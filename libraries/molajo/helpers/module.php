@@ -151,8 +151,6 @@ abstract class MolajoModuleHelper
 			||	$lang->load($module->module, JPATH_BASE, $lang->getDefault(), false, false)
 			||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
 
-
-
 			$content = '';
 			ob_start();
 			require $path;
@@ -168,6 +166,7 @@ abstract class MolajoModuleHelper
 
 		require_once JPATH_THEMES.'/system/html/modules.php';
 		$chromePath = JPATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
+
 		if (!isset($chrome[$chromePath]))
 		{
 			if (file_exists($chromePath)) {
@@ -278,8 +277,8 @@ abstract class MolajoModuleHelper
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 
-            $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
+//            $acl = new MolajoACL ();
+//            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
 
 			$query->where('m.client_id = '. $clientId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
@@ -293,6 +292,7 @@ abstract class MolajoModuleHelper
 
 			// Set the query
 			$db->setQuery($query);
+            
 			$modules = $db->loadObjectList();
 			$clean	= array();
 
@@ -400,7 +400,7 @@ abstract class MolajoModuleHelper
 		$wrkarounds = true;
 
         $acl = new MolajoACL();
-		$view_levels = md5(serialize ($acl->getList('Viewaccess')));
+		$view_levels = md5(serialize ($acl->getList('viewaccess')));
 
 		switch ($cacheparams->cachemode) {
 

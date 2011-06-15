@@ -177,13 +177,13 @@ class MolajoComponentHelper
 	{
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
-		$query->select('extension_id AS "id", element AS "option", params, enabled');
+		$query->select('id AS "id", element AS "option", params, enabled');
 		$query->from('#__extensions');
 		$query->where('`type` = '.$db->quote('component'));
 		$query->where('`element` = '.$db->quote($option));
 
-        $acl = new MolajoACL ();
-        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>''));
+//        $acl = new MolajoACL ();
+//        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>''));
 
 		$db->setQuery($query);
 

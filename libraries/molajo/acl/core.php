@@ -368,14 +368,14 @@ class CoreACL extends MolajoACL
     public function getUserQueryInformation ($query, $option, $params)
     {
         $query->select('a.access');
-        $query->select('ag.title AS access_level');
+//        $query->select('ag.title AS access_level');
 
         $aclClass = ucfirst(strtolower(JRequest::getVar('default_view'))).'ACL';
         $acl = new $aclClass();
-        $groupList = $acl->getList('Usergroupings');
+        $groupList = $acl->getList('viewaccess');
 
         $query->where('a.access in ('.$groupList.')');
-        $query->join('LEFT', '#__viewlevels AS ag ON a.access = ag.id');
+//$query->join('LEFT', '#__viewlevels AS ag ON a.access = ag.id');
 
         /** Molajo_note: come back and deal with edit and edit state capabilities
          * the way this is currently coded in core, users would not be able to update their articles
@@ -409,7 +409,6 @@ class CoreACL extends MolajoACL
         }
     }
 
-
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getViewaccessQueryInformation
      *  Usage:
@@ -418,12 +417,16 @@ class CoreACL extends MolajoACL
      */
     public function getViewaccessQueryInformation ($query, $option, $params)
     {
+        $prefix = $params['table_prefix'];
+        if (trim($prefix == '')) {
+        } else {
+            $prefix = $prefix.'.';
+        }
         $acl	= new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
-        $query->where($params['table_prefix'].'access IN (' . $list . ')');
+        $query->where($prefix.'access IN ('.$list.')');
         return;
     }
-
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> Retrieves list of ACL-related data

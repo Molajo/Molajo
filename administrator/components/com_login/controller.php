@@ -35,7 +35,6 @@ class LoginController extends JController
 		// Special treatment is required for this plugin, as this view may be called
 		// after a session timeout. We must reset the view and layout prior to display
 		// otherwise an error will occur.
-
 		JRequest::setVar('view', 'login');
 		JRequest::setVar('layout', 'default');
 
