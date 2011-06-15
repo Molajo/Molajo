@@ -399,9 +399,9 @@ abstract class MolajoModuleHelper
 
 		$wrkarounds = true;
 
-        $acl = new MolajoACL();
-		$view_levels = md5(serialize ($acl->getList('viewaccess')));
-
+//        $acl = new MolajoACL();
+//		$view_levels = md5(serialize ($acl->getList('viewaccess')));
+$view_levels='';
 		switch ($cacheparams->cachemode) {
 
 			case 'id':

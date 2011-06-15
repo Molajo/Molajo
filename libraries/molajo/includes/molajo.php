@@ -59,6 +59,7 @@ foreach ($files as $file) {
 
 /** Include Application */
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/'.MOLAJO_APPLICATION.'.php', 'Molajo'.ucfirst(MOLAJO_APPLICATION));
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/menu.php', 'MolajoMenu');
 
 /** HTML fields */
 $files = JFolder::files(MOLAJO_LIBRARY.'/html/html', '\.php$', false, false);

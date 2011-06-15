@@ -161,6 +161,7 @@ class JRouterSite extends JRouter
 		$vars	= array();
 		$app	= JFactory::getApplication();
 		$menu	= $app->getMenu(true);
+
 		$route	= $uri->getPath();
 
 		// Get the variables from the uri
@@ -265,7 +266,6 @@ class JRouterSite extends JRouter
 			}
 		} else {
 			//Set active menu item
-
 			if ($item = $menu->getActive()) {
 				$vars = $item->query;
 			}

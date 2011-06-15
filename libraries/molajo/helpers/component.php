@@ -157,7 +157,6 @@ class MolajoComponentHelper
 		if (($path = JApplicationHelper::getPath('toolbar')) && $app->isAdmin()) {
 			// Get the task again, in case it has changed
 			$task = JRequest::getString('task');
-
 			// Make the toolbar
 			include_once $path;
 		}

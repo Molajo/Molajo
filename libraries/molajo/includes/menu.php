@@ -278,27 +278,25 @@ class MolajoMenu extends JObject
 		return $this->_items;
 	}
 
-	/**
-	 * Method to check MolajoMenu object authorization against an access control
-	 * object and optionally an access extension object
-	 *
-	 * @param   integer  $id	The menu id
-	 *
-	 * @return  boolean  True if authorised
-	 * @since   11.1
-	 */
-	public function authorise($id)
-	{
-		$menu	= $this->getItem($id);
-		$acl	= new MolajoAccess();
-
-		if ($menu) {
-			return in_array((int) $menu->access, $acl->getList('Viewaccess'));
-		}
-		else {
-			return true;
-		}
-	}
+    /**
+     * Method to check JMenu object authorization against an access control
+     * object and optionally an access extension object
+     *
+     * @param   integer  $id	The menu id
+     *
+     * @return  boolean  True if authorised
+     * @since   11.1
+     */
+    public function authorise($id)
+    {
+        $menu	= $this->getItem($id);
+        if ($menu) {
+            $acl = new MolajoACL();
+            return $acl->checkPermissions ('user', JFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset, $menu->access);
+        } else {
+            return true;
+        }
+    }
 
 	/**
 	 * Loads the menu items
