@@ -290,13 +290,9 @@ class JMenu extends JObject
 	public function authorise($id)
 	{
 		$menu	= $this->getItem($id);
-        $acl    = new MolajoACL();
-        $access = $acl->checkPermissions ('User',
-                                          JFactory::getUser()->id,
-                                          MOLAJO_ACL_ACTION_VIEW,
-                                          $menu->asset,
-                                          $menu->access);
-		if ($access) {
+		$user	= JFactory::getUser();
+
+		if ($menu) {
 			return in_array((int) $menu->access, $user->getAuthorisedViewLevels());
 		}
 		else {
