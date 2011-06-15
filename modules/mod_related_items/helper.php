@@ -21,7 +21,6 @@ abstract class modRelatedItemsHelper
 		$user		= JFactory::getUser();
 		$userId		= (int) $user->get('id');
 		$count		= intval($params->get('count', 5));
-		$groups		= implode(',', $user->getAuthorisedViewLevels());
 		$date		= JFactory::getDate();
 
 		$option		= JRequest::getCmd('option');
@@ -78,7 +77,7 @@ abstract class modRelatedItemsHelper
 					$query->leftJoin('#__categories AS cc ON cc.id = a.catid');
 					$query->where('a.id != ' . (int) $id);
 					$query->where('a.state = 1');
-					$query->where('a.access IN (' . $groups . ')');
+
 					$query->where('(CONCAT(",", REPLACE(a.metakey, ", ", ","), ",") LIKE "%'.implode('%" OR CONCAT(",", REPLACE(a.metakey, ", ", ","), ",") LIKE "%', $likes).'%")'); //remove single space after commas in keywords)
 					$query->where('(a.publish_up = '.$db->Quote($nullDate).' OR a.publish_up <= '.$db->Quote($now).')');
 					$query->where('(a.publish_down = '.$db->Quote($nullDate).' OR a.publish_down >= '.$db->Quote($now).')');
@@ -87,6 +86,9 @@ abstract class modRelatedItemsHelper
 					if ($app->getLanguageFilter()) {
 						$query->where('a.language in (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
 					}
+
+                    $acl = new MolajoACL ();
+                    $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
 
 					$db->setQuery($query);
 					$temp = $db->loadObjectList();

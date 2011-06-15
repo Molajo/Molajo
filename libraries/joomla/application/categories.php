@@ -209,8 +209,9 @@ class JCategories
 		$query->from('#__categories as c');
 		$query->where('(c.extension='.$db->Quote($extension).' OR c.extension='.$db->Quote('system').')');
 
-		if ($this->_options['access']) {
-			$query->where('c.access IN ('.implode(',', $user->getAuthorisedViewLevels()).')');
+        if ($this->_options['access']) {
+            $acl = new MolajoACL ();
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'c'));
 		}
 
 		if ($this->_options['published'] == 1) {

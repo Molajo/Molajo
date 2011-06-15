@@ -491,71 +491,7 @@ class CoreACL extends MolajoACL
      */
     public function getViewaccessList ($userid='', $option='', $action='', $params=array())
     {
-
         return $this->getUsergroupsList($userid, $option, MOLAJO_ACL_ACTION_VIEW, $params);
-
-        $acl = new MolajoACL();
-        $cache 	= JFactory::getCache('com_plugins', '');
-
-        /** $key */
-        if ((int) $userid == 0) {
-            $userid = JFactory::getUser()->get('id');
-        }
-
-        /** query  */
-		$db = JFactory::getDBO();
-        $query = $db->getQuery(true);
-
-        $query->select('a.id');
-        $query->from('#__groupings a');
-        $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
-        $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
-
-        /** Guest: 3 - Public: 4 */
-        if ((int) $userid == 0) {
-            $query->where('c.id IN ('.MOLAJO_ACL_GROUP_PUBLIC.','.MOLAJO_ACL_GROUP_GUEST.')');
-        } else {
-            $query->join('LEFT', '#__user_groups AS d ON d.id = b.group_id');
-            $query->where('d.user_id = '.(int) $userid);
-        }
-
-        /** $asset */
-        if ($option == '') {
-        } else {
-            /* find the access level for com_content in the extensions table */
-            $query->from('#__extensions AS e');
-            $query->where('e.element = '.$db->_quoted($option));
-            $query->where('e.access = a.id');
-        }
-
-        /** run query **/
-        $hash = hash('md5',$query->__toString(), false);
-        $authorised = $cache->get($hash);
-
-        if ($authorised) {
-        } else {
-
-            $db->setQuery($query);
-            $options = $db->loadObjectList();
-
-            /** error handling */
-            if ($db->getErrorNum()) {
-                $this->setError($db->getErrorMsg());
-                return false;
-
-            } else if (count($options) == 0) {
-                return false;
-            }
-
-            /** load into an array as expected by 1.6 */
-            $authorised = array();
-            foreach ($options as $option) {
-                $authorised[] = $option->id;
-            }
-            $cache->store($authorised, $hash);
-        }
-
-		return $authorised;
     }
     
     /**

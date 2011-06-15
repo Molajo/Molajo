@@ -29,15 +29,17 @@ class MolajoContentView {
     function driver ($content)
     {
         $firsttime = true;
+
         /** $matches[0][i] = "{view:1}You must be in group 1 to see this top secret information.{/view}"**/
         /** $matches[1][i] = "1" **/
-        /** $matches[2][i] = You must be in group 1 to see this top secret information.{/view **/
+        /** $matches[2][i] = You must be in group 1 to see this top secret information.{/view} **/
         preg_match_all( '~{view:([^}]+)}(.*?)}~is', $content, $matches);
 
         for ( $i=0; $i < count($matches[0]); $i++ ) {
 
             if ($firsttime) {
-                $userAccess = array_unique(JFactory::getUser()->getAuthorisedViewLevels());
+                $acl = new MolajoACL();
+                $userAccess = array_unique($acl->getList('Viewaccess'));
                 $firsttime = false;
             }
 

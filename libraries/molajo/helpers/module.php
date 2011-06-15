@@ -257,12 +257,11 @@ abstract class MolajoModuleHelper
 		$Itemid 	= JRequest::getInt('Itemid');
 		$app		= JFactory::getApplication();
 		$user		= JFactory::getUser();
-		$groups		= implode(',', $user->getAuthorisedViewLevels());
 		$lang 		= JFactory::getLanguage()->getTag();
 		$clientId 	= (int) $app->getClientId();
 
 		$cache 		= JFactory::getCache ('com_modules', '');
-		$cacheid 	= md5(serialize(array($Itemid, $groups, $clientId, $lang)));
+		$cacheid 	= md5(serialize(array($Itemid, $clientId, $lang)));
 
 		if (!($clean = $cache->get($cacheid))) {
 			$db	= JFactory::getDbo();
@@ -279,7 +278,9 @@ abstract class MolajoModuleHelper
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 
-			$query->where('m.access IN ('.$groups.')');
+            $acl = new MolajoACL ();
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
+
 			$query->where('m.client_id = '. $clientId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
 
@@ -397,7 +398,9 @@ abstract class MolajoModuleHelper
 		);
 
 		$wrkarounds = true;
-		$view_levels = md5(serialize ($user->getAuthorisedViewLevels()));
+
+        $acl = new MolajoACL();
+		$view_levels = md5(serialize ($acl->getList('Viewaccess')));
 
 		switch ($cacheparams->cachemode) {
 

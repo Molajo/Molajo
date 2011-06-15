@@ -47,9 +47,8 @@ class MolajoFilterHelper
         $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 
-        /** get the user's ACL groups **/
-        $aclClass = ucfirst(JRequest::getCmd('default_view')).'ACL';
-        $userGroups = $aclClass::getUserGroups();
+        $acl = new MolajoACL ();
+        $userGroups = $acl->getList ('usergroups');
 
         /** retrieve defined filters by group **/
         $filters = $systemParams->get('filters');

@@ -62,7 +62,7 @@ class plgSearchCategories extends JPlugin
 		$db		= JFactory::getDbo();
 		$user	= JFactory::getUser();
 		$app	= JFactory::getApplication();
-		$groups	= implode(',', $user->getAuthorisedViewLevels());
+
 		$searchText = $text;
 
 		if (is_array($areas)) {
@@ -109,8 +109,9 @@ class plgSearchCategories extends JPlugin
 			$query->select('a.title, a.description AS text, "" AS created, "2" AS browsernav, a.id AS catid, '
 						.'CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(":", a.id, a.alias) ELSE a.id END as slug');
 			$query->from('#__categories AS a');
-			$query->where('(a.title LIKE '. $text .' OR a.description LIKE '. $text .') AND a.published IN ('.implode(',',$state).') AND a.extension = \'com_articles\''
-						.'AND a.access IN ('. $groups .')' );
+			$query->where('(a.title LIKE '. $text .' OR a.description LIKE '. $text .') AND a.published IN ('.implode(',',$state).') AND a.extension = \'com_articles\')');
+            $acl = new MolajoACL ();
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
 			$query->group('a.id');
 			$query->order($order);
 			if ($app->isSite() && $app->getLanguageFilter()) {

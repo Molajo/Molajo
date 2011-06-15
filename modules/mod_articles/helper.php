@@ -33,9 +33,9 @@ abstract class modArticlesHelper
 		$model->setState('filter.published', 1);
 
 		// Access filter
-		$access = !JComponentHelper::getParams('com_articles')->get('show_noauth');
-		$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
-		$model->setState('filter.access', $access);
+		$parameterAccess = !JComponentHelper::getParams('com_articles')->get('show_noauth');
+		$model->setState('filter.access', $parameterAccess);
+        $acl = new MolajoACL();
 
 		// Category filter
 		$model->setState('filter.category_id', $params->get('catid', array()));
@@ -91,13 +91,15 @@ abstract class modArticlesHelper
 		$model->setState('list.direction', $dir);
 
 		$items = $model->getItems();
-
 		foreach ($items as &$item) {
 			$item->slug = $item->id.':'.$item->alias;
 			$item->catslug = $item->catid.':'.$item->category_alias;
 
-			if ($access || in_array($item->access, $authorised)) {
-				// We know that user has the privilege to view the article
+			if ($parameterAccess) {
+            } else {
+                $itemAccess = $acl->checkPermissions ('user', JFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $item->asset, $item->access);
+            }
+            if ($parameterAccess || $itemAccess) {
 				$item->link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catslug));
 			} else {
 				$item->link = JRoute::_('index.php?option=com_user&view=login');

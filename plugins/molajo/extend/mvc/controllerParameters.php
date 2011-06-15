@@ -160,7 +160,8 @@ class extendControllerParameters {
         }
 
         /** access **/
-        $groups = $user->getAuthorisedViewLevels();
+        $acl	= new MolajoACL();
+        $groups = $acl->getList('Viewaccess');
         if (!in_array($fieldParams->def($contentType.'_access_criteria', 0), $groups)) {
             return false;
         }

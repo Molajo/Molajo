@@ -45,7 +45,6 @@ class plgSearchWeblinks extends JPlugin
 		$db		= JFactory::getDbo();
 		$app	= JFactory::getApplication();
 		$user	= JFactory::getUser();
-		$groups	= implode(',', $user->getAuthorisedViewLevels());
 
 		$searchText = $text;
 
@@ -134,7 +133,11 @@ class plgSearchWeblinks extends JPlugin
 						.'CONCAT_WS(" / ", '.$db->Quote($section).', c.title) AS section, "1" AS browsernav');
 			$query->from('#__weblinks AS a');
 			$query->innerJoin('#__categories AS c ON c.id = a.catid');
-			$query->where('('.$where.')' . ' AND a.state in ('.implode(',',$state).') AND  c.published=1 AND  c.access IN ('.$groups.')');
+			$query->where('('.$where.')' . ' AND a.state in ('.implode(',',$state).') AND  c.published=1 ');
+
+            $acl = new MolajoACL ();
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
+
 			$query->order($order);
 
 			// Filter by language

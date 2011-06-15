@@ -315,8 +315,8 @@ class JUser extends JObject
 	 */
 	public function getAuthorisedViewLevels()
 	{
-        $acl = new MolajoACL ();
-        return $acl->getList ('AuthorisedViewLevels', $userId='', $option='', $task='', $params=array());
+        $acl = new MolajoACL();
+        return $acl->getList ('viewaccess', $userId='', $option='', $task='', $params=array());
 	}
 
 

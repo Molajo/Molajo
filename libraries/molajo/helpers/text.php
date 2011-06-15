@@ -36,7 +36,7 @@ class MolajoTextHelper   {
      */
     function smilies ($text) {
         
-        $wpsmiliestrans = array(
+        $smile = array(
         ':mrgreen:' => 'mrgreen.gif',
         ':neutral:' => 'neutral.gif',
         ':twisted:' => 'twisted.gif',
@@ -83,8 +83,8 @@ class MolajoTextHelper   {
               ':?:' => 'question.gif',
         );
 
-        if (count($wpsmiliestrans) > 0 ) {
-            foreach ( $wpsmiliestrans as $key => $val )   {
+        if (count($smile) > 0 ) {
+            foreach ( $smile as $key => $val )   {
                 $text = JString::str_ireplace ($key, '<span><img src="'. JURI::base().'media/molajo/images/smiley/'.$val.'" alt="smiley" class="smiley-class" /></span>', $text);
             }
         }

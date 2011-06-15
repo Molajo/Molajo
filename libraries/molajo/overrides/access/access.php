@@ -148,7 +148,7 @@ class JAccess extends MolajoACL
 	public static function getAuthorisedViewLevels($userId)
 	{
         $acl = new MolajoACL();
-        return $acl->getList ('Usergroupings', $userId, $option='', $task='', $params=array());
+        return $acl->getList ('viewaccess', $userId, $option='', $task='', $params=array());
 	}
 
 	/**

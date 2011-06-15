@@ -153,7 +153,6 @@ class MolajoComponentHelper
 		ob_end_clean();
 
 		// Build the component toolbar
-//als jimport('joomla.application.helper');
 
 		if (($path = JApplicationHelper::getPath('toolbar')) && $app->isAdmin()) {
 			// Get the task again, in case it has changed
@@ -182,6 +181,10 @@ class MolajoComponentHelper
 		$query->from('#__extensions');
 		$query->where('`type` = '.$db->quote('component'));
 		$query->where('`element` = '.$db->quote($option));
+
+        $acl = new MolajoACL ();
+        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>''));
+
 		$db->setQuery($query);
 
 		$cache = JFactory::getCache('_system','callback');
