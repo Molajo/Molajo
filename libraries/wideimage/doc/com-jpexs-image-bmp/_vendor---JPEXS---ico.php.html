@@ -1,0 +1,546 @@
+<html>
+<head>
+<title>Docs for page ico.php</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">com-jpexs-image-bmp</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                                                                                                                                  		  [ <a href="../classtrees_com-jpexs-image-bmp.html" class="menu">class tree: com-jpexs-image-bmp</a> ]
+		  [ <a href="../elementindex_com-jpexs-image-bmp.html" class="menu">index: com-jpexs-image-bmp</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_com-jpexs-image-bmp.html">com-jpexs-image-bmp</a><br />
+              <a href="../li_Exceptions.html">Exceptions</a><br />
+              <a href="../li_Internal-Mappers.html">Internal-Mappers</a><br />
+              <a href="../li_Internal-Operations.html">Internal-Operations</a><br />
+              <a href="../li_Internals.html">Internals</a><br />
+              <a href="../li_WideImage.html">WideImage</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="_vendor---JPEXS---bmp.php.html">		bmp.php
+		</a><br>
+			<a href="../com-jpexs-image-bmp/_vendor---JPEXS---ico.php.html">		ico.php
+		</a><br>
+	  </div><br />
+      
+      
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Procedural File: ico.php</h1>
+Source Location: /vendor/JPEXS/ico.php<br /><br />
+
+<br>
+<br>
+
+
+<h2>Page Details:</h2>
+<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>JPEXS</td>
+  </tr>
+  <tr>
+    <td><b>version:</b>&nbsp;&nbsp;</td><td>2.1</td>
+  </tr>
+  <tr>
+    <td><b>copyright:</b>&nbsp;&nbsp;</td><td><p>(c) JPEXS 2004-2009</p><p>Webpage: http://www.jpexs.com  Email: jpexs@jpexs.com</p><p>If you like my script, you can donate... visit my webpages or email me for more info.</p><p>Version changes:                 v2.1 - redesigned sourcecode, phpdoc included, all internal functions and global variables have prefix &quot;jpexs_&quot;                 v2.0 - For icons with Alpha channel now you can set background color <ul><li>ImageCreateFromExeIco added</li><li>Fixed ICO_MAX_SIZE and ICO_MAX_COLOR values</li></ul>  TODO list: <ul><li>better error handling</li><li>class encapsulation</li></ul> License: <ul><li>you can freely use it</li><li>you can freely distribute sourcecode</li><li>you can freely modify it as long as you leave my copyright/author info in source code</li><li>if you developing closesource application, you should add my name at least to &quot;about&quot; page of your web application</li><li>if you create an amazing modification, please contact me... I can publish link to your webpage if you're interested...</li><li>if you want to use my script in commercial application for earning money, you should make a donation to me first</li></ul></p></td>
+  </tr>
+</table>
+</div>
+<br /><br />
+<br /><br />
+<br /><br />
+  <hr />
+	<a name="defineICO_MAX_COLOR"></a>
+	<h3>ICO_MAX_COLOR <span class="smalllinenumber">[line 38]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>ICO_MAX_COLOR = -2</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    Image with maximum colors<br /><br />    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineICO_MAX_SIZE"></a>
+	<h3>ICO_MAX_SIZE <span class="smalllinenumber">[line 40]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>ICO_MAX_SIZE = -2</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    Image with maximal size<br /><br />    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineICO_TRUE_COLOR"></a>
+	<h3>ICO_TRUE_COLOR <span class="smalllinenumber">[line 34]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>ICO_TRUE_COLOR = 0x1000000</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    TrueColor images constant<br /><br />    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineICO_XP_COLOR"></a>
+	<h3>ICO_XP_COLOR <span class="smalllinenumber">[line 36]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>ICO_XP_COLOR = 4294967296</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    XPColor images constant (Alpha channel)<br /><br />    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineMAX_COLOR"></a>
+	<h3>MAX_COLOR <span class="smalllinenumber">[line 54]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>MAX_COLOR = -2</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    Image with maximum colors<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>deprecated:</b>&nbsp;&nbsp;</td><td>Deprecated since version 2.1, please use ICO_ constants</td>
+  </tr>
+</table>
+</div>
+    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineMAX_SIZE"></a>
+	<h3>MAX_SIZE <span class="smalllinenumber">[line 58]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>MAX_SIZE = -2</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    Image with maximal size<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>deprecated:</b>&nbsp;&nbsp;</td><td>Deprecated since version 2.1, please use ICO_ constants</td>
+  </tr>
+</table>
+</div>
+    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineTRUE_COLOR"></a>
+	<h3>TRUE_COLOR <span class="smalllinenumber">[line 46]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>TRUE_COLOR = 0x1000000</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    TrueColor images constant<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>deprecated:</b>&nbsp;&nbsp;</td><td>Deprecated since version 2.1, please use ICO_ constants</td>
+  </tr>
+</table>
+</div>
+    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineXP_COLOR"></a>
+	<h3>XP_COLOR <span class="smalllinenumber">[line 50]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>XP_COLOR = 4294967296</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    XPColor images constant (Alpha channel)<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>deprecated:</b>&nbsp;&nbsp;</td><td>Deprecated since version 2.1, please use ICO_ constants</td>
+  </tr>
+</table>
+</div>
+    <br />
+		</div>
+	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+<br />
+  <hr />
+	<a name="functionimageCreateFromExeIco"></a>
+	<h3>imageCreateFromExeIco <span class="smalllinenumber">[line 397]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>resource imageCreateFromExeIco(
+string $filename, int $icoIndex, [int $icoColorCount = 16], [int $icoSize = 16], [int $alphaBgR = 255], [int $alphaBgG = 255], [int $alphaBgB = 255])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		Reads image from a icon in exe file<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Image resource or false on error</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td>Target exefile</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$icoIndex</b>&nbsp;&nbsp;</td>
+        <td>Index of the icon in exefile</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$icoColorCount</b>&nbsp;&nbsp;</td>
+        <td>Icon color count (For multiple icons ico file) - 2,16,256, ICO_TRUE_COLOR, ICO_XP_COLOR or ICO_MAX_COLOR</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$icoSize</b>&nbsp;&nbsp;</td>
+        <td>Icon width (For multiple icons ico file) or ICO_MAX_SIZE</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$alphaBgR</b>&nbsp;&nbsp;</td>
+        <td>Background color R value for alpha-channel images (Default is White)</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$alphaBgG</b>&nbsp;&nbsp;</td>
+        <td>Background color G value for alpha-channel images (Default is White)</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$alphaBgB</b>&nbsp;&nbsp;</td>
+        <td>Background color B value for alpha-channel images (Default is White)</td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionimageCreateFromIco"></a>
+	<h3>imageCreateFromIco <span class="smalllinenumber">[line 72]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>resource imageCreateFromIco(
+string $filename, [int $icoColorCount = 16], [int $icoSize = 16], [int $alphaBgR = 255], [int $alphaBgG = 255], [int $alphaBgB = 255])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		Reads image from a ICO file<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Image resource</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td>Target ico file to load</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$icoColorCount</b>&nbsp;&nbsp;</td>
+        <td>Icon color count (For multiple icons ico file) - 2,16,256, ICO_TRUE_COLOR, ICO_XP_COLOR or ICO_MAX_COLOR</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$icoSize</b>&nbsp;&nbsp;</td>
+        <td>Icon width (For multiple icons ico file) or ICO_MAX_SIZE</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$alphaBgR</b>&nbsp;&nbsp;</td>
+        <td>Background color R value for alpha-channel images (Default is White)</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$alphaBgG</b>&nbsp;&nbsp;</td>
+        <td>Background color G value for alpha-channel images (Default is White)</td>
+      </tr>
+		      <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$alphaBgB</b>&nbsp;&nbsp;</td>
+        <td>Background color B value for alpha-channel images (Default is White)</td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionimageIco"></a>
+	<h3>imageIco <span class="smalllinenumber">[line 597]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void imageIco(
+resource|array $images, [string $filename = &amp;quot;&amp;quot;])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		Creates ico file from image resource(s)<br /><br />    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">resource|array&nbsp;&nbsp;</td>
+        <td><b>$images</b>&nbsp;&nbsp;</td>
+        <td>Target Image resource (Can be array of image resources)</td>
+      </tr>
+		      <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td>Target ico file to save icon to, If ommited or &quot;&quot;, image is written to snadard output - use header(&quot;Content-type: image/x-icon&quot;);</td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionjpexs_GetIconsInfo"></a>
+	<h3>jpexs_GetIconsInfo <span class="smalllinenumber">[line 351]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void jpexs_GetIconsInfo(
+ $filename)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionjpexs_inttodword"></a>
+	<h3>jpexs_inttodword <span class="smalllinenumber">[line 955]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void jpexs_inttodword(
+ $n)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$n</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionjpexs_inttoword"></a>
+	<h3>jpexs_inttoword <span class="smalllinenumber">[line 960]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void jpexs_inttoword(
+ $n)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$n</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionjpexs_readIcon"></a>
+	<h3>jpexs_readIcon <span class="smalllinenumber">[line 228]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void jpexs_readIcon(
+ $filename,  $id,  &$Ikona)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$Ikona</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionjpexs_readResDirectoryEntry"></a>
+	<h3>jpexs_readResDirectoryEntry <span class="smalllinenumber">[line 543]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void jpexs_readResDirectoryEntry(
+ &$parentRes,  $offset)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		Internal function for reading exe icons<br /><br />    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$parentRes</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+		      <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$offset</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+  <hr />
+	<a name="functionsaveExeIcon"></a>
+	<h3>saveExeIcon <span class="smalllinenumber">[line 420]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean saveExeIcon(
+string $filename, [string $icoFileNameOrPath = &amp;quot;&amp;quot;], [int|array $iconIndex = -1])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		Saves icon(s) from the exe file<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>True on successful save</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td>Target exefile</td>
+      </tr>
+		      <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$icoFileNameOrPath</b>&nbsp;&nbsp;</td>
+        <td>Filename to save ico or path (Default &quot;&quot;) Path if you want more than 1 icon. If &quot;&quot;, the filename is &quot;$icoIndex.ico&quot;</td>
+      </tr>
+		      <tr>
+        <td class="type">int|array&nbsp;&nbsp;</td>
+        <td><b>$iconIndex</b>&nbsp;&nbsp;</td>
+        <td>Index(es) of the icon in exefile  (Default -1) If -1, all icons are saved, Can be an array of indexes.</td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="_vendor---JPEXS---ico.php.html#top">Top</a> ]</div><br /><br />
+	</div>
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Sat, 31 Jul 2010 20:37:58 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.2</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

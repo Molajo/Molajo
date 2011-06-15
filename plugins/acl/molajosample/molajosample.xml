@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="ACL" method="upgrade">
+    <name>PLG_ACL_MOLAJOSAMPLE_PLUGIN</name>
+    <author>Amy Stephen</author>
+    <creationDate>June 2011</creationDate>
+    <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>AmyStephen@gmail.com</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.6.0</version>
+    <description>PLG_ACL_MOLAJOSAMPLE_XML_DESCRIPTION_PLUGIN</description>
+
+	<files>
+		<filename plugin="molajosample">molajosample.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.plg_ACL_molajosample.ini</language>
+		<language tag="language/en-GB">en-GB.plg_ACL_molajosample.sys.ini</language>
+	</languages>
+	<config>
+            <fields name="params">
+
+                <fieldset
+                    name="example_field"
+                    label="PLG_ACL_MOLAJOEXAMPLE_FIELDSET_LABEL">
+
+                        <field
+                            name="section_molajosample_enable"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_ACL_MOLAJOSAMPLE_FIELD_LABEL"
+                            description="PLG_ACL_MOLAJOSAMPLE_FIELD_DESC"
+                            />
+
+                       <field
+                            name="enable_molajosample_feature"
+                            type="radio"
+                            label="PLG_ACL_MOLAJOSAMPLE_ENABLE_LABEL"
+                            description="PLG_ACL_MOLAJOSAMPLE_ENABLE_LABEL_DESC"
+                            default="1">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                </fieldset>
+            </fields>
+	</config>
+</extension>
