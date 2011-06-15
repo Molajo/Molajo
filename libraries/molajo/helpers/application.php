@@ -62,20 +62,22 @@ class MolajoApplicationHelper
 	 */
 	public static function getClientInfo($id = null, $byName = false)
 	{
-
 		if (self::$_clients === null)
         {
             $obj = new stdClass();
             $db	= JFactory::getDbo();
+            if ($byName === true) {
+                $where = ' `name` = "'.$id.'"';
+            } else {
+                $where = ' `id` = '. (int) $id;
+            }
 
             $db->setQuery(
                 'SELECT `client_id` as id, `name`, `path` ' .
-                ' FROM `#__clients`' .
-                ' WHERE `client_id` = '.(int) $id .
-                ' OR `name` = '.$db->getEscaped($byName)
+                ' FROM `#__clients` ' .
+                'WHERE '.$where
             );
             $results = $db->loadObjectList();
-
             if ($db->getErrorNum()) {
                 return new JException($db->getErrorMsg());
             }
