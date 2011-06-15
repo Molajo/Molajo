@@ -181,23 +181,26 @@ abstract class MolajoPluginHelper
 			return $plugins;
 		}
 
-		$user	= JFactory::getUser();
 		$cache 	= JFactory::getCache('com_plugins', '');
 
-		$levels = implode(',', $user->getAuthorisedViewLevels());
+        $db		= JFactory::getDbo();
+        $query	= $db->getQuery(true);
 
-		if (!$plugins = $cache->get($levels)) {
-			$db		= JFactory::getDbo();
-			$query	= $db->getQuery(true);
+        $query->select('folder AS type, element AS name, params')
+            ->from('#__extensions')
+            ->where('enabled >= 1')
+            ->where('type ='.$db->Quote('plugin'))
+            ->where('state >= 0')
+            ->order('ordering');
 
-			$query->select('folder AS type, element AS name, params')
-				->from('#__extensions')
-				->where('enabled >= 1')
-				->where('type ='.$db->Quote('plugin'))
-				->where('state >= 0')
-				->where('access IN ('.$levels.')')
-				->order('ordering');
+        $acl = new MolajoACL ();
+        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>''));
 
+        /** run query **/
+        $hash = hash('md5',$query->__toString(), false);
+        $plugins = $cache->get($hash);
+
+        if ($plugins === false) {
 			$plugins = $db->setQuery($query)
 				->loadObjectList();
 
@@ -206,7 +209,7 @@ abstract class MolajoPluginHelper
 				return false;
 			}
 
-			$cache->store($plugins, $levels);
+			$cache->store($plugins, $hash);
 		}
 
 		return $plugins;

@@ -67,6 +67,19 @@ define('MOLAJO_STATE_UNPUBLISHED', 0);
 define('MOLAJO_STATE_TRASHED', -1);
 define('MOLAJO_STATE_SPAMMED', -2);
 define('MOLAJO_STATE_VERSION', -10);
+/** ACL **/
+define('MOLAJO_ACL_GROUP_ADMINISTRATOR', 1);
+define('MOLAJO_ACL_GROUP_REGISTERED', 2);
+define('MOLAJO_ACL_GROUP_GUEST', 3);
+define('MOLAJO_ACL_GROUP_PUBLIC', 4);
+/** ACL Actions */
+define('MOLAJO_ACL_ACTION_LOGIN', 'login');
+define('MOLAJO_ACL_ACTION_CREATE', 'create');
+define('MOLAJO_ACL_ACTION_VIEW', 'view');
+define('MOLAJO_ACL_ACTION_EDIT', 'edit');
+define('MOLAJO_ACL_ACTION_DELETE', 'delete');
+define('MOLAJO_ACL_ACTION_ADMIN', 'admin');
+
 /** Layouts **/
 define('MOLAJO_CONFIG_OPTION_ID_PARAMETERS_LAYOUTS', 500);
 

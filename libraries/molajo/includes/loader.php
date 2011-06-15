@@ -106,7 +106,6 @@ if (MOLAJO_APPLICATION == 'installation') {
 
 /** joomla library: core and overrides */
 /** access */
-jimport('molajo.user.user');
 jimport('molajo.overrides.user.user');
 jimport('joomla.environment.uri');
 jimport('joomla.html.html');

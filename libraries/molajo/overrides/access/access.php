@@ -36,7 +36,7 @@ class JAccess extends MolajoACL
 	public function check($userId, $action, $asset = null)
     {
         $acl = new MolajoACL();
-        return $acl->checkPermissions ('user', $userId, $action, $asset);
+        return $acl->checkPermissions ('user', $userId, $action, $asset, '');
     }
 
 	/**
@@ -55,7 +55,7 @@ class JAccess extends MolajoACL
 	public function checkGroup($groupId, $action, $asset = null)
 	{
         $acl = new MolajoACL();
-        return $acl->checkPermissions ('group', $groupId, $action, $asset);
+        return $acl->checkPermissions ('group', $groupId, $action, $asset, '');
 	}
 
 	/**

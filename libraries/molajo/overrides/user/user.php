@@ -258,7 +258,7 @@ class JUser extends JObject
 	public function authorize($action, $assetname = null)
 	{
         $acl = new MolajoACL ();
-        return $acl->checkPermissions ('user', $userId='', $action, $assetname = null);
+        return $acl->checkPermissions('user', $userId='', $action, $assetname, '');
 	}
 
 	/**
@@ -276,7 +276,7 @@ class JUser extends JObject
 	public function authorise($action, $assetname = null)
 	{
         $acl = new MolajoACL ();
-        return $acl->checkPermissions ('user', $userId='', $action, $assetname = null);
+        return $acl->checkPermissions('user', $userId='', $action, $assetname, '');
 	}
 
 	/**
@@ -316,7 +316,7 @@ class JUser extends JObject
 	public function getAuthorisedViewLevels()
 	{
         $acl = new MolajoACL ();
-        return $acl->getList ('Usergroupings', $userId='', $option='', $task='', $params=array());
+        return $acl->getList ('AuthorisedViewLevels', $userId='', $option='', $task='', $params=array());
 	}
 
 
@@ -588,7 +588,7 @@ class JUser extends JObject
 
 			// Check if I am a Super Admin
 			$acl = new MolajoACL ();
-            $iAmSuperAdmin = $acl->checkPermissions ('user', $my->id, 'admin', $asset = null);
+            $iAmSuperAdmin = $acl->checkPermissions ('user', $my->id, 'admin', '', '');
 
 			// We are only worried about edits to this account if I am not a Super Admin.
 			if ($iAmSuperAdmin != true) {
@@ -596,14 +596,14 @@ class JUser extends JObject
 					// Check if the new user is being put into a Super Admin group.
 					foreach ($this->groups as $key => $groupId)
 					{
-						if ($acl->checkPermissions ('group', $groupId, 'admin', $asset = null)) {
+						if ($acl->checkPermissions ('group', $groupId, 'admin', '', '')) {
 							throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
 						}
 					}
 				}
 				else {
 					// I am not a Super Admin, and this one is, so fail.
-					if ($acl->checkPermissions ('user', $this->id, 'admin', $asset = null)) {
+					if ($acl->checkPermissions ('user', $this->id, 'admin', '', '')) {
 						throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
 					}
 
@@ -611,7 +611,7 @@ class JUser extends JObject
 					// I am not a Super Admin and I'm trying to make one.
 						foreach ($this->groups as $groupId)
 						{
-							if ($acl->checkPermissions ('group', $groupId, 'admin', $asset = null)) {
+							if ($acl->checkPermissions ('group', $groupId, 'admin', '', '')) {
 								throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
 							}
 						}

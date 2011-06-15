@@ -43,9 +43,8 @@ class MolajoMenuSite extends JMenu
 			$query->where('m.client_id = 0');
 			$query->order('m.lft');
 
-			$user = JFactory::getUser();
-			$groups = implode(',', $user->getAuthorisedViewLevels());
-			$query->where('m.access IN (' . $groups . ')');
+            $acl = new MolajoACL ();
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m.'));
 
 			// Set the query
 			$db->setQuery($query);
@@ -79,6 +78,7 @@ class MolajoMenuSite extends JMenu
 			$this->_items = $data;
 		}
 	}
+    
 	/**
 	 * Gets menu items by attribute
 	 *

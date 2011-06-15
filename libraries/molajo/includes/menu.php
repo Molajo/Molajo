@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * JMenu class
+ * MolajoMenu class
  *
  * @package     Joomla.Platform
  * @subpackage  Application
@@ -47,7 +47,7 @@ class MolajoMenu extends JObject
 	 *
 	 * @param   array    $options  An array of configuration options.
 	 *
-	 * @return  JMenu  A JMenu object
+	 * @return  MolajoMenu  A MolajoMenu object
 	 * @since   11.1
 	 */
 	public function __construct($options = array())
@@ -69,12 +69,12 @@ class MolajoMenu extends JObject
 	}
 
 	/**
-	 * Returns a JMenu object
+	 * Returns a MolajoMenu object
 	 *
 	 * @param   string  $client   The name of the client
 	 * @param   array   $options  An associative array of options
 	 *
-	 * @return  JMenu  A menu object.
+	 * @return  MolajoMenu  A menu object.
 	 * @since   11.1
 	 */
 	public static function getInstance($client, $options = array())
@@ -279,7 +279,7 @@ class MolajoMenu extends JObject
 	}
 
 	/**
-	 * Method to check JMenu object authorization against an access control
+	 * Method to check MolajoMenu object authorization against an access control
 	 * object and optionally an access extension object
 	 *
 	 * @param   integer  $id	The menu id
@@ -290,11 +290,13 @@ class MolajoMenu extends JObject
 	public function authorise($id)
 	{
 		$menu	= $this->getItem($id);
+		$acl	= new MolajoAccess();
+
 		if ($menu) {
-            $acl = new MolajoACL();
-            return $acl->checkPermissions ('user', JFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset, $menu->access);
-		} else {
-            return true;
+			return in_array((int) $menu->access, $acl->getList('Viewaccess'));
+		}
+		else {
+			return true;
 		}
 	}
 

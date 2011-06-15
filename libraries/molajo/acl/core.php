@@ -98,38 +98,6 @@ class CoreACL extends MolajoACL
         return $authorised;
     }
 
-    public function coreAuthorise ($item, $option)
-    {
-        		// Make sure we only check for core.admin once during the run.
-		if ($this->isRoot === null) {
-			$this->isRoot = false;
-
-			// Check for the configuration file failsafe.
-			$config		= JFactory::getConfig();
-			$rootUser	= $config->get('root_user');
-
-			// The root_user variable can be a numeric user ID or a username.
-			if (is_numeric($rootUser) && $this->id > 0 && $this->id == $rootUser) {
-				$this->isRoot = true;
-			}
-			else if ($this->username && $this->username == $rootUser) {
-				$this->isRoot = true;
-			}
-			else {
-				// Get all groups against which the user is mapped.
-				$identities = $this->getAuthorisedGroups();
-				array_unshift($identities, $this->id * -1);
-
-				if (JAccess::getAssetRules(1)->allow('core.admin', $identities)) {
-					$this->isRoot = true;
-					return true;
-				}
-			}
-		}
-
-		return $this->isRoot ? true : JAccess::check($this->id, $action, $assetname);
-    }
-
     /** members **/
     public function checkAdminAuthorisation ($option, $entity, $task, $catid, $id, $item)
     {
@@ -168,8 +136,6 @@ class CoreACL extends MolajoACL
      */
     public function checkTaskView ($option, $entity, $task, $catid, $id, $item)
     {
-        return true; // for now
-
         $viewGroups = $this->getUsergroupsView();
         if (in_array($item->access, $viewGroups)) {
             return true;
@@ -399,7 +365,7 @@ class CoreACL extends MolajoACL
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getUserQueryInformation
      */
-    public function getUserQueryInformation ($query, $type, $params)
+    public function getUserQueryInformation ($query, $option, $params)
     {
         $query->select('a.access');
         $query->select('ag.title AS access_level');
@@ -435,13 +401,29 @@ class CoreACL extends MolajoACL
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getFilterQueryInformation
      */
-    public function getFilterQueryInformation ($query, $type, $filterValue)
+    public function getFilterQueryInformation ($query, $option, $filterValue)
     {
         if ((int) $filterValue == 0) {
         } else {
             $query->where('a.access = '. (int) $filterValue);
         }
     }
+
+
+    /**
+     *  TYPE 2 --> MolajoACL::getQueryInformation -> getViewaccessQueryInformation
+     *  Usage:
+     *  $acl = new MolajoACL ();
+     *  $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m.'));
+     */
+    public function getViewaccessQueryInformation ($query, $option, $params)
+    {
+        $acl	= new MolajoACL();
+        $list = implode(',', $acl->getList('viewaccess'));
+        $query->where($params['table_prefix'].'access IN (' . $list . ')');
+        return;
+    }
+
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> Retrieves list of ACL-related data
@@ -505,6 +487,78 @@ class CoreACL extends MolajoACL
     }
 
     /**
+     *  TYPE 3 --> MolajoACL::getList -> getViewaccessList
+     */
+    public function getViewaccessList ($userid='', $option='', $action='', $params=array())
+    {
+
+        return $this->getUsergroupsList($userid, $option, MOLAJO_ACL_ACTION_VIEW, $params);
+
+        $acl = new MolajoACL();
+        $cache 	= JFactory::getCache('com_plugins', '');
+
+        /** $key */
+        if ((int) $userid == 0) {
+            $userid = JFactory::getUser()->get('id');
+        }
+
+        /** query  */
+		$db = JFactory::getDBO();
+        $query = $db->getQuery(true);
+
+        $query->select('a.id');
+        $query->from('#__groupings a');
+        $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
+        $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
+
+        /** Guest: 3 - Public: 4 */
+        if ((int) $userid == 0) {
+            $query->where('c.id IN ('.MOLAJO_ACL_GROUP_PUBLIC.','.MOLAJO_ACL_GROUP_GUEST.')');
+        } else {
+            $query->join('LEFT', '#__user_groups AS d ON d.id = b.group_id');
+            $query->where('d.user_id = '.(int) $userid);
+        }
+
+        /** $asset */
+        if ($option == '') {
+        } else {
+            /* find the access level for com_content in the extensions table */
+            $query->from('#__extensions AS e');
+            $query->where('e.element = '.$db->_quoted($option));
+            $query->where('e.access = a.id');
+        }
+
+        /** run query **/
+        $hash = hash('md5',$query->__toString(), false);
+        $authorised = $cache->get($hash);
+
+        if ($authorised) {
+        } else {
+
+            $db->setQuery($query);
+            $options = $db->loadObjectList();
+
+            /** error handling */
+            if ($db->getErrorNum()) {
+                $this->setError($db->getErrorMsg());
+                return false;
+
+            } else if (count($options) == 0) {
+                return false;
+            }
+
+            /** load into an array as expected by 1.6 */
+            $authorised = array();
+            foreach ($options as $option) {
+                $authorised[] = $option->id;
+            }
+            $cache->store($authorised, $hash);
+        }
+
+		return $authorised;
+    }
+    
+    /**
      *  TYPE 3 --> MolajoACL::getList -> getCategoriesList
      */
     public function getCategoriesList($id, $option, $task, $params=array())
@@ -543,14 +597,6 @@ class CoreACL extends MolajoACL
     }
 
     /**
-     *  TYPE 3 --> MolajoACL::getList -> getGroupingsList
-     */
-    public function getGroupingsList($id, $option, $task, $params=array())
-    {
-
-    }
-
-    /**
      *  TYPE 3 --> MolajoACL::getList -> getRulesList
      */
     public function getRulesList($id, $option, $task, $params=array())
@@ -562,11 +608,76 @@ class CoreACL extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupsList
      */
-    public function getUsergroupsList($id, $option, $task, $params=array())
+    public function getUsergroupsList($userid, $option, $action, $params=array())
     {
+        $acl = new MolajoACL();
+        $cache 	= JFactory::getCache('coreacl.getUsergroupsList', '');
 
+        /** $key */
+        if ((int) $userid == 0) {
+            $userid = JFactory::getUser()->get('id');
+        }
+
+        /** query  */
+		$db = JFactory::getDBO();
+        $query = $db->getQuery(true);
+
+        $query->select('a.id');
+
+        if ($action == MOLAJO_ACL_ACTION_VIEW) {
+            $query->from('#__groupings a');
+            $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
+            $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
+        } else {
+            $query->from('#__groups c');
+        }
+
+        /** Guest: 3 - Public: 4 */
+        if ((int) $userid == 0) {
+            $query->where('c.id IN ('.MOLAJO_ACL_GROUP_PUBLIC.','.MOLAJO_ACL_GROUP_GUEST.')');
+        } else {
+            $query->join('LEFT', '#__user_groups AS d ON d.id = b.group_id');
+            $query->where('d.user_id = '.(int) $userid);
+        }
+
+        /** $asset */
+        if ($option == '') {
+        } else if ($action == MOLAJO_ACL_ACTION_VIEW) {
+            /* find the access level for com_content in the extensions table */
+            $query->from('#__extensions AS e');
+            $query->where('e.element = '.$db->_quoted($option));
+            $query->where('e.access = a.id');
+        }
+
+        /** run query **/
+        $hash = hash('md5',$query->__toString(), false);
+        $authorised = $cache->get($hash);
+
+        if ($authorised) {
+        } else {
+
+            $db->setQuery($query);
+            $options = $db->loadObjectList();
+
+            /** error handling */
+            if ($db->getErrorNum()) {
+                $this->setError($db->getErrorMsg());
+                return false;
+
+            } else if (count($options) == 0) {
+                return false;
+            }
+
+            /** load into an array as expected by 1.6 */
+            $authorised = array();
+            foreach ($options as $option) {
+                $authorised[] = $option->id;
+            }
+            $cache->store($authorised, $hash);
+        }
+
+		return $authorised;
     }
-
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupingsList
@@ -592,44 +703,76 @@ class CoreACL extends MolajoACL
      *
      *  Checks specific authorisation for a user or group, returning a true or false test result.
      *
-     *  @param string $key primary key for content
+     *  @param string $userid
      *  @param string $action 1-login; 2-create; 3-view; 4-edit; 5-delete; 6-admin
-     *  @param integer $id - primary key for content
-     *  @param object $asset - ????
+     *  @param integer $asset key
+     *  $param integer $access key
      *
      *  @return object list requested
      *  @return boolean
      */
-    public function checkUserPermissions ($key, $action, $asset=null)
+    public function checkUserPermissions ($userid, $action, $asset='', $access='')
     {
         $acl = new MolajoACL ();
 
         /** $key */
-        if ((int) $key == 0) {
-            $key = JFactory::getUser()->id;
+        if ((int) $userid == 0) {
+            $userid = JFactory::getUser()->id;
         }
-        /** $asset */
-        if ($asset == null) {
-            $asset  = $acl->getList('Usergroups', $key, array('action'=>$action));
-        }
-        /** User Groups for Action  */
-        $actionGroups = $acl->getList('Usergroups', $key, array('action'=>$action));
 
+        /** user groups */
+        $userGroups = $acl->getList('Usergroups', $userid, '', $action);
+
+        /** query  */
 		$db = JFactory::getDBO();
-		$db->setQuery(
-			'SELECT a.group' .
-			' FROM #__permissions_groups AS a, ' .
-			'     #__assets    b, ' .
-			'     #__actions c ' .
-			' WHERE a.asset_id = b.id ' .
-			'   AND a.action_id = c.id ' .
-			'   AND b.id = '.(int) $key .
-			'   AND c.title = '.$db->_quoted($action) .
-			' GROUP BY a.id' .
-			' ORDER BY a.lft ASC'
-		);
-		$options = $db->loadObjectList();
-		return $options;
+        $query = $db->getQuery(true);
+
+        /** view access */
+        if ($action == MOLAJO_ACL_ACTION_VIEW) {
+
+            if ((int) $access == 0) {
+                $query->select('content_table');
+                $query->from('#__assets a');
+                $query->where('asset_id = '.(int) $asset);
+                $db->setQuery($query);
+                $tableName = $db->loadResult();
+                if ($db->getErrorNum()) {
+                    $this->setError($db->getErrorMsg());
+                    return false;
+                }
+                $query = $db->getQuery(true);
+                $query->select('access');
+                $query->from($db->_nameQuote($tableName));
+                $query->where('asset_id = '.(int) $asset);
+                $db->setQuery($query);
+                $access = $db->loadResult();
+                if ($db->getErrorNum()) {
+                    $this->setError($db->getErrorMsg());
+                    return false;
+                }
+            }
+            return in_array($access, $userGroups);
+        }
+
+        /** Not View Access */
+        $query->select('a.group');
+        $query->from('#__permissions_groups AS a');
+        $query->join('LEFT', '#__assets AS b ON b.id = a.asset_id');
+        $query->join('LEFT', '#__actions AS c ON c.id = a.action_id');
+        $query->where('c.title = '.$db->_quoted($action));
+        $query->where('a.group IN (' . implode(',', $userGroups) . ')');
+
+        $db->setQuery($query);
+        $accessResult = $db->loadObjectList();
+        if ($db->getErrorNum()) {
+            return new JException($db->getErrorMsg());
+        }
+
+        if (count($accessResult) == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function checkGroupPermissions ($key, $action, $asset=null)

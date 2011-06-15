@@ -134,12 +134,12 @@ class MolajoACL
     * @param string $option 'com_articles', etc.
     * @param string $query query object
     * @param string $type 'user', 'filter', 'xyz'
-    * @param integer $filterValue
+    * @param string $filterValue
     *
     *  @return     boolean
     *  @since      1.0
     */
-    public function getQueryInformation ($option, $query, $type, $filterValue=null)
+    public function getQueryInformation ($option='', $query=array(), $type='', $params=array())
     {
         $method = 'get'.ucfirst(strtolower($type)).'QueryInformation';
         $aclClass = $this->getMethodClass ($method, $option);
@@ -147,7 +147,7 @@ class MolajoACL
             return false;
         }
         $acl = new $aclClass;
-        $acl->$method ($query, $type, $filterValue);
+        $acl->$method ($query, $option, $params);
     }
 
     /**
@@ -159,21 +159,21 @@ class MolajoACL
      *
      * getActionsList - produces a list of Actions parameter combinations
      * getAssetsList - produces a list of Assets parameter combinations
+     * getViewaccessList - produces a View Access List parameter combinations
      * getCategoriesList - produces a list of Categories parameter combinations
      * getGroupsList - produces a list of Groups parameter combinations
-     * getGroupingsList - produces a list of Groupings parameter combinations
      * getRulesList - produces a list of Rules for parameter combinations
      * getUsergroupsList - produces a list of Usergroups for parameter combinations
      * getUsergroupingsList - produces a list of Usergroupings for parameter combinations
      *
-     * @param  $type
+     * @param $type
      * @param string $option
      * @param string $task
      * @param array $params
      *
      * @return bool
      */
-    public function getList ($type, $id, $option='', $task='', $params=array())
+    public function getList ($type, $id='', $option='', $task='', $params=array())
     {
         $method = 'get'.ucfirst(strtolower($type)).'List';
         $aclClass = $this->getMethodClass ($method, $option);
@@ -189,24 +189,25 @@ class MolajoACL
      *
      * ACL Implementations methods needed for:
      *
-     * checkUserPermissions - produces a true or false response for specific user, action, asset access
-     * checkGroupPermissions - produces a true or false response for specific group, action, asset access
+     * checkUserPermissions - produces a true or false response for specific parameters
+     * checkGroupPermissions - produces a true or false response for specific parameters
      *
-     * @param  $type
+     * @param $type
      * @param string $key
      * @param string $action
-     * @param array $asset
+     * @param string $asset
+     * @param string $access
      * @return bool
      */
-    public function checkPermissions ($type, $key, $task, $asset)
+    public function checkPermissions ($type, $key='', $action='', $asset='', $access='')
     {
-        $method = 'check'.ucfirst(strtolower($task)).'Permissions';
-        $aclClass = $this->getMethodClass ($key, $task, $asset);
+        $method = 'check'.ucfirst(strtolower($type)).'Permissions';
+        $aclClass = $this->getMethodClass ($method, '');
         if ($aclClass == false) {
             return false;
         }
         $acl = new $aclClass;
-        return $acl->$method ($key, $task, $asset);
+        return $acl->$method ($key, $action, $asset, $access);
     }
 
     /**
