@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!-- $Id: remind.xml 20081 2011-01-05 00:40:30Z eddieajau $ -->
+<form>
+	<fieldset name="default" label="COM_USERS_REMIND_DEFAULT_LABEL">
+		<field name="email" type="email"
+			description="COM_USERS_FIELD_REMIND_EMAIL_DESC"
+			label="COM_USERS_FIELD_REMIND_EMAIL_LABEL"
+			required="true"
+			size="30"
+			validate="email"
+		/>
+	</fieldset>
+</form>
