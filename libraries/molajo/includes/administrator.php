@@ -10,8 +10,6 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.helper');
-
 /**
  * Joomla! Application class
  *
@@ -65,6 +63,7 @@ class MolajoAdministrator extends JApplication
 			} else {
 				$params = JComponentHelper::getParams('com_languages');
 				$client	= JApplicationHelper::getClientInfo($this->getClientId());
+
 				$options['language'] = $params->get($client->name, $config->get('language','en-GB'));
 			}
 		}

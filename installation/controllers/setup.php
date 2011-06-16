@@ -239,7 +239,7 @@ class JInstallationControllerSetup extends JController
 		$configuration = $this->getModel('Configuration', 'JInstallationModel', array('dbo' => null));
 
 		// Attempt to setup the configuration.
-		$return = $configuration->setup($vars);
+//		$return = $configuration->setup($vars);
 
 		// Ensure a language was set.
 		if (!$return) {

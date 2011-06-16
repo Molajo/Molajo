@@ -27,5 +27,3 @@ $filehelper->requireClassFile(JPATH_ROOT.'/libraries/mollom/mollom.php', 'Mollom
 require_once JPATH_ROOT.'/libraries/recaptcha/recaptchalib.php';
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/securimage/securimage.php', 'Securimage');
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/wideimage/WideImage.php', 'WideImage');
-
-/** Twig loaded in MolajoViewTwig_display */

@@ -21,7 +21,6 @@ JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /** initialize */
 $app = JFactory::getApplication(MOLAJO_APPLICATION);
-
 if (MOLAJO_APPLICATION == 'administrator') {
     $app->initialise(array(
         'language' => $app->getUserState('application.lang', 'lang')

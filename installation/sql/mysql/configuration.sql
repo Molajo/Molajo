@@ -94,9 +94,9 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (210, 'com_articles', 'component', 'com_articles', '', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 1, 1210),
-    (220, 'com_search', 'component', 'com_search', '', 1, 1, 1, '', '{"enabled":"0","show_date":"1"}', '', '', 0, '0000-00-00 00:00:00', 17, 1, 1, 1220),
-    (230, 'com_users', 'component', 'com_users', '', 1, 1, 1, '', '{"allowUserRegistration":"1","useractivation":"1","frontend_userparams":"1","mailSubjectPrefix":"","mailBodySuffix":""}', '', '', 0, '0000-00-00 00:00:00', 19, 1, 1, 1230);
+    (210, 'com_articles', 'component', 'com_articles', '', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 1, 1210),
+    (220, 'com_search', 'component', 'com_search', '', 0, 1, 1, '', '{"enabled":"0","show_date":"1"}', '', '', 0, '0000-00-00 00:00:00', 17, 1, 1, 1220),
+    (230, 'com_users', 'component', 'com_users', '', 0, 1, 1, '', '{"allowUserRegistration":"1","useractivation":"1","frontend_userparams":"1","mailSubjectPrefix":"","mailBodySuffix":""}', '', '', 0, '0000-00-00 00:00:00', 19, 1, 1, 1230);
 
 # Layouts
 INSERT INTO `#__extensions` (
@@ -656,20 +656,20 @@ INSERT INTO `#__languages` (`lang_id`,`lang_code`,`title`,`title_native`,`sef`,`
 INSERT INTO `#__menu_types` VALUES (1, 'mainmenu', 'Main Menu', 'The main menu for the site');
 
 # Administrator
-INSERT INTO `#__menu` VALUES (1, '', 'Menu_Item_Root', 'root', '', '', '', '', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 121, 5, '', 0, '', 0, 49, 0, '*', 0);
-INSERT INTO `#__menu` VALUES (2, 'menu', 'com_messages', 'Messaging', '', 'Messaging', 'index.php?option=com_messages', 'component', 1, 1, 1, 13, 2, 0, '0000-00-00 00:00:00', 0, 122, 5, 'class:messages', 0, '', 17, 22, 0, '*', 0);
-INSERT INTO `#__menu` VALUES (3, 'menu', 'com_messages_add', 'New Private Message', '', 'list/New Private Message', 'index.php?option=com_messages&task=message.add', 'component', 1, 2, 2, 13, 3, 0, '0000-00-00 00:00:00', 0, 123, 5, 'class:messages-add', 0, '', 46, 49, 0, '*', 0);
-INSERT INTO `#__menu` VALUES (4, 'menu', 'com_messages_read', 'Read Private Message', '', 'list/Read Private Message', 'index.php?option=com_messages', 'component', 1, 2, 2, 13, 4, 0, '0000-00-00 00:00:00', 0, 124, 5, 'class:messages-read', 0, '', 50, 51, 0, '*', 0);
-INSERT INTO `#__menu` VALUES (5, 'menu', 'com_redirect', 'Redirect', '', 'Redirect', 'index.php?option=com_redirect', 'component', 1, 1, 1, 16, 5, 0, '0000-00-00 00:00:00', 0, 125, 5, 'class:redirect', 0, '', 37, 38, 0, '*', 0);
-INSERT INTO `#__menu` VALUES (6, 'menu', 'com_search', 'Search', '', 'Search', 'index.php?option=com_search', 'component', 1, 1, 1, 17, 6, 0, '0000-00-00 00:00:00', 0, 126, 5, 'class:search', 0, '', 29, 30, 0, '*', 0);
+INSERT INTO `#__menu` VALUES (1, '', 'Menu_Item_Root', 'root', '', '', '', '', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 121, 5, '', 0, '', 0, 49, 0, '*', 1);
+INSERT INTO `#__menu` VALUES (2, 'menu', 'com_messages', 'Messaging', '', 'Messaging', 'index.php?option=com_messages', 'component', 1, 1, 1, 13, 2, 0, '0000-00-00 00:00:00', 0, 122, 5, 'class:messages', 0, '', 17, 22, 0, '*', 1);
+INSERT INTO `#__menu` VALUES (3, 'menu', 'com_messages_add', 'New Private Message', '', 'list/New Private Message', 'index.php?option=com_messages&task=message.add', 'component', 1, 2, 2, 13, 3, 0, '0000-00-00 00:00:00', 0, 123, 5, 'class:messages-add', 0, '', 46, 49, 0, '*', 1);
+INSERT INTO `#__menu` VALUES (4, 'menu', 'com_messages_read', 'Read Private Message', '', 'list/Read Private Message', 'index.php?option=com_messages', 'component', 1, 2, 2, 13, 4, 0, '0000-00-00 00:00:00', 0, 124, 5, 'class:messages-read', 0, '', 50, 51, 0, '*', 1);
+INSERT INTO `#__menu` VALUES (5, 'menu', 'com_redirect', 'Redirect', '', 'Redirect', 'index.php?option=com_redirect', 'component', 1, 1, 1, 16, 5, 0, '0000-00-00 00:00:00', 0, 125, 5, 'class:redirect', 0, '', 37, 38, 0, '*', 1);
+INSERT INTO `#__menu` VALUES (6, 'menu', 'com_search', 'Search', '', 'Search', 'index.php?option=com_search', 'component', 1, 1, 1, 17, 6, 0, '0000-00-00 00:00:00', 0, 126, 5, 'class:search', 0, '', 29, 30, 0, '*', 1);
 
 # Client
-INSERT INTO `#__menu` VALUES (7, 'mainmenu', 'Home', 'home', '', 'home', 'index.php?option=com_users&view=login', 'component', 1, 1, 1, 19, 1, 0, '0000-00-00 00:00:00', 0, 127, 1, '', 0, '{"login_redirect_url":"","logindescription_show":"1","login_description":"","login_image":"","logout_redirect_url":"","logoutdescription_show":"1","logout_description":"","logout_image":"","menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 39, 40, 1, '*', 1);
-INSERT INTO `#__menu` VALUES (8, 'mainmenu', 'Edit Article', 'edit', '', 'edit', 'index.php?option=com_articles&view=article&layout=edit', 'component', 1, 1, 1, 2, 2, 0, '0000-00-00 00:00:00', 0, 128, 5, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 41, 42, 0, '*', 1);
-INSERT INTO `#__menu` VALUES (9, 'mainmenu', 'Display Article', 'item', '', 'item', 'index.php?option=com_articles&view=articles&layout=item&id=5', 'component', 1, 1, 1, 2, 2, 0, '0000-00-00 00:00:00', 0, 129, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 41, 42, 0, '*', 1);
-INSERT INTO `#__menu` VALUES (10, 'mainmenu', 'Article Blog', 'items', '', 'items', 'index.php?option=com_articles&view=articles&layout=items&catid=2', 'component', 1, 1, 1, 2, 3, 0, '0000-00-00 00:00:00', 0, 130, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 43, 44, 0, '*', 1);
-INSERT INTO `#__menu` VALUES (11, 'mainmenu', 'Article List', 'list', '', 'list', 'index.php?option=com_articles&view=articles&catid=2', 'component', 1, 1, 1, 2, 4, 0, '0000-00-00 00:00:00', 0, 131, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 45, 52, 0, '*', 1);
-INSERT INTO `#__menu` VALUES (12, 'mainmenu', 'Article Table', 'table', '', 'table', 'index.php?option=com_articles&view=articles&layout=table&catid=2', 'component', 1, 1, 1, 5, 5, 0, '0000-00-00 00:00:00', 0, 132, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 47, 48, 0, '*', 1);
+INSERT INTO `#__menu` VALUES (7, 'mainmenu', 'Home', 'home', '', 'home', 'index.php?option=com_users&view=login', 'component', 1, 1, 1, 19, 1, 0, '0000-00-00 00:00:00', 0, 127, 1, '', 0, '{"login_redirect_url":"","logindescription_show":"1","login_description":"","login_image":"","logout_redirect_url":"","logoutdescription_show":"1","logout_description":"","logout_image":"","menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 39, 40, 1, '*', 0);
+INSERT INTO `#__menu` VALUES (8, 'mainmenu', 'Edit Article', 'edit', '', 'edit', 'index.php?option=com_articles&view=article&layout=edit', 'component', 1, 1, 1, 2, 2, 0, '0000-00-00 00:00:00', 0, 128, 5, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 41, 42, 0, '*', 0);
+INSERT INTO `#__menu` VALUES (9, 'mainmenu', 'Display Article', 'item', '', 'item', 'index.php?option=com_articles&view=articles&layout=item&id=5', 'component', 1, 1, 1, 2, 2, 0, '0000-00-00 00:00:00', 0, 129, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 41, 42, 0, '*', 0);
+INSERT INTO `#__menu` VALUES (10, 'mainmenu', 'Article Blog', 'items', '', 'items', 'index.php?option=com_articles&view=articles&layout=items&catid=2', 'component', 1, 1, 1, 2, 3, 0, '0000-00-00 00:00:00', 0, 130, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 43, 44, 0, '*', 0);
+INSERT INTO `#__menu` VALUES (11, 'mainmenu', 'Article List', 'list', '', 'list', 'index.php?option=com_articles&view=articles&catid=2', 'component', 1, 1, 1, 2, 4, 0, '0000-00-00 00:00:00', 0, 131, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 45, 52, 0, '*', 0);
+INSERT INTO `#__menu` VALUES (12, 'mainmenu', 'Article Table', 'table', '', 'table', 'index.php?option=com_articles&view=articles&layout=table&catid=2', 'component', 1, 1, 1, 5, 5, 0, '0000-00-00 00:00:00', 0, 132, 1, '', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}', 47, 48, 0, '*', 0);
 
 INSERT INTO `#__modules_menu` VALUES
 (1,0),
@@ -697,37 +697,37 @@ INSERT INTO `#__modules` (`id`, `title`,  `note`, `content`, `ordering`, `positi
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `client_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (1, 'Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 0, '*', 5, 5001),
-    (2, 'Popular Articles', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 0, '*', 5, 5008),
-    (3, 'Recently Added Articles', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 0, '*', 5, 5010),
-    (4, 'Unread Messages', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 0, '*', 5, 5011),
-    (5, 'Online Users', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 0, '*', 5, 5015),
-    (6, 'Toolbar', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 0, '*', 5, 5020),
-    (7, 'Quick Icons', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 0, '*', 5, 5030),
-    (8, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 0, '*', 5, 5035),
-    (9, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 0, '*', 5, 5040),
-    (10, 'Admin Submenu', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 0, '*', 5, 5050),
-    (11, 'User Status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 0, '*', 5, 5055),
-    (12, 'Title', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 0, '*', 5, 5060),
-    (13, 'My Panel', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 0, '*', 5, 5062),
-    (14, 'My Shortcuts', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 0, '*', 5, 5063);
+    (1, 'Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 5, 5001),
+    (2, 'Popular Articles', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5008),
+    (3, 'Recently Added Articles', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5010),
+    (4, 'Unread Messages', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 5, 5011),
+    (5, 'Online Users', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 5, 5015),
+    (6, 'Toolbar', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 5, 5020),
+    (7, 'Quick Icons', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 5, 5030),
+    (8, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5035),
+    (9, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 5, 5040),
+    (10, 'Admin Submenu', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 5, 5050),
+    (11, 'User Status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 5, 5055),
+    (12, 'Title', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 5, 5060),
+    (13, 'My Panel', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 5, 5062),
+    (14, 'My Shortcuts', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 5, 5063);
 
 # site modules
 INSERT INTO `#__modules` (`id`, `title`,  `note`, `content`, `ordering`, `position`, `checked_out`,
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `client_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (15, 'Main Menu', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 1, '*', 5, 5070),
-    (16, 'Login Form', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 1, '*', 5, 5085),
-    (17, 'Breadcrumbs', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 1, '*', 5, 5080);
+    (15, 'Main Menu', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
+    (16, 'Login Form', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
+    (17, 'Breadcrumbs', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
 
 #
 # TEMPLATES
 #
-INSERT INTO `#__template_styles` VALUES (1, 'molajo-construct', '0', '1', 'Molajo Construct', '{}');
+INSERT INTO `#__template_styles` VALUES (1, 'molajo-construct', '0', '0', 'Molajo Construct', '{}');
 INSERT INTO `#__template_styles` VALUES (2, 'Blank Slate', '0', '1', 'Molajo Blankslate - DEFAULT', '{}');
-INSERT INTO `#__template_styles` VALUES (3, 'bluestork', '1', '0', 'Bluestork', '{"useRoundedCorners":"1","showSiteName":"0"}');
-INSERT INTO `#__template_styles` VALUES (4, 'minima', '1', '1', 'Minima - DEFAULT', '{}');
+INSERT INTO `#__template_styles` VALUES (3, 'bluestork', '1', '1', 'Bluestork - DEFAULT', '{"useRoundedCorners":"1","showSiteName":"0"}');
+INSERT INTO `#__template_styles` VALUES (4, 'minima', '1', '0', 'Minima', '{}');
 
 #
 # UPDATES
