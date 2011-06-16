@@ -73,6 +73,7 @@ class JInstallationModelDatabase extends JModel
 		// If the database is not yet created, create it.
 		if (empty($options->db_created))
 		{
+
 			// Get a database object.
 			$db = $this->getDbo($options->db_type, $options->db_host, $options->db_user, $options->db_pass, null, $options->db_prefix, false);
 
@@ -157,7 +158,6 @@ class JInstallationModelDatabase extends JModel
             /**
              * Molajo Hack: molajo.sql
              */
-
 			// Tables
 			$type = $options->db_type;
 			$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/tables.sql';

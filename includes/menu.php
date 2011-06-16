@@ -37,14 +37,14 @@ class MolajoMenuSite extends JMenu
 			$query->select('m.language');
 			$query->select('e.element as component');
 			$query->from('#__menu AS m');
-			$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
+			$query->leftJoin('#__extensions AS e ON m.component_id = e.id');
 			$query->where('m.published = 1');
 			$query->where('m.parent_id > 0');
 			$query->where('m.client_id = 0');
 			$query->order('m.lft');
 
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m.'));
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
 
 			// Set the query
 			$db->setQuery($query);
@@ -77,6 +77,9 @@ class MolajoMenuSite extends JMenu
 		} else {
 			$this->_items = $data;
 		}
+
+        var_dump($this->_items);
+        die();
 	}
     
 	/**
