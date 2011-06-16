@@ -14,7 +14,7 @@ defined('MOLAJO') or die();
  * @package  Molajo
  * @since    1.0
  */
-final class MolajoApplication
+final class MolajoVersion
 {
 	// Product name.
 	const PRODUCT = 'Molajo';

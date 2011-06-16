@@ -29,7 +29,7 @@ class MolajoTableUsergroup extends JTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__usergroups', 'id', $db);
+		parent::__construct('#__groups', 'id', $db);
 	}
 
 	/**

@@ -152,7 +152,7 @@ class UsersModelDebugGroup extends JModelList
 		$db = $this->getDbo();
 		$query	= $db->getQuery(true)
 			->select('id, title')
-			->from('#__usergroups')
+			->from('#__groups')
 			->where('id = '.$groupId);
 
 		$db->setQuery($query);

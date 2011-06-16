@@ -9,13 +9,11 @@
 
 defined('JPATH_PLATFORM') or die;
 
-//point these to the normal joomla library location - Amy Stephen
-
 //Register the storage class with the loader
-JLoader::register('JCacheStorage', JPATH_PLATFORM.'/joomla/cache/storage.php');
+JLoader::register('JCacheStorage', dirname(__FILE__).DS.'storage.php');
 
 //Register the controller class with the loader
-JLoader::register('JCacheController', JPATH_PLATFORM.'/joomla/cache/controller.php');
+JLoader::register('JCacheController', dirname(__FILE__).DS.'controller.php');
 
 /**
  * Joomla! Cache base object
@@ -33,9 +31,7 @@ class JCache extends JObject
 	 * @var    object  Storage handler
 	 * @since  11.1
 	 */
-
-    /** removed static for phpp strict errors - Amy Stephen */
-	public $_handler = array();
+	public static $_handler = array();
 
 	/**
 	 * @var    Options

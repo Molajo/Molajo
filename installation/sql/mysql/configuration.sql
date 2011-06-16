@@ -4,9 +4,9 @@
 # CLIENTS
 #
 
-INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id`) VALUES (1, 0, 'Site', 'JPATH_SITE', 1, 1);
-INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id`) VALUES (2, 1, 'Administrator', 'JPATH_ADMINISTRATOR', 5, 2);
-INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id`) VALUES (3, 2, 'Installation', 'JPATH_INSTALLATION', 0, 3);
+INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id`) VALUES (1, 0, 'site', 'JPATH_SITE', 1, 1);
+INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id`) VALUES (2, 1, 'administrator', 'JPATH_ADMINISTRATOR', 5, 2);
+INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id`) VALUES (3, 2, 'installation', 'JPATH_INSTALLATION', 0, 3);
 
 #
 # USERS AND GROUPS
@@ -697,29 +697,29 @@ INSERT INTO `#__modules` (`id`, `title`,  `note`, `content`, `ordering`, `positi
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `client_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (1, 'Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 5, 5001),
-    (2, 'Popular Articles', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5008),
-    (3, 'Recently Added Articles', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5010),
-    (4, 'Unread Messages', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 5, 5011),
-    (5, 'Online Users', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 5, 5015),
-    (6, 'Toolbar', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 5, 5020),
-    (7, 'Quick Icons', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 5, 5030),
-    (8, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5035),
-    (9, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 5, 5040),
-    (10, 'Admin Submenu', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 5, 5050),
-    (11, 'User Status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 5, 5055),
-    (12, 'Title', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 5, 5060),
-    (13, 'My Panel', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 5, 5062),
-    (14, 'My Shortcuts', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 5, 5063);
+    (1, 'Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 0, '*', 5, 5001),
+    (2, 'Popular Articles', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 0, '*', 5, 5008),
+    (3, 'Recently Added Articles', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 0, '*', 5, 5010),
+    (4, 'Unread Messages', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 0, '*', 5, 5011),
+    (5, 'Online Users', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 0, '*', 5, 5015),
+    (6, 'Toolbar', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 0, '*', 5, 5020),
+    (7, 'Quick Icons', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 0, '*', 5, 5030),
+    (8, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 0, '*', 5, 5035),
+    (9, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 0, '*', 5, 5040),
+    (10, 'Admin Submenu', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 0, '*', 5, 5050),
+    (11, 'User Status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 0, '*', 5, 5055),
+    (12, 'Title', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 0, '*', 5, 5060),
+    (13, 'My Panel', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 0, '*', 5, 5062),
+    (14, 'My Shortcuts', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 0, '*', 5, 5063);
 
 # site modules
 INSERT INTO `#__modules` (`id`, `title`,  `note`, `content`, `ordering`, `position`, `checked_out`,
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `client_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (15, 'Main Menu', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
-    (16, 'Login Form', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
-    (17, 'Breadcrumbs', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
+    (15, 'Main Menu', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 1, '*', 5, 5070),
+    (16, 'Login Form', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 1, '*', 5, 5085),
+    (17, 'Breadcrumbs', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 1, '*', 5, 5080);
 
 #
 # TEMPLATES

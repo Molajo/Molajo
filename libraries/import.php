@@ -37,12 +37,7 @@ if (!class_exists('JLoader')) {
 
 // Register the JPlatform version class for lazy loading.
 if (!class_exists('JPlatform')) {
-	JLoader::register('JPlatform', JPATH_PLATFORM.'/joomla/platform.php');
-}
-
-// Define the Joomla Platform version if not already defined.
-if (!defined('JPLATFORM')) {
-	define('JPLATFORM', JPlatform::getShortVersion());
+	JLoader::register('JPlatform', JPATH_PLATFORM.'/platform.php');
 }
 
 /**

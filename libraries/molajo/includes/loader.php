@@ -31,12 +31,13 @@ if (MOLAJO_APPLICATION == 'installation'
         exit();
     }
 }
-
 if (class_exists('JLoader')) {
 } else {
 	require_once JPATH_PLATFORM.'/loader.php';
 }
-
+if (!defined('JPLATFORM')) {
+	require_once JPATH_LIBRARIES.'/platform.php';
+}
 JLoader::import('joomla.base.object');
 JLoader::import('joomla.base.observable');
 JLoader::import('joomla.environment.request');
@@ -121,9 +122,6 @@ jimport('joomla.utilities.date');
 jimport('joomla.cache.cache');
 jimport('joomla.cache.controller');
 jimport('joomla.cache.storage');
-JLoader::register('JCache', OVERRIDES_LIBRARY.'/cache/cache.php');
-JLoader::register('JCacheController', JPATH_PLATFORM.'/joomla/cache/controller.php');
-JLoader::register('JCacheStorage', JPATH_PLATFORM.'/joomla/cache/storage.php');
 
 /** Files and Folders */
 jimport('joomla.filesystem.file');

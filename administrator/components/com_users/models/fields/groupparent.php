@@ -45,12 +45,12 @@ class JFormFieldGroupParent extends JFormFieldList
 		$query = $db->getQuery(true);
 
 		$query->select('a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level');
-		$query->from('#__usergroups AS a');
-		$query->join('LEFT', '`#__usergroups` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+		$query->from('#__groups AS a');
+		$query->join('LEFT', '`#__groups` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
 
 		// Prevent parenting to children of this item.
 		if ($id = $this->form->getValue('id')) {
-			$query->join('LEFT', '`#__usergroups` AS p ON p.id = '.(int) $id);
+			$query->join('LEFT', '`#__groups` AS p ON p.id = '.(int) $id);
 			$query->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
 		}
 

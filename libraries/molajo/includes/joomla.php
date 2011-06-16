@@ -32,97 +32,63 @@ if (MOLAJO_APPLICATION == 'installation'
     }
 }
 
-if (class_exists('JLoader')) {
-} else {
-	require_once JPATH_PLATFORM.'/loader.php';
-}
-
-JLoader::import('joomla.base.object');
-JLoader::import('joomla.base.observable');
-JLoader::import('joomla.environment.request');
-if (!defined('_JREQUEST_NO_CLEAN')) {
-	JRequest::clean();
-}
-JLoader::import('joomla.environment.response');
-JLoader::import('joomla.factory');
-$os = strtoupper(substr(PHP_OS, 0, 3));
-if (!defined('IS_WIN')) {
-	define('IS_WIN', ($os === 'WIN') ? true : false);
-}
-if (!defined('IS_MAC')) {
-	define('IS_MAC', ($os === 'MAC') ? true : false);
-}
-if (!defined('IS_UNIX')) {
-	define('IS_UNIX', (($os !== 'MAC') && ($os !== 'WIN')) ? true : false);
-}
-
-/** Register the JPlatform version class for lazy loading */
-if (!class_exists('JPlatform')) {
-	JLoader::register('JPlatform', JPATH_PLATFORM.'/joomla/platform.php');
-}
-
-// Define the Joomla Platform version if not already defined.
-if (!defined('JPLATFORM')) {
-	define('JPLATFORM', JPlatform::getShortVersion());
-}
-define('MolajoVersion', '1.0');
+// Import the cms version library if necessary.
 if (!class_exists('MolajoVersion')) {
     require JPATH_ROOT.'/includes/version.php';
 }
-JLoader::import('joomla.error.error');
-JLoader::import('joomla.error.exception');
+
+// System includes.
+require_once JPATH_LIBRARIES.'/import.php';
+
+
+// System configuration.
+$CONFIG = new JConfig();
+
+if (@$CONFIG->error_reporting === 0) {
+	error_reporting(0);
+} else if (@$CONFIG->error_reporting > 0) {
+	error_reporting($CONFIG->error_reporting);
+	ini_set('display_errors', 1);
+}
+
+define('JDEBUG', $CONFIG->debug);
+
+unset($CONFIG);
+
+//
+// Joomla framework loading.
+//
+
+// System profiler.
+if (JDEBUG) {
+	jimport('joomla.error.profiler');
+	$_PROFILER = JProfiler::getInstance('Application');
+}
+
+JLoader::import('joomla.base.observable');
 JLoader::import('joomla.utilities.arrayhelper');
 JLoader::import('joomla.filter.filterinput');
 JLoader::import('joomla.filter.filteroutput');
-JLoader::register('JText', JPATH_PLATFORM.'/joomla/methods.php');
-JLoader::register('JRoute', JPATH_PLATFORM.'/joomla/methods.php');
 
-/** configuration and debugging */
-if (MOLAJO_APPLICATION == 'installation') {
-    define('JDEBUG', false);
-} else {
-
-    if (file_exists(JPATH_CONFIGURATION.'/configuration.php')) {
-    } else {
-        echo 'Molajo configuration.php File Missing';
-        exit;
-    }
-    require_once JPATH_CONFIGURATION.'/configuration.php';
-
-    $CONFIG = new JConfig();
-    if (@$CONFIG->error_reporting === 0) {
-        error_reporting(0);
-    } else if (@$CONFIG->error_reporting > 0) {
-        error_reporting($CONFIG->error_reporting);
-        ini_set('display_errors', 1);
-    }
-    define('JDEBUG', $CONFIG->debug);
-    unset($CONFIG);
-    if (JDEBUG) {
-        jimport('joomla.error.profiler');
-        $_PROFILER = JProfiler::getInstance('Application');
-    }
-}
-
-/** joomla library: core and overrides */
-/** access */
+jimport('joomla.application.menu');
 jimport('molajo.user.user');
 jimport('molajo.overrides.user.user');
-jimport('joomla.environment.uri');
+jimport('joomla.filter.filterinput');
+jimport('joomla.filter.filteroutput');
 jimport('joomla.html.html');
 jimport('joomla.utilities.utility');
 jimport('joomla.event.event');
 jimport('joomla.event.dispatcher');
 jimport('joomla.language.language');
-jimport('joomla.language.helper');
 jimport('joomla.utilities.string');
 jimport('joomla.utilities.date');
+jimport('joomla.utilities.arrayhelper');
 
 /** cache */
 jimport('joomla.cache.cache');
 jimport('joomla.cache.controller');
 jimport('joomla.cache.storage');
-JLoader::register('JCache', OVERRIDES_LIBRARY.'/cache/cache.php');
+JLoader::register('JCache', JPATH_PLATFORM.'/cache/cache.php');
 JLoader::register('JCacheController', JPATH_PLATFORM.'/joomla/cache/controller.php');
 JLoader::register('JCacheStorage', JPATH_PLATFORM.'/joomla/cache/storage.php');
 
@@ -188,10 +154,6 @@ jimport('joomla.plugin.plugin');
 /** ACL */
 jimport('molajo.acl.legacy.access');
 jimport('molajo.overrides.access.access');
-jimport('molajo.acl.legacy.rule');
-jimport('molajo.overrides.access.rule');
-jimport('molajo.acl.legacy.rules');
-jimport('molajo.overrides.access.rules');
 
 /** menu */
 jimport('molajo.menu.menu');
@@ -202,18 +164,6 @@ if (MOLAJO_APPLICATION == 'administrator') {
     require_once JPATH_BASE.'/includes/helper.php';
 }
 require_once OVERRIDES_LIBRARY.'/includes/toolbar.php';
-
-/** file helper */
-if (class_exists('MolajoFileHelper')) {
-} else {
-    if (file_exists(MOLAJO_LIBRARY.'/helpers/file.php')) {
-        JLoader::register('MolajoFileHelper', MOLAJO_LIBRARY.'/helpers/file.php');
-    } else {
-        JError::raiseNotice(500, JText::_('MOLAJO_OVERRIDE_CREATE_MISSING_CLASS_FILE'.' '.'MolajoFileHelper'));
-        return;
-    }
-}
-$filehelper = new MolajoFileHelper();
 
 /** form fields */
 $files = JFolder::files(OVERRIDES_LIBRARY.'/form/fields', '\.php$', false, false);

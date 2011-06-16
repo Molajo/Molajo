@@ -1,14 +1,14 @@
 <?php
 /**
  * @version		$Id: configuration.php-dist 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla
+ * @package		Molajo
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  *
  * -------------------------------------------------------------------------
  * THIS SHOULD ONLY BE USED AS A LAST RESORT WHEN THE WEB INSTALLER FAILS
  *
- * If you are installing Joomla! manually i.e. not using the web browser installer
+ * If you are installing Molajo manually i.e. not using the web browser installer
  * then rename this file to configuration.php e.g.
  *
  * UNIX -> mv configuration.php-dist configuration.php
@@ -21,10 +21,10 @@ class JConfig {
 	/* Site Settings */
 	public $offline = '0';
 	public $offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';
-	public $sitename = 'Joomla!';				// Name of Joomla site
-	public $editor = 'tinymce';
+	public $sitename = 'Molajo';				// Name of Molajo site
+	public $editor = 'none';
 	public $list_limit = '20';
-	public $root_user = '42';
+	public $root_user = '';                     // Random value
 	public $access = '1';
 
 	/* Database Settings */
@@ -39,7 +39,7 @@ class JConfig {
 	public $secret = 'FBVtggIk5lAzEU9H'; 		// Change this to something more secure
 	public $gzip = '0';
 	public $error_reporting = '-1';
-	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';
+	public $helpurl = 'http://molajo.org/';
 	public $ftp_host = '';
 	public $ftp_port = '';
 	public $ftp_user = '';
@@ -48,7 +48,7 @@ class JConfig {
 	public $ftp_enable = '';
 	public $tmp_path = '/tmp';
 	public $log_path = '/var/logs';
-	public $live_site = ''; 					// Optional, Full url to Joomla install.
+	public $live_site = ''; 					// Optional, Full url to Molajo install.
 	public $force_ssl = 0;						// Force areas of the site to be SSL ONLY.  0 = None, 1 = Administrator, 2 = Both Site and Administrator
 
 	/* Locale Settings */
@@ -79,8 +79,8 @@ class JConfig {
 	public $debug_lang = '0';
 
 	/* Meta Settings */
-	public $MetaDesc = 'Joomla! - the dynamic portal engine and content management system';
-	public $MetaKeys = 'joomla, Joomla';
+	public $MetaDesc = 'Molajo - it is as good as Soup';
+	public $MetaKeys = 'Molajo';
 	public $MetaTitle = '1';
 	public $MetaAuthor = '1';
 

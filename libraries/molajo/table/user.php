@@ -91,7 +91,7 @@ class MolajoTableUser extends JTable
 			// Load the user groups.
 			$this->_db->setQuery(
 				'SELECT g.id, g.title' .
-				' FROM #__usergroups AS g' .
+				' FROM #__groups AS g' .
 				' JOIN #__user_usergroup_map AS m ON m.group_id = g.id' .
 				' WHERE m.user_id = '.(int) $userId
 			);
@@ -138,7 +138,7 @@ class MolajoTableUser extends JTable
 			// Get the titles for the user groups.
 			$this->_db->setQuery(
 				'SELECT '.$this->_db->quoteName('id').', '.$this->_db->quoteName('title') .
-				' FROM '.$this->_db->quoteName('#__usergroups') .
+				' FROM '.$this->_db->quoteName('#__groups') .
 				' WHERE '.$this->_db->quoteName('id').' = '.implode(' OR '.$this->_db->quoteName('id').' = ', $this->groups)
 			);
 			// Set the titles for the user groups.

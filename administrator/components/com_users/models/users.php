@@ -171,7 +171,7 @@ class UsersModelUsers extends JModelList
 
 			// Join over the user groups table.
 				->select('GROUP_CONCAT(g2.title SEPARATOR '.$db->Quote("\n").') AS group_names')
-				->join('LEFT', '#__usergroups AS g2 ON g2.id = map.group_id');
+				->join('LEFT', '#__groups AS g2 ON g2.id = map.group_id');
 
 			$db->setQuery($query);
 

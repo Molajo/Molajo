@@ -39,7 +39,7 @@ class JFormFieldUserMessages extends JFormFieldUser
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('id');
-        $query->from('#__usergroups');
+        $query->from('#__groups');
         $db->setQuery($query);
         $groups = $db->loadResultArray();
 
