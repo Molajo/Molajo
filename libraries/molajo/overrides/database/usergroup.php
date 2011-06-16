@@ -9,14 +9,12 @@
 
 defined('JPATH_PLATFORM') or die;
 
-jimport('joomla.database.table');
-jimport('joomla.database.tableasset');
 
 /**
- * Module table
+ * Usergroup table class.
  *
  * @package     Joomla.Platform
- * @subpackage  Table
- * @since       11.1
+ * @subpackage  Database
+ * @version		1.0
  */
-class JTableModule extends MolajoTableModule {}
+class JTableUsergroup extends MolajoTableUsergroup {}

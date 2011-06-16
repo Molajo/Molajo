@@ -10,12 +10,14 @@ defined('MOLAJO') or die();
 
 /** phpversion */
 require_once MOLAJO_LIBRARY.'/includes/phpversion.php';
-
 /** defines */
 require_once MOLAJO_LIBRARY.'/includes/defines.php';
-
+/** joomla platform */
+require_once JPATH_LIBRARIES.'/import.php';
 /** load frameworks */
-require_once MOLAJO_LIBRARY.'/includes/loader.php';
+require_once MOLAJO_LIBRARY.'/includes/import.php';
+/** other libraries */
+require_once MOLAJO_LIBRARY.'/includes/other.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 

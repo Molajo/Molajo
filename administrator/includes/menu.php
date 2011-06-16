@@ -15,7 +15,4 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage	Application
  * @since		1.5
  */
-class MolajoMenuAdministrator extends JMenu
-{
-
-}
+class MolajoMenuAdministrator extends JMenu {}

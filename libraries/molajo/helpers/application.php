@@ -62,10 +62,11 @@ class MolajoApplicationHelper
 	 */
 	public static function getClientInfo($id = null, $byName = false)
 	{
+        $db	= JFactory::getDbo();
+
 		if (self::$_clients === null)
         {
             $obj = new stdClass();
-            $db	= JFactory::getDbo();
             if ($byName === true) {
                 $where = ' `name` = "'.$id.'"';
             } else {
@@ -83,6 +84,7 @@ class MolajoApplicationHelper
             }
 
             $obj->id    = (int) $results[0]->id;
+            $clientID   = (int) $results[0]->id;
             $obj->name  = strtolower($results[0]->name);
 
             if ($results[0]->path == 'JPATH_ADMINISTRATOR') {
@@ -93,7 +95,7 @@ class MolajoApplicationHelper
                 $obj->path	= JPATH_SITE;
             }
 
-            self::$_clients[$results[0]->id] = clone $obj;
+            self::$_clients[$clientID] = clone $obj;
         }
 
 		// If no client id has been passed return the whole array
@@ -102,20 +104,26 @@ class MolajoApplicationHelper
 		}
 
 		// Are we looking for client information by id or by name?
-		if (!$byName)
+		if ($byName === false)
 		{
 			if (isset(self::$_clients[$id])){
 				return self::$_clients[$id];
 			}
 		}
-		else
-		{
-			foreach (self::$_clients as $client)
-			{
-				if ($client->name == strtolower($id)) {
-					return $client;
-				}
-			}
+
+        /** retrieve ID */
+        $db->setQuery(
+            'SELECT `client_id` as id ' .
+            ' FROM `#__clients` ' .
+            'WHERE '.' `name` = "'.$id.'"'
+        );
+        $id = $db->loadResult();
+        if ($db->getErrorNum()) {
+            return new JException($db->getErrorMsg());
+        }
+
+        if (isset(self::$_clients[$id])){
+			return self::$_clients[$id];
 		}
 
 		return null;
