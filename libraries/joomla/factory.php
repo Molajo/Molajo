@@ -537,6 +537,7 @@ abstract class JFactory
 		$options['expire'] = ($conf->get('lifetime')) ? $conf->get('lifetime') * 60 : 900;
 
 		$session = JSession::getInstance($handler, $options);
+
 		if ($session->getState() == 'expired') {
 			$session->restart();
 		}

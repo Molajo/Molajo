@@ -165,6 +165,8 @@ jimport('molajo.overrides.application.menu');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/categories.php', 'MolajoCategories');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/categories.php', 'MolajoCategoriesHelper');
 jimport('molajo.overrides.application.categories');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/router.php', 'MolajoRouter');
+jimport('molajo.overrides.application.router');
 jimport('joomla.plugin.plugin');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/plugin.php', 'MolajoPluginHelper');
 jimport('molajo.overrides.plugin.helper');
@@ -293,7 +295,6 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.application.component.modellist');
 jimport('joomla.application.component.view');
 jimport('joomla.application.pathway');
-jimport('joomla.application.router');
 
 /** Router */
 $files = JFolder::files(MOLAJO_LIBRARY.'/router', '\.php$', false, false);

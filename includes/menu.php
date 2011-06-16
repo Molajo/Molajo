@@ -33,8 +33,8 @@ class MolajoMenuSite extends JMenu
 			$query	= $db->getQuery(true);
 
 			$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
-			$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
-			$query->select('m.language');
+			$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id');
+			$query->select('m.component_id, m.parent_id, m.language');
 			$query->select('e.element as component');
 			$query->from('#__menu AS m');
 			$query->leftJoin('#__extensions AS e ON m.component_id = e.id');
@@ -46,40 +46,39 @@ class MolajoMenuSite extends JMenu
             $acl = new MolajoACL ();
             $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
 
-			// Set the query
-			$db->setQuery($query);
-			if (!($menus = $db->loadObjectList('id'))) {
-				JError::raiseWarning(500, JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()));
-				return false;
-			}
+            $db->setQuery($query->__toString());
+            $menus = $db->loadObjectList();
 
-			foreach ($menus as &$menu) {
-				// Get parent information.
-				$parent_tree = array();
-				if (isset($menus[$menu->parent_id])) {
-					$parent_tree  = $menus[$menu->parent_id]->tree;
-				}
+            if ($db->getError()) {
+                JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+                return false;
+            }
 
-				// Create tree.
-				$parent_tree[] = $menu->id;
-				$menu->tree = $parent_tree;
+            if (count($menus) > 0) {
+                foreach ($menus as &$menu) {
+                    // Get parent information.
+                    $parent_tree = array();
+                    if (isset($menus[$menu->parent_id])) {
+                        $parent_tree  = $menus[$menu->parent_id]->tree;
+                    }
 
-				// Create the query array.
-				$url = str_replace('index.php?', '', $menu->link);
-				$url = str_replace('&amp;','&',$url);
+                    // Create tree.
+                    $parent_tree[] = $menu->id;
+                    $menu->tree = $parent_tree;
 
-				parse_str($url, $menu->query);
-			}
+                    // Create the query array.
+                    $url = str_replace('index.php?', '', $menu->link);
+                    $url = str_replace('&amp;','&',$url);
 
+                    parse_str($url, $menu->query);
+                }
+            }
 			$cache->store($menus, 'menu_items'.JFactory::getLanguage()->getTag());
 
 			$this->_items = $menus;
 		} else {
 			$this->_items = $data;
 		}
-
-        var_dump($this->_items);
-        die();
 	}
     
 	/**
@@ -124,5 +123,4 @@ class MolajoMenuSite extends JMenu
 			return 0;
 		}
 	}
-
 }
