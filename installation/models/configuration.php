@@ -236,7 +236,7 @@ class JInstallationModelConfiguration extends JModel
 		}
 
 		// Map the super admin to the Super Admin Group
-		$query = 'REPLACE INTO #__jos_user_groups' .
+		$query = 'REPLACE INTO #__jos_user_groups' . 
 				' SET user_id = 42, group_id = 8';
 		$db->setQuery($query);
 		if (!$db->query()) {
