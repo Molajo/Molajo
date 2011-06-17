@@ -1,0 +1,20 @@
+@charset "UTF-8";
+/*
+@version     $id: administrator.css
+@package     Molajo
+@subpackage  com_things
+@copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+/* -- JGRID STYLES ----------------------------- */
+.jgrid span.spam                                        {       background-image: url(../images/spam.png); }
+
+/* -- ICON STYLES ----------------------------- */
+.icon-16-things                                         {	background-image: url(../images/icon-16-things.png);	}
+
+/* -- TOOLBAR ICON STYLES ----------------------------- */
+.icon-32-spam           				{	background-image: url(./images/icon-32-spam.png);	}
+.icon-32-featured           				{	background-image: url(./images/icon-32-featured.png);	}
+
+/* -- HEADER ICON STYLES ----------------------------- */
+.icon-48-things                                         {	background-image: url(../images/icon-48-things.png);	}
