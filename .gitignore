@@ -1,5 +1,7 @@
 .DS_Store
-configuration.php
-!installation/models/configuration.php
+/configuration.php
 cache/*
-adminsitrator/cache/*
+administrator/cache/*
+/.project
+/.buildpath
+/.settings
