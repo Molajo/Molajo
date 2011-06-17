@@ -1,1 +1,8 @@
 .DS_Store
+/configuration.php
+cache/*
+administrator/cache/*
+/.project
+/.buildpath
+/.settings
+tmp/*
