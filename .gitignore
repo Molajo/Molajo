@@ -1,3 +1,5 @@
 .DS_Store
 configuration.php
-libraries/joomla
+!installation/models/configuration.php
+cache/*
+adminsitrator/cache/*
