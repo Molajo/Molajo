@@ -502,18 +502,23 @@ class CoreACL extends MolajoACL
      */
     public function getCategoriesList($id, $option, $task, $params=array())
     {
-        $molajoConfig = new MolajoModelConfiguration ();
-        $taskTests = $molajoConfig->getOptionValueLiteral (MOLAJO_CONFIG_OPTION_ID_TASK_ACL_METHODS, $task);
-        if (is_array($taskTests)) {
-        } else {
-            $taskTests = array($taskTests);
-        }
+
+		$db = JFactory::getDBO();
+        $query = $db->getQuery(true);
+
+        $query->select('DISTINCT c.id');
+        $query->from('#__groupings a');
+        $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
+        $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
+        $query->join('LEFT', '#__categories AS d ON d.access = a.id');
+        $query->where('e.extension = '.$db->escape($option));
+        $query->join('ORDER BY c.id ASC');
+
+		$results = $db->loadObjectList();
+
         $categories = array();
-        foreach ( $taskTests as $action )   {
-            $authorised =  JFactory::getUser()->getAuthorisedCategories($option, $action->option_value_literal);
-            if (count($authorised) > 0 && is_array($authorised)) {
-                $categories = array_merge($authorised, $categories);
-            }
+        foreach ( $results as $category )   {
+            $categories[] = $category->id;
         }
         return implode(',', array_unique($categories));
     }

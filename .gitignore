@@ -5,3 +5,4 @@ administrator/cache/*
 /.project
 /.buildpath
 /.settings
+tmp/*
