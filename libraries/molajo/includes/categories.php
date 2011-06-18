@@ -209,7 +209,7 @@ class MolajoCategories
 
 		if ($this->_options['access']) {
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'c'));
+            $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'c'));
 		}
 
 		if ($this->_options['published'] == 1) {

@@ -44,7 +44,7 @@ class MolajoMenuSite extends JMenu
 			$query->order('m.lft');
 
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
+            $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
 
             $db->setQuery($query->__toString());
             $menus = $db->loadObjectList();

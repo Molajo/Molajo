@@ -111,7 +111,7 @@ class plgSearchCategories extends JPlugin
 			$query->from('#__categories AS a');
 			$query->where('(a.title LIKE '. $text .' OR a.description LIKE '. $text .') AND a.published IN ('.implode(',',$state).') AND a.extension = \'com_articles\')');
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
+            $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'a'));
 			$query->group('a.id');
 			$query->order($order);
 			if ($app->isSite() && $app->getLanguageFilter()) {

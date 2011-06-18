@@ -181,8 +181,8 @@ class MolajoComponentHelper
 		$query->where('`type` = '.$db->quote('component'));
 		$query->where('`element` = '.$db->quote($option));
 
-//        $acl = new MolajoACL ();
-//        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>''));
+        $acl = new MolajoACL ();
+        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
 
 		$db->setQuery($query);
 

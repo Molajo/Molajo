@@ -136,7 +136,7 @@ class plgSearchWeblinks extends JPlugin
 			$query->where('('.$where.')' . ' AND a.state in ('.implode(',',$state).') AND  c.published=1 ');
 
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
+            $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'a'));
 
 			$query->order($order);
 

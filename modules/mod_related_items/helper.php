@@ -88,7 +88,7 @@ abstract class modRelatedItemsHelper
 					}
 
                     $acl = new MolajoACL ();
-                    $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
+                    $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'a'));
 
 					$db->setQuery($query);
 					$temp = $db->loadObjectList();
