@@ -1,4 +1,4 @@
-<?php
+<<?php
 /**
  * @version		$Id: configuration.php 21376 2011-05-24 17:11:48Z dextercowley $
  * @package		Joomla.Installation

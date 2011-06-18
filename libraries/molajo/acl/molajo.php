@@ -139,7 +139,7 @@ class MolajoACL
     *  @return     boolean
     *  @since      1.0
     */
-    public function getQueryInformation ($option='', $query=array(), $type='', $params=array())
+    public function getQueryInformation ($option='', &$query=array(), $type='', $params=array())
     {
         $method = 'get'.ucfirst(strtolower($type)).'QueryInformation';
         $aclClass = $this->getMethodClass ($method, $option);

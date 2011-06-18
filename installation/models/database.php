@@ -121,39 +121,39 @@ class JInstallationModelDatabase extends JModel
 			$utfSupport = $db->hasUTF();
 
 			// Try to select the database
-//			if (!$db->select($options->db_name))
-//			{
+			if (!$db->select($options->db_name))
+			{
 				// If the database could not be selected, attempt to create it and then select it.
 				if ($this->createDatabase($db, $options->db_name, $utfSupport)) {
 					$db->select($options->db_name);
 				}
-//				else {
-//					$this->setError(JText::sprintf('INSTL_DATABASE_ERROR_CREATE', $options->db_name));
-//					return false;
-//				}
-//			}
-//			else {
+				else {
+					$this->setError(JText::sprintf('INSTL_DATABASE_ERROR_CREATE', $options->db_name));
+					return false;
+				}
+			}
+			else {
 				// Set the character set to UTF-8 for pre-existing databases.
-//				$this->setDatabaseCharset($db, $options->db_name);
-//			}
+				$this->setDatabaseCharset($db, $options->db_name);
+			}
 
 			// Should any old database tables be removed or backed up?
-//			if ($options->db_old == 'remove')
-//			{
+			if ($options->db_old == 'remove')
+			{
 				// Attempt to delete the old database tables.
-//				if (!$this->deleteDatabase($db, $options->db_name, $options->db_prefix)) {
-//					$this->setError(JText::_('INSTL_DATABASE_ERROR_DELETE'));
-//					return false;
-//				}
-//			}
-//			else
-//			{
-//				// If the database isn't being deleted, back it up.
-//				if (!$this->backupDatabase($db, $options->db_name, $options->db_prefix)) {
-//					$this->setError(JText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
-//					return false;
-//				}
-//			}
+				if (!$this->deleteDatabase($db, $options->db_name, $options->db_prefix)) {
+					$this->setError(JText::_('INSTL_DATABASE_ERROR_DELETE'));
+					return false;
+				}
+			}
+			else
+			{
+				// If the database isn't being deleted, back it up.
+				if (!$this->backupDatabase($db, $options->db_name, $options->db_prefix)) {
+					$this->setError(JText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
+					return false;
+				}
+			}
 
             /**
              * Molajo Hack: molajo.sql
