@@ -12,24 +12,27 @@ INSERT INTO `#__clients` (`id`, `client_id`, `name`, `path`, `access`, `asset_id
 # USERS AND GROUPS
 #
 
-INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`) VALUES (1, 0, 0, 1, 'Administrator', 4, 1, 50);
-INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`) VALUES (2, 0, 2, 3, 'Registered',    4, 1, 60);
-INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`) VALUES (3, 0, 4, 5, 'Guest',         4, 1, 70);
-INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`) VALUES (4, 0, 6, 7, 'Public',        4, 1, 80);
-
+INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`)
+VALUES (1, 0, 0, 1, 'Public',        4, 1, 50);
+INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`)
+VALUES (2, 0, 2, 3, 'Guest',         4, 1, 60);
+INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`)
+VALUES (3, 0, 4, 5, 'Registered',    4, 1, 70);
+INSERT INTO `#__groups` (`id` ,`parent_id` ,`lft` ,`rgt` ,`title`, `access`, `protected`, `asset_id`)
+VALUES (4, 0, 6, 7, 'Administrator', 4, 1, 80);
 INSERT INTO `#__groupings` (`id`, `group_name_list`, `group_id_list` ) VALUES
-    (1, 'Administrator', '1'),
-    (2, 'Registered', '2'),
-    (3, 'Guest', '3'),
-    (4, 'Public', '4'),
-    (5, 'Registered, Administrator', '1,2');
+    (1, 'Public', '1'),
+    (2, 'Guest', '2'),
+    (3, 'Registered', '3'),
+    (4, 'Administrator', '4'),
+    (5, 'Registered, Administrator', '4,5');
 
 INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 1, 1;
 INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 2, 2;
 INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 3, 3;
 INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 4, 4;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 1, 5;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 2, 5;
+INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 3, 5;
+INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 4, 5;
 
 #
 # CONTENT
@@ -64,7 +67,7 @@ INSERT INTO `#__articles` (
 
 # Components - Administrator
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -90,7 +93,7 @@ INSERT INTO `#__extensions` (
 
 # Components - Site
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -100,7 +103,7 @@ INSERT INTO `#__extensions` (
 
 # Layouts
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -122,7 +125,7 @@ INSERT INTO `#__extensions` (
 
 # Libraries
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -141,7 +144,7 @@ INSERT INTO `#__extensions` (
 
 # Modules - Administrator
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -164,7 +167,7 @@ INSERT INTO `#__extensions` (
 
 # Modules - Site
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -189,7 +192,7 @@ INSERT INTO `#__extensions` (
 
 ## Authentication
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -197,7 +200,7 @@ INSERT INTO `#__extensions` (
 
 ## Content
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -207,7 +210,7 @@ INSERT INTO `#__extensions` (
 
 ## Editors
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -217,7 +220,7 @@ INSERT INTO `#__extensions` (
 
 ## Extended Editor
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -230,7 +233,7 @@ INSERT INTO `#__extensions` (
 
 ## Extension
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -238,7 +241,7 @@ INSERT INTO `#__extensions` (
 
 ## Language
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUE
@@ -247,7 +250,7 @@ INSERT INTO `#__extensions` (
 
 ## Molajo
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -267,7 +270,7 @@ INSERT INTO `#__extensions` (
 
 ## Search
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -277,7 +280,7 @@ INSERT INTO `#__extensions` (
 
 ## System
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -294,7 +297,7 @@ INSERT INTO `#__extensions` (
 
 ## Query
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
@@ -302,7 +305,7 @@ INSERT INTO `#__extensions` (
 
 ## Template
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUE
@@ -312,7 +315,7 @@ INSERT INTO `#__extensions` (
 
 ## Users
 INSERT INTO `#__extensions` (
-  `id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
+  `extension_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES

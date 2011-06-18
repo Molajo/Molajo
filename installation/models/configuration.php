@@ -252,16 +252,39 @@ class JInstallationModelConfiguration extends JModel
 			$this->setError($db->getErrorMsg());
 			return false;
 		}
-
-		// Add user as group - type_id = 0 for User
-		$query	= 'INSERT INTO #__groups (parent_id, lft, rgt, title, asset_id, access, type_id) '
-				. ' SELECT 0, 0, 0, '.$db->quote('Administrator User').', 51, 4, 0';
+		// Map the super admin to the Super Admin Group
+		$query = 'INSERT INTO #__user_groups' .
+				' SELECT '.$randomID.', 3';
+		$db->setQuery($query);
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+		// Map the super admin to the Super Admin Group
+		$query = 'INSERT INTO #__user_groups' .
+				' SELECT '.$randomID.', 1';
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
 			return false;
 		}
 
+		// Add user as group - type_id = 0 for User
+		$query	= 'INSERT INTO #__groups (parent_id, lft, rgt, title, asset_id, access, type_id) '
+				. ' SELECT 5, 0, 0, '.$db->quote('Administrator User').', 51, 4, 0';
+		$db->setQuery($query);
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+		// Map the super admin to the their personal group
+		$query = 'INSERT INTO #__user_groups' .
+				' SELECT '.$randomID.', 5';
+		$db->setQuery($query);
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
 		// Run rebuild ACL methods
 
         return true;

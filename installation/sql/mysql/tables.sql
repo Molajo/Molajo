@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
 #
 
 CREATE TABLE `#__extensions` (
-  `id` INT (11) NOT NULL AUTO_INCREMENT,
+  `extension_id` INT (11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `type` VARCHAR(20) NOT NULL,
   `element` VARCHAR(100) NOT NULL,
@@ -378,7 +378,7 @@ CREATE TABLE `#__extensions` (
   `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ordering` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordering',
   `state` TINYINT (3) NOT NULL DEFAULT '0' COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`extension_id`),
   UNIQUE KEY `idx_asset_id` (`asset_id`, `access`),
   INDEX `element_clientid`(`element`, `client_id`),
   INDEX `element_folder_clientid`(`element`, `folder`, `client_id`),
