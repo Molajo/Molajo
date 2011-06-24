@@ -279,8 +279,6 @@ abstract class JDatabase
 					return JError::raiseError(500, JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
 				}
 				else {
-                    echo $e->getMessage();
-                    die();
 					throw new DatabaseException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
 				}
 			}

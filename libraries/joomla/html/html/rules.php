@@ -147,8 +147,8 @@ abstract class JHtmlRules
 		$db->setQuery(
 			'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
 			' , GROUP_CONCAT(b.id SEPARATOR \',\') AS parents' .
-			' FROM #__groups AS a' .
-			' LEFT JOIN #__groups AS b ON a.lft > b.lft AND a.rgt < b.rgt' .
+			' FROM #__usergroups AS a' .
+			' LEFT JOIN #__usergroups AS b ON a.lft > b.lft AND a.rgt < b.rgt' .
 			' GROUP BY a.id' .
 			' ORDER BY a.lft ASC'
 		);

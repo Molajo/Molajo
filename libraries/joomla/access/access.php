@@ -122,7 +122,7 @@ class JAccess
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true)
 				->select('parent.id, parent.lft, parent.rgt')
-				->from('#__groups AS parent')
+				->from('#__usergroups AS parent')
 				->order('parent.lft');
 			$db->setQuery($query);
 			$groups = $db->loadObjectList('id');
@@ -236,11 +236,11 @@ class JAccess
 				$query->select($recursive ? 'b.id' : 'a.id');
 				$query->from('#__user_usergroup_map AS map');
 				$query->where('map.user_id = '.(int) $userId);
-				$query->leftJoin('#__groups AS a ON a.id = map.group_id');
+				$query->leftJoin('#__usergroups AS a ON a.id = map.group_id');
 
 				// If we want the rules cascading up to the global asset node we need a self-join.
 				if ($recursive) {
-					$query->leftJoin('#__groups AS b ON b.lft <= a.lft AND b.rgt >= a.rgt');
+					$query->leftJoin('#__usergroups AS b ON b.lft <= a.lft AND b.rgt >= a.rgt');
 				}
 
 				// Execute the query and load the rules from the result.
@@ -286,8 +286,8 @@ class JAccess
 		// First find the users contained in the group
 		$query	= $db->getQuery(true);
 		$query->select('DISTINCT(user_id)');
-		$query->from('#__groups as ug1');
-		$query->join('INNER','#__groups AS ug2 ON ug2.lft'.$test.'ug1.lft AND ug1.rgt'.$test.'ug2.rgt');
+		$query->from('#__usergroups as ug1');
+		$query->join('INNER','#__usergroups AS ug2 ON ug2.lft'.$test.'ug1.lft AND ug1.rgt'.$test.'ug2.rgt');
 		$query->join('INNER','#__user_usergroup_map AS m ON ug2.id=m.group_id');
 		$query->where('ug1.id='.$db->Quote($groupId));
 

@@ -31,7 +31,7 @@ class JTableUsergroup extends JTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__groups', 'id', $db);
+		parent::__construct('#__usergroups', 'id', $db);
 	}
 
 	/**
