@@ -80,7 +80,7 @@ class MolajoRouter extends JObject
 
 		if (empty($instances[$client])) {
 			// Load the router object
-			$info = JApplicationHelper::getClientInfo($client, true);
+			$info = MolajoApplicationHelper::getClientInfo($client, true);
 
 			$path = $info->path.DS.'includes'.DS.'router.php';
 			if (file_exists($path)) {

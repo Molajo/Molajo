@@ -83,7 +83,7 @@ class MolajoController extends JController
     public function __construct($config = array())
     {
         parent::__construct($config);
-        $this->params = JComponentHelper::getParams(JRequest::getVar('option'));
+        $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
     }
 
     /**
@@ -183,7 +183,7 @@ class MolajoController extends JController
         if ($this->dispatcher) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
-            JPluginHelper::importPlugin('content');
+            MolajoPluginHelper::importPlugin('content');
         }
 
         /** authorisation **/

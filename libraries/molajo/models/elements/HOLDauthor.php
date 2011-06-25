@@ -7,7 +7,7 @@
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('MOLAJO') or die();
 
 /**
  * Renders a author element
@@ -48,7 +48,7 @@ class MolajoElementAuthor extends JElement
 		$query->select('u.id AS value');
 		$query->select('u.name AS text');
 		$query->from('#__users AS u');
-		$query->join('INNER', '#__user_usergroup_map AS m ON m.user_id = u.id');
+		$query->join('INNER', '#__user_groups AS m ON m.user_id = u.id');
 		$query->where('u.block = 0');
 		$query->where('m.group_id IN ('.$groups.')');
 

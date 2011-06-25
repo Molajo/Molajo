@@ -74,7 +74,7 @@ class ConfigModelComponent extends JModelForm
 			return false;
 		}
 /** Molajo_Hack: Begin **/
-        JPluginHelper::importPlugin('content');
+        MolajoPluginHelper::importPlugin('content');
         $dispatcher	= JDispatcher::getInstance();
 
         // Trigger the data preparation event.
@@ -103,7 +103,7 @@ class ConfigModelComponent extends JModelForm
 		||	$lang->load($option, JPATH_BASE, $lang->getDefault(), false, false)
 		||	$lang->load($option, JPATH_BASE . "/components/$option", $lang->getDefault(), false, false);
 
-		$result = JComponentHelper::getComponent($option);
+		$result = MolajoComponentHelper::getComponent($option);
 
 		return $result;
 	}

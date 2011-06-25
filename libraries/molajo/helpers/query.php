@@ -153,7 +153,7 @@ class MolajoQueryHelper
 	public static function buildVotingQuery($params=null)
 	{
 		if (!$params) {
-			$params = JComponentHelper::getParams('com_dogs');
+			$params = MolajoComponentHelper::getParams('com_dogs');
 		}
 
 		$voting = $params->get('show_vote');

@@ -7,9 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
-
-jimport('joomla.database.tablenested');
+defined('MOLAJO') or die();
 
 /**
  * Category table
@@ -187,7 +185,10 @@ class MolajoTableCategory extends MolajoTableNested
 		}
 	// Verify that the alias is unique
 		$table = MolajoTable::getInstance('Category','MolajoTable');
-		if ($table->load(array('alias'=>$this->alias,'parent_id'=>$this->parent_id,'extension'=>$this->extension)) && ($table->id != $this->id || $this->id==0)) {
+		if ($table->load(array('alias'=>$this->alias,
+                                'parent_id'=>$this->parent_id,
+                                'extension'=>$this->extension))
+                                && ($table->id != $this->id || $this->id==0)) {
 
 			$this->setError(JText::_('JLIB_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
 			return false;

@@ -185,7 +185,7 @@ class MolajoRouter extends JObject
 		if (self::$lookup === null) {
 			self::$lookup = array();
 
-			$component	= JComponentHelper::getComponent($componentOptionParam);
+			$component	= MolajoComponentHelper::getComponent($componentOptionParam);
 			$items		= $menus->getItems('component_id', $component->id);
 
 			foreach ($items as $data) {

@@ -7,7 +7,7 @@
  */
 
 // No direct access
-defined('JPATH_PLATFORM') or die();
+defined('MOLAJO') or die();
 
 class MolajoElementArticle extends JElement
 {

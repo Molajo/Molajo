@@ -173,7 +173,7 @@ class MolajoModelDisplay extends JModel
    //         $this->_mergeParams ();
 //		$this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
-           $this->params = JComponentHelper::getParams(JRequest::getCmd('option'));
+           $this->params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
         }
 
         $this->filterFieldName = JRequest::getCmd('filterFieldName', 'config_manager_list_filters');
@@ -181,8 +181,8 @@ class MolajoModelDisplay extends JModel
         $this->molajoField  = new MolajoField();
 
         $this->dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('query');
-		JPluginHelper::importPlugin('content');
+		MolajoPluginHelper::importPlugin('query');
+		MolajoPluginHelper::importPlugin('content');
 
         if (JRequest::getInt('id') == 0) {
             $this->populateStateMultiple ($ordering, $direction);
@@ -948,7 +948,7 @@ $items[$i]->checked_out = false;
      */
     public function getOptionList($field1, $field2, $showKey = false, $showKeyFirst = false, $table  = null)
     {
-        $this->params = JComponentHelper::getParams($this->getState('request.option'));   
+        $this->params = MolajoComponentHelper::getParams($this->getState('request.option'));
 
         $this->query = $this->_db->getQuery(true);
 

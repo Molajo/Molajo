@@ -16,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Table
  * @since       11.1
  */
-class MolajoTableUser extends JTable
+class MolajoTableUser extends MolajoTable
 {
 	/**
 	 * Associative array of user names => group ids
@@ -92,7 +92,7 @@ class MolajoTableUser extends JTable
 			$this->_db->setQuery(
 				'SELECT g.id, g.title' .
 				' FROM #__groups AS g' .
-				' JOIN #__user_usergroup_map AS m ON m.group_id = g.id' .
+				' JOIN #__user_groups AS m ON m.group_id = g.id' .
 				' WHERE m.user_id = '.(int) $userId
 			);
 			// Add the groups to the user data.
@@ -161,9 +161,6 @@ class MolajoTableUser extends JTable
 	 */
 	function check()
 	{
-		jimport('joomla.mail.helper');
-
-		// Validate user information
 		if (trim($this->name) == '') {
 			$this->setError(JText::_('JLIB_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
 			return false;
@@ -203,7 +200,6 @@ class MolajoTableUser extends JTable
 			return false;
 		}
 
-
 		// check for existing email
 		$query = 'SELECT id'
 			. ' FROM #__users '
@@ -237,6 +233,12 @@ class MolajoTableUser extends JTable
 		return true;
 	}
 
+    /**
+     * store
+     *
+     * @param bool $updateNulls
+     * @return bool
+     */
 	function store($updateNulls = false)
 	{
 		// Get the table key and key value.
@@ -274,7 +276,7 @@ class MolajoTableUser extends JTable
 		{
 			// Delete the old user group maps.
 			$this->_db->setQuery(
-				'DELETE FROM '.$this->_db->quoteName('#__user_usergroup_map') .
+				'DELETE FROM '.$this->_db->quoteName('#__user_groups') .
 				' WHERE '.$this->_db->quoteName('user_id').' = '.(int) $this->id
 			);
 			$this->_db->query();
@@ -287,7 +289,7 @@ class MolajoTableUser extends JTable
 
 			// Set the new user group maps.
 			$this->_db->setQuery(
-				'INSERT INTO '.$this->_db->quoteName('#__user_usergroup_map').' ('.$this->_db->quoteName('user_id').', '.$this->_db->quoteName('group_id').')' .
+				'INSERT INTO '.$this->_db->quoteName('#__user_groups').' ('.$this->_db->quoteName('user_id').', '.$this->_db->quoteName('group_id').')' .
 				' VALUES ('.$this->id.', '.implode('), ('.$this->id.', ', $this->groups).')'
 			);
 			$this->_db->query();
@@ -335,7 +337,7 @@ class MolajoTableUser extends JTable
 
 		// Delete the user group maps.
 		$this->_db->setQuery(
-			'DELETE FROM '.$this->_db->quoteName('#__user_usergroup_map') .
+			'DELETE FROM '.$this->_db->quoteName('#__user_groups') .
 			' WHERE '.$this->_db->quoteName('user_id').' = '.(int) $this->$k
 		);
 		$this->_db->query();

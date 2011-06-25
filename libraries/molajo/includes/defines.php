@@ -25,7 +25,7 @@ define('JPATH_CONFIGURATION',	JPATH_ROOT);
 define('JPATH_LIBRARIES',		JPATH_ROOT.'/libraries');
 
 /** overrides */
-define('OVERRIDES_LIBRARY',		JPATH_ROOT.'/libraries/molajo/overrides');
+define('OVERRIDES_LIBRARY',		JPATH_ROOT.'/libraries/overrides');
 
 /** Configuration Fields **/
 define('MOLAJO_CONFIG_OPTION_ID_FIELDS', 1);

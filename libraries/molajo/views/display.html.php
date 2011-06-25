@@ -86,7 +86,7 @@ class MolajoViewDisplay extends MolajoView
    //         $this->_mergeParams ();
 //		$this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
-           $this->params = JComponentHelper::getParams(JRequest::getCmd('option'));
+           $this->params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
         }
 
         /** 6. Get Pagination data */

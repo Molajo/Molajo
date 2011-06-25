@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Table
  * @since       11.1
  */
-class MolajoTableUpdate extends JTable
+class MolajoTableUpdate extends MolajoTable
 {
 	/**
 	 * Contructor

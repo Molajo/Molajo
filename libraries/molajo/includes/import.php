@@ -113,11 +113,9 @@ jimport('joomla.cache.storage');
 
 /** Database */
 jimport('joomla.database');
-
-
-
 jimport('joomla.database.table');
 jimport('joomla.database.tableasset');
+jimport('joomla.database.tablenested');
 
 $files = JFolder::files(MOLAJO_LIBRARY.'/table', '\.php$', false, false);
 foreach ($files as $file) {
@@ -138,13 +136,13 @@ foreach ($files as $file) {
 
 /** User */
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/user.php', 'MolajoUserHelper');
-jimport('molajo.overrides.user.helper');
-jimport('molajo.overrides.user.user');
+jimport('D.user.helper');
+jimport('overrides.user.user');
 
 /** ACL */
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/acl/core.php', 'CoreACL');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/acl/molajo.php', 'MolajoACL');
-jimport('molajo.overrides.access.access');
+jimport('overrides.access.access');
 
 /** Application */
 if (MOLAJO_APPLICATION == 'administrator') {
@@ -155,21 +153,21 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/site.php', 'MolajoSite')
 jimport('joomla.application.application');
 jimport('joomla.application.applicationexception');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/application.php', 'MolajoApplicationHelper');
-jimport('molajo.overrides.application.helper');
+jimport('overrides.application.helper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/component.php', 'MolajoComponentHelper');
-jimport('molajo.overrides.application.component.helper');
+jimport('overrides.application.component.helper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/module.php', 'MolajoModuleHelper');
-jimport('molajo.overrides.application.module.helper');
+jimport('overrides.application.module.helper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/menu/menu.php', 'MolajoMenu');
-jimport('molajo.overrides.application.menu');
+jimport('overrides.application.menu');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/categories.php', 'MolajoCategories');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/categories.php', 'MolajoCategoriesHelper');
-jimport('molajo.overrides.application.categories');
+jimport('overrides.application.categories');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/router.php', 'MolajoRouter');
-jimport('molajo.overrides.application.router');
+jimport('overrides.application.router');
 jimport('joomla.plugin.plugin');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/plugin.php', 'MolajoPluginHelper');
-jimport('molajo.overrides.plugin.helper');
+jimport('overrides.plugin.helper');
 
 /** events and plugins */
 jimport('joomla.event.event');
@@ -212,9 +210,9 @@ foreach ($files as $file) {
 /** HTML */
 jimport('joomla.html.html');
 jimport('joomla.html.toolbar');
-jimport('molajo.overrides.html.pagination');
-jimport('molajo.overrides.html.toolbar');
-jimport('molajo.overrides.html.editor');
+jimport('overrides.html.pagination');
+jimport('overrides.html.toolbar');
+jimport('overrides.html.editor');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/toolbar.php', 'MolajoToolbarHelper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/rendertoolbar.php', 'MolajoRendertoolbarHelper');
 require_once OVERRIDES_LIBRARY.'/includes/toolbar.php';

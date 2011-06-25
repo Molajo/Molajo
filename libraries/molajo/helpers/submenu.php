@@ -25,7 +25,7 @@ class MolajoSubmenuHelper
     public static function add ()
     {
         /** component parameters **/
-        $params = JComponentHelper::getParams(JRequest::getCmd('option'));
+        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
 
         /** Toolbar title and buttons **/
         for ($i=1; $i < 1000; $i++) {

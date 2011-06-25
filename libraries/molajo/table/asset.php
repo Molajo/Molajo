@@ -16,7 +16,7 @@ defined('MOLAJO') or die();
  * @since       1
  * @link
  */
-class MolajoTableAsset extends JTable
+class MolajoTableAsset extends MolajoTable
 {
 	/**
 	 * The primary key of the asset.

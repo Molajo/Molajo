@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @version		$Id: application.php 21320 2011-05-11 01:01:37Z dextercowley $
@@ -61,9 +60,8 @@ class MolajoAdministrator extends JApplication
 			if ($lang && JLanguage::exists($lang)) {
 				$options['language'] = $lang;
 			} else {
-				$params = JComponentHelper::getParams('com_languages');
-				$client	= JApplicationHelper::getClientInfo($this->getClientId());
-
+				$params = MolajoComponentHelper::getParams('com_languages');
+				$client	= MolajoApplicationHelper::getClientInfo($this->getClientId());
 				$options['language'] = $params->get($client->name, $config->get('language','en-GB'));
 			}
 		}
@@ -151,11 +149,11 @@ class MolajoAdministrator extends JApplication
 			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
-			$contents = JComponentHelper::renderComponent($component);
+			$contents = MolajoComponentHelper::renderComponent($component);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.
-			JPluginHelper::importPlugin('system');
+			MolajoPluginHelper::importPlugin('system');
 			$this->triggerEvent('onAfterDispatch');
 		}
 		// Mop up any uncaught exceptions.
@@ -185,7 +183,6 @@ class MolajoAdministrator extends JApplication
 		// Safety check for when configuration.php root_user is in use.
 		$config		= JFactory::getConfig();
 		$rootUser	= $config->get('root_user');
-
 		if (property_exists('JConfig', 'root_user') &&
 			(JFactory::getUser()->get('username') == $rootUser || JFactory::getUser()->id === (string) $rootUser)) {
 			JError::raiseNotice(200, JText::sprintf('JWARNING_REMOVE_ROOT_USER', 'index.php?option=com_config&task=application.removeroot&'. JUtility::getToken() .'=1'));
@@ -224,14 +221,15 @@ class MolajoAdministrator extends JApplication
 
 		//Make sure users are not autoregistered
 		$options['autoregister'] = false;
-
+var_dump($options);
+        die();
 		//Set the application login entry point
 		if (!array_key_exists('entry_url', $options)) {
 			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=login';
 		}
 
 		// Set the access control action to check.
-		$options['action'] = 'login.admin';
+		$options['action'] = 'core.login.admin';
 
 		$result = parent::login($credentials, $options);
 
@@ -311,10 +309,9 @@ class MolajoAdministrator extends JApplication
 		. ' WHERE user_id = ' . (int) $userid
 		. ' AND cfg_name = "auto_purge"'
 		;
-
 		$db->setQuery($query);
 		$config = $db->loadObject();
- 
+
 		// check if auto_purge value set
 		if (is_object($config) and $config->cfg_name == 'auto_purge') {
 			$purge	= $config->cfg_value;

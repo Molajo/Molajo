@@ -15,9 +15,9 @@ jimport('joomla.filesystem.file');
  *
  * http://planetozh.com/blog/2010/05/how-to-embed-a-tweet-in-wordpress-a-complete-oembed-tutorial/
  */
-defined('MOLAJO') or die('Restricted Access');
+defined('MOLAJO') or die();
 
-class MolajoHelperOembed {
+class MolajoOembedHelper {
 
 	var $output_Class = '';
 	var $option_height = '';

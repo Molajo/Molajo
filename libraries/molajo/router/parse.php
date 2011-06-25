@@ -40,7 +40,7 @@ class MolajoRouterParse extends MolajoRouter
         $app	= JFactory::getApplication();
         $menu	= $app->getMenu();
         $item	= $menu->getActive();
-        $params = JComponentHelper::getParams($componentParam);
+        $params = MolajoComponentHelper::getParams($componentParam);
         $advanced = $params->get('sef_advanced_link', 0);
         $db = JFactory::getDBO();
 

@@ -40,7 +40,7 @@ class MolajoModelEdit extends JModel
     {
         parent::__construct($config);
         JRequest::setVar('view', JRequest::getCmd('single_view'));
-        $this->params = JComponentHelper::getParams(JRequest::getVar('option'));
+        $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
     }
 
     /**
@@ -163,7 +163,7 @@ class MolajoModelEdit extends JModel
             return false;
         }
 
-        JPluginHelper::importPlugin('content');
+        MolajoPluginHelper::importPlugin('content');
         $dispatcher	= JDispatcher::getInstance();
 
         $dispatcher->trigger('onContentPrepareData', array($formName, $data));

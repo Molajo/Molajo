@@ -509,7 +509,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 /** Molajo_Hack: Begin **/
-        JPluginHelper::importPlugin('content');
+        MolajoPluginHelper::importPlugin('content');
         $dispatcher	= JDispatcher::getInstance();
 
         // Trigger the data preparation event.
@@ -640,7 +640,7 @@ class MenusModelItem extends JModelAdmin
 					||	$lang->load($args['option'], JPATH_ADMINISTRATOR.'/components/'.$args['option'], $lang->getDefault(), false, false);
 
 					// Determine the component id.
-					$component = JComponentHelper::getComponent($args['option']);
+					$component = MolajoComponentHelper::getComponent($args['option']);
 					if (isset($component->id)) {
 						$table->component_id = $component->id;
 					}
@@ -791,7 +791,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_menus');
+		$params	= MolajoComponentHelper::getParams('com_menus');
 		$this->setState('params', $params);
 	}
 

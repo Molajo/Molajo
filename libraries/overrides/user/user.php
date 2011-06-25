@@ -620,7 +620,7 @@ class JUser extends JObject
 			}
 
 			// Fire the onUserBeforeSave event.
-			JPluginHelper::importPlugin('user');
+			MolajoPluginHelper::importPlugin('user');
 			$dispatcher = JDispatcher::getInstance();
 
 			$result = $dispatcher->trigger('onUserBeforeSave', array($oldUser->getProperties(), $isNew, $this->getProperties()));
@@ -666,7 +666,7 @@ class JUser extends JObject
 	 */
 	public function delete()
 	{
-		JPluginHelper::importPlugin('user');
+		MolajoPluginHelper::importPlugin('user');
 
 		// Trigger the onUserBeforeDelete event
 		$dispatcher = JDispatcher::getInstance();

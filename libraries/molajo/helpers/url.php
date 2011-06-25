@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die();
 
-class MolajoHelperURL {
+class MolajoURLHelper {
 
     /**
      * Get either a Gravatar URL or complete image tag for a specified email address.

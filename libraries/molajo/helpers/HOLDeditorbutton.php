@@ -22,7 +22,7 @@ class MolajoEditorbuttonHelper extends JPlugin {
     function checkCriteria ($name)
     {
         /** parameters **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 
         $editorButtonsArray = new object;

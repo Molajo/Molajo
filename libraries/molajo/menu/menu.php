@@ -87,7 +87,7 @@ class MolajoMenu extends JObject
 
 		if (empty($instances[$client])) {
 			//Load the router object
-			$info = JApplicationHelper::getClientInfo($client, true);
+			$info = MolajoApplicationHelper::getClientInfo($client, true);
 
 			$path = $info->path.'/includes/menu.php';
 			if (file_exists($path)) {
@@ -279,7 +279,7 @@ class MolajoMenu extends JObject
 	}
 
     /**
-     * Method to check JMenu object authorization against an access control
+     * Method to check MolajoMenu object authorization against an access control
      * object and optionally an access extension object
      *
      * @param   integer  $id	The menu id

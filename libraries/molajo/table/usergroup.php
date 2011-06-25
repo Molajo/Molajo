@@ -213,7 +213,7 @@ class MolajoTableUsergroup extends JTable
 
 		// Delete the user to usergroup mappings for the group(s) from the database.
 		$db->setQuery(
-			'DELETE FROM `#__user_usergroup_map`' .
+			'DELETE FROM `#__user_groups`' .
 			' WHERE `group_id` IN ('.implode(',', $ids).')'
 		);
 		$db->query();

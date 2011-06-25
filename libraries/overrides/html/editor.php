@@ -268,7 +268,7 @@ class JEditor extends JObservable
 		}
 
 		// Get plugins
-		$plugins = JPluginHelper::getPlugin('editors-xtd');
+		$plugins = MolajoPluginHelper::getPlugin('editors-xtd');
 
 		foreach($plugins as $plugin)
 		{
@@ -276,7 +276,7 @@ class JEditor extends JObservable
 				continue;
 			}
 
-			$isLoaded = JPluginHelper::importPlugin('editors-xtd', $plugin->name, false);
+			$isLoaded = MolajoPluginHelper::importPlugin('editors-xtd', $plugin->name, false);
 			$className = 'plgButton'.$plugin->name;
 
 			if (class_exists($className)) {
@@ -326,7 +326,7 @@ class JEditor extends JObservable
 		require_once $path;
 
 		// Get the plugin
-		$plugin		= JPluginHelper::getPlugin('editors', $this->_name);
+		$plugin		= MolajoPluginHelper::getPlugin('editors', $this->_name);
 		$params = new JRegistry;
 		$params->loadJSON($plugin->params);
 		$params->loadArray($config);
@@ -338,7 +338,7 @@ class JEditor extends JObservable
 		if ($this->_editor = new $name ($this, (array)$plugin)) {
 			// Load plugin parameters
 			$this->initialise();
-			JPluginHelper::importPlugin('editors-xtd');
+			MolajoPluginHelper::importPlugin('editors-xtd');
 		}
 	}
 }

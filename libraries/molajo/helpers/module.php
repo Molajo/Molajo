@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die();
 
 /**
  * Module helper class
@@ -29,7 +29,7 @@ abstract class MolajoModuleHelper
 	public static function &getModule($name, $title = null)
 	{
 		$result		= null;
-		$modules	= JModuleHelper::_load();
+		$modules	= MolajoModuleHelper::_load();
 		$total		= count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -76,7 +76,7 @@ abstract class MolajoModuleHelper
 		$position	= strtolower($position);
 		$result		= array();
 
-		$modules = JModuleHelper::_load();
+		$modules = MolajoModuleHelper::_load();
 
 		$total = count($modules);
 		for ($i = 0; $i < $total; $i++)
@@ -87,9 +87,9 @@ abstract class MolajoModuleHelper
 		}
 		if (count($result) == 0)
 		{
-			if (JRequest::getBool('tp') && JComponentHelper::getParams('com_templates')->get('template_positions_display'))
+			if (JRequest::getBool('tp') && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display'))
 			{
-				$result[0] = JModuleHelper::getModule('mod_'.$position);
+				$result[0] = MolajoModuleHelper::getModule('mod_'.$position);
 				$result[0]->title = $position;
 				$result[0]->content = $position;
 				$result[0]->position = $position;
@@ -108,7 +108,7 @@ abstract class MolajoModuleHelper
 	 */
 	public static function isEnabled($module)
 	{
-		$result = JModuleHelper::getModule($module);
+		$result = MolajoModuleHelper::getModule($module);
 		return (!is_null($result));
 	}
 
@@ -181,7 +181,7 @@ abstract class MolajoModuleHelper
 		}
 
 		// Dynamically add outline style
-		if (JRequest::getBool('tp') && JComponentHelper::getParams('com_templates')->get('template_positions_display')) {
+		if (JRequest::getBool('tp') && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
 			$attribs['style'] .= ' outline';
 		}
 

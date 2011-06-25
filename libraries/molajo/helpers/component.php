@@ -154,7 +154,7 @@ class MolajoComponentHelper
 
 		// Build the component toolbar
 
-		if (($path = JApplicationHelper::getPath('toolbar')) && $app->isAdmin()) {
+		if (($path = MolajoApplicationHelper::getPath('toolbar')) && $app->isAdmin()) {
 			// Get the task again, in case it has changed
 			$task = JRequest::getString('task');
 			// Make the toolbar

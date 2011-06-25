@@ -26,7 +26,7 @@ class MolajoToolbarHelper
     public function addButtonsDefaultLayout ($state, $userToolbarButtonPermissions)
     {
         /** ToolBar title **/
-        $params = JComponentHelper::getParams(JRequest::getCmd('option'));
+        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
         $this->addTitle ($params->def('config_manager_title_image', 1), $params->def('config_manager_title', 1), JRequest::getCmd('default_view'), JRequest::getCmd('option'), JRequest::getCmd('view'));
 
         /** Process Buttons **/
@@ -49,7 +49,7 @@ class MolajoToolbarHelper
         JRequest::setVar('hidemainmenu', true);
 
         /** ToolBar title **/
-        $params = JComponentHelper::getParams(JRequest::getCmd('option'));
+        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
         $this->addTitle ($params->def('config_manager_title_image', 1), $params->def('config_manager_title', 1), JRequest::getCmd('default_view'), JRequest::getCmd('option'), JRequest::getCmd('view'));
 
         if ((int) $id == 0) {
@@ -94,7 +94,7 @@ class MolajoToolbarHelper
     public function buttonLoop ($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item)
     {
         /** component parameters **/
-        $params = JComponentHelper::getParams(JRequest::getCmd('option'));
+        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
 
         /** loop thru config options and add ToolBar buttons **/
         $count = 0;
@@ -230,7 +230,7 @@ class MolajoToolbarHelper
      */
     public function addSpamButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        $params = JComponentHelper::getParams(JRequest::getVar('option'));
+        $params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
         if ($params->def('config_component_state_spam', '0') == 1) {
             JToolBarHelper::custom(JRequest::getCmd('default_view').'.spam', 'spam.png', 'spam_f2.png','JToolBar_SPAM', true);
         }
@@ -420,7 +420,7 @@ class MolajoToolbarHelper
         } else {
             return;
         }
-        $params = JComponentHelper::getParams(JRequest::getVar('option'));
+        $params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
         if ($params->def('config_component_version_management', '1') == 1) {
             JToolBarHelper::custom(JRequest::getCmd('single_view').'.restore', 'restore.png', 'restore_f2.png','JToolBar_RESTORE', false);
         }

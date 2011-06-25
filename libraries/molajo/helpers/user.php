@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('MOLAJO') or die();
 
 /**
  * ALS: usergroups table now named groups
@@ -204,7 +204,7 @@ abstract class MolajoUserHelper
 
 		// Get the dispatcher and load the user's plugins.
 		$dispatcher	= JDispatcher::getInstance();
-		JPluginHelper::importPlugin('user');
+		MolajoPluginHelper::importPlugin('user');
 
 		$data = new JObject;
 

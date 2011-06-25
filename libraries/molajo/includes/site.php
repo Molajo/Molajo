@@ -57,7 +57,7 @@ class MolajoSite extends JApplication
 
 		// if a language was specified it has priority
 		// otherwise use user or default language settings
-		JPluginHelper::importPlugin('system', 'languagefilter');
+		MolajoPluginHelper::importPlugin('system', 'languagefilter');
 
 		if (empty($options['language'])) {
 			$lang = JRequest::getString('language', null);
@@ -95,8 +95,8 @@ class MolajoSite extends JApplication
 
 		if (empty($options['language'])) {
 			// Detect default language
-			$params = JComponentHelper::getParams('com_languages');
-			$client	= JApplicationHelper::getClientInfo($this->getClientId());
+			$params = MolajoComponentHelper::getParams('com_languages');
+			$client	= MolajoApplicationHelper::getClientInfo($this->getClientId());
 			$options['language'] = $params->get($client->name, $config->get('language', 'en-GB'));
 		}
 
@@ -113,7 +113,7 @@ class MolajoSite extends JApplication
 
 		// Execute the parent initialise method.
 		parent::initialise($options);
-
+ 
 		// Load Library language
 		$lang = JFactory::getLanguage();
 		$lang->load('lib_joomla', JPATH_SITE)
@@ -179,11 +179,11 @@ class MolajoSite extends JApplication
 
 			$document->setTitle($params->get('page_title'));
 			$document->setDescription($params->get('page_description'));
-			$contents = JComponentHelper::renderComponent($component);
+			$contents = MolajoComponentHelper::renderComponent($component);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.
-			JPluginHelper::importPlugin('system');
+			MolajoPluginHelper::importPlugin('system');
 			$this->triggerEvent('onAfterDispatch');
 		}
 		// Mop up any uncaught exceptions.
@@ -244,7 +244,7 @@ class MolajoSite extends JApplication
 		$document->parse($params);
 
 		// Trigger the onBeforeRender event.
-		JPluginHelper::importPlugin('system');
+		MolajoPluginHelper::importPlugin('system');
 		$this->triggerEvent('onBeforeRender');
 
 		$caching = false;
@@ -339,7 +339,7 @@ class MolajoSite extends JApplication
 				$option = JRequest::getCmd('option');
 			}
 			// Get new instance of component global parameters
-			$params[$hash] = clone JComponentHelper::getParams($option);
+			$params[$hash] = clone MolajoComponentHelper::getParams($option);
 
 			// Get menu parameters
 			$menus	= $this->getMenu();
@@ -492,7 +492,7 @@ class MolajoSite extends JApplication
 	 * @param	string	$name		The name of the application/client.
 	 * @param	array	$options	An optional associative array of configuration settings.
 	 *
-	 * @return	object	JMenu.
+	 * @return	object	MolajoMenu.
 	 * @since	1.5
 	 */
 	public function getMenu($name = null, $options = array())

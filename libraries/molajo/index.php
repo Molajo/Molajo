@@ -41,7 +41,6 @@ if (MOLAJO_APPLICATION == 'installation') {
 }
 
 // Get the component if not set.
-
 $component = JRequest::getCmd('option', 'com_articles');
 if ($component == 'com_articles') {
      JRequest::setVar('option', 'com_articles');
@@ -53,7 +52,7 @@ if (MOLAJO_APPLICATION == 'installation') {
     $app->dispatch();
     JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 }
-        
+
 /** render application */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
