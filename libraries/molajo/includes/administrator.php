@@ -216,13 +216,17 @@ class MolajoAdministrator extends JApplication
 	 */
 	public function login($credentials, $options = array())
 	{
+
+// enable Krumo
+krumo::enable();
+krumo::classes();
+
 		//The minimum group
 		$options['group'] = 'Public Backend';
 
 		//Make sure users are not autoregistered
 		$options['autoregister'] = false;
-var_dump($options);
-        die();
+
 		//Set the application login entry point
 		if (!array_key_exists('entry_url', $options)) {
 			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=login';

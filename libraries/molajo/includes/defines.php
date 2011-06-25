@@ -9,6 +9,8 @@
 defined('MOLAJO') or die();
 define('_JEXEC', 1);
 
+define('OVERRIDE', 1);
+
 define('JPATH_SITE',			JPATH_ROOT);
 define('JPATH_ADMINISTRATOR',	JPATH_ROOT.'/administrator');
 define('JPATH_PLATFORM',		JPATH_ROOT.'/libraries');

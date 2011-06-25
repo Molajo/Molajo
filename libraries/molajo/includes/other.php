@@ -20,10 +20,14 @@ if (class_exists('MolajoFileHelper')) {
 }
 $filehelper = new MolajoFileHelper();
 
-/** Additional Libraries */
+/** Additional Libraries (Add as configuration options later) */
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/akismet/Akismet.class.php', 'Akismet');
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/curl/curl.php', 'curl');
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/mollom/mollom.php', 'Mollom');
 require_once JPATH_ROOT.'/libraries/recaptcha/recaptchalib.php';
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/securimage/securimage.php', 'Securimage');
 $filehelper->requireClassFile(JPATH_ROOT.'/libraries/wideimage/WideImage.php', 'WideImage');
+
+/** Note: Krumo Configuration INI file must be managed */
+include JPATH_ROOT.'/libraries/krumo/class.krumo.php';
+krumo::disable();
