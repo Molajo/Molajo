@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: search.php 20228 2011-01-10 00:52:54Z eddieajau $
+ * @version		$Id: search.php 21518 2011-06-10 21:38:12Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -39,7 +39,7 @@ class SearchHelper
 		$assetName = 'com_search';
 
 		$actions = array(
-			'admin', 'manage', 'create', 'edit', 'edit.state', 'delete'
+			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete'
 		);
 
 		foreach ($actions as $action) {
@@ -59,7 +59,7 @@ class SearchHelper
 		$search_ignore	= $lang->getIgnoredSearchWords();
 
 		// Deprecated in 1.6 use $lang->getIgnoredSearchWords instead
-		$ignoreFile		= $lang->getLanguagePath().DS.$tag.DS.$tag.'.ignore.php';
+		$ignoreFile		= $lang->getLanguagePath() . '/' . $tag . '/' . $tag.'.ignore.php';
 		if (file_exists($ignoreFile)) {
 			include $ignoreFile;
 		}

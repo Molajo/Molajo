@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: categories.php 20267 2011-01-11 03:44:44Z eddieajau $
+ * @version		$Id: categories.php 21590 2011-06-20 20:13:43Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_categories
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -69,7 +69,7 @@ class CategoriesModelCategories extends JModelList
 		$app		= JFactory::getApplication();
 		$context	= $this->context;
 
-		$extension = $app->getUserStateFromRequest('com_categories.categories.filter.extension', 'extension', 'com_content');
+		$extension = $app->getUserStateFromRequest('com_categories.categories.filter.extension', 'extension', 'com_articles');
 
 		$this->setState('filter.extension', $extension);
 		$parts = explode('.',$extension);
@@ -129,8 +129,9 @@ class CategoriesModelCategories extends JModelList
 	function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$user	= JFactory::getUser();
 
 		// Select the required fields from the table.
 		$query->select(
@@ -175,6 +176,13 @@ class CategoriesModelCategories extends JModelList
 			$query->where('a.access = ' . (int) $access);
 		}
 
+		// Implement View Level Access
+		if (!$user->authorise('core.admin'))
+		{
+		    $groups	= implode(',', $user->getAuthorisedViewLevels());
+			$query->where('a.access IN ('.$groups.')');
+		}
+                
 		// Filter by published state
 		$published = $this->getState('filter.published');
 		if (is_numeric($published)) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21343 2011-05-12 10:56:24Z infograf768 $
+ * @version		$Id: default.php 21529 2011-06-11 22:17:15Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_languages
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -63,9 +63,9 @@ $clientId	= $this->state->get('filter.client_id', 0);
 		</tfoot>
 		<tbody>
 		<?php foreach ($this->rows as $i => $row) :
-			$canCreate	= $user->authorise('create',		'com_languages');
-			$canEdit	= $user->authorise('edit',			'com_languages');
-			$canChange	= $user->authorise('edit.state',	'com_languages');
+			$canCreate	= $user->authorise('core.create',		'com_languages');
+			$canEdit	= $user->authorise('core.edit',			'com_languages');
+			$canChange	= $user->authorise('core.edit.state',	'com_languages');
 		?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td width="20">
@@ -75,7 +75,7 @@ $clientId	= $this->state->get('filter.client_id', 0);
 					<?php echo JHtml::_('languages.id',$i,$row->language);?>
 				</td>
 				<td width="25%">
-					<?php echo $this->escape($row->name);?>
+					<?php echo $this->escape($row->name); ?>
 				</td>
 				<td align="center">
 					<?php echo $client;?>

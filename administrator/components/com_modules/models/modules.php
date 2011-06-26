@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: modules.php 20267 2011-01-11 03:44:44Z eddieajau $
+ * @version		$Id: modules.php 21551 2011-06-17 14:07:31Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -79,7 +79,12 @@ class ModulesModelModules extends JModelList
 		$module = $this->getUserStateFromRequest($this->context.'.filter.module', 'filter_module', '', 'string');
 		$this->setState('filter.module', $module);
 
-		$clientId = $this->getUserStateFromRequest($this->context.'.filter.client_id', 'filter_client_id', 0, 'int');
+		$clientId = $this->getUserStateFromRequest($this->context.'.filter.client_id', 'filter_client_id', 0, 'int', false);
+		$previousId = $app->getUserState($this->context.'.filter.client_id_previous', null);
+		if($previousId != $clientId || $previousId === null){
+			$this->getUserStateFromRequest($this->context.'.filter.client_id_previous', 'filter_client_id_previous', 0, 'int', true);
+			$app->setUserState($this->context.'.filter.client_id_previous', $clientId);
+		}
 		$this->setState('filter.client_id', $clientId);
 
 		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');

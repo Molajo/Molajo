@@ -16,7 +16,7 @@ defined('MOLAJO') or die();
  * @subpackage	HTML
  * @since		1.5
  */
-abstract class JHtmlPluginType
+abstract class MolajoHtmlPluginType
 {
     /**
      * Returns an array of plugin types

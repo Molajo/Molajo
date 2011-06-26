@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: component.php 21032 2011-03-29 16:38:31Z dextercowley $
+ * @version		$Id: component.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_config
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -34,7 +34,7 @@ class ConfigModelComponent extends JModelForm
 
 		// Set an alternative path for the configuration file.
 		if ($path = JRequest::getString('path')) {
-			$path = JPath::clean(JPATH_SITE.DS.$path);
+			$path = JPath::clean(JPATH_SITE . '/' . $path);
 			JPath::check($path);
 			$this->setState('component.path', $path);
 		}

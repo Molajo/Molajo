@@ -41,9 +41,9 @@ class UsersControllerUser extends JControllerForm
 	protected function allowEdit($data = array(), $key = 'id')
 	{
 		// Check if this person is a Super Admin
-		if (JAccess::check($data[$key], 'admin')) {
+		if (JAccess::check($data[$key], 'core.admin')) {
 			// If I'm not a Super Admin, then disallow the edit.
-			if (!JFactory::getUser()->authorise('admin')) {
+			if (!JFactory::getUser()->authorise('core.admin')) {
 				return false;
 			}
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -54,31 +54,31 @@ class LanguagesViewLanguages extends JView
 
 		JToolBarHelper::title(JText::_('COM_LANGUAGES_VIEW_LANGUAGES_TITLE'), 'langmanager.png');
 
-		if ($canDo->get('create')) {
-			JToolBarHelper::addNew('language.add','JTOOLBAR_NEW');
+		if ($canDo->get('core.create')) {
+			JToolBarHelper::addNew('language.add');
 		}
 
-		if ($canDo->get('edit')) {
-			JToolBarHelper::editList('language.edit','JTOOLBAR_EDIT');
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::editList('language.edit');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('edit.state')) {
+		if ($canDo->get('core.edit.state')) {
 			if ($this->state->get('filter.published') != 2) {
-				JToolBarHelper::publishList('languages.publish','JTOOLBAR_PUBLISH');
-				JToolBarHelper::unpublishList('languages.unpublish','JTOOLBAR_UNPUBLISH');
+				JToolBarHelper::publishList('languages.publish');
+				JToolBarHelper::unpublishList('languages.unpublish');
 			}
 		}
 
-		if ($this->state->get('filter.published') == -2 && $canDo->get('delete')) {
+		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
 			JToolBarHelper::deleteList('', 'languages.delete','JTOOLBAR_EMPTY_TRASH');
 			JToolBarHelper::divider();
-		} else if ($canDo->get('edit.state')) {
-			JToolBarHelper::trash('languages.trash','JTOOLBAR_TRASH');
+		} else if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::trash('languages.trash');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_languages');
 			JToolBarHelper::divider();
 		}

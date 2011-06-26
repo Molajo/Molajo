@@ -16,7 +16,7 @@ defined('MOLAJO') or die();
  * @subpackage  Table
  * @since       11.1
  */
-class MolajoTableCategory extends MolajoTableNested
+class MolajoTableCategory extends JTableNested
 {
 	/**
 	 * @param database A database connector object

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: module.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: module.php 21670 2011-06-24 08:11:47Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_modules
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -85,7 +85,7 @@ class ModulesModelModule extends JModelAdmin
 			if ($table->load($pk)) {
 
 				// Access checks.
-				if (!$user->authorise('delete', 'com_modules') ||
+				if (!$user->authorise('core.delete', 'com_modules') ||
 							$table->published != -2) {
 					JError::raiseWarning(403, JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 					//	throw new Exception(JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
@@ -115,7 +115,7 @@ class ModulesModelModule extends JModelAdmin
 		}
 
 		// Clear modules cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -136,7 +136,7 @@ class ModulesModelModule extends JModelAdmin
 		$db		= $this->getDbo();
 
 		// Access checks.
-		if (!$user->authorise('create', 'com_modules')) {
+		if (!$user->authorise('core.create', 'com_modules')) {
 			throw new Exception(JText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
 		}
 
@@ -197,7 +197,7 @@ class ModulesModelModule extends JModelAdmin
 		}
 
 		// Clear modules cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -351,7 +351,7 @@ class ModulesModelModule extends JModelAdmin
 
 			// Convert the params field to an array.
 			$registry = new JRegistry;
-			$registry->loadJSON($table->params);
+			$registry->loadString($table->params);
 			$this->_cache[$pk]->params = $registry->toArray();
 
 			// Determine the page assignment mode.
@@ -515,8 +515,6 @@ class ModulesModelModule extends JModelAdmin
 	 */
 	function validate($form, $data)
 	{
-//require_once(JPATH_ADMINISTRATOR.'/components/com_content/helpers/content.php');
-
 		return parent::validate($form, $data);
 	}
 
@@ -684,7 +682,7 @@ class ModulesModelModule extends JModelAdmin
 		$this->setState('module.id',			$table->id);
 
 		// Clear modules cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		// Clean module cache
 		parent::cleanCache($table->module, $table->client_id);
@@ -714,7 +712,7 @@ class ModulesModelModule extends JModelAdmin
 	 *
 	 * @since	1.6
 	 */
-//	function cleanCache() {
-		//parent::cleanCache('com_modules', $this->getClient());
-//	}
+	function cleanCache() {
+		parent::cleanCache('com_modules', $this->getClient());
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: helper.php 20411 2011-01-23 06:15:49Z infograf768 $
+ * @version		$Id: helper.php 21672 2011-06-24 22:04:46Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	mod_quickicon
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -35,14 +35,18 @@ abstract class modQuickIconHelper
 	public static function button($button)
 	{
 		if (!empty($button['access'])) {
-			if (is_bool($button['access']) && $button['access'] == false) {
-				return '';
-			}
-
-			// Take each pair of permission, context values.
-			for ($i = 0, $n = count($button['access']); $i < $n; $i += 2) {
-				if (!JFactory::getUser()->authorise($button['access'][$i], $button['access'][$i+1])) {
+			if (is_bool($button['access'])) {
+				if ($button['access'] == false) {
 					return '';
+				}
+			}
+			else {
+
+				// Take each pair of permission, context values.
+				for ($i = 0, $n = count($button['access']); $i < $n; $i += 2) {
+					if (!JFactory::getUser()->authorise($button['access'][$i], $button['access'][$i+1])) {
+						return '';
+					}
 				}
 			}
 		}
@@ -67,73 +71,73 @@ abstract class modQuickIconHelper
 		if (empty(self::$buttons)) {
 			self::$buttons = array(
 				array(
-					'link' => JRoute::_('index.php?option=com_articles&task=article.add'),
+					'link' => JRoute::_('index.php?option=com_content&task=article.add'),
 					'image' => 'header/icon-48-article-add.png',
 					'text' => JText::_('MOD_QUICKICON_ADD_NEW_ARTICLE'),
-					'access' => array('manage', 'com_articles', 'create', 'com_articles', )
+					'access' => array('core.manage', 'com_content', 'core.create', 'com_content', )
 				),
 				array(
-					'link' => JRoute::_('index.php?option=com_articles'),
+					'link' => JRoute::_('index.php?option=com_content'),
 					'image' => 'header/icon-48-article.png',
 					'text' => JText::_('MOD_QUICKICON_ARTICLE_MANAGER'),
-					'access' => array('manage', 'com_articles')
+					'access' => array('core.manage', 'com_content')
 				),
 				array(
-					'link' => JRoute::_('index.php?option=com_categories&extension=com_articles'),
+					'link' => JRoute::_('index.php?option=com_categories&extension=com_content'),
 					'image' => 'header/icon-48-category.png',
 					'text' => JText::_('MOD_QUICKICON_CATEGORY_MANAGER'),
-					'access' => array('manage', 'com_articles')
+					'access' => array('core.manage', 'com_content')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_media'),
 					'image' => 'header/icon-48-media.png',
 					'text' => JText::_('MOD_QUICKICON_MEDIA_MANAGER'),
-					'access' => array('manage', 'com_media')
+					'access' => array('core.manage', 'com_media')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_menus'),
 					'image' => 'header/icon-48-menumgr.png',
 					'text' => JText::_('MOD_QUICKICON_MENU_MANAGER'),
-					'access' => array('manage', 'com_menus')
+					'access' => array('core.manage', 'com_menus')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_users'),
 					'image' => 'header/icon-48-user.png',
 					'text' => JText::_('MOD_QUICKICON_USER_MANAGER'),
-					'access' => array('manage', 'com_users')
+					'access' => array('core.manage', 'com_users')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_modules'),
 					'image' => 'header/icon-48-module.png',
 					'text' => JText::_('MOD_QUICKICON_MODULE_MANAGER'),
-					'access' => array('manage', 'com_modules')
+					'access' => array('core.manage', 'com_modules')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_installer'),
 					'image' => 'header/icon-48-extension.png',
 					'text' => JText::_('MOD_QUICKICON_EXTENSION_MANAGER'),
-					'access' => array('manage', 'com_installer')
+					'access' => array('core.manage', 'com_installer')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_languages'),
 					'image' => 'header/icon-48-language.png',
 					'text' => JText::_('MOD_QUICKICON_LANGUAGE_MANAGER'),
-					'access' => array('manage', 'com_languages')
+					'access' => array('core.manage', 'com_languages')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_config'),
 					'image' => 'header/icon-48-config.png',
 					'text' => JText::_('MOD_QUICKICON_GLOBAL_CONFIGURATION'),
-					'access' => array('manage', 'com_config', 'admin', 'com_config')
+					'access' => array('core.manage', 'com_config', 'core.admin', 'com_config')
 				),
 				array(
 					'link' => JRoute::_('index.php?option=com_templates'),
 					'image' => 'header/icon-48-themes.png',
 					'text' => JText::_('MOD_QUICKICON_TEMPLATE_MANAGER'),
-					'access' => array('manage', 'com_templates')
+					'access' => array('core.manage', 'com_templates')
 				),
 				array(
-					'link' => JRoute::_('index.php?option=com_admin&task=profile.edit'),
+					'link' => JRoute::_('index.php?option=com_admin&task=profile.edit&id='.JFactory::getUser()->id),
 					'image' => 'header/icon-48-user-profile.png',
 					'text' => JText::_('MOD_QUICKICON_PROFILE'),
 					'access' => true

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/joomla/!svn/ver/21568/development/trunk/administrator/components/com_installer/views/install/tmpl
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/joomla/!svn/ver/21568/development/trunk/administrator/components/com_installer/views/install/tmpl/index.html
+END
+default.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/joomla/!svn/ver/20196/development/trunk/administrator/components/com_installer/views/install/tmpl/default.php
+END
+default_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/joomla/!svn/ver/21320/development/trunk/administrator/components/com_installer/views/install/tmpl/default_form.php
+END

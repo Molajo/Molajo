@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/joomla/!svn/ver/21568/development/trunk/components/com_users/models
+END
+registration.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/joomla/!svn/ver/20228/development/trunk/components/com_users/models/registration.php
+END
+profile.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/20228/development/trunk/components/com_users/models/profile.php
+END
+login.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/20228/development/trunk/components/com_users/models/login.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21568/development/trunk/components/com_users/models/index.html
+END
+reset.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/20228/development/trunk/components/com_users/models/reset.php
+END
+remind.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/20228/development/trunk/components/com_users/models/remind.php
+END

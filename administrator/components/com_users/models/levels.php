@@ -147,7 +147,7 @@ class UsersModelLevels extends JModelList
 		}
 
 		// Access checks.
-		$allow = $user->authorise('edit.state', 'com_users');
+		$allow = $user->authorise('core.edit.state', 'com_users');
 
 		if (!$allow)
 		{
@@ -185,7 +185,7 @@ class UsersModelLevels extends JModelList
 			$table->load((int) $pk);
 
 			// Access checks.
-			$allow = $user->authorise('edit.state', 'com_users');
+			$allow = $user->authorise('core.edit.state', 'com_users');
 
 			if (!$allow)
 			{

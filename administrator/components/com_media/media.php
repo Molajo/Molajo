@@ -16,12 +16,12 @@ $user = JFactory::getUser();
 $asset = JRequest::getCmd('asset');
 $author = JRequest::getCmd('author');
 
-if (	!$user->authorise('manage', 'com_media')
+if (	!$user->authorise('core.manage', 'com_media')
 	&&	(!$asset or (
-			!$user->authorise('edit', $asset)
-		&&	!$user->authorise('create', $asset)
-		&& 	count($user->getAuthorisedCategories($asset, 'create')) == 0)
-		&&	!($user->id==$author && $user->authorise('edit.own', $asset))))
+			!$user->authorise('core.edit', $asset)
+		&&	!$user->authorise('core.create', $asset)
+		&& 	count($user->getAuthorisedCategories($asset, 'core.create')) == 0)
+		&&	!($user->id==$author && $user->authorise('core.edit.own', $asset))))
 {
 	return JError::raiseWarning(403, JText::_('JERROR_ALERTNOAUTHOR'));
 }

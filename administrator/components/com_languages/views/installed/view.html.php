@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21343 2011-05-12 10:56:24Z infograf768 $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -80,12 +80,12 @@ class LanguagesViewInstalled extends JView
 
 		JToolBarHelper::title(JText::_('COM_LANGUAGES_VIEW_INSTALLED_TITLE'), 'langmanager.png');
 
-		if ($canDo->get('edit.state')) {
-			JToolBarHelper::makeDefault('installed.setDefault','JTOOLBAR_DEFAULT');
+		if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::makeDefault('installed.setDefault');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_languages');
 			JToolBarHelper::divider();
 		}

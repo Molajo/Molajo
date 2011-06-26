@@ -16,28 +16,4 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  HTML
  * @since       11.1
  */
-class JButtonCustom extends JButton
-{
-	/**
-	 * Button type
-	 *
-	 * @var    string
-	 */
-	protected $_name = 'Custom';
-
-	public function fetchButton($type='Custom', $html = '', $id = 'custom')
-	{
-		return $html;
-	}
-
-	/**
-	 * Get the button CSS Id
-	 *
-	 * @return  string  Button CSS Id
-	 * @since   11.1
-	 */
-	public function fetchId($type='Custom', $html = '', $id = 'custom')
-	{
-		return $this->_parent->getName().'-'.$id;
-	}
-}
+class JButtonCustom extends MolajoButtonCustom {}

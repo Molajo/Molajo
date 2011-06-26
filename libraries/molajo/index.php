@@ -8,20 +8,22 @@
  */
 defined('MOLAJO') or die();
 
+/** LOAD */
+
 /** phpversion */
 require_once MOLAJO_LIBRARY.'/includes/phpversion.php';
 /** defines */
 require_once MOLAJO_LIBRARY.'/includes/defines.php';
 /** joomla platform */
 require_once JPATH_LIBRARIES.'/import.php';
-/** load frameworks */
+/** molajo and joomla platform */
 require_once MOLAJO_LIBRARY.'/includes/import.php';
 /** other libraries */
 require_once MOLAJO_LIBRARY.'/includes/other.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
-/** initialize */
+/** INITIALIZE */
 $app = JFactory::getApplication(MOLAJO_APPLICATION);
 
 if (MOLAJO_APPLICATION == 'administrator') {
@@ -33,27 +35,26 @@ if (MOLAJO_APPLICATION == 'administrator') {
 }
 JDEBUG ? $_PROFILER->mark('afterInitialise') : null;
 
-/** route application */
+/** ROUTE */
 if (MOLAJO_APPLICATION == 'installation') {
 } else {
     $app->route();
     JDEBUG ? $_PROFILER->mark('afterRoute') : null;
 }
 
-// Get the component if not set.
 $component = JRequest::getCmd('option', 'com_articles');
 if ($component == 'com_articles') {
      JRequest::setVar('option', 'com_articles');
 }
 
-/** dispatch application */
+/** DISPATCH */
 if (MOLAJO_APPLICATION == 'installation') {
 } else {
     $app->dispatch();
     JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 }
 
-/** render application */
+/** RENDER */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
 

@@ -8,7 +8,6 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-return;
 
 // Include the mod_online functions only once.
 require_once dirname(__FILE__).'/helper.php';
@@ -17,6 +16,4 @@ require_once dirname(__FILE__).'/helper.php';
 $list = modPopularHelper::getList($params);
 
 // Render the module
-if ($list) {
-    require JModuleHelper::getLayoutPath('mod_popular', $params->get('layout', 'default'));
-}
+require JModuleHelper::getLayoutPath('mod_popular', $params->get('layout', 'default'));

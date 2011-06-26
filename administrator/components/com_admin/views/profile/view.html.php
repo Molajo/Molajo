@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -51,8 +51,8 @@ class AdminViewProfile extends JView
 		JRequest::setVar('hidemainmenu', 1);
 
 		JToolBarHelper::title(JText::_('COM_ADMIN_VIEW_PROFILE_TITLE'), 'user-profile');
-		JToolBarHelper::apply('profile.apply','JTOOLBAR_APPLY');
-		JToolBarHelper::save('profile.save','JTOOLBAR_SAVE');
+		JToolBarHelper::apply('profile.apply');
+		JToolBarHelper::save('profile.save');
 		JToolBarHelper::cancel('profile.cancel', 'JTOOLBAR_CLOSE');
 		JToolBarHelper::divider();
 		JToolBarHelper::help('JHELP_ADMIN_USER_PROFILE_EDIT');

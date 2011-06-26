@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: edit_assignment.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: edit_assignment.php 21674 2011-06-24 22:16:09Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_modules
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -21,10 +21,9 @@ $menuTypes = MenusHelper::getMenuLinks();
 			});
 			function validate(){
 				var value	= document.id('jform_assignment').value;
-				var button 	= document.id('jform_toggle');
 				var list	= document.id('menu-assignment');
 				if(value == '-' || value == '0'){
-					button.setProperty('disabled', true);
+					$$('.jform-assignments-button').each(function(el) {el.setProperty('disabled', true); });
 					list.getElements('input').each(function(el){
 						el.setProperty('disabled', true);
 						if (value == '-'){
@@ -34,7 +33,7 @@ $menuTypes = MenusHelper::getMenuLinks();
 						}
 					});
 				} else {
-					button.setProperty('disabled', false);
+					$$('.jform-assignments-button').each(function(el) {el.setProperty('disabled', false); });
 					list.getElements('input').each(function(el){
 						el.setProperty('disabled', false);
 					});
@@ -55,8 +54,16 @@ $menuTypes = MenusHelper::getMenuLinks();
 
 			<label id="jform_menuselect-lbl" for="jform_menuselect"><?php echo JText::_('JGLOBAL_MENU_SELECTION'); ?></label>
 
-			<button type="button" id="jform_toggle" class="jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = !el.checked; });">
+			<button type="button" class="jform-assignments-button jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = !el.checked; });">
 				<?php echo JText::_('JGLOBAL_SELECTION_INVERT'); ?>
+			</button>
+
+			<button type="button" class="jform-assignments-button jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = false; });">
+				<?php echo JText::_('JGLOBAL_SELECTION_NONE'); ?>
+			</button>
+
+			<button type="button" class="jform-assignments-button jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = true; });">
+				<?php echo JText::_('JGLOBAL_SELECTION_ALL'); ?>
 			</button>
 
 			<div class="clr"></div>

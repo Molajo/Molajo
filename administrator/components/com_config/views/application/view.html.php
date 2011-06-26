@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_config
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -69,10 +69,10 @@ class ConfigViewApplication extends JView
 	protected function addToolbar()
 	{
 		JToolBarHelper::title(JText::_('COM_CONFIG_GLOBAL_CONFIGURATION'), 'config.png');
-		JToolBarHelper::apply('application.apply', 'JTOOLBAR_APPLY');
-		JToolBarHelper::save('application.save', 'JTOOLBAR_SAVE');
+		JToolBarHelper::apply('application.apply');
+		JToolBarHelper::save('application.save');
 		JToolBarHelper::divider();
-		JToolBarHelper::cancel('application.cancel', 'JTOOLBAR_CANCEL');
+		JToolBarHelper::cancel('application.cancel');
 		JToolBarHelper::divider();
 		JToolBarHelper::help('JHELP_SITE_GLOBAL_CONFIGURATION');
 	}

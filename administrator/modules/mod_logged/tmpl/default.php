@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: default.php 21400 2011-05-30 23:21:14Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	mod_logged
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -38,14 +38,14 @@ defined('_JEXEC') or die;
 	<tbody>
 	<?php foreach ($users as $user) : ?>
 		<tr>
-			<td>
+			<th scope="row">
 				<?php if (isset($user->editLink)) :?>
 					<a href="<?php echo $user->editLink; ?>">
 						<?php echo $user->name;?></a>
 				<?php else :
 					echo $user->name;
 				endif; ?>
-			</td>
+			</th>
 			<td class="center">
 				<?php
 					if($user->client_id) {

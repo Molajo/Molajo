@@ -148,13 +148,13 @@ class UsersModelUser extends JModelAdmin
 		}
 
 		// Make sure that we are not removing ourself from Super Admin group
-		$iAmSuperAdmin = $my->authorise('admin');
+		$iAmSuperAdmin = $my->authorise('core.admin');
 		if ($iAmSuperAdmin && $my->get('id') == $pk) {
 			// Check that at least one of our new groups is Super Admin
 			$stillSuperAdmin = false;
 			$myNewGroups = $data['groups'];
 			foreach ($myNewGroups as $group) {
-				$stillSuperAdmin = ($stillSuperAdmin) ? ($stillSuperAdmin) : JAccess::checkGroup($group, 'admin');
+				$stillSuperAdmin = ($stillSuperAdmin) ? ($stillSuperAdmin) : JAccess::checkGroup($group, 'core.admin');
 			}
 			if (!$stillSuperAdmin) {
 				$this->setError(JText::_('COM_USERS_USERS_ERROR_CANNOT_DEMOTE_SELF'));
@@ -195,7 +195,7 @@ class UsersModelUser extends JModelAdmin
 		$pks	= (array) $pks;
 
         // Check if I am a Super Admin
-		$iAmSuperAdmin	= $user->authorise('admin');
+		$iAmSuperAdmin	= $user->authorise('core.admin');
 
 		// Trigger the onUserBeforeSave event.
 		JPluginHelper::importPlugin('user');
@@ -211,9 +211,9 @@ class UsersModelUser extends JModelAdmin
 		{
 			if ($table->load($pk)) {
 				// Access checks.
-				$allow = $user->authorise('delete', 'com_users');
+				$allow = $user->authorise('core.delete', 'com_users');
 				// Don't allow non-super-admin to delete a super admin
-				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'admin')) ? false : $allow;
+				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'core.admin')) ? false : $allow;
 
 				if ($allow) {
 					// Get users data for the users to delete.
@@ -261,7 +261,7 @@ class UsersModelUser extends JModelAdmin
 		$dispatcher	= JDispatcher::getInstance();
 		$user		= JFactory::getUser();
         // Check if I am a Super Admin
-		$iAmSuperAdmin	= $user->authorise('admin');
+		$iAmSuperAdmin	= $user->authorise('core.admin');
 		$table		= $this->getTable();
 		$pks		= (array) $pks;
 
@@ -278,9 +278,9 @@ class UsersModelUser extends JModelAdmin
 			}
 			else if ($table->load($pk)) {
 				$old	= $table->getProperties();
-				$allow	= $user->authorise('edit.state', 'com_users');
+				$allow	= $user->authorise('core.edit.state', 'com_users');
 				// Don't allow non-super-admin to delete a super admin
-				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'admin')) ? false : $allow;
+				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'core.admin')) ? false : $allow;
 
 				// Prepare the logout options.
 				$options = array(
@@ -357,7 +357,7 @@ class UsersModelUser extends JModelAdmin
 		$dispatcher	= JDispatcher::getInstance();
 		$user		= JFactory::getUser();
         // Check if I am a Super Admin
-		$iAmSuperAdmin	= $user->authorise('admin');
+		$iAmSuperAdmin	= $user->authorise('core.admin');
 		$table		= $this->getTable();
 		$pks		= (array) $pks;
 		
@@ -368,9 +368,9 @@ class UsersModelUser extends JModelAdmin
 		{
 			if ($table->load($pk)) {
 				$old	= $table->getProperties();
-				$allow	= $user->authorise('edit.state', 'com_users');
+				$allow	= $user->authorise('core.edit.state', 'com_users');
 				// Don't allow non-super-admin to delete a super admin
-				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'admin')) ? false : $allow;
+				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'core.admin')) ? false : $allow;
 
 				if (empty($table->activation)) {
 					// Ignore activated accounts.
@@ -536,7 +536,7 @@ class UsersModelUser extends JModelAdmin
 	public function getGroups()
 	{
 		$user = JFactory::getUser();
-		if ($user->authorise('edit', 'com_users') && $user->authorise('manage', 'com_users'))
+		if ($user->authorise('core.edit', 'com_users') && $user->authorise('core.manage', 'com_users'))
 		{
 			$model = JModel::getInstance('Groups', 'UsersModel', array('ignore_request' => true));
 			return $model->getItems();

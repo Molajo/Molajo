@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: default.php 21543 2011-06-15 22:48:00Z chdemko $
  * @package		Joomla.Site
  * @subpackage	com_users
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -34,7 +34,7 @@ JHtml::_('behavior.formvalidation');
 			<?php else:?>
 				<dt>
 				<?php echo $field->label; ?>
-				<?php if (!$field->required && (!$field->type == "spacer")): ?>
+				<?php if (!$field->required && $field->type != 'Spacer'): ?>
 					<span class="optional"><?php echo JText::_('COM_USERS_OPTIONAL');?></span>
 				<?php endif; ?>
 				</dt>

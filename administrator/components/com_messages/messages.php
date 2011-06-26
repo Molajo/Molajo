@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Access check.
-if (!JFactory::getUser()->authorise('manage', 'com_messages')) {
+if (!JFactory::getUser()->authorise('core.manage', 'com_messages')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 

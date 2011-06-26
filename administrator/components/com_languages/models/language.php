@@ -178,7 +178,7 @@ class LanguagesModelLanguage extends JModelAdmin
 		$this->setState('language.id', $table->lang_id);
 
 		// Clean the cache.
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -217,7 +217,7 @@ class LanguagesModelLanguage extends JModelAdmin
 		}
 
 		// Clean the cache.
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}

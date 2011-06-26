@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -57,25 +57,25 @@ class MenusViewMenu extends JView
 		JToolBarHelper::title(JText::_($isNew ? 'COM_MENUS_VIEW_NEW_MENU_TITLE' : 'COM_MENUS_VIEW_EDIT_MENU_TITLE'), 'menu.png');
 
 		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
-		if ($isNew && $canDo->get('create')) {
-			if ($canDo->get('edit')) {
-				JToolBarHelper::apply('menu.apply','JTOOLBAR_APPLY');
+		if ($isNew && $canDo->get('core.create')) {
+			if ($canDo->get('core.edit')) {
+				JToolBarHelper::apply('menu.apply');
 			}
-			JToolBarHelper::save('menu.save', 'JTOOLBAR_SAVE');
+			JToolBarHelper::save('menu.save');
 		}
 
 		// If user can edit, can save the item.
-		if (!$isNew && $canDo->get('edit')) {
-			JToolBarHelper::apply('menu.apply','JTOOLBAR_APPLY');
-			JToolBarHelper::save('menu.save','JTOOLBAR_SAVE');
+		if (!$isNew && $canDo->get('core.edit')) {
+			JToolBarHelper::apply('menu.apply');
+			JToolBarHelper::save('menu.save');
 		}
 
 		// If the user can create new items, allow them to see Save & New
-		if ($canDo->get('create')) {
-			JToolBarHelper::custom('menu.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+		if ($canDo->get('core.create')) {
+			JToolBarHelper::save2new('menu.save2new');
 		}
 		if ($isNew) {
-			JToolBarHelper::cancel('menu.cancel', 'JTOOLBAR_CANCEL');
+			JToolBarHelper::cancel('menu.cancel');
 		} else {
 			JToolBarHelper::cancel('menu.cancel', 'JTOOLBAR_CLOSE');
 		}

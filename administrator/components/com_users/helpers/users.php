@@ -41,10 +41,10 @@ class UsersHelper
 			$vName == 'users'
 		);
 
-		// Groups and Levels are restricted to admin
+		// Groups and Levels are restricted to core.admin
 		$canDo = self::getActions();
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JSubMenuHelper::addEntry(
 				JText::_('COM_USERS_SUBMENU_GROUPS'),
 				'index.php?option=com_users&view=groups',
@@ -71,7 +71,7 @@ class UsersHelper
 			self::$actions	= new JObject;
 
 			$actions = array(
-				'admin', 'manage', 'create', 'edit', 'edit.own', 'edit.state', 'delete'
+				'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
 			);
 
 			foreach ($actions as $action) {
@@ -125,8 +125,8 @@ class UsersHelper
 		$db = JFactory::getDbo();
 		$db->setQuery(
 			'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
-			' FROM #__groups AS a' .
-			' LEFT JOIN `#__groups` AS b ON a.lft > b.lft AND a.rgt < b.rgt' .
+			' FROM #__usergroups AS a' .
+			' LEFT JOIN `#__usergroups` AS b ON a.lft > b.lft AND a.rgt < b.rgt' .
 			' GROUP BY a.id' .
 			' ORDER BY a.lft ASC'
 		);

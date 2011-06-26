@@ -21,7 +21,7 @@ $user = JFactory::getUser();
 			</td>
 			<td>&#160;</td>
 			<td>&#160;</td>
-		<?php if ($user->authorise('delete','com_media')):?>
+		<?php if ($user->authorise('core.delete','com_media')):?>
 			<td>&#160;</td>
 		<?php endif;?>
 		</tr>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: item.php 21447 2011-06-04 17:39:55Z dextercowley $
+ * @version		$Id: item.php 21593 2011-06-21 02:45:51Z dextercowley $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -61,7 +61,7 @@ class MenusModelItem extends JModelAdmin
 			}
 			$user = JFactory::getUser();
 
-		return $user->authorise('delete', 'com_menus.item.'.(int) $record->id);
+		return $user->authorise('core.delete', 'com_menus.item.'.(int) $record->id);
 		}
 	}
 
@@ -78,7 +78,7 @@ class MenusModelItem extends JModelAdmin
 		$user = JFactory::getUser();
 
 		if (!empty($record->id)) {
-			return $user->authorise('edit.state', 'com_menus.item.'.(int) $record->id);
+			return $user->authorise('core.edit.state', 'com_menus.item.'.(int) $record->id);
 		}
 		// Default to component settings if menu item not known.
 		else {
@@ -186,7 +186,7 @@ class MenusModelItem extends JModelAdmin
 
 		// Check that user has create permission for menus
 		$user	= JFactory::getUser();
-		if (!$user->authorise('create', 'com_menus')) {
+		if (!$user->authorise('core.create', 'com_menus')) {
 			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
 		}
@@ -264,6 +264,7 @@ class MenusModelItem extends JModelAdmin
 			$table->level	= null;
 			$table->lft		= null;
 			$table->rgt		= null;
+			$table->home	= 0;
 
 			// Alter the title & alias
 			list($title,$alias) = $this->generateNewTitle($table->parent_id, $table->alias, $table->title);
@@ -299,7 +300,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -342,12 +343,12 @@ class MenusModelItem extends JModelAdmin
 
 		// Check that user has create and edit permission for menus
 		$user	= JFactory::getUser();
-		if (!$user->authorise('create', 'com_menus')) {
+		if (!$user->authorise('core.create', 'com_menus')) {
 			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
 		}
 
-		if (!$user->authorise('edit', 'com_menus')) {
+		if (!$user->authorise('core.edit', 'com_menus')) {
 			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_EDIT'));
 			return false;
 		}
@@ -430,7 +431,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -446,7 +447,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function canSave($data = array(), $key = 'id')
 	{
-		return JFactory::getUser()->authorise('edit', $this->option);
+		return JFactory::getUser()->authorise('core.edit', $this->option);
 	}
 
 	/**
@@ -615,7 +616,7 @@ class MenusModelItem extends JModelAdmin
 
 		// Convert the params field to an array.
 		$registry = new JRegistry;
-		$registry->loadJSON($table->params);
+		$registry->loadString($table->params);
 		$result->params = $registry->toArray();
 
 		// Merge the request arguments in to the params for a component.
@@ -925,7 +926,7 @@ class MenusModelItem extends JModelAdmin
 		foreach ($items as &$item)
 		{
 			$registry = new JRegistry;
-			$registry->loadJSON($item->params);
+			$registry->loadString($item->params);
 			$params = (string)$registry;
 
 			$db->setQuery(
@@ -942,7 +943,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -980,11 +981,12 @@ class MenusModelItem extends JModelAdmin
 			return false;
 		}
 
-		// Alter the title & alias for save as copy.
+		// Alter the title & alias for save as copy.  Also, unset the home record.
 		if(!$isNew && $data['id'] == 0){
 			list($title,$alias) = $this->generateNewTitle($table->parent_id, $table->alias, $table->title);
-			$table->title = $title;
-			$table->alias = $alias;
+			$table->title	= $title;
+			$table->alias	= $alias;
+			$table->home	= 0;
 		}
 
 		// Check the data.
@@ -1009,7 +1011,7 @@ class MenusModelItem extends JModelAdmin
 		$this->setState('item.menutype', $table->menutype);
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		if (isset($data['link'])) {
 			$base 	= JURI::base();
@@ -1017,7 +1019,7 @@ class MenusModelItem extends JModelAdmin
 			$option = $juri->getVar('option');
 
 			// Clean the cache
-//			parent::cleanCache($option);
+			parent::cleanCache($option);
 		}
 
 		return true;
@@ -1045,7 +1047,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -1115,7 +1117,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -1149,7 +1151,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return parent::publish($pks,$value);
 	}
@@ -1190,8 +1192,8 @@ class MenusModelItem extends JModelAdmin
 	 * @since	1.6
 	 */
 	function cleanCache() {
-		//parent::cleanCache('com_modules');
-		//parent::cleanCache('mod_menu');
+		parent::cleanCache('com_modules');
+		parent::cleanCache('mod_menu');
 	}
 
 }

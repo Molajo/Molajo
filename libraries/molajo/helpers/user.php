@@ -295,7 +295,7 @@ abstract class MolajoUserHelper
 	public static function getCryptedPassword($plaintext, $salt = '', $encryption = 'md5-hex', $show_encrypt = false)
 	{
 		// Get the salt to use.
-		$salt = JUserHelper::getSalt($encryption, $salt, $plaintext);
+		$salt = MolajoUserHelper::getSalt($encryption, $salt, $plaintext);
 
 		// Encrypt the password.
 		switch ($encryption)
@@ -328,7 +328,7 @@ abstract class MolajoUserHelper
 			case 'aprmd5' :
 				$length = strlen($plaintext);
 				$context = $plaintext.'$apr1$'.$salt;
-				$binary = JUserHelper::_bin(md5($plaintext.$salt.$plaintext));
+				$binary = MolajoUserHelper::_bin(md5($plaintext.$salt.$plaintext));
 
 				for ($i = $length; $i > 0; $i -= 16) {
 					$context .= substr($binary, 0, ($i > 16 ? 16 : $i));
@@ -337,7 +337,7 @@ abstract class MolajoUserHelper
 					$context .= ($i & 1) ? chr(0) : $plaintext[0];
 				}
 
-				$binary = JUserHelper::_bin(md5($context));
+				$binary = MolajoUserHelper::_bin(md5($context));
 
 				for ($i = 0; $i < 1000; $i ++) {
 					$new = ($i & 1) ? $plaintext : substr($binary, 0, 16);
@@ -348,7 +348,7 @@ abstract class MolajoUserHelper
 						$new .= $plaintext;
 					}
 					$new .= ($i & 1) ? substr($binary, 0, 16) : $plaintext;
-					$binary = JUserHelper::_bin(md5($new));
+					$binary = MolajoUserHelper::_bin(md5($new));
 				}
 
 				$p = array ();
@@ -358,10 +358,10 @@ abstract class MolajoUserHelper
 					if ($j == 16) {
 						$j = 5;
 					}
-					$p[] = JUserHelper::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
+					$p[] = MolajoUserHelper::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
 				}
 
-				return '$apr1$'.$salt.'$'.implode('', $p).JUserHelper::_toAPRMD5(ord($binary[11]), 3);
+				return '$apr1$'.$salt.'$'.implode('', $p).MolajoUserHelper::_toAPRMD5(ord($binary[11]), 3);
 
 			case 'md5-hex' :
 			default :

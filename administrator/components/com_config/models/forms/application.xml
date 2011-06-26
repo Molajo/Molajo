@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!-- $Id: application.xml 21412 2011-05-31 15:42:42Z dextercowley $ -->
+	<!-- $Id: application.xml 21484 2011-06-08 00:57:51Z dextercowley $ -->
 <form>
 	<fieldset
 		name="cache"
@@ -369,6 +369,7 @@
 			filter="string"
 			cols="60"
 			rows="3" />
+
 		<field
 			name="MetaRights"
 			type="textarea"
@@ -377,18 +378,6 @@
 			filter="string"
 			cols="60"
 			rows="2" />
-		<field
-			name="MetaTitle"
-			type="radio"
-			default="1"
-			label="COM_CONFIG_FIELD_METATITLE_LABEL"
-			description="COM_CONFIG_FIELD_METATITLE_DESC"
-			filter="integer">
-			<option
-				value="1">JYES</option>
-			<option
-				value="0">JNO</option>
-		</field>
 
 		<field
 			name="MetaAuthor"
@@ -739,43 +728,43 @@
 			class="inputbox"
 			filter="rules">
 			<action
-				name="login.site"
+				name="core.login.site"
 				title="JACTION_LOGIN_SITE"
 				description="COM_CONFIG_ACTION_LOGIN_SITE_DESC" />
 			<action
-				name="login.admin"
+				name="core.login.admin"
 				title="JACTION_LOGIN_ADMIN"
 				description="COM_CONFIG_ACTION_LOGIN_ADMIN_DESC" />
 			<action
-				name="login.offline"
+				name="core.login.offline"
 				title="JACTION_LOGIN_OFFLINE"
 				description="COM_CONFIG_ACTION_LOGIN_OFFLINE_DESC" />
 			<action
-				name="admin"
+				name="core.admin"
 				title="JACTION_ADMIN_GLOBAL"
 				description="COM_CONFIG_ACTION_ADMIN_DESC" />
 			<action
-				name="manage"
+				name="core.manage"
 				title="JACTION_MANAGE"
 				description="COM_CONFIG_ACTION_MANAGE_DESC" />
 			<action
-				name="create"
+				name="core.create"
 				title="JACTION_CREATE"
 				description="COM_CONFIG_ACTION_CREATE_DESC" />
 			<action
-				name="delete"
+				name="core.delete"
 				title="JACTION_DELETE"
 				description="COM_CONFIG_ACTION_DELETE_DESC" />
 			<action
-				name="edit"
+				name="core.edit"
 				title="JACTION_EDIT"
 				description="COM_CONFIG_ACTION_EDIT_DESC" />
 			<action
-				name="edit.state"
+				name="core.edit.state"
 				title="JACTION_EDITSTATE"
 				description="COM_CONFIG_ACTION_EDITSTATE_DESC" />
 			<action
-				name="edit.own"
+				name="core.edit.own"
 				title="JACTION_EDITOWN"
 				description="COM_CONFIG_ACTION_EDITOWN_DESC" />
 		</field>

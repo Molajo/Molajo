@@ -27,22 +27,22 @@ $canDo	= TemplatesHelper::getActions();
 			<ul>
 				<li>
 					<?php $id = $this->files['main']['index']->id; ?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
 					<?php endif; ?>
 						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_EDIT_MAIN');?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 						</a>
 					<?php endif; ?>
 				</li>
 				<?php if ($this->files['main']['error']->exists) : ?>
 				<li>
 					<?php $id = $this->files['main']['error']->id; ?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 						<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
 					<?php endif; ?>
 						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_EDIT_ERROR');?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 						</a>
 					<?php endif; ?>
 				</li>
@@ -50,11 +50,11 @@ $canDo	= TemplatesHelper::getActions();
 				<?php if ($this->files['main']['print']->exists) : ?>
 				<li>
 					<?php $id = $this->files['main']['print']->id; ?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 						<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
 					<?php endif; ?>
 						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_EDIT_PRINTVIEW');?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 						</a>
 					<?php endif; ?>
 				</li>
@@ -74,12 +74,12 @@ $canDo	= TemplatesHelper::getActions();
 			<ul>
 				<?php foreach ($this->files['css'] as $file) : ?>
 				<li>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$file->id);?>">
 					<?php endif; ?>
 
 						<?php echo JText::sprintf('COM_TEMPLATES_TEMPLATE_EDIT_CSS', $file->name);?>
-					<?php if ($canDo->get('edit')) : ?>
+					<?php if ($canDo->get('core.edit')) : ?>
 					</a>
 					<?php endif; ?>
 				</li>

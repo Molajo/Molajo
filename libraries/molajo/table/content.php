@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage	Component Database Table
  * @since	1.6
  */
-class MolajoContentTable extends MolajoTable
+class MolajoTableContent extends MolajoTable
 {
     /**
      * __construct

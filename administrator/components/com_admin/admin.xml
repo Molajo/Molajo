@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: admin.xml 20196 2011-01-09 02:40:25Z ian $ -->
-<extension type="component" version="1.6.0" method="upgrade">
+<!-- $Id: admin.xml 21505 2011-06-10 07:21:09Z infograf768 $ -->
+<extension type="component" version="1.7" method="upgrade">
 	<name>com_admin</name>
 	<author>Joomla! Project</author>
 	<creationDate>April 2006</creationDate>
@@ -10,7 +10,7 @@
 		LICENSE.txt</license>
 	<authorEmail>admin@joomla.org</authorEmail>
 	<authorUrl>www.joomla.org</authorUrl>
-	<version>1.6.0</version>
+	<version>1.7.0</version>
 	<description>COM_ADMIN_XML_DESCRIPTION</description>
 	<media />
 	<administration>

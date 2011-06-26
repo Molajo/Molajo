@@ -38,7 +38,7 @@ class UsersController extends JController
 			case 'group':
 			case 'levels':
 			case 'level':
-				return $canDo->get('admin');
+				return $canDo->get('core.admin');
 				break;
 
 			// Default permissions.

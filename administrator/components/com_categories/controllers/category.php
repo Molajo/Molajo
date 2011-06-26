@@ -37,7 +37,7 @@ class CategoriesControllerCategory extends JControllerForm
 
 		// Guess the JText message prefix. Defaults to the option.
 		if (empty($this->extension)) {
-			$this->extension = JRequest::getCmd('extension', 'com_content');
+			$this->extension = JRequest::getCmd('extension', 'com_articles');
 		}
 	}
 
@@ -53,7 +53,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 */
 	protected function allowAdd($data = array())
 	{
-		return JFactory::getUser()->authorise('create', $this->extension);
+		return JFactory::getUser()->authorise('core.create', $this->extension);
 	}
 
 	/**
@@ -75,18 +75,18 @@ class CategoriesControllerCategory extends JControllerForm
 		$userId		= $user->get('id');
 
 		// Check general edit permission first.
-		if ($user->authorise('edit', $this->extension)) {
+		if ($user->authorise('core.edit', $this->extension)) {
 			return true;
 		}
 
 		// Check specific edit permission.
-		if ($user->authorise('edit', $this->extension.'.category.'.$recordId)) {
+		if ($user->authorise('core.edit', $this->extension.'.category.'.$recordId)) {
 			return true;
 		}
 
 		// Fallback on edit.own.
 		// First test if the permission is available.
-		if ($user->authorise('edit.own', $this->extension.'.category.'.$recordId) || $user->authorise('edit.own', $this->extension)) {
+		if ($user->authorise('core.edit.own', $this->extension.'.category.'.$recordId) || $user->authorise('core.edit.own', $this->extension)) {
 			// Now test the owner is the user.
 			$ownerId	= (int) isset($data['created_user_id']) ? $data['created_user_id'] : 0;
 			if (empty($ownerId) && $recordId) {

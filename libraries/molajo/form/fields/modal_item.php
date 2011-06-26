@@ -17,7 +17,7 @@ defined('MOLAJO') or die();
  * @subpackage	Lists Content for Single Item Selection
  * @since		1.6
  */
-class JFormFieldModal_Item extends JFormField
+class MolajoFormFieldModal_item extends JFormField
 {
 	/**
 	 * The form field type.

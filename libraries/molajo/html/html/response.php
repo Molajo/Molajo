@@ -12,7 +12,7 @@ defined('MOLAJO') or die();
  * @package		Joomla.Administrator
  * @subpackage	com_response
  */
-abstract class JHtmlResponse
+abstract class MolajoHtmlResponse
 {
 	/**
 	 * @param	int $value	The state value

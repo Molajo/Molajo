@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: templates.php 21097 2011-04-07 15:38:03Z dextercowley $
+ * @version		$Id: templates.php 21650 2011-06-23 05:29:17Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -47,7 +47,7 @@ class TemplatesHelper
 		$result	= new JObject;
 
 		$actions = array(
-			'admin', 'manage', 'create', 'edit', 'edit.state', 'delete'
+			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete'
 		);
 
 		foreach ($actions as $action) {
@@ -81,19 +81,19 @@ class TemplatesHelper
 	{
 		// Build the filter options.
 		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
 
-		if ($clientId == '*') {
-			$where = '';
-		} else {
-			$where = ' WHERE client_id = '.(int) $clientId;
+		if ($clientId != '*') {
+			$query->where('client_id='.(int) $clientId);
 		}
 
-		$db->setQuery(
-			'SELECT DISTINCT(template) AS value, template AS text' .
-			' FROM #__template_styles' .
-			$where .
-			' ORDER BY template'
-		);
+		$query->select('element as value, name as text');
+		$query->from('#__extensions');
+		$query->where('type='.$db->quote('template'));
+		$query->where('enabled=1');
+		$query->order('client_id');
+		$query->order('name');
+		$db->setQuery($query);
 		$options = $db->loadObjectList();
 		return $options;
 	}

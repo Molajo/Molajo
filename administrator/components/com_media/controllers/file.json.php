@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: file.json.php 20808 2011-02-21 19:55:35Z dextercowley $
+ * @version		$Id: file.json.php 21518 2011-06-10 21:38:12Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -58,7 +58,7 @@ class MediaControllerFile extends JController
 			// The request is valid
 			$err = null;
 
-			$filepath = JPath::clean(COM_MEDIA_BASE.DS.$folder.DS.strtolower($file['name']));
+			$filepath = JPath::clean(COM_MEDIA_BASE . '/' . $folder . '/' . strtolower($file['name']));
 
 			if (!MediaHelper::canUpload($file, $err))
 			{
@@ -99,7 +99,7 @@ class MediaControllerFile extends JController
 				echo json_encode($response);
 				return;
 			}
-			elseif (!$user->authorise('create', 'com_media'))
+			elseif (!$user->authorise('core.create', 'com_media'))
 			{
 				// File does not exist and user is not authorised to create
 				$log->addEntry(array('comment' => 'Create not permitted: '.$filepath.' by user_id '.$user->id));

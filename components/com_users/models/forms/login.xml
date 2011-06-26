@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!-- $Id: login.xml 19713 2010-12-01 17:01:50Z infograf768 $ -->
+	<!-- $Id: login.xml 21521 2011-06-10 22:21:18Z chdemko $ -->
 <form>
 	<fieldset name="credentials"
 		label="COM_USERS_LOGIN_DEFAULT_LABEL"	>
@@ -17,7 +17,7 @@
 			class="validate-password"
 			filter="raw"
 			label="JGLOBAL_PASSWORD"
-			required="required"
+			required="true"
 			size="25"
 		/>
 	</fieldset>

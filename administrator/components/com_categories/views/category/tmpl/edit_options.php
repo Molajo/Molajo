@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: edit_options.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: edit_options.php 21503 2011-06-09 22:58:13Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_categories
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -47,10 +47,10 @@ foreach ($fieldSets as $name => $fieldSet) :
 	<ul class="adminformlist">
 
 		<?php foreach ($this->form->getFieldset($name) as $field) : ?>
-		<li><?php echo $field->label; ?>
+			<li><?php echo $field->label; ?>
 			<?php echo $field->input; ?></li>
-
 		<?php endforeach; ?>
+
 		<li><?php echo $this->form->getLabel('note'); ?>
 		<?php echo $this->form->getInput('note'); ?></li>
 	</ul>

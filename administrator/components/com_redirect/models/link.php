@@ -40,7 +40,7 @@ class RedirectModelLink extends JModelAdmin
 				return false;
 			}
 			$user = JFactory::getUser();
-			return $user->authorise('admin', 'com_redirect');
+			return $user->authorise('core.admin', 'com_redirect');
 
 	}
 
@@ -57,7 +57,7 @@ class RedirectModelLink extends JModelAdmin
 		$user = JFactory::getUser();
 
 		// Check the component since there are no categories or other assets.
-			return $user->authorise('admin', 'com_redirect');
+			return $user->authorise('core.admin', 'com_redirect');
 
 	}
 
@@ -146,7 +146,7 @@ class RedirectModelLink extends JModelAdmin
 		$comment = (!empty($comment)) ? $comment : JText::sprintf('COM_REDIRECT_REDIRECTED_ON', JHtml::_('date',time()));
 
 		// Access checks.
-		if (!$user->authorise('admin', 'com_redirect')) {
+		if (!$user->authorise('core.admin', 'com_redirect')) {
 			$pks = array();
 			$this->setError(JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 			return false;

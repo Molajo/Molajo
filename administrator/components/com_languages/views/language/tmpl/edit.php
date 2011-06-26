@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: edit.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: edit.php 21529 2011-06-11 22:17:15Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_languages
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
-$canDo		= LanguagesHelper::getActions();
+$canDo = LanguagesHelper::getActions();
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -29,6 +29,8 @@ $canDo		= LanguagesHelper::getActions();
 		<fieldset class="adminform">
 			<?php if ($this->item->lang_id) : ?>
 				<legend><?php echo JText::sprintf('JGLOBAL_RECORD_NUMBER', $this->item->lang_id); ?></legend>
+			<?php else : ?>
+				<legend><?php echo JText::_('COM_LANGUAGES_VIEW_LANGUAGE_EDIT_NEW_TITLE'); ?></legend>
 			<?php endif; ?>
 
 			<?php echo $this->form->getLabel('title'); ?>
@@ -46,7 +48,7 @@ $canDo		= LanguagesHelper::getActions();
 			<?php echo $this->form->getLabel('lang_code'); ?>
 			<?php echo $this->form->getInput('lang_code'); ?>
 
-			<?php if ($canDo->get('edit.state')) : ?>
+			<?php if ($canDo->get('core.edit.state')) : ?>
 				<?php echo $this->form->getLabel('published'); ?>
 				<?php echo $this->form->getInput('published'); ?>
 			<?php endif; ?>

@@ -35,6 +35,7 @@ class LoginController extends JController
 		// Special treatment is required for this plugin, as this view may be called
 		// after a session timeout. We must reset the view and layout prior to display
 		// otherwise an error will occur.
+
 		JRequest::setVar('view', 'login');
 		JRequest::setVar('layout', 'default');
 
@@ -57,7 +58,7 @@ class LoginController extends JController
 		$credentials = $model->getState('credentials');
 		$return = $model->getState('return');
 
-		$result = $app->login($credentials, array('action' => 'login.admin'));
+		$result = $app->login($credentials, array('action' => 'core.login.admin'));
 
 		if (!JError::isError($result)) {
 			$app->redirect($return);

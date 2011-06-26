@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: default.php 21593 2011-06-21 02:45:51Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_cpanel
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -17,7 +17,7 @@ echo JHtml::_('sliders.start','panel-sliders',array('useCookie'=>'1'));
 foreach ($this->modules as $module) {
 	$output = JModuleHelper::renderModule($module);
 	$params = new JRegistry;
-	$params->loadJSON($module->params);
+	$params->loadString($module->params);
 	if ($params->get('automatic_title','0')=='0') {
 		echo JHtml::_('sliders.panel', $module->title, 'cpanel-panel-'.$module->name);
 	}

@@ -89,7 +89,7 @@ class CategoriesHelper
 		}
 
 		$actions = array(
-			'admin', 'manage', 'create', 'edit', 'edit.own', 'edit.state', 'delete'
+			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
 		);
 
 		foreach ($actions as $action) {

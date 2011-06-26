@@ -215,8 +215,7 @@ class JApplication extends JObject
 	{
 		// Get the full request URI.
 		$uri	= clone JURI::getInstance();
-var_dump($uri);
-        die();
+
 		$router = $this->getRouter();
 		$result = $router->parse($uri);
 

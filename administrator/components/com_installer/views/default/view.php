@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_installer
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -28,7 +28,7 @@ class InstallerViewDefault extends JView
 	{
 		$app = JFactory::getApplication();
 		parent::__construct($config);
-		$this->_addPath('template', $this->_basePath.DS.'views'.DS.'default'.DS.'tmpl');
+		$this->_addPath('template', $this->_basePath . '/views/default/tmpl');
 		$this->_addPath('template', JPATH_THEMES.'/'.$app->getTemplate().'/html/com_installer/default');
 	}
 
@@ -66,7 +66,7 @@ class InstallerViewDefault extends JView
 		$canDo	= InstallerHelper::getActions();
 		JToolBarHelper::title(JText::_('COM_INSTALLER_HEADER_' . $this->getName()), 'install.png');
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_installer');
 			JToolBarHelper::divider();
 		}

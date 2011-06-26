@@ -175,21 +175,22 @@ class MolajoComponentHelper
 	protected static function _load($option)
 	{
 		$db		= JFactory::getDbo();
+
 		$query	= $db->getQuery(true);
+
 		$query->select('extension_id AS "id", element AS "option", params, enabled');
 		$query->from('#__extensions');
 		$query->where('`type` = '.$db->quote('component'));
 		$query->where('`element` = '.$db->quote($option));
 
 //        $acl = new MolajoACL ();
-//        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>''));
+//        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
 
 		$db->setQuery($query);
 
 		$cache = JFactory::getCache('_system','callback');
 
 		self::$_components[$option] =  $cache->get(array($db, 'loadObject'), null, $option, false);
-
 		if ($error = $db->getErrorMsg() || empty(self::$_components[$option])) {
 			// Fatal error.
 			JError::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));

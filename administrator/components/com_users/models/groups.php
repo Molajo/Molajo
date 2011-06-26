@@ -168,11 +168,11 @@ class UsersModelGroups extends JModelList
 				'a.*'
 			)
 		);
-		$query->from('`#__groups` AS a');
+		$query->from('`#__usergroups` AS a');
 
 		// Add the level in the tree.
 		$query->select('COUNT(DISTINCT c2.id) AS level');
-		$query->join('LEFT OUTER', '`#__groups` AS c2 ON a.lft > c2.lft AND a.rgt < c2.rgt');
+		$query->join('LEFT OUTER', '`#__usergroups` AS c2 ON a.lft > c2.lft AND a.rgt < c2.rgt');
 		$query->group('a.id');
 
 		// Filter the comments over the search string if set.

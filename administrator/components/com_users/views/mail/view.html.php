@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_users
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -48,7 +48,7 @@ class UsersViewMail extends JView
 
 		JToolBarHelper::title(JText::_('COM_USERS_MASS_MAIL'), 'massmail.png');
 		JToolBarHelper::custom('mail.send', 'send.png', 'send_f2.png', 'COM_USERS_TOOLBAR_MAIL_SEND_MAIL', false);
-		JToolBarHelper::cancel('mail.cancel','JTOOLBAR_CANCEL');
+		JToolBarHelper::cancel('mail.cancel');
 		JToolBarHelper::divider();
 		JToolBarHelper::preferences('com_users');
 		JToolBarHelper::divider();

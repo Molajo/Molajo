@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!-- $Id: languages.xml 21024 2011-03-29 09:57:24Z infograf768 $ -->
-<extension type="component" version="1.6" method="upgrade">
+	<!-- $Id: languages.xml 21505 2011-06-10 07:21:09Z infograf768 $ -->
+<extension type="component" version="1.7" method="upgrade">
 	<name>com_languages</name>
 	<author>Joomla! Project</author>
 	<creationDate>2006</creationDate>
@@ -10,7 +10,7 @@
 		LICENSE.txt</license>
 	<authorEmail>admin@joomla.org</authorEmail>
 	<authorUrl>www.joomla.org</authorUrl>
-	<version>1.6.0</version>
+	<version>1.7.0</version>
 	<description>COM_LANGUAGES_XML_DESCRIPTION</description>
 	<administration>
 		<files folder="admin">

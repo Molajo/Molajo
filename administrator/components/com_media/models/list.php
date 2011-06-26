@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: list.php 20228 2011-01-10 00:52:54Z eddieajau $
+ * @version		$Id: list.php 21566 2011-06-19 12:56:14Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -108,7 +108,7 @@ class MediaModelList extends JModel
 					$tmp = new JObject();
 					$tmp->name = $file;
 					$tmp->title = $file;
-					$tmp->path = str_replace(DS, '/', JPath::clean($basePath.DS.$file));
+					$tmp->path = str_replace(DS, '/', JPath::clean($basePath . '/' . $file));
 					$tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
 					$tmp->size = filesize($tmp->path);
 
@@ -123,6 +123,7 @@ class MediaModelList extends JModel
 						case 'odg':
 						case 'bmp':
 						case 'jpeg':
+						case 'ico':
 							$info = @getimagesize($tmp->path);
 							$tmp->width		= @$info[0];
 							$tmp->height	= @$info[1];
@@ -169,7 +170,7 @@ class MediaModelList extends JModel
 			{
 				$tmp = new JObject();
 				$tmp->name = basename($folder);
-				$tmp->path = str_replace(DS, '/', JPath::clean($basePath.DS.$folder));
+				$tmp->path = str_replace(DS, '/', JPath::clean($basePath . '/' . $folder));
 				$tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
 				$count = MediaHelper::countFiles($tmp->path);
 				$tmp->files = $count[0];

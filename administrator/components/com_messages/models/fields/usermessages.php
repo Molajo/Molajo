@@ -36,12 +36,12 @@ class JFormFieldUserMessages extends JFormFieldUser
 	protected function getGroups()
 	{
 		// Compute usergroups
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select('id');
-        $query->from('#__groups');
-        $db->setQuery($query);
-        $groups = $db->loadResultArray();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__usergroups');
+		$db->setQuery($query);
+		$groups = $db->loadResultArray();
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
@@ -51,14 +51,14 @@ class JFormFieldUserMessages extends JFormFieldUser
 
 		foreach ($groups as $i=>$group)
 		{
-			if (JAccess::checkGroup($group, 'admin')) {
+			if (JAccess::checkGroup($group, 'core.admin')) {
 				continue;
 			}
-			if (!JAccess::checkGroup($group, 'manage', 'com_messages')) {
+			if (!JAccess::checkGroup($group, 'core.manage', 'com_messages')) {
 				unset($groups[$i]);
 				continue;
 			}
-			if (!JAccess::checkGroup($group, 'login.admin')) {
+			if (!JAccess::checkGroup($group, 'core.login.admin')) {
 				unset($groups[$i]);
 				continue;
 			}

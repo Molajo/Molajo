@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Access check.
-if (!JFactory::getUser()->authorise('manage', 'com_templates')) {
+if (!JFactory::getUser()->authorise('core.manage', 'com_templates')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 

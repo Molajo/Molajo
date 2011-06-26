@@ -15,17 +15,17 @@ defined('MOLAJO') or die();
  * @subpackage	ACL
  * @since	1.0
  */
-class CoreACL extends MolajoACL
+class MolajoACLCore extends MolajoACL
 {
     /**
      *  Core ACL - Called by the ACL Class
      *
      *  TYPE 0 --> No check needed (Cancel, Close, Help, Separator, etc.)
-     *  TYPE 1 --> MolajoACL::authoriseTask -> CoreACL:checkXYZAuthorisation -> direct back into one of three sub-types, below
+     *  TYPE 1 --> MolajoACL::authoriseTask -> MolajoACLCore:checkXYZAuthorisation -> direct back into one of three sub-types, below
      *  TYPE 2 --> MolajoACL::getQueryInformation -> Build query to filter rows Users are authorised to see and/or relates to the filter selected
      *  TYPE 3 --> MolajoACL::getList -> Retrieves list of ACL-related data
      *  TYPE 4 --> MolajoACL::checkPermissions -> Verifies access for a specific user or group
-     *  TYPE 5 --> MolajoACL::getFormAuthorisations -> CoreACL::checkFormAuthorisations
+     *  TYPE 5 --> MolajoACL::getFormAuthorisations -> MolajoACLCore::checkFormAuthorisations
      */
 
     /**
@@ -63,7 +63,7 @@ class CoreACL extends MolajoACL
     }
 
     /**
-     *  TYPE 1:A Controller -> authoriseTask -> CoreACL::checkXYZAuthorisation --> CoreACL::checkTaskManage
+     *  TYPE 1:A Controller -> authoriseTask -> MolajoACLCore::checkXYZAuthorisation --> MolajoACLCore::checkTaskManage
      *
      *  Management tasks, such as accessing the Administrator area, updating configuration, and checking in content
      *
@@ -117,7 +117,7 @@ class CoreACL extends MolajoACL
     }
 
     /**
-     *  TYPE 1:B Controller -> authoriseTask -> CoreACL::getDisplayAuthorisation --> CoreACL::checkTaskView
+     *  TYPE 1:B Controller -> authoriseTask -> MolajoACLCore::getDisplayAuthorisation --> MolajoACLCore::checkTaskView
      *
      *  Display Task or View Access
      *
@@ -148,11 +148,11 @@ class CoreACL extends MolajoACL
     }
 
     /**
-     *  TYPE 1:C Controller -> authoriseTask -> CoreACL::getXZYAuthorisation --> CoreACL::checkTaskUpdate
+     *  TYPE 1:C Controller -> authoriseTask -> MolajoACLCore::getXZYAuthorisation --> MolajoACLCore::checkTaskUpdate
      *
      *  Called from Controller to verify user authorisation for a specific Task
      *
-     *  ACL authoriseTask Method calls one of below which calls CoreACL::checkTaskUpdate
+     *  ACL authoriseTask Method calls one of below which calls MolajoACLCore::checkTaskUpdate
      *
      *  checkAddAuthorisation - test before presenting the editor for a create
      *  checkApplyAuthorisation - create or save (check id)
@@ -643,7 +643,7 @@ class CoreACL extends MolajoACL
 	}
 
    /**
-     *  TYPE 4 --> MolajoACL::checkPermissions -> CoreACL::checkUserPermissions
+     *  TYPE 4 --> MolajoACL::checkPermissions -> MolajoACLCore::checkUserPermissions
      *
      *  Checks specific authorisation for a user or group, returning a true or false test result.
      *
@@ -726,7 +726,7 @@ class CoreACL extends MolajoACL
     }
 
     /**
-     *  TYPE 5 --> MolajoACL::getFormAuthorisations -> CoreACL::checkFormAuthorisations
+     *  TYPE 5 --> MolajoACL::getFormAuthorisations -> MolajoACLCore::checkFormAuthorisations
      *
      *  Disables form fields that required editstate for those without such authorisation
      *

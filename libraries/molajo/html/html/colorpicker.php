@@ -14,7 +14,7 @@
  * @subpackage	HTML
  * @version	1.6
  */
-abstract class JHtmlColorpicker
+abstract class MolajoHtmlColorpicker
 {
 
 	/**

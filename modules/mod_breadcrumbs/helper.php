@@ -19,8 +19,6 @@ class modBreadCrumbsHelper
 		$pathway	= $app->getPathway();
 		$items		= $pathway->getPathWay();
 
-        var_dump($app->getMenu()->getDefault());
-
 		$count = count($items);
 		for ($i = 0; $i < $count; $i ++)
 		{

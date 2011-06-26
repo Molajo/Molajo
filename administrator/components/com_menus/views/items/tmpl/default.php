@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21020 2011-03-27 06:52:01Z infograf768 $
+ * @version		$Id: default.php 21595 2011-06-21 02:51:29Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_menus
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -13,14 +13,14 @@ defined('_JEXEC') or die;
 // Include the component HTML helpers.
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
-JHtml::_('script','system/multiselect.js',false,true);
+JHtml::_('behavior.multiselect');
 
-$user	= JFactory::getUser();
-$userId	= $user->get('id');
+$user		= JFactory::getUser();
+$userId		= $user->get('id');
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 $ordering 	= ($listOrder == 'a.lft');
-$canOrder	= $user->authorise('edit.state',	'com_menus');
+$canOrder	= $user->authorise('core.edit.state',	'com_menus');
 $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 ?>
 <?php //Set up the filter bar. ?>
@@ -67,7 +67,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 		<thead>
 			<tr>
 				<th width="1%">
-					<input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="title">
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
@@ -77,7 +77,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 				</th>
 				<th width="13%">
 					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ORDERING', 'a.lft', $listDirn, $listOrder); ?>
-					<?php if ($canOrder && $saveOrder) : ?>
+					<?php if ($canOrder && $saveOrder) :?>
 						<?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'items.saveorder'); ?>
 					<?php endif; ?>
 				</th>
@@ -111,10 +111,10 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 		$originalOrders = array();
 		foreach ($this->items as $i => $item) :
 			$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
-			$canCreate	= $user->authorise('create',		'com_menus');
-			$canEdit	= $user->authorise('edit',			'com_menus');
-			$canCheckin	= $user->authorise('manage',		'com_checkin') || $item->checked_out==$user->get('id')|| $item->checked_out==0;
-			$canChange	= $user->authorise('edit.state',	'com_menus') && $canCheckin;
+			$canCreate	= $user->authorise('core.create',		'com_menus');
+			$canEdit	= $user->authorise('core.edit',			'com_menus');
+			$canCheckin	= $user->authorise('core.manage',		'com_checkin') || $item->checked_out==$user->get('id')|| $item->checked_out==0;
+			$canChange	= $user->authorise('core.edit.state',	'com_menus') && $canCheckin;
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
@@ -196,7 +196,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-<?php //Load the batch processing form. ?>
+	<?php //Load the batch processing form. ?>
 	<?php echo $this->loadTemplate('batch'); ?>
 
 	<div>

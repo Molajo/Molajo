@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -62,15 +62,15 @@ class UsersViewUser extends JView
 		$isNew	= ($this->item->id == 0);
 		$isProfile = $this->item->id == $user->id;
 		JToolBarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_USER_TITLE' : ($isProfile ? 'COM_USERS_VIEW_EDIT_PROFILE_TITLE' : 'COM_USERS_VIEW_EDIT_USER_TITLE')), $isNew ? 'user-add' : ($isProfile ? 'user-profile' : 'user-edit'));
-		if ($canDo->get('edit')||$canDo->get('edit.own')||$canDo->get('create')) {
-			JToolBarHelper::apply('user.apply','JTOOLBAR_APPLY');
-			JToolBarHelper::save('user.save','JTOOLBAR_SAVE');
+		if ($canDo->get('core.edit')||$canDo->get('core.edit.own')||$canDo->get('core.create')) {
+			JToolBarHelper::apply('user.apply');
+			JToolBarHelper::save('user.save');
 		}
-		if ($canDo->get('create')&&$canDo->get('manage')) {
-			JToolBarHelper::custom('user.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+		if ($canDo->get('core.create')&&$canDo->get('core.manage')) {
+			JToolBarHelper::save2new('user.save2new');
 		}
 		if (empty($this->item->id))  {
-			JToolBarHelper::cancel('user.cancel','JTOOLBAR_CANCEL');
+			JToolBarHelper::cancel('user.cancel');
 		} else {
 			JToolBarHelper::cancel('user.cancel', 'JTOOLBAR_CLOSE');
 		}

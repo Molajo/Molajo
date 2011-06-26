@@ -274,7 +274,7 @@ class MolajoACL
             }
         }
 
-        $default_class = 'CoreACL';
+        $default_class = 'MolajoACLCore';
         if (class_exists($default_class)) {
             if (method_exists($default_class,$method)) {
                 return $default_class;

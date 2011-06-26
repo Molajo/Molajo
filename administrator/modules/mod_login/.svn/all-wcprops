@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/joomla/!svn/ver/21568/development/trunk/administrator/modules/mod_login
+END
+mod_login.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/joomla/!svn/ver/21506/development/trunk/administrator/modules/mod_login/mod_login.xml
+END
+mod_login.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/joomla/!svn/ver/20196/development/trunk/administrator/modules/mod_login/mod_login.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/joomla/!svn/ver/21568/development/trunk/administrator/modules/mod_login/index.html
+END
+helper.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/joomla/!svn/ver/20502/development/trunk/administrator/modules/mod_login/helper.php
+END

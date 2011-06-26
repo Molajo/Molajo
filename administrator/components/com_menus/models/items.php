@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: items.php 21006 2011-03-21 06:20:03Z infograf768 $
+ * @version		$Id: items.php 21590 2011-06-20 20:13:43Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -160,8 +160,9 @@ class MenusModelItems extends JModelList
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$user	= JFactory::getUser();
 
 		// Select all fields from the table.
 		$query->select($this->getState('list.select', 'a.*'));
@@ -227,6 +228,13 @@ class MenusModelItems extends JModelList
 			$query->where('a.access = '.(int) $access);
 		}
 
+		// Implement View Level Access
+		if (!$user->authorise('core.admin'))
+		{
+		    $groups	= implode(',', $user->getAuthorisedViewLevels());
+			$query->where('a.access IN ('.$groups.')');
+		}
+                
 		// Filter on the level.
 		if ($level = $this->getState('filter.level')) {
 			$query->where('a.level <= '.(int) $level);

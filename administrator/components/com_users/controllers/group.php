@@ -28,7 +28,7 @@ class UsersControllerGroup extends JControllerForm
 	/**
 	 * Method to check if you can save a new or existing record.
 	 *
-	 * Overrides JControllerForm::allowSave to check the admin permission.
+	 * Overrides JControllerForm::allowSave to check the core.admin permission.
 	 *
 	 * @param	array	An array of input data.
 	 * @param	string	The name of the key for the primary key.
@@ -38,7 +38,7 @@ class UsersControllerGroup extends JControllerForm
 	 */
 	protected function allowSave($data, $key = 'id')
 	{
-		return (JFactory::getUser()->authorise('admin', $this->option) && parent::allowSave($data, $key));
+		return (JFactory::getUser()->authorise('core.admin', $this->option) && parent::allowSave($data, $key));
 	}
 
 	/**
@@ -55,9 +55,9 @@ class UsersControllerGroup extends JControllerForm
 	protected function allowEdit($data = array(), $key = 'id')
 	{
 		// Check if this group is a Super Admin
-		if (JAccess::checkGroup($data[$key], 'admin')) {
+		if (JAccess::checkGroup($data[$key], 'core.admin')) {
 			// If I'm not a Super Admin, then disallow the edit.
-			if (!JFactory::getUser()->authorise('admin')) {
+			if (!JFactory::getUser()->authorise('core.admin')) {
 				return false;
 			}
 		}

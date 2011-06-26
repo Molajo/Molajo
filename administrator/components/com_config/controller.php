@@ -53,7 +53,7 @@ class ConfigController extends JController
 				$model = $this->getModel($vName);
 
 				// Access check.
-				if (!JFactory::getUser()->authorise('admin', $model->getState('component.option'))) {
+				if (!JFactory::getUser()->authorise('core.admin', $model->getState('component.option'))) {
 					return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 				}
 

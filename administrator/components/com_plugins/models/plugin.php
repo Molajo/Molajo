@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: plugin.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: plugin.php 21593 2011-06-21 02:45:51Z dextercowley $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -141,7 +141,7 @@ class PluginsModelPlugin extends JModelAdmin
 
 			// Convert the params field to an array.
 			$registry = new JRegistry;
-			$registry->loadJSON($table->params);
+			$registry->loadString($table->params);
 			$this->_cache[$pk]->params = $registry->toArray();
 
 			// Get the plugin XML.

@@ -20,17 +20,26 @@ class MolajoFileHelper
      */
     function requireClassFile ($file, $class)
     {
-        if (substr($file, 0, 4) == 'HOLD') {
+        if (substr(basename($file), 0, 4) == 'HOLD') {
             return;
         }
         if (class_exists($class)) {
+            return;
+        }
+        if (file_exists($file)) {
+            JLoader::register($class, $file);
         } else {
-            if (file_exists($file)) {
-                JLoader::register($class, $file);
-            } else {
-                JError::raiseNotice(500, JText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.$class.' '.$file), 'error');
-                return false;
-            }
+            JError::raiseNotice(500, JText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS'.' '.$file.' '.$class), 'error');
+            return false;
+        }
+
+// echo 'class exists '.$class.' and file '.$file.'<br />';
+        if (class_exists($class)) {
+// echo 'class exists '.$class.' and file '.$file.' successfully <br />';
+            return;
+        } else {
+            JError::raiseNotice(500, JText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');
+            return false;
         }
     }
 }

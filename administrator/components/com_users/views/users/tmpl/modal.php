@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: modal.php 21148 2011-04-14 17:30:08Z ian $
+ * @version		$Id: modal.php 21503 2011-06-09 22:58:13Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_users
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
+
 $field		= JRequest::getCmd('field');
 $function	= 'jSelectUser_'.$field;
 $listOrder	= $this->escape($this->state->get('list.ordering'));

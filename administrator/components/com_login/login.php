@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Require the base controller
-//jimport('joomla.application.component.controller');
+jimport('joomla.application.component.controller');
 
 $task = JRequest::getCmd('task');
 if ($task != 'login' && $task != 'logout')
@@ -21,6 +21,5 @@ if ($task != 'login' && $task != 'logout')
 }
 
 $controller	= JController::getInstance('Login');
-
 $controller->execute($task);
 $controller->redirect();

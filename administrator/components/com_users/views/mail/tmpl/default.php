@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 20417 2011-01-23 16:47:27Z infograf768 $
+ * @version		$Id: default.php 21546 2011-06-15 23:13:47Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_users
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -44,6 +44,9 @@ JFactory::getDocument()->addScriptDeclaration($script);
 
 			<li><?php echo $this->form->getLabel('mode'); ?>
 			<?php echo $this->form->getInput('mode'); ?></li>
+			
+			<li><?php echo $this->form->getLabel('disabled'); ?>
+			<?php echo $this->form->getInput('disabled'); ?></li>
 
 			<li><?php echo $this->form->getLabel('group'); ?>
 			<?php echo $this->form->getInput('group'); ?></li>

@@ -176,7 +176,7 @@ class LanguagesModelLanguages extends JModelList
 		}
 
 		// Clean the cache.
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}

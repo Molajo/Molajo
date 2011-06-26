@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: edit.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: edit.php 21503 2011-06-09 22:58:13Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_categories
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -20,7 +20,8 @@ JHtml::_('behavior.keepalive');
 ?>
 
 <script type="text/javascript">
-	Joomla.submitbutton = function(task) {
+	Joomla.submitbutton = function(task)
+	{
 		if (task == 'category.cancel' || document.formvalidator.isValid(document.id('item-form'))) {
 			<?php echo $this->form->getField('description')->save(); ?>
 			Joomla.submitform(task, document.getElementById('item-form'));
@@ -30,7 +31,7 @@ JHtml::_('behavior.keepalive');
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_categories&extension='.JRequest::getCmd('extension', 'com_content').'&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<form action="<?php echo JRoute::_('index.php?option=com_categories&extension='.JRequest::getCmd('extension', 'com_articles').'&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('COM_CATEGORIES_FIELDSET_DETAILS');?></legend>
@@ -52,7 +53,8 @@ JHtml::_('behavior.keepalive');
 
 				<li><?php echo $this->form->getLabel('access'); ?>
 				<?php echo $this->form->getInput('access'); ?></li>
-				<?php if ($this->canDo->get('admin')): ?>
+
+				<?php if ($this->canDo->get('core.admin')): ?>
 					<li><span class="faux-label"><?php echo JText::_('JGLOBAL_ACTION_PERMISSIONS_LABEL'); ?></span>
 					<div class="button2-left"><div class="blank">
 		      			<button type="button" onclick="document.location.href='#access-rules';">
@@ -60,6 +62,7 @@ JHtml::_('behavior.keepalive');
 		      		</div></div>
 		    		</li>
 				<?php endif; ?>
+
 				<li><?php echo $this->form->getLabel('language'); ?>
 				<?php echo $this->form->getInput('language'); ?></li>
 
@@ -87,16 +90,17 @@ JHtml::_('behavior.keepalive');
 		<?php echo JHtml::_('sliders.end'); ?>
 	</div>
 	<div class="clr"></div>
-	<?php if ($this->canDo->get('admin')): ?>
+
+	<?php if ($this->canDo->get('core.admin')): ?>
 		<div  class="width-100 fltlft">
 
 			<?php echo JHtml::_('sliders.start','permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
 
 			<?php echo JHtml::_('sliders.panel',JText::_('COM_CATEGORIES_FIELDSET_RULES'), 'access-rules'); ?>
-				<fieldset class="panelform">
-					<?php echo $this->form->getLabel('rules'); ?>
-					<?php echo $this->form->getInput('rules'); ?>
-				</fieldset>
+			<fieldset class="panelform">
+				<?php echo $this->form->getLabel('rules'); ?>
+				<?php echo $this->form->getInput('rules'); ?>
+			</fieldset>
 
 			<?php echo JHtml::_('sliders.end'); ?>
 		</div>

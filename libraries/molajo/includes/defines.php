@@ -23,11 +23,14 @@ define('JPATH_MANIFESTS',		JPATH_ADMINISTRATOR.'/manifests');
 /** JPATH_CONFIGURATION can be moved to hide the configuration.php file */
 define('JPATH_CONFIGURATION',	JPATH_ROOT);
 
-/** legacy/* */
+/** legacy  */
 define('JPATH_LIBRARIES',		JPATH_ROOT.'/libraries');
 
 /** overrides */
 define('OVERRIDES_LIBRARY',		JPATH_ROOT.'/libraries/overrides');
+
+/** joomla */
+define('JOOMLA_LIBRARY',		JPATH_ROOT.'/libraries/joomla');
 
 /** Configuration Fields **/
 define('MOLAJO_CONFIG_OPTION_ID_FIELDS', 1);

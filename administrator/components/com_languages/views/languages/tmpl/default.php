@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21182 2011-04-22 13:46:15Z infograf768 $
+ * @version		$Id: default.php 21595 2011-06-21 02:51:29Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	com_languages
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
-JHtml::_('script','system/multiselect.js',false,true);
+JHtml::_('behavior.multiselect');
 
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
@@ -48,7 +48,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JText::_('JGRID_HEADING_ROW_NUMBER'); ?>
 				</th>
 				<th width="20">
-					<input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="title">
 					<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
@@ -86,9 +86,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<tbody>
 		<?php
 		foreach ($this->items as $i => $item) :
-			$canCreate	= $user->authorise('create',		'com_languages');
-			$canEdit	= $user->authorise('edit',			'com_languages');
-			$canChange	= $user->authorise('edit.state',	'com_languages');
+			$canCreate	= $user->authorise('core.create',		'com_languages');
+			$canEdit	= $user->authorise('core.edit',			'com_languages');
+			$canChange	= $user->authorise('core.edit.state',	'com_languages');
 		?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td>
@@ -130,7 +130,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php endif;?>
 				</td>
 				<td class="center">
-					<?php echo $item->lang_id; ?>
+					<?php echo $this->escape($item->lang_id); ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>

@@ -342,7 +342,7 @@ class UsersModelReset extends JModelForm
 		}
 
 		// Make sure the user isn't a Super Admin.
-		if ($user->authorise('admin')) {
+		if ($user->authorise('core.admin')) {
 			$this->setError(JText::_('COM_USERS_REMIND_SUPERADMIN_ERROR'));
 			return false;
 		}

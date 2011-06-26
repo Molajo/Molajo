@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: edit.php 20330 2011-01-15 18:57:08Z infograf768 $
+ * @version		$Id: edit.php 21529 2011-06-11 22:17:15Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_modules
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -84,8 +84,7 @@ JFactory::getDocument()->addScriptDeclaration($script);
 
 			<li><?php echo $this->form->getLabel('client_id'); ?>
 			<input type="text" size="35" value="<?php echo $this->item->client_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" />
-			<?php echo $this->form->getInput('client_id'); ?>
-			</li>
+			<?php echo $this->form->getInput('client_id'); ?></li>
 			</ul>
 			<div class="clr"></div>
 			<?php if ($this->item->xml) : ?>

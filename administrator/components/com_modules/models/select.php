@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: select.php 21097 2011-04-07 15:38:03Z dextercowley $
+ * @version		$Id: select.php 21657 2011-06-23 07:04:38Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_modules
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -93,6 +93,9 @@ class ModulesModelSelect extends JModelList
 		// Filter by client.
 		$clientId = $this->getState('filter.client_id');
 		$query->where('a.client_id = '.(int) $clientId);
+
+		// Filter by enabled
+		$query->where('a.enabled = 1');
 
 		// Add the list ordering clause.
 		$query->order($db->getEscaped($this->getState('list.ordering', 'a.ordering')).' '.$db->getEscaped($this->getState('list.direction', 'ASC')));

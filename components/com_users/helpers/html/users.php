@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: users.php 21321 2011-05-11 01:05:59Z dextercowley $
+ * @version		$Id: users.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Site
  * @subpackage	com_users
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -44,10 +44,10 @@ abstract class JHtmlUsers
 		}
 		else
 		{
-			$version = new MolajoVersion();
+			$version = new JVersion();
 			$jver = explode( '.', $version->getShortVersion() );
 
-			$pathToXml = JPATH_ADMINISTRATOR.'/help/helpsites-'.$jver[0].$jver[1].'.xml';
+			$pathToXml = JPATH_ADMINISTRATOR.'/help/helpsites.xml';
 
 			$text = $value;
 			if (!empty($pathToXml) && $xml = JFactory::getXML($pathToXml))
@@ -166,9 +166,9 @@ abstract class JHtmlUsers
 			if ($title)
 			{
 					$lang->load("plg_editors_$value.sys", JPATH_ADMINISTRATOR, null, false, false)
-				||	$lang->load("plg_editors_$value.sys", JPATH_PLUGINS .DS.'editors'.DS.$value, null, false, false)
+				||	$lang->load("plg_editors_$value.sys", JPATH_PLUGINS . '/editors/' . $value, null, false, false)
 				||	$lang->load("plg_editors_$value.sys", JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-				||	$lang->load("plg_editors_$value.sys", JPATH_PLUGINS .DS.'editors'.DS.$value, $lang->getDefault(), false, false);
+				||	$lang->load("plg_editors_$value.sys", JPATH_PLUGINS . '/editors/' . $value, $lang->getDefault(), false, false);
 				$lang->load($title.'.sys');
 				return JText::_($title);
 			}

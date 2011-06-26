@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -53,27 +53,27 @@ class UsersViewUsers extends JView
 
 		JToolBarHelper::title(JText::_('COM_USERS_VIEW_USERS_TITLE'), 'user');
 
-		if ($canDo->get('create')) {
-			JToolBarHelper::custom('user.add', 'new.png', 'new_f2.png','JTOOLBAR_NEW', false);
+		if ($canDo->get('core.create')) {
+			JToolBarHelper::addNew('user.add');
 		}
-		if ($canDo->get('edit')) {
-			JToolBarHelper::custom('user.edit', 'edit.png', 'edit_f2.png','JTOOLBAR_EDIT', true);
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::editList('user.edit');
 		}
 
-		if ($canDo->get('edit.state')) {
+		if ($canDo->get('core.edit.state')) {
 			JToolBarHelper::divider();
-			JToolBarHelper::custom('users.activate', 'publish.png', 'publish_f2.png', 'COM_USERS_TOOLBAR_ACTIVATE', true);
-			JToolBarHelper::custom('users.block', 'unpublish.png', 'unpublish_f2.png', 'COM_USERS_TOOLBAR_BLOCK', true);
+			JToolBarHelper::publish('users.activate', 'COM_USERS_TOOLBAR_ACTIVATE');
+			JToolBarHelper::unpublish('users.block', 'COM_USERS_TOOLBAR_BLOCK');
 			JToolBarHelper::custom('users.unblock', 'unblock.png', 'unblock_f2.png', 'COM_USERS_TOOLBAR_UNBLOCK', true);
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('delete')) {
-			JToolBarHelper::deleteList('', 'users.delete','JTOOLBAR_DELETE');
+		if ($canDo->get('core.delete')) {
+			JToolBarHelper::deleteList('', 'users.delete');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_users');
 			JToolBarHelper::divider();
 		}

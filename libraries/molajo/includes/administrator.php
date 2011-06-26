@@ -149,7 +149,7 @@ class MolajoAdministrator extends JApplication
 			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
-			$contents = MolajoComponentHelper::renderComponent($component);
+			$contents = JComponentHelper::renderComponent($component);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.
@@ -243,7 +243,7 @@ krumo::classes();
 			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
 			$this->setUserState('application.lang', $lang );
 
-			JAdministrator::purgeMessages();
+			MolajoAdministrator::purgeMessages();
 		}
 
 		return $result;

@@ -15,7 +15,7 @@ defined('JPATH_BASE') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class JFormFieldParameters extends JFormField
+class MolajoFormFieldParameters extends JFormField
 {
 	/**
 	 * The form field type.

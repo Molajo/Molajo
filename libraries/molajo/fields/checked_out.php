@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @version     $id: filterChecked_out.php

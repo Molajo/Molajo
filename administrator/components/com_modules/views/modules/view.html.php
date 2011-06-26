@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21656 2011-06-23 05:57:14Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -54,37 +54,37 @@ class ModulesViewModules extends JView
 
 		JToolBarHelper::title(JText::_('COM_MODULES_MANAGER_MODULES'), 'module.png');
 
-		if ($canDo->get('create')) {
+		if ($canDo->get('core.create')) {
 			//JToolBarHelper::addNew('module.add');
 			$bar = JToolBar::getInstance('toolbar');
 			$bar->appendButton('Popup', 'new', 'JTOOLBAR_NEW', 'index.php?option=com_modules&amp;view=select&amp;tmpl=component', 850, 400);
 		}
 
-		if ($canDo->get('edit')) {
-			JToolBarHelper::editList('module.edit','JTOOLBAR_EDIT');
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::editList('module.edit');
 		}
 
-		if ($canDo->get('create')) {
-			JToolBarHelper::custom('modules.duplicate', 'copy.png', 'copy_f2.png','JTOOLBAR_DUPLICATE', true);
+		if ($canDo->get('core.create')) {
+			JToolBarHelper::custom('modules.duplicate', 'copy.png', 'copy_f2.png', 'JTOOLBAR_DUPLICATE', true);
 		}
 
-		if ($canDo->get('edit.state')) {
+		if ($canDo->get('core.edit.state')) {
 			JToolBarHelper::divider();
-			JToolBarHelper::custom('modules.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('modules.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+			JToolBarHelper::publish('modules.publish');
+			JToolBarHelper::unpublish('modules.unpublish');
 			JToolBarHelper::divider();
-			JToolBarHelper::custom('modules.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+			JToolBarHelper::checkin('modules.checkin');
 		}
 
-		if ($state->get('filter.state') == -2 && $canDo->get('delete')) {
-			JToolBarHelper::deleteList('', 'modules.delete','JTOOLBAR_EMPTY_TRASH');
+		if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
+			JToolBarHelper::deleteList('', 'modules.delete', 'JTOOLBAR_EMPTY_TRASH');
 			JToolBarHelper::divider();
-		} else if ($canDo->get('edit.state')) {
-			JToolBarHelper::trash('modules.trash','JTOOLBAR_TRASH');
+		} else if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::trash('modules.trash');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_modules');
 			JToolBarHelper::divider();
 		}

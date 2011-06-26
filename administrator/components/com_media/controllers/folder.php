@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: folder.php 20808 2011-02-21 19:55:35Z dextercowley $
+ * @version		$Id: folder.php 21518 2011-06-10 21:38:12Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -45,7 +45,7 @@ class MediaControllerFolder extends JController
 			$this->setRedirect('index.php?option=com_media&folder='.$folder);
 		}
 
-		if (!$user->authorise('delete','com_media'))
+		if (!$user->authorise('core.delete','com_media'))
 		{
 			// User is not authorised to delete
 			JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
@@ -70,7 +70,7 @@ class MediaControllerFolder extends JController
 						continue;
 					}
 
-					$fullPath = JPath::clean(COM_MEDIA_BASE.DS.$folder.DS.$path);
+					$fullPath = JPath::clean(COM_MEDIA_BASE . '/' . $folder . '/' . $path);
 					$object_file = new JObject(array('filepath' => $fullPath));
 					if (is_file($fullPath))
 					{
@@ -139,7 +139,7 @@ class MediaControllerFolder extends JController
 
 		if (strlen($folder) > 0)
 		{
-			if (!$user->authorise('create','com_media'))
+			if (!$user->authorise('core.create','com_media'))
 			{
 				// User is not authorised to delete
 				JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_CREATE_NOT_PERMITTED'));
@@ -157,7 +157,7 @@ class MediaControllerFolder extends JController
 				return false;
 			}
 
-			$path = JPath::clean(COM_MEDIA_BASE.DS.$parent.DS.$folder);
+			$path = JPath::clean(COM_MEDIA_BASE . '/' . $parent . '/' . $folder);
 			if (!is_dir($path) && !is_file($path))
 			{
 				// Trigger the onContentBeforeSave event.
@@ -173,7 +173,7 @@ class MediaControllerFolder extends JController
 
 				JFolder::create($path);
 				$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-				JFile::write($path.DS."index.html", $data);
+				JFile::write($path . "/index.html", $data);
 
 				// Trigger the onContentAfterSave event.
 				$dispatcher->trigger('onContentAfterSave', array('com_media.folder', &$object_file, true));

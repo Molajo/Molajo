@@ -601,6 +601,7 @@ abstract class JFactory
 		}
 
 		$db->debug($debug);
+
 		return $db;
 	}
 

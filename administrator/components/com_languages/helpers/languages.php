@@ -53,7 +53,7 @@ class LanguagesHelper
 		$assetName	= 'com_languages';
 
 		$actions = array(
-			'admin', 'manage', 'create', 'edit', 'edit.state', 'delete'
+			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete'
 		);
 
 		foreach ($actions as $action) {

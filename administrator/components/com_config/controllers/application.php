@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: application.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: application.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_config
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -42,7 +42,7 @@ class ConfigControllerApplication extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('admin'))
+		if (!JFactory::getUser()->authorise('core.admin'))
 		{
 			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
@@ -125,7 +125,7 @@ class ConfigControllerApplication extends JController
 	function cancel()
 	{
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('admin', 'com_config'))
+		if (!JFactory::getUser()->authorise('core.admin', 'com_config'))
 		{
 			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
@@ -150,9 +150,9 @@ class ConfigControllerApplication extends JController
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 
-		if (($data = file_get_contents('http://help.joomla.org/helpsites-16.xml')) === false) {
+		if (($data = file_get_contents('http://help.joomla.org/helpsites.xml')) === false) {
 			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_ERROR_HELPREFRESH_FETCH'), 'error');
-		} else if (!JFile::write(JPATH_BASE.DS.'help'.DS.'helpsites-16.xml', $data)) {
+		} else if (!JFile::write(JPATH_BASE . '/help/helpsites.xml', $data)) {
 			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_ERROR_HELPREFRESH_ERROR_STORE'), 'error');
 		} else {
 			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_HELPREFRESH_SUCCESS'));
@@ -168,7 +168,7 @@ class ConfigControllerApplication extends JController
 	public function removeroot()
 	{
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('admin')) {
+		if (!JFactory::getUser()->authorise('core.admin')) {
 			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}

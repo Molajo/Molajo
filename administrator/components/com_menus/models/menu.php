@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: menu.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: menu.php 21593 2011-06-21 02:45:51Z dextercowley $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -44,7 +44,7 @@ class MenusModelMenu extends JModelForm
 	{
 		$user = JFactory::getUser();
 
-		return $user->authorise('delete', 'com_menus.menu.'.(int) $record->id);
+		return $user->authorise('core.delete', 'com_menus.menu.'.(int) $record->id);
 	}
 
 	/**
@@ -59,7 +59,7 @@ class MenusModelMenu extends JModelForm
 	{
 		$user = JFactory::getUser();
 
-		return $user->authorise('edit.state', 'com_menus.menu.'.(int) $record->id);
+		return $user->authorise('core.edit.state', 'com_menus.menu.'.(int) $record->id);
 	}
 
 	/**
@@ -203,7 +203,7 @@ class MenusModelMenu extends JModelForm
 		$this->setState('menu.id', $table->id);
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -235,7 +235,7 @@ class MenusModelMenu extends JModelForm
 		}
 
 		// Clean the cache
-		// $this->cleanCache();
+		$this->cleanCache();
 
 		return true;
 	}
@@ -263,7 +263,7 @@ class MenusModelMenu extends JModelForm
 
 		foreach ($modules as &$module) {
 			$params = new JRegistry;
-			$params->loadJSON($module->params);
+			$params->loadString($module->params);
 
 			$menuType = $params->get('menutype');
 			if (!isset($result[$menuType])) {
@@ -281,7 +281,7 @@ class MenusModelMenu extends JModelForm
 	 * @since	1.6
 	 */
 	function cleanCache() {
-//		parent::cleanCache('com_modules');
-//		parent::cleanCache('mod_menu');
+		parent::cleanCache('com_modules');
+		parent::cleanCache('mod_menu');
 	}
 }

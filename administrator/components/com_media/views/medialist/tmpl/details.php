@@ -20,7 +20,7 @@ $user = JFactory::getUser();
 			<th><?php echo JText::_('COM_MEDIA_NAME'); ?></th>
 			<th width="8%"><?php echo JText::_('COM_MEDIA_PIXEL_DIMENSIONS'); ?></th>
 			<th width="8%"><?php echo JText::_('COM_MEDIA_FILESIZE'); ?></th>
-		<?php if ($user->authorise('delete','com_media')):?>
+		<?php if ($user->authorise('core.delete','com_media')):?>
 			<th width="8%"><?php echo JText::_('JACTION_DELETE'); ?></th>
 		<?php endif;?>
 		</tr>

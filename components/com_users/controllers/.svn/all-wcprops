@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/joomla/!svn/ver/21568/development/trunk/components/com_users/controllers
+END
+registration.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/joomla/!svn/ver/20196/development/trunk/components/com_users/controllers/registration.php
+END
+profile.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/joomla/!svn/ver/20196/development/trunk/components/com_users/controllers/profile.php
+END
+user.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/20899/development/trunk/components/com_users/controllers/user.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/21568/development/trunk/components/com_users/controllers/index.html
+END
+reset.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/joomla/!svn/ver/20196/development/trunk/components/com_users/controllers/reset.php
+END
+remind.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/20196/development/trunk/components/com_users/controllers/remind.php
+END

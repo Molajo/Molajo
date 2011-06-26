@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!-- $Id: mail.xml 16472 2010-04-26 04:44:48Z infograf768 $ -->
+	<!-- $Id: mail.xml 21546 2011-06-15 23:13:47Z chdemko $ -->
 <form>
 	<fieldset>
 
@@ -12,6 +12,12 @@
 		<field name="mode" type="checkbox"
 			description="COM_USERS_MAIL_FIELD_SEND_IN_HTML_MODE_DESC"
 			label="COM_USERS_MAIL_FIELD_SEND_IN_HTML_MODE_LABEL"
+			value="1"
+		/>
+		
+		<field name="disabled" type="checkbox"
+			description="COM_USERS_MAIL_FIELD_EMAIL_DISABLED_USERS_DESC"
+			label="COM_USERS_MAIL_FIELD_EMAIL_DISABLED_USERS_LABEL"
 			value="1"
 		/>
 

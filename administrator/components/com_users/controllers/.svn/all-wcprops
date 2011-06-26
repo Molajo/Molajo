@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/joomla/!svn/ver/21568/development/trunk/administrator/components/com_users/controllers
+END
+mail.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/joomla/!svn/ver/20196/development/trunk/administrator/components/com_users/controllers/mail.php
+END
+users.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/joomla/!svn/ver/20228/development/trunk/administrator/components/com_users/controllers/users.php
+END
+user.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/joomla/!svn/ver/20228/development/trunk/administrator/components/com_users/controllers/user.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/joomla/!svn/ver/21568/development/trunk/administrator/components/com_users/controllers/index.html
+END
+levels.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/joomla/!svn/ver/20228/development/trunk/administrator/components/com_users/controllers/levels.php
+END
+group.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/joomla/!svn/ver/21320/development/trunk/administrator/components/com_users/controllers/group.php
+END
+config.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/joomla/!svn/ver/20196/development/trunk/administrator/components/com_users/controllers/config.php
+END
+groups.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/joomla/!svn/ver/20228/development/trunk/administrator/components/com_users/controllers/groups.php
+END
+level.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/joomla/!svn/ver/20232/development/trunk/administrator/components/com_users/controllers/level.php
+END

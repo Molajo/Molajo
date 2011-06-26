@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21020 2011-03-27 06:52:01Z infograf768 $
+ * @version		$Id: default.php 21663 2011-06-23 13:51:35Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_categories
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.DS.'helpers'.DS.'html');
+JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
-JHtml::_('script','system/multiselect.js',false,true);
+JHtml::_('behavior.multiselect');
 
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
@@ -32,8 +32,8 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
 			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
-		<div class="filter-select fltrt">
 
+		<div class="filter-select fltrt">
 			<select name="filter_level" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('COM_CATEGORIES_OPTION_SELECT_LEVEL');?></option>
 				<?php echo JHtml::_('select.options', $this->f_levels, 'value', 'text', $this->state->get('filter.level'));?>
@@ -53,7 +53,6 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 				<option value=""><?php echo JText::_('JOPTION_SELECT_LANGUAGE');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'));?>
 			</select>
-
 		</div>
 	</fieldset>
 	<div class="clr"> </div>
@@ -62,7 +61,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 		<thead>
 			<tr>
 				<th width="1%">
-					<input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th>
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
@@ -99,11 +98,11 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 			$originalOrders = array();
 			foreach ($this->items as $i => $item) :
 				$orderkey	= array_search($item->id, $this->ordering[$item->parent_id]);
-				$canEdit	= $user->authorise('edit',			$extension.'.category.'.$item->id);
-				$canCheckin	= $user->authorise('admin', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
-				$canEditOwn	= $user->authorise('edit.own',		$extension.'.category.'.$item->id) && $item->created_user_id == $userId;
-				$canChange	= $user->authorise('edit.state',	$extension.'.category.'.$item->id) && $canCheckin;
-				?>
+				$canEdit	= $user->authorise('core.edit',			$extension.'.category.'.$item->id);
+				$canCheckin	= $user->authorise('core.admin', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+				$canEditOwn	= $user->authorise('core.edit.own',		$extension.'.category.'.$item->id) && $item->created_user_id == $userId;
+				$canChange	= $user->authorise('core.edit.state',	$extension.'.category.'.$item->id) && $canCheckin;
+			?>
 				<tr class="row<?php echo $i % 2; ?>">
 					<td class="center">
 						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
@@ -161,7 +160,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-<?php //Load the batch processing form. ?>
+	<?php //Load the batch processing form. ?>
 	<?php echo $this->loadTemplate('batch'); ?>
 
 	<div>

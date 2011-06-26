@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21032 2011-03-29 16:38:31Z dextercowley $
+ * @version		$Id: default.php 21663 2011-06-23 13:51:35Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_cache
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -30,7 +30,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<?php echo JText::_('COM_CACHE_NUM'); ?>
 			</th>
 			<th width="20">
-				<input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
+				<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 			</th>
 			<th class="title nowrap">
 				<?php echo JHtml::_('grid.sort',  'COM_CACHE_GROUP', 'group', $listDirn, $listOrder); ?>

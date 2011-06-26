@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: edit.php 21020 2011-03-27 06:52:01Z infograf768 $
+ * @version		$Id: edit.php 21529 2011-06-11 22:17:15Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_plugins
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -55,11 +55,14 @@ JHtml::_('behavior.formvalidation');
 			<!-- Plugin metadata -->
 			<?php if ($this->item->xml) : ?>
 				<?php if ($text = trim($this->item->xml->description)) : ?>
+
 					<label id="jform_extdescription-lbl">
 						<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
-						</label>
-						<div class="clr"></div>
-						<span class="readonly plg-desc"><?php echo JText::_($text); ?></span>
+					</label>
+					<div class="clr"></div>
+					<span class="readonly plg-desc">
+						<?php echo JText::_($text); ?>
+					</span>
 
 				<?php endif; ?>
 			<?php else : ?>

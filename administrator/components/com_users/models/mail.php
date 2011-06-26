@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: mail.php 20228 2011-01-10 00:52:54Z eddieajau $
+ * @version		$Id: mail.php 21546 2011-06-15 23:13:47Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -83,6 +83,7 @@ class UsersModelMail extends JModelAdmin
 		$grp		= array_key_exists('group',$data) ? intval($data['group']) : 0;
 		$recurse	= array_key_exists('recurse',$data) ? intval($data['recurse']) : 0;
 		$bcc		= array_key_exists('bcc',$data) ? intval($data['bcc']) : 0;
+		$disabled	= array_key_exists('disabled',$data) ? intval($data['disabled']) : 0;
 		$message_body = array_key_exists('message',$data) ? $data['message'] : '';
 
 		// automatically removes html formatting
@@ -111,6 +112,10 @@ class UsersModelMail extends JModelAdmin
 			} else {
 				$query->where('id IN (' . implode(',', $to) . ')');
 			}
+		}
+
+		if($disabled == 0){
+			$query->where("block = 0");
 		}
 
 		$db->setQuery($query);

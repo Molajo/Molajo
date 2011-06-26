@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: update.php 21439 2011-06-04 13:38:13Z dextercowley $
+ * @version		$Id: update.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_installer
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -39,7 +39,7 @@ class InstallerModelUpdate extends JModelList
 				'type',
 				'folder',
 				'extension_id',
-				'id',
+				'update_id',
 				'update_site_id',
 			);
 		}
@@ -197,7 +197,7 @@ class InstallerModelUpdate extends JModelList
 		$tmp_dest	= $config->get('tmp_path');
 
 		// Unpack the downloaded package file
-		$package	= JInstallerHelper::unpack($tmp_dest.DS.$p_file);
+		$package	= JInstallerHelper::unpack($tmp_dest . '/' . $p_file);
 
 		// Get an installer instance
 		$installer	= JInstaller::getInstance();
@@ -229,7 +229,7 @@ class InstallerModelUpdate extends JModelList
 		// Cleanup the install files
 		if (!is_file($package['packagefile'])) {
 			$config = JFactory::getConfig();
-			$package['packagefile'] = $config->get('tmp_path').DS.$package['packagefile'];
+			$package['packagefile'] = $config->get('tmp_path') . '/' . $package['packagefile'];
 		}
 
 		JInstallerHelper::cleanupInstall($package['packagefile'], $package['extractdir']);

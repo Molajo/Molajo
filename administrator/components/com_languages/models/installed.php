@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: installed.php 21343 2011-05-12 10:56:24Z infograf768 $
+ * @version		$Id: installed.php 21518 2011-06-10 21:38:12Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -167,7 +167,7 @@ class LanguagesModelInstalled extends JModelList
 			$data	= array ();
 
 			foreach($langlist as $lang){
-				$file = $path.DS.$lang.DS.$lang.'.xml';
+				$file = $path . '/' . $lang . '/' . $lang.'.xml';
 				$info = JApplicationHelper::parseXMLLangMetaFile($file);
 				$row = new JObject();
 				$row->language = $lang;
@@ -317,7 +317,7 @@ class LanguagesModelInstalled extends JModelList
 		}
 
 		// Clean the cache.
-		// $this->cleanCache();
+		$this->cleanCache();
 		$this->cleanCache('_system', 0);
 		$this->cleanCache('_system', 1);
 

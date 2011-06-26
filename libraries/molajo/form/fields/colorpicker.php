@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class JFormFieldColorpicker extends JFormField
+class MolajoFormFieldColorpicker extends JFormField
 {
 	/**
 	 * The form field type.

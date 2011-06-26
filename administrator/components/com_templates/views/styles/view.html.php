@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -55,25 +55,25 @@ class TemplatesViewStyles extends JView
 
 		JToolBarHelper::title(JText::_('COM_TEMPLATES_MANAGER_STYLES'), 'thememanager');
 
-		if ($canDo->get('edit.state')) {
+		if ($canDo->get('core.edit.state')) {
 			JToolBarHelper::makeDefault('styles.setDefault', 'COM_TEMPLATES_TOOLBAR_SET_HOME');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('edit')) {
-			JToolBarHelper::editList('style.edit','JTOOLBAR_EDIT');
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::editList('style.edit');
 		}
-		if ($canDo->get('create') && $isSite) {
+		if ($canDo->get('core.create') && $isSite) {
 			JToolBarHelper::addNew('styles.duplicate', 'JTOOLBAR_DUPLICATE');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('delete') && $isSite) {
-			JToolBarHelper::deleteList('', 'styles.delete','JTOOLBAR_DELETE');
+		if ($canDo->get('core.delete') && $isSite) {
+			JToolBarHelper::deleteList('', 'styles.delete');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_templates');
 			JToolBarHelper::divider();
 		}

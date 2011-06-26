@@ -131,7 +131,7 @@ class MediaViewMedia extends JView
 		JToolBarHelper::title(JText::_('COM_MEDIA'), 'mediamanager.png');
 
 		// Add a delete button
-		if ($user->authorise('delete','com_media'))
+		if ($user->authorise('core.delete','com_media'))
 		{
 			$title = JText::_('JTOOLBAR_DELETE');
 			$dhtml = "<a href=\"#\" onclick=\"MediaManager.submit('folder.delete')\" class=\"toolbar\">
@@ -141,7 +141,7 @@ class MediaViewMedia extends JView
 			JToolBarHelper::divider();
 		}
 		// Add a delete button
-		if ($user->authorise('admin','com_media'))
+		if ($user->authorise('core.admin','com_media'))
 		{
 			JToolBarHelper::preferences('com_media', 450, 800, 'JToolbar_Options', '', 'window.location.reload()');
 			JToolBarHelper::divider();

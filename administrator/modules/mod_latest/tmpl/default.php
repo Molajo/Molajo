@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 21020 2011-03-27 06:52:01Z infograf768 $
+ * @version		$Id: default.php 21482 2011-06-08 00:40:30Z dextercowley $
  * @package		Joomla.Administrator
  * @subpackage	mod_latest
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -31,7 +31,7 @@ defined('_JEXEC') or die;
 	<tbody>
 	<?php foreach ($list as $i=>$item) : ?>
 		<tr>
-			<td>
+			<th scope="row">
 				<?php if ($item->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time); ?>
 				<?php endif; ?>
@@ -42,7 +42,7 @@ defined('_JEXEC') or die;
 				<?php else :
 					echo htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8');
 				endif; ?>
-			</td>
+			</th>
 			<td class="center">
 				<?php echo JHtml::_('jgrid.published', $item->state, $i, '', false); ?>
 			</td>
@@ -58,7 +58,7 @@ defined('_JEXEC') or die;
 <?php else : ?>
 	<tbody>
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				<p class="noresults"><?php echo JText::_('MOD_LATEST_NO_MATCHING_RESULTS');?></p>
 			</td>
 		</tr>

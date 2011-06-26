@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -56,19 +56,19 @@ class MenusViewMenus extends JView
 
 		JToolBarHelper::title(JText::_('COM_MENUS_VIEW_MENUS_TITLE'), 'menumgr.png');
 
-		if ($canDo->get('create')) {
-			JToolBarHelper::custom('menu.add', 'new.png', 'new_f2.png', 'JTOOLBAR_NEW', false);
+		if ($canDo->get('core.create')) {
+			JToolBarHelper::addNew('menu.add');
 		}
-		if ($canDo->get('edit')) {
-			JToolBarHelper::custom('menu.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::editList('menu.edit');
 		}
-		if ($canDo->get('delete')) {
+		if ($canDo->get('core.delete')) {
 			JToolBarHelper::divider();
-			JToolBarHelper::deleteList('', 'menus.delete','JTOOLBAR_DELETE');
+			JToolBarHelper::deleteList('', 'menus.delete');
 		}
 
 		JToolBarHelper::custom('menus.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::preferences('com_menus');
 		}

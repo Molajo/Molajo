@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_installer
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -62,15 +62,15 @@ class InstallerViewManage extends InstallerViewDefault
 	protected function addToolbar()
 	{
 		$canDo	= InstallerHelper::getActions();
-		if ($canDo->get('edit.state')) {
-			JToolBarHelper::custom('manage.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_ENABLE', true);
-			JToolBarHelper::custom('manage.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_DISABLE', true);
+		if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::publish('manage.publish', 'JTOOLBAR_ENABLE');
+			JToolBarHelper::unpublish('manage.unpublish', 'JTOOLBAR_DISABLE');
 			JToolBarHelper::divider();
 		}
-		JToolBarHelper::custom('manage.refresh', 'refresh', 'refresh','JTOOLBAR_REFRESH_CACHE',true);
+		JToolBarHelper::custom('manage.refresh', 'refresh', 'refresh', 'JTOOLBAR_REFRESH_CACHE',true);
 		JToolBarHelper::divider();
-		if ($canDo->get('delete')) {
-			JToolBarHelper::deleteList('', 'manage.remove','JTOOLBAR_UNINSTALL');
+		if ($canDo->get('core.delete')) {
+			JToolBarHelper::deleteList('', 'manage.remove', 'JTOOLBAR_UNINSTALL');
 			JToolBarHelper::divider();
 		}
 		parent::addToolbar();

@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class JFormFieldExtension extends JFormFieldList
+class MolajoFormFieldExtension extends JFormFieldList
 {
 	/**
 	 * The form field type.

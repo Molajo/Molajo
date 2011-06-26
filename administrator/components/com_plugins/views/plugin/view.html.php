@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21097 2011-04-07 15:38:03Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -57,9 +57,9 @@ class PluginsViewPlugin extends JView
 		JToolBarHelper::title(JText::sprintf('COM_PLUGINS_MANAGER_PLUGIN', JText::_($this->item->name)), 'plugin');
 
 		// If not checked out, can save the item.
-		if ($canDo->get('edit')) {
-			JToolBarHelper::apply('plugin.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('plugin.save', 'JTOOLBAR_SAVE');
+		if ($canDo->get('core.edit')) {
+			JToolBarHelper::apply('plugin.apply');
+			JToolBarHelper::save('plugin.save');
 		}
 		JToolBarHelper::cancel('plugin.cancel', 'JTOOLBAR_CLOSE');
 		JToolBarHelper::divider();

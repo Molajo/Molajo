@@ -8,7 +8,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-JModel::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_articles/models', 'ContentModel');
+JModel::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_content/models', 'ContentModel');
 
 jimport('joomla.application.categories');
 
@@ -31,18 +31,12 @@ abstract class modPopularHelper
 		// Initialise variables
 		$user = JFactory::getuser();
 
-/**
- *  Molajo Hack Begins: ALS
- */
 		// Get an instance of the generic articles model
-		$model = JModel::getInstance('Things', 'ThingsModel', array('ignore_request' => true));
+		$model = JModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
 
 		// Set List SELECT
- 		$model->setState('list.select', 'a.id, a.title, a.checked_out, a.checked_out_time, ' .
-				' a.access, a.created, a.created_by, a.created_by_alias, a.featured, a.state');
-/**
- *  Molajo Hack Ends
- */
+		$model->setState('list.select', 'a.id, a.title, a.checked_out, a.checked_out_time, ' .
+				' a.created, a.hits');
 
 		// Set Ordering filter
 		$model->setState('list.ordering', 'a.hits');
@@ -80,8 +74,8 @@ abstract class modPopularHelper
 
 		// Set the links
 		foreach ($items as &$item) {
-			if ($user->authorise('edit','com_articles.article.'.$item->id)){
-				$item->link = JRoute::_('index.php?option=com_articles&task=article.edit&id='.$item->id);
+			if ($user->authorise('core.edit','com_content.article.'.$item->id)){
+				$item->link = JRoute::_('index.php?option=com_content&task=article.edit&id='.$item->id);
 			} else {
 				$item->link = '';
 			}

@@ -8,13 +8,9 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-return;
+
 // Include dependancies.
 require_once dirname(__FILE__).'/helper.php';
 
 $list = modLatestHelper::getList($params);
-
-// Render the module
-if ($list) {
-    require JModuleHelper::getLayoutPath('mod_latest', $params->get('layout', 'default'));
-}
+require JModuleHelper::getLayoutPath('mod_latest', $params->get('layout', 'default'));

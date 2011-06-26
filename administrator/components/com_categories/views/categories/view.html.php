@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -112,35 +112,35 @@ class CategoriesViewCategories extends JView
 		// Prepare the toolbar.
 		JToolBarHelper::title($title, 'categories '.substr($component,4).($section?"-$section":'').'-categories');
 
-		if ($canDo->get('create')) {
-			 JToolBarHelper::custom('category.add', 'new.png', 'new_f2.png', 'JTOOLBAR_NEW', false);
+		if ($canDo->get('core.create')) {
+			 JToolBarHelper::addNew('category.add');
 		}
 
-		if ($canDo->get('edit' ) || $canDo->get('edit.own')) {
-			JToolBarHelper::custom('category.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);
+		if ($canDo->get('core.edit' ) || $canDo->get('core.edit.own')) {
+			JToolBarHelper::editList('category.edit');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('edit.state')) {
-			JToolBarHelper::custom('categories.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::custom('categories.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+		if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::publish('categories.publish');
+			JToolBarHelper::unpublish('categories.unpublish');
 			JToolBarHelper::divider();
-			JToolBarHelper::archiveList('categories.archive','JTOOLBAR_ARCHIVE');
+			JToolBarHelper::archiveList('categories.archive');
 		}
 
-		if (JFactory::getUser()->authorise('admin')) {
-			JToolBarHelper::custom('categories.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+		if (JFactory::getUser()->authorise('core.admin')) {
+			JToolBarHelper::checkin('categories.checkin');
 		}
 
-		if ($this->state->get('filter.published') == -2 && $canDo->get('delete', $component)) {
-			JToolBarHelper::deleteList('', 'categories.delete','JTOOLBAR_EMPTY_TRASH');
+		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete', $component)) {
+			JToolBarHelper::deleteList('', 'categories.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
-		else if ($canDo->get('edit.state')) {
-			JToolBarHelper::trash('categories.trash','JTOOLBAR_TRASH');
+		else if ($canDo->get('core.edit.state')) {
+			JToolBarHelper::trash('categories.trash');
 			JToolBarHelper::divider();
 		}
 
-		if ($canDo->get('admin')) {
+		if ($canDo->get('core.admin')) {
 			JToolBarHelper::custom('categories.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
 			JToolBarHelper::preferences($component);
 			JToolBarHelper::divider();

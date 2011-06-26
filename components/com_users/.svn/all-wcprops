@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/joomla/!svn/ver/21568/development/trunk/components/com_users
+END
+users.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/joomla/!svn/ver/20196/development/trunk/components/com_users/users.php
+END
+router.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/joomla/!svn/ver/20196/development/trunk/components/com_users/router.php
+END
+controller.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/joomla/!svn/ver/20553/development/trunk/components/com_users/controller.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/joomla/!svn/ver/21568/development/trunk/components/com_users/index.html
+END
+metadata.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/joomla/!svn/ver/16235/development/trunk/components/com_users/metadata.xml
+END

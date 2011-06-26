@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @package		Joomla.Administrator
  * @subpackage	com_modules
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -63,19 +63,19 @@ class ModulesViewModule extends JView
 		JToolBarHelper::title( JText::sprintf('COM_MODULES_MANAGER_MODULE', JText::_($this->item->module)), 'module.png');
 
 		// If not checked out, can save the item.
-		if (!$checkedOut && ($canDo->get('edit') || $canDo->get('create') )) {
-			JToolBarHelper::apply('module.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('module.save', 'JTOOLBAR_SAVE');
+		if (!$checkedOut && ($canDo->get('core.edit') || $canDo->get('core.create') )) {
+			JToolBarHelper::apply('module.apply');
+			JToolBarHelper::save('module.save');
 		}
-		if (!$checkedOut && $canDo->get('create')) {
-			JToolBarHelper::custom('module.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+		if (!$checkedOut && $canDo->get('core.create')) {
+			JToolBarHelper::save2new('module.save2new');
 		}
 			// If an existing item, can save to a copy.
-		if (!$isNew && $canDo->get('create')) {
-			JToolBarHelper::custom('module.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+		if (!$isNew && $canDo->get('core.create')) {
+			JToolBarHelper::save2copy('module.save2copy');
 		}
 		if (empty($this->item->id))  {
-			JToolBarHelper::cancel('module.cancel', 'JTOOLBAR_CANCEL');
+			JToolBarHelper::cancel('module.cancel');
 		} else {
 			JToolBarHelper::cancel('module.cancel', 'JTOOLBAR_CLOSE');
 		}

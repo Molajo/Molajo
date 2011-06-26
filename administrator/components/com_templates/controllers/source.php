@@ -45,7 +45,7 @@ class TemplatesControllerSource extends JController
 	 */
 	protected function allowEdit()
 	{
-		return JFactory::getUser()->authorise('edit', 'com_templates');
+		return JFactory::getUser()->authorise('core.edit', 'com_templates');
 	}
 
 	/**

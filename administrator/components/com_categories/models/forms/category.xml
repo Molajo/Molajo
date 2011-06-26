@@ -193,7 +193,7 @@
 		filter="rules"
 		validate="rules"
 		class="inputbox"
-		component="com_content"
+		component="com_articles"
 		section="category"/>
 
 	<fields name="params">

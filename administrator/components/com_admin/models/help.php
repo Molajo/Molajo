@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: help.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: help.php 21518 2011-06-10 21:38:12Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -80,7 +80,7 @@ class AdminModelHelp extends JModel
 			$lang = JFactory::getLanguage();
 			$this->lang_tag = $lang->getTag();
 			jimport('joomla.filesystem.folder');
-			if (!JFolder::exists(JPATH_BASE . DS . 'help' . DS . $this->lang_tag)) {
+			if (!JFolder::exists(JPATH_BASE . '/help/' . $this->lang_tag)) {
 				$this->lang_tag = 'en-GB'; // use english as fallback
 			}
 
@@ -100,11 +100,11 @@ class AdminModelHelp extends JModel
 			$help_search = $this->getHelpSearch();
 
 			// Get Help files
-			$files = JFolder::files(JPATH_BASE . DS . 'help' . DS . $lang_tag, '\.xml$|\.html$');
+			$files = JFolder::files(JPATH_BASE . '/help/' . $lang_tag, '\.xml$|\.html$');
 			$this->toc = array();
 			foreach($files as $file)
 			{
-				$buffer = file_get_contents(JPATH_BASE . DS . 'help' . DS . $lang_tag . DS . $file);
+				$buffer = file_get_contents(JPATH_BASE . '/help/' . $lang_tag . '/' . $file);
 				if (preg_match('#<title>(.*?)</title>#', $buffer, $m))
 				{
 					$title = trim($m[1]);

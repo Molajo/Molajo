@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: file.php 21320 2011-05-11 01:01:37Z dextercowley $
+ * @version		$Id: file.php 21518 2011-06-10 21:38:12Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -62,7 +62,7 @@ class MediaControllerFile extends JController
 				return false;
 			}
 
-			$filepath = JPath::clean(COM_MEDIA_BASE.DS.$folder.DS.strtolower($file['name']));
+			$filepath = JPath::clean(COM_MEDIA_BASE . '/' . $folder . '/' . strtolower($file['name']));
 
 			// Trigger the onContentBeforeSave event.
 			JPluginHelper::importPlugin('content');
@@ -83,7 +83,7 @@ class MediaControllerFile extends JController
 				JError::raiseWarning(100, JText::_('COM_MEDIA_ERROR_FILE_EXISTS'));
 				return false;
 			}
-			elseif (!$user->authorise('create', 'com_media'))
+			elseif (!$user->authorise('core.create', 'com_media'))
 			{
 				// File does not exist and user is not authorised to create
 				JError::raiseWarning(403, JText::_('COM_MEDIA_ERROR_CREATE_NOT_PERMITTED'));
@@ -135,7 +135,7 @@ class MediaControllerFile extends JController
 			$this->setRedirect('index.php?option=com_media&folder='.$folder);
 		}
 
-		if (!$user->authorise('delete','com_media'))
+		if (!$user->authorise('core.delete','com_media'))
 		{
 			// User is not authorised to delete
 			JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
@@ -164,7 +164,7 @@ class MediaControllerFile extends JController
 						continue;
 					}
 
-					$fullPath = JPath::clean(COM_MEDIA_BASE.DS.$folder.DS.$path);
+					$fullPath = JPath::clean(COM_MEDIA_BASE . '/' . $folder . '/' . $path);
 					$object_file = new JObject(array('filepath' => $fullPath));
 					if (is_file($fullPath))
 					{

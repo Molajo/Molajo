@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 <tr class="<?php echo "row".$this->item->index % 2; ?>" >
 	<td><?php echo $this->pagination->getRowOffset($this->item->index); ?></td>
 	<td>
-		<input type="checkbox" id="cb<?php echo $this->item->index;?>" name="uid[]" value="<?php echo $this->item->id; ?>" onclick="isChecked(this.checked);" />
+		<input type="checkbox" id="cb<?php echo $this->item->index;?>" name="uid[]" value="<?php echo $this->item->update_id; ?>" onclick="isChecked(this.checked);" />
 		<span class="editlinktip hasTip" title="<?php echo JText::_('INSTALLER_TIP_UPDATE_DESCRIPTION');?>::<?php echo $this->item->description ? $this->item->description : JText::_('INSTALLER_MSG_UPDATE_NODESC'); ?>">
 		<?php echo $this->item->name; ?>
 		</span>

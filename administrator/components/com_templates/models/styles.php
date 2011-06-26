@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: styles.php 20267 2011-01-11 03:44:44Z eddieajau $
+ * @version		$Id: styles.php 21650 2011-06-23 05:29:17Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -119,6 +119,10 @@ class TemplatesModelStyles extends JModelList
 
 		// Join over the language
 		$query->join('LEFT', '`#__languages` AS l ON l.lang_code = a.home');
+
+		// Filter by extension enabled
+		$query->join('LEFT', '`#__extensions` AS e ON e.element = a.template');
+		$query->where('e.enabled = 1');
 
 		// Filter by template.
 		if ($template = $this->getState('filter.template')) {
