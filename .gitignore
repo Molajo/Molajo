@@ -5,4 +5,5 @@ administrator/cache/*
 /.project
 /.buildpath
 /.settings
+.svn
 tmp/*
