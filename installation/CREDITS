@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: CREDITS 21112 2011-04-09 15:41:18Z infograf768 $
+ * @version		$Id: CREDITS 21516 2011-06-10 10:15:22Z infograf768 $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 -----Please save file as UTF8
 
--------------------- Joomla! 1.6 Credits ---------------------
+-------------------- Joomla! 1.6/1.7 Credits ---------------------
 
 Code contributors:
 ------------------

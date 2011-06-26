@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: database.xml 20111 2011-01-06 02:59:28Z dextercowley $ -->
+<!-- $Id: database.xml 21676 2011-06-25 07:43:49Z chdemko $ -->
 <form>
 	<fieldset>
 		<fieldset name="basic">
@@ -43,6 +43,8 @@
 				label="INSTL_DATABASE_PREFIX_LABEL"
 				default="jos_"
 				required="true"
+				validate="prefix"
+				message="INSTL_DATABASE_PREFIX_MSG"
 			/>
 		</fieldset>
 	</fieldset>

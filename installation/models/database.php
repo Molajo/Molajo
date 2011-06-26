@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: database.php 21323 2011-05-11 01:15:08Z dextercowley $
+ * @version		$Id: database.php 21652 2011-06-23 05:33:52Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
 jimport('joomla.database.database');
+jimport('joomla.installer.installer');
 require_once JPATH_INSTALLATION.'/helpers/database.php';
 
 /**
@@ -71,9 +72,7 @@ class JInstallationModelDatabase extends JModel
 		}
 
 		// If the database is not yet created, create it.
-		if (empty($options->db_created))
-		{
-
+		if (empty($options->db_created)) {
 			// Get a database object.
 			$db = $this->getDbo($options->db_type, $options->db_host, $options->db_user, $options->db_pass, null, $options->db_prefix, false);
 
@@ -100,8 +99,8 @@ class JInstallationModelDatabase extends JModel
 				return false;
 			}
 			// @internal MySQL versions pre 5.1.6 forbid . / or \ or NULL
-			if ((preg_match('#[\\\/\.\0]#',$options->db_name)) && (!version_compare($db_version, '5.1.6', '>='))) {
-				$this->setError(JText::sprintf('INSTL_DATABASE_INVALID_NAME',$db_version));
+			if ((preg_match('#[\\\/\.\0]#', $options->db_name)) && (!version_compare($db_version, '5.1.6', '>='))) {
+				$this->setError(JText::sprintf('INSTL_DATABASE_INVALID_NAME', $db_version));
 				return false;
 			}
 
@@ -112,7 +111,7 @@ class JInstallationModelDatabase extends JModel
 			}
 
 			// @internal Check for asc(00) Null in name
-			if (strpos($options->db_name, chr(00)) !== FALSE ) {
+			if (strpos($options->db_name, chr(00)) !== false) {
 				$this->setError(JText::_('INSTL_DATABASE_NAME_INVALID_CHAR'));
 				return false;
 			}
@@ -121,46 +120,41 @@ class JInstallationModelDatabase extends JModel
 			$utfSupport = $db->hasUTF();
 
 			// Try to select the database
-			if (!$db->select($options->db_name))
-			{
+			if (!$db->select($options->db_name)) {
 				// If the database could not be selected, attempt to create it and then select it.
 				if ($this->createDatabase($db, $options->db_name, $utfSupport)) {
 					$db->select($options->db_name);
-				}
-				else {
+				} else {
 					$this->setError(JText::sprintf('INSTL_DATABASE_ERROR_CREATE', $options->db_name));
 					return false;
 				}
-			}
-			else {
+			} else {
 				// Set the character set to UTF-8 for pre-existing databases.
 				$this->setDatabaseCharset($db, $options->db_name);
 			}
 
 			// Should any old database tables be removed or backed up?
-			if ($options->db_old == 'remove')
-			{
+			if ($options->db_old == 'remove') {
 				// Attempt to delete the old database tables.
 				if (!$this->deleteDatabase($db, $options->db_name, $options->db_prefix)) {
 					$this->setError(JText::_('INSTL_DATABASE_ERROR_DELETE'));
 					return false;
 				}
-			}
-			else
-			{
+			} else {
 				// If the database isn't being deleted, back it up.
-    			if (!$this->backupDatabase($db, $options->db_name, $options->db_prefix)) {
+				if (!$this->backupDatabase($db, $options->db_name, $options->db_prefix)) {
 					$this->setError(JText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
 					return false;
 				}
 			}
 
-            /**
-             * Molajo Hack: molajo.sql
-             */
-			// Tables
+			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
-			$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/tables.sql';
+			if ($utfSupport) {
+				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla.sql';
+			} else {
+				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla_backward.sql';
+			}
 
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
@@ -168,27 +162,49 @@ class JInstallationModelDatabase extends JModel
 				return false;
 			}
 
-			// Minimum Configuration Data
-			$type = $options->db_type;
-			$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/configuration.sql';
-
-			// Attempt to import the database schema.
-			if (!$this->populateDatabase($db, $schema)) {
-				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
+			// Attempt to update the table #__schema.
+			$files = JFolder::files(JPATH_ADMINISTRATOR . '/components/com_admin/sql/updates/mysql/', '\.sql$');
+			if (empty($files)) {
+				$this->setError(JText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
+				return false;
+			}
+			$version = '';
+			foreach ($files as $file) {
+				if (version_compare($version, JFile::stripExt($file)) <0) {
+					$version = JFile::stripExt($file);
+				}
+			}
+			$query = $db->getQuery(true);
+			$query->insert('#__schemas');
+			$query->values('700, '. $db->quote($version));
+			$db->setQuery($query);
+			$db->query();
+			if ($db->getErrorNum()) {
+				$this->setError($db->getErrorMsg());
 				return false;
 			}
 
-			// Minimum Configuration Data
-			$type = $options->db_type;
-			$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/acl.sql';
-
-			// Attempt to import the database schema.
-			if (!$this->populateDatabase($db, $schema)) {
-				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
-				return false;
+			// Attempt to refresh manifest caches
+			$query = $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__extensions');
+			$db->setQuery($query);
+			$extensions = $db->loadObjectList();
+			// Check for errors.
+			if ($db->getErrorNum()) {
+				$this->setError($db->getErrorMsg());
+				$return = false;
+			}
+			JFactory::$database = $db;
+			$installer = JInstaller::getInstance();
+			foreach ($extensions as $extension) {
+				if (!$installer->refreshManifestCache($extension->extension_id)) {
+					$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_REFRESH_MANIFEST_CACHE', $extension->name));
+					return false;
+				}
 			}
 
-			// Load the localise.sql for translating the data in molajo.sql
+			// Load the localise.sql for translating the data in joomla.sql/joomla_backwards.sql
 			$dblocalise = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/localise.sql';
 			if (JFile::exists($dblocalise)) {
 				if (!$this->populateDatabase($db, $dblocalise)) {
@@ -200,8 +216,7 @@ class JInstallationModelDatabase extends JModel
 			// Handle default backend language setting. This feature is available for localized versions of Joomla 1.5.
 			$app = JFactory::getApplication();
 			$languages = $app->getLocaliseAdmin($db);
-			if (in_array($options->language, $languages['admin']) || in_array($options->language, $languages['site']))
-			{
+			if (in_array($options->language, $languages['admin']) || in_array($options->language, $languages['site'])) {
 				// Build the language parameters for the language manager.
 				$params = array();
 
@@ -282,18 +297,18 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to get a JDatabase object.
 	 *
-	 * @access	public
-	 * @param	string	The database driver to use.
-	 * @param	string	The hostname to connect on.
-	 * @param	string	The user name to connect with.
-	 * @param	string	The password to use for connection authentication.
-	 * @param	string	The database to use.
-	 * @param	string	The table prefix to use.
-	 * @param	boolean True if the database should be selected.
+	 * @param	string	$driver		The database driver to use.
+	 * @param	string	$host		The hostname to connect on.
+	 * @param	string	$user		The user name to connect with.
+	 * @param	string	$password	The password to use for connection authentication.
+	 * @param	string	$database	The database to use.
+	 * @param	string	$prefix		The table prefix to use.
+	 * @param	boolean $select		True if the database should be selected.
+	 *
 	 * @return	mixed	JDatabase object on success, JException on error.
 	 * @since	1.0
 	 */
-	function & getDbo($driver, $host, $user, $password, $database, $prefix, $select = true)
+	public function & getDbo($driver, $host, $user, $password, $database, $prefix, $select = true)
 	{
 		static $db;
 
@@ -319,14 +334,14 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to backup all tables in a database with a given prefix.
 	 *
-	 * @access	public
-	 * @param	object	JDatabase object.
-	 * @param	string	Name of the database to process.
-	 * @param	string	Database table prefix.
+	 * @param	JDatabase	&$db	JDatabase object.
+	 * @param	string		$name	Name of the database to process.
+	 * @param	string		$prefix	Database table prefix.
+	 *
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	function backupDatabase(& $db, $name, $prefix)
+	public function backupDatabase(& $db, $name, $prefix)
 	{
 		// Initialise variables.
 		$return = true;
@@ -337,13 +352,11 @@ class JInstallationModelDatabase extends JModel
 			'SHOW TABLES' .
 			' FROM '.$db->nameQuote($name)
 		);
-		if ($tables = $db->loadResultArray())
-		{
+		if ($tables = $db->loadResultArray()) {
 			foreach ($tables as $table)
 			{
 				// If the table uses the given prefix, back it up.
-				if (strpos($table, $prefix) === 0)
-				{
+				if (strpos($table, $prefix) === 0) {
 					// Backup table name.
 					$backupTable = str_replace($prefix, $backup, $table);
 
@@ -380,14 +393,14 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to create a new database.
 	 *
-	 * @access	public
-	 * @param	object	JDatabase object.
-	 * @param	string	Name of the database to create.
-	 * @param	boolean True if the database supports the UTF-8 character set.
+	 * @param	JDatabase	&$db	JDatabase object.
+	 * @param	string		$name	Name of the database to create.
+	 * @param	boolean 	$utf	True if the database supports the UTF-8 character set.
+	 *
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	function createDatabase(& $db, $name, $utf)
+	public function createDatabase(& $db, $name, $utf)
 	{
 		// Build the create database query.
 		if ($utf) {
@@ -412,14 +425,14 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to delete all tables in a database with a given prefix.
 	 *
-	 * @access	public
-	 * @param	object	JDatabase object.
-	 * @param	string	Name of the database to process.
-	 * @param	string	Database table prefix.
+	 * @param	JDatabase	&$db	JDatabase object.
+	 * @param	string		$name	Name of the database to process.
+	 * @param	string		$prefix	Database table prefix.
+	 *
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	function deleteDatabase(& $db, $name, $prefix)
+	public function deleteDatabase(& $db, $name, $prefix)
 	{
 		// Initialise variables.
 		$return = true;
@@ -428,13 +441,11 @@ class JInstallationModelDatabase extends JModel
 		$db->setQuery(
 			'SHOW TABLES FROM '.$db->nameQuote($name)
 		);
-		if ($tables = $db->loadResultArray())
-		{
+		if ($tables = $db->loadResultArray()) {
 			foreach ($tables as $table)
 			{
 				// If the table uses the given prefix, drop it.
-				if (strpos($table, $prefix) === 0)
-				{
+				if (strpos($table, $prefix) === 0) {
 					// Drop the table.
 					$db->setQuery(
 						'DROP TABLE IF EXISTS '.$db->nameQuote($table)
@@ -456,13 +467,13 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to import a database schema from a file.
 	 *
-	 * @access	public
-	 * @param	object	JDatabase object.
-	 * @param	string	Path to the schema file.
+	 * @param	JDatabase	&$db	JDatabase object.
+	 * @param	string		$schema	Path to the schema file.
+	 *
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	function populateDatabase(& $db, $schema)
+	public function populateDatabase(& $db, $schema)
 	{
 		// Initialise variables.
 		$return = true;
@@ -481,8 +492,7 @@ class JInstallationModelDatabase extends JModel
 			$query = trim($query);
 
 			// If the query isn't empty and is not a comment, execute it.
-			if (!empty($query) && ($query{0} != '#'))
-			{
+			if (!empty($query) && ($query{0} != '#')) {
 				// Execute the query.
 				$db->setQuery($query);
 				$db->query();
@@ -501,17 +511,16 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to set the database character set to UTF-8.
 	 *
-	 * @access	public
-	 * @param	object	JDatabase object.
-	 * @param	string	Name of the database to process.
+	 * @param	JDatabase	&$db	JDatabase object.
+	 * @param	string		$name	Name of the database to process.
+	 *
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	function setDatabaseCharset(& $db, $name)
+	public function setDatabaseCharset(& $db, $name)
 	{
 		// Only alter the database if it supports the character set.
-		if ($db->hasUTF())
-		{
+		if ($db->hasUTF()) {
 			// Run the create database query.
 			$db->setQuery(
 				'ALTER DATABASE '.$db->nameQuote($name).' CHARACTER' .
@@ -531,10 +540,11 @@ class JInstallationModelDatabase extends JModel
 	/**
 	 * Method to split up queries from a schema file into an array.
 	 *
-	 * @access	protected
-	 * @param	string	SQL schema.
+	 * @param	string	$sql SQL schema.
+	 *
 	 * @return	array	Queries to perform.
 	 * @since	1.0
+	 * @access	protected
 	 */
 	function _splitQueries($sql)
 	{

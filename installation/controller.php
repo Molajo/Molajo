@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: controller.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @version		$Id: controller.php 21463 2011-06-06 15:28:10Z dextercowley $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -47,6 +47,10 @@ class JInstallationController extends JController
 		$vName		= JRequest::getWord('view', $default_view);
 		$vFormat	= $document->getType();
 		$lName		= JRequest::getWord('layout', 'default');
+		
+		if (strcmp($vName, $default_view) == 0) {
+			JRequest::setVar('view', $default_view);
+		}
 
 		if ($view = $this->getView($vName, $vFormat)) {
 

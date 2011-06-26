@@ -1,32 +1,54 @@
 <?php
 /**
- * @version		$Id: installation.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @version		$Id: installation.php 21463 2011-06-06 15:28:10Z dextercowley $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/**
- * Joomla Installation HTML Helper Class.
- *
- * @static
- * @package		Joomla.Installation
- * @since		1.6
- */
 class JHtmlInstallation
 {
-	/**
-	 */
-	public static function stepbar($on = 1)
-	{
-		$html = '<h1>'.JText::_('INSTL_STEPS_TITLE').'</h1>' .
-			'<div class="step-'.($on == 1 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_1_LABEL').'</div>' .
-			'<div class="step-'.($on == 2 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_2_LABEL').'</div>' .
-			'<div class="step-'.($on == 3 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_3_LABEL').'</div>' .
-			'<div class="step-'.($on == 4 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_4_LABEL').'</div>' .
-			'<div class="step-'.($on == 5 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_5_LABEL').'</div>' .
-			'<div class="step-'.($on == 6 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_6_LABEL').'</div>' .
-			'<div class="step-'.($on == 7 ? 'on' : 'off').'">'.JText::_('INSTL_STEP_7_LABEL').'</div>';
-		return $html;
+	public static function stepbar()
+ 	{
+		$view = JRequest::getWord('view');
+		switch ($view) {
+			case '':
+			case 'language':
+				$on = 1;
+				break;
+			case 'preinstall':
+				$on = 2;
+				break;
+			case 'license':
+				$on = 3;
+				break;
+			case 'database':
+				$on = 4;
+				break;
+			case 'filesystem':
+				$on = 5;
+				break;
+			case 'site':
+				$on = 6;
+				break;
+			case 'complete':
+				$on = 7;
+				break;
+			case 'remove':
+				$on = 7;
+				break;
+			default:
+				$on = 1;
+		}
+
+ 		$html = '<h1>'.JText::_('INSTL_STEPS_TITLE').'</h1>' .
+			'<div class="step'.($on == 1 ? ' active' : '').'" id="language">'.JText::_('INSTL_STEP_1_LABEL').'</div>' .
+			'<div class="step'.($on == 2 ? ' active' : '').'" id="preinstall">'.JText::_('INSTL_STEP_2_LABEL').'</div>' .
+			'<div class="step'.($on == 3 ? ' active' : '').'" id="license">'.JText::_('INSTL_STEP_3_LABEL').'</div>' .
+			'<div class="step'.($on == 4 ? ' active' : '').'" id="database">'.JText::_('INSTL_STEP_4_LABEL').'</div>' .
+			'<div class="step'.($on == 5 ? ' active' : '').'" id="filesystem">'.JText::_('INSTL_STEP_5_LABEL').'</div>' .
+			'<div class="step'.($on == 6 ? ' active' : '').'" id="site">'.JText::_('INSTL_STEP_6_LABEL').'</div>' .
+			'<div class="step'.($on == 7 ? ' active' : '').'" id="complete">'.JText::_('INSTL_STEP_7_LABEL').'</div>';
+			return $html;
 	}
 }

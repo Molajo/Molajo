@@ -1,11 +1,16 @@
 <?php
 /**
- * @version		$Id: index.php 21438 2011-06-04 13:35:56Z dextercowley $
+ * @version		$Id: index.php 21652 2011-06-23 05:33:52Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-define('MOLAJO_APPLICATION', 'installation');
+
+// PHP 5 check
+if (version_compare(PHP_VERSION, '5.2.4', '<')) {
+	die('Your host needs to use PHP 5.2.4 or higher to run Joomla 1.6.');
+}
+
 /**
  * Constant that is checked in included files to prevent direct access.
  */
@@ -28,16 +33,13 @@ array_pop($parts);
 define('JPATH_ROOT',			implode(DS, $parts));
 define('JPATH_SITE',			JPATH_ROOT);
 define('JPATH_CONFIGURATION',	JPATH_ROOT);
-define('JPATH_ADMINISTRATOR',	JPATH_ROOT.'/administrator');
-define('JPATH_LIBRARIES',		JPATH_ROOT.'/libraries');
-define('JPATH_PLUGINS',			JPATH_ROOT.'/plugins');
-define('JPATH_INSTALLATION',	JPATH_ROOT.'/installation');
+define('JPATH_ADMINISTRATOR',	JPATH_ROOT . '/administrator');
+define('JPATH_LIBRARIES',		JPATH_ROOT . '/libraries');
+define('JPATH_PLUGINS',			JPATH_ROOT . '/plugins');
+define('JPATH_INSTALLATION',	JPATH_ROOT . '/installation');
 define('JPATH_THEMES',			JPATH_BASE);
-define('JPATH_CACHE',			JPATH_ROOT.'/cache');
-define('MOLAJO_LIBRARY',		JPATH_ROOT.'/libraries/molajo');
-
-/** phpversion */
-require_once MOLAJO_LIBRARY.'/includes/phpversion.php';
+define('JPATH_CACHE',			JPATH_ROOT . '/cache');
+define('JPATH_MANIFESTS',		JPATH_ADMINISTRATOR . '/manifests');
 
 /*
  * Joomla system checks.
@@ -59,7 +61,7 @@ if (file_exists(JPATH_CONFIGURATION.'/configuration.php') && (filesize(JPATH_CON
 //
 
 // Import the cms version library if necessary.
-if (!class_exists('MolajoVersion')) {
+if (!class_exists('JVersion')) {
 	require JPATH_ROOT.'/includes/version.php';
 }
 

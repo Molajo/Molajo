@@ -1,5 +1,5 @@
 /**
- * @version		$Id: installation.js 21330 2011-05-11 04:18:33Z eddieajau $
+ * @version		$Id: installation.js 21570 2011-06-19 13:47:57Z chdemko $
  * @package		Joomla.Installation
  * @subpackage	JavaScript
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
@@ -11,10 +11,93 @@ if (typeof(Install) === 'undefined') {
 	var Install = {};
 };
 
-Install.submitform = function(task) {
+Install.submitform = function() {
+	var url = baseUrl+'?tmpl=body';
 	var form = document.id('adminForm');
-	Joomla.submitform(task, form);
-}
+	
+	if (Install.busy) {
+		return false;
+	}
+
+	var req = new Request.JSON({
+		method: 'post',
+		url: url,
+		onRequest: function() {
+			Install.spinner.show(true);
+			Install.busy = true;
+			Joomla.removeMessages();
+		},
+		onSuccess: function(r) {
+			var lang = $$('html').getProperty('lang')[0];
+			if (r.messages) {
+				Joomla.renderMessages(r.messages);
+			}
+			if (lang.toLowerCase() === r.lang.toLowerCase()) {
+				Install.goToPage(r.data.view);
+			} else {
+				window.location = baseUrl+'?view='+r.data.view;
+			}
+		},
+		onFailure: function(xhr) {
+			Install.spinner.hide(true);
+			Install.busy = false;
+			var r = JSON.decode(xhr.responseText);
+			if (r) {
+				Joomla.replaceTokens(r.token);
+				alert(r.message);
+			}
+		}
+	});
+	req.post(form.toQueryString()+'&task='+form.task.value+'&format=json');
+
+	return false;
+};
+
+Install.goToPage = function(page) {
+	var url = baseUrl+'?tmpl=body&view='+page;
+	var req = new Request.HTML({
+		method: 'get',
+		url: url,
+		onSuccess: function (r) {
+			document.id('rightpad').empty().adopt(r);
+			Install.spinner.hide(true);
+			Install.busy = false;
+
+			//Re-attach the validator
+			var forms = $$('form.form-validate');
+			forms.each(function(form){ this.attachToForm(form); }, document.formvalidator);
+			Install.addToggler();
+
+			//Take care of the sidebar
+			var active = $$('.active');
+			active.removeClass('active');
+			var nextStep = document.id(page);
+			nextStep.addClass('active');
+		}
+	}).send();
+
+	return false;
+};
+
+Install.addToggler = function () {
+	new Accordion($$('h3.moofx-toggler'), $$('div.moofx-slider'), {
+		onActive: function(toggler, i) {
+			toggler.addClass('moofx-toggler-down');
+		},
+		onBackground: function(toggler, i) {
+			toggler.removeClass('moofx-toggler-down');
+		},
+		duration: 300,
+		opacity: false,
+		alwaysHide:true,
+		show: 1
+	}); 
+};
+
+window.addEvent('domready', function() {
+	Install.addToggler;
+	Install.spinner = new Spinner('rightpad');
+});
 
 /**
  * Method to install sample data via AJAX request.

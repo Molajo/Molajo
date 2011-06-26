@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: setup.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @version		$Id: setup.php 21463 2011-06-06 15:28:10Z dextercowley $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -126,7 +126,7 @@ class JInstallationControllerSetup extends JController
 		// Attempt to initialise the database.
 		$return = $database->initialise($vars);
 
-		// Ensure a language was set.
+		// Check if the databasa was initialised
 		if (!$return) {
 			$this->setMessage($database->getError(), 'notice');
 			$this->setRedirect('index.php?view=database');

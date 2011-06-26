@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!-- $Id: en-GB.xml 20375 2011-01-20 09:14:14Z infograf768 $ -->
+	<!-- $Id: en-GB.xml 21492 2011-06-09 08:06:47Z infograf768 $ -->
 <metafile
-	version="1.6"
+	version="1.7"
 	client="installation">
 	<name>English (United Kingdom)</name>
-	<version>1.6.1</version>
+	<version>1.7.0</version>
 	<creationDate>March 2009</creationDate>
 	<author>Joomla! Project</author>
 	<authorEmail>admin@joomla.org</authorEmail>

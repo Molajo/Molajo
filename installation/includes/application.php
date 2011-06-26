@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: application.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @version		$Id: application.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -85,9 +85,11 @@ class JInstallation extends JApplication
 		$contents = ob_get_contents();
 		ob_end_clean();
 
+		$file = JRequest::getCmd('tmpl', 'index');
+
 		$params = array(
 			'template'	=> 'template',
-			'file'		=> 'index.php',
+			'file'		=> $file.'.php',
 			'directory' => JPATH_THEMES,
 			'params'	=> '{}'
 		);
@@ -288,7 +290,7 @@ class JInstallation extends JApplication
 	 */
 	public function getLocalise()
 	{
-		$xml = JFactory::getXML(JPATH_SITE.DS.'installation'.DS.'localise.xml');
+		$xml = JFactory::getXML(JPATH_SITE . '/installation/localise.xml');
 
 		if (!$xml) {
 			return false;
@@ -322,7 +324,7 @@ class JInstallation extends JApplication
  		jimport('joomla.filesystem.folder');
 
  		// Read the files in the admin area
- 		$path = JLanguage::getLanguagePath(JPATH_SITE.DS.'administrator');
+ 		$path = JLanguage::getLanguagePath(JPATH_SITE . '/administrator');
  		$langfiles['admin'] = JFolder::folders($path);
 
  		// Read the files in the site area

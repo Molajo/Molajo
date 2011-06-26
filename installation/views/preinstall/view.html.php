@@ -33,7 +33,7 @@ class JInstallationViewPreinstall extends JView
 		$this->settings		= $this->get('PhpSettings');
 		$this->options		= $this->get('PhpOptions');
 		$this->sufficient	= $this->get('PhpOptionsSufficient');
-		$this->version		= new MolajoVersion;
+		$this->version		= new JVersion;
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {

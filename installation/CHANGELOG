@@ -1,6 +1,6 @@
 0. Metadata
 -----------
-File version:	$Id: CHANGELOG 21452 2011-06-04 20:36:16Z dextercowley $
+File version:	$Id: CHANGELOG 21676 2011-06-25 07:43:49Z chdemko $
 Copyright:		Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
 License:		GNU General Public License version 2 or later; see LICENSE.txt
 
@@ -13,7 +13,7 @@ see source code and the LICENSE file
 2. Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-Joomla! 1.6, including alpha and beta versions.
+Joomla! 1.6 and 1.7, including alpha and beta versions.
 Our thanks to all those people who've contributed bug reports and
 code fixes.
 
@@ -27,7 +27,205 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
--------------------- 1.7.0 Alpha Release [04-June-2011] ------------------
+25-Jun-2011 Christophe Demko
+ # [#23893] My Profile issues
+ # [#26252] Cache library does not generate valid index.html file
+ # [#26238] Improvement of assigning modules (Dennis Hermatski)
+ # [#26043] Install second joomla with special prefix destruct first joomla tables at the same database
+
+24-Jun-2011 Christophe Demko
+ - Revert commit 21640 (http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=25041)
+
+23-Jun-2011 Jean-Marie Simonet
+ $ Correcting extraneous spaces in some ini files
+ 
+23-Jun-2011 Christophe Demko
+ # [#24662] Newly published articles showing pending when they are actually published (revived) (Elin Waring)
+ # [#22158] Templates are still available for assignment after being unpublished
+ # [#26040] Redirect of article enabled with 'register to read more' function results in 404 Category not found (Joel Walker)
+ # [#23793] Core update potentially allows for installing an older update
+ # [#26221] Disabling admin module Title breaks layout
+ # [#26200] Add toolbar helper task for checkin (Michael Babker)
+ # [#26199] Use defined toolbar tasks in place of custom (Michael Babker)
+ # [#26234] Add missing toolbar icon and update two old ones (Andrea Tarr)
+ # [#26208] More administrator layout syncs (Andrea Tarr, Rouven Weßling)
+
+22-Jun-2011 Christophe Demko
+ # [#24604] JDate class sets php timezone to UTC which forces all Joomla addons to use UTC dates
+ # [#25239] Cant set template style (bill richardson)
+ + [#26171] Automatic DB update
+ + [#25041] Module Menu Assignment Enhancements (David Havard)
+ # [#26222] Fatal error: Class 'JFile' not found in \libraries\joomla\cache\storage\file.php on line 200 (Peter Chovancak)
+ ^ Rename the update SQL file
+ # [#26111] JFormFieldMedia not match with com_media params (Yohann Tilotti)
+ # [#25697] Joomla updater needs better error reporting (Roland Dalmulder)
+
+21-Jun-2011 Christophe Demko
+ # [#26211] New opensearch feature generate non valid html output
+ # [#26212] Bluestork administrator login screen is not valid
+ ^ Replace media/system/images/notice-* images by transparent ones
+
+21-Jun-2011 Jean-Marie Simonet
+ # [#26172] fatal error when calling $app->logout(); Thanks Nikolai
+ 
+21-Jun-2011 Mark Dexter
+ # [#26194] Replace calls to JRegistry::loadJSON (Michael Babker)
+ # [#26196] Use field type email in com_contact (Rouven Weßling)
+ # [#26193] Actually use the namespaced version of checkAll() (Rouven Weßling)
+
+20-Jun-2011 Christophe Demko
+ # [#26201] Broken newsfeeds when SEF URLs are off (Nikolai Plath)
+ + [#25200] View Access Level not testing in Administrator Models (Amy Stephen)
+ + [#25250] Add support for OpenSearch to com_search (Rouven Weßling)
+
+20-Jun-2011 Andrew Eddie
+ + Added feature [#26113] Add PHP and HTML modes to CodeMirror (Rouven Weßling).
+ + Added feature [#24930] Add to debug log information component and module start time and memory use when showing (Vladimir Serotyukov, Dennis Hermatski).
+ # Fixed [#26077] JModelList casts $query to string unnecessarily making it impossible to implement Joomfish (Geraint Edwards).
+
+19-Jun-2011 Christophe Demko
+ # [#25116] icon as image file instead of document in media manager
+ # [#26184] Don't render meta elements without content (Rouven Weßling)
+ ^ [#23165] Make index.html's valid (Rouven Weßling)
+ # [#26181] Some minor fixes for the installation (Rouven Weßling)
+ # [#26189] Plugin uninstall uses incorrect sql (Kevin Griffiths & Sam Moffatt)
+ # [#24629] mod_menu can create invalid id attribute HTML (Rouven Weßling)
+ # [#26192] Use local storage for tabs (Rouven Weßling)
+ # [#26076] Joomla 1.7 alpha (Rune Sjøen, bill richardson)
+ # [#26104] JModelForm validate method is missing group option (Roland Dalmulder)
+ ^ [#26079] Turn multiselect into a behavior (Rouven Weßling)
+ # [#25981] Missed time offset in RSS/Atom feeds in 1.6.x (Sergey Novikov)
+ # [#25701] One item in #__content in sample data checked out (Ramindu Deshapriya)
+ - Removed useless files (commit 21553: [#26164] More Hathor/Bluestork/Installation sync and cleanup)
+
+18-Jun-2011 Jean-Marie Simonet
+# [#26179] Joomla 1.7.0 find updates and proposes 1.6.3. Thanks Christophe
+- [#26103] Empty file administrator/components/com_weblinks/helpers/html/weblink.php. Thanks Mark.
+# [#26188] Update TinyMCE to version 3.4.1. Thanks Rouven.
+
+17-Jun-2011 Mark Dexter
+ # [#26124] Namespace the checkAll() function
+
+17-Jun-2011 Christophe Demko
+ # [#24887] Incorrect redirection after saving an admin module (Rune Sjøen)
+ # [#26164] More Hathor/Bluestork/Installation sync and cleanup (Rouven Weßling)
+ # [#26159] Multiselect failing depending on selection (Rouven Weßling)
+ # [#25703] com_contact - Line is missing in default_form.php
+
+16-Jun-2011 Christophe Demko
+ ^ Commit #21329 breaks commit #21093 ([#25571] admin templates does not add a border on fielset when using tabs)
+
+16-Jun-2011 Jean-Marie Simonet
+ $ Alpha Ordering ini strings in com_search ini and com_users.ini. Updating xx-XX
+ 
+16-Jun-2011 Christophe Demko
+ + [#26073] Make single contact view ready to use dynamic forms
+ + [#26120] [patch] JToolBar cleanup for Save and Create New and Save as Copy
+ + [#26072] Add ability to save a search in a menu item
+ + [#21905] Mass Mail - exclude disabled user
+ # [#26162] Add spinner to the installation (Rouven Weßling)
+ # [#26166] Unused XML file in com_weblinks (Mark Dexter)
+
+14-Jun-2011 Christophe Demko
+ # [#26070] The com_categories component is looking in the 3rd party component directory for a category.xml file
+
+13-Jun-2011 Jean-Marie Simonet
+ $ Added missing lang strings
+ # [#26153] Modals inaccessible because JFile isn't loaded. Thanks Rouven
+ # [#26136] Add back borders in editor for codemirror. Thanks Andrea.
+ $ [#26101] pagebreak or page break. Thanks Bill.
+ # [#26160] com_content archive view does not display the parent category. Thanks Christophe.
+ 
+13-Jun-2011 Mark Dexter
+ # [#26158] Cannot create menu items
+
+12-Jun-2011 Jean-Marie Simonet
+ # [#26137] Fix parameter conditions for bluestork css files. Thanks Andrea.
+ # [#26146] Bluestork admin error.php not loading css files. Thanks bug squad ;)
+
+12-Jun-2011 Christophe Demko
+ # [#26135] Remove wrong background on bluestork login (Rouven Weßling)
+ # [#26128] Sync admin layouts (hathor) (Rouven Weßling, Andrea Tarr)
+
+11-Jun-2011 Jean-Marie Simonet
+ - # Revert [#25041] Module Menu Assignment Enhancements. Breaks 1.6.x existing sites. See feature tracker.
+
+10-Jun-2011 Christophe Demko
+ # [#25248] Systematic elimination of DS as directory separator - Final round
+ # [#26107] RTL issues with trunk (Ofer Cohen)
+ # [#26121] wrong output of mod_custom (Mark Visser)
+ # [#24137] Decide and document what value the required attribute takes for JForm. (Rune Sjøen)
+ # [#26119] Update TinyMCE to version 3.4.3 (Rouven Weßling)
+ # [#26084] Don't always load Mootools (More) in the backend - this time for real (Rouven Weßling)
+ # [#26112] Remove unnecessary file from CodeMirror (Rouven Weßling)
+ # [#26069] Don't render <meta name="rights"> when it has no content. (Rune Sjøen)
+ # [#25275] User profile fields are empty after submitting form with error in user fieldset (Piotr Mocko)
+
+10-Jun-2011 Mark Dexter
+ + [#25041] Module Menu Assignment Enhancements (David Harvard)
+
+10-Jun-2011 Jean-Marie Simonet
+ # [#26118] *Multibyte spaces search broken. Thanks Chris and Jonathan.
+ # Updating admin components xmls to version 1.7
+ # Updating admin manifests and modules xmls to version 1.7
+ # Updating site components xmls to version 1.7
+ # Updating admin templates xmls to version 1.7
+ # Updating main en-GB and localise xmls to version 1.7
+ + Adding default empty en-GB.override.ini
+ # Updating site modules xmls to version 1.7
+ # Updating plugins xmls to version 1.7
+ # Updating site templates xmls to version 1.7
+ # Updating tests xmls to version 1.7
+ # Updating some occurrences of Joomla! 1.6 to Joomla! 1.7 (more TODO)
+ 
+09-Jun-2011 Mark Dexter
+ # [#26089] Sync admin layouts (hathor)
+
+09-Jun-2011 Jean-Marie Simonet
+ # Updating installation languages xmls to version 1.7
+ #$ Deleting redundant lang string from Rev 21463
+ 
+08-Jun-2011 Mark Dexter
+ # [#24826] ACL bug in Contact component backend
+ # [#25711] All Components are deleted from the Administration interface when a new Menu Type named “menu” is deleted
+ # [#25865] Cannot set custom offset for the tooltip
+ # [#25938] Repetition code in JHTMLImage::site()
+ # [#25974] weblinks component
+ # [#26067] Wrong colspan in admin/mod_latest when there are no results
+ # [#26083] Update SqueezeBox to version 1.2
+ # [#23410] Remove <meta name="title">
+ # [#26085] *Uninstalling/discovering 4 core components kills their admin menu translations and links
+
+08-Jun-2011 Christophe Demko
+ # [#26062] gray bars in Firefox/Safari above and under the Submenue in adminlists (Rouven Weßling)
+ # [#26065] Bluestork clean up (Rouven Weßling)
+ # [#26097] rev 21483 - file modal.js not updated (Rouven Weßling)
+ # [#26095] Follow on to 25462 for plugin uninstall (Michael Babker)
+
+07-Jun-2011 Jean-Marie Simonet
+ $ Updating site en-GB.lib_joomla.ini
+ 
+07-Jun-2011 Christophe Demko
+ + [#25409] Examples for the editor, search & system plugins. (Peter Nurse)
+ # [#26041] Menu type manager slows down considerably as menu tree gets larger (Andrew Eddie)
+
+06-Jun-2011 Mark Dexter
+ + [#25977] Improve the installation (Rouven Weßling)
+ + [#26046] Rename administrator/help/helpsites-1.6.xml File
+
+06-Jun-2011 Jean-Marie Simonet
+ $ [#26055] Category spelling error in help text. Thanks Bill.
+ # [#26052] Improve com_categories batchCopy. Thanks Michael.
+ # [#26025] Article - save as copy. Thanks Michael.
+ # [#25873] *Featured Articles Menu Option does not show option to select category as intended
+
+05-Jun-2011 Jean-Marie Simonet
+ # [#26051] Copy tasks allow multiple home menu items to be set. Thanks Michael.
+
+-------------------- 1.7.0 Alpha Release [04-Jun-2011] ------------------
+
+04-Jun-2011 Mark Dexter
+ # Revert [#25873] *Featured Articles Menu Option change since this causes errors on new install
 
 04-Jun-2011 Jean-Marie Simonet
  # [#25873] *Featured Articles Menu Option does not show option to select category as intended
@@ -40,8 +238,8 @@ $ -> Language fix or change
  # [#25923] Possible error in JModuleHelper
  # [#24338] Autoupdate fails for components after applying a patch from issue #24305
  # [#25085] Media Manager changes directory after file upload or directory creation
- + Feature [#22590] Make copy/move consistent across components
- + Feature [#25313] Update TinyMCE to version 3.4.2
+ + Feature [#22590] Make copy/move consistent across components (Michael Babker)
+ + Feature [#25313] Update TinyMCE to version 3.4.2 (Rouven Weßling)
  # [#25852] Cache and mod_menu problem
  # [#26039] Latest News Module redirects to incorrect login URL
  
@@ -1751,7 +1949,7 @@ $ Deleted some redundant ini string
  # [#23059] Incorrect table ordering behavior (Dennis Hermacki)
 
 31-Oct-2010 Christophe Demko
- # [#23073] Module position selection popup does not display administrator positions
+ # [#23073] Module position selection popup does not display administrator positions
 
 31-Oct-2010 Jean-Marie Simonet
  # [#23076] Plugin Edits not checking back in in Bluestork. Thanks Andrea.
@@ -1964,7 +2162,7 @@ $ Deleted some redundant ini string
  # [#22555] Use Joomla.submitbutton() instead of submitbutton() (Rouven Weßling)
  # [#22775] Router does not redirect correctly
  # [#22621] Boolean validation in JForm (Rune Sjøen)
- # [#22775] Router does not redirect correctly (removing accidently one line)
+ # [#22775] Router does not redirect correctly (removing accidently one line)
 
 8-Oct-2010 Christophe Demko
  # [#22759] Add version, date, author to Hathor (from Tracker # 22482) (thanks Andrea Tarr)
@@ -3325,7 +3523,7 @@ $ Deleted some redundant ini string
  # Fixed sample data
  # Fixed some hathor issues relative to [#20632]
  # Fixed issue [#20707] ContentModelArticles::getListQuery does not format ORDER BY clause correctly (thanks Amy Stephen)
- # Fixed issue [#20642] com_banners submits form even when required fields are not filled (thanks bill richardson)
+ # Fixed issue [#20642] com_banners submits form even when required fields are not filled (thanks bill richardson)
 
 30-May-2010 Jean-Marie Simonet
  # [#20679] Page column sort filter not working properly in module manager. Thanks Christophe.

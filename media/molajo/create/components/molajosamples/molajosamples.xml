@@ -2,7 +2,7 @@
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>MOLAJOSAMPLES</name>
 	<author>Amy Stephen</author>
-	<authorEmail>AmyStephen@gmail.com</authorEmail>
+	<authorEmail>AmyStephen@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU/GPL v 2, or later</license>

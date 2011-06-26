@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: setup.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @version		$Id: setup.php 21676 2011-06-25 07:43:49Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -50,9 +50,10 @@ class JInstallationModelSetup extends JModel
 		$options = array_merge($old, (array)$options);
 		$session->set('setup.options', $options);
 
-		// If the setup language is set in the options, set it separately in the session.
+		// If the setup language is set in the options, set it separately in the session and JLanguage.
 		if (!empty($options['language'])) {
 			$session->set('setup.language', $options['language']);
+			JFactory::getLanguage()->setLanguage($options['language']);
 		}
 
 		return $options;
@@ -77,6 +78,7 @@ class JInstallationModelSetup extends JModel
 		jimport('joomla.form.form');
 		JForm::addFormPath(JPATH_COMPONENT.'/models/forms');
 		JForm::addFieldPath(JPATH_COMPONENT.'/models/fields');
+		JForm::addRulePath(JPATH_COMPONENT.'/models/rules');
 
 		try
 		{

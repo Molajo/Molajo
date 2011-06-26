@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: filesystem.php 21438 2011-06-04 13:35:56Z dextercowley $
+ * @version		$Id: filesystem.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -411,7 +411,7 @@ class JInstallationModelFilesystem extends JModel
 		$ftpRoot = $options->ftpRoot;
 
 		// Determine if the path is "chmodable".
-		if (!JPath::canChmod(JPath::clean(JPATH_SITE.DS.$folder))) {
+		if (!JPath::canChmod(JPath::clean(JPATH_SITE . '/' . $folder))) {
 			$ftpFlag = true;
 		}
 
@@ -439,7 +439,7 @@ class JInstallationModelFilesystem extends JModel
 			$client->quit();
 			$ret = true;
 		} else {
-			$path = JPath::clean(JPATH_SITE.DS.$folder);
+			$path = JPath::clean(JPATH_SITE . '/' . $folder);
 
 			if (!@ chmod($path, octdec('0755'))) {
 				$ret = false;
@@ -463,7 +463,7 @@ class JInstallationModelFilesystem extends JModel
 	{
 		$app	= JFactory::getApplication();
 		$arr = array();
-		$arr[ftp_enable] = $vars['ftp_enable'];
+		$arr['ftp_enable'] = $vars['ftp_enable'];
 		$arr['ftp_user'] = $vars['ftp_user'];
 		$arr['ftp_pass'] = $vars['ftp_pass'];
 		$arr['ftp_root'] = $vars['ftp_root'];

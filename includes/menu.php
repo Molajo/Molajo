@@ -55,6 +55,7 @@ class MolajoMenuSite extends JMenu
             }
 
             if (count($menus) > 0) {
+
                 foreach ($menus as &$menu) {
                     // Get parent information.
                     $parent_tree = array();

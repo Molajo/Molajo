@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: configuration.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @version		$Id: configuration.php 21518 2011-06-10 21:38:12Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -106,7 +106,6 @@ class JInstallationModelConfiguration extends JModel
 		/* Meta Settings */
 		$registry->set('MetaDesc', $options->site_metadesc);
 		$registry->set('MetaKeys', $options->site_metakeys);
-		$registry->set('MetaTitle', 1);
 		$registry->set('MetaAuthor', 1);
 
 		/* SEO Settings */
@@ -117,8 +116,8 @@ class JInstallationModelConfiguration extends JModel
 
 		/* Feed Settings */
 		$registry->set('feed_limit', 10);
-		$registry->set('log_path', JPATH_ROOT.DS.'logs');
-		$registry->set('tmp_path', JPATH_ROOT.DS.'tmp');
+		$registry->set('log_path', JPATH_ROOT . '/logs');
+		$registry->set('tmp_path', JPATH_ROOT . '/tmp');
 
 		/* Session Setting */
 		$registry->set('lifetime', 15);
@@ -129,13 +128,13 @@ class JInstallationModelConfiguration extends JModel
 
 
 		// Build the configuration file path.
-		$path = JPATH_CONFIGURATION.DS.'configuration.php';
+		$path = JPATH_CONFIGURATION . '/configuration.php';
 
 		// Determine if the configuration file path is writable.
 		if (file_exists($path)) {
 			$canWrite = is_writable($path);
 		} else {
-			$canWrite = is_writable(JPATH_CONFIGURATION.DS);
+			$canWrite = is_writable(JPATH_CONFIGURATION . '/');
 		}
 
 		/*
@@ -194,12 +193,7 @@ class JInstallationModelConfiguration extends JModel
 	function _createRootUser($options)
 	{
 		// Get a database object.
-		$db = JInstallationHelperDatabase::getDBO($options->db_type,
-                                                  $options->db_host,
-                                                  $options->db_user,
-                                                  $options->db_pass,
-                                                  $options->db_name,
-                                                  $options->db_prefix);
+		$db = JInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
 		// Check for errors.
 		if (JError::isError($db)) {
@@ -213,7 +207,7 @@ class JInstallationModelConfiguration extends JModel
 			return false;
 		}
 
-		// Create random salt/password
+		// Create random salt/password for the admin user
 		$salt = JUserHelper::genRandomPassword(32);
 		$crypt = JUserHelper::getCryptedPassword($options->admin_password, $salt);
 		$cryptpass = $crypt.':'.$salt;
@@ -222,22 +216,19 @@ class JInstallationModelConfiguration extends JModel
 		date_default_timezone_set('UTC');
 		$installdate	= date('Y-m-d H:i:s');
 		$nullDate		= $db->getNullDate();
-        $randomID       = rand(1, 10000);
 		$query	= 'REPLACE INTO #__users SET'
-				. ' id = '.$randomID
-				. ', name = '.$db->quote('Administrator')
+				. ' id = 42'
+				. ', name = '.$db->quote('Super User')
 				. ', username = '.$db->quote($options->admin_user)
 				. ', email = '.$db->quote($options->admin_email)
 				. ', password = '.$db->quote($cryptpass)
+				. ', usertype = '.$db->quote('deprecated')		// Need to weed out where this is used
 				. ', block = 0'
 				. ', sendEmail = 1'
 				. ', registerDate = '.$db->quote($installdate)
 				. ', lastvisitDate = '.$db->quote($nullDate)
 				. ', activation = '.$db->quote('')
-				. ', params = '.$db->quote('')
-				. ', asset_id = 51 '
-				. ', access = 4';
-
+				. ', params = '.$db->quote('');
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
@@ -245,48 +236,14 @@ class JInstallationModelConfiguration extends JModel
 		}
 
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groups' .
-				' SELECT '.$randomID.', 4';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groups' .
-				' SELECT '.$randomID.', 3';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groups' .
-				' SELECT '.$randomID.', 1';
+		$query = 'REPLACE INTO #__user_usergroup_map' .
+				' SET user_id = 42, group_id = 8';
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
 			return false;
 		}
 
-		// Add user as group - type_id = 0 for User
-		$query	= 'INSERT INTO #__groups (parent_id, lft, rgt, title, asset_id, access, type_id) '
-				. ' SELECT 5, 0, 0, '.$db->quote('Administrator User').', 51, 4, 0';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Map the super admin to the their personal group
-		$query = 'INSERT INTO #__user_groups' .
-				' SELECT '.$randomID.', 5';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Run rebuild ACL methods
-
-        return true;
-    }
+		return true;
+	}
 }
