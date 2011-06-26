@@ -1,19 +1,20 @@
 <?php
 /**
- * @version		$Id: author.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: author.php 21097 2011-04-07 15:38:03Z dextercowley $
  * @package		Joomla.Administrator
- * @subpackage	Articles
+ * @subpackage	com_content
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('MOLAJO') or die();
+defined('_JEXEC') or die;
 
 /**
- * Renders a author element
+ * Renders an author element
  *
- * @package		Joomla
- * @subpackage	Articles
+ * @package		Joomla.Administrator
+ * @subpackage	com_content
+ * @deprecated	JParameter is deprecated and will be removed in a future version. Use JForm instead.
  * @since		1.5
  */
 class MolajoElementAuthor extends JElement
@@ -25,12 +26,12 @@ class MolajoElementAuthor extends JElement
 	 */
 	var	$_name = 'Author';
 
-	function fetchElement($name, $value, $node, $control_name)
+	function fetchElement($name, $value, &$node, $control_name)
 	{
 		$access	= JFactory::getACL();
 
 		// Include user in groups that have access to edit their articles, other articles, or manage content.
-		$action = array('com_articles.article.edit_own', 'com_articles.article.edit_article', 'com_articles.manage');
+		$action = array('com_content.article.edit_own', 'com_content.article.edit_article', 'com_content.manage');
 		$groups	= $access->getAuthorisedUsergroups($action, true);
 
 		// Check the results of the access check.
@@ -48,7 +49,7 @@ class MolajoElementAuthor extends JElement
 		$query->select('u.id AS value');
 		$query->select('u.name AS text');
 		$query->from('#__users AS u');
-		$query->join('INNER', '#__user_groups AS m ON m.user_id = u.id');
+		$query->join('INNER', '#__user_usergroup_map AS m ON m.user_id = u.id');
 		$query->where('u.block = 0');
 		$query->where('m.group_id IN ('.$groups.')');
 

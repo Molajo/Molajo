@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.6.0" method="upgrade">
+	<name>COM_ARTICLES</name>
+	<author>Amy Stephen</author>
+	<authorEmail>AmyStephen@gmail.com</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
+	<license>GNU/GPL v 2, or later</license>
+	<version>1.0</version>
+	<creationDate>May 2011</creationDate>
+	<description>COM_ARTICLES_XML_DESCRIPTION</description>
+
+	<!-- Installer Hooks -->
+        <scriptfile>file.script.php</scriptfile>
+
+	<!-- SQL Files -->
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
+	<!-- Site -->
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<filename>articles.php</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+	<media destination="com_articles" folder="media">
+		<filename>index.html</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+	</media>
+	<administration>
+		<!-- Administrator Menu -->
+		<menu img="../media/com_articles/images/icon-16-articles">COM_ARTICLES_MENU</menu>
+		<submenu>
+			<menu link="option=com_articles&amp;view=articles"
+				alt="Articles/Articles">COM_ARTICLES_SUBMENU_ARTICLES</menu>
+			<menu link="option=com_categories&amp;extension=com_articles"
+				alt="Articles/Categories">COM_ARTICLES_SUBMENU_CATEGORIES</menu>
+		</submenu>
+		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>readme.php</filename>
+			<filename>articles.php</filename>
+			<folder>controllers</folder>
+			<folder>elements</folder>
+			<folder>helpers</folder>
+            <folder>includes</folder>
+			<folder>language</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+		<languages folder="admin">
+			<language tag="en-GB">com_articles/language/en-GB/en-GB.com_articles.ini</language>
+			<language tag="en-GB">com_articles/language/en-GB/en-GB.com_articles.sys.ini</language>
+		</languages>
+	</administration>
+
+	<!-- Extension Update Specification -->
+	<updateservers>
+		<server type="extension" priority="1" name="Extension Update Site">http://jsitepoint.com/update/components/com_alpha/extension.xml</server> <!-- useful for single extensions -->
+		<server type="collection" priority="2" name="Collection Update Site">http://jsitepoint.com/update/update.xml</server><!-- useful for collections of extensions -->
+	</updateservers>
+
+	<!-- Table Backups -->
+	<tables>
+		<table>#__articles</table>
+	</tables>
+
+	<!--  Dependencies -->
+	<dependencies>
+		<dependency type="platform" name="joomla" operator="=" version="1.6" />
+		<dependency type="library" name="molajo" operator="=" version="1.6" />                
+	</dependencies>
+</extension>
