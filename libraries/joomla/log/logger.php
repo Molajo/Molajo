@@ -24,8 +24,7 @@ jimport('joomla.log.logentry');
 abstract class JLogger
 {
 	/**
-	 * Options array for the JLog instance.
-	 * @var    array
+	 * @var    array  Options array for the JLog instance.
 	 * @since  11.1
 	 */
 	protected $options = array();
@@ -36,6 +35,7 @@ abstract class JLogger
 	 * @param   array  $options  Log object options.
 	 *
 	 * @return  void
+	 *
 	 * @since   11.1
 	 */
 	public function __construct(array & $options)
@@ -50,6 +50,7 @@ abstract class JLogger
 	 * @param   JLogEntry  The log entry object to add to the log.
 	 *
 	 * @return  void
+	 *
 	 * @since   11.1
 	 */
 	abstract public function addEntry(JLogEntry $entry);

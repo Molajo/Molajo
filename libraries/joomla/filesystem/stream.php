@@ -20,7 +20,7 @@ jimport('joomla.utilities.utility');
  * atomic manner.
  *
  * This class adheres to the stream wrapper operations:
- * @see http://php.net/manual/en/function.stream-get-wrappers.php
+ * http://php.net/manual/en/function.stream-get-wrappers.php
  *
  * @see http://php.net/manual/en/intro.stream.php PHP Stream Manual
  * @see http://php.net/manual/en/wrappers.php Stream Wrappers
@@ -31,51 +31,43 @@ class JStream extends JObject
 {
 	// Publicly settable vars (protected to let our parent read them)
 	/**
-	 * File Mode
-	 * @var    integer
+	 * @var    integer  File Mode
 	 * @since  11.1
 	 * */
 	protected $filemode = 0644;
 
 	/**
-	 * Directory Mode
-	 * @var   integer
+	 * @var   integer  Directory Mode
 	 * @since  11.1
 	 * */
 	protected $dirmode = 0755;
 
 	/**
-	 * Default Chunk Size
-	 * @var    integer
+	 * @var    integer  Default Chunk Size
 	 * @since  11.1
 	 */
 	protected $chunksize = 8192;
 
 	/**
-	 * Filename
-	 * @var    string
+	 * @var    string  Filename
 	 * @since  11.1
 	 */
 	protected $filename;
 
 	/**
-	 * Prefix of the connection for writing
-	 * @var    string
+	 * @var    string  Prefix of the connection for writing
 	 * @since  11.1
 	 */
 	protected $writeprefix;
 
 	/**
-	 * Prefix of the connection for reading
-	 * @var    string
+	 * @var    string  Prefix of the connection for reading
 	 * @since  11.1
 	 */
 	protected $readprefix;
 
 	/**
-	 * 
-	 *Read Processing method
-	 * @var   string  gz, bz, f
+	/** @var   string  Read Processing method: gz, bz, f
 	 *                 If a scheme is detected, fopen will be defaulted
 	 *                 To use compression with a network stream use a filter
 	 * @since  11.1
@@ -83,43 +75,38 @@ class JStream extends JObject
 	protected $processingmethod = 'f';
 
 	/**
-	 * Filters applied to the current stream
-	 * @var    array  
+	 * @var    array  Filters applied to the current stream
 	 * @since  11.1
 	 */
 	protected $filters = Array();
 
 	/**
-	 * File Handle
-	 * @var    array
+	 * @var    array  File Handle
 	 * @since  11.1
 	 */
 	protected $_fh;
 
 	/**
-	 * File size
-	 * @var    integer
+	 * @var    integer  File size
 	 * @since  11.1
 	 */
 	protected $_filesize;
 
 	/**
-	 *Context to use when opening the connection
-	 * @var
+	 *
+	 * @var    Context to use when opening the connection
 	 * @since  11.1
 	 */
 	protected $_context = null;
 
 	/**
-	 * Context options; used to rebuild the context
-	 * @var 
+	 * @var Context options; used to rebuild the context
 	 * @since  11.1
 	 */
 	protected $_contextOptions;
 
 	/**
-	 * The mode under which the file was opened
-	 * @var 
+	 * @var The mode under which the file was opened
 	 * @since  11.1
 	 */
 	protected $_openmode;
@@ -127,7 +114,7 @@ class JStream extends JObject
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $writeprefix   Prefix of the stream; Note: unlike the JPATH_*, this has a final path seperator!
+	 * @param   string  $writeprefix	Prefix of the stream; Note: unlike the JPATH_*, this has a final path seperator!
 	 * @param   string  $readprefix
 	 * @param   string  $context
 	 *
@@ -494,7 +481,7 @@ class JStream extends JObject
 	 *
 	 * @return  mixed
 	 *
-	 * @see     http://php.net/manual/en/function.fread.php
+	 * @see		http://php.net/manual/en/function.fread.php
 	 * @since   11.1
 	 */
 	function read($length=0)
@@ -818,7 +805,7 @@ class JStream extends JObject
 	 *
 	 * @return  array  header/metadata
 	 *
-	 * @see     http://php.net/manual/en/function.stream-get-meta-data.php
+	 * @see		http://php.net/manual/en/function.stream-get-meta-data.php
 	 * @since   11.1
 	 */
 	function get_meta_data()
@@ -896,7 +883,7 @@ class JStream extends JObject
 	 *
 	 * @return  void
 	 *
-	 * @see     http://php.net/stream_context_create
+	 * @see		http://php.net/stream_context_create
 	 * @since   11.1
 	 */
 	function deleteContextEntry($wrapper, $name)
@@ -961,7 +948,7 @@ class JStream extends JObject
 	 *
 	 * @return  mixed
 	 *
-	 * @see     http://php.net/manual/en/function.stream-filter-append.php
+	 * @see		http://php.net/manual/en/function.stream-filter-append.php
 	 * @since   11.1
 	 */
 	function appendFilter($filtername, $read_write = STREAM_FILTER_READ, $params = array() )
@@ -999,7 +986,7 @@ class JStream extends JObject
 	 *
 	 * @return  mixed
 	 *
-	 * @see     http://php.net/manual/en/function.stream-filter-prepend.php
+	 * @see		http://php.net/manual/en/function.stream-filter-prepend.php
 	 * @since   11.1
 	 */
 	function prependFilter($filtername, $read_write = STREAM_FILTER_READ, $params = array() )
@@ -1072,15 +1059,15 @@ class JStream extends JObject
 	/**
 	 * Copy a file from src to dest
 	 *
-	 * @param    string	$src
-	 * @param    string	$dest
-	 * @param    $context
-	 * @param    boolean	$user_prefix
-	 * @param    boolean	$relative
+	 * @param	string	$src
+	 * @param	string	$dest
+	 * @param			$context
+	 * @param	boolean	$user_prefix
+	 * @param	boolean	$relative
 	 *
-	 * @return   mixed
+	 * @return	mixed
 	 *
-	 * @since    11.1
+	 * @since	11.1
 	 */
 	function copy($src, $dest, $context=null, $use_prefix=true, $relative=false)
 	{

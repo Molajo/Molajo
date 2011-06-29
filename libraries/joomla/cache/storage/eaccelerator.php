@@ -15,8 +15,6 @@ defined('JPATH_PLATFORM') or die;
  * @package     Joomla.Platform
  * @subpackage  Cache
  * @since       11.1
- * 
- * @link        http://eaccelerator.net/
  */
 class JCacheStorageEaccelerator extends JCacheStorage
 {
@@ -24,8 +22,6 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	 * Constructor
 	 *
 	 * @param   array    $options optional parameters
-	 * 
-	 * @since       11.1
 	 */
 	public function __construct($options = array())
 	{
@@ -35,10 +31,9 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	/**
 	 * Get cached data by id and group
 	 *
-	 * @param   string   $id         The cache data id
-	 * @param   string   $group      The cache data group
-	 * @param   boolean  $checkTime  True to verify cache time expiration threshold
-	 * 
+	 * @param   string   $id			The cache data id
+	 * @param   string   $group		The cache data group
+	 * @param   boolean  $checkTime	True to verify cache time expiration threshold
 	 * @return  mixed    Boolean false on failure or a cached data string
 	 * @since   11.1
 	 */
@@ -69,7 +64,6 @@ class JCacheStorageEaccelerator extends JCacheStorage
 
 		foreach ($keys as $key) {
 			/* Trim leading ":" to work around list_keys namespace bug in eAcc. This will still work when bug is fixed */
-			// http://eaccelerator.net/ticket/287
 			$name 		= ltrim($key['name'], ':');
 			$namearr 	= explode('-',$name);
 
@@ -95,10 +89,9 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	/**
 	 * Store the data to by id and group
 	 *
-	 * @param   string   $id     The cache data id
-	 * @param   string   $group  The cache data group
-	 * @param   string   $data   The data to store in cache
-	 * 
+	 * @param   string   $id		The cache data id
+	 * @param   string   $group	The cache data group
+	 * @param   string   $data	The data to store in cache
 	 * @return  boolean  True on success, false otherwise
 	 * @since   11.1
 	 */
@@ -111,8 +104,8 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	/**
 	 * Remove a cached data entry by id and group
 	 *
-	 * @param   string   $id     The cache data id
-	 * @param   string   $group  The cache data group
+	 * @param   string   $id		The cache data id
+	 * @param   string   $group	The cache data group
 	 * @return  boolean  True on success, false otherwise
 	 * @since   11.1
 	 */
@@ -125,11 +118,11 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	/**
 	 * Clean cache for a group given a mode.
 	 *
-	 * @param   string   $group  The cache data group
-	 * @param   string   $mode   The mode for cleaning cache [group|notgroup]
-	 *                               group mode    : cleans all cache in the group
-	 *                               notgroup mode : cleans all cache not in the group
+	 * group mode		: cleans all cache in the group
+	 * notgroup mode	: cleans all cache not in the group
 	 *
+	 * @param   string   $group	The cache data group
+	 * @param   string   $mode	The mode for cleaning cache [group|notgroup]
 	 * @return  boolean  True on success, false otherwise
 	 * @since   11.1
 	 */
@@ -155,7 +148,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	/**
 	 * Garbage collect expired cache data
 	 *
-	 * @return  boolean  True on success, false otherwise.
+	 * @return boolean  True on success, false otherwise.
 	 * @since   11.1
 	 */
 	public function gc()
@@ -167,7 +160,6 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	 * Test to see if the cache storage is available.
 	 *
 	 * @return boolean  True on success, false otherwise.
-	 * @since   11.1
 	 */
 	public static function test()
 	{
@@ -180,7 +172,6 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	 * @param   string   $id		The cache data id
 	 * @param   string   $group	The cache data group
 	 * @param   integer  $locktime Cached item max lock time
-	 *
 	 * @return  boolean  True on success, false otherwise.
 	 * @since   11.1
 	 */
@@ -199,8 +190,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
 
 			$lock_counter = 0;
 
-			// Loop until you find that the lock has been released.
-			// That implies that data get from other thread has finished
+			// loop until you find that the lock has been released.  that implies that data get from other thread has finished
 			while ($data_lock === false) {
 
 				if ($lock_counter > $looptime) {
@@ -225,7 +215,6 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	 *
 	 * @param   string   $id		The cache data id
 	 * @param   string   $group	The cache data group
-	 *
 	 * @return  boolean  True on success, false otherwise.
 	 * @since   11.1
 	 */

@@ -7,3 +7,5 @@ administrator/cache/*
 /.settings
 .svn
 tmp/*
+/installationOLD
+/xinstallation

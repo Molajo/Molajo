@@ -18,130 +18,24 @@ defined('JPATH_PLATFORM') or die;
  */
 class JUpdate extends JObject
 {
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */	
 	protected $name;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $description;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $element;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $type;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $version;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $infourl;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $client;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $group;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $downloads;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $tags;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $maintainer;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $maintainerurl;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $category;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $relationships;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
 	protected $targetplatform;
-	
-	/**
-	 * 
-	 * @var   string
-	 * @since 11.1 
-	 */
+
 	protected $_xml_parser;
-	
-	/**
-	 * 
-	 * @var   array
-	 * @since 11.1 
-	 */
 	protected $_stack = Array('base');
-	
-	/**
-	 * 
-	 * @var   array
-	 * @since 11.1 
-	 */
 	protected $_state_store = Array();
 
 	/**
@@ -159,7 +53,6 @@ class JUpdate extends JObject
 	 * Get the last position in stack count
 	 *
 	 * @return  string
-	 * @since   11.1
 	 */
 	protected function _getLastTag()
 	{
@@ -168,13 +61,10 @@ class JUpdate extends JObject
 
 	/**
 	 * XML Start Element callback
-	 * @note  This is public because it is called externally
-	 * 
-	 * @param   object  $parser  Parser object
-	 * @param   string  $name    Name of the tag found
-	 * @param   array   $attrs   Attributes of the tag
-	 * 
-	 * @since   11.1
+	 * Note: This is public because it is called externally
+	 * @param object parser object
+	 * @param string name of the tag found
+	 * @param array attributes of the tag
 	 *
 	 */
 	public function _startElement($parser, $name, $attrs = Array())
@@ -206,12 +96,10 @@ class JUpdate extends JObject
 
 	/**
 	 * Callback for closing the element
-	 * @note This is public because it is called externally
+	 * Note: This is public because it is called externally
 	 *
-	 * @param  object  $parser  Parser object
-	 * @param  string  $name    Name of element that was closed
-	 * 
-	 * @since  11.1
+	 * @param object parser object
+	 * @param string name of element that was closed
 	 */
 	public function _endElement($parser, $name)
 	{
@@ -256,12 +144,10 @@ class JUpdate extends JObject
 
 	/**
 	 * Character Parser Function
-	 * @note This is public because its called externally
+	 * Note: This is public because its called externally
 	 *
-	 * @param   object  $data
-	 * @param   object  $parser  Parser object
-	 * 
-	 * @since   11.1
+	 * @param		$data
+	 * @param		$parser
 	 *
 	 */
 	public function _characterData($parser, $data) {
@@ -272,15 +158,7 @@ class JUpdate extends JObject
 		$tag = strtolower($tag);
 		$this->_current_update->$tag->_data .= $data;
 	}
-	/**
-	 * 
-	 *
-	 * @param   string     $url
-	 * 
-	 * @return  boolean  True on success
-	 * @since   11.1
-	 *
-	 */
+
 	public function loadFromXML($url)
 	{
 		if (!($fp = @fopen($url, "r")))

@@ -82,13 +82,8 @@ class JDocumentRendererHead extends JDocumentRenderer
 		$buffer .= $tab.'<title>'.htmlspecialchars($document->getTitle(), ENT_COMPAT, 'UTF-8').'</title>'.$lnEnd;
 
 		// Generate link declarations
-		foreach ($document->_links as $link => $linkAtrr)
-		{
-			$buffer .= $tab.'<link href="'.$link.'" '.$linkAtrr['relType'].'="'.$linkAtrr['relation'].'"';
-			if ($temp = JArrayHelper::toString($linkAtrr['attribs'])) {
-				$buffer .= ' '.$temp;
-			}
-			$buffer .= ' />'.$lnEnd;
+		foreach ($document->_links as $link) {
+			$buffer .= $tab.$link.$tagEnd.$lnEnd;
 		}
 
 		// Generate stylesheet links

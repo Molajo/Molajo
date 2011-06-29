@@ -1,5 +1,5 @@
 /**
- * @version		$Id: core-uncompressed.js 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: core-uncompressed.js 21570 2011-06-19 13:47:57Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -92,6 +92,88 @@ Joomla.isEmail = function(text) {
 };
 
 /**
+ * USED IN: all list forms.
+ *
+ * Toggles the check state of a group of boxes
+ *
+ * Checkboxes must have an id attribute in the form cb0, cb1...
+ *
+ * @param	mixed	The number of box to 'check', for a checkbox element
+ * @param	string	An alternative field name
+ */
+Joomla.checkAll = function(checkbox, stub) {
+	if (!stub) {
+		stub = 'cb';
+	}
+	if (checkbox.form) {
+		var c = 0;
+		for (var i = 0, n = checkbox.form.elements.length; i < n; i++) {
+			var e = checkbox.form.elements[i];
+			if (e.type == checkbox.type) {
+				if ((stub && e.id.indexOf(stub) == 0) || !stub) {
+					e.checked = checkbox.checked;
+					c += (e.checked == true ? 1 : 0);
+				}
+			}
+		}
+		if (checkbox.form.boxchecked) {
+			checkbox.form.boxchecked.value = c;
+		}
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Render messages send via JSON
+ *
+ * @param	object	messages	JavaScript object containing the messages to render
+ * @return	void
+ */
+Joomla.renderMessages = function(messages) {
+	Joomla.removeMessages();
+	var container = document.id('system-message-container');
+
+	var dl = new Element('dl', {
+		id: 'system-message',
+		role: 'alert'
+	});
+	Object.each(messages, function (item, type) {
+		var dt = new Element('dt', {
+			'class': type,
+			html: type
+		});
+		dt.inject(dl);
+		var dd = new Element('dd', {
+			'class': type
+		});
+		dd.addClass('message');
+		var list = new Element('ul');
+
+		Array.each(item, function (item, index, object) {
+			var li = new Element('li', {
+				html: item
+			});
+			li.inject(list);
+		}, this);
+		list.inject(dd);
+		dd.inject(dl);
+	}, this);
+	dl.inject(container);
+};
+
+
+/**
+ * Remove messages
+ *
+ * @return	void
+ */
+Joomla.removeMessages = function() {
+	var children = $$('#system-message-container > *');
+	children.destroy();
+}
+
+/**
  * USED IN: administrator/components/com_modules/views/module/tmpl/default.php
  *
  * Writes a dynamically generated list
@@ -128,7 +210,7 @@ function writeDynaList(selectParams, source, key, orig_key, orig_val) {
 }
 
 /**
- * USED IN: administrator/components/com_articles/views/article/view.html.php
+ * USED IN: administrator/components/com_content/views/article/view.html.php
  *
  * Changes a dynamically generated list
  *
@@ -199,14 +281,14 @@ function radioGetCheckedValue(radioObj) {
  * USED IN: administrator/components/com_banners/views/banner/tmpl/default/php
  * administrator/components/com_categories/views/category/tmpl/default.php
  * administrator/components/com_categories/views/copyselect/tmpl/default.php
- * administrator/components/com_articles/views/copyselect/tmpl/default.php
+ * administrator/components/com_content/views/copyselect/tmpl/default.php
  * administrator/components/com_massmail/views/massmail/tmpl/default.php
  * administrator/components/com_menus/views/list/tmpl/copy.php
  * administrator/components/com_menus/views/list/tmpl/move.php
  * administrator/components/com_messages/views/message/tmpl/default_form.php
  * administrator/components/com_newsfeeds/views/newsfeed/tmpl/default.php
- * components/com_articles/views/article/tmpl/form.php
- * templates/beez/html/com_articles/article/form.php
+ * components/com_content/views/article/tmpl/form.php
+ * templates/beez/html/com_content/article/form.php
  *
  * @param frmName
  * @param srcListName
@@ -233,6 +315,8 @@ function getSelectedValue(frmName, srcListName) {
  *
  * @param	mixed	The number of box to 'check', for a checkbox element
  * @param	string	An alternative field name
+ *
+ * @deprecated	11.1 This function will be removed in a future version. Use Joomla.checkAll() instead.
  */
 function checkAll(checkbox, stub) {
 	if (!stub) {
@@ -332,6 +416,8 @@ function isChecked(isitchecked) {
 
 /**
  * Default function. Usually would be overriden by the component
+ *
+ * @deprecated	11.1 This function will be removed in a future version. Use Joomla.submitbutton() instead.
  */
 function submitbutton(pressbutton) {
 	submitform(pressbutton);
@@ -339,6 +425,8 @@ function submitbutton(pressbutton) {
 
 /**
  * Submit the admin form
+ *
+ * @deprecated	11.1 This function will be removed in a future version. Use Joomla.submitform() instead.
  */
 function submitform(pressbutton) {
 	if (pressbutton) {

@@ -148,13 +148,11 @@ class JInstallationModelDatabase extends JModel
 				}
 			}
 
+/** Molajo Hack Begins */
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
-			if ($utfSupport) {
-				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla.sql';
-			} else {
-				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla_backward.sql';
-			}
+            $schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
+/** Molajo Hack Ends */
 
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
@@ -163,7 +161,10 @@ class JInstallationModelDatabase extends JModel
 			}
 
 			// Attempt to update the table #__schema.
+/** Molajo Hack Begins */
+			// changed file from 1.7.0.sql to 1.0.sql
 			$files = JFolder::files(JPATH_ADMINISTRATOR . '/components/com_admin/sql/updates/mysql/', '\.sql$');
+/** Molajo Hack Ends */
 			if (empty($files)) {
 				$this->setError(JText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
 				return false;
@@ -176,7 +177,10 @@ class JInstallationModelDatabase extends JModel
 			}
 			$query = $db->getQuery(true);
 			$query->insert('#__schemas');
-			$query->values('700, '. $db->quote($version));
+/** Molajo Hack Begins */
+			$query->values('999, '. $db->quote($version));
+/** Molajo Hack Ends */
+
 			$db->setQuery($query);
 			$db->query();
 			if ($db->getErrorNum()) {

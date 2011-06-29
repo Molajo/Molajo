@@ -142,12 +142,16 @@ class JURI extends JObject
 					// To build the entire URI we need to prepend the protocol, and the http host
 					// to the URI string.
 					$theURI = 'http' . $https . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-				}
-				else {
+
 					// Since we do not have REQUEST_URI to work with, we will assume we are
 					// running on IIS and will therefore need to work some magic with the SCRIPT_NAME and
 					// QUERY_STRING environment variables.
 
+					if (strlen($_SERVER['QUERY_STRING']) && strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']) === false) {
+						$theURI .= '?'.$_SERVER['QUERY_STRING'];
+					}
+				}
+				else {
 					// IIS uses the SCRIPT_NAME variable instead of a REQUEST_URI variable... thanks, MS
 					$theURI = 'http' . $https . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
 
@@ -462,7 +466,7 @@ class JURI extends JObject
 	 * @see     parse_str()
 	 * @since   11.1
 	 */
-	public static function buildQuery($params)
+	public static function buildQuery($params, $akey = null)
 	{
 		if (!is_array($params) || count($params) == 0) {
 			return false;

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('MOLAJO') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Application helper functions
@@ -49,54 +49,43 @@ class MolajoApplicationHelper
 	}
 
 	/**
-	 * getClientInfo
+	 * Gets information on a specific client id.  This method will be useful in
+	 * future versions when we start mapping applications in the database.
 	 *
-	 * Molajo modifies this method in order to store and retrieve Client information
-	 * from a database so that adding clients is easier.
+	 * This method will return a client information array if called
+	 * with no arguments which can be used to add custom application information.
 	 *
 	 * @param   integer  $id		A client identifier
 	 * @param   boolean  $byName	If True, find the client by its name
 	 *
 	 * @return  mixed  Object describing the client or false if not known
-	 * @since   1.1
+	 * @since   11.1
 	 */
 	public static function getClientInfo($id = null, $byName = false)
 	{
-        $db	= JFactory::getDbo();
-
+		// Only create the array if it does not exist
 		if (self::$_clients === null)
-        {
-            $obj = new stdClass();
-            if ($byName === true) {
-                $where = ' `name` = "'.$id.'"';
-            } else {
-                $where = ' `id` = '. (int) $id;
-            }
+		{
+			$obj = new stdClass();
 
-            $db->setQuery(
-                'SELECT `client_id` as id, `name`, `path` ' .
-                ' FROM `#__clients` ' .
-                'WHERE '.$where
-            );
-            $results = $db->loadObjectList();
-            if ($db->getErrorNum()) {
-                return new JException($db->getErrorMsg());
-            }
+			// Site Client
+			$obj->id	= 0;
+			$obj->name	= 'site';
+			$obj->path	= JPATH_SITE;
+			self::$_clients[0] = clone $obj;
 
-            $obj->id    = (int) $results[0]->id;
-            $clientID   = (int) $results[0]->id;
-            $obj->name  = strtolower($results[0]->name);
+			// Administrator Client
+			$obj->id	= 1;
+			$obj->name	= 'administrator';
+			$obj->path	= JPATH_ADMINISTRATOR;
+			self::$_clients[1] = clone $obj;
 
-            if ($results[0]->path == 'JPATH_ADMINISTRATOR') {
-                $obj->path	= JPATH_ADMINISTRATOR;
-            } elseif ($results[0]->path == 'JPATH_INSTALLATION') {
-                $obj->path	= JPATH_INSTALLATION;
-            } else {
-                $obj->path	= JPATH_SITE;
-            }
-
-            self::$_clients[$clientID] = clone $obj;
-        }
+			// Installation Client
+			$obj->id	= 2;
+			$obj->name	= 'installation';
+			$obj->path	= JPATH_INSTALLATION;
+			self::$_clients[2] = clone $obj;
+		}
 
 		// If no client id has been passed return the whole array
 		if (is_null($id)) {
@@ -104,30 +93,68 @@ class MolajoApplicationHelper
 		}
 
 		// Are we looking for client information by id or by name?
-		if ($byName === false)
+		if (!$byName)
 		{
 			if (isset(self::$_clients[$id])){
 				return self::$_clients[$id];
 			}
 		}
-
-        /** retrieve ID */
-        $db->setQuery(
-            'SELECT `client_id` as id ' .
-            ' FROM `#__clients` ' .
-            'WHERE '.' `name` = "'.$id.'"'
-        );
-        $id = $db->loadResult();
-        if ($db->getErrorNum()) {
-            return new JException($db->getErrorMsg());
-        }
-
-        if (isset(self::$_clients[$id])){
-			return self::$_clients[$id];
+		else
+		{
+			foreach (self::$_clients as $client)
+			{
+				if ($client->name == strtolower($id)) {
+					return $client;
+				}
+			}
 		}
 
 		return null;
 	}
+
+	/**
+	 * Retrieves Client info from database
+	 *
+	 * This method will return a client information array if called
+	 * with no arguments which can be used to add custom application information.
+	 *
+	 * @param   integer  $id		A client identifier
+	 * @param   boolean  $byName	If True, find the client by its name
+	 *
+	 * @return  boolean  True if the information is added. False on error
+	 * @since   11.1
+	 */
+	public static function getClientInfoDB ($id = null, $byName = false)
+	{
+        // if even this single next statement is run
+        $db = JFactory::getDbo();
+        // Warning: mysqli::ping() [mysqli.ping]: Couldn't fetch mysqli in /Users/amystephen/Sites/molajo/libraries/joomla/database/database/mysqli.php on line 188
+        $query = $db->getQuery(true);
+
+        /** validation query **/
+        $query->select('client_id as id');
+        $query->select('name');
+        $query->select('path');
+        $query->from($db->namequote('#__clients'));
+
+        if ($byName === true) {
+            $query->where('name = '.$db->quote(trim($id)));
+        } else {
+            $query->where('id = '. (int) $id);
+        }
+
+        $db->setQuery($query->__toString());
+
+        if ($results = $db->loadObjectList()) {
+        } else {
+            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            return false;
+        }
+
+        if ($db->getErrorNum()) {
+            return new JException($db->getErrorMsg());
+        }
+    }
 
 	/**
 	 * Adds information for a client.

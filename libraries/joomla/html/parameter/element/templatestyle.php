@@ -24,12 +24,7 @@ class JElementTemplateStyle extends JElement {
 	**/
 	protected	$_name = 'TemplateStyle';
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
+
 	public function fetchElement( $name, $value, &$node, $control_name )
 	{
 		$db = JFactory::getDBO();
@@ -48,19 +43,13 @@ class JElementTemplateStyle extends JElement {
 		return $html;
 	}
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
 	protected function _getSelected()
 	{
-		$id = JRequest::getVar('cid', 0);
+		$id = JRequest::getVar( 'cid', 0 );
 		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select($query->qn('template_style_id'))->from($query->qn('#__menu'))->where($query->qn('id').' = '.(int) $id[0]);
-		$db->setQuery($query);
+		$query = 'SELECT `template_style_id` FROM `#__menu` '
+			. 'WHERE id = '.$id[0];
+		$db->setQuery( $query );
 		$result = $db->loadResult();
 		return $result;
 	}

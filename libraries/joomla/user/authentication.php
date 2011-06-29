@@ -37,8 +37,7 @@ class JAuthentication extends JObservable
 {
 	/**
 	 * Constructor
-	 * 
-	 * @since 11.1
+	 *
 	 */
 	public function __construct()
 	{
@@ -53,7 +52,7 @@ class JAuthentication extends JObservable
 	 * Returns the global authentication object, only creating it
 	 * if it doesn't already exist.
 	 *
-	 * @return  JAuthentication object
+	 * @return  object  The global JAuthentication object
 	 * @since   11.1
 	 */
 	public static function getInstance()
@@ -75,13 +74,10 @@ class JAuthentication extends JObservable
 	 * Finds out if a set of login credentials are valid by asking all obvserving
 	 * objects to run their respective authentication routines.
 	 *
-	 * @param   array  $credentials  Array holding the user credentials
-	 * @param   array  $options      Array of options
-	 * 
+	 * @param   array  Array holding the user credentials
 	 * @return  mixed  Integer userid for valid user if credentials are valid or
-	 *                  boolean false if they are not
+	 *					boolean false if they are not
 	 * @since   11.1
-	 * @see     JAuthenticationResponse
 	 */
 	public function authenticate($credentials, $options)
 	{
@@ -153,56 +149,49 @@ class JAuthenticationResponse extends JObject
 	/**
 	 * Response status (see status codes)
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var type string
 	 */
 	public $status		= JAUTHENTICATE_STATUS_FAILURE;
 
 	/**
 	 * The type of authentication that was successful
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var type string
 	 */
 	public $type		= '';
 
 	/**
 	 *  The error message
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var error_message string
 	 */
 	public $error_message	= '';
 
 	/**
 	 * Any UTF-8 string that the End User wants to use as a username.
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var fullname string
 	 */
 	public $username		= '';
 
 	/**
 	 * Any UTF-8 string that the End User wants to use as a password.
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var password string
 	 */
 	public $password		= '';
 
 	/**
 	 * The email address of the End User as specified in section 3.4.1 of [RFC2822]
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var email string
 	 */
 	public $email			= '';
 
 	/**
 	 * UTF-8 string free text representation of the End User's full name.
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var fullname string
 	 *
 	 */
 	public $fullname		= '';
@@ -216,16 +205,15 @@ class JAuthenticationResponse extends JObject
 	 * For instance, if a End User wants to specify that his date of birth is in 1980, but
 	 * not the month or day, the value returned SHALL be "1980-00-00".
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var fullname string
 	 */
 	public $birthdate		= '';
 
 	/**
 	 * The End User's gender, "M" for male, "F" for female.
 	 *
-	 * @var  string
-	 * @since  11.1
+	 * @var gender string
+	 *
 	 */
 	public $gender		= '';
 
@@ -233,31 +221,27 @@ class JAuthenticationResponse extends JObject
 	 * UTF-8 string free text that SHOULD conform to the End User's country's postal system.
 	 *
 	 * @var postcode string
-	 * @since  11.1
 	 */
 	public $postcode		= '';
 
 	/**
 	 * The End User's country of residence as specified by ISO3166.
 	 *
-	 * @var string
-	 * @since  11.1
+	 * @var country string
 	 */
 	public $country		= '';
 
 	/**
 	 * End User's preferred language as specified by ISO639.
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var language string
 	 */
 	public $language		= '';
 
 	/**
 	 * ASCII string from TimeZone database
 	 *
-	 * @var    string
-	 * @since  11.1
+	 * @var timezone string
 	 */
 	public $timezone		= '';
 
@@ -265,7 +249,6 @@ class JAuthenticationResponse extends JObject
 	 * Constructor
 	 *
 	 * @param   string  $name  The type of the response
-	 * 
 	 * @since   11.1
 	 */
 	function __construct()

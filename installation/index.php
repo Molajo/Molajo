@@ -61,7 +61,7 @@ if (file_exists(JPATH_CONFIGURATION.'/configuration.php') && (filesize(JPATH_CON
 //
 
 // Import the cms version library if necessary.
-if (!class_exists('JVersion')) {
+if (!class_exists('MolajoVersion')) {
 	require JPATH_ROOT.'/includes/version.php';
 }
 
