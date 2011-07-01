@@ -17,4 +17,4 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Database
  * @version		1.0
  */
-class JTableUsergroup extends MolajoTableUsergroup {}
+class JTableUsergroup extends MolajoTableGroup {}

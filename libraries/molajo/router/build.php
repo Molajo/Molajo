@@ -12,7 +12,7 @@ defined('MOLAJO') or die();
  * Molajo Router
  *
  * @static
- * @package		Joomla
+ * @package		Molajo
  * @subpackage	Router
  * @since 1.5
  */

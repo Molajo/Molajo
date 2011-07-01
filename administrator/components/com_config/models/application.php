@@ -49,23 +49,7 @@ class ConfigModelApplication extends JModelForm
 	 */
 	public function getData()
 	{
-		// Get the config data.
-		$config	= new JConfig();
-		$data	= JArrayHelper::fromObject($config);
-
-		// Prime the asset_id for the rules.
-		$data['asset_id'] = 1;
-
-		// Check for data in the session.
-		$app	= JFactory::getApplication();
-		$temp	= $app->getUserState('com_config.config.global.data');
-
-		// Merge in the session data.
-		if (!empty($temp)) {
-			$data = array_merge($data, $temp);
-		}
-
-		return $data;
+        //amy
 	}
 
 	/**
@@ -77,40 +61,20 @@ class ConfigModelApplication extends JModelForm
 	 */
 	public function save($data)
 	{
-		// Save the rules
+		// Can't remove super admin
 		if (isset($data['rules']))
 		{
-			jimport('joomla.access.rules');
-			$rules	= new JRules($data['rules']);
 
-			// Check that we aren't removing our Super User permission
-			// Need to get groups from database, since they might have changed
-			$myGroups = JAccess::getGroupsByUser(JFactory::getUser()->get('id'));
-			$myRules = $rules->getData();
-			$hasSuperAdmin = $myRules['core.admin']->allow($myGroups);
-			if (!$hasSuperAdmin) {
-				$this->setError(JText::_('COM_CONFIG_ERROR_REMOVING_SUPER_ADMIN'));
-				return false;
-			}
-
-
-			$asset	= JTable::getInstance('asset');
-			if ($asset->loadByName('root.1'))
-			{
-				$asset->rules = (string) $rules;
-
-				if (!$asset->check() || !$asset->store()) {
-					JError::raiseNotice('SOME_ERROR_CODE', $asset->getError());
-				}
-			}
-			else
-			{
-				$this->setError(JText::_('COM_CONFIG_ERROR_ROOT_ASSET_NOT_FOUND'));
-				return false;
-			}
-			unset($data['rules']);
-		}
-
+// Amy
+// Site - asset 1
+// Administrator - asset 2
+// Installation - asset 3
+// Actions - login, create, view, edit, delete, admin
+// 4 groups 1-public; 2-guest; 3-registered; 4-administrator
+// Administrator is ALWAYS going to have all actions for all assets
+// Don't allow any change on Administrator
+// 
+        }
 		// Get the previous configuration.
 		$prev = new JConfig();
 		$prev = JArrayHelper::fromObject($prev);

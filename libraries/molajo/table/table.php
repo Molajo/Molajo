@@ -19,6 +19,7 @@ defined('JPATH_PLATFORM') or die;
  * @since       11.1
  * @tutorial	Joomla.Platform/jtable.cls
  * @link		http://docs.joomla.org/JTable
+ *
  */
 abstract class MolajoTable extends JObject
 {
@@ -45,21 +46,6 @@ abstract class MolajoTable extends JObject
 	 * @since  11.1
 	 */
 	protected $_db;
-
-	/**
-	 * Should rows be tracked as ACL assets?
-	 *
-	 * @var    boolean
-	 * @since  11.1
-	 */
-	protected $_trackAssets = false;
-
-	/**
-	 * The rules associated with this record.
-	 *
-	 * @var	JRules	A JRules object.
-	 */
-	protected $_rules;
 
 	/**
 	 * Indicator that the tables have been locked.
@@ -98,17 +84,11 @@ abstract class MolajoTable extends JObject
 			}
 		}
 
-		// If we are tracking assets, make sure an access field exists and initially set the default.
-		if (property_exists($this, 'asset_id')) {
-			jimport('joomla.access.rules');
-			$this->_trackAssets = true;
-		}
+        if ((int) $this->access == 0) {
+            $this->access = (int) JFactory::getConfig()->get('access');
+        }
 
-		// If the acess property exists, set the default.
-		if (property_exists($this, 'access')) {
-			$this->access = (int) JFactory::getConfig()->get('access');
-		}
-	}
+    }
 
 	/**
 	 * Get the columns from database table.
@@ -198,7 +178,7 @@ abstract class MolajoTable extends JObject
 
 		// If the internal paths have not been initialised, do so with the base table path.
 		if (!isset($_paths)) {
-			$_paths = array(dirname(__FILE__).DS.'table');
+			$_paths = array(dirname(__FILE__) . '/table');
 		}
 
 		// Convert the passed path(s) to add to an array.
@@ -218,55 +198,6 @@ abstract class MolajoTable extends JObject
 		}
 
 		return $_paths;
-	}
-
-	/**
-	 * Method to compute the default name of the asset.
-	 * The default name is in the form `table_name.id`
-	 * where id is the value of the primary key of the table.
-	 *
-	 * @return  string
-	 */
-	protected function _getAssetName()
-	{
-		$k = $this->_tbl_key;
-		return $this->_tbl.'.'.(int) $this->$k;
-	}
-
-	/**
-	 * Method to return the title to use for the asset table.  In
-	 * tracking the assets a title is kept for each asset so that there is some
-	 * context available in a unified access manager.  Usually this woud just
-	 * return $this->title or $this->name or whatever is being used for the
-	 * primary name of the row. If this method is not overriden, the asset name is used.
-	 *
-	 * @return  string  The string to use as the title in the asset table.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/getAssetTitle
-	 */
-	protected function _getAssetTitle()
-	{
-		return $this->_getAssetName();
-	}
-
-	/**
-	 * Method to get the parent asset under which to register this one.
-	 * By default, all assets are registered to the ROOT node with ID 1.
-	 * The extended class can define a table and id to lookup.  If the
-	 * asset does not exist it will be created.
-	 *
-	 * @param   JTable	A JTable object for the asset parent.
-	 *
-	 * @return  integer
-	 */
-	protected function _getAssetParentId($table = null, $id = null)
-	{
-		// For simple cases, parent to the asset root.
-		if (empty($table) || empty($id)) {
-			return 1;
-		}
-
-		return 1;
 	}
 
 	/**
@@ -321,31 +252,6 @@ abstract class MolajoTable extends JObject
 		$this->_db = &$db;
 
 		return true;
-	}
-
-	/**
-	 * Method to set rules for the record.
-	 *
-	 * @param   mixed  A JRules object, JSON string, or array.
-	 */
-	function setRules($input)
-	{
-		if ($input instanceof JRules) {
-			$this->_rules = $input;
-		}
-		else {
-			$this->_rules = new JRules($input);
-		}
-	}
-
-	/**
-	 * Method to get the rules for the record.
-	 *
-	 * @return  object  JRules
-	 */
-	public function getRules()
-	{
-		return $this->_rules;
 	}
 
 	/**
@@ -525,11 +431,6 @@ abstract class MolajoTable extends JObject
 		// Initialise variables.
 		$k = $this->_tbl_key;
 
-		// The asset id field is managed privately by this class.
-		if ($this->_trackAssets) {
-			unset($this->asset_id);
-		}
-
 		// If a primary key exists update the object, otherwise insert it.
 		if ($this->$k) {
 			$stored = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
@@ -545,11 +446,6 @@ abstract class MolajoTable extends JObject
 			return false;
 		}
 
-		// If the table is not set to track assets return true.
-		if (!$this->_trackAssets) {
-			return true;
-		}
-
 		if ($this->_locked) {
 			$this->_unlock();
 		}
@@ -557,46 +453,21 @@ abstract class MolajoTable extends JObject
 		//
 		// Asset Tracking
 		//
-
-		$parentId	= $this->_getAssetParentId();
-		$name		= $this->_getAssetName();
-		$title		= $this->_getAssetTitle();
-
 		$asset	= JTable::getInstance('Asset');
-		$asset->loadByName($name);
 
-		// Re-inject the asset id.
-		$this->asset_id = $asset->id;
+        if ((int) $this->asset_id == 0) {
+            $asset->content_table = $this->_tbl;
+            $this->asset_id = $asset->save();
+        } else {
+            $asset->load();
+        }
 
-		// Check for an error.
-		if ($error = $asset->getError()) {
-			$this->setError($error);
-			return false;
-		}
+        if ($asset->getError()) {
+            $this->setError($asset->getError());
+            return false;
+        }
 
-		// Specify how a new or moved node asset is inserted into the tree.
-		if (empty($this->asset_id) || $asset->parent_id != $parentId) {
-			$asset->setLocation($parentId, 'last-child');
-		}
-
-		// Prepare the asset to be stored.
-		$asset->parent_id	= $parentId;
-		$asset->name		= $name;
-		$asset->title		= $title;
-
-		if ($this->_rules instanceof JRules) {
-			$asset->rules = (string) $this->_rules;
-		}
-
-		if (!$asset->check() || !$asset->store($updateNulls)) {
-			$this->setError($asset->getError());
-			return false;
-		}
-
-		if (empty($this->asset_id)) {
-			// Update the asset_id field in this table.
-			$this->asset_id = (int) $asset->id;
-
+        if ((int) $this->asset_id == 0) {
 			$query = $this->_db->getQuery(true);
 			$query->update($this->_db->quoteName($this->_tbl));
 			$query->set('asset_id = '.(int) $this->asset_id);
@@ -608,7 +479,38 @@ abstract class MolajoTable extends JObject
 				$this->setError($e);
 				return false;
 			}
-		}
+        }
+
+		//
+		// View Access
+		//
+		$grouping = JTable::getInstance('Grouping');
+
+        if ((int) $this->access == 0) {
+            $asset->content_table = $this->_tbl;
+            $this->asset_id = $asset->save();
+        } else {
+            $asset->load();
+        }
+
+        if ($asset->getError()) {
+            $this->setError($asset->getError());
+            return false;
+        }
+
+        if ((int) $this->asset_id == 0) {
+			$query = $this->_db->getQuery(true);
+			$query->update($this->_db->quoteName($this->_tbl));
+			$query->set('asset_id = '.(int) $this->asset_id);
+			$query->where($this->_db->quoteName($k).' = '.(int) $this->$k);
+			$this->_db->setQuery($query);
+
+			if (!$this->_db->query()) {
+				$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
+				$this->setError($e);
+				return false;
+			}
+        }
 
 		return true;
 	}

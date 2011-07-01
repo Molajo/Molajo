@@ -16,93 +16,83 @@ defined('MOLAJO') or die();
  * @since       1
  * @link
  */
-class MolajoTableAsset extends MolajoTable
-{
-	/**
-	 * The primary key of the asset.
-	 *
-	 * @var int
-	 */
-	public $id = null;
+class MolajoTableAsset extends MolajoTable {
+
+    /**
+     * The primary key of the asset.
+     *
+     * @var int
+     */
+    public $id = null;
+
+    /**
+     * content table associated with the asset.
+     *
+     * @var string
+     */
+    public $content_table = null;
+
+
+    /**
+     * @param database A database connector object
+     */
+    public function __construct(&$db)
+    {
+        parent::__construct('#__assets', 'id', $db);
+    }
 
 	/**
-	 * The source table to which the asset belongs
+	 * Method to provide a shortcut to binding, checking and storing a JTable
+	 * instance to the database table.  The method will check a row in once the
+	 * data has been stored and if an ordering filter is present will attempt to
+	 * reorder the table rows based on the filter.  The ordering filter is an instance
+	 * property name.  The rows that will be reordered are those whose value matches
+	 * the JTable instance for the property specified.
 	 *
-	 * @var string
-	 */
-	public $table = null;
-
-	/**
-	 * @param database A database connector object
-	 */
-	public function __construct(&$db)
-	{
-		parent::__construct('#__assets', 'id', $db);
-	}
-
-	/**
-	 * Method to load an asset by it's name.
+	 * @param   mixed   An associative array or object to bind to the JTable instance.
+	 * @param   string  Filter for the order updating
+	 * @param   mixed   An optional array or space separated list of properties
+	 *					to ignore while binding.
 	 *
-	 * @param   string  The name of the asset.
+	 * @return  boolean  True on success.
 	 *
-	 * @return  integer
-	 */
-	public function loadByName($name)
-	{
-		// Get the asset id for the asset.
-		$this->_db->setQuery(
-			'SELECT '.$this->_db->quoteName('id') .
-			' FROM '.$this->_db->quoteName('#__assets') .
-			' WHERE '.$this->_db->quoteName('name').' = '.$this->_db->Quote($name)
-		);
-		$assetId = (int) $this->_db->loadResult();
-		if (empty($assetId)) {
-			return false;
-		}
-		// Check for a database error.
-		if ($error = $this->_db->getErrorMsg())
-		{
-			$this->setError($error);
-			return false;
-		}
-		return $this->load($assetId);
-	}
-
-	/**
-	 * Asset that the nested set data is valid.
-	 *
-	 * @return  bool  True if the instance is sane and able to be stored in the database.
-	 *
-	 * @link	http://docs.joomla.org/JTable/check
+	 * @link	http://docs.joomla.org/JTable/save
 	 * @since   11.1
 	 */
-	public function check()
+	public function save($src, $orderingFilter = '', $ignore = '')
 	{
-		$this->parent_id = (int) $this->parent_id;
 
-		// JTableNested does not allow parent_id = 0, override this.
-		if ($this->parent_id > 0)
-		{
-			$this->_db->setQuery(
-				'SELECT COUNT(id)' .
-				' FROM '.$this->_db->quoteName($this->_tbl).
-				' WHERE '.$this->_db->quoteName('id').' = '.$this->parent_id
-			);
-			if ($this->_db->loadResult()) {
-				return true;
-			}
-			else
-			{
-				if ($error = $this->_db->getErrorMsg()) {
-					$this->setError($error);
-				}
-				else {
-					$this->setError(JText::_('JLIB_DATABASE_ERROR_INVALID_PARENT_ID'));
-				}
-				return false;
-			}
+		// Run any sanity checks on the instance and verify that it is ready for storage.
+		if (!$this->check()) {
+			return false;
 		}
+
+		// Attempt to store the properties to the database table.
+		if (!$this->store()) {
+			return false;
+		}
+
+		// Set the error to empty and return true.
+		$this->setError('');
 
 		return true;
 	}
+
+
+    /**
+     * Check for necessary data
+     *
+     * @return  bool  True if the instance is sane and able to be stored in the database.
+     *
+     * @link	http://docs.joomla.org/JTable/check
+     * @since   11.1
+     */
+    public function check()
+    {
+        if ($this->content_table == null) {
+            $this->setError(JText::_('ASSET_TABLE_MUST_HAVE_CONTENT_TABLE_VALUE'));
+            return false;
+        }
+        return true;
+    }
 }

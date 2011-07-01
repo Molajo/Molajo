@@ -73,7 +73,7 @@ class JAccess extends MolajoACL
 	protected function getGroupPath($groupId) {}
 
 	/**
-     * Deprecated: Use MolajoACL::getList
+     * Note: No longer needed
      *
 	 * Method to return the JRules object for an asset.  The returned object can optionally hold
 	 * only the rules explicitly set for the asset or the summation of all inherited rules from
@@ -86,11 +86,7 @@ class JAccess extends MolajoACL
 	 *
 	 * @since   11.1
 	 */
-	public function getAssetRules($asset, $recursive = false)
-    {
-        $acl = new MolajoACL();
-        return $acl->getList ('rules', $asset, $option='', $task='', $params=array());
-    }
+	public function getAssetRules($asset, $recursive = false) {}
 
 	/**
      * Deprecated: Use MolajoACL::getList

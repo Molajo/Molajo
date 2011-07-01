@@ -153,7 +153,6 @@ class JInstallationModelDatabase extends JModel
 			$type = $options->db_type;
             $schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
 /** Molajo Hack Ends */
-
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
 				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));

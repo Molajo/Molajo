@@ -1369,7 +1369,13 @@ INSERT INTO `#__update_sites_extensions` VALUES (1, 700), (2, 700);
 #
 # Actions
 #
-INSERT INTO `#__actions` (`id` ,`title`) VALUES (1, 'login'), (2, 'create'), (3, 'view'), (4, 'edit'), (5, 'delete'), (6, 'admin');
+INSERT INTO `#__actions` (`id` ,`title`)
+  VALUES (1, 'login'),
+        (2, 'create'),
+        (3, 'view'),
+        (4, 'edit'),
+        (5, 'delete'),
+        (6, 'admin');
 
 #
 # Table structure for table `#__temp_permissions`
