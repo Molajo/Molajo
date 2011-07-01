@@ -23,7 +23,8 @@ class JCacheControllerCallback extends JCacheController
 	/**
 	 * Executes a cacheable callback if not found in cache else returns cached output and result
 	 *
-	 * Since arguments to this function are read with func_get_args you can pass any number of arguments to this method
+	 * Since arguments to this function are read with func_get_args you can pass any number of
+	 * arguments to this method
 	 * as long as the first argument passed is the callback definition.
 	 *
 	 * The callback definition can be in several forms:
@@ -50,7 +51,7 @@ class JCacheControllerCallback extends JCacheController
 	 * @param   mixed    Callback or string shorthand for a callback
 	 * @param   array    Callback arguments
 	 * @param   string   Cache id
-	 * @param   boolean  Perform workarounds on data?
+	 * @param   boolean  True to perform workarounds on data
 	 * @param   array    Workaround options
 	 *
 	 * @return  mixed  Result of the callback
@@ -120,6 +121,15 @@ class JCacheControllerCallback extends JCacheController
 			}
 
 			if ($locktest->locked == false) $locktest = $this->cache->lock($id);
+			
+			if (isset($woptions['modulemode'])) {
+				$document	= JFactory::getDocument();
+				$coptions['modulemode'] =  $woptions['modulemode'];
+				$coptions['headerbefore'] = $document->getHeadData();
+			} else {
+				$coptions['modulemode'] = 0;
+			}
+			
 			ob_start();
 			ob_implicit_flush(false);
 
@@ -133,7 +143,6 @@ class JCacheControllerCallback extends JCacheController
 			$coptions['nopathway'] = isset($woptions['nopathway']) ? $woptions['nopathway'] : 1;
 			$coptions['nohead'] = isset($woptions['nohead']) ? $woptions['nohead'] : 1;
 			$coptions['nomodules'] = isset($woptions['nomodules']) ? $woptions['nomodules'] : 1;
-			$coptions['modulemode'] = isset($woptions['modulemode']) ? $woptions['modulemode'] : 0;
 
 			$cached['output'] = ($wrkarounds == false) ? $output : JCache::setWorkarounds($output, $coptions);
 			$cached['result'] = $result;

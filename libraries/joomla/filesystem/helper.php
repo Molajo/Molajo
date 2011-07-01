@@ -34,7 +34,7 @@ class JFilesystemHelper
 	 *
 	 * @return  mixed
 	 *
-	 * @see		http://www.php.net/manual/en/function.filesize.php#71098
+	 * @see     http://www.php.net/manual/en/function.filesize.php#71098
 	 * @since   11.1
 	 */
 	function remotefsize($url)
@@ -113,12 +113,12 @@ class JFilesystemHelper
 	/**
 	 * Quick FTP chmod
 	 *
-	 * @param   string   $url	TODO Add text
-	 * @param   integer  $mode	The new permissions, given as an octal value.
+	 * @param   string   $url   Link identifier
+	 * @param   integer  $mode  The new permissions, given as an octal value.
 	 *
 	 * @return  mixed
 	 *
-	 * @see		http://www.php.net/manual/en/function.ftp-chmod.php
+	 * @see     http://www.php.net/manual/en/function.ftp-chmod.php
 	 * @since   11.1
 	 */
 	function ftpChmod($url, $mode)
@@ -251,7 +251,7 @@ class JFilesystemHelper
 		if (!$streams) {
 			$streams = array_map(
 				array('JFile', 'stripExt'),
-				JFolder::files(dirname(__FILE__) . '/streams', '.php')
+				JFolder::files(dirname(__FILE__).DS.'streams', '.php')
 			);
 		}
 

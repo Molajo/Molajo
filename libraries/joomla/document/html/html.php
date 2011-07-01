@@ -188,9 +188,9 @@ class JDocumentHTML extends JDocument
 	 */
 	public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
 	{
-		$attribs = JArrayHelper::toString($attribs);
-		$generatedTag = '<link href="'.$href.'" '.$relType.'="'.$relation.'" '.$attribs;
-		$this->_links[] = $generatedTag;
+		$this->_links[$href]['relation']	= $relation;
+		$this->_links[$href]['relType']		= $relType;
+		$this->_links[$href]['attribs']		= $attribs;
 	}
 
 	/**
@@ -207,7 +207,7 @@ class JDocumentHTML extends JDocument
 	public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
 	{
 		$href = str_replace('\\', '/', $href);
-		$this->_links[] = '<link href="'.$href.'" rel="'.$relation.'" type="'.$type.'"';
+		$this->addHeadLink($href, $relation, 'rel', array('type' => $type));
 	}
 
 	/**
@@ -398,27 +398,27 @@ class JDocumentHTML extends JDocument
 		$contents = '';
 
 		// Check to see if we have a valid template file
-		if (file_exists($directory . '/' . $filename))
+		if (file_exists($directory.DS.$filename))
 		{
 			// Store the file path
-			$this->_file = $directory . '/' . $filename;
+			$this->_file = $directory.DS.$filename;
 
 			//get the file content
 			ob_start();
-			require $directory . '/' . $filename;
+			require $directory.DS.$filename;
 			$contents = ob_get_contents();
 			ob_end_clean();
 		}
 
 		// Try to find a favicon by checking the template and root folder
-		$path = $directory . '/';
-		$dirs = array($path, JPATH_BASE . '/');
+		$path = $directory . DS;
+		$dirs = array($path, JPATH_BASE.DS);
 		foreach ($dirs as $dir)
 		{
 			$icon = $dir.'favicon.ico';
 			if (file_exists($icon))
 			{
-				$path = str_replace(JPATH_BASE . '/', '', $dir);
+				$path = str_replace(JPATH_BASE . DS, '', $dir);
 				$path = str_replace('\\', '/', $path);
 				$this->addFavicon(JURI::base(true).'/'.$path.'favicon.ico');
 				break;
@@ -441,7 +441,7 @@ class JDocumentHTML extends JDocument
 		$template	= $filter->clean($params['template'], 'cmd');
 		$file		= $filter->clean($params['file'], 'cmd');
 
-		if (!file_exists($directory . '/' . $template . '/' . $file)) {
+		if (!file_exists($directory.DS.$template.DS.$file)) {
 			$template = 'system';
 		}
 
@@ -450,9 +450,9 @@ class JDocumentHTML extends JDocument
 		// 1.5 or core then 1.6
 
 			$lang->load('tpl_'.$template, JPATH_BASE, null, false, false)
-		||	$lang->load('tpl_'.$template, $directory . '/' . $template, null, false, false)
+		||	$lang->load('tpl_'.$template, $directory.DS.$template, null, false, false)
 		||	$lang->load('tpl_'.$template, JPATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, $directory . '/' . $template, $lang->getDefault(), false, false);
+		||	$lang->load('tpl_'.$template, $directory.DS.$template, $lang->getDefault(), false, false);
 
 		// Assign the variables
 		$this->template = $template;
@@ -460,7 +460,7 @@ class JDocumentHTML extends JDocument
 		$this->params	= isset($params['params']) ? $params['params'] : new JRegistry;
 
 		// Load
-		$this->_template = $this->_loadTemplate($directory . '/' . $template, $file);
+		$this->_template = $this->_loadTemplate($directory.DS.$template, $file);
 	}
 
 	/**

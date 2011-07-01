@@ -9,7 +9,7 @@
 
 defined('JPATH_PLATFORM') or die;
 
-require_once dirname(__FILE__) . '/list.php';
+require_once dirname(__FILE__).'/list.php';
 
 /**
  * Renders a select list of Asset Groups
@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/list.php';
  * @package     Joomla.Platform
  * @subpackage  Parameter
  * @since       11.1
- * @deprecated .Use JForm instead
+ * @deprecated  Use JForm instead
  */
 class JElementContentLanguages extends JElementList
 {
@@ -33,6 +33,9 @@ class JElementContentLanguages extends JElementList
 	 *
 	 * @param   object   $node
 	 * @return  array
+	 * 
+	 * @since   11.1
+	 * @deprecated
 	 */
 	protected function _getOptions(&$node)
 	{

@@ -65,12 +65,12 @@ class JDocumentRendererModule extends JDocumentRenderer
 
 		// Get module parameters
 		$params = new JRegistry;
-		$params->loadString($module->params);
+		$params->loadJSON($module->params);
 
 		// Use parameters from template
 		if (isset($attribs['params'])) {
 			$template_params = new JRegistry;
-			$template_params->loadString(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
+			$template_params->loadJSON(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
 			$params->merge($template_params);
 			$module = clone $module;
 			$module->params = (string) $params;

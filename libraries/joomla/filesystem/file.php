@@ -77,8 +77,8 @@ class JFile
 	{
 		// Prepend a base path if it exists
 		if ($path) {
-			$src = JPath::clean($path . '/' . $src);
-			$dest = JPath::clean($path . '/' . $dest);
+			$src = JPath::clean($path.DS.$src);
+			$dest = JPath::clean($path.DS.$dest);
 		}
 
 		// Check src path
@@ -204,8 +204,8 @@ class JFile
 	public static function move($src, $dest, $path = '', $use_streams=false)
 	{
 		if ($path) {
-			$src = JPath::clean($path . '/' . $src);
-			$dest = JPath::clean($path . '/' . $dest);
+			$src = JPath::clean($path.DS.$src);
+			$dest = JPath::clean($path.DS.$dest);
 		}
 
 		// Check src path
@@ -313,8 +313,8 @@ class JFile
 	/**
 	 * Write contents to a file
 	 *
-	 * @param   string  $file The full file path
-	 * @param   string  $buffer The buffer to write
+	 * @param   string   $file    The full file path
+	 * @param   string   $buffer  The buffer to write
 	 *
 	 * @return  boolean  True on success
 	 * @since   11.1
@@ -452,9 +452,7 @@ class JFile
 	 */
 	public static function getName($file)
 	{
-		// convert back slashes to forward slashes
-		$file = str_replace('\\', '/', $file);
-		$slash = strrpos($file, '/');
+		$slash = strrpos($file, DS);
 		if ($slash !== false) {
 
 			return substr($file, $slash + 1);

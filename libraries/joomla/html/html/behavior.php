@@ -229,11 +229,7 @@ abstract class JHtmlBehavior
 		// Setup options object
 		$opt['maxTitleChars']	= (isset($params['maxTitleChars']) && ($params['maxTitleChars'])) ? (int)$params['maxTitleChars'] : 50 ;
 		// offsets needs an array in the format: array('x'=>20, 'y'=>30)
-		$opt['offset']			= (isset($params['offset']) && (is_array($params['offset']))) ? $params['offset'] : null;
-		if (!isset($opt['offset'])) {
-			// Suppporting offsets parameter which was working in mootools 1.2 (Joomla!1.5)
-			$opt['offset']			= (isset($params['offsets']) && (is_array($params['offsets']))) ? $params['offsets'] : null;
-		}
+		$opt['offsets']			= (isset($params['offsets']) && (is_array($params['offsets']))) ? $params['offsets'] : null;
 		$opt['showDelay']		= (isset($params['showDelay'])) ? (int)$params['showDelay'] : null;
 		$opt['hideDelay']		= (isset($params['hideDelay'])) ? (int)$params['hideDelay'] : null;
 		$opt['className']		= (isset($params['className'])) ? $params['className'] : null;
@@ -353,15 +349,17 @@ abstract class JHtmlBehavior
 	/**
 	 * JavaScript behavior to allow shift select in grids
 	 *
+	 * @param	string	$id Id of the form element that the multiselect behavior should be applied to
+	 *
 	 * @return  void
 	 * @since   11.1
 	 */
-	public static function multiselect()
+	public static function multiselect($id = 'adminForm')
 	{
 		// Include MooTools framework
 		self::framework();
 		JHtml::_('script','system/multiselect.js', true, true);
-
+ 
 		return;
 	}
 

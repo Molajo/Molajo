@@ -78,7 +78,7 @@ abstract class JHtmlJGrid
 	 *
 	 * @return The Html code
 	 *
-	 * @since	1.
+	 * @since    1.
 	 */
 	public static function state($states, $value, $i, $prefix = '', $enabled = true, $translate=true, $checkbox='cb')
 	{
@@ -136,21 +136,21 @@ abstract class JHtmlJGrid
 		// Special state for dates
 		if ($publish_up || $publish_down)
 		{
-			$nullDate 	= JFactory::getDBO()->getNullDate();
+			$nullDate 	= JFActory::getDBO()->getNullDate();
 			$nowDate 	= JFactory::getDate()->toUnix();
 
-			$tz	= new DateTimeZone(JFactory::getUser()->getParam('timezone', JFactory::getConfig()->get('offset')));
+			$tz	= JFactory::getApplication()->getCfg('offset');
 
-			$publish_up		= ($publish_up 		!= $nullDate) ? JFactory::getDate($publish_up, 'UTC')->setTimeZone($tz) 	: false;
-			$publish_down 	= ($publish_down 	!= $nullDate) ? JFactory::getDate($publish_down, 'UTC')->setTimeZone($tz)  	: false;
+			$publish_up		= ($publish_up 		!= $nullDate) ? JFactory::getDate($publish_up, $tz) 	: false;
+			$publish_down 	= ($publish_down 	!= $nullDate) ? JFactory::getDate($publish_down, $tz) 	: false;
 
 			// Create tip text, only we have publish up or down settings
 			$tips = array();
 			if ($publish_up) {
-				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_START', $publish_up->format(JDate::$format, true));
+				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_START', $publish_up->toFormat());
 			}
 			if ($publish_down) {
-				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $publish_down->format(JDate::$format, true));
+				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $publish_down->toFormat());
 			}
 			$tip = empty($tips) ? false : implode('<br/>', $tips);
 

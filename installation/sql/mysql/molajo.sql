@@ -16,10 +16,14 @@
 #
 
 CREATE TABLE IF NOT EXISTS `#__actions` (
-  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key',
+  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key' ,  
   `title` VARCHAR(255) NOT NULL DEFAULT '',
-  PRIMARY KEY  (`id`)
-)  DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `idx_actions_table_id_join` ON `#__actions` (`id` ASC) ;
+CREATE UNIQUE INDEX `idx_actions_table_title` ON `#__actions` (`title` ASC) ;
 
 #
 # Table structure for table `#__assets`
@@ -30,42 +34,13 @@ CREATE TABLE IF NOT EXISTS `#__actions` (
 #
 
 CREATE TABLE IF NOT EXISTS `#__assets` (
-  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Assets Primary Key',
-  `content_table` VARCHAR(100) NOT NULL DEFAULT '',
-    PRIMARY KEY  (`id`),
-    UNIQUE KEY `idx_content_table_id_join` (`content_table`,`id`)
-) DEFAULT CHARSET=utf8;
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Assets Primary Key' ,
+  `content_table` VARCHAR(100) NOT NULL DEFAULT '' ,
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
 
-#
-# Table structure for table `#__permissions_groups`
-#   A complete list of assigned actions by asset id for groups
-#
-
-CREATE TABLE IF NOT EXISTS `#__permissions_groups` (
-  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key',
-  `group_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #_groups.id',
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__assets.id',
-  `action_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__actions.id',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `idx_asset_action_to_group_lookup` (`asset_id`,`action_id`,`group_id`),
-  UNIQUE KEY `idx_group_to_asset_action_lookup` (`group_id`,`asset_id`,`action_id`)
-)  DEFAULT CHARSET=utf8;
-
-#
-# Table structure for table `#__permissions_groupings`
-#
-#   A complete list of assigned actions by asset id for groupings of groups
-#
-
-CREATE TABLE IF NOT EXISTS `#__permissions_groupings` (
-  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key',
-  `grouping_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__groups.id',
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__assets.id',
-  `action_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__actions.id',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `idx_asset_action_to_group_lookup` (`asset_id`,`action_id`,`grouping_id`),
-  UNIQUE KEY `idx_group_to_asset_action_lookup` (`grouping_id`,`asset_id`,`action_id`)
-)  DEFAULT CHARSET=utf8;
+CREATE UNIQUE INDEX `idx_content_table_id_join` ON `#__assets` (`content_table` ASC, `id` ASC) ;
 
 #
 # CLIENTS (Applications)
@@ -76,12 +51,12 @@ CREATE TABLE IF NOT EXISTS `#__permissions_groupings` (
 #
 CREATE TABLE `#__clients` (
   `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Client Primary Key',
-  `client_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Numeric value associated with the client',
+  `client_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Numeric value associated with the client',
   `name` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `path` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `description` mediumtext NOT NULL,
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-  `access` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to the #__groupings table',
+  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
+  `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
   `metakey` text COMMENT 'Meta Key',
   `metadesc` text COMMENT 'Meta Description',
   `metadata` text COMMENT 'Meta Data',
@@ -100,41 +75,44 @@ CREATE TABLE `#__clients` (
 # Table structure for table `#__users`
 #
 
-CREATE TABLE `#__users` (
-  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL DEFAULT '',
-  `username` VARCHAR(150) NOT NULL DEFAULT '',
-  `email` VARCHAR(255) NOT NULL DEFAULT '',
-  `password` VARCHAR(100) NOT NULL DEFAULT '',
-  `block` tinyint(4) NOT NULL DEFAULT '0',
-  `sendEmail` tinyint(4) DEFAULT '0',
-  `registerDate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `lastvisitDate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `activation` VARCHAR(100) NOT NULL DEFAULT '',
-  `params` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
-  `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
-  PRIMARY KEY  (`id`),
-  KEY `idx_name` (`name`),
-  KEY `idx_block` (`block`),
-  KEY `username` (`username`),
-  KEY `email` (`email`)
-)  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `#___users` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(255) NOT NULL DEFAULT '' ,
+  `username` VARCHAR(150) NOT NULL DEFAULT '' ,
+  `email` VARCHAR(255) NOT NULL DEFAULT '' ,
+  `password` VARCHAR(100) NOT NULL DEFAULT '' ,
+  `block` TINYINT(4) NOT NULL DEFAULT 0 ,
+  `sendEmail` TINYINT(4) NULL DEFAULT 0 ,
+  `registerDate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' ,
+  `lastvisitDate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' ,
+  `activation` VARCHAR(100) NOT NULL DEFAULT '' ,
+  `params` MEDIUMTEXT NULL DEFAULT NULL COMMENT 'Configurable Parameter Values' ,
+  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.' ,
+  `access` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table' ,
+  PRIMARY KEY (`id`) )
+DEFAULT CHARACTER SET = utf8;
+
+CREATE INDEX `idx_name` ON `#___users` (`name` ASC) ;
+CREATE INDEX `idx_block` ON `#___users` (`block` ASC) ;
+CREATE INDEX `username` ON `#___users` (`username` ASC) ;
+CREATE INDEX `email` ON `#___users` (`email` ASC) ;
 
 #
 # Table structure for table `#__user_profiles`
 #
 
-CREATE TABLE `#__user_profiles` (
-  `user_id` INT (11) NOT NULL,
-  `profile_key` VARCHAR(100) NOT NULL,
-  `profile_value` VARCHAR(255) NOT NULL,
-  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordering',
-  UNIQUE KEY `idx_user_id_profile_key` (`user_id`,`profile_key`)
-)  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `#___user_profiles` (
+  `user_id` INT(11) NOT NULL ,
+  `profile_key` VARCHAR(100) NOT NULL ,
+  `profile_value` VARCHAR(255) NOT NULL ,
+  `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering' )
+DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `idx_user_id_profile_key` ON `#___user_profiles` (`user_id` ASC, `profile_key` ASC) ;
 
 #
 # Table structure for table `#__groups`
+#
 #   A group is a structure for defining a set of user(s) for the purpose of assigning permissions or other applications
 #   When a user is assigned to a Group, that user is also a member of existing and future child groups
 #   Each user is also assigned a special group that can be used to assign "Edit Own", "View Own" or "Delete Own" Permissions
@@ -142,25 +120,41 @@ CREATE TABLE `#__user_profiles` (
 #   In smaller implementations or social networks, "User Groups" provides support for friending, etc.
 #
 
-CREATE TABLE IF NOT EXISTS `#__groups` (
-  `id` INT (11) UNSIGNED NOT NULL auto_increment COMMENT 'Group Primary Key',
-  `parent_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Parent ID',
-  `lft` INT (11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
-  `rgt` INT (11) NOT NULL DEFAULT '0' COMMENT 'Nested set rgt.',
-  `title` VARCHAR(255) NOT NULL DEFAULT '',
-  `description` MEDIUMTEXT NOT NULL DEFAULT '',
-  `type_id` INT (11) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Users: 0, Groups: 1',
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
-  `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'View level Access with a FK to the #__groupings table',
-  `protected` boolean NOT NULL DEFAULT 0 COMMENT 'If true, protects group from system removal via the interface.',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `idx_usergroup_parent_title_lookup` (`parent_id`,`title`,`type_id`),
-  KEY `idx_access` (`access`),
-  KEY `idx_usergroup_title_lookup` (`title`),
-  KEY `idx_usergroup_adjacency_lookup` (`parent_id`),
-  KEY `idx_usergroup_type_id` (`type_id`),
-  KEY `idx_usergroup_nested_set_lookup` USING BTREE (`lft`,`rgt`)
-)  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `#___groups` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Group Primary Key' ,
+  `parent_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Parent ID' ,
+  `lft` INT(11) NOT NULL DEFAULT 0 COMMENT 'Nested set lft.' ,
+  `rgt` INT(11) NOT NULL DEFAULT 0 COMMENT 'Nested set rgt.' ,
+  `title` VARCHAR(255) NOT NULL DEFAULT '' ,
+  `description` MEDIUMTEXT NOT NULL ,
+  `type_id` INT(11) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Users: 0, Groups: 1' ,
+  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.' ,
+  `access` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'View level Access with a FK to the #__groupings table' ,
+  `protected` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'If true, protects group from system removal via the interface.' ,
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `#___groups` (`parent_id` ASC, `title` ASC, `type_id` ASC) ;
+CREATE INDEX `idx_access` ON `#___groups` (`access` ASC) ;
+CREATE INDEX `idx_usergroup_title_lookup` ON `#___groups` (`title` ASC) ;
+CREATE INDEX `idx_usergroup_adjacency_lookup` ON `#___groups` (`parent_id` ASC) ;
+CREATE INDEX `idx_usergroup_type_id` ON `#___groups` (`type_id` ASC) ;
+CREATE INDEX `idx_usergroup_nested_set_lookup` USING BTREE ON `#___groups` (`lft` ASC, `rgt` ASC) ;
+
+#
+# Table structure for table `#__user_groups`
+#
+#   Groups to which users belong
+#
+
+CREATE TABLE IF NOT EXISTS `#___user_groups` (
+  `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__users.id' ,
+  `group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__groups.id' ,
+  PRIMARY KEY (`user_id`, `group_id`) )
+DEFAULT CHARACTER SET = utf8;
+CREATE INDEX `fk_jos_user_groups_jos_users1` ON `#___user_groups` (`user_id` ASC) ;
+CREATE INDEX `fk_jos_user_groups_jos_groups1` ON `#___user_groups` (`group_id` ASC) ;
 
 #
 # Table structure for table `#__groupings`
@@ -170,38 +164,30 @@ CREATE TABLE IF NOT EXISTS `#__groups` (
 #     Replaces viewlevel table and provides this structure for view and other ACL actions
 #
 
-CREATE TABLE IF NOT EXISTS `#__groupings` (
-  `id` INT (11) UNSIGNED NOT NULL auto_increment COMMENT 'Groupings Primary Key',
-  `group_name_list` TEXT NOT NULL DEFAULT '',
-  `group_id_list` TEXT NOT NULL DEFAULT '',
-  PRIMARY KEY  (`id`)
-)  DEFAULT CHARSET=utf8;
+CREATE  TABLE IF NOT EXISTS `#__groupings` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Groupings Primary Key' ,
+  `group_name_list` TEXT NOT NULL ,
+  `group_id_list` TEXT NOT NULL ,
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
 
 #
-# Table structure for table `#__group_to_groupings`
+# Table structure for table `#___group_to_groupings`
 #
-#     Links the group to the groupings table
+#     A listing of groups that belong to the group
 #
+CREATE TABLE IF NOT EXISTS `#___group_to_groupings` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Group to Group Primary Key' ,
+  `group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__group table.' ,
+  `grouping_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table.' ,
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `#__group_to_groupings` (
-  `id` INT (11) UNSIGNED NOT NULL auto_increment COMMENT 'Group to Group Primary Key',
-  `group_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__group table.',
-  `grouping_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table.',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `idx_group_to_groupings_id` (`group_id`, `grouping_id`)
-)  DEFAULT CHARSET=utf8;
-
-#
-# Table structure for table `#__user_groups`
-#
-#   Groups to which users belong
-#
-
-CREATE TABLE IF NOT EXISTS `#__user_groups` (
-  `user_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__users.id',
-  `group_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__groups.id',
-  PRIMARY KEY  (`user_id`,`group_id`)
-)  DEFAULT CHARSET=utf8;
+CREATE UNIQUE INDEX `idx_group_to_groupings_id` ON `#___group_to_groupings` (`group_id` ASC, `grouping_id` ASC) ;
+CREATE INDEX `fk_jos_group_to_groupings_jos_groups1` ON `#___group_to_groupings` (`group_id` ASC) ;
+CREATE INDEX `fk_jos_group_to_groupings_jos_groupings1` ON `#___group_to_groupings` (`grouping_id` ASC) ;
 
 #
 # Table structure for table `#__user_groupings`
@@ -209,12 +195,15 @@ CREATE TABLE IF NOT EXISTS `#__user_groups` (
 #   Groupings of groups to which users belong
 #
 
-CREATE TABLE IF NOT EXISTS `#__user_groupings` (
-  `user_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__users.id',
-  `grouping_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__groupings.id',
-  PRIMARY KEY  (`user_id`,`grouping_id`)
-)  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `#___user_groupings` (
+  `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__users.id' ,
+  `grouping_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__groupings.id' ,
+  `id` INT(11) NOT NULL ,
+  PRIMARY KEY (`user_id`, `grouping_id`, `id`) )
+DEFAULT CHARACTER SET = utf8;
 
+CREATE INDEX `fk_jos_user_groupings_jos_users1` ON `#___user_groupings` (`user_id` ASC) ;
+CREATE INDEX `fk_jos_user_groupings_jos_groupings1` ON `#___user_groupings` (`grouping_id` ASC) ;
 
 #
 # Table structure for table `#__user_clients`
@@ -222,11 +211,55 @@ CREATE TABLE IF NOT EXISTS `#__user_groupings` (
 #   Clients to which users belong
 #
 
-CREATE TABLE IF NOT EXISTS `#__user_clients` (
-  `user_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__users.id',
-  `client_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__clients.id',
-  PRIMARY KEY  (`user_id`,`client_id`)
-)  DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `#___user_clients` (
+  `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__users.id' ,
+  `client_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__clients.id' ,
+  PRIMARY KEY (`user_id`, `client_id`) )
+DEFAULT CHARACTER SET = utf8;
+
+CREATE INDEX `user_id` ON `#___user_clients` (`user_id` ASC) ;
+CREATE INDEX `fk_jos_user_clients_jos_users1` ON `#___user_clients` (`client_id` ASC) ;
+
+#
+# Table structure for table `#__permissions_groups`
+#   A complete list of assigned actions by asset id for groups
+#
+
+CREATE TABLE IF NOT EXISTS `#___permissions_groups` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key' ,
+  `group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #_groups.id' ,
+  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__assets.id' ,
+  `action_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__actions.id' ,
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#___permissions_groups` (`asset_id` ASC, `action_id` ASC, `group_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#___permissions_groups` (`group_id` ASC, `asset_id` ASC, `action_id` ASC) ;
+CREATE INDEX `fk_jos_permissions_groups_jos_groups1` ON `#___permissions_groups` (`group_id` ASC) ;
+CREATE INDEX `fk_jos_permissions_groups_jos_assets1` ON `#___permissions_groups` (`asset_id` ASC) ;
+CREATE INDEX `fk_jos_permissions_groups_jos_actions1` ON `#___permissions_groups` (`action_id` ASC) ;
+
+#
+# Table structure for table `#__permissions_groupings`
+#
+#   A complete list of assigned actions by asset id for groupings of groups
+#
+
+CREATE TABLE IF NOT EXISTS `#___permissions_groupings` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key' ,
+  `grouping_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__groups.id' ,
+  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__assets.id' ,
+  `action_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__actions.id' ,
+  PRIMARY KEY (`id`) )
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#___permissions_groupings` (`asset_id` ASC, `action_id` ASC, `grouping_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#___permissions_groupings` (`grouping_id` ASC, `asset_id` ASC, `action_id` ASC) ;
+CREATE INDEX `fk_jos_permissions_groupings_jos_groupings1` ON `#___permissions_groupings` (`grouping_id` ASC) ;
+CREATE INDEX `fk_jos_permissions_groupings_jos_assets1` ON `#___permissions_groupings` (`asset_id` ASC) ;
+CREATE INDEX `fk_jos_permissions_groupings_jos_actions1` ON `#___permissions_groupings` (`action_id` ASC) ;
 
 #
 # CONTENT
@@ -239,29 +272,29 @@ CREATE TABLE IF NOT EXISTS `#__user_clients` (
 CREATE TABLE `#__categories` (
   `id` INT (11) NOT NULL auto_increment,
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
-  `parent_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
-  `lft` INT (11) NOT NULL DEFAULT '0',
-  `rgt` INT (11) NOT NULL DEFAULT '0',
-  `level` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `parent_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
+  `lft` INT (11) NOT NULL DEFAULT 0,
+  `rgt` INT (11) NOT NULL DEFAULT 0,
+  `level` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `path` VARCHAR(255) NOT NULL DEFAULT '',
   `extension` VARCHAR(50) NOT NULL DEFAULT '',
   `title` VARCHAR(255) NOT NULL,
   `alias` VARCHAR(255) NOT NULL DEFAULT '',
   `note` VARCHAR(255) NOT NULL DEFAULT '',
   `description` MEDIUMTEXT NOT NULL DEFAULT '',
-  `published` INT (11) UNSIGNED NOT NULL DEFAULT '0',
-  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `published` INT (11) UNSIGNED NOT NULL DEFAULT 0,
+  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
   `params` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
   `metadesc` VARCHAR(1024) NOT NULL DEFAULT ' ' COMMENT 'The meta description for the page.',
   `metakey` VARCHAR(1024) NOT NULL DEFAULT ' ' COMMENT 'The meta keywords for the page.',
   `metadata` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'JSON encoded metadata properties.',
-  `created_user_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `created_user_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `created_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_user_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_user_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `modified_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `hits` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `language` CHAR(7) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `cat_idx` (`extension`,`published`,`access`),
@@ -285,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `title` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `alias` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
 
-  `content_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT 'Content Type: Links to #__configuration.option_id = 10 and content_table values matching ',
+  `content_type` tinyint(3) NOT NULL DEFAULT 0 COMMENT 'Content Type: Links to #__configuration.option_id = 10 and content_table values matching ',
 
   `content_text` MEDIUMTEXT NULL COMMENT 'Content Primary Text Field, can include break to designate Introductory and Full text',
   `content_link` VARCHAR (2083) NULL COMMENT 'Content Link for Weblink or Newsfeed Field',
@@ -293,14 +326,14 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `content_numeric_value` TINYINT (3) NULL COMMENT 'Content Numeric Value, ex. vote on poll',
   `content_file` VARCHAR (255) NOT NULL DEFAULT '' COMMENT 'Content Network Path to File',
 
-  `featured` boolean NOT NULL DEFAULT '0' COMMENT 'Featured 1-Featured 0-Not Featured',
-  `stickied` boolean NOT NULL DEFAULT '0' COMMENT 'Stickied 1-Stickied 0-Not Stickied',
-  `user_default` boolean NOT NULL DEFAULT '0' COMMENT 'User DEFAULT 1-DEFAULT 0-Not DEFAULT',
-  `category_default` boolean NOT NULL DEFAULT '0' COMMENT 'Category DEFAULT 1-DEFAULT 0-Not DEFAULT',
+  `featured` boolean NOT NULL DEFAULT 0 COMMENT 'Featured 1-Featured 0-Not Featured',
+  `stickied` boolean NOT NULL DEFAULT 0 COMMENT 'Stickied 1-Stickied 0-Not Stickied',
+  `user_default` boolean NOT NULL DEFAULT 0 COMMENT 'User DEFAULT 1-DEFAULT 0-Not DEFAULT',
+  `category_default` boolean NOT NULL DEFAULT 0 COMMENT 'Category DEFAULT 1-DEFAULT 0-Not DEFAULT',
   `language` CHAR (7) NOT NULL DEFAULT '' COMMENT 'Language',
-  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordering',
+  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering',
 
-  `state` TINYINT (3) NOT NULL DEFAULT '0' COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version',
+  `state` TINYINT (3) NOT NULL DEFAULT 0 COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version',
   `publish_up` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish Begin Date and Time',
   `publish_down` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish End Date and Time',
   `version` INT (11) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Version Number',
@@ -308,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `state_prior_to_version` INT (11) UNSIGNED NULL COMMENT 'State value prior to creating this version copy and changing the state to Version',
 
   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT 'Created Date and Time',
-  `created_by` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Created by User ID',
+  `created_by` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Created by User ID',
   `created_by_alias` VARCHAR (255) NOT NULL DEFAULT '' COMMENT 'Created by Alias',
   `created_by_email` VARCHAR (255) NULL COMMENT 'Created By Email Address',
   `created_by_website` VARCHAR (255) NULL COMMENT 'Created By Website',
@@ -316,9 +349,9 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `created_by_referer` VARCHAR (255) NULL COMMENT 'Created By Referer',
 
   `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Modified Date',
-  `modified_by` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Modified By User ID',
+  `modified_by` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Modified By User ID',
 
-  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Checked out by User Id',
+  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Checked out by User Id',
   `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Checked out Date and Time',
 
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
@@ -329,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `parent_id` INT (11) NULL COMMENT 'Nested set parent',
   `lft` INT (11) NULL COMMENT 'Nested set lft',
   `rgt` INT (11) NULL COMMENT 'Nested set rgt',
-  `level` INT (11) NULL DEFAULT '0' COMMENT 'The cached level in the nested tree',
+  `level` INT (11) NULL DEFAULT 0 COMMENT 'The cached level in the nested tree',
   `metakey` TEXT NULL COMMENT 'Meta Key',
   `metadesc` TEXT NULL COMMENT 'Meta Description',
   `metadata` TEXT NULL COMMENT 'Meta Data',
@@ -369,21 +402,21 @@ CREATE TABLE `#__extensions` (
   `enabled` TINYINT(3) NOT NULL DEFAULT '1',
   `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
-  `protected` TINYINT(3) NOT NULL DEFAULT '0',
+  `protected` TINYINT(3) NOT NULL DEFAULT 0,
   `manifest_cache` MEDIUMTEXT  NOT NULL,
   `params` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
   `custom_data` MEDIUMTEXT COMMENT 'Available for Custom Data needed by the Extension',
   `system_data` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
-  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordering',
-  `state` TINYINT (3) NOT NULL DEFAULT '0' COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version',
+  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering',
+  `state` TINYINT (3) NOT NULL DEFAULT 0 COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version',
   PRIMARY KEY (`extension_id`),
   UNIQUE KEY `idx_asset_id` (`asset_id`, `access`),
   INDEX `element_clientid`(`element`, `client_id`),
   INDEX `element_folder_clientid`(`element`, `folder`, `client_id`),
   INDEX `extension`(`type`,`element`,`folder`,`client_id`)
-) AUTO_INCREMENT=10000 CHARACTER SET utf8;
+) AUTO_INCREMENT=1 CHARACTER SET utf8;
 
 
 #
@@ -427,24 +460,24 @@ CREATE TABLE `#__menu` (
   `path` VARCHAR(1024) NOT NULL DEFAULT ' ' COMMENT 'The computed path of the menu item based on the alias field.',
   `link` VARCHAR(1024) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.',
   `type` VARCHAR(16) NOT NULL DEFAULT ' ' COMMENT 'The type of link: Component, URL, Alias, Separator',
-  `published` INT (11)NOT NULL DEFAULT '0' COMMENT 'The published state of the menu link.',
+  `published` INT (11)NOT NULL DEFAULT 0 COMMENT 'The published state of the menu link.',
   `parent_id` INT (11) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'The parent menu item in the menu tree.',
-  `level` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The relative level in the tree.',
-  `component_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to #__extensions.id',
-  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordering',
-  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to #__users.id',
+  `level` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'The relative level in the tree.',
+  `component_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to #__extensions.id',
+  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering',
+  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to #__users.id',
   `checked_out_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The time the menu item was checked out.',
-  `browserNav` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'The click behaviour of the link.',
+  `browserNav` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'The click behaviour of the link.',
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
   `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
   `img` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'The image of the menu item.',
-  `template_style_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `template_style_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `params` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
-  `lft` INT (11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
-  `rgt` INT (11) NOT NULL DEFAULT '0' COMMENT 'Nested set rgt.',
-  `home` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Indicates if this menu item is the home or DEFAULT page.',
+  `lft` INT (11) NOT NULL DEFAULT 0 COMMENT 'Nested set lft.',
+  `rgt` INT (11) NOT NULL DEFAULT 0 COMMENT 'Nested set rgt.',
+  `home` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Indicates if this menu item is the home or DEFAULT page.',
   `language` CHAR(7) NOT NULL DEFAULT '',
-  `client_id` INT (11) NOT NULL DEFAULT '0',
+  `client_id` INT (11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_client_id_parent_id_alias` (`client_id`,`parent_id`,`alias`),
   UNIQUE KEY `idx_asset_id` (`asset_id`),
@@ -461,8 +494,8 @@ CREATE TABLE `#__menu` (
 #
 
 CREATE TABLE `#__modules_menu` (
-  `moduleid` INT (11) NOT NULL DEFAULT '0',
-  `menuid` INT (11) NOT NULL DEFAULT '0',
+  `moduleid` INT (11) NOT NULL DEFAULT 0,
+  `menuid` INT (11) NOT NULL DEFAULT 0,
   PRIMARY KEY  (`moduleid`,`menuid`)
 ) DEFAULT CHARSET=utf8;
 
@@ -475,19 +508,19 @@ CREATE TABLE `#__modules` (
   `title` VARCHAR(255) NOT NULL DEFAULT '',
   `note` VARCHAR(255) NOT NULL DEFAULT '',
   `content` MEDIUMTEXT NOT NULL,
-  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordering',
+  `ordering` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering',
   `position` VARCHAR(50) DEFAULT NULL,
-  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_up` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `published` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `published` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `module` VARCHAR(255) DEFAULT NULL,
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
   `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
   `showtitle` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `params` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
-  `client_id` INT (11) NOT NULL DEFAULT '0',
+  `client_id` INT (11) NOT NULL DEFAULT 0,
   `language` CHAR(7) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `idx_asset_id` (`asset_id`),
@@ -510,7 +543,7 @@ CREATE TABLE `#__languages` (
   `description` VARCHAR(512) NOT NULL,
   `metakey` text NOT NULL,
   `metadesc` text NOT NULL,
-  `published` INT (11) NOT NULL DEFAULT '0',
+  `published` INT (11) NOT NULL DEFAULT 0,
   PRIMARY KEY  (`lang_id`),
   UNIQUE `idx_sef` (`sef`)
 )  DEFAULT CHARSET=utf8;
@@ -527,7 +560,7 @@ CREATE TABLE IF NOT EXISTS `#__template_styles` (
   `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `template` VARCHAR(50) NOT NULL DEFAULT '',
   `client_id` INT(11) UNSIGNED NOT NULL DEFAULT 0,
-  `home` CHAR(7) NOT NULL DEFAULT '0',
+  `home` CHAR(7) NOT NULL DEFAULT 0,
   `title` VARCHAR(255) NOT NULL DEFAULT '',
   `params` MEDIUMTEXT COMMENT 'Configurable Parameter Values',
   PRIMARY KEY  (`id`),
@@ -545,12 +578,12 @@ CREATE TABLE IF NOT EXISTS `#__template_styles` (
 
 CREATE TABLE `#__messages` (
   `message_id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id_from` INT (11) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id_to` INT (11) UNSIGNED NOT NULL DEFAULT '0',
-  `folder_id` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `user_id_from` INT (11) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id_to` INT (11) UNSIGNED NOT NULL DEFAULT 0,
+  `folder_id` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `date_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `state` tinyint(1) NOT NULL DEFAULT '0',
-  `priority` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `state` tinyint(1) NOT NULL DEFAULT 0,
+  `priority` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `subject` VARCHAR(255) NOT NULL DEFAULT '',
   `message` MEDIUMTEXT COMMENT 'Messages',
   PRIMARY KEY (`message_id`),
@@ -562,7 +595,7 @@ CREATE TABLE `#__messages` (
 #
 
 CREATE TABLE `#__messages_cfg` (
-  `user_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `user_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `cfg_name` VARCHAR(100) NOT NULL DEFAULT '',
   `cfg_value` VARCHAR(255) NOT NULL DEFAULT '',
   UNIQUE KEY `idx_user_var_name` (`user_id`,`cfg_name`)
@@ -574,11 +607,11 @@ CREATE TABLE `#__messages_cfg` (
 
 CREATE TABLE `#__session` (
   `session_id` VARCHAR(32) NOT NULL DEFAULT '',
-  `client_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `client_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `guest` tinyint(4) UNSIGNED DEFAULT '1',
   `time` VARCHAR(14) DEFAULT '',
   `data` LONGTEXT DEFAULT NULL,
-  `userid` INT (11) DEFAULT '0',
+  `userid` INT (11) DEFAULT 0,
   `username` VARCHAR(150) DEFAULT '',
   PRIMARY KEY  (`session_id`),
   KEY `whosonline` (`guest`),
@@ -592,10 +625,10 @@ CREATE TABLE `#__session` (
 
 CREATE TABLE IF NOT EXISTS `#__configuration` (
   `content_table` VARCHAR(50) NOT NULL DEFAULT '',
-  `option_id` INT (11) UNSIGNED NOT NULL DEFAULT '0',
+  `option_id` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `option_value` VARCHAR(80) NOT NULL DEFAULT '',
   `option_value_literal` VARCHAR(255) NOT NULL DEFAULT ' ',
-  `ordering` INT (11) NOT NULL DEFAULT '0',
+  `ordering` INT (11) NOT NULL DEFAULT 0,
   UNIQUE KEY `idx_content_table_id_value_key` (`content_table`,`option_id`,`option_value`)
 ) DEFAULT CHARSET=utf8;
 
@@ -609,15 +642,15 @@ CREATE TABLE IF NOT EXISTS `#__configuration` (
 
 CREATE TABLE  `#__updates` (
   `id` INT (11) NOT NULL auto_increment,
-  `update_site_id` INT (11) DEFAULT '0',
-  `extension_id` INT (11) DEFAULT '0',
-  `categoryid` INT (11) DEFAULT '0',
+  `update_site_id` INT (11) DEFAULT 0,
+  `extension_id` INT (11) DEFAULT 0,
+  `categoryid` INT (11) DEFAULT 0,
   `name` VARCHAR(100) DEFAULT '',
   `description` text NOT NULL,
   `element` VARCHAR(100) DEFAULT '',
   `type` VARCHAR(20) DEFAULT '',
   `folder` VARCHAR(20) DEFAULT '',
-  `client_id` INT (11) DEFAULT '0',
+  `client_id` INT (11) DEFAULT 0,
   `version` VARCHAR(10) DEFAULT '',
   `data` text NOT NULL,
   `detailsurl` text NOT NULL,
@@ -633,7 +666,7 @@ CREATE TABLE  `#__update_sites` (
   `name` VARCHAR(100) DEFAULT '',
   `type` VARCHAR(20) DEFAULT '',
   `location` text NOT NULL,
-  `enabled` INT (11) DEFAULT '0',
+  `enabled` INT (11) DEFAULT 0,
   PRIMARY KEY  (`update_site_id`)
 )  DEFAULT CHARSET=utf8;
 
@@ -1384,9 +1417,9 @@ INSERT INTO `#__actions` (`id` ,`title`)
 
 CREATE TABLE IF NOT EXISTS `#__temp_permissions` (
   `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key',
-  `group_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #_groups.id',
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__assets.id',
-  `action_id` INT (11) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__actions.id',
+  `group_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #_groups.id',
+  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__assets.id',
+  `action_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__actions.id',
   PRIMARY KEY  (`id`)
 )  DEFAULT CHARSET=utf8;
 

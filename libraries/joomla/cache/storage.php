@@ -103,7 +103,7 @@ class JCacheStorage
 	{
 		static $now = null;
 
-		JCacheStorage::addIncludePath(JPATH_PLATFORM . '/joomla/cache/storage');
+		JCacheStorage::addIncludePath(JPATH_PLATFORM.DS.'joomla'.DS.'cache'.DS.'storage');
 
 		if (!isset($handler)) {
 			$conf = JFactory::getConfig();
@@ -160,7 +160,7 @@ class JCacheStorage
 	public function getAll()
 	{
 		if (!class_exists('JCacheStorageHelper', false)) {
-			require_once JPATH_LIBRARIES.'/joomla/cache/storage/helpers/helper.php';
+			require_once JPATH_PLATFORM.'/joomla/cache/storage/helpers/helper.php';
 		}
 		return;
 	}

@@ -146,7 +146,7 @@ class JInstallerModule extends JAdapterInstance
 			}
 		}
 		if (!empty ($element)) {
-			$this->parent->setPath('extension_root', $basePath . '/modules/' . $element);
+			$this->parent->setPath('extension_root', $basePath.DS.'modules'.DS.$element);
 		}
 		else {
 			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_MOD_INSTALL_NOFILE', JText::_('JLIB_INSTALLER_'.$this->route)));
@@ -158,10 +158,9 @@ class JInstallerModule extends JAdapterInstance
 		// If it is, then update the table because if the files aren't there
 		// we can assume that it was (badly) uninstalled
 		// If it isn't, add an entry to extensions
-		$query = 'SELECT `extension_id`' .
-				' FROM `#__extensions` ' .
-				' WHERE element = '.$db->Quote($element) .
-				' AND client_id = '.(int)$clientId;
+		$query = $db->getQuery(true);
+		$query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
+		$query->where($query->qn('element').' = '.$query->q($element))->where($query->qn('client_id').' = '.(int) $clientId);
 		$db->setQuery($query);
 
 		try
@@ -217,7 +216,7 @@ class JInstallerModule extends JAdapterInstance
 		$manifestScript = (string)$this->manifest->scriptfile;
 
 		if ($manifestScript) {
-			$manifestScriptFile = $this->parent->getPath('source') . '/' . $manifestScript;
+			$manifestScriptFile = $this->parent->getPath('source').DS.$manifestScript;
 
 			if (is_file($manifestScriptFile)) {
 				// Load the file
@@ -284,8 +283,8 @@ class JInstallerModule extends JAdapterInstance
 
 		// If there is a manifest script, lets copy it.
 		if ($this->get('manifest_script')) {
-			$path['src'] = $this->parent->getPath('source') . '/' . $this->get('manifest_script');
-			$path['dest'] = $this->parent->getPath('extension_root') . '/' . $this->get('manifest_script');
+			$path['src'] = $this->parent->getPath('source').DS.$this->get('manifest_script');
+			$path['dest'] = $this->parent->getPath('extension_root').DS.$this->get('manifest_script');
 
 			if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
 				if (!$this->parent->copyFiles(array ($path))) {
@@ -468,8 +467,8 @@ class JInstallerModule extends JAdapterInstance
 	public function discover()
 	{
 		$results = Array();
-		$site_list = JFolder::folders(JPATH_SITE . '/modules');
-		$admin_list = JFolder::folders(JPATH_ADMINISTRATOR . '/modules');
+		$site_list = JFolder::folders(JPATH_SITE.DS.'modules');
+		$admin_list = JFolder::folders(JPATH_ADMINISTRATOR.DS.'modules');
 		$site_info = JApplicationHelper::getClientInfo('site', true);
 		$admin_info = JApplicationHelper::getClientInfo('administrator', true);
 
@@ -513,7 +512,7 @@ class JInstallerModule extends JAdapterInstance
 		// Modules are like templates, and are one of the easiest
 		// If its not in the extensions table we just add it
 		$client = JApplicationHelper::getClientInfo($this->parent->extension->client_id);
-		$manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
+		$manifestPath = $client->path . DS . 'modules'. DS . $this->parent->extension->element . DS . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$description = (string)$this->parent->manifest->description;
 
@@ -550,7 +549,7 @@ class JInstallerModule extends JAdapterInstance
 	public function refreshManifestCache()
 	{
 		$client = JApplicationHelper::getClientInfo($this->parent->extension->client_id);
-		$manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
+		$manifestPath = $client->path . DS . 'modules'. DS . $this->parent->extension->element . DS . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
 		$manifest_details = JApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -607,7 +606,7 @@ class JInstallerModule extends JAdapterInstance
 			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ERROR_MOD_UNINSTALL_UNKNOWN_CLIENT', $row->client_id));
 			return false;
 		}
-		$this->parent->setPath('extension_root', $client->path . '/modules/' . $element);
+		$this->parent->setPath('extension_root', $client->path.DS.'modules'.DS.$element);
 
 		$this->parent->setPath('source', $this->parent->getPath('extension_root'));
 
@@ -624,7 +623,7 @@ class JInstallerModule extends JAdapterInstance
 		$manifestScript = (string)$this->manifest->scriptfile;
 
 		if ($manifestScript) {
-			$manifestScriptFile = $this->parent->getPath('extension_root') . '/' . $manifestScript;
+			$manifestScriptFile = $this->parent->getPath('extension_root').DS.$manifestScript;
 
 			if (is_file($manifestScriptFile)) {
 				// Load the file
@@ -688,10 +687,10 @@ class JInstallerModule extends JAdapterInstance
 		$this->parent->removeFiles($this->manifest->languages, $row->client_id);
 
 		// Let's delete all the module copies for the type we are uninstalling
-		$query = 'SELECT `id`' .
-				' FROM `#__modules`' .
-				' WHERE module = '.$db->Quote($row->element) .
-				' AND client_id = '.(int)$row->client_id;
+		$query = $db->getQuery(true);
+		$query->select($query->qn('id'))->from($query->qn('#__modules'));
+		$query->where($query->qn('module').' = '.$query->q($row->element));
+		$query->where($query->qn('client_id').' = '.(int) $row->client_id);
 		$db->setQuery($query);
 
 		try
@@ -744,7 +743,7 @@ class JInstallerModule extends JAdapterInstance
 
 		// Now we will no longer need the module object, so lets delete it and free up memory
 		$row->delete($row->extension_id);
-		$query = 'DELETE FROM `#__modules` WHERE module = '.$db->Quote($row->element) . ' AND client_id = ' . $row->client_id;
+		$query = 'DELETE FROM #__modules WHERE module = '.$db->Quote($row->element) . ' AND client_id = ' . $row->client_id;
 		$db->setQuery($query);
 
 		try
@@ -784,7 +783,7 @@ class JInstallerModule extends JAdapterInstance
 
 		// Remove the entry from the #__modules_menu table
 		$query = 'DELETE' .
-				' FROM `#__modules_menu`' .
+				' FROM #__modules_menu' .
 				' WHERE moduleid='.(int)$arg['id'];
 		$db->setQuery($query);
 
@@ -814,7 +813,7 @@ class JInstallerModule extends JAdapterInstance
 
 		// Remove the entry from the #__modules table
 		$query = 'DELETE' .
-				' FROM `#__modules`' .
+				' FROM #__modules' .
 				' WHERE id='.(int)$arg['id'];
 		$db->setQuery($query);
 		try

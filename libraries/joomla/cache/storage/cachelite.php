@@ -10,20 +10,28 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Cache litestorage handler
+ * Cache lite storage handler
  *
  * @package     Joomla.Platform
  * @subpackage  Cache
  * @since       11.1
+ * 
+ * @see http://pear.php.net/package/Cache_Lite/
  */
 class JCacheStorageCachelite extends JCacheStorage
 {
 	/**
-	 * @since   11.1
+	 * 
+	 * 
+	 * @var    object
+	 * @since  11.1
 	 */
 	protected static $CacheLiteInstance = null;
 
 	/**
+	 * 
+	 * 
+	 * @var
 	 * @since   11.1
 	 */
 	protected $_root;
@@ -44,7 +52,7 @@ class JCacheStorageCachelite extends JCacheStorage
 		$this->_root	= $options['cachebase'];
 
 		$cloptions = array(
-			'cacheDir' 					=> $this->_root . '/',
+			'cacheDir' 					=> $this->_root.DS,
 			'lifeTime' 					=> $this->_lifetime,
 			'fileLocking'   			=> $this->_locking,
 			'automaticCleaningFactor'	=> isset($options['autoclean']) ? $options['autoclean'] : 200,
@@ -92,7 +100,7 @@ class JCacheStorageCachelite extends JCacheStorage
 	public function get($id, $group, $checkTime = true)
 	{
 		$data = false;
-		self::$CacheLiteInstance->setOption('cacheDir', $this->_root . '/' . $group . '/');
+		self::$CacheLiteInstance->setOption('cacheDir', $this->_root.DS.$group.DS);
 		$this->_getCacheId($id, $group);
 		$data = self::$CacheLiteInstance->get($this->rawname, $group);
 
@@ -118,11 +126,11 @@ class JCacheStorageCachelite extends JCacheStorage
 
 		foreach ($folders as $folder)
 		{
-			$files = JFolder::files($path . '/' . $folder);
+			$files = JFolder::files($path.DS.$folder);
 			$item = new JCacheStorageHelper($folder);
 
 			foreach ($files as $file) {
-				$item->updateSize(filesize($path . '/' . $folder . '/' . $file)/1024);
+				$item->updateSize(filesize($path.DS.$folder.DS.$file)/1024);
 			}
 
 			$data[$folder] = $item;
@@ -144,13 +152,13 @@ class JCacheStorageCachelite extends JCacheStorage
 	 */
 	public function store($id, $group, $data)
 	{
-		$dir = $this->_root . '/' . $group;
+		$dir = $this->_root.DS.$group;
 
 		// If the folder doesn't exist try to create it
 		if (!is_dir($dir)) {
 			// Make sure the index file is there
 			$indexFile = $dir.'/index.html';
-			@mkdir($dir) && file_put_contents($indexFile, '<!DOCTYPE html><title></title>');
+			@mkdir($dir) && file_put_contents($indexFile, '<html><body bgcolor="#FFFFFF"></body></html>');
 		}
 
 		// Make sure the folder exists
@@ -158,7 +166,7 @@ class JCacheStorageCachelite extends JCacheStorage
 			return false;
 		}
 
-		self::$CacheLiteInstance->setOption('cacheDir', $this->_root . '/' . $group . '/');
+		self::$CacheLiteInstance->setOption('cacheDir', $this->_root.DS.$group.DS);
 		$this->_getCacheId($id, $group);
 		$success = self::$CacheLiteInstance->save($data, $this->rawname, $group);
 
@@ -182,7 +190,7 @@ class JCacheStorageCachelite extends JCacheStorage
 	 */
 	public function remove($id, $group)
 	{
-		self::$CacheLiteInstance->setOption('cacheDir', $this->_root . '/' . $group . '/');
+		self::$CacheLiteInstance->setOption('cacheDir', $this->_root.DS.$group.DS);
 		$this->_getCacheId($id, $group);
 		$success = self::$CacheLiteInstance->remove($this->rawname, $group);
 
@@ -197,11 +205,10 @@ class JCacheStorageCachelite extends JCacheStorage
 	/**
 	 * Clean cache for a group given a mode.
 	 *
-	 * group mode    : cleans all cache in the group
-	 * notgroup mode : cleans all cache not in the group
-	 *
 	 * @param   string  $group  The cache data group.
 	 * @param   string  $mode   The mode for cleaning cache [group|notgroup].
+	 *                             group mode    : cleans all cache in the group
+	 *                             notgroup mode : cleans all cache not in the group
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
@@ -227,11 +234,11 @@ class JCacheStorageCachelite extends JCacheStorage
 				break;
 
 			case 'group':
-				if (is_dir($this->_root . '/' . $group)) {
+				if (is_dir($this->_root.DS.$group)) {
 					$clmode = $group;
-					self::$CacheLiteInstance->setOption('cacheDir', $this->_root . '/' . $group . '/');
+					self::$CacheLiteInstance->setOption('cacheDir', $this->_root.DS.$group.DS);
 					$success = self::$CacheLiteInstance->clean($group, $clmode);
- 					$return = JFolder::delete($this->_root . '/' . $group);
+ 					$return = JFolder::delete($this->_root.DS.$group);
  				}
 				else {
 					$success = true;
@@ -240,9 +247,9 @@ class JCacheStorageCachelite extends JCacheStorage
 				break;
 
 			default:
-				if (is_dir($this->_root . '/' . $group)) {
+				if (is_dir($this->_root.DS.$group)) {
 					$clmode = $group;
-					self::$CacheLiteInstance->setOption('cacheDir', $this->_root . '/' . $group . '/');
+					self::$CacheLiteInstance->setOption('cacheDir', $this->_root.DS.$group.DS);
 					$success = self::$CacheLiteInstance->clean($group, $clmode);
 				}
 				else {
@@ -263,7 +270,7 @@ class JCacheStorageCachelite extends JCacheStorage
 	/**
 	 * Garbage collect expired cache data
 	 *
-	 * @return boolean  True on success, false otherwise.
+	 * @return  boolean  True on success, false otherwise.
 	 *
 	 * @since   11.1
 	 */
@@ -273,19 +280,19 @@ class JCacheStorageCachelite extends JCacheStorage
 		self::$CacheLiteInstance->setOption('automaticCleaningFactor', 1);
 		self::$CacheLiteInstance->setOption('hashedDirectoryLevel', 1);
 		$test 		= self::$CacheLiteInstance;
-		$success1 	= self::$CacheLiteInstance->_cleanDir($this->_root . '/', false, 'old');
+		$success1 	= self::$CacheLiteInstance->_cleanDir($this->_root.DS, false, 'old');
 
-		if (!($dh = opendir($this->_root . '/'))) {
+		if (!($dh = opendir($this->_root.DS))) {
 			return false;
 		}
 
 		while ($file = readdir($dh))
 		{
 			if (($file != '.') && ($file != '..') && ($file != '.svn')) {
-				$file2 = $this->_root . '/' . $file;
+				$file2 = $this->_root.DS.$file;
 
 				if (is_dir($file2)) {
-					$result = ($result and (self::$CacheLiteInstance->_cleanDir($file2 . '/', false, 'old')));
+					$result = ($result and (self::$CacheLiteInstance->_cleanDir($file2.DS, false, 'old')));
 				}
 			}
 		}
@@ -294,7 +301,7 @@ class JCacheStorageCachelite extends JCacheStorage
 
 		return $success;
 	}
-
+	
 	/**
 	 * Test to see if the cache storage is available.
 	 *

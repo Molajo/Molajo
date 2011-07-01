@@ -19,6 +19,9 @@ jimport('joomla.filesystem.folder');
  * @package     Joomla.Platform
  * @subpackage  Application
  * @since       11.1
+ * 
+ * @see         http://www.php.net/manual/en/book.pcntl.php
+ * @see         http://php.net/manual/en/features.commandline.php
  */
 class JDaemon extends JCli
 {
@@ -35,19 +38,25 @@ class JDaemon extends JCli
 	);
 
 	/**
-	 * @var    bool  True if the daemon is in the process of exiting.
+	 * Exiting status
+	 * True if the daemon is in the process of exiting.
+	 * 
+	 * @var    boolean  
 	 * @since  11.1
 	 */
 	protected $exiting = false;
 
 	/**
-	 * @var    integer  The process id of the daemon.
+	 * The process id of the daemon.
+	 * @var    integer
 	 * @since  11.1
 	 */
 	protected $processId = 0;
 
 	/**
-	 * @var    bool  True if the daemon is currently running.
+	 * Running status
+	 * True if the daemon is currently running.
+	 * @var    boolean
 	 * @since  11.1
 	 */
 	protected $running = false;
@@ -144,7 +153,7 @@ class JDaemon extends JCli
 	 * Check to see if the daemon is active.  This does not assume that $this daemon is active, but
 	 * only if an instance of the application is active as a daemon.
 	 *
-	 * @return  bool  True if daemon is active.
+	 * @return  boolean  True if daemon is active.
 	 *
 	 * @since   11.1
 	 */
@@ -292,7 +301,7 @@ class JDaemon extends JCli
 	/**
 	 * Spawn daemon process.
 	 *
-	 * @return  bool  True if successfully spawned
+	 * @return  boolean  True if successfully spawned
 	 *
 	 * @since   11.1
 	 */
@@ -343,11 +352,10 @@ class JDaemon extends JCli
 	/**
 	 * Method to change the identity of the daemon process and resources.
 	 *
-	 * @return  bool  True if identitye successfully changed
+	 * @return  boolean  True if identity successfully changed
 	 *
 	 * @since   11.1
 	 * @see     posix_setuid()
-	 * @see     posix_setgid()
 	 */
 	protected function changeIdentity()
 	{
@@ -399,7 +407,7 @@ class JDaemon extends JCli
 	/**
 	 * Method to put the application into the background.
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   11.1
 	 * @throws  ApplicationException
@@ -527,7 +535,7 @@ class JDaemon extends JCli
 	 * Method to attach the JDaemon signal handler to the known signals.  Applications can override
 	 * these handlers by using the pcntl_signal() function and attaching a different callback method.
 	 *
-	 * @return  void
+	 * @return  boolean
 	 *
 	 * @since   11.1
 	 * @see     pcntl_signal()
@@ -555,7 +563,7 @@ class JDaemon extends JCli
 	/**
 	 * Method to shut down the daemon and optionally restart it.
 	 *
-	 * @param   bool  $restart  True to restart the daemon on exit.
+	 * @param   boolean  $restart  True to restart the daemon on exit.
 	 *
 	 * @return  void
 	 *
