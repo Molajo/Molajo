@@ -29,7 +29,7 @@ CREATE UNIQUE INDEX `idx_actions_table_title` ON `#__actions` (`title` ASC) ;
 # Table structure for table `#__assets`
 #
 #   An Asset ID is a unique key assigned to any item (asset) subject to ACL control
-#   The ACL Assets table contains a list of assigned ids and associated content_table 
+#   The ACL Assets table contains a list of assigned ids and associated content_table
 #   The asset id must be stored in the item using the column named asset_id
 #
 
@@ -75,7 +75,7 @@ CREATE TABLE `#__clients` (
 # Table structure for table `#__users`
 #
 
-CREATE TABLE IF NOT EXISTS `#___users` (
+CREATE TABLE IF NOT EXISTS `#__users` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL DEFAULT '' ,
   `username` VARCHAR(150) NOT NULL DEFAULT '' ,
@@ -92,23 +92,23 @@ CREATE TABLE IF NOT EXISTS `#___users` (
   PRIMARY KEY (`id`) )
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `idx_name` ON `#___users` (`name` ASC) ;
-CREATE INDEX `idx_block` ON `#___users` (`block` ASC) ;
-CREATE INDEX `username` ON `#___users` (`username` ASC) ;
-CREATE INDEX `email` ON `#___users` (`email` ASC) ;
+CREATE INDEX `idx_name` ON `#__users` (`name` ASC) ;
+CREATE INDEX `idx_block` ON `#__users` (`block` ASC) ;
+CREATE INDEX `username` ON `#__users` (`username` ASC) ;
+CREATE INDEX `email` ON `#__users` (`email` ASC) ;
 
 #
 # Table structure for table `#__user_profiles`
 #
 
-CREATE TABLE IF NOT EXISTS `#___user_profiles` (
+CREATE TABLE IF NOT EXISTS `#__user_profiles` (
   `user_id` INT(11) NOT NULL ,
   `profile_key` VARCHAR(100) NOT NULL ,
   `profile_value` VARCHAR(255) NOT NULL ,
   `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering' )
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_user_id_profile_key` ON `#___user_profiles` (`user_id` ASC, `profile_key` ASC) ;
+CREATE UNIQUE INDEX `idx_user_id_profile_key` ON `#__user_profiles` (`user_id` ASC, `profile_key` ASC) ;
 
 #
 # Table structure for table `#__groups`
@@ -120,7 +120,7 @@ CREATE UNIQUE INDEX `idx_user_id_profile_key` ON `#___user_profiles` (`user_id` 
 #   In smaller implementations or social networks, "User Groups" provides support for friending, etc.
 #
 
-CREATE TABLE IF NOT EXISTS `#___groups` (
+CREATE TABLE IF NOT EXISTS `#__groups` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Group Primary Key' ,
   `parent_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Parent ID' ,
   `lft` INT(11) NOT NULL DEFAULT 0 COMMENT 'Nested set lft.' ,
@@ -135,12 +135,12 @@ CREATE TABLE IF NOT EXISTS `#___groups` (
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `#___groups` (`parent_id` ASC, `title` ASC, `type_id` ASC) ;
-CREATE INDEX `idx_access` ON `#___groups` (`access` ASC) ;
-CREATE INDEX `idx_usergroup_title_lookup` ON `#___groups` (`title` ASC) ;
-CREATE INDEX `idx_usergroup_adjacency_lookup` ON `#___groups` (`parent_id` ASC) ;
-CREATE INDEX `idx_usergroup_type_id` ON `#___groups` (`type_id` ASC) ;
-CREATE INDEX `idx_usergroup_nested_set_lookup` USING BTREE ON `#___groups` (`lft` ASC, `rgt` ASC) ;
+CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `#__groups` (`parent_id` ASC, `title` ASC, `type_id` ASC) ;
+CREATE INDEX `idx_access` ON `#__groups` (`access` ASC) ;
+CREATE INDEX `idx_usergroup_title_lookup` ON `#__groups` (`title` ASC) ;
+CREATE INDEX `idx_usergroup_adjacency_lookup` ON `#__groups` (`parent_id` ASC) ;
+CREATE INDEX `idx_usergroup_type_id` ON `#__groups` (`type_id` ASC) ;
+CREATE INDEX `idx_usergroup_nested_set_lookup` USING BTREE ON `#__groups` (`lft` ASC, `rgt` ASC) ;
 
 #
 # Table structure for table `#__user_groups`
@@ -148,13 +148,14 @@ CREATE INDEX `idx_usergroup_nested_set_lookup` USING BTREE ON `#___groups` (`lft
 #   Groups to which users belong
 #
 
-CREATE TABLE IF NOT EXISTS `#___user_groups` (
+CREATE TABLE IF NOT EXISTS `#__user_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__users.id' ,
   `group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__groups.id' ,
   PRIMARY KEY (`user_id`, `group_id`) )
 DEFAULT CHARACTER SET = utf8;
-CREATE INDEX `fk_jos_user_groups_jos_users1` ON `#___user_groups` (`user_id` ASC) ;
-CREATE INDEX `fk_jos_user_groups_jos_groups1` ON `#___user_groups` (`group_id` ASC) ;
+
+CREATE INDEX `fk_molajo_user_groups_molajo_users1` ON `#__user_groups` (`user_id` ASC) ;
+CREATE INDEX `fk_molajo_user_groups_molajo_groups1` ON `#__user_groups` (`group_id` ASC) ;
 
 #
 # Table structure for table `#__groupings`
@@ -173,11 +174,12 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 #
-# Table structure for table `#___group_to_groupings`
+# Table structure for table `#__group_to_groupings`
 #
 #     A listing of groups that belong to the group
 #
-CREATE TABLE IF NOT EXISTS `#___group_to_groupings` (
+
+CREATE TABLE IF NOT EXISTS `#__group_to_groupings` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Group to Group Primary Key' ,
   `group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__group table.' ,
   `grouping_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table.' ,
@@ -185,9 +187,9 @@ CREATE TABLE IF NOT EXISTS `#___group_to_groupings` (
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_group_to_groupings_id` ON `#___group_to_groupings` (`group_id` ASC, `grouping_id` ASC) ;
-CREATE INDEX `fk_jos_group_to_groupings_jos_groups1` ON `#___group_to_groupings` (`group_id` ASC) ;
-CREATE INDEX `fk_jos_group_to_groupings_jos_groupings1` ON `#___group_to_groupings` (`grouping_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_groupings_id` ON `#__group_to_groupings` (`group_id` ASC, `grouping_id` ASC) ;
+CREATE INDEX `fk_molajo_group_to_groupings_molajo_groups1` ON `#__group_to_groupings` (`group_id` ASC) ;
+CREATE INDEX `fk_molajo_group_to_groupings_molajo_groupings1` ON `#__group_to_groupings` (`grouping_id` ASC) ;
 
 #
 # Table structure for table `#__user_groupings`
@@ -195,15 +197,15 @@ CREATE INDEX `fk_jos_group_to_groupings_jos_groupings1` ON `#___group_to_groupin
 #   Groupings of groups to which users belong
 #
 
-CREATE TABLE IF NOT EXISTS `#___user_groupings` (
+CREATE TABLE IF NOT EXISTS `#__user_groupings` (
   `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__users.id' ,
   `grouping_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__groupings.id' ,
   `id` INT(11) NOT NULL ,
   PRIMARY KEY (`user_id`, `grouping_id`, `id`) )
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_jos_user_groupings_jos_users1` ON `#___user_groupings` (`user_id` ASC) ;
-CREATE INDEX `fk_jos_user_groupings_jos_groupings1` ON `#___user_groupings` (`grouping_id` ASC) ;
+CREATE INDEX `fk_molajo_user_groupings_molajo_users1` ON `#__user_groupings` (`user_id` ASC) ;
+CREATE INDEX `fk_molajo_user_groupings_molajo_groupings1` ON `#__user_groupings` (`grouping_id` ASC) ;
 
 #
 # Table structure for table `#__user_clients`
@@ -211,21 +213,21 @@ CREATE INDEX `fk_jos_user_groupings_jos_groupings1` ON `#___user_groupings` (`gr
 #   Clients to which users belong
 #
 
-CREATE TABLE IF NOT EXISTS `#___user_clients` (
+CREATE TABLE IF NOT EXISTS `#__user_clients` (
   `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__users.id' ,
   `client_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__clients.id' ,
   PRIMARY KEY (`user_id`, `client_id`) )
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `user_id` ON `#___user_clients` (`user_id` ASC) ;
-CREATE INDEX `fk_jos_user_clients_jos_users1` ON `#___user_clients` (`client_id` ASC) ;
+CREATE INDEX `user_id` ON `#__user_clients` (`user_id` ASC) ;
+CREATE INDEX `fk_molajo_user_clients_molajo_users1` ON `#__user_clients` (`client_id` ASC) ;
 
 #
 # Table structure for table `#__permissions_groups`
 #   A complete list of assigned actions by asset id for groups
 #
 
-CREATE TABLE IF NOT EXISTS `#___permissions_groups` (
+CREATE TABLE IF NOT EXISTS `#__permissions_groups` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key' ,
   `group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #_groups.id' ,
   `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__assets.id' ,
@@ -234,11 +236,11 @@ CREATE TABLE IF NOT EXISTS `#___permissions_groups` (
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#___permissions_groups` (`asset_id` ASC, `action_id` ASC, `group_id` ASC) ;
-CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#___permissions_groups` (`group_id` ASC, `asset_id` ASC, `action_id` ASC) ;
-CREATE INDEX `fk_jos_permissions_groups_jos_groups1` ON `#___permissions_groups` (`group_id` ASC) ;
-CREATE INDEX `fk_jos_permissions_groups_jos_assets1` ON `#___permissions_groups` (`asset_id` ASC) ;
-CREATE INDEX `fk_jos_permissions_groups_jos_actions1` ON `#___permissions_groups` (`action_id` ASC) ;
+CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#__permissions_groups` (`asset_id` ASC, `action_id` ASC, `group_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#__permissions_groups` (`group_id` ASC, `asset_id` ASC, `action_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groups_molajo_groups1` ON `#__permissions_groups` (`group_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groups_molajo_assets1` ON `#__permissions_groups` (`asset_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groups_molajo_actions1` ON `#__permissions_groups` (`action_id` ASC) ;
 
 #
 # Table structure for table `#__permissions_groupings`
@@ -246,7 +248,7 @@ CREATE INDEX `fk_jos_permissions_groups_jos_actions1` ON `#___permissions_groups
 #   A complete list of assigned actions by asset id for groupings of groups
 #
 
-CREATE TABLE IF NOT EXISTS `#___permissions_groupings` (
+CREATE TABLE IF NOT EXISTS `#__permissions_groupings` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key' ,
   `grouping_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__groups.id' ,
   `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__assets.id' ,
@@ -255,11 +257,11 @@ CREATE TABLE IF NOT EXISTS `#___permissions_groupings` (
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#___permissions_groupings` (`asset_id` ASC, `action_id` ASC, `grouping_id` ASC) ;
-CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#___permissions_groupings` (`grouping_id` ASC, `asset_id` ASC, `action_id` ASC) ;
-CREATE INDEX `fk_jos_permissions_groupings_jos_groupings1` ON `#___permissions_groupings` (`grouping_id` ASC) ;
-CREATE INDEX `fk_jos_permissions_groupings_jos_assets1` ON `#___permissions_groupings` (`asset_id` ASC) ;
-CREATE INDEX `fk_jos_permissions_groupings_jos_actions1` ON `#___permissions_groupings` (`action_id` ASC) ;
+CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#__permissions_groupings` (`asset_id` ASC, `action_id` ASC, `grouping_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#__permissions_groupings` (`grouping_id` ASC, `asset_id` ASC, `action_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groupings_molajo_groupings1` ON `#__permissions_groupings` (`grouping_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groupings_molajo_assets1` ON `#__permissions_groupings` (`asset_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groupings_molajo_actions1` ON `#__permissions_groupings` (`action_id` ASC) ;
 
 #
 # CONTENT
@@ -1409,83 +1411,3 @@ INSERT INTO `#__actions` (`id` ,`title`)
         (4, 'edit'),
         (5, 'delete'),
         (6, 'admin');
-
-#
-# Table structure for table `#__temp_permissions`
-#   Calculate assigned actions by asset id for groups
-#
-
-CREATE TABLE IF NOT EXISTS `#__temp_permissions` (
-  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Permissions Primary Key',
-  `group_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #_groups.id',
-  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__assets.id',
-  `action_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Foreign Key to #__actions.id',
-  PRIMARY KEY  (`id`)
-)  DEFAULT CHARSET=utf8;
-
-# groups
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, '#__groups' FROM `#__groups`;
-# administrator has full control of groups (no 1=login needed)
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__groups` a, `#__actions` b WHERE b.id > 1;
-
-# clients
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, '#__clients' FROM `#__clients`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__clients` a, `#__actions` b where b.id <> 3;
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__clients` a, `#__actions` b where b.id = 3;
-
-# categories
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, '#__categories' FROM `#__categories`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__categories` a, `#__actions` b where b.id NOT IN (1, 3);
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__categories` a, `#__actions` b where b.id = 3;
-
-# articles
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, '#__articles' FROM `#__articles`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__articles` a, `#__actions` b where b.id <> 1;
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__articles` a, `#__actions` b where b.id = 3;
-
-# menus
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, '#__menu' FROM `#__menu`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__menu` a, `#__actions` b where b.id <> 1;
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__menu` a, `#__actions` b where b.id = 3;
-
-# extensions
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, '#__extensions' FROM `#__extensions`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__extensions` a, `#__actions` b where b.id <> 1;
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__extensions` a, `#__actions` b where b.id = 3;
-
-# modules
-INSERT INTO `#__assets` SELECT DISTINCT asset_id, '#__modules' FROM `#__modules`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__modules` a, `#__actions` b where b.id NOT IN (1, 3);
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__modules` a, `#__actions` b where b.id = 3;
-
-# users
-INSERT INTO `#__assets` SELECT DISTINCT asset_id, '#__users' FROM `#__users`;
-# administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__users` a, `#__actions` b where b.id NOT IN (1, 3);
-# load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__users` a, `#__actions` b where b.id = 3;
-
-/** aggregate permissions */
-INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
-  SELECT DISTINCT `group_id`,`asset_id`,`action_id`
-    FROM `#__temp_permissions`;
-
-INSERT INTO `#__permissions_groupings` ( `grouping_id`, `asset_id`, `action_id`)
-  SELECT DISTINCT b.grouping_id, a.asset_id, a.action_id
-  FROM #__temp_permissions a,
-    #__group_to_groupings b
-  WHERE a.group_id = b.group_id;
-
-DROP TABLE `#__temp_permissions`;

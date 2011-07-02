@@ -33,7 +33,7 @@ class JConfig {
 	public $user = '';							// MySQL username
 	public $password = '';						// MySQL password
 	public $db = '';							// MySQL database name
-	public $dbprefix = 'jos_';					// Do not change unless you need to!
+	public $dbprefix = 'molajo_';					// Do not change unless you need to!
 
 	/* Server Settings */
 	public $secret = 'FBVtggIk5lAzEU9H'; 		// Change this to something more secure

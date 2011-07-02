@@ -151,12 +151,16 @@ class JInstallationModelDatabase extends JModel
 /** Molajo Hack Begins */
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
+            $fp = fopen('amy.txt', 'w');
+
+            fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
+
             $schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
 /** Molajo Hack Ends */
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
-				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
-				return false;
+//				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
+//				return false;
 			}
 
 			// Attempt to update the table #__schema.
@@ -480,6 +484,10 @@ class JInstallationModelDatabase extends JModel
 	{
 		// Initialise variables.
 		$return = true;
+$fp = fopen('amy.txt', 'w');
+jimport('joomla.error.log');
+$log = JLog::getInstance('update.error.php');
+        $log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
 
 		// Get the contents of the schema file.
 		if (!($buffer = file_get_contents($schema))) {
@@ -487,13 +495,16 @@ class JInstallationModelDatabase extends JModel
 			return false;
 		}
 
+$log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
+fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
 		// Get an array of queries from the schema and process them.
 		$queries = $this->_splitQueries($buffer);
 		foreach ($queries as $query)
 		{
 			// Trim any whitespace.
 			$query = trim($query);
-
+ $log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
+fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
 			// If the query isn't empty and is not a comment, execute it.
 			if (!empty($query) && ($query{0} != '#')) {
 				// Execute the query.
@@ -507,7 +518,8 @@ class JInstallationModelDatabase extends JModel
 				}
 			}
 		}
-
+ $log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
+fclose($fp);
 		return $return;
 	}
 
