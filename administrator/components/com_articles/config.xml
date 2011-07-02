@@ -137,8 +137,8 @@
 
     <fieldset
         name="permissions"
-        description="JCONFIG_PERMISSIONS_DESC"
-        label="JCONFIG_PERMISSIONS_LABEL"
+        description="MOLAJO_CONFIG_PERMISSIONS_DESC"
+        label="MOLAJO_CONFIG_PERMISSIONS_LABEL"
         >
         <field
             name="rules"
@@ -146,7 +146,7 @@
             component="com_articles"
             filter="rules"
             validate="rules"
-            label="JCONFIG_PERMISSIONS_LABEL"
+            label="MOLAJO_CONFIG_PERMISSIONS_LABEL"
             section="component"
             />
     </fieldset>

@@ -151,16 +151,12 @@ class JInstallationModelDatabase extends JModel
 /** Molajo Hack Begins */
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
-            $fp = fopen('amy.txt', 'w');
-
-            fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
-
             $schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
 /** Molajo Hack Ends */
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
-//				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
-//				return false;
+				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
+				return false;
 			}
 
 			// Attempt to update the table #__schema.

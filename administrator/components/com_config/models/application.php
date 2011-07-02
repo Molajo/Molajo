@@ -73,6 +73,7 @@ class ConfigModelApplication extends JModelForm
 // 4 groups 1-public; 2-guest; 3-registered; 4-administrator
 // Administrator is ALWAYS going to have all actions for all assets
 // Don't allow any change on Administrator
+// remove root_user configuration
 // 
         }
 		// Get the previous configuration.
@@ -168,70 +169,12 @@ class ConfigModelApplication extends JModelForm
 	}
 
 	/**
-	 * Method to unset the root_user value from configuration data.
+     * Molajo Hack - remove removeroot
+     *
+	 * Method to remove the root property from the configuration.
 	 *
-	 * This method will load the global configuration data straight from
-	 * JConfig and remove the root_user value for security, then save the configuration.
-	 *
-	 * @since	1.6
+	 * @return	bool	True on success, false on failure.
+	 * @since	1.5
 	 */
-	function removeroot()
-	{
-		// Include client helper
-		jimport('joomla.client.helper');
-
-		// Get the previous configuration.
-		$prev = new JConfig();
-		$prev = JArrayHelper::fromObject($prev);
-
-		// Clean the cache if disabled but previously enabled.
-		if ($prev['caching']) {
-			$cache = JFactory::getCache();
-			$cache->clean();
-		}
-
-		// Create the new configuration object, and unset the root_user property
-		$config = new JRegistry('config');
-		unset($prev['root_user']);
-		$config->loadArray($prev);
-
-		/*
-		 * Write the configuration file.
-		 */
-		jimport('joomla.filesystem.path');
-		jimport('joomla.filesystem.file');
-
-		// Set the configuration file path.
-		$file = JPATH_CONFIGURATION . '/configuration.php';
-
-		// Overwrite the old FTP credentials with the new ones.
-		$temp = JFactory::getConfig();
-		$temp->set('ftp_enable', $prev['ftp_enable']);
-		$temp->set('ftp_host', $prev['ftp_host']);
-		$temp->set('ftp_port', $prev['ftp_port']);
-		$temp->set('ftp_user', $prev['ftp_user']);
-		$temp->set('ftp_pass', $prev['ftp_pass']);
-		$temp->set('ftp_root', $prev['ftp_root']);
-
-		// Get the new FTP credentials.
-		$ftp = JClientHelper::getCredentials('ftp', true);
-
-		// Attempt to make the file writeable if using FTP.
-		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0644')) {
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTWRITABLE'));
-		}
-
-		// Attempt to write the configuration file as a PHP class named JConfig.
-		if (!JFile::write($file, $config->toString('PHP', array('class' => 'JConfig', 'closingtag' => false)))) {
-			$this->setError(JText::_('COM_CONFIG_ERROR_WRITE_FAILED'));
-			return false;
-		}
-
-		// Attempt to make the file unwriteable if using FTP.
-		if ($prev['ftp_enable'] == 0 && !$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0444')) {
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTUNWRITABLE'));
-		}
-
-		return true;
-	}
+	public function removeroot() {}
 }

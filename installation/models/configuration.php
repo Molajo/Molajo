@@ -266,7 +266,7 @@ class JInstallationModelConfiguration extends JModel
 
 		// Add user as group - type_id = 0 for User
 		$query	= 'INSERT INTO #__groups (parent_id, lft, rgt, title, asset_id, access, type_id) '
-				. ' SELECT 5, 0, 0, '.$db->quote('Administrator User').', 51, 4, 0';
+				. ' SELECT 5, 0, 0, '.$db->quote('Administrator').', 51, 4, 0';
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
