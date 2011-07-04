@@ -122,14 +122,14 @@ abstract class JTable extends JObject
 		if ($cache === null) {
 			// Lookup the fields for this table only once.
 			$name	= $this->_tbl;
-			$fields	= $this->_db->getTableColumns($name, false);
+			$fields	= $this->_db->getTableFields($name, false);
 
-			if (empty($fields)) {
+			if (!isset($fields[$name])) {
 				$e = new JException(JText::_('JLIB_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
 				$this->setError($e);
 				return false;
 			}
-			$cache = $fields;
+			$cache = $fields[$name];
 		}
 
 		return $cache;
@@ -198,7 +198,7 @@ abstract class JTable extends JObject
 
 		// If the internal paths have not been initialised, do so with the base table path.
 		if (!isset($_paths)) {
-			$_paths = array(dirname(__FILE__).DS.'table');
+			$_paths = array(dirname(__FILE__) . '/table');
 		}
 
 		// Convert the passed path(s) to add to an array.

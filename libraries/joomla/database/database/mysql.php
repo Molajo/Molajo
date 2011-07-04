@@ -19,44 +19,35 @@ JLoader::register('JDatabaseImporterMySQL', dirname(__FILE__).'/mysqlimporter.ph
  * @package     Joomla.Platform
  * @subpackage  Database
  * @since       11.1
- * 
- * @see         http://dev.mysql.com/doc/
  */
 class JDatabaseMySQL extends JDatabase
 {
 	/**
-	 * The name of the database driver.
-	 *
-	 * @var    string
+	 * @var    string  The name of the database driver.
 	 * @since  11.1
 	 */
 	public $name = 'mysql';
 
 	/**
-	 * The character(s) used to quote SQL statement names such as table names or field names,
-	 * etc. The child classes should define this as necessary.  If a single character string the
-	 * same character is used for both sides of the quoted name, else the first character will be
-	 * used for the opening quote and the second for the closing quote.
-	 * 
-	 * @var    string  
+	 * @var    string  The character(s) used to quote SQL statement names such as table names or field names,
+	 *                 etc.  The child classes should define this as necessary.  If a single character string the
+	 *                 same character is used for both sides of the quoted name, else the first character will be
+	 *                 used for the opening quote and the second for the closing quote.
 	 * @since  11.1
 	 */
 	protected $nameQuote = '`';
 
 	/**
-	 * The null or zero representation of a timestamp for the database driver.  This should be
-	 * defined in child classes to hold the appropriate value for the engine.
-	 * 
-	 * @var    string
+	 * @var    string  The null or zero representation of a timestamp for the database driver.  This should be
+	 *                 defined in child classes to hold the appropriate value for the engine.
 	 * @since  11.1
 	 */
 	protected $nullDate = '0000-00-00 00:00:00';
 
 	/**
 	 * Constructor.
-	 * List of options used to configure the connection
 	 *
-	 * @param   array    $options  Array of database options with keys: host, user, password, database, select. 
+	 * @param   array  $options  List of options used to configure the connection
 	 *
 	 * @return  void
 	 *
@@ -151,7 +142,7 @@ class JDatabaseMySQL extends JDatabase
 	/**
 	 * Test to see if the MySQL connector is available.
 	 *
-	 * @return  boolean  True on success, false otherwise.
+	 * @return  bool  True on success, false otherwise.
 	 *
 	 * @since   11.1
 	 */
@@ -179,10 +170,10 @@ class JDatabaseMySQL extends JDatabase
 	/**
 	 * Drops a table from the database.
 	 *
-	 * @param   string   $tableName  The name of the database table to drop.
-	 * @param   boolean  $ifExists   Optionally specify that the table must exist before it is dropped.
+	 * @param   string  $tableName  The name of the database table to drop.
+	 * @param   bool    $ifExists   Optionally specify that the table must exist before it is dropped.
 	 *
-	 * @return  JDatabaseSQLSrv      Returns this object to support chaining.
+	 * @return  JDatabaseSQLSrv  Returns this object to support chaining.
 	 * @since   11.1
 	 */
 	function dropTable($tableName, $ifExists = true)
@@ -215,7 +206,7 @@ class JDatabaseMySQL extends JDatabase
 	/**
 	 * Method to get the database collation in use by sampling a text field of a table in the database.
 	 *
-	 * @return  mixed  The collation in use by the database (string) or boolean false if not supported.
+	 * @return  mixed  The collation in use by the database or boolean false if not supported.
 	 *
 	 * @since   11.1
 	 */
@@ -287,9 +278,9 @@ class JDatabaseMySQL extends JDatabase
 	/**
 	 * Get the current or query, or new JDatabaseQuery object.
 	 *
-	 * @param   boolean  $new  False to return the last query set, True to return a new JDatabaseQuery object.
+	 * @param   bool   $new  False to return the last query set, True to return a new JDatabaseQuery object.
 	 *
-	 * @return  mixed    The current value of the internal SQL variable or a new JDatabaseQuery object.
+	 * @return  mixed  The current value of the internal SQL variable or a new JDatabaseQuery object.
 	 *
 	 * @since   11.1
 	 * @throws  DatabaseException
@@ -529,7 +520,7 @@ class JDatabaseMySQL extends JDatabase
 	 *
 	 * @param   string  $database  The name of the database to select for use.
 	 *
-	 * @return  boolean  True if the database was successfully selected.
+	 * @return  bool  True if the database was successfully selected.
 	 *
 	 * @since   11.1
 	 * @throws  DatabaseException
@@ -560,7 +551,7 @@ class JDatabaseMySQL extends JDatabase
 	/**
 	 * Set the connection to use UTF-8 character encoding.
 	 *
-	 * @return  boolean  True on success.
+	 * @return  bool  True on success.
 	 *
 	 * @since   11.1
 	 */
@@ -716,7 +707,7 @@ class JDatabaseMySQL extends JDatabase
 		}
 		$buffer .= '</tbody></table>';
 
-		// Restore the original query to its state before we ran the explain.
+		// Restore the original query to it's state before we ran the explain.
 		$this->sql = $backup;
 
 		// Free up system resources and return.

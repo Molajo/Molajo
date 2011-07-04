@@ -53,7 +53,7 @@ class JInstallationModelConfiguration extends JModel
 		$registry->set('offline', 0);
 		$registry->set('offline_message', JText::_('INSTL_STD_OFFLINE_MSG'));
 		$registry->set('sitename', $options->site_name);
-		$registry->set('editor', 'none');
+		$registry->set('editor', 'tinymce');
 		$registry->set('list_limit', 20);
 		$registry->set('access', 1);
 
@@ -74,7 +74,7 @@ class JInstallationModelConfiguration extends JModel
 		$registry->set('secret', JUserHelper::genRandomPassword(16));
 		$registry->set('gzip', 0);
 		$registry->set('error_reporting', -1);
-		$registry->set('helpurl', 'http://help.molajo.org/');
+		$registry->set('helpurl', 'http://help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}');
 		$registry->set('ftp_host', $options->ftp_host);
 		$registry->set('ftp_port', $options->ftp_port);
 		$registry->set('ftp_user', $options->ftp_save ? $options->ftp_user : '');
@@ -207,8 +207,7 @@ class JInstallationModelConfiguration extends JModel
 			return false;
 		}
 
-
-		// Create random salt/password
+		// Create random salt/password for the admin user
 		$salt = JUserHelper::genRandomPassword(32);
 		$crypt = JUserHelper::getCryptedPassword($options->admin_password, $salt);
 		$cryptpass = $crypt.':'.$salt;
@@ -217,22 +216,19 @@ class JInstallationModelConfiguration extends JModel
 		date_default_timezone_set('UTC');
 		$installdate	= date('Y-m-d H:i:s');
 		$nullDate		= $db->getNullDate();
-        $randomID       = rand(1, 10000);
 		$query	= 'REPLACE INTO #__users SET'
-				. ' id = '.$randomID
-				. ', name = '.$db->quote('Administrator')
+				. ' id = 42'
+				. ', name = '.$db->quote('Super User')
 				. ', username = '.$db->quote($options->admin_user)
 				. ', email = '.$db->quote($options->admin_email)
 				. ', password = '.$db->quote($cryptpass)
+				. ', usertype = '.$db->quote('deprecated')		// Need to weed out where this is used
 				. ', block = 0'
 				. ', sendEmail = 1'
 				. ', registerDate = '.$db->quote($installdate)
 				. ', lastvisitDate = '.$db->quote($nullDate)
 				. ', activation = '.$db->quote('')
-				. ', params = '.$db->quote('')
-				. ', asset_id = 51 '
-				. ', access = 4';
-
+				. ', params = '.$db->quote('');
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
@@ -240,47 +236,14 @@ class JInstallationModelConfiguration extends JModel
 		}
 
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groups' .
-				' SELECT '.$randomID.', 4';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groupings' .
-				' SELECT '.$randomID.', 4';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groupings' .
-				' SELECT '.$randomID.', 5';
+		$query = 'REPLACE INTO #__user_usergroup_map' .
+				' SET user_id = 42, group_id = 8';
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
 			return false;
 		}
 
-		// Add user as group - type_id = 0 for User
-		$query	= 'INSERT INTO #__groups (parent_id, lft, rgt, title, asset_id, access, type_id) '
-				. ' SELECT 5, 0, 0, '.$db->quote('Administrator').', 51, 4, 0';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-		// Map the super admin to the their personal group
-		$query = 'INSERT INTO #__user_groups' .
-				' SELECT '.$randomID.', 5';
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-        
 		return true;
 	}
 }

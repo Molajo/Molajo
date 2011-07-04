@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: database.xml 21676 2011-06-25 07:43:49Z chdemko $ -->
+<!-- $Id: database.xml 21718 2011-07-01 07:52:13Z chdemko $ -->
 <form>
 	<fieldset>
 		<fieldset name="basic">
@@ -39,9 +39,8 @@
 				<option value="backup">INSTL_DATABASE_FIELD_VALUE_BACKUP</option>
 				<option value="remove">INSTL_DATABASE_FIELD_VALUE_REMOVE</option>
 			</field>
-			<field name="db_prefix" type="text" id="db_prefix" class="inputbox"
+			<field name="db_prefix" type="prefix" id="db_prefix" class="inputbox"
 				label="INSTL_DATABASE_PREFIX_LABEL"
-				default="molajo_"
 				required="true"
 				validate="prefix"
 				message="INSTL_DATABASE_PREFIX_MSG"

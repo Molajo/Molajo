@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: database.php 21652 2011-06-23 05:33:52Z chdemko $
+ * @version		$Id: database.php 21718 2011-07-01 07:52:13Z chdemko $
  * @package		Joomla.Installation
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
@@ -148,11 +148,14 @@ class JInstallationModelDatabase extends JModel
 				}
 			}
 
-/** Molajo Hack Begins */
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
-            $schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
-/** Molajo Hack Ends */
+			if ($utfSupport) {
+				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla.sql';
+			} else {
+				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla_backward.sql';
+			}
+
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
 				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
@@ -160,10 +163,7 @@ class JInstallationModelDatabase extends JModel
 			}
 
 			// Attempt to update the table #__schema.
-/** Molajo Hack Begins */
-			// changed file from 1.7.0.sql to 1.0.sql
 			$files = JFolder::files(JPATH_ADMINISTRATOR . '/components/com_admin/sql/updates/mysql/', '\.sql$');
-/** Molajo Hack Ends */
 			if (empty($files)) {
 				$this->setError(JText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
 				return false;
@@ -176,10 +176,7 @@ class JInstallationModelDatabase extends JModel
 			}
 			$query = $db->getQuery(true);
 			$query->insert('#__schemas');
-/** Molajo Hack Begins */
-			$query->values('999, '. $db->quote($version));
-/** Molajo Hack Ends */
-
+			$query->values('700, '. $db->quote($version));
 			$db->setQuery($query);
 			$db->query();
 			if ($db->getErrorNum()) {
@@ -348,7 +345,7 @@ class JInstallationModelDatabase extends JModel
 	{
 		// Initialise variables.
 		$return = true;
-		$backup = 'bak_';
+		$backup = 'bak_' . $prefix;
 
 		// Get the tables in the database.
 		$db->setQuery(
@@ -480,10 +477,6 @@ class JInstallationModelDatabase extends JModel
 	{
 		// Initialise variables.
 		$return = true;
-$fp = fopen('amy.txt', 'w');
-jimport('joomla.error.log');
-$log = JLog::getInstance('update.error.php');
-        $log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
 
 		// Get the contents of the schema file.
 		if (!($buffer = file_get_contents($schema))) {
@@ -491,16 +484,13 @@ $log = JLog::getInstance('update.error.php');
 			return false;
 		}
 
-$log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
-fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
 		// Get an array of queries from the schema and process them.
 		$queries = $this->_splitQueries($buffer);
 		foreach ($queries as $query)
 		{
 			// Trim any whitespace.
 			$query = trim($query);
- $log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
-fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
+
 			// If the query isn't empty and is not a comment, execute it.
 			if (!empty($query) && ($query{0} != '#')) {
 				// Execute the query.
@@ -514,8 +504,7 @@ fwrite($fp, 'Line:'.__FILE__.':'.__LINE__);
 				}
 			}
 		}
- $log->addEntry(array('comment' => 'Line:'.__FILE__.':'.__LINE__));
-fclose($fp);
+
 		return $return;
 	}
 

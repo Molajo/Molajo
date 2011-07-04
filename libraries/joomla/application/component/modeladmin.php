@@ -21,49 +21,37 @@ jimport('joomla.application.component.modelform');
 abstract class JModelAdmin extends JModelForm
 {
 	/**
-	 * The prefix to use with controller messages.
-	 * 
-	 * @var    string
+	 * @var    string	The prefix to use with controller messages.
 	 * @since  11.1
 	 */
 	protected $text_prefix = null;
 
 	/**
-	 * The event to trigger after deleting the data.
-	 * 
-	 * @var    string
+	 * @var    string	The event to trigger after deleting the data.
 	 * @since  11.1
 	 */
 	protected $event_after_delete = null;
 
 	/**
-	 * The event to trigger after saving the data.
-	 *
-	 * @var    string
+	 * @var    string	The event to trigger after saving the data.
 	 * @since  11.1
 	 */
 	protected $event_after_save = null;
 
 	/**
-	 * The event to trigger before deleting the data.
-	 * 
-	 * @var    string
+	 * @var    string	The event to trigger before deleting the data.
 	 * @since  11.1
 	 */
 	protected $event_before_delete = null;
 
 	/**
-	 * The event to trigger before saving the data.
-	 * 
-	 * @var    string
+	 * @var    string	The event to trigger before saving the data.
 	 * @since  11.1
 	 */
 	protected $event_before_save = null;
 
 	/**
-	 * The event to trigger after changing the published state of the data.
-	 *
-	 * @var    string
+	 * @var    string	The event to trigger after changing the published state of the data.
 	 * @since  11.1
 	 */
 	protected $event_change_state = null;
@@ -71,7 +59,6 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @return  JModelAdmin
@@ -182,11 +169,11 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Batch access level changes for a group of rows.
 	 *
-	 * @param   integer  $value  The new value matching an Asset Group ID.
-	 * @param   array    $pks    An array of row IDs.
+	 * @param	int    $value  The new value matching an Asset Group ID.
+	 * @param	array  $pks    An array of row IDs.
 	 *
-	 * @return  booelan  True if successful, false otherwise and internal error is set.
-	 * @since   11.1
+	 * @return	booelan  True if successful, false otherwise and internal error is set.
+	 * @since	11.1
 	 */
 	protected function batchAccess($value, $pks)
 	{
@@ -221,10 +208,10 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Batch copy items to a new category or current.
 	 *
-	 * @param   integer  $value  The new category.
-	 * @param   array    $pks    An array of row IDs.
+	 * @param	int		$value  The new category.
+	 * @param	array	$pks    An array of row IDs.
 	 *
-	 * @return   boolean  True if successful, false otherwise and internal error is set.
+	 * @return	boolean  True if successful, false otherwise and internal error is set.
 	 *
 	 * @since	11.1
 	 */
@@ -322,10 +309,10 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Batch move articles to a new category
 	 *
-	 * @param   integer  $value  The new category ID.
-	 * @param   array    $pks    An array of row IDs.
+	 * @param	int	   $value  The new category ID.
+	 * @param	array  $pks    An array of row IDs.
 	 *
-	 * @return  booelan  True if successful, false otherwise and internal error is set.
+	 * @return	booelan  True if successful, false otherwise and internal error is set.
 	 *
 	 * @since	11.1
 	 */
@@ -412,7 +399,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method to test whether a record can be deleted.
 	 *
-	 * @param   object   $record  A record object.
+	 * @param   object   $record	A record object.
 	 *
 	 * @return  boolean  True if allowed to delete the record. Defaults to the permission for the component.
 	 * @since   11.1
@@ -440,7 +427,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method override to check-in a record or an array of record
 	 *
-	 * @param   mixed    $pks    The ID of the primary key or an array of IDs
+	 * @param   integer|array	$pks	The ID of the primary key or an array of IDs
 	 *
 	 * @return  mixed    Boolean false if there is an error, otherwise the count of records checked in.
 	 * @since   11.1
@@ -482,7 +469,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method override to check-out a record.
 	 *
-	 * @param   integer  $pk   The ID of the primary key.
+	 * @param   integer  $pk	The ID of the primary key.
 	 *
 	 * @return  boolean  True if successful, false if an error occurs.
 	 * @since   11.1
@@ -498,7 +485,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method to delete one or more records.
 	 *
-	 * @param   array    $pks   An array of record primary keys.
+	 * @param   array    $pks	An array of record primary keys.
 	 *
 	 * @return  boolean  True if successful, false if an error occurs.
 	 * @since   11.1
@@ -597,7 +584,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method to get a single record.
 	 *
-	 * @param   integer  $pk    The id of the primary key.
+	 * @param   integer  $pk	The id of the primary key.
 	 *
 	 * @return  mixed    Object on success, false on failure.
 	 * @since   11.1
@@ -625,7 +612,7 @@ abstract class JModelAdmin extends JModelForm
 
 		if (property_exists($item, 'params')) {
 			$registry = new JRegistry;
-			$registry->loadJSON($item->params);
+			$registry->loadString($item->params);
 			$item->params = $registry->toArray();
 		}
 
@@ -635,7 +622,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
-	 * @param   object  $table  A JTable object.
+	 * @param   object  $table	A JTable object.
 	 *
 	 * @return  array  An array of conditions to add to ordering queries.
 	 * @since   11.1
@@ -670,7 +657,7 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
-	 * @param   JTable  $table  A reference to a JTable object.
+	 * @param   JTable	$table	A reference to a JTable object.
 	 *
 	 * @return  void
 	 * @since   11.1
@@ -683,8 +670,8 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method to change the published state of one or more records.
 	 *
-	 * @param   array    $pks    A list of the primary keys to change.
-	 * @param   integer  $value  The value of the published state.
+	 * @param   array    $pks	A list of the primary keys to change.
+	 * @param   integer  $value	The value of the published state.
 	 *
 	 * @return  boolean  True on success.
 	 * @since   11.1
@@ -745,8 +732,7 @@ abstract class JModelAdmin extends JModelForm
 	 * @param   integer  $pks    The ID of the primary key to move.
 	 * @param   integer  $delta  Increment, usually +1 or -1
 	 *
-	 * @return  mixed    False on failure or error, true on success, 
-	 *                    null if the $pk is empty (no items selected).
+	 * @return  boolean|null	False on failure or error, true on success.
 	 * @since   11.1
 	 */
 	public function reorder($pks, $delta = 0)
@@ -805,9 +791,9 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array    $data   The form data.
+	 * @param   array  $data	The form data.
 	 *
-	 * @return  boolean  True on success, False on error.
+	 * @return  boolean  True on success.
 	 * @since   11.1
 	 */
 	public function save($data)
@@ -885,8 +871,8 @@ abstract class JModelAdmin extends JModelForm
 	/**
 	 * Saves the manually set order of records.
 	 *
-	 * @param   array    $pks     An array of primary key ids.
-	 * @param   integer  $order   +1 or -1
+	 * @param   array    $pks	An array of primary key ids.
+	 * @param   integer  $order	+/-1
 	 *
 	 * @return  mixed
 	 * @since   11.1

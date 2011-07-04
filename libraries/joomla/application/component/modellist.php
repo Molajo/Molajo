@@ -59,9 +59,6 @@ class JModelList extends JModel
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 * 
 	 * @return  JModelList
-	 * @since   11.1
-	 * 
-	 * @see     JController
 	 */
 	public function __construct($config = array())
 	{
@@ -141,6 +138,7 @@ class JModelList extends JModel
 	 * Method to get a JDatabaseQuery object for retrieving the data set from a database.
 	 *
 	 * @return  JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
+	 * 
 	 * @since   11.1
 	 */
 	protected function getListQuery()
@@ -186,8 +184,7 @@ class JModelList extends JModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string   $id  An identifier string to generate the store id.
-	 * 
+	 * @param   string   An identifier string to generate the store id.
 	 * @return  string   A store id.
 	 * @since   11.1
 	 */
@@ -326,7 +323,7 @@ class JModelList extends JModel
 	 * @param   string   $request    The name of the variable passed in a request.
 	 * @param   string   $default    The default value for the variable if not found. Optional.
 	 * @param   string   $type       Filter for the variable, for valid values see {@link JFilterInput::clean()}. Optional.
-	 * @param   boolean  $resetpage  If true, the limitstart in request is set to zero
+	 * @param   boolean  $resetPage  If true, the limitstart in request is set to zero
 	 * 
 	 * @return  The request user state.
 	 * 

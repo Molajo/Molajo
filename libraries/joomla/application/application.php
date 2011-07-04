@@ -89,12 +89,8 @@ class JApplication extends JObject
 		jimport('joomla.error.profiler');
 
 		// Set the view name.
-		$this->_name = $this->getName();
-
-		// Only set the clientId if available.
-		if (isset($config['clientId'])) {
-			$this->_clientId = $config['clientId'];
-		}
+		$this->_name		= $this->getName();
+		$this->_clientId	= $config['clientId'];
 
 		// Enable sessions by default.
 		if (!isset($config['session'])) {
@@ -112,9 +108,7 @@ class JApplication extends JObject
 		}
 
 		// Create the configuration object.
-		if (file_exists(JPATH_CONFIGURATION.DS.$config['config_file'])) {
-			$this->_createConfiguration(JPATH_CONFIGURATION.DS.$config['config_file']);
-		}
+		$this->_createConfiguration(JPATH_CONFIGURATION . '/' . $config['config_file']);
 
 		// Create the session if a session name is passed.
 		if ($config['session'] !== false) {
@@ -151,7 +145,7 @@ class JApplication extends JObject
 			jimport('joomla.application.helper');
 			$info = JApplicationHelper::getClientInfo($client, true);
 
-			$path = $info->path.DS.'includes'.DS.'application.php';
+			$path = $info->path . '/includes/application.php';
 			if (file_exists($path)) {
 				require_once $path;
 
@@ -666,9 +660,13 @@ class JApplication extends JObject
 		if (isset($options['silent']) && $options['silent']) {
 			return false;
 		}
-
-		// Return the error.
-		return JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
+	
+		// If status is success, any error will ahve been raised by the user plugin
+		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
+			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
+		}
+		
+		return false;
 	}
 
 	/**
@@ -934,10 +932,9 @@ class JApplication extends JObject
 		if ($time % 2) {
 			// The modulus introduces a little entropy, making the flushing less accurate
 			// but fires the query less than half the time.
-			$query = $db->getQuery(true);
 			$db->setQuery(
-				'DELETE FROM '.$query->qn('#__session') .
-				' WHERE '.$query->qn('time').' < '.(int) ($time - $session->getExpire())
+				'DELETE FROM `#__session`' .
+				' WHERE `time` < '.(int) ($time - $session->getExpire())
 			);
 			$db->query();
 		}
@@ -970,11 +967,10 @@ class JApplication extends JObject
 		$session 	= JFactory::getSession();
 		$user		= JFactory::getUser();
 
-		$query = $db->getQuery(true);
 		$db->setQuery(
-			'SELECT '.$query->qn('session_id') .
-			' FROM '.$query->qn('#__session') .
-			' WHERE '.$query->qn('session_id').' = '.$query->q($session->getId()), 0, 1
+			'SELECT `session_id`' .
+			' FROM `#__session`' .
+			' WHERE `session_id` = '.$db->quote($session->getId()), 0, 1
 		);
 		$exists = $db->loadResult();
 
@@ -982,14 +978,14 @@ class JApplication extends JObject
 		if (!$exists) {
 			if ($session->isNew()) {
 				$db->setQuery(
-					'INSERT INTO '.$query->qn('#__session').' ('.$query->qn('session_id').', '.$query->qn('client_id').', '.$query->qn('time').')' .
-					' VALUES ('.$query->q($session->getId()).', '.(int) $this->getClientId().', '.(int) time().')'
+					'INSERT INTO `#__session` (`session_id`, `client_id`, `time`)' .
+					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getClientId().', '.(int) time().')'
 				);
 			}
 			else {
 				$db->setQuery(
-					'INSERT INTO '.$query->qn('#__session').' ('.$query->qn('session_id').', '.$query->qn('client_id').', '.$query->qn('guest').', '.$query->qn('time').', '.$query->qn('userid').', '.$query->qn('username').')' .
-					' VALUES ('.$query->q($session->getId()).', '.(int) $this->getClientId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$query->q($user->get('username')).')'
+					'INSERT INTO `#__session` (`session_id`, `client_id`, `guest`, `time`, `userid`, `username`)' .
+					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getClientId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$db->quote($user->get('username')).')'
 				);
 			}
 
