@@ -1,0 +1,3 @@
+A unified test template for Joomla! 1.5 / 1.6 that displays certain diagnostic information.
+
+Be sure to clone this repository into a directory named "test-template"  (all lower case) as it will otherwise return a 500 error when accessing it from the front-end.
