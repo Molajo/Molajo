@@ -1,0 +1,10 @@
+/*
+@version     $id: molajo.css
+@package     Molajo
+@subpackage  Syntax Highlighter
+@copyright   Copyright (C) 2010-2011 individual Molajo Contributors. All rights reserved. See http://molajo.org/copyright
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+#synhi1, #synhi2, #synhi3, #synhi4, #synhiN {}
+.synhieven {}
+.synhiodd {}

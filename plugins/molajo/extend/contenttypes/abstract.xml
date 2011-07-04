@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+        <fields name="attribs">
+
+            <fieldset
+                name="abstract"
+                label="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_SLIDER_LABEL"
+                addfieldpath="/plugins/system/extend/fieldtypes/custom"
+                >
+
+                <field
+                    name="field_of_study"
+                    type="text"
+                    default=""
+                    label="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_FIELD_OF_STUDY_LABEL"
+                    description="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_FIELD_OF_STUDY_DESC"
+                    filter="string"
+                    >
+                </field>
+
+                <field
+                    name="templatestyle"
+                    type="templatestyle"
+                    multiple="true"
+                    size="5"
+                    label="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_HOLY_SMOKE_LABEL"
+                    description="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_HOLY_SMOKE_DESC"
+                    >
+                </field>
+
+                <field
+                    name="abstract_author"
+                    type="author"
+                    multiple="true"
+                    size="5"
+                    label="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_AUTHOR_LABEL"
+                    description="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_AUTHOR_DESC"
+                    >
+                </field>
+
+                <field
+                    name="dissertation_pdf"
+                    type="media"
+                    directory="images/pdfs/"
+                    hide_none="true"
+                    label="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_PDF_LABEL"
+                    description="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_PDF_DESC"
+                    >
+                </field>
+
+                <field
+                    name="last_revision_date"
+                    type="calendar"
+                    label="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_REVISION_LABEL"
+                    description="PLG_SYSTEM_EXTEND_FIELD_ABSTRACT_REVISION_DESC"
+                    filter="date"
+                    >
+                </field>
+            </fieldset>
+    </fields>
+</form>

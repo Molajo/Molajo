@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="layout" method="upgrade">
+    <name>LAYOUT_EDIT_NAME</name>
+    <author>Amy Stephen</author>
+    <creationDate>June 2011</creationDate>
+    <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>AmyStephen@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>LAYOUT_EDIT_XML_DESCRIPTION</description>
+	<files>
+		<filename>index.html</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+		<folder>parameters</folder>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.layouts_edit.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_edit.sys.ini</language>
+	</languages>
+</extension>
