@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!-- $Id: contact.xml $ -->
+<form>
+	<fields name="params">
+
+        <!-- Form options. -->
+        <fieldset name="Contact_Form"
+            label="MOLAJO_CONFIG_ITEM_LAYOUT_PARAMETER_CONTACT_FORM"
+        >
+
+            <field name="show_email_form" type="list"
+                description="COM_CONTACT_FIELD_EMAIL_SHOW_FORM_DESC"
+                label="COM_CONTACT_FIELD_EMAIL_SHOW_FORM_LABEL"
+            >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+
+            <field name="show_email_copy"
+                type="list"
+                description="COM_CONTACT_FIELD_EMAIL_EMAIL_COPY_DESC"
+                label="COM_CONTACT_FIELD_EMAIL_EMAIL_COPY_LABEL"
+            >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JHIDE</option>
+                <option value="1">JSHOW</option>
+            </field>
+
+            <field name="banned_email"
+                type="textarea"
+                cols="30"
+                description="COM_CONTACT_FIELD_CONFIG_BANNED_EMAIL_DESC"
+                label="COM_CONTACT_FIELD_CONFIG_BANNED_EMAIL_LABEL"
+                rows="3"
+            />
+
+            <field name="banned_subject"
+                type="textarea"
+                cols="30"
+                description="COM_CONTACT_FIELD_CONFIG_BANNED_SUBJECT_DESC"
+                label="COM_CONTACT_FIELD_CONFIG_BANNED_SUBJECT_LABEL"
+                rows="3"
+            />
+
+            <field name="banned_text"
+                type="textarea"
+                cols="30"
+                description="COM_CONTACT_FIELD_CONFIG_BANNED_TEXT_DESC"
+                label="COM_CONTACT_FIELD_CONFIG_BANNED_TEXT_LABEL"
+                rows="3"
+            />
+
+            <field name="validate_session"
+                type="list"
+                description="COM_CONTACT_FIELD_CONFIG_SESSION_CHECK_DESC"
+                label="COM_CONTACT_FIELD_CONFIG_SESSION_CHECK_LABEL"
+            >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="custom_reply"
+                type="list"
+                description="COM_CONTACT_FIELD_CONFIG_CUSTOM_REPLY_DESC"
+                label="COM_CONTACT_FIELD_CONFIG_CUSTOM_REPLY_LABEL"
+            >
+                <option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+            </field>
+
+            <field name="redirect"
+                type="text"
+                description="COM_CONTACT_FIELD_CONFIG_REDIRECT_DESC"
+                label="COM_CONTACT_FIELD_CONFIG_REDIRECT_LABEL"
+                size="30"
+            />
+        </fieldset>
+    </fields>
+</form>

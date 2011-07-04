@@ -1,0 +1,11 @@
+.DS_Store
+/configuration.php
+cache/*
+administrator/cache/*
+/.project
+/.buildpath
+/.settings
+.svn
+tmp/*
+/installationOLD
+/xinstallation
