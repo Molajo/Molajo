@@ -17,10 +17,10 @@ defined('_JEXEC') or die;
 final class MolajoVersion
 {
 	/** @var  string  Product name. */
-	public $PRODUCT = 'Joomla!';
+	public $PRODUCT = 'Molajo';
 
 	/** @var  string  Release version. */
-	public $RELEASE = '1.7';
+	public $RELEASE = '1.0';
 
 	/** @var  string  Maintenance version. */
 	public $MAINTENANCE = '0';
@@ -32,10 +32,10 @@ final class MolajoVersion
 	public $BUILD = 0;
 
 	/** @var  string  Code name. */
-	public $CODE_NAME = 'Ember';
+	public $CODE_NAME = 'Flight';
 
 	/** @var  string  Release date. */
-	public $RELEASE_DATE = '02-Jun-2011';
+	public $RELEASE_DATE = '01-Aug-2011';
 
 	/** @var  string  Release time. */
 	public $RELEASE_TIME = '06:00';
@@ -44,10 +44,10 @@ final class MolajoVersion
 	public $RELEASE_TIME_ZONE = 'GMT';
 
 	/** @var  string  Copyright Notice. */
-	public $COPYRIGHT = 'Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.';
+	public $COPYRIGHT = 'Copyright (C) 2011 Molajo Contributors. All rights reserved.';
 
 	/** @var  string  Link text. */
-	public $LINK_TEXT = '<a href="http://www.joomla.org">Joomla!</a> is Free Software released under the GNU General Public License.';
+	public $LINK_TEXT = '<a href="http://molajo.org">Molajo</a> is Free Software released under the GNU General Public License.';
 
 	/**
 	 * Compares two a "PHP standardized" version number against the current Joomla version.
@@ -139,7 +139,7 @@ final class MolajoVersion
 }
 
 // Define the Joomla version if not already defined.
-if (!defined('JVERSION')) {
+if (!defined('MOLAJOVERSION')) {
 	$jversion = new MolajoVersion;
-	define('JVERSION', $jversion->getShortVersion());
+	define('MOLAJOVERSION', $jversion->getShortVersion());
 }

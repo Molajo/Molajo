@@ -21,9 +21,10 @@ class JConfig {
 	/* Site Settings */
 	public $offline = '0';
 	public $offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';
-	public $sitename = 'Molajo';				// Name of Molajo site
-	public $editor = 'none';
+	public $sitename = 'Joomla!';				// Name of Joomla site
+	public $editor = 'tinymce';
 	public $list_limit = '20';
+	public $root_user = '42';
 	public $access = '1';
 
 	/* Database Settings */
@@ -32,13 +33,13 @@ class JConfig {
 	public $user = '';							// MySQL username
 	public $password = '';						// MySQL password
 	public $db = '';							// MySQL database name
-	public $dbprefix = 'molajo_';				// Change for security
+	public $dbprefix = 'jos_';					// Do not change unless you need to!
 
 	/* Server Settings */
 	public $secret = 'FBVtggIk5lAzEU9H'; 		// Change this to something more secure
 	public $gzip = '0';
 	public $error_reporting = '-1';
-	public $helpurl = 'http://molajo.org/proxy/index.php?option=com_help';
+	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '';
 	public $ftp_port = '';
 	public $ftp_user = '';
@@ -47,7 +48,7 @@ class JConfig {
 	public $ftp_enable = '';
 	public $tmp_path = '/tmp';
 	public $log_path = '/var/logs';
-	public $live_site = ''; 					// Only if URL problems, specify full url to Molajo install.
+	public $live_site = ''; 					// Optional, Full url to Joomla install.
 	public $force_ssl = 0;						// Force areas of the site to be SSL ONLY.  0 = None, 1 = Administrator, 2 = Both Site and Administrator
 
 	/* Locale Settings */
@@ -55,7 +56,7 @@ class JConfig {
 	public $offset_user = 'UTC';
 
 	/* Session settings */
-	public $lifetime = '15';
+	public $lifetime = '15';					// Session time
 	public $session_handler = 'database';
 
 	/* Mail Settings */
@@ -78,12 +79,12 @@ class JConfig {
 	public $debug_lang = '0';
 
 	/* Meta Settings */
-	public $MetaDesc = '';
-	public $MetaKeys = '';
-	public $MetaAuthor = '';
+	public $MetaDesc = 'Joomla! - the dynamic portal engine and content management system';
+	public $MetaKeys = 'joomla, Joomla';
+	public $MetaAuthor = '1';
 
 	/* SEO Settings */
-	public $sef = '0';
+	public $sef = '1';
 	public $sef_rewrite = '0';
 	public $sef_suffix = '0';
 	public $unicodeslugs = '0';

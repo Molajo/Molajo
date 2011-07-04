@@ -19,40 +19,31 @@ defined('JPATH_PLATFORM') or die;
 class JDatabaseImporterMySQLi
 {
 	/**
-	 * An array of cached data.
-	 * 
-	 * @var    array
+	 * @var    array  An array of cached data.
 	 * @since  11.1
 	 */
 	protected $cache = array();
 
 	/**
-	 * The database connector to use for exporting structure and/or data.
-	 *
-	 * @var    JDatabaseMySQLi
+	 * @var    JDatabaseMySQLi  The database connector to use for exporting structure and/or data.
 	 * @since  11.1
 	 */
 	protected $db = null;
 
 	/**
-	 * The input source.
-	 *
-	 * @var    mixed
+	 * @var    mixed  The input source.
 	 * @since  11.1
 	 */
 	protected $from = array();
 
 	/**
-	 * The type of input format (xml).
-	 *
-	 * @var    string
+	 * @var    string  The type of input format (xml).
 	 * @since  11.1
 	 */
 	protected $asFormat = 'xml';
 
 	/**
-	 * An array of options for the exporter.
-	 * @var    JObject
+	 * @var    JObject  An array of options for the exporter.
 	 * @since  11.1
 	 */
 	protected $options = null;
@@ -106,7 +97,6 @@ class JDatabaseImporterMySQLi
 	 * @return  JDatabaseImporterMySQLi  Method supports chaining.
 	 *
 	 * @since   11.1
-	 * 
 	 * @throws  Exception if an error is encountered.
 	 */
 	public function check()
@@ -127,7 +117,7 @@ class JDatabaseImporterMySQLi
 	/**
 	 * Specifies the data source to import.
 	 *
-	 * @param   mixed  $from             The data source to import.
+	 * @param   mixed  $from  The data source to import.
 	 *
 	 * @return  JDatabaseImporterMySQLi  Method supports chaining.
 	 *
@@ -453,7 +443,6 @@ class JDatabaseImporterMySQLi
 	 * @return  array	The lookup array. array({key name} => array(object, ...))
 	 *
 	 * @since   11.1
-	 * 
 	 * @throws  Exception
 	 */
 	protected function getKeyLookup($keys)
@@ -549,14 +538,13 @@ class JDatabaseImporterMySQLi
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * 
 	 * @throws  Exception on error.
-	 * @note    Currently supports XML format only.
-	 * @todo    IF it is not in XML format, convert it first.
 	 */
 	protected function mergeStructure()
 	{
 		// Currently only support XML format anyway.
+		// TODO If it's not, convert it to XML first
+
 		// Initialise variables.
 		$prefix	= $this->db->getPrefix();
 		$tables	= $this->db->getTableList();

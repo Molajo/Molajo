@@ -47,7 +47,7 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 			<div id="header2">
 				<div id="header3">
 					<span class="logo"><a href="http://www.joomla.org" target="_blank"><img src="template/images/logo.png" alt="Joomla!" /></a></span>
-					<span>Joomla! <?php echo JVERSION; ?> <?php echo JText::_('INSTL_INSTALLATION') ?></span>
+					<span>Molajo <?php echo MOLAJOVERSION; ?> <?php echo JText::_('INSTL_INSTALLATION') ?></span>
 				</div>
 			</div>
 		</div>
@@ -74,8 +74,8 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 			</div>
 		</div>
 		<div id="copyright">
-			<?php $joomla= '<a href="http://www.joomla.org">Joomla!&#174;</a>';
-			echo JText::sprintf('JGLOBAL_ISFREESOFTWARE', $joomla) ?>
+			<?php $molajo= '<a href="http://molajo.org">Molajo&#174;</a>';
+			echo JText::sprintf('JGLOBAL_ISFREESOFTWARE', $molajo) ?>
 		</div>
 	</body>
 </html>
