@@ -8,7 +8,7 @@
  */
 
 // Check to ensure this file is included in Joomla!
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 abstract class ModMyshortcutsHelper
 {
@@ -80,12 +80,12 @@ abstract class ModMyshortcutsHelper
                 array(
                     'link' => JRoute::_('index.php?option=com_config'),
                     'text' => 'Global Config',
-                    'access' => array('manage','com_config')
+                    'access' => array('core.manage','com_config')
                 ),
                 array(
-                    'link' => JRoute::_('index.php?option=com_articles'),
+                    'link' => JRoute::_('index.php?option=com_content'),
                     'text' => 'Content',
-                    'access' => array('manage','com_articles')
+                    'access' => array('core.manage','com_content')
                 )
             );
         }
@@ -110,47 +110,47 @@ abstract class ModMyshortcutsHelper
                 array(
                     'link' => JRoute::_('index.php?option=com_config'),
                     'text' => JText::_('MOD_MYSHORTCUTS_CONFIGURATION'),
-                    'access' => array('manage','com_config')
+                    'access' => array('core.manage','com_config')
                 ),
                 array(
-                    'link' => JRoute::_('index.php?option=com_articles'),
+                    'link' => JRoute::_('index.php?option=com_content'),
                     'text' => JText::_('MOD_MYSHORTCUTS_ARTICLES'),
-                    'access' => array('manage','com_articles')
+                    'access' => array('core.manage','com_content')
                 ),
                 array(
-                    'link' => JRoute::_('index.php?option=com_articles&task=article.add'),
+                    'link' => JRoute::_('index.php?option=com_content&task=article.add'),
                     'text' => JText::_('MOD_MYSHORTCUTS_ADD_ARTICLE'),
-                    'access' => array('manage','com_articles')
+                    'access' => array('core.manage','com_content')
                 ),
                 array(
                     'link' => JRoute::_('index.php?option=com_media'),
                     'text' => JText::_('MOD_MYSHORTCUTS_MEDIA'),
-                    'access' => array('manage','com_media')
+                    'access' => array('core.manage','com_media')
                 ),
                 array(
                     'link' => JRoute::_('index.php?option=com_menus&view=menus'),
                     'text' => JText::_('MOD_MYSHORTCUTS_MENUS'),
-                    'access' => array('manage','com_menus')
+                    'access' => array('core.manage','com_menus')
                 ),
                 array(
                     'link' => JRoute::_('index.php?option=com_users'),
                     'text' => JText::_('MOD_MYSHORTCUTS_USERS'),
-                    'access' => array('manage','com_users')
+                    'access' => array('core.manage','com_users')
                 ),
                 /*array(
                     'link' => JRoute::_('index.php?option=com_modules'),
                     'text' => JText::_('MOD_SHORTCUTS_MODULES'),
-                    'access' => array('manage','com_modules')
+                    'access' => array('core.manage','com_modules')
                 ),*/
                 array(
                     'link' => JRoute::_('index.php?option=com_installer'),
                     'text' => JText::_('MOD_MYSHORTCUTS_EXTEND'),
-                    'access' => array('manage','com_installer')
+                    'access' => array('core.manage','com_installer')
                 ),
                 array(
                     'link' => JRoute::_('index.php?option=com_admin&view=help'),
                     'text' => JText::_('MOD_MYSHORTCUTS_HELP'),
-                    'access' => array('manage','com_admin')
+                    'access' => array('core.manage','com_admin')
                 )
             );
         }

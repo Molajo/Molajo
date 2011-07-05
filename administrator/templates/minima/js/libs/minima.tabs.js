@@ -6,40 +6,54 @@
  */
 
 var MinimaTabsClass = new Class({
-	Implements: [Options],
+        
+    Implements: [Options],
 
     options: {
     },
 
     elements: {
-    	'tabs': null,
-    	'content': null
+        tabs     : null,
+        content  : null
+    },
+        
+    initialize: function(options, elements){
+        // Set options
+        this.setOptions(options);
+        // Set elements
+        this.elements = elements;
     },
 
-	initialize: function(options, elements){
-    	// Set options
-    	this.setOptions(options);
-
-    	// Set elements
-    	this.elements = elements;
+    // move outside tabs the proper place
+    moveTabs: function(el) {        
+        // the #submenu should have a .minimaTabs class
+        //this.elements.subMenu.addClass('minima-tabs');            
+        // move the tbas to the right place
+        // which is above the title and toolbar-box
+        el.inject( $('content'),'top' );
     },
 
+    // shows the first tab content
     showFirst: function() {
-    	// Show first
+        // Show first
         this.elements.content.pick().removeClass('hide');
     },
 
+    // hide all contents
     hideAllContent: function() {
-    	// Hide all
-    	this.elements.content.addClass('hide');
+        // Hide all
+        this.elements.content.addClass('hide');
     },
 
+    // attaches the tabs actions
     addTabsAction: function() {
-    	var _this = this;
-    	this.elements.tabs.each(function(tab, index){
+        // save the context
+        var _this = this;            
+        // go through each tab and do the magic
+        this.elements.tabs.each(function(tab, index){                
             tab.addEvents({
-                click: function(e){
-                	// Stop the event
+                click: function(e){                        
+                    // Stop the event
                     e.stop();
                     // Remove class active from all tabs
                     _this.elements.tabs.removeClass('active');
@@ -53,4 +67,5 @@ var MinimaTabsClass = new Class({
             }); //end of tab.addEvents
         }); // end of tabs.each
     }
+    
 });

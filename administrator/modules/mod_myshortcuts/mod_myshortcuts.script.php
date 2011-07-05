@@ -1,4 +1,4 @@
-<?php
+    <?php
 /** 
  * @package     Minima
  * @subpackage  mod_myshortcuts
@@ -49,6 +49,9 @@ class Mod_MyshortcutsInstallerScript {
 
         $alreadyInstalled = $db->loadResult();
 
+        // language that is being used
+        $currentLang = JFactory::getLanguage()->getTag();
+
         if (!$alreadyInstalled) {
 
             // myshortcuts
@@ -87,8 +90,8 @@ class Mod_MyshortcutsInstallerScript {
             if (!$db->query() && ($db->getErrorNum() != 1060)) {
                 echo $db->getErrorMsg(true);
             }
-    	
-    	   // add values to modules_menu
+        
+           // add values to modules_menu
             $db->setQuery("INSERT INTO `#__modules_menu` (`moduleid`,`menuid`)".
                 " SELECT `id`,0 FROM `#__modules`".
                 " WHERE `#__modules`.`position` = 'widgets-last' OR `#__modules`.`position` = 'widgets-first'");
@@ -112,9 +115,7 @@ class Mod_MyshortcutsInstallerScript {
             if (!$db->query() && ($db->getErrorNum() != 1060)) {
                 die($db->getErrorMsg(true));
             }
-
-            // language that is being used
-            /*$currentLang = JFactory::getLanguage()->getTag();
+            
             // for testing purposes, say the language is de-DE
             //$currentLang = "de-DE";
 
@@ -143,7 +144,19 @@ class Mod_MyshortcutsInstallerScript {
                 } // end of foreach
             } //end of if in_array
             */
-        } // end of alreadyInstalled
+        // end of alreadyInstalled
+        } else {
+            // removing some old files
+            $toDelete = array("mod_myshortcuts.ini","tpl_minima.ini");
+            foreach($toDelete as $file) {
+                if (file_exists(JPATH_ADMINISTRATOR.'/language/'.$currentLang.'/'.$currentLang.".".$file)) {
+                    unlink(JPATH_ADMINISTRATOR.'/language/'.$currentLang.'/'.$currentLang.".".$file);
+                }
+            }
+            // cleaning cache
+            JModel::cleanCache("Minima");
+
+        }
     } // end of postflight
 
 }

@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 /**
  * @package     Minima
@@ -64,7 +64,7 @@ class ModMypanelHelper
 
             if ($component->parent_id == 1) {
                 // Only add this top level if it is authorised and enabled.
-                if ($authCheck == false || ($authCheck && $user->authorize('manage', $component->element))) {
+                if ($authCheck == false || ($authCheck && $user->authorize('core.manage', $component->element))) {
                     // Root level.
                     $result[$component->id] = $component;
                     if (!isset($result[$component->id]->submenu)) {

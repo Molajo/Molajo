@@ -3,12 +3,12 @@
  * @package     Minima
  * @subpackage  mod_myshortcuts
  * @author      Marco Barbosa
- * @copyright   Copyright (C) 2010 Webnific. All rights reserved.
+ * @copyright   Copyright (C) 2011 Marco Barbosa. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // No direct access.
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 $buttons = ModMyshortcutsHelper::getButtons();
 
@@ -27,7 +27,7 @@ $lang->load('mod_menu', JPATH_ADMINISTRATOR, null, true);
 	<li class="home">
 		<a href="index.php">Dashboard</a>
 	</li>
-	<?php if( $currentUser->authorize( array('manage','com_config') ) ): ?>
+	<?php if( $currentUser->authorize( array('core.manage','com_config') ) ): ?>
 	<li>
 		<a href="<?php echo JRoute::_('index.php?option=com_config'); ?>">
 			<?php echo JText::_('MOD_MYSHORTCUTS_CONFIGURATION');?>
@@ -35,38 +35,38 @@ $lang->load('mod_menu', JPATH_ADMINISTRATOR, null, true);
 	</li>
 	<?php endif; ?>
 	<?php 
-		if( $currentUser->authorize( array('manage','com_articles') )
-			|| $currentUser->authorize( array('manage','com_categories') )
-			|| $currentUser->authorize( array('manage','com_media') )
+		if( $currentUser->authorize( array('core.manage','com_content') )
+			|| $currentUser->authorize( array('core.manage','com_categories') ) 
+			|| $currentUser->authorize( array('core.manage','com_media') )
 		) : 
 	?>
 	<li class="parent">
 		<a href="#"><?php echo JText::_('MOD_MENU_COM_CONTENT');?></a>
 		<nav class="sub">			
-			<?php if( $currentUser->authorize( array('manage','com_articles') ) ): ?>
+			<?php if( $currentUser->authorize( array('core.manage','com_content') ) ): ?>
 			<ul>				
 				<li>
-					<a class="section" href="<?php echo JRoute::_('index.php?option=com_articles#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_ARTICLES'); ?></a>
+					<a class="section" href="<?php echo JRoute::_('index.php?option=com_content#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_ARTICLES'); ?></a>
 				</li>			
 				<li>
-					<a href="<?php echo JRoute::_('index.php?option=com_articles&task=article.add'); ?>"><?php echo JText::_('MOD_MENU_COM_CONTENT_NEW_ARTICLE'); ?></a>
+					<a href="<?php echo JRoute::_('index.php?option=com_content&task=article.add'); ?>"><?php echo JText::_('MOD_MENU_COM_CONTENT_NEW_ARTICLE'); ?></a>
 				</li>
 				<li>
-					<a href="<?php echo JRoute::_('index.php?option=com_articles&view=featured#content-box'); ?>"><?php echo JText::_('MOD_MENU_COM_CONTENT_FEATURED'); ?></a>
+					<a href="<?php echo JRoute::_('index.php?option=com_content&view=featured#content-box'); ?>"><?php echo JText::_('MOD_MENU_COM_CONTENT_FEATURED'); ?></a>
 				</li>
 			</ul>
 			<?php endif; ?>
-			<?php if( $currentUser->authorize( array('manage','com_categories') ) ): ?>
+			<?php if( $currentUser->authorize( array('core.manage','com_categories') ) ): ?>
 			<ul>
 				<li>
-					<a class="section" href="<?php echo JRoute::_('index.php?option=com_categories&view=categories&extension=com_articles#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_CATEGORIES'); ?></a>
+					<a class="section" href="<?php echo JRoute::_('index.php?option=com_categories&view=categories&extension=com_content#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_CATEGORIES'); ?></a>
 				</li>
 				<li>
-					<a href="<?php echo JRoute::_('index.php?option=com_categories&view=category&layout=edit&extension=com_articles'); ?>"><?php echo JText::_('MOD_MENU_COM_CONTENT_NEW_CATEGORY'); ?></a>
+					<a href="<?php echo JRoute::_('index.php?option=com_categories&view=category&layout=edit&extension=com_content'); ?>"><?php echo JText::_('MOD_MENU_COM_CONTENT_NEW_CATEGORY'); ?></a>
 				</li>
 			</ul>
 			<?php endif; ?>
-			<?php if( $currentUser->authorize( array('manage','com_media') ) ): ?>
+			<?php if( $currentUser->authorize( array('core.manage','com_media') ) ): ?>
 			<ul class="row">
 				<li>
 					<a class="section" href="<?php echo JRoute::_('index.php?option=com_media#content-box');?>"><?php echo JText::_('MOD_MYSHORTCUTS_MEDIA'); ?></a>
@@ -76,7 +76,7 @@ $lang->load('mod_menu', JPATH_ADMINISTRATOR, null, true);
 		</nav><!-- /.sub -->
 	</li><!-- /.parent -->
 	<?php endif; ?>
-	<?php if( $currentUser->authorize( array('manage','com_menus') ) ): ?>
+	<?php if( $currentUser->authorize( array('core.manage','com_menus') ) ): ?>
 	<li class="parent">
 		<a href="#"><?php echo JText::_('MOD_MENU_MENUS'); ?></a>
 		<nav class="sub">			
@@ -99,7 +99,7 @@ $lang->load('mod_menu', JPATH_ADMINISTRATOR, null, true);
 		</nav><!-- /.sub -->
 	</li><!-- /.parent -->
 	<?php endif; ?>
-	<?php if( $currentUser->authorize( array('manage','com_users') ) ): ?>
+	<?php if( $currentUser->authorize( array('core.manage','com_users') ) ): ?>
 	<li class="parent">
 		<a href="#"><?php echo JText::_('MOD_MENU_COM_USERS'); ?></a>	
 		<nav class="sub">			
@@ -134,26 +134,26 @@ $lang->load('mod_menu', JPATH_ADMINISTRATOR, null, true);
 	</li><!-- /.parent -->
 	<?php endif; ?>
 	<?php 
-		if( $currentUser->authorize( array('manage','com_languages') )
-			|| $currentUser->authorize( array('manage','com_modules') )
-			|| $currentUser->authorize( array('manage','com_plugins') )
-			|| $currentUser->authorize( array('manage','com_templates') )
+		if( $currentUser->authorize( array('core.manage','com_languages') ) 
+			|| $currentUser->authorize( array('core.manage','com_modules') )
+			|| $currentUser->authorize( array('core.manage','com_plugins') )
+			|| $currentUser->authorize( array('core.manage','com_templates') )
 		): 
 	?>
 	<li class="parent">			
 		<a href="#"><?php echo JText::_('MOD_MENU_EXTENSIONS_EXTENSIONS'); ?></a>
 		<nav class="sub">			
 			<ul>
-				<?php if( $currentUser->authorize( array('manage','com_languages') ) ): ?>
+				<?php if( $currentUser->authorize( array('core.manage','com_languages') ) ): ?>
 				<li><a href="<?php echo JRoute::_('index.php?option=com_languages#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_LANGUAGES'); ?></a></li>
 				<?php endif; ?>
-				<?php if( $currentUser->authorize( array('manage','com_modules') ) ): ?>
+				<?php if( $currentUser->authorize( array('core.manage','com_modules') ) ): ?>
 				<li><a href="<?php echo JRoute::_('index.php?option=com_modules#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_MODULES'); ?></a></li>
 				<?php endif; ?>
-				<?php if( $currentUser->authorize( array('manage','com_plugins') ) ): ?>
+				<?php if( $currentUser->authorize( array('core.manage','com_plugins') ) ): ?>
 				<li><a href="<?php echo JRoute::_('index.php?option=com_plugins#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_PLUGINS'); ?></a></li>
 				<?php endif; ?>
-				<?php if( $currentUser->authorize( array('manage','com_templates') ) ): ?>
+				<?php if( $currentUser->authorize( array('core.manage','com_templates') ) ): ?>
 				<li><a href="<?php echo JRoute::_('index.php?option=com_templates#content-box'); ?>"><?php echo JText::_('MOD_MYSHORTCUTS_TEMPLATES'); ?></a></li>
 				<?php endif; ?>
 			</ul>

@@ -8,46 +8,77 @@
  */
 
 var MinimaClass = new Class({
-	Implements: [Options],
+    
+    Implements: [Options],
 
     options: {
     },
 
-	element: {
-		systemMessage: null
-	},
+    elements: {
+        systemMessage : null,
+        jformTitle    : null
+    },    
 
-	initialize: function(options, elements){
-    	// Set options
-    	this.setOptions(options);
-    	// Set elements
-    	this.element.systemMessage = elements.systemMessage;
+    // minima node
+    minima : null,
+
+    initialize: function(options, elements){
+       // set the main node for DOM selection
+        this.minima = document.id(this.options.minima) || document.id('minima');
+        // Set options
+        this.setOptions(options);
+        // Set elements
+        this.elements = elements;
     },
 
-	showSystemMessage: function() {
-	    // system-message fade
-	    if (this.element.systemMessage && this.element.systemMessage.getElement("ul li:last-child")) {
-	    	var _this = this;
-	        var hideAnchor = new Element('a', {
-	            'href': '#',
-	            'id': 'hide-system-message',
-	            'html': 'hide',
-	            'events': {
-	                'click': function(e){
-	                    _this.element.systemMessage.dissolve({duration: 'short'})
-	                }
-	            }
-	        });
-	        // inject hideAnchor in the system-message container
-	        this.element.systemMessage.show().getElement("ul li:last-child").adopt(hideAnchor);
-	    };
-	},
+    showSystemMessage: function() {
+        // system-message fade
+        if (this.elements.systemMessage && this.elements.systemMessage.getElement("ul li:last-child")) {
+            var _this = this,
+                hideAnchor = new Element('a', {
+                'href': '#',
+                'id': 'hide-system-message',
+                'html': 'hide',
+                'events': {
+                    'click': function(e){
+                        _this.elements.systemMessage.dissolve({duration: 'short'})
+                    }
+                }
+            });
+            // inject hideAnchor in the system-message container
+            this.elements.systemMessage.show().getElement("ul li:last-child").adopt(hideAnchor);
+        };
+    },
 
-	makeRowsClickable: function() {
-		// get the toggle element
-        var toggle = $$('input[name=checkall-toggle]');
-        // now remove the horrible onClick event
-        //toggle.set("onclick",null);
+    dynamicTitle: function() {        
+        
+        // save the h2 element
+        var h2Title     = this.minima.getElement('.pagetitle h2'),
+            jformAlias  = $('jform_alias'),
+            _this       = this;
+
+        // change the h2 title dynamically
+        // set the title of the page with the jform_title
+        if(this.elements.jformTitle.get("value") != "") h2Title.set('html', this.elements.jformTitle.get("value"));
+        
+        // change while typing it
+        this.elements.jformTitle.addEvent('keyup', function(event){
+            // show h2 with the title typed
+            if (_this.elements.jformTitle.get("value") != ""){
+               h2Title.set('html', this.get("value"));
+            }
+            //fix alias automatically, removing extra chars, all lower cased
+            // but only if it's a new content
+            if (_this.minima.hasClass('no-id') && jformAlias) {
+                jformAlias.set( 'value', this.get("value").standardize().replace(/\s+/g, '-').replace(/[^-\w]+/g, '').toLowerCase() );
+            }
+        });
+        
+    },
+
+    makeRowsClickable: function() {
+        // get the toggle element
+        var toggle = $$('input[name=checkall-toggle]');        
         // add the real click event
         toggle.addEvent('click', function(){
             var rows = $$('.adminlist tbody tr');
@@ -55,12 +86,9 @@ var MinimaClass = new Class({
         });
 
         $$('.adminlist tbody tr input[type=checkbox]').each(function(element){
-
-        	// get parent
-            var parent = element.getParent('tr');
-
-            // get boxchecked
-            var boxchecked = $$('input[name=boxchecked]');
+                
+            var parent = element.getParent('tr'), // get parent                
+                boxchecked = $$('input[name=boxchecked]'); // get boxchecked
 
             // add click event
             element.addEvent('click', function(event){
@@ -89,5 +117,5 @@ var MinimaClass = new Class({
 
         // highlight the sorting column
         $$('.adminlist th img').getParent('th').addClass('active');
-	}
-});
+    }
+});    

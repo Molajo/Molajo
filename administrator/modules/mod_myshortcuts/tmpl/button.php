@@ -8,7 +8,7 @@
  */
 
 // No direct access.
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 // defining the active icon
 $juri = clone(JURI::getInstance());

@@ -2,12 +2,13 @@
 /** 
  * @package     Minima
  * @author      Marco Barbosa
- * @copyright   Copyright (C) 2010 Marco Barbosa. All rights reserved.
+ * @author      Júlio Pontes
+ * @copyright   Copyright (C) 2011 Marco Barbosa. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 $app    = JFactory::getApplication();
 
@@ -19,13 +20,16 @@ $lighterColor   = $this->params->get('lighterColor');
 // get the current logged in user
 $currentUser = JFactory::getUser();    
 
-// Detecting Active Variables
-$option = JRequest::getCmd('option', '');
-$view = JRequest::getCmd('view', '');
-$layout = JRequest::getCmd('layout', '');
-$task = JRequest::getCmd('task', '');
-$itemid = JRequest::getCmd('Itemid', '');
-$hidemainmenu = JRequest::getInt('hidemainmenu');
+// Mount the body classes
+$requestVars = array(
+                        "option"  => JRequest::getCmd('option', 'no-option'), 
+                        "view"    => JRequest::getCmd('view', 'no-view'),
+                        "layout"  => JRequest::getCmd('layout', 'no-layout'),
+                        "task"    => JRequest::getCmd('task', 'no-task'),
+                        "itemId"  => JRequest::getCmd('Itemid', 'no-itemid'),                        
+                        "locked"  => JRequest::getInt('hidemainmenu') ? 'locked' : 'not-locked',
+                        "hasId"   => JRequest::getCmd('id', '') ? 'has-id' : 'no-id'
+                    );
 
 ?>
 
@@ -39,7 +43,7 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
 
     <jdoc:include type="head" />
 
-    <link href="templates/<?php echo $this->template ?>/css/template.min.css" rel="stylesheet">    
+    <link href="templates/<?php echo $this->template ?>/css/template.css" rel="stylesheet">    
     <link href="templates/<?php echo $this->template ?>/css/ipad.css" media="screen and (min-device-width: 768px) and (max-device-width : 1024px)" rel="stylesheet">
 
     <style>
@@ -59,12 +63,13 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
     <script src="templates/<?php echo $this->template ?>/js/plugins/head.min.js"></script>
 
     <script src="http://yandex.st/raphael/1.5.2/raphael.min.js"></script>
-    <script>!window.Raphael && document.write(unescape('%3Cscript src="templates/<?php echo $this->template ?>/js/raphael.min.js"%3E%3C/script%3E'))</script>	
+    <script>!window.Raphael && document.write(unescape('%3Cscript src="templates/<?php echo $this->template ?>/js/raphael/raphael.min.js"%3E%3C/script%3E'))</script>	
+        
 	<!--[if (gte IE 6)&(lte IE 8)]>
-        <script type="text/javascript" src="templates/<?php echo $this->template ?>/js/selectivizr.js" defer="defer"></script>
+        <script type="text/javascript" src="templates/<?php echo $this->template ?>/js/selectivizr.min.js" defer="defer"></script>
     <![endif]-->
 </head>
-<body id="minima" class="full jbg <?php echo $option." ".$view." ".$layout." ".$task." ".$itemid; if ($hidemainmenu) echo " locked"; ?>">
+<body id="minima" class="full jbg <?php echo implode(" ", $requestVars); ?>">
     <?php if( $this->countModules('panel') ): ?>
     <div id="panel-wrapper">
         <jdoc:include type="modules" name="panel" />
@@ -91,18 +96,18 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
             <nav id="list-content">
                 <dl>
                     <dt><?php echo JText::_('TPL_MINIMA_TOOLS',true);?></dt>
-                    <?php if( $currentUser->authorize( array('manage','com_checkin') ) ): ?><dd><a href="index.php?option=com_checkin"><?php echo JText::_('TPL_MINIMA_TOOLS_GLOBAL_CHECKIN'); ?></a></dd><?php endif; ?>
-                    <?php if( $currentUser->authorize( array('manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache"><?php echo JText::_('TPL_MINIMA_TOOLS_CLEAR_CACHE'); ?></a></dd><?php endif; ?>
-                    <?php if( $currentUser->authorize( array('manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache&amp;view=purge"><?php echo JText::_('TPL_MINIMA_TOOLS_PURGE_EXPIRED_CACHE'); ?></a></dd><?php endif; ?>
-                    <?php if( $currentUser->authorize( array('manage','com_admin') ) ): ?><dd><a href="index.php?option=com_admin&amp;view=sysinfo"><?php echo JText::_('TPL_MINIMA_TOOLS_SYSTEM_INFORMATION'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_checkin') ) ): ?><dd><a href="index.php?option=com_checkin"><?php echo JText::_('TPL_MINIMA_TOOLS_GLOBAL_CHECKIN'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache"><?php echo JText::_('TPL_MINIMA_TOOLS_CLEAR_CACHE'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache&amp;view=purge"><?php echo JText::_('TPL_MINIMA_TOOLS_PURGE_EXPIRED_CACHE'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_admin') ) ): ?><dd><a href="index.php?option=com_admin&amp;view=sysinfo"><?php echo JText::_('TPL_MINIMA_TOOLS_SYSTEM_INFORMATION'); ?></a></dd><?php endif; ?>
                 </dl>
-                <?php if( $currentUser->authorize( array('manage','com_installer') ) ): ?>
+                <?php if( $currentUser->authorize( array('core.manage','com_installer') ) ): ?>
                 <dl>
                     <dt><?php echo JText::_('TPL_MINIMA_EXTENSIONS',true);?></dt>
                     <dd><a href="index.php?option=com_installer">Install</a></dd>
-                    <dd><a href="index.php?option=com_installer&view=update">Update</a></dd>
-                    <dd><a href="index.php?option=com_installer&view=manage">Manage</a></dd>
-                    <dd><a href="index.php?option=com_installer&view=discover">Discover</a></dd>
+                    <dd><a href="index.php?option=com_installer&amp;view=update">Update</a></dd>
+                    <dd><a href="index.php?option=com_installer&amp;view=manage">Manage</a></dd>
+                    <dd><a href="index.php?option=com_installer&amp;view=discover">Discover</a></dd>
                 </dl>
                 <?php endif; ?>
             </nav><!-- /#list-content -->
@@ -123,17 +128,19 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
     </div><!-- /#content-cpanel -->
     <footer>
         <p class="copyright">
-            <a href="http://molajo.org">Molajo</a>
-            <span class="version"><?php echo  JText::_('MolajoVersion_TEXT') ?> <?php echo MolajoVersion; ?></span>
+            <a href="http://www.joomla.org">Joomla!</a>
+            <span class="version"><?php echo  JText::_('JVERSION') ?> <?php echo  JVERSION; ?></span>
         </p>
         <jdoc:include type="modules" name="footer" style="none"  />
     </footer>
     <script>
         head.js(
-            {minima: "templates/<?php echo $this->template ?>/js/minima.min.js"}            
+            {minima: "templates/<?php echo $this->template ?>/js/minima.js"},
+            {localstorage: "templates/<?php echo $this->template ?>/js/plugins/localstorage.js"},
+            {widgets: "templates/<?php echo $this->template ?>/js/libs/minima.widgets.js"}
         , function() {
             // all done            
-            $(document.body).addClass('ready');            
+            $('minima').addClass('ready');          
         });
     </script>
 </body>

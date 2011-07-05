@@ -25,12 +25,20 @@ var MinimaPanelClass = new Class({
     	increment: 900
     },
 
+    // minima node
+    minima: null,
+
+    // some private variables
     maxRightIncrement: null,
     panelSlide: null,
     numberOfExtensions: null,
 
 	initialize: function(options){
-    	// Set options
+        
+        // set the main node for DOM selection
+        this.minima = document.id(this.options.minima) || document.id('minima');
+    	
+        // Set options
     	this.setOptions(options);
 
     	// Create a slide in this class scope

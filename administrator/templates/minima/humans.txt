@@ -10,6 +10,10 @@
     Javascript developer: Henrik Hussfelt
     Twitter: @hussfelt
     From: Sweden
+
+    Php & Javascript developer: Júlio Pontes
+    Twitter: @juliopontes
+    From: Brazil
     
 /* CONTRIBUTORS */
     Norwegian: Torkil S. Johnsen

@@ -8,7 +8,7 @@
  */
 
 // No direct access.
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 $items = ModMypanelHelper::getItems();
 $invisible = false;
@@ -44,7 +44,8 @@ $nPages = ceil( count($items) / 9);
             $std = array("com_banners", "com_contact", "com_messages", "com_newsfeeds", "com_redirect", "com_search");
             foreach ($items as $item) :
                 $desc = substr(JText::_(''.strtoupper($item->title).'_XML_DESCRIPTION'), 0, 100);
-                $descExists = strpos($desc, '_XML_DESCRIPTION');
+                $descExists = strpos($desc, '_XML_DESCRIPTION');                
+                $title = JText::_(''.strtoupper($item->title));
                 if ($descExists !== false) $desc = JText::_('TPL_MINIMA_NODESCRIPTION');
                 // if it's a standard extension, add the class to use the sprite img instead
                 if (in_array(strtolower($item->element), $std)) {
@@ -52,23 +53,22 @@ $nPages = ceil( count($items) / 9);
                     $arrClass = explode(":", $item->img);
                     $class = "icon-48-".$arrClass[1];
                 } else {
-                    $arrImg = explode("com_", $item->element);
-                    $img = JPATH_ADMINISTRATOR."/components".$item->element."/images/icons/icon-48-".strtolower($arrImg[1]).".png";
-                    // FIXME JPATH is the wrong constant
+                	// component dev already specifies image path, so grab 48 px icon vs. 16 px
+                	$img = str_replace('16', '48', $item->img);
                     // fallback if img not found
                    if (!file_exists($img)) $class = "icon-48-generic";
                 }
         ?>
         <?php   if (!empty($class)): ?>
                 <li>
-                    <a href="<?php echo $item->link; ?>" class="<?php echo $class; ?>"><?php echo $item->alias; ?>
+                    <a href="<?php echo $item->link; ?>" class="<?php echo $class; ?>"><?php echo $title; ?>
                         <span class="extension-desc"><?php echo $desc; ?></span>
                     </a>
                 </li>
         <?php else: ?>
                 <li class="ext">
-                    <img src="<?php echo $img; ?>" width="48" height="48" alt="<?php echo $item->alias; ?>" />
-                    <a href="<?php echo $item->link; ?>" class="<?php echo $class; ?>"><?php echo $item->alias; ?>
+                    <img src="<?php echo $img; ?>" width="48" height="48" alt="<?php echo $title; ?>" />
+                    <a href="<?php echo $item->link; ?>" class="<?php echo $class; ?>"><?php echo $title; ?>
                         <span class="extension-desc"><?php echo $desc; ?></span>
                     </a>
                 </li>

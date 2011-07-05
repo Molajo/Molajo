@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 // Include the module helper class.
 require_once dirname(__FILE__).DS.'helper.php';
