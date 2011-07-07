@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  *
  * @package		Joomla.Installation
  */
-class JInstallation extends JApplication
+class MolajoInstallation extends JApplication
 {
 	/**
 	 * The url of the site
@@ -77,7 +77,7 @@ class JInstallation extends JApplication
 		require_once JPATH_COMPONENT.'/controller.php';
 
 		// Execute the task.
-		$controller	= JController::getInstance('JInstallation');
+		$controller	= JController::getInstance('MolajoInstallation');
 		$controller->execute(JRequest::getVar('task'));
 		$controller->redirect();
 

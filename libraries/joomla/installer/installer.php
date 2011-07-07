@@ -26,89 +26,69 @@ class JInstaller extends JAdapter
 {
 	/**
 	 * Array of paths needed by the installer
-	 * 
-	 * @var   array
-	 * @since 11.1
+	 * @var array
 	 */
 	protected $_paths = array();
 
 	/**
 	 * True if packakge is an upgrade
-	 * 
-	 * @var   boolean
-	 * @since 11.1
+	 * @var boolean
 	 */
 	protected $_upgrade = null;
 
 	/**
 	 * The manifest trigger class
-	 * 
-	 * @var   object
-	 * @since 11.1
+	 * @var object
 	 */
 	public $manifestClass = null;
 
 	/**
 	 * True if existing files can be overwritten
-	 * @var   boolean
-	 * @since 11.1
+	 * @var boolean
 	 */
 	protected $_overwrite = false;
 
 	/**
 	 * Stack of installation steps
 	 *	- Used for installation rollback
-	 *
-	 * @var   array
-	 * @since 11.1
+	 * @var array
 	 */
 	protected $_stepStack = array();
 
 	/**
 	 * Extension Table Entry
-	 *
-	 * @var   JTableExtension
-	 * @since 11.1
+	 * @var JTableExtension
 	 */
 	public $extension = null;
 
 	/**
 	 * The output from the install/uninstall scripts
-	 * 
-	 * @var   string
-	 * @since 11.1
-	 *  */
+	 * @var string
+	 */
 	public $message = null;
 
 	/**
 	 * The installation manifest XML object
-	 * 
-	 * @var    object
-	 * @since  11.1
+	 * @var object
 	 */
 	public $manifest = null;
 
 	/**
 	 * The extension message that appears
-	 * 
-	 * @var    string
-	 * @since  11.1
+	 * @var string
 	 */
 	protected $extension_message = null;
 
 
 	/**
 	 * The redirect URL if this extension (can be null if no redirect)
-	 * 
-	 * @var    string
-	 * @since  11.1
+	 * @var string
 	 */
 	protected $redirect_url = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @since 11.1
 	 */
 	public function __construct()
 	{
@@ -135,7 +115,7 @@ class JInstaller extends JAdapter
 	/**
 	 * Get the allow overwrite switch
 	 *
-	 * @return  boolean  Allow overwrite switch
+	 * @return  boolean	Allow overwrite switch
 	 * @since   11.1
 	 */
 	public function getOverwrite()
@@ -148,7 +128,7 @@ class JInstaller extends JAdapter
 	 *
 	 * @param   boolean  $state	Overwrite switch state
 	 *
-	 * @return  boolean  True it state is set, false if it is not
+	 * @return  boolean	Previous value
 	 * @since   11.1
 	 */
 	public function setOverwrite($state=false)
@@ -177,9 +157,9 @@ class JInstaller extends JAdapter
 	}
 
 	/**
-	 * Set the redirect location
+	 * Set the redirct location
 	 *
-	 * @param  string  $newurl  New redirect location
+	 * @param  string 	New redirect location
 	 * @since   11.1
 	 */
 	public function setRedirectURL($newurl)
@@ -188,9 +168,9 @@ class JInstaller extends JAdapter
 	}
 
 	/**
-	 * Get the upgrade switch
+	 * Get the allow overwrite switch
 	 *
-	 * @return  boolean 
+	 * @return  boolean	Allow overwrite switch
 	 * @since   11.1
 	 */
 	public function getUpgrade()
@@ -199,11 +179,10 @@ class JInstaller extends JAdapter
 	}
 
 	/**
-	 * Set the upgrade switch
+	 * Set the allow overwrite switch
 	 *
-	 * @param   boolean  $state  Upgrade switch state
-	 * 
-	 * @return  boolean  True if upgrade, false otherwise
+	 * @param   boolean  $state	Overwrite switch state
+	 * @return  boolean	Previous value
 	 * @since   11.1
 	 */
 	public function setUpgrade($state=false)
@@ -238,8 +217,8 @@ class JInstaller extends JAdapter
 	/**
 	 * Get an installer path by name
 	 *
-	 * @param   string  $name     Path name
-	 * @param   string  $default  Default value
+	 * @param   string  $name		Path name
+	 * @param   string  $default	Default value
 	 *
 	 * @return  string  Path
 	 * @since   11.1
@@ -252,8 +231,8 @@ class JInstaller extends JAdapter
 	/**
 	 * Sets an installer path by name
 	 *
-	 * @param   string  $name   Path name
-	 * @param   string  $value  Path
+	 * @param   string  $name	Path name
+	 * @param   string  $value	Path
 	 *
 	 * @return  void
 	 * @since   11.1
@@ -266,7 +245,7 @@ class JInstaller extends JAdapter
 	/**
 	 * Pushes a step onto the installer stack for rolling back steps
 	 *
-	 * @param   array  $step   Installer step
+	 * @param   array  $step	Installer step
 	 * @return  void
 	 *
 	 * @since   11.1
@@ -279,8 +258,8 @@ class JInstaller extends JAdapter
 	/**
 	 * Installation abort method
 	 *
-	 * @param   string  $msg    Abort message from the installer
-	 * @param   string  $type   Package type if defined
+	 * @param   string  $msg	Abort message from the installer
+	 * @param   string  $type	Package type if defined
 	 *
 	 * @return  boolean  True if successful
 	 * @since   11.1
@@ -322,7 +301,7 @@ class JInstaller extends JAdapter
 
 					// Remove the entry from the #__extensions table
 					$query = 'DELETE' .
-							' FROM #__extensions' .
+							' FROM `#__extensions`' .
 							' WHERE extension_id = '.(int)$step['id'];
 					$db->setQuery($query);
 					$stepval = $db->Query();
@@ -368,7 +347,7 @@ class JInstaller extends JAdapter
 	/**
 	 * Package installation method
 	 *
-	 * @param   string   $path   Path to package source folder
+	 * @param   string  $path	Path to package source folder
 	 *
 	 * @return  boolean  True if successful
 	 * @since   11.1
@@ -422,8 +401,7 @@ class JInstaller extends JAdapter
 	/*
 	 * Discovered package installation method
 	 *
-	 * @param   integer  $eid  Extension ID
-	 * 
+	 * @param   integer  $eid Extension ID
 	 * @return  boolean  True if successful
 	 * @since   11.1
 	 */
@@ -490,7 +468,6 @@ class JInstaller extends JAdapter
 	 * Asks each adapter to find extensions
 	 *
 	 * @return  array  JExtension
-	 * @since   11.1
 	 */
 	public function discover()
 	{
@@ -517,7 +494,7 @@ class JInstaller extends JAdapter
 	/**
 	 * Package update method
 	 *
-	 * @param   string  $path   Path to package source folder
+	 * @param   string  $path	Path to package source folder
 	 *
 	 * @return  boolean  True if successful
 	 * @since   11.1
@@ -568,9 +545,9 @@ class JInstaller extends JAdapter
 	/**
 	 * Package uninstallation method
 	 *
-	 * @param   string   $type        Package type
-	 * @param   mixed    $identifier  Package identifier for adapter
-	 * @param   integer  $cid         Application ID; deprecated in 1.6
+	 * @param   string   $type	Package type
+	 * @param   mixed    $identifier	Package identifier for adapter
+	 * @param   integer  $cid	Application ID; deprecated in 1.6
 	 *
 	 * @return  boolean  True if successful
 	 * @since   11.1
@@ -579,8 +556,7 @@ class JInstaller extends JAdapter
 	{
 		if (!isset($this->_adapters[$type]) || !is_object($this->_adapters[$type])) {
 			if (!$this->setAdapter($type)) {
-				// We failed to get the right adapter
-				return false; 
+				return false; // We failed to get the right adapter
 			}
 		}
 
@@ -604,9 +580,9 @@ class JInstaller extends JAdapter
 	/**
 	 * Refreshes the manifest cache stored in #__extensions
 	 *
-	 * @param   integer  $eid   Extension ID
+	 * @param   integer  $eid Extension ID
 	 *
-	 * @return  mixed    void on success, false on error @todo missing return value ?
+	 * @return  mixed  void on success | false on error @todo missing return value ?
 	 */
 	function refreshManifestCache($eid)
 	{
@@ -690,9 +666,9 @@ class JInstaller extends JAdapter
 	 * Backward compatible method to parse through a queries element of the
 	 * installation manifest file and take appropriate action.
 	 *
-	 * @param   JXMLElement   $element The XML node to process
+	 * @param   JXMLElement	$element The XML node to process
 	 *
-	 * @return  mixed          Number of queries processed or False on error
+	 * @return  mixed  Number of queries processed or False on error
 	 * @since   11.1
 	 */
 	public function parseQueries($element)
@@ -731,7 +707,7 @@ class JInstaller extends JAdapter
 	/**
 	 * Method to extract the name of a discreet installation sql file from the installation manifest file.
 	 *
-	 * @param   object  $element    The XML node to process
+	 * @param   object  $element	The XML node to process
 	 *
 	 * @return  mixed  Number of queries processed or False on error
 	 * @since   11.1
@@ -767,7 +743,7 @@ class JInstaller extends JAdapter
 			}
 
 			if ($fCharset == $dbCharset && $fDriver == $dbDriver) {
-				$sqlfile = $this->getPath('extension_root').DS.$file;
+				$sqlfile = $this->getPath('extension_root') . '/' . $file;
 
 				// Check that sql files exists before reading. Otherwise raise error for rollback
 				if (!file_exists($sqlfile)) {
@@ -818,8 +794,8 @@ class JInstaller extends JAdapter
 	/**
 	 * Set the schema version for an extension by looking at its latest update
 	 *
-	 * @param   JXMLElement  $schema Schema Tag
-	 * @param   integer      $eid    Extension ID
+	 * @param JXMLElement $schema Schema Tag
+	 * @param   integer  $eid Extension ID
 	 *
 	 * @return void
 	 */
@@ -851,7 +827,7 @@ class JInstaller extends JAdapter
 				}
 
 				if (strlen($schemapath)) {
-					$files = str_replace('.sql','', JFolder::files($this->getPath('extension_root').DS.$schemapath,'\.sql$'));
+					$files = str_replace('.sql','', JFolder::files($this->getPath('extension_root') . '/' . $schemapath,'\.sql$'));
 					usort($files,'version_compare');
 					// Update the database
 					$query = $db->getQuery(true);
@@ -872,10 +848,10 @@ class JInstaller extends JAdapter
 	/**
 	 * Method to process the updates for an item
 	 *
-	 * @param   JXMLElement  $schema  The XML node to process
-	 * @param   integer      $eid     Extension Identifier
+	 * @param   JXMLElement	 $schema  The XML node to process
+	 * @param   integer  	 $eid     Extension Identifier
 	 *
-	 * @return  boolean      Result of the operations
+	 * @return  boolean	Result of the operations
 	 * @since   11.1
 	 */
 	public function parseSchemaUpdates($schema, $eid)
@@ -907,7 +883,7 @@ class JInstaller extends JAdapter
 				}
 
 				if (strlen($schemapath)) {
-					$files = str_replace('.sql','', JFolder::files($this->getPath('extension_root').DS.$schemapath,'\.sql$'));
+					$files = str_replace('.sql','', JFolder::files($this->getPath('extension_root') . '/' . $schemapath,'\.sql$'));
 					usort($files,'version_compare');
 
 					if (!count($files)) {
@@ -920,11 +896,11 @@ class JInstaller extends JAdapter
 					$version = $db->loadResult();
 
 					if ($version) {
-						// We have a version!
+						// we have a version!
 						foreach($files as $file)
 						{
 							if (version_compare($file,$version) > 0) {
-								$buffer = file_get_contents($this->getPath('extension_root').DS.$schemapath.DS.$file.'.sql');
+								$buffer = file_get_contents($this->getPath('extension_root') . '/' . $schemapath . '/' . $file.'.sql');
 
 								// Graceful exit and rollback if read not successful
 								if ($buffer === false) {
@@ -985,12 +961,12 @@ class JInstaller extends JAdapter
 	 * Method to parse through a files element of the installation manifest and take appropriate
 	 * action.
 	 *
-	 * @param   JXMLElement  $element   The XML node to process
-	 * @param   integer      $cid       Application ID of application to install to
-	 * @param   array        $oldFiles  List of old files (JXMLElement's)
-	 * @param   array        $oldMD5    List of old MD5 sums (indexed by filename with value as MD5)
+	 * @param   JXMLElement  $element	The XML node to process
+	 * @param   integer      $cid		Application ID of application to install to
+	 * @param   array        $oldFiles	List of old files (JXMLElement's)
+	 * @param   array        $oldMD5		List of old MD5 sums (indexed by filename with value as MD5)
 	 *
-	 * @return  boolean      True on success
+	 * @return  boolean  True on success
 	 * @since   11.1
 	 */
 	public function parseFiles($element, $cid=0, $oldFiles=null, $oldMD5=null)
@@ -1030,8 +1006,8 @@ class JInstaller extends JAdapter
 
 		$folder = (string)$element->attributes()->folder;
 
-		if ($folder && file_exists($this->getPath('source').DS.$folder)) {
-			$source = $this->getPath('source').DS.$folder;
+		if ($folder && file_exists($this->getPath('source') . '/' . $folder)) {
+			$source = $this->getPath('source') . '/' . $folder;
 		}
 		else {
 			$source = $this->getPath('source');
@@ -1046,19 +1022,19 @@ class JInstaller extends JAdapter
 
 				foreach ($deletions['folders'] as $deleted_folder)
 				{
-					JFolder::delete($destination.DS.$deleted_folder);
+					JFolder::delete($destination . '/' . $deleted_folder);
 				}
 
 				foreach ($deletions['files'] as $deleted_file) {
-					JFile::delete($destination.DS.$deleted_file);
+					JFile::delete($destination . '/' . $deleted_file);
 				}
 			}
 		}
 
 		// Copy the MD5SUMS file if it exists
-		if (file_exists($source.DS.'MD5SUMS')) {
-			$path['src'] = $source.DS.'MD5SUMS';
-			$path['dest'] = $destination.DS.'MD5SUMS';
+		if (file_exists($source . '/MD5SUMS')) {
+			$path['src'] = $source . '/MD5SUMS';
+			$path['dest'] = $destination . '/MD5SUMS';
 			$path['type'] = 'file';
 			$copyfiles[] = $path;
 		}
@@ -1066,8 +1042,8 @@ class JInstaller extends JAdapter
 		// Process each file in the $files array (children of $tagName).
 		foreach ($element->children() as $file)
 		{
-			$path['src']	= $source.DS.$file;
-			$path['dest']	= $destination.DS.$file;
+			$path['src']	= $source . '/' . $file;
+			$path['dest']	= $destination . '/' . $file;
 
 			// Is this path a file or folder?
 			$path['type']	= ($file->getName() == 'folder') ? 'folder' : 'file';
@@ -1096,11 +1072,11 @@ class JInstaller extends JAdapter
 	 * Method to parse through a languages element of the installation manifest and take appropriate
 	 * action.
 	 *
-	 * @param   JXMLElement  $element   The XML node to process
-	 * @param   integer      $cid       Application ID of application to install to
+	 * @param	JXMLElement	$element	The xml node to process
+	 * @param	int			$cid		Application ID of application to install to
 	 *
-	 * @return  boolean      True on success
-	 * @since   11.1
+	 * @return	boolean	True on success
+	 * @since	11.1
 	 */
 	public function parseLanguages($element, $cid=0)
 	{
@@ -1120,7 +1096,7 @@ class JInstaller extends JAdapter
 		// Here we set the folder we are going to copy the files to.
 		// 'languages' Files are copied to JPATH_BASE/language/ folder
 
-		$destination = $client->path.DS.'language';
+		$destination = $client->path . '/language';
 
 		// Here we set the folder we are going to copy the files from.
 
@@ -1132,8 +1108,8 @@ class JInstaller extends JAdapter
 
 		$folder = (string)$element->attributes()->folder;
 
-		if ($folder && file_exists($this->getPath('source').DS.$folder)) {
-			$source = $this->getPath('source').DS.$folder;
+		if ($folder && file_exists($this->getPath('source') . '/' . $folder)) {
+			$source = $this->getPath('source') . '/' . $folder;
 		}
 		else {
 			$source = $this->getPath('source');
@@ -1143,23 +1119,23 @@ class JInstaller extends JAdapter
 		foreach ($element->children() as $file)
 		{
 			// Language files go in a subfolder based on the language code, ie.
-			// <language tag="en-US">en-US.mycomponent.ini</language>
+			//		<language tag="en-US">en-US.mycomponent.ini</language>
 			// would go in the en-US subdirectory of the language folder.
 
 			// We will only install language files where a core language pack
 			// already exists.
 
 			if ((string)$file->attributes()->tag != '') {
-				$path['src'] = $source.DS.$file;
+				$path['src'] = $source . '/' . $file;
 
 				if ((string)$file->attributes()->client != '') {
 					// Override the client
 					$langclient = JApplicationHelper::getClientInfo((string)$file->attributes()->client, true);
-					$path['dest'] = $langclient->path.DS.'language'.DS.$file->attributes()->tag.DS.basename((string)$file);
+					$path['dest'] = $langclient->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
 				}
 				else {
 					// Use the default client
-					$path['dest']	= $destination.DS.$file->attributes()->tag.DS.basename((string)$file);
+					$path['dest']	= $destination . '/' . $file->attributes()->tag . '/' . basename((string)$file);
 				}
 
 				// If the language folder is not present, then the core pack hasn't been installed... ignore
@@ -1168,8 +1144,8 @@ class JInstaller extends JAdapter
 				}
 			}
 			else {
-				$path['src']	= $source.DS.$file;
-				$path['dest']	= $destination.DS.$file;
+				$path['src']	= $source . '/' . $file;
+				$path['dest']	= $destination . '/' . $file;
 			}
 
 			//
@@ -1198,11 +1174,11 @@ class JInstaller extends JAdapter
 	 * Method to parse through a media element of the installation manifest and take appropriate
 	 * action.
 	 *
-	 * @param   JXMLElement  $element  The XML node to process
-	 * @param   integer      $cid      Application ID of application to install to
+	 * @param	JXMLElement	$element	The xml node to process
+	 * @param	int			$cid		Application ID of application to install to
 	 *
-	 * @return   boolean     True on success
-	 * @since    11.1
+	 * @return	boolean	True on success
+	 * @since	11.1
 	 */
 	public function parseMedia($element, $cid=0)
 	{
@@ -1221,8 +1197,8 @@ class JInstaller extends JAdapter
 		// Here we set the folder we are going to copy the files to.
 		//	Default 'media' Files are copied to the JPATH_BASE/media folder
 
-		$folder = ((string)$element->attributes()->destination) ? DS.$element->attributes()->destination : null;
-		$destination = JPath::clean(JPATH_ROOT.DS.'media'.$folder);
+		$folder = ((string)$element->attributes()->destination) ? '/' . $element->attributes()->destination : null;
+		$destination = JPath::clean(JPATH_ROOT . '/media'.$folder);
 
 		// Here we set the folder we are going to copy the files from.
 
@@ -1233,8 +1209,8 @@ class JInstaller extends JAdapter
 
 		$folder = (string)$element->attributes()->folder;
 
-		if ($folder && file_exists($this->getPath('source').DS.$folder)) {
-			$source = $this->getPath('source').DS.$folder;
+		if ($folder && file_exists($this->getPath('source') . '/' . $folder)) {
+			$source = $this->getPath('source') . '/' . $folder;
 		}
 		else {
 			$source = $this->getPath('source');
@@ -1243,8 +1219,8 @@ class JInstaller extends JAdapter
 		// Process each file in the $files array (children of $tagName).
 		foreach ($element->children() as $file)
 		{
-			$path['src']	= $source.DS.$file;
-			$path['dest']	= $destination.DS.$file;
+			$path['src']	= $source . '/' . $file;
+			$path['dest']	= $destination . '/' . $file;
 
 			// Is this path a file or folder?
 			$path['type']	= ($file->getName() == 'folder') ? 'folder' : 'file';
@@ -1275,9 +1251,9 @@ class JInstaller extends JAdapter
 	 * Method to parse the parameters of an extension, build the INI
 	 * string for its default parameters, and return the INI string.
 	 *
-	 * @return   string   INI string of parameter values
+	 * @return	string	INI string of parameter values
 	 *
-	 * @since    11.1
+	 * @since	11.1
 	 */
 	public function getParams()
 	{
@@ -1325,11 +1301,11 @@ class JInstaller extends JAdapter
 	 *
 	 * Copy files from source directory to the target directory
 	 *
-	 * @param    array    $files      Array with filenames
-	 * @param    boolean  $overwrite  True if existing files can be replaced
+	 * @param	array $files array with filenames
+	 * @param	boolean $overwrite True if existing files can be replaced
 	 *
-	 * @return   boolean  True on success
-	 * @since    11.1
+	 * @return	boolean True on success
+	 * @since	11.1
 	 */
 	public function copyFiles($files, $overwrite=null)
 	{
@@ -1363,7 +1339,7 @@ class JInstaller extends JAdapter
 
 					return false;
 				}
-				else if (file_exists($filedest) && !$overwrite) {
+				else if (($exists = file_exists($filedest)) && !$overwrite) {
 
 					 // It's okay if the manifest already exists
 					if ($this->getPath('manifest') == $filesource) {
@@ -1385,7 +1361,7 @@ class JInstaller extends JAdapter
 							JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FOLDER', $filesource, $filedest));
 							return false;
 						}
-
+						
 						$step = array ('type' => 'folder', 'path' => $filedest);
 					}
 					else {
@@ -1402,7 +1378,9 @@ class JInstaller extends JAdapter
 					 * Since we copied a file/folder, we want to add it to the installation step stack so that
 					 * in case we have to roll back the installation we can remove the files copied.
 					 */
-					$this->_stepStack[] = $step;
+					if (!$exists) {
+						$this->_stepStack[] = $step;
+					}
 				}
 			}
 		}
@@ -1418,11 +1396,11 @@ class JInstaller extends JAdapter
 	 * Method to parse through a files element of the installation manifest and remove
 	 * the files that were installed
 	 *
-	 * @param   object   $element   The XML node to process
-	 * @param   integer  $cid       Application ID of application to remove from
+	 * @param	object	$element	The xml node to process
+	 * @param	int		$cid		Application ID of application to remove from
 	 *
-	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @return	boolean	True on success
+	 * @since	11.1
 	 */
 	public function removeFiles($element, $cid=0)
 	{
@@ -1474,7 +1452,7 @@ class JInstaller extends JAdapter
 					$folder = '';
 				}
 
-				$source = $client->path.DS.'media'.DS.$folder;
+				$source = $client->path . '/media/' . $folder;
 
 				break;
 
@@ -1483,11 +1461,11 @@ class JInstaller extends JAdapter
 
 				if ($lang_client) {
 					$client = JApplicationHelper::getClientInfo($lang_client, true);
-					$source = $client->path.DS.'language';
+					$source = $client->path . '/language';
 				}
 				else {
 					if ($client) {
-						$source = $client->path.DS.'language';
+						$source = $client->path . '/language';
 					}
 					else {
 						$source = '';
@@ -1519,11 +1497,11 @@ class JInstaller extends JAdapter
 
 			if ($file->getName() == 'language' && (string)$file->attributes()->tag != '') {
 				if ($source) {
-					$path = $source.DS.$file->attributes()->tag.DS.basename((string)$file);
+					$path = $source . '/' . $file->attributes()->tag . '/' . basename((string)$file);
 				}
 				else {
 					$target_client = JApplicationHelper::getClientInfo((string)$file->attributes()->client, true);
-					$path = $target_client->path.DS.'language'.DS.$file->attributes()->tag.DS.basename((string)$file);
+					$path = $target_client->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
 				}
 
 				// If the language folder is not present, then the core pack hasn't been installed... ignore
@@ -1533,7 +1511,7 @@ class JInstaller extends JAdapter
 				}
 			}
 			else {
-				$path = $source.DS.$file;
+				$path = $source . '/' . $file;
 			}
 
 			// Actually delete the files/folders
@@ -1561,10 +1539,10 @@ class JInstaller extends JAdapter
 	/**
 	 * Copies the installation manifest file to the extension folder in the given client
 	 *
-	 * @param    integer  $cid	Where to copy the installfile [optional: defaults to 1 (admin)]
+	 * @param	int		$cid	Where to copy the installfile [optional: defaults to 1 (admin)]
 	 *
-	 * @return   boolean  True on success, False on error
-	 * @since    11.1
+	 * @return	boolean	True on success, False on error
+	 * @since	11.1
 	 */
 	public function copyManifest($cid=1)
 	{
@@ -1576,11 +1554,11 @@ class JInstaller extends JAdapter
 
 		if ($client) {
 			$pathname = 'extension_'.$client->name;
-			$path['dest']  = $this->getPath($pathname).DS.basename($this->getPath('manifest'));
+			$path['dest']  = $this->getPath($pathname) . '/' . basename($this->getPath('manifest'));
 		}
 		else {
 			$pathname = 'extension_root';
-			$path['dest']  = $this->getPath($pathname).DS.basename($this->getPath('manifest'));
+			$path['dest']  = $this->getPath($pathname) . '/' . basename($this->getPath('manifest'));
 		}
 
 		return $this->copyFiles(array ($path), true);
@@ -1627,32 +1605,32 @@ class JInstaller extends JAdapter
 				}
 			}
 
-			// None of the XML files found were valid install files
+			// None of the xml files found were valid install files
 			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
 
 			return false;
 		}
 		else {
-			// No XML files were found in the install folder
+			// No xml files were found in the install folder
 			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
 			return false;
 		}
 	}
 
 	/**
-	 * Is the XML file a valid Joomla installation manifest file
+	 * Is the xml file a valid Joomla installation manifest file
 	 *
-	 * @param    string   $file  An xmlfile path to check
+	 * @param	string	$file	An xmlfile path to check
 	 *
-	 * @return   mixed    A JXMLElement, or null if the file failed to parse
-	 * @since    11.1
+	 * @return	mixed	A JXMLElement, or null if the file failed to parse
+	 * @since	11.1
 	 */
 	public function isManifest($file)
 	{
 		// Initialise variables.
 		$xml = JFactory::getXML($file);
 
-		// If we cannot load the XML file return null
+		// If we cannot load the xml file return null
 		if (!$xml) {
 			return null;
 		}
@@ -1675,7 +1653,6 @@ class JInstaller extends JAdapter
 	 * Generates a manifest cache
 	 *
 	 * @return string serialised manifest data
-	 * @since    11.1
 	 */
 	public function generateManifestCache()
 	{
@@ -1683,15 +1660,13 @@ class JInstaller extends JAdapter
 	}
 
 	/**
-	 * Cleans up discovered extensions if they're being installed some other way
-	 * 
-	 * @param    string   $type     The type of extension (component, etc)
-	 * @param    string   $element  Unique element identifier (e.g. com_content)
-	 * @param    string   $folder   The folder of the extension (plugins; e.g. system)
-	 * @param    integer  $client   The client application (administrator or site)
+	 * Cleans up discovered extensions if they're being installed somehow else
+	 * @param   string   $type The type of extension (component, etc)
+	 * @param   string   $element Unique element identifier (e.g. com_content)
+	 * @param   string   $folder The folder of the extension (plugins; e.g. system)
+	 * @param   integer  $client The client application (administrator or site)
 	 *
-	 * @return   object    Result of query
-	 * @since    11.1
+	 * @return result of query
 	 */
 	public function cleanDiscoveredExtension($type, $element, $folder='', $client=0)
 	{
@@ -1704,11 +1679,10 @@ class JInstaller extends JAdapter
 	/**
 	 * Compares two "files" entries to find deleted files/folders
 	 *
-	 * @param    array   $old_files An array of JXMLElement objects that are the old files
-	 * @param    array   $new_files An array of JXMLElement objects that are the new files
+	 * @param array $old_files An array of JXMLElement objects that are the old files
+	 * @param array $new_files An array of JXMLElement objects that are the new files
 	 *
-	 * @return   array   An array with the delete files and folders in findDeletedFiles[files] and findDeletedFiles[folders] resepctively
-	 * @since    11.1
+	 * @return array An array with the delete files and folders in findDeletedFiles[files] and findDeletedFiles[folders] resepctively
 	 */
 	public function findDeletedFiles($old_files, $new_files)
 	{
@@ -1729,7 +1703,6 @@ class JInstaller extends JAdapter
 			switch($file->getName())
 			{
 				case 'folder':
-					// Add any folders to the list
 					$folders[] = (string)$file; // add any folders to the list
 					break;
 
@@ -1790,17 +1763,13 @@ class JInstaller extends JAdapter
 
 	/**
 	 * Loads an MD5SUMS file into an associative array
-	 * 
-	 * @param    string   Filename to load
-	 * 
-	 * @return   array    Associative array with filenames as the index and the MD5 as the value
-	 * @since    11.1
+	 * @param   string Filename to load
+	 * @return  array    Associative array with filenames as the index and the MD5 as the value
 	 */
 	function loadMD5Sum($filename)
 	{
 		if (!file_exists($filename)) {
-			// Bail if the file doesn't exist
-			return false; 
+			return false; // bail if the file doesn't exist
 		}
 
 		$data = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);

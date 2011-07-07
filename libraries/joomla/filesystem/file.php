@@ -77,8 +77,8 @@ class JFile
 	{
 		// Prepend a base path if it exists
 		if ($path) {
-			$src = JPath::clean($path.DS.$src);
-			$dest = JPath::clean($path.DS.$dest);
+			$src = JPath::clean($path . '/' . $src);
+			$dest = JPath::clean($path . '/' . $dest);
 		}
 
 		// Check src path
@@ -204,8 +204,8 @@ class JFile
 	public static function move($src, $dest, $path = '', $use_streams=false)
 	{
 		if ($path) {
-			$src = JPath::clean($path.DS.$src);
-			$dest = JPath::clean($path.DS.$dest);
+			$src = JPath::clean($path . '/' . $src);
+			$dest = JPath::clean($path . '/' . $dest);
 		}
 
 		// Check src path
@@ -313,8 +313,8 @@ class JFile
 	/**
 	 * Write contents to a file
 	 *
-	 * @param   string   $file    The full file path
-	 * @param   string   $buffer  The buffer to write
+	 * @param   string  $file The full file path
+	 * @param   string  $buffer The buffer to write
 	 *
 	 * @return  boolean  True on success
 	 * @since   11.1
@@ -407,8 +407,8 @@ class JFile
 				$dest = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $dest), '/');
 
 				// Copy the file to the destination directory
-				if ($ftp->store($src, $dest)) {
-					$ftp->chmod($dest, 0777);
+				if (is_uploaded_file($src) && $ftp->store($src, $dest)) {
+					unlink($src);
 					$ret = true;
 				} else {
 					JError::raiseWarning(21, JText::_('JLIB_FILESYSTEM_ERROR_WARNFS_ERR02'));
@@ -452,7 +452,9 @@ class JFile
 	 */
 	public static function getName($file)
 	{
-		$slash = strrpos($file, DS);
+		// convert back slashes to forward slashes
+		$file = str_replace('\\', '/', $file);
+		$slash = strrpos($file, '/');
 		if ($slash !== false) {
 
 			return substr($file, $slash + 1);

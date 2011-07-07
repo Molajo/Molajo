@@ -22,50 +22,43 @@ defined('JPATH_PLATFORM') or die;
 class JFilterInput extends JObject
 {
 	/**
-	 * An array of permitted tags.
-	 * @var    array
+	 * @var    array	An array of permitted tags.
 	 * @since  11.1
 	 */
 	var $tagsArray;
 
 	/**
-	 * An array of permitted tag attributes.
-	 * @var    array
+	 * @var    array	An array of permitted tag attributes.
 	 * @since  11.1
 	 */
 	var $attrArray;
 
 	/**
-	 * Method for tags
-	 * @var    integer    WhiteList method = 0 (default), BlackList method = 1
+	 * @var    int		WhiteList method = 0 (default), BlackList method = 1
 	 * @since  11.1
 	 */
 	var $tagsMethod;
 
 	/**
-	 * Method for attributes 
-	 * @var     integer    WhiteList method = 0 (default), BlackList method = 1
+	 * @var    int		WhiteList method = 0 (default), BlackList method = 1
 	 * @since   11.1
 	 */
 	var $attrMethod;
 
 	/**
-	 * Autoclean
-	 * @var    integer     Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
+	 * @var    int		Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
 	 * @since  11.1
 	 */
 	var $xssAuto;
 
 	/**
-	 * Blacklisted tags
-	 * @var    array       A list of the default blacklisted tags.
+	 * @var    array	A list of the default blacklisted tags.
 	 * @since  11.1
 	 */
 	var $tagBlacklist = array ('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
 
 	/**
-	 * Black listed attributes
-	 * @var    array     A list of the default blacklisted tag attributes.
+	 * @var    array	A list of the default blacklisted tag attributes.
 	 * @since   11.1
 	 */
 	var $attrBlacklist = array ('action', 'background', 'codebase', 'dynsrc', 'lowsrc'); // also will strip ALL event handlers
@@ -129,8 +122,8 @@ class JFilterInput extends JObject
 	 * Method to be called by another php script. Processes for XSS and
 	 * specified bad code.
 	 *
-	 * @param   mixed   $source	Input string/array-of-string to be 'cleaned'
-	 * @param   string  $type	Return type for the variable (INT, UINT, FLOAT, BOOLEAN, WORD, ALNUM, CMD, BASE64, STRING, ARRAY, PATH, NONE)
+	 * @param   mixed   $source  Input string/array-of-string to be 'cleaned'
+	 * @param	string	$type	Return type for the variable (INT, UINT, FLOAT, BOOLEAN, WORD, ALNUM, CMD, BASE64, STRING, ARRAY, PATH, NONE)
 	 *
 	 * @return  mixed  'Cleaned' version of input parameter
 	 *
@@ -204,6 +197,53 @@ class JFilterInput extends JObject
 			case 'USERNAME' :
 				$result = (string) preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $source);
 				break;
+			case 'TEL' :
+				$source = trim($source);
+				if (preg_match('/^(?:\+?1[-. ]?)?\(?([2-9][0-8][0-9])\)?[-. ]?([2-9][0-9]{2})[-. ]?([0-9]{4})$/',$source) == 1) {
+					$number = (string) preg_replace('/[^\d]/', '', $source);
+					if (substr($number,0,1) == 1) {
+						$number = substr($number,1);
+					}
+					if (substr($number,0,2) == '+1') {
+						$number = substr($number,2);
+					}
+					$result = '1.'.$number;
+				} elseif
+				 (preg_match('/^\+(?:[0-9] ?){6,14}[0-9]$/',$source) == 1) {
+					$countrycode =  substr($source,0,strpos($source,' '));
+					$countrycode = (string) preg_replace('/[^\d]/', '', $countrycode);
+					$number = strstr($source,' ');
+					$number = (string) preg_replace('/[^\d]/', '', $number);
+					$result = $countrycode.'.'.$number;
+				} elseif
+				 (preg_match('/^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$/',$source)  == 1){
+				 	if (strstr($source,'x')) {
+				 		$xpos = strpos($source,'x');
+				 		$source = substr($source,0,$xpos);
+				 	}
+				 	$countrycode =  strstr($source,'.',true);
+					$countrycode = (string) preg_replace('/[^\d]/', '', $countrycode);
+					$number = strstr($source,'.');
+					$number = (string) preg_replace('/[^\d]/', '', $number);
+					$result = $countrycode.'.'.$number;
+				} else
+				{ $source = (string) preg_replace('/[^\d]/', '', $source);
+					if ($source != null) {
+						$length = strlen($source);
+						if ($length <= 12) {
+							$result='.'.$source;
+
+						} else {
+							$cclen = $length - 12;
+							$result = substr($source,0,$cclen).'.'.substr($source,$cclen);
+						}
+					}
+					 else {
+						$result = '.';
+					}
+				}
+
+				break;
 
 			default :
 				// Are we dealing with an array?
@@ -255,7 +295,7 @@ class JFilterInput extends JObject
 	/**
 	 * Internal method to iteratively remove all unwanted tags and attributes
 	 *
-	 * @param   string  $source   Input string to be 'cleaned'
+	 * @param   string  $source	Input string to be 'cleaned'
 	 *
 	 * @return  string  'Cleaned' version of input parameter
 	 * @since   11.1
@@ -276,7 +316,7 @@ class JFilterInput extends JObject
 	/**
 	 * Internal method to strip a string of certain tags
 	 *
-	 * @param   string   $source   Input string to be 'cleaned'
+	 * @param   string  Input string to be 'cleaned'
 	 *
 	 * @return  string  'Cleaned' version of input parameter
 	 *
@@ -588,10 +628,9 @@ class JFilterInput extends JObject
 	/**
 	 * Escape < > and " inside attribute values
 	 *
-	 * @param   string  $source The source string.
-	 * 
-	 * @return  string  Filtered string
-	 * @since    11.1
+	 * @param	string	$source The source string.
+	 * @return	string	Filtered string
+	 * @since	1.6
 	 */
 	protected function _escapeAttributeValues($source)
 	{
@@ -635,10 +674,9 @@ class JFilterInput extends JObject
 	/**
 	 * Remove CSS Expressions in the form of <property>:expression(...)
 	 *
-	 * @param   string    $source The source string.
-	 * 
-	 * @return  string    Filtered string
-	 * @since   11.1
+	 * @param	string	$source The source string.
+	 * @return	string	Filtered string
+	 * @since	1.6
 	 */
 	protected function _stripCSSExpressions($source)
 	{

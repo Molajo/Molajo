@@ -97,7 +97,7 @@ class JArchiveTar extends JObject
 			if ($type == 'file' || $type == 'unix file')
 			{
 				$buffer = $this->_metadata[$i]['data'];
-				$path = JPath::clean($destination.DS.$this->_metadata[$i]['name']);
+				$path = JPath::clean($destination . '/' . $this->_metadata[$i]['name']);
 				// Make sure the destination folder exists
 				if (!JFolder::create(dirname($path)))
 				{
@@ -118,7 +118,7 @@ class JArchiveTar extends JObject
 	 * Get the list of files/data from a Tar archive buffer.
 	 *
 	 * @param 	string	$data	The Tar archive buffer.
-	 * @return   array	Archive metadata array
+	 * @return	array	Archive metadata array
 	 * <pre>
 	 * KEY: Position in the array
 	 * VALUES: 'attr'  --  File attributes
@@ -128,7 +128,7 @@ class JArchiveTar extends JObject
 	 *         'size'  --  Original file size
 	 *         'type'  --  File type
 	 * </pre>
-	 * @since    11.1
+	 * @since	11.1
 	 */
 	protected function _getTarInfo(& $data)
 	{

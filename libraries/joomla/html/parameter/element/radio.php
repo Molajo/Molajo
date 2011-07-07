@@ -27,12 +27,6 @@ class JElementRadio extends JElement
 	*/
 	protected $_name = 'Radio';
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
 	public function fetchElement($name, $value, &$node, $control_name)
 	{
 		$options = array ();

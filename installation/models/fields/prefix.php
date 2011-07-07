@@ -51,8 +51,7 @@ class JFormFieldPrefix extends JFormField
 
 		// If a prefix is already set, use it instead
 		$session = JFactory::getSession()->get('setup.options', array());
- 
-		if(!empty($session['db_prefix'])){
+		if(empty($session['db_prefix'])){
 
 			// Get all tables from this DB
 			$tables = JFactory::getDbo()->getTableList();

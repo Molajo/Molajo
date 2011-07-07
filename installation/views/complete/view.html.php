@@ -17,7 +17,7 @@ jimport('joomla.html.html');
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationViewComplete extends JView
+class MolajoInstallationViewComplete extends JView
 {
 	/**
 	 * Display the view

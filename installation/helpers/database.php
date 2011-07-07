@@ -13,7 +13,7 @@
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationHelperDatabase
+class MolajoInstallationHelperDatabase
 {
 	/**
 	 * Method to get a JDatabase object.

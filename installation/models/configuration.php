@@ -19,7 +19,7 @@ require_once JPATH_INSTALLATION.'/helpers/database.php';
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationModelConfiguration extends JModel
+class MolajoInstallationModelConfiguration extends JModel
 {
 	/**
 	 * @return boolean
@@ -193,7 +193,7 @@ class JInstallationModelConfiguration extends JModel
 	function _createRootUser($options)
 	{
 		// Get a database object.
-		$db = JInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
 		// Check for errors.
 		if (JError::isError($db)) {

@@ -20,13 +20,12 @@ class JSimpleCrypt extends JObject
 {
 	/**
 	 * Encryption/Decryption Key
-	 * 
 	 * @var    string
 	 */
 	protected $_key;
 
 	/**
-	 * Object Constructor takes an optional key to be used for encryption/decryption. If no key is given then the
+	 * Object Constructor takes an optional key to be used for encryption/decryption.  If no key is given then the
 	 * secret word from the configuration object is used.
 	 *
 	 * @param   string  $key  Optional encryption key
@@ -43,11 +42,10 @@ class JSimpleCrypt extends JObject
 			$this->_key = md5($conf->get('secret'));
 		}
 	}
-
 	/**
-	 * Decrypt a string
+	 * Decrypt
 	 *
-	 * @param   string  $s  String to decrypt
+	 * @param   string  $s
 	 *
 	 * @return  string
 	 * @since   11.1
@@ -59,9 +57,9 @@ class JSimpleCrypt extends JObject
 		return $s1;
 	}
 	/**
-	 * Encrypt a string
+	 * Encrypt
 	 *
-	 * @param   string  $s  String to encrypt
+	 * @param   string  $s
 	 *
 	 * @return  string
 	 * @since   11.1
@@ -74,9 +72,8 @@ class JSimpleCrypt extends JObject
 			$s1 = $s1 . $this->_intToHex((int) $ai[$i]);
 		return $s1;
 	}
-	
 	/**
-	 * Convert hex to an integer
+	 * HextoInt
 	 *
 	 * @param   string   $s
 	 * @param   integer  $i
@@ -151,11 +148,11 @@ class JSimpleCrypt extends JObject
 		return $k;
 	}
 	/**
-	 * Convert hex to an array of integers
+	 * HexToIntArray
 	 *
 	 * @param   string  $s
 	 *
-	 * @return  array[integers]
+	 * @return  array
 	 * @since   11.1
 	 */
 	protected function _hexToIntArray($s)
@@ -171,7 +168,7 @@ class JSimpleCrypt extends JObject
 		return $ai;
 	}
 	/**
-	 * Convert character string to integer
+	 * CharToInt
 	 *
 	 * @param   string  $c
 	 *
@@ -187,14 +184,14 @@ class JSimpleCrypt extends JObject
 	/**
 	 * XorString
 	 *
-	 * @param   $ai
+	 * @param   string  $ai
 	 *
 	 * @return  string
 	 * @since   11.1
 	 */
 	protected function _xorString($ai)
 	{
-		$s = $this->_key;
+		$s = $this->_key; //
 		(int) $i = strlen($s);
 		$ai1 = $ai;
 		(int) $j = count($ai1);
@@ -210,7 +207,7 @@ class JSimpleCrypt extends JObject
 		return $s1;
 	}
 	/**
-	 * Convert integer to hex
+	 * inToHex
 	 *
 	 * @param   integer  $i
 	 *
@@ -231,11 +228,11 @@ class JSimpleCrypt extends JObject
 		return $s;
 	}
 	/**
-	 * Use xor encryption
+	 * Decrypt
 	 *
 	 * @param   string  $s
 	 *
-	 * @return  array[integer]
+	 * @return
 	 * @since   11.1
 	 */
 	protected function _xorCharString($s)

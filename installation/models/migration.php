@@ -17,6 +17,6 @@ jimport('joomla.filesystem.file');
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationModelMigration extends JModel
+class MolajoInstallationModelMigration extends JModel
 {
 }

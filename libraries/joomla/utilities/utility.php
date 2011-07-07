@@ -21,23 +21,23 @@ class JUtility
 	/**
 	 * Mail function (uses phpMailer)
 	 *
-	 * @param   string   $from         From email address
-	 * @param   string   $fromname     From name
-	 * @param   mixed    $recipient    Recipient email address(es)
-	 * @param   string   $subject      Email subject
-	 * @param   string   $body         Message body
-	 * @param   boolean  $mode         False = plain text, true = HTML
-	 * @param   mixed    $cc           CC email address(es)
-	 * @param   mixed    $bcc          BCC email address(es)
-	 * @param   mixed    $attachment   Attachment file name(s)
-	 * @param   mixed    $replyto      Reply to email address(es)
-	 * @param   mixed    $replytoname  Reply to name(s)
+	 * @param   string   $from		From email address
+	 * @param   string   $fromname	From name
+	 * @param   mixed    $recipient	Recipient email address(es)
+	 * @param   string   $subject	Email subject
+	 * @param   string   $body		Message body
+	 * @param   boolean  $mode		false = plain text, true = HTML
+	 * @param   mixed    $cc			CC email address(es)
+	 * @param   mixed    $bcc		BCC email address(es)
+	 * @param   mixed    $attachment	Attachment file name(s)
+	 * @param   mixed    $replyto	Reply to email address(es)
+	 * @param   mixed    $replytoname Reply to name(s)
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 * @see     JMail::sendMail()
+	 *
+	 * @since       11.1
+	 * @deprecated  1.6
+	 * @see			JMail::sendMail()
 	 */
 	public static function sendMail($from, $fromname, $recipient, $subject, $body, $mode=0, $cc=null, $bcc=null, $attachment=null, $replyto=null, $replytoname=null)
 	{
@@ -53,18 +53,17 @@ class JUtility
 	/**
 	 * Sends mail to administrator for approval of a user submission
 	 *
-	 * @param   string   $adminName   Name of administrator
-	 * @param   string   $adminEmail  Email address of administrator
-	 * @param   string   $email       [NOT USED]
-	 * @param   string   $type        Type of item to approve
-	 * @param   string   $title       Title of item to approve
-	 * @param   string   $author      Author of item to approve
+	 * @param   string  $adminName	Name of administrator
+	 * @param   string  $adminEmail	Email address of administrator
+	 * @param   string  $email		[NOT USED TODO: Deprecate?]
+	 * @param   string  $type		Type of item to approve
+	 * @param   string  $title		Title of item to approve
+	 * @param   string  $author		Author of item to approve
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
 	 *
-	 * @deprecated
-	 * @see      JMail::sendAdminMail()
+	 * @deprecated  1.6
+	 * @see			JMail::sendAdminMail()
 	 */
 	public static function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
 	{
@@ -82,11 +81,9 @@ class JUtility
 	 * @param   string  $seed  Seed string.
 	 *
 	 * @return  string
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 * 
-	 * @see     JApplication:getHash()
+	 *
+	 * @deprecated  1.6
+	 * @see			JApplication:getHash()
 	 */
 	public static function getHash($seed)
 	{
@@ -97,14 +94,12 @@ class JUtility
 
 	/**
 	 * Method to determine a hash for anti-spoofing variable names
-	 * 
-	 * @param   boolean  $forceNew  Force creation of a new token.
-	 * 
-	 * @return  string   Hashed var name
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 * @see     JApplication:getHash()
+	 *
+	 * @return  string  Hashed var name
+	 *
+	 * @since       11.1
+	 * @deprecated  1.6
+	 * @see			JApplication:getHash()
 	 */
 	public static function getToken($forceNew = false)
 	{
@@ -118,7 +113,8 @@ class JUtility
 	 *
 	 * @param   string  $string  String containing XML style attributes
 	 *
-	 * @return  array   Key/Value pairs for the attributes
+	 * @return  array  Key/Value pairs for the attributes
+	 *
 	 * @since       11.1
 	 */
 	public static function parseAttributes($string)
@@ -145,10 +141,10 @@ class JUtility
 	 * Method to determine if the host OS is  Windows
 	 *
 	 * @return  boolean  True if Windows OS.
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 * @see         JApplication::isWinOS()
+	 *
+	 * @since       11.1
+	 * @deprecated  1.6
+	 * @see			JApplication::isWinOS()
 	 */
 	public static function isWinOS()
 	{
@@ -160,13 +156,13 @@ class JUtility
 	/**
 	 * Method to dump the structure of a variable for debugging purposes
 	 *
-	 * @param   mixed    $var       A variable
-	 * @param   boolean  $htmlSafe  True to ensure all characters are htmlsafe
+	 * @param   mixed    $var		A variable
+	 * @param   boolean  $htmlSafe	True to ensure all characters are htmlsafe
 	 *
 	 * @return  string
-	 * @since       11.1
 	 *
-	 * @deprecated
+	 * @since       11.1
+	 * @deprecated  1.6
 	 */
 	public static function dump(&$var, $htmlSafe = true)
 	{
@@ -179,14 +175,14 @@ class JUtility
 	 * Prepend a reference to an element to the beginning of an array.
 	 * Renumbers numeric keys, so $value is always inserted to $array[0]
 	 *
-	 * @param   array  $array  Array to be modified
-	 * @param   mixed  $value  Value to add
+	 * @param   $array array
+	 * @param   $value mixed
 	 *
 	 * @return  integer
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 * @see      http://www.php.net/manual/en/function.array-unshift.php#40270
+	 *
+	 * @since       11.1
+	 * @deprecated  1.6
+	 * @see			http://www.php.net/manual/en/function.array-unshift.php#40270
 	 */
 	function array_unshift_ref(&$array, &$value)
 	{
@@ -202,10 +198,10 @@ class JUtility
 	 * @param   string  $val  String optionally with G, M or K suffix
 	 *
 	 * @return  integer  size in bytes
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 * @see       JHtmlNumber::bytes
+	 *
+	 * @since       11.1
+	 * @deprecated  1.6
+	 * @see			JHtmlNumber::bytes
 	 */
 	function return_bytes($val)
 	{

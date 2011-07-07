@@ -277,8 +277,8 @@ abstract class MolajoModuleHelper
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 
-//            $acl = new MolajoACL ();
-//            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
+$acl = new MolajoACL ();
+$acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
 
 			$query->where('m.client_id = '. $clientId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');

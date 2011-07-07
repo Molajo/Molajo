@@ -8,7 +8,7 @@
 	<author>Ümit Kenan Gönüllü</author>
 	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<description>Turkish Installation file for Joomla 1.6</description>
+	<description>Turkish Installation file for Molajo 1.0</description>
 	<files>
 		<filename>tr-TR.ini</filename>
 	</files>

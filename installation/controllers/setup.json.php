@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationControllerSetup extends JController
+class MolajoInstallationControllerSetup extends JController
 {
 	/**
 	 * Method to set the setup language for the application.
@@ -39,7 +39,7 @@ class JInstallationControllerSetup extends JController
 		}
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -88,7 +88,7 @@ class JInstallationControllerSetup extends JController
 		$app = JFactory::getApplication();
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -124,7 +124,7 @@ class JInstallationControllerSetup extends JController
 		$vars = $model->storeOptions($return);
 
 		// Get the database model.
-		$database = $this->getModel('Database', 'JInstallationModel', array('dbo' => null));
+		$database = $this->getModel('Database', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Attempt to initialise the database.
 		$return = $database->initialise($vars);
@@ -159,7 +159,7 @@ class JInstallationControllerSetup extends JController
 		$app = JFactory::getApplication();
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -208,7 +208,7 @@ class JInstallationControllerSetup extends JController
 		$app = JFactory::getApplication();
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -248,7 +248,7 @@ class JInstallationControllerSetup extends JController
 		$vars = $model->storeOptions($return);
 
 		// Get the configuration model.
-		$configuration = $this->getModel('Configuration', 'JInstallationModel', array('dbo' => null));
+		$configuration = $this->getModel('Configuration', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Attempt to setup the configuration.
 		$return = $configuration->setup($vars);
@@ -276,13 +276,13 @@ class JInstallationControllerSetup extends JController
 		$vars = JRequest::getVar('jform', array());
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the options from the session.
 		$vars = $model->storeOptions($vars);
 
 		// Get the database model.
-		$database = $this->getModel('Database', 'JInstallationModel', array('dbo' => null));
+		$database = $this->getModel('Database', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Attempt to load the database sample data.
 		$return = $database->installSampleData($vars);
@@ -319,13 +319,13 @@ class JInstallationControllerSetup extends JController
 		$vars = JRequest::getVar('jform', array());
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Store the options in the session.
 		$vars = $model->storeOptions($vars);
 
 		// Get the database model.
-		$filesystem = $this->getModel('Filesystem', 'JInstallationModel', array('dbo' => null));
+		$filesystem = $this->getModel('Filesystem', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Attempt to detect the Joomla root from the ftp account.
 		$return = $filesystem->detectFtpRoot($vars);
@@ -356,13 +356,13 @@ class JInstallationControllerSetup extends JController
 		$vars = JRequest::getVar('jform', array());
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Store the options in the session.
 		$vars = $model->storeOptions($vars);
 
 		// Get the database model.
-		$filesystem = $this->getModel('Filesystem', 'JInstallationModel', array('dbo' => null));
+		$filesystem = $this->getModel('Filesystem', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Verify the FTP settings.
 		$return = $filesystem->verifyFtpSettings($vars);
@@ -480,7 +480,7 @@ class JInstallationControllerSetup extends JController
 		}
 
 		// Send the JSON response.
-		echo json_encode(new JInstallationJsonResponse($response));
+		echo json_encode(new MolajoInstallationJsonResponse($response));
 
 		// Close the application.
 		$app = JFactory::getApplication();
@@ -494,7 +494,7 @@ class JInstallationControllerSetup extends JController
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationJsonResponse
+class MolajoInstallationJsonResponse
 {
 	function __construct($state)
 	{
@@ -538,4 +538,4 @@ class JInstallationJsonResponse
 }
 
 // Set the error handler.
-//JError::setErrorHandling(E_ALL, 'callback', array('JInstallationControllerSetup', 'sendResponse'));
+//JError::setErrorHandling(E_ALL, 'callback', array('MolajoInstallationControllerSetup', 'sendResponse'));

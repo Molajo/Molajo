@@ -16,7 +16,7 @@ jimport('joomla.application.component.model');
  * @package		Joomla.Installation
  * @since		1.6
  */
-class JInstallationModelSetup extends JModel
+class MolajoInstallationModelSetup extends JModel
 {
 	/**
 	 * Get the current setup options from the session.

@@ -15,8 +15,6 @@ defined('JPATH_PLATFORM') or die;
  * @package     Joomla.Platform
  * @subpackage  Cache
  * @since       11.1
- * 
- * @see         http://php.net/manual/en/book.wincache.php
  */
 class JCacheStorageWincache extends JCacheStorage
 {
@@ -24,8 +22,6 @@ class JCacheStorageWincache extends JCacheStorage
 	 * Constructor
 	 *
 	 * @param   array    $options optional parameters
-	 * 
-	 * @since   11.1
 	 */
 	public function __construct( $options = array() )
 	{
@@ -35,10 +31,9 @@ class JCacheStorageWincache extends JCacheStorage
 	/**
 	 * Get cached data from WINCACHE by id and group
 	 *
-	 * @param   string   $id         The cache data id
-	 * @param   string   $group      The cache data group
-	 * @param   boolean  $checkTime  True to verify cache time expiration threshold
-	 * 
+	 * @param   string   $id		The cache data id
+	 * @param   string   $group		The cache data group
+	 * @param   boolean  $checkTime	True to verify cache time expiration threshold
 	 * @return  mixed    Boolean false on failure or a cached data string
 	 * @since   11.1
 	 */
@@ -78,9 +73,8 @@ class JCacheStorageWincache extends JCacheStorage
 					$item->updateSize($key['value_size']/1024);
 				}
 				else {
-					// Dummy, WINCACHE version is too low
 					$item->updateSize(1);
-				} 
+				} // dummy, WINCACHE version is too low
 				$data[$group] = $item;
 			}
 		}
@@ -94,7 +88,6 @@ class JCacheStorageWincache extends JCacheStorage
 	 * @param   string   $id	The cache data id
 	 * @param   string   $group	The cache data group
 	 * @param   string   $data	The data to store in cache
-	 * 
 	 * @return  boolean  True on success, false otherwise
 	 * @since   11.1
 	 */
@@ -109,7 +102,6 @@ class JCacheStorageWincache extends JCacheStorage
 	 *
 	 * @param   string   $id		The cache data id
 	 * @param   string   $group	The cache data group
-	 * 
 	 * @return  boolean  True on success, false otherwise
 	 * @since   11.1
 	 */
@@ -122,11 +114,11 @@ class JCacheStorageWincache extends JCacheStorage
 	/**
 	 * Clean cache for a group given a mode.
 	 *
-	 * @param   string   $group  The cache data group
-	 * @param   string   $mode   The mode for cleaning cache [group|notgroup]
-	 *                            group mode    : cleans all cache in the group
-	 *                            notgroup mode : cleans all cache not in the group
-	 * 
+	 * group mode		: cleans all cache in the group
+	 * notgroup mode	: cleans all cache not in the group
+	 *
+	 * @param   string   $group	The cache data group
+	 * @param   string   $mode	The mode for cleaning cache [group|notgroup]
 	 * @return  boolean  True on success, false otherwise
 	 * @since   11.1
 	 */

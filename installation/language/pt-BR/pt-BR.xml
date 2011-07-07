@@ -5,10 +5,10 @@
 	<name>Português (Brasil)</name>
 	<version>1.7.0</version>
 	<creationDate>Janeiro 2011</creationDate>
-	<author>Joomla! Brasil</author>
-	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved. Copyright (C) Translation 2005 - 2011 Joomla! Brasil. All rights reserved.</copyright>
+	<author>Molajo Brasil</author>
+	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved. Copyright (C) Translation 2005 - 2011 Molajo Brasil. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<description>Pacote de idioma em Português Brasileiro para o instalador web do Joomla!</description>
+	<description>Pacote de idioma em Português Brasileiro para o instalador web do Molajo</description>
 	<files>
 		<filename>pt-BR.ini</filename>
 	</files>

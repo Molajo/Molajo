@@ -10,14 +10,14 @@
 defined('JPATH_PLATFORM') or die;
 
 // Register the session storage class with the loader
-JLoader::register('JSessionStorage', dirname(__FILE__).DS.'storage.php');
+JLoader::register('JSessionStorage', dirname(__FILE__) . '/storage.php');
 
 /**
  * Class for managing HTTP sessions
  *
  * Provides access to session-state values as well as session-level
  * settings and lifetime management methods.
- * Based on the standard PHP session handling mechanism it provides
+ * Based on the standart PHP session handling mechanism it provides
  * more advanced features such as expire timeouts.
  *
  * @package     Joomla.Platform
@@ -28,50 +28,42 @@ class JSession extends JObject
 {
 	/**
 	 * Internal state.
-	 * One of 'active'|'expired'|'destroyed|'error'
 	 *
-	 * @var string
-	 * @since  11.1
+	 * @var	string $_state one of 'active'|'expired'|'destroyed|'error'
 	 * @see getState()
 	 */
 	protected	$_state	=	'active';
 
 	/**
 	 * Maximum age of unused session.
-	 * In minutes
-	 * 
-	 * @var    string
-	 * @since  11.1
+	 *
+	 * @var	string $_expire minutes
 	 */
 	protected	$_expire	=	15;
 
 	/**
 	 * The session store object.
 	 *
-	 * @var    JSessionStorage
-	 * @since  11.1
+	 * @var	object A JSessionStorage object
 	 */
 	protected	$_store	=	null;
 
 	/**
 	 * Security policy.
-	 * List of checks that will be done.
-	 * 
+	 *
 	 * Default values:
 	 *  - fix_browser
 	 *  - fix_adress
 	 *
-	 * @var array
-	 * @since  11.1
+	 * @var array $_security list of checks that will be done.
 	 */
 	protected $_security = array('fix_browser');
 
 	/**
 	 * Force cookies to be SSL only
-	 * Default  false
-	 * 
-	 * @var boolean
-	 * @since  11.1
+	 *
+	 * @default false
+	 * @var bool $force_ssl
 	 */
 	protected $_force_ssl = false;
 
@@ -79,9 +71,7 @@ class JSession extends JObject
 	 * Constructor
 	 *
 	 * @param   string  $storage
-	 * @param   array   $options  Optional parameters
-	 * 
-	 * @since 11.1
+	 * @param   array   $options	optional parameters
 	 */
 	public function __construct($store = 'none', $options = array())
 	{
@@ -132,10 +122,7 @@ class JSession extends JObject
 	 * Returns the global Session object, only creating it
 	 * if it doesn't already exist.
 	 *
-	 * @param        $handler
-	 * @param        $options
-	 * 
-	 * @return  JSession  The Session object.
+	 * @return  object  JSession	The Session object.
 	 * @since   11.1
 	 */
 	public static function getInstance($handler, $options)
@@ -153,7 +140,6 @@ class JSession extends JObject
 	 * Get current state of session
 	 *
 	 * @return  string  The session state
-	 * @since   11.1
 	 */
 	public function getState()
 	{
@@ -164,7 +150,6 @@ class JSession extends JObject
 	 * Get expiration time in minutes
 	 *
 	 * @return  integer  The session expiration time in minutes
-	 * @since   11.1
 	 */
 	public function getExpire()
 	{
@@ -178,10 +163,9 @@ class JSession extends JObject
 	 * has been generated the system will check the post request to see if
 	 * it is present, if not it will invalidate the session.
 	 *
-	 * @param   boolean  $forceNew  If true, force a new token to be created
+	 * @param   boolean  If true, force a new token to be created
 	 *
-	 * @return  string   The session token
-	 * @since   11.1
+	 * @return  string	The session token
 	 */
 	public function getToken($forceNew = false)
 	{
@@ -200,8 +184,8 @@ class JSession extends JObject
 	 * Method to determine if a token exists in the session. If not the
 	 * session will be set to expired
 	 *
-	 * @param   string   $tCheck       Hashed token to be verified
-	 * @param   boolean  $forceExpire  If true, expires the session
+	 * @param   string	Hashed token to be verified
+	 * @param   boolean  If true, expires the session
 	 *
 	 * @return  boolean
 	 * @since   11.1
@@ -225,10 +209,8 @@ class JSession extends JObject
 	/**
 	 * Method to determine a hash for anti-spoofing variable names
 	 *
-	 * @param   boolean  $forceNew  If true, force a new token to be created
-	 * 
-	 * @return  string   Hashed var name
-	 * @since   11.1
+	 * @return  string  Hashed var name
+	 * @since       11.1
 	 */
 	public static function getFormToken($forceNew = false)
 	{
@@ -243,7 +225,6 @@ class JSession extends JObject
 	 * Get session name
 	 *
 	 * @return  string  The session name
-	 * @since   11.1
 	 */
 	public function getName()
 	{
@@ -258,7 +239,6 @@ class JSession extends JObject
 	 * Get session id
 	 *
 	 * @return  string  The session name
-	 * @since   11.1
 	 */
 	public function getId()
 	{
@@ -273,12 +253,11 @@ class JSession extends JObject
 	 * Get the session handlers
 	 *
 	 * @return  array  An array of available session handlers
-	 * @since   11.1
 	 */
 	public static function getStores()
 	{
 		jimport('joomla.filesystem.folder');
-		$handlers = JFolder::files(dirname(__FILE__).DS.'storage', '.php$');
+		$handlers = JFolder::files(dirname(__FILE__) . '/storage', '.php$');
 
 		$names = array();
 		foreach($handlers as $handler) {
@@ -287,7 +266,7 @@ class JSession extends JObject
 
 			//Load the class only if needed
 			if (!class_exists($class)) {
-				require_once dirname(__FILE__).DS.'storage'.DS.$name.'.php';
+				require_once dirname(__FILE__) . '/storage/' . $name.'.php';
 			}
 
 			if (call_user_func_array(array(trim($class), 'test'), array())) {
@@ -302,7 +281,6 @@ class JSession extends JObject
 	 * Check whether this session is currently created
 	 *
 	 * @return  boolean  True on success.
-	 * @since   11.1
 	 */
 	public function isNew()
 	{
@@ -316,12 +294,11 @@ class JSession extends JObject
 	/**
 	 * Get data from the session store
 	 *
-	 * @param   string  $name       Name of a variable
-	 * @param   mixed   $default    Default value of a variable if not set
-	 * @param   string  $namespace  Namespace to use, default to 'default'
+	 * @param   string  Name of a variable
+	 * @param   mixed   Default value of a variable if not set
+	 * @param   string  Namespace to use, default to 'default'
 	 *
-	 * @return  mixed   Value of a variable
-	 * @since   11.1
+	 * @return  mixed	Value of a variable
 	 */
 	public function get($name, $default = null, $namespace = 'default')
 	{
@@ -342,12 +319,11 @@ class JSession extends JObject
 	/**
 	 * Set data into the session store.
 	 *
-	 * @param   string  $name       Name of a variable.
-	 * @param   mixed   $value      Value of a variable.
-	 * @param   string  $namespace  Namespace to use, default to 'default'.
+	 * @param   string  Name of a variable.
+	 * @param   mixed   Value of a variable.
+	 * @param   string  Namespace to use, default to 'default'.
 	 *
-	 * @return  mixed   Old value of a variable.
-	 * @since   11.1
+	 * @return  mixed	Old value of a variable.
 	 */
 	public function set($name, $value = null, $namespace = 'default')
 	{
@@ -372,16 +348,13 @@ class JSession extends JObject
 	/**
 	 * Check whether data exists in the session store
 	 *
-	 * @param   string  $name       Name of variable
-	 * @param   string  $namespace  Namespace to use, default to 'default'
-	 * 
+	 * @param   string  Name of variable
+	 * @param   string  Namespace to use, default to 'default'
 	 * @return  boolean  True if the variable exists
-	 * @since   11.1
 	 */
 	public function has($name, $namespace = 'default')
 	{
-		// Add prefix to namespace to avoid collisions.
-		$namespace = '__'.$namespace; 
+		$namespace = '__'.$namespace; //add prefix to namespace to avoid collisions
 
 		if ($this->_state !== 'active') {
 			// @TODO :: generated error here
@@ -394,11 +367,9 @@ class JSession extends JObject
 	/**
 	 * Unset data from the session store
 	 *
-	 * @param   string  $name       Name of variable
-	 * @param   string  $namespace  Namespace to use, default to 'default'
-	 * 
-	 * @return  mixed   The value from session or NULL if not set
-	 * @since   11.1
+	 * @param  string  Name of variable
+	 * @param  string  Namespace to use, default to 'default'
+	 * @return  mixed  The value from session or NULL if not set
 	 */
 	public function clear($name, $namespace = 'default')
 	{
@@ -425,7 +396,6 @@ class JSession extends JObject
 	 * Creates a session (or resumes the current one based on the state of the session)
 	 *
 	 * @return  boolean  true on success
-	 * @since   11.1
 	 */
 	protected function _start()
 	{
@@ -455,10 +425,9 @@ class JSession extends JObject
 	 * with the current session in its storage (file or DB). It forces new session to be
 	 * started after this method is called. It does not unset the session cookie.
 	 *
-	 * @return  boolean  True on success
-	 * @since   11.1
-	 * @see     session_unset()
-	 * @see     session_destroy()
+	 * @return  boolean	true on success
+	 * @see	session_unset()
+	 * @see	session_destroy()
 	 */
 	public function destroy()
 	{
@@ -467,7 +436,7 @@ class JSession extends JObject
 			return true;
 		}
 
-		// In order to kill the session altogether, such as to log the user out, the session id
+		// In order to kill the session altogether, like to log the user out, the session id
 		// must also be unset. If a cookie is used to propagate the session id (default behavior),
 		// then the session cookie must be deleted.
 		if (isset($_COOKIE[session_name()])) {
@@ -487,9 +456,8 @@ class JSession extends JObject
 	/**
 	 * Restart an expired or locked session.
 	 *
-	 * @return  boolean  True on success
-	 * @since   11.1
-	 * @see     destroy
+	 * @return  boolean  true on success
+	 * @see	destroy
 	 */
 	public function restart()
 	{
@@ -518,8 +486,7 @@ class JSession extends JObject
 	/**
 	 * Create a new session and copy variables from the old one
 	 *
-	 * @return  boolean $result true on success
-	 * @since   11.1
+	 * @return boolean $result true on success
 	 */
 	public function fork()
 	{
@@ -569,8 +536,7 @@ class JSession extends JObject
 	 * frames by ending the session as soon as all changes to session variables are
 	 * done.
 	 *
-	 * @since   11.1
-	 * @see     session_write_close()
+	 * @see	session_write_close()
 	 */
 	public function close()
 	{
@@ -581,7 +547,6 @@ class JSession extends JObject
 	 * Create a session id
 	 *
 	 * @return  string  Session ID
-	 * @since   11.1
 	 */
 	protected function _createId()
 	{
@@ -596,8 +561,6 @@ class JSession extends JObject
 
 	/**
 	 * Set session cookie parameters
-	 * 
-	 * @since  11.1
 	 */
 	protected function _setCookieParams()
 	{
@@ -621,10 +584,9 @@ class JSession extends JObject
 	/**
 	 * Create a token-string
 	 *
-	 * @param   integer  Length of string
+	 * @param   integer  length of string
 	 *
-	 * @return  string   Generated token
-	 * @since   11.1
+	 * @return  string  generated token
 	 */
 	protected function _createToken($length = 32)
 	{
@@ -642,8 +604,7 @@ class JSession extends JObject
 	/**
 	 * Set counter of session usage
 	 *
-	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @return  boolean  true on success
 	 */
 	protected function _setCounter()
 	{
@@ -657,8 +618,7 @@ class JSession extends JObject
 	/**
 	 * Set the session timers
 	 *
-	 * @return boolean  True on success
-	 * @since   11.1
+	 * @return boolean $result true on success
 	 */
 	protected function _setTimers()
 	{
@@ -679,10 +639,9 @@ class JSession extends JObject
 	/**
 	 * Set additional session options
 	 *
-	 * @param   array    $options  List of parameter
+	 * @param   array  list of parameter
 	 *
-	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @return  boolean  true on success
 	 */
 	protected function _setOptions(&$options)
 	{
@@ -725,11 +684,10 @@ class JSession extends JObject
 	 *
 	 * If one check failed, session data has to be cleaned.
 	 *
-	 * @param   boolean  Reactivate session
+	 * @param   boolean  reactivate session
 	 *
-	 * @return  boolean  True on success
-	 * @since   11.1
-	 * @see     http://shiflett.org/articles/the-truth-about-sessions
+	 * @return  boolean  true on success
+	 * @see		http://shiflett.org/articles/the-truth-about-sessions
 	 */
 	protected function _validate($restart = false)
 	{

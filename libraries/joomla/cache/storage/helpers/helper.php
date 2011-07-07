@@ -19,33 +19,24 @@ defined('JPATH_PLATFORM') or die;
 class JCacheStorageHelper
 {
 	/**
-	 * Cache data group
-	 * 
-	 * @var
 	 * @since   11.1
 	 */
 	public $group = '';
 
 	/**
-	 * Cached item size
-	 * 
-	 * @var    string
 	 * @since   11.1
 	 */
 	public $size = 0;
 
 	/**
-	 * Counter
-	 * 
-	 * @var    integer
-	 * @since  11.1
+	 * @since   11.1
 	 */
 	public $count = 0;
 
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $group  The cache data group
+	 * @param   array  $options	options
 	 */
 	public function __construct($group)
 	{
@@ -55,7 +46,8 @@ class JCacheStorageHelper
 	/**
 	 * Increase cache items count.
 	 *
-	 * @param   string  $size   Cached item size
+	 * @param   string  $size	Cached item size
+	 * @param   string  $group	The cache data group
 	 * @since   11.1
 	 */
 	public function updateSize($size)

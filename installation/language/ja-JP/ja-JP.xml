@@ -5,10 +5,10 @@
 	<name>Japanese(JP)</name>
 	<version>1.7.0</version>
 	<creationDate>2011-01-08</creationDate>
-	<author>Joomla! Japanese Translation Team</author>
+	<author>Molajo Japanese Translation Team</author>
 	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<description>Joomla! 1.7のインストール用日本語ランゲージファイルです。</description>
+	<description>Molajo 1.7のインストール用日本語ランゲージファイルです。</description>
 	<files>
 		<filename>ja-JP.ini</filename>
 	</files>

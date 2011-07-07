@@ -14,8 +14,6 @@ jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.archive');
 jimport('joomla.filesystem.path');
 jimport('joomla.base.adapter');
-jimport('joomla.utilities.arrayhelper');
-jimport('joomla.log.log');
 
 /**
  * Updater Class
@@ -27,8 +25,6 @@ class JUpdater extends JAdapter {
 
 	/**
 	 * Constructor
-	 * 
-	 * @since   11.1
 	 */
 	public function __construct() {
 		// Adapter base path, class prefix
@@ -40,7 +36,6 @@ class JUpdater extends JAdapter {
 	 * if it doesn't already exist.
 	 *
 	 * @return  object  An installer object
-	 * @since   11.1
 	 */
 	public static function &getInstance()
 	{
@@ -55,12 +50,18 @@ class JUpdater extends JAdapter {
 	/**
 	 * Finds an update for an extension
 	 *
-	 * @param   integer  $eid  Extension Identifier; if zero use all sites
+	 * @param int Extension Identifier; if zero use all sites
 	 *
-	 * @return  boolean True if there are updates
-	 * @since   11.1
+	 * @return boolean If there are updates or not
 	 */
 	public function findUpdates($eid=0) {
+		// Check if fopen is allowed
+		$result = ini_get('allow_url_fopen');
+		if (empty($result)) {
+			JError::raiseWarning('101', JText::_('JLIB_UPDATER_ERROR_COLLECTION_FOPEN'));
+			return false;
+		}
+
 		$dbo = $this->getDBO();
 		$retval = false;
 		// Push it into an array
@@ -85,7 +86,7 @@ class JUpdater extends JAdapter {
 			{
 				if(array_key_exists('update_sites',$update_result) && count($update_result['update_sites']))
 				{
-					$results = JArrayHelper::arrayUnique(array_merge($results, $update_result['update_sites']));
+					$results = $this->arrayUnique(array_merge($results, $update_result['update_sites']));
 					$result_count = count($results);
 				}
 				if(array_key_exists('updates', $update_result) && count($update_result['updates']))
@@ -143,29 +144,28 @@ class JUpdater extends JAdapter {
 
 	/**
 	 * Multidimensional array safe unique test
-	 * 
-	 * @param   array  $myarray
-	 * 
-	 * @return  array
-	 * @since   11.1
 	 * Borrowed from PHP.net
 	 * @see http://au2.php.net/manual/en/function.array-unique.php
-	 *
-	 * @deprecated	11.1	Use JArrayHelper::arrayUnique() instead.
 	 */
 	public function arrayUnique($myArray)
 	{
-		JLog::add('JUpdater::arrayUnique() is deprecated. See JArrayHelper::arrayUnique().', JLog::WARNING, 'deprecated');
-		return JArrayHelper::arrayUnique($myArray);
+		if (!is_array($myArray)) {
+			return $myArray;
+		}
+
+		foreach ($myArray as &$myvalue){
+			$myvalue=serialize($myvalue);
+		}
+
+		$myArray=array_unique($myArray);
+
+		foreach ($myArray as &$myvalue){
+			$myvalue=unserialize($myvalue);
+		}
+
+		return $myArray;
 	}
-	/**
-	 * Finds an update for an extension
-	 *
-	 * @param   integer  $id
-	 *
-	 * @return  mixed
-	 * @since   11.1
-	 */
+
 	public function update($id)
 	{
 		$updaterow = JTable::getInstance('update');

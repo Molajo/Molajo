@@ -27,12 +27,6 @@ class JElementUserGroup extends JElement
 	*/
 	protected $_name = 'UserGroup';
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
 	public function fetchElement($name, $value, &$node, $control_name)
 	{
 		$ctrl	= $control_name .'['. $name .']';

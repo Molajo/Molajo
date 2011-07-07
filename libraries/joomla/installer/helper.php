@@ -66,10 +66,10 @@ abstract class JInstallerHelper
 
 		// Set the target path if not given
 		if (!$target) {
-			$target = $config->get('tmp_path').DS.self::getFilenameFromURL($url);
+			$target = $config->get('tmp_path') . '/' . self::getFilenameFromURL($url);
 		}
 		else {
-			$target = $config->get('tmp_path').DS.basename($target);
+			$target = $config->get('tmp_path') . '/' . basename($target);
 		}
 
 		// Initialise contents buffer
@@ -78,7 +78,7 @@ abstract class JInstallerHelper
 		while (!feof($inputHandle))
 		{
 			$contents .= fread($inputHandle, 4096);
-			if ($contents == false)
+			if ($contents === false)
 			{
 				JError::raiseWarning(44, JText::sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
 				return false;
@@ -94,6 +94,9 @@ abstract class JInstallerHelper
 		// Restore error tracking to what it was before
 		ini_set('track_errors',$track_errors);
 
+		// bump the max execution time because not using built in php zip libs are slow
+		set_time_limit(ini_get('max_execution_time'));
+
 		// Return the name of the downloaded package
 		return basename($target);
 	}
@@ -102,9 +105,9 @@ abstract class JInstallerHelper
 	 * Unpacks a file and verifies it as a Joomla element package
 	 * Supports .gz .tar .tar.gz and .zip
 	 *
-	 * @param   string   $p_filename  The uploaded package filename or install directory
+	 * @param   string   $p_filename The uploaded package filename or install directory
 	 *
-	 * @return  array    Two elements: extractdir and packagefile
+	 * @return  array    Two elements - extractdir and packagefile
 	 * @since   11.1
 	 */
 	public static function unpack($p_filename)
@@ -116,7 +119,7 @@ abstract class JInstallerHelper
 		$tmpdir = uniqid('install_');
 
 		// Clean the paths to use for archive extraction
-		$extractdir = JPath::clean(dirname($p_filename).DS.$tmpdir);
+		$extractdir = JPath::clean(dirname($p_filename) . '/' . $tmpdir);
 		$archivename = JPath::clean($archivename);
 
 		// Do the unpacking of the archive
@@ -145,9 +148,9 @@ abstract class JInstallerHelper
 
 		if (count($dirList) == 1)
 		{
-			if (JFolder::exists($extractdir.DS.$dirList[0]))
+			if (JFolder::exists($extractdir . '/' . $dirList[0]))
 			{
-				$extractdir = JPath::clean($extractdir.DS.$dirList[0]);
+				$extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
 			}
 		}
 
@@ -174,7 +177,7 @@ abstract class JInstallerHelper
 	 *
 	 * @param   string   $p_dir Path to package directory
 	 *
-	 * @return  mixed    Extension type string or boolean false on fail
+	 * @return  mixed  Extension type string or boolean false on fail
 	 * @since   11.1
 	 */
 	public static function detectType($p_dir)
@@ -216,9 +219,9 @@ abstract class JInstallerHelper
 	/**
 	 * Gets a file name out of a url
 	 *
-	 * @param   string  $url  URL to get name from
+	 * @param   string  $url URL to get name from
 	 *
-	 * @return  mixed   String filename or boolean false if failed
+	 * @return  mixed  String filename or boolean false if failed
 	 * @since   11.1
 	 */
 	public static function getFilenameFromURL($url)
@@ -234,8 +237,8 @@ abstract class JInstallerHelper
 	/**
 	 * Clean up temporary uploaded package and unpacked extension
 	 *
-	 * @param   string   $package    Path to the uploaded package file
-	 * @param   string   $resultdir  Path to the unpacked extension
+	 * @param   string  $package Path to the uploaded package file
+	 * @param   string  $resultdir Path to the unpacked extension
 	 *
 	 * @return  boolean  True on success
 	 * @since   11.1
@@ -253,20 +256,21 @@ abstract class JInstallerHelper
 		if (is_file($package)) {
 			JFile::delete($package);
 		}
-		elseif (is_file(JPath::clean($config->get('tmp_path').DS.$package)))
+		elseif (is_file(JPath::clean($config->get('tmp_path') . '/' . $package)))
 		{
 			// It might also be just a base filename
-			JFile::delete(JPath::clean($config->get('tmp_path').DS.$package));
+			JFile::delete(JPath::clean($config->get('tmp_path') . '/' . $package));
 		}
 	}
 
 	/**
-	 * Splits contents of a sql file into array of discreet queries.
-	 * Queries need to be delimited with end of statement marker ';'
-	 * 
+	 * Splitsql
+	 *
+	 * Splits contents of a sql file into array of discreet queries
+	 * queries need to be delimited with end of statement marker ';'
 	 * @param   string
 	 *
-	 * @return  array   Array of queries
+	 * @return  array
 	 */
 	public static function splitSql($sql)
 	{
