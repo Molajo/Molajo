@@ -8,7 +8,7 @@
  * -------------------------------------------------------------------------
  * THIS SHOULD ONLY BE USED AS A LAST RESORT WHEN THE WEB INSTALLER FAILS
  *
- * If you are installing Joomla! manually i.e. not using the web browser installer
+ * If you are installing Molajo manually i.e. not using the web browser installer
  * then rename this file to configuration.php e.g.
  *
  * UNIX -> mv configuration.php-dist configuration.php
@@ -21,7 +21,7 @@ class JConfig {
 	/* Site Settings */
 	public $offline = '0';
 	public $offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';
-	public $sitename = 'Joomla!';				// Name of Joomla site
+	public $sitename = 'Molajo';				// Name of Joomla site
 	public $editor = 'tinymce';
 	public $list_limit = '20';
 	public $root_user = '42';
@@ -39,7 +39,7 @@ class JConfig {
 	public $secret = 'FBVtggIk5lAzEU9H'; 		// Change this to something more secure
 	public $gzip = '0';
 	public $error_reporting = '-1';
-	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';
+	public $helpurl = 'http://help.molajo.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '';
 	public $ftp_port = '';
 	public $ftp_user = '';
@@ -79,7 +79,7 @@ class JConfig {
 	public $debug_lang = '0';
 
 	/* Meta Settings */
-	public $MetaDesc = 'Joomla! - the dynamic portal engine and content management system';
+	public $MetaDesc = 'Molajo - the dynamic portal engine and content management system';
 	public $MetaKeys = 'joomla, Joomla';
 	public $MetaAuthor = '1';
 

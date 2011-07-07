@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Joomla! Installation define.
+ * Molajo Installation define.
  */
 
 //Defines.

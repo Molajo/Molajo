@@ -16,6 +16,6 @@ jimport('joomla.application.component.view');
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoInstallationViewRemove extends JView
+class JInstallationViewRemove extends JView
 {
 }

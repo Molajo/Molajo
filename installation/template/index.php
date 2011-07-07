@@ -46,7 +46,7 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 		<div id="header1">
 			<div id="header2">
 				<div id="header3">
-					<span class="logo"><a href="http://www.joomla.org" target="_blank"><img src="template/images/logo.png" alt="Joomla!" /></a></span>
+					<span class="logo"><a href="http://molajo.org" target="_blank"><img src="template/images/logo.png" alt="Molajo" /></a></span>
 					<span>Molajo <?php echo MOLAJOVERSION; ?> <?php echo JText::_('INSTL_INSTALLATION') ?></span>
 				</div>
 			</div>

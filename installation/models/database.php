@@ -20,7 +20,7 @@ require_once JPATH_INSTALLATION.'/helpers/database.php';
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoInstallationModelDatabase extends JModel
+class JInstallationModelDatabase extends JModel
 {
 
 	function initialise($options)
@@ -151,7 +151,7 @@ class MolajoInstallationModelDatabase extends JModel
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
 			if ($utfSupport) {
-				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla.sql';
+				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
 			} else {
 				$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/joomla_backward.sql';
 			}
@@ -204,7 +204,7 @@ class MolajoInstallationModelDatabase extends JModel
 				}
 			}
 
-			// Load the localise.sql for translating the data in joomla.sql/joomla_backwards.sql
+			// Load the localise.sql for translating the data in molajo.sql/joomla_backwards.sql
 			$dblocalise = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/localise.sql';
 			if (JFile::exists($dblocalise)) {
 				if (!$this->populateDatabase($db, $dblocalise)) {
@@ -259,7 +259,7 @@ class MolajoInstallationModelDatabase extends JModel
 		$options = JArrayHelper::toObject($options, 'JObject');
 
 		// Get a database object.
-		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+		$db = JInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
 		// Check for errors.
 		if (JError::isError($db)) {

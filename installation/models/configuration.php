@@ -19,7 +19,7 @@ require_once JPATH_INSTALLATION.'/helpers/database.php';
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoInstallationModelConfiguration extends JModel
+class JInstallationModelConfiguration extends JModel
 {
 	/**
 	 * @return boolean
@@ -74,7 +74,7 @@ class MolajoInstallationModelConfiguration extends JModel
 		$registry->set('secret', JUserHelper::genRandomPassword(16));
 		$registry->set('gzip', 0);
 		$registry->set('error_reporting', -1);
-		$registry->set('helpurl', 'http://help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}');
+		$registry->set('helpurl', 'http://help.molajo.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}');
 		$registry->set('ftp_host', $options->ftp_host);
 		$registry->set('ftp_port', $options->ftp_port);
 		$registry->set('ftp_user', $options->ftp_save ? $options->ftp_user : '');
@@ -193,7 +193,7 @@ class MolajoInstallationModelConfiguration extends JModel
 	function _createRootUser($options)
 	{
 		// Get a database object.
-		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+		$db = JInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
 		// Check for errors.
 		if (JError::isError($db)) {

@@ -17,7 +17,7 @@ jimport('joomla.application.component.helper');
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoInstallationController extends JController
+class JInstallationController extends JController
 {
 	/**
 	 * Method to display a view.
@@ -56,7 +56,7 @@ class MolajoInstallationController extends JController
 
 			switch ($vName) {
 				default:
-					$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
+					$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
 					break;
 			}
 

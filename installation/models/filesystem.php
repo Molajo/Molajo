@@ -18,7 +18,7 @@ jimport('joomla.filesystem.path');
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoInstallationModelFilesystem extends JModel
+class JInstallationModelFilesystem extends JModel
 {
 	/**
 	 * Find the ftp filesystem root for a given user/pass pair.
