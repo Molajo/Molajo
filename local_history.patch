@@ -1,0 +1,30 @@
+Index: libraries/joomla/application/application.php
+===================================================================
+--- libraries/joomla/application/application.php	(revision )
++++ libraries/joomla/application/application.php	(revision )
+@@ -1,0 +1,0 @@
+Index: libraries/joomla/application/cli.php
+===================================================================
+--- libraries/joomla/application/cli.php	(revision )
++++ libraries/joomla/application/cli.php	(revision )
+@@ -1,0 +1,0 @@
+Index: libraries/joomla/factory.php
+===================================================================
+--- libraries/joomla/factory.php	(revision )
++++ libraries/joomla/factory.php	(revision )
+@@ -1,0 +1,0 @@
+Index: libraries/molajo/includes/import.php
+===================================================================
+--- libraries/molajo/includes/import.php	(revision )
++++ libraries/molajo/includes/import.php	(revision )
+@@ -1,0 +1,0 @@
+Index: installation/configuration.php-dist
+===================================================================
+--- installation/configuration.php-dist	(revision )
++++ installation/configuration.php-dist	(revision )
+@@ -1,0 +1,0 @@
+Index: installation/models/configuration.php
+===================================================================
+--- installation/models/configuration.php	(revision )
++++ installation/models/configuration.php	(revision )
+@@ -1,0 +1,0 @@
