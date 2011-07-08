@@ -198,12 +198,12 @@ class JInstallationModelDatabase extends JModel
 			}
 			JFactory::$database = $db;
 			$installer = JInstaller::getInstance();
-			foreach ($extensions as $extension) {
-				if (!$installer->refreshManifestCache($extension->extension_id)) {
-					$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_REFRESH_MANIFEST_CACHE', $extension->name));
-					return false;
-				}
-			}
+//			foreach ($extensions as $extension) {
+//				if (!$installer->refreshManifestCache($extension->extension_id)) {
+//					$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_REFRESH_MANIFEST_CACHE', $extension->name));
+//					return false;
+//				}
+//			}
 
 			// Load the localise.sql for translating the data in molajo.sql/joomla_backwards.sql
 			$dblocalise = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/localise.sql';

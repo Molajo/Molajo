@@ -227,7 +227,7 @@ class JInstallationModelConfiguration extends JModel
 				. ', username = '.$db->quote($options->admin_user)
 				. ', email = '.$db->quote($options->admin_email)
 				. ', password = '.$db->quote($cryptpass)
-				. ', usertype = '.$db->quote('deprecated')		// Need to weed out where this is used
+//. ', usertype = '.$db->quote('deprecated')		// Need to weed out where this is used
 				. ', block = 0'
 				. ', sendEmail = 1'
 				. ', registerDate = '.$db->quote($installdate)
@@ -241,7 +241,7 @@ class JInstallationModelConfiguration extends JModel
 		}
 
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groups' .
+		$query = 'INSERT INTO #__user_groups (user_id, group_id) ' .
 				' SELECT '.$randomID.', 4';
 		$db->setQuery($query);
 		if (!$db->query()) {
@@ -249,7 +249,7 @@ class JInstallationModelConfiguration extends JModel
 			return false;
 		}
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groupings' .
+		$query = 'INSERT INTO #__user_groupings (user_id, grouping_id) ' .
 				' SELECT '.$randomID.', 4';
 		$db->setQuery($query);
 		if (!$db->query()) {
@@ -257,7 +257,7 @@ class JInstallationModelConfiguration extends JModel
 			return false;
 		}
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groupings' .
+		$query = 'INSERT INTO #__user_groupings (user_id, grouping_id) ' .
 				' SELECT '.$randomID.', 5';
 		$db->setQuery($query);
 		if (!$db->query()) {
@@ -274,7 +274,7 @@ class JInstallationModelConfiguration extends JModel
 			return false;
 		}
 		// Map the super admin to the their personal group
-		$query = 'INSERT INTO #__user_groups' .
+		$query = 'INSERT INTO #__user_groups (user_id, group_id) ' .
 				' SELECT '.$randomID.', 5';
 		$db->setQuery($query);
 		if (!$db->query()) {

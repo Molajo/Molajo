@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="250dcd1d-52ef-46e9-8218-850d76ad1c35" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/administrator/language/en-GB/en-GB.com_installer.ini" afterPath="$PROJECT_DIR$/administrator/language/en-GB/en-GB.com_installer.ini" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configuration.php" afterPath="$PROJECT_DIR$/configuration.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/installation/models/configuration.php" afterPath="$PROJECT_DIR$/installation/models/configuration.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/installation/models/database.php" afterPath="$PROJECT_DIR$/installation/models/database.php" />
     </list>
@@ -48,7 +49,7 @@
       <file leaf-file-name="database.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/installation/models/database.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="178" column="31" selection-start="6055" selection-end="6055" vertical-scroll-proportion="0.0">
+            <state line="213" column="17" selection-start="7255" selection-end="7256" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -57,7 +58,7 @@
       <file leaf-file-name="configuration.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/installation/models/configuration.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="273" column="13" selection-start="8379" selection-end="8379" vertical-scroll-proportion="0.41209564">
+            <state line="285" column="1" selection-start="8739" selection-end="8739" vertical-scroll-proportion="0.78340364">
               <folding />
             </state>
           </provider>
@@ -80,6 +81,7 @@
         <option value="$PROJECT_DIR$/installation/configuration.php-dist" />
         <option value="$PROJECT_DIR$/installation/models/database.php" />
         <option value="$PROJECT_DIR$/installation/models/configuration.php" />
+        <option value="$PROJECT_DIR$/configuration.php" />
       </list>
     </option>
   </component>
@@ -124,78 +126,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mysql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sql" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -268,7 +198,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="705" y="28" width="1688" height="1215" extended-state="0" />
+    <frame x="629" y="104" width="1688" height="1215" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -362,14 +292,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/installation/models/database.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="31" selection-start="6055" selection-end="6055" vertical-scroll-proportion="0.0">
+        <state line="213" column="17" selection-start="7255" selection-end="7256" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configuration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="30" selection-start="230" selection-end="230" vertical-scroll-proportion="-0.12154696">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/installation/models/configuration.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="273" column="13" selection-start="8379" selection-end="8379" vertical-scroll-proportion="0.41209564">
+        <state line="285" column="1" selection-start="8739" selection-end="8739" vertical-scroll-proportion="0.78340364">
           <folding />
         </state>
       </provider>
