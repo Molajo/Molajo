@@ -12,7 +12,6 @@ defined('MOLAJO') or die();
 @ini_set('magic_quotes_runtime', 0);
 @ini_set('zend.ze1_compatibility_mode', '0');
 
-define('MolajoVersion', '1.0');
 if (!class_exists('MolajoVersion')) {
     require JPATH_ROOT.'/includes/version.php';
 }
@@ -150,6 +149,7 @@ $files = JFolder::files(JOOMLA_LIBRARY.'/database/table', '\.php$', false, false
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/table/'.$file, 'JTable'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
+
 /** mysql */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database/mysqlquery.php', 'JDatabaseQueryMySQL');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database/mysqlexporter.php', 'JDatabaseExporterMySQL');
@@ -344,6 +344,29 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))).'Helper');
 }
 
+/** Document */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/renderer.php', 'MolajoDocumentRenderer');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/renderer.php', 'JDocumentRenderer');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/document.php', 'MolajoDocument');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/document.php', 'JDocument');
+$format = JRequest::getCmd('format', 'html');
+$formatClass = 'JDocument'.ucfirst($format);
+if (class_exists($formatClass)) {
+} else {
+    $path = MOLAJO_LIBRARY.'/document/'.$format.'/'.$format.'.php';
+    if (file_exists($path)) {
+        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/'.$format.'/'.$format.'.php', $formatClass);
+    } else {
+        $path = JOOMLA_LIBRARY.'/document/'.$format.'/'.$format.'.php';
+        if (file_exists($path)) {
+            $filehelper->requireClassFile(JOOMLA_LIBRARY.'/document/'.$format.'/'.$format.'.php', $formatClass);
+        } else {
+            JError::raiseError(500,JText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+        }
+    }
+}
+JRequest::setVar('format', $format);
+
 /** Controller */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/controller.php', 'JController');
 $files = JFolder::files(MOLAJO_LIBRARY.'/controllers', '\.php$', false, false);
@@ -364,6 +387,7 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(MOLAJO_LIBRARY.'/fields/'.$file, 'MolajoField'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
+
 /** Models */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/model.php', 'JModel');
 $files = JFolder::files(MOLAJO_LIBRARY.'/models', '\.php$', false, false);
@@ -380,13 +404,7 @@ foreach ($files as $file) {
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/view.php', 'JView');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/views/view.php', 'MolajoView');
 $files = JFolder::files(MOLAJO_LIBRARY.'/views', '\.php$', false, false);
-$format = JRequest::getCmd('format', 'html');
-if ($format == 'html' || $format == 'feed' || $format == 'raw') {
-} else {
-    $format == 'raw';
-}
 foreach ($files as $file) {
-
     if ($file == 'view.php') {
     } else {
         if (strpos($file, $format)) {

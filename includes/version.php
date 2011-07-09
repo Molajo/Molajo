@@ -44,7 +44,7 @@ final class MolajoVersion
 	public $RELEASE_TIME_ZONE = 'GMT';
 
 	/** @var  string  Copyright Notice. */
-	public $COPYRIGHT = 'Copyright (C) 2011 Molajo Contributors. All rights reserved.';
+	public $COPYRIGHT = 'Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.';
 
 	/** @var  string  Link text. */
 	public $LINK_TEXT = '<a href="http://molajo.org">Molajo</a> is Free Software released under the GNU General Public License.';

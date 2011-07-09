@@ -1,34 +1,45 @@
 <?php
 /**
- * @version		$Id: index.php 21652 2011-06-23 05:33:52Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  index.php
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+define('MOLAJO_APPLICATION', 'installation');
 
-define('_JEXEC', 1);
-
-define('JPATH_BASE', dirname(__FILE__));
-
+/**
+ * BEGIN: Common code for all clients
+ *
+ * JPATH_BASE (same as JPATH_ADMINISTRATOR, JPATH_INSTALLATION, JPATH_SITE)
+ * JPATH_ROOT is the root path for the Joomla install regardless of BASE
+ *
+ */
+define('MOLAJO', 'molajo');
 define('DS', DIRECTORY_SEPARATOR);
 
-if (file_exists(JPATH_BASE.'/defines.php')) {
-	include_once JPATH_BASE.'/defines.php';
+/** Override defines.php for client in current folder */
+if (file_exists(dirname(__FILE__).'/defines.php')) {
+	include_once dirname(__FILE__).'/defines.php';
 }
-if (!defined('_MOLAJO_DEFINES')) {
-	require_once dirname(__FILE__).'/includes/defines.php';
+
+/** JPATH_BASE - base for the client base ex /Users/amystephen/Sites/molajo/administrator */
+define('JPATH_BASE', dirname(__FILE__));
+
+/** JPATH_ROOT - base for the website ex /Users/amystephen/Sites/molajo */
+if (MOLAJO_APPLICATION == 'site') {
+    define('JPATH_ROOT', JPATH_BASE);
+} else {
+    $parts = explode(DS, JPATH_BASE);
+    array_pop($parts);
+    define('JPATH_ROOT', implode(DS, $parts));
 }
- 
-require_once JPATH_BASE.'/includes/framework.php';
 
-// Create the application object.
-$app = JFactory::getApplication('installation');
+/** Library */
+define('MOLAJO_LIBRARY', JPATH_ROOT.'/libraries/molajo');
 
-// Initialise the application.
-$app->initialise();
+/** Index.php - shared between clients */
+include_once MOLAJO_LIBRARY.'/index.php';
 
-// Render the document.
-$app->render();
-
-// Return the response.
-echo $app;
+/**
+ * END: Common code for all clients
+ */

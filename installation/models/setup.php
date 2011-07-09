@@ -8,8 +8,6 @@
 
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
-
 /**
  * Setup model for the Joomla Core Installer.
  *
@@ -75,7 +73,6 @@ class JInstallationModelSetup extends JModel
 		}
 
 		// Get the form.
-		jimport('joomla.form.form');
 		JForm::addFormPath(JPATH_COMPONENT.'/models/forms');
 		JForm::addFieldPath(JPATH_COMPONENT.'/models/fields');
 		JForm::addRulePath(JPATH_COMPONENT.'/models/rules');
@@ -155,7 +152,6 @@ class JInstallationModelSetup extends JModel
 		$app = JFactory::getApplication();
 
 		// Detect the native language.
-		jimport('joomla.language.helper');
 		$native = JLanguageHelper::detectLanguage();
 
 		if (empty($native)) {

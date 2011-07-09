@@ -32,124 +32,124 @@ class MolajoTableGroup extends JTable
 		parent::__construct('#__groups', 'id', $db);
 	}
 
-	/**
-	 * Method to check the current record to save
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since   11.1
-	 */
-	public function check()
-	{
-		// Validate the title.
-		if ((trim($this->title)) == '') {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE'));
-			return false;
-		}
+    /**
+     * Method to check the current record to save
+     *
+     * @return  boolean  True on success
+     *
+     * @since   11.1
+     */
+    public function check()
+    {
+        // Validate the title.
+        if ((trim($this->title)) == '') {
+            $this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE'));
+            return false;
+        }
 
-		// Check for a duplicate parent_id, title.
-		// There is a unique index on the (parend_id, title) field in the table.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true)
-			->select('COUNT(title)')
-			->from($this->_tbl)
-			->where('title = '.$db->quote(trim($this->title)))
-			->where('parent_id = '.(int) $this->parent_id)
-			->where('id <> '.(int) $this->id);
-		$db->setQuery($query);
+        // Check for a duplicate parent_id, title.
+        // There is a unique index on the (parend_id, title) field in the table.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true)
+            ->select('COUNT(title)')
+            ->from($this->_tbl)
+            ->where('title = '.$db->quote(trim($this->title)))
+            ->where('parent_id = '.(int) $this->parent_id)
+            ->where('id <> '.(int) $this->id);
+        $db->setQuery($query);
 
-		if ($db->loadResult() > 0) {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
-			return false;
-		}
+        if ($db->loadResult() > 0) {
+            $this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Method to recursively rebuild the nested set tree.
-	 *
-	 * @param   integer  The root of the tree to rebuild.
-	 * @param   integer  The left id to start with in building the tree.
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since   11.1
-	 */
-	public function rebuild($parent_id = 0, $left = 0)
-	{
-		// get the database object
-		$db = &$this->_db;
+    /**
+     * Method to recursively rebuild the nested set tree.
+     *
+     * @param   integer  The root of the tree to rebuild.
+     * @param   integer  The left id to start with in building the tree.
+     *
+     * @return  boolean  True on success
+     *
+     * @since   11.1
+     */
+    public function rebuild($parent_id = 0, $left = 0)
+    {
+        // get the database object
+        $db = &$this->_db;
 
-		// get all children of this node
-		$db->setQuery(
-			'SELECT id FROM '. $this->_tbl .
-			' WHERE parent_id='. (int)$parent_id .
-			' ORDER BY parent_id, title'
-		);
-		$children = $db->loadColumn();
+        // get all children of this node
+        $db->setQuery(
+            'SELECT id FROM '. $this->_tbl .
+            ' WHERE parent_id='. (int)$parent_id .
+            ' ORDER BY parent_id, title'
+        );
+        $children = $db->loadColumn();
 
-		// the right value of this node is the left value + 1
-		$right = $left + 1;
+        // the right value of this node is the left value + 1
+        $right = $left + 1;
 
-		// execute this function recursively over all children
-		for ($i=0,$n=count($children); $i < $n; $i++)
-		{
-			// $right is the current right value, which is incremented on recursion return
-			$right = $this->rebuild($children[$i], $right);
+        // execute this function recursively over all children
+        for ($i=0,$n=count($children); $i < $n; $i++)
+        {
+            // $right is the current right value, which is incremented on recursion return
+            $right = $this->rebuild($children[$i], $right);
 
-			// if there is an update failure, return false to break out of the recursion
-			if ($right === false) {
-				return false;
-			}
-		}
+            // if there is an update failure, return false to break out of the recursion
+            if ($right === false) {
+                return false;
+            }
+        }
 
-		// we've got the left value, and now that we've processed
-		// the children of this node we also know the right value
-		$db->setQuery(
-			'UPDATE '. $this->_tbl .
-			' SET lft='. (int)$left .', rgt='. (int)$right .
-			' WHERE id='. (int)$parent_id
-		);
-		// if there is an update failure, return false to break out of the recursion
-		if (!$db->query()) {
-			return false;
-		}
+        // we've got the left value, and now that we've processed
+        // the children of this node we also know the right value
+        $db->setQuery(
+            'UPDATE '. $this->_tbl .
+            ' SET lft='. (int)$left .', rgt='. (int)$right .
+            ' WHERE id='. (int)$parent_id
+        );
+        // if there is an update failure, return false to break out of the recursion
+        if (!$db->query()) {
+            return false;
+        }
 
-		// return the right value of this node + 1
-		return $right + 1;
-	}
+        // return the right value of this node + 1
+        return $right + 1;
+    }
 
-	/**
-	 * Inserts a new row if id is zero or updates an existing row in the database table
-	 *
-	 * @param   bool  $updateNulls	If false, null object variables are not updated
-	 *
-	 * @return  bool  True successful, false otherwise and an internal error message is set
-	 *
-	 * @since   11.1
-	 */
-	function store($updateNulls = false)
-	{
-		if ($result = parent::store($updateNulls)) {
-			// Rebuild the nested set tree.
-			$this->rebuild();
-		}
+    /**
+     * Inserts a new row if id is zero or updates an existing row in the database table
+     *
+     * @param   bool  $updateNulls	If false, null object variables are not updated
+     *
+     * @return  bool  True successful, false otherwise and an internal error message is set
+     *
+     * @since   11.1
+     */
+    function store($updateNulls = false)
+    {
+        if ($result = parent::store($updateNulls)) {
+            // Rebuild the nested set tree.
+            $this->rebuild();
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * Delete this object and it's dependancies
-	 *
-	 * @param   integer  $id	The primary key of the user group to delete.
-	 *
-	 * @return  mixed  Boolean or Exception.
-	 *
-	 * @since   11.1
-	 */
-	function delete($id = null)
-	{
+    /**
+     * Delete this object and it's dependancies
+     *
+     * @param   integer  $id	The primary key of the user group to delete.
+     *
+     * @return  mixed  Boolean or Exception.
+     *
+     * @since   11.1
+     */
+    function delete($id = null)
+    {
         // Cannot delete Groups
         //  1: Public
         //  2: Guest
@@ -164,39 +164,39 @@ class MolajoTableGroup extends JTable
             return new JException(JText::_('MOLAJO_SYSTEM_GROUP_CANNOT_BE_DELETED'));
         }
 
-		if ($id) {
-			$this->load($id);
-		}
+        if ($id) {
+            $this->load($id);
+        }
 
         /**
          * Retrieve Group and Children for the Group
          */
         $db = $this->getDbo();
-		$db->setQuery(
-			'SELECT c.id' .
-			' FROM '.$db->quoteName($this->_tbl).' AS c' .
-			' WHERE c.lft >= '.(int) $this->lft.' AND c.rgt <= '.$this->rgt .
+        $db->setQuery(
+            'SELECT c.id' .
+            ' FROM '.$db->quoteName($this->_tbl).' AS c' .
+            ' WHERE c.lft >= '.(int) $this->lft.' AND c.rgt <= '.$this->rgt .
             '   AND c.id > 4 '
-		);
-        
-		$groupIds = $db->loadColumn();
-		if (empty($groupIds)) {
-			return new JException(JText::_('MOLAJO_GROUP_DOES_NOT_EXIST'));
-		}
+        );
+
+        $groupIds = $db->loadColumn();
+        if (empty($groupIds)) {
+            return new JException(JText::_('MOLAJO_GROUP_DOES_NOT_EXIST'));
+        }
 
         /**
          * Retrieve Groupings Impacted for Later Rebuild
          */
-		$db->setQuery(
-			'SELECT DISTINCT grouping_id ' .
-			' FROM #__group_to_groupings ' .
-			' WHERE group_id IN ('.implode(',', $groupIds).')'
-		);
+        $db->setQuery(
+            'SELECT DISTINCT grouping_id ' .
+            ' FROM #__group_to_groupings ' .
+            ' WHERE group_id IN ('.implode(',', $groupIds).')'
+        );
 
-		$groupingIds = $db->loadColumn();
-		if (empty($groupingIds)) {
-			$groupingIds = array();
-		}
+        $groupingIds = $db->loadColumn();
+        if (empty($groupingIds)) {
+            $groupingIds = array();
+        }
 
         /**
          * Delete all Group Related Content
@@ -205,77 +205,70 @@ class MolajoTableGroup extends JTable
          * 3. #__permissions_groups
          * 4. #__group_to_groupings
          */
-		// Delete Group to Groupings
-		$db->setQuery(
-			'DELETE FROM #__group_to_groupings '.
-			' WHERE group_id IN ('.implode(',', $groupIds).')'
-		);
-		if ($db->query()) {
+        // Delete Group to Groupings
+        $db->setQuery(
+            'DELETE FROM #__group_to_groupings '.
+            ' WHERE group_id IN ('.implode(',', $groupIds).')'
+        );
+        if ($db->query()) {
         } else {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
+            $this->setError($db->getErrorMsg());
+            return false;
+        }
 
         // Retrieve Groupings that still remain
-		$db->setQuery(
-			'SELECT DISTINCT grouping_id ' .
-			' FROM #__group_to_groupings ' .
-			' WHERE grouping_id IN ('.implode(',', $groupingIds).')'
-		);
+        $db->setQuery(
+            'SELECT DISTINCT grouping_id ' .
+            ' FROM #__group_to_groupings ' .
+            ' WHERE grouping_id IN ('.implode(',', $groupingIds).')'
+        );
 
-		$groupingIdsRemaining = $db->loadColumn();
-		if (empty($groupingIdsRemaining)) {
-			$groupingIdsRemaining = array();
-		}
+        $groupingIdsRemaining = $db->loadColumn();
+        if (empty($groupingIdsRemaining)) {
+            $groupingIdsRemaining = array();
+        }
 
         $delete = array();
         foreach($groupingIds as $singleID) {
-            if (in_array($singleID, $groupingIdsRemaining) {
+            if (in_array($singleID, $groupingIdsRemaining)) {
             } else {
                 $delete[] = $singleID;
             }
         }
 
-		// Delete orphans
+        // Delete orphans
         $db->setQuery(
-			'DELETE FROM `#__`' .
-			' WHERE `group_id` IN ('.implode(',', $groupIds).')'
-		);
-		$db->query();
-        
+            'DELETE FROM `#__`' .
+            ' WHERE `group_id` IN ('.implode(',', $groupIds).')'
+        );
+        $db->query();
 
-		// Delete from group to groupings table
-		$query = $db->getQuery(true);
-		$query->set('rules='.str_repeat('replace(',4*count($groupIds)).'rules'.implode('',$replace));
-		$query->update('#__viewlevels');
-		$query->where('rules REGEXP "(,|\\\\[)('.implode('|', $groupIds).')(,|\\\\])"');
-		$db->setQuery($query);
-		if (!$db->query()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
 
-        // Delete from groupings table 
-        
+        // Delete from group to groupings table
+        $query = $db->getQuery(true);
+
+
+        // Delete from groupings table
+
         //
-        
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
 
-		// Delete Group and Children
-		$db->setQuery(
-			'DELETE FROM '.$db->quoteName($this->_tbl).
-			' WHERE id IN ('.implode(',', $groupIds).')'
-		);
-		if ($db->query()) {
+        // Check for a database error.
+        if ($db->getErrorNum()) {
+            $this->setError($db->getErrorMsg());
+            return false;
+        }
+
+        // Delete Group and Children
+        $db->setQuery(
+            'DELETE FROM '.$db->quoteName($this->_tbl).
+            ' WHERE id IN ('.implode(',', $groupIds).')'
+        );
+        if ($db->query()) {
         } else {
-			$this->setError($db->getErrorMsg());
-			return false;
-		}
-        
-		return true;
-	}
+            $this->setError($db->getErrorMsg());
+            return false;
+        }
+
+        return true;
+    }
 }

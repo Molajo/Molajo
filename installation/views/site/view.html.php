@@ -8,9 +8,6 @@
 
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
-jimport('joomla.html.html');
-
 /**
  * The HTML Joomla Core Site Configuration View
  *

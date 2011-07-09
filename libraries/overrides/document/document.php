@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Platform
- * @subpackage  Database
+ * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -10,11 +10,10 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Update table
- * Stores updates temporarily
+ * Document class, provides an easy interface to parse and display a document
  *
  * @package     Joomla.Platform
- * @subpackage  Table
+ * @subpackage  Document
  * @since       11.1
  */
-class JTableUpdate extends MolajoTableUpdate {}
+class JDocument extends MolajoDocument {}

@@ -1,55 +1,45 @@
 <?php
 /**
- * @version		$Id: index.php 20806 2011-02-21 19:44:59Z dextercowley $
- * @package		Joomla.Site
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  index.php
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+define('MOLAJO_APPLICATION', 'site');
 
-// Set flag that this is a parent file.
-define('_JEXEC', 1);
+/**
+ * BEGIN: Common code for all clients
+ *
+ * JPATH_BASE (same as JPATH_ADMINISTRATOR, JPATH_INSTALLATION, JPATH_SITE)
+ * JPATH_ROOT is the root path for the Joomla install regardless of BASE
+ *
+ */
+define('MOLAJO', 'molajo');
 define('DS', DIRECTORY_SEPARATOR);
 
-if (file_exists(dirname(__FILE__) . '/defines.php')) {
-	include_once dirname(__FILE__) . '/defines.php';
+/** Override defines.php for client in current folder */
+if (file_exists(dirname(__FILE__).'/defines.php')) {
+	include_once dirname(__FILE__).'/defines.php';
 }
 
-if (!defined('_JDEFINES')) {
-	define('JPATH_BASE', dirname(__FILE__));
-	require_once JPATH_BASE.'/includes/defines.php';
+/** JPATH_BASE - base for the client base ex /Users/amystephen/Sites/molajo/administrator */
+define('JPATH_BASE', dirname(__FILE__));
+
+/** JPATH_ROOT - base for the website ex /Users/amystephen/Sites/molajo */
+if (MOLAJO_APPLICATION == 'site') {
+    define('JPATH_ROOT', JPATH_BASE);
+} else {
+    $parts = explode(DS, JPATH_BASE);
+    array_pop($parts);
+    define('JPATH_ROOT', implode(DS, $parts));
 }
 
-require_once JPATH_BASE.'/includes/framework.php';
+/** Library */
+define('MOLAJO_LIBRARY', JPATH_ROOT.'/libraries/molajo');
 
-// Mark afterLoad in the profiler.
-JDEBUG ? $_PROFILER->mark('afterLoad') : null;
+/** Index.php - shared between clients */
+include_once MOLAJO_LIBRARY.'/index.php';
 
-// Instantiate the application.
-$app = JFactory::getApplication('site');
-
-// Initialise the application.
-$app->initialise();
-
-// Mark afterIntialise in the profiler.
-JDEBUG ? $_PROFILER->mark('afterInitialise') : null;
-
-// Route the application.
-$app->route();
-
-// Mark afterRoute in the profiler.
-JDEBUG ? $_PROFILER->mark('afterRoute') : null;
-
-// Dispatch the application.
-$app->dispatch();
-
-// Mark afterDispatch in the profiler.
-JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
-
-// Render the application.
-$app->render();
-
-// Mark afterRender in the profiler.
-JDEBUG ? $_PROFILER->mark('afterRender') : null;
-
-// Return the response.
-echo $app;
+/**
+ * END: Common code for all clients
+ */

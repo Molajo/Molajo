@@ -181,7 +181,6 @@ class JView extends JObject
 		if (JError::isError($result)) {
 			return $result;
 		}
-
 		echo $result;
 	}
 

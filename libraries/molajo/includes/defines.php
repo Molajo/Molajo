@@ -16,9 +16,14 @@ define('JPATH_ADMINISTRATOR',	JPATH_ROOT.'/administrator');
 define('JPATH_PLATFORM',		JPATH_ROOT.'/libraries');
 define('JPATH_PLUGINS',			JPATH_ROOT.'/plugins');
 define('JPATH_INSTALLATION',	JPATH_ROOT.'/installation');
-define('JPATH_THEMES',			JPATH_BASE.'/templates');
 define('JPATH_CACHE',			JPATH_BASE.'/cache');
 define('JPATH_MANIFESTS',		JPATH_ADMINISTRATOR.'/manifests');
+
+if (MOLAJO_APPLICATION == 'installation') {
+    define('JPATH_THEMES', JPATH_BASE);
+} else {
+    define('JPATH_THEMES', JPATH_BASE.'/templates');
+}
 
 /** JPATH_CONFIGURATION can be moved to hide the configuration.php file */
 define('JPATH_CONFIGURATION',	JPATH_ROOT);

@@ -8,9 +8,6 @@
 
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
-jimport('joomla.application.component.helper');
-
 /**
  * Base controller class for the Joomla Core Installer.
  *
@@ -30,6 +27,7 @@ class JInstallationController extends JController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
+
 		// Get the current URI to redirect to.
 		$uri		= JURI::getInstance();
 		$redirect	= base64_encode($uri);
@@ -47,7 +45,7 @@ class JInstallationController extends JController
 		$vName		= JRequest::getWord('view', $default_view);
 		$vFormat	= $document->getType();
 		$lName		= JRequest::getWord('layout', 'default');
-		
+
 		if (strcmp($vName, $default_view) == 0) {
 			JRequest::setVar('view', $default_view);
 		}

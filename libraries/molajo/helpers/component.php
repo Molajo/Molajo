@@ -20,23 +20,22 @@ class MolajoComponentHelper
 	/**
 	 * The component list cache
 	 *
-	 * @var		array
-	 * @since	1.0
+	 * @var    array
+	 * @since  11.1
 	 */
 	protected static $_components = array();
 
 	/**
 	 * Get the component information.
 	 *
-	 * @param	string	$option	The component option.
-	 * @param	boolean	$string	If set and a component does not exist, the enabled attribute will be set to false
+	 * @param   string   $option  The component option.
+	 * @param   boolean  $string  If set and the component does not exist, the enabled attribue will be set to false
 	 *
-	 * @return	object	An object with the fields for the component.
-	 * @since	1.5
+	 * @return  object   An object with the information for the component.
+	 * @since   11.1
 	 */
 	public static function getComponent($option, $strict = false)
 	{
-        // return $router->buildRoute(&$query, 'com_articles', 'article', 'articles', 'Article', '#__articles');
 		if (!isset(self::$_components[$option])) {
 			if (self::_load($option)){
 				$result = self::$_components[$option];
@@ -55,11 +54,11 @@ class MolajoComponentHelper
 	/**
 	 * Checks if the component is enabled
 	 *
-	 * @param	string	$option	The component option.
-	 * @param	boolean	$string	If set and a component does not exist, false will be returned
+	 * @param   string   $option  The component option.
+	 * @param   boolean  $string  If set and the component does not exist, false will be returned
 	 *
-	 * @return	boolean
-	 * @since	1.5
+	 * @return  boolean
+	 * @since   11.1
 	 */
 	public static function isEnabled($option, $strict = false)
 	{
@@ -71,11 +70,13 @@ class MolajoComponentHelper
 	/**
 	 * Gets the parameter object for the component
 	 *
-	 * @param	string		The option for the component.
-	 * @param	boolean		If set and a component does not exist, false will be returned
+	 * @param   string   $option  The option for the component.
+	 * @param   boolean  $strict  If set and the component does not exist, false will be returned
 	 *
-	 * @return	JRegistry	As of 1.6, this method returns a JRegistry (previous versions returned JParameter).
-	 * @since	1.5
+	 * @return  JRegistry  A JRegistry object.
+	 *
+	 * @see     JRegistry
+	 * @since   11.1
 	 */
 	public static function getParams($option, $strict = false)
 	{
@@ -87,10 +88,11 @@ class MolajoComponentHelper
 	/**
 	 * Render the component.
 	 *
-	 * @param	string	The component option.
+	 * @param   string  $option  The component option.
+	 * @param   array   $params  The component parameters
 	 *
-	 * @return	void
-	 * @since	1.5
+	 * @return  void
+	 * @since   11.1
 	 */
 	public static function renderComponent($option, $params = array())
 	{
@@ -111,26 +113,28 @@ class MolajoComponentHelper
 			return;
 		}
 
-		$scope = $app->scope; //record the scope
-		$app->scope = $option;  //set scope to component name
+		 // Record the scope
+		$scope = $app->scope;
+		// Set scope to component name
+		$app->scope = $option;
 
 		// Build the component path.
 		$option	= preg_replace('/[^A-Z0-9_\.-]/i', '', $option);
 		$file	= substr($option, 4);
 
 		// Define component path.
-		define('JPATH_COMPONENT',				JPATH_BASE.DS.'components'.DS.$option);
-		define('JPATH_COMPONENT_SITE',			JPATH_SITE.DS.'components'.DS.$option);
-		define('JPATH_COMPONENT_ADMINISTRATOR',	JPATH_ADMINISTRATOR.DS.'components'.DS.$option);
+		define('JPATH_COMPONENT',				JPATH_BASE . '/components/' . $option);
+		define('JPATH_COMPONENT_SITE',			JPATH_SITE . '/components/' . $option);
+		define('JPATH_COMPONENT_ADMINISTRATOR',	JPATH_ADMINISTRATOR . '/components/' . $option);
 
-		// get component path
-		if ($app->isAdmin() && file_exists(JPATH_COMPONENT.DS.'admin.'.$file.'.php')) {
-			$path = JPATH_COMPONENT.DS.'admin.'.$file.'.php';
+		// Get component path
+		if ($app->isAdmin() && file_exists(JPATH_COMPONENT . '/admin.'.$file.'.php')) {
+			$path = JPATH_COMPONENT . '/admin.'.$file.'.php';
 		} else {
-			$path = JPATH_COMPONENT.DS.$file.'.php';
+			$path = JPATH_COMPONENT . '/' . $file.'.php';
 		}
 
-		// If component disabled throw error
+		// If component is disabled throw error
 		if (!self::isEnabled($option) || !file_exists($path)) {
 			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
@@ -152,16 +156,16 @@ class MolajoComponentHelper
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		// Build the component toolbar
-
 		if (($path = MolajoApplicationHelper::getPath('toolbar')) && $app->isAdmin()) {
 			// Get the task again, in case it has changed
 			$task = JRequest::getString('task');
+
 			// Make the toolbar
 			include_once $path;
 		}
 
-		$app->scope = $scope; //revert the scope
+		// Revert the scope
+		$app->scope = $scope;
 
 		return $contents;
 	}
@@ -169,28 +173,25 @@ class MolajoComponentHelper
 	/**
 	 * Load the installed components into the _components property.
 	 *
-	 * @return	boolean
-	 * @since	1.5
+	 * @param   string  $option  The element value for the extension
+	 *
+	 * @return  bool  True on success
+	 * @since   11.1
 	 */
 	protected static function _load($option)
 	{
 		$db		= JFactory::getDbo();
-
 		$query	= $db->getQuery(true);
-
 		$query->select('extension_id AS "id", element AS "option", params, enabled');
 		$query->from('#__extensions');
 		$query->where('`type` = '.$db->quote('component'));
 		$query->where('`element` = '.$db->quote($option));
-
-//        $acl = new MolajoACL ();
-//        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
-
 		$db->setQuery($query);
 
 		$cache = JFactory::getCache('_system','callback');
 
 		self::$_components[$option] =  $cache->get(array($db, 'loadObject'), null, $option, false);
+
 		if ($error = $db->getErrorMsg() || empty(self::$_components[$option])) {
 			// Fatal error.
 			JError::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
@@ -200,7 +201,7 @@ class MolajoComponentHelper
 		// Convert the params to an object.
 		if (is_string(self::$_components[$option]->params)) {
 			$temp = new JRegistry;
-			$temp->loadJSON(self::$_components[$option]->params);
+			$temp->loadString(self::$_components[$option]->params);
 			self::$_components[$option]->params = $temp;
 		}
 

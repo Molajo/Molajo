@@ -44,6 +44,59 @@ class JInstallation extends JApplication
 		JURI::root(null, str_replace('/'.$this->getName(), '', JURI::base(true)));
 	}
 
+    /**
+     * Initialise the application.
+     *
+     * @param	array	$options
+     *
+     * @return	void
+     */
+    public function initialise(array $options = array())
+    {
+        //Get the localisation information provided in the localise.xml file.
+        $forced = $this->getLocalise();
+
+        // Check the request data for the language.
+        if (empty($options['language'])) {
+            $requestLang = JRequest::getCmd('lang', null);
+            if (!is_null($requestLang)) {
+                $options['language'] = $requestLang;
+            }
+        }
+
+        // Check the session for the language.
+        if (empty($options['language'])) {
+            $sessionLang = JFactory::getSession()->get('setup.language');
+            if (!is_null($sessionLang)) {
+                $options['language'] = $sessionLang;
+            }
+        }
+
+        // This could be a first-time visit - try to determine what the client accepts.
+        if (empty($options['language'])) {
+            if (!empty($forced['language'])) {
+                $options['language'] = $forced['language'];
+            } else {
+                jimport('joomla.language.helper');
+                $options['language'] = JLanguageHelper::detectLanguage();
+                if (empty($options['language'])) {
+                    $options['language'] = 'en-GB';
+                }
+            }
+        }
+
+        // Give the user English
+        if (empty($options['language'])) {
+            $options['language'] = 'en-GB';
+        }
+
+        // Set the language in the class
+        $conf = JFactory::getConfig();
+        $conf->set('language', $options['language']);
+        $conf->set('debug_lang', $forced['debug']);
+        $conf->set('sampledata', $forced['sampledata']);
+    }
+
 	/**
 	 * Render the application
 	 *
@@ -58,7 +111,6 @@ class JInstallation extends JApplication
 		switch($document->getType())
 		{
 			case 'html' :
-				// Set metadata
 				$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
 				break;
 			default :
@@ -70,14 +122,14 @@ class JInstallation extends JApplication
 		define('JPATH_COMPONENT_SITE', JPATH_SITE);
 		define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_ADMINISTRATOR);
 
+		// Import the controller.
+		require_once JPATH_COMPONENT.'/controller.php';
+		$controller	= JController::getInstance('JInstallation');
+
 		// Start the output buffer.
 		ob_start();
 
-		// Import the controller.
-		require_once JPATH_COMPONENT.'/controller.php';
-
 		// Execute the task.
-		$controller	= JController::getInstance('JInstallation');
 		$controller->execute(JRequest::getVar('task'));
 		$controller->redirect();
 
@@ -96,65 +148,11 @@ class JInstallation extends JApplication
 
 		$document->setBuffer($contents, 'installation');
 		$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
-
 		$data = $document->render(false, $params);
 		JResponse::setBody($data);
 		if (JFactory::getConfig()->get('debug_lang')) {
 			$this->debugLanguage();
 		}
-	}
-
-	/**
-	 * Initialise the application.
-	 *
-	 * @param	array	$options
-	 *
-	 * @return	void
-	 */
-	public function initialise(array $options = array())
-	{
-		//Get the localisation information provided in the localise.xml file.
-		$forced = $this->getLocalise();
-
-		// Check the request data for the language.
-		if (empty($options['language'])) {
-			$requestLang = JRequest::getCmd('lang', null);
-			if (!is_null($requestLang)) {
-				$options['language'] = $requestLang;
-			}
-		}
-
-		// Check the session for the language.
-		if (empty($options['language'])) {
-			$sessionLang = JFactory::getSession()->get('setup.language');
-			if (!is_null($sessionLang)) {
-				$options['language'] = $sessionLang;
-			}
-		}
-
-		// This could be a first-time visit - try to determine what the client accepts.
-		if (empty($options['language'])) {
-			if (!empty($forced['language'])) {
-				$options['language'] = $forced['language'];
-			} else {
-				jimport('joomla.language.helper');
-				$options['language'] = JLanguageHelper::detectLanguage();
-				if (empty($options['language'])) {
-					$options['language'] = 'en-GB';
-				}
-			}
-		}
-
-		// Give the user English
-		if (empty($options['language'])) {
-			$options['language'] = 'en-GB';
-		}
-
-		// Set the language in the class
-		$conf = JFactory::getConfig();
-		$conf->set('language', $options['language']);
-		$conf->set('debug_lang', $forced['debug']);
-		$conf->set('sampledata', $forced['sampledata']);
 	}
 
 	/**

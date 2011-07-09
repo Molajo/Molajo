@@ -39,7 +39,7 @@ class JConfig {
 	public $secret = 'FBVtggIk5lAzEU9H'; 		// Change this to something more secure
 	public $gzip = '0';
 	public $error_reporting = '-1';
-	public $helpurl = 'http://help.molajo.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';
+	public $helpurl = 'http://help.molajo.org/';
 	public $ftp_host = '';
 	public $ftp_port = '';
 	public $ftp_user = '';
@@ -79,8 +79,8 @@ class JConfig {
 	public $debug_lang = '0';
 
 	/* Meta Settings */
-	public $MetaDesc = 'Molajo - the dynamic portal engine and content management system';
-	public $MetaKeys = 'joomla, Joomla';
+	public $MetaDesc = 'Molajo - the Cats Meow';
+	public $MetaKeys = 'molajo, Molajo';
 	public $MetaAuthor = '1';
 
 	/* SEO Settings */
