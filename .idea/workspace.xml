@@ -2,6 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="250dcd1d-52ef-46e9-8218-850d76ad1c35" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/installation/includes/installation.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/article.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/banner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/blog.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/categories.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/category.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/contact.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/contact_form.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/integration.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/item.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/list.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/newsfeed.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/response.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/search.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/user.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/layouts/parameters/weblink.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/document/document.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/document/error/error.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/document/feed/feed.php" />
@@ -18,6 +34,11 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/document/raw/raw.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/document/renderer.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/document/xml/xml.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/includes/application.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/includes/exception.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/molajo/includes/installation.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/overrides/application/application.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/overrides/application/applicationexception.php" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/installation/includes/defines.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/installation/includes/framework.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/molajo/acl/klas.php" afterPath="" />
@@ -46,8 +67,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/installation/views/site/view.html.php" afterPath="$PROJECT_DIR$/installation/views/site/view.html.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/joomla/application/component/view.php" afterPath="$PROJECT_DIR$/libraries/joomla/application/component/view.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/helpers/component.php" afterPath="$PROJECT_DIR$/libraries/molajo/helpers/component.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/includes/defines.php" afterPath="$PROJECT_DIR$/libraries/molajo/includes/defines.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/includes/administrator.php" afterPath="$PROJECT_DIR$/libraries/molajo/includes/administrator.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/includes/import.php" afterPath="$PROJECT_DIR$/libraries/molajo/includes/import.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/includes/site.php" afterPath="$PROJECT_DIR$/libraries/molajo/includes/site.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/index.php" afterPath="$PROJECT_DIR$/libraries/molajo/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/molajo/table/group.php" afterPath="$PROJECT_DIR$/libraries/molajo/table/group.php" />
     </list>
@@ -72,19 +94,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/installation/includes/application.php">
+      <file leaf-file-name="installation.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/installation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="164" column="34" selection-start="4368" selection-end="4368" vertical-scroll-proportion="0.0">
+            <state line="44" column="5" selection-start="1120" selection-end="1120" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="document.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libraries/molajo/document/document.php">
+      <file leaf-file-name="import.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/import.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="816" column="82" selection-start="15388" selection-end="15388" vertical-scroll-proportion="0.56984276">
+            <state line="422" column="14" selection-start="20549" selection-end="20549" vertical-scroll-proportion="0.34820145">
               <folding />
             </state>
           </provider>
@@ -104,22 +126,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/installation/views/site/view.html.php" />
-        <option value="$PROJECT_DIR$/installation/views/language/tmpl/default.php" />
-        <option value="$PROJECT_DIR$/libraries/overrides/document/document.php" />
-        <option value="$PROJECT_DIR$/libraries/overrides/document/renderer.php" />
-        <option value="$PROJECT_DIR$/libraries/molajo/document/renderer.php" />
-        <option value="$PROJECT_DIR$/libraries/molajo/includes/defines.php" />
-        <option value="$PROJECT_DIR$/installation/views/database/view.html.php" />
-        <option value="$PROJECT_DIR$/installation/controller.php" />
         <option value="$PROJECT_DIR$/libraries/joomla/application/component/controller.php" />
         <option value="$PROJECT_DIR$/libraries/joomla/application/component/view.php" />
         <option value="$PROJECT_DIR$/installation/views/language/view.html.php" />
-        <option value="$PROJECT_DIR$/libraries/molajo/includes/import.php" />
         <option value="$PROJECT_DIR$/libraries/molajo/helpers/component.php" />
         <option value="$PROJECT_DIR$/installation/includes/framework.php" />
-        <option value="$PROJECT_DIR$/installation/includes/application.php" />
         <option value="$PROJECT_DIR$/libraries/molajo/document/document.php" />
+        <option value="$PROJECT_DIR$/installation/includes/installation.php" />
+        <option value="$PROJECT_DIR$/installation/includes/application.php" />
+        <option value="$PROJECT_DIR$/libraries/molajo/includes/installation.php" />
+        <option value="$PROJECT_DIR$/libraries/molajo/includes/site.php" />
+        <option value="$PROJECT_DIR$/libraries/molajo/includes/administrator.php" />
+        <option value="$PROJECT_DIR$/libraries/molajo/includes/application.php" />
+        <option value="$PROJECT_DIR$/libraries/overrides/application/application.php" />
+        <option value="$PROJECT_DIR$/libraries/overrides/application/applicationexception.php" />
+        <option value="$PROJECT_DIR$/libraries/molajo/includes/exception.php" />
+        <option value="$PROJECT_DIR$/libraries/molajo/includes/import.php" />
       </list>
     </option>
   </component>
@@ -197,7 +219,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="molajo" />
+              <option name="myItemId" value="overrides" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -215,33 +237,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="molajo" />
+              <option name="myItemId" value="overrides" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="includes" />
+              <option name="myItemId" value="application" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -259,37 +259,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="molajo" />
+              <option name="myItemId" value="overrides" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
+              <option name="myItemId" value="application" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
+              <option name="myItemId" value="module" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -307,19 +285,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="molajo" />
+              <option name="myItemId" value="overrides" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="document" />
+              <option name="myItemId" value="application" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
+              <option name="myItemId" value="component" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Molajo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Molajo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="renderer" />
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="joomla" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Molajo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Molajo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layouts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -334,114 +340,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="language" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="language" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="template" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="includes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Molajo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="installation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -465,10 +363,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/libraries/overrides/application" />
+      <recent name="$PROJECT_DIR$/layouts" />
+      <recent name="$PROJECT_DIR$/libraries/molajo/includes" />
+      <recent name="$PROJECT_DIR$/installation/includes" />
       <recent name="$PROJECT_DIR$/libraries/overrides/document" />
-      <recent name="$PROJECT_DIR$/libraries/molajo/document" />
-      <recent name="$PROJECT_DIR$/administrator/language/en-GB" />
-      <recent name="$PROJECT_DIR$/installation/sql/mysql" />
     </key>
   </component>
   <component name="RunManager">
@@ -527,16 +426,16 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3205699" sideWeight="0.98375183" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2233069" sideWeight="0.67937607" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2233069" sideWeight="0.6794301" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3206239" sideWeight="0.98375183" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -593,114 +492,114 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libraries/molajo/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1054" selection-end="1340" vertical-scroll-proportion="0.6756032">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/installation/views/complete/view.html.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="24" selection-start="423" selection-end="448" vertical-scroll-proportion="0.2100955">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/installation/views/database/view.html.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="37" selection-start="578" selection-end="578" vertical-scroll-proportion="0.5536424">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/joomla/application/application.php">
+    <entry file="file://$PROJECT_DIR$/libraries/joomla/application/input/cli.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/joomla/application/component/controller.php">
+    <entry file="file://$PROJECT_DIR$/includes/version.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="594" column="5" selection-start="14786" selection-end="14786" vertical-scroll-proportion="1.0614525">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/installation/controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="8" selection-start="882" selection-end="882" vertical-scroll-proportion="0.7115903">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/joomla/application/component/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="9" selection-start="3515" selection-end="3515" vertical-scroll-proportion="0.39526066">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/installation/views/language/view.html.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="30" selection-start="838" selection-end="838" vertical-scroll-proportion="0.6234004">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/joomla/application/component/helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="7" selection-start="0" selection-end="6049" vertical-scroll-proportion="0.28492138">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/molajo/helpers/application.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="26" selection-start="407" selection-end="430" vertical-scroll-proportion="0.24421832">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/molajo/helpers/component.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="58" selection-start="3632" selection-end="3647" vertical-scroll-proportion="1.3294348">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/installation/includes/router.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/molajo/document/html/renderer/head.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="14" selection-start="396" selection-end="417" vertical-scroll-proportion="0.24421832">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/import.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="351" column="12" selection-start="17501" selection-end="17546" vertical-scroll-proportion="0.45050877">
+        <state line="81" column="5" selection-start="1979" selection-end="1979" vertical-scroll-proportion="1.546716">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/installation/includes/application.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="34" selection-start="4368" selection-end="4368" vertical-scroll-proportion="0.0">
+        <state line="13" column="40" selection-start="397" selection-end="397" vertical-scroll-proportion="0.16087751">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/molajo/document/document.php">
+    <entry file="file://$PROJECT_DIR$/installation/includes/installation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="816" column="82" selection-start="15388" selection-end="15388" vertical-scroll-proportion="0.56984276">
+        <state line="17" column="12" selection-start="437" selection-end="437" vertical-scroll-proportion="0.24131627">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/application.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="2" selection-start="0" selection-end="461" vertical-scroll-proportion="0.28153566">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/site.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="42" selection-start="470" selection-end="470" vertical-scroll-proportion="0.28492138">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/administrator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="51" selection-start="529" selection-end="529" vertical-scroll-proportion="0.30164534">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/installation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="5" selection-start="1120" selection-end="1120" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/joomla/application/component/modelform.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/joomla/user/authentication.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="21" selection-start="830" selection-end="845" vertical-scroll-proportion="0.5901943">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/layouts/parameters/article.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/overrides/application/application.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="601" selection-end="648" vertical-scroll-proportion="0.3418647">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/overrides/application/applicationexception.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="50" selection-start="437" selection-end="481" vertical-scroll-proportion="0.24131627">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/application.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/exception.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="21" selection-start="437" selection-end="452" vertical-scroll-proportion="0.35967302">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/molajo/includes/import.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="422" column="14" selection-start="20549" selection-end="20549" vertical-scroll-proportion="0.34820145">
           <folding />
         </state>
       </provider>

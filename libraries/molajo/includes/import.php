@@ -16,7 +16,10 @@ if (!class_exists('MolajoVersion')) {
     require JPATH_ROOT.'/includes/version.php';
 }
 
-/** installation check */
+/**
+ *  Installation Check
+ */
+
 define('INSTALL_CHECK', false);
 if (MOLAJO_APPLICATION == 'installation'
     || (INSTALL_CHECK === false
@@ -37,7 +40,9 @@ if (MOLAJO_APPLICATION == 'installation'
     }
 }
 
-/** configuration and debugging */
+/**
+ *  Configuration and Debugging
+ */
 if (MOLAJO_APPLICATION == 'installation') {
     define('JDEBUG', false);
 } else {
@@ -64,7 +69,9 @@ if (MOLAJO_APPLICATION == 'installation') {
     }
 }
 
-/** file helper */
+/**
+ *  File Helper
+ */
 if (class_exists('MolajoFileHelper')) {
 } else {
     if (file_exists(MOLAJO_LIBRARY.'/helpers/file.php')) {
@@ -76,20 +83,42 @@ if (class_exists('MolajoFileHelper')) {
 }
 $filehelper = new MolajoFileHelper();
 
-/** framework */
+
+/** Application */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/categories.php', 'MolajoCategories');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/categories.php', 'JCategories');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/application.php', 'MolajoApplication');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/application.php', 'JApplication');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/exception.php', 'MolajoException');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/'.strtolower(MOLAJO_APPLICATION).'.php', 'Molajo'.ucfirst(MOLAJO_APPLICATION));
+if (MOLAJO_APPLICATION == 'administrator') {    /** no site helper */
+    require_once JPATH_BASE.'/includes/helper.php';
+}
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/application.php', 'MolajoApplicationHelper');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/helper.php', 'JApplicationHelper');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/cli.php', 'JCli');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/cli/daemon.php', 'JDaemon');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/component.php', 'MolajoComponentHelper');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/component/helper.php', 'JComponentHelper');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/module.php', 'MolajoModuleHelper');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/module/helper.php', 'JModuleHelper');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/categories.php', 'MolajoCategoriesHelper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/menu/menu.php', 'MolajoMenu');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/menu.php', 'JMenu');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/router.php', 'MolajoRouter');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/router.php', 'JRouter');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/user.php', 'MolajoUserHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/helper.php', 'JUserHelper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/user/user.php', 'MolajoUser');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/user.php', 'JUser');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/user/authentication.php', 'JAuthentication');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/uri.php', 'JURI');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilterInput');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filteroutput.php', 'JFilterOutput');
-
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/utility.php', 'JUtility');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/event.php', 'JEvent');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/dispatcher.php', 'JDispatcher');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilterInput');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filteroutput.php', 'JFilterOutput');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/utility.php', 'JUtility');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/string.php', 'JString');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/arrayhelper.php', 'JArrayHelper');
 
@@ -308,28 +337,6 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/rules/'.$file, 'JFormRule'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
-/** Application */
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/categories.php', 'MolajoCategories');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/categories.php', 'JCategories');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/application.php', 'JApplication');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/administrator.php', 'MolajoAdministrator');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/site.php', 'MolajoSite');
-if (MOLAJO_APPLICATION == 'administrator') {    /** no site helper */
-    require_once JPATH_BASE.'/includes/helper.php';
-}
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/application.php', 'MolajoApplicationHelper');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/helper.php', 'JApplicationHelper');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/cli.php', 'JCli');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/cli/daemon.php', 'JDaemon');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/component.php', 'MolajoComponentHelper');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/component/helper.php', 'JComponentHelper');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/module.php', 'MolajoModuleHelper');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/module/helper.php', 'JModuleHelper');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/categories.php', 'MolajoCategoriesHelper');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/router.php', 'MolajoRouter');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/router.php', 'JRouter');
-
 /** Plugins */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/plugin/plugin.php', 'JPlugin');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/plugin.php', 'MolajoPluginHelper');
@@ -413,7 +420,7 @@ foreach ($files as $file) {
     }
 }
 
-/** application */
+/** legacy support */
 jimport('joomla.application.component.controlleradmin');
 jimport('joomla.application.component.controllerform');
 jimport('joomla.application.component.modeladmin');

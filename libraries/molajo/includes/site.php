@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @package		Joomla.Site
  * @subpackage	Application
  */
-class MolajoSite extends JApplication
+class MolajoSite extends MolajoApplication
 {
 	/**
 	 * Currently active template

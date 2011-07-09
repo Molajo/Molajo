@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  * @final
  * @since		1.5
  */
-class MolajoAdministrator extends JApplication
+class MolajoAdministrator extends MolajoApplication
 {
 	/**
 	 * Class constructor
