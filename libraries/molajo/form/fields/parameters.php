@@ -1,13 +1,12 @@
 <?php
 /**
- * @version		$Id: Parameters.php 21007 2011-03-22 13:23:21Z infograf768 $
- * @package		Joomla.Framework
- * @subpackage	Form
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Form
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen, Cristina Solano. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('JPATH_BASE') or die();
-
+defined('MOLAJO') or die();
 /**
  * Form Field class for the Joomla Framework.
  *

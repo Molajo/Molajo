@@ -1,21 +1,12 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Form
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Cristina Solano. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('JPATH_PLATFORM') or die;
-
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
-jimport('joomla.form.helper');
-JFormHelper::loadFieldClass('groupedlist');
-
-// Import the com_menus helper.
-require_once realpath(JPATH_ADMINISTRATOR.'/components/com_menus/helpers/menus.php');
+defined('MOLAJO') or die();
 
 /**
  * Supports an HTML select list of menu item
@@ -24,7 +15,7 @@ require_once realpath(JPATH_ADMINISTRATOR.'/components/com_menus/helpers/menus.p
  * @subpackage  Form
  * @since       11.1
  */
-class JFormFieldMenuItem extends JFormFieldGroupedList
+class MolajoFormFieldMenuItem extends JFormFieldGroupedList
 {
 	/**
 	 * The form field type.

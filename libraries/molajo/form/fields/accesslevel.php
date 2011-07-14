@@ -1,13 +1,12 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Form
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen, Cristina Solano. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die();
 
 /**
  * Form Field class for the Joomla Framework.

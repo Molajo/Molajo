@@ -1,16 +1,12 @@
 <?php
 /**
- * @version     $id: filters.php
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- * @package     Molajo Hack for ACL
- *
- * @subpackage  JForm Override
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @package     Molajo
+ * @subpackage  Form
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Cristina Solano. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die();
-
 /**
  * Form Field class for the Joomla Framework.
  *

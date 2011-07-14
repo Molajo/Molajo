@@ -1,18 +1,12 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Form
- *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
- */
-
-/**
  * @package     Molajo
- * @subpackage  ACL
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @subpackage  Form
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen, Cristina Solano. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die();
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -22,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Form
  * @since       11.1
  */
-class JFormFieldRules extends JFormField
+class MolajoFormFieldRules extends JFormField
 {
 	/**
 	 * The form field type.

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version     $id: sql.php
  * @package     Molajo
- * @subpackage  JForm Override
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @subpackage  Form
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen, Cristina Solano. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die();
@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class JFormFieldSql extends JFormFieldList
+class MolajoFormFieldSql extends JFormFieldList
 {
 	/**
 	 * The form field type.
