@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/joomla/!svn/ver/21673/development/trunk/libraries/joomla/cache/storage
+END
+eaccelerator.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/cache/storage/eaccelerator.php
+END
+wincache.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/cache/storage/wincache.php
+END
+xcache.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/cache/storage/xcache.php
+END
+file.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21673/development/trunk/libraries/joomla/cache/storage/file.php
+END
+memcache.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/21586/development/trunk/libraries/joomla/cache/storage/memcache.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/cache/storage/index.html
+END
+cachelite.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/joomla/!svn/ver/21673/development/trunk/libraries/joomla/cache/storage/cachelite.php
+END
+apc.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/cache/storage/apc.php
+END

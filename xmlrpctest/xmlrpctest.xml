@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="component" version="1.5.0" method="upgrade">
+	<name>Xmlrpctest</name>
+	<creationDate>2010-10-29</creationDate>
+	<author>Antonio Duran</author>
+	<authorEmail>antonio.duran.terres@gmail.com</authorEmail>
+	<authorUrl>http://www.joomdle.com</authorUrl>
+	<license>This component in released under the GNU/GPL v3 or later license</license>
+	<version>0.1</version>
+	<description>Component to test XMLRPC in Joomla 1.6</description>
+
+	<!-- Public front end files -->
+	<files folder="site">
+		<filename>xmlrpctest.php</filename>
+		<filename>controller.php</filename>
+		<folder>controllers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+
+	<!-- Administrator back-end section -->
+	<administration>
+		<!-- Administration menu -->
+		<!--
+		<submenu>
+			<menu view="backup"
+				img="components/com_akeeba/assets/images/backup-16.png">BACKUP_NOW</menu>
+			<menu view="config"
+				img="components/com_akeeba/assets/images/config-16.png">CONFIGURATION</menu>
+			<menu view="buadmin"
+				img="components/com_akeeba/assets/images/bufa-16.png">ADMINISTER_BACKUP_FILES</menu>
+		</submenu>
+		-->
+
+		<!-- Back-end files -->
+		<files folder="admin">
+			<filename>xmlrpctest.php</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+		</files>
+
+	</administration>
+
+</install>

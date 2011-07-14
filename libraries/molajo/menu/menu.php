@@ -4,10 +4,10 @@
  * @subpackage  Application
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die();
 
 /**
  * MolajoMenu class
@@ -90,18 +90,13 @@ class MolajoMenu extends JObject
 			$info = MolajoApplicationHelper::getClientInfo($client, true);
 
 			$path = $info->path.'/includes/menu.php';
+
 			if (file_exists($path)) {
 				require_once $path;
 
 				// Create a JPathway object
 				$classname = 'MolajoMenu'.ucfirst($client);
 				$instance = new $classname($options);
-			}
-			else {
-				//$error = JError::raiseError(500, 'Unable to load menu: '.$client);
-				//TODO: Solve this
-				$error = null;
-				return $error;
 			}
 
 			$instances[$client] = & $instance;

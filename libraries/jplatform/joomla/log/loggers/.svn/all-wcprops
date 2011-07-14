@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/joomla/!svn/ver/21438/development/trunk/libraries/joomla/log/loggers
+END
+w3c.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/loggers/w3c.php
+END
+syslog.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/loggers/syslog.php
+END
+formattedtext.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/joomla/!svn/ver/21438/development/trunk/libraries/joomla/log/loggers/formattedtext.php
+END
+messagequeue.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/loggers/messagequeue.php
+END
+database.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/loggers/database.php
+END
+echo.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/loggers/echo.php
+END

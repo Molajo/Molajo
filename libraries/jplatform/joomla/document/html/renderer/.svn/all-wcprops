@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21593/development/trunk/libraries/joomla/document/html/renderer
+END
+message.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/joomla/!svn/ver/21463/development/trunk/libraries/joomla/document/html/renderer/message.php
+END
+modules.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/document/html/renderer/modules.php
+END
+module.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/joomla/!svn/ver/21593/development/trunk/libraries/joomla/document/html/renderer/module.php
+END
+component.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/document/html/renderer/component.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/document/html/renderer/index.html
+END
+head.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/joomla/!svn/ver/21567/development/trunk/libraries/joomla/document/html/renderer/head.php
+END

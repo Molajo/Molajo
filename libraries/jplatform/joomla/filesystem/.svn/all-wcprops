@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/joomla/!svn/ver/21756/development/trunk/libraries/joomla/filesystem
+END
+file.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21756/development/trunk/libraries/joomla/filesystem/file.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/filesystem/index.html
+END
+folder.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21756/development/trunk/libraries/joomla/filesystem/folder.php
+END
+helper.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21518/development/trunk/libraries/joomla/filesystem/helper.php
+END
+stream.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21347/development/trunk/libraries/joomla/filesystem/stream.php
+END
+archive.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21518/development/trunk/libraries/joomla/filesystem/archive.php
+END
+path.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21518/development/trunk/libraries/joomla/filesystem/path.php
+END

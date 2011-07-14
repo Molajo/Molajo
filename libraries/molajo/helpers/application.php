@@ -215,7 +215,7 @@ class MolajoApplicationHelper
 
 			case 'html':
 			case 'front_html':
-				if (!($result = self::_checkPath(DS.'templates'.DS. JApplication::getTemplate() .DS.'components'.DS. $name .'.html.php', 0))) {
+				if (!($result = self::_checkPath(DS.'templates'.DS. MolajoApplication::getTemplate() .DS.'components'.DS. $name .'.html.php', 0))) {
 					$result = self::_checkPath(DS.'components'.DS. $user_option .DS. $name .'.html.php', 0);
 				}
 				break;

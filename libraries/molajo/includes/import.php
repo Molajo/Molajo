@@ -1,8 +1,7 @@
 <?php
 /**
- * @version     $id: joomla.php
  * @package     Molajo
- * @subpackage  Load Joomla Framework
+ * @subpackage  Load Framework
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -13,7 +12,7 @@ defined('MOLAJO') or die();
 @ini_set('zend.ze1_compatibility_mode', '0');
 
 if (!class_exists('MolajoVersion')) {
-    require JPATH_ROOT.'/includes/version.php';
+    require MOLAJO_LIBRARY.'/includes/version.php';
 }
 
 /**
@@ -62,9 +61,9 @@ if (MOLAJO_APPLICATION == 'installation') {
         ini_set('display_errors', 1);
     }
     define('JDEBUG', $CONFIG->debug);
+    jimport('joomla.error.profiler');
     unset($CONFIG);
     if (JDEBUG) {
-        jimport('joomla.error.profiler');
         $_PROFILER = JProfiler::getInstance('Application');
     }
 }
@@ -83,15 +82,15 @@ if (class_exists('MolajoFileHelper')) {
 }
 $filehelper = new MolajoFileHelper();
 
-
 /** Application */
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/profiler.php', 'JProfiler');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/categories.php', 'MolajoCategories');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/categories.php', 'JCategories');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/application.php', 'MolajoApplication');
+require_once JPATH_BASE.'/includes/application.php';
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/application.php', 'JApplication');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/exception.php', 'MolajoException');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/'.strtolower(MOLAJO_APPLICATION).'.php', 'Molajo'.ucfirst(MOLAJO_APPLICATION));
 if (MOLAJO_APPLICATION == 'administrator') {    /** no site helper */
     require_once JPATH_BASE.'/includes/helper.php';
 }
@@ -199,22 +198,41 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database/sqlsrv.php', 'J
 /** environment */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/response.php', 'JResponse');
 
+/** mail */
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/mail/helper.php', 'JMailHelper');
+$filehelper->requireClassFile(JPATH_PLATFORM.'/phpmailer/phpmailer.php', 'PHPMailer');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/mail/mail.php', 'MolajoMail');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/mail/mail.php', 'JMail');
+
 /** Utilities */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/date.php', 'MolajoDate');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/utilities/date.php', 'JDate');
 $files = JFolder::files(JOOMLA_LIBRARY.'/utilities', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    if ($file == 'date') {
+    } else {
+        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 
 /** registry */
-jimport('joomla.registry.registry');
+JLoader::register('JRegistryFormat', JOOMLA_LIBRARY.'/registry/format.php');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/registry/registry.php', 'MolajoRegistry');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
 
 /** Language */
 jimport('joomla.language.helper');
 
 /** cache */
+/** HTML Root */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/controller.php', 'JCacheController');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/storage.php', 'JCacheStorage');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/cache.php', 'JCache');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/cache/controller/page.php', 'MolajoCacheControllerPage');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/cache/controller/page.php', 'JCacheControllerPage');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/cache/controller/view.php', 'MolajoCacheControllerView');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/cache/controller/view.php', 'JCacheControllerView');
+
 $files = JFolder::files(JOOMLA_LIBRARY.'/cache/controller', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/controller/'.$file, 'JCacheController'.ucfirst(substr($file, 0, strpos($file, '.'))));
@@ -285,6 +303,10 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/toolbar/button/'.$file, 'JButton'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 /** HTML Root */
+JLoader::register('JElement', JOOMLA_LIBRARY.'/html/parameter/element.php');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/parameter.php', 'MolajoParameter');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/html/parameter.php', 'JParameter');
+
 /** Molajo library */
 $files = JFolder::files(MOLAJO_LIBRARY.'/html', '\.php$', false, false);
 foreach ($files as $file) {

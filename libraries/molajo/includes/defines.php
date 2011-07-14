@@ -13,7 +13,7 @@ define('OVERRIDE', 1);
 
 define('JPATH_SITE',			JPATH_ROOT);
 define('JPATH_ADMINISTRATOR',	JPATH_ROOT.'/administrator');
-define('JPATH_PLATFORM',		JPATH_ROOT.'/libraries');
+define('JPATH_PLATFORM',		JPATH_ROOT.'/libraries/jplatform');
 define('JPATH_PLUGINS',			JPATH_ROOT.'/plugins');
 define('JPATH_INSTALLATION',	JPATH_ROOT.'/installation');
 define('JPATH_CACHE',			JPATH_BASE.'/cache');
@@ -35,7 +35,7 @@ define('JPATH_LIBRARIES',		JPATH_ROOT.'/libraries');
 define('OVERRIDES_LIBRARY',		JPATH_ROOT.'/libraries/overrides');
 
 /** joomla */
-define('JOOMLA_LIBRARY',		JPATH_ROOT.'/libraries/joomla');
+define('JOOMLA_LIBRARY',		JPATH_ROOT.'/libraries/jplatform/joomla');
 
 /** Configuration Fields **/
 define('MOLAJO_CONFIG_OPTION_ID_FIELDS', 1);

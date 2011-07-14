@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Xmlrpctest Default Layout">
+		<message>
+			<![CDATA[XMLRPCTEST DEFAULT LAYOUT DESCRIPTION]]>
+		</message>
+	</layout>
+	<state>
+		<name>Xmlrpctest Default Layout</name>
+		<description>Xmlrpctest DEFAULT LAYOUT DESCRIPTION</description>
+		<params>
+			<param name="enrollable_only" type="radio" default="0" label="Mostrar solamente cursos abiertos para inscripciones" description="PARAMENROLLABLEONLY">
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                        </param>
+
+		</params>
+		<advanced>
+
+		</advanced>
+	</state>
+</metadata>

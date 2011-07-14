@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/installer
+END
+installer.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/installer/installer.php
+END
+librarymanifest.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/installer/librarymanifest.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/installer/index.html
+END
+helper.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21699/development/trunk/libraries/joomla/installer/helper.php
+END
+extension.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/installer/extension.php
+END
+packagemanifest.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/installer/packagemanifest.php
+END

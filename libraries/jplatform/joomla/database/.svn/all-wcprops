@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/joomla/!svn/ver/21768/development/trunk/libraries/joomla/database
+END
+database.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/database/database.php
+END
+databasequery.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/21639/development/trunk/libraries/joomla/database/databasequery.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/database/index.html
+END
+table.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/joomla/!svn/ver/21586/development/trunk/libraries/joomla/database/table.php
+END
+databaseexception.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/database/databaseexception.php
+END
+tablenested.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21586/development/trunk/libraries/joomla/database/tablenested.php
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/joomla/!svn/ver/21438/development/trunk/libraries/joomla/log
+END
+logexception.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/logexception.php
+END
+logentry.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/joomla/!svn/ver/21347/development/trunk/libraries/joomla/log/logentry.php
+END
+logger.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/logger.php
+END
+log.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/log/log.php
+END

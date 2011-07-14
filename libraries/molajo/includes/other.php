@@ -1,8 +1,7 @@
 <?php
 /**
- * @version     $id: other.php
  * @package     Molajo
- * @subpackage  Define other libraries
+ * @subpackage  Other
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */

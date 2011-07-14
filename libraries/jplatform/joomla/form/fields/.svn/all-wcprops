@@ -1,0 +1,251 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/joomla/!svn/ver/21744/development/trunk/libraries/joomla/form/fields
+END
+rules.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/rules.php
+END
+templatestyle.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/joomla/!svn/ver/21650/development/trunk/libraries/joomla/form/fields/templatestyle.php
+END
+timezone.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/timezone.php
+END
+imagelist.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/imagelist.php
+END
+textarea.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/textarea.php
+END
+radio.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/radio.php
+END
+groupedlist.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/groupedlist.php
+END
+file.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/file.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/form/fields/index.html
+END
+category.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/category.php
+END
+integer.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/integer.php
+END
+calendar.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/calendar.php
+END
+checkbox.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/checkbox.php
+END
+cachehandler.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/cachehandler.php
+END
+helpsite.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21464/development/trunk/libraries/joomla/form/fields/helpsite.php
+END
+user.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/user.php
+END
+folderlist.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/folderlist.php
+END
+sql.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/sql.php
+END
+combo.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/combo.php
+END
+contentlanguage.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/contentlanguage.php
+END
+usergroup.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/usergroup.php
+END
+modulelayout.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/modulelayout.php
+END
+language.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/language.php
+END
+filelist.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/filelist.php
+END
+tel.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/tel.php
+END
+password.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/password.php
+END
+email.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/email.php
+END
+list.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/list.php
+END
+menu.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/menu.php
+END
+accesslevel.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/accesslevel.php
+END
+media.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21647/development/trunk/libraries/joomla/form/fields/media.php
+END
+editors.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/editors.php
+END
+componentlayout.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/componentlayout.php
+END
+hidden.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/hidden.php
+END
+spacer.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/spacer.php
+END
+editor.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/editor.php
+END
+text.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/text.php
+END
+url.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/url.php
+END
+checkboxes.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/checkboxes.php
+END
+menuitem.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21744/development/trunk/libraries/joomla/form/fields/menuitem.php
+END
+sessionhandler.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/form/fields/sessionhandler.php
+END

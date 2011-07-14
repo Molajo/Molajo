@@ -8,10 +8,6 @@
 
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
-jimport('joomla.filesystem.file');
-jimport('joomla.filesystem.path');
-
 /**
  * Filesystem configuration model for the Joomla Core Installer.
  *
@@ -32,8 +28,6 @@ class JInstallationModelFilesystem extends JModel
 	{
 		// Get the options as a JObject for easier handling.
 		$options = JArrayHelper::toObject($options, 'JObject');
-
-		jimport('joomla.client.ftp');
 
 		// Connect and login to the FTP server.
 		// Use binary transfer mode to be able to compare files.
@@ -90,7 +84,7 @@ class JInstallationModelFilesystem extends JModel
 
 		// Check all possible paths for the real Joomla installation by comparing version files.
 		$rootPath = false;
-		$checkValue = file_get_contents(JPATH_ROOT.'/includes/version.php');
+		$checkValue = file_get_contents(MOLAJO_LIBRARY.'/includes/version.php');
 		foreach ($paths as $tmp)
 		{
 			$filePath = rtrim($tmp, '/').'/includes/version.php';
@@ -126,8 +120,6 @@ class JInstallationModelFilesystem extends JModel
 	{
 		// Get the options as a JObject for easier handling.
 		$options = JArrayHelper::toObject($options, 'JObject');
-
-		jimport('joomla.client.ftp');
 
 		// Connect and login to the FTP server.
 		@$ftp = JFTP::getInstance($options->get('ftp_host'), $options->get('ftp_port'));
@@ -283,7 +275,6 @@ class JInstallationModelFilesystem extends JModel
 	 */
 	public static function checkSettings($user, $pass, $root, $host = '127.0.0.1', $port = '21')
 	{
-		jimport('joomla.client.ftp');
 		$ftp = JFTP::getInstance($host, $port);
 
 		// Since the root path will be trimmed when it gets saved to configuration.php, we want to test with the same value as well
@@ -422,7 +413,6 @@ class JInstallationModelFilesystem extends JModel
 
 		if ($ftpFlag == true) {
 			// Connect the FTP client
-			jimport('joomla.client.ftp');
 			$client = JFTP::getInstance($options['ftp_host'], $options['ftp_port']);
 			$client->login($options['ftp_user'], $options['ftp_pass']);
 
@@ -489,7 +479,6 @@ class JInstallationModelFilesystem extends JModel
 
 		if ($ftpFlag == true) {
 			// Connect the FTP client
-			jimport('joomla.client.ftp');
 			$ftp = JFTP::getInstance($app->getCfg('ftp_host'), $app->getCfg('ftp_port'));
 			$ftp->login($app->getCfg('ftp_user'), $app->getCfg('ftp_pass'));
 

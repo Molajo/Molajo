@@ -8,7 +8,7 @@
 define('MOLAJO_APPLICATION', 'administrator');
 
 /**
- * BEGIN: Common code for all clients
+ * BEGIN: Common code for all Applications
  *
  * JPATH_BASE (same as JPATH_ADMINISTRATOR, JPATH_INSTALLATION, JPATH_SITE)
  * JPATH_ROOT is the root path for the Joomla install regardless of BASE
@@ -17,15 +17,23 @@ define('MOLAJO_APPLICATION', 'administrator');
 define('MOLAJO', 'molajo');
 define('DS', DIRECTORY_SEPARATOR);
 
-/** Override defines.php for client in current folder */
+/** Override defines.php for Application in current folder */
 if (file_exists(dirname(__FILE__).'/defines.php')) {
 	include_once dirname(__FILE__).'/defines.php';
 }
 
-/** JPATH_BASE - base for the client base ex /Users/amystephen/Sites/molajo/administrator */
+/**
+ * JPATH_BASE - base for the Application, examples:
+ * 0 /Users/amystephen/Sites/molajo/
+ * 1 /Users/amystephen/Sites/molajo/administrator
+ * 2 /Users/amystephen/Sites/molajo/installation
+ */
 define('JPATH_BASE', dirname(__FILE__));
 
-/** JPATH_ROOT - base for the website ex /Users/amystephen/Sites/molajo */
+/**
+ * JPATH_ROOT - base for the website, example:
+ * ex /Users/amystephen/Sites/molajo
+ */
 if (MOLAJO_APPLICATION == 'site') {
     define('JPATH_ROOT', JPATH_BASE);
 } else {
@@ -34,12 +42,12 @@ if (MOLAJO_APPLICATION == 'site') {
     define('JPATH_ROOT', implode(DS, $parts));
 }
 
-/** Library */
+/** Molajo Library */
 define('MOLAJO_LIBRARY', JPATH_ROOT.'/libraries/molajo');
 
-/** Index.php - shared between clients */
+/** index.php - shared between Applications */
 include_once MOLAJO_LIBRARY.'/index.php';
 
 /**
- * END: Common code for all clients
+ * END: Common code for all Applications
  */

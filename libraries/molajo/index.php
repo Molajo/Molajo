@@ -15,7 +15,7 @@ require_once MOLAJO_LIBRARY.'/includes/phpversion.php';
 /** defines */
 require_once MOLAJO_LIBRARY.'/includes/defines.php';
 /** joomla platform */
-require_once JPATH_LIBRARIES.'/import.php';
+require_once JPATH_PLATFORM.'/import.php';
 /** molajo and joomla platform */
 require_once MOLAJO_LIBRARY.'/includes/import.php';
 /** other libraries */
@@ -25,6 +25,7 @@ JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /** INITIALIZE */
 $app = JFactory::getApplication(MOLAJO_APPLICATION);
+
 if (MOLAJO_APPLICATION == 'administrator') {
     $app->initialise(array(
         'language' => $app->getUserState('application.lang', 'lang')

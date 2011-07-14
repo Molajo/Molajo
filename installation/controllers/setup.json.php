@@ -25,6 +25,8 @@ class JInstallationControllerSetup extends JController
 	 */
 	public function setlanguage()
 	{
+        echo 'adfhlasjldfkasfd';
+        die();
 		// Check for request forgeries.
 		JRequest::checkToken() or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
 		

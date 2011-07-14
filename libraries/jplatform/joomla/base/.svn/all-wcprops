@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/joomla/!svn/ver/21586/development/trunk/libraries/joomla/base
+END
+observer.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/base/observer.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/base/index.html
+END
+tree.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/base/tree.php
+END
+adapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/joomla/!svn/ver/21518/development/trunk/libraries/joomla/base/adapter.php
+END
+object.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/joomla/!svn/ver/21586/development/trunk/libraries/joomla/base/object.php
+END
+node.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/base/node.php
+END
+observable.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/base/observable.php
+END
+adapterinstance.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/joomla/!svn/ver/21325/development/trunk/libraries/joomla/base/adapterinstance.php
+END

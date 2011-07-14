@@ -1,26 +1,21 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Application
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die();
 
 /**
- * Base class for a Joomla! application.
+ * Base class for an application.
  *
  * Acts as a Factory class for application specific objects and provides many
  * supporting API functions. Derived clases should supply the route(), dispatch()
  * and render() functions.
- *
- * @package     Joomla.Platform
- * @subpackage  Application
- * @since       11.1
  */
-
 class MolajoApplication extends JObject
 {
 	/**
@@ -81,8 +76,6 @@ class MolajoApplication extends JObject
 	 */
 	public function __construct($config = array())
 	{
-
-		// Set the view name.
 		$this->_name		= $this->getName();
 		$this->_clientId	= $config['clientId'];
 
@@ -126,9 +119,10 @@ class MolajoApplication extends JObject
 	 * @return  MolajoApplication A MolajoApplication object.
 	 * @since   11.1
 	 */
-	public static function getInstance($client, $config = array(), $prefix = 'J')
+	public static function getInstance($client, $config = array(), $prefix = 'Molajo')
 	{
 		static $instances;
+        $prefix = 'Molajo';
 
 		if (!isset($instances)) {
 			$instances = array();
@@ -137,8 +131,8 @@ class MolajoApplication extends JObject
 		if (empty($instances[$client])) {
 			// Load the router object.
 			$info = MolajoApplicationHelper::getClientInfo($client, true);
-
 			$path = $info->path . '/includes/application.php';
+
 			if (file_exists($path)) {
 				require_once $path;
 
@@ -204,7 +198,6 @@ class MolajoApplication extends JObject
 	 */
 	public function route()
 	{
-		// Get the full request URI.
 		$uri	= clone JURI::getInstance();
 
 		$router = $this->getRouter();
@@ -464,7 +457,7 @@ class MolajoApplication extends JObject
 
 		if (empty($name)) {
 			$r = null;
-			if (!preg_match('/J(.*)/i', get_class($this), $r)) {
+			if (!preg_match('/Molajo(.*)/i', get_class($this), $r)) {
 				JError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_APPLICATION_GET_NAME'));
 			}
 			$name = strtolower($r[1]);
@@ -817,7 +810,7 @@ class MolajoApplication extends JObject
 			$name = $this->_name;
 		}
 
-		$menu = JMenu::getInstance($name, $options);
+		$menu = MolajoMenu::getInstance($name, $options);
 
 		if (JError::isError($menu)) {
 			return null;
@@ -851,9 +844,8 @@ class MolajoApplication extends JObject
 	 *
 	 * @since   11.1
 	 */
-	protected function _createConfiguration($file)
+	protected function _createConfiguration($file = null)
 	{
-
 		require_once $file;
 
 		// Create the JConfig object.

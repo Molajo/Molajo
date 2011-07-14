@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component
+END
+modeladmin.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/modeladmin.php
+END
+modellist.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/modellist.php
+END
+model.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/model.php
+END
+modelitem.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/joomla/!svn/ver/21764/development/trunk/libraries/joomla/application/component/modelitem.php
+END
+controller.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/controller.php
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/joomla/!svn/ver/21568/development/trunk/libraries/joomla/application/component/index.html
+END
+modelform.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/modelform.php
+END
+helper.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/joomla/!svn/ver/21764/development/trunk/libraries/joomla/application/component/helper.php
+END
+controllerform.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/controllerform.php
+END
+controlleradmin.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/joomla/!svn/ver/21766/development/trunk/libraries/joomla/application/component/controlleradmin.php
+END
+view.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/joomla/!svn/ver/21586/development/trunk/libraries/joomla/application/component/view.php
+END
