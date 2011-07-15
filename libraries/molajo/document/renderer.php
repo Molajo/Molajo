@@ -19,7 +19,7 @@ defined('JPATH_PLATFORM') or die;
 class MolajoDocumentRenderer extends JObject
 {
 	/**
-	* Reference to the JDocument object that instantiated the renderer
+	* Reference to the MolajoDocument object that instantiated the renderer
 	*
 	* @var    object
 	* @since  11.1
@@ -37,7 +37,7 @@ class MolajoDocumentRenderer extends JObject
 	/**
 	* Class constructor
 	*
-	* @param   object   $doc  A reference to the JDocument object that instantiated the renderer
+	* @param   object   $doc  A reference to the MolajoDocument object that instantiated the renderer
 	*
 	* @since   11.1
 	*/

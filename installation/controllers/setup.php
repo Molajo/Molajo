@@ -26,7 +26,9 @@ class JInstallationControllerSetup extends JController
 	{
 		// Get the application object.
 		$app = JFactory::getApplication();
-
+echo 'here';
+        var_dump($app);
+        die();
 		// Check for potentially unwritable session
 		$session = JFactory::getSession();
 

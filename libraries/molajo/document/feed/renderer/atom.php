@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * JDocumentRenderer_Atom is a feed that implements the atom specification
+ * MolajoDocumentRenderer_Atom is a feed that implements the atom specification
  *
  * Please note that just by using this class you won't automatically
  * produce valid atom files. For example, you have to specify either an editor
@@ -22,7 +22,7 @@ defined('JPATH_PLATFORM') or die;
  * @since       11.1
  */
 
- class JDocumentRendererAtom extends JDocumentRenderer
+ class MolajoDocumentRendererAtom extends MolajoDocumentRenderer
  {
 	/**
 	 * Document mime type

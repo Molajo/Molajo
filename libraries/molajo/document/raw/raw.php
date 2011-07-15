@@ -19,7 +19,7 @@ defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.document.document');
 
-class JDocumentRAW extends JDocument
+class MolajoDocumentRAW extends MolajoDocument
 {
 
 	/**

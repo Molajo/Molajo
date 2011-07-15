@@ -255,7 +255,7 @@ class MolajoDocument extends JObject
 			}
 
 			// Determine the path and class
-			$class = 'JDocument'.$type;
+			$class = 'MolajoDocument'.$type;
     		if (!class_exists($class)) {
 				$path	= dirname(__FILE__) . '/' . $type . '/' . $type.'.php';
 				if (file_exists($path)) {
@@ -809,7 +809,7 @@ class MolajoDocument extends JObject
 	*/
 	public function loadRenderer($type)
 	{
-		$rendererClass	= 'JDocumentRenderer'.$type;
+		$rendererClass	= 'MolajoDocumentRenderer'.$type;
         $format = JRequest::getCmd('format', 'html');
         
         if (class_exists($rendererClass)) {

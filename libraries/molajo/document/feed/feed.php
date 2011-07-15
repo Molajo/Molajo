@@ -19,7 +19,7 @@ defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.document.document');
 
-class JDocumentFeed extends JDocument
+class MolajoDocumentFeed extends MolajoDocument
 {
 	/**
 	 * Syndication URL feed element
@@ -193,7 +193,7 @@ class JDocumentFeed extends JDocument
 
 		// Instantiate feed renderer and set the mime encoding
 		$renderer = $this->loadRenderer(($type) ? $type : 'rss');
-		if (!is_a($renderer, 'JDocumentRenderer')) {
+		if (!is_a($renderer, 'MolajoDocumentRenderer')) {
 			JError::raiseError(404, JText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
 		}
 		$this->setMimeEncoding($renderer->getContentType());

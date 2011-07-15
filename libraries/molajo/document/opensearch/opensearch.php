@@ -21,7 +21,7 @@ jimport('joomla.environment.uri');
  * @subpackage	Document
  * @since		11.1
  */
-class JDocumentOpensearch extends JDocument
+class MolajoDocumentOpensearch extends MolajoDocument
 {
 	/**
 	 * ShortName element

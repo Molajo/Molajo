@@ -19,7 +19,7 @@ defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.document.document');
 
-class JDocumentXML extends JDocument
+class MolajoDocumentXML extends MolajoDocument
 {
 	/**
 	 * Document name

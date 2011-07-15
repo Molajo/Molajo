@@ -17,9 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * @since       11.1
  */
 
-jimport('joomla.document.document');
-
-class JDocumentError extends JDocument
+class MolajoDocumentError extends MolajoDocument
 {
 	/**
 	 * Error Object

@@ -366,17 +366,20 @@ foreach ($files as $file) {
 }
 
 /** Document */
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/renderer.php', 'MolajoDocumentRenderer');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/renderer.php', 'JDocumentRenderer');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/document.php', 'MolajoDocument');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/document.php', 'JDocument');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/renderer.php', 'MolajoDocumentRenderer');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/renderer.php', 'JDocumentRenderer');
+
 $format = JRequest::getCmd('format', 'html');
-$formatClass = 'JDocument'.ucfirst($format);
 if (class_exists($formatClass)) {
 } else {
     $path = MOLAJO_LIBRARY.'/document/'.$format.'/'.$format.'.php';
     if (file_exists($path)) {
+        $formatClass = 'MolajoDocument'.ucfirst($format);
         $filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/'.$format.'/'.$format.'.php', $formatClass);
+        $formatClass = 'JDocument'.ucfirst($format);
+        $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/'.$format.'/'.$format.'.php', $formatClass);
     } else {
         $path = JOOMLA_LIBRARY.'/document/'.$format.'/'.$format.'.php';
         if (file_exists($path)) {
@@ -387,7 +390,7 @@ if (class_exists($formatClass)) {
     }
 }
 JRequest::setVar('format', $format);
-
+ 
 /** Controller */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/controller.php', 'JController');
 $files = JFolder::files(MOLAJO_LIBRARY.'/controllers', '\.php$', false, false);

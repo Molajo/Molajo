@@ -21,7 +21,7 @@ jimport('joomla.application.module.helper');
 
 jimport('joomla.document.document');
 
-class JDocumentHTML extends JDocument
+class MolajoDocumentHTML extends MolajoDocument
 {
 	/**
 	 * Array of Header <link> tags
