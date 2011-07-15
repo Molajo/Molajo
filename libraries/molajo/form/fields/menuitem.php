@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldMenuItem extends JFormFieldGroupedList
+class MolajoFormFieldMenuItem extends MolajoFormFieldGroupedList
 {
 	/**
 	 * The form field type.

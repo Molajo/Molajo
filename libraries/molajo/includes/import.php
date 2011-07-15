@@ -322,6 +322,7 @@ $files = JFolder::files(JOOMLA_LIBRARY.'/html', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
+
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/toolbar.php', 'MolajoToolbarHelper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/rendertoolbar.php', 'MolajoRendertoolbarHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/includes/toolbar.php', 'JToolbarHelper');
@@ -332,11 +333,16 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/fields/list.php', 'JFormFiel
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/formrule.php', 'JFormRule');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/helper.php', 'JFormHelper');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/form.php', 'JForm');
+
 /** Form Fields */
 $files = JFolder::files(MOLAJO_LIBRARY.'/form/fields', '\.php$', false, false);
 foreach ($files as $file) {
+
+echo $file.'<br />';
     $filehelper->requireClassFile(MOLAJO_LIBRARY.'/form/fields/'.$file, 'MolajoFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
+echo 'hello';
+die();
 $files = JFolder::files(OVERRIDES_LIBRARY.'/form/fields', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/form/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));

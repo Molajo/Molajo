@@ -15,13 +15,4 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldUrl extends JFormFieldText
-{
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */
-	protected $type = 'Url';
-}
+class JFormFieldUrl extends MolajoFormFieldUrl {}
