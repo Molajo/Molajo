@@ -60,7 +60,7 @@
     fixToolbar: function() {
         // save this for further reference
         var _this = this;
-        // only proccess if we have bulkActionsArray
+        // only proccess if we have more than one in bulkActionsArray
         if (this.bulkActionsArray.length > 1) {         
             // creating new elements            
             var 
