@@ -29,7 +29,7 @@ $unread = (int) $db->loadResult();
 $query->clear();
 $query->select('COUNT(session_id)');
 $query->from('#__session');
-$query->where('guest = 0 AND client_id = 1');
+$query->where('guest = 0 AND application_id = 1');
 
 $db->setQuery($query);
 $count = (int) $db->loadResult();
@@ -52,7 +52,7 @@ if ($unread) {
 $query->clear();
 $query->select('COUNT(session_id)');
 $query->from('#__session');
-$query->where('guest = 0 AND client_id = 0');
+$query->where('guest = 0 AND application_id = 0');
 
 $db->setQuery($query);
 $online_num = (int) $db->loadResult();

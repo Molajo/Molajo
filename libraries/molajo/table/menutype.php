@@ -166,7 +166,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->select('id');
 			$query->from('#__menu');
 			$query->where('menutype='.$this->_db->quote($table->menutype));
-			$query->where('client_id=0');
+			$query->where('application_id=0');
 			$query->where('(checked_out NOT IN (0,'.(int) $userId.') OR home=1 AND language='.$this->_db->quote('*').')');
 			$this->_db->setQuery($query);
 			if ($this->_db->loadRowList()) {
@@ -193,7 +193,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->delete();
 			$query->from('#__menu');
 			$query->where('menutype='.$this->_db->quote($table->menutype));
-			$query->where('client_id=0');
+			$query->where('application_id=0');
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
 				$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));

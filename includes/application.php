@@ -1,12 +1,12 @@
 <?php
 /**
- * @version		$Id: application.php 21148 2011-04-14 17:30:08Z ian $
+ * @package     Molajo
+ * @subpackage  Application
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// no direct access
-defined('_JEXEC') or die;
+defined('MOLAJO') or die;
 
 /**
  * Joomla! Application class
@@ -38,11 +38,11 @@ class MolajoSite extends MolajoApplication
 	 * Class constructor
 	 *
 	 * @param	array An optional associative array of configuration settings.
-	 * Recognized key values include 'clientId' (this list is not meant to be comprehensive).
+	 * Recognized key values include 'applicationId' (this list is not meant to be comprehensive).
 	 */
 	public function __construct($config = array())
 	{
-		$config['clientId'] = 0;
+		$config['applicationId'] = 0;
 		parent::__construct($config);
 	}
 
@@ -432,7 +432,7 @@ class MolajoSite extends MolajoApplication
 			$query = $db->getQuery(true);
 			$query->select('id, home, template, params');
 			$query->from('#__template_styles');
-			$query->where('client_id = 0');
+			$query->where('application_id = 0');
 
 			$db->setQuery($query);
 			$templates = $db->loadObjectList('id');

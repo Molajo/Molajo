@@ -39,7 +39,7 @@ class TemplatesModelTemplates extends JModelList
 				'enabled', 'a.enabled',
 				'access', 'a.access', 'access_level',
 				'ordering', 'a.ordering',
-				'client_id', 'a.client_id',
+				'application_id', 'a.application_id',
 			);
 		}
 
@@ -56,7 +56,7 @@ class TemplatesModelTemplates extends JModelList
 		$items = parent::getItems();
 
 		foreach ($items as &$item) {
-			$client = JApplicationHelper::getClientInfo($item->client_id);
+			$client = JApplicationHelper::getClientInfo($item->application_id);
 			$item->xmldata = TemplatesHelper::parseXMLTemplateFile($client->path, $item->element);
 		}
 		return $items;
@@ -78,7 +78,7 @@ class TemplatesModelTemplates extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.extension_id, a.name, a.element, a.client_id'
+				'a.extension_id, a.name, a.element, a.application_id'
 			)
 		);
 		$query->from('`#__extensions` AS a');
@@ -87,9 +87,9 @@ class TemplatesModelTemplates extends JModelList
 		$query->where('`type` = '.$db->quote('template'));
 
 		// Filter by client.
-		$clientId = $this->getState('filter.client_id');
-		if (is_numeric($clientId)) {
-			$query->where('a.client_id = '.(int) $clientId);
+		$applicationId = $this->getState('filter.application_id');
+		if (is_numeric($applicationId)) {
+			$query->where('a.application_id = '.(int) $applicationId);
 		}
 
 		// Filter by search in title
@@ -124,7 +124,7 @@ class TemplatesModelTemplates extends JModelList
 	{
 		// Compile the store id.
 		$id	.= ':'.$this->getState('filter.search');
-		$id	.= ':'.$this->getState('filter.client_id');
+		$id	.= ':'.$this->getState('filter.application_id');
 
 		return parent::getStoreId($id);
 	}
@@ -145,8 +145,8 @@ class TemplatesModelTemplates extends JModelList
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		$clientId = $this->getUserStateFromRequest($this->context.'.filter.client_id', 'filter_client_id', null);
-		$this->setState('filter.client_id', $clientId);
+		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', null);
+		$this->setState('filter.application_id', $applicationId);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_templates');

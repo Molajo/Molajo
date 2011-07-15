@@ -77,21 +77,21 @@ class TemplatesHelper
 	 *
 	 * @return	array	An array of JHtmlOption elements.
 	 */
-	public static function getTemplateOptions($clientId = '*')
+	public static function getTemplateOptions($applicationId = '*')
 	{
 		// Build the filter options.
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		if ($clientId != '*') {
-			$query->where('client_id='.(int) $clientId);
+		if ($applicationId != '*') {
+			$query->where('application_id='.(int) $applicationId);
 		}
 
 		$query->select('element as value, name as text');
 		$query->from('#__extensions');
 		$query->where('type='.$db->quote('template'));
 		$query->where('enabled=1');
-		$query->order('client_id');
+		$query->order('application_id');
 		$query->order('name');
 		$db->setQuery($query);
 		$options = $db->loadObjectList();

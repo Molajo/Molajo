@@ -13,10 +13,10 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
-$client		= $this->state->get('filter.client_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
-$clientId	= $this->state->get('filter.client_id', 0);
+$client		= $this->state->get('filter.application_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
+$applicationId	= $this->state->get('filter.application_id', 0);
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_languages&view=installed&client='.$clientId); ?>" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_languages&view=installed&client='.$applicationId); ?>" method="post" id="adminForm" name="adminForm">
 
 	<?php if ($this->ftp): ?>
 		<?php echo $this->loadTemplate('ftp');?>

@@ -1,4 +1,5 @@
-<?php defined('_JEXEC') or die;
+<?php
+defined('_JEXEC') or die;
 /**
 * @package		Template Framework for Joomla! 1.6
 * @author		Joomla Engineering http://joomlaengineering.com

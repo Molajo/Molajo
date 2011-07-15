@@ -57,8 +57,8 @@ class ModulesModelPositions extends JModelList
 		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
 		$this->setState('filter.state', $state);
 
-		$clientId = JRequest::getInt('client_id',0);
-		$this->setState('filter.client_id',$clientId);
+		$applicationId = JRequest::getInt('application_id',0);
+		$this->setState('filter.application_id',$applicationId);
 
 		$template = $this->getUserStateFromRequest($this->context.'.filter.template', 'filter_template', '', 'string');
 		$this->setState('filter.template', $template);
@@ -87,14 +87,14 @@ class ModulesModelPositions extends JModelList
 			$lang				= JFactory::getLanguage();
 			$search				= $this->getState('filter.search');
 			$state				= $this->getState('filter.state');
-			$clientId			= $this->getState('filter.client_id');
+			$applicationId			= $this->getState('filter.application_id');
 			$filter_template	= $this->getState('filter.template');
 			$type				= $this->getState('filter.type');
 			$ordering			= $this->getState('list.ordering');
 			$direction			= $this->getState('list.direction');
 			$limitstart			= $this->getState('list.start');
 			$limit				= $this->getState('list.limit');
-			$client				= JApplicationHelper::getClientInfo($clientId);
+			$client				= JApplicationHelper::getClientInfo($applicationId);
 
 			if ($type!='template')
 			{
@@ -102,7 +102,7 @@ class ModulesModelPositions extends JModelList
 				$query	= $this->_db->getQuery(true);
 				$query->select('DISTINCT(position) as value');
 				$query->from('#__modules');
-				$query->where('`client_id` = '.(int) $clientId);
+				$query->where('`application_id` = '.(int) $applicationId);
 				if ($search) {
 					$query->where('position LIKE '.$this->_db->Quote('%'.$this->_db->getEscaped($search, true).'%'));
 				}
@@ -124,7 +124,7 @@ class ModulesModelPositions extends JModelList
 			}
 
 			// Load the positions from the installed templates.
-			foreach (ModulesHelper::getTemplates($clientId) as $template)
+			foreach (ModulesHelper::getTemplates($applicationId) as $template)
 			{
 				$path = JPath::clean($client->path.'/templates/'.$template->element.'/templateDetails.xml');
 

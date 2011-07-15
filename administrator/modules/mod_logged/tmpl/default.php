@@ -48,7 +48,7 @@ defined('_JEXEC') or die;
 			</th>
 			<td class="center">
 				<?php
-					if($user->client_id) {
+					if($user->application_id) {
 						echo JText::_('JADMINISTRATOR');
 					} else {
 						echo JText::_('JSITE');
@@ -61,7 +61,7 @@ defined('_JEXEC') or die;
 				<?php echo JHtml::_('date', $user->time, 'Y-m-d H:i:s'); ?>
 			</td>
 			<td class="center">
-				<?php if ($user->client_id == 0) :?>
+				<?php if ($user->application_id == 0) :?>
 					<a href="<?php echo $user->logoutLink;?>">
 						<?php echo JHtml::_('image', 'mod_logged/icon-16-logout.png', JText::_('JLOGOUT'), null, true);?>
 					</a>

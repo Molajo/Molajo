@@ -22,7 +22,7 @@
 			readonly="true" />
 
 		<field
-			name="client_id"
+			name="application_id"
 			type="hidden"
 			label="COM_TEMPLATES_FIELD_CLIENT_LABEL"
 			description="COM_TEMPLATES_FIELD_CLIENT_DESC"

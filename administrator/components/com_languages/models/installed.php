@@ -73,8 +73,8 @@ class LanguagesModelInstalled extends JModelList
 		$app = JFactory::getApplication('administrator');
 
 		// Load the filter state.
-		$clientId = JRequest::getInt('client');
-		$this->setState('filter.client_id', $clientId);
+		$applicationId = JRequest::getInt('client');
+		$this->setState('filter.application_id', $applicationId);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_languages');
@@ -99,7 +99,7 @@ class LanguagesModelInstalled extends JModelList
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':'.$this->getState('filter.client_id');
+		$id	.= ':'.$this->getState('filter.application_id');
 
 		return parent::getStoreId($id);
 	}
@@ -113,7 +113,7 @@ class LanguagesModelInstalled extends JModelList
 	public function &getClient()
 	{
 		if (is_null($this->client)) {
-			$this->client = JApplicationHelper::getClientInfo($this->getState('filter.client_id', 0));
+			$this->client = JApplicationHelper::getClientInfo($this->getState('filter.application_id', 0));
 		}
 
 		return $this->client;
@@ -237,7 +237,7 @@ class LanguagesModelInstalled extends JModelList
 		// Create a new db object.
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-		$client = $this->getState('filter.client_id');
+		$client = $this->getState('filter.application_id');
 		$type = "language";
 		// Select field element from the extensions table.
 		$query->select($this->getState('list.select', 'a.element'));
@@ -249,9 +249,9 @@ class LanguagesModelInstalled extends JModelList
 		$query->where('state = 0');
 		$query->where('enabled = 1');
 
-		$query->where('client_id=' . intval($client));
+		$query->where('application_id=' . intval($client));
 
-		// for client_id = 1 do we need to check language table also ?
+		// for application_id = 1 do we need to check language table also ?
 		$db->setQuery($query);
 
 		$this->langlist = $db->loadResultArray();

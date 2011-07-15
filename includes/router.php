@@ -1,14 +1,12 @@
 <?php
 /**
- * @version		$Id: router.php 20757 2011-02-18 04:38:02Z dextercowley $
- * @package		Joomla.Site
- * @subpackage	Application
+ * @package     Molajo
+ * @subpackage  Application
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access
-defined('JPATH_BASE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Class to create and parse routes for the site application
@@ -17,7 +15,7 @@ defined('JPATH_BASE') or die;
  * @subpackage	Application
  * @since		1.5
  */
-class JRouterSite extends JRouter
+class MolajoRouterSite extends MolajoRouter
 {
 	/**
 	 * Parse the URI

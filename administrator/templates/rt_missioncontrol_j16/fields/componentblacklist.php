@@ -87,7 +87,7 @@ class JFormFieldComponentBlacklist extends JFormFieldCheckboxes  {
 
 		// Filter on the enabled states.
 		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
-		$query->where('m.client_id = 1');
+		$query->where('m.application_id = 1');
 		$query->where('e.enabled = 1');
 		$query->where('m.id > 1');
 

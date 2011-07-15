@@ -51,7 +51,7 @@ class JFormFieldModuleOrder extends JFormField
 
 		$ordering = $this->form->getValue('ordering');
 		$position = $this->form->getValue('position');
-		$clientId = $this->form->getValue('client_id');
+		$applicationId = $this->form->getValue('application_id');
 
 		$html[] = 'var originalOrder = "'.$ordering.'";';
 		$html[] = 'var originalPos = "'.$position.'";';
@@ -61,7 +61,7 @@ class JFormFieldModuleOrder extends JFormField
 		$query	= $db->getQuery(true);
 		$query->select('position, ordering, title');
 		$query->from('#__modules');
-		$query->where('client_id = '.(int) $clientId);
+		$query->where('application_id = '.(int) $applicationId);
 		$query->where('published > -1');
 		$query->order('ordering');
 

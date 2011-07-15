@@ -41,7 +41,7 @@ class ModulesModelModules extends JModelList
 				'language', 'a.language', 'language_title',
 				'publish_up', 'a.publish_up',
 				'publish_down', 'a.publish_down',
-				'client_id', 'a.client_id',
+				'application_id', 'a.application_id',
 				'position', 'a.position',
 				'pages',
 				'name', 'e.name',
@@ -79,13 +79,13 @@ class ModulesModelModules extends JModelList
 		$module = $this->getUserStateFromRequest($this->context.'.filter.module', 'filter_module', '', 'string');
 		$this->setState('filter.module', $module);
 
-		$clientId = $this->getUserStateFromRequest($this->context.'.filter.client_id', 'filter_client_id', 0, 'int', false);
-		$previousId = $app->getUserState($this->context.'.filter.client_id_previous', null);
-		if($previousId != $clientId || $previousId === null){
-			$this->getUserStateFromRequest($this->context.'.filter.client_id_previous', 'filter_client_id_previous', 0, 'int', true);
-			$app->setUserState($this->context.'.filter.client_id_previous', $clientId);
+		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int', false);
+		$previousId = $app->getUserState($this->context.'.filter.application_id_previous', null);
+		if($previousId != $applicationId || $previousId === null){
+			$this->getUserStateFromRequest($this->context.'.filter.application_id_previous', 'filter_application_id_previous', 0, 'int', true);
+			$app->setUserState($this->context.'.filter.application_id_previous', $applicationId);
 		}
-		$this->setState('filter.client_id', $clientId);
+		$this->setState('filter.application_id', $applicationId);
 
 		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
@@ -117,7 +117,7 @@ class ModulesModelModules extends JModelList
 		$id	.= ':'.$this->getState('filter.state');
 		$id	.= ':'.$this->getState('filter.position');
 		$id	.= ':'.$this->getState('filter.module');
-		$id	.= ':'.$this->getState('filter.client_id');
+		$id	.= ':'.$this->getState('filter.application_id');
 		$id	.= ':'.$this->getState('filter.language');
 
 		return parent::getStoreId($id);
@@ -170,7 +170,7 @@ class ModulesModelModules extends JModelList
 	protected function translate(&$items)
 	{
 		$lang = JFactory::getLanguage();
-		$client = $this->getState('filter.client_id') ? 'administrator' : 'site';
+		$client = $this->getState('filter.application_id') ? 'administrator' : 'site';
 		foreach($items as $item) {
 			$extension = $item->module;
 			$source = constant('JPATH_' . strtoupper($client)) . "/modules/$extension";
@@ -261,9 +261,9 @@ class ModulesModelModules extends JModelList
 		}
 
 		// Filter by client.
-		$clientId = $this->getState('filter.client_id');
-		if (is_numeric($clientId)) {
-			$query->where('a.client_id = '.(int) $clientId);
+		$applicationId = $this->getState('filter.application_id');
+		if (is_numeric($applicationId)) {
+			$query->where('a.application_id = '.(int) $applicationId);
 		}
 
 		// Filter by search in title

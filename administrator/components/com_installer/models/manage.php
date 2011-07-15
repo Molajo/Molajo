@@ -34,7 +34,7 @@ class InstallerModelManage extends InstallerModel
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'name',
-				'client_id',
+				'application_id',
 				'enabled',
 				'type',
 				'folder',
@@ -75,7 +75,7 @@ class InstallerModelManage extends InstallerModel
 		$this->setState('filter.enabled', isset($filters['enabled']) ? $filters['enabled'] : '');
 		$this->setState('filter.type', isset($filters['type']) ? $filters['type'] : '');
 		$this->setState('filter.group', isset($filters['group']) ? $filters['group'] : '');
-		$this->setState('filter.client_id', isset($filters['client_id']) ? $filters['client_id'] : '');
+		$this->setState('filter.application_id', isset($filters['application_id']) ? $filters['application_id'] : '');
 		parent::populateState('name', 'asc');
 	}
 
@@ -111,7 +111,7 @@ class InstallerModelManage extends InstallerModel
 				$table->load($id);
 				if ($table->type == 'template') {
 					$style = JTable::getInstance('Style', 'TemplatesTable');
-					if ($style->load(array('template' => $table->element, 'client_id' => $table->client_id, 'home'=>1))) {
+					if ($style->load(array('template' => $table->element, 'application_id' => $table->application_id, 'home'=>1))) {
 						JError::raiseNotice(403, JText::_('COM_INSTALLER_ERROR_DISABLE_DEFAULT_TEMPLATE_NOT_PERMITTED'));
 						unset($eid[$i]);
 						continue;
@@ -176,7 +176,7 @@ class InstallerModelManage extends InstallerModel
 			$failed = array();
 
 			/*
-			* Ensure eid is an array of extension ids in the form id => client_id
+			* Ensure eid is an array of extension ids in the form id => application_id
 			* TODO: If it isn't an array do we want to set an error and fail?
 			*/
 			if (!is_array($eid)) {
@@ -248,7 +248,7 @@ class InstallerModelManage extends InstallerModel
 	{
 		$enabled= $this->getState('filter.enabled');
 		$type = $this->getState('filter.type');
-		$client = $this->getState('filter.client_id');
+		$client = $this->getState('filter.application_id');
 		$group = $this->getState('filter.group');
 		$hideprotected = $this->getState('filter.hideprotected');
 		$query = JFactory::getDBO()->getQuery(true);
@@ -265,7 +265,7 @@ class InstallerModelManage extends InstallerModel
 			$query->where('type=' . $this->_db->Quote($type));
 		}
 		if ($client != '') {
-			$query->where('client_id=' . intval($client));
+			$query->where('application_id=' . intval($client));
 		}
 		if ($group != '' && in_array($type, array('plugin', 'library', ''))) {
 

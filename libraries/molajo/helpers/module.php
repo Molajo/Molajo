@@ -257,10 +257,10 @@ abstract class MolajoModuleHelper
 		$app		= JFactory::getApplication();
 		$user		= JFactory::getUser();
 		$lang 		= JFactory::getLanguage()->getTag();
-		$clientId 	= (int) $app->getClientId();
+		$applicationId 	= (int) $app->getClientId();
 
 		$cache 		= JFactory::getCache ('com_modules', '');
-		$cacheid 	= md5(serialize(array($Itemid, $clientId, $lang)));
+		$cacheid 	= md5(serialize(array($Itemid, $applicationId, $lang)));
 
 		if (!($clean = $cache->get($cacheid))) {
 			$db	= JFactory::getDbo();
@@ -280,7 +280,7 @@ abstract class MolajoModuleHelper
 $acl = new MolajoACL ();
 $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
 
-			$query->where('m.client_id = '. $clientId);
+			$query->where('m.application_id = '. $applicationId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
 
 			// Filter by language

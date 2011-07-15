@@ -112,7 +112,7 @@ var MinimaWidgetsClass = new Class({
     
     // Config action to open a modal cconfiguration of a module
     config: function(id) {
-        var url = 'index.php?option=com_modules&client_id=0&task=module.edit&id='+id+'&tmpl=component&view=module&layout=modal';
+        var url = 'index.php?option=com_modules&application_id=0&task=module.edit&id='+id+'&tmpl=component&view=module&layout=modal';
         //console.log(url);        
         SqueezeBox.open(url,{handler: 'iframe', size: {x: 900, y: 550}});
     }

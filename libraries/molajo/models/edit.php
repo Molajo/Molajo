@@ -953,7 +953,7 @@ class MolajoModelEdit extends JModel
                                     return false;
                             }
 
-                            // remember to reorder within position and client_id
+                            // remember to reorder within position and application_id
                             $condition = $this->getReorderConditions($table);
                             $found = false;
 

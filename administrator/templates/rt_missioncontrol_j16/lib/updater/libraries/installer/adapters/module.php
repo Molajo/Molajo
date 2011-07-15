@@ -75,12 +75,12 @@ class RokInstallerModule extends JInstallerModule
 				return false;
 			}
 			$basePath = $client->path;
-			$clientId = $client->id;
+			$applicationId = $client->id;
 		} else {
 			// No client attribute was found so we assume the site as the client
 			$cname = 'site';
 			$basePath = JPATH_SITE;
-			$clientId = 0;
+			$applicationId = 0;
 		}
 
 		// Set the installation path
@@ -143,8 +143,8 @@ class RokInstallerModule extends JInstallerModule
 		}
 
 		// Parse optional tags
-		$this->parent->parseMedia($this->manifest->getElementByPath('media'), $clientId);
-		$this->parent->parseLanguages($this->manifest->getElementByPath('languages'), $clientId);
+		$this->parent->parseMedia($this->manifest->getElementByPath('media'), $applicationId);
+		$this->parent->parseLanguages($this->manifest->getElementByPath('languages'), $applicationId);
 
 		// Parse deprecated tags
 		$this->parent->parseFiles($this->manifest->getElementByPath('images'), -1);
@@ -159,7 +159,7 @@ class RokInstallerModule extends JInstallerModule
 		$query = 'SELECT `id`' .
 				' FROM `#__modules` ' .
 				' WHERE module = '.$db->Quote($mname) .
-				' AND client_id = '.(int)$clientId;
+				' AND application_id = '.(int)$applicationId;
 		$db->setQuery($query);
 		if (!$db->Query()) {
 			// Install failed, roll back changes
@@ -185,8 +185,8 @@ class RokInstallerModule extends JInstallerModule
 			$row->position = 'left';
 			$row->showtitle = 1;
 			$row->iscore = 0;
-			$row->access = $clientId == 1 ? 2 : 0;
-			$row->client_id = $clientId;
+			$row->access = $applicationId == 1 ? 2 : 0;
+			$row->application_id = $applicationId;
 			$row->module = $mname;
 			$row->params = $this->parent->getParams();
 

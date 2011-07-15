@@ -24,7 +24,7 @@ class MolajoApplication extends JObject
 	 * @var    integer
 	 * @since  11.1
 	 */
-	protected $_clientId = null;
+	protected $_applicationId = null;
 
 	/**
 	 * The application message queue.
@@ -70,14 +70,14 @@ class MolajoApplication extends JObject
 	 * Class constructor.
 	 *
 	 * @param   array  $config  A configuration array including optional elements such as session
-	 *                   session_name, clientId and others. This is not exhaustive.
+	 *                   session_name, applicationId and others. This is not exhaustive.
 	 *
 	 * @since   11.1
 	 */
 	public function __construct($config = array())
 	{
 		$this->_name		= $this->getName();
-		$this->_clientId	= $config['clientId'];
+		$this->_applicationId	= $config['applicationId'];
 
 		// Enable sessions by default.
 		if (!isset($config['session'])) {
@@ -879,7 +879,7 @@ class MolajoApplication extends JObject
 		$options = array();
 		$options['name'] = $name;
 
-		switch($this->_clientId)
+		switch($this->_applicationId)
 		{
 			case 0:
 				if ($this->getCfg('force_ssl') == 2) {
@@ -951,13 +951,13 @@ class MolajoApplication extends JObject
 		if (!$exists) {
 			if ($session->isNew()) {
 				$db->setQuery(
-					'INSERT INTO `#__session` (`session_id`, `client_id`, `time`)' .
+					'INSERT INTO `#__session` (`session_id`, `application_id`, `time`)' .
 					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getClientId().', '.(int) time().')'
 				);
 			}
 			else {
 				$db->setQuery(
-					'INSERT INTO `#__session` (`session_id`, `client_id`, `guest`, `time`, `userid`, `username`)' .
+					'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `time`, `userid`, `username`)' .
 					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getClientId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$db->quote($user->get('username')).')'
 				);
 			}
@@ -984,7 +984,7 @@ class MolajoApplication extends JObject
 	 */
 	public function getClientId()
 	{
-		return $this->_clientId;
+		return $this->_applicationId;
 	}
 
 	/**
@@ -996,7 +996,7 @@ class MolajoApplication extends JObject
 	 */
 	public function isAdmin()
 	{
-		return ($this->_clientId == 1);
+		return ($this->_applicationId == 1);
 	}
 
 	/**
@@ -1008,7 +1008,7 @@ class MolajoApplication extends JObject
 	 */
 	public function isSite()
 	{
-		return ($this->_clientId == 0);
+		return ($this->_applicationId == 0);
 	}
 
 	/**

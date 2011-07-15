@@ -35,7 +35,7 @@ class InstallerModelUpdate extends JModelList
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'name',
-				'client_id',
+				'application_id',
 				'type',
 				'folder',
 				'extension_id',

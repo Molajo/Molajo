@@ -173,16 +173,16 @@ class TemplatesModelStyle extends JModelAdmin
 		// The folder and element vars are passed when saving the form.
 		if (empty($data)) {
 			$item		= $this->getItem();
-			$clientId	= $item->client_id;
+			$applicationId	= $item->application_id;
 			$template	= $item->template;
 		}
 		else {
-			$clientId	= JArrayHelper::getValue($data, 'client_id');
+			$applicationId	= JArrayHelper::getValue($data, 'application_id');
 			$template	= JArrayHelper::getValue($data, 'template');
 		}
 
 		// These variables are used to add data from the plugin XML files.
-		$this->setState('item.client_id',	$clientId);
+		$this->setState('item.application_id',	$applicationId);
 		$this->setState('item.template',	$template);
 
 		// Get the form.
@@ -259,7 +259,7 @@ class TemplatesModelStyle extends JModelAdmin
 			$this->_cache[$pk]->params = $registry->toArray();
 
 			// Get the template XML.
-			$client	= JApplicationHelper::getClientInfo($table->client_id);
+			$client	= JApplicationHelper::getClientInfo($table->application_id);
 			$path	= JPath::clean($client->path.'/templates/'.$table->template.'/templateDetails.xml');
 
 			if (file_exists($path)) {
@@ -295,10 +295,10 @@ class TemplatesModelStyle extends JModelAdmin
 	protected function preprocessForm(JForm $form, $data, $group = '')
 	{
 		// Initialise variables.
-		$clientId	= $this->getState('item.client_id');
+		$applicationId	= $this->getState('item.application_id');
 		$template	= $this->getState('item.template');
 		$lang		= JFactory::getLanguage();
-		$client		= JApplicationHelper::getClientInfo($clientId);
+		$client		= JApplicationHelper::getClientInfo($applicationId);
 		if (!$form->loadFile('style_'.$client->name, true)) {
 			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
 		}
@@ -357,7 +357,7 @@ class TemplatesModelStyle extends JModelAdmin
 	{
 		// Detect disabled extension
 		$extension = JTable::getInstance('Extension');
-		if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $data['template'], 'client_id' => $data['client_id']))) {
+		if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $data['template'], 'application_id' => $data['application_id']))) {
 			$this->setError(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
 			return false;
 		}
@@ -411,7 +411,7 @@ class TemplatesModelStyle extends JModelAdmin
 		}
 
 		$user = JFactory::getUser();
-		if ($user->authorise('core.edit','com_menus') && $table->client_id==0) {
+		if ($user->authorise('core.edit','com_menus') && $table->application_id==0) {
 			$n		= 0;
 			$db		= JFactory::getDbo();
 			$user	= JFactory::getUser();
@@ -489,16 +489,16 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Detect disabled extension
 		$extension = JTable::getInstance('Extension');
-		if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $style->template, 'client_id' => $style->client_id))) {
+		if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $style->template, 'application_id' => $style->application_id))) {
 			throw new Exception(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
 		}
 
 
-		// Reset the home fields for the client_id.
+		// Reset the home fields for the application_id.
 		$db->setQuery(
 			'UPDATE #__template_styles' .
 			' SET home = \'0\'' .
-			' WHERE client_id = '.(int) $style->client_id .
+			' WHERE application_id = '.(int) $style->application_id .
 			' AND home = \'1\''
 		);
 
@@ -542,9 +542,9 @@ class TemplatesModelStyle extends JModelAdmin
 			throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 
-		// Lookup the client_id.
+		// Lookup the application_id.
 		$db->setQuery(
-			'SELECT client_id, home' .
+			'SELECT application_id, home' .
 			' FROM #__template_styles' .
 			' WHERE id = '.(int) $id
 		);
@@ -553,7 +553,7 @@ class TemplatesModelStyle extends JModelAdmin
 		if ($error = $db->getErrorMsg()) {
 			throw new Exception($error);
 		}
-		else if (!is_numeric($style->client_id)) {
+		else if (!is_numeric($style->application_id)) {
 			throw new Exception(JText::_('COM_TEMPLATES_ERROR_STYLE_NOT_FOUND'));
 		}
 		else if ($style->home=='1') {

@@ -47,7 +47,7 @@ $menuTypes = MenusHelper::getMenuLinks();
 
 			<fieldset id="jform_menus" class="radio">
 				<select name="jform[assignment]" id="jform_assignment">
-					<?php echo JHtml::_('select.options', ModulesHelper::getAssignmentOptions($this->item->client_id), 'value', 'text', $this->item->assignment, true);?>
+					<?php echo JHtml::_('select.options', ModulesHelper::getAssignmentOptions($this->item->application_id), 'value', 'text', $this->item->assignment, true);?>
 				</select>
 
 			</fieldset>

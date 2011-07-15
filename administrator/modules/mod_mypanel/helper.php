@@ -36,13 +36,13 @@ class ModMypanelHelper
         $langs  = array();
 
         // Prepare the query.
-        $query->select('m.id, m.title, m.alias, m.link, m.img, m.parent_id, m.client_id, e.element');
+        $query->select('m.id, m.title, m.alias, m.link, m.img, m.parent_id, m.application_id, e.element');
         $query->from('#__menu AS m');
 
         // Filter on the enabled states.
         $query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
 
-        $query->where('m.client_id=1');
+        $query->where('m.application_id=1');
         $query->where('e.enabled = 1');
         $query->where('m.id > 1');
 

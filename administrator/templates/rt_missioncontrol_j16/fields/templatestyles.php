@@ -68,7 +68,7 @@ class JFormFieldTemplateStyles extends JFormFieldList
         $query = $db->getQuery(true);
         $query->select('id, home, template, params, title');
         $query->from('#__template_styles');
-        $query->where('client_id = 1');
+        $query->where('application_id = 1');
         $db->setQuery($query);
         $templates = $db->loadObjectList('id');
         foreach ($templates as &$template)

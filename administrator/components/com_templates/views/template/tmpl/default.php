@@ -21,7 +21,7 @@ $canDo	= TemplatesHelper::getActions();
 		<fieldset class="adminform" id="template-manager">
 			<legend><?php echo JText::_('COM_TEMPLATES_TEMPLATE_MASTER_FILES');?></legend>
 
-			<?php echo JHtml::_('templates.thumb', $this->template->element, $this->template->client_id); ?>
+			<?php echo JHtml::_('templates.thumb', $this->template->element, $this->template->application_id); ?>
 
 			<h2><?php echo $this->template->element; ?></h2>
 			<ul>

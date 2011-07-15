@@ -19,18 +19,18 @@ class JHtmlTemplates
 	 *
 	 * @param	string	The name of the active view.
 	 */
-	public static function thumb($template, $clientId = 0)
+	public static function thumb($template, $applicationId = 0)
 	{
-		$client		= JApplicationHelper::getClientInfo($clientId);
+		$client		= JApplicationHelper::getClientInfo($applicationId);
 		$basePath	= $client->path.'/templates/'.$template;
-		$baseUrl	= ($clientId == 0) ? JUri::root(true) : JUri::root(true).'/administrator';
+		$baseUrl	= ($applicationId == 0) ? JUri::root(true) : JUri::root(true).'/administrator';
 		$thumb		= $basePath.'/template_thumbnail.png';
 		$preview	= $basePath.'/template_preview.png';
 		$html		= '';
 
 		if (file_exists($thumb))
 		{
-			$clientPath = ($clientId == 0) ? '' : 'administrator/';
+			$clientPath = ($applicationId == 0) ? '' : 'administrator/';
 			$thumb	= $clientPath.'templates/'.$template.'/template_thumbnail.png';
 			$html	= JHtml::_('image',$thumb,JText::_('COM_TEMPLATES_PREVIEW'));
 			if (file_exists($preview))

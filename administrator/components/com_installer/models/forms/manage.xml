@@ -24,7 +24,7 @@
 			name="select"
 		>
 			<field type="list"
-				name="client_id"
+				name="application_id"
 				hidden="true"
 				onchange="this.form.submit();"
 			>

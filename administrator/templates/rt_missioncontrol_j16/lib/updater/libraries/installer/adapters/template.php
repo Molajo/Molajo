@@ -52,12 +52,12 @@ class RokInstallerTemplate extends JInstallerTemplate
 				return false;
 			}
 			$basePath = $client->path;
-			$clientId = $client->id;
+			$applicationId = $client->id;
 		} else {
 			// No client attribute was found so we assume the site as the client
 			$cname = 'site';
 			$basePath = JPATH_SITE;
-			$clientId = 0;
+			$applicationId = 0;
 		}
 
 		// Set the extensions name
@@ -116,7 +116,7 @@ class RokInstallerTemplate extends JInstallerTemplate
 		}
 
 		// Parse optional tags
-		$this->parent->parseFiles($root->getElementByPath('media'), $clientId);
+		$this->parent->parseFiles($root->getElementByPath('media'), $applicationId);
 		$this->parent->parseLanguages($root->getElementByPath('languages'));
 		$this->parent->parseLanguages($root->getElementByPath('administration/languages'), 1);
 

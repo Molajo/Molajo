@@ -82,9 +82,9 @@ JFactory::getDocument()->addScriptDeclaration($script);
 			<?php echo $this->form->getInput('module'); ?>
 			<input type="text" size="35" value="<?php if ($this->item->xml) echo ($text = (string) $this->item->xml->name) ? JText::_($text) : $this->item->module;else echo JText::_(COM_MODULES_ERR_XML);?>" class="readonly" readonly="readonly" /></li>
 
-			<li><?php echo $this->form->getLabel('client_id'); ?>
-			<input type="text" size="35" value="<?php echo $this->item->client_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" />
-			<?php echo $this->form->getInput('client_id'); ?></li>
+			<li><?php echo $this->form->getLabel('application_id'); ?>
+			<input type="text" size="35" value="<?php echo $this->item->application_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" />
+			<?php echo $this->form->getInput('application_id'); ?></li>
 			</ul>
 			<div class="clr"></div>
 			<?php if ($this->item->xml) : ?>
@@ -122,7 +122,7 @@ JFactory::getDocument()->addScriptDeclaration($script);
 	</div>
 
 	<?php endif; ?>
-	<?php if ($this->item->client_id == 0) :?>
+	<?php if ($this->item->application_id == 0) :?>
 	<div class="width-60 fltlft">
 		<?php echo $this->loadTemplate('assignment'); ?>
 	</div>

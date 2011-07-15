@@ -107,7 +107,7 @@ class ModulesModelModule extends JModelAdmin
 				}
 
 				// Clear module cache
-				parent::cleanCache($table->module, $table->client_id);
+				parent::cleanCache($table->module, $table->application_id);
 			}
 			else {
 				throw new Exception($table->getError());
@@ -227,16 +227,16 @@ class ModulesModelModule extends JModelAdmin
 		// The folder and element vars are passed when saving the form.
 		if (empty($data)) {
 			$item		= $this->getItem();
-			$clientId	= $item->client_id;
+			$applicationId	= $item->application_id;
 			$module		= $item->module;
 		}
 		else {
-			$clientId	= JArrayHelper::getValue($data, 'client_id');
+			$applicationId	= JArrayHelper::getValue($data, 'application_id');
 			$module		= JArrayHelper::getValue($data, 'module');
 		}
 
 		// These variables are used to add data from the plugin XML files.
-		$this->setState('item.client_id',	$clientId);
+		$this->setState('item.application_id',	$applicationId);
 		$this->setState('item.module',		$module);
 
 		// Get the form.
@@ -245,7 +245,7 @@ class ModulesModelModule extends JModelAdmin
 			return false;
 		}
 
-		$form->setFieldAttribute('position', 'client', $this->getState('item.client_id') == 0 ? 'site' : 'administrator');
+		$form->setFieldAttribute('position', 'client', $this->getState('item.application_id') == 0 ? 'site' : 'administrator');
 
 		// Modify the form based on access controls.
 		if (!$this->canEditState((object) $data)) {
@@ -317,7 +317,7 @@ class ModulesModelModule extends JModelAdmin
 			if (empty($pk)) {
 				if ($extensionId = (int) $this->getState('extension.id')) {
 					$query	= $db->getQuery(true);
-					$query->select('element, client_id');
+					$query->select('element, application_id');
 					$query->from('#__extensions');
 					$query->where('extension_id = '.$extensionId);
 					$query->where('type = '.$db->quote('module'));
@@ -336,7 +336,7 @@ class ModulesModelModule extends JModelAdmin
 
 					// Extension found, prime some module values.
 					$table->module		= $extension->element;
-					$table->client_id	= $extension->client_id;
+					$table->application_id	= $extension->application_id;
 				}
 				else {
 					$app = JFactory::getApplication();
@@ -386,7 +386,7 @@ class ModulesModelModule extends JModelAdmin
 			$this->_cache[$pk]->assignment = $assignment;
 
 			// Get the module XML.
-			$client	= JApplicationHelper::getClientInfo($table->client_id);
+			$client	= JApplicationHelper::getClientInfo($table->application_id);
 			$path	= JPath::clean($client->path.'/modules/'.$table->module.'/'.$table->module.'.xml');
 
 			if (file_exists($path)) {
@@ -466,10 +466,10 @@ class ModulesModelModule extends JModelAdmin
 
 		// Initialise variables.
 		$lang		= JFactory::getLanguage();
-		$clientId	= $this->getState('item.client_id');
+		$applicationId	= $this->getState('item.application_id');
 		$module		= $this->getState('item.module');
 
-		$client		= JApplicationHelper::getClientInfo($clientId);
+		$client		= JApplicationHelper::getClientInfo($applicationId);
 		$formFile	= JPath::clean($client->path.'/modules/'.$module.'/'.$module.'.xml');
 
 		// Load the core and/or local language file(s).
@@ -685,7 +685,7 @@ class ModulesModelModule extends JModelAdmin
 		$this->cleanCache();
 
 		// Clean module cache
-		parent::cleanCache($table->module, $table->client_id);
+		parent::cleanCache($table->module, $table->application_id);
 
 		return true;
 	}
@@ -701,7 +701,7 @@ class ModulesModelModule extends JModelAdmin
 	protected function getReorderConditions($table)
 	{
 		$condition = array();
-		$condition[] = 'client_id = '.(int) $table->client_id;
+		$condition[] = 'application_id = '.(int) $table->application_id;
 		$condition[] = 'position = '. $this->_db->Quote($table->position);
 
 		return $condition;

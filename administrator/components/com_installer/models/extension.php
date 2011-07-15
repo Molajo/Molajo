@@ -35,7 +35,7 @@ class InstallerModel extends JModelList
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'name',
-				'client_id',
+				'application_id',
 				'enabled',
 				'type',
 				'folder',
@@ -113,8 +113,8 @@ class InstallerModel extends JModelList
 				}
 			}
 			$item->author_info = @$item->authorEmail .'<br />'. @$item->authorUrl;
-			$item->client = $item->client_id ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
-			$path = $item->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE;
+			$item->client = $item->application_id ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
+			$path = $item->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			switch ($item->type) {
 				case 'component':
 					$extension = $item->element;

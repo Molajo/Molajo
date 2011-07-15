@@ -53,10 +53,10 @@ class CacheModelCache extends JModelList
 	{
 		$app = JFactory::getApplication();
 
-		$clientId = $this->getUserStateFromRequest($this->context.'.filter.client_id', 'filter_client_id', 0, 'int');
-		$this->setState('clientId', $clientId == 1 ? 1 : 0);
+		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int');
+		$this->setState('applicationId', $applicationId == 1 ? 1 : 0);
 
-		$client	= JApplicationHelper::getClientInfo($clientId);
+		$client	= JApplicationHelper::getClientInfo($applicationId);
 		$this->setState('client', $client);
 
 		parent::populateState('group', 'asc');
@@ -113,7 +113,7 @@ class CacheModelCache extends JModelList
 			'defaultgroup'	=> '',
 			'storage' 		=> $conf->get('cache_handler', ''),
 			'caching'		=> true,
-			'cachebase'		=> ($this->getState('clientId') == 1) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
+			'cachebase'		=> ($this->getState('applicationId') == 1) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
 		);
 
 		jimport('joomla.cache.cache');

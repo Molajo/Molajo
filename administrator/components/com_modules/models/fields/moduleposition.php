@@ -36,20 +36,20 @@ class JFormFieldModulePosition extends JFormFieldText
 	protected function getInput()
 	{
 		// Get the client id.
-		$clientId = $this->element['client_id'];
-		if (!isset($clientId))
+		$applicationId = $this->element['application_id'];
+		if (!isset($applicationId))
 		{
 			$clientName = $this->element['client'];
 			if (isset($clientName))
 			{
 				$client = JApplicationHelper::getClientInfo($clientName, true);
-				$clientId = $client->id;
+				$applicationId = $client->id;
 			}
 		}
-		if (!isset($clientId) && $this->form instanceof JForm) {
-			$clientId = $this->form->getValue('client_id');
+		if (!isset($applicationId) && $this->form instanceof JForm) {
+			$applicationId = $this->form->getValue('application_id');
 		}
-		$clientId = (int) $clientId;
+		$applicationId = (int) $applicationId;
 
 		// Load the modal behavior script.
 		JHtml::_('behavior.modal', 'a.modal');
@@ -66,7 +66,7 @@ class JFormFieldModulePosition extends JFormFieldText
 
 		// Setup variables for display.
 		$html	= array();
-		$link	= 'index.php?option=com_modules&amp;view=positions&amp;layout=modal&amp;tmpl=component&amp;function=jSelectPosition_'.$this->id.'&amp;client_id='.$clientId;
+		$link	= 'index.php?option=com_modules&amp;view=positions&amp;layout=modal&amp;tmpl=component&amp;function=jSelectPosition_'.$this->id.'&amp;application_id='.$applicationId;
 
 		// The current user display field.
 		$html[] = '<div class="fltlft">';

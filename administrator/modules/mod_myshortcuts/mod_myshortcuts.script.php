@@ -73,7 +73,7 @@ class Mod_MyshortcutsInstallerScript {
             }
 
             // copy modules
-            $db->setQuery("INSERT INTO `#__modules` (`title`, `note`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`, `access`, `showtitle`, `params`, `client_id`, `language`) VALUES ".
+            $db->setQuery("INSERT INTO `#__modules` (`title`, `note`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`, `access`, `showtitle`, `params`, `application_id`, `language`) VALUES ".
                 " ('Popular Articles', '', '', 3, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 3, 1, '{\"count\":\"5\",\"catid\":\"\",\"user_id\":\"0\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\",\"automatic_title\":\"1\"}', 1, '*'),".
                 " ('Recently Added Articles', '', '', 4, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 3, 1, '{\"count\":\"5\",\"ordering\":\"c_dsc\",\"catid\":\"\",\"user_id\":\"0\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\",\"automatic_title\":\"1\"}', 1, '*'),".
                 " ('Logged-in Users', '', '', 2, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 3, 1, '{\"count\":\"5\",\"name\":\"1\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\",\"automatic_title\":\"1\"}', 1, '*')");
@@ -103,7 +103,7 @@ class Mod_MyshortcutsInstallerScript {
             // set minima style default
             $db->setQuery("UPDATE `#__template_styles`".
                 " SET `home` = '0'".
-                " WHERE `#__template_styles`.`client_id` =1;");
+                " WHERE `#__template_styles`.`application_id` =1;");
 
             if (!$db->query() && ($db->getErrorNum() != 1060)) {
                 die($db->getErrorMsg(true));

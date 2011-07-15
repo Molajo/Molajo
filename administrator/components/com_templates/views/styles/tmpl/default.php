@@ -30,13 +30,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<div class="filter-select fltrt">
 			<select name="filter_template" class="inputbox" onchange="this.form.submit()">
 				<option value="0"><?php echo JText::_('COM_TEMPLATES_FILTER_TEMPLATE'); ?></option>
-				<?php echo JHtml::_('select.options', TemplatesHelper::getTemplateOptions($this->state->get('filter.client_id')), 'value', 'text', $this->state->get('filter.template'));?>
+				<?php echo JHtml::_('select.options', TemplatesHelper::getTemplateOptions($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.template'));?>
 			</select>
 		</div>
 		<div class="filter-select fltrt">
-			<select name="filter_client_id" class="inputbox" onchange="this.form.submit()">
+			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo JText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
-				<?php echo JHtml::_('select.options', TemplatesHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.client_id'));?>
+				<?php echo JHtml::_('select.options', TemplatesHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -52,7 +52,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.sort', 'COM_TEMPLATES_HEADING_STYLE', 'a.title', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHtml::_('grid.sort', 'JCLIENT', 'a.client_id', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('grid.sort', 'JCLIENT', 'a.application_id', $listDirn, $listOrder); ?>
 				</th>
 				<th>
 					<?php echo JHtml::_('grid.sort', 'COM_TEMPLATES_HEADING_TEMPLATE', 'a.template', $listDirn, $listOrder); ?>
@@ -95,7 +95,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php echo $item->client_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>
+					<?php echo $item->application_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>
 				</td>
 				<td>
 					<label for="cb<?php echo $i;?>">

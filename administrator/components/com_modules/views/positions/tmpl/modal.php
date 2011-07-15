@@ -17,12 +17,12 @@ $function	= JRequest::getCmd('function', 'jSelectPosition');
 $lang		= JFactory::getLanguage();
 $ordering	= $this->escape($this->state->get('list.ordering'));
 $direction	= $this->escape($this->state->get('list.direction'));
-$clientId	= $this->state->get('filter.client_id');
+$applicationId	= $this->state->get('filter.application_id');
 $state		= $this->state->get('filter.state');
 $template	= $this->state->get('filter.template');
 $type		= $this->state->get('filter.type');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_modules&view=positions&layout=modal&tmpl=component&function='.$function.'&client_id=' .$clientId);?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_modules&view=positions&layout=modal&tmpl=component&function='.$function.'&application_id=' .$applicationId);?>" method="post" name="adminForm" id="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
 			<label for="filter_search">
@@ -49,7 +49,7 @@ $type		= $this->state->get('filter.type');
 
 			<select name="filter_template" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('JOPTION_SELECT_TEMPLATE');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('modules.templates', $clientId), 'value', 'text', $template, true);?>
+				<?php echo JHtml::_('select.options', JHtml::_('modules.templates', $applicationId), 'value', 'text', $template, true);?>
 			</select>
 		</div>
 	</fieldset>

@@ -132,7 +132,7 @@ class MolajoApplicationHelper
         $query = $db->getQuery(true);
 
         /** validation query **/
-        $query->select('client_id as id');
+        $query->select('application_id as id');
         $query->select('name');
         $query->select('path');
         $query->from($db->namequote('#__clients'));

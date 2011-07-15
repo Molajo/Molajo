@@ -71,7 +71,7 @@ class InstallerModelDiscover extends InstallerModel
 		$results	= $installer->discover();
 
 		// Get all templates, including discovered ones
-		$query = 'SELECT extension_id, element, folder, client_id, type FROM #__extensions';
+		$query = 'SELECT extension_id, element, folder, application_id, type FROM #__extensions';
 		$dbo = JFactory::getDBO();
 		$dbo->setQuery($query);
 		$installedtmp = $dbo->loadObjectList();
@@ -79,7 +79,7 @@ class InstallerModelDiscover extends InstallerModel
 
 		foreach($installedtmp as $install)
 		{
-			$key = implode(':', Array($install->type, $install->element, $install->folder, $install->client_id));
+			$key = implode(':', Array($install->type, $install->element, $install->folder, $install->application_id));
 			$extensions[$key] = $install;
 		}
 		unset($installedtmp);
@@ -87,7 +87,7 @@ class InstallerModelDiscover extends InstallerModel
 
 		foreach($results as $result) {
 			// check if we have a match on the element
-			$key = implode(':', Array($result->type, $result->element, $result->folder, $result->client_id));
+			$key = implode(':', Array($result->type, $result->element, $result->folder, $result->application_id));
 			if(!array_key_exists($key, $extensions))
 			{
 				$result->store(); // put it into the table

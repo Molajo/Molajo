@@ -28,13 +28,13 @@ class MolajoInstallation extends MolajoApplication
 	* Class constructor
 	*
 	* @param	array $config	An optional associative array of configuration settings.
-	* Recognized key values include 'clientId' (this list is not meant to be comprehensive).
+	* Recognized key values include 'applicationId' (this list is not meant to be comprehensive).
 	*
 	* @return	void
 	*/
 	public function __construct(array $config = array())
 	{
-		$config['clientId'] = 2;
+		$config['applicationId'] = 2;
 		parent::__construct($config);
 
 		JError::setErrorHandling(E_ALL, 'Ignore');
@@ -329,14 +329,14 @@ class MolajoInstallation extends MolajoApplication
  			$langfiles['admin'] = Array();
  			$langfiles['site'] = Array();
  			$query = $db->getQuery(true);
- 			$query->select('element,client_id');
+ 			$query->select('element,application_id');
  			$query->from('#__extensions');
  			$query->where('type = '.$db->quote('language'));
  			$db->setQuery($query);
  			$langs = $db->loadObjectList();
  			foreach ($langs as $lang)
  			{
- 				switch($lang->client_id)
+ 				switch($lang->application_id)
  				{
  					case 0: // site
  						if (in_array($lang->element, $langfiles_disk['site'])) {

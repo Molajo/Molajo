@@ -124,7 +124,7 @@ class TemplatesModelSource extends JModelForm
 
 		if ($this->_template) {
 			$fileName	= $this->getState('filename');
-			$client		= JApplicationHelper::getClientInfo($this->_template->client_id);
+			$client		= JApplicationHelper::getClientInfo($this->_template->application_id);
 			$filePath	= JPath::clean($client->path.'/templates/'.$this->_template->element.'/'.$fileName);
 
 			if (file_exists($filePath)) {
@@ -156,7 +156,7 @@ class TemplatesModelSource extends JModelForm
 
 		// Get the template information.
 		$db->setQuery(
-			'SELECT extension_id, client_id, element' .
+			'SELECT extension_id, application_id, element' .
 			' FROM #__extensions' .
 			' WHERE extension_id = '.(int) $pk.
 			'  AND type = '.$db->quote('template')
@@ -199,7 +199,7 @@ class TemplatesModelSource extends JModelForm
 
 		$dispatcher = JDispatcher::getInstance();
 		$fileName	= $this->getState('filename');
-		$client		= JApplicationHelper::getClientInfo($template->client_id);
+		$client		= JApplicationHelper::getClientInfo($template->application_id);
 		$filePath	= JPath::clean($client->path.'/templates/'.$template->element.'/'.$fileName);
 
 		// Include the extension plugins for the save events.

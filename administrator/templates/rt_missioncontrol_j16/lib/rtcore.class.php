@@ -510,7 +510,7 @@ class RTCore
     {
 
         $db =& JFactory::getDBO();
-        $db->setQuery('select template from #__template_styles where client_id = 1 and home = 1');
+        $db->setQuery('select template from #__template_styles where application_id = 1 and home = 1');
         $template = $db->loadResult();
 
         return $template;
@@ -520,7 +520,7 @@ class RTCore
     {
 
         $db =& JFactory::getDBO();
-        $db->setQuery('select template from #__template_styles where client_id = 0 and home = 1');
+        $db->setQuery('select template from #__template_styles where application_id = 0 and home = 1');
         $template = $db->loadResult();
 
         return $template;

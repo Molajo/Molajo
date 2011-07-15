@@ -35,17 +35,17 @@ class MolajoFormFieldModuleLayout extends JFormField
 		// Initialize variables.
 
 		// Get the client id.
-		$clientName = $this->element['client_id'];
+		$clientName = $this->element['application_id'];
 
 		// Get the client id.
-		$clientId = $this->element['client_id'];
+		$applicationId = $this->element['application_id'];
 
-		if (is_null($clientId) && $this->form instanceof JForm) {
-			$clientId = $this->form->getValue('client_id');
+		if (is_null($applicationId) && $this->form instanceof JForm) {
+			$applicationId = $this->form->getValue('application_id');
 		}
-		$clientId = (int) $clientId;
+		$applicationId = (int) $applicationId;
 
-		$client	= JApplicationHelper::getClientInfo($clientId);
+		$client	= JApplicationHelper::getClientInfo($applicationId);
 
 		// Get the module.
 		$module = (string) $this->element['module'];
@@ -84,7 +84,7 @@ class MolajoFormFieldModuleLayout extends JFormField
 			// Build the query.
 			$query->select('element, name');
 			$query->from('#__extensions as e');
-			$query->where('e.client_id = '.(int) $clientId);
+			$query->where('e.application_id = '.(int) $applicationId);
 			$query->where('e.type = '.$db->quote('template'));
 			$query->where('e.enabled = 1');
 

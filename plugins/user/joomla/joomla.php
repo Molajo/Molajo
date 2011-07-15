@@ -214,7 +214,7 @@ class plgUserJoomla extends JPlugin
 		$db->setQuery(
 			'DELETE FROM `#__session`' .
 			' WHERE `userid` = '.(int) $user['id'] .
-			' AND `client_id` = '.(int) $options['clientid']
+			' AND `application_id` = '.(int) $options['clientid']
 		);
 		$db->query();
 

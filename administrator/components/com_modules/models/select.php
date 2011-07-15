@@ -34,8 +34,8 @@ class ModulesModelSelect extends JModelList
 		$app = JFactory::getApplication('administrator');
 
 		// Load the filter state.
-		$clientId = $app->getUserState('com_modules.modules.filter.client_id', 0);
-		$this->setState('filter.client_id', (int) $clientId);
+		$applicationId = $app->getUserState('com_modules.modules.filter.application_id', 0);
+		$this->setState('filter.application_id', (int) $applicationId);
 
 		// Load the parameters.
 		$params	= JComponentHelper::getParams('com_modules');
@@ -62,7 +62,7 @@ class ModulesModelSelect extends JModelList
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':'.$this->getState('filter.client_id');
+		$id	.= ':'.$this->getState('filter.application_id');
 
 		return parent::getStoreId($id);
 	}
@@ -91,8 +91,8 @@ class ModulesModelSelect extends JModelList
 		$query->where('a.type = '.$db->Quote('module'));
 
 		// Filter by client.
-		$clientId = $this->getState('filter.client_id');
-		$query->where('a.client_id = '.(int) $clientId);
+		$applicationId = $this->getState('filter.application_id');
+		$query->where('a.application_id = '.(int) $applicationId);
 
 		// Filter by enabled
 		$query->where('a.enabled = 1');
@@ -115,7 +115,7 @@ class ModulesModelSelect extends JModelList
 		$items = parent::getItems();
 
 		// Initialise variables.
-		$client = JApplicationHelper::getClientInfo($this->getState('filter.client_id', 0));
+		$client = JApplicationHelper::getClientInfo($this->getState('filter.application_id', 0));
 		$lang	= JFactory::getLanguage();
 
 		// Loop through the results to add the XML metadata,

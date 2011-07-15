@@ -32,7 +32,7 @@ class TemplatesModelStyles extends JModelList
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'title', 'a.title',
-				'client_id', 'a.client_id',
+				'application_id', 'a.application_id',
 				'template', 'a.template',
 				'home', 'a.home',
 			);
@@ -60,8 +60,8 @@ class TemplatesModelStyles extends JModelList
 		$template = $this->getUserStateFromRequest($this->context.'.filter.template', 'filter_template', '0', 'cmd');
 		$this->setState('filter.template', $template);
 
-		$clientId = $this->getUserStateFromRequest($this->context.'.filter.client_id', 'filter_client_id', null);
-		$this->setState('filter.client_id', $clientId);
+		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', null);
+		$this->setState('filter.application_id', $applicationId);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_templates');
@@ -87,7 +87,7 @@ class TemplatesModelStyles extends JModelList
 		// Compile the store id.
 		$id	.= ':'.$this->getState('filter.search');
 		$id	.= ':'.$this->getState('filter.template');
-		$id	.= ':'.$this->getState('filter.client_id');
+		$id	.= ':'.$this->getState('filter.application_id');
 
 		return parent::getStoreId($id);
 	}
@@ -107,7 +107,7 @@ class TemplatesModelStyles extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.id, a.template, a.title, a.home, a.client_id, l.title AS language_title, l.image as image'
+				'a.id, a.template, a.title, a.home, a.application_id, l.title AS language_title, l.image as image'
 			)
 		);
 		$query->from('`#__template_styles` AS a');
@@ -130,9 +130,9 @@ class TemplatesModelStyles extends JModelList
 		}
 
 		// Filter by client.
-		$clientId = $this->getState('filter.client_id');
-		if (is_numeric($clientId)) {
-			$query->where('a.client_id = '.(int) $clientId);
+		$applicationId = $this->getState('filter.application_id');
+		if (is_numeric($applicationId)) {
+			$query->where('a.application_id = '.(int) $applicationId);
 		}
 
 		// Filter by search in title

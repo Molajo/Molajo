@@ -9,7 +9,7 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$client	= $this->state->get('filter.client_id', 0);
+$client	= $this->state->get('filter.application_id', 0);
 ?>
 <div id="submenu-box">
 	<div class="submenu-box">

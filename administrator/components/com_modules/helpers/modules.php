@@ -77,7 +77,7 @@ abstract class ModulesHelper
 		return $options;
 	}
 
-	static function getPositions($clientId)
+	static function getPositions($applicationId)
 	{
 		jimport('joomla.filesystem.folder');
 
@@ -86,7 +86,7 @@ abstract class ModulesHelper
 
 		$query->select('DISTINCT(position)');
 		$query->from('#__modules');
-		$query->where('`client_id` = '.(int) $clientId);
+		$query->where('`application_id` = '.(int) $applicationId);
 		$query->order('position');
 
 		$db->setQuery($query);
@@ -106,7 +106,7 @@ abstract class ModulesHelper
 		return $options;
 	}
 
-	public static function getTemplates($clientId = 0, $state = '', $template='')
+	public static function getTemplates($applicationId = 0, $state = '', $template='')
 	{
 		$db = JFactory::getDbo();
 		// Get the database object and a new query object.
@@ -115,7 +115,7 @@ abstract class ModulesHelper
 		// Build the query.
 		$query->select('element, name, enabled');
 		$query->from('#__extensions');
-		$query->where('client_id = '.(int) $clientId);
+		$query->where('application_id = '.(int) $applicationId);
 		$query->where('type = '.$db->quote('template'));
 		if ($state!='') {
 			$query->where('enabled = '.$db->quote($state));
@@ -137,17 +137,17 @@ abstract class ModulesHelper
 	 *
 	 * @return	array
 	 */
-	public static function getModules($clientId)
+	public static function getModules($applicationId)
 	{
 		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('element AS value, name AS text');
 		$query->from('#__extensions as e');
-		$query->where('e.`client_id` = '.(int)$clientId);
+		$query->where('e.`application_id` = '.(int)$applicationId);
 		$query->where('`type` = '.$db->quote('module'));
 		$query->where('`enabled` = 1');
-		$query->leftJoin('#__modules as m ON m.module=e.element AND m.client_id=e.client_id');
+		$query->leftJoin('#__modules as m ON m.module=e.element AND m.application_id=e.application_id');
 		$query->where('m.module IS NOT NULL');
 		$query->group('element');		
 
@@ -156,7 +156,7 @@ abstract class ModulesHelper
 		$lang = JFactory::getLanguage();
 		foreach ($modules as $i=>$module) {
 			$extension = $module->value;
-			$path = $clientId ? JPATH_ADMINISTRATOR : JPATH_SITE;
+			$path = $applicationId ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			$source = $path . "/modules/$extension";
 				$lang->load("$extension.sys", $path, null, false, false)
 			||	$lang->load("$extension.sys", $source, null, false, false)
@@ -175,13 +175,13 @@ abstract class ModulesHelper
 	 *
 	 * @return	array
 	 */
-	public static function getAssignmentOptions($clientId)
+	public static function getAssignmentOptions($applicationId)
 	{
 		$options = array();
 		$options[] = JHtml::_('select.option', '0', 'COM_MODULES_OPTION_MENU_ALL');
 		$options[] = JHtml::_('select.option', '-', 'COM_MODULES_OPTION_MENU_NONE');
 
-		if ($clientId == 0) {
+		if ($applicationId == 0) {
 			$options[] = JHtml::_('select.option', '1', 'COM_MODULES_OPTION_MENU_INCLUDE');
 			$options[] = JHtml::_('select.option', '-1', 'COM_MODULES_OPTION_MENU_EXCLUDE');
 		}

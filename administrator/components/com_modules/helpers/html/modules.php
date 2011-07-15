@@ -16,12 +16,12 @@ defined('_JEXEC') or die;
 abstract class JHtmlModules
 {
 	/**
-	 * @param	int $clientId	The client id
+	 * @param	int $applicationId	The client id
 	 * @param	string $state 	The state of the template
 	 */
-	static public function templates($clientId = 0, $state = '')
+	static public function templates($applicationId = 0, $state = '')
 	{
-		$templates = ModulesHelper::getTemplates($clientId, $state);
+		$templates = ModulesHelper::getTemplates($applicationId, $state);
 		foreach ($templates as $template) {
 			$options[]	= JHtml::_('select.option', $template->element, $template->name);
 		}

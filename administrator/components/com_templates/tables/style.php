@@ -79,7 +79,7 @@ class TemplatesTableStyle extends JTable
 			$query = $this->_db->getQuery(true);
 			$query->update('#__template_styles');
 			$query->set('home=\'0\'');
-			$query->where('client_id='.(int)$this->client_id);
+			$query->where('application_id='.(int)$this->application_id);
 			$query->where('home='.$this->_db->quote($this->home));
 			$this->_db->setQuery($query);
 			$this->_db->query();
@@ -104,7 +104,7 @@ class TemplatesTableStyle extends JTable
 			$query = $this->_db->getQuery(true);
 			$query->from('#__template_styles');
 			$query->select('id');
-			$query->where('client_id='.(int)$this->client_id);
+			$query->where('application_id='.(int)$this->application_id);
 			$query->where('template='.$this->_db->quote($this->template));
 			$this->_db->setQuery($query);
 			$results = $this->_db->loadResultArray();

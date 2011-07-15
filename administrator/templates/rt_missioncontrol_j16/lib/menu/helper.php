@@ -29,7 +29,7 @@ abstract class ModMenuHelper
 		$query->select('a.*, SUM(b.home) AS home');
 		$query->from('#__menu_types AS a');
 		$query->leftJoin('#__menu AS b ON b.menutype = a.menutype');
-		$query->where('(b.client_id = 0 OR b.client_id IS NULL)');
+		$query->where('(b.application_id = 0 OR b.application_id IS NULL)');
 		$query->group('a.id');
 
 		$db->setQuery($query);
@@ -63,7 +63,7 @@ abstract class ModMenuHelper
 
 		// Filter on the enabled states.
 		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
-		$query->where('m.client_id = 1');
+		$query->where('m.application_id = 1');
 		$query->where('e.enabled = 1');
 		$query->where('m.id > 1');
 

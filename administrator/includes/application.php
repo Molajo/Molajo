@@ -24,13 +24,13 @@ class MolajoAdministrator extends MolajoApplication
 	 * Class constructor
 	 *
 	 * @param	array	An optional associative array of configuration settings.
-	 * Recognized key values include 'clientId' (this list is not meant to be comprehensive).
+	 * Recognized key values include 'applicationId' (this list is not meant to be comprehensive).
 	 *
 	 * @since	1.5
 	 */
 	public function __construct($config = array())
 	{
-		$config['clientId'] = 1;
+		$config['applicationId'] = 1;
 		parent::__construct($config);
 
 		//Set the root in the URI based on the application name
@@ -255,7 +255,7 @@ class MolajoAdministrator extends MolajoApplication
 			$query = $db->getQuery(true);
 			$query->select('template, params');
 			$query->from('#__template_styles');
-			$query->where('client_id = 1');
+			$query->where('application_id = 1');
 			if ($admin_style)
 			{
 				$query->where('id = '.(int)$admin_style);

@@ -170,17 +170,17 @@ if ($im || $mm || $pm || $tm || $lm || $components)
 	}
 	if ($mm) {
 		$menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_MODULE_MANAGER'), 'index.php?option=com_modules', 'class:module'),true);
-		$menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_MODULE_SITE'), 'index.php?option=com_modules&filter_client_id=0', 'class:modules'));
-	    $menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_MODULE_ADMIN'), 'index.php?option=com_modules&filter_client_id=1', 'class:modules'));
+		$menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_MODULE_SITE'), 'index.php?option=com_modules&filter_application_id=0', 'class:modules'));
+	    $menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_MODULE_ADMIN'), 'index.php?option=com_modules&filter_application_id=1', 'class:modules'));
         $menu->getParent();
 	}
 	if ($pm) {
 		$menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_PLUGIN_MANAGER'), 'index.php?option=com_plugins', 'class:plugin'));
 	}
 	if ($tm) {
-		$menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_TEMPLATE_MANAGER'), 'index.php?option=com_templates&filter_client_id=*', 'class:themes'),true);
-        $menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_TEMPLATES_SITE'), 'index.php?option=com_templates&filter_client_id=0', 'class:themes'));
-	    $menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_TEMPLATES_ADMIN'), 'index.php?option=com_templates&filter_client_id=1', 'class:themes'));
+		$menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_TEMPLATE_MANAGER'), 'index.php?option=com_templates&filter_application_id=*', 'class:themes'),true);
+        $menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_TEMPLATES_SITE'), 'index.php?option=com_templates&filter_application_id=0', 'class:themes'));
+	    $menu->addChild(new JMenuNode(JText::_('MOD_MENU_EXTENSIONS_TEMPLATES_ADMIN'), 'index.php?option=com_templates&filter_application_id=1', 'class:themes'));
         $menu->getParent();
     }
 	if ($lm) {

@@ -74,7 +74,7 @@ class MolajoApplicationHelper
             }
 
             $db->setQuery(
-                'SELECT `client_id` as id, `name`, `path` ' .
+                'SELECT `application_id` as id, `name`, `path` ' .
                 ' FROM `#__clients` ' .
                 'WHERE '.$where
             );
@@ -113,7 +113,7 @@ class MolajoApplicationHelper
 
         /** retrieve ID */
         $db->setQuery(
-            'SELECT `client_id` as id ' .
+            'SELECT `application_id` as id ' .
             ' FROM `#__clients` ' .
             'WHERE '.' `name` = "'.$id.'"'
         );

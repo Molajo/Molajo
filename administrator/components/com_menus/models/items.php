@@ -42,7 +42,7 @@ class MenusModelItems extends JModelList
 				'rgt', 'a.rgt',
 				'level', 'a.level',
 				'path', 'a.path',
-				'client_id', 'a.client_id',
+				'application_id', 'a.application_id',
 				'home', 'a.home',
 			);
 		}
@@ -186,7 +186,7 @@ class MenusModelItems extends JModelList
 
 		// Exclude the root category.
 		$query->where('a.id > 1');
-		$query->where('a.client_id = 0');
+		$query->where('a.application_id = 0');
 
 		// Filter on the published state.
 		$published = $this->getState('filter.published');

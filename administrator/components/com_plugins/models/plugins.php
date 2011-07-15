@@ -40,7 +40,7 @@ class PluginsModelPlugins extends JModelList
 				'enabled', 'a.enabled',
 				'access', 'a.access', 'access_level',
 				'ordering', 'a.ordering',
-				'client_id', 'a.client_id',
+				'application_id', 'a.application_id',
 			);
 		}
 

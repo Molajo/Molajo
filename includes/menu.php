@@ -1,19 +1,19 @@
 <?php
 /**
- * @version		$Id: menu.php 20196 2011-01-09 02:40:25Z ian $
+ * @package     Molajo
+ * @subpackage  Application
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access.
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 /**
  * MolajoMenu class
  *
- * @package		Joomla.Site
- * @subpackage	Application
- * @since		1.5
+ * @package		Molajo
+ * @subpackage	Menu
+ * @since		1.0
  */
 class MolajoMenuSite extends JMenu
 {
@@ -40,7 +40,7 @@ class MolajoMenuSite extends JMenu
 			$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
 			$query->where('m.published = 1');
 			$query->where('m.parent_id > 0');
-			$query->where('m.client_id = 0');
+			$query->where('m.application_id = 0');
 			$query->order('m.lft');
 
             $acl = new MolajoACL ();

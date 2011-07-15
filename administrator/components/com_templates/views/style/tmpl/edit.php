@@ -36,9 +36,9 @@ $canDo = TemplatesHelper::getActions();
 
 			<li><?php echo $this->form->getLabel('template'); ?>
 			<?php echo $this->form->getInput('template'); ?>
-			<?php echo $this->form->getLabel('client_id'); ?>
-			<?php echo $this->form->getInput('client_id'); ?>
-			<input type="text" size="35" value="<?php echo $this->item->client_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" /></li>
+			<?php echo $this->form->getLabel('application_id'); ?>
+			<?php echo $this->form->getInput('application_id'); ?>
+			<input type="text" size="35" value="<?php echo $this->item->application_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" /></li>
 
 			<li><?php echo $this->form->getLabel('home'); ?>
 			<?php echo $this->form->getInput('home'); ?></li>
@@ -75,7 +75,7 @@ $canDo = TemplatesHelper::getActions();
 
 	<?php echo JHtml::_('sliders.end'); ?>
 	</div>
-	<?php if ($user->authorise('core.edit','com_menu') && $this->item->client_id==0):?>
+	<?php if ($user->authorise('core.edit','com_menu') && $this->item->application_id==0):?>
 		<?php if ($canDo->get('core.edit.state')) : ?>
 			<div class="width-60 fltlft">
 			<?php echo $this->loadTemplate('assignment'); ?>

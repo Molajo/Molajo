@@ -51,7 +51,7 @@ class TemplatesViewStyles extends JView
 	{
 		$state	= $this->get('State');
 		$canDo	= TemplatesHelper::getActions();
-		$isSite	= ($state->get('filter.client_id') == 0);
+		$isSite	= ($state->get('filter.application_id') == 0);
 
 		JToolBarHelper::title(JText::_('COM_TEMPLATES_MANAGER_STYLES'), 'thememanager');
 

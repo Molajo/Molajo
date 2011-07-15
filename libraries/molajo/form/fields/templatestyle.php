@@ -37,7 +37,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 		$groups = array();
 		$lang = JFactory::getLanguage();
 
-		// Get the client and client_id.
+		// Get the client and application_id.
 		$clientName = $this->element['client'] ? (string) $this->element['client'] : 'site';
 		$client = JApplicationHelper::getClientInfo($clientName, true);
 
@@ -51,7 +51,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 		// Build the query.
 		$query->select('s.id, s.title, e.name as name, s.template');
 		$query->from('#__template_styles as s');
-		$query->where('s.client_id = '.(int) $client->id);
+		$query->where('s.application_id = '.(int) $client->id);
 		$query->order('template');
 		$query->order('title');
 		if ($template) {
