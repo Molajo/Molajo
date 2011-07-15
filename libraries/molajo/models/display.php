@@ -1129,11 +1129,11 @@ $items[$i]->checked_out = false;
      * @param	string	A prefix for the table class name. Optional.
      * @param	array	Configuration array for model. Optional.
      *
-     * @return	JTable	A database object
+     * @return	MolajoTable	A database object
     */
     public function getTable($type='', $prefix='', $config = array())
     {
-        return JTable::getInstance($type=ucfirst($this->getState('request.single_view')),
+        return MolajoTable::getInstance($type=ucfirst($this->getState('request.single_view')),
                                    $prefix=ucfirst($this->getState('request.default_view').'Table'),
                                    $config);
     }

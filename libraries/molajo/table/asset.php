@@ -1,8 +1,8 @@
 <?php
 /**
- * @version     $id: version.php
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Table
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -12,8 +12,8 @@ defined('MOLAJO') or die();
  * Asset Table Class
  *
  * @package     Molajo
- * @subpackage  Database
- * @since       1
+ * @subpackage  Table
+ * @since       1.0
  * @link
  */
 class MolajoTableAsset extends MolajoTable {
@@ -42,21 +42,21 @@ class MolajoTableAsset extends MolajoTable {
     }
 
 	/**
-	 * Method to provide a shortcut to binding, checking and storing a JTable
+	 * Method to provide a shortcut to binding, checking and storing a MolajoTable
 	 * instance to the database table.  The method will check a row in once the
 	 * data has been stored and if an ordering filter is present will attempt to
 	 * reorder the table rows based on the filter.  The ordering filter is an instance
 	 * property name.  The rows that will be reordered are those whose value matches
-	 * the JTable instance for the property specified.
+	 * the MolajoTable instance for the property specified.
 	 *
-	 * @param   mixed   An associative array or object to bind to the JTable instance.
+	 * @param   mixed   An associative array or object to bind to the MolajoTable instance.
 	 * @param   string  Filter for the order updating
 	 * @param   mixed   An optional array or space separated list of properties
 	 *					to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.joomla.org/JTable/save
+	 * @link	http://docs.joomla.org/MolajoTable/save
 	 * @since   11.1
 	 */
 	public function save($src, $orderingFilter = '', $ignore = '')
@@ -84,7 +84,7 @@ class MolajoTableAsset extends MolajoTable {
      *
      * @return  bool  True if the instance is sane and able to be stored in the database.
      *
-     * @link	http://docs.joomla.org/JTable/check
+     * @link	http://docs.joomla.org/MolajoTable/check
      * @since   11.1
      */
     public function check()

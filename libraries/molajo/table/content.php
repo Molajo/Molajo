@@ -1,19 +1,20 @@
 <?php
 /**
- * @version     $id: table
  * @package     Molajo
  * @subpackage  Table
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die;
+defined('MOLAJO') or die();
 
 /**
- * Table Class
+ * Content Table Class
  *
- * @package	Molajo
- * @subpackage	Component Database Table
- * @since	1.6
+ * @package     Molajo
+ * @subpackage  Table
+ * @since       1.0
+ * @link
  */
 class MolajoTableContent extends MolajoTable
 {
@@ -85,7 +86,7 @@ class MolajoTableContent extends MolajoTable
      * @param	array $hash named array
      *
      * @return	null|string null is operation was satisfactory, otherwise returns an error
-     * @see	JTable:bind
+     * @see	MolajoTable:bind
      * @since	1.6
      */
     public function bind($array, $ignore = '')
@@ -117,7 +118,7 @@ class MolajoTableContent extends MolajoTable
      * Overloaded check function
      *
      * @return	boolean
-     * @see	JTable::check
+     * @see	MolajoTable::check
      * @since	1.6
      */
     public function check()
@@ -168,7 +169,7 @@ class MolajoTableContent extends MolajoTable
     /**
      * store
      *
-     * Overriden JTable::store to set modified data and user id.
+     * Overriden MolajoTable::store to set modified data and user id.
      *
      * @param	boolean	True to update fields even if they are null.
      *

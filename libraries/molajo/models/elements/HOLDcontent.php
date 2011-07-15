@@ -33,7 +33,7 @@ class MolajoElementContent extends JElement
 		$doc		= JFactory::getDocument();
 		$template	= $app->getTemplate();
 		$fieldName	= $control_name.'['.$name.']';
-		$article = JTable::getInstance('content');
+		$article = MolajoTable::getInstance('content');
 		if ($value) {
 			$article->load($value);
 		} else {

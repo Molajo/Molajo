@@ -15,4 +15,4 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldComponentLayout extends JFormField {}
+class JFormFieldComponentlayout extends MolajoFormFieldComponentlayout {}

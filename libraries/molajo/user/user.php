@@ -417,14 +417,14 @@ class MolajoUser extends JObject
 	 * @return  object   The user table object
 	 * @since   11.1
 	 */
-	public static function getTable($type = null, $prefix = 'JTable')
+	public static function getTable($type = null, $prefix = 'MolajoTable')
 	{
 		static $tabletype;
 
 		// Set the default tabletype;
 		if (!isset($tabletype)) {
 			$tabletype['name']		= 'user';
-			$tabletype['prefix']	= 'JTable';
+			$tabletype['prefix']	= 'MolajoTable';
 		}
 
 		// Set a custom table type is defined
@@ -434,7 +434,7 @@ class MolajoUser extends JObject
 		}
 
 		// Create the user table object
-		return JTable::getInstance($tabletype['name'], $tabletype['prefix']);
+		return MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
 	/**

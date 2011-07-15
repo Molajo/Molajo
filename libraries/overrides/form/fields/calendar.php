@@ -15,4 +15,4 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class JFieldCalendar extends MolajoFieldCalendar {}
+class JFormFieldCalendar extends MolajoFormFieldCalendar {}

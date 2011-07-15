@@ -143,39 +143,28 @@ foreach ($files as $file) {
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/html.php', 'JHtml');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/language.php', 'JLanguage');
 
-/** Database */
+/** Database and Table */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database.php', 'JDatabase');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databaseexception.php', 'DatabaseException');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databasequery.php', 'JDatabaseQueryElement');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/table/table.php', 'MolajoTable');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/database/table.php', 'JTable');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/tablenested.php', 'JTableNested');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/table/tablenested.php', 'MolajoTableNested');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/database/tablenested.php', 'JTableNested');
 
 $files = JFolder::files(MOLAJO_LIBRARY.'/table', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'table.php') {
+    if ($file == 'table.php' || $file == 'tablenested.php') {
     } else {
         $filehelper->requireClassFile(MOLAJO_LIBRARY.'/table/'.$file, 'MolajoTable'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 $files = JFolder::files(OVERRIDES_LIBRARY.'/database', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'table.php') {
+    if ($file == 'table.php' || $file == 'tablenested.php') {
     } else {
         $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/database/'.$file, 'JTable'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
-}
-$files = JFolder::files(JOOMLA_LIBRARY.'/database', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'databaseexception.php') {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/'.$file, 'DatabaseException');
-    } else if ($file == 'databasequery.php') {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/'.$file, 'JDatabaseQueryElement');
-    } else {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
-$files = JFolder::files(JOOMLA_LIBRARY.'/database/table', '\.php$', false, false);
-foreach ($files as $file) {
-    $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/table/'.$file, 'JTable'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /** mysql */
@@ -335,21 +324,18 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/helper.php', 'JFormHelper');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/form.php', 'JForm');
 
 /** Form Fields */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/form/fields/text.php', 'MolajoFormFieldText');
 $files = JFolder::files(MOLAJO_LIBRARY.'/form/fields', '\.php$', false, false);
 foreach ($files as $file) {
-
-echo $file.'<br />';
     $filehelper->requireClassFile(MOLAJO_LIBRARY.'/form/fields/'.$file, 'MolajoFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-echo 'hello';
-die();
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/form/fields/filters.php', 'ContentHelper');
 $files = JFolder::files(OVERRIDES_LIBRARY.'/form/fields', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/form/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
-}
-$files = JFolder::files(JOOMLA_LIBRARY.'/form/fields', '\.php$', false, false);
-foreach ($files as $file) {
-    $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    if ($file == 'filters.php') {
+    } else {
+        $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/form/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 /** Form Rules */
 $files = JFolder::files(MOLAJO_LIBRARY.'/form/rules', '\.php$', false, false);

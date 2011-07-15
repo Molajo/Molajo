@@ -1,22 +1,22 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Database
- *
+ * @package     Molajo
+ * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die();
 
 /**
- * Groups Table Class.
+ * Group Table Class
  *
  * @package     Molajo
- * @subpackage  Database
- * @version		1.0
+ * @subpackage  Table
+ * @since       1.0
+ * @link
  */
-class MolajoTableGroup extends JTable
+class MolajoTableGroup extends MolajoTable
 {
 	/**
 	 * Constructor

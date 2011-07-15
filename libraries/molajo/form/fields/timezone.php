@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldTimezone extends JFormFieldGroupedList
+class MolajoFormFieldTimezone extends MolajoFormFieldGroupedList
 {
 	/**
 	 * The form field type.

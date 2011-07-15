@@ -290,7 +290,7 @@ class MolajoModelEdit extends JModel
      *
      * Prepares table data prior to saving.
      *
-     * @param	JTable	A JTable object.
+     * @param	MolajoTable	A MolajoTable object.
      *
      * @return	void
      * @since	1.0
@@ -989,10 +989,10 @@ class MolajoModelEdit extends JModel
      * @param	string	A prefix for the table class name. Optional.
      * @param	array	Configuration array for model. Optional.
      *
-     * @return	JTable	A database object
+     * @return	MolajoTable	A database object
     */
     public function getTable($type='', $prefix='', $config = array())
     {
-        return JTable::getInstance($type=ucfirst(JRequest::getCmd('view')), $prefix=ucfirst(JRequest::getVar('default_view').'Table'), $config);
+        return MolajoTable::getInstance($type=ucfirst(JRequest::getCmd('view')), $prefix=ucfirst(JRequest::getVar('default_view').'Table'), $config);
     }
 }

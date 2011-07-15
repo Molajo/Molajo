@@ -1,25 +1,20 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Database
- *
+ * @package     Molajo
+ * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die();
 
 /**
- * Abstract Table class
+ * Table Class
  *
- * Parent class to all tables.
- *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Table
- * @since       11.1
- * @tutorial	Joomla.Platform/jtable.cls
- * @link		http://docs.joomla.org/JTable
- *
+ * @since       1.0
+ * @link
  */
 abstract class MolajoTable extends JObject
 {
@@ -116,18 +111,18 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Static method to get an instance of a JTable class if it can be found in
-	 * the table include paths.  To add include paths for searching for JTable
-	 * classes @see JTable::addIncludePath().
+	 * Static method to get an instance of a MolajoTable class if it can be found in
+	 * the table include paths.  To add include paths for searching for MolajoTable
+	 * classes @see MolajoTable::addIncludePath().
 	 *
-	 * @param   string   The type (name) of the JTable class to get an instance of.
+	 * @param   string   The type (name) of the MolajoTable class to get an instance of.
 	 * @param   string   An optional prefix for the table class name.
-	 * @param   array    An optional array of configuration values for the JTable object.
-	 * @return  mixed    A JTable object if found or boolean false if one could not be found.
+	 * @param   array    An optional array of configuration values for the MolajoTable object.
+	 * @return  mixed    A MolajoTable object if found or boolean false if one could not be found.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/getInstance
+	 * @link	http://docs.joomla.org/MolajoTable/getInstance
 	*/
-	public static function getInstance($type, $prefix = 'JTable', $config = array())
+	public static function getInstance($type, $prefix = 'MolajoTable', $config = array())
 	{
 		// Sanitize and prepare the table class name.
 		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
@@ -135,10 +130,10 @@ abstract class MolajoTable extends JObject
 
 		// Only try to load the class if it doesn't already exist.
 		if (!class_exists($tableClass)) {
-			// Search for the class file in the JTable include paths.
+			// Search for the class file in the MolajoTable include paths.
 			jimport('joomla.filesystem.path');
 
-			if ($path = JPath::find(JTable::addIncludePath(), strtolower($type).'.php')) {
+			if ($path = JPath::find(MolajoTable::addIncludePath(), strtolower($type).'.php')) {
 				// Import the class file.
 				require_once $path;
 
@@ -149,7 +144,7 @@ abstract class MolajoTable extends JObject
 				}
 			}
 			else {
-				// If we were unable to find the class file in the JTable include paths, raise a warning and return false.
+				// If we were unable to find the class file in the MolajoTable include paths, raise a warning and return false.
 				JError::raiseWarning(0, JText::sprintf('JLIB_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
 				return false;
 			}
@@ -163,13 +158,13 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Add a filesystem path where JTable should search for table class files.
+	 * Add a filesystem path where MolajoTable should search for table class files.
 	 * You may either pass a string or an array of paths.
 	 *
 	 * @param   mixed  A filesystem path or array of filesystem paths to add.
-	 * @return  array  An array of filesystem paths to find JTable classes in.
+	 * @return  array  An array of filesystem paths to find MolajoTable classes in.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/addIncludePath
+	 * @link	http://docs.joomla.org/MolajoTable/addIncludePath
 	 */
 	public static function addIncludePath($path = null)
 	{
@@ -205,7 +200,7 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  string  The name of the database table being modeled.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/getTableName
+	 * @link	http://docs.joomla.org/MolajoTable/getTableName
 	 */
 	public function getTableName()
 	{
@@ -217,7 +212,7 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  string  The name of the primary key for the table.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/getKeyName
+	 * @link	http://docs.joomla.org/MolajoTable/getKeyName
 	 */
 	public function getKeyName()
 	{
@@ -228,7 +223,7 @@ abstract class MolajoTable extends JObject
 	 * Method to get the JDatabase connector object.
 	 *
 	 * @return  object  The internal database connector object.
-	 * @link	http://docs.joomla.org/JTable/getDBO
+	 * @link	http://docs.joomla.org/MolajoTable/getDBO
 	 */
 	public function getDbo()
 	{
@@ -240,7 +235,7 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @param   object   A JDatabase connector object to be used by the table object.
 	 * @return  boolean  True on success.
-	 * @link	http://docs.joomla.org/JTable/setDBO
+	 * @link	http://docs.joomla.org/MolajoTable/setDBO
 	 */
 	public function setDBO(&$db)
 	{
@@ -261,7 +256,7 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  void
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/reset
+	 * @link	http://docs.joomla.org/MolajoTable/reset
 	 */
 	public function reset()
 	{
@@ -276,18 +271,18 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to bind an associative array or object to the JTable instance.This
+	 * Method to bind an associative array or object to the MolajoTable instance.This
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
-	 * @param   mixed  An associative array or object to bind to the JTable instance.
+	 * @param   mixed  An associative array or object to bind to the MolajoTable instance.
 	 * @param   mixed  An optional array or space separated list of properties
 	 *				to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/bind
+	 * @link	http://docs.joomla.org/MolajoTable/bind
 	 */
 	public function bind($src, $ignore = array())
 	{
@@ -324,7 +319,7 @@ abstract class MolajoTable extends JObject
 
 	/**
 	 * Method to load a row from the database by primary key and bind the fields
-	 * to the JTable instance properties.
+	 * to the MolajoTable instance properties.
 	 *
 	 * @param   mixed  An optional primary key value to load the row by, or an array of fields to match.  If not
 	 *                 set the instance property value is used.
@@ -333,7 +328,7 @@ abstract class MolajoTable extends JObject
 	 * @return  bool  True if successful. False if row not found or on error (internal error state set in that case).
 	 *
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/load
+	 * @link	http://docs.joomla.org/MolajoTable/load
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -398,14 +393,14 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to perform sanity checks on the JTable instance properties to ensure
+	 * Method to perform sanity checks on the MolajoTable instance properties to ensure
 	 * they are safe to store in the database.  Child classes should override this
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/check
+	 * @link	http://docs.joomla.org/MolajoTable/check
 	 */
 	public function check()
 	{
@@ -413,17 +408,17 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to store a row in the database from the JTable instance properties.
+	 * Method to store a row in the database from the MolajoTable instance properties.
 	 * If a primary key value is set the row with that primary key value will be
 	 * updated with the instance property values.  If no primary key value is set
 	 * a new row will be inserted into the database with the properties from the
-	 * JTable instance.
+	 * MolajoTable instance.
 	 *
 	 * @param   boolean True to update fields even if they are null.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.joomla.org/JTable/store
+	 * @link	http://docs.joomla.org/MolajoTable/store
 	 * @since   11.1
 	 */
 	public function store($updateNulls = false)
@@ -453,7 +448,7 @@ abstract class MolajoTable extends JObject
 		//
 		// Asset Tracking
 		//
-		$asset	= JTable::getInstance('Asset');
+		$asset	= MolajoTable::getInstance('Asset');
 
         if ((int) $this->asset_id == 0) {
             $asset->content_table = $this->_tbl;
@@ -484,7 +479,7 @@ abstract class MolajoTable extends JObject
 		//
 		// View Access
 		//
-		$grouping = JTable::getInstance('Grouping');
+		$grouping = MolajoTable::getInstance('Grouping');
 
         if ((int) $this->access == 0) {
             $asset->content_table = $this->_tbl;
@@ -516,21 +511,21 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to provide a shortcut to binding, checking and storing a JTable
+	 * Method to provide a shortcut to binding, checking and storing a MolajoTable
 	 * instance to the database table.  The method will check a row in once the
 	 * data has been stored and if an ordering filter is present will attempt to
 	 * reorder the table rows based on the filter.  The ordering filter is an instance
 	 * property name.  The rows that will be reordered are those whose value matches
-	 * the JTable instance for the property specified.
+	 * the MolajoTable instance for the property specified.
 	 *
-	 * @param   mixed   An associative array or object to bind to the JTable instance.
+	 * @param   mixed   An associative array or object to bind to the MolajoTable instance.
 	 * @param   string  Filter for the order updating
 	 * @param   mixed   An optional array or space separated list of properties
 	 *					to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.joomla.org/JTable/save
+	 * @link	http://docs.joomla.org/MolajoTable/save
 	 * @since   11.1
 	 */
 	public function save($src, $orderingFilter = '', $ignore = '')
@@ -574,7 +569,7 @@ abstract class MolajoTable extends JObject
 	 *					instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/delete
+	 * @link	http://docs.joomla.org/MolajoTable/delete
 	 */
 	public function delete($pk = null)
 	{
@@ -594,7 +589,7 @@ abstract class MolajoTable extends JObject
 			// Get and the asset name.
 			$this->$k	= $pk;
 			$name		= $this->_getAssetName();
-			$asset		= JTable::getInstance('Asset');
+			$asset		= MolajoTable::getInstance('Asset');
 
 			if ($asset->loadByName($name)) {
 				if (!$asset->delete()) {
@@ -638,7 +633,7 @@ abstract class MolajoTable extends JObject
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/checkOut
+	 * @link	http://docs.joomla.org/MolajoTable/checkOut
 	 */
 	public function checkOut($userId, $pk = null)
 	{
@@ -690,7 +685,7 @@ abstract class MolajoTable extends JObject
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/checkIn
+	 * @link	http://docs.joomla.org/MolajoTable/checkIn
 	 */
 	public function checkIn($pk = null)
 	{
@@ -739,7 +734,7 @@ abstract class MolajoTable extends JObject
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/hit
+	 * @link	http://docs.joomla.org/MolajoTable/hit
 	 */
 	public function hit($pk = null)
 	{
@@ -790,12 +785,12 @@ abstract class MolajoTable extends JObject
 	 *					is used as a static function.
 	 * @return  boolean  True if checked out.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/isCheckedOut
+	 * @link	http://docs.joomla.org/MolajoTable/isCheckedOut
 	 */
 	public function isCheckedOut($with = 0, $against = null)
 	{
 		// Handle the non-static case.
-		if (isset($this) && ($this instanceof JTable) && is_null($against)) {
+		if (isset($this) && ($this instanceof MolajoTable) && is_null($against)) {
 			$against = $this->get('checked_out');
 		}
 
@@ -823,7 +818,7 @@ abstract class MolajoTable extends JObject
 	 * @param   string   WHERE clause to use for selecting the MAX(ordering) for the table.
 	 * @return  mixed    Boolean false an failure or the next ordering value as an integer.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/getNextOrder
+	 * @link	http://docs.joomla.org/MolajoTable/getNextOrder
 	 */
 	public function getNextOrder($where = '')
 	{
@@ -868,7 +863,7 @@ abstract class MolajoTable extends JObject
 	 *					compact the ordering values.
 	 * @return  mixed    Boolean true on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/reorder
+	 * @link	http://docs.joomla.org/MolajoTable/reorder
 	 */
 	public function reorder($where = '')
 	{
@@ -946,7 +941,7 @@ abstract class MolajoTable extends JObject
 	 *					ordering values.
 	 * @return  mixed    Boolean true on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/move
+	 * @link	http://docs.joomla.org/MolajoTable/move
 	 */
 	public function move($delta, $where = '')
 	{
@@ -1057,7 +1052,7 @@ abstract class MolajoTable extends JObject
 	 * @param   integer The user id of the user performing the operation.
 	 * @return  boolean  True on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/publish
+	 * @link	http://docs.joomla.org/MolajoTable/publish
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{
@@ -1119,7 +1114,7 @@ abstract class MolajoTable extends JObject
 			}
 		}
 
-		// If the JTable instance value is in the list of primary keys that were set, set the instance.
+		// If the MolajoTable instance value is in the list of primary keys that were set, set the instance.
 		if (in_array($this->$k, $pks)) {
 			$this->published = $state;
 		}
@@ -1140,7 +1135,7 @@ abstract class MolajoTable extends JObject
 	 *					[label => 'Label', name => 'table name' , idfield => 'field', joinfield => 'field']
 	 * @return  boolean  True on success.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/canDelete
+	 * @link	http://docs.joomla.org/MolajoTable/canDelete
 	 */
 	public function canDelete($pk = null, $joins = null)
 	{
@@ -1208,13 +1203,13 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to export the JTable instance properties to an XML string.
+	 * Method to export the MolajoTable instance properties to an XML string.
 	 *
 	 * @deprecated
 	 * @param   boolean  True to map foreign keys to text values.
 	 * @return  string   XML string representation of the instance.
 	 * @since   11.1
-	 * @link	http://docs.joomla.org/JTable/toXML
+	 * @link	http://docs.joomla.org/MolajoTable/toXML
 	 */
 	public function toXML($mapKeysToText=false)
 	{

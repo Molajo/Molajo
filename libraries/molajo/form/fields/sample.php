@@ -13,7 +13,7 @@ defined('MOLAJO') or die();
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoFormFieldLanguageSample extends JFormFieldList
+class MolajoFormFieldSample extends MolajoFormFieldList
 {
 	/**
 	 * The form field type.

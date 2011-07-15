@@ -8,4 +8,4 @@
  */
 defined('MOLAJO') or die;
 
-class JFormFieldPrefix extends MolajoFieldPrefix {}
+class JFormFieldPrefix extends MolajoFormFieldPrefix {}

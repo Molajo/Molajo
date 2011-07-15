@@ -33,6 +33,7 @@ class MolajoFormFieldUser extends JFormField
 	 */
 	protected function getInput()
 	{
+
 		// Initialize variables.
 		$html = array();
 		$groups = $this->getGroups();
@@ -65,13 +66,13 @@ class MolajoFormFieldUser extends JFormField
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
 		// Load the current username if available.
-		$table = JTable::getInstance('user');
+		$table = MolajoTable::getInstance('user');
 		if ($this->value) {
 			$table->load($this->value);
 		} else {
 			$table->username = JText::_('JLIB_FORM_SELECT_USER');
 		}
-
+        return;
 		// Create a dummy text field with the user name.
 		$html[] = '<div class="fltlft">';
 		$html[] = '	<input type="text" id="'.$this->id.'_name"' .
