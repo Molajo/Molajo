@@ -2,13 +2,13 @@
 /** 
  * @package     Minima
  * @author      Marco Barbosa
- * @copyright   Copyright (C) 2010 Marco Barbosa. All rights reserved.
+ * @copyright   Copyright (C) 2011 Marco Barbosa. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
-$app    = JFactory::getApplication();
+defined('_JEXEC') or die;
+$app = JFactory::getApplication();
 
 // template color parameter
 $templateColor = $this->params->get('templateColor');
@@ -20,21 +20,23 @@ if (strrpos($templateColor, "#") === false) $templateColor = "#".$this->params->
 // get the current logged in user
 $currentUser = JFactory::getUser();
 
+// get the current language object
 $lang   = JFactory::getLanguage();
-/*$lang->load('mod_menu', JPATH_ADMINISTRATOR.'/components/'.str_replace('.sys', '', $langName), $lang->getDefault(), false, false);*/
-//$lang->load('mod_menu', JPATH_BASE, $lang->getDefault(), false, false);
 
-// Detecting Active Variables
-$option = JRequest::getCmd('option', '');
-$view = JRequest::getCmd('view', '');
-$layout = JRequest::getCmd('layout', '');
-$task = JRequest::getCmd('task', '');
-$itemid = JRequest::getCmd('Itemid', '');
-$hidemainmenu = JRequest::getInt('hidemainmenu');
+// Mount the body classes
+$requestVars = array(
+                        "option"  => JRequest::getCmd('option', 'no-option'), 
+                        "view"    => JRequest::getCmd('view', 'no-view'),
+                        "layout"  => JRequest::getCmd('layout', 'no-layout'),
+                        "task"    => JRequest::getCmd('task', 'no-task'),
+                        "itemId"  => JRequest::getCmd('Itemid', 'no-itemid'),                        
+                        "locked"  => JRequest::getInt('hidemainmenu') ? 'locked' : 'not-locked',
+                        "hasId"   => JRequest::getCmd('id', '') ? 'has-id' : 'no-id'
+                    );
 
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo  $this->language; ?>" class="no-js" dir="<?php echo  $this->direction; ?>">
+<html lang="<?php echo $this->language; ?>" class="no-js" dir="<?php echo  $this->direction; ?>">
 
 <head>
 
@@ -43,7 +45,7 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
 
     <jdoc:include type="head" />
 
-    <link href="templates/<?php echo $this->template ?>/css/template.min.css" rel="stylesheet">        
+    <link href="templates/<?php echo $this->template ?>/css/template.css" rel="stylesheet">
     <link href="templates/<?php echo $this->template ?>/css/ipad.css" media="screen and (min-device-width: 768px) and (max-device-width : 1024px)" rel="stylesheet">
 
     <style>
@@ -64,10 +66,10 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
 
     <script src="templates/<?php echo $this->template ?>/js/plugins/head.min.js"></script>    
 	<!--[if (gte IE 6)&(lte IE 8)]>
-        <script type="text/javascript" src="templates/<?php echo $this->template ?>/js/plugins/selectivizr.js" defer="defer"></script>
+        <script type="text/javascript" src="templates/<?php echo $this->template ?>/js/plugins/selectivizr.min.js" defer="defer"></script>
     <![endif]-->
 </head>
-<body id="minima" class="<?php echo $option." ".$view." ".$layout." ".$task." ".$itemid; if ($hidemainmenu) echo " locked"; ?>">
+<body id="minima" class="<?php echo implode(" ", $requestVars); ?>">
     <?php if (!JRequest::getInt('hidemainmenu')): ?>
         <?php if( $this->countModules('panel') ): ?>
         <div id="panel-wrapper">
@@ -95,18 +97,18 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
             <nav id="list-content">
                 <dl>
                     <dt><?php echo JText::_('TPL_MINIMA_TOOLS',true);?></dt>
-                    <?php if( $currentUser->authorize( array('manage','com_checkin') ) ): ?><dd><a href="index.php?option=com_checkin"><?php echo JText::_('TPL_MINIMA_TOOLS_GLOBAL_CHECKIN'); ?></a></dd><?php endif; ?>
-                    <?php if( $currentUser->authorize( array('manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache"><?php echo JText::_('TPL_MINIMA_TOOLS_CLEAR_CACHE'); ?></a></dd><?php endif; ?>
-                    <?php if( $currentUser->authorize( array('manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache&amp;view=purge"><?php echo JText::_('TPL_MINIMA_TOOLS_PURGE_EXPIRED_CACHE'); ?></a></dd><?php endif; ?>
-                    <?php if( $currentUser->authorize( array('manage','com_admin') ) ): ?><dd><a href="index.php?option=com_admin&amp;view=sysinfo"><?php echo JText::_('TPL_MINIMA_TOOLS_SYSTEM_INFORMATION'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_checkin') ) ): ?><dd><a href="index.php?option=com_checkin"><?php echo JText::_('TPL_MINIMA_TOOLS_GLOBAL_CHECKIN'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache"><?php echo JText::_('TPL_MINIMA_TOOLS_CLEAR_CACHE'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_cache') ) ): ?><dd><a href="index.php?option=com_cache&amp;view=purge"><?php echo JText::_('TPL_MINIMA_TOOLS_PURGE_EXPIRED_CACHE'); ?></a></dd><?php endif; ?>
+                    <?php if( $currentUser->authorize( array('core.manage','com_admin') ) ): ?><dd><a href="index.php?option=com_admin&amp;view=sysinfo"><?php echo JText::_('TPL_MINIMA_TOOLS_SYSTEM_INFORMATION'); ?></a></dd><?php endif; ?>
                 </dl>
-                <?php if( $currentUser->authorize( array('manage','com_installer') ) ): ?>
+                <?php if( $currentUser->authorize( array('core.manage','com_installer') ) ): ?>
                 <dl>
                     <dt><?php echo JText::_('TPL_MINIMA_EXTENSIONS',true);?></dt>
-                    <dd><a href="index.php?option=com_installer">Install</a></dd>
-                    <dd><a href="index.php?option=com_installer&view=update">Update</a></dd>
-                    <dd><a href="index.php?option=com_installer&view=manage">Manage</a></dd>
-                    <dd><a href="index.php?option=com_installer&view=discover">Discover</a></dd>
+                    <dd><a href="index.php?option=com_installer"><?php echo JText::_('TPL_MINIMA_EXTENSIONS_INSTALL'); ?></a></dd>
+                    <dd><a href="index.php?option=com_installer&amp;view=update"><?php echo JText::_('TPL_MINIMA_EXTENSIONS_UPDATE'); ?></a></dd>
+                    <dd><a href="index.php?option=com_installer&amp;view=manage"><?php echo JText::_('TPL_MINIMA_EXTENSIONS_MANAGE'); ?></a></dd>
+                    <dd><a href="index.php?option=com_installer&amp;view=discover"><?php echo JText::_('TPL_MINIMA_EXTENSIONS_DISCOVER'); ?></a></dd>
                 </dl>
                 <?php endif; ?>
             </nav><!-- /#list-content -->
@@ -150,16 +152,16 @@ $hidemainmenu = JRequest::getInt('hidemainmenu');
     </footer>
     <script>
         head.js(
-            {minima: "templates/<?php echo $this->template ?>/js/minima.min.js"},
-            {fixes: "templates/<?php echo $this->template ?>/js/libs/minima.fixes.min.js"}
+            {minima: "templates/<?php echo $this->template ?>/js/minima.js"}/*,
+            {fixes: "templates/<?php echo $this->template ?>/js/libs/minima.fixes.js"}*/
         , function() {
             // all done            
-            $(document.body).addClass('ready');            
+            $('minima').addClass('ready');
         });
         MooTools.lang.set('en-US', 'Minima', {
             actionBtn : "<?php echo JText::_('TPL_MINIMA_ACTIONS',true);?>",
             showFilter: "<?php echo JText::_('TPL_MINIMA_SHOW_FILTER',true);?>",
-            closeFilter: "<?php echo JText::_('TPL_MINIMA_HIDE_FILTER',true);?>"
+            hideFilter: "<?php echo JText::_('TPL_MINIMA_HIDE_FILTER',true);?>"
         });
     </script>        
 </body>

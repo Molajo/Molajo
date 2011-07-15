@@ -2,12 +2,12 @@
 /** 
  * @package     Minima
  * @author      Marco Barbosa
- * @copyright   Copyright (C) 2010 Marco Barbosa. All rights reserved.
+ * @copyright   Copyright (C) 2011 Marco Barbosa. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 // template color parameter
 $templateColor = $this->params->get('templateColor');

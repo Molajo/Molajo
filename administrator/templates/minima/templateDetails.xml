@@ -47,6 +47,8 @@
         <language tag="de-DE">language/de-DE/de-DE.tpl_minima.ini</language>
         <language tag="en-GB">language/en-GB/en-GB.tpl_minima.ini</language>
         <language tag="es-ES">language/es-ES/es-ES.tpl_minima.ini</language>
+        <language tag="es-AR">language/es-AR/es-AR.tpl_minima.ini</language>
+        <language tag="es-MX">language/es-MX/es-MX.tpl_minima.ini</language>
         <language tag="nb-NO">language/nb-NO/nb-NO.tpl_minima.ini</language>
         <language tag="pt-BR">language/pt-BR/pt-BR.tpl_minima.ini</language>
         <language tag="ru-RU">language/ru-RU/ru-RU.tpl_minima.ini</language>
