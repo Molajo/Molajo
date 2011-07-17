@@ -2,7 +2,7 @@
 	<!-- $Id: nn-NO.xml 1576 2011-01-30 21:48:21Z rued $ -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Norsk nynorsk (Norway)</name>
 	<version>1.7.0</version>
 	<creationDate>2011-01-30</creationDate>

@@ -39,6 +39,7 @@ if (!class_exists('JPlatform')) {
 if (!class_exists('JLoader')) {
     require_once JPATH_PLATFORM.'/loader.php';
 }
+
 /**
  * Import the base Joomla Platform libraries.
  */
@@ -59,7 +60,7 @@ if (isset($_SERVER['HTTP_HOST'])) {
 
 	// If an application flags it doesn't want this, adhere to that.
 	if (!defined('_JREQUEST_NO_CLEAN')) {
-        JRequest::clean();
+		JRequest::clean();
 	}
 }
 

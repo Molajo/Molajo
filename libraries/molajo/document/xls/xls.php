@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * DocumentFeed class, provides an easy interface to parse and display any feed document
@@ -182,7 +182,7 @@ class MolajoDocumentXLS extends MolajoDocument
 		 */
 		$cache		= 0;
 		$cache_time = 3600;
-		$cache_path = JPATH_CACHE;
+		$cache_path = MOLAJO_PATH_CACHE;
 
 		// set filename for rss feeds
 		$file = strtolower(str_replace('.', '', $type));

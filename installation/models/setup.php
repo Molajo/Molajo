@@ -1,22 +1,25 @@
 <?php
 /**
- * @version		$Id: setup.php 21676 2011-06-25 07:43:49Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 
 /**
- * Setup model for the Joomla Core Installer.
+ * Setup model for the Installer.
  *
- * @package		Joomla.Installation
+ * @package		Molajo
+ * @subpackage  Installation
  * @since		1.6
  */
 class JInstallationModelSetup extends JModel
 {
 	/**
+     * getOptions
+     *
 	 * Get the current setup options from the session.
 	 *
 	 * @return	array
@@ -31,6 +34,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * storeOptions
+     *
 	 * Store the current setup options in the session.
 	 *
 	 * @param	array	$options
@@ -58,6 +63,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * getForm
+     *
 	 * Method to get the link form.
 	 *
 	 * @return	mixed	JForm object on success, false on failure.
@@ -73,9 +80,9 @@ class JInstallationModelSetup extends JModel
 		}
 
 		// Get the form.
-		JForm::addFormPath(JPATH_COMPONENT.'/models/forms');
-		JForm::addFieldPath(JPATH_COMPONENT.'/models/fields');
-		JForm::addRulePath(JPATH_COMPONENT.'/models/rules');
+		JForm::addFormPath(MOLAJO_PATH_COMPONENT.'/models/forms');
+		JForm::addFieldPath(MOLAJO_PATH_COMPONENT.'/models/fields');
+		JForm::addRulePath(MOLAJO_PATH_COMPONENT.'/models/rules');
 
 		try
 		{
@@ -99,6 +106,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * setDboptions
+     *
 	 * @return	array
 	 * @since	1.6
 	 */
@@ -141,6 +150,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * getLanguages
+     *
 	 * Generate a panel of language choices for the user to select their language
 	 *
 	 * @return	boolean True if successful
@@ -176,6 +187,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * getIniParserAvailability
+     *
 	 * Checks the availability of the parse_ini_file and parse_ini_string functions.
 	 *
 	 * @return	boolean
@@ -294,6 +307,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * getPhpOptionsSufficient
+     *
 	 * Checks if all of the mandatory PHP options are met
 	 *
 	 * @return	boolean
@@ -315,6 +330,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * getPhpSettings
+     *
 	 * Gets PHP Settings.
 	 *
 	 * @return	array
@@ -378,6 +395,8 @@ class JInstallationModelSetup extends JModel
 	}
 
 	/**
+     * validate
+     *
 	 * Method to validate the form data.
 	 *
 	 * @param	array	$data	The form data.

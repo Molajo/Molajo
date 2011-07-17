@@ -42,7 +42,7 @@ class JFormFieldComponentLayout extends JFormField
 	{
 		// Initialize variables.
 
-		// Get the client id.
+		// Get the application id.
 		$applicationId = $this->element['application_id'];
 
 		if (is_null($applicationId) && $this->form instanceof JForm) {
@@ -50,7 +50,7 @@ class JFormFieldComponentLayout extends JFormField
 		}
 		$applicationId = (int) $applicationId;
 
-		$client	= JApplicationHelper::getClientInfo($applicationId);
+		$application	= JApplicationHelper::getApplicationInfo($applicationId);
 
 		// Get the extension.
 		$extn = (string) $this->element['extension'];
@@ -77,7 +77,7 @@ class JFormFieldComponentLayout extends JFormField
 		$view = preg_replace('#\W#', '', $view);
 
 		// If a template, extension and view are present build the options.
-		if ($extn && $view && $client) {
+		if ($extn && $view && $application) {
 
 			// Load language file
 			$lang = JFactory::getLanguage();
@@ -116,7 +116,7 @@ class JFormFieldComponentLayout extends JFormField
 			}
 
 			// Build the search paths for component layouts.
-			$component_path = JPath::clean($client->path.'/components/'.$extn.'/views/'.$view.'/tmpl');
+			$component_path = JPath::clean($application->path.'/components/'.$extn.'/views/'.$view.'/tmpl');
 
 			// Prepare array of component layouts
 			$component_layouts = array();
@@ -169,12 +169,12 @@ class JFormFieldComponentLayout extends JFormField
 				foreach ($templates as $template)
 				{
 					// Load language file
-					$lang->load('tpl_'.$template->element.'.sys', $client->path, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path, $lang->getDefault(), false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
+					$lang->load('tpl_'.$template->element.'.sys', $application->path, null, false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path.'/templates/'.$template->element, null, false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path, $lang->getDefault(), false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
 
-					$template_path = JPath::clean($client->path.'/templates/'.$template->element.'/html/'.$extn.'/'.$view);
+					$template_path = JPath::clean($application->path.'/templates/'.$template->element.'/html/'.$extn.'/'.$view);
 
 					// Add the layout options from the template path.
 					if (is_dir($template_path) && ($files = JFolder::files($template_path, '^[^_]*\.php$', false, true)))

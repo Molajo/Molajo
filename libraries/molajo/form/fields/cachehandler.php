@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldCacheHandler extends JFormFieldList
+class MolajoFormFieldCacheHandler extends MolajoFormFieldList
 {
 	/**
 	 * The form field type.

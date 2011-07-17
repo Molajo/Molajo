@@ -483,7 +483,7 @@ abstract class MolajoRendertoolbarHelper
 	 * @param	int		$height		The height of the popup.
 	 * @param	int		$width		The width of the popup.
 	 * @param	string	$alt		The name of the button.
-	 * @param	string	$path		An alternative path for the configuation xml relative to JPATH_SITE.
+	 * @param	string	$path		An alternative path for the configuation xml relative to MOLAJO_PATH_SITE.
 	 * @since	1.0
 	 */
 	public static function preferences($component, $height = '550', $width = '875', $alt = 'JToolbar_Options', $path = '', $onClose = '')

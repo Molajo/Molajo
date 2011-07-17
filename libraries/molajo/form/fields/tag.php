@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class MolajoFormFieldTag extends JFormFieldList
+class MolajoFormFieldTag extends MolajoFormFieldList
 {
 	/**
 	 * The form field type.
@@ -60,7 +60,7 @@ class MolajoFormFieldTag extends JFormFieldList
 		// Set the query and load the options.
 		$lang = JFactory::getLanguage();
 		foreach ($options as $i=>$option) {
-                    $lang->load($option->value, JPATH_ADMINISTRATOR, null, false, false);
+                    $lang->load($option->value, MOLAJO_PATH_ADMINISTRATOR, null, false, false);
                     $options[$i]->text = JText::_($option->text);
 		}
 

@@ -59,7 +59,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<td><?php echo JText::_('COM_INSTALLER_TYPE_' . $item->type) ?></td>
 				<td class="center"><?php echo $item->version ?></td>
 				<td class="center"><?php echo @$item->folder != '' ? $item->folder : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
-				<td class="center"><?php echo @$item->client != '' ? JText::_('COM_INSTALLER_TYPE_' . $item->client) : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
+				<td class="center"><?php echo @$item->application != '' ? JText::_('COM_INSTALLER_TYPE_' . $item->application) : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
 				<td><?php echo $item->detailsurl ?></td>
 			</tr>
 		<?php endforeach;?>

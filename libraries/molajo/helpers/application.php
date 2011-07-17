@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * Application helper functions
@@ -19,9 +19,9 @@ defined('JPATH_PLATFORM') or die;
 class MolajoApplicationHelper
 {
 	/**
-	 * Client information array
+	 * Application information array
 	 */
-	protected static $_clients = null;
+	protected static $_applications = null;
 
 	/**
 	 * Return the name of the request component [main component]
@@ -49,62 +49,62 @@ class MolajoApplicationHelper
 	}
 
 	/**
-	 * Gets information on a specific client id.  This method will be useful in
+	 * Gets information on a specific application id.  This method will be useful in
 	 * future versions when we start mapping applications in the database.
 	 *
-	 * This method will return a client information array if called
+	 * This method will return a application information array if called
 	 * with no arguments which can be used to add custom application information.
 	 *
-	 * @param   integer  $id		A client identifier
-	 * @param   boolean  $byName	If True, find the client by its name
+	 * @param   integer  $id		A application identifier
+	 * @param   boolean  $byName	If True, find the application by its name
 	 *
-	 * @return  mixed  Object describing the client or false if not known
+	 * @return  mixed  Object describing the application or false if not known
 	 * @since   11.1
 	 */
-	public static function getClientInfo($id = null, $byName = false)
+	public static function getApplicationInfo($id = null, $byName = false)
 	{
 		// Only create the array if it does not exist
-		if (self::$_clients === null)
+		if (self::$_applications === null)
 		{
 			$obj = new stdClass();
 
-			// Site Client
+			// Site Application
 			$obj->id	= 0;
 			$obj->name	= 'site';
-			$obj->path	= JPATH_SITE;
-			self::$_clients[0] = clone $obj;
+			$obj->path	= MOLAJO_PATH_SITE;
+			self::$_applications[0] = clone $obj;
 
-			// Administrator Client
+			// Administrator Application
 			$obj->id	= 1;
 			$obj->name	= 'administrator';
-			$obj->path	= JPATH_ADMINISTRATOR;
-			self::$_clients[1] = clone $obj;
+			$obj->path	= MOLAJO_PATH_ADMINISTRATOR;
+			self::$_applications[1] = clone $obj;
 
-			// Installation Client
+			// Installation Application
 			$obj->id	= 2;
 			$obj->name	= 'installation';
-			$obj->path	= JPATH_INSTALLATION;
-			self::$_clients[2] = clone $obj;
+			$obj->path	= MOLAJO_PATH_INSTALLATION;
+			self::$_applications[2] = clone $obj;
 		}
 
-		// If no client id has been passed return the whole array
+		// If no application id has been passed return the whole array
 		if (is_null($id)) {
-			return self::$_clients;
+			return self::$_applications;
 		}
 
-		// Are we looking for client information by id or by name?
+		// Are we looking for application information by id or by name?
 		if (!$byName)
 		{
-			if (isset(self::$_clients[$id])){
-				return self::$_clients[$id];
+			if (isset(self::$_applications[$id])){
+				return self::$_applications[$id];
 			}
 		}
 		else
 		{
-			foreach (self::$_clients as $client)
+			foreach (self::$_applications as $application)
 			{
-				if ($client->name == strtolower($id)) {
-					return $client;
+				if ($application->name == strtolower($id)) {
+					return $application;
 				}
 			}
 		}
@@ -113,18 +113,18 @@ class MolajoApplicationHelper
 	}
 
 	/**
-	 * Retrieves Client info from database
+	 * Retrieves Application info from database
 	 *
-	 * This method will return a client information array if called
+	 * This method will return a application information array if called
 	 * with no arguments which can be used to add custom application information.
 	 *
-	 * @param   integer  $id		A client identifier
-	 * @param   boolean  $byName	If True, find the client by its name
+	 * @param   integer  $id		A application identifier
+	 * @param   boolean  $byName	If True, find the application by its name
 	 *
 	 * @return  boolean  True if the information is added. False on error
 	 * @since   11.1
 	 */
-	public static function getClientInfoDB ($id = null, $byName = false)
+	public static function getApplicationInfoDB ($id = null, $byName = false)
 	{
         // if even this single next statement is run
         $db = JFactory::getDbo();
@@ -135,7 +135,7 @@ class MolajoApplicationHelper
         $query->select('application_id as id');
         $query->select('name');
         $query->select('path');
-        $query->from($db->namequote('#__clients'));
+        $query->from($db->namequote('#__applications'));
 
         if ($byName === true) {
             $query->where('name = '.$db->quote(trim($id)));
@@ -157,30 +157,30 @@ class MolajoApplicationHelper
     }
 
 	/**
-	 * Adds information for a client.
+	 * Adds information for a application.
 	 *
-	 * @param   mixed  A client identifier either an array or object
+	 * @param   mixed  A application identifier either an array or object
 	 *
 	 * @return  boolean  True if the information is added. False on error
 	 * @since   11.1
 	 */
-	public static function addClientInfo($client)
+	public static function addApplicationInfo($application)
 	{
-		if (is_array($client)) {
-			$client = (object) $client;
+		if (is_array($application)) {
+			$application = (object) $application;
 		}
 
-		if (!is_object($client)) {
+		if (!is_object($application)) {
 			return false;
 		}
 
-		$info = self::getClientInfo();
+		$info = self::getApplicationInfo();
 
-		if (!isset($client->id)) {
-			$client->id = count($info);
+		if (!isset($application->id)) {
+			$application->id = count($info);
 		}
 
-		self::$_clients[$client->id] = clone $client;
+		self::$_applications[$application->id] = clone $application;
 
 		return true;
 	}
@@ -409,13 +409,13 @@ class MolajoApplicationHelper
 	 */
 	protected static function _checkPath($path, $checkAdmin=1)
 	{
-		$file = JPATH_SITE . $path;
+		$file = MOLAJO_PATH_SITE . $path;
 		if ($checkAdmin > -1 && file_exists($file)) {
 			return $file;
 		}
 		else if ($checkAdmin != 0)
 		{
-			$file = JPATH_ADMINISTRATOR . $path;
+			$file = MOLAJO_PATH_ADMINISTRATOR . $path;
 			if (file_exists($file)) {
 				return $file;
 			}

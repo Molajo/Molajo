@@ -2,7 +2,7 @@
 	<!-- $Id: zh-TW.xml 14543 2010-02-04 04:29:34Z eddychang $ -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Traditional Chinese (Taiwan)</name>
 	<version>1.7.0</version>
 	<creationDate>2010-12-15</creationDate>

@@ -58,11 +58,11 @@ class TemplatesHelper
 	}
 
 	/**
-	 * Get a list of filter options for the application clients.
+	 * Get a list of filter options for the application applications.
 	 *
 	 * @return	array	An array of JHtmlOption elements.
 	 */
-	public static function getClientOptions()
+	public static function getApplicationOptions()
 	{
 		// Build the filter options.
 		$options	= array();

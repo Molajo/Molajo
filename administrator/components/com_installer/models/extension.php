@@ -113,7 +113,7 @@ class InstallerModel extends JModelList
 				}
 			}
 			$item->author_info = @$item->authorEmail .'<br />'. @$item->authorUrl;
-			$item->client = $item->application_id ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
+			$item->application = $item->application_id ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
 			$path = $item->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			switch ($item->type) {
 				case 'component':

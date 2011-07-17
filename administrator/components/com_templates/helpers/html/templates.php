@@ -21,8 +21,8 @@ class JHtmlTemplates
 	 */
 	public static function thumb($template, $applicationId = 0)
 	{
-		$client		= JApplicationHelper::getClientInfo($applicationId);
-		$basePath	= $client->path.'/templates/'.$template;
+		$application		= JApplicationHelper::getApplicationInfo($applicationId);
+		$basePath	= $application->path.'/templates/'.$template;
 		$baseUrl	= ($applicationId == 0) ? JUri::root(true) : JUri::root(true).'/administrator';
 		$thumb		= $basePath.'/template_thumbnail.png';
 		$preview	= $basePath.'/template_preview.png';
@@ -30,8 +30,8 @@ class JHtmlTemplates
 
 		if (file_exists($thumb))
 		{
-			$clientPath = ($applicationId == 0) ? '' : 'administrator/';
-			$thumb	= $clientPath.'templates/'.$template.'/template_thumbnail.png';
+			$applicationPath = ($applicationId == 0) ? '' : 'administrator/';
+			$thumb	= $applicationPath.'templates/'.$template.'/template_thumbnail.png';
 			$html	= JHtml::_('image',$thumb,JText::_('COM_TEMPLATES_PREVIEW'));
 			if (file_exists($preview))
 			{

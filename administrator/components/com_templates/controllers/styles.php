@@ -62,7 +62,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 	}
 
 	/**
-	 * Method to set the home template for a client.
+	 * Method to set the home template for a application.
 	 *
 	 * @since	1.6
 	 */
@@ -97,7 +97,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 		$this->setRedirect('index.php?option=com_templates&view=styles');
 	}
 	/**
-	 * Method to unset the default template for a client and for a language
+	 * Method to unset the default template for a application and for a language
 	 *
 	 * @since	1.6
 	 */

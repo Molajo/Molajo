@@ -147,7 +147,7 @@ class MolajoModelEdit extends JModel
      * @param	array	$data		Data for the form.
      * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
      *
-     * @return	mixed	A JForm object on success, false on failure
+     * @return	mixed	A MolajoForm object on success, false on failure
      * @since	1.0
      */
     public function getForm ($data = array(), $loadData = true)
@@ -182,7 +182,7 @@ class MolajoModelEdit extends JModel
      * @param	array		$options	Optional array of options for the form creation.
      * @param	boolean		$clear		Optional argument to force load a new form.
      * @param	string		$xpath		An optional xpath to search for the fields.
-     * @return	mixed		JForm object on success, False on error.
+     * @return	mixed		MolajoForm object on success, False on error.
      */
     protected function loadForm ($name, $source = null, $options = array(), $clear = false, $xpath = false)
     {
@@ -193,7 +193,7 @@ class MolajoModelEdit extends JModel
             return $this->_forms[$hash];
         }
 
-        $form = JForm::getInstance($name, $source, $options, false, $xpath);
+        $form = MolajoForm::getInstance($name, $source, $options, false, $xpath);
 
         if (isset($options['load_data']) && $options['load_data']) {
             $data = $this->loadFormData();

@@ -46,7 +46,7 @@ abstract class JHtmlLanguages {
 		return '<input type="radio" id="cb'.$rowNum.'" name="cid" value="'.htmlspecialchars($language).'" onclick="isChecked(this.checked);" title="'.($rowNum+1).'"/>';
 	}
 
-	public static function clients()
+	public static function applications()
 	{
 		return array(
 			JHtml::_('select.option', 0, JText::_('JSITE')),

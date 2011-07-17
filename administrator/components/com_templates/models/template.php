@@ -55,8 +55,8 @@ class TemplatesModelTemplate extends JModel
 		if ($template = $this->getTemplate()) {
 			jimport('joomla.filesystem.folder');
 
-			$client = JApplicationHelper::getClientInfo($template->application_id);
-			$path	= JPath::clean($client->path.'/templates/'.$template->element.'/');
+			$application = JApplicationHelper::getApplicationInfo($template->application_id);
+			$path	= JPath::clean($application->path.'/templates/'.$template->element.'/');
 
 			// Check if the template path exists.
 

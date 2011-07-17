@@ -1,28 +1,22 @@
 <?php
 /**
- * @version		$Id: database.php 21718 2011-07-01 07:52:13Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
-
-jimport('joomla.application.component.model');
-jimport('joomla.filesystem.file');
-jimport('joomla.database.database');
-jimport('joomla.installer.installer');
-require_once JPATH_INSTALLATION.'/helpers/database.php';
+defined('MOLAJO') or die();
 
 /**
- * Database configuration model for the Joomla Core Installer.
+ * Database configuration model for Installer.
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since		1.0
  */
 class JInstallationModelDatabase extends JModel
 {
-
 	function initialise($options)
 	{
 		// Get the options as a JObject for easier handling.
@@ -31,9 +25,9 @@ class JInstallationModelDatabase extends JModel
 		// Load the back-end language files so that the DB error messages work
 		$jlang = JFactory::getLanguage();
 		// Pre-load en-GB in case the chosen language files do not exist
-		$jlang->load('joomla', JPATH_ADMINISTRATOR, 'en-GB', true);
+		$jlang->load('joomla', MOLAJO_PATH_ADMINISTRATOR, 'en-GB', true);
 		// Load the selected language
-		$jlang->load('joomla', JPATH_ADMINISTRATOR, $options->language, true);
+		$jlang->load('joomla', MOLAJO_PATH_ADMINISTRATOR, $options->language, true);
 
 		// Ensure a database type was selected.
 		if (empty($options->db_type)) {
@@ -146,12 +140,10 @@ class JInstallationModelDatabase extends JModel
 					$this->setError(JText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
 					return false;
 				}
-			}
-/** Molajo Hack Begins */
+
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
 			$schema = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/molajo.sql';
-/** Molajo Hack Ends */
 
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
@@ -159,10 +151,9 @@ class JInstallationModelDatabase extends JModel
 				return false;
 			}
 
-/** Molajo Hack Begins */
 			// Attempt to update the table #__schema.
-			$files = JFolder::files(JPATH_ADMINISTRATOR . '/components/com_admin/sql/updates/mysql/', '\.sql$');
-/** Molajo Hack Ends */
+			$files = JFolder::files(MOLAJO_PATH_ADMINISTRATOR . '/components/com_admin/sql/updates/mysql/', '\.sql$');
+
 			if (empty($files)) {
 				$this->setError(JText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
 				return false;
@@ -175,9 +166,9 @@ class JInstallationModelDatabase extends JModel
 			}
 			$query = $db->getQuery(true);
 			$query->insert('#__schemas');
-/** Molajo Hack Ends */
+
 			$query->values('999, '. $db->quote($version));
-/** Molajo Hack Ends */
+
 			$db->setQuery($query);
 			$db->query();
 			if ($db->getErrorNum()) {
@@ -254,6 +245,12 @@ class JInstallationModelDatabase extends JModel
 		return true;
 	}
 
+    /**
+     * installSampleData
+     *
+     * @param $options
+     * @return bool
+     */
 	function installSampleData($options)
 	{
 		// Get the options as a JObject for easier handling.
@@ -280,7 +277,7 @@ class JInstallationModelDatabase extends JModel
 			$type = 'mysql';
 		}
 
-		$data = JPATH_INSTALLATION.'/sql/'.$type.'/' . $options->sample_file;
+		$data = MOLAJO_PATH_INSTALLATION.'/sql/'.$type.'/' . $options->sample_file;
 
 		// Attempt to import the database schema.
 		if (!file_exists($data)) {
@@ -296,6 +293,7 @@ class JInstallationModelDatabase extends JModel
 	}
 
 	/**
+     * getDbo
 	 * Method to get a JDatabase object.
 	 *
 	 * @param	string	$driver		The database driver to use.
@@ -539,6 +537,8 @@ class JInstallationModelDatabase extends JModel
 	}
 
 	/**
+     * _splitQueries
+     *
 	 * Method to split up queries from a schema file into an array.
 	 *
 	 * @param	string	$sql SQL schema.

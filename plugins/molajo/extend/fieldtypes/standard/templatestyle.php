@@ -45,7 +45,7 @@ class JFormFieldTemplateStyle extends JFormFieldGroupedList
 
 		// Get the client and application_id.
 		$clientName = $this->element['client'] ? (string) $this->element['client'] : 'site';
-		$client = JApplicationHelper::getClientInfo($clientName, true);
+		$client = JApplicationHelper::getApplicationInfo($clientName, true);
 
 		// Get the template.
 		$template = (string) $this->element['template'];

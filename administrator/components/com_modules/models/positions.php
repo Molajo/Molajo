@@ -94,7 +94,7 @@ class ModulesModelPositions extends JModelList
 			$direction			= $this->getState('list.direction');
 			$limitstart			= $this->getState('list.start');
 			$limit				= $this->getState('list.limit');
-			$client				= JApplicationHelper::getClientInfo($applicationId);
+			$application				= JApplicationHelper::getApplicationInfo($applicationId);
 
 			if ($type!='template')
 			{
@@ -126,17 +126,17 @@ class ModulesModelPositions extends JModelList
 			// Load the positions from the installed templates.
 			foreach (ModulesHelper::getTemplates($applicationId) as $template)
 			{
-				$path = JPath::clean($client->path.'/templates/'.$template->element.'/templateDetails.xml');
+				$path = JPath::clean($application->path.'/templates/'.$template->element.'/templateDetails.xml');
 
 				if (file_exists($path))
 				{
 					$xml = simplexml_load_file($path);
 					if (isset($xml->positions[0]))
 					{
-						$lang->load('tpl_'.$template->element.'.sys', $client->path, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path, $lang->getDefault(), false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
+						$lang->load('tpl_'.$template->element.'.sys', $application->path, null, false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path.'/templates/'.$template->element, null, false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path, $lang->getDefault(), false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
 						foreach ($xml->positions[0] as $position)
 						{
 							$value = (string)$position['value'];

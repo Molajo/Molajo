@@ -2,7 +2,7 @@
 <extension
 	type="module"
 	version="1.7"
-	client="administrator">
+	application="administrator">
 	<name>mod_latest</name>
 	<author>Joomla! Project</author>
 	<creationDate>July 2004</creationDate>

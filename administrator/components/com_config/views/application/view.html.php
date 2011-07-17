@@ -48,8 +48,8 @@ class ConfigViewApplication extends JView
 		$mediaParams = JComponentHelper::getParams('com_media');
 
 		// Load settings for the FTP layer.
-		jimport('joomla.client.helper');
-		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
+		jimport('joomla.application.helper');
+		$ftp = JApplicationHelper::setCredentialsFromRequest('ftp');
 
 		$this->assignRef('form',	$form);
 		$this->assignRef('data',	$data);

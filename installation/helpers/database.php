@@ -1,21 +1,26 @@
 <?php
 /**
- * @version		$Id: database.php 21376 2011-05-24 17:11:48Z dextercowley $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die();
 
 /**
- * Joomla Installation Database Helper Class.
+ * Installation Database Helper Class.
  *
  * @static
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since		1.0
  */
 class JInstallationHelperDatabase
 {
 	/**
+     * getDBO
+     *
 	 * Method to get a JDatabase object.
 	 *
 	 * @param	string	$driver		The database driver to use.
@@ -46,7 +51,6 @@ class JInstallationHelperDatabase
 			);
 
 			// Get a database object.
-			jimport('joomla.database.database');
 			$db = JDatabase::getInstance($options);
 		}
 

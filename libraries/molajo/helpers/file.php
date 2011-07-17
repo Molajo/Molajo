@@ -33,9 +33,7 @@ class MolajoFileHelper
             return false;
         }
 
-// echo 'class exists '.$class.' and file '.$file.'<br />';
         if (class_exists($class)) {
-// echo 'class exists '.$class.' and file '.$file.' successfully <br />';
             return;
         } else {
             JError::raiseNotice(500, JText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');

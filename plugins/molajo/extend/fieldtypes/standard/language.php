@@ -41,15 +41,15 @@ class JFormFieldLanguage extends JFormFieldList
 	protected function getOptions()
 	{
 		// Initialize some field attributes.
-		$client	= (string) $this->element['client'];
-		if ($client != 'site' && $client != 'administrator') {
-			$client = 'site';
+		$application	= (string) $this->element['application'];
+		if ($application != 'site' && $application != 'administrator') {
+			$application = 'site';
 		}
 
 		// Merge any additional options in the XML definition.
 		$options = array_merge(
 			parent::getOptions(),
-			JLanguageHelper::createLanguageList($this->value, constant('JPATH_'.strtoupper($client)), true, true)
+			JLanguageHelper::createLanguageList($this->value, constant('JPATH_'.strtoupper($application)), true, true)
 		);
 
 		return $options;

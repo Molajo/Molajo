@@ -26,7 +26,7 @@ abstract class MolajoPluginHelper
         $defaultLayout = $layout;
 
         /** template and base path for the layout **/
-        $tPath = JPATH_THEMES.'/'.$template.'/html/'.$widget['type'].'/'.$widget['name'].'/'.$layout.'.php';
+        $tPath = MOLAJO_PATH_THEMES.'/'.$template.'/html/'.$widget['type'].'/'.$widget['name'].'/'.$layout.'.php';
         $bPath = MOLAJO_WIDGETS.'/'.$widget['type'].'/'.$widget['name'].'/tmpl/'.$defaultLayout.'.php';
 
         /** use layout overrides, if available **/

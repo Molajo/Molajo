@@ -20,9 +20,9 @@ jimport('joomla.application.component.view');
 class LanguagesViewInstalled extends JView
 {
 	/**
-	 * @var object client object
+	 * @var object application object
 	 */
-	protected $client = null;
+	protected $application = null;
 
 	/**
 	 * @var boolean|JExeption True, if FTP settings should be shown, or an exeption

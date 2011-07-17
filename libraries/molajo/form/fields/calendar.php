@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldCalendar extends JFormField
+class MolajoFormFieldCalendar extends MolajoFormField
 {
 	/**
 	 * The form field type.

@@ -43,7 +43,7 @@ class LanguagesController extends JController
 
 		$view	= JRequest::getCmd('view', 'languages');
 		$layout	= JRequest::getCmd('layout', 'default');
-		$client	= JRequest::getInt('client');
+		$application	= JRequest::getInt('application');
 		$id		= JRequest::getInt('id');
 
 		// Check for edit form.

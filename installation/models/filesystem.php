@@ -1,22 +1,25 @@
 <?php
 /**
- * @version		$Id: filesystem.php 21518 2011-06-10 21:38:12Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 
 /**
- * Filesystem configuration model for the Joomla Core Installer.
+ * Filesystem configuration model for the Installer.
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since		1.0
  */
 class JInstallationModelFilesystem extends JModel
 {
 	/**
+     * detectFtpRoot
+     *
 	 * Find the ftp filesystem root for a given user/pass pair.
 	 *
 	 * @param	array	$options	Configuration options.
@@ -71,8 +74,8 @@ class JInstallationModelFilesystem extends JModel
 			$paths[] = $cwd.'/';
 		}
 
-		// Search through the segments of JPATH_SITE looking for root possibilities.
-		$parts = explode(DS, JPATH_SITE);
+		// Search through the segments of MOLAJO_PATH_SITE looking for root possibilities.
+		$parts = explode(DS, MOLAJO_PATH_SITE);
 		$tmp = '';
 		for ($i = count($parts) - 1; $i >= 0; $i--)
 		{
@@ -109,6 +112,8 @@ class JInstallationModelFilesystem extends JModel
 	}
 
 	/**
+     * verifyFtpSettings
+     *
 	 * Verify the FTP settings as being functional and correct.
 	 *
 	 * @param	array	$options	Configuration options.
@@ -191,7 +196,7 @@ class JInstallationModelFilesystem extends JModel
 		}
 
 		// Verify valid root path, part two
-		$checkValue = file_get_contents(JPATH_ROOT.'/includes/version.php');
+		$checkValue = file_get_contents(MOLAJO_PATH_ROOT.'/includes/version.php');
 		if ($buffer !== $checkValue) {
 			$ftp->quit();
 			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
@@ -231,30 +236,32 @@ class JInstallationModelFilesystem extends JModel
 	}
 
 	/**
+     * checkPermissions
+     *
 	 * Check the webserver user permissions for writing files/folders
 	 *
 	 * @return	boolean	True if correct permissions exist
 	 *
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public static function checkPermissions()
 	{
-		if (!is_writable(JPATH_ROOT.'/tmp')) {
+		if (!is_writable(MOLAJO_PATH_ROOT.'/tmp')) {
 			return false;
 		}
-		if (!mkdir(JPATH_ROOT.'/tmp/test', 0755)) {
+		if (!mkdir(MOLAJO_PATH_ROOT.'/tmp/test', 0755)) {
 			return false;
 		}
-		if (!copy(JPATH_ROOT.'/tmp/index.html', JPATH_ROOT.'tmp/test/index.html')) {
+		if (!copy(MOLAJO_PATH_ROOT.'/tmp/index.html', MOLAJO_PATH_ROOT.'tmp/test/index.html')) {
 			return false;
 		}
-		if (!chmod(JPATH_ROOT.'/tmp/test/index.html', 0777)) {
+		if (!chmod(MOLAJO_PATH_ROOT.'/tmp/test/index.html', 0777)) {
 			return false;
 		}
-		if (!unlink(JPATH_ROOT.'/tmp/test/index.html')) {
+		if (!unlink(MOLAJO_PATH_ROOT.'/tmp/test/index.html')) {
 			return false;
 		}
-		if (!rmdir(JPATH_ROOT.'/tmp/test')) {
+		if (!rmdir(MOLAJO_PATH_ROOT.'/tmp/test')) {
 			return false;
 		}
 
@@ -262,6 +269,8 @@ class JInstallationModelFilesystem extends JModel
 	}
 
 	/**
+     * checkSettings
+     *
 	 * Verify the FTP configuration values are valid
 	 *
 	 * @param	string	$user	Username of the ftp user to determine root for
@@ -271,7 +280,7 @@ class JInstallationModelFilesystem extends JModel
 	 * @param	string	$port
 	 *
 	 * @return	mixed	Boolean true on success or JError object on fail
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public static function checkSettings($user, $pass, $root, $host = '127.0.0.1', $port = '21')
 	{
@@ -329,7 +338,7 @@ class JInstallationModelFilesystem extends JModel
 		}
 
 		// Verify valid root path, part one
-		$checkList = array('CHANGELOG.php', 'COPYRIGHT.php', 'index.php', 'INSTALL.php', 'LICENSE.php');
+		$checkList = array('index.php', 'INSTALL.php', 'LICENSE.php');
 		if (count(array_diff($checkList, $rootList))) {
 			$ftp->quit();
 			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
@@ -345,7 +354,7 @@ class JInstallationModelFilesystem extends JModel
 		}
 
 		// Verify valid root path, part two
-		$checkValue = file_get_contents(JPATH_ROOT.'/includes/version.php');
+		$checkValue = file_get_contents(LIBRARIES.'/includes/version.php');
 		if ($buffer !== $checkValue) {
 			$ftp->quit();
 			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
@@ -384,6 +393,8 @@ class JInstallationModelFilesystem extends JModel
 	}
 
 	/**
+     * setFolderPermissions
+     *
 	 * Set default folder permissions
 	 *
 	 * @param string $path The full file path
@@ -402,7 +413,7 @@ class JInstallationModelFilesystem extends JModel
 		$ftpRoot = $options->ftpRoot;
 
 		// Determine if the path is "chmodable".
-		if (!JPath::canChmod(JPath::clean(JPATH_SITE . '/' . $folder))) {
+		if (!JPath::canChmod(JPath::clean(MOLAJO_PATH_SITE . '/' . $folder))) {
 			$ftpFlag = true;
 		}
 
@@ -429,7 +440,7 @@ class JInstallationModelFilesystem extends JModel
 			$client->quit();
 			$ret = true;
 		} else {
-			$path = JPath::clean(JPATH_SITE . '/' . $folder);
+			$path = JPath::clean(MOLAJO_PATH_SITE . '/' . $folder);
 
 			if (!@ chmod($path, octdec('0755'))) {
 				$ret = false;
@@ -442,6 +453,8 @@ class JInstallationModelFilesystem extends JModel
 	}
 
 	/**
+     * setFTPCfg
+     *
 	 * Inserts ftp variables to mainframe registry
 	 * Needed to activate ftp layer for file operations in safe mode
 	 *
@@ -463,6 +476,13 @@ class JInstallationModelFilesystem extends JModel
 		$app->setCfg($arr, 'config');
 	}
 
+    /**
+     * _chmod
+     *
+     * @param $path
+     * @param $mode
+     * @return bool
+     */
 	function _chmod($path, $mode)
 	{
 		$app	= JFactory::getApplication();
@@ -483,7 +503,7 @@ class JInstallationModelFilesystem extends JModel
 			$ftp->login($app->getCfg('ftp_user'), $app->getCfg('ftp_pass'));
 
 			//Translate the destination path for the FTP account
-			$path = JPath::clean(str_replace(JPATH_SITE, $ftpRoot, $path), '/');
+			$path = JPath::clean(str_replace(MOLAJO_PATH_SITE, $ftpRoot, $path), '/');
 
 			// do the ftp chmod
 			if (!$ftp->chmod($path, $mode)) {

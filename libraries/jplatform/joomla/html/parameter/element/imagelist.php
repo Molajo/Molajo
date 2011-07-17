@@ -15,8 +15,9 @@ defined('JPATH_PLATFORM') or die;
  * @package     Joomla.Platform
  * @subpackage  Parameter
  * @since       11.1
- * @deprecated	JParameter is deprecated and will be removed in a future version. Use JForm instead.
+ * deprecated   Use JForm instead
  */
+
 class JElementImageList extends JElement
 {
 	/**
@@ -26,12 +27,6 @@ class JElementImageList extends JElement
 	*/
 	protected $_name = 'ImageList';
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
 	public function fetchElement($name, $value, &$node, $control_name)
 	{
 		$filter = '\.png$|\.gif$|\.jpg$|\.bmp$|\.ico$';

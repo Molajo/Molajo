@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldFolderList extends JFormFieldList
+class MolajoFormFieldFolderList extends MolajoFormFieldList
 {
 	/**
 	 * The form field type.
@@ -45,7 +45,7 @@ class MolajoFormFieldFolderList extends JFormFieldList
 		// Get the path in which to search for file options.
 		$path = (string) $this->element['directory'];
 		if (!is_dir($path)) {
-			$path = JPATH_ROOT.'/'.$path;
+			$path = MOLAJO_PATH_ROOT.'/'.$path;
 		}
 
 		// Prepend some default options based on field attributes.

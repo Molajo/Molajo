@@ -71,13 +71,13 @@ class MolajoMenu extends JObject
 	/**
 	 * Returns a MolajoMenu object
 	 *
-	 * @param   string  $client   The name of the client
+	 * @param   string  $application   The name of the application
 	 * @param   array   $options  An associative array of options
 	 *
 	 * @return  MolajoMenu  A menu object.
 	 * @since   11.1
 	 */
-	public static function getInstance($client, $options = array())
+	public static function getInstance($application, $options = array())
 	{
 		static $instances;
 
@@ -85,9 +85,9 @@ class MolajoMenu extends JObject
 			$instances = array();
 		}
 
-		if (empty($instances[$client])) {
+		if (empty($instances[$application])) {
 			//Load the router object
-			$info = MolajoApplicationHelper::getClientInfo($client, true);
+			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
 			$path = $info->path.'/includes/menu.php';
 
@@ -95,14 +95,14 @@ class MolajoMenu extends JObject
 				require_once $path;
 
 				// Create a JPathway object
-				$classname = 'MolajoMenu'.ucfirst($client);
+				$classname = 'MolajoMenu'.ucfirst($application);
 				$instance = new $classname($options);
 			}
 
-			$instances[$client] = & $instance;
+			$instances[$application] = & $instance;
 		}
 
-		return $instances[$client];
+		return $instances[$application];
 	}
 
 	/**

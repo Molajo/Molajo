@@ -2,7 +2,7 @@
 	<!-- $Id: km-KH.xml 00001 2011-01-05 19:32:34Z km-KH.org $ -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Khmer (Cambodia)</name>
 	<version>1.7.0</version>
 	<creationDate>2011-01-05</creationDate>

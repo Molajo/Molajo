@@ -19,8 +19,6 @@ defined('JPATH_PLATFORM') or die;
 abstract class JHtmlList
 {
 	/**
-	 * 
-	 * @param   $row
 	 * Use JHtml::_('access.assetgrouplist', 'access', $selected) instead
 	 * @deprecated
 	 */
@@ -108,7 +106,7 @@ abstract class JHtmlList
 	}
 
 	/**
-	 * @deprecated  Use JHtml::_('list.ordering') instead
+	 * @deprecated	1.6 Use JHtml::_('list.ordering') instead
 	 */
 	public static function specificordering($value, $id, $query, $neworder = 0)
 	{

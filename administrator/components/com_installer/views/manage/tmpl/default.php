@@ -82,7 +82,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					</span>
 				</td>
 				<td class="center">
-					<?php echo $item->client; ?>
+					<?php echo $item->application; ?>
 				</td>
 				<td class="center">
 					<?php if (!$item->element) : ?>

@@ -2,7 +2,7 @@
 <extension
 	type="module"
 	version="1.6.0"
-	client="site"
+	application="site"
 	method="upgrade">
 	<name>mod_menu</name>
 	<author>Joomla! Project</author>

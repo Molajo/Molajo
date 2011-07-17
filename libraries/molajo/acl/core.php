@@ -463,8 +463,8 @@ class MolajoACLCore extends MolajoACL
         $component = $params[0];
         $section = $params[1];
 
-		if (defined('JPATH_ADMINISTRATOR') && is_file(JPATH_ADMINISTRATOR.'/components/'.$component.'/access.xml')) {
-			$xml = simplexml_load_file(JPATH_ADMINISTRATOR.'/components/'.$component.'/access.xml');
+		if (defined('MOLAJO_PATH_ADMINISTRATOR') && is_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml')) {
+			$xml = simplexml_load_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml');
 
 			foreach ($xml->children() as $child)
 			{

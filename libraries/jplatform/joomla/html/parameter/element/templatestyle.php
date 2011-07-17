@@ -14,23 +14,17 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Parameter
  * @since       11.1
  * @deprecated  Use JForm instead
- */
+**/
 class JElementTemplateStyle extends JElement {
 
 	/**
-	 * Element name
-	 *
-	 * @var    string
-	 */
+	* Element name
+	*
+	* @var    string
+	**/
 	protected	$_name = 'TemplateStyle';
 
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
 	public function fetchElement( $name, $value, &$node, $control_name )
 	{
 		$db = JFactory::getDBO();
@@ -49,15 +43,9 @@ class JElementTemplateStyle extends JElement {
 		return $html;
 	}
 
-	/**
-	 *
-	 * @since   11.1
-	 * 
-	 * @deprecated
-	 */
 	protected function _getSelected()
 	{
-		$id = JRequest::getVar('cid', 0);
+		$id = JRequest::getVar( 'cid', 0 );
 		$db = JFactory::getDBO();
 		$query = 'SELECT `template_style_id` FROM `#__menu` '
 			. 'WHERE id = '.$id[0];

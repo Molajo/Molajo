@@ -170,13 +170,13 @@ class ModulesModelModules extends JModelList
 	protected function translate(&$items)
 	{
 		$lang = JFactory::getLanguage();
-		$client = $this->getState('filter.application_id') ? 'administrator' : 'site';
+		$application = $this->getState('filter.application_id') ? 'administrator' : 'site';
 		foreach($items as $item) {
 			$extension = $item->module;
-			$source = constant('JPATH_' . strtoupper($client)) . "/modules/$extension";
-				$lang->load("$extension.sys", constant('JPATH_' . strtoupper($client)), null, false, false)
+			$source = constant('JPATH_' . strtoupper($application)) . "/modules/$extension";
+				$lang->load("$extension.sys", constant('JPATH_' . strtoupper($application)), null, false, false)
 			||	$lang->load("$extension.sys", $source, null, false, false)
-			||	$lang->load("$extension.sys", constant('JPATH_' . strtoupper($client)), $lang->getDefault(), false, false)
+			||	$lang->load("$extension.sys", constant('JPATH_' . strtoupper($application)), $lang->getDefault(), false, false)
 			||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 			$item->name = JText::_($item->name);
 			if (is_null($item->pages)) {
@@ -260,7 +260,7 @@ class ModulesModelModules extends JModelList
 			$query->where('a.module = '.$db->Quote($module));
 		}
 
-		// Filter by client.
+		// Filter by application.
 		$applicationId = $this->getState('filter.application_id');
 		if (is_numeric($applicationId)) {
 			$query->where('a.application_id = '.(int) $applicationId);

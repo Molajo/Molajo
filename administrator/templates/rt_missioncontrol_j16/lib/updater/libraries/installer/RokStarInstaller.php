@@ -118,9 +118,9 @@ class RokStarInstaller extends JInstaller
 		// Initialize variables
 		$exceptionFiles = array ();
 
-		// Get the client info
+		// Get the application info
 		jimport('joomla.application.helper');
-		$client =& JApplicationHelper::getClientInfo($cid);
+		$application =& JApplicationHelper::getApplicationInfo($cid);
 
 		if (!is_a($element, 'JSimpleXMLElement') || !count($element->children())) {
 			// Either the tag does not exist or has no children therefore we return zero files processed.
@@ -137,8 +137,8 @@ class RokStarInstaller extends JInstaller
 		/*
 		 * Here we set the folder we are going to remove the files from.
 		 */
-		if ($client) {
-			$pathname = 'extension_'.$client->name;
+		if ($application) {
+			$pathname = 'extension_'.$application->name;
 			$destination = $this->getPath($pathname);
 		} else {
 			$pathname = 'extension_root';
@@ -202,7 +202,7 @@ class RokStarInstaller extends JInstaller
     }
 
     function copyFiles($files, $overwrite=null){
-        $ftp = JClientHelper::getCredentials('ftp');
+        $ftp = JApplicationHelper::getCredentials('ftp');
 
         // try to make writeable
         if ($overwrite || $this->getOverwrite()){

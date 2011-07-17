@@ -102,7 +102,7 @@ class MolajoTableMenu extends MolajoTableNested
 
 		// Verify that a first level menu item alias is not the name of a folder.
 		jimport('joomla.filesystem.folders');
-		if ($this->parent_id==1 && in_array($this->alias, JFolder::folders(JPATH_ROOT))) {
+		if ($this->parent_id==1 && in_array($this->alias, JFolder::folders(MOLAJO_PATH_ROOT))) {
 			$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_MENU_ROOT_ALIAS_FOLDER', $this->alias, $this->alias));
 			return false;
 		}

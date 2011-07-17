@@ -1,0 +1,18 @@
+<?php
+/**
+ * @package		Joomla.Framework
+ * @subpackage	Form
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
+/**
+ * Form Rule class for the Joomla Framework.
+ * Requires the value entered be one of the options in a field of type="list"
+ *
+ * @package		Joomla.Framework
+ * @subpackage	Form
+ * @since		1.6
+ */
+class JFormRuleOptions extends MolajoFormRuleOptions {}

@@ -2,7 +2,7 @@
 <extension
 	type="module"
 	version="1.7"
-	client="administrator">
+	application="administrator">
 	<name>mod_online</name>
 	<author>Joomla! Project</author>
 	<creationDate>Jan 2006</creationDate>

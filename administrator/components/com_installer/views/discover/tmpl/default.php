@@ -51,7 +51,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<td class="center"><?php echo @$item->version != '' ? $item->version : '&#160;'; ?></td>
 				<td class="center"><?php echo @$item->creationDate != '' ? $item->creationDate : '&#160;'; ?></td>
 				<td class="center"><?php echo @$item->folder != '' ? $item->folder : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
-				<td class="center"><?php echo $item->client; ?></td>
+				<td class="center"><?php echo $item->application; ?></td>
 				<td class="center">
 					<span class="editlinktip hasTip" title="<?php echo addslashes(htmlspecialchars(JText::_('COM_INSTALLER_AUTHOR_INFORMATION').'::'.$item->author_info)); ?>">
 						<?php echo @$item->author != '' ? $item->author : '&#160;'; ?>

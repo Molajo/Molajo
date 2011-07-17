@@ -294,7 +294,7 @@ class JParameter extends JRegistry
 	 * @return  object
 	 * @since   11.1
 	 */
-	public function loadSetupFile($path=null)
+	public function loadSetupFile($path)
 	{
 		$result = false;
 

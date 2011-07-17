@@ -9,13 +9,13 @@
 defined('MOLAJO') or die();
 
 /**
- * Form Field class for the Joomla Framework.
+ * Access Level
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
-class MolajoFormFieldAccesslevel extends JFormFieldList
+class MolajoFormFieldAccesslevel extends MolajoFormFieldList
 {
 	/**
 	 * The form field type.

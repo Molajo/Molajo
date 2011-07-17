@@ -11,7 +11,7 @@ class PFactory extends JFactory {
 	function &getStream($use_prefix=true, $use_network=true,$ua=null, $uamask=false) {
 		RokUpdater::import('joomla.filesystem.stream');
 		RokUpdater::import('pasamio.pversion');
-		jimport('joomla.client.helper');
+		jimport('joomla.application.helper');
 		// Setup the context; Joomla! UA and overwrite
 		$context = Array();
 		$version = new PVersion();
@@ -19,8 +19,8 @@ class PFactory extends JFactory {
 		$context['http']['user_agent'] = $version->getUserAgent($ua, $uamask);
 		$context['ftp']['overwrite'] = true;
 		if($use_prefix) {
-			$FTPOptions = JClientHelper::getCredentials('ftp');
-			$SCPOptions = JClientHelper::getCredentials('scp');
+			$FTPOptions = JApplicationHelper::getCredentials('ftp');
+			$SCPOptions = JApplicationHelper::getCredentials('scp');
 			if ($FTPOptions['enabled'] == 1 && $use_network) {
 				$prefix = 'ftp://'. $FTPOptions['user'] .':'. $FTPOptions['pass'] .'@'. $FTPOptions['host'];
 				$prefix .= $FTPOptions['port'] ? ':'. $FTPOptions['port'] : '';

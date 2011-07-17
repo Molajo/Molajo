@@ -81,7 +81,7 @@ class LoginController extends JController
 		$userid = JRequest::getInt('uid', null);
 
 		$options = array(
-			'clientid' => ($userid) ? 0 : 1
+			'applicationid' => ($userid) ? 0 : 1
 		);
 
 		$result = $app->logout($userid, $options);

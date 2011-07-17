@@ -124,8 +124,8 @@ class TemplatesModelSource extends JModelForm
 
 		if ($this->_template) {
 			$fileName	= $this->getState('filename');
-			$client		= JApplicationHelper::getClientInfo($this->_template->application_id);
-			$filePath	= JPath::clean($client->path.'/templates/'.$this->_template->element.'/'.$fileName);
+			$application		= JApplicationHelper::getApplicationInfo($this->_template->application_id);
+			$filePath	= JPath::clean($application->path.'/templates/'.$this->_template->element.'/'.$fileName);
 
 			if (file_exists($filePath)) {
 				jimport('joomla.filesystem.file');
@@ -189,7 +189,7 @@ class TemplatesModelSource extends JModelForm
 	public function save($data)
 	{
 		jimport('joomla.filesystem.file');
-		jimport('joomla.client.helper');
+		jimport('joomla.application.helper');
 
 		// Get the template.
 		$template = $this->getTemplate();
@@ -199,15 +199,15 @@ class TemplatesModelSource extends JModelForm
 
 		$dispatcher = JDispatcher::getInstance();
 		$fileName	= $this->getState('filename');
-		$client		= JApplicationHelper::getClientInfo($template->application_id);
-		$filePath	= JPath::clean($client->path.'/templates/'.$template->element.'/'.$fileName);
+		$application		= JApplicationHelper::getApplicationInfo($template->application_id);
+		$filePath	= JPath::clean($application->path.'/templates/'.$template->element.'/'.$fileName);
 
 		// Include the extension plugins for the save events.
 		JPluginHelper::importPlugin('extension');
 
 		// Set FTP credentials, if given.
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp = JClientHelper::getCredentials('ftp');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
+		$ftp = JApplicationHelper::getCredentials('ftp');
 
 		// Try to make the template file writeable.
 		if (!$ftp['enabled'] && JPath::isOwner($filePath) && !JPath::setPermissions($filePath, '0644')) {

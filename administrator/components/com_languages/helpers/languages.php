@@ -26,12 +26,12 @@ class LanguagesHelper
 	{
 		JSubMenuHelper::addEntry(
 			JText::_('COM_LANGUAGES_SUBMENU_INSTALLED_SITE'),
-			'index.php?option=com_languages&view=installed&client=0',
+			'index.php?option=com_languages&view=installed&application=0',
 			$vName == 'installed'
 		);
 		JSubMenuHelper::addEntry(
 			JText::_('COM_LANGUAGES_SUBMENU_INSTALLED_ADMINISTRATOR'),
-			'index.php?option=com_languages&view=installed&client=1',
+			'index.php?option=com_languages&view=installed&application=1',
 			$vName == 'installed'
 		);
 		JSubMenuHelper::addEntry(

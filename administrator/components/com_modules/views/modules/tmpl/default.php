@@ -15,7 +15,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 
-$client		= $this->state->get('filter.application_id') ? 'administrator' : 'site';
+$application		= $this->state->get('filter.application_id') ? 'administrator' : 'site';
 $user		= JFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
@@ -32,7 +32,7 @@ $saveOrder	= $listOrder == 'ordering';
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<?php echo JHtml::_('select.options', ModulesHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo JHtml::_('select.options', ModulesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
              <select name="filter_state" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>

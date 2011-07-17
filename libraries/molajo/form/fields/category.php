@@ -9,7 +9,7 @@
 defined('MOLAJO') or die();
 
 /**
- * JFormFieldCategory
+ * MolajoFormFieldCategory
  *
  * Utility class for Extension Categories
  *
@@ -18,7 +18,7 @@ defined('MOLAJO') or die();
  * @subpackage          HTML
  * @since		1.6
  */
-class MolajoFormFieldCategory extends JFormFieldList
+class MolajoFormFieldCategory extends MolajoFormFieldList
 {
     /**
      * Field Type

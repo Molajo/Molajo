@@ -42,19 +42,19 @@ class RokInstallerTemplate extends JInstallerTemplate
 		$manifest =& $this->parent->getManifest();
 		$root =& $manifest->document;
 
-		// Get the client application target
-		if ($cname = $root->attributes('client')) {
-			// Attempt to map the client to a base path
+		// Get the application application target
+		if ($cname = $root->attributes('application')) {
+			// Attempt to map the application to a base path
 			jimport('joomla.application.helper');
-			$client =& JApplicationHelper::getClientInfo($cname, true);
-			if ($client === false) {
-				$this->parent->abort(JText::_('Template').' '.JText::_('Install').': '.JText::_('Unknown client type').' ['.$cname.']');
+			$application =& JApplicationHelper::getApplicationInfo($cname, true);
+			if ($application === false) {
+				$this->parent->abort(JText::_('Template').' '.JText::_('Install').': '.JText::_('Unknown application type').' ['.$cname.']');
 				return false;
 			}
-			$basePath = $client->path;
-			$applicationId = $client->id;
+			$basePath = $application->path;
+			$applicationId = $application->id;
 		} else {
-			// No client attribute was found so we assume the site as the client
+			// No application attribute was found so we assume the site as the application
 			$cname = 'site';
 			$basePath = JPATH_SITE;
 			$applicationId = 0;

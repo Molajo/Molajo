@@ -2,7 +2,7 @@
 <extension
 	type="module"
 	version="1.6.0"
-	client="administrator">
+	application="administrator">
 	<name>mod_custom</name>
 	<author>Joomla! Project</author>
 	<creationDate>July 2004</creationDate>

@@ -30,11 +30,11 @@ class TemplatesViewSource extends JView
 	 */
 	public function display($tpl = null)
 	{
-		jimport('joomla.client.helper');
+		jimport('joomla.application.helper');
 
 		// Initialise variables.
 		$this->form		= $this->get('Form');
-		$this->ftp		= JClientHelper::setCredentialsFromRequest('ftp');
+		$this->ftp		= JApplicationHelper::setCredentialsFromRequest('ftp');
 		$this->source	= $this->get('Source');
 		$this->state	= $this->get('State');
 		$this->template	= $this->get('Template');

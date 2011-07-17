@@ -19,11 +19,11 @@ class CacheHelper
 {
 
 	/**
-	 * Get a list of filter options for the application clients.
+	 * Get a list of filter options for the application applications.
 	 *
 	 * @return	array	An array of JHtmlOption elements.
 	 */
-	static function getClientOptions()
+	static function getApplicationOptions()
 	{
 		// Build the filter options.
 		$options	= array();

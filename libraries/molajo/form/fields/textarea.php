@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldTextarea extends JFormField
+class MolajoFormFieldTextarea extends MolajoFormField
 {
 	/**
 	 * The form field type.

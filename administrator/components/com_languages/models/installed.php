@@ -20,9 +20,9 @@ jimport('joomla.application.component.modellist');
 class LanguagesModelInstalled extends JModelList
 {
 	/**
-	 * @var object client object
+	 * @var object application object
 	 */
-	protected $client = null;
+	protected $application = null;
 
 	/**
 	 * @var object user object
@@ -73,7 +73,7 @@ class LanguagesModelInstalled extends JModelList
 		$app = JFactory::getApplication('administrator');
 
 		// Load the filter state.
-		$applicationId = JRequest::getInt('client');
+		$applicationId = JRequest::getInt('application');
 		$this->setState('filter.application_id', $applicationId);
 
 		// Load the parameters.
@@ -105,18 +105,18 @@ class LanguagesModelInstalled extends JModelList
 	}
 
 	/**
-	 * Method to get the client object
+	 * Method to get the application object
 	 *
 	 * @return	object
 	 * @since	1.6
 	 */
-	public function &getClient()
+	public function &getApplication()
 	{
-		if (is_null($this->client)) {
-			$this->client = JApplicationHelper::getClientInfo($this->getState('filter.application_id', 0));
+		if (is_null($this->application)) {
+			$this->application = JApplicationHelper::getApplicationInfo($this->getState('filter.application_id', 0));
 		}
 
-		return $this->client;
+		return $this->application;
 	}
 
 	/**
@@ -128,8 +128,8 @@ class LanguagesModelInstalled extends JModelList
 	public function &getFtp()
 	{
 		if (is_null($this->ftp)) {
-			jimport('joomla.client.helper');
-			$this->ftp = JClientHelper::setCredentialsFromRequest('ftp');
+			jimport('joomla.application.helper');
+			$this->ftp = JApplicationHelper::setCredentialsFromRequest('ftp');
 		}
 
 		return $this->ftp;
@@ -160,7 +160,7 @@ class LanguagesModelInstalled extends JModelList
 
 			// Get information
 			$path		= $this->getPath();
-			$client		= $this->getClient();
+			$application		= $this->getApplication();
 			$langlist   = $this->getLanguageList();
 
 			// Compute all the languages
@@ -183,7 +183,7 @@ class LanguagesModelInstalled extends JModelList
 
 				// if current than set published
 				$params = JComponentHelper::getParams('com_languages');
-				if ($params->get($client->name, 'en-GB') == $row->language) {
+				if ($params->get($application->name, 'en-GB') == $row->language) {
 					$row->published	= 1;
 				}
 				else {
@@ -237,7 +237,7 @@ class LanguagesModelInstalled extends JModelList
 		// Create a new db object.
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-		$client = $this->getState('filter.application_id');
+		$application = $this->getState('filter.application_id');
 		$type = "language";
 		// Select field element from the extensions table.
 		$query->select($this->getState('list.select', 'a.element'));
@@ -249,7 +249,7 @@ class LanguagesModelInstalled extends JModelList
 		$query->where('state = 0');
 		$query->where('enabled = 1');
 
-		$query->where('application_id=' . intval($client));
+		$query->where('application_id=' . intval($application));
 
 		// for application_id = 1 do we need to check language table also ?
 		$db->setQuery($query);
@@ -284,10 +284,10 @@ class LanguagesModelInstalled extends JModelList
 	public function publish($cid)
 	{
 		if ($cid) {
-			$client	= $this->getClient();
+			$application	= $this->getApplication();
 
 			$params = JComponentHelper::getParams('com_languages');
-			$params->set($client->name, $cid);
+			$params->set($application->name, $cid);
 
 			$table = JTable::getInstance('extension');
 			$id = $table->find(array('element' => 'com_languages'));
@@ -350,8 +350,8 @@ class LanguagesModelInstalled extends JModelList
 	protected function getPath()
 	{
 		if (is_null($this->path)) {
-			$client = $this->getClient();
-			$this->path = JLanguage::getLanguagePath($client->path);
+			$application = $this->getApplication();
+			$this->path = JLanguage::getLanguagePath($application->path);
 		}
 
 		return $this->path;

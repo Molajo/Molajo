@@ -9,14 +9,17 @@
 defined('MOLAJO') or die;
 
 /**
- * Base controller class for the Joomla Core Installer.
+ * Base controller class for the Installer.
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Joomla
+ * @subpackage  Molajo
+ * @since		1.0
  */
 class JInstallationController extends JController
 {
 	/**
+     * display
+     *
 	 * Method to display a view.
 	 *
 	 * @param	boolean	$cachable	If true, the view output will be cached
@@ -27,7 +30,6 @@ class JInstallationController extends JController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-
 		// Get the current URI to redirect to.
 		$uri		= JURI::getInstance();
 		$redirect	= base64_encode($uri);
@@ -36,7 +38,9 @@ class JInstallationController extends JController
 		$document	= JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		if (file_exists(JPATH_CONFIGURATION.'/configuration.php') && (filesize(JPATH_CONFIGURATION.'/configuration.php') > 10) && file_exists(JPATH_INSTALLATION.'/index.php')) {
+		if (file_exists(MOLAJO_PATH_CONFIGURATION.'/configuration.php')
+            && (filesize(MOLAJO_PATH_CONFIGURATION.'/configuration.php') > 10)
+            && file_exists(MOLAJO_PATH_INSTALLATION.'/index.php')) {
 			$default_view	= 'remove';
 		} else {
 			$default_view	= 'language';

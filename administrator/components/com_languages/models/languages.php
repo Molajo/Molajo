@@ -182,7 +182,7 @@ class LanguagesModelLanguages extends JModelList
 	}
 
 	/**
-	 * Custom clean cache method, 2 places for 2 clients
+	 * Custom clean cache method, 2 places for 2 applications
 	 *
 	 * @since	1.6
 	 */

@@ -41,8 +41,8 @@ class ConfigControllerComponent extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Set FTP credentials, if given.
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		jimport('joomla.application.helper');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
 		$app	= JFactory::getApplication();

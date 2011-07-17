@@ -2,7 +2,7 @@
 	<!-- $Id: ta-IN.xml 00001 2011-04-24 21:00:00Z imanickam $ -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Tamil (INDIA)</name>
 	<version>1.7.0</version>
 	<creationDate>2011-01-20</creationDate>

@@ -56,8 +56,8 @@ class CacheModelCache extends JModelList
 		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int');
 		$this->setState('applicationId', $applicationId == 1 ? 1 : 0);
 
-		$client	= JApplicationHelper::getClientInfo($applicationId);
-		$this->setState('client', $client);
+		$application	= JApplicationHelper::getApplicationInfo($applicationId);
+		$this->setState('application', $application);
 
 		parent::populateState('group', 'asc');
 	}
@@ -123,13 +123,13 @@ class CacheModelCache extends JModelList
 	}
 
 	/**
-	 * Method to get client data
+	 * Method to get application data
 	 *
 	 * @return array
 	 */
-	public function getClient()
+	public function getApplication()
 	{
-		return $this->getState('client');
+		return $this->getState('application');
 	}
 
 	/**

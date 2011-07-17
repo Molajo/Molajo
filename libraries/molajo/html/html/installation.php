@@ -1,12 +1,14 @@
 <?php
 /**
- * @version		$Id: installation.php 21463 2011-06-06 15:28:10Z dextercowley $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die();
 
-class JHtmlInstallation
+class MolajoHtmlInstallation
 {
 	public static function stepbar()
  	{

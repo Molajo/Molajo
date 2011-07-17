@@ -8,7 +8,7 @@
  */
 
 // No direct access
-defined('JPATH_BASE') or die;
+defined('MOLAJO_PATH_BASE') or die;
 
 jimport('joomla.document.document');
 jimport('joomla.methods');
@@ -73,13 +73,13 @@ class MolajoDocumentOpensearch extends MolajoDocument
 		// Add the favicon as the default image
 		// Try to find a favicon by checking the template and root folder
 		$app = JFactory::getApplication();
-		$dirs = array(JPATH_THEMES.'/'.$app->getTemplate(), JPATH_BASE);
+		$dirs = array(MOLAJO_PATH_THEMES.'/'.$app->getTemplate(), MOLAJO_PATH_BASE);
 
 		foreach ($dirs as $dir)
 		{
 			if (file_exists($dir.'/favicon.ico')) {
 
-				$path = str_replace(JPATH_BASE.DS, '', $dir);
+				$path = str_replace(MOLAJO_PATH_BASE.DS, '', $dir);
 				$path = str_replace('\\', '/', $path);
 
 				$favicon = new JOpenSearchImage;

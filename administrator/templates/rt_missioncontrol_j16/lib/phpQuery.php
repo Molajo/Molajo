@@ -5019,7 +5019,7 @@ abstract class phpQuery {
 	 * 'document' - document for global events, @see phpQuery::getDocumentID()
 	 * 'referer' - implemented
 	 * 'requested_with' - TODO; not implemented (X-Requested-With)
-	 * @return Zend_Http_Client
+	 * @return Zend_Http_Application
 	 * @link http://docs.jquery.com/Ajax/jQuery.ajax
 	 *
 	 * @TODO $options['cache']
@@ -5037,21 +5037,21 @@ abstract class phpQuery {
 			: null;
 		if ($xhr) {
 			// reuse existing XHR object, but clean it up
-			$client = $xhr;
-//			$client->setParameterPost(null);
-//			$client->setParameterGet(null);
-			$client->setAuth(false);
-			$client->setHeaders("If-Modified-Since", null);
-			$client->setHeaders("Referer", null);
-			$client->resetParameters();
+			$application = $xhr;
+//			$application->setParameterPost(null);
+//			$application->setParameterGet(null);
+			$application->setAuth(false);
+			$application->setHeaders("If-Modified-Since", null);
+			$application->setHeaders("Referer", null);
+			$application->resetParameters();
 		} else {
 			// create new XHR object
-			require_once('Zend/Http/Client.php');
-			$client = new Zend_Http_Client();
-			$client->setCookieJar();
+			require_once('Zend/Http/Application.php');
+			$application = new Zend_Http_Application();
+			$application->setCookieJar();
 		}
 		if (isset($options['timeout']))
-			$client->setConfig(array(
+			$application->setConfig(array(
 				'timeout'      => $options['timeout'],
 			));
 //			'maxredirects' => 0,
@@ -5106,11 +5106,11 @@ abstract class phpQuery {
 					$options['url'] = preg_replace($jsre, "=$jsonpCallback\\1", $options['url']);
 			}
 		}
-		$client->setUri($options['url']);
-		$client->setMethod(strtoupper($options['type']));
+		$application->setUri($options['url']);
+		$application->setMethod(strtoupper($options['type']));
 		if (isset($options['referer']) && $options['referer'])
-			$client->setHeaders('Referer', $options['referer']);
-		$client->setHeaders(array(
+			$application->setHeaders('Referer', $options['referer']);
+		$application->setHeaders(array(
 //			'content-type' => $options['contentType'],
 			'User-Agent' => 'Mozilla/5.0 (X11; U; Linux x86; en-US; rv:1.9.0.5) Gecko'
 				 .'/2008122010 Firefox/3.0.5',
@@ -5121,14 +5121,14 @@ abstract class phpQuery {
 	 		'Accept-Language' => 'en-us,en;q=0.5',
 		));
 		if ($options['username'])
-			$client->setAuth($options['username'], $options['password']);
+			$application->setAuth($options['username'], $options['password']);
 		if (isset($options['ifModified']) && $options['ifModified'])
-			$client->setHeaders("If-Modified-Since",
+			$application->setHeaders("If-Modified-Since",
 				self::$lastModified
 					? self::$lastModified
 					: "Thu, 01 Jan 1970 00:00:00 GMT"
 			);
-		$client->setHeaders("Accept",
+		$application->setHeaders("Accept",
 			isset($options['dataType'])
 			&& isset(self::$ajaxSettings['accepts'][ $options['dataType'] ])
 				? self::$ajaxSettings['accepts'][ $options['dataType'] ].", */*"
@@ -5142,31 +5142,31 @@ abstract class phpQuery {
 				$options['data'][ $r['name'] ] = $r['value'];
 		}
 		if (strtolower($options['type']) == 'get') {
-			$client->setParameterGet($options['data']);
+			$application->setParameterGet($options['data']);
 		} else if (strtolower($options['type']) == 'post') {
-			$client->setEncType($options['contentType']);
-			$client->setParameterPost($options['data']);
+			$application->setEncType($options['contentType']);
+			$application->setParameterPost($options['data']);
 		}
 		if (self::$active == 0 && $options['global'])
 			phpQueryEvents::trigger($documentID, 'ajaxStart');
 		self::$active++;
 		// beforeSend callback
 		if (isset($options['beforeSend']) && $options['beforeSend'])
-			phpQuery::callbackRun($options['beforeSend'], array($client));
+			phpQuery::callbackRun($options['beforeSend'], array($application));
 		// ajaxSend event
 		if ($options['global'])
-			phpQueryEvents::trigger($documentID, 'ajaxSend', array($client, $options));
+			phpQueryEvents::trigger($documentID, 'ajaxSend', array($application, $options));
 		if (phpQuery::$debug) {
 			self::debug("{$options['type']}: {$options['url']}\n");
 			self::debug("Options: <pre>".var_export($options, true)."</pre>\n");
-//			if ($client->getCookieJar())
-//				self::debug("Cookies: <pre>".var_export($client->getCookieJar()->getMatchingCookies($options['url']), true)."</pre>\n");
+//			if ($application->getCookieJar())
+//				self::debug("Cookies: <pre>".var_export($application->getCookieJar()->getMatchingCookies($options['url']), true)."</pre>\n");
 		}
 		// request
-		$response = $client->request();
+		$response = $application->request();
 		if (phpQuery::$debug) {
 			self::debug('Status: '.$response->getStatus().' / '.$response->getMessage());
-			self::debug($client->getLastRequest());
+			self::debug($application->getLastRequest());
 			self::debug($response->getHeaders());
 		}
 		if ($response->isSuccessful()) {
@@ -5176,20 +5176,20 @@ abstract class phpQuery {
 			if (isset($options['success']) && $options['success'])
 				phpQuery::callbackRun($options['success'], array($data, $response->getStatus(), $options));
 			if ($options['global'])
-				phpQueryEvents::trigger($documentID, 'ajaxSuccess', array($client, $options));
+				phpQueryEvents::trigger($documentID, 'ajaxSuccess', array($application, $options));
 		} else {
 			if (isset($options['error']) && $options['error'])
-				phpQuery::callbackRun($options['error'], array($client, $response->getStatus(), $response->getMessage()));
+				phpQuery::callbackRun($options['error'], array($application, $response->getStatus(), $response->getMessage()));
 			if ($options['global'])
-				phpQueryEvents::trigger($documentID, 'ajaxError', array($client, /*$response->getStatus(),*/$response->getMessage(), $options));
+				phpQueryEvents::trigger($documentID, 'ajaxError', array($application, /*$response->getStatus(),*/$response->getMessage(), $options));
 		}
 		if (isset($options['complete']) && $options['complete'])
-			phpQuery::callbackRun($options['complete'], array($client, $response->getStatus()));
+			phpQuery::callbackRun($options['complete'], array($application, $response->getStatus()));
 		if ($options['global'])
-			phpQueryEvents::trigger($documentID, 'ajaxComplete', array($client, $options));
+			phpQueryEvents::trigger($documentID, 'ajaxComplete', array($application, $options));
 		if ($options['global'] && ! --self::$active)
 			phpQueryEvents::trigger($documentID, 'ajaxStop');
-		return $client;
+		return $application;
 //		if (is_null($domId))
 //			$domId = self::$defaultDocumentID ? self::$defaultDocumentID : false;
 //		return new phpQueryAjaxResponse($response, $domId);

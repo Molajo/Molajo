@@ -18,7 +18,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<fieldset id="filter-bar">
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<?php echo JHtml::_('select.options', CacheHelper::getClientOptions(), 'value', 'text', $this->state->get('applicationId'));?>
+				<?php echo JHtml::_('select.options', CacheHelper::getApplicationOptions(), 'value', 'text', $this->state->get('applicationId'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -77,7 +77,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 <div>
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="boxchecked" value="0" />
-	<input type="hidden" name="client" value="<?php echo $this->client->id;?>" />
+	<input type="hidden" name="application" value="<?php echo $this->application->id;?>" />
 	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
 	<?php echo JHtml::_('form.token'); ?>

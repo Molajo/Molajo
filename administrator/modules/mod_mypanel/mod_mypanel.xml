@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="module" version="1.6" client="administrator" method="upgrade">
+<install type="module" version="1.6" application="administrator" method="upgrade">
     <name>Minima myPanel</name>
     <author>Marco Barbosa</author>
     <creationDate>October 2010</creationDate>

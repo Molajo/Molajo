@@ -73,11 +73,11 @@ class InstallerModelInstall extends JModel
 	 */
 	function install()
 	{
-		jimport('joomla.client.helper');
+		jimport('joomla.application.helper');
 		$this->setState('action', 'install');
 
 		// Set FTP credentials, if given.
-		JClientHelper::setCredentialsFromRequest('ftp');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
 		$app = JFactory::getApplication();
 
 		switch(JRequest::getWord('installtype')) {

@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldMedia extends JFormField
+class MolajoFormFieldMedia extends MolajoFormField
 {
 	/**
 	 * The form field type.
@@ -90,13 +90,13 @@ class MolajoFormFieldMedia extends JFormField
 		$html[] = '</div>';
 
 		$directory = (string)$this->element['directory'];
-		if ($this->value && file_exists(JPATH_ROOT . '/' . $this->value)) {
+		if ($this->value && file_exists(MOLAJO_PATH_ROOT . '/' . $this->value)) {
 			$folder = explode ('/',$this->value);
 			array_shift($folder);
 			array_pop($folder);
 			$folder = implode('/',$folder);
 		}
-		elseif (file_exists(JPATH_ROOT . '/' . JComponentHelper::getParams('com_media')->get('image_path', 'images') . '/' . $directory)) {
+		elseif (file_exists(MOLAJO_PATH_ROOT . '/' . MolajoComponentHelper::getParams('com_media')->get('image_path', 'images') . '/' . $directory)) {
 			$folder = $directory;
 		}
 		else {

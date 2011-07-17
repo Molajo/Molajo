@@ -2,7 +2,7 @@
 	<!-- $Id: it-IT.xml 14543 2010-02-04 04:29:34Z molajo.it $ -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Italian -Italy</name>
 	<version>1.7.0</version>
 	<creationDate>March 2009</creationDate>

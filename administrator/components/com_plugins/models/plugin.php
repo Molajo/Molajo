@@ -206,7 +206,7 @@ class PluginsModelPlugin extends JModelAdmin
 		$folder		= $this->getState('item.folder');
 		$element	= $this->getState('item.element');
 		$lang		= JFactory::getLanguage();
-		$client		= JApplicationHelper::getClientInfo(0);
+		$application		= JApplicationHelper::getApplicationInfo(0);
 
 	// Load the core and/or local language sys file(s) for the ordering field.
 		$db = JFactory::getDbo();
@@ -317,7 +317,7 @@ class PluginsModelPlugin extends JModelAdmin
 	}
 
 	/**
-	 * Custom clean cache method, plugins are cached in 2 places for different clients
+	 * Custom clean cache method, plugins are cached in 2 places for different applications
 	 *
 	 * @since	1.6
 	 */

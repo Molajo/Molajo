@@ -7,35 +7,23 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die();
-define('_JEXEC', 1);
 
-define('OVERRIDE', 1);
+/** MOLAJO_PATH_CONFIGURATION can be moved to hide the configuration.php file */
+define('MOLAJO_PATH_CONFIGURATION', MOLAJO_PATH_ROOT);
 
-define('JPATH_SITE',			JPATH_ROOT);
-define('JPATH_ADMINISTRATOR',	JPATH_ROOT.'/administrator');
-define('JPATH_PLATFORM',		JPATH_ROOT.'/libraries/jplatform');
-define('JPATH_PLUGINS',			JPATH_ROOT.'/plugins');
-define('JPATH_INSTALLATION',	JPATH_ROOT.'/installation');
-define('JPATH_CACHE',			JPATH_BASE.'/cache');
-define('JPATH_MANIFESTS',		JPATH_ADMINISTRATOR.'/manifests');
+define('MOLAJO_PATH_SITE',			MOLAJO_PATH_ROOT);
+define('MOLAJO_PATH_ADMINISTRATOR',	MOLAJO_PATH_ROOT.'/administrator');
+define('MOLAJO_PATH_PLUGINS',		MOLAJO_PATH_ROOT.'/plugins');
+define('MOLAJO_PATH_INSTALLATION',	MOLAJO_PATH_ROOT.'/installation');
+define('MOLAJO_PATH_CACHE',			MOLAJO_PATH_BASE.'/cache');
+define('MOLAJO_LIBRARY',		    MOLAJO_PATH_ROOT.'/libraries/molajo');
+define('MOLAJO_PATH_MANIFESTS',		MOLAJO_PATH_ADMINISTRATOR.'/manifests');
 
 if (MOLAJO_APPLICATION == 'installation') {
-    define('JPATH_THEMES', JPATH_BASE);
+    define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE);
 } else {
-    define('JPATH_THEMES', JPATH_BASE.'/templates');
+    define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE.'/templates');
 }
-
-/** JPATH_CONFIGURATION can be moved to hide the configuration.php file */
-define('JPATH_CONFIGURATION',	JPATH_ROOT);
-
-/** legacy  */
-define('JPATH_LIBRARIES',		JPATH_ROOT.'/libraries');
-
-/** overrides */
-define('OVERRIDES_LIBRARY',		JPATH_ROOT.'/libraries/overrides');
-
-/** joomla */
-define('JOOMLA_LIBRARY',		JPATH_ROOT.'/libraries/jplatform/joomla');
 
 /** Configuration Fields **/
 define('MOLAJO_CONFIG_OPTION_ID_FIELDS', 1);
@@ -113,8 +101,29 @@ if (isset($_SERVER["REQUEST_URI"])) {
 }
 define('MOLAJO_CURRENT_URL', strtolower($currentURL));
 
-/** Layouts: Drivers, Layouts, and Parameters */
+/** Layouts, Forms, and Parameters */
 $temp = JPATH_ROOT.'/layouts';
 define('MOLAJO_LAYOUTS', $temp);
-$temp = MOLAJO_LIBRARY.'/parameters';
+$temp = MOLAJO_LAYOUTS.'/parameters';
 define('MOLAJO_PARAMETERS', $temp);
+$temp = MOLAJO_LAYOUTS.'/forms';
+define('MOLAJO_FORM_LAYOUTS', $temp);
+
+/** joomla */
+define('_JEXEC', 1);
+define('JPATH_BASE',		    MOLAJO_PATH_BASE);
+define('JPATH_ROOT',		    MOLAJO_PATH_ROOT);
+define('JPATH_CONFIGURATION',	MOLAJO_PATH_CONFIGURATION);
+define('JPATH_LIBRARIES',		LIBRARIES);
+define('JOOMLA_LIBRARY',		MOLAJO_PATH_ROOT.'/libraries/jplatform/joomla');
+define('JPATH_SITE',			MOLAJO_PATH_SITE);
+define('JPATH_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR);
+define('JPATH_PLATFORM',		MOLAJO_PATH_ROOT.'/libraries/jplatform');
+define('JPATH_PLUGINS',			MOLAJO_PATH_PLUGINS);
+define('JPATH_INSTALLATION',	MOLAJO_PATH_INSTALLATION);
+define('JPATH_CACHE',			MOLAJO_PATH_CACHE);
+define('JPATH_MANIFESTS',		MOLAJO_PATH_MANIFESTS);
+define('JPATH_THEMES',          MOLAJO_PATH_THEMES);
+/** overrides */
+define('OVERRIDE', 1);
+define('OVERRIDES_LIBRARY',		MOLAJO_PATH_ROOT.'/libraries/overrides');

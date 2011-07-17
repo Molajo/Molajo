@@ -494,9 +494,9 @@ class RTCore
         global $mainframe, $option;
         $template = null;
         $task = JRequest::getCmd('task');
-        $client =& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
+        $application =& JApplicationHelper::getApplicationInfo(JRequest::getVar('application', '0', '', 'int'));
 
-        if ($option == 'com_templates' && $task == 'edit' && $client->id == 1 && array_key_exists('cid', $_REQUEST)) {
+        if ($option == 'com_templates' && $task == 'edit' && $application->id == 1 && array_key_exists('cid', $_REQUEST)) {
             $template = $_REQUEST['cid'][0];
         }
         else {

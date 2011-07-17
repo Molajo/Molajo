@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 jimport('joomla.event.dispatcher');
 
@@ -311,10 +311,10 @@ class MolajoEditor extends JObservable
 
 		// Build the path to the needed editor plugin
 		$name = JFilterInput::getInstance()->clean($this->_name, 'cmd');
-		$path = JPATH_PLUGINS.'/editors/'.$name.'.php';
+		$path = MOLAJO_PATH_PLUGINS.'/editors/'.$name.'.php';
 
 		if (!JFile::exists($path)) {
-			$path = JPATH_PLUGINS.'/editors/'.$name.'/'.$name.'.php';
+			$path = MOLAJO_PATH_PLUGINS.'/editors/'.$name.'/'.$name.'.php';
 			if (!JFile::exists($path)) {
 				$message = JText::_('JLIB_HTML_EDITOR_CANNOT_LOAD');
 				JError::raiseWarning(500, $message);

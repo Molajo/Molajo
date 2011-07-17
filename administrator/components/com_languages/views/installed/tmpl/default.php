@@ -13,10 +13,10 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 $user		= JFactory::getUser();
 $userId		= $user->get('id');
-$client		= $this->state->get('filter.application_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
+$application		= $this->state->get('filter.application_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
 $applicationId	= $this->state->get('filter.application_id', 0);
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_languages&view=installed&client='.$applicationId); ?>" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_languages&view=installed&application='.$applicationId); ?>" method="post" id="adminForm" name="adminForm">
 
 	<?php if ($this->ftp): ?>
 		<?php echo $this->loadTemplate('ftp');?>
@@ -78,7 +78,7 @@ $applicationId	= $this->state->get('filter.application_id', 0);
 					<?php echo $this->escape($row->name); ?>
 				</td>
 				<td align="center">
-					<?php echo $client;?>
+					<?php echo $application;?>
 				</td>
 				<td align="center">
 					<?php echo JHtml::_('jgrid.isdefault', $row->published, $i, 'installed.',  !$row->published && $canChange);?>

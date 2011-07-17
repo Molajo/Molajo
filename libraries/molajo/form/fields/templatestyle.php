@@ -37,9 +37,9 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 		$groups = array();
 		$lang = JFactory::getLanguage();
 
-		// Get the client and application_id.
-		$clientName = $this->element['client'] ? (string) $this->element['client'] : 'site';
-		$client = JApplicationHelper::getClientInfo($clientName, true);
+		// Get the application and application_id.
+		$applicationName = $this->element['application'] ? (string) $this->element['application'] : 'site';
+		$application = JApplicationHelper::getApplicationInfo($applicationName, true);
 
 		// Get the template.
 		$template = (string) $this->element['template'];
@@ -51,7 +51,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 		// Build the query.
 		$query->select('s.id, s.title, e.name as name, s.template');
 		$query->from('#__template_styles as s');
-		$query->where('s.application_id = '.(int) $client->id);
+		$query->where('s.application_id = '.(int) $application->id);
 		$query->order('template');
 		$query->order('title');
 		if ($template) {
@@ -69,10 +69,10 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 		{
 			foreach($styles as $style) {
 				$template = $style->template;
-				$lang->load('tpl_'.$template.'.sys', $client->path, null, false, false)
-			||	$lang->load('tpl_'.$template.'.sys', $client->path.'/templates/'.$template, null, false, false)
-			||	$lang->load('tpl_'.$template.'.sys', $client->path, $lang->getDefault(), false, false)
-			||	$lang->load('tpl_'.$template.'.sys', $client->path.'/templates/'.$template, $lang->getDefault(), false,false);
+				$lang->load('tpl_'.$template.'.sys', $application->path, null, false, false)
+			||	$lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, null, false, false)
+			||	$lang->load('tpl_'.$template.'.sys', $application->path, $lang->getDefault(), false, false)
+			||	$lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, $lang->getDefault(), false,false);
 				$name = JText::_($style->name);
 				// Initialize the group if necessary.
 				if (!isset($groups[$name])) {

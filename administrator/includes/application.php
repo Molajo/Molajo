@@ -61,8 +61,8 @@ class MolajoAdministrator extends MolajoApplication
 				$options['language'] = $lang;
 			} else {
 				$params = MolajoComponentHelper::getParams('com_languages');
-				$client	= MolajoApplicationHelper::getClientInfo($this->getClientId());
-				$options['language'] = $params->get($client->name, $config->get('language','en-GB'));
+				$application	= MolajoApplicationHelper::getApplicationInfo($this->getApplicationId());
+				$options['language'] = $params->get($application->name, $config->get('language','en-GB'));
 			}
 		}
 

@@ -8,7 +8,7 @@
 defined('MOLAJO') or die();
 
 /** defines and includes  **/
-require_once JPATH_COMPONENT.'/includes/include.php';
+require_once MOLAJO_PATH_COMPONENT.'/includes/include.php';
 
 /** validate option **/
 if (JRequest::getCmd('option') == $current_folder) {

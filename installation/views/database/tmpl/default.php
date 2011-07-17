@@ -1,12 +1,12 @@
 <?php
 /**
- * @version		$Id: default.php 21463 2011-06-06 15:28:10Z dextercowley $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 ?>
 <div id="step">
 	<div class="far-right">
@@ -122,7 +122,7 @@ defined('_JEXEC') or die;
 									<?php echo JText::_('INSTL_DATABASE_OLD_PROCESS_DESC'); ?>
 									</em>
 								</td>
-							</tr>																
+							</tr>
 						</table>
 					</div>
 				</div>

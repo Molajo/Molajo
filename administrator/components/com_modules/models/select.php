@@ -90,7 +90,7 @@ class ModulesModelSelect extends JModelList
 		// Filter by module
 		$query->where('a.type = '.$db->Quote('module'));
 
-		// Filter by client.
+		// Filter by application.
 		$applicationId = $this->getState('filter.application_id');
 		$query->where('a.application_id = '.(int) $applicationId);
 
@@ -115,13 +115,13 @@ class ModulesModelSelect extends JModelList
 		$items = parent::getItems();
 
 		// Initialise variables.
-		$client = JApplicationHelper::getClientInfo($this->getState('filter.application_id', 0));
+		$application = JApplicationHelper::getApplicationInfo($this->getState('filter.application_id', 0));
 		$lang	= JFactory::getLanguage();
 
 		// Loop through the results to add the XML metadata,
 		// and load language support.
 		foreach ($items as &$item) {
-			$path = JPath::clean($client->path.'/modules/'.$item->module.'/'.$item->module.'.xml');
+			$path = JPath::clean($application->path.'/modules/'.$item->module.'/'.$item->module.'.xml');
 			if (file_exists($path)) {
 				$item->xml = simplexml_load_file($path);
 			} else {
@@ -130,10 +130,10 @@ class ModulesModelSelect extends JModelList
 
 					// 1.5 Format; Core files or language packs then
 			// 1.6 3PD Extension Support
-				$lang->load($item->module.'.sys', $client->path, null, false, false)
-			||	$lang->load($item->module.'.sys', $client->path.'/modules/'.$item->module, null, false, false)
-			||	$lang->load($item->module.'.sys', $client->path, $lang->getDefault(), false, false)
-			||	$lang->load($item->module.'.sys', $client->path.'/modules/'.$item->module, $lang->getDefault(), false, false);
+				$lang->load($item->module.'.sys', $application->path, null, false, false)
+			||	$lang->load($item->module.'.sys', $application->path.'/modules/'.$item->module, null, false, false)
+			||	$lang->load($item->module.'.sys', $application->path, $lang->getDefault(), false, false)
+			||	$lang->load($item->module.'.sys', $application->path.'/modules/'.$item->module, $lang->getDefault(), false, false);
 			$item->name	= JText::_($item->name);
 
 			if (isset($item->xml) && $text = trim($item->xml->description)) {

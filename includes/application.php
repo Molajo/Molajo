@@ -96,8 +96,8 @@ class MolajoSite extends MolajoApplication
 		if (empty($options['language'])) {
 			// Detect default language
 			$params = MolajoComponentHelper::getParams('com_languages');
-			$client	= MolajoApplicationHelper::getClientInfo($this->getClientId());
-			$options['language'] = $params->get($client->name, $config->get('language', 'en-GB'));
+			$application	= MolajoApplicationHelper::getApplicationInfo($this->getApplicationId());
+			$options['language'] = $params->get($application->name, $config->get('language', 'en-GB'));
 		}
 
 		// One last check to make sure we have something
@@ -489,7 +489,7 @@ class MolajoSite extends MolajoApplication
 	/**
 	 * Return a reference to the JPathway object.
 	 *
-	 * @param	string	$name		The name of the application/client.
+	 * @param	string	$name		The name of the application/application.
 	 * @param	array	$options	An optional associative array of configuration settings.
 	 *
 	 * @return	object	MolajoMenu.

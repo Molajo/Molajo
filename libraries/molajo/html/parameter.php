@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * Parameter handler
@@ -15,7 +15,7 @@ defined('JPATH_PLATFORM') or die;
  * @package     Joomla.Platform
  * @subpackage  Parameter
  * @since       11.1
- * @deprecated  Use JForm instead
+ * @deprecated  Use MolajoForm instead
  */
 class MolajoParameter extends JRegistry
 {
@@ -105,7 +105,7 @@ class MolajoParameter extends JRegistry
 			}
 
 			if ($dir = $xml->attributes('addpath')) {
-				$this->addElementPath(JPATH_ROOT . str_replace('/', DS, $dir));
+				$this->addElementPath(MOLAJO_PATH_ROOT . str_replace('/', DS, $dir));
 			}
 		}
 	}

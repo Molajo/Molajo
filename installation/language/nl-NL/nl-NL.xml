@@ -2,7 +2,7 @@
 	<!-- $Id: nl-NL.xml 1.0 -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Nederlands nl-NL</name>
 	<version>1.7.0</version>
 	<creationDate>August 2011</creationDate>

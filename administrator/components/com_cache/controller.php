@@ -81,7 +81,7 @@ class CacheController extends JController
 			$model->cleanlist($cid);
 		}
 
-		$this->setRedirect('index.php?option=com_cache&client='.$model->getClient()->id);
+		$this->setRedirect('index.php?option=com_cache&application='.$model->getApplication()->id);
 	}
 
 	public function purge()

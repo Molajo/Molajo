@@ -203,14 +203,14 @@ class ModulesModelModule extends JModelAdmin
 	}
 
 	/**
-	 * Method to get the client object
+	 * Method to get the application object
 	 *
 	 * @return	void
 	 * @since	1.6
 	 */
-	function &getClient()
+	function &getApplication()
 	{
-		return $this->_client;
+		return $this->_application;
 	}
 
 	/**
@@ -245,7 +245,7 @@ class ModulesModelModule extends JModelAdmin
 			return false;
 		}
 
-		$form->setFieldAttribute('position', 'client', $this->getState('item.application_id') == 0 ? 'site' : 'administrator');
+		$form->setFieldAttribute('position', 'application', $this->getState('item.application_id') == 0 ? 'site' : 'administrator');
 
 		// Modify the form based on access controls.
 		if (!$this->canEditState((object) $data)) {
@@ -386,8 +386,8 @@ class ModulesModelModule extends JModelAdmin
 			$this->_cache[$pk]->assignment = $assignment;
 
 			// Get the module XML.
-			$client	= JApplicationHelper::getClientInfo($table->application_id);
-			$path	= JPath::clean($client->path.'/modules/'.$table->module.'/'.$table->module.'.xml');
+			$application	= JApplicationHelper::getApplicationInfo($table->application_id);
+			$path	= JPath::clean($application->path.'/modules/'.$table->module.'/'.$table->module.'.xml');
 
 			if (file_exists($path)) {
 				$this->_cache[$pk]->xml = simplexml_load_file($path);
@@ -469,14 +469,14 @@ class ModulesModelModule extends JModelAdmin
 		$applicationId	= $this->getState('item.application_id');
 		$module		= $this->getState('item.module');
 
-		$client		= JApplicationHelper::getClientInfo($applicationId);
-		$formFile	= JPath::clean($client->path.'/modules/'.$module.'/'.$module.'.xml');
+		$application		= JApplicationHelper::getApplicationInfo($applicationId);
+		$formFile	= JPath::clean($application->path.'/modules/'.$module.'/'.$module.'.xml');
 
 		// Load the core and/or local language file(s).
-			$lang->load($module, $client->path, null, false, false)
-		||	$lang->load($module, $client->path.'/modules/'.$module, null, false, false)
-		||	$lang->load($module, $client->path, $lang->getDefault(), false, false)
-		||	$lang->load($module, $client->path.'/modules/'.$module, $lang->getDefault(), false, false);
+			$lang->load($module, $application->path, null, false, false)
+		||	$lang->load($module, $application->path.'/modules/'.$module, null, false, false)
+		||	$lang->load($module, $application->path, $lang->getDefault(), false, false)
+		||	$lang->load($module, $application->path.'/modules/'.$module, $lang->getDefault(), false, false);
 
 		if (file_exists($formFile)) {
 			// Get the module form.
@@ -708,11 +708,11 @@ class ModulesModelModule extends JModelAdmin
 	}
 
 	/**
-	 * Custom clean cache method for different clients
+	 * Custom clean cache method for different applications
 	 *
 	 * @since	1.6
 	 */
 	function cleanCache() {
-		parent::cleanCache('com_modules', $this->getClient());
+		parent::cleanCache('com_modules', $this->getApplication());
 	}
 }

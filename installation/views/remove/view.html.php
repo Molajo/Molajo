@@ -1,18 +1,19 @@
 <?php
 /**
- * @version		$Id: view.html.php 20264 2011-01-10 22:38:46Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 
 /**
- * The HTML Joomla Core Install Remove View
+ * View
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since		1.0
  */
 class JInstallationViewRemove extends JView
 {

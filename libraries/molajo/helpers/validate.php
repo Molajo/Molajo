@@ -237,9 +237,9 @@ echo 'valid tasks for controller: '.$task.'<br />';
 
             /** 10. validate view (display only) **/
             if (JFactory::getApplication()->getName() == 'administrator') {
-                $folder = JPATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option').'/views/'.$view;
+                $folder = MOLAJO_PATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option').'/views/'.$view;
             } else {
-                $folder = JPATH_SITE.'/components/'.JRequest::getCmd('option').'/views/'.$view;
+                $folder = MOLAJO_PATH_SITE.'/components/'.JRequest::getCmd('option').'/views/'.$view;
             }
 
             if (JFolder::exists($folder)) {
@@ -285,7 +285,7 @@ echo 'format (display only): '.$format.'<br />';
             }
  
             if (JFactory::getApplication()->getName() == 'administrator') {
-                $fileName = JPATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option').'/views/'.$view.'/tmpl/'.$layout.'.php';
+                $fileName = MOLAJO_PATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option').'/views/'.$view.'/tmpl/'.$layout.'.php';
                 if ($view == $defaultView && $layout == 'default') {
                     $layout = 'manager';
                 }
@@ -293,7 +293,7 @@ echo 'format (display only): '.$format.'<br />';
                     $layout = 'edit';
                 }
             } else {
-                $fileName = JPATH_SITE.'/components/'.JRequest::getCmd('option').'/views/'.$view.'/tmpl/'.$layout.'.php';
+                $fileName = MOLAJO_PATH_SITE.'/components/'.JRequest::getCmd('option').'/views/'.$view.'/tmpl/'.$layout.'.php';
             }
 
             if (JFile::exists($fileName)) {

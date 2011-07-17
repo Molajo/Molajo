@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install PUBLIC "-//Joomla! 1.6//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.6/template-install.dtd">
-<extension type="template" version="1.6" client="administrator" method="upgrade" >
+<extension type="template" version="1.6" application="administrator" method="upgrade" >
 	<name>rt_missioncontrol_j16</name>
 	<creationDate>June 9, 2011</creationDate>
 	<author>RocketTheme, LLC</author>

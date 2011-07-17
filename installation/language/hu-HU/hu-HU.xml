@@ -2,7 +2,7 @@
 	<!-- $Id: hu-HU.xml 14543 2010-02-04 04:29:34Z localicer $ -->
 <metafile
 	version="1.7"
-	client="installation">
+	application="installation">
 	<name>Hungarian (Magyar)</name>
 	<version>1.7.0</version>
 	<creationDate>January 2011</creationDate>

@@ -9,7 +9,7 @@
 
 defined('JPATH_PLATFORM') or die;
 
-require_once dirname(__FILE__) . '/list.php';
+require_once dirname(__FILE__).'/list.php';
 
 /**
  * Parameter to display a list of the layouts for a module from the module or default template overrides.
@@ -27,9 +27,6 @@ class JElementModuleLayouts extends JElementList
 
 	/**
 	 * Get the options for the list.
-	 * @since   11.1
-	 * 
-	 * @deprecated
 	 */
 	protected function _getOptions(&$node)
 	{

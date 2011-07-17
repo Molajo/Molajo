@@ -161,10 +161,10 @@
 		<file>version.php</file>
 		<file>config.php</file>
 		<file>backup/adapter/table.php</file>
-		<file>client/ldap.php</file>
-		<file>client/helper.php</file>
-		<file>client/index.html</file>
-		<file>client/ftp.php</file>
+		<file>application/ldap.php</file>
+		<file>application/helper.php</file>
+		<file>application/index.html</file>
+		<file>application/ftp.php</file>
 		<file>filter/filteroutput.php</file>
 		<file>filter/filterinput.php</file>
 		<file>filter/index.html</file>

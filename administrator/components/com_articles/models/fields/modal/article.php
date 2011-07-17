@@ -90,7 +90,7 @@ class JFormFieldModal_Article extends JFormField
 			$value = (int)$this->value;
 		}
 
-		// class='required' for client side validation
+		// class='required' for application side validation
 		$class = '';
 		if ($this->required) {
 			$class = ' class="required modal-value"';

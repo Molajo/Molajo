@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 abstract class JHtmlModules
 {
 	/**
-	 * @param	int $applicationId	The client id
+	 * @param	int $applicationId	The application id
 	 * @param	string $state 	The state of the template
 	 */
 	static public function templates($applicationId = 0, $state = '')

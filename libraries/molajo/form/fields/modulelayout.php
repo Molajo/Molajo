@@ -14,7 +14,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldModuleLayout extends JFormField
+class MolajoFormFieldModuleLayout extends MolajoFormField
 {
 	/**
 	 * The form field type.
@@ -34,23 +34,23 @@ class MolajoFormFieldModuleLayout extends JFormField
 	{
 		// Initialize variables.
 
-		// Get the client id.
-		$clientName = $this->element['application_id'];
+		// Get the application id.
+		$applicationName = $this->element['application_id'];
 
-		// Get the client id.
+		// Get the application id.
 		$applicationId = $this->element['application_id'];
 
-		if (is_null($applicationId) && $this->form instanceof JForm) {
+		if (is_null($applicationId) && $this->form instanceof MolajoForm) {
 			$applicationId = $this->form->getValue('application_id');
 		}
 		$applicationId = (int) $applicationId;
 
-		$client	= JApplicationHelper::getClientInfo($applicationId);
+		$application	= JApplicationHelper::getApplicationInfo($applicationId);
 
 		// Get the module.
 		$module = (string) $this->element['module'];
 
-		if (empty($module) && ($this->form instanceof JForm)) {
+		if (empty($module) && ($this->form instanceof MolajoForm)) {
 			$module = $this->form->getValue('module');
 		}
 
@@ -61,21 +61,21 @@ class MolajoFormFieldModuleLayout extends JFormField
 		$template = preg_replace('#\W#', '', $template);
 
 		// Get the style.
-		if ($this->form instanceof JForm) {
+		if ($this->form instanceof MolajoForm) {
 			$template_style_id = $this->form->getValue('template_style_id');
 		}
 
 		$template_style_id = preg_replace('#\W#', '', $template_style_id);
 
 		// If an extension and view are present build the options.
-		if ($module && $client) {
+		if ($module && $application) {
 
 			// Load language file
 			$lang = JFactory::getLanguage();
-				$lang->load($module.'.sys', $client->path, null, false, false)
-			||	$lang->load($module.'.sys', $client->path.'/modules/'.$module, null, false, false)
-			||	$lang->load($module.'.sys', $client->path, $lang->getDefault(), false, false)
-			||	$lang->load($module.'.sys', $client->path.'/modules/'.$module, $lang->getDefault(), false, false);
+				$lang->load($module.'.sys', $application->path, null, false, false)
+			||	$lang->load($module.'.sys', $application->path.'/modules/'.$module, null, false, false)
+			||	$lang->load($module.'.sys', $application->path, $lang->getDefault(), false, false)
+			||	$lang->load($module.'.sys', $application->path.'/modules/'.$module, $lang->getDefault(), false, false);
 
 			// Get the database object and a new query object.
 			$db		= JFactory::getDBO();
@@ -107,7 +107,7 @@ class MolajoFormFieldModuleLayout extends JFormField
 			}
 
 			// Build the search paths for module layouts.
-			$module_path = JPath::clean($client->path.'/modules/'.$module.'/tmpl');
+			$module_path = JPath::clean($application->path.'/modules/'.$module.'/tmpl');
 
 			// Prepare array of component layouts
 			$module_layouts = array();
@@ -137,12 +137,12 @@ class MolajoFormFieldModuleLayout extends JFormField
 				foreach ($templates as $template)
 				{
 					// Load language file
-						$lang->load('tpl_'.$template->element.'.sys', $client->path, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path, $lang->getDefault(), false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
+						$lang->load('tpl_'.$template->element.'.sys', $application->path, null, false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path.'/templates/'.$template->element, null, false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path, $lang->getDefault(), false, false)
+					||	$lang->load('tpl_'.$template->element.'.sys', $application->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
 
-					$template_path = JPath::clean($client->path.'/templates/'.$template->element.'/html/'.$module);
+					$template_path = JPath::clean($application->path.'/templates/'.$template->element.'/html/'.$module);
 
 					// Add the layout options from the template path.
 					if (is_dir($template_path) && ($files = JFolder::files($template_path, '^[^_]*\.php$'))) {

@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  *
  * @package		Joomla.Administrator
  * @subpackage	com_content
- * @deprecated	JParameter is deprecated and will be removed in a future version. Use JForm instead.
+ * @deprecated	JParameter is deprecated and will be removed in a future version. Use MolajoForm instead.
  * @since		1.5
  */
 class MolajoElementContent extends JElement

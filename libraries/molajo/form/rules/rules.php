@@ -1,22 +1,21 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Form
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die();
 
 /**
- * Form Rule class for the Joomla Framework.
+ * Boolean Rule
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
-class MolajoFormRuleRules extends JFormRule
+class MolajoFormRuleRules extends MolajoFormRule
 {
 	/**
 	 * Method to test the value.

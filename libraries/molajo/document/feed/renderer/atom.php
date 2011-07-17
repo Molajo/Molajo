@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * MolajoDocumentRenderer_Atom is a feed that implements the atom specification

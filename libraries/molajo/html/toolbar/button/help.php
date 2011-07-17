@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * Renders a help popup window button
@@ -76,7 +76,7 @@ class MolajoButtonHelp extends MolajoButton
 	{
 		// Get Help URL
 		jimport('joomla.language.help');
-		$url = JHelp::createURL($ref, $com, $override, $component);
+		$url = MolajoHelp::createURL($ref, $com, $override, $component);
 		$url = htmlspecialchars($url, ENT_QUOTES);
 		$cmd = "popupWindow('$url', '".JText::_('JHELP', true)."', 700, 500, 1)";
 

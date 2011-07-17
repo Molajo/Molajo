@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldCheckbox extends JFormField
+class MolajoFormFieldCheckbox extends MolajoFormField
 {
 	/**
 	 * The form field type.

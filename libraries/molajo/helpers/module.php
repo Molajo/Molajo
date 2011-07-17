@@ -139,16 +139,16 @@ abstract class MolajoModuleHelper
 
 		// Get module path
 		$module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
-		$path = JPATH_BASE.'/modules/'.$module->module.'/'.$module->module.'.php';
+		$path = MOLAJO_PATH_BASE.'/modules/'.$module->module.'/'.$module->module.'.php';
 
 		// Load the module
 		if (!$module->user && file_exists($path))
 		{
 			$lang = JFactory::getLanguage();
 			// 1.5 or Core then 1.6 3PD
-				$lang->load($module->module, JPATH_BASE, null, false, false)
+				$lang->load($module->module, MOLAJO_PATH_BASE, null, false, false)
 			||	$lang->load($module->module, dirname($path), null, false, false)
-			||	$lang->load($module->module, JPATH_BASE, $lang->getDefault(), false, false)
+			||	$lang->load($module->module, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
 			||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
 
 			$content = '';
@@ -164,8 +164,8 @@ abstract class MolajoModuleHelper
 			$chrome = array();
 		}
 
-		require_once JPATH_THEMES.'/system/html/modules.php';
-		$chromePath = JPATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
+		require_once MOLAJO_PATH_THEMES.'/system/html/modules.php';
+		$chromePath = MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
 
 		if (!isset($chrome[$chromePath]))
 		{
@@ -228,8 +228,8 @@ abstract class MolajoModuleHelper
 		}
 
 		// Build the template and base path for the layout
-		$tPath = JPATH_THEMES.'/'.$template.'/html/'.$module.'/'.$layout.'.php';
-		$bPath = JPATH_BASE.'/modules/'.$module.'/tmpl/'.$defaultLayout.'.php';
+		$tPath = MOLAJO_PATH_THEMES.'/'.$template.'/html/'.$module.'/'.$layout.'.php';
+		$bPath = MOLAJO_PATH_BASE.'/modules/'.$module.'/tmpl/'.$defaultLayout.'.php';
 
 		// If the template has a layout override use it
 		if (file_exists($tPath)) {
@@ -257,7 +257,7 @@ abstract class MolajoModuleHelper
 		$app		= JFactory::getApplication();
 		$user		= JFactory::getUser();
 		$lang 		= JFactory::getLanguage()->getTag();
-		$applicationId 	= (int) $app->getClientId();
+		$applicationId 	= (int) $app->getApplicationId();
 
 		$cache 		= JFactory::getCache ('com_modules', '');
 		$cacheid 	= md5(serialize(array($Itemid, $applicationId, $lang)));

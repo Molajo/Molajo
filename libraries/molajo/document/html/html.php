@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 jimport('joomla.application.module.helper');
 
@@ -412,13 +412,13 @@ class MolajoDocumentHTML extends MolajoDocument
 
 		// Try to find a favicon by checking the template and root folder
 		$path = $directory . '/';
-		$dirs = array($path, JPATH_BASE . '/');
+		$dirs = array($path, MOLAJO_PATH_BASE . '/');
 		foreach ($dirs as $dir)
 		{
 			$icon = $dir.'favicon.ico';
 			if (file_exists($icon))
 			{
-				$path = str_replace(JPATH_BASE . '/', '', $dir);
+				$path = str_replace(MOLAJO_PATH_BASE . '/', '', $dir);
 				$path = str_replace('\\', '/', $path);
 				$this->addFavicon(JURI::base(true).'/'.$path.'favicon.ico');
 				break;
@@ -449,9 +449,9 @@ class MolajoDocumentHTML extends MolajoDocument
 		$lang = JFactory::getLanguage();
 		// 1.5 or core then 1.6
 
-			$lang->load('tpl_'.$template, JPATH_BASE, null, false, false)
+			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
 		||	$lang->load('tpl_'.$template, $directory . '/' . $template, null, false, false)
-		||	$lang->load('tpl_'.$template, JPATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
 		||	$lang->load('tpl_'.$template, $directory . '/' . $template, $lang->getDefault(), false, false);
 
 		// Assign the variables

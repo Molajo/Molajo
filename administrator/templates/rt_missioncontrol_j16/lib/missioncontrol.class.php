@@ -91,7 +91,7 @@ class MissionControl extends RTCore {
 	function displayDashText() {
 		
 		$params = $this->params;
-		$default = 'You can put anything you want here to provide some information to your Administrators. <a href="index.php?option=com_templates&task=edit&cid[]=rt_missioncontrol_j16&client=1">Edit This Text Now...</a>';
+		$default = 'You can put anything you want here to provide some information to your Administrators. <a href="index.php?option=com_templates&task=edit&cid[]=rt_missioncontrol_j16&application=1">Edit This Text Now...</a>';
 		$dashtext = $params->get('dashboard',$default);
 		echo '<p class="mc-dashtext">'.$dashtext.'</p>';
 	}

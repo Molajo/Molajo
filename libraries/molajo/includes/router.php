@@ -64,13 +64,13 @@ class MolajoRouter extends JObject
 	 * Returns the global JRouter object, only creating it if it
 	 * doesn't already exist.
 	 *
-	 * @param   string  $client  The name of the client
+	 * @param   string  $application  The name of the application
 	 * @param   array   $options An associative array of options
 	 *
 	 * @return  JRouter  A JRouter object.
 	 * @since   11.1
 	 */
-	public static function getInstance($client, $options = array())
+	public static function getInstance($application, $options = array())
 	{
 		static $instances;
 
@@ -78,26 +78,26 @@ class MolajoRouter extends JObject
 			$instances = array();
 		}
 
-		if (empty($instances[$client])) {
+		if (empty($instances[$application])) {
 			// Load the router object
-			$info = MolajoApplicationHelper::getClientInfo($client, true);
+			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
 			$path = $info->path.DS.'includes'.DS.'router.php';
 			if (file_exists($path)) {
 				require_once $path;
 
 				// Create a JRouter object
-				$classname = 'JRouter'.ucfirst($client);
+				$classname = 'JRouter'.ucfirst($application);
 				$instance = new $classname($options);
 			} else {
-				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_ROUTER_LOAD', $client));
+				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_ROUTER_LOAD', $application));
 				return $error;
 			}
 
-			$instances[$client] = & $instance;
+			$instances[$application] = & $instance;
 		}
 
-		return $instances[$client];
+		return $instances[$application];
 	}
 
 	/**

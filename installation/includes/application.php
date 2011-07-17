@@ -1,19 +1,22 @@
 <?php
 /**
- * @version		$Id: application.php 21518 2011-06-10 21:38:12Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 
 /**
- * Joomla Application class
+ * Application class
  *
  * Provide many supporting API functions
  *
- * @package		Joomla.Installation
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since       1.0
+ *
  */
 class MolajoInstallation extends MolajoApplication
 {
@@ -72,13 +75,12 @@ class MolajoInstallation extends MolajoApplication
             }
         }
 
-        // This could be a first-time visit - try to determine what the client accepts.
+        // This could be a first-time visit - try to determine what the application accepts.
         if (empty($options['language'])) {
             if (!empty($forced['language'])) {
                 $options['language'] = $forced['language'];
             } else {
-                jimport('joomla.language.helper');
-                $options['language'] = JLanguageHelper::detectLanguage();
+                $options['language'] = MolajoLanguageHelper::detectLanguage();
                 if (empty($options['language'])) {
                     $options['language'] = 'en-GB';
                 }
@@ -98,6 +100,8 @@ class MolajoInstallation extends MolajoApplication
     }
 
 	/**
+     * render
+     *
 	 * Render the application
 	 *
 	 * @return	void
@@ -118,23 +122,28 @@ class MolajoInstallation extends MolajoApplication
 		}
 
 		// Define component path
-		define('JPATH_COMPONENT', JPATH_BASE);
-		define('JPATH_COMPONENT_SITE', JPATH_SITE);
-		define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_ADMINISTRATOR);
+		define('MOLAJO_PATH_COMPONENT', MOLAJO_PATH_BASE);
+		define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
+		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
+
+		define('JPATH_COMPONENT', MOLAJO_PATH_BASE);
+		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
+		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
 
 		// Import the controller.
-		require_once JPATH_COMPONENT.'/controller.php';
+		require_once MOLAJO_PATH_COMPONENT.'/controller.php';
 		$controller	= JController::getInstance('JInstallation');
 
 		// Start the output buffer.
 		ob_start();
-
+ 
 		// Execute the task.
 		$controller->execute(JRequest::getVar('task'));
 		$controller->redirect();
 
 		// Get output from the buffer and clean it.
 		$contents = ob_get_contents();
+
 		ob_end_clean();
 
 		$file = JRequest::getCmd('tmpl', 'index');
@@ -142,7 +151,7 @@ class MolajoInstallation extends MolajoApplication
 		$params = array(
 			'template'	=> 'template',
 			'file'		=> $file.'.php',
-			'directory' => JPATH_THEMES,
+			'directory' => MOLAJO_PATH_THEMES,
 			'params'	=> '{}'
 		);
 
@@ -156,6 +165,8 @@ class MolajoInstallation extends MolajoApplication
 	}
 
 	/**
+     * debugLanguage
+     *
 	 * @return	void
 	 */
 	public static function debugLanguage()
@@ -277,6 +288,8 @@ class MolajoInstallation extends MolajoApplication
 	}
 
 	/**
+     * getLocalise
+     *
 	 * Returns the language code and help url set in the localise.xml file.
 	 * Used for forcing a particular language in localised releases.
 	 *
@@ -284,7 +297,7 @@ class MolajoInstallation extends MolajoApplication
 	 */
 	public function getLocalise()
 	{
-		$xml = JFactory::getXML(JPATH_SITE . '/installation/localise.xml');
+		$xml = JFactory::getXML(MOLAJO_PATH_SITE . '/installation/localise.xml');
 
 		if (!$xml) {
 			return false;
@@ -306,6 +319,8 @@ class MolajoInstallation extends MolajoApplication
 	}
 
     /**
+     * getLocaliseAdmin
+     *
      * Returns the installed language files in the administrative and
      * front-end area.
      *
@@ -316,11 +331,11 @@ class MolajoInstallation extends MolajoApplication
  	public function getLocaliseAdmin($db=false)
  	{
  		// Read the files in the admin area
- 		$path = JLanguage::getLanguagePath(JPATH_SITE . '/administrator');
+ 		$path = JLanguage::getLanguagePath(MOLAJO_PATH_SITE . '/administrator');
  		$langfiles['admin'] = JFolder::folders($path);
 
  		// Read the files in the site area
- 		$path = JLanguage::getLanguagePath(JPATH_SITE);
+ 		$path = JLanguage::getLanguagePath(MOLAJO_PATH_SITE);
  		$langfiles['site'] = JFolder::folders($path);
 
  		if ($db) {
@@ -329,7 +344,7 @@ class MolajoInstallation extends MolajoApplication
  			$langfiles['admin'] = Array();
  			$langfiles['site'] = Array();
  			$query = $db->getQuery(true);
- 			$query->select('element,application_id');
+ 			$query->select('element, application_id');
  			$query->from('#__extensions');
  			$query->where('type = '.$db->quote('language'));
  			$db->setQuery($query);

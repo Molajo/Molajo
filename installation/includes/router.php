@@ -1,25 +1,25 @@
 <?php
 /**
- * @version		$Id: router.php 21376 2011-05-24 17:11:48Z dextercowley $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access
-defined('JPATH_BASE') or die;
-
-jimport('joomla.application.router');
+defined('MOLAJO') or die();
 
 /**
  * Class to create and parse routes
  *
- * @package		Joomla
- * @since		1.5
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since		1.0
  */
-class JRouterInstallation extends JObject
+class MolajoRouterInstallation extends JObject
 {
 	/**
+     * parse
+     *
 	 * Function to convert a route to an internal URI
 	 *
 	 * @return	boolean
@@ -31,6 +31,8 @@ class JRouterInstallation extends JObject
 	}
 
 	/**
+     * build
+     *
 	 * Function to convert an internal URI to a route
 	 *
 	 * @param	string	$url	The internal URL

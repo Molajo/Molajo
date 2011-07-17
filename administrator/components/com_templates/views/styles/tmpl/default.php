@@ -36,7 +36,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo JText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
-				<?php echo JHtml::_('select.options', TemplatesHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo JHtml::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
 		</div>
 	</fieldset>

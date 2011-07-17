@@ -3,19 +3,19 @@
  * @package     Molajo
  * @subpackage  Form
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Cristina Solano. All rights reserved.
+ * @copyright   Copyright (C) 2011 Cristina Solana, Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die();
 
 /**
- * Form Field class for the Joomla Framework.
+ * Database Prefix for Installer
  *
- * @package		Joomla.Framework
+ * @package		Molajo
  * @subpackage	Form
  * @since		1.6
  */
-class MolajoFormFieldPrefix extends JFormField
+class MolajoFormFieldPrefix extends MolajoFormField
 {
 	/**
 	 * The form field type.
@@ -33,76 +33,198 @@ class MolajoFormFieldPrefix extends JFormField
 	 */
 	protected function getInput()
 	{
-		// Initialize some field attributes.
-		$size		= $this->element['size'] ? abs((int) $this->element['size']) : 5;
-		$count		= $this->element['count'] ? abs((int) $this->element['count']) : 100;
-		$maxLength	= $this->element['maxlength'] ? ' maxlength="'.(int) $this->element['maxlength'].'"' : '';
-		$class		= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
-		$readonly	= ((string) $this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
-		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 
-		// Make sure somebody doesn't put in a too large prefix size value:
+        $this->rowset = array();
+
+        if (isset($this->id)) {
+            $this->rowset[0]['id'] = $this->id;
+        } else {
+            $this->rowset[0]['id'] = '';
+        }
+        if (isset($this->name)) {
+            $this->rowset[0]['name'] = $this->name;
+        } else {
+            $this->rowset[0]['name'] = '';
+        }
+        if (isset($this->description)) {
+            $this->rowset[0]['description'] = $this->description;
+        } else {
+            $this->rowset[0]['description'] = '';
+        }
+
+        if (isset($this->fieldname)) {
+            $this->rowset[0]['fieldname'] = $this->fieldname;
+        } else {
+            $this->rowset[0]['fieldname'] = '';
+        }
+        if (isset($this->group)) {
+            $this->rowset[0]['group'] = $this->group;
+        } else {
+            $this->rowset[0]['group'] = '';
+        }
+        if (isset($this->input)) {
+            $this->rowset[0]['input'] = $this->input;
+        } else {
+            $this->rowset[0]['input'] = '';
+        }
+        if (isset($this->label)) {
+            $this->rowset[0]['label'] = $this->label;
+        } else {
+            $this->rowset[0]['label'] = '';
+        }
+        if (isset($this->multiple)) {
+            $this->rowset[0]['multiple'] = $this->multiple;
+        } else {
+            $this->rowset[0]['multiple'] = '';
+        }
+        if (isset($this->required)) {
+            $this->rowset[0]['required'] = $this->required;
+        } else {
+            $this->rowset[0]['required'] = '';
+        }
+        if (isset($this->title)) {
+            $this->rowset[0]['title'] = $this->title;
+        } else {
+            $this->rowset[0]['title'] = '';
+        }
+        if (isset($this->translateLabel)) {
+            $this->rowset[0]['translateLabel'] = $this->translateLabel;
+        } else {
+            $this->rowset[0]['translateLabel'] = '';
+        }
+        if (isset($this->translate_description)) {
+            $this->rowset[0]['translate_description'] = $this->translate_description;
+        } else {
+            $this->rowset[0]['translate_description'] = '';
+        }
+        if (isset($this->type)) {
+            $this->rowset[0]['type'] = $this->type;
+        } else {
+            $this->rowset[0]['type'] = '';
+        }
+
+        if ($this->element->class) {
+            $this->rowset[0]['class'] = (string) $this->element->class;
+        } else {
+            $this->rowset[0]['class'] = '';
+        }
+
+        if ($this->element->readonly == 'true' || $this->element->readonly === true) {
+            $this->rowset[0]['readonly'] = 'readonly="readonly"';
+        } else {
+            $this->rowset[0]['readonly'] = '';
+        }
+
+        $maxLength	= (int) $this->element->maxlength;
+
+        if ($this->element->enabled == 'false' || $this->element->enabled === false) {
+            $this->rowset[0]['disabled'] = 'disabled="disabled"';
+        } else {
+            $this->rowset[0]['disabled'] = '';
+        }
+
+        if ($this->element->onchange) {
+            $this->rowset[0]['onchange'] = ' onchange="'.(string) $this->element->onchange.'"';
+        } else {
+            $this->rowset[0]['onchange'] = '';
+        }
+
+    /**
+     * Prefix
+     */
+        $prefix = false;
+
+		$size		= $this->element->size ? abs((int) $this->element->size) : 5;
 		if ($size > 10) {
 			$size = 10;
 		}
 
-		// If a prefix is already set, use it instead
 		$session = JFactory::getSession()->get('setup.options', array());
-		if(empty($session['db_prefix'])){
+		if (empty($session->db_prefix)) {
+        } else {
+            $prefix = $session->db_prefix;
+        }
 
-			// Get all tables from this DB
-			$tables = JFactory::getDbo()->getTableList();
+        if ($prefix) {
+        } else {
+            $prefix = JFactory::getApplication()->getCfg('prefix');
+        }
 
-			// Loop until an non used prefix is found or until $count is reached
-			$k = 0;
-			do {
-				$k++;
-				// Create the random prefix:
-				$prefix = '';
-				$chars = range('a', 'z');
-				$numbers = range(0, 9);
+        if ($prefix) {
+        } else {
+            $prefix = $this->getPrefix ($size);
+        }
 
-				// We want the fist character to be a random letter:
-				shuffle($chars);
-				$prefix .= $chars[0];
+        if ($prefix) {
+        } else {
+            $prefix = 'molajo';
+        }
 
-				// Next we combine the numbers and characters to get the other characters:
-				$symbols = array_merge($numbers, $chars);
-				shuffle($symbols);
+        $this->rowset[0]->prefix = htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8');
+        
+        if ($prefix) {
+            $this->rowset[0]['prefix'] = htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8');
+        } else {
+            $this->rowset[0]['prefix'] = 'molajo_';
+        }
 
-				for($i = 0, $j = $size - 1; $i < $j; ++$i) {
-					$prefix .= $symbols[$i];
-				}
-
-				// Add in the underscore:
-				$prefix .= '_';
-
-				// Search for conflict
-				$found = false;
-				if ($tables) {
-					foreach ($tables as $table) {
-						if (strpos($table, $prefix) === 0) {
-							$found = true;
-							break;
-						}
-					}
-				}
-			}
-			while ($found && $k < $count);
-			if ($found) {
-				$prefix = '';
-			}
-		}
-		else {
-			$prefix = $session['db_prefix'];
-		}
-
-		// Initialize JavaScript field attributes.
-		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
-
-		return '<input type="text" name="'.$this->name.'" id="'.$this->id.'"' .
-				' value="'.htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8').'"' .
-				$class.$disabled.$readonly.$onchange.$maxLength.'/>';
+        var_dump($this->rowset);
 	}
+
+    /**
+     * get_prefix
+     *
+     * @param $size
+     * @param $count
+     * @return void
+     */
+    protected function getPrefix ($size=10, $count=100)
+    {
+        // For an existing table, retrieve all table names
+        $db = JFactory::getApplication()->getCfg('db');
+        if ($db) {
+            $tables = JFactory::getDbo()->getTableList();
+        } else {
+            $tables = array();
+        }
+
+        // Loop until an non used prefix is found or until $count is reached
+        $found = false;
+        $k = 0;
+        for ($k=0; ($k < $count || $found === true); $k++)
+        {
+            // Create the random prefix:
+            $prefix = '';
+            $chars = range('a', 'z');
+            $numbers = range(0, 9);
+
+            // first character is random letter
+            shuffle($chars);
+            $prefix .= $chars[0];
+
+            // combine numbers and characters into pool and retrieve random set
+            $symbols = array_merge($numbers, $chars);
+            shuffle($symbols);
+
+            for($i = 0, $j = $size - 1; $i < $j; ++$i) {
+                $prefix .= $symbols[$i];
+            }
+
+            // Add in the underscore:
+            $prefix .= '_';
+
+            // Search for conflict
+            if ($tables) {
+                foreach ($tables as $table) {
+                    if (strpos($table, $prefix) === 0) {
+                        $found = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $prefix;
+    }
 }
 

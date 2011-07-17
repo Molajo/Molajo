@@ -9,7 +9,7 @@
 defined('MOLAJO') or die();
 
 /**
- * JFormFieldModal_Item
+ * MolajoFormFieldModal_Item
  *
  * Supports a modal item picker.
  *
@@ -17,7 +17,7 @@ defined('MOLAJO') or die();
  * @subpackage	Lists Content for Single Item Selection
  * @since		1.6
  */
-class MolajoFormFieldModal_item extends JFormField
+class MolajoFormFieldModal_item extends MolajoFormField
 {
 	/**
 	 * The form field type.
@@ -86,7 +86,7 @@ class MolajoFormFieldModal_item extends JFormField
 			$value = (int)$this->value;
 		}
 
-		// class='required' for client side validation
+		// class='required' for application side validation
 		$class = '';
 		if ($this->required) {
 			$class = ' class="required modal-value"';

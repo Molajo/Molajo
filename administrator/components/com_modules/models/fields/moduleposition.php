@@ -35,15 +35,15 @@ class JFormFieldModulePosition extends JFormFieldText
 	 */
 	protected function getInput()
 	{
-		// Get the client id.
+		// Get the application id.
 		$applicationId = $this->element['application_id'];
 		if (!isset($applicationId))
 		{
-			$clientName = $this->element['client'];
-			if (isset($clientName))
+			$applicationName = $this->element['application'];
+			if (isset($applicationName))
 			{
-				$client = JApplicationHelper::getClientInfo($clientName, true);
-				$applicationId = $client->id;
+				$application = JApplicationHelper::getApplicationInfo($applicationName, true);
+				$applicationId = $application->id;
 			}
 		}
 		if (!isset($applicationId) && $this->form instanceof JForm) {

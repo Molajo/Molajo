@@ -1,14 +1,13 @@
 <?php
 /**
- * @version		$Id: prefix.php 21676 2011-06-25 07:43:49Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Joomla.Platform
+ * @subpackage  Form
+ *
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_BASE') or die;
-
-jimport('joomla.form.formrule');
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Form Rule class for the prefix DB.
@@ -16,7 +15,7 @@ jimport('joomla.form.formrule');
  * @package		Joomla.Installation
  * @since		1.7
  */
-class JFormRulePrefix extends JFormRule
+class JFormRulePrefix extends MolajoFormRulePrefix
 {
 	/**
 	 * The regular expression to use in testing a form field value.

@@ -15,7 +15,7 @@
  *  For PHP Strict
  *
  */
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * JDate is a class that stores a date and provides logic to manipulate

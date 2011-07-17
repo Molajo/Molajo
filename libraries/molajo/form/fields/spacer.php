@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class MolajoFormFieldSpacer extends JFormField
+class MolajoFormFieldSpacer extends MolajoFormField
 {
 	/**
 	 * The form field type.

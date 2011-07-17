@@ -22,40 +22,35 @@ class JPagination extends JObject
 	/**
 	 * The record number to start dislpaying from.
 	 *
-	 * @var    integer
-	 * @since  11.1
+	 * @var int
 	 */
 	public $limitstart = null;
 
 	/**
 	 * Number of rows to display per page.
 	 *
-	 * @var integer
-	 * @since  11.1
+	 * @var int
 	 */
 	public $limit = null;
 
 	/**
 	 * Total number of rows.
 	 *
-	 * @var integer
-	 * @since  11.1
+	 * @var int
 	 */
 	public $total = null;
 
 	/**
 	 * Prefix used for request variables.
 	 *
-	 * @var    integer
-	 * @since  11.1
+	 * @var int
 	 */
 	public $prefix = null;
 
 	/**
 	 * View all flag
 	 *
-	 * @var    boolean
-	 * @since  11.1
+	 * @var boolean
 	 */
 	protected $_viewall = false;
 
@@ -71,10 +66,10 @@ class JPagination extends JObject
 	/**
 	 * Constructor.
 	 *
-	 * @param   integer  $total       The total number of items.
-	 * @param   integer  $limitstart  The offset of the item to start at.
-	 * @param   integer  $limit       The number of items to display per page.
-	 * @param   string   $prefix      The prefix used for request variables.
+	 * @param   integer  The total number of items.
+	 * @param   integer  The offset of the item to start at.
+	 * @param   integer  The number of items to display per page.
+	 * @param   string   The prefix used for request variables.
 	 */
 	function __construct($total, $limitstart, $limit, $prefix = '')
 	{
@@ -136,8 +131,8 @@ class JPagination extends JObject
 	 * Method to set an additional URL parameter to be added to all pagination class generated
 	 * links.
 	 *
-	 * @param   string   $key    The name of the URL parameter for which to set a value.
-	 * @param   mixed    $value  The value to set for the URL parameter.
+	 * @param   string   $key	The name of the URL parameter for which to set a value.
+	 * @param   mixed    $value	The value to set for the URL parameter.
 	 *
 	 * @return  mixed    The old value for the parameter.
 	 *
@@ -179,9 +174,8 @@ class JPagination extends JObject
 	/**
 	 * Return the rationalised offset for a row with a given index.
 	 *
-	 * @param   integer  $index   The row index
-	 *
-	 * @return  integer  Rationalised offset for a row with a given index.
+	 * @param   integer  $index The row index
+	 * @return  integer  	Rationalised offset for a row with a given index.
 	 * @since   11.1
 	 */
 	public function getRowOffset($index)
@@ -221,7 +215,7 @@ class JPagination extends JObject
 	}
 
 	/**
-	 * Create and return the pagination result set counter string, e.g. Results 1-10 of 42
+	 * Create and return the pagination result set counter string, ie. Results 1-10 of 42
 	 *
 	 * @return  string   Pagination result set counter string.
 	 * @since   11.1
@@ -256,7 +250,7 @@ class JPagination extends JObject
 	 * Create and return the pagination page list string, ie. Previous, Next, 1 2 3 ... x.
 	 *
 	 * @return  string   Pagination page list string.
-	 * @since   11.1
+	 * @since	1.0
 	 */
 	public function getPagesLinks()
 	{
@@ -350,7 +344,7 @@ class JPagination extends JObject
 	 * Return the pagination footer.
 	 *
 	 * @return  string   Pagination footer.
-	 * @since   11.1
+	 * @since	1.0
 	 */
 	public function getListFooter()
 	{
@@ -380,7 +374,7 @@ class JPagination extends JObject
 	 * Creates a dropdown box for selecting how many records to show per page.
 	 *
 	 * @return  string   The HTML for the limit # input box.
-	 * @since   11.1
+	 * @since	1.0
 	 */
 	public function getLimitBox()
 	{
@@ -412,15 +406,15 @@ class JPagination extends JObject
 	/**
 	 * Return the icon to move an item UP.
 	 *
-	 * @param   integer  $i          The row index.
-	 * @param   boolean  $condition  True to show the icon.
-	 * @param   string   $task       The task to fire.
-	 * @param   string   $alt        The image alternative text string.
-	 * @param   boolean  $enabled    An optional setting for access control on the action.
-	 * @param   string   $checkbox   An optional prefix for checkboxes.
+	 * @param   integer  $i			The row index.
+	 * @param   boolean  $condition	True to show the icon.
+	 * @param   string   $task		The task to fire.
+	 * @param   string   $alt		The image alternative text string.
+	 * @param   boolean  $enabled	An optional setting for access control on the action.
+	 * @param   string   $checkbox	An optional prefix for checkboxes.
 	 *
 	 * @return  string   Either the icon to move an item up or a space.
-	 * @since   11.1
+	 * @since	1.0
 	 */
 	public function orderUpIcon($i, $condition = true, $task = 'orderup', $alt = 'JLIB_HTML_MOVE_UP', $enabled = true, $checkbox='cb')
 	{
@@ -435,16 +429,16 @@ class JPagination extends JObject
 	/**
 	 * Return the icon to move an item DOWN.
 	 *
-	 * @param   integer  $i          The row index.
-	 * @param   integer  $n          The number of items in the list.
-	 * @param   boolean  $condition  True to show the icon.
-	 * @param   string   $task       The task to fire.
-	 * @param   string   $alt        The image alternative text string.
-	 * @param   boolean  $enabled    An optional setting for access control on the action.
-	 * @param   string   $checkbox   An optional prefix for checkboxes.
+	 * @param   integer  $i			The row index.
+	 * @param   integer  $n			The number of items in the list.
+	 * @param   boolean  $condition	True to show the icon.
+	 * @param   string   $task		The task to fire.
+	 * @param   string   $alt		The image alternative text string.
+	 * @param   boolean  $enabled	An optional setting for access control on the action.
+	 * @param   string   $checkbox	An optional prefix for checkboxes.
 	 *
 	 * @return  string   Either the icon to move an item down or a space.
-	 * @since   11.1
+	 * @since	1.0
 	 */
 	public function orderDownIcon($i, $n, $condition = true, $task = 'orderdown', $alt = 'JLIB_HTML_MOVE_DOWN', $enabled = true, $checkbox='cb')
 	{
@@ -456,14 +450,6 @@ class JPagination extends JObject
 		}
 	}
 
-	/*
-	 * Create the HTML for a list footer
-	 * 
-	 * @param    array  $list  
-	 * 
-	 * @return   string  HTML for a list footer
-	 * @since    11.1
-	 */
 	protected function _list_footer($list)
 	{
 		$html = "<div class=\"list-footer\">\n";
@@ -478,14 +464,6 @@ class JPagination extends JObject
 		return $html;
 	}
 
-	/*
-	 * Create the html for a list footer
-	 * 
-	 * @param    array  $list  
-	 * 
-	 * @return   string  HTML for a list start, previous, next,end
-	 * @since    11.1
-	 */
 	protected function _list_render($list)
 	{
 		// Reverse output rendering for right-to-left display.
@@ -502,14 +480,6 @@ class JPagination extends JObject
 		return $html;
 	}
 
-	/*
-	 * 
-	 * 
-	 * @param    object  $item  
-	 * 
-	 * @return   string  HTML link
-	 * @since    11.1
-	 */
 	protected function _item_active(&$item)
 	{
 		$app = JFactory::getApplication();
@@ -527,14 +497,6 @@ class JPagination extends JObject
 		}
 	}
 
-	/*
-	 * 
-	 * 
-	 * @param    object  $item  
-	 * 
-	 * @return   string
-	 * @since    11.1
-	 */
 	protected function _item_inactive(&$item)
 	{
 		$app = JFactory::getApplication();
@@ -633,49 +595,11 @@ class JPagination extends JObject
  */
 class JPaginationObject extends JObject
 {
-	/**
-	 * 
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */
 	public $text;
-
-	/**
-	 * 
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */
 	public $base;
-
-	/**
-	 * 
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */	
 	public $link;
-
-	/**
-	 * 
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */
 	public $prefix;
 
-	/*
-	 * 
-	 * 
-	 * @param   string   $text
-	 * @param   string   $prefix
-	 * @param   string   $base
-	 * @param   string   $link
-	 * 
-	 * @return   
-	 * @since    11.1
-	 */
 	public function __construct($text, $prefix = '', $base = null, $link = null)
 	{
 		$this->text = $text;

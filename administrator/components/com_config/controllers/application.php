@@ -49,8 +49,8 @@ class ConfigControllerApplication extends JController
 		}
 
 		// Set FTP credentials, if given.
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		jimport('joomla.application.helper');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
 		$app	= JFactory::getApplication();
@@ -132,8 +132,8 @@ class ConfigControllerApplication extends JController
 		}
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		jimport('joomla.application.helper');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
 
 		// Clean the session data.
 		$app = JFactory::getApplication();
@@ -147,8 +147,8 @@ class ConfigControllerApplication extends JController
 		jimport('joomla.filesystem.file');
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		jimport('joomla.application.helper');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
 
 		if (($data = file_get_contents('http://help.joomla.org/helpsites.xml')) === false) {
 			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_ERROR_HELPREFRESH_FETCH'), 'error');

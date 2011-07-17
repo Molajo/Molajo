@@ -15,7 +15,7 @@ defined('MOLAJO') or die();
  * @subpackage  Form
  * @since       11.1
  */
-class MolajoFormFieldHelpsite extends JFormFieldList
+class MolajoFormFieldHelpsite extends MolajoFormFieldList
 {
 	/**
 	 * The form field type.
@@ -40,7 +40,7 @@ class MolajoFormFieldHelpsite extends JFormFieldList
 		// Merge any additional options in the XML definition.
 		$options = array_merge(
 			parent::getOptions(),
-			JHelp::createSiteList(JPATH_ADMINISTRATOR.'/help/helpsites.xml', $this->value)
+			MolajoHelp::createSiteList(MOLAJO_PATH_ADMINISTRATOR.'/help/helpsites.xml', $this->value)
 		);
 
 		return $options;

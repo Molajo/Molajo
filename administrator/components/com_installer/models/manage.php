@@ -248,7 +248,7 @@ class InstallerModelManage extends InstallerModel
 	{
 		$enabled= $this->getState('filter.enabled');
 		$type = $this->getState('filter.type');
-		$client = $this->getState('filter.application_id');
+		$application = $this->getState('filter.application_id');
 		$group = $this->getState('filter.group');
 		$hideprotected = $this->getState('filter.hideprotected');
 		$query = JFactory::getDBO()->getQuery(true);
@@ -264,8 +264,8 @@ class InstallerModelManage extends InstallerModel
 		if ($type) {
 			$query->where('type=' . $this->_db->Quote($type));
 		}
-		if ($client != '') {
-			$query->where('application_id=' . intval($client));
+		if ($application != '') {
+			$query->where('application_id=' . intval($application));
 		}
 		if ($group != '' && in_array($type, array('plugin', 'library', ''))) {
 

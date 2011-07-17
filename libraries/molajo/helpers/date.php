@@ -216,7 +216,7 @@ class MolajoDateHelper {
 
     /**
      * @package     Joomla.Platform
-     * @subpackage  Adapted from JFormFieldCalendar
+     * @subpackage  Adapted from MolajoFormFieldCalendar
      *
      * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
      * @license     GNU General Public License version 2 or later; see LICENSE

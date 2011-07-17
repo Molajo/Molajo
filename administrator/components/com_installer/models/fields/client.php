@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: client.php 20196 2011-01-09 02:40:25Z ian $
+ * @version		$Id: application.php 20196 2011-01-09 02:40:25Z ian $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License, see LICENSE.php
  */
@@ -17,14 +17,14 @@ jimport('joomla.form.formfield');
  * @subpackage	com_installer
  * @since		1.6
  */
-class JFormFieldClient extends JFormField
+class JFormFieldApplication extends JFormField
 {
 	/**
 	 * The field type.
 	 *
 	 * @var		string
 	 */
-	protected $type = 'Client';
+	protected $type = 'Application';
 
 	/**
 	 * Method to get the field input.

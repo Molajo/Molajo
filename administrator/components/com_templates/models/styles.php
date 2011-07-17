@@ -129,7 +129,7 @@ class TemplatesModelStyles extends JModelList
 			$query->where('a.template = '.$db->quote($template));
 		}
 
-		// Filter by client.
+		// Filter by application.
 		$applicationId = $this->getState('filter.application_id');
 		if (is_numeric($applicationId)) {
 			$query->where('a.application_id = '.(int) $applicationId);

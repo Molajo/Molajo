@@ -60,7 +60,9 @@ class JInstallerFile extends JAdapterInstance
 
 		// Set element
 		$manifestPath = JPath::clean($this->parent->getPath('manifest'));
-		$element = preg_replace('/\.xml/', '', basename($manifestPath));
+		$element = explode('/',$manifestPath);
+		$element = $element[count($element) - 1];
+		$element = preg_replace('/\.xml/', '', $element);
 		$this->set('element', $element);
 
 		// Get the component description
@@ -103,7 +105,7 @@ class JInstallerFile extends JAdapterInstance
 		$manifestScript = (string)$this->manifest->scriptfile;
 
 		if ($manifestScript) {
-			$manifestScriptFile = $this->parent->getPath('source').'/'.$manifestScript;
+			$manifestScriptFile = $this->parent->getPath('source').DS.$manifestScript;
 
 			if (is_file($manifestScriptFile)) {
 				// load the file
@@ -369,11 +371,6 @@ class JInstallerFile extends JAdapterInstance
 			return false;
 		}
 
-		if ($row->protected) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_WARNCOREFILE'));
-			return false;
-		}
-
 		$retval = true;
 		$manifestFile = JPATH_MANIFESTS . '/files/' . $row->element .'.xml';
 
@@ -414,7 +411,7 @@ class JInstallerFile extends JAdapterInstance
 				}
 
 				// Set the class name
-				$classname = $row->element.'InstallerScript';
+				$classname = $element.'InstallerScript';
 
 				if (class_exists($classname)) {
 					// Create a new instance
@@ -452,7 +449,6 @@ class JInstallerFile extends JAdapterInstance
 			}
 
 			// Remove the schema version
-			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->delete()->from('#__schemas')->where('extension_id = '. $row->extension_id);
 			$db->setQuery($query);

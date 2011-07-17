@@ -102,10 +102,10 @@ class MolajoComponentHelper
 		// Load template language files.
 		$template	= $app->getTemplate(true)->template;
 		$lang = JFactory::getLanguage();
-			$lang->load('tpl_'.$template, JPATH_BASE, null, false, false)
-		||	$lang->load('tpl_'.$template, JPATH_THEMES."/$template", null, false, false)
-		||	$lang->load('tpl_'.$template, JPATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, JPATH_THEMES."/$template", $lang->getDefault(), false, false);
+			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", $lang->getDefault(), false, false);
 
 		if (empty($option)) {
 			// Throw 404 if no component
@@ -123,15 +123,15 @@ class MolajoComponentHelper
 		$file	= substr($option, 4);
 
 		// Define component path.
-		define('JPATH_COMPONENT',				JPATH_BASE . '/components/' . $option);
-		define('JPATH_COMPONENT_SITE',			JPATH_SITE . '/components/' . $option);
-		define('JPATH_COMPONENT_ADMINISTRATOR',	JPATH_ADMINISTRATOR . '/components/' . $option);
+		define('MOLAJO_PATH_COMPONENT',				    MOLAJO_PATH_BASE . '/components/' . $option);
+		define('MOLAJO_PATH_COMPONENT_SITE',			MOLAJO_PATH_SITE . '/components/' . $option);
+		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR . '/components/' . $option);
 
 		// Get component path
-		if ($app->isAdmin() && file_exists(JPATH_COMPONENT . '/admin.'.$file.'.php')) {
-			$path = JPATH_COMPONENT . '/admin.'.$file.'.php';
+		if ($app->isAdmin() && file_exists(MOLAJO_PATH_COMPONENT . '/admin.'.$file.'.php')) {
+			$path = MOLAJO_PATH_COMPONENT . '/admin.'.$file.'.php';
 		} else {
-			$path = JPATH_COMPONENT . '/' . $file.'.php';
+			$path = MOLAJO_PATH_COMPONENT . '/' . $file.'.php';
 		}
 
 		// If component is disabled throw error
@@ -142,10 +142,10 @@ class MolajoComponentHelper
 		$task = JRequest::getString('task');
 
 		// Load common and local language files.
-			$lang->load($option, JPATH_BASE, null, false, false)
-		||	$lang->load($option, JPATH_COMPONENT, null, false, false)
-		||	$lang->load($option, JPATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load($option, JPATH_COMPONENT, $lang->getDefault(), false, false);
+			$lang->load($option, MOLAJO_PATH_BASE, null, false, false)
+		||	$lang->load($option, MOLAJO_PATH_COMPONENT, null, false, false)
+		||	$lang->load($option, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load($option, MOLAJO_PATH_COMPONENT, $lang->getDefault(), false, false);
 
 		// Handle template preview outlining.
 		$contents = null;

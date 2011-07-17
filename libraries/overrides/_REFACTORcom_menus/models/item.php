@@ -710,7 +710,7 @@ class MenusModelItem extends JModelAdmin
 		$query->select('ag.title AS access_title');
 		$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 		$query->where('a.published >= 0');
-		$query->where('a.client_id = 0');
+		$query->where('a.application_id = 0');
 		$query->order('a.position, a.ordering');
 
 		$db->setQuery($query);

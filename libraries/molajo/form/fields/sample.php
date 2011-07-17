@@ -34,12 +34,12 @@ class MolajoFormFieldSample extends MolajoFormFieldList
 		// Initialize variables.
 		$lang = JFactory::getLanguage();
 		$options = array();
-		$type = $this->form instanceof JForm ? $this->form->getValue('db_type') : 'mysql';
+		$type = $this->form instanceof MolajoForm ? $this->form->getValue('db_type') : 'mysql';
 		if ($type == 'mysqli') {
 			$type='mysql';
 		}
 		// Get a list of files in the search path with the given filter.
-		$files = JFolder::files(JPATH_INSTALLATION.'/sql/'.$type, '^sample.*\.sql$');
+		$files = JFolder::files(MOLAJO_PATH_INSTALLATION.'/sql/'.$type, '^sample.*\.sql$');
 
 		// Build the options list from the list of files.
 		if (is_array($files)) {

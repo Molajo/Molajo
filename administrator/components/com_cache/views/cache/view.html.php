@@ -22,7 +22,7 @@ jimport('joomla.application.component.view');
  */
 class CacheViewCache extends JView
 {
-	protected $client;
+	protected $application;
 	protected $data;
 	protected $pagination;
 	protected $state;
@@ -30,7 +30,7 @@ class CacheViewCache extends JView
 	public function display($tpl = null)
 	{
 		$this->data			= $this->get('Data');
-		$this->client		= $this->get('Client');
+		$this->application	= $this->get('Application');
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
 
@@ -52,7 +52,7 @@ class CacheViewCache extends JView
 	protected function addToolbar()
 	{
 		$user = JFactory::getUser();
-		$condition = ($this->client->name == 'site');
+		$condition = ($this->application->name == 'site');
 
 		JToolBarHelper::title(JText::_('COM_CACHE_CLEAR_CACHE'), 'clear.png');
 		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'JTOOLBAR_DELETE', true);

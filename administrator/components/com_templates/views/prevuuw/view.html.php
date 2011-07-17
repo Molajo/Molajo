@@ -21,7 +21,7 @@ jimport('joomla.application.component.view');
  */
 class TemplatesViewPrevuuw extends JView
 {
-	protected $client;
+	protected $application;
 	protected $id;
 	protected $option;
 	protected $template;
@@ -37,20 +37,20 @@ class TemplatesViewPrevuuw extends JView
 		require_once JPATH_COMPONENT.'/helpers/templates.php';
 
 		// Initialise some variables
-		$this->client	= JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
+		$this->application	= JApplicationHelper::getApplicationInfo(JRequest::getVar('application', '0', '', 'int'));
 		$this->id		= JRequest::getVar('id', '', 'method', 'int');
 		$this->option	= JRequest::getCmd('option');
 		$this->template	= TemplatesHelper::getTemplateName($this->id);
 		$this->tp		= true;
-		$this->url		= $client->id ? JURI::base() : JURI::root();
+		$this->url		= $application->id ? JURI::base() : JURI::root();
 
 		if (!$this->template) {
 			return JError::raiseWarning(500, JText::_('COM_TEMPLATES_TEMPLATE_NOT_SPECIFIED'));
 		}
 
 		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		jimport('joomla.application.helper');
+		JApplicationHelper::setCredentialsFromRequest('ftp');
 
 		parent::display($tpl);
 		$this->addToolbar();

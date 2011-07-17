@@ -64,11 +64,11 @@ abstract class ModulesHelper
 	}
 
 	/**
-	 * Get a list of filter options for the application clients.
+	 * Get a list of filter options for the application applications.
 	 *
 	 * @return	array	An array of JHtmlOption elements.
 	 */
-	public static function getClientOptions()
+	public static function getApplicationOptions()
 	{
 		// Build the filter options.
 		$options	= array();
@@ -131,9 +131,9 @@ abstract class ModulesHelper
 	}
 
 	/**
-	 * Get a list of the unique modules installed in the client application.
+	 * Get a list of the unique modules installed in the application application.
 	 *
-	 * @param	int		The client id.
+	 * @param	int		The application id.
 	 *
 	 * @return	array
 	 */
@@ -171,7 +171,7 @@ abstract class ModulesHelper
 	/**
 	 * Get a list of the assignment options for modules to menus.
 	 *
-	 * @param	int		The client id.
+	 * @param	int		The application id.
 	 *
 	 * @return	array
 	 */

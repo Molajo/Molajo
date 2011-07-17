@@ -1,22 +1,18 @@
 <?php
 /**
- * @version		$Id: migration.php 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
-
-jimport('joomla.application.component.model');
-jimport('joomla.filesystem.file');
+defined('MOLAJO') or die();
 
 /**
- * Site migration model for the Joomla Core Installer.
+ * Site migration model for the Installer.
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @subpackage  Installation
+ * @since		1.0
  */
-class JInstallationModelMigration extends JModel
-{
-}
+class JInstallationModelMigration extends JModel {}

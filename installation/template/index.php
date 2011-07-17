@@ -1,19 +1,16 @@
 <?php
 /**
- * @version		$Id: index.php 21553 2011-06-17 14:28:21Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
-
-jimport('joomla.html.html');
-
+defined('MOLAJO') or die();
 $doc = JFactory::getDocument();
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(MOLAJO_PATH_COMPONENT.'/helpers/html');
 
 // Add Stylesheets
 $doc->addStyleSheet('../media/system/css/system.css');

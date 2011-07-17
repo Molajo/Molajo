@@ -1,23 +1,26 @@
 <?php
 /**
- * @version		$Id: setup.json.php 21463 2011-06-06 15:28:10Z dextercowley $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 
 /**
- * Setup controller for the Joomla Core Installer.
+ * Setup controller for the Installer.
  * - JSON Protocol -
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @sub_package Installation
+ * @since		1.0
  */
 class JInstallationControllerSetup extends JController
 {
 	/**
+     * setlanguage
+     *
 	 * Method to set the setup language for the application.
 	 *
 	 * @return	void
@@ -76,6 +79,8 @@ class JInstallationControllerSetup extends JController
 	}
 	
 	/**
+     * database
+     *
 	 * @return	void
 	 * @since	1.7
 	 */
@@ -147,6 +152,8 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
+     * filesystem
+     *
 	 * @return	void
 	 * @since	1.7
 	 */
@@ -196,6 +203,8 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
+     * saveconfig
+     *
 	 * @return	void
 	 * @since	1.7
 	 */
@@ -264,6 +273,8 @@ class JInstallationControllerSetup extends JController
 	}
 	
 	/**
+     * loadSampleData
+     *
 	 * @return	void
 	 * @since	1.6
 	 */
@@ -307,6 +318,8 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
+     * detectFtpRoot
+     *
 	 * @return	void
 	 * @since	1.6
 	 */
@@ -344,6 +357,8 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
+     * verifyFtpSettings
+     *
 	 * @return	void
 	 * @since	1.6
 	 */
@@ -381,12 +396,13 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
+     * removeFolder
+     *
 	 * @return	void
 	 * @since	1.6
 	 */
 	public function removeFolder()
 	{
-		jimport('joomla.filesystem.folder');
 
 		// Check for a valid token. If invalid, send a 403 with the error message.
 		JRequest::checkToken('request') or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
@@ -394,7 +410,7 @@ class JInstallationControllerSetup extends JController
 		// Get the posted config options.
 		$vars = JRequest::getVar('jform', array());
 
-		$path = JPATH_INSTALLATION;
+		$path = MOLAJO_PATH_INSTALLATION;
 		//check whether the folder still exists
 		if (!file_exists($path)) {
 			$this->sendResponse(new JException(JText::sprintf('INSTL_COMPLETE_ERROR_FOLDER_ALREADY_REMOVED'), 500));
@@ -417,15 +433,12 @@ class JInstallationControllerSetup extends JController
 		}
 
 		if ($useFTP == true) {
-			// Connect the FTP client
-			jimport('joomla.client.ftp');
-			jimport('joomla.filesystem.path');
 
 			$ftp = JFTP::getInstance($options->ftp_host, $options->ftp_port);
 			$ftp->login($options->ftp_user, $options->ftp_pass);
 
 			// Translate path for the FTP account
-			$file = JPath::clean(str_replace(JPATH_CONFIGURATION, $options->ftp_root, $path), '/');
+			$file = JPath::clean(str_replace(MOLAJO_PATH_CONFIGURATION, $options->ftp_root, $path), '/');
 			$return = $ftp->delete($file);
 
 			// Delete the extra XML file while we're at it
@@ -442,7 +455,7 @@ class JInstallationControllerSetup extends JController
 			// We use output buffering so that any error message echoed JFolder::delete
 			// doesn't land in our JSON output.
 			ob_start();
-			$return = JFolder::delete($path) && (!file_exists(JPATH_ROOT.'/molajo.xml') || JFile::delete(JPATH_ROOT.'/molajo.xml'));
+			$return = JFolder::delete($path) && (!file_exists(MOLAJO_PATH_ROOT.'/molajo.xml') || JFile::delete(MOLAJO_PATH_ROOT.'/molajo.xml'));
 			ob_end_clean();
 		}
 
@@ -460,6 +473,8 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
+     * sendResponse
+     *
 	 * Method to handle a send a JSON response. The data parameter
 	 * can be a JException object for when an error has occurred or
 	 * a JObject for a good response.
@@ -489,7 +504,9 @@ class JInstallationControllerSetup extends JController
 }
 
 /**
- * Joomla Core Installation JSON Response Class
+ * JInstallationJsonResponse
+ *
+ * Core Installation JSON Response Class
  *
  * @package		Joomla.Installation
  * @since		1.6

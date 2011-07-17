@@ -1,18 +1,19 @@
 <?php
 /**
- * @version		$Id: setup.php 21463 2011-06-06 15:28:10Z dextercowley $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
+defined('MOLAJO') or die();
 
 /**
- * Setup controller for the Joomla Core Installer.
+ * Setup controller for the Installer.
  *
- * @package		Joomla.Installation
- * @since		1.6
+ * @package		Molajo
+ * @sub_package Installation
+ * @since		1.0
  */
 class JInstallationControllerSetup extends JController
 {
@@ -26,9 +27,7 @@ class JInstallationControllerSetup extends JController
 	{
 		// Get the application object.
 		$app = JFactory::getApplication();
-echo 'here';
-        var_dump($app);
-        die();
+
 		// Check for potentially unwritable session
 		$session = JFactory::getSession();
 
@@ -78,7 +77,9 @@ echo 'here';
 	}
 
 	/**
-	 * @since	1.6
+     * database
+     *
+	 * @since	1.0
 	 */
 	function database()
 	{
@@ -144,7 +145,9 @@ echo 'here';
 	}
 
 	/**
-	 * @since	1.6
+     * filesystem
+     *
+	 * @since	1.0
 	 */
 	function filesystem()
 	{
@@ -189,7 +192,9 @@ echo 'here';
 	}
 
 	/**
-	 * @since	1.6
+     * saveconfig
+     *
+	 * @since	1.0
 	 */
 	function saveconfig()
 	{

@@ -31,7 +31,7 @@ class MolajoViewTwig_display extends MolajoViewDisplay
     {
         /** Twig Autoload */
         $filehelper = new MolajoFileHelper();
-        $filehelper->requireClassFile(JPATH_ROOT.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
+        $filehelper->requireClassFile(MOLAJO_PATH_ROOT.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
         Twig_Autoloader::register();
 
         /** @var $loader  */

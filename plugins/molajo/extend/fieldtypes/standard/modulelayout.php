@@ -53,7 +53,7 @@ class JFormFieldModuleLayout extends JFormField
 		}
 		$applicationId = (int) $applicationId;
 
-		$client	= JApplicationHelper::getClientInfo($applicationId);
+		$client	= JApplicationHelper::getApplicationInfo($applicationId);
 
 		// Get the module.
 		$module = (string) $this->element['module'];

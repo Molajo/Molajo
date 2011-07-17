@@ -506,7 +506,7 @@ class JRegistry
 	 * @deprecated  1.6 - Jun 17, 2010
 	 * @todo        Remove this method for the 1.7 release.
 	 */
-	public function loadSetupFile($path=null)
+	public function loadSetupFile()
 	{
 		return true;
 	}

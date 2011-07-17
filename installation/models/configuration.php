@@ -1,20 +1,15 @@
 <?php
 /**
- * @version		$Id: configuration.php 21518 2011-06-10 21:38:12Z chdemko $
- * @package		Joomla.Installation
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Installation
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-defined('_JEXEC') or die;
-
-jimport('joomla.application.component.model');
-jimport('joomla.filesystem.file');
-jimport('joomla.user.helper');
-require_once JPATH_INSTALLATION.'/helpers/database.php';
+defined('MOLAJO') or die();
 
 /**
- * Install Configuration model for the Joomla Core Installer.
+ * Install Configuration model for the Installer.
  *
  * @package		Joomla.Installation
  * @since		1.6
@@ -22,6 +17,8 @@ require_once JPATH_INSTALLATION.'/helpers/database.php';
 class JInstallationModelConfiguration extends JModel
 {
 	/**
+     * setup
+     *
 	 * @return boolean
 	 */
 	public function setup($options)
@@ -42,10 +39,14 @@ class JInstallationModelConfiguration extends JModel
 		return true;
 	}
 
+    /**
+     * _createConfiguration
+     *
+     * @param $options
+     * @return bool
+     */
 	function _createConfiguration($options)
 	{
-		jimport('joomla.registry.registry');
-
 		// Create a new registry to build the configuration options.
 		$registry = new JRegistry();
 
@@ -53,9 +54,7 @@ class JInstallationModelConfiguration extends JModel
 		$registry->set('offline', 0);
 		$registry->set('offline_message', JText::_('INSTL_STD_OFFLINE_MSG'));
 		$registry->set('sitename', $options->site_name);
-/** Molajo Hack Begin */
 		$registry->set('editor', 'none');
-/** Molajo Hack Ends */
 		$registry->set('list_limit', 20);
 		$registry->set('access', 1);
 
@@ -118,8 +117,8 @@ class JInstallationModelConfiguration extends JModel
 
 		/* Feed Settings */
 		$registry->set('feed_limit', 10);
-		$registry->set('log_path', JPATH_ROOT . '/logs');
-		$registry->set('tmp_path', JPATH_ROOT . '/tmp');
+		$registry->set('log_path', MOLAJO_PATH_ROOT . '/logs');
+		$registry->set('tmp_path', MOLAJO_PATH_ROOT . '/tmp');
 
 		/* Session Setting */
 		$registry->set('lifetime', 15);
@@ -130,13 +129,13 @@ class JInstallationModelConfiguration extends JModel
 
 
 		// Build the configuration file path.
-		$path = JPATH_CONFIGURATION . '/configuration.php';
+		$path = MOLAJO_PATH_CONFIGURATION . '/configuration.php';
 
 		// Determine if the configuration file path is writable.
 		if (file_exists($path)) {
 			$canWrite = is_writable($path);
 		} else {
-			$canWrite = is_writable(JPATH_CONFIGURATION . '/');
+			$canWrite = is_writable(MOLAJO_PATH_CONFIGURATION . '/');
 		}
 
 		/*
@@ -144,7 +143,8 @@ class JInstallationModelConfiguration extends JModel
 		 * is not writable we need to use FTP
 		 */
 		$useFTP = false;
-		if ((file_exists($path) && !is_writable($path)) || (!file_exists($path) && !is_writable(dirname($path).'/'))) {
+		if ((file_exists($path) && !is_writable($path))
+                || (!file_exists($path) && !is_writable(dirname($path).'/'))) {
 			$useFTP = true;
 		}
 
@@ -159,15 +159,11 @@ class JInstallationModelConfiguration extends JModel
 		}
 
 		if ($useFTP == true) {
-			// Connect the FTP client
-			jimport('joomla.client.ftp');
-			jimport('joomla.filesystem.path');
-
 			$ftp = JFTP::getInstance($options->ftp_host, $options->ftp_port);
 			$ftp->login($options->ftp_user, $options->ftp_pass);
 
 			// Translate path for the FTP account
-			$file = JPath::clean(str_replace(JPATH_CONFIGURATION, $options->ftp_root, $path), '/');
+			$file = JPath::clean(str_replace(MOLAJO_PATH_CONFIGURATION, $options->ftp_root, $path), '/');
 
 			// Use FTP write buffer to file
 			if (!$ftp->write($file, $buffer)) {
@@ -192,6 +188,12 @@ class JInstallationModelConfiguration extends JModel
 		return true;
 	}
 
+    /**
+     * _createRootUser
+     *
+     * @param $options
+     * @return bool
+     */
 	function _createRootUser($options)
 	{
 		// Get a database object.
@@ -220,20 +222,19 @@ class JInstallationModelConfiguration extends JModel
 		$nullDate		= $db->getNullDate();
         $randomID       = rand(1, 10000);
 
-/** Molajo Hack Begins */
 		$query	= 'REPLACE INTO #__users SET'
 				. ' id = '.$randomID
 				. ', name = '.$db->quote('Administrator')
 				. ', username = '.$db->quote($options->admin_user)
 				. ', email = '.$db->quote($options->admin_email)
 				. ', password = '.$db->quote($cryptpass)
-//. ', usertype = '.$db->quote('deprecated')		// Need to weed out where this is used
 				. ', block = 0'
 				. ', sendEmail = 1'
 				. ', registerDate = '.$db->quote($installdate)
 				. ', lastvisitDate = '.$db->quote($nullDate)
 				. ', activation = '.$db->quote('')
 				. ', params = '.$db->quote('');
+
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());

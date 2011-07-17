@@ -29,7 +29,7 @@ class MolajoMail extends PHPMailer
 	public function __construct()
 	{
 		// PHPMailer has an issue using the relative path for it's language files
-		$this->SetLanguage('joomla', JPATH_PLATFORM.'/phpmailer/language/');
+		$this->SetLanguage('joomla', MOLAJO_LIBRARY.'/phpmailer/language/');
 	}
 
 	/**

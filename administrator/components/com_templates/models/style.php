@@ -259,8 +259,8 @@ class TemplatesModelStyle extends JModelAdmin
 			$this->_cache[$pk]->params = $registry->toArray();
 
 			// Get the template XML.
-			$client	= JApplicationHelper::getClientInfo($table->application_id);
-			$path	= JPath::clean($client->path.'/templates/'.$table->template.'/templateDetails.xml');
+			$application	= JApplicationHelper::getApplicationInfo($table->application_id);
+			$path	= JPath::clean($application->path.'/templates/'.$table->template.'/templateDetails.xml');
 
 			if (file_exists($path)) {
 				$this->_cache[$pk]->xml = simplexml_load_file($path);
@@ -298,21 +298,21 @@ class TemplatesModelStyle extends JModelAdmin
 		$applicationId	= $this->getState('item.application_id');
 		$template	= $this->getState('item.template');
 		$lang		= JFactory::getLanguage();
-		$client		= JApplicationHelper::getClientInfo($applicationId);
-		if (!$form->loadFile('style_'.$client->name, true)) {
+		$application		= JApplicationHelper::getApplicationInfo($applicationId);
+		if (!$form->loadFile('style_'.$application->name, true)) {
 			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
 		}
 
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
-		$formFile	= JPath::clean($client->path.'/templates/'.$template.'/templateDetails.xml');
+		$formFile	= JPath::clean($application->path.'/templates/'.$template.'/templateDetails.xml');
 
 		// Load the core and/or local language file(s).
-			$lang->load('tpl_'.$template, $client->path, null, false, false)
-		||	$lang->load('tpl_'.$template, $client->path.'/templates/'.$template, null, false, false)
-		||	$lang->load('tpl_'.$template, $client->path, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, $client->path.'/templates/'.$template, $lang->getDefault(), false, false);
+			$lang->load('tpl_'.$template, $application->path, null, false, false)
+		||	$lang->load('tpl_'.$template, $application->path.'/templates/'.$template, null, false, false)
+		||	$lang->load('tpl_'.$template, $application->path, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, $application->path.'/templates/'.$template, $lang->getDefault(), false, false);
 
 		if (file_exists($formFile)) {
 			// Get the template form.

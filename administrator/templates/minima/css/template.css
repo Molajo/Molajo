@@ -193,7 +193,7 @@ input:invalid, textarea:invalid         {
 button                                  {   width: auto; overflow: visible; }
 
 /* bicubic resizing for non-native sized IMG:
-   code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/ */
+   code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-application-side-image-resizing/ */
 .ie7 img                                {   -ms-interpolation-mode: bicubic; }
 
 /* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
@@ -2665,7 +2665,7 @@ span.move_up                            {   background-position: 0 -888px;  }
 .icon-16-archive                        {   background-position: 4px -88px;  }
 .icon-16-article                        {   background-position: 4px -134px; }
 .icon-16-banners-cat                    {   background-position: 4px -180px; }
-.icon-16-banners-clients                {   background-position: 4px -226px; }
+.icon-16-banners-applications                {   background-position: 4px -226px; }
 .icon-16-banners-tracks                 {   background-position: 4px -272px; }
 .icon-16-banners                        {   background-position: 4px -318px; }
 .icon-16-calendar                       {   background-position: 4px -364px; }
@@ -2804,7 +2804,7 @@ span.move_up                            {   background-position: 0 -888px;  }
 .icon-48-article                        {   background-position: 10px -480px; }
     #cpanel .icon-48-article            {   background-position: 24px -480px; }
 .icon-48-banners-categories             {   background-position: 10px -578px; }
-.icon-48-banners-clients                {   background-position: 10px -676px; }
+.icon-48-banners-applications                {   background-position: 10px -676px; }
 .icon-48-banners-tracks                 {   background-position: 10px -774px; }
 .icon-48-banners                        {   background-position: 10px -872px; }
 .icon-48-calendar                       {   background-position: 10px -970px; }

@@ -29,7 +29,7 @@ defined('_JEXEC') or die;
 		<?php echo $this->item->version ?>
 	</td>
 	<td class="center"><?php echo @$this->item->folder != '' ? $this->item->folder : 'N/A'; ?></td>
-	<td class="center"><?php echo @$this->item->client != '' ? JText::_($this->item->client) : 'N/A'; ?></td>
+	<td class="center"><?php echo @$this->item->application != '' ? JText::_($this->item->application) : 'N/A'; ?></td>
 	<td>
 		<?php echo $this->item->detailsurl ?>
 	</td>

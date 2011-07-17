@@ -91,6 +91,18 @@ abstract class JButton extends JObject
 	}
 
 	/**
+	 * Get the button id
+	 *
+	 * Can be redefined in the final button class
+	 *
+	 * @since       11.1
+	 */
+	public function fetchId()
+	{
+		return;
+	}
+
+	/**
 	 * Get the button
 	 *
 	 * Defined in the final button class

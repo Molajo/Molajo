@@ -19,7 +19,7 @@ defined('MOLAJO') or die();
 class MolajoApplication extends JObject
 {
 	/**
-	 * The client identifier.
+	 * The application identifier.
 	 *
 	 * @var    integer
 	 * @since  11.1
@@ -95,7 +95,7 @@ class MolajoApplication extends JObject
 		}
 
 		// Create the configuration object.
-		$this->_createConfiguration(JPATH_CONFIGURATION . '/' . $config['config_file']);
+		$this->_createConfiguration(MOLAJO_PATH_CONFIGURATION . '/' . $config['config_file']);
 
 		// Create the session if a session name is passed.
 		if ($config['session'] !== false) {
@@ -112,14 +112,14 @@ class MolajoApplication extends JObject
 	 * Returns the global MolajoApplication object, only creating it if it
 	 * doesn't already exist.
 	 *
-	 * @param   mixed   $client  A client identifier or name.
+	 * @param   mixed   $application  A application identifier or name.
 	 * @param   array   $config  An optional associative array of configuration settings.
 	 * @param   strong  $prefx   A prefix for class names
 	 *
 	 * @return  MolajoApplication A MolajoApplication object.
 	 * @since   11.1
 	 */
-	public static function getInstance($client, $config = array(), $prefix = 'Molajo')
+	public static function getInstance($application, $config = array(), $prefix = 'Molajo')
 	{
 		static $instances;
         $prefix = 'Molajo';
@@ -128,27 +128,27 @@ class MolajoApplication extends JObject
 			$instances = array();
 		}
 
-		if (empty($instances[$client])) {
+		if (empty($instances[$application])) {
 			// Load the router object.
-			$info = MolajoApplicationHelper::getClientInfo($client, true);
+			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 			$path = $info->path . '/includes/application.php';
 
 			if (file_exists($path)) {
 				require_once $path;
 
 				// Create a JRouter object.
-				$classname = $prefix.ucfirst($client);
+				$classname = $prefix.ucfirst($application);
 				$instance = new $classname($config);
 			}
 			else {
-				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD', $client));
+				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
 			}
 
-			$instances[$client] = &$instance;
+			$instances[$application] = &$instance;
 		}
 
-		return $instances[$client];
+		return $instances[$application];
 	}
 
 	/**
@@ -252,7 +252,7 @@ class MolajoApplication extends JObject
 		$params = array(
 			'template'	=> $this->getTemplate(),
 			'file'		=> 'index.php',
-			'directory'	=> JPATH_THEMES,
+			'directory'	=> MOLAJO_PATH_THEMES,
 			'params'	=> $template->params
 		);
 
@@ -658,7 +658,7 @@ class MolajoApplication extends JObject
 	 * much more information about why the routine may have failed.
 	 *
 	 * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
-	 * @param   array    $options  Array('clientid' => array of client id's)
+	 * @param   array    $options  Array('applicationid' => array of application id's)
 	 *
 	 * @return  boolean  True on success
 	 *
@@ -676,9 +676,9 @@ class MolajoApplication extends JObject
 		$parameters['username']	= $user->get('username');
 		$parameters['id']		= $user->get('id');
 
-		// Set clientid in the options array if it hasn't been set already.
-		if (!isset($options['clientid'])) {
-			$options['clientid']= $this->getClientId();
+		// Set applicationid in the options array if it hasn't been set already.
+		if (!isset($options['applicationid'])) {
+			$options['applicationid']= $this->getApplicationId();
 		}
 
 		// Import the user plugin group.
@@ -797,7 +797,7 @@ class MolajoApplication extends JObject
 	/**
 	 * Returns the application JPathway object.
 	 *
-	 * @param   string  $name     The name of the application/client.
+	 * @param   string  $name     The name of the application/application.
 	 * @param   array   $options  An optional associative array of configuration settings.
 	 *
 	 * @return  JMenu  JMenu object.
@@ -952,13 +952,13 @@ class MolajoApplication extends JObject
 			if ($session->isNew()) {
 				$db->setQuery(
 					'INSERT INTO `#__session` (`session_id`, `application_id`, `time`)' .
-					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getClientId().', '.(int) time().')'
+					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getApplicationId().', '.(int) time().')'
 				);
 			}
 			else {
 				$db->setQuery(
 					'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `time`, `userid`, `username`)' .
-					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getClientId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$db->quote($user->get('username')).')'
+					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getApplicationId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$db->quote($user->get('username')).')'
 				);
 			}
 
@@ -976,13 +976,13 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Gets the client id of the current running application.
+	 * Gets the application id of the current running application.
 	 *
-	 * @return  integer  A client identifier.
+	 * @return  integer  A application identifier.
 	 *
 	 * @since   11.1
 	 */
-	public function getClientId()
+	public function getApplicationId()
 	{
 		return $this->_applicationId;
 	}

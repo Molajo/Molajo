@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_LIBRARY') or die;
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
@@ -265,7 +265,7 @@ class MolajoPagination extends JObject
 		$itemOverride = false;
 		$listOverride = false;
 
-		$chromePath = JPATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.'pagination.php';
+		$chromePath = MOLAJO_PATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.'pagination.php';
 		if (file_exists($chromePath))
 		{
 			require_once $chromePath;
@@ -359,7 +359,7 @@ class MolajoPagination extends JObject
 		$list['pagescounter']	= $this->getPagesCounter();
 		$list['pageslinks']		= $this->getPagesLinks();
 
-		$chromePath	= JPATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.'pagination.php';
+		$chromePath	= MOLAJO_PATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.'pagination.php';
 		if (file_exists($chromePath))
 		{
 			require_once $chromePath;

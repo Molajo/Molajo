@@ -208,13 +208,13 @@ class MolajoView extends JView
     {
         /** path: template **/
         $template = JFactory::getApplication()->getTemplate();
-        $templatePath = JPATH_THEMES.'/'.$template.'/html/';
+        $templatePath = MOLAJO_PATH_THEMES.'/'.$template.'/html/';
 
         /** path: component **/
         if (MOLAJO_APPLICATION == 'site') {
-            $componentPath = JPATH_ROOT.'/components/'.$this->state->get('request.option').'/views/'.$this->state->get('request.view').'/tmpl/';
+            $componentPath = MOLAJO_PATH_ROOT.'/components/'.$this->state->get('request.option').'/views/'.$this->state->get('request.view').'/tmpl/';
         } else {
-            $componentPath = JPATH_ROOT.'/'.MOLAJO_APPLICATION.'/components/'.$this->state->get('request.option').'/views/'.$this->state->get('request.view').'/tmpl/';
+            $componentPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION.'/components/'.$this->state->get('request.option').'/views/'.$this->state->get('request.view').'/tmpl/';
         }
 
         /** path: core **/

@@ -56,8 +56,8 @@ class TemplatesModelTemplates extends JModelList
 		$items = parent::getItems();
 
 		foreach ($items as &$item) {
-			$client = JApplicationHelper::getClientInfo($item->application_id);
-			$item->xmldata = TemplatesHelper::parseXMLTemplateFile($client->path, $item->element);
+			$application = JApplicationHelper::getApplicationInfo($item->application_id);
+			$item->xmldata = TemplatesHelper::parseXMLTemplateFile($application->path, $item->element);
 		}
 		return $items;
 	}
@@ -86,7 +86,7 @@ class TemplatesModelTemplates extends JModelList
 		// Filter by extension type.
 		$query->where('`type` = '.$db->quote('template'));
 
-		// Filter by client.
+		// Filter by application.
 		$applicationId = $this->getState('filter.application_id');
 		if (is_numeric($applicationId)) {
 			$query->where('a.application_id = '.(int) $applicationId);

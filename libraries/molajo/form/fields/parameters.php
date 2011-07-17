@@ -14,7 +14,7 @@ defined('MOLAJO') or die();
  * @subpackage	Form
  * @since		1.6
  */
-class MolajoFormFieldParameters extends JFormField
+class MolajoFormFieldParameters extends MolajoFormField
 {
 	/**
 	 * The form field type.
@@ -35,7 +35,7 @@ class MolajoFormFieldParameters extends JFormField
 	protected function getInput()
 	{
         /** language **/
-        JFactory::getLanguage()->load('plg_system_create_molajosamples', JPATH_SITE.'/media/plg_system_create/components/', JFactory::getLanguage()->getDefault(), true, true);
+        JFactory::getLanguage()->load('plg_system_create_molajosamples', MOLAJO_PATH_SITE.'/media/plg_system_create/components/', JFactory::getLanguage()->getDefault(), true, true);
 
         /** $parameter_type **/
         $parameter_type	= (string) $this->element['parameter_type'];
@@ -61,7 +61,7 @@ class MolajoFormFieldParameters extends JFormField
 
 		return simplexml_load_file($parameter_type);
 
-		return JForm::loadFile($parameter_type, false);
+		return MolajoForm::loadFile($parameter_type, false);
 	}
 }
 

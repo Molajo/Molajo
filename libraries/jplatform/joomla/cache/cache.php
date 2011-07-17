@@ -210,7 +210,7 @@ class JCache extends JObject
 		$handler = $this->_getStorage();
 		if (!JError::isError($handler) && $this->_options['caching']) {
 			$handler->_lifetime = $this->_options['lifetime'];
-			return $handler->store($data, $id, $group);
+			return $handler->store($id, $group, $data);
 		}
 		return false;
 	}
