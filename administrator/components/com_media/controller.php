@@ -85,7 +85,6 @@ class MediaController extends JController
 	function ftpValidate()
 	{
 		// Set FTP credentials, if given
-		jimport('joomla.application.helper');
-		JApplicationHelper::setCredentialsFromRequest('ftp');
+		JClientHelper::setCredentialsFromRequest('ftp');
 	}
 }

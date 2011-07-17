@@ -146,7 +146,7 @@ class ConfigModelApplication extends JModelForm
 		$temp->set('ftp_root', $data['ftp_root']);
 
 		// Get the new FTP credentials.
-		$ftp = JApplicationHelper::getCredentials('ftp', true);
+		$ftp = JClientHelper::getCredentials('ftp', true);
 
 		// Attempt to make the file writeable if using FTP.
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0644')) {

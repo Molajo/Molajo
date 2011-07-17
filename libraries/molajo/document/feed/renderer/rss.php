@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('MOLAJO_LIBRARY') or die;
+defined('MOLAJO') or die;
 
 /**
  * MolajoDocumentRenderer_RSS is a feed that implements RSS 2.0 Specification

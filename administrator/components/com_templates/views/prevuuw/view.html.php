@@ -49,8 +49,7 @@ class TemplatesViewPrevuuw extends JView
 		}
 
 		// Set FTP credentials, if given
-		jimport('joomla.application.helper');
-		JApplicationHelper::setCredentialsFromRequest('ftp');
+		JClientHelper::setCredentialsFromRequest('ftp');
 
 		parent::display($tpl);
 		$this->addToolbar();

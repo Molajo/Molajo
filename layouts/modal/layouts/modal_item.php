@@ -8,7 +8,7 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_PATH_PLATFORM') or die;
 
 $function	= JRequest::getCmd('function', 'jSelect');
 

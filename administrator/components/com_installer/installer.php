@@ -16,10 +16,6 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_installer')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-// Include dependancies
-jimport('joomla.application.component.controller');
-jimport('joomla.application.helper');
-
 $controller	= JController::getInstance('Installer');
 $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();

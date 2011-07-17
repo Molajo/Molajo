@@ -188,9 +188,6 @@ class TemplatesModelSource extends JModelForm
 	 */
 	public function save($data)
 	{
-		jimport('joomla.filesystem.file');
-		jimport('joomla.application.helper');
-
 		// Get the template.
 		$template = $this->getTemplate();
 		if (empty($template)) {
@@ -206,8 +203,8 @@ class TemplatesModelSource extends JModelForm
 		JPluginHelper::importPlugin('extension');
 
 		// Set FTP credentials, if given.
-		JApplicationHelper::setCredentialsFromRequest('ftp');
-		$ftp = JApplicationHelper::getCredentials('ftp');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = JClientHelper::getCredentials('ftp');
 
 		// Try to make the template file writeable.
 		if (!$ftp['enabled'] && JPath::isOwner($filePath) && !JPath::setPermissions($filePath, '0644')) {

@@ -1,16 +1,24 @@
 <?php
 /**
-* @package        Molajo
-* @subpackage     Helper
-* @copyright      Copyright (C) 2010 Tämkä. All rights reserved.
-* @author		  		Amy Stephen.
-* @trademark	  	Molajo is a registered trademark of Amy Stephen.
-* @license        http://www.gnu.org/licenses/licenses.html#GPL GPL v 2, or later
-*/
-jimport('joomla.filesystem.file');
+ * @package     Molajo
+ * @subpackage  Helper
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ */
+defined('MOLAJO') or die;
+
+/**
+ * Image Helper
+ *
+ * @package     Molajo
+ * @subpackage  Oembed Helper
+ * @since       1.0
+ */
+
 /**
  * Usage:
- * MolajoFunctionsOembed::getProvider
+ * MolajoOembedHelper::getProvider
  * http://api.embed.ly/tools/generator
  *
  * http://planetozh.com/blog/2010/05/how-to-embed-a-tweet-in-wordpress-a-complete-oembed-tutorial/

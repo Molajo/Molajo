@@ -1,12 +1,20 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  MolajoFilterHelper
+ * @subpackage  Helper
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
-defined( 'MOLAJO' ) or die( 'Restricted access' );
+defined('MOLAJO') or die;
 
+/**
+ * Application Helper
+ *
+ * @package     Molajo
+ * @subpackage  Filter Helper
+ * @since       1.0
+ */
 class MolajoFilterHelper
 {
     /**

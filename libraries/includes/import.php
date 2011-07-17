@@ -97,7 +97,7 @@ if (MOLAJO_APPLICATION == 'administrator') {    /** no site helper */
     require_once MOLAJO_PATH_BASE.'/includes/helper.php';
 }
 if (MOLAJO_APPLICATION == 'installation') {
-    require_once MOLAJO_PATH_BASE.'/includes/helper.php';
+    require_once MOLAJO_PATH_BASE.'/helpers/database.php';
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/installer/installer.php', 'JInstaller');
 }
 

@@ -1,16 +1,19 @@
 <?php
 /**
- * @version		$Id: toolbar.php 20224 2011-01-09 22:46:21Z infograf768 $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Helper
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /**
- * Utility class for the button bar.
+ * Image Helper
  *
- * @package		Joomla.Administrator
- * @subpackage	Application
+ * @package     Molajo
+ * @subpackage  Render Tool Bar Helper
+ * @since       1.0
  */
 abstract class MolajoRendertoolbarHelper
 {

@@ -47,8 +47,7 @@ class MediaControllerFile extends JController
 		$return		= JRequest::getVar('return-url', null, 'post', 'base64');
 
 		// Set FTP credentials, if given
-		jimport('joomla.application.helper');
-		JApplicationHelper::setCredentialsFromRequest('ftp');
+		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Make the filename safe
 		$file['name']	= JFile::makeSafe($file['name']);

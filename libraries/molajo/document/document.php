@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('MOLAJO_LIBRARY') or die;
+defined('MOLAJO') or die;
 
 /**
  * Document class, provides an easy interface to parse and display a document

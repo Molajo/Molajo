@@ -1,19 +1,19 @@
 <?php
 /**
- * @version     $id: submenu.php
  * @package     Molajo
- * @subpackage  Submenu Helper
+ * @subpackage  Helper
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /**
- * Molajo SubMenu Helper
+ * Image Helper
  *
- * @package	Molajo
- * @subpackage	Helper
- * @since	1.0
+ * @package     Molajo
+ * @subpackage  Submenu Helper
+ * @since       1.0
  */
 class MolajoSubmenuHelper
 {

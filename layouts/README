@@ -20,10 +20,10 @@ A column is a single piece of information about an item. The Layout can display 
 II. WHAT IS A MOLAJO LAYOUT?
 
 1. What is a Molajo Layout?
-A Molajo Layout is a collection of files used to display output from Molajo Extensions. Layouts can be reused by any Component, Module, or Plugin.
+A Molajo Layout is a collection of files used to display output from Molajo Extensions. Layouts can be reused by any Component, Module, or Plugin. Even Form Field Types use Layouts.
 
 2. What is the structure of a Layout?
-A Layout is a sest of files, contained within one folder.
+A Layout is a set of files, contained within one folder.
 
 A typical Layout file structure is organized in the following way:
 
@@ -56,7 +56,7 @@ layout-name
 
 Core Molajo Layouts are located on the root directory in the Layouts folder and can be used to display output from any Molajo Extension.
 Layouts can also be a folder in the component/view/tmpl folder, or within the modules/
-Layouts can also be located in the Templates/html/layouts folder.
+Layouts can also be located in the templates/html/layouts folder.
 
 4. How can I override a core Layout?
 

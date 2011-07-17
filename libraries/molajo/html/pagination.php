@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('MOLAJO_LIBRARY') or die;
+defined('MOLAJO') or die;
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the

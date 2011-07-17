@@ -68,7 +68,6 @@ class RokInstallerModule extends JInstallerModule
 		// Get the target application
 		if ($cname = $this->manifest->attributes('application')) {
 			// Attempt to map the application to a base path
-			jimport('joomla.application.helper');
 			$application =& JApplicationHelper::getApplicationInfo($cname, true);
 			if ($application === false) {
 				$this->parent->abort(JText::_('Module').' '.JText::_('Install').': '.JText::_('Unknown application type').' ['.$application->name.']');

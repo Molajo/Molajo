@@ -54,8 +54,7 @@ class MediaControllerFolder extends JController
 		else
 		{
 			// Set FTP credentials, if given
-			jimport('joomla.application.helper');
-			JApplicationHelper::setCredentialsFromRequest('ftp');
+			JClientHelper::setCredentialsFromRequest('ftp');
 
 			// Initialise variables.
 			$ret = true;
@@ -147,8 +146,7 @@ class MediaControllerFolder extends JController
 			}
 
 			// Set FTP credentials, if given
-			jimport('joomla.application.helper');
-			JApplicationHelper::setCredentialsFromRequest('ftp');
+			JClientHelper::setCredentialsFromRequest('ftp');
 
 			JRequest::setVar('folder', $parent);
 

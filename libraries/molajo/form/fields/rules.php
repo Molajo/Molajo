@@ -7,7 +7,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die();
-defined('MOLAJO_LIBRARY') or die;
+defined('MOLAJO') or die;
 
 /**
  * Form Field class for the Joomla Framework.

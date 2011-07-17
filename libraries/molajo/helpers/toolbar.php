@@ -1,19 +1,18 @@
 <?php
 /**
- * @version     $id: toolbar.php
  * @package     Molajo
- * @subpackage  Toolbar Helper
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @license     GNU General Public License version 2 or later; see LICENSE
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /**
- * Molajo ToolBar Helper
+ * Toolbar Helper
  *
- * @package	Molajo
- * @subpackage	Helper
- * @since	1.0
+ * @package     Molajo
+ * @subpackage  Toolbar Helper
+ * @since       1.0
  */
 class MolajoToolbarHelper
 {

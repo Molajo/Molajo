@@ -44,7 +44,7 @@ class InstallerController extends JController
 
 		// Get and render the view.
 		if ($view = $this->getView($vName, $vFormat)) {
-			$ftp	= JApplicationHelper::setCredentialsFromRequest('ftp');
+			$ftp	= JClientHelper::setCredentialsFromRequest('ftp');
 			$view->assignRef('ftp', $ftp);
 
 			// Get the model for the view.

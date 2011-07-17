@@ -119,7 +119,6 @@ class RokStarInstaller extends JInstaller
 		$exceptionFiles = array ();
 
 		// Get the application info
-		jimport('joomla.application.helper');
 		$application =& JApplicationHelper::getApplicationInfo($cid);
 
 		if (!is_a($element, 'JSimpleXMLElement') || !count($element->children())) {
@@ -202,7 +201,7 @@ class RokStarInstaller extends JInstaller
     }
 
     function copyFiles($files, $overwrite=null){
-        $ftp = JApplicationHelper::getCredentials('ftp');
+        $ftp = JClientHelper::getCredentials('ftp');
 
         // try to make writeable
         if ($overwrite || $this->getOverwrite()){

@@ -40,8 +40,7 @@ class MediaControllerFile extends JController
 
 
 		// Set FTP credentials, if given
-		jimport('joomla.application.helper');
-		JApplicationHelper::setCredentialsFromRequest('ftp');
+		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Set the redirect
 		if ($return) {
@@ -144,8 +143,7 @@ class MediaControllerFile extends JController
 		else
 		{
 			// Set FTP credentials, if given
-			jimport('joomla.application.helper');
-			JApplicationHelper::setCredentialsFromRequest('ftp');
+			JClientHelper::setCredentialsFromRequest('ftp');
 
 			// Initialise variables.
 			$ret = true;

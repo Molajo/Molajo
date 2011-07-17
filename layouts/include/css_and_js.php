@@ -22,31 +22,31 @@ defined('MOLAJO') or die;
  */
 if ($this->state->get('layout.loadSiteCSS', true) === true) {
     /** standard site-wide css and js - media/site/css[js]/viewname.css[js] **/
-    if (JFile::exists(JPATH_BASE.'/media/site/css/site.css')) {
+    if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/site.css')) {
         $this->document->addStyleSheet(JURI::base().'/site/css/site.css');
     }
     if ($this->document->direction == 'rtl') {
-        if (JFile::exists(JPATH_BASE.'/media/site/css/site_rtl.css')) {
+        if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/site_rtl.css')) {
             $this->document->addStyleSheet(JURI::base().'/media/site/css/site_rtl.css');
         }
     }
 }
 
 if ($this->state->get('layout.loadSiteJS', true) === true) {
-    if (JFile::exists(JPATH_BASE.'/media/site/js/site.js')) {
+    if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/site.js')) {
         $this->document->addScript(JURI::base().'/media/site/js/site.js');
     }
 }
 
 /** component specific css and js - media/site/css[js]/component_option.css[js] **/
 if ($this->state->get('layout.loadComponentCSS', true) === true) {
-    if (JFile::exists(JPATH_BASE.'/media/site/css/'.$this->state->get('request.option').'.css')) {
+    if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/'.$this->state->get('request.option').'.css')) {
         $this->document->addStyleSheet(JURI::base().'/media/site/css/'.$this->state->get('request.option').'.css');
     }
 }
 
 if ($this->state->get('layout.loadComponentJS', true) === true) {
-    if (JFile::exists(JPATH_BASE.'/media/site/js/'.$this->state->get('request.option').'.js')) {
+    if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/'.$this->state->get('request.option').'.js')) {
         $this->document->addScript(JURI::base().'media/site/js/'.$this->state->get('request.option').'.js');
     }
 }
