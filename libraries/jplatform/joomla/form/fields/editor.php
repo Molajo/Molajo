@@ -50,7 +50,7 @@ class JFormFieldEditor extends JFormField
 		$cols		= (int) $this->element['cols'];
 		$height		= ((string) $this->element['height']) ? (string) $this->element['height'] : '250';
 		$width		= ((string) $this->element['width']) ? (string) $this->element['width'] : '100%';
-		$assetField	= $this->element['asset_field'] ? (string) $this->element['asset_field'] : 'asset_id';
+		$assetField	= $this ->element['asset_field'] ? (string) $this->element['asset_field'] : 'asset_id';
 		$authorField= $this->element['created_by_field'] ? (string) $this->element['created_by_field'] : 'created_by';
 		$asset		= $this->form->getValue($assetField) ? $this->form->getValue($assetField) : (string) $this->element['asset_id'] ;
 

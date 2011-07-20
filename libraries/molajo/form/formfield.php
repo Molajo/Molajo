@@ -180,6 +180,14 @@ abstract class MolajoFormField
 	 */
 	static protected $generated_fieldname = '__field';
 
+    /**
+     * Tracks pre and post processing for Form Fieldtypes
+     *
+     * @var    integer
+     * @since  11.1
+     */
+    static protected $preFieldTypeProcessor = true;
+
 	/**
 	 * Method to instantiate the form field object.
 	 *
@@ -290,6 +298,7 @@ abstract class MolajoFormField
 			return false;
 		}
 
+
 		// Reset the input and label values.
 		$this->input = null;
 		$this->label = null;
@@ -397,13 +406,190 @@ abstract class MolajoFormField
 	}
 
 	/**
+     * getInput
+     *
 	 * Method to get the field input markup.
 	 *
 	 * @return  string  The field input markup.
 	 * @since   11.1
 	 */
-	abstract protected function getInput();
+	protected function getInput()
+    {
+        if ($this->preFieldTypeProcessor) {
+            $this->preFieldTypeProcessor = false;
+            $this->getInputPreFieldTypeProcessing ();
+        } else {
+            $this->getInputPostFieldTypeProcessing ();
+        }
+    }
 
+	/**
+	 * getInputPreProcessing
+     *
+     * Method to Define Common Attributes for all FormFields
+	 *
+	 * @return  array  $this->rowset
+	 * @since   11.1
+	 */
+	protected function getInputPreFieldTypeProcessing()
+    {
+        $this->rowset = array();
+
+        /** class */
+        if ($this->element->class) {
+            $this->rowset[0]['class'] = (string) $this->element->class;
+        } else {
+            $this->rowset[0]['class'] = '';
+        }
+
+        /** description */
+        if (isset($this->description)) {
+            $this->rowset[0]['description'] = trim($this->description);
+        } else {
+            $this->rowset[0]['description'] = '';
+        }
+
+        /** disabled */
+        if ($this->element->disabled == 'true' || $this->element->disabled === true) {
+            $this->rowset[0]['disabled'] = true;
+        } else {
+            $this->rowset[0]['disabled'] = false;
+        }
+
+        /** fieldname */
+        if (isset($this->fieldname)) {
+            $this->rowset[0]['fieldname'] = trim($this->fieldname);
+        } else {
+            $this->rowset[0]['fieldname'] = '';
+        }
+
+        /** group */
+        if (isset($this->group)) {
+            $this->rowset[0]['group'] = trim($this->group);
+        } else {
+            $this->rowset[0]['group'] = '';
+        }
+
+        /** html5 */
+        if ($this->element->html5) {
+            $this->rowset[0]['html5'] = (boolean) $this->element->html5;
+        } else {
+            $this->rowset[0]['html5'] = true;
+        }
+
+        /** id */
+        if (isset($this->id)) {
+            $this->rowset[0]['id'] = trim($this->id);
+        } else {
+            $this->rowset[0]['id'] = '';
+        }
+
+        /** label */
+        if (isset($this->label)) {
+            $this->rowset[0]['label'] = trim($this->label);
+        } else {
+            $this->rowset[0]['label'] = '';
+        }
+
+        /** layout */
+        if (isset($this->layout)) {
+            $this->rowset[0]['layout'] = trim($this->layout);
+        } else {
+            $this->rowset[0]['layout'] = 'text';
+        }
+
+        /** maxlength */
+        if (isset($this->maxlength)) {
+            $this->rowset[0]['maxlength'] = (int) $this->maxlength;
+        } else {
+            $this->rowset[0]['maxlength'] = 0;
+        }
+
+        /** multiple */
+        if (isset($this->multiple)) {
+            $this->rowset[0]['multiple'] = $this->multiple;
+        }
+        if ($this->multiple == true || trim($this->multiple) == 'true' || trim($this->multiple) == 'multiple') {
+            $this->rowset[0]['multiple'] = 'multiple';
+        } else {
+            $this->rowset[0]['multiple'] = '';
+        }
+
+        /** name */
+        if (isset($this->name)) {
+            $this->rowset[0]['name'] = trim($this->name);
+        } else {
+            $this->rowset[0]['name'] = '';
+        }
+
+        /** name */
+        if ($this->element->onchange) {
+            $this->rowset[0]['onchange'] = ' onchange="'.(string) $this->element->onchange.'"';
+        } else {
+            $this->rowset[0]['onchange'] = '';
+        }
+
+        /** readonly */
+        if (trim($this->readonly) == 'true' || trim($this->readonly) == 'readonly' || $this->readonly === true) {
+            $this->rowset[0]['readonly'] = 'readonly';
+        } else {
+            $this->rowset[0]['readonly'] = '';
+        }
+
+        /** required */
+        if (trim($this->required) == 'true' || trim($this->required) == 'required' || $this->required === true) {
+            $this->rowset[0]['required'] = 'required';
+        } else {
+            $this->rowset[0]['required'] = '';
+        }
+
+        /** size */
+        if (isset($this->size)) {
+            $this->rowset[0]['size'] = (int) $this->size;
+        } else {
+            $this->rowset[0]['size'] = 0;
+        }
+		if ($this->size > 10) {
+			$this->size = 10;
+		}
+
+        /** translateDescription */
+        if (trim($this->translateDescription) == 'true' || trim($this->translateDescription) == 'required' || $this->translateDescription === true) {
+            $this->rowset[0]['translate_description'] = true;
+        } else {
+            $this->rowset[0]['translate_description'] = false;
+        }
+
+        /** translateLabel */
+        if (trim($this->translateLabel) == 'true' || trim($this->translateLabel) == 'required' || $this->translateLabel === true) {
+            $this->rowset[0]['translate_label'] = true;
+        } else {
+            $this->rowset[0]['translate_label'] = false;
+        }
+
+        /** type */
+        if (isset($this->type)) {
+            $this->rowset[0]['type'] = $this->type;
+        } else {
+            $this->rowset[0]['type'] = '';
+        }
+
+        return;
+    }
+
+	/**
+	 * getInputPostFieldTypeProcessing
+     *
+     * Output Form Field to Layout
+	 *
+	 * @return  array
+	 * @since   11.1
+	 */
+	protected function getInputPostFieldTypeProcessing()
+    {
+
+
+    }
 	/**
 	 * Method to get the field title.
 	 *

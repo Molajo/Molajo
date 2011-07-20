@@ -33,105 +33,10 @@ class MolajoFormFieldPrefix extends MolajoFormField
 	 */
 	protected function getInput()
 	{
+        /** pre-processing: create $this->rowset and populate shared elements  */
+        parent::getInput();
 
-        $this->rowset = array();
-
-        if (isset($this->id)) {
-            $this->rowset[0]['id'] = $this->id;
-        } else {
-            $this->rowset[0]['id'] = '';
-        }
-        if (isset($this->name)) {
-            $this->rowset[0]['name'] = $this->name;
-        } else {
-            $this->rowset[0]['name'] = '';
-        }
-        if (isset($this->description)) {
-            $this->rowset[0]['description'] = $this->description;
-        } else {
-            $this->rowset[0]['description'] = '';
-        }
-
-        if (isset($this->fieldname)) {
-            $this->rowset[0]['fieldname'] = $this->fieldname;
-        } else {
-            $this->rowset[0]['fieldname'] = '';
-        }
-        if (isset($this->group)) {
-            $this->rowset[0]['group'] = $this->group;
-        } else {
-            $this->rowset[0]['group'] = '';
-        }
-        if (isset($this->input)) {
-            $this->rowset[0]['input'] = $this->input;
-        } else {
-            $this->rowset[0]['input'] = '';
-        }
-        if (isset($this->label)) {
-            $this->rowset[0]['label'] = $this->label;
-        } else {
-            $this->rowset[0]['label'] = '';
-        }
-        if (isset($this->multiple)) {
-            $this->rowset[0]['multiple'] = $this->multiple;
-        } else {
-            $this->rowset[0]['multiple'] = '';
-        }
-        if (isset($this->required)) {
-            $this->rowset[0]['required'] = $this->required;
-        } else {
-            $this->rowset[0]['required'] = '';
-        }
-        if (isset($this->title)) {
-            $this->rowset[0]['title'] = $this->title;
-        } else {
-            $this->rowset[0]['title'] = '';
-        }
-        if (isset($this->translateLabel)) {
-            $this->rowset[0]['translateLabel'] = $this->translateLabel;
-        } else {
-            $this->rowset[0]['translateLabel'] = '';
-        }
-        if (isset($this->translate_description)) {
-            $this->rowset[0]['translate_description'] = $this->translate_description;
-        } else {
-            $this->rowset[0]['translate_description'] = '';
-        }
-        if (isset($this->type)) {
-            $this->rowset[0]['type'] = $this->type;
-        } else {
-            $this->rowset[0]['type'] = '';
-        }
-
-        if ($this->element->class) {
-            $this->rowset[0]['class'] = (string) $this->element->class;
-        } else {
-            $this->rowset[0]['class'] = '';
-        }
-
-        if ($this->element->readonly == 'true' || $this->element->readonly === true) {
-            $this->rowset[0]['readonly'] = 'readonly="readonly"';
-        } else {
-            $this->rowset[0]['readonly'] = '';
-        }
-
-        $maxLength	= (int) $this->element->maxlength;
-
-        if ($this->element->enabled == 'false' || $this->element->enabled === false) {
-            $this->rowset[0]['disabled'] = 'disabled="disabled"';
-        } else {
-            $this->rowset[0]['disabled'] = '';
-        }
-
-        if ($this->element->onchange) {
-            $this->rowset[0]['onchange'] = ' onchange="'.(string) $this->element->onchange.'"';
-        } else {
-            $this->rowset[0]['onchange'] = '';
-        }
-
-    /**
-     * Prefix
-     */
+        /** processing for field type */
         $prefix = false;
 
 		$size		= $this->element->size ? abs((int) $this->element->size) : 5;
@@ -156,19 +61,15 @@ class MolajoFormFieldPrefix extends MolajoFormField
         }
 
         if ($prefix) {
-        } else {
-            $prefix = 'molajo';
-        }
-
-        $this->rowset[0]->prefix = htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8');
-        
-        if ($prefix) {
             $this->rowset[0]['prefix'] = htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8');
         } else {
-            $this->rowset[0]['prefix'] = 'molajo_';
+            $this->rowset[0]['prefix'] = strtolower(MOLAJO).'_';
         }
 
-        var_dump($this->rowset);
+        /** post-processing: outputs HTML into layout  **/
+        parent::getInput();
+
+        return;
 	}
 
     /**
