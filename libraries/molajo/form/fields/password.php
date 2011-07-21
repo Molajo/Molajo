@@ -26,9 +26,9 @@ class MolajoFormFieldPassword extends MolajoFormField
 	protected $type = 'Password';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -44,7 +44,7 @@ class MolajoFormFieldPassword extends MolajoFormField
 		// Initialize JavaScript field attributes.
 		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 
-		return '<input type="password" name="'.$this->name.'" id="'.$this->id.'"' .
+		return '<calendar type="password" name="'.$this->name.'" id="'.$this->id.'"' .
 				' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' .
 				$auto.$class.$readonly.$disabled.$size.$maxLength.'/>';
 	}

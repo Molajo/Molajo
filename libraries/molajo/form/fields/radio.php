@@ -26,9 +26,9 @@ class MolajoFormFieldRadio extends MolajoFormField
 	protected $type = 'Radio';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -56,7 +56,7 @@ class MolajoFormFieldRadio extends MolajoFormField
 			// Initialize some JavaScript option attributes.
 			$onclick	= !empty($option->onclick) ? ' onclick="'.$option->onclick.'"' : '';
 
-			$html[] = '<input type="radio" id="'.$this->id.$i.'" name="'.$this->name.'"' .
+			$html[] = '<calendar type="radio" id="'.$this->id.$i.'" name="'.$this->name.'"' .
 					' value="'.htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8').'"'
 					.$checked.$class.$onclick.$disabled.'/>';
 

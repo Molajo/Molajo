@@ -35,7 +35,7 @@ class MolajoFormRuleEmail extends MolajoFormRule
 	 * 								container for the field. For example if the field has name="foo"
 	 * 								and the group value is set to "bar" then the full field name
 	 * 								would end up being "bar[foo]".
-	 * @param   object  $input		An optional JRegistry object with the entire data set to validate
+	 * @param   object  $calendar		An optional JRegistry object with the entire data set to validate
 	 * 								against the entire form.
 	 * @param   object  $form		The form object for which the field is being tested.
 	 *
@@ -44,7 +44,7 @@ class MolajoFormRuleEmail extends MolajoFormRule
 	 * @since   11.1
 	 * @throws  JException on invalid rule.
 	 */
-	public function test(& $element, $value, $group = null, & $input = null, & $form = null)
+	public function test(& $element, $value, $group = null, & $calendar = null, & $form = null)
 	{
 		// If the field is empty and not required, the field is valid.
 		$required = ((string) $element['required'] == 'true' || (string) $element['required'] == 'required');
@@ -53,7 +53,7 @@ class MolajoFormRuleEmail extends MolajoFormRule
 		}
 
 		// Test the value against the regular expression.
-		if (!parent::test($element, $value, $group, $input, $form)) {
+		if (!parent::test($element, $value, $group, $calendar, $form)) {
 			return false;
 		}
 

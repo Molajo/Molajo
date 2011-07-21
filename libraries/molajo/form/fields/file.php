@@ -26,9 +26,9 @@ class MolajoFormFieldFile extends MolajoFormField
 	public $type = 'File';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -42,7 +42,7 @@ class MolajoFormFieldFile extends MolajoFormField
 		// Initialize JavaScript field attributes.
 		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 
-		return '<input type="file" name="'.$this->name.'" id="'.$this->id.'"' .
+		return '<calendar type="file" name="'.$this->name.'" id="'.$this->id.'"' .
 				' value=""' .
 				$accept.$disabled.$class.$size.$onchange.' />';
 	}

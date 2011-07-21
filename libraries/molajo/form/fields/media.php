@@ -34,9 +34,9 @@ class MolajoFormFieldMedia extends MolajoFormField
 	protected static $initialised = false;
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -84,7 +84,7 @@ class MolajoFormFieldMedia extends MolajoFormField
 
 		// The text field.
 		$html[] = '<div class="fltlft">';
-		$html[] = '	<input type="text" name="'.$this->name.'" id="'.$this->id.'"' .
+		$html[] = '	<calendar type="text" name="'.$this->name.'" id="'.$this->id.'"' .
 					' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' .
 					' readonly="readonly"'.$attr.' />';
 		$html[] = '</div>';

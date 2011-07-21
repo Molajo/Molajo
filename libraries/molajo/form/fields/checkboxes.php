@@ -34,9 +34,9 @@ class MolajoFormFieldCheckboxes extends MolajoFormField
 	protected $forceMultiple = true;
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -66,7 +66,7 @@ class MolajoFormFieldCheckboxes extends MolajoFormField
 			$onclick	= !empty($option->onclick) ? ' onclick="'.$option->onclick.'"' : '';
 
 			$html[] = '<li>';
-			$html[] = '<input type="checkbox" id="'.$this->id.$i.'" name="'.$this->name.'"' .
+			$html[] = '<calendar type="checkbox" id="'.$this->id.$i.'" name="'.$this->name.'"' .
 					' value="'.htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8').'"'
 					.$checked.$class.$onclick.$disabled.'/>';
 

@@ -34,9 +34,9 @@ class MolajoFormFieldEditor extends MolajoFormField
 	protected $editor;
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()

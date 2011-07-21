@@ -82,12 +82,12 @@ abstract class MolajoFormField
 	protected $id;
 
 	/**
-	 * The input for the form field.
+	 * The calendar for the form field.
 	 *
 	 * @var    string
 	 * @since  11.1
 	 */
-	protected $input;
+	protected $calendar;
 
 	/**
 	 * The label for the form field.
@@ -234,13 +234,13 @@ abstract class MolajoFormField
 				return $this->$name;
 				break;
 
-			case 'input':
-				// If the input hasn't yet been generated, generate it.
-				if (empty($this->input)) {
-					$this->input = $this->getInput();
+			case 'calendar':
+				// If the calendar hasn't yet been generated, generate it.
+				if (empty($this->calendar)) {
+					$this->calendar = $this->getInput();
 				}
 
-				return $this->input;
+				return $this->calendar;
 				break;
 
 			case 'label':
@@ -299,8 +299,8 @@ abstract class MolajoFormField
 		}
 
 
-		// Reset the input and label values.
-		$this->input = null;
+		// Reset the calendar and label values.
+		$this->calendar = null;
 		$this->label = null;
 
 		// Set the XML element object.
@@ -361,12 +361,12 @@ abstract class MolajoFormField
 	}
 
 	/**
-	 * Method to get the id used for the field input tag.
+	 * Method to get the id used for the field calendar tag.
 	 *
 	 * @param   string  $fieldId    The field element id.
 	 * @param   string  $fieldName  The field element name.
 	 *
-	 * @return  string  The id to be used for the field input tag.
+	 * @return  string  The id to be used for the field calendar tag.
 	 *
 	 * @since   11.1
 	 */
@@ -408,9 +408,9 @@ abstract class MolajoFormField
 	/**
      * getInput
      *
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -656,11 +656,11 @@ abstract class MolajoFormField
 	}
 
 	/**
-	 * Method to get the name used for the field input tag.
+	 * Method to get the name used for the field calendar tag.
 	 *
 	 * @param   string  $fieldName  The field element name.
 	 *
-	 * @return  string  The name to be used for the field input tag.
+	 * @return  string  The name to be used for the field calendar tag.
 	 *
 	 * @since   11.1
 	 */

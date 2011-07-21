@@ -26,9 +26,9 @@ class MolajoFormFieldColorpicker extends MolajoFormField
 	public $type = 'colorpicker';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return	string	The field input markup.
+	 * @return	string	The field calendar markup.
 	 * @since	1.6
 	 */
 	protected function getInput()
@@ -47,7 +47,7 @@ class MolajoFormFieldColorpicker extends MolajoFormField
             $document =& JFactory::getDocument();
             $document->addScript('../media/molajo/js/jscolor.js' );
 
-            return '<input type="text" name="'.$this->name.'" id="'.$this->id.'"' .
+            return '<calendar type="text" name="'.$this->name.'" id="'.$this->id.'"' .
                             ' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' . 
                             $class.$size.$disabled.$readonly.$onchange.$maxLength.'/>';
 

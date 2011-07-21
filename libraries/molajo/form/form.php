@@ -106,7 +106,7 @@ class MolajoForm
 			return false;
 		}
 
-		// Convert the input to an array.
+		// Convert the calendar to an array.
 		if (is_object($data)) {
 			if ($data instanceof JRegistry) {
 				// Handle a JRegistry.
@@ -122,7 +122,7 @@ class MolajoForm
 			}
 		}
 
-		// Process the input data.
+		// Process the calendar data.
 		foreach ($data as $k => $v) {
 
 			if ($this->findField($k)) {
@@ -150,10 +150,10 @@ class MolajoForm
 	 */
 	protected function bindLevel($group, $data)
 	{
-		// Ensure the input data is an array.
+		// Ensure the calendar data is an array.
 		settype($data, 'array');
 
-		// Process the input data.
+		// Process the calendar data.
 		foreach ($data as $k => $v) {
 
 			if ($this->findField($k, $group)) {
@@ -185,7 +185,7 @@ class MolajoForm
 		}
 
 		// Initialise variables.
-		$input	= new JRegistry($data);
+		$calendar	= new JRegistry($data);
 		$output	= new JRegistry;
 
 		// Get the fields for which to filter the data.
@@ -206,17 +206,17 @@ class MolajoForm
 			$groups	= array_map('strval', $attrs ? $attrs : array());
 			$group	= implode('.', $groups);
 
-			// Get the field value from the data input.
+			// Get the field value from the data calendar.
 			if ($group) {
 				// Filter the value if it exists.
-				if ($input->exists($group.'.'.$name)) {
-					$output->set($group.'.'.$name, $this->filterField($field, $input->get($group.'.'.$name, (string) $field['default'])));
+				if ($calendar->exists($group.'.'.$name)) {
+					$output->set($group.'.'.$name, $this->filterField($field, $calendar->get($group.'.'.$name, (string) $field['default'])));
 				}
 			}
 			else {
 				// Filter the value if it exists.
-				if ($input->exists($name)) {
-					$output->set($name, $this->filterField($field, $input->get($name, (string) $field['default'])));
+				if ($calendar->exists($name)) {
+					$output->set($name, $this->filterField($field, $calendar->get($name, (string) $field['default'])));
 				}
 			}
 		}
@@ -443,9 +443,9 @@ class MolajoForm
 	/**
 	 * Method to get the form control. This string serves as a container for all form fields. For
 	 * example, if there is a field named 'foo' and a field named 'bar' and the form control is
-	 * empty the fields will be rendered like: <input name="foo" /> and <input name="bar" />.  If
+	 * empty the fields will be rendered like: <calendar name="foo" /> and <calendar name="bar" />.  If
 	 * the form control is set to 'joomla' however, the fields would be rendered like:
-	 * <input name="joomla[foo]" /> and <input name="joomla[bar]" />.
+	 * <calendar name="joomla[foo]" /> and <calendar name="joomla[bar]" />.
 	 *
 	 * @return  string  The form control string.
 	 *
@@ -493,7 +493,7 @@ class MolajoForm
 	}
 
 	/**
-	 * Method to get a form field markup for the field input.
+	 * Method to get a form field markup for the field calendar.
 	 *
 	 * @param   string  $name   The name of the form field.
 	 * @param   string  $group  The optional dot-separated form group path on which to find the field.
@@ -507,14 +507,14 @@ class MolajoForm
 	{
 		// Attempt to get the form field.
 		if ($field = $this->getField($name, $group, $value)) {
-			return $field->input;
+			return $field->calendar;
 		}
 
 		return '';
 	}
 
 	/**
-	 * Method to get a form field markup for the field input.
+	 * Method to get a form field markup for the field calendar.
 	 *
 	 * @param   string  $name   The name of the form field.
 	 * @param   string  $group  The optional dot-separated form group path on which to find the field.
@@ -997,8 +997,8 @@ class MolajoForm
 		// Initialise variables.
 		$return	= true;
 
-		// Create an input registry object from the data to validate.
-		$input = new JRegistry($data);
+		// Create an calendar registry object from the data to validate.
+		$calendar = new JRegistry($data);
 
 		// Get the fields for which to validate the data.
 		$fields = $this->findFieldsByGroup($group);
@@ -1019,16 +1019,16 @@ class MolajoForm
 			$groups	= array_map('strval', $attrs ? $attrs : array());
 			$group	= implode('.', $groups);
 
-			// Get the value from the input data.
+			// Get the value from the calendar data.
 			if ($group) {
-				$value = $input->get($group.'.'.$name);
+				$value = $calendar->get($group.'.'.$name);
 			}
 			else {
-				$value = $input->get($name);
+				$value = $calendar->get($name);
 			}
 
 			// Validate the field.
-			$valid = $this->validateField($field, $group, $value, $input);
+			$valid = $this->validateField($field, $group, $value, $calendar);
 
 			// Check for an error.
 			if (JError::isError($valid)) {
@@ -1051,7 +1051,7 @@ class MolajoForm
 	}
 
 	/**
-	 * Method to apply an input filter to a value based on field data.
+	 * Method to apply an calendar filter to a value based on field data.
 	 *
 	 * @param   string  $element  The XML element object representation of the form field.
 	 * @param   mixed   $value    The value to filter for the field.
@@ -1069,7 +1069,7 @@ class MolajoForm
 		// Get the field filter type.
 		$filter = (string) $element['filter'];
 
-		// Process the input value based on the filter.
+		// Process the calendar value based on the filter.
 		$return = null;
 
 		switch (strtoupper($filter))
@@ -1099,9 +1099,9 @@ class MolajoForm
 				$return = $value;
 				break;
 
-			// Filter the input as an array of integers.
+			// Filter the calendar as an array of integers.
 			case 'INT_ARRAY':
-				// Make sure the input is an array.
+				// Make sure the calendar is an array.
 				if (is_object($value)) {
 					$value = get_object_vars($value);
 				}
@@ -1633,14 +1633,14 @@ class MolajoForm
 	 * @param   string  $element  The XML element object representation of the form field.
 	 * @param   string  $group    The optional dot-separated form group path on which to find the field.
 	 * @param   mixed   $value    The optional value to use as the default for the field.
-	 * @param   object  $input    An optional JRegistry object with the entire data set to validate
+	 * @param   object  $calendar    An optional JRegistry object with the entire data set to validate
 	 *                            against the entire form.
 	 *
 	 * @return  mixed  Boolean true if field value is valid, JException on failure.
 	 *
 	 * @since   11.1
 	 */
-	protected function validateField($element, $group = null, $value = null, $input = null)
+	protected function validateField($element, $group = null, $value = null, $calendar = null)
 	{
 		// Make sure there is a valid JXMLElement.
 		if (!$element instanceof JXMLElement) {
@@ -1685,7 +1685,7 @@ class MolajoForm
 			}
 
 			// Run the field validation rule test.
-			$valid = $rule->test($element, $value, $group, $input, $this);
+			$valid = $rule->test($element, $value, $group, $calendar, $this);
 
 			// Check for an error in the validation test.
 			if (JError::isError($valid)) {
@@ -1873,7 +1873,7 @@ class MolajoForm
 	 */
 	protected static function mergeNodes(SimpleXMLElement $source, SimpleXMLElement $new)
 	{
-		// The assumption is that the inputs are at the same relative level.
+		// The assumption is that the calendars are at the same relative level.
 		// So we just have to scan the children and deal with them.
 
 		// Update the attributes of the child node.

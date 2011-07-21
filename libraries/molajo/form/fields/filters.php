@@ -25,11 +25,11 @@ class MolajoFormFieldFilters extends MolajoFormField
 	public $type = 'Filters';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
 	 * TODO: Add access check.
 	 *
-	 * @return	string	The field input markup.
+	 * @return	string	The field calendar markup.
 	 * @since	1.6
 	 */
 	protected function getInput()
@@ -88,10 +88,10 @@ return 'Filters are broken - ACL results set is fine - output is failing';
 			$html[] = '				</select>';
 			$html[] = '		</td>';
 			$html[] = '		<td >';
-			$html[] = '				<input name="'.$this->name.'['.$group->value.'][filter_tags]" id="'.$this->id.$group->value.'_filter_tags" title="'.JText::_('MOLAJO_FILTER_TAGS_LABEL').'" value="'.$group_filter['filter_tags'].'"/>';
+			$html[] = '				<calendar name="'.$this->name.'['.$group->value.'][filter_tags]" id="'.$this->id.$group->value.'_filter_tags" title="'.JText::_('MOLAJO_FILTER_TAGS_LABEL').'" value="'.$group_filter['filter_tags'].'"/>';
 			$html[] = '		</td>';
 			$html[] = '		<td >';
-			$html[] = '				<input name="'.$this->name.'['.$group->value.'][filter_attributes]" id="'.$this->id.$group->value.'_filter_attributes" title="'.JText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL').'" value="'.$group_filter['filter_attributes'].'"/>';
+			$html[] = '				<calendar name="'.$this->name.'['.$group->value.'][filter_attributes]" id="'.$this->id.$group->value.'_filter_attributes" title="'.JText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL').'" value="'.$group_filter['filter_attributes'].'"/>';
 			$html[] = '		</td>';
 			$html[] = '	</tr>';
 		}

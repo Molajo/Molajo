@@ -26,9 +26,9 @@ class MolajoFormFieldCombo extends MolajoFormFieldList
 	public $type = 'Combo';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string   The field input markup.
+	 * @return  string   The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -52,8 +52,8 @@ class MolajoFormFieldCombo extends MolajoFormFieldList
 		// Load the combobox behavior.
 		JHtml::_('behavior.combobox');
 
-		// Build the input for the combo box.
-		$html[] = '<input type="text" name="'.$this->name.'" id="'.$this->id.'"' .
+		// Build the calendar for the combo box.
+		$html[] = '<calendar type="text" name="'.$this->name.'" id="'.$this->id.'"' .
 				' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"'.$attr.'/>';
 
 		// Build the list for the combo box.

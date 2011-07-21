@@ -26,9 +26,9 @@ class MolajoFormFieldList extends MolajoFormField
 	protected $type = 'List';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -54,10 +54,10 @@ class MolajoFormFieldList extends MolajoFormField
 		// Get the field options.
 		$options = (array) $this->getOptions();
 
-		// Create a read-only list (no name) with a hidden input to store the value.
+		// Create a read-only list (no name) with a hidden calendar to store the value.
 		if ((string) $this->element['readonly'] == 'true') {
 			$html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
-			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
+			$html[] = '<calendar type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
 		}
 		// Create a regular list.
 		else {

@@ -28,9 +28,9 @@ class MolajoFormFieldModal_item extends MolajoFormField
 	protected $type = 'Modal_Item';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return	string	The field input markup.
+	 * @return	string	The field calendar markup.
 	 * @since	1.6
 	 */
 	protected function getInput()
@@ -69,7 +69,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
 
 		// The current user display field.
 		$html[] = '<div class="fltlft">';
-		$html[] = '  <input type="text" id="'.$this->id.'_name" value="'.$title.'" disabled="disabled" size="35" />';
+		$html[] = '  <calendar type="text" id="'.$this->id.'_name" value="'.$title.'" disabled="disabled" size="35" />';
 		$html[] = '</div>';
 
 		// The user select button.
@@ -92,7 +92,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
 			$class = ' class="required modal-value"';
 		}
 
-		$html[] = '<input type="hidden" id="'.$this->id.'_id"'.$class.' name="'.$this->name.'" value="'.$value.'" />';
+		$html[] = '<calendar type="hidden" id="'.$this->id.'_id"'.$class.' name="'.$this->name.'" value="'.$value.'" />';
 
 		return implode("\n", $html);
 	}

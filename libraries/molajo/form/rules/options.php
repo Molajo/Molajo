@@ -17,7 +17,7 @@ defined('MOLAJO') or die();
  */
 class MolajoFormRuleOptions extends MolajoFormRule
 {
-	public function test(& $element, $value, $group = null, & $input = null, & $form = null)
+	public function test(& $element, $value, $group = null, & $calendar = null, & $form = null)
 	{
 		// Check each value and return true if we get a match
 		foreach ($element->option as $option) {

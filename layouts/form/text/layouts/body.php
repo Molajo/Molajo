@@ -6,14 +6,16 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-
+<?php if ($this->row->label == "") {
+} else { ?>
 <label
     class="hasTip"
     <?php if ($this->row->id == "") { } else { echo ' for="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
     <?php if ($this->row->description == "") { } else { echo ' name="'.htmlspecialchars(JText::_($this->row->description)).'"'; } ?>
-    <?php if ($this->row->label == "") { } else { echo JText::_(($this->row->label), ENT_COMPAT, 'UTF-8'); } ?>
+    <?php echo JText::_(($this->row->label), ENT_COMPAT, 'UTF-8'); ?>
     >
-    <input
+<?php } ?>
+    <calendar
        type="<?php echo $this->row->type; ?>"
        <?php if ($this->row->id == "") { } else { echo ' id="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
        <?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
@@ -28,4 +30,7 @@ defined('MOLAJO') or die; ?>
        <?php if ($this->row->readonly === true) { echo ' readonly="readonly"'; } ?>
        <?php if ((int) $this->row->size == 0) { } else { echo ' size="'.(int) $this->row->size.'"'; } ?>
     />
+<?php if ($this->row->label == "") {
+} else { ?>
 </label>
+<?php }

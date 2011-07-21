@@ -26,9 +26,9 @@ class MolajoFormFieldEMail extends MolajoFormField
 	protected $type = 'Email';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -43,7 +43,7 @@ class MolajoFormFieldEMail extends MolajoFormField
 		// Initialize JavaScript field attributes.
 		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 
-		return '<input type="text" name="'.$this->name.'" class="validate-email'.$class.'" id="'.$this->id.'"' .
+		return '<calendar type="text" name="'.$this->name.'" class="validate-email'.$class.'" id="'.$this->id.'"' .
 				' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' .
 				$size.$disabled.$readonly.$onchange.$maxLength.'/>';
 	}

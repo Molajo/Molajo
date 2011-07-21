@@ -26,9 +26,9 @@ class MolajoFormFieldPrefix extends MolajoFormField
 	protected $type = 'Prefix';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return	string	The field input markup.
+	 * @return	string	The field calendar markup.
 	 * @since	1.6
 	 */
 	protected function getInput()

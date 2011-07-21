@@ -26,9 +26,9 @@ class MolajoFormFieldUser extends MolajoFormField
 	public $type = 'User';
 
 	/**
-	 * Method to get the field input markup.
+	 * Method to get the field calendar markup.
 	 *
-	 * @return  string  The field input markup.
+	 * @return  string  The field calendar markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -75,7 +75,7 @@ class MolajoFormFieldUser extends MolajoFormField
         return;
 		// Create a dummy text field with the user name.
 		$html[] = '<div class="fltlft">';
-		$html[] = '	<input type="text" id="'.$this->id.'_name"' .
+		$html[] = '	<calendar type="text" id="'.$this->id.'_name"' .
 					' value="'.htmlspecialchars($table->username, ENT_COMPAT, 'UTF-8').'"' .
 					' disabled="disabled"'.$attr.' />';
 		$html[] = '</div>';
@@ -93,7 +93,7 @@ class MolajoFormFieldUser extends MolajoFormField
 		$html[] = '</div>';
 
 		// Create the real field, hidden, that stored the user id.
-		$html[] = '<input type="hidden" id="'.$this->id.'_id" name="'.$this->name.'" value="'.(int) $this->value.'" />';
+		$html[] = '<calendar type="hidden" id="'.$this->id.'_id" name="'.$this->name.'" value="'.(int) $this->value.'" />';
 
 		return implode("\n", $html);
 	}

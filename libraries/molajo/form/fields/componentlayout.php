@@ -26,9 +26,9 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 	protected $type = 'ComponentLayout';
 
 	/**
-	 * Method to get the field input.
+	 * Method to get the field calendar.
 	 *
-	 * @return  string   The field input.
+	 * @return  string   The field calendar.
 	 * @since   11.1
 	 */
 	protected function getInput()
