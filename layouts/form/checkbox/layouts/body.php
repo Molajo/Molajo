@@ -16,34 +16,22 @@ defined('MOLAJO') or die; ?>
     >
 <?php } ?>
     <input
-       type="<?php echo $this->row->type; ?>"
+       type="checkbox"
        <?php if ($this->row->id == "") { } else { echo ' id="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
        <?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
-       value="<?php echo htmlspecialchars($this->row->value, ENT_COMPAT, 'UTF-8'); ?>"
+       <?php if ($this->row->checked === true) {
+                echo ' name="'.$this->row->name.'"';
+                echo ' value="'.htmlspecialchars($this->row->value, ENT_COMPAT, 'UTF-8').'"';
+        } ?>
        <?php if ($this->row->required === true) { } else { $this->row->class .= ' required'; } ?>
        <?php if ($this->row->class == "") { } else { echo ' class="'.htmlspecialchars($this->row->class, ENT_COMPAT, 'UTF-8').'"'; } ?>
        <?php if ($this->row->disabled === false) { } else { echo ' disabled="disabled"'; } ?>
-       <?php if ((int) $this->row->maxlength == 0) { } else { echo ' maxlength="'.(int) $this->row->maxlength.'"'; } ?>
        <?php if ($this->row->multiple === false) { } else { echo ' disabled="multiple"'; } ?>
        <?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
-       <?php if ($this->row->onchange == "") { } else { echo ' onchange="'.(string) $this->row->onchange.'"'; } ?>
+       <?php if ($this->row->onclick == "") { } else { echo ' onclick="'.(string) $this->row->onclick.'"'; } ?>
        <?php if ($this->row->readonly === true) { echo ' readonly="readonly"'; } ?>
-       <?php if ((int) $this->row->size == 0) { } else { echo ' size="'.(int) $this->row->size.'"'; } ?>
     />
 <?php if ($this->row->label == "") {
 } else { ?>
 </label>
 <?php }
-
-
-
-		$class		= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
-		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-		$checked	= ((string) $this->element['value'] == $this->value) ? ' checked="checked"' : '';
-
-		// Initialize JavaScript field attributes.
-		$onclick	= $this->element['onclick'] ? ' onclick="'.(string) $this->element['onclick'].'"' : '';
-
-		return '<input type="checkbox" name="'.$this->name.'" id="'.$this->id.'"' .
-				' value="'.htmlspecialchars((string) $this->element['value'], ENT_COMPAT, 'UTF-8').'"' .
-				$class.$checked.$disabled.$onclick.'/>';

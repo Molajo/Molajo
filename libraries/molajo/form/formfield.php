@@ -532,11 +532,18 @@ abstract class MolajoFormField
             $this->rowset[0]['name'] = '';
         }
 
-        /** name */
+        /** onchange */
         if ($this->element->onchange) {
             $this->rowset[0]['onchange'] = ' onchange="'.(string) $this->element->onchange.'"';
         } else {
             $this->rowset[0]['onchange'] = '';
+        }
+
+        /** onclick */
+        if ($this->element->onclick) {
+            $this->rowset[0]['onclick'] = ' onclick="'.(string) $this->element->onclick.'"';
+        } else {
+            $this->rowset[0]['onclick'] = '';
         }
 
         /** readonly */
