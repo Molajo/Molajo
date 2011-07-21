@@ -435,6 +435,16 @@ abstract class MolajoFormField
     {
         $this->rowset = array();
 
+        /** column */
+        if (isset($this->row)) {
+            $this->rowset[0]['column'] = (int) $this->column;
+        } else {
+            $this->rowset[0]['column'] = 0;
+        }
+		if ($this->column > 1000) {
+			$this->column = 10;
+		}
+
         /** class */
         if ($this->element->class) {
             $this->rowset[0]['class'] = (string) $this->element->class;
@@ -542,6 +552,16 @@ abstract class MolajoFormField
         } else {
             $this->rowset[0]['required'] = '';
         }
+
+        /** row */
+        if (isset($this->row)) {
+            $this->rowset[0]['row'] = (int) $this->row;
+        } else {
+            $this->rowset[0]['row'] = 0;
+        }
+		if ($this->row > 1000) {
+			$this->row = 10;
+		}
 
         /** size */
         if (isset($this->size)) {

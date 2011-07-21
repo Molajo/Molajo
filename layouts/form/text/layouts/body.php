@@ -15,7 +15,7 @@ defined('MOLAJO') or die; ?>
     <?php echo JText::_(($this->row->label), ENT_COMPAT, 'UTF-8'); ?>
     >
 <?php } ?>
-    <calendar
+    <input
        type="<?php echo $this->row->type; ?>"
        <?php if ($this->row->id == "") { } else { echo ' id="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
        <?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>

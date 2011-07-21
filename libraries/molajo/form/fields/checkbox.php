@@ -26,9 +26,9 @@ class MolajoFormFieldCheckbox extends MolajoFormField
 	public $type = 'Checkbox';
 
 	/**
-	 * Method to get the field calendar markup.
+	 * Method to get the field input markup.
 	 *
-	 * @return  string   The field calendar markup.
+	 * @return  string   The field input markup.
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -41,7 +41,7 @@ class MolajoFormFieldCheckbox extends MolajoFormField
 		// Initialize JavaScript field attributes.
 		$onclick	= $this->element['onclick'] ? ' onclick="'.(string) $this->element['onclick'].'"' : '';
 
-		return '<calendar type="checkbox" name="'.$this->name.'" id="'.$this->id.'"' .
+		return '<input type="checkbox" name="'.$this->name.'" id="'.$this->id.'"' .
 				' value="'.htmlspecialchars((string) $this->element['value'], ENT_COMPAT, 'UTF-8').'"' .
 				$class.$checked.$disabled.$onclick.'/>';
 	}

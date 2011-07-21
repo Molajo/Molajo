@@ -15,7 +15,7 @@ defined('MOLAJO') or die; ?>
     <?php echo JText::_(($this->row->label), ENT_COMPAT, 'UTF-8'); ?>
     >
 <?php } ?>
-    <calendar
+    <input
        type="<?php echo $this->row->type; ?>"
        <?php if ($this->row->id == "") { } else { echo ' id="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
        <?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
@@ -34,3 +34,16 @@ defined('MOLAJO') or die; ?>
 } else { ?>
 </label>
 <?php }
+
+
+
+		$class		= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
+		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+		$checked	= ((string) $this->element['value'] == $this->value) ? ' checked="checked"' : '';
+
+		// Initialize JavaScript field attributes.
+		$onclick	= $this->element['onclick'] ? ' onclick="'.(string) $this->element['onclick'].'"' : '';
+
+		return '<input type="checkbox" name="'.$this->name.'" id="'.$this->id.'"' .
+				' value="'.htmlspecialchars((string) $this->element['value'], ENT_COMPAT, 'UTF-8').'"' .
+				$class.$checked.$disabled.$onclick.'/>';

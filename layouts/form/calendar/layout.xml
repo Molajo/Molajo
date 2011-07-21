@@ -19,7 +19,7 @@
 		<file>layout.xml</file>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layouts_form_calendar.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_form_calendar.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_calendar.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_calendar.sys.ini</language>
 	</languages>
 </extension>
