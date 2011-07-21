@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="layout" method="upgrade">
+    <name>LAYOUT_FORM_COLORPICKER_NAME</name>
+    <author>Molajo Contributors</author>
+    <creationDate>July 2011</creationDate>
+    <copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>LAYOUT_FORM_COLORPICKER_DESCRIPTION</description>
+	<files>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+		<folder>parameters</folder>
+		<file>layout.xml</file>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.layouts_colorpicker.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_colorpicker.sys.ini</language>
+	</languages>
+</extension>
