@@ -35,10 +35,6 @@ Thumbs.db
 .idea
 .svn
 
-# Empty folders #
-#################
-*.bs
-
 # File List #
 #############
 /configuration.php
