@@ -22,6 +22,8 @@ abstract class modSubmenuHelper
 	 */
 	public static function getItems()
 	{
+$submenu = new MolajoSubmenuHelper ();
+$submenu->add();
 		// Initialise variables.
 		$menu = JToolBar::getInstance('submenu');
 

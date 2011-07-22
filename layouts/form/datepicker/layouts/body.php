@@ -7,4 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 
-http://www.digitalmagicpro.com/jPicker/
+http://jqueryui.com/demos/datepicker/
+http://marxsoftware.blogspot.com/2011/01/html5-date-picker.html

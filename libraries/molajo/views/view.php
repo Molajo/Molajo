@@ -18,55 +18,44 @@ defined('MOLAJO') or die();
 class MolajoView extends JView
 {
     /**
+     * @var $app object
+     */
+        protected $app;
+    
+    /**
      * @var $system object
      */
-    protected $system;
+        protected $system;
 
     /**
      * @var $document object
      */
-    protected $document;
+        protected $document;
 
     /**
      * @var $user object
      */
-    protected $user;
-
-    /**
-     * @var $layoutFolder string
-     */
-    protected $layoutFolder;
-
-    /** layout working fields */
-    protected $tempArray;
-    protected $tempSection;
-    protected $tempSelected;
-    protected $tempColumnCount;
-    protected $tempColumnName;
-
-    /** ?? */
-    /** toolbar - layout? */
-    protected $userToolbarButtonPermissions;
+        protected $user;
 
     /**
      * @var $state object
      */
-    protected $state;
+        protected $state;
 
     /**
      * @var $params object
      */
-    protected $params;
+        protected $params;
 
     /**
      * @var $rowset object
      */
-    protected $rowset;
+        protected $rowset;
 
     /**
      * @var $row array
      */
-    protected $row;
+        protected $row;
 
     /**
      * display
@@ -74,120 +63,26 @@ class MolajoView extends JView
      * View for Display View that uses no forms
      *
      * @param null $tpl
+     * 
      * @return bool
      */
     public function display($tpl = null)
     {
-        /** @var $system */
+        /** @var $this->app */
+        $this->app = JFactory::getApplication();
+        
+        /** @var $this->system */
         $this->system = JFactory::getConfig();
 
-        /** @var $document */
+        /** @var $this->document */
         $this->document = JFactory::getDocument();
 
-        /** @var $user */
+        /** @var $this->user */
         $this->user = JFactory::getUser();
-    }
 
-    /**
-     * getColumns
-     *
-     * Displays system variable names and values
-     *
-     * $this->params
-     *
-     * $this->getColumns ('system');
-     *
-     * @param  $type
-     * @return void
-     */
-    protected function getColumns ($type, $layout='system')
-    {
-        /** @var $this->rowset */
-        $this->rowset = array();
-
-        /** @var $registry */
-        $registry = new JRegistry();
-
-        /** @var $tempIndex */
-        $this->tempIndex =0;
-
-        if ($type == 'user') {
-            foreach ($this->$type as $column=>$value) {
-                if ($column == 'params') {
-                    $registry->loadJSON($value);
-                    $options = $registry->toArray();
-                    $this->getColumnsJSONArray ($type, $options);
-                } else {
-                    $this->getColumnsFormatting ($type, $column, $value);
-                }
-            }
-            
-        } else if ($type == 'system') {
-                $registry->loadJSON($this->$type);
-                $options = $registry->toArray();
-                $this->getColumnsJSONArray ($type, $options);
-            
-        } else {
-            return false;
-        }
-
-        /**
-         *  Display Results
-         */
-        $this->layoutFolder = $this->findPath($layout);
-        echo $this->renderMolajoLayout ('system');
-        
-        return;
-
-    }
-
-    /**
-     * getColumnsJSONArray
-     * 
-     * Process Array from converted JSON Object
-     * 
-     * @param  $type
-     * @param  $options
-     * @return void
-     */
-    private function getColumnsJSONArray ($type, $options)
-    {
-        foreach ($options as $column=>$value) {
-            $this->getColumnsFormatting ($type, $column, $value);
-        }
-    }
-
-    /**
-     * getColumnsFormatting
-     *
-     * Process Columns from Object
-     *
-     * @param  $type
-     * @param  $column
-     * @param  $value
-     * @return void
-     */
-    private function getColumnsFormatting ($type, $column, $value)
-    {
-        $this->rowset[$this->tempIndex]['column'] = $column;
-
-        if (is_array($value)) {
-            $this->rowset[$this->tempIndex]['syntax'] = '$list = $this->'.$type."->get('".$column."');<br />";
-            $this->rowset[$this->tempIndex]['syntax'] .= 'foreach ($list as $item=>$itemValue) { <br />';
-            $this->rowset[$this->tempIndex]['syntax'] .= '&nbsp;&nbsp;&nbsp;&nbsp;echo $item.'."': '".'.$itemValue;';
-            $this->rowset[$this->tempIndex]['syntax'] .= '<br />'.'}';
-            $temp = '';
-            $list = $this->$type->get($column);
-            foreach ($list as $item=>$itemValue) {
-                $temp .= $item.': '.$itemValue.'<br />';
-            }
-            $this->rowset[$this->tempIndex]['value'] = $temp;
-        } else {
-            $this->rowset[$this->tempIndex]['syntax'] = 'echo $this->'.$type."->get('".$column."');  ";
-            $this->rowset[$this->tempIndex]['value'] = $value;
-        }
-
-        $this->tempIndex++;
+        /** Set Page Meta */
+//		$pageModel = JModel::getInstance('Page', 'MolajoModel', array('ignore_request' => true));
+//		$pageModel->setState('params', $this->app->getParams());
     }
 
     /**
@@ -198,8 +93,6 @@ class MolajoView extends JView
      *  1. CurrentTemplate/html/$layout-folder/
      *  2. components/com_component/views/$view/tmpl/$layout-folder/
      *  3. MOLAJO_LAYOUTS/$layout-folder/
-     * 
-     *  4. If none of the above, use normal Joomla tmpl/layout.php
      *
      * @param  $tpl
      * @return bool|string
@@ -249,29 +142,33 @@ class MolajoView extends JView
     *
     * Loops through rowset, one row at a time, including top, header, body, footer, and bottom files
     *
-    * @param $this->layoutFolder
+    * @param $layout
+    * @param $layoutFolder
     * @return string
     *
     */
-    protected function renderMolajoLayout ($layout='')
+    protected function renderMolajoLayout ($layoutFolder, $layout)
     {
         /** @var $rowCount */
         $rowCount = 1;
 
+        /** Media */
+        $this->renderMolajoLayoutHeadMedia ($layoutFolder);
+
+        /** Language */
+        $this->renderMolajoLayoutLanguage ($layoutFolder);
+
         /** start collecting output */
         ob_start();
 
-    /**
-    *  I. Rowset processed by Layout
-    *
-    *  If the body.php file does not existing in the layoutFolder
-    *      include the custom.php file which handles $this->rowset processing
-    *
-    */
-        if (!file_exists($this->layoutFolder.'/layouts/body.php')) {
-            if (file_exists($this->layoutFolder.'/layouts/custom.php')) {
-                include $this->layoutFolder.'/layouts/custom.php';
-            }
+        /**
+        *  I. Rowset processed by Layout
+        *
+        *  If the custom.php file exists in layoutFolder, layout handles $this->rowset processing
+        *
+        */
+        if (file_exists($layoutFolder.'/layouts/custom.php')) {
+            include $layoutFolder.'/layouts/custom.php';
 
         } else {
 
@@ -281,8 +178,10 @@ class MolajoView extends JView
         * The following layoutFolder/layouts/ files are included, if existing
         *
         * 1. Before any rows and if there is a top.php file:
-        *       beforeDisplayContent output is rendered;
-        *       the top.php file is included.
+        *
+        *       - beforeDisplayContent output is rendered;
+        *
+        *       - the top.php file is included.
         *
         * 2. For each row:
         *
@@ -303,28 +202,19 @@ class MolajoView extends JView
                 /** layout: top */
                 if ($rowCount == 1 && (!$layout == 'system')) {
 
-                    /**
-                     * load Language, Document Head, Toolbar/Submenu,
-                     *  and JS/CSS (Site, Component, and Layout)
-                     *  In most cases, only included for a component display
-                     */
-                    if (file_exists(MOLAJO_LAYOUTS.'/include/head.php')) {
-                        include MOLAJO_LAYOUTS.'/include/head.php';
-                    }
-
                     /** event: Before Content Display */
                     if (isset($this->row->event->beforeDisplayContent)) {
                         echo $this->row->event->beforeDisplayContent;
                     }
 
-                    if (file_exists($this->layoutFolder.'/layouts/top.php')) {
-                        include $this->layoutFolder.'/layouts/top.php';
+                    if (file_exists($layoutFolder.'/layouts/top.php')) {
+                        include $layoutFolder.'/layouts/top.php';
                     }
                 }
 
                 /** item: header */
-                if (file_exists($this->layoutFolder.'/layouts/header.php')) {
-                    include $this->layoutFolder.'/layouts/header.php';
+                if (file_exists($layoutFolder.'/layouts/header.php')) {
+                    include $layoutFolder.'/layouts/header.php';
 
                     /** event: After Display of Title */
                     if (isset($this->row->event->afterDisplayTitle)) {
@@ -333,21 +223,21 @@ class MolajoView extends JView
                 }
 
                 /** item: body */
-                if (file_exists($this->layoutFolder.'/layouts/body.php')) {
-                    include $this->layoutFolder.'/layouts/body.php';
+                if (file_exists($layoutFolder.'/layouts/body.php')) {
+                    include $layoutFolder.'/layouts/body.php';
                 }
 
                 /** item: footer */
-                if (file_exists($this->layoutFolder.'/layouts/footer.php')) {
-                    include $this->layoutFolder.'/layouts/footer.php';
+                if (file_exists($layoutFolder.'/layouts/footer.php')) {
+                    include $layoutFolder.'/layouts/footer.php';
                 }
 
                 $rowCount++;
             }
 
             /** layout: bottom */
-            if (file_exists($this->layoutFolder.'/layouts/bottom.php')) {
-                include $this->layoutFolder.'/layouts/bottom.php';
+            if (file_exists($layoutFolder.'/layouts/bottom.php')) {
+                include $layoutFolder.'/layouts/bottom.php';
 
                 /** event: After Layout is finished */
                 if (isset($this->row->event->afterDisplayContent)) {
@@ -361,5 +251,201 @@ class MolajoView extends JView
         ob_end_clean();
 
         return $output;
+    }
+
+    /**
+     * renderMolajoLayoutHead
+     *
+     * Language
+     *
+     * Automatically includes the following files (if existing)
+     *
+     * 1. Master Layout folder Language Files found in => layout/[current-language]/
+     * 2. Current Layout folder Language Files found in => layout/current-layout/[current-language]/
+     *
+     * @param $layoutFolder
+     * @return void
+     */
+    protected function renderMolajoLayoutLanguage ($layoutFolder)
+    {
+        $language = JFactory::getLanguage();
+        $language->load('layouts', MOLAJO_LAYOUTS, $language->getDefault(), true, true);
+        $language->load('layouts_'.$this->state->get('request.layout'), $layoutFolder, $language->getDefault(), true, true);
+    }
+
+    /**
+     * renderMolajoLayoutHeadMedia
+     *
+     * Automatically includes the following files (if existing)
+     *
+     * 1. Standard site-wide CSS and JS in => media/site/css[js]/site.css[js]
+     * 2. Component specific CSS and JS in => media/site/css[js]/component_option.css[js]
+     * 3. Any CSS file in the CSS sub-folder => css/filenames.css
+     * 4. Any JS file in the JS sub-folder => js/filenames.js
+     *
+     * Note: Right-to-left css files should begin with rtl_
+     *
+     * @param $layoutFolder
+     *
+     * @return void
+     */
+    protected function renderMolajoLayoutHeadMedia ($layoutFolder)
+    {
+        if ($this->state->get('layout.loadSiteCSS', true) === true) {
+            /** standard site-wide css and js - media/site/css[js]/viewname.css[js] **/
+            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/site.css')) {
+                $this->document->addStyleSheet(JURI::base().'/site/css/site.css');
+            }
+            if ($this->document->direction == 'rtl') {
+                if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/site_rtl.css')) {
+                    $this->document->addStyleSheet(JURI::base().'/media/site/css/site_rtl.css');
+                }
+            }
+        }
+
+        if ($this->state->get('layout.loadSiteJS', true) === true) {
+            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/site.js')) {
+                $this->document->addScript(JURI::base().'/media/site/js/site.js');
+            }
+        }
+
+        /** component specific css and js - media/site/css[js]/component_option.css[js] **/
+        if ($this->state->get('layout.loadComponentCSS', true) === true) {
+            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/'.$this->state->get('request.option').'.css')) {
+                $this->document->addStyleSheet(JURI::base().'/media/site/css/'.$this->state->get('request.option').'.css');
+            }
+        }
+
+        if ($this->state->get('layout.loadComponentJS', true) === true) {
+            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/'.$this->state->get('request.option').'.js')) {
+                $this->document->addScript(JURI::base().'media/site/js/'.$this->state->get('request.option').'.js');
+            }
+        }
+
+        /** Load Layout CSS (if exists in layout CSS folder) */
+        if ($this->state->get('layout.loadLayoutCSS', true) === true) {
+            $files = JFolder::files($layoutFolder.'/css', '\.css', false, false);
+            foreach ($files as $file) {
+                if (substr(strtolower($file), 0, 4) == 'rtl_' && $this->document->direction == 'rtl') {
+                    $this->document->addStyleSheet($layoutFolder.'/css/'.$file);
+                } else {
+                    $this->document->addStyleSheet($layoutFolder.'/css/'.$file);
+                }
+            }
+        }
+
+        /** Load Layout JS (if exists in layout JS folder) */
+        if ($this->state->get('layout.loadLayoutJS', true) === true) {
+            $files = JFolder::files($layoutFolder.'/js', '\.js', false, false);
+            foreach ($files as $file) {
+                if (substr(strtolower($file), 0, 4) == 'rtl_' && $this->document->direction == 'rtl') {
+                    $this->document->addStyleSheet($layoutFolder.'/js/'.$file);
+                } else {
+                    $this->document->addStyleSheet($layoutFolder.'/js/'.$file);
+                }
+            }
+        }
+    }
+
+    /**
+     * getColumns
+     *
+     * Displays system variable names and values
+     *
+     * $this->params
+     *
+     * $this->getColumns ('system');
+     *
+     * @param  $type
+     * @return void
+     */
+    protected function getColumns ($type, $layout='system')
+    {
+        /** @var $this->rowset */
+        $this->rowset = array();
+
+        /** @var $registry */
+        $registry = new JRegistry();
+
+        /** @var $tempIndex */
+        $columnIndex = 0;
+
+        if ($type == 'user') {
+            foreach ($this->$type as $column=>$value) {
+                if ($column == 'params') {
+                    $registry->loadJSON($value);
+                    $options = $registry->toArray();
+                    $this->getColumnsJSONArray ($type, $options);
+                } else {
+                    $this->getColumnsFormatting ($type, $column, $value);
+                }
+            }
+
+        } else if ($type == 'system') {
+                $registry->loadJSON($this->$type);
+                $options = $registry->toArray();
+                $this->getColumnsJSONArray ($type, $options);
+
+        } else {
+            return false;
+        }
+
+        /**
+         *  Display Results
+         */
+        $layoutFolder = $this->findPath($layout);
+        echo $this->renderMolajoLayout ($layoutFolder, 'system');
+
+        return;
+
+    }
+
+    /**
+     * getColumnsJSONArray
+     *
+     * Process Array from converted JSON Object
+     *
+     * @param  $type
+     * @param  $options
+     * @return void
+     */
+    private function getColumnsJSONArray ($type, $options)
+    {
+        foreach ($options as $column=>$value) {
+            $this->getColumnsFormatting ($type, $column, $value);
+        }
+    }
+
+    /**
+     * getColumnsFormatting
+     *
+     * Process Columns from Object
+     *
+     * @param  $type
+     * @param  $column
+     * @param  $value
+     * @return void
+     */
+    private function getColumnsFormatting ($type, $column, $value, $columnIndex)
+    {
+        $this->rowset[$columnIndex]['column'] = $column;
+
+        if (is_array($value)) {
+            $this->rowset[$columnIndex]['syntax'] = '$list = $this->'.$type."->get('".$column."');<br />";
+            $this->rowset[$columnIndex]['syntax'] .= 'foreach ($list as $item=>$itemValue) { <br />';
+            $this->rowset[$columnIndex]['syntax'] .= '&nbsp;&nbsp;&nbsp;&nbsp;echo $item.'."': '".'.$itemValue;';
+            $this->rowset[$columnIndex]['syntax'] .= '<br />'.'}';
+            $temp = '';
+            $list = $this->$type->get($column);
+            foreach ($list as $item=>$itemValue) {
+                $temp .= $item.': '.$itemValue.'<br />';
+            }
+            $this->rowset[$columnIndex]['value'] = $temp;
+        } else {
+            $this->rowset[$columnIndex]['syntax'] = 'echo $this->'.$type."->get('".$column."');  ";
+            $this->rowset[$columnIndex]['value'] = $value;
+        }
+
+        $columnIndex++;
     }
 }

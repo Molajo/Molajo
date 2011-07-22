@@ -11,9 +11,9 @@ defined('MOLAJO') or die();
 /**
  * MolajoModelEdit
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Single Model
- * @since       1.6
+ * @since       1.0
  */
 class MolajoModelEdit extends JModel
 {

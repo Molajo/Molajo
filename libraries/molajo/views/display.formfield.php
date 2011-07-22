@@ -71,11 +71,11 @@ class MolajoViewFormfield extends MolajoView
             return false;
         }
 
-        $this->layoutFolder = $this->findPath($this->state->get('request.layout'));
-        if ($this->layoutFolder === false) {
+        $layoutFolder = $this->findPath($this->state->get('request.layout'));
+        if ($layoutFolder === false) {
             parent::display($tpl);
         } else {
-            echo $this->renderMolajoLayout ();
+            echo $this->renderMolajoLayout ($layoutFolder);
         }
     }
 }
