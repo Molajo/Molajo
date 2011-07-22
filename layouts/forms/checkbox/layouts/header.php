@@ -8,6 +8,4 @@
 defined('MOLAJO') or die; ?>
 <?php if ($this->row->grouped === true) {
 <li class="xyz">
-} else { ?>
-<span class="xyz">
 <?php }
