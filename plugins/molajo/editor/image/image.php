@@ -27,7 +27,7 @@ class plgButtonImage extends JPlugin
 	function onDisplay($name)
 	{
 		$app = JFactory::getApplication();
-		$params = JComponentHelper::getParams('com_media');
+		$params = MolajoComponentHelper::getParams('com_media');
 		$ranks = array('publisher', 'editor', 'author', 'registered');
 		$acl = JFactory::getACL();
 

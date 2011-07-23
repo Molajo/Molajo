@@ -49,6 +49,7 @@ class MolajoLinksExternalLinks {
 		$document =& JFactory::getDocument();
 		$document->addScript(JURI::base().'media/molajo/js/mooexternal.js' );
 		$document->addStyleSheet(JURI::base().'media/molajo/css/external.css' );
+
             }
 
             $verify = MolajoHelperURLs::checkURLExternal ($matches[1][$i]);

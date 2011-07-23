@@ -96,7 +96,7 @@ class MolajoMediaAudio {
         }
 
         /** layout: loads JS for footer **/
-        $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio_footer');
+        $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio');
         MolajoPluginHelper::generateLayout ($layoutPath);
 
         /** update source **/

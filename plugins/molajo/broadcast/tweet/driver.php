@@ -29,7 +29,7 @@ class MolajoBroadcastTweet {
     function driver ()
     {
         /** com_responses parameters **/
-        $responsesParams = JComponentHelper::getParams('com_responses', true);
+        $responsesParams = MolajoComponentHelper::getParams('com_responses', true);
 
 
         /** email **/

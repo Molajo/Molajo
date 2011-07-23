@@ -33,7 +33,7 @@ class plgMolajoTags extends JPlugin	{
         }
 
         /** com_tags parameters **/
-        $responsesParams = JComponentHelper::getParams('com_tags', true);
+        $responsesParams = MolajoComponentHelper::getParams('com_tags', true);
 
         /** broadcasting enabled **/
         if ($responsesParams->def('enable_broadcast', 0) == '1') {

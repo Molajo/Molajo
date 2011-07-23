@@ -80,7 +80,7 @@ class plgMolajoResponses extends JPlugin	{
         }
 
         /** com_responses parameters **/
-        $responsesParams = JComponentHelper::getParams('com_responses', true);
+        $responsesParams = MolajoComponentHelper::getParams('com_responses', true);
 
         /** response type 1: comments **/
         if (($responsesParams->def('enable_comments', 0) == '1') &&
@@ -172,7 +172,7 @@ class plgMolajoResponses extends JPlugin	{
         }
 
         /** com_responses enabled? **/
-        if (JComponentHelper::isEnabled('com_responses')) {
+        if (MolajoComponentHelper::isEnabled('com_responses')) {
         } else {
             return false;
         }
