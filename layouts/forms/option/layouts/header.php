@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 <?php if ($this->row->grouped === true) { ?>
-<li class="amy">
+<li>
 <?php }
