@@ -5,6 +5,12 @@
  * @copyright   Copyright (C) 2011 Amy Stephen, Cristina Solana. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+
+		if ((string) $this->element['readonly'] == 'true') {
+			$html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
+			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
+		}
+
 defined('MOLAJO') or die; ?>
 <?php if ($this->row->label == "") {
 } else { ?>
