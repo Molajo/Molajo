@@ -1,8 +1,8 @@
 /*
-@version     $id: external.css
+@version     $id: site.css
 @package     Molajo
-@subpackage  External Links
-@copyright   Copyright (C) 2010-2011 individual Molajo Contributors. All rights reserved. See http://molajo.org/copyright
+@subpackage  Audio
+@copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
 a[class="external"], a.external { background: url(../images/external.png) no-repeat 100% 50%; padding-right: 15px; white-space: nowrap; zoom: 1; }

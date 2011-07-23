@@ -56,7 +56,7 @@ class plgContentJoomla extends JPlugin
 		$db->setQuery('SELECT id FROM #__users WHERE sendEmail = 1');
 		$users = (array) $db->loadResultArray();
 
-		$default_language = JComponentHelper::getParams('com_languages')->get('administrator');
+		$default_language = MolajoComponentHelper::getParams('com_languages')->get('administrator');
 		$debug = JFactory::getConfig()->get('debug_lang');
 
 		foreach ($users as $user_id)

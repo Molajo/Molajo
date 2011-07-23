@@ -32,7 +32,7 @@ class plgMolajoBroadcast extends JPlugin	{
         }
 
         /** com_responses parameters **/
-        $responsesParams = JComponentHelper::getParams('com_responses', true);
+        $responsesParams = MolajoComponentHelper::getParams('com_responses', true);
    
         /** broadcasting enabled **/
         if ($responsesParams->def('enable_broadcast', 0) == '1') {

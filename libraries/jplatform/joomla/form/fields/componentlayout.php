@@ -16,7 +16,8 @@ jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
 
 /**
- * Form Field to display a list of the layouts for a component view from the extension or template overrides.
+ * Form Field to display a list of the layouts for a component view from 
+ * the extension or template overrides.
  *
  * @package     Joomla.Platform
  * @subpackage  Form
@@ -33,9 +34,10 @@ class JFormFieldComponentLayout extends JFormField
 	protected $type = 'ComponentLayout';
 
 	/**
-	 * Method to get the field input.
+	 * Method to get the field input for a component layout field.
 	 *
 	 * @return  string   The field input.
+	 *
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -179,7 +181,7 @@ class JFormFieldComponentLayout extends JFormField
 					// Add the layout options from the template path.
 					if (is_dir($template_path) && ($files = JFolder::files($template_path, '^[^_]*\.php$', false, true)))
 					{
-						// Files with corresponding xml files are alternate menu items, not alternate layout files
+						// Files with corresponding XML files are alternate menu items, not alternate layout files
 						// so we need to exclude these files from the list.
 						$xml_files = JFolder::files($template_path, '^[^_]*\.xml$', false, true);
 						for ($j = 0, $count = count($xml_files); $j < $count; $j++)
@@ -236,4 +238,3 @@ class JFormFieldComponentLayout extends JFormField
 		}
 	}
 }
-
