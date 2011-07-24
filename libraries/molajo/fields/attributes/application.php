@@ -55,8 +55,8 @@ class MolajoAttributeApplication extends MolajoAttribute
         $results = $this->verifyValue($id);
 
         /** $this->value */
-        if ($results === true && $id > 0) {
-            $value = 'application="'.$id.'"';
+        if ($results === true) {
+            $value = 'application="'.$results.'"';
         } else {
             $value = '';
         }
@@ -85,7 +85,7 @@ class MolajoAttributeApplication extends MolajoAttribute
 
         $query->select('a.id AS value');
         $query->from('#__applications AS a');
-        $query->where('a.id = '.(int) $id);
+        $query->where('a.id IN ('.(int) $id.')');
 
         $db->setQuery($query);
 
@@ -96,10 +96,15 @@ class MolajoAttributeApplication extends MolajoAttribute
             return false;
         }
 
+        $returnValue = '';
         foreach ($results as $result) {
-            $result->found = true;
+            if ($returnValue == '') {
+            } else {
+               $returnValue .= ', ';
+            }
+            $returnValue .= $result->value;
         }
 
-        return true;
+        return $returnValue;
      }
 }

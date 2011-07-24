@@ -50,15 +50,26 @@ class MolajoAttributeAsset extends MolajoAttribute
 	 */
 	protected function setValue()
 	{
-        $id = (int) $this->element['asset'];
-
-        $results = $this->verifyValue($id);
+        $asset = $this->element['asset'];
+        $ids = explode(',', $this->element['asset']);
+        $list = '';
+        foreach ($ids as $ids) {
+            if ((int) $id == 0) {
+            } else (if $list == '') {
+            } else {
+               $list .= ', ';
+            }
+            if ((int) $id == 0) {
+            } else {
+               $list .= $id;
+            }
+        }
+        $results = $this->verifyValue($list);
 
         /** $this->value */
-        if ($results === true && $id > 0) {
-            $value = 'asset="'.$id.'"';
+        if ($results === false) {
         } else {
-            $value = '';
+            $value = 'asset="'.$results.'"';
         }
         parent::__set('value', $value);
         
