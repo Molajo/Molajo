@@ -8,21 +8,20 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoAttributeAutocomplete
+ * MolajoAttributeChecked
  *
- * Populate Autocomplete Attribute
+ * Populate Checked Attribute
  *
  * @package     Molajo
  * @subpackage  Attributes
  * @since       1.0
  */
-class MolajoAttributeAutocomplete extends MolajoAttribute
+class MolajoAttributeChecked extends MolajoAttribute
 {
-
     /**
      * __construct
      * 
-	 * Method to instantiate the Autocomplete object.
+	 * Method to instantiate the Checked object.
      * 
      * @param array $input
      * @param array $rowset
@@ -34,7 +33,7 @@ class MolajoAttributeAutocomplete extends MolajoAttribute
 	public function __construct($input = array(), $rowset = array())
 	{
         parent::__construct();
-        parent::__set('name', 'Autocomplete');
+        parent::__set('name', 'Checked');
         parent::__set('input', $input);        
         parent::__set('rowset', $rowset); 
 	}
@@ -50,13 +49,13 @@ class MolajoAttributeAutocomplete extends MolajoAttribute
 	 */
 	protected function setValue()
 	{
-        $autocomplete = $this->element['autocomplete'];
-        $value = $this->verifyValue($autocomplete);
+        $checked = $this->element['checked'];
+        $value = $this->verifyValue($checked);
 
         parent::__set('value', $value);
         
         /** $this->rowset */
-        $this->rowset[0]['autocomplete'] = $this->value;
+        $this->rowset[0]['checked'] = $this->value;
 
         /** return array of attributes */
         return $this->rowset;
@@ -65,16 +64,16 @@ class MolajoAttributeAutocomplete extends MolajoAttribute
 	/**
      * verifyValue
      *
-	 * Method to determine whether or not the Autocomplete exists
+	 * Method to determine whether or not the Checked exists
 	 *
 	 * @return  array   $rowset
      *
 	 * @since   1.1
 	 */
-	protected function verifyValue($autocomplete)
+	protected function verifyValue($checked)
 	{
-        if ((boolean) $autocomplete === true) {
-            $value = 'autocomplete="autocomplete"';
+        if ((boolean) $checked === true) {
+            $value = 'checked="checked"';
         } else {
             $value = '';
         }

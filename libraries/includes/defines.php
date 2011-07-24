@@ -19,6 +19,7 @@ define('MOLAJO_PATH_CACHE',			MOLAJO_PATH_BASE.'/cache');
 define('MOLAJO_LIBRARY',		    MOLAJO_PATH_ROOT.'/libraries/molajo');
 define('MOLAJO_PATH_MANIFESTS',		MOLAJO_PATH_ADMINISTRATOR.'/manifests');
 
+define('MOLAJO_LIBRARY_FORM',       MOLAJO_LIBRARY.'/fields/form');
 define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY.'/fields/fields');
 define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY.'/fields/fieldtypes');
 define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY.'/fields/attributes');

@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @subpackage	com_menus
  * @since		1.6
  */
-class MenusHelper
+class MolajoMenuHelper
 {
 	/**
 	 * Defines the valid request variables for the reverse lookup.
