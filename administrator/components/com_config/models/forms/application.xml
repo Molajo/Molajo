@@ -129,7 +129,7 @@
 		<field
 			name="dbprefix"
 			type="text"
-			default="jos_"
+			default="molajo_"
 			label="COM_CONFIG_FIELD_DATABASE_PREFIX_LABEL"
 			description="COM_CONFIG_FIELD_DATABASE_PREFIX_DESC"
 			filter="string"

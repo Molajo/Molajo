@@ -284,7 +284,7 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
-	 * Purge the jos_messages table of old messages
+	 * Purge the table of old messages
 	 *
 	 * @return	void
 	 * @since	1.5

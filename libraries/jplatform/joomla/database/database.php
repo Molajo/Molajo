@@ -389,7 +389,7 @@ abstract class JDatabase
 	protected function __construct($options)
 	{
 		// Initialise object variables.
-		$this->tablePrefix = (isset($options['prefix'])) ? $options['prefix'] : 'jos_';
+		$this->tablePrefix = (isset($options['prefix'])) ? $options['prefix'] : 'molajo_';
 		$this->count       = 0;
 		$this->errorNum    = 0;
 		$this->log         = array();

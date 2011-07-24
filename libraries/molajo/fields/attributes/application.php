@@ -50,15 +50,26 @@ class MolajoAttributeApplication extends MolajoAttribute
 	 */
 	protected function setValue()
 	{
-        $id = (int) $this->element['application'];
-
-        $results = $this->verifyValue($id);
+        $application = $this->element['application'];
+        $ids = explode(',', $this->element['application']);
+        $list = '';
+        foreach ($ids as $id) {
+            if ((int) $id == 0) {
+            } else if ($list == '') {
+            } else {
+               $list .= ', ';
+            }
+            if ((int) $id == 0) {
+            } else {
+               $list .= $id;
+            }
+        }
+        $results = $this->verifyValue($list);
 
         /** $this->value */
-        if ($results === true) {
-            $value = 'application="'.$results.'"';
+        if ($results === false) {
         } else {
-            $value = '';
+            $value = 'application="'.$results.'"';
         }
         parent::__set('value', $value);
         

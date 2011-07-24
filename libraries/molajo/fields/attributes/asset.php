@@ -53,9 +53,9 @@ class MolajoAttributeAsset extends MolajoAttribute
         $asset = $this->element['asset'];
         $ids = explode(',', $this->element['asset']);
         $list = '';
-        foreach ($ids as $ids) {
+        foreach ($ids as $id) {
             if ((int) $id == 0) {
-            } else (if $list == '') {
+            } else if ($list == '') {
             } else {
                $list .= ', ';
             }
