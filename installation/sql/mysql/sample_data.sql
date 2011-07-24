@@ -103,12 +103,12 @@ INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DIS
 INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__users` a, `#__actions` b where b.id = 3;
 
 /** aggregate permissions */
-TRUNCATE TABLE `#__permissions_groups`
+TRUNCATE TABLE `#__permissions_groups`;
 INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
   SELECT DISTINCT `group_id`,`asset_id`,`action_id`
     FROM `#__temp_permissions`;
 
-TRUNCATE TABLE `#__permissions_groupings`
+TRUNCATE TABLE `#__permissions_groupings`;
 INSERT INTO `#__permissions_groupings` ( `grouping_id`, `asset_id`, `action_id`)
   SELECT DISTINCT b.grouping_id, a.asset_id, a.action_id
   FROM #__temp_permissions a,

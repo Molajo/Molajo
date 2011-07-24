@@ -292,7 +292,6 @@ class JInstallationModelDatabase extends JModel
 		return true;
 	}
 
-
 	/**
      * getDbo
 	 * Method to get a JDatabase object.
