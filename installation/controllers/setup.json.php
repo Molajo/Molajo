@@ -86,7 +86,7 @@ class JInstallationControllerSetup extends JController
 	 */
 	public function database()
 	{
-        trigger_error("the function ran");
+        trigger_error("the database function ran");
 		// Check for request forgeries.
 		JRequest::checkToken() or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
 

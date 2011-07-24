@@ -140,6 +140,7 @@ class JInstallationModelDatabase extends JModel
 					$this->setError(JText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
 					return false;
 				}
+            }
 
 			// Set the appropriate schema script based on UTF-8 support.
 			$type = $options->db_type;
@@ -244,7 +245,6 @@ class JInstallationModelDatabase extends JModel
 
 		return true;
 	}
-
     /**
      * installSampleData
      *
@@ -291,6 +291,7 @@ class JInstallationModelDatabase extends JModel
 
 		return true;
 	}
+
 
 	/**
      * getDbo
