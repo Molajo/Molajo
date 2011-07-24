@@ -23,6 +23,7 @@ class JInstallationViewLanguage extends JView
 	 */
 	public function display($tpl = null)
 	{
+        echo 'adsfasdf';
 		$state = $this->get('State');
 		$form  = $this->get('Form');
 

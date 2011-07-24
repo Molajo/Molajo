@@ -362,4 +362,3 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(MOLAJO_LIBRARY.'/router/'.$file, 'MolajoRouter'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-echo 'here';
