@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /** MOLAJO_PATH_CONFIGURATION can be moved to hide the configuration.php file */
 define('MOLAJO_PATH_CONFIGURATION', MOLAJO_PATH_ROOT);
@@ -18,6 +18,10 @@ define('MOLAJO_PATH_INSTALLATION',	MOLAJO_PATH_ROOT.'/installation');
 define('MOLAJO_PATH_CACHE',			MOLAJO_PATH_BASE.'/cache');
 define('MOLAJO_LIBRARY',		    MOLAJO_PATH_ROOT.'/libraries/molajo');
 define('MOLAJO_PATH_MANIFESTS',		MOLAJO_PATH_ADMINISTRATOR.'/manifests');
+
+define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY.'/fields/fields');
+define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY.'/fields/fieldtypes');
+define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY.'/fields/attributes');
 
 if (MOLAJO_APPLICATION == 'installation') {
     define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE);
@@ -77,9 +81,13 @@ define('MOLAJO_ACL_ACTION_VIEW', 'view');
 define('MOLAJO_ACL_ACTION_EDIT', 'edit');
 define('MOLAJO_ACL_ACTION_DELETE', 'delete');
 define('MOLAJO_ACL_ACTION_ADMIN', 'admin');
-
 /** Layouts **/
-define('MOLAJO_CONFIG_OPTION_ID_PARAMETERS_LAYOUTS', 500);
+define('MOLAJO_CONFIG_OPTION_ID_LAYOUTS', 500);
+/** MIME Types */
+define('MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES', 1000);
+define('MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES', 1010);
+define('MOLAJO_CONFIG_OPTION_ID_TEXT_MIMES', 1020);
+define('MOLAJO_CONFIG_OPTION_ID_VIDEO_MIMES ', 1030);
 
 /** current url */
 $currentURL = 'http';

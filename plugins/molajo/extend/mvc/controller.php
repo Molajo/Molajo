@@ -5,7 +5,7 @@
  * @copyright   Copyright (C) 2010-2011 Amy Stephen. All rights reserved. See http://molajo.org/copyright
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /** load mvc classes **/
 require_once dirname(__FILE__).'/controllerParameters.php';

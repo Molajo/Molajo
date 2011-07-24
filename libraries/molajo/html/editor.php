@@ -1,15 +1,11 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  HTML
- *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @package     Molajo
+ * @subpackage  Attributes
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
-
-jimport('joomla.event.dispatcher');
 
 /**
  * MolajoEditor class to handle WYSIWYG editors
@@ -115,14 +111,14 @@ class MolajoEditor extends JObservable
 	 * @param   string   $name		The control name.
 	 * @param   string   $html		The contents of the text area.
 	 * @param   string   $width		The width of the text area (px or %).
-	 * @param   string   $height		The height of the text area (px or %).
+	 * @param   string   $height	The height of the text area (px or %).
 	 * @param   integer  $col		The number of columns for the textarea.
 	 * @param   integer  $row		The number of rows for the textarea.
 	 * @param   boolean  $buttons	True and the editor buttons will be displayed.
-	 * @param   string   $id			An optional ID for the textarea (note: since 1.6). If not supplied the name is used.
+	 * @param   string   $id		An optional ID for the textarea (note: since 1.6). If not supplied the name is used.
 	 * @param   string   $asset
 	 * @param   object   $author
-	 * @param   array    $params		Associative array of editor parameters.
+	 * @param   array    $params	Associative array of editor parameters.
 	 */
 	public function display($name, $html, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array())
 	{

@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /** done in layout in case designer does not want: remove first and last p tags to ensure cite within blockquote **/
 if (substr($this->excerpt, 0, 3) == '<p>') { $this->excerpt = substr($this->excerpt, 3, strlen($this->excerpt) - 3); }

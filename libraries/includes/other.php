@@ -5,7 +5,7 @@
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die();
+defined('MOLAJO') or die;
 
 /** Additional Libraries (Add as configuration options later) */
 $filehelper->requireClassFile(LIBRARIES.'/akismet/Akismet.class.php', 'Akismet');
