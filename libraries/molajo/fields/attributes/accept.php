@@ -124,6 +124,5 @@ class MolajoAttributeAccept extends MolajoAttribute
         }
 
         return $formattedList;
-
      }
 }
