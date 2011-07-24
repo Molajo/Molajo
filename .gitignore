@@ -36,7 +36,11 @@ Thumbs.db
 
 # File List #
 #############
+logs
+tmp
+cache
 /configuration.php
+/xconfiguration.php
 /administrator/cache/
 /.project
 /.buildpath
