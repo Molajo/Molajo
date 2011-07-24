@@ -1,27 +1,28 @@
 <?php
 /**
- * @package     Molajo
- * @subpackage  Installation
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @version		$Id: view.html.php 21376 2011-05-24 17:11:48Z dextercowley $
+ * @package		Joomla.Installation
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-defined('MOLAJO') or die;
+
+defined('_JEXEC') or die;
+
+jimport('joomla.application.component.view');
+jimport('joomla.html.html');
 
 /**
- * View
+ * The HTML Joomla Core Database Configuration View
  *
- * @package		Molajo
- * @subpackage  Installation
- * @since		1.0
+ * @package		Joomla.Installation
+ * @since		1.6
  */
 class JInstallationViewDatabase extends JView
 {
-    /**
-     * display
-     *
-     * Display the view
-     */
+	/**
+	 * Display the view
+	 *
+	 */
 	public function display($tpl = null)
 	{
 		$state = $this->get('State');

@@ -1,5 +1,5 @@
 /**
- * @version		$Id: template_rtl.css 21330 2011-05-11 04:18:33Z eddieajau $
+ * @version		$Id: template_rtl.css 21743 2011-07-06 08:24:29Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -8,20 +8,12 @@ body{
 	direction: rtl;
 }
 
-#header2 {
-	background-image: url(../images/j_header_right_rtl.png);
-}
-
-#header3 {
-	background-image: url(../images/j_header_left_rtl.png);
-}
-
-#header3 span.logo {
+#header .logo {
 	float: left;
 	padding-left:15px;
 }
 
-#header3 span {
+#header span {
 	padding-right: 15px;
 }
 

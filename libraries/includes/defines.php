@@ -82,8 +82,6 @@ define('MOLAJO_ACL_ACTION_VIEW', 'view');
 define('MOLAJO_ACL_ACTION_EDIT', 'edit');
 define('MOLAJO_ACL_ACTION_DELETE', 'delete');
 define('MOLAJO_ACL_ACTION_ADMIN', 'admin');
-/** Layouts **/
-define('MOLAJO_CONFIG_OPTION_ID_LAYOUTS', 500);
 /** MIME Types */
 define('MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES', 1000);
 define('MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES', 1010);
@@ -111,7 +109,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 define('MOLAJO_CURRENT_URL', strtolower($currentURL));
 
 /** Layouts, Forms, and Parameters */
-$temp = JPATH_ROOT.'/layouts';
+$temp = MOLAJO_PATH_ROOT.'/layouts';
 define('MOLAJO_LAYOUTS', $temp);
 $temp = MOLAJO_LAYOUTS.'/parameters';
 define('MOLAJO_PARAMETERS', $temp);

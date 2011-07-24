@@ -301,6 +301,7 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/document/renderer.php', 'MolajoDo
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/renderer.php', 'JDocumentRenderer');
 
 $format = JRequest::getCmd('format', 'html');
+$formatClass = 'MolajoDocument'.ucfirst($format);
 if (class_exists($formatClass)) {
 } else {
     $path = MOLAJO_LIBRARY.'/document/'.$format.'/'.$format.'.php';

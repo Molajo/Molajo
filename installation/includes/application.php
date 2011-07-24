@@ -130,9 +130,9 @@ class MolajoInstallation extends MolajoApplication
 		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
 		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
 
-		JForm::addFormPath(MOLAJO_PATH_COMPONENT.'/models/forms');
-		JForm::addFieldPath(MOLAJO_PATH_COMPONENT.'/models/fields');
-		JForm::addRulePath(MOLAJO_PATH_COMPONENT.'/models/rules');
+//		JForm::addFormPath(MOLAJO_PATH_COMPONENT.'/models/forms');
+//		JForm::addFieldPath(MOLAJO_PATH_COMPONENT.'/models/fields');
+//		JForm::addRulePath(MOLAJO_PATH_COMPONENT.'/models/rules');
 
 		// Import the controller.
 		require_once MOLAJO_PATH_COMPONENT.'/controller.php';

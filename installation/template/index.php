@@ -1,16 +1,19 @@
 <?php
 /**
- * @package     Molajo
- * @subpackage  Installation
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @version		$Id: index.php 21743 2011-07-06 08:24:29Z chdemko $
+ * @package		Joomla.Installation
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-defined('MOLAJO') or die;
+
+defined('_JEXEC') or die;
+
+jimport('joomla.html.html');
+
 $doc = JFactory::getDocument();
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(MOLAJO_PATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Add Stylesheets
 $doc->addStyleSheet('../media/system/css/system.css');
@@ -40,13 +43,9 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
  		</script>
 	</head>
 	<body>
-		<div id="header1">
-			<div id="header2">
-				<div id="header3">
-					<span class="logo"><a href="http://molajo.org" target="_blank"><img src="template/images/logo.png" alt="Molajo" /></a></span>
-					<span>Molajo <?php echo MOLAJOVERSION; ?> <?php echo JText::_('INSTL_INSTALLATION') ?></span>
-				</div>
-			</div>
+		<div id="header">
+			<span class="logo"><a href="http://molajo.org" target="_blank"><img src="template/images/logo.png" alt="Molajo" /></a></span>
+			<span>Molajo <?php echo MOLAJOVERSION; ?> <?php echo JText::_('INSTL_INSTALLATION') ?></span>
 		</div>
 		<jdoc:include type="message" />
 		<div id="content-box">
