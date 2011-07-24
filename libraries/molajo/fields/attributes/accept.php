@@ -86,16 +86,19 @@ class MolajoAttributeAccept extends MolajoAttribute
             $MIMEtypes = array_merge((array)$MIMEtypes, (array)$temp);
         }
 
-        $value = implode(',', $MIMEtypes);
-
         /** $this->value */
+        if ($MIMEtypes == '') {
+            $value = '';
+        } else {
+            $value = implode(',', $MIMEtypes);
+        }
         parent::__set('value', 'accept="'.$value.'"');
 
         /** $this->rowset */
-        $this->rowset[] = $this->value;
+        $this->rowset[0]['accept'] = $this->value;
 
         /** return array of attributes */
-        return $this->rowset[];
+        return $this->rowset;
      }
 
 	/**
