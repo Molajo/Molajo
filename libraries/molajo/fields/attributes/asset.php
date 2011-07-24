@@ -56,7 +56,7 @@ class MolajoAttributeAsset extends MolajoAttribute
 
         /** $this->value */
         if ($results === true && $id > 0) {
-            $value = 'asset="'.$id;            
+            $value = 'asset="'.$id.'"';
         } else {
             $value = '';
         }
@@ -85,7 +85,7 @@ class MolajoAttributeAsset extends MolajoAttribute
 
         $query->select('a.id AS value');
         $query->from('#__assets AS a');
-        $query->where('a.id = '.(int) $id);
+        $query->where('a.id IN ('.(int) $id.')');
 
         $db->setQuery($query);
 
@@ -96,10 +96,15 @@ class MolajoAttributeAsset extends MolajoAttribute
             return false;
         }
 
+        $returnValue = '';
         foreach ($results as $result) {
-            $result->found = true;
+            if ($returnValue == '') {
+            } else {
+               $returnValue .= ', ';
+            }
+            $returnValue .= $result->value;
         }
 
-        return true;
+        return $returnValue;
      }
 }
