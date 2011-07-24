@@ -50,15 +50,77 @@ class MolajoAttributeAccept extends MolajoAttribute
 	 */
 	protected function setValue()
 	{
+        $MIMEtypes = array();
 
-//accept="image/gif, image/jpeg"
-  /**
-  * MIME Media Types
-  * - Source: ftp://ftp.iana.org/assignments/media-types/
-  * MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES - 1000
-  * MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES - 1010
-  * MOLAJO_CONFIG_OPTION_ID_TEXT_MIMES - 1020
-  * MOLAJO_CONFIG_OPTION_ID_VIDEO_MIMES - 1030
-  */
-	}
+        $filetypes = explode(',', $this->element['filetype']);
+        if (count($filetypes) == 0) {
+            $filetypes = array();
+            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
+        }
+
+        foreach ($filetypes as $type) {
+
+            $request = 0;
+
+            if ($type == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES || strtolower($type = 'audio')) {
+                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+                $literal = 'audio';
+            } else if ($type == MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES || strtolower($type = 'image') || strtolower($type == 'images')) {
+                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+                $literal = 'image';
+            } else if ($type == MOLAJO_CONFIG_OPTION_ID_TEXT_MIMES || strtolower($type = 'text')) {
+                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+                $literal = 'text';
+            } else if ($type == MOLAJO_CONFIG_OPTION_ID_VIDEO_MIMES || strtolower($type = 'video') || strtolower($type == 'videos')) {
+                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+                $literal = 'video';
+            }
+
+            if ((int) $request > 0) {
+                $temp = $this->retrieveList($request, $literal);
+            }
+
+            $MIMEtypes = array_merge((array)$MIMEtypes, (array)$temp);
+        }
+
+        $value = implode(',', $MIMEtypes);
+
+        /** $this->value */
+        parent::__set('value', 'accept="'.$value.'"');
+
+        /** $this->rowset */
+        $this->rowset[] = $this->value;
+
+        /** return array of attributes */
+        return $this->rowset[];
+     }
+
+	/**
+     * retrieveList
+     *
+	 * Method to retrieve list of configuration values for MIME type
+	 *
+	 * @return  array   $rowset
+     *
+	 * @since   1.1
+	 */
+	protected function retrieveList($MIME_type_id, $MIME_literal)
+	{
+        $molajoConfig = new MolajoModelConfiguration ();
+        $MIMEtypes = $molajoConfig->getOptionList ($MIME_type_id);
+
+        $formattedList = array();
+
+        if (count($MIMEtypes)) {
+            foreach ($MIMEtypes as $type ) {
+                $formattedList[] = $MIME_literal.'/'.$type;
+            }
+        }
+
+        return $formattedList;
+
+     }
 }
