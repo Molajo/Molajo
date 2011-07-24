@@ -1,14 +1,19 @@
 <?php
 /**
- * @version     $id: include.php
  * @package     Molajo
- * @subpackage  Include
+ * @subpackage  Administrator Component Include
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-JForm::addFormPath(JPATH_COMPONENT_ADMINISTRATOR.'/models/forms');
-JForm::addFieldPath(JPATH_COMPONENT_ADMINISTRATOR.'/models/fields');
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/helpers/acl.php';
-require_once JPATH_COMPONENT.'/helpers/route.php';
+/** File Helper */
+$filehelper = new MolajoFileHelper();
+/** ACL Overrides */
+$filehelper->requireClassFile(MOLAJO_PATH_COMPONENT.'/helpers/acl.php', 'MolajoACLArticles');
+/** Component Helper */
+$filehelper->requireClassFile(MOLAJO_PATH_COMPONENT.'/helpers/router.php', 'ArticlesRouteHelper');
+/** Override Folders */
+define('MOLAJO_COMPONENT_ATTRIBUTES', MOLAJO_PATH_COMPONENT.'/fields/attributes');
+define('MOLAJO_COMPONENT_FIELDS', MOLAJO_PATH_COMPONENT.'/fields/fields');
+define('MOLAJO_COMPONENT_FIELDTYPES', MOLAJO_PATH_COMPONENT.'/fields/fieldtypes');

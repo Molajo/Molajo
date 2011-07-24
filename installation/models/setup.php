@@ -45,8 +45,6 @@ class JInstallationModelSetup extends JModel
 	 */
 	public function storeOptions($options)
 	{
-        trigger_error("the storeOptions function ran");
-
 		// Get the current setup options from the session.
 		$session = JFactory::getSession();
 		$old = $session->get('setup.options', array());

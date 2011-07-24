@@ -205,6 +205,16 @@ class MolajoSite extends MolajoApplication
 		// get the format to render
 		$format = $document->getType();
 
+
+		// Define component path
+		define('MOLAJO_PATH_COMPONENT', MOLAJO_PATH_BASE);
+		define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
+		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
+
+		define('JPATH_COMPONENT', MOLAJO_PATH_BASE);
+		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
+		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
+
 		switch ($format)
 		{
 			case 'feed':
@@ -519,7 +529,7 @@ class MolajoSite extends MolajoApplication
 	}
 
 	/**
-	 * Return a reference to the JRouter object.
+	 * Return a reference to the MolajoRouter object.
 	 *
 	 * @param	string	$name		The name of the application.
 	 * @param	array	$options	An optional associative array of configuration settings.

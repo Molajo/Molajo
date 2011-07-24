@@ -61,13 +61,13 @@ class MolajoRouter extends JObject
 	}
 
 	/**
-	 * Returns the global JRouter object, only creating it if it
+	 * Returns the global MolajoRouter object, only creating it if it
 	 * doesn't already exist.
 	 *
 	 * @param   string  $application  The name of the application
 	 * @param   array   $options An associative array of options
 	 *
-	 * @return  JRouter  A JRouter object.
+	 * @return  MolajoRouter  A MolajoRouter object.
 	 * @since   11.1
 	 */
 	public static function getInstance($application, $options = array())
@@ -86,8 +86,8 @@ class MolajoRouter extends JObject
 			if (file_exists($path)) {
 				require_once $path;
 
-				// Create a JRouter object
-				$classname = 'JRouter'.ucfirst($application);
+				// Create a MolajoRouter object
+				$classname = 'MolajoRouter'.ucfirst($application);
 				$instance = new $classname($options);
 			} else {
 				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_ROUTER_LOAD', $application));

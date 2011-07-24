@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO_PATH_PLATFORM') or die;
 
 /**
  * ArticlesHelper
@@ -31,12 +31,12 @@ class ArticlesHelper
      */
     public static function addSubmenu($vName)
     {
-        JSubMenuHelper::addEntry(
+        MolajoSubMenuHelper::addEntry(
                 JText::_('COM_ARTICLES_ARTICLES'),
                 'index.php?option=com_articles&view=articles',
                 $vName == 'articles'
         );
-        JSubMenuHelper::addEntry(
+        MolajoSubMenuHelper::addEntry(
                 JText::_('COM_ARTICLES_SUBMENU_CATEGORIES'),
                 'index.php?option=com_categories&extension=com_articles',
                 $vName == 'categories'
