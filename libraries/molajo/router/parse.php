@@ -131,6 +131,5 @@ class MolajoRouterParse extends MolajoRouter
         } else {
             return $id;
         }
-
     }
 }

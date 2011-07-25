@@ -34,6 +34,8 @@ function ArticlesBuildRoute(&$query)
  */
 function ArticlesParseRoute ($segments)
 {
+    var_dump($segments);
+    die();
     $router = new MolajoRouterParse();
     return $router->parseRoute($segments, 'com_articles', 'article', 'articles', 'Article', '#__articles');
 }
