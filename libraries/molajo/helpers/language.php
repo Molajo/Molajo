@@ -37,7 +37,7 @@ class MolajoLanguageHelper
 		$langs = JLanguage::getKnownLanguages($basePath);
 		if ($installed)
 		{
-			$db = JFactory::getDBO();
+			$db = MolajoFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('element');
 			$query->from('#__extensions');
@@ -127,7 +127,7 @@ class MolajoLanguageHelper
 		if (empty($languages)) {
 
 			// Installation uses available languages
-			if (JFactory::getApplication()->getApplicationId() == 2) {
+			if (MolajoFactory::getApplication()->getApplicationId() == 2) {
 				$languages[$key] = array();
 				$knownLangs = JLanguage::getKnownLanguages(MOLAJO_PATH_BASE);
 				foreach($knownLangs as $metadata)
@@ -137,10 +137,10 @@ class MolajoLanguageHelper
 				}
 			} else {
 
-            	$cache = JFactory::getCache('com_languages', '');
+            	$cache = MolajoFactory::getCache('com_languages', '');
 
 				if (!$languages = $cache->get('languages')) {
-					$db 	= JFactory::getDBO();
+					$db 	= MolajoFactory::getDBO();
 					$query	= $db->getQuery(true);
 					$query->select('*')->from('#__languages')->where('published=1')->order('ordering ASC');
 					$db->setQuery($query);

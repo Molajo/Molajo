@@ -191,9 +191,9 @@ class MolajoCategories
 	 */
 	protected function _load($id)
 	{
-		$db	= JFactory::getDbo();
-		$app = JFactory::getApplication();
-		$user = JFactory::getUser();
+		$db	= MolajoFactory::getDbo();
+		$app = MolajoFactory::getApplication();
+		$user = MolajoFactory::getUser();
 		$extension = $this->_extension;
 
 		// Record that has this $id has been checked
@@ -249,7 +249,7 @@ class MolajoCategories
 
 		// Filter by language
 		if ($app->isSite() && $app->getLanguageFilter()) {
-			$query->where('(' . ($id!='root' ? 'c.id=s.id OR ':'') .'c.language in (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . '))');
+			$query->where('(' . ($id!='root' ? 'c.id=s.id OR ':'') .'c.language in (' . $db->Quote(MolajoFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . '))');
 		}
 
 		// Get the results
@@ -716,10 +716,10 @@ class MolajoCategoryNode extends JObject
 	function getAuthor($modified_user = false)
 	{
 		if ($modified_user) {
-			return JFactory::getUser($this->modified_user_id);
+			return MolajoFactory::getUser($this->modified_user_id);
 		}
 
-		return JFactory::getUser($this->created_user_id);
+		return MolajoFactory::getUser($this->created_user_id);
 	}
 
 	function setAllLoaded()

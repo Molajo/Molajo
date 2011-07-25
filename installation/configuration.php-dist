@@ -26,7 +26,7 @@ defined('MOLAJO') or die;
  * Now edit this file and configure the parameters for your site and
  * database.
  */
-class JConfig {
+class MolajoConfig {
 	/* Site Settings */
 	public $offline = '0';
 	public $offline_message = 'This site is not available.<br /> Please check back again soon.';

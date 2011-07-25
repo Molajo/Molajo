@@ -22,7 +22,7 @@ abstract class MolajoPluginHelper
     public static function getLayoutPath($widget = array(), $layout = 'default')
     {
         /** current template **/
-        $template = JFactory::getApplication()->getTemplate();
+        $template = MolajoFactory::getApplication()->getTemplate();
         $defaultLayout = $layout;
 
         /** template and base path for the layout **/

@@ -53,7 +53,7 @@ if (MOLAJO_APPLICATION == 'installation') {
     }
     require_once MOLAJO_PATH_CONFIGURATION.'/configuration.php';
 
-    $CONFIG = new JConfig();
+    $CONFIG = new MolajoConfig();
     if (@$CONFIG->error_reporting === 0) {
         error_reporting(0);
     } else if (@$CONFIG->error_reporting > 0) {

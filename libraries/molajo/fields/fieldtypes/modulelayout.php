@@ -71,14 +71,14 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 		if ($module && $application) {
 
 			// Load language file
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 				$lang->load($module.'.sys', $application->path, null, false, false)
 			||	$lang->load($module.'.sys', $application->path.'/modules/'.$module, null, false, false)
 			||	$lang->load($module.'.sys', $application->path, $lang->getDefault(), false, false)
 			||	$lang->load($module.'.sys', $application->path.'/modules/'.$module, $lang->getDefault(), false, false);
 
 			// Get the database object and a new query object.
-			$db		= JFactory::getDBO();
+			$db		= MolajoFactory::getDBO();
 			$query	= $db->getQuery(true);
 
 			// Build the query.

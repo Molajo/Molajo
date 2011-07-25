@@ -38,16 +38,16 @@ defined('MOLAJO') or die;
 	 */
 	public function render()
 	{
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 
 		// Gets and sets timezone offset from site configuration
 		$tz	= new DateTimeZone($app->getCfg('offset'));
-		$now	= JFactory::getDate();
+		$now	= MolajoFactory::getDate();
 		$now->setTimeZone($tz);
 
 		$data	= &$this->_doc;
 
-		$uri = JFactory::getURI();
+		$uri = MolajoFactory::getURI();
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 		$syndicationURL = JRoute::_('&format=feed&type=atom');
 
@@ -103,7 +103,7 @@ defined('MOLAJO') or die;
 			if ($data->items[$i]->date=="") {
 				$data->items[$i]->date = $now->toUnix();
 			}
-			$itemDate = JFactory::getDate($data->items[$i]->date);
+			$itemDate = MolajoFactory::getDate($data->items[$i]->date);
 			$itemDate->setTimeZone($tz);
 			$feed.= "		<published>".htmlspecialchars($itemDate->toISO8601(true), ENT_COMPAT, 'UTF-8')."</published>\n";
 			$feed.= "		<updated>".htmlspecialchars($itemDate->toISO8601(true), ENT_COMPAT, 'UTF-8')."</updated>\n";

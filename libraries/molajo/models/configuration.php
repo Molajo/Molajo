@@ -82,7 +82,7 @@ class MolajoModelConfiguration extends JModel
      */
     public function getSingleConfigurationValue ($option_id)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
         
         /** check for override **/
@@ -102,7 +102,7 @@ class MolajoModelConfiguration extends JModel
 
         if ($results = $db->loadObjectList()) {
         } else {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -125,7 +125,7 @@ class MolajoModelConfiguration extends JModel
      */
     public function validationQuery ($value, $option_id)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -145,7 +145,7 @@ class MolajoModelConfiguration extends JModel
         $db->setQuery($query->__toString());
 
         if (!$results = $db->loadObjectList()) {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -171,7 +171,7 @@ class MolajoModelConfiguration extends JModel
     public function getOptionList ($option_id)
     {
         /** check for overrides **/
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -192,7 +192,7 @@ class MolajoModelConfiguration extends JModel
         $db->setQuery($query->__toString());
 
         if (!$results = $db->loadObjectList()) {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
         return $results;
@@ -210,7 +210,7 @@ class MolajoModelConfiguration extends JModel
     public function getOptionValueLiteral ($option_id, $option_value)
     {
         /** check for overrides **/
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -254,7 +254,7 @@ class MolajoModelConfiguration extends JModel
     public function getDefaultView ($option_id)
     {
         /** check for overrides **/
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -299,7 +299,7 @@ class MolajoModelConfiguration extends JModel
     public function getDefaultViewOrdering ($option_id)
     {
         /** check for overrides **/
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -339,7 +339,7 @@ class MolajoModelConfiguration extends JModel
     public function getViewType ($option_id, $value)
     {
          /** check for overrides **/
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -386,7 +386,7 @@ class MolajoModelConfiguration extends JModel
     public function getViewMatch ($option_id, $value, $type)
     {
         /** check for overrides **/
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $component_option = $this->getOverrideKey ($option_id);
@@ -455,7 +455,7 @@ class MolajoModelConfiguration extends JModel
      */
     public function getMolajoComponentList ()
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         /** validation query **/
@@ -471,7 +471,7 @@ class MolajoModelConfiguration extends JModel
         $db->setQuery($query->__toString());
 
         if (!$results = $db->loadObjectList()) {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
         return $results;
@@ -491,7 +491,7 @@ class MolajoModelConfiguration extends JModel
      */
     public function getOptionOverrides ($component_option)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         /** retrieve all option_id values **/
@@ -503,7 +503,7 @@ class MolajoModelConfiguration extends JModel
         $db->setQuery($query->__toString());
 
         if (!$results = $db->loadObjectList()) {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
 

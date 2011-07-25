@@ -250,7 +250,7 @@ class MolajoDocumentHTML extends MolajoDocument
 
 			$renderer = $this->loadRenderer($type);
 			if ($this->_caching == true && $type == 'modules') {
-				$cache = JFactory::getCache('com_modules','');
+				$cache = MolajoFactory::getCache('com_modules','');
 				$hash = md5(serialize(array($name, $attribs, $result, $renderer)));
 				$cbuffer = $cache->get('cbuffer_'.$type);
 
@@ -366,8 +366,8 @@ class MolajoDocumentHTML extends MolajoDocument
 		static $children;
 
 		if (!isset($children)) {
-			$dbo	= JFactory::getDbo();
-			$app	= JFactory::getApplication();
+			$dbo	= MolajoFactory::getDbo();
+			$app	= MolajoFactory::getApplication();
 			$menu	= $app->getMenu();
 			$where	= Array();
 			$active	= $menu->getActive();
@@ -446,7 +446,7 @@ class MolajoDocumentHTML extends MolajoDocument
 		}
 
 		// Load the language file for the template
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		// 1.5 or core then 1.6
 
 			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)

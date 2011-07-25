@@ -37,12 +37,12 @@ class MolajoRouterParse extends MolajoRouter
         $vars = array();
 
         //Get the active menu item.
-        $app	= JFactory::getApplication();
+        $app	= MolajoFactory::getApplication();
         $menu	= $app->getMenu();
         $item	= $menu->getActive();
         $params = MolajoComponentHelper::getParams($componentParam);
         $advanced = $params->get('sef_advanced_link', 0);
-        $db = JFactory::getDBO();
+        $db = MolajoFactory::getDBO();
 
         /** Count route segments */
         $count = count($segments);

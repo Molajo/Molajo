@@ -123,7 +123,7 @@ class MolajoField
 
         /** retain value from previous page load if current request is null **/
         if ($this->requestValue == null) {
-            $this->requestValue = JFactory::getApplication()->getUserState('filter.'.$this->fieldName);
+            $this->requestValue = MolajoFactory::getApplication()->getUserState('filter.'.$this->fieldName);
         } 
     }
 
@@ -171,7 +171,7 @@ class MolajoField
                 require_once $fieldClassFile;
             } else {
                 if ($reportError === true) {
-                    JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_FILENAME').' '.'MolajoField'.ucfirst($fieldName).' '.$fieldClassFile, 'error');
+                    MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_FILENAME').' '.'MolajoField'.ucfirst($fieldName).' '.$fieldClassFile, 'error');
                     return false;
                 }
             }

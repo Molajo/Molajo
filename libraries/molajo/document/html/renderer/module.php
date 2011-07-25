@@ -55,8 +55,8 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		// Get the user and configuration object
-		// $user = JFactory::getUser();
-		$conf = JFactory::getConfig();
+		// $user = MolajoFactory::getUser();
+		$conf = MolajoFactory::getConfig();
 
 		// Set the module content
 		if (!is_null($content)) {

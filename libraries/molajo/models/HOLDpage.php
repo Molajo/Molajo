@@ -36,10 +36,10 @@ class MolajoModelPage extends JModel
     {
 
         $documentHelper->prepareDocument($this->params, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
-        $menus		= JFactory::getApplication()->getMenu();
-        $pathway	= JFactory::getApplication()->getPathway();
+        $menus		= MolajoFactory::getApplication()->getMenu();
+        $pathway	= MolajoFactory::getApplication()->getPathway();
         $title 		= null;
-        $document	= JFactory::getDocument();
+        $document	= MolajoFactory::getDocument();
 
         // Because the application sets a default page title,
         // we need to get it from the menu item itself
@@ -89,10 +89,10 @@ class MolajoModelPage extends JModel
         }
 
         if (empty($title)) {
-            $title = JFactory::getApplication()->getCfg('sitename');
+            $title = MolajoFactory::getApplication()->getCfg('sitename');
 
-        } elseif (JFactory::getApplication()->getCfg('sitename_pagetitles', 0)) {
-            $title = JText::sprintf('JPAGETITLE', JFactory::getApplication()->getCfg('sitename'), $title);
+        } elseif (MolajoFactory::getApplication()->getCfg('sitename_pagetitles', 0)) {
+            $title = JText::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getCfg('sitename'), $title);
         }
 
         if (empty($title)) {
@@ -118,7 +118,7 @@ class MolajoModelPage extends JModel
             $document->setMetadata('robots', $params->get('robots'));
         }
 
-        if (JFactory::getApplication()->getCfg('MetaTitle') == '1') {
+        if (MolajoFactory::getApplication()->getCfg('MetaTitle') == '1') {
             $document->setMetaData('title', $content_item->title);
         }
 

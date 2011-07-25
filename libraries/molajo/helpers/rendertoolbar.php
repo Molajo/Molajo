@@ -37,7 +37,7 @@ abstract class MolajoRendertoolbarHelper
 
 		$html = '<div class="pagetitle '.implode(' ', $icons).'"><h2>'.$title.'</h2></div>';
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$app->set('JComponentTitle', $html);
 	}
 

@@ -235,7 +235,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Preparation: Save form or version data **/
-        JFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
+        MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
         $context = JRequest::getVar('option').'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task.'.'.JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
@@ -263,16 +263,16 @@ class MolajoControllerEdit extends MolajoController
             $errors = $this->model->getErrors();
             for ($e=0; $e < count($errors); $e++) {
                 if (JError::isError($errors[$e])) {
-                    JFactory::getApplication()->enqueueMessage($errors[$e]->getMessage(), 'warning');
+                    MolajoFactory::getApplication()->enqueueMessage($errors[$e]->getMessage(), 'warning');
                 } else {
-                    JFactory::getApplication()->enqueueMessage($errors[$e], 'warning');
+                    MolajoFactory::getApplication()->enqueueMessage($errors[$e], 'warning');
                 }
             }
-            JFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
+            MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        JFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $validData);
+        MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $validData);
 
         /** Trigger_Event: onContentValidateForm **/
         /** Molajo_Note: onContentValidateForm is a new event that follows the primary source validation **/
@@ -329,7 +329,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** clear session data **/
-        JFactory::getApplication()->setUserState(JRequest::getInt('datakey'), null);
+        MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), null);
 
         /** Molajo_Note: Testing added to ensure state change before onContentChangeState event is triggered  **/
         if ($this->existingState == $validData->state || $this->isNew) {

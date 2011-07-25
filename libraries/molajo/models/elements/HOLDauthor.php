@@ -28,7 +28,7 @@ class MolajoElementAuthor extends JElement
 
 	function fetchElement($name, $value, &$node, $control_name)
 	{
-		$access	= JFactory::getACL();
+		$access	= MolajoFactory::getACL();
 
 		// Include user in groups that have access to edit their articles, other articles, or manage content.
 		$action = array('com_content.article.edit_own', 'com_content.article.edit_article', 'com_content.manage');
@@ -44,7 +44,7 @@ class MolajoElementAuthor extends JElement
 		$groups = implode(',', $groups);
 
 		// Build the query to get the users.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('u.id AS value');
 		$query->select('u.name AS text');

@@ -319,7 +319,7 @@ class MolajoController extends JController
         }
 
         /** model: checkin **/
-        if ($this->table->checked_out == JFactory::getUser()->get('id')) {
+        if ($this->table->checked_out == MolajoFactory::getUser()->get('id')) {
         } else {
             $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER').' '.$this->getTask());
             $this->redirectClass->setRedirectMessageType('warning');
@@ -463,7 +463,7 @@ class MolajoController extends JController
     */
     public function cleanCache ()
     {
-        $cache = JFactory::getCache(JRequest::getCmd('option'));
+        $cache = MolajoFactory::getCache(JRequest::getCmd('option'));
         $cache->clean();
     }
 

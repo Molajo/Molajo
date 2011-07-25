@@ -25,7 +25,7 @@ class MolajoTableCategory extends MolajoTableNested
 	{
 		parent::__construct('#__categories', 'id', $db);
 
-		$this->access	= (int) JFactory::getConfig()->get('access');
+		$this->access	= (int) MolajoFactory::getConfig()->get('access');
 	}
 
 	/**
@@ -122,7 +122,7 @@ class MolajoTableCategory extends MolajoTableNested
 
 		$this->alias = JApplication::stringURLSafe($this->alias);
 		if (trim(str_replace('-','',$this->alias)) == '') {
-			$this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
+			$this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
 		}
 
 		return true;
@@ -171,8 +171,8 @@ class MolajoTableCategory extends MolajoTableNested
 	 */
 	public function store($updateNulls = false)
 	{
-		$date	= JFactory::getDate();
-		$user	= JFactory::getUser();
+		$date	= MolajoFactory::getDate();
+		$user	= MolajoFactory::getUser();
 
 		if ($this->id) {
 			// Existing category

@@ -596,7 +596,7 @@ class MolajoForm
 
 		// Attempt to load the XML if a string.
 		if (is_string($data)) {
-			$data = JFactory::getXML($data, false);
+			$data = MolajoFactory::getXML($data, false);
 
 			// Make sure the XML loaded correctly.
 			if (!$data) {
@@ -704,7 +704,7 @@ class MolajoForm
 			}
 		}
 		// Attempt to load the XML file.
-		$xml = JFactory::getXML($file, true);
+		$xml = MolajoFactory::getXML($file, true);
 
 		return $this->load($xml, $reset, $xpath);
 	}
@@ -1120,10 +1120,10 @@ class MolajoForm
 			case 'SERVER_UTC':
 				if (intval($value) > 0) {
 					// Get the server timezone setting.
-					$offset	= JFactory::getConfig()->get('offset');
+					$offset	= MolajoFactory::getConfig()->get('offset');
 
 					// Return a MySQL formatted datetime string in UTC.
-					$return = JFactory::getDate($value, $offset)->toMySQL();
+					$return = MolajoFactory::getDate($value, $offset)->toMySQL();
 				}
 				else {
 					$return = '';
@@ -1134,10 +1134,10 @@ class MolajoForm
 			case 'USER_UTC':
 				if (intval($value) > 0) {
 					// Get the user timezone setting defaulting to the server timezone setting.
-					$offset	= JFactory::getUser()->getParam('timezone', JFactory::getConfig()->get('offset'));
+					$offset	= MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getConfig()->get('offset'));
 
 					// Return a MySQL formatted datetime string in UTC.
-					$return = JFactory::getDate($value, $offset)->toMySQL();
+					$return = MolajoFactory::getDate($value, $offset)->toMySQL();
 				}
 				else {
 					$return = '';
@@ -1519,7 +1519,7 @@ class MolajoForm
 			$default = (string) $element['default'];
 			if (($translate = $element['translate_default']) && ((string)$translate=='true' || (string)$translate=='1' ))
 			{
-				$lang = JFactory::getLanguage();
+				$lang = MolajoFactory::getLanguage();
 				if ($lang->hasKey($default))
 				{
 					$debug = $lang->setDebug(false);

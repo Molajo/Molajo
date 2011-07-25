@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * Provide many supporting API functions
  *
- * @package		Joomla.Site
+ * @package		Molajo
  * @subpackage	Application
  */
 class MolajoSite extends MolajoApplication
@@ -47,6 +47,8 @@ class MolajoSite extends MolajoApplication
 	}
 
 	/**
+     * initialise
+     *
 	 * Initialise the application.
 	 *
 	 * @param	array
@@ -152,6 +154,31 @@ class MolajoSite extends MolajoApplication
 			$router		= $this->getRouter();
 			$params		= $this->getParams();
 
+            if (defined('MOLAJO_PATH_COMPONENT')) {
+            } else {
+                define('MOLAJO_PATH_COMPONENT',	MOLAJO_PATH_BASE.'/components/'.$option);
+            }
+            if (defined('MOLAJO_PATH_COMPONENT_SITE')) {
+            } else {
+                define('MOLAJO_PATH_COMPONENT_SITE',	MOLAJO_PATH_SITE.'/components/'.$option);
+            }
+            if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) {
+            } else {
+                define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option);
+            }
+            if (defined('JPATH_COMPONENT')) {
+            } else {
+                define('JPATH_COMPONENT', 'MOLAJO_PATH_COMPONENT');
+            }
+            if (defined('JPATH_COMPONENT_SITE')) {
+            } else {
+                define('JPATH_COMPONENT_SITE', 'MOLAJO_PATH_COMPONENT_ADMINISTRATOR');
+            }
+            if (defined('JPATH_COMPONENT_ADMINISTRATOR')) {
+            } else {
+                define('JPATH_COMPONENT_ADMINISTRATOR', 'MOLAJO_PATH_COMPONENT_ADMINISTRATOR');
+            }
+
 			switch($document->getType())
 			{
 				case 'html':
@@ -204,16 +231,6 @@ class MolajoSite extends MolajoApplication
 
 		// get the format to render
 		$format = $document->getType();
-
-
-		// Define component path
-		define('MOLAJO_PATH_COMPONENT', MOLAJO_PATH_BASE);
-		define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
-		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
-
-		define('JPATH_COMPONENT', MOLAJO_PATH_BASE);
-		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
-		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
 
 		switch ($format)
 		{

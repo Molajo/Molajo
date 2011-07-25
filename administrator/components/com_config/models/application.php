@@ -41,7 +41,7 @@ class ConfigModelApplication extends JModelForm
 	 * Method to get the configuration data.
 	 *
 	 * This method will load the global configuration data straight from
-	 * JConfig. If configuration data has been saved in the session, that
+	 * MolajoConfig. If configuration data has been saved in the session, that
 	 * data will be merged into the original data, overwriting it.
 	 *
 	 * @return	array		An array containg all global config data.
@@ -77,7 +77,7 @@ class ConfigModelApplication extends JModelForm
 // 
         }
 		// Get the previous configuration.
-		$prev = new JConfig();
+		$prev = new MolajoConfig();
 		$prev = JArrayHelper::fromObject($prev);
 
 		// Merge the new data in. We do this to preserve values that were not in the form.
@@ -153,8 +153,8 @@ class ConfigModelApplication extends JModelForm
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTWRITABLE'));
 		}
 
-		// Attempt to write the configuration file as a PHP class named JConfig.
-		$configString = $config->toString('PHP', array('class' => 'JConfig', 'closingtag' => false));
+		// Attempt to write the configuration file as a PHP class named MolajoConfig.
+		$configString = $config->toString('PHP', array('class' => 'MolajoConfig', 'closingtag' => false));
 		if (!JFile::write($file, $configString)) {
 			$this->setError(JText::_('COM_CONFIG_ERROR_WRITE_FAILED'));
 			return false;

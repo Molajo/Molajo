@@ -67,12 +67,12 @@ class MolajoDocumentOpensearch extends MolajoDocument
 		$update = new JOpenSearchUrl();
 		$update->type = 'application/opensearchdescription+xml';
 		$update->rel = 'self';
-		$update->template = JRoute::_(JFactory::getURI());
+		$update->template = JRoute::_(MolajoFactory::getURI());
 		$this->addUrl($update);
 
 		// Add the favicon as the default image
 		// Try to find a favicon by checking the template and root folder
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$dirs = array(MOLAJO_PATH_THEMES.'/'.$app->getTemplate(), MOLAJO_PATH_BASE);
 
 		foreach ($dirs as $dir)

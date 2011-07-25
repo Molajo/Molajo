@@ -127,7 +127,7 @@ class MolajoModelEdit extends JModel
             $this->setError($table->getError());
             return false;
         }
-        if ($table->checked_out == JFactory::getUser()->get('id')) {
+        if ($table->checked_out == MolajoFactory::getUser()->get('id')) {
             return true;
         } else {
             $this->setError(JText::_('MOLAJO_ERROR_ROW_NOT_CHECKED_OUT_FOR_EDIT'));
@@ -154,7 +154,7 @@ class MolajoModelEdit extends JModel
     {
         $datakey = JRequest::getInt('datakey');
         if ((int) $datakey > 0) {
-            $data = JFactory::getApplication()->getUserState($datakey, array());
+            $data = MolajoFactory::getApplication()->getUserState($datakey, array());
         }
         $formName = JRequest::getVar('option').'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.JRequest::getCmd('task').'.'.JRequest::getInt('id').'.'.JRequest::getVar('datakey');
 
@@ -222,13 +222,13 @@ class MolajoModelEdit extends JModel
     {
         $datakey = JRequest::getInt('datakey');
         if ((int) $datakey > 0) {
-            $data = JFactory::getApplication()->getUserState($datakey, array());
+            $data = MolajoFactory::getApplication()->getUserState($datakey, array());
         }
 
         if (empty($data)) {
             $data = $this->getItem();
         } else {
-            JFactory::getApplication()->setUserState($datakey, null);
+            MolajoFactory::getApplication()->setUserState($datakey, null);
             JRequest::setVar('datakey', null);
         }
         return $data;
@@ -299,7 +299,7 @@ class MolajoModelEdit extends JModel
     {
         /** publish up defaults to now **/
         if($table->state == 1 && intval($table->publish_up) == 0) {
-            $table->publish_up = JFactory::getDate()->toMySQL();
+            $table->publish_up = MolajoFactory::getDate()->toMySQL();
         }
 
         /** version **/
@@ -404,10 +404,10 @@ class MolajoModelEdit extends JModel
                     $toTable->$column_name = 1;
 
                 } else if ($column_name == 'modified') {
-                    $toTable->$column_name = JFactory::getDate()->toMySQL();
+                    $toTable->$column_name = MolajoFactory::getDate()->toMySQL();
 
                 } else if ($column_name == 'modified_by') {
-                    $toTable->$column_name = JFactory::getUser()->get('id');
+                    $toTable->$column_name = MolajoFactory::getUser()->get('id');
 
                 } else {
                     $toTable->$column_name = $column_value;
@@ -521,10 +521,10 @@ class MolajoModelEdit extends JModel
                     $column_name = MOLAJO_STATE_VERSION.' as '.$db->namequote('state');
 
                 } else if ($column_name == 'modified') {
-                    $column_name = '"'.JFactory::getDate()->toMySQL().'" as '.$db->namequote('modified');
+                    $column_name = '"'.MolajoFactory::getDate()->toMySQL().'" as '.$db->namequote('modified');
 
                 } else if ($column_name == 'modified_by') {
-                    $column_name = JFactory::getUser()->get('id').' as '.$db->namequote('modified_by');
+                    $column_name = MolajoFactory::getUser()->get('id').' as '.$db->namequote('modified_by');
 
                 } else if ($column_name == 'ordering') {
                     $column_name =  $db->namequote('version').' as '.$db->namequote('ordering');
@@ -541,7 +541,7 @@ class MolajoModelEdit extends JModel
         $db->setQuery( $insertQuery );
         if ($db->query()) {
         } else {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
 	}
 
@@ -612,10 +612,10 @@ class MolajoModelEdit extends JModel
                     $toTable->$column_name = 0;
 
                 } else if ($column_name == 'modified') {
-                    $toTable->$column_name = JFactory::getDate()->toMySQL();
+                    $toTable->$column_name = MolajoFactory::getDate()->toMySQL();
 
                 } else if ($column_name == 'modified_by') {
-                    $toTable->$column_name = JFactory::getUser()->get('id');
+                    $toTable->$column_name = MolajoFactory::getUser()->get('id');
 
                 } else {
                     $toTable->$column_name = $fromTable->$column_name;
@@ -666,7 +666,7 @@ class MolajoModelEdit extends JModel
         $db->setQuery( $deleteQuery );
         if ($db->query()) {
         } else {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
 	}
 
@@ -819,13 +819,13 @@ class MolajoModelEdit extends JModel
         }
 
         if ($table->checked_out == 0) {
-            if ($table->checkout(JFactory::getUser()->get('id'), $id)) {
+            if ($table->checkout(MolajoFactory::getUser()->get('id'), $id)) {
             } else {
                 $this->setError(JText::_('MOLAJO_ERROR_CHECKOUT_TASK'));
                 return false;
             }
         } else {
-            if ($table->checked_out == JFactory::getUser()->get('id')) {
+            if ($table->checked_out == MolajoFactory::getUser()->get('id')) {
             } else {
                 $this->setError(JText::_('MOLAJO_ERROR_DATA_ALREADY_CHECKED_OUT_TO_SOMEONE_ELSE'));
                 return false;
@@ -852,7 +852,7 @@ class MolajoModelEdit extends JModel
      */
     public function reorder($ids, $delta = 0)
     {
-        $user	= JFactory::getUser();
+        $user	= MolajoFactory::getUser();
         $table	= $this->getTable();
         $ids	= (array) $ids;
         $result	= true;
@@ -929,7 +929,7 @@ class MolajoModelEdit extends JModel
     {
             $table = $this->getTable();
             $conditions	= array();
-            $user = JFactory::getUser();
+            $user = MolajoFactory::getUser();
 
             if (empty($ids)) {
                     return JError::raiseWarning(500, 'MOLAJO_ERROR_NO_ITEMS_SELECTED');

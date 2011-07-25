@@ -126,7 +126,7 @@ class MolajoApplicationHelper
 	public static function getApplicationInfoDB ($id = null, $byName = false)
 	{
         // if even this single next statement is run
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         // Warning: mysqli::ping() [mysqli.ping]: Couldn't fetch mysqli in /Users/amystephen/Sites/molajo/libraries/joomla/database/database/mysqli.php on line 188
         $query = $db->getQuery(true);
 
@@ -146,7 +146,7 @@ class MolajoApplicationHelper
 
         if ($results = $db->loadObjectList()) {
         } else {
-            JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -310,7 +310,7 @@ class MolajoApplicationHelper
 	public static function parseXMLInstallFile($path)
 	{
 		// Read the file to see if it's a valid component XML file
-		if( ! $xml = JFactory::getXML($path))
+		if( ! $xml = MolajoFactory::getXML($path))
 		{
 			return false;
 		}
@@ -362,7 +362,7 @@ class MolajoApplicationHelper
 	public static function parseXMLLangMetaFile($path)
 	{
 		// Read the file to see if it's a valid component XML file
-		$xml = JFactory::getXML($path);
+		$xml = MolajoFactory::getXML($path);
 
 		if( ! $xml)
 		{

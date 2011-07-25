@@ -339,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `publish_up` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish Begin Date and Time',
   `publish_down` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish End Date and Time',
   `version` INT (11) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Version Number',
-  `version_of_id` INT (11) NULL COMMENT 'Category ID associated with the Primary Key',
+  `version_of_id` INT (11) NULL COMMENT 'Primary ID for this Version',
   `state_prior_to_version` INT (11) UNSIGNED NULL COMMENT 'State value prior to creating this version copy and changing the state to Version',
 
   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT 'Created Date and Time',

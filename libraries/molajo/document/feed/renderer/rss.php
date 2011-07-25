@@ -33,16 +33,16 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	 */
 	public function render()
 	{
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 
 		// Gets and sets timezone offset from site configuration
 		$tz	= new DateTimeZone($app->getCfg('offset'));
-		$now	= JFactory::getDate();
+		$now	= MolajoFactory::getDate();
 		$now->setTimeZone($tz);
 
 		$data	= &$this->_doc;
 
-		$uri = JFactory::getURI();
+		$uri = MolajoFactory::getURI();
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 		$syndicationURL = JRoute::_('&format=feed&type=rss');
 
@@ -98,7 +98,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 			$feed.= "		<webMaster>".htmlspecialchars($data->webmaster, ENT_COMPAT, 'UTF-8')."</webMaster>\n";
 		}
 		if ($data->pubDate!="") {
-			$pubDate = JFactory::getDate($data->pubDate);
+			$pubDate = MolajoFactory::getDate($data->pubDate);
 			$pubDate->setTimeZone($tz);
 			$feed.= "		<pubDate>".htmlspecialchars($pubDate->toRFC822(true), ENT_COMPAT, 'UTF-8')."</pubDate>\n";
 		}
@@ -170,7 +170,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 				$feed.= "			<comments>".htmlspecialchars($data->items[$i]->comments, ENT_COMPAT, 'UTF-8')."</comments>\n";
 			}
 			if ($data->items[$i]->date!="") {
-				$itemDate = JFactory::getDate($data->items[$i]->date);
+				$itemDate = MolajoFactory::getDate($data->items[$i]->date);
 				$itemDate->setTimeZone($tz);
 				$feed.= "			<pubDate>".htmlspecialchars($itemDate->toRFC822(true), ENT_COMPAT, 'UTF-8')."</pubDate>\n";
 			}

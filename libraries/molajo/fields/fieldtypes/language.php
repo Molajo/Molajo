@@ -36,7 +36,7 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
 
 
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Detect the native language.
 		$native = JLanguageHelper::detectLanguage();
@@ -51,7 +51,7 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
 		}
 
 		// If a language is already set in the session, use this instead
-		$session = JFactory::getSession()->get('setup.options', array());
+		$session = MolajoFactory::getSession()->get('setup.options', array());
 		if (!empty($session['language'])){
 			$native = $session['language'];
 		}

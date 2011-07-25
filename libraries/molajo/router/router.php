@@ -30,7 +30,7 @@ class MolajoRouter extends JObject
      */
     protected function getKey ($ccyy, $mm, $dd, $alias, $tableParam)
     {
-        $db = JFactory::getDBO();
+        $db = MolajoFactory::getDBO();
     
         $query = $db->getQuery(true);
         $query->select('MIN(id)');
@@ -179,7 +179,7 @@ class MolajoRouter extends JObject
      */
 	protected static function _findItem ($needles = null, $componentOptionParam)
 	{
-		$menus		= JFactory::getApplication()->getMenu('site');
+		$menus		= MolajoFactory::getApplication()->getMenu('site');
 
 		// Prepare the reverse lookup array.
 		if (self::$lookup === null) {

@@ -472,7 +472,7 @@ class MolajoUser extends JObject
 
 			// Set the registration timestamp
 
-			$this->set('registerDate', JFactory::getDate()->toMySQL());
+			$this->set('registerDate', MolajoFactory::getDate()->toMySQL());
 
 			// Check that username is not greater than 150 characters
 			$username = $this->get('username');
@@ -508,7 +508,7 @@ class MolajoUser extends JObject
 		}
 
 		// TODO: this will be deprecated as of the ACL implementation
-//		$db = JFactory::getDbo();
+//		$db = MolajoFactory::getDbo();
 
 		if (array_key_exists('params', $array)) {
 			$params	= '';
@@ -566,7 +566,7 @@ class MolajoUser extends JObject
 			//
 			// @todo ACL - this needs to be acl checked
 			//
-			$my = JFactory::getUser();
+			$my = MolajoFactory::getUser();
 
 			//are we creating a new user
 			$isNew = empty($this->id);

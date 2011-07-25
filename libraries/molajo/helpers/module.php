@@ -71,7 +71,7 @@ abstract class MolajoModuleHelper
 	 */
 	public static function &getModules($position)
 	{
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$position	= strtolower($position);
 		$result		= array();
 
@@ -124,7 +124,7 @@ abstract class MolajoModuleHelper
 		static $chrome;
 
 		$option = JRequest::getCmd('option');
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 
 		// Record the scope.
 		$scope	= $app->scope;
@@ -143,7 +143,7 @@ abstract class MolajoModuleHelper
 		// Load the module
 		if (!$module->user && file_exists($path))
 		{
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 			// 1.5 or Core then 1.6 3PD
 				$lang->load($module->module, MOLAJO_PATH_BASE, null, false, false)
 			||	$lang->load($module->module, dirname($path), null, false, false)
@@ -215,7 +215,7 @@ abstract class MolajoModuleHelper
 	 */
 	public static function getLayoutPath($module, $layout = 'default')
 	{
-		$template = JFactory::getApplication()->getTemplate();
+		$template = MolajoFactory::getApplication()->getTemplate();
 		$defaultLayout = $layout;
 		if (strpos($layout, ':') !== false )
 		{
@@ -253,16 +253,16 @@ abstract class MolajoModuleHelper
 		}
 
 		$Itemid 	= JRequest::getInt('Itemid');
-		$app		= JFactory::getApplication();
-		$user		= JFactory::getUser();
-		$lang 		= JFactory::getLanguage()->getTag();
+		$app		= MolajoFactory::getApplication();
+		$user		= MolajoFactory::getUser();
+		$lang 		= MolajoFactory::getLanguage()->getTag();
 		$applicationId 	= (int) $app->getApplicationId();
 
-		$cache 		= JFactory::getCache ('com_modules', '');
+		$cache 		= MolajoFactory::getCache ('com_modules', '');
 		$cacheid 	= md5(serialize(array($Itemid, $applicationId, $lang)));
 
 		if (!($clean = $cache->get($cacheid))) {
-			$db	= JFactory::getDbo();
+			$db	= MolajoFactory::getDbo();
 
 			$query = $db->getQuery(true);
 			$query->select('id, title, module, position, content, showtitle, params, mm.menuid');
@@ -270,7 +270,7 @@ abstract class MolajoModuleHelper
 			$query->join('LEFT','#__modules_menu AS mm ON mm.moduleid = m.id');
 			$query->where('m.published = 1');
 
-			$date = JFactory::getDate();
+			$date = MolajoFactory::getDate();
 			$now = $date->toMySQL();
 			$nullDate = $db->getNullDate();
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
@@ -377,9 +377,9 @@ $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m')
 			$cacheparams->cachegroup = $module->module;
 		}
 
-		$user = JFactory::getUser();
-		$cache = JFactory::getCache($cacheparams->cachegroup, 'callback');
-		$conf = JFactory::getConfig();
+		$user = MolajoFactory::getUser();
+		$cache = MolajoFactory::getCache($cacheparams->cachegroup, 'callback');
+		$conf = MolajoFactory::getConfig();
 
 		// Turn cache off for internal callers if parameters are set to off and for all logged in users
 		if($moduleparams->get('owncache', null) === 0  || $conf->get('caching') == 0 || $user->get('id')) {

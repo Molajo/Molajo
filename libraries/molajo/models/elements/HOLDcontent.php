@@ -28,9 +28,9 @@ class MolajoElementContent extends JElement
 
 	function fetchElement($name, $value, &$node, $control_name)
 	{
-		$app		= JFactory::getApplication();
-		$db			= JFactory::getDbo();
-		$doc		= JFactory::getDocument();
+		$app		= MolajoFactory::getApplication();
+		$db			= MolajoFactory::getDbo();
+		$doc		= MolajoFactory::getDocument();
 		$template	= $app->getTemplate();
 		$fieldName	= $control_name.'['.$name.']';
 		$article = MolajoTable::getInstance('content');

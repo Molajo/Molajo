@@ -44,7 +44,7 @@ class MolajoFormFieldColorpicker extends MolajoFormField
 
             $onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 
-            $document =& JFactory::getDocument();
+            $document =& MolajoFactory::getDocument();
             $document->addScript('../media/molajo/js/jscolor.js' );
 
             return '<input type="text" name="'.$this->name.'" id="'.$this->id.'"' .

@@ -294,7 +294,7 @@ class MolajoParameter extends JRegistry
 		$result = false;
 
 		if ($path) {
-			$xml = JFactory::getXMLParser('Simple');
+			$xml = MolajoFactory::getXMLParser('Simple');
 
 			if ($xml->loadFile($path)) {
 				if ($params = $xml->document->params) {

@@ -161,7 +161,7 @@ class MolajoApplication extends JObject
 	public function initialise($options = array())
 	{
 		// Set the language in the class.
-		$config = JFactory::getConfig();
+		$config = MolajoFactory::getConfig();
 
 		// Check that we were given a language in the array (since by default may be blank).
 		if (isset($options['language'])) {
@@ -169,7 +169,7 @@ class MolajoApplication extends JObject
 		}
 
 		// Set user specific editor.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$editor	= $user->getParam('editor', $this->getCfg('editor'));
 		if (!MolajoPluginHelper::isEnabled('editors', $editor)) {
 			$editor	= $this->getCfg('editor');
@@ -224,7 +224,7 @@ class MolajoApplication extends JObject
 	 */
 	public function dispatch($component = null)
 	{
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 
 		$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 		$document->setDescription($this->getCfg('MetaDesc'));
@@ -257,7 +257,7 @@ class MolajoApplication extends JObject
 		);
 
 		// Parse the document.
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->parse($params);
 
 		// Trigger the onBeforeRender event.
@@ -343,7 +343,7 @@ class MolajoApplication extends JObject
 
 		// Persist messages if they exist.
 		if (count($this->_messageQueue)) {
-			$session = JFactory::getSession();
+			$session = MolajoFactory::getSession();
 			$session->set('application.queue', $this->_messageQueue);
 		}
 
@@ -353,7 +353,7 @@ class MolajoApplication extends JObject
 			echo "<script>document.location.href='$url';</script>\n";
 		}
 		else {
-			$document = JFactory::getDocument();
+			$document = MolajoFactory::getDocument();
 			$navigator = JBrowser::getInstance();
 			if ($navigator->isBrowser('msie')) {
 				// MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
@@ -387,7 +387,7 @@ class MolajoApplication extends JObject
 	{
 		// For empty queue, if messages exists in the session, enqueue them first.
 		if (!count($this->_messageQueue)) {
-			$session = JFactory::getSession();
+			$session = MolajoFactory::getSession();
 			$sessionQueue = $session->get('application.queue');
 
 			if (count($sessionQueue)) {
@@ -411,7 +411,7 @@ class MolajoApplication extends JObject
 	{
 		// For empty queue, if messages exists in the session, enqueue them.
 		if (!count($this->_messageQueue)) {
-			$session = JFactory::getSession();
+			$session = MolajoFactory::getSession();
 			$sessionQueue = $session->get('application.queue');
 
 			if (count($sessionQueue)) {
@@ -437,7 +437,7 @@ class MolajoApplication extends JObject
 	 */
 	public function getCfg($varname, $default=null)
 	{
-		$config = JFactory::getConfig();
+		$config = MolajoFactory::getConfig();
 		return $config->get('' . $varname, $default);
 	}
 
@@ -478,7 +478,7 @@ class MolajoApplication extends JObject
 	 */
 	public function getUserState($key, $default = null)
 	{
-		$session	= JFactory::getSession();
+		$session	= MolajoFactory::getSession();
 		$registry	= $session->get('registry');
 
 		if (!is_null($registry)) {
@@ -500,7 +500,7 @@ class MolajoApplication extends JObject
 	 */
 	public function setUserState($key, $value)
 	{
-		$session	= JFactory::getSession();
+		$session	= MolajoFactory::getSession();
 		$registry	= $session->get('registry');
 
 		if (!is_null($registry)) {
@@ -670,7 +670,7 @@ class MolajoApplication extends JObject
 		$retval = false;
 
 		// Get a user object from the MolajoApplication.
-		$user = JFactory::getUser($userid);
+		$user = MolajoFactory::getUser($userid);
 
 		// Build the credentials array.
 		$parameters['username']	= $user->get('username');
@@ -731,7 +731,7 @@ class MolajoApplication extends JObject
 	static public function getRouter($name = null, array $options = array())
 	{
 		if (!isset($name)) {
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			$name = $app->getName();
 		}
 
@@ -757,7 +757,7 @@ class MolajoApplication extends JObject
 	 */
 	static public function stringURLSafe($string)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		if (self::getCfg('unicodeslugs') == 1) {
 			$output = JFilterOutput::stringURLUnicodeSlug($string);
@@ -830,7 +830,7 @@ class MolajoApplication extends JObject
 	 */
 	public static function getHash($seed)
 	{
-		$conf = JFactory::getConfig();
+		$conf = MolajoFactory::getConfig();
 
 		return md5($conf->get('secret').$seed);
 	}
@@ -840,7 +840,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @param   string  $file  The path to the configuration file
 	 *
-	 * return   object  A JConfig object
+	 * return   object  A MolajoConfig object
 	 *
 	 * @since   11.1
 	 */
@@ -848,11 +848,11 @@ class MolajoApplication extends JObject
 	{
 		require_once $file;
 
-		// Create the JConfig object.
-		$config = new JConfig();
+		// Create the MolajoConfig object.
+		$config = new MolajoConfig();
 
 		// Get the global configuration object.
-		$registry = JFactory::getConfig();
+		$registry = MolajoFactory::getConfig();
 
 		// Load the configuration values into the registry.
 		$registry->loadObject($config);
@@ -894,11 +894,11 @@ class MolajoApplication extends JObject
 				break;
 		}
 
-		$session = JFactory::getSession($options);
+		$session = MolajoFactory::getSession($options);
 
 		//TODO: At some point we need to get away from having session data always in the db.
 
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 
 		// Remove expired sessions from the database.
 		$time = time();
@@ -936,9 +936,9 @@ class MolajoApplication extends JObject
 	 */
 	public function checkSession()
 	{
-		$db 		= JFactory::getDBO();
-		$session 	= JFactory::getSession();
-		$user		= JFactory::getUser();
+		$db 		= MolajoFactory::getDBO();
+		$session 	= MolajoFactory::getSession();
+		$user		= MolajoFactory::getUser();
 
 		$db->setQuery(
 			'SELECT `session_id`' .

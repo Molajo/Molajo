@@ -44,7 +44,7 @@ class MolajoFormFieldPrefix extends MolajoFormField
 			$size = 10;
 		}
 
-		$session = JFactory::getSession()->get('setup.options', array());
+		$session = MolajoFactory::getSession()->get('setup.options', array());
 		if (empty($session->db_prefix)) {
         } else {
             $prefix = $session->db_prefix;
@@ -52,7 +52,7 @@ class MolajoFormFieldPrefix extends MolajoFormField
 
         if ($prefix) {
         } else {
-            $prefix = JFactory::getApplication()->getCfg('prefix');
+            $prefix = MolajoFactory::getApplication()->getCfg('prefix');
         }
 
         if ($prefix) {
@@ -82,9 +82,9 @@ class MolajoFormFieldPrefix extends MolajoFormField
     protected function getPrefix ($size=10, $count=100)
     {
         // For an existing table, retrieve all table names
-        $db = JFactory::getApplication()->getCfg('db');
+        $db = MolajoFactory::getApplication()->getCfg('db');
         if ($db) {
-            $tables = JFactory::getDbo()->getTableList();
+            $tables = MolajoFactory::getDbo()->getTableList();
         } else {
             $tables = array();
         }

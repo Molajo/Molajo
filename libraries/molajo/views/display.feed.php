@@ -21,9 +21,9 @@ class ContentViewCategory extends JView
 {
 	function display()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
-		$doc	= JFactory::getDocument();
+		$doc	= MolajoFactory::getDocument();
 		$params = $app->getParams();
 		$feedEmail	= (@$app->getCfg('feed_email')) ? $app->getCfg('feed_email') : 'author';
 

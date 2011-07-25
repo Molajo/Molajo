@@ -36,7 +36,7 @@ abstract class MolajoHtmlAccess
 	 */
 	public static function level($name, $selected, $attribs = '', $params = true, $id = false)
 	{
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('a.id AS value, a.title AS text');
@@ -84,7 +84,7 @@ abstract class MolajoHtmlAccess
 	 */
 	public static function usergroup($name, $selected, $attribs = '', $allowAll = true)
 	{
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
 			' FROM #__groups AS a' .
@@ -131,10 +131,10 @@ abstract class MolajoHtmlAccess
 
 		$count++;
 
-		$isSuperAdmin = JFactory::getUser()->authorise('admin');
+		$isSuperAdmin = MolajoFactory::getUser()->authorise('admin');
 
 
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'SELECT a.*, COUNT(DISTINCT b.id) AS level' .
 			' FROM #__groups AS a' .
@@ -233,7 +233,7 @@ abstract class MolajoHtmlAccess
 	public static function assetgroups($config = array())
 	{
 		if (empty(JHtmlAccess::$asset_groups)) {
-			$db		= JFactory::getDbo();
+			$db		= MolajoFactory::getDbo();
 			$query	= $db->getQuery(true);
 
 			$query->select('a.id AS value, a.title AS text');

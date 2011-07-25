@@ -91,7 +91,7 @@ class MolajoAttributeAuthor extends MolajoAttribute
 	 */
 	protected function verifyValue($id)
 	{
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('a.id AS value');

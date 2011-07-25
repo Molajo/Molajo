@@ -180,9 +180,9 @@ abstract class MolajoPluginHelper
 			return $plugins;
 		}
 
-		$cache 	= JFactory::getCache('com_plugins', '');
+		$cache 	= MolajoFactory::getCache('com_plugins', '');
 
-        $db		= JFactory::getDbo();
+        $db		= MolajoFactory::getDbo();
         $query	= $db->getQuery(true);
 
         $query->select('folder AS type, element AS name, params')

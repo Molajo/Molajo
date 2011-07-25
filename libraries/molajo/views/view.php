@@ -69,16 +69,16 @@ class MolajoView extends JView
     public function display($tpl = null)
     {
         /** @var $this->app */
-        $this->app = JFactory::getApplication();
+        $this->app = MolajoFactory::getApplication();
         
         /** @var $this->system */
-        $this->system = JFactory::getConfig();
+        $this->system = MolajoFactory::getConfig();
 
         /** @var $this->document */
-        $this->document = JFactory::getDocument();
+        $this->document = MolajoFactory::getDocument();
 
         /** @var $this->user */
-        $this->user = JFactory::getUser();
+        $this->user = MolajoFactory::getUser();
 
         /** Set Page Meta */
 //		$pageModel = JModel::getInstance('Page', 'MolajoModel', array('ignore_request' => true));
@@ -100,7 +100,7 @@ class MolajoView extends JView
     protected function findPath ($layout)
     {
         /** path: template **/
-        $template = JFactory::getApplication()->getTemplate();
+        $template = MolajoFactory::getApplication()->getTemplate();
         $templatePath = MOLAJO_PATH_THEMES.'/'.$template.'/html/';
 
         /** path: component **/
@@ -268,7 +268,7 @@ class MolajoView extends JView
      */
     protected function renderMolajoLayoutLanguage ($layoutFolder)
     {
-        $language = JFactory::getLanguage();
+        $language = MolajoFactory::getLanguage();
         $language->load('layouts', MOLAJO_LAYOUTS, $language->getDefault(), true, true);
         $language->load('layouts_'.$this->state->get('request.layout'), $layoutFolder, $language->getDefault(), true, true);
     }

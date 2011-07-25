@@ -33,7 +33,7 @@ class MolajoHelp
 	static function createURL($ref, $useComponent = false, $override = null, $component = null)
 	{
 		$local	= false;
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 
 		if (is_null($component)) {
 			$component = JApplicationHelper::getComponentName();
@@ -48,7 +48,7 @@ class MolajoHelp
 		}
 		else {
 			// Get the user help URL.
-			$user		= JFactory::getUser();
+			$user		= MolajoFactory::getUser();
 			$url		= $user->getParam('helpsite');
 
 			// If user hasn't specified a help URL, then get the global one.
@@ -85,7 +85,7 @@ class MolajoHelp
 		/*
 		 *  Replace substitution codes in the URL.
 		 */
-		$lang		= JFactory::getLanguage();
+		$lang		= MolajoFactory::getLanguage();
 		$version 	= new JVersion;
 		$jver		= explode( '.', $version->getShortVersion() );
 		$jlang		= explode( '-', $lang->getTag() );
@@ -154,7 +154,7 @@ class MolajoHelp
 		$xml = false;
 
 		if (!empty($pathToXml)) {
-			$xml = JFactory::getXML($pathToXml);
+			$xml = MolajoFactory::getXML($pathToXml);
 		}
 
 		if (!$xml) {

@@ -183,7 +183,7 @@ class MolajoTableUser extends MolajoTable
 
 		// Set the registration timestamp
 		if ($this->registerDate == null || $this->registerDate == $this->_db->getNullDate() ) {
-			$this->registerDate = JFactory::getDate()->toMySQL();
+			$this->registerDate = MolajoFactory::getDate()->toMySQL();
 		}
 
 
@@ -397,7 +397,7 @@ class MolajoTableUser extends MolajoTable
 		}
 
 		// If no timestamp value is passed to functon, than current time is used.
-		$date = JFactory::getDate($timeStamp);
+		$date = MolajoFactory::getDate($timeStamp);
 
 		// Update the database row for the user.
 		$this->_db->setQuery(

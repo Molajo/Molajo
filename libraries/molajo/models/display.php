@@ -168,8 +168,8 @@ class MolajoModelDisplay extends JModel
             $this->context .= '.'.JRequest::getCmd('layout');
         }
 
-        if (JFactory::getApplication()->getName() == 'site') {
-           $this->params = JFactory::getApplication()->getParams();
+        if (MolajoFactory::getApplication()->getName() == 'site') {
+           $this->params = MolajoFactory::getApplication()->getParams();
    //         $this->_mergeParams ();
 //		$this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
@@ -244,18 +244,18 @@ class MolajoModelDisplay extends JModel
         }
 
         /** list limit **/
-        $limit = (int) JFactory::getApplication()->getUserStateFromRequest('global.list.limit', 'limit',
-                                                                           JFactory::getApplication()->getCfg('list_limit'));
+        $limit = (int) MolajoFactory::getApplication()->getUserStateFromRequest('global.list.limit', 'limit',
+                                                                           MolajoFactory::getApplication()->getCfg('list_limit'));
         $this->setState('list.limit', (int) $limit);
 
         /** list start **/
-        $value = JFactory::getApplication()->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0);
+        $value = MolajoFactory::getApplication()->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0);
         $limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
         $this->setState('list.start', (int) $limitstart);
 
         /** ordering by field **/
         $ordering = 'a.title';
-        $value = JFactory::getApplication()->getUserStateFromRequest($this->context.'.ordercol', 'filter_order', $ordering);
+        $value = MolajoFactory::getApplication()->getUserStateFromRequest($this->context.'.ordercol', 'filter_order', $ordering);
         if (strpos($value, 'a.')) {
             $searchValue = substr($value, (strpos($value, 'a.') + 1), strlen($value) - strpos($value, 'a.'));
         } else {
@@ -266,7 +266,7 @@ class MolajoModelDisplay extends JModel
         } else {
             $ordering = 'a.title';
         }
-        JFactory::getApplication()->setUserState($this->context.'.ordercol', $ordering);
+        MolajoFactory::getApplication()->setUserState($this->context.'.ordercol', $ordering);
 
         $this->setState('list.ordering', $value);
 
@@ -278,11 +278,11 @@ class MolajoModelDisplay extends JModel
 
         /** ordering direction **/
         $direction = 'ASC';
-        $value = JFactory::getApplication()->getUserStateFromRequest($this->context.'.orderdirn', 'filter_order_Dir', $direction);
+        $value = MolajoFactory::getApplication()->getUserStateFromRequest($this->context.'.orderdirn', 'filter_order_Dir', $direction);
         if (in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
         } else {
             $value = $direction;
-            JFactory::getApplication()->setUserState($this->context.'.orderdirn', $value);
+            MolajoFactory::getApplication()->setUserState($this->context.'.orderdirn', $value);
         }
         $this->setState('list.direction', $value);
 
@@ -322,7 +322,7 @@ class MolajoModelDisplay extends JModel
         if (class_exists($fieldClassName)) {
             $molajoSpecificFieldClass = new $fieldClassName();
         } else {
-            JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
             return false;
         }
 
@@ -416,7 +416,7 @@ class MolajoModelDisplay extends JModel
 
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publilshing) **/
         $nullDate = $this->_db->Quote($this->_db->getNullDate());
-        $nowDate = $this->_db->Quote(JFactory::getDate()->toMySQL());
+        $nowDate = $this->_db->Quote(MolajoFactory::getDate()->toMySQL());
 
         /** retrieve names of json fields for this type of content **/
         $jsonFields = $this->molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
@@ -666,7 +666,7 @@ $items[$i]->checked_out = false;
         $this->query->join(' LEFT OUTER', '('.$subQuery.') AS maximumState ON maximumState.id = c.id ');
 
 /**
-			$date = JFactory::getDate();
+			$date = MolajoFactory::getDate();
 			$now = $date->toMySQL();
 			$nullDate = $db->getNullDate();
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
@@ -1028,7 +1028,7 @@ $items[$i]->checked_out = false;
 
         } else {
             if ($onlyWhereClause === true) {
-                JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.'.$fieldname);
@@ -1067,7 +1067,7 @@ $items[$i]->checked_out = false;
         $this->_db->setQuery($this->query->__toString());
 
         if (!$results = $this->_db->loadObjectList()) {
-            JFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -1109,7 +1109,7 @@ $items[$i]->checked_out = false;
         $this->_db->setQuery($this->query->__toString());
 
         if (!$results = $this->_db->loadObjectList()) {
-            JFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 

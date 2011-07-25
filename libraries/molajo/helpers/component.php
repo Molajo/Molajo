@@ -64,7 +64,7 @@ class MolajoComponentHelper
 	{
 		$result = self::getComponent($option, $strict);
 
-		return ($result->enabled | JFactory::getApplication()->isAdmin());
+		return ($result->enabled | MolajoFactory::getApplication()->isAdmin());
 	}
 
 	/**
@@ -97,11 +97,11 @@ class MolajoComponentHelper
 	public static function renderComponent($option, $params = array())
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 
 		// Load template language files.
 		$template	= $app->getTemplate(true)->template;
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", null, false, false)
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
@@ -122,11 +122,30 @@ class MolajoComponentHelper
 		$option	= preg_replace('/[^A-Z0-9_\.-]/i', '', $option);
 		$file	= substr($option, 4);
 
-		// Define component path.
-		define('MOLAJO_PATH_COMPONENT',				    MOLAJO_PATH_BASE . '/components/' . $option);
-		define('MOLAJO_PATH_COMPONENT_SITE',			MOLAJO_PATH_SITE . '/components/' . $option);
-		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR . '/components/' . $option);
-
+        if (defined('MOLAJO_PATH_COMPONENT')) {
+        } else {
+            define('MOLAJO_PATH_COMPONENT',	MOLAJO_PATH_BASE.'/components/'.$option);
+        }
+        if (defined('MOLAJO_PATH_COMPONENT_SITE')) {
+        } else {
+            define('MOLAJO_PATH_COMPONENT_SITE',	MOLAJO_PATH_SITE.'/components/'.$option);
+        }
+        if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) {
+        } else {
+            define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option);
+        }
+        if (defined('JPATH_COMPONENT')) {
+        } else {
+            define('JPATH_COMPONENT', 'MOLAJO_PATH_COMPONENT');
+        }
+        if (defined('JPATH_COMPONENT_SITE')) {
+        } else {
+            define('JPATH_COMPONENT_SITE', 'MOLAJO_PATH_COMPONENT_ADMINISTRATOR');
+        }
+        if (defined('JPATH_COMPONENT_ADMINISTRATOR')) {
+        } else {
+            define('JPATH_COMPONENT_ADMINISTRATOR', 'MOLAJO_PATH_COMPONENT_ADMINISTRATOR');
+        }
 		// Get component path
 		if ($app->isAdmin() && file_exists(MOLAJO_PATH_COMPONENT . '/admin.'.$file.'.php')) {
 			$path = MOLAJO_PATH_COMPONENT . '/admin.'.$file.'.php';
@@ -180,7 +199,7 @@ class MolajoComponentHelper
 	 */
 	protected static function _load($option)
 	{
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$query->select('extension_id AS "id", element AS "option", params, enabled');
 		$query->from('#__extensions');
@@ -188,7 +207,7 @@ class MolajoComponentHelper
 		$query->where('`element` = '.$db->quote($option));
 		$db->setQuery($query);
 
-		$cache = JFactory::getCache('_system','callback');
+		$cache = MolajoFactory::getCache('_system','callback');
 
 		self::$_components[$option] =  $cache->get(array($db, 'loadObject'), null, $option, false);
 

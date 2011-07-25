@@ -25,7 +25,7 @@ class MolajoValidateHelper
      */
     public function checkRequest ()
     {
-        if (JFactory::getApplication()->getName() == 'site') {
+        if (MolajoFactory::getApplication()->getName() == 'site') {
             return $this->checkAdministratorRequest();
         } else {
             return $this->checkAdministratorRequest();
@@ -114,7 +114,7 @@ if ($debug) {
 echo 'view (default): '.$lookupView.'<br />';
 }
             if ($lookupView === false) {
-                JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
+                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
                 return false;
             }
 
@@ -131,7 +131,7 @@ if ($debug) {
 echo 'ERROR: type of view not found - bad error';
 
 }
-            JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_VIEW_TYPE').' '.$lookupView, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_VIEW_TYPE').' '.$lookupView, 'error');
             return false;
 
         }
@@ -143,7 +143,7 @@ echo 'type (of view): '.$lookupViewType.'<br />';
         /** 6. Knowing both view and type, determine values for single and default **/
         $otherView = $molajoConfig->getViewMatch (MOLAJO_CONFIG_OPTION_ID_VIEW_PAIRS, $lookupView, $lookupViewType);
         if ($otherView === false) {
-            JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_MATCHING_VIEW').' '.$lookupView, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_MATCHING_VIEW').' '.$lookupView, 'error');
             return false;
         }
 
@@ -233,7 +233,7 @@ echo 'valid tasks for controller: '.$task.'<br />';
             }
 
             /** 10. validate view (display only) **/
-            if (JFactory::getApplication()->getName() == 'administrator') {
+            if (MolajoFactory::getApplication()->getName() == 'administrator') {
                 $folder = MOLAJO_PATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option').'/views/'.$view;
             } else {
                 $folder = MOLAJO_PATH_SITE.'/components/'.JRequest::getCmd('option').'/views/'.$view;
@@ -241,7 +241,7 @@ echo 'valid tasks for controller: '.$task.'<br />';
 
             if (JFolder::exists($folder)) {
             } else {
-                JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_VIEW_FOLDERNAMES').' '.$folder, 'error');
+                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_VIEW_FOLDERNAMES').' '.$folder, 'error');
                 return false;
             }
 
@@ -269,10 +269,10 @@ echo 'format (display only): '.$format.'<br />';
             $layout = JRequest::getCmd('layout', '');
 
             if ($layout == '') {
-                //if (JFactory::getApplication()->getName() == 'administrator') {
+                //if (MolajoFactory::getApplication()->getName() == 'administrator') {
                     $layout = 'default';
                 //} else {
-//                    $menus = JFactory::getApplication()->getMenu('site');
+//                    $menus = MolajoFactory::getApplication()->getMenu('site');
 //                    $active = $menus->getActive();
                     
 //                    if ($active && $active->component == $option) {
@@ -281,7 +281,7 @@ echo 'format (display only): '.$format.'<br />';
                 //}
             }
  
-            if (JFactory::getApplication()->getName() == 'administrator') {
+            if (MolajoFactory::getApplication()->getName() == 'administrator') {
                 $fileName = MOLAJO_PATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option').'/views/'.$view.'/tmpl/'.$layout.'.php';
                 if ($view == $defaultView && $layout == 'default') {
                     $layout = 'manager';
@@ -296,7 +296,7 @@ echo 'format (display only): '.$format.'<br />';
             if (JFile::exists($fileName)) {
 
             } else {
-                JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_LAYOUT').' '.$fileName, 'error');
+                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_LAYOUT').' '.$fileName, 'error');
                 return false;
             }
 

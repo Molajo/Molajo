@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Router
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -11,13 +11,15 @@ defined('MOLAJO') or die;
 /**
  * Class to create and parse routes for the site application
  *
- * @package		Joomla.Site
+ * @package		Molajo
  * @subpackage	Application
  * @since		1.5
  */
 class MolajoRouterSite extends MolajoRouter
 {
 	/**
+     * parse
+     * 
 	 * Parse the URI
 	 *
 	 * @param	object	The URI
@@ -28,7 +30,6 @@ class MolajoRouterSite extends MolajoRouter
 	{
 		$vars = array();
 
-		// Get the application
 		$app = JFactory::getApplication();
 
 		if ($app->getCfg('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
@@ -48,11 +49,11 @@ class MolajoRouterSite extends MolajoRouter
 
 			// Get the current entry point path relative to the site path.
 			$scriptPath = realpath($_SERVER['SCRIPT_FILENAME'] ? $_SERVER['SCRIPT_FILENAME'] : str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']));
-			$relativeScriptPath = str_replace('\\', '/', str_replace(JPATH_SITE, '', $scriptPath));
+			$relativeScriptPath = str_replace('\\', '/', str_replace(MOLAJO_PATH_SITE, '', $scriptPath));
 
 			// If a php file has been found in the request path, check to see if it is a valid file.
 			// Also verify that it represents the same file from the server variable for entry script.
-			if (file_exists(JPATH_SITE.$matches[0]) && ($matches[0] == $relativeScriptPath)) {
+			if (file_exists(MOLAJO_PATH_SITE.$matches[0]) && ($matches[0] == $relativeScriptPath)) {
 
 				// Remove the entry point segments from the request path for proper routing.
 				$path = str_replace($matches[0], '', $path);
@@ -77,6 +78,12 @@ class MolajoRouterSite extends MolajoRouter
 		return $vars;
 	}
 
+    /**
+     * build
+     *
+     * @param $url
+     * @return string
+     */
 	public function build($url)
 	{
 		$uri = parent::build($url);
@@ -107,6 +114,12 @@ class MolajoRouterSite extends MolajoRouter
 		return $uri;
 	}
 
+    /**
+     * _parseRawRoute
+     *
+     * @param $uri
+     * @return array
+     */
 	protected function _parseRawRoute(&$uri)
 	{
 		$vars	= array();
@@ -140,7 +153,8 @@ class MolajoRouterSite extends MolajoRouter
 		$this->setVar('Itemid', JRequest::getInt('Itemid', null));
 
 		// Only an Itemid  OR if filter language plugin set? Get the full information from the itemid
-		if (count($this->getVars()) == 1 || ( $app->getLanguageFilter() && count( $this->getVars()) == 2 )) {
+		if (count($this->getVars()) == 1
+            || ( $app->getLanguageFilter() && count( $this->getVars()) == 2 )) {
 			
 			$item = $menu->getItem($this->getVar('Itemid'));
 			if ($item !== NULL && is_array($item->query)) {
@@ -154,6 +168,12 @@ class MolajoRouterSite extends MolajoRouter
 		return $vars;
 	}
 
+    /**
+     * _parseSefRoute
+     *
+     * @param $uri
+     * @return array|string
+     */
 	protected function _parseSefRoute(&$uri)
 	{
 		$vars	= array();
@@ -240,7 +260,7 @@ class MolajoRouterSite extends MolajoRouter
 			$component = preg_replace('/[^A-Z0-9_\.-]/i', '', $this->_vars['option']);
 
 			// Use the component routing handler if it exists
-			$path = JPATH_SITE.DS.'components'.DS.$component.DS.'router.php';
+			$path = MOLAJO_PATH_SITE.'/components/'.$component.'/router.php';
 
 			if (file_exists($path) && count($segments)) {
 				if ($component != "com_search") { // Cheap fix on searches
@@ -272,10 +292,20 @@ class MolajoRouterSite extends MolajoRouter
 		return $vars;
 	}
 
-	protected function _buildRawRoute(&$uri)
-	{
-	}
+    /**
+     * _buildRawRoute
+     *
+     * @param $uri
+     * @return void
+     */
+	protected function _buildRawRoute(&$uri) {}
 
+    /**
+     * _buildSefRoute
+     *
+     * @param $uri
+     * @return
+     */
 	protected function _buildSefRoute(&$uri)
 	{
 		// Get the route
@@ -298,7 +328,7 @@ class MolajoRouterSite extends MolajoRouter
 		$tmp		= '';
 
 		// Use the component routing handler if it exists
-		$path = JPATH_SITE.DS.'components'.DS.$component.DS.'router.php';
+		$path = MOLAJO_PATH_SITE.DS.'components/'.$component.'/router.php';
 
 		// Use the custom routing handler if it exists
 		if (file_exists($path) && !empty($query)) {
@@ -365,6 +395,12 @@ class MolajoRouterSite extends MolajoRouter
 		$uri->setPath($route);
 	}
 
+    /**
+     * _processParseRules
+     *
+     * @param $uri
+     * @return array
+     */
 	protected function _processParseRules(&$uri)
 	{
 		// Process the attached parse rules
@@ -383,10 +419,17 @@ class MolajoRouterSite extends MolajoRouter
 		return $vars;
 	}
 
+    /**
+     * _processBuildRules
+     *
+     * @param $uri
+     * @return void
+     */
 	protected function _processBuildRules(&$uri)
 	{
 		// Make sure any menu vars are used if no others are specified
-		if (($this->_mode != JROUTER_MODE_SEF) && $uri->getVar('Itemid') && count($uri->getQuery(true)) == 2) {
+		if (($this->_mode != JROUTER_MODE_SEF)
+            && $uri->getVar('Itemid') && count($uri->getQuery(true)) == 2) {
 
 			$app	= JFactory::getApplication();
 			$menu	= $app->getMenu();
@@ -419,6 +462,12 @@ class MolajoRouterSite extends MolajoRouter
 		$uri->setPath($route);
 	}
 
+    /**
+     * _createURI
+     *
+     * @param $url
+     * @return JURI
+     */
 	protected function _createURI($url)
 	{
 		//Create the URI
@@ -453,7 +502,6 @@ class MolajoRouterSite extends MolajoRouter
 				}
 			}
 		}
-
 		return $uri;
 	}
 }

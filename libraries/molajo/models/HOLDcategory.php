@@ -81,9 +81,9 @@ class MolajoModelCategory extends JModel
             $this->setState('category.id', JRequest::getInt('id'));
 
             /** Merge Component and Menu Item Parameters */
-            $params = JFactory::getApplication()->getParams();
+            $params = MolajoFactory::getApplication()->getParams();
             $menuParams = new JRegistry;
-            if ($menu = JFactory::getApplication()->getMenu()->getActive()) {
+            if ($menu = MolajoFactory::getApplication()->getMenu()->getActive()) {
                 $menuParams->loadJSON($menu->params);
             }
             $mergedParams = clone $menuParams;
@@ -102,13 +102,13 @@ class MolajoModelCategory extends JModel
 
             // filter.order
             $itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
-            $orderCol = JFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
+            $orderCol = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
             if (!in_array($orderCol, $this->filter_fields)) {
                 $orderCol = 'a.ordering';
             }
             $this->setState('list.ordering', $orderCol);
 
-            $listOrder = JFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order_Dir',
+            $listOrder = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order_Dir',
                 'filter_order_Dir', '', 'cmd');
             if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', ''))) {
                 $listOrder = 'ASC';
@@ -123,7 +123,7 @@ class MolajoModelCategory extends JModel
                 $this->setState('list.links', $params->get('num_links'));
             }
             else {
-                $limit = JFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
+                $limit = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
             }
 
             $this->setState('list.limit', $limit);
@@ -136,7 +136,7 @@ class MolajoModelCategory extends JModel
                 $this->setState('filter.subcategories', true);
             }
 
-            $this->setState('filter.language',JFactory::getApplication()->getLanguageFilter());
+            $this->setState('filter.language',MolajoFactory::getApplication()->getLanguageFilter());
 
             $this->setState('layout', JRequest::getCmd('layout'));
         }
@@ -161,7 +161,7 @@ class MolajoModelCategory extends JModel
 
             if ($this->_articles === null && $category = $this->getCategory()) {
                 $model = JModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
-                $model->setState('params', JFactory::getApplication()->getParams());
+                $model->setState('params', MolajoFactory::getApplication()->getParams());
                 $model->setState('filter.category_id', $category->id);
                 $model->setState('filter.published', $this->getState('filter.published'));
                 $model->setState('filter.access', $this->getState('filter.access'));
@@ -204,8 +204,8 @@ class MolajoModelCategory extends JModel
             $db			= $this->getDbo();
             $params		= $this->state->params;
             $itemid		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
-            $orderCol	= JFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
-            $orderDirn	= JFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
+            $orderCol	= MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
+            $orderDirn	= MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
             $orderby	= ' ';
 
             if (!in_array($orderCol, $this->filter_fields)) {
@@ -264,12 +264,12 @@ class MolajoModelCategory extends JModel
 
                 // Compute selected asset permissions.
                 if (is_object($this->_item)) {
-                    $user	= JFactory::getUser();
-                    $userId	= JFactory::getUser()->get('id');
+                    $user	= MolajoFactory::getUser();
+                    $userId	= MolajoFactory::getUser()->get('id');
                     $asset	= 'com_articles.category.'.$this->_item->id;
 
                     // Check general create permission.
-                    if (JFactory::getUser()->authorise('create', $asset)) {
+                    if (MolajoFactory::getUser()->authorise('create', $asset)) {
                         $this->_item->getParams()->set('access-create', true);
                     }
 

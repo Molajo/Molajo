@@ -133,7 +133,7 @@ class MolajoTableContent extends MolajoTable
         $this->_getAlias();
 
         if (trim(str_replace('-','',$this->alias)) == '') {
-            $this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
+            $this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
         }
 
         /** text fields **/
@@ -178,8 +178,8 @@ class MolajoTableContent extends MolajoTable
      */
     public function store($updateNulls = false)
     {
-        $date = JFactory::getDate();
-        $user = JFactory::getUser();
+        $date = MolajoFactory::getDate();
+        $user = MolajoFactory::getUser();
 
         if ($this->id) {
             $this->modified	= $date->toMySQL();
@@ -204,7 +204,7 @@ class MolajoTableContent extends MolajoTable
         $this->_getAlias();
 
         if (trim(str_replace('-','',$this->alias)) == '') {
-            $this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
+            $this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
         }
 
         return parent::store($updateNulls);

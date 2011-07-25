@@ -130,7 +130,7 @@ class MolajoControllerRedirect extends MolajoController
 
         /** cancel **/
         if ($task == 'cancel') {
-            if (JFactory::getApplication()->getName() == 'site') {
+            if (MolajoFactory::getApplication()->getName() == 'site') {
                 if ($this->id == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
@@ -295,6 +295,6 @@ class MolajoControllerRedirect extends MolajoController
         }
         
         /** redirect **/
-        JFactory::getApplication()->redirect(JRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
+        MolajoFactory::getApplication()->redirect(JRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
     }
 }

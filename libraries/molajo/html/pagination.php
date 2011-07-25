@@ -254,7 +254,7 @@ class MolajoPagination extends JObject
 	 */
 	public function getPagesLinks()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Build the page navigation list.
 		$data = $this->_buildDataObject();
@@ -348,7 +348,7 @@ class MolajoPagination extends JObject
 	 */
 	public function getListFooter()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		$list = array();
 		$list['prefix']			= $this->prefix;
@@ -378,7 +378,7 @@ class MolajoPagination extends JObject
 	 */
 	public function getLimitBox()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Initialise variables.
 		$limits = array ();
@@ -482,7 +482,7 @@ class MolajoPagination extends JObject
 
 	protected function _item_active(&$item)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		if ($app->isAdmin())
 		{
 			if ($item->base > 0) {
@@ -499,7 +499,7 @@ class MolajoPagination extends JObject
 
 	protected function _item_inactive(&$item)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		if ($app->isAdmin()) {
 			return "<span>".$item->text."</span>";
 		}

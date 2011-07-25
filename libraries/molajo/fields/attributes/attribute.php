@@ -128,7 +128,7 @@ class MolajoAttribute
         }
 
         if ($reportError === true) {
-            JFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME').' '.$class.' '.$classFile, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME').' '.$class.' '.$classFile, 'error');
             return false;
         }
 

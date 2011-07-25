@@ -80,7 +80,7 @@ abstract class MolajoTable extends JObject
 		}
 
         if ((int) $this->access == 0) {
-            $this->access = (int) JFactory::getConfig()->get('access');
+            $this->access = (int) MolajoFactory::getConfig()->get('access');
         }
 
     }
@@ -150,8 +150,8 @@ abstract class MolajoTable extends JObject
 			}
 		}
 
-		// If a database object was passed in the configuration array use it, otherwise get the global one from JFactory.
-		$db = isset($config['dbo']) ? $config['dbo'] : JFactory::getDbo();
+		// If a database object was passed in the configuration array use it, otherwise get the global one from MolajoFactory.
+		$db = isset($config['dbo']) ? $config['dbo'] : MolajoFactory::getDbo();
 
 		// Instantiate a new table class and return it.
 		return new $tableClass($db);
@@ -654,7 +654,7 @@ abstract class MolajoTable extends JObject
 		}
 
 		// Get the current time in MySQL format.
-		$time = JFactory::getDate()->toMysql();
+		$time = MolajoFactory::getDate()->toMysql();
 
 		// Check the row out by primary key.
 		$query = $this->_db->getQuery(true);
@@ -799,7 +799,7 @@ abstract class MolajoTable extends JObject
 			return false;
 		}
 
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 		$db->setQuery(
 			'SELECT COUNT(userid)' .
 			' FROM '.$db->quoteName('#__session') .

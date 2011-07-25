@@ -43,7 +43,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 	public function fetchHead(&$document)
 	{
 		// Trigger the onBeforeCompileHead event (skip for installation, since it causes an error)
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$app->triggerEvent('onBeforeCompileHead');
 		// Get line endings
 		$lnEnd	= $document->_getLineEnd();

@@ -39,7 +39,7 @@ abstract class MolajoUserHelper
 		if (!in_array($groupId, $user->groups))
 		{
 			// Get the title of the group.
-			$db	= JFactory::getDbo();
+			$db	= MolajoFactory::getDbo();
 			$db->setQuery(
 				'SELECT `title`' .
 				' FROM `#__groups`' .
@@ -67,11 +67,11 @@ abstract class MolajoUserHelper
 		}
 
 		// Set the group data for any preloaded user objects.
-		$temp = JFactory::getUser((int) $userId);
+		$temp = MolajoFactory::getUser((int) $userId);
 		$temp->groups = $user->groups;
 
 		// Set the group data for the user object in the session.
-		$temp = JFactory::getUser();
+		$temp = MolajoFactory::getUser();
 		if ($temp->id == $userId) {
 			$temp->groups = $user->groups;
 		}
@@ -120,11 +120,11 @@ abstract class MolajoUserHelper
 		}
 
 		// Set the group data for any preloaded user objects.
-		$temp = JFactory::getUser((int) $userId);
+		$temp = MolajoFactory::getUser((int) $userId);
 		$temp->groups = $user->groups;
 
 		// Set the group data for the user object in the session.
-		$temp = JFactory::getUser();
+		$temp = MolajoFactory::getUser();
 		if ($temp->id == $userId) {
 			$temp->groups = $user->groups;
 		}
@@ -151,7 +151,7 @@ abstract class MolajoUserHelper
 		$user->groups = $groups;
 
 		// Get the titles for the user groups.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'SELECT `id`, `title`' .
 			' FROM `#__groups`' .
@@ -175,11 +175,11 @@ abstract class MolajoUserHelper
 		}
 
 		// Set the group data for any preloaded user objects.
-		$temp = JFactory::getUser((int) $userId);
+		$temp = MolajoFactory::getUser((int) $userId);
 		$temp->groups = $user->groups;
 
 		// Set the group data for the user object in the session.
-		$temp = JFactory::getUser();
+		$temp = MolajoFactory::getUser();
 		if ($temp->id == $userId) {
 			$temp->groups = $user->groups;
 		}
@@ -193,11 +193,11 @@ abstract class MolajoUserHelper
 	function getProfile($userId = 0)
 	{
 		if ($userId == 0) {
-			$user	= JFactory::getUser();
+			$user	= MolajoFactory::getUser();
 			$userId	= $user->id;
 		}
 		else {
-			$user	= JFactory::getUser((int) $userId);
+			$user	= MolajoFactory::getUser((int) $userId);
 		}
 
 		// Get the dispatcher and load the user's plugins.
@@ -222,7 +222,7 @@ abstract class MolajoUserHelper
 	public static function activateUser($activation)
 	{
 		// Initialize some variables.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		// Let's get the id of the user we want to activate
 		$query = 'SELECT id'
@@ -268,7 +268,7 @@ abstract class MolajoUserHelper
 	public static function getUserId($username)
 	{
 		// Initialise some variables
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		$query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
 		$db->setQuery($query, 0, 1);

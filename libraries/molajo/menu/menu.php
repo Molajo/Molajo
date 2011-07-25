@@ -287,7 +287,7 @@ class MolajoMenu extends JObject
         $menu	= $this->getItem($id);
         if ($menu) {
             $acl = new MolajoACL();
-            return $acl->checkPermissions ('user', JFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset, $menu->access);
+            return $acl->checkPermissions ('user', MolajoFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset, $menu->access);
         } else {
             return true;
         }

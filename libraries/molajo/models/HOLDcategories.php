@@ -46,7 +46,7 @@ class MolajoModelCategories extends JModel
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$this->setState('filter.extension', $this->_extension);
 
 		// Get the parent id if defined.
@@ -93,7 +93,7 @@ class MolajoModelCategories extends JModel
 	public function getItems($recursive = false)
 	{
 		if (!count($this->_items)) {
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			$menu = $app->getMenu();
 			$active = $menu->getActive();
 			$params = new JRegistry();

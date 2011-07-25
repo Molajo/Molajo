@@ -57,8 +57,8 @@ class MolajoViewFormfield extends MolajoView
         $this->rowset     = $this->get('Items');
 
         /** 5. Retrieve Layout Parameters */
-        if (JFactory::getApplication()->getName() == 'site') {
-           $this->params = JFactory::getApplication()->getParams();
+        if (MolajoFactory::getApplication()->getName() == 'site') {
+           $this->params = MolajoFactory::getApplication()->getParams();
    //         $this->_mergeParams ();
 //		$this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
