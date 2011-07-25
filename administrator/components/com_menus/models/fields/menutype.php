@@ -75,7 +75,7 @@ class JFormFieldMenuType extends JFormFieldList
 		JHtml::_('behavior.framework');
 		JHtml::_('behavior.modal', 'input.modal');
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->addScriptDeclaration("
 		window.addEvent('domready', function() {
 			var div = new Element('div').setStyle('display', 'none').injectBefore(document.id('menu-types'));
@@ -169,11 +169,11 @@ class JFormFieldMenuType extends JFormFieldList
 		jimport('joomla.filesystem.file');
 
 		// Initialise variables.
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$list = array();
 
 		// Get the list of components.
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 		$db->setQuery(
 			'SELECT `name`, `element` AS "option"' .
 			' FROM `#__extensions`' .
@@ -388,7 +388,7 @@ class JFormFieldMenuType extends JFormFieldList
 		$layouts = array();
 		$layoutNames = array();
 		$templateLayouts = array();
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		// Get the layouts from the view folder.
 		$path = JPATH_SITE.'/components/'.$component.'/views/'.$view.'/tmpl';

@@ -51,7 +51,7 @@ class PluginsViewPlugin extends JView
 	{
 		JRequest::setVar('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$canDo		= PluginsHelper::getActions();
 
 		JToolBarHelper::title(JText::sprintf('COM_PLUGINS_MANAGER_PLUGIN', JText::_($this->item->name)), 'plugin');
@@ -65,7 +65,7 @@ class PluginsViewPlugin extends JView
 		JToolBarHelper::divider();
 		// Get the help information for the plugin item.
 
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		$help = $this->get('Help');
 		if ($lang->hasKey($help->url)) {

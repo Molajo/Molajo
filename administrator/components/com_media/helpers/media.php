@@ -74,7 +74,7 @@ abstract class MediaHelper
 			return false;
 		}
 
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		$imginfo = null;
 		if ($params->get('restrict_uploads',1)) {
 			$images = explode(',', $params->get('image_extensions'));

@@ -8,7 +8,7 @@
 
 // no direct access
 defined('_JEXEC') or die;
-$app = JFactory::getApplication();
+$app = MolajoFactory::getApplication();
 
 // template color parameter
 $templateColor = $this->params->get('templateColor');
@@ -18,10 +18,10 @@ $darkerColor   = $this->params->get('darkerColor');
 if (strrpos($templateColor, "#") === false) $templateColor = "#".$this->params->get('templateColor');
 
 // get the current logged in user
-$currentUser = JFactory::getUser();
+$currentUser = MolajoFactory::getUser();
 
 // get the current language object
-$lang   = JFactory::getLanguage();
+$lang   = MolajoFactory::getLanguage();
 
 // Mount the body classes
 $requestVars = array(

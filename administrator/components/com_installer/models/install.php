@@ -52,7 +52,7 @@ class InstallerModelInstall extends JModel
 	protected function populateState()
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		$this->setState('message',$app->getUserState('com_installer.message'));
 		$this->setState('extension_message',$app->getUserState('com_installer.extension_message'));
@@ -77,7 +77,7 @@ class InstallerModelInstall extends JModel
 
 		// Set FTP credentials, if given.
 		JClientHelper::setCredentialsFromRequest('ftp');
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		switch(JRequest::getWord('installtype')) {
 			case 'folder':
@@ -121,7 +121,7 @@ class InstallerModelInstall extends JModel
 		}
 
 		// Set some model state values
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$app->enqueueMessage($msg);
 		$this->setState('name', $installer->get('name'));
 		$this->setState('result', $result);
@@ -131,7 +131,7 @@ class InstallerModelInstall extends JModel
 
 		// Cleanup the install files
 		if (!is_file($package['packagefile'])) {
-			$config = JFactory::getConfig();
+			$config = MolajoFactory::getConfig();
 			$package['packagefile'] = $config->get('tmp_path') . '/' . $package['packagefile'];
 		}
 
@@ -176,7 +176,7 @@ class InstallerModelInstall extends JModel
 		}
 
 		// Build the appropriate paths
-		$config		= JFactory::getConfig();
+		$config		= MolajoFactory::getConfig();
 		$tmp_dest	= $config->get('tmp_path') . '/' . $userfile['name'];
 		$tmp_src	= $userfile['tmp_name'];
 
@@ -234,7 +234,7 @@ class InstallerModelInstall extends JModel
 	protected function _getPackageFromUrl()
 	{
 		// Get a database connector
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		// Get the URL of the package to install
 		$url = JRequest::getString('install_url');
@@ -254,7 +254,7 @@ class InstallerModelInstall extends JModel
 			return false;
 		}
 
-		$config		= JFactory::getConfig();
+		$config		= MolajoFactory::getConfig();
 		$tmp_dest	= $config->get('tmp_path');
 
 		// Unpack the downloaded package file

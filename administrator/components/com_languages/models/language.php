@@ -40,7 +40,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 */
 	protected function populateState()
 	{
-		$app		= JFactory::getApplication('administrator');
+		$app		= MolajoFactory::getApplication('administrator');
 		$params		= JComponentHelper::getParams('com_languages');
 
 		// Load the User state.
@@ -112,7 +112,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_languages.edit.language.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_languages.edit.language.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();

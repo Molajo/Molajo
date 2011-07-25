@@ -24,7 +24,7 @@ class ModulesViewPreview extends JView
 {
 	function display($tpl = null)
 	{
-		$editor = JFactory::getEditor();
+		$editor = MolajoFactory::getEditor();
 
 		$this->assignRef('editor',		$editor);
 

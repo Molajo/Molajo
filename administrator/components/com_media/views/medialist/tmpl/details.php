@@ -9,7 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 ?>
 <form target="_parent" action="index.php?option=com_media&amp;tmpl=index&amp;folder=<?php echo $this->state->folder; ?>" method="post" id="mediamanager-form" name="mediamanager-form">
 	<div class="manager">

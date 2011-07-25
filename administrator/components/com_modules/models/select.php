@@ -31,7 +31,7 @@ class ModulesModelSelect extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$applicationId = $app->getUserState('com_modules.modules.filter.application_id', 0);
@@ -116,7 +116,7 @@ class ModulesModelSelect extends JModelList
 
 		// Initialise variables.
 		$application = JApplicationHelper::getApplicationInfo($this->getState('filter.application_id', 0));
-		$lang	= JFactory::getLanguage();
+		$lang	= MolajoFactory::getLanguage();
 
 		// Loop through the results to add the XML metadata,
 		// and load language support.

@@ -28,9 +28,9 @@ class ModMypanelHelper
     function getItems($authCheck = true)
     {
         // Initialise variables.
-        $lang   = JFactory::getLanguage();
-        $user   = JFactory::getUser();
-        $db     = JFactory::getDbo();
+        $lang   = MolajoFactory::getLanguage();
+        $user   = MolajoFactory::getUser();
+        $db     = MolajoFactory::getDbo();
         $query  = $db->getQuery(true);
         $result = array();
         $langs  = array();

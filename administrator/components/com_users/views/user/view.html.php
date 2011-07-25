@@ -54,7 +54,7 @@ class UsersViewUser extends JView
 	{
 		JRequest::setVar('hidemainmenu', 1);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$canDo		= UsersHelper::getActions();
 

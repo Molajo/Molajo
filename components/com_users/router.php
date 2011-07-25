@@ -34,7 +34,7 @@ function UsersBuildRoute(&$query)
 	// Get the relevant menu items if not loaded.
 	if (empty($items)) {
 		// Get all relevant menu items.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$menu	= $app->getMenu();
 		$items	= $menu->getItems('component', 'com_users');
 
@@ -136,7 +136,7 @@ function UsersBuildRoute(&$query)
 				}
 
 				// Only append the user id if not "me".
-				$user = JFactory::getUser();
+				$user = MolajoFactory::getUser();
 				if (!empty($query['user_id']) && ($query['user_id'] != $user->id)) {
 					$segments[] = $query['user_id'];
 				}
@@ -176,7 +176,7 @@ function UsersParseRoute($segments)
 
 	if (is_numeric($userId)) {
 		// Get the package id from the packages table by alias.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'SELECT `id`' .
 			' FROM `#__users`' .

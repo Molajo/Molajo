@@ -9,7 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 ?>
 <script type='text/javascript'>
 var image_base_path = '<?php $params = JComponentHelper::getParams('com_media');

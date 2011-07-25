@@ -31,7 +31,7 @@ class MediaControllerFolder extends JController
 	{
 		JRequest::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 
 		// Get some data from the request
 		$tmpl	= JRequest::getCmd('tmpl');
@@ -128,7 +128,7 @@ class MediaControllerFolder extends JController
 		// Check for request forgeries
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		$folder			= JRequest::getCmd('foldername', '');
 		$folderCheck	= JRequest::getVar('foldername', null, '', 'string', JREQUEST_ALLOWRAW);

@@ -44,7 +44,7 @@ class ConfigControllerComponent extends JController
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Component');
 		$form	= $model->getForm();
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
@@ -52,9 +52,9 @@ class ConfigControllerComponent extends JController
 		$option	= JRequest::getCmd('component');
 
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('core.admin', $option))
+		if (!MolajoFactory::getUser()->authorise('core.admin', $option))
 		{
-			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
 

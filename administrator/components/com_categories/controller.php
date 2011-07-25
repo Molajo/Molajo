@@ -54,7 +54,7 @@ class CategoriesController extends JController
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Get the document object.
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 
 		// Set the default view name and format from the Request.
 		$vName		= JRequest::getCmd('view', 'categories');

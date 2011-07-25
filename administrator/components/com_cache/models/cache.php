@@ -51,7 +51,7 @@ class CacheModelCache extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int');
 		$this->setState('applicationId', $applicationId == 1 ? 1 : 0);
@@ -107,7 +107,7 @@ class CacheModelCache extends JModelList
 	 */
 	public function getCache()
 	{
-		$conf = JFactory::getConfig();
+		$conf = MolajoFactory::getConfig();
 
 		$options = array(
 			'defaultgroup'	=> '',
@@ -182,7 +182,7 @@ class CacheModelCache extends JModelList
 
 	public function purge()
 	{
-		$cache = JFactory::getCache('');
+		$cache = MolajoFactory::getCache('');
 		return $cache->gc();
 	}
 }

@@ -43,14 +43,14 @@ class Mod_MyshortcutsInstallerScript {
 
     function postflight($type, $parent) {
 
-        $db = JFactory::getDBO();
+        $db = MolajoFactory::getDBO();
         
         $db->setQuery("SELECT `home` FROM `#__template_styles` WHERE `#__template_styles`.`template` = 'minima'");                
 
         $alreadyInstalled = $db->loadResult();
 
         // language that is being used
-        $currentLang = JFactory::getLanguage()->getTag();
+        $currentLang = MolajoFactory::getLanguage()->getTag();
 
         if (!$alreadyInstalled) {
 

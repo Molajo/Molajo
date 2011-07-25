@@ -71,7 +71,7 @@ class UsersModelProfile extends JModelForm
 			$table = JTable::getInstance('User');
 
 			// Get the current user object.
-			$user = JFactory::getUser();
+			$user = MolajoFactory::getUser();
 
 			// Attempt to check the row out.
 			if (!$table->checkout($user->get('id'), $userId)) {
@@ -106,7 +106,7 @@ class UsersModelProfile extends JModelForm
 			$this->data->email2 = $this->data->get('email');
 
 			// Override the base user data with any data in the session.
-			$temp = (array)JFactory::getApplication()->getUserState('com_users.edit.profile.data', array());
+			$temp = (array)MolajoFactory::getApplication()->getUserState('com_users.edit.profile.data', array());
 			foreach ($temp as $k => $v) {
 				$this->data->$k = $v;
 			}
@@ -181,7 +181,7 @@ class UsersModelProfile extends JModelForm
 		if (JComponentHelper::getParams('com_users')->get('frontend_userparams'))
 		{
 			$form->loadFile('frontend',false);
-			if (JFactory::getUser()->authorise('core.login.admin')) {
+			if (MolajoFactory::getUser()->authorise('core.login.admin')) {
 				$form->loadFile('frontend_admin',false);
 			}
 		}
@@ -198,11 +198,11 @@ class UsersModelProfile extends JModelForm
 	protected function populateState()
 	{
 		// Get the application object.
-		$params	= JFactory::getApplication()->getParams('com_users');
+		$params	= MolajoFactory::getApplication()->getParams('com_users');
 
 		// Get the user id.
-		$userId = JFactory::getApplication()->getUserState('com_users.edit.profile.id');
-		$userId = !empty($userId) ? $userId : (int)JFactory::getUser()->get('id');
+		$userId = MolajoFactory::getApplication()->getUserState('com_users.edit.profile.id');
+		$userId = !empty($userId) ? $userId : (int)MolajoFactory::getUser()->get('id');
 
 		// Set the user id.
 		$this->setState('user.id', $userId);

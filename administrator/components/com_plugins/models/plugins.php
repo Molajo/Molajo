@@ -57,7 +57,7 @@ class PluginsModelPlugins extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
@@ -129,7 +129,7 @@ class PluginsModelPlugins extends JModelList
 					}
 				}
 			}
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 			JArrayHelper::sortObjects($result,'name', $this->getState('list.direction') == 'desc' ? -1 : 1, true, $lang->getLocale());
 			$total = count($result);
 			$this->cache[$this->getStoreId('getTotal')] = $total;
@@ -161,7 +161,7 @@ class PluginsModelPlugins extends JModelList
 	 */
 	protected function translate(&$items)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		foreach($items as &$item) {
 			$source = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
 			$extension = 'plg_' . $item->folder . '_' . $item->element;

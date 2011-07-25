@@ -36,7 +36,7 @@ class RedirectHelper
 	 */
 	public static function getActions()
 	{
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$result		= new JObject;
 		$assetName	= 'com_redirect';
 
@@ -76,7 +76,7 @@ class RedirectHelper
 	 */
 	public static function isEnabled()
 	{
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'SELECT enabled' .
 			' FROM #__extensions' .

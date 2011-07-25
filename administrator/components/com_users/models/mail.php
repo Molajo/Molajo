@@ -30,7 +30,7 @@ class UsersModelMail extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_users.mail', 'mail', array('control' => 'jform', 'load_data' => $loadData));
@@ -50,7 +50,7 @@ class UsersModelMail extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_users.display.mail.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_users.display.mail.data', array());
 
 		return $data;
 	}
@@ -72,9 +72,9 @@ class UsersModelMail extends JModelAdmin
 	{
 		// Initialise variables.
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
-		$app	= JFactory::getApplication();
-		$user	= JFactory::getUser();
-		$acl	= JFactory::getACL();
+		$app	= MolajoFactory::getApplication();
+		$user	= MolajoFactory::getUser();
+		$acl	= MolajoFactory::getACL();
 		$db		= $this->getDbo();
 
 
@@ -129,7 +129,7 @@ class UsersModelMail extends JModelAdmin
 		}
 
 		// Get the Mailer
-		$mailer = JFactory::getMailer();
+		$mailer = MolajoFactory::getMailer();
 		$params = JComponentHelper::getParams('com_users');
 
 		// Build email message format.

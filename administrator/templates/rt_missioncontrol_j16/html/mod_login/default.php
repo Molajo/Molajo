@@ -13,7 +13,7 @@ jimport('joomla.language.helper');
 //$browserLang = JLanguageHelper::detectLanguage();
 // forced to default
 $browserLang = null;
-$lang =& JFactory::getLanguage();
+$lang =& MolajoFactory::getLanguage();
 
 //manually get the params
 $module = JModuleHelper::getModule( 'mod_login', 'module-title' );
@@ -28,7 +28,7 @@ $params = new JParameter( $module->params );
 						' JLanguage.LOGIN_WITH_OPENID = \''.JText::_( 'LOGIN_WITH_OPENID' ).'\';'.
 						' JLanguage.NORMAL_LOGIN = \''.JText::_( 'NORMAL_LOGIN' ).'\';'.
 						' var modlogin = 1;';
-		$document = &JFactory::getDocument();
+		$document = &MolajoFactory::getDocument();
 		$document->addScriptDeclaration( $langScript );
 		JHTML::_('script', 'openid.js');
 endif; ?>

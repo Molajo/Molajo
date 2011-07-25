@@ -90,7 +90,7 @@ class ConfigModelComponent extends JModelForm
 		$option = $this->getState('component.option');
 
 		// Load common and local language files.
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 			$lang->load($option, JPATH_BASE, null, false, false)
 		||	$lang->load($option, JPATH_BASE . "/components/$option", null, false, false)
 		||	$lang->load($option, JPATH_BASE, $lang->getDefault(), false, false)

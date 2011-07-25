@@ -52,7 +52,7 @@ class UsersModelLogin extends JModelForm
 	protected function loadFormData()
 	{
 		// Check the session for previously entered login form data.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$data	= $app->getUserState('users.login.form.data', array());
 
 		// check for return URL from the request first
@@ -82,7 +82,7 @@ class UsersModelLogin extends JModelForm
 	protected function populateState()
 	{
 		// Get the application object.
-		$params	= JFactory::getApplication()->getParams('com_users');
+		$params	= MolajoFactory::getApplication()->getParams('com_users');
 
 		// Load the parameters.
 		$this->setState('params', $params);

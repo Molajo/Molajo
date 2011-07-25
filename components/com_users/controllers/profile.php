@@ -27,8 +27,8 @@ class UsersControllerProfile extends UsersController
 	 */
 	public function edit()
 	{
-		$app			= JFactory::getApplication();
-		$user			= JFactory::getUser();
+		$app			= MolajoFactory::getApplication();
+		$user			= MolajoFactory::getUser();
 		$loginUserId	= (int) $user->get('id');
 
 		// Get the previous user id (if any) and the current user id.
@@ -73,9 +73,9 @@ class UsersControllerProfile extends UsersController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Profile', 'UsersModel');
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$userId	= (int) $user->get('id');
 
 		// Get the user data.

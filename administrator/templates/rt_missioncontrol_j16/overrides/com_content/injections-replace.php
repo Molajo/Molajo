@@ -70,7 +70,7 @@ if ($layout == 'edit' or $layout == 'add') {
 			$cid = JRequest::getVar('id');
 			if (is_array($cid)) $cid = $cid[0];
 			
-			$db =& JFactory::getDBO();
+			$db =& MolajoFactory::getDBO();
 			$query = 'select r.*, u.name, u.username, u.email,e.name as extension from #__rokadminaudit as r, #__users as u, #__extensions as e where r.user_id = u.id and e.element = r.option and r.cid = '.$cid.' and (r.task ="apply" or r.task="save") order by id desc limit '. intval($limit);
 			$db->setQuery($query);
 

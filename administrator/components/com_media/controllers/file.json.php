@@ -38,7 +38,7 @@ class MediaControllerFile extends JController
 		}
 
 		// Get the user
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$log		= JLog::getInstance('upload.error.php');
 
 		// Get some data from the request

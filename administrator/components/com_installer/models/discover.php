@@ -34,7 +34,7 @@ class InstallerModelDiscover extends InstallerModel
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$this->setState('message',$app->getUserState('com_installer.message'));
 		$this->setState('extension_message',$app->getUserState('com_installer.extension_message'));
 		$app->setUserState('com_installer.message','');
@@ -50,7 +50,7 @@ class InstallerModelDiscover extends InstallerModel
 	 */
 	protected function getListQuery()
 	{
-		$db		= JFactory::getDBO();
+		$db		= MolajoFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__extensions');
@@ -72,7 +72,7 @@ class InstallerModelDiscover extends InstallerModel
 
 		// Get all templates, including discovered ones
 		$query = 'SELECT extension_id, element, folder, application_id, type FROM #__extensions';
-		$dbo = JFactory::getDBO();
+		$dbo = MolajoFactory::getDBO();
 		$dbo->setQuery($query);
 		$installedtmp = $dbo->loadObjectList();
 		$extensions = Array();
@@ -102,7 +102,7 @@ class InstallerModelDiscover extends InstallerModel
 	 */
 	function discover_install()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$installer = JInstaller::getInstance();
 		$eid = JRequest::getVar('cid',0);
 		if (is_array($eid) || $eid) {
@@ -110,7 +110,7 @@ class InstallerModelDiscover extends InstallerModel
 				$eid = Array($eid);
 			}
 			JArrayHelper::toInteger($eid);
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			$failed = false;
 			foreach($eid as $id) {
 				$result = $installer->discover_install($id);
@@ -138,7 +138,7 @@ class InstallerModelDiscover extends InstallerModel
 	 */
 	function purge()
 	{
-		$db		= JFactory::getDBO();
+		$db		= MolajoFactory::getDBO();
 		$query	= $db->getQuery(true);
 		$query->delete();
 		$query->from('#__extensions');

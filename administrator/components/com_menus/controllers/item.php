@@ -27,7 +27,7 @@ class MenusControllerItem extends JControllerForm
 	public function add()
 	{
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$context	= 'com_menus.edit.item';
 
 		$result = parent::add();
@@ -75,7 +75,7 @@ class MenusControllerItem extends JControllerForm
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$context	= 'com_menus.edit.item';
 		$result		= parent::cancel();
 
@@ -95,7 +95,7 @@ class MenusControllerItem extends JControllerForm
 	public function edit($key = null, $urlVar = null)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$result	= parent::edit();
 
 		if ($result) {
@@ -119,7 +119,7 @@ class MenusControllerItem extends JControllerForm
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$model		= $this->getModel('Item', '', array());
 		$data		= JRequest::getVar('jform', array(), 'post', 'array');
 		$task		= $this->getTask();
@@ -270,7 +270,7 @@ class MenusControllerItem extends JControllerForm
 	function setType()
 	{
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 
 		// Get the posted values from the request.
 		$data		= JRequest::getVar('jform', array(), 'post', 'array');

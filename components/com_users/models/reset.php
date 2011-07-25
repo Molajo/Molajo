@@ -100,7 +100,7 @@ class UsersModelReset extends JModelForm
 	protected function populateState()
 	{
 		// Get the application object.
-		$params	= JFactory::getApplication()->getParams('com_users');
+		$params	= MolajoFactory::getApplication()->getParams('com_users');
 
 		// Load the parameters.
 		$this->setState('params', $params);
@@ -138,7 +138,7 @@ class UsersModelReset extends JModelForm
 		}
 
 		// Get the token and user id from the confirmation process.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$token	= $app->getUserState('com_users.reset.token', null);
 		$userId	= $app->getUserState('com_users.reset.user', null);
 
@@ -265,7 +265,7 @@ class UsersModelReset extends JModelForm
 		}
 
 		// Push the user data into the session.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$app->setUserState('com_users.reset.token', $crypt.':'.$salt);
 		$app->setUserState('com_users.reset.user', $user->id);
 
@@ -279,7 +279,7 @@ class UsersModelReset extends JModelForm
 	 */
 	public function processResetRequest($data)
 	{
-		$config	= JFactory::getConfig();
+		$config	= MolajoFactory::getConfig();
 
 		// Get the form.
 		$form = $this->getForm();

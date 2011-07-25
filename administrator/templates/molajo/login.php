@@ -10,7 +10,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
-$app = JFactory::getApplication();
+$app = MolajoFactory::getApplication();
 JHtml::_('behavior.noframes');
 JHtml::_('behavior.framework');
 ?>

@@ -50,7 +50,7 @@ class RokUpdater
     function init($details_url, $slug, $params, $download_method = ROKUPDATER_DLMETHOD_FOPEN, $extractor_method = ROKUPDATER_EXTRACTOR_16)
     {
 
-        $config =& JFactory::getConfig();
+        $config =& MolajoFactory::getConfig();
         $this->tmp_path = $config->getValue('config.tmp_path');
 
         $this->details_url = $details_url;
@@ -261,7 +261,7 @@ class RokUpdater
     function generateUAString($mask = true)
     {
         $version = new JVersion();
-        $lang =& JFactory::getLanguage();
+        $lang =& MolajoFactory::getLanguage();
         $parts = Array();
         if ($mask) {
             $parts[] = 'Mozilla/5.0';

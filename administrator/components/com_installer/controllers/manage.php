@@ -42,7 +42,7 @@ class InstallerControllerManage extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
 		$values	= array('publish' => 1, 'unpublish' => 0);
 		$task	= $this->getTask();

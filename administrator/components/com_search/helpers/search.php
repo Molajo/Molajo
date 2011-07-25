@@ -34,7 +34,7 @@ class SearchHelper
 	 */
 	public static function getActions()
 	{
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$result	= new JObject;
 		$assetName = 'com_search';
 
@@ -53,7 +53,7 @@ class SearchHelper
 	{
 		$ignored = false;
 
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		$tag			= $lang->getTag();
 		$search_ignore	= $lang->getIgnoredSearchWords();
@@ -93,7 +93,7 @@ class SearchHelper
 	{
 		$restriction = false;
 
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		// limit searchword to a maximum of characters
 		$upper_limit = $lang->getUpperLimitSearchWord();
@@ -113,7 +113,7 @@ class SearchHelper
 
 	static function logSearch($search_term)
 	{
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		$params = JComponentHelper::getParams('com_search');
 		$enable_log_searches = $params->get('enabled');
@@ -122,7 +122,7 @@ class SearchHelper
 
 		if (@$enable_log_searches)
 		{
-			$db = JFactory::getDbo();
+			$db = MolajoFactory::getDbo();
 			$query = 'SELECT hits'
 			. ' FROM #__core_log_searches'
 			. ' WHERE LOWER(search_term) = "'.$search_term.'"'
@@ -206,7 +206,7 @@ class SearchHelper
 	 */
 	static function _smartSubstr($text, $searchword)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$length = $lang->getSearchDisplayedCharactersNumber();
 		$textlen = JString::strlen($text);
 		$lsearchword = JString::strtolower($searchword);

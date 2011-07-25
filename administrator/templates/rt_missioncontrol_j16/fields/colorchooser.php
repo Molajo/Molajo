@@ -23,7 +23,7 @@ class JFormFieldColorChooser extends JFormField  {
 		global $mctrl;
 		$mctrl =& MissionControl::getInstance();
 		
-		$doc =& JFactory::getDocument();		
+		$doc =& MolajoFactory::getDocument();
 		
 		$output = '';
 
@@ -53,7 +53,7 @@ class JFormFieldColorChooser extends JFormField  {
 	
 	function getJSVersion(){
 	  if (version_compare(JVERSION, '1.5', '>=') && version_compare(JVERSION, '1.6', '<')) {
-	    if (JFactory::getApplication()->get('MooToolsVersion', '1.11') != '1.11') return "-mt1.2";
+	    if (MolajoFactory::getApplication()->get('MooToolsVersion', '1.11') != '1.11') return "-mt1.2";
 	    else return "";
 	  }
 	  else {

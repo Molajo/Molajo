@@ -103,7 +103,7 @@ class MenusControllerMenus extends JController
 	public function resync()
 	{
 		// Initialise variables.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$parts = null;
 
 		// Load a lookup table of all the component id's.

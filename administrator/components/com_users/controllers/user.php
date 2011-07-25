@@ -43,7 +43,7 @@ class UsersControllerUser extends JControllerForm
 		// Check if this person is a Super Admin
 		if (JAccess::check($data[$key], 'core.admin')) {
 			// If I'm not a Super Admin, then disallow the edit.
-			if (!JFactory::getUser()->authorise('core.admin')) {
+			if (!MolajoFactory::getUser()->authorise('core.admin')) {
 				return false;
 			}
 		}

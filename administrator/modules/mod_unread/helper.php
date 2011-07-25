@@ -23,8 +23,8 @@ abstract class ModUnreadHelper
 	public static function getCount()
 	{
 		// Initialise variables.
-		$db		= JFactory::getDbo();
-		$user	= JFactory::getUser();
+		$db		= MolajoFactory::getDbo();
+		$user	= MolajoFactory::getUser();
 
 		// Get the number of unread messages in your inbox.
 		$query	= $db->getQuery(true);

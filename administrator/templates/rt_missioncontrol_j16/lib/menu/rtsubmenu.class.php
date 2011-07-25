@@ -9,9 +9,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Lets get some variables we will need to render the menu
-$lang	=& JFactory::getLanguage();
-$doc	=& JFactory::getDocument();
-$user	=& JFactory::getUser();
+$lang	=& MolajoFactory::getLanguage();
+$doc	=& MolajoFactory::getDocument();
+$user	=& MolajoFactory::getUser();
 
 echo RTAdminSubMenu::get();
 
@@ -83,8 +83,8 @@ class RTAdminSubMenu
 
 	function _loadDBList( $componentOption )
 	{
-		$db   =& JFactory::getDBO();
-		$lang =& JFactory::getLanguage();
+		$db   =& MolajoFactory::getDBO();
+		$lang =& MolajoFactory::getLanguage();
 
 		$lang->load($componentOption.'.menu');
 

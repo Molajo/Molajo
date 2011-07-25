@@ -43,7 +43,7 @@ class JFormFieldGroup extends JFormField
 			$options[] = JHtml::_('select.option', (string)$option->attributes()->value, JText::_(trim($option->data())));
 		}
 
-		$dbo = JFactory::getDbo();
+		$dbo = MolajoFactory::getDbo();
 		$query = $dbo->getQuery(true);
 		$query->select('DISTINCT `folder`');
 		$query->from('#__extensions');

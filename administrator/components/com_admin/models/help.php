@@ -77,7 +77,7 @@ class AdminModelHelp extends JModel
 	{
 		if (is_null($this->lang_tag))
 		{
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 			$this->lang_tag = $lang->getTag();
 			jimport('joomla.filesystem.folder');
 			if (!JFolder::exists(JPATH_BASE . '/help/' . $this->lang_tag)) {

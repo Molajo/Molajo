@@ -52,7 +52,7 @@ class CategoriesHelper
 			if (class_exists($cName)) {
 
 				if (is_callable(array($cName, 'addSubmenu'))) {
-					$lang = JFactory::getLanguage();
+					$lang = MolajoFactory::getLanguage();
 					// loading language file from the administrator/language directory then
 					// loading language file from the administrator/components/*extension*/language directory
 						$lang->load($component, JPATH_BASE, null, false, false)
@@ -76,7 +76,7 @@ class CategoriesHelper
 	 */
 	public static function getActions($extension, $categoryId = 0)
 	{
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$result		= new JObject;
 		$parts		= explode('.',$extension);
 		$component	= $parts[0];

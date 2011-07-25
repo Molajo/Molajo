@@ -40,7 +40,7 @@ class JFormFieldCategoryParent extends JFormFieldList
 		// Initialise variables.
 		$options = array();
 
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('a.id AS value, a.title AS text, a.level');
@@ -91,7 +91,7 @@ class JFormFieldCategoryParent extends JFormFieldList
 		}
 
 		// Initialise variables.
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		if (empty($id)) {
 			// New item, only have to check core.create.

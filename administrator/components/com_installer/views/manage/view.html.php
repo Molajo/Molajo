@@ -45,7 +45,7 @@ class InstallerViewManage extends InstallerViewDefault
 
 		//Check if there are no matching items
 		if(!count($this->items)){
-			JFactory::getApplication()->enqueueMessage(
+			MolajoFactory::getApplication()->enqueueMessage(
 				JText::_('COM_INSTALLER_MSG_MANAGE_NOEXTENSION')
 			);
 		}

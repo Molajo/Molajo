@@ -70,7 +70,7 @@ class LanguagesModelInstalled extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$applicationId = JRequest::getInt('application');

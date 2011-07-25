@@ -84,7 +84,7 @@ class AdminModelSysInfo extends JModel
 	{
 		if (is_null($this->config))
 		{
-			$registry = JFactory::getConfig();
+			$registry = MolajoFactory::getConfig();
 			$this->config = $registry->toArray();
 			$hidden = array('host', 'user', 'password', 'ftp_user', 'ftp_pass', 'smtpuser', 'smtppass');
 			foreach($hidden as $key) {
@@ -105,7 +105,7 @@ class AdminModelSysInfo extends JModel
 			$this->info = array();
 			$version = new JVersion();
 			$platform = new JPlatform();
-			$db = JFactory::getDBO();
+			$db = MolajoFactory::getDBO();
 			if (isset($_SERVER['SERVER_SOFTWARE'])) {
 				$sf = $_SERVER['SERVER_SOFTWARE'];
 			}
@@ -160,7 +160,7 @@ class AdminModelSysInfo extends JModel
 		{
 			$this->directories = array();
 
-			$registry = JFactory::getConfig();
+			$registry = MolajoFactory::getConfig();
 			jimport('joomla.filesystem.folder');
 			$cparams = JComponentHelper::getParams('com_media');
 
@@ -236,7 +236,7 @@ class AdminModelSysInfo extends JModel
 	{
 		if (is_null($this->editor))
 		{
-			$config = JFactory::getConfig();
+			$config = MolajoFactory::getConfig();
 			$this->editor = $config->get('editor');
 		}
 		return $this->editor;

@@ -38,7 +38,7 @@ class UsersControllerGroup extends JControllerForm
 	 */
 	protected function allowSave($data, $key = 'id')
 	{
-		return (JFactory::getUser()->authorise('core.admin', $this->option) && parent::allowSave($data, $key));
+		return (MolajoFactory::getUser()->authorise('core.admin', $this->option) && parent::allowSave($data, $key));
 	}
 
 	/**
@@ -57,7 +57,7 @@ class UsersControllerGroup extends JControllerForm
 		// Check if this group is a Super Admin
 		if (JAccess::checkGroup($data[$key], 'core.admin')) {
 			// If I'm not a Super Admin, then disallow the edit.
-			if (!JFactory::getUser()->authorise('core.admin')) {
+			if (!MolajoFactory::getUser()->authorise('core.admin')) {
 				return false;
 			}
 		}

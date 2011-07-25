@@ -29,7 +29,7 @@ abstract class modPopularHelper
 	public static function getList($params)
 	{
 		// Initialise variables
-		$user = JFactory::getuser();
+		$user = MolajoFactory::getuser();
 
 		// Get an instance of the generic articles model
 		$model = JModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));

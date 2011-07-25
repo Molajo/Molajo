@@ -29,12 +29,12 @@ class InstallerControllerInstall extends JController
 
 		$model = $this->getModel('install');
 		if ($model->install()) {
-			$cache = JFactory::getCache('mod_menu');
+			$cache = MolajoFactory::getCache('mod_menu');
 			$cache->clean();
 			// TODO: Reset the users acl here as well to kill off any missing bits
 		}
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$redirect_url = $app->getUserState('com_installer.redirect_url');
 		if(empty($redirect_url)) {
 			$redirect_url = JRoute::_('index.php?option=com_installer&view=install',false);

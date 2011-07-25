@@ -95,7 +95,7 @@ class TemplatesModelTemplate extends JModel
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		$pk = (int) JRequest::getInt('id');

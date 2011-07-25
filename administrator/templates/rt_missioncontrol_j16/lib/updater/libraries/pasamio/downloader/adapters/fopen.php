@@ -13,7 +13,7 @@ class DownloaderFOpen extends JAdapterInstance {
 		$php_errormsg = '';								// Set the error message
 		$track_errors = ini_set('track_errors',true);	// Set track errors
 
-		$config =& JFactory::getConfig();
+		$config =& MolajoFactory::getConfig();
 
 		if(is_null($params)) {
 			$params = new JParameter();

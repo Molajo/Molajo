@@ -62,7 +62,7 @@ class JFormFieldModulePosition extends JFormFieldText
 		$script[] = '	}';
 
 		// Add the script to the document head.
-		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+		MolajoFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
 		// Setup variables for display.
 		$html	= array();

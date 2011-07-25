@@ -16,9 +16,9 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 
-$uri		= JFactory::getUri();
+$uri		= MolajoFactory::getUri();
 $return		= base64_encode($uri);
-$user		= JFactory::getUser();
+$user		= MolajoFactory::getUser();
 $userId		= $user->get('id');
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));

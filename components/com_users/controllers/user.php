@@ -29,7 +29,7 @@ class UsersControllerUser extends UsersController
 	{
 		JRequest::checkToken('post') or jexit(JText::_('JInvalid_Token'));
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Populate the data array:
 		$data = array();
@@ -75,7 +75,7 @@ class UsersControllerUser extends UsersController
 	{
 		JRequest::checkToken('default') or jexit(JText::_('JInvalid_Token'));
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Perform the log in.
 		$error = $app->logout();
@@ -115,7 +115,7 @@ class UsersControllerUser extends UsersController
 		// Check for errors.
 		if ($return === false) {
 			// Get the validation messages.
-			$app	= &JFactory::getApplication();
+			$app	= &MolajoFactory::getApplication();
 			$errors	= $model->getErrors();
 
 			// Push up to three validation messages out to the user.
@@ -165,7 +165,7 @@ class UsersControllerUser extends UsersController
 		// Check the request token.
 		JRequest::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('User', 'UsersModel');
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
 

@@ -25,8 +25,8 @@ abstract class modLoggedHelper
 	public static function getList($params)
 	{
 		// Initialise variables
-		$db = JFactory::getDbo();
-		$user = JFactory::getUser();
+		$db = MolajoFactory::getDbo();
+		$user = MolajoFactory::getUser();
 		$query = $db->getQuery(true);
 
 		$query->select('s.time, s.application_id, u.id, u.name, u.username');

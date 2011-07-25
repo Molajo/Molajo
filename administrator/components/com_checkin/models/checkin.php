@@ -31,7 +31,7 @@ class CheckinModelCheckin extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
@@ -47,7 +47,7 @@ class CheckinModelCheckin extends JModelList
 	 */
 	public function checkin($ids = array())
 	{
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$db			= $this->_db;
 		$nullDate	= $db->getNullDate();
 
@@ -111,7 +111,7 @@ class CheckinModelCheckin extends JModelList
 	{
 		if (!isset($this->items))
 		{
-			$app		= JFactory::getApplication();
+			$app		= MolajoFactory::getApplication();
 			$db			= $this->_db;
 			$nullDate	= $db->getNullDate();
 			$tables 	= $db->getTableList();

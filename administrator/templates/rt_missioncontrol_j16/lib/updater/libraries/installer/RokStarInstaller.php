@@ -108,7 +108,7 @@ class RokStarInstaller extends JInstaller
 	 */
 	function prepExceptions($element, $cid=0)
 	{
-        $config =& JFactory::getConfig();
+        $config =& MolajoFactory::getConfig();
         $this->backup_dir = $config->getValue('config.tmp_path') . DS.uniqid('backup_');
         if (!JFolder::create($this->backup_dir)) {
             JError::raiseWarning(1, 'JInstaller::install: '.JText::_('Failed to create directory').' "'.$this->backup_dir.'"');

@@ -20,8 +20,8 @@ if (!class_exists('RTAdminCssMenu')) {
 }
 
 // Initialise variables.
-$lang		= JFactory::getLanguage();
-$user		= JFactory::getUser();
+$lang		= MolajoFactory::getLanguage();
+$user		= MolajoFactory::getUser();
 $menu		= new RTAdminCSSMenu();
 $enabled	= JRequest::getInt('hidemainmenu') ? false : true;
 

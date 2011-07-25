@@ -82,7 +82,7 @@ class UsersModelDebugUser extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Adjust the context to support modal layouts.
 		if ($layout = JRequest::getVar('layout', 'default')) {
@@ -150,7 +150,7 @@ class UsersModelDebugUser extends JModelList
 	{
 		$userId = $this->getState('filter.user_id');
 
-		return JFactory::getUser($userId);
+		return MolajoFactory::getUser($userId);
 	}
 
 	/**

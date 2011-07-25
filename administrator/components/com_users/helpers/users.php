@@ -67,7 +67,7 @@ class UsersHelper
 	public static function getActions()
 	{
 		if (empty(self::$actions)) {
-			$user	= JFactory::getUser();
+			$user	= MolajoFactory::getUser();
 			self::$actions	= new JObject;
 
 			$actions = array(
@@ -122,7 +122,7 @@ class UsersHelper
 	 */
 	static function getGroups()
 	{
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
 			' FROM #__usergroups AS a' .

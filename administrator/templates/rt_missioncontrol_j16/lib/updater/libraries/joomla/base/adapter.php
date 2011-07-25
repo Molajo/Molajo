@@ -57,7 +57,7 @@ class JAdapter extends JObject {
 		$this->_basepath = $basepath;
 		$this->_classprefix = $classprefix ? $classprefix : 'J';
 		$this->_adapterfolder = $adapterfolder ? $adapterfolder : 'adapters';
-		$this->_db =& JFactory::getDBO();
+		$this->_db =& MolajoFactory::getDBO();
 	}
 	
 	/**

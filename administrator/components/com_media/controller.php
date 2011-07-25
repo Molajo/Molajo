@@ -47,7 +47,7 @@ class MediaController extends JController
 				break;
 
 			case 'mediaList':
-				$app	= JFactory::getApplication();
+				$app	= MolajoFactory::getApplication();
 				$mName = 'list';
 				$vLayout = $app->getUserStateFromRequest('media.list.layout', 'layout', 'thumbs', 'word');
 
@@ -61,7 +61,7 @@ class MediaController extends JController
 				break;
 		}
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$vType		= $document->getType();
 
 		// Get/Create the view

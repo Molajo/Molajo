@@ -26,7 +26,7 @@ class MessagesControllerConfig extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$model		= $this->getModel('Config', 'MessagesModel');
 		$data		= JRequest::getVar('jform', array(), 'post', 'array');
 

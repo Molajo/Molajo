@@ -56,7 +56,7 @@ class RTToolbar extends JToolBar
 		/*
 		if(!$this->_bar && $this->_name == 'toolbar') {
 		
-			$document = JFactory::getDocument();
+			$document = MolajoFactory::getDocument();
 			$buffer = $document->getBuffer();
 
 			if(isset($buffer['modules']['toolbar'])) return $buffer['modules']['toolbar'];

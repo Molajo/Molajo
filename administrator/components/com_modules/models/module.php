@@ -49,7 +49,7 @@ class ModulesModelModule extends JModelAdmin
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		if (!($pk = (int) JRequest::getInt('id'))) {
@@ -76,7 +76,7 @@ class ModulesModelModule extends JModelAdmin
 	{
 		// Initialise variables.
 		$pks	= (array) $pks;
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$table	= $this->getTable();
 
 		// Iterate the items to delete each one.
@@ -132,7 +132,7 @@ class ModulesModelModule extends JModelAdmin
 	public function duplicate(&$pks)
 	{
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$db		= $this->getDbo();
 
 		// Access checks.
@@ -275,7 +275,7 @@ class ModulesModelModule extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_modules.edit.module.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_modules.edit.module.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -339,7 +339,7 @@ class ModulesModelModule extends JModelAdmin
 					$table->application_id	= $extension->application_id;
 				}
 				else {
-					$app = JFactory::getApplication();
+					$app = MolajoFactory::getApplication();
 					$app->redirect(JRoute::_('index.php?option=com_modules&view=modules',false));
 					return false;
 				}
@@ -435,8 +435,8 @@ class ModulesModelModule extends JModelAdmin
 	protected function prepareTable(&$table)
 	{
 		jimport('joomla.filter.output');
-		$date = JFactory::getDate();
-		$user = JFactory::getUser();
+		$date = MolajoFactory::getDate();
+		$user = MolajoFactory::getUser();
 
 		$table->title		= htmlspecialchars_decode($table->title, ENT_QUOTES);
 
@@ -465,7 +465,7 @@ class ModulesModelModule extends JModelAdmin
 		jimport('joomla.filesystem.folder');
 
 		// Initialise variables.
-		$lang		= JFactory::getLanguage();
+		$lang		= MolajoFactory::getLanguage();
 		$applicationId	= $this->getState('item.application_id');
 		$module		= $this->getState('item.module');
 

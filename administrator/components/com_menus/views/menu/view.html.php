@@ -50,7 +50,7 @@ class MenusViewMenu extends JView
 	{
 		JRequest::setVar('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$canDo		= MenusHelper::getActions($this->state->get('filter.parent_id'));
 

@@ -53,12 +53,12 @@ class RTCore
 
         // Set the main class vars to match the call
         JHTML::_('behavior.mootools');
-        $doc =& JFactory::getDocument();
+        $doc =& MolajoFactory::getDocument();
         $this->document = $doc;
-        $this->user =& JFactory::getUser();
+        $this->user =& MolajoFactory::getUser();
         $this->language = $doc->language;
         $this->direction = $doc->direction;
-        $this->session =& JFactory::getSession();
+        $this->session =& MolajoFactory::getSession();
         $this->baseUrl = JURI::root(true) . "/";
         $uri = JURI::getInstance();
         $this->currentUrl = $uri->toString();
@@ -77,7 +77,7 @@ class RTCore
 
 		require_once(dirname(__FILE__) . "/rtparameter.php");
 
-        $app =& JFactory::getApplication();
+        $app =& MolajoFactory::getApplication();
         $template =  $app->getTemplate(true);
         $params = new RTParameter( $template->params, $this->templatePath);
 
@@ -176,7 +176,7 @@ class RTCore
 
 //    function checkRedirect()
 //    {
-//        $mainframe =& JFactory::getApplication();
+//        $mainframe =& MolajoFactory::getApplication();
 //
 //
 //        $redirect = Jrequest::getVar(_COOKIENAME, '', 'COOKIE');
@@ -442,7 +442,7 @@ class RTCore
     function _getTools()
     {
 
-        $user = & JFactory::getUser();
+        $user = & MolajoFactory::getUser();
 
         // cache some acl checks
         $canCheckin = $user->authorise('admin', 'com_checkin');
@@ -509,7 +509,7 @@ class RTCore
     function _getCurrentAdminTemplate()
     {
 
-        $db =& JFactory::getDBO();
+        $db =& MolajoFactory::getDBO();
         $db->setQuery('select template from #__template_styles where application_id = 1 and home = 1');
         $template = $db->loadResult();
 
@@ -519,7 +519,7 @@ class RTCore
     function _getCurrentSiteTemplate()
     {
 
-        $db =& JFactory::getDBO();
+        $db =& MolajoFactory::getDBO();
         $db->setQuery('select template from #__template_styles where application_id = 0 and home = 1');
         $template = $db->loadResult();
 

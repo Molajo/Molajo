@@ -47,7 +47,7 @@ class TemplatesModelStyle extends JModelAdmin
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		$pk = (int) JRequest::getInt('id');
@@ -69,7 +69,7 @@ class TemplatesModelStyle extends JModelAdmin
 	{
 		// Initialise variables.
 		$pks	= (array) $pks;
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$table	= $this->getTable();
 
 		// Iterate the items to delete each one.
@@ -114,7 +114,7 @@ class TemplatesModelStyle extends JModelAdmin
 	public function duplicate(&$pks)
 	{
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$db		= $this->getDbo();
 
 		// Access checks.
@@ -168,7 +168,7 @@ class TemplatesModelStyle extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// The folder and element vars are passed when saving the form.
 		if (empty($data)) {
@@ -213,7 +213,7 @@ class TemplatesModelStyle extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_templates.edit.style.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_templates.edit.style.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -297,7 +297,7 @@ class TemplatesModelStyle extends JModelAdmin
 		// Initialise variables.
 		$applicationId	= $this->getState('item.application_id');
 		$template	= $this->getState('item.template');
-		$lang		= JFactory::getLanguage();
+		$lang		= MolajoFactory::getLanguage();
 		$application		= JApplicationHelper::getApplicationInfo($applicationId);
 		if (!$form->loadFile('style_'.$application->name, true)) {
 			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
@@ -410,11 +410,11 @@ class TemplatesModelStyle extends JModelAdmin
 			return false;
 		}
 
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		if ($user->authorise('core.edit','com_menus') && $table->application_id==0) {
 			$n		= 0;
-			$db		= JFactory::getDbo();
-			$user	= JFactory::getUser();
+			$db		= MolajoFactory::getDbo();
+			$user	= MolajoFactory::getUser();
 
 			if (!empty($data['assigned']) && is_array($data['assigned'])) {
 				JArrayHelper::toInteger($data['assigned']);
@@ -447,7 +447,7 @@ class TemplatesModelStyle extends JModelAdmin
 
 			$n += $db->getAffectedRows();
 			if ($n > 0) {
-				$app = JFactory::getApplication();
+				$app = MolajoFactory::getApplication();
 				$app->enQueueMessage(JText::plural('COM_TEMPLATES_MENU_CHANGED',$n));
 			}
 		}
@@ -474,7 +474,7 @@ class TemplatesModelStyle extends JModelAdmin
 	public function setHome($id = 0)
 	{
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$db		= $this->getDbo();
 
 		// Access checks.
@@ -534,7 +534,7 @@ class TemplatesModelStyle extends JModelAdmin
 	public function unsetHome($id = 0)
 	{
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$db		= $this->getDbo();
 
 		// Access checks.

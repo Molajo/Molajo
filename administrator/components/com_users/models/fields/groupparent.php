@@ -40,8 +40,8 @@ class JFormFieldGroupParent extends JFormFieldList
 		// Initialize variables.
 		$options = array();
 
-		$db = JFactory::getDbo();
-		$user = JFactory::getUser();
+		$db = MolajoFactory::getDbo();
+		$user = MolajoFactory::getUser();
 		$query = $db->getQuery(true);
 
 		$query->select('a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level');

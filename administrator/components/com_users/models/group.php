@@ -57,7 +57,7 @@ class UsersModelGroup extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_users.group', 'group', array('control' => 'jform', 'load_data' => $loadData));
@@ -77,7 +77,7 @@ class UsersModelGroup extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_users.edit.group.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_users.edit.group.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -136,7 +136,7 @@ class UsersModelGroup extends JModelAdmin
 		}
 
         // Check for non-super admin trying to save with super admin group
-		$iAmSuperAdmin	= JFactory::getUser()->authorise('core.admin');
+		$iAmSuperAdmin	= MolajoFactory::getUser()->authorise('core.admin');
         if ((!$iAmSuperAdmin) && ($groupSuperAdmin)) {
         	try
         	{
@@ -153,7 +153,7 @@ class UsersModelGroup extends JModelAdmin
 		// First, are we a super admin>
 		if ($iAmSuperAdmin) {
 			// Next, are we a member of the current group?
-			$myGroups = JAccess::getGroupsByUser(JFactory::getUser()->get('id'), false);
+			$myGroups = JAccess::getGroupsByUser(MolajoFactory::getUser()->get('id'), false);
 			if (in_array($data['id'], $myGroups)) {
 				// Now, would we have super admin permissions without the current group?
 				$otherGroups = array_diff($myGroups, array($data['id']));
@@ -192,7 +192,7 @@ class UsersModelGroup extends JModelAdmin
 	{
 		// Typecast variable.
 		$pks = (array) $pks;
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$groups = JAccess::getGroupsByUser($user->get('id'));
 
 		// Get a row instance.

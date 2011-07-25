@@ -81,7 +81,7 @@ class CategoriesViewCategories extends JView
 		}
 
 		// Need to load the menu language file as mod_menu hasn't been loaded yet.
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 			$lang->load($component, JPATH_BASE, null, false, false)
 		||	$lang->load($component, JPATH_ADMINISTRATOR.'/components/'.$component, null, false, false)
 		||	$lang->load($component, JPATH_BASE, $lang->getDefault(), false, false)
@@ -128,7 +128,7 @@ class CategoriesViewCategories extends JView
 			JToolBarHelper::archiveList('categories.archive');
 		}
 
-		if (JFactory::getUser()->authorise('core.admin')) {
+		if (MolajoFactory::getUser()->authorise('core.admin')) {
 			JToolBarHelper::checkin('categories.checkin');
 		}
 

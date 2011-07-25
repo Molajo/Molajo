@@ -52,7 +52,7 @@ class MenusViewItem extends JView
 	{
 		JRequest::setVar('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo		= MenusHelper::getActions($this->state->get('filter.parent_id'));
@@ -92,7 +92,7 @@ class MenusViewItem extends JView
 		JToolBarHelper::divider();
 
 		// Get the help information for the menu item.
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		$help = $this->get('Help');
 		if ($lang->hasKey($help->url)) {

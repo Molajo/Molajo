@@ -9,7 +9,7 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$app	= JFactory::getApplication();
+$app	= MolajoFactory::getApplication();
 $style = $app->getUserStateFromRequest('media.list.layout', 'layout', 'thumbs', 'word');
 ?>
 <div id="submenu-box">

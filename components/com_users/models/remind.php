@@ -63,7 +63,7 @@ class UsersModelRemind extends JModelForm
 	protected function populateState()
 	{
 		// Get the application object.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$params	= $app->getParams('com_users');
 
 		// Load the parameters.
@@ -120,7 +120,7 @@ class UsersModelRemind extends JModelForm
 			return false;
 		}
 
-		$config	= JFactory::getConfig();
+		$config	= MolajoFactory::getConfig();
 
 		// Assemble the login link.
 		$itemid = UsersHelperRoute::getLoginRoute();

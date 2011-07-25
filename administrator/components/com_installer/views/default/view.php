@@ -26,7 +26,7 @@ class InstallerViewDefault extends JView
 	 */
 	function __construct($config = null)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		parent::__construct($config);
 		$this->_addPath('template', $this->_basePath . '/views/default/tmpl');
 		$this->_addPath('template', JPATH_THEMES.'/'.$app->getTemplate().'/html/com_installer/default');
@@ -72,7 +72,7 @@ class InstallerViewDefault extends JView
 		}
 
 		// Document
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->setTitle(JText::_('COM_INSTALLER_TITLE_' . $this->getName()));
 	}
 }

@@ -52,7 +52,7 @@ class LoginController extends JController
 		// Check for request forgeries.
 		JRequest::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		$model = $this->getModel('login');
 		$credentials = $model->getState('credentials');
@@ -76,7 +76,7 @@ class LoginController extends JController
 	{
 		JRequest::checkToken('default') or jexit(JText::_('JInvalid_Token'));
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		$userid = JRequest::getInt('uid', null);
 

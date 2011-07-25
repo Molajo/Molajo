@@ -28,7 +28,7 @@ class UsersControllerRegistration extends UsersController
 	 */
 	public function activate()
 	{
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$uParams	= JComponentHelper::getParams('com_users');
 
 		// If the user is logged in, return them back to the homepage.
@@ -107,7 +107,7 @@ class UsersControllerRegistration extends UsersController
 		}
 
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Registration', 'UsersModel');
 
 		// Get the user data.

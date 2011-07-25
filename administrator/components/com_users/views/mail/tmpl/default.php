@@ -30,7 +30,7 @@ $script .= "\t\t".'}'."\n";
 // Load the tooltip behavior.
 JHtml::_('behavior.tooltip');
 
-JFactory::getDocument()->addScriptDeclaration($script);
+MolajoFactory::getDocument()->addScriptDeclaration($script);
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_users&view=mail'); ?>" name="adminForm" method="post" id="adminForm">

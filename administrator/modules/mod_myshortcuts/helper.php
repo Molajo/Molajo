@@ -40,7 +40,7 @@ abstract class ModMyshortcutsHelper
     {
         if ( !empty($button['access']) )
         {
-            if ( !JFactory::getUser()->authorize($button['access']) ) {
+            if ( !MolajoFactory::getUser()->authorize($button['access']) ) {
                 return '';
             }
         }

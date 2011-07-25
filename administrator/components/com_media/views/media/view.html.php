@@ -21,14 +21,14 @@ class MediaViewMedia extends JView
 {
 	function display($tpl = null)
 	{
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$config = JComponentHelper::getParams('com_media');
 
-		$lang	= JFactory::getLanguage();
+		$lang	= MolajoFactory::getLanguage();
 
 		$style = $app->getUserStateFromRequest('media.list.layout', 'layout', 'thumbs', 'word');
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->setBuffer($this->loadTemplate('navigation'), 'modules', 'submenu');
 
 		JHtml::_('behavior.framework', true);
@@ -99,7 +99,7 @@ class MediaViewMedia extends JView
 		 */
 		$ftp = !JClientHelper::hasCredentials('ftp');
 
-		$session	= JFactory::getSession();
+		$session	= MolajoFactory::getSession();
 		$state		= $this->get('state');
 		$this->assignRef('session', $session);
 		$this->assignRef('config', $config);
@@ -124,7 +124,7 @@ class MediaViewMedia extends JView
 	{
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		// Set the titlebar text
 		JToolBarHelper::title(JText::_('COM_MEDIA'), 'mediamanager.png');

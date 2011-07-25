@@ -55,7 +55,7 @@ class TemplatesViewSource extends JView
 	{
 		JRequest::setVar('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$canDo		= TemplatesHelper::getActions();
 
 		JToolBarHelper::title(JText::_('COM_TEMPLATES_MANAGER_EDIT_FILE'), 'thememanager');

@@ -50,7 +50,7 @@ class SearchModelSearches extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
@@ -140,7 +140,7 @@ class SearchModelSearches extends JModelList
 		// by default it is `off` as it is highly query intensive
 		if ($this->getState('filter.results')) {
 			JPluginHelper::importPlugin('search');
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 
 			if (!class_exists('JSite')) {
 				// This fools the routers in the search plugins into thinking it's in the frontend

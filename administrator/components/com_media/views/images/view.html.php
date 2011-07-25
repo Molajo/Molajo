@@ -22,8 +22,8 @@ class MediaViewImages extends JView
 	function display($tpl = null)
 	{
 		$config = JComponentHelper::getParams('com_media');
-		$app	= JFactory::getApplication();
-		$lang	= JFactory::getLanguage();
+		$app	= MolajoFactory::getApplication();
+		$lang	= MolajoFactory::getLanguage();
 		$append = '';
 
 		JHtml::_('behavior.framework', true);
@@ -74,7 +74,7 @@ class MediaViewImages extends JView
 		 */
 		$ftp = !JClientHelper::hasCredentials('ftp');
 
-		$this->assignRef('session',	JFactory::getSession());
+		$this->assignRef('session',	MolajoFactory::getSession());
 		$this->assignRef('config',		$config);
 		$this->assignRef('state',		$this->get('state'));
 		$this->assignRef('folderList',	$this->get('folderList'));

@@ -66,7 +66,7 @@ class CategoriesModelCategories extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$context	= $this->context;
 
 		$extension = $app->getUserStateFromRequest('com_categories.categories.filter.extension', 'extension', 'com_articles');
@@ -131,7 +131,7 @@ class CategoriesModelCategories extends JModelList
 		// Create a new query object.
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 
 		// Select the required fields from the table.
 		$query->select(

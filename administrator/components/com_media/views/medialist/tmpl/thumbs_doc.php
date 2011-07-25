@@ -9,7 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 $params = new JRegistry;
 $dispatcher	= JDispatcher::getInstance();
 $dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_tmp_doc, &$params));

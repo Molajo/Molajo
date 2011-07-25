@@ -109,6 +109,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * getInstance
+     *
 	 * Returns the global MolajoApplication object, only creating it if it
 	 * doesn't already exist.
 	 *
@@ -129,18 +131,15 @@ class MolajoApplication extends JObject
 		}
 
 		if (empty($instances[$application])) {
-			// Load the router object.
+
 			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 			$path = $info->path . '/includes/application.php';
 
 			if (file_exists($path)) {
 				require_once $path;
-
-				// Create a JRouter object.
 				$classname = $prefix.ucfirst($application);
 				$instance = new $classname($config);
-			}
-			else {
+			} else {
 				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
 			}
@@ -152,6 +151,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * initialise
+     *
 	 * Initialise the application.
 	 *
 	 * @param   array  $options  An optional associative array of configuration settings.
@@ -186,6 +187,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * route
+     *
 	 * Route the application.
 	 *
 	 * Routing is the process of examining the request environment to determine which
@@ -205,7 +208,6 @@ class MolajoApplication extends JObject
 
 		JRequest::set($result, 'get', false);
 
-		// Trigger the onAfterRoute event.
 		MolajoPluginHelper::importPlugin('system');
 		$this->triggerEvent('onAfterRoute');
 	}
@@ -795,12 +797,12 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Returns the application JPathway object.
+	 * Returns the Menu object.
 	 *
 	 * @param   string  $name     The name of the application/application.
 	 * @param   array   $options  An optional associative array of configuration settings.
 	 *
-	 * @return  JMenu  JMenu object.
+	 * @return  MolajoMenu  MolajoMenu object.
 	 *
 	 * @since   11.1
 	 */

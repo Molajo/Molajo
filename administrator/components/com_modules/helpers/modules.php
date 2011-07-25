@@ -34,7 +34,7 @@ abstract class ModulesHelper
 	 */
 	public static function getActions()
 	{
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$result	= new JObject;
 
 		$actions = array(
@@ -81,7 +81,7 @@ abstract class ModulesHelper
 	{
 		jimport('joomla.filesystem.folder');
 
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('DISTINCT(position)');
@@ -108,7 +108,7 @@ abstract class ModulesHelper
 
 	public static function getTemplates($applicationId = 0, $state = '', $template='')
 	{
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		// Get the database object and a new query object.
 		$query	= $db->getQuery(true);
 
@@ -139,7 +139,7 @@ abstract class ModulesHelper
 	 */
 	public static function getModules($applicationId)
 	{
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('element AS value, name AS text');
@@ -153,7 +153,7 @@ abstract class ModulesHelper
 
 		$db->setQuery($query);
 		$modules = $db->loadObjectList();
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		foreach ($modules as $i=>$module) {
 			$extension = $module->value;
 			$path = $applicationId ? JPATH_ADMINISTRATOR : JPATH_SITE;

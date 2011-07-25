@@ -45,7 +45,7 @@ class TemplatesControllerSource extends JController
 	 */
 	protected function allowEdit()
 	{
-		return JFactory::getUser()->authorise('core.edit', 'com_templates');
+		return MolajoFactory::getUser()->authorise('core.edit', 'com_templates');
 	}
 
 	/**
@@ -100,7 +100,7 @@ class TemplatesControllerSource extends JController
 	public function edit()
 	{
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$model		= $this->getModel();
 		$recordId	= JRequest::getVar('id');
 		$context	= 'com_templates.edit.source';
@@ -132,7 +132,7 @@ class TemplatesControllerSource extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$model		= $this->getModel();
 		$context	= 'com_templates.edit.source';
 		$returnId	= (int) $model->getState('extension.id');
@@ -152,7 +152,7 @@ class TemplatesControllerSource extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$data		= JRequest::getVar('jform', array(), 'post', 'array');
 		$context	= 'com_templates.edit.source';
 		$task		= $this->getTask();

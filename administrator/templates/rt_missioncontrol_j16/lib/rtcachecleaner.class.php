@@ -12,7 +12,7 @@ class RTCacheClean {
 	
 	function clean($ids = array())
 	{
-		$conf = JFactory::getConfig();
+		$conf = MolajoFactory::getConfig();
 
 		// setup options with site cachebase
 		$options = array(
@@ -41,7 +41,7 @@ class RTCacheClean {
 
 	function getCount() {
 
-			$conf = JFactory::getConfig();
+			$conf = MolajoFactory::getConfig();
 			$count = 0;
 
 			// setup options with site cachebase

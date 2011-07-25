@@ -52,7 +52,7 @@ class JFormFieldOrdering extends JFormField
 		// Get some field values from the form.
 		$pluginId	= (int) $this->form->getValue('extension_id');
 		$folder	=  $this->form->getValue('folder');
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		// Build the query for the ordering list.
 		$query = 'SELECT ordering AS value, name AS text, type AS type, folder AS folder, extension_id AS extension_id' .

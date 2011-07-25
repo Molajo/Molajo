@@ -1,6 +1,6 @@
 <?php
 
-class PFactory extends JFactory {
+class PFactory extends MolajoFactory {
 	/**
 	 * Creates a new stream object with appropriate prefix
 	 * @param boolean Prefix the connections for writing

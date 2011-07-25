@@ -50,7 +50,7 @@ abstract class JHtmlUsers
 			$pathToXml = JPATH_ADMINISTRATOR.'/help/helpsites.xml';
 
 			$text = $value;
-			if (!empty($pathToXml) && $xml = JFactory::getXML($pathToXml))
+			if (!empty($pathToXml) && $xml = MolajoFactory::getXML($pathToXml))
 			{
 				foreach ($xml->sites->site as $site)
 				{
@@ -80,7 +80,7 @@ abstract class JHtmlUsers
 		}
 		else
 		{
-			$db = JFactory::getDbo();
+			$db = MolajoFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('title');
 			$query->from('#__template_styles');
@@ -154,8 +154,8 @@ abstract class JHtmlUsers
 		}
 		else
 		{
-			$db = JFactory::getDbo();
-			$lang = JFactory::getLanguage();
+			$db = MolajoFactory::getDbo();
+			$lang = MolajoFactory::getLanguage();
 			$query = $db->getQuery(true);
 			$query->select('name');
 			$query->from('#__extensions');

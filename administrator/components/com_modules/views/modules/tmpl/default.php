@@ -16,7 +16,7 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 
 $application		= $this->state->get('filter.application_id') ? 'administrator' : 'site';
-$user		= JFactory::getUser();
+$user		= MolajoFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 $canOrder	= $user->authorise('core.edit.state', 'com_modules');

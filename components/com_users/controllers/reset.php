@@ -30,7 +30,7 @@ class UsersControllerReset extends UsersController
 		// Check the request token.
 		JRequest::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Reset', 'UsersModel');
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
 
@@ -89,7 +89,7 @@ class UsersControllerReset extends UsersController
 		// Check the request token.
 		JRequest::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Reset', 'UsersModel');
 		$data	= JRequest::getVar('jform', array(), 'request', 'array');
 
@@ -148,7 +148,7 @@ class UsersControllerReset extends UsersController
 		// Check for request forgeries
 		JRequest::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Reset', 'UsersModel');		$data	= JRequest::getVar('jform', array(), 'post', 'array');
 
 		// Complete the password reset request.

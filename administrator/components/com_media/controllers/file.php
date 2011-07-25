@@ -31,7 +31,7 @@ class MediaControllerFile extends JController
 		JRequest::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Get the user
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 
 		// Get some data from the request
 		$file		= JRequest::getVar('Filedata', '', 'files', 'array');
@@ -119,8 +119,8 @@ class MediaControllerFile extends JController
 	function delete()
 	{
 		JRequest::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
-		$app	= JFactory::getApplication();
-		$user	= JFactory::getUser();
+		$app	= MolajoFactory::getApplication();
+		$user	= MolajoFactory::getUser();
 
 		// Get some data from the request
 		$tmpl	= JRequest::getCmd('tmpl');

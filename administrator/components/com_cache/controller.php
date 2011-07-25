@@ -33,7 +33,7 @@ class CacheController extends JController
 		require_once JPATH_COMPONENT.'/helpers/cache.php';
 
 		// Get the document object.
-		$document	= JFactory::getDocument();
+		$document	= MolajoFactory::getDocument();
 
 		// Set the default view name and format from the Request.
 		$vName		= JRequest::getCmd('view', 'cache');

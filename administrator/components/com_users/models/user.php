@@ -69,7 +69,7 @@ class UsersModelUser extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_users.user', 'user', array('control' => 'jform', 'load_data' => $loadData));
@@ -89,7 +89,7 @@ class UsersModelUser extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_users.edit.user.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_users.edit.user.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -140,7 +140,7 @@ class UsersModelUser extends JModelAdmin
 		$pk			= (!empty($data['id'])) ? $data['id'] : (int) $this->getState('user.id');
 		$user		= JUser::getInstance($pk);
 
-		$my = JFactory::getUser();
+		$my = MolajoFactory::getUser();
 
 		if ($data['block'] && $pk == $my->id && !$my->block) {
 			$this->setError(JText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
@@ -190,7 +190,7 @@ class UsersModelUser extends JModelAdmin
 	public function delete(&$pks)
 	{
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$table	= $this->getTable();
 		$pks	= (array) $pks;
 
@@ -217,7 +217,7 @@ class UsersModelUser extends JModelAdmin
 
 				if ($allow) {
 					// Get users data for the users to delete.
-					$user_to_delete = JFactory::getUser($pk);
+					$user_to_delete = MolajoFactory::getUser($pk);
 
 					// Fire the onUserBeforeDelete event.
 					$dispatcher->trigger('onUserBeforeDelete', array($table->getProperties()));
@@ -257,9 +257,9 @@ class UsersModelUser extends JModelAdmin
 	function block(&$pks, $value = 1)
 	{
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$dispatcher	= JDispatcher::getInstance();
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
         // Check if I am a Super Admin
 		$iAmSuperAdmin	= $user->authorise('core.admin');
 		$table		= $this->getTable();
@@ -355,7 +355,7 @@ class UsersModelUser extends JModelAdmin
 	{
 		// Initialise variables.
 		$dispatcher	= JDispatcher::getInstance();
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
         // Check if I am a Super Admin
 		$iAmSuperAdmin	= $user->authorise('core.admin');
 		$table		= $this->getTable();
@@ -450,7 +450,7 @@ class UsersModelUser extends JModelAdmin
 			}
 
 			// Get the system ACL object and set the mode to database driven.
-			$acl = JFactory::getACL();
+			$acl = MolajoFactory::getACL();
 			$oldAclMode = $acl->setCheckMode(1);
 
 			$groupLogic	= JArrayHelper::getValue($config, 'group_logic');
@@ -535,7 +535,7 @@ class UsersModelUser extends JModelAdmin
 	 */
 	public function getGroups()
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		if ($user->authorise('core.edit', 'com_users') && $user->authorise('core.manage', 'com_users'))
 		{
 			$model = JModel::getInstance('Groups', 'UsersModel', array('ignore_request' => true));

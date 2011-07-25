@@ -99,7 +99,7 @@ class PluginsModelPlugin extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_plugins.edit.plugin.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -148,7 +148,7 @@ class PluginsModelPlugin extends JModelAdmin
 			$path = JPath::clean(JPATH_PLUGINS.'/'.$table->folder.'/'.$table->element.'/'.$table->element.'.xml');
 
 			if (file_exists($path)) {
-				$this->_cache[$pk]->xml = JFactory::getXML($path);
+				$this->_cache[$pk]->xml = MolajoFactory::getXML($path);
 			} else {
 				$this->_cache[$pk]->xml = null;
 			}
@@ -183,7 +183,7 @@ class PluginsModelPlugin extends JModelAdmin
 		// Execute the parent method.
 		parent::populateState();
 
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		$pk = (int) JRequest::getInt('extension_id');
@@ -205,11 +205,11 @@ class PluginsModelPlugin extends JModelAdmin
 		// Initialise variables.
 		$folder		= $this->getState('item.folder');
 		$element	= $this->getState('item.element');
-		$lang		= JFactory::getLanguage();
+		$lang		= MolajoFactory::getLanguage();
 		$application		= JApplicationHelper::getApplicationInfo(0);
 
 	// Load the core and/or local language sys file(s) for the ordering field.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$query = 'SELECT element' .
 				' FROM #__extensions' .
 				' WHERE (type =' .$db->Quote('plugin'). 'AND folder='. $db->Quote($folder) . ')';
@@ -225,7 +225,7 @@ class PluginsModelPlugin extends JModelAdmin
 		}
 
 		if (empty($folder) || empty($element)) {
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			$app->redirect(JRoute::_('index.php?option=com_plugins&view=plugins',false));
 		}
 		// Try 1.6 format: /plugins/folder/element/element.xml

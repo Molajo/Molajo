@@ -32,7 +32,7 @@ class UsersController extends JController
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Get the document object.
-		$document	= JFactory::getDocument();
+		$document	= MolajoFactory::getDocument();
 
 		// Set the default view name and format from the Request.
 		$vName	 = JRequest::getCmd('view', 'login');
@@ -44,7 +44,7 @@ class UsersController extends JController
 			switch ($vName) {
 				case 'registration':
 					// If the user is already logged in, redirect to the profile page.
-					$user = JFactory::getUser();
+					$user = MolajoFactory::getUser();
 					if ($user->get('guest') != 1) {
 						// Redirect to profile page.
 						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
@@ -66,7 +66,7 @@ class UsersController extends JController
 				case 'profile':
 
 					// If the user is a guest, redirect to the login page.
-					$user = JFactory::getUser();
+					$user = MolajoFactory::getUser();
 					if ($user->get('guest') == 1) {
 						// Redirect to login page.
 						$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));
@@ -82,7 +82,7 @@ class UsersController extends JController
 
 				case 'reset':
 					// If the user is already logged in, redirect to the profile page.
-					$user = JFactory::getUser();
+					$user = MolajoFactory::getUser();
 					if ($user->get('guest') != 1) {
 						// Redirect to profile page.
 						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
@@ -94,7 +94,7 @@ class UsersController extends JController
 
 				case 'remind':
 					// If the user is already logged in, redirect to the profile page.
-					$user = JFactory::getUser();
+					$user = MolajoFactory::getUser();
 					if ($user->get('guest') != 1) {
 						// Redirect to profile page.
 						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));

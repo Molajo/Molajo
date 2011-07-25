@@ -74,7 +74,7 @@ class RTAdminCssMenu extends JTree
 
 		if ($this->_css) {
 			// Add style to document head
-			$doc = JFactory::getDocument();
+			$doc = MolajoFactory::getDocument();
 			$doc->addStyleDeclaration($this->_css);
 		}
 	}

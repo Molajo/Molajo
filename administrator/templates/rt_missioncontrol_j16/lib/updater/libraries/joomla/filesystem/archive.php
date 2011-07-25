@@ -55,7 +55,7 @@ class JArchive
 				$adapter = &JArchive::getAdapter('gzip');
 				if ($adapter)
 				{
-					$config = &JFactory::getConfig();
+					$config = &MolajoFactory::getConfig();
 					$tmpfname = $config->getValue('config.tmp_path').DS.uniqid('gzip');
 					$gzresult = $adapter->extract($archivename, $tmpfname);
 					if (JError::isError($gzresult))
@@ -87,7 +87,7 @@ class JArchive
 				$adapter = &JArchive::getAdapter('bzip2');
 				if ($adapter)
 				{
-					$config = &JFactory::getConfig();
+					$config = &MolajoFactory::getConfig();
 					$tmpfname = $config->getValue('config.tmp_path').DS.uniqid('bzip2');
 					$bzresult = $adapter->extract($archivename, $tmpfname);
 					if (JError::isError($bzresult))

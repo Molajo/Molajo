@@ -24,12 +24,12 @@ class MolajoMenuSite extends JMenu
 	 */
 	public function load()
 	{
-		$cache = JFactory::getCache('mod_menu', '');  // has to be mod_menu or this cache won't get cleaned
+		$cache = MolajoFactory::getCache('mod_menu', '');  // has to be mod_menu or this cache won't get cleaned
 
-		if (!$data = $cache->get('menu_items'.JFactory::getLanguage()->getTag())) {
+		if (!$data = $cache->get('menu_items'.MolajoFactory::getLanguage()->getTag())) {
 			// Initialise variables.
-			$db		= JFactory::getDbo();
-			$app	= JFactory::getApplication();
+			$db		= MolajoFactory::getDbo();
+			$app	= MolajoFactory::getApplication();
 			$query	= $db->getQuery(true);
 
 			$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
@@ -45,12 +45,12 @@ class MolajoMenuSite extends JMenu
 
             $acl = new MolajoACL ();
             $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
-
+echo $query->__toString();
             $db->setQuery($query->__toString());
             $menus = $db->loadObjectList();
 
             if ($db->getError()) {
-                JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+                MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
                 return false;
             }
 
@@ -74,7 +74,7 @@ class MolajoMenuSite extends JMenu
                     parse_str($url, $menu->query);
                 }
             }
-			$cache->store($menus, 'menu_items'.JFactory::getLanguage()->getTag());
+			$cache->store($menus, 'menu_items'.MolajoFactory::getLanguage()->getTag());
 
 			$this->_items = $menus;
 		} else {
@@ -95,11 +95,11 @@ class MolajoMenuSite extends JMenu
 	{
 		$attributes = (array) $attributes;
 		$values = (array) $values;
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		// Filter by language if not set
 		if ($app->isSite() && $app->getLanguageFilter() && !array_key_exists('language',$attributes)) {
 			$attributes[]='language';
-			$values[]=array(JFactory::getLanguage()->getTag(), '*');
+			$values[]=array(MolajoFactory::getLanguage()->getTag(), '*');
 		}
 		return parent::getItems($attributes, $values, $firstonly);
 	}
@@ -114,7 +114,7 @@ class MolajoMenuSite extends JMenu
 	 */
 	function getDefault($language='*')
 	{
-		if (array_key_exists($language, $this->_default) && JFactory::getApplication()->getLanguageFilter()) {
+		if (array_key_exists($language, $this->_default) && MolajoFactory::getApplication()->getLanguageFilter()) {
 			return $this->_items[$this->_default[$language]];
 		}
 		else if (array_key_exists('*', $this->_default)) {

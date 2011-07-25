@@ -37,7 +37,7 @@ class TemplatesModelSource extends JModelForm
 	{
 		jimport('joomla.filesystem.file');
 
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		$id = $app->getUserState('com_templates.edit.source.id');
@@ -68,10 +68,10 @@ class TemplatesModelSource extends JModelForm
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Codemirror or Editor None should be enabled
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('COUNT(*)');
 		$query->from('#__extensions as a');
@@ -100,7 +100,7 @@ class TemplatesModelSource extends JModelForm
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_templates.edit.source.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_templates.edit.source.data', array());
 
 		if (empty($data)) {
 			$data = $this->getSource();

@@ -11,8 +11,8 @@ jimport('joomla.cache.cache');
 
 global $mctrl;
 
-$db =& JFactory::getDBO();
-$user =& JFactory::getUser();
+$db =& MolajoFactory::getDBO();
+$user =& MolajoFactory::getUser();
 
 $id = JRequest::getInt('id',0);
 $editor = JRequest::getString('editor',null);

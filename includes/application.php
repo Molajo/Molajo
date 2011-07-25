@@ -55,7 +55,7 @@ class MolajoSite extends MolajoApplication
 	 */
 	public function initialise($options = array())
 	{
-		$config = JFactory::getConfig();
+		$config = MolajoFactory::getConfig();
 
 		// if a language was specified it has priority
 		// otherwise use user or default language settings
@@ -79,7 +79,7 @@ class MolajoSite extends MolajoApplication
 
 		if (empty($options['language'])) {
 			// Detect user language
-			$lang = JFactory::getUser()->getParam('language');
+			$lang = MolajoFactory::getUser()->getParam('language');
 			// Make sure that the user's language exists
 			if ($lang && JLanguage::exists($lang)) {
 				$options['language'] = $lang;
@@ -117,7 +117,7 @@ class MolajoSite extends MolajoApplication
 		parent::initialise($options);
  
 		// Load Library language
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$lang->load('lib_joomla', JPATH_SITE)
 		|| $lang->load('lib_joomla', JPATH_ADMINISTRATOR);
 
@@ -148,11 +148,11 @@ class MolajoSite extends MolajoApplication
 			if (!$component) {
 				$component = JRequest::getCmd('option');
 			}
-
-			$document	= JFactory::getDocument();
-			$user		= JFactory::getUser();
+			$document	= MolajoFactory::getDocument();
+			$user		= MolajoFactory::getUser();
 			$router		= $this->getRouter();
 			$params		= $this->getParams();
+            $option     = $component;
 
             if (defined('MOLAJO_PATH_COMPONENT')) {
             } else {
@@ -160,11 +160,11 @@ class MolajoSite extends MolajoApplication
             }
             if (defined('MOLAJO_PATH_COMPONENT_SITE')) {
             } else {
-                define('MOLAJO_PATH_COMPONENT_SITE',	MOLAJO_PATH_SITE.'/components/'.$option);
+                define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE.'/components/'.$option);
             }
             if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) {
             } else {
-                define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option);
+                define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option);
             }
             if (defined('JPATH_COMPONENT')) {
             } else {
@@ -183,7 +183,7 @@ class MolajoSite extends MolajoApplication
 			{
 				case 'html':
 					// Get language
-					$lang_code = JFactory::getLanguage()->getTag();
+					$lang_code = MolajoFactory::getLanguage()->getTag();
 					$languages = JLanguageHelper::getLanguages('lang_code');
 
 					// Set metadata
@@ -226,8 +226,8 @@ class MolajoSite extends MolajoApplication
 	 */
 	public function render()
 	{
-		$document	= JFactory::getDocument();
-		$user		= JFactory::getUser();
+		$document	= MolajoFactory::getDocument();
+		$user		= MolajoFactory::getUser();
 
 		// get the format to render
 		$format = $document->getType();
@@ -248,7 +248,7 @@ class MolajoSite extends MolajoApplication
 				}
 
 				if ($this->getCfg('offline') && !$user->authorise('admin')) {
-					$uri		= JFactory::getURI();
+					$uri		= MolajoFactory::getURI();
 					$return		= (string)$uri;
 					$this->setUserState('users.login.form.data',array( 'return' => $return ) );
 					$file = 'offline';
@@ -267,7 +267,7 @@ class MolajoSite extends MolajoApplication
 		}
 
 		// Parse the document.
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->parse($params);
 
 		// Trigger the onBeforeRender event.
@@ -321,14 +321,14 @@ class MolajoSite extends MolajoApplication
 	public function authorise($itemid)
 	{
 		$menus	= $this->getMenu();
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 
 		if (!$menus->authorise($itemid))
 		{
 			if ($user->get('id') == 0)
 			{
 				// Redirect to login
-				$uri		= JFactory::getURI();
+				$uri		= MolajoFactory::getURI();
 				$return		= (string)$uri;
 
 				$this->setUserState('users.login.form.data',array( 'return' => $return ) );
@@ -373,7 +373,7 @@ class MolajoSite extends MolajoApplication
 			$menu	= $menus->getActive();
 
 			// Get language
-			$lang_code = JFactory::getLanguage()->getTag();
+			$lang_code = MolajoFactory::getLanguage()->getTag();
 			$languages = JLanguageHelper::getLanguages('lang_code');
 
 			$title = $this->getCfg('sitename');
@@ -446,16 +446,16 @@ class MolajoSite extends MolajoApplication
 		}
 
 
-		$cache = JFactory::getCache('com_templates', '');
+		$cache = MolajoFactory::getCache('com_templates', '');
 		if ($this->_language_filter) {
-			$tag = JFactory::getLanguage()->getTag();
+			$tag = MolajoFactory::getLanguage()->getTag();
 		}
 		else {
 			$tag ='';
 		}
 		if (!$templates = $cache->get('templates0'.$tag)) {
 			// Load styles
-			$db = JFactory::getDbo();
+			$db = MolajoFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('id, home, template, params');
 			$query->from('#__template_styles');
@@ -514,7 +514,7 @@ class MolajoSite extends MolajoApplication
 	}
 
 	/**
-	 * Return a reference to the JPathway object.
+	 * Return a reference to the Menu object.
 	 *
 	 * @param	string	$name		The name of the application/application.
 	 * @param	array	$options	An optional associative array of configuration settings.
@@ -556,7 +556,7 @@ class MolajoSite extends MolajoApplication
 	 */
 	static public function getRouter($name = null, array $options = array())
 	{
-		$config = JFactory::getConfig();
+		$config = MolajoFactory::getConfig();
 		$options['mode'] = $config->get('sef');
 		$router = parent::getRouter('site', $options);
 		return $router;

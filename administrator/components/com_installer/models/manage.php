@@ -55,7 +55,7 @@ class InstallerModelManage extends InstallerModel
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$filters = JRequest::getVar('filters');
 		if (empty($filters)) {
 			$data = $app->getUserState($this->context.'.data');
@@ -88,7 +88,7 @@ class InstallerModelManage extends InstallerModel
 	function publish(&$eid = array(), $value = 1)
 	{
 		// Initialise variables.
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		if ($user->authorise('core.edit.state', 'com_installer')) {
 			$result = true;
 
@@ -101,7 +101,7 @@ class InstallerModelManage extends InstallerModel
 			}
 
 			// Get a database connector
-			$db = JFactory::getDBO();
+			$db = MolajoFactory::getDBO();
 
 			// Get a table object for the extension type
 			$table = JTable::getInstance('Extension');
@@ -144,7 +144,7 @@ class InstallerModelManage extends InstallerModel
 		}
 
 		// Get a database connector
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 
 		// Get an installer object for the extension type
 		jimport('joomla.installer.installer');
@@ -169,7 +169,7 @@ class InstallerModelManage extends InstallerModel
 	function remove($eid = array())
 	{
 		// Initialise variables.
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		if ($user->authorise('core.delete', 'com_installer')) {
 
 			// Initialise variables.
@@ -184,7 +184,7 @@ class InstallerModelManage extends InstallerModel
 			}
 
 			// Get a database connector
-			$db = JFactory::getDBO();
+			$db = MolajoFactory::getDBO();
 
 			// Get an installer object for the extension type
 			jimport('joomla.installer.installer');
@@ -225,7 +225,7 @@ class InstallerModelManage extends InstallerModel
 				$msg = JText::sprintf('COM_INSTALLER_UNINSTALL_SUCCESS', $rowtype);
 				$result = true;
 			}
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			$app->enqueueMessage($msg);
 			$this->setState('action', 'remove');
 			$this->setState('name', $installer->get('name'));
@@ -251,7 +251,7 @@ class InstallerModelManage extends InstallerModel
 		$application = $this->getState('filter.application_id');
 		$group = $this->getState('filter.group');
 		$hideprotected = $this->getState('filter.hideprotected');
-		$query = JFactory::getDBO()->getQuery(true);
+		$query = MolajoFactory::getDBO()->getQuery(true);
 		$query->select('*');
 		$query->from('#__extensions');
 		$query->where('state=0');
@@ -293,7 +293,7 @@ class InstallerModelManage extends InstallerModel
 	{
 		// Get the form.
 		jimport('joomla.form.form');
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
 		JForm::addFieldPath(JPATH_COMPONENT . '/models/fields');
 		$form = JForm::getInstance('com_installer.manage', 'manage', array('load_data' => $loadData));
@@ -323,7 +323,7 @@ class InstallerModelManage extends InstallerModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_installer.manage.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_installer.manage.data', array());
 
 		return $data;
 	}

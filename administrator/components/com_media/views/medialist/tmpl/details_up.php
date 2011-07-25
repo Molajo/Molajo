@@ -9,7 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 ?>
 		<tr>
 			<td class="imgTotal">

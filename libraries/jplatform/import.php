@@ -45,10 +45,7 @@ if (!class_exists('JLoader')) {
  */
 
 // Import the factory library.
-//JLoader::import('joomla.factory');
-/** MolajoFactory */
-require_once LIBRARIES.'/molajo/factory.php';
-require_once LIBRARIES.'/overrides/factory.php';
+JLoader::import('joomla.factory');
 
 // Import the exception and error handling libraries.
 JLoader::import('joomla.error.error');

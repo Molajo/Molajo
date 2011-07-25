@@ -40,7 +40,7 @@ class CacheViewPurge extends JView
 		JToolBarHelper::title(JText::_('COM_CACHE_PURGE_EXPIRED_CACHE'), 'purge.png');
 		JToolBarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_CACHE_PURGE_EXPIRED', false);
 		JToolBarHelper::divider();
-		if (JFactory::getUser()->authorise('core.admin', 'com_cache')) {
+		if (MolajoFactory::getUser()->authorise('core.admin', 'com_cache')) {
 			JToolBarHelper::preferences('com_cache');
 			JToolBarHelper::divider();
 		}

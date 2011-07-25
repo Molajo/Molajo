@@ -64,7 +64,7 @@ class UsersViewReset extends JView
 	 */
 	protected function prepareDocument()
 	{
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$menus		= $app->getMenu();
 		$title 		= null;
 

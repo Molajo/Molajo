@@ -42,9 +42,9 @@ class ConfigControllerApplication extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('core.admin'))
+		if (!MolajoFactory::getUser()->authorise('core.admin'))
 		{
-			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
 
@@ -52,7 +52,7 @@ class ConfigControllerApplication extends JController
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Initialise variables.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Application');
 		$form	= $model->getForm();
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
@@ -124,9 +124,9 @@ class ConfigControllerApplication extends JController
 	function cancel()
 	{
 		// Check if the user is authorized to do this.
-		if (!JFactory::getUser()->authorise('core.admin', 'com_config'))
+		if (!MolajoFactory::getUser()->authorise('core.admin', 'com_config'))
 		{
-			JFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
 
@@ -134,7 +134,7 @@ class ConfigControllerApplication extends JController
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		// Clean the session data.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$app->setUserState('com_config.config.global.data',	null);
 
 		$this->setRedirect('index.php');

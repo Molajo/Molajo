@@ -34,7 +34,7 @@ class UsersViewLogin extends JView
 	public function display($tpl = null)
 	{
 		// Get the view data.
-		$this->user		= JFactory::getUser();
+		$this->user		= MolajoFactory::getUser();
 		$this->form		= $this->get('Form');
 		$this->state	= $this->get('State');
 		$this->params	= $this->state->get('params');
@@ -46,7 +46,7 @@ class UsersViewLogin extends JView
 		}
 
 		// Check for layout override
-		$active = JFactory::getApplication()->getMenu()->getActive();
+		$active = MolajoFactory::getApplication()->getMenu()->getActive();
 		if (isset($active->query['layout'])) {
 			$this->setLayout($active->query['layout']);
 		}
@@ -65,9 +65,9 @@ class UsersViewLogin extends JView
 	 */
 	protected function prepareDocument()
 	{
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$menus		= $app->getMenu();
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$login		= $user->get('guest') ? true : false;
 		$title 		= null;
 

@@ -60,7 +60,7 @@ class MenusModelItems extends JModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		$search = $this->getUserStateFromRequest($this->context.'.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -162,7 +162,7 @@ class MenusModelItems extends JModelList
 		// Create a new query object.
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 
 		// Select all fields from the table.
 		$query->select($this->getState('list.select', 'a.*'));

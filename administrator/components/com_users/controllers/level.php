@@ -38,7 +38,7 @@ class UsersControllerLevel extends JControllerForm
 	 */
 	protected function allowSave($data, $key = 'id')
 	{
-		return (JFactory::getUser()->authorise('core.admin', $this->option) && parent::allowSave($data, $key));
+		return (MolajoFactory::getUser()->authorise('core.admin', $this->option) && parent::allowSave($data, $key));
 	}
 
 	/**
@@ -50,10 +50,10 @@ class UsersControllerLevel extends JControllerForm
 		JRequest::checkToken() or jexit(JText::_('JInvalid_Token'));
 
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
 
-		if (!JFactory::getUser()->authorise('core.admin', $this->option)) {
+		if (!MolajoFactory::getUser()->authorise('core.admin', $this->option)) {
 			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
 			jexit();
 		}

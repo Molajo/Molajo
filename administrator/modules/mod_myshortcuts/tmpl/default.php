@@ -13,9 +13,9 @@ defined('_JEXEC') or die;
 $buttons = ModMyshortcutsHelper::getButtons();
 
 // get the current logged in user
-$currentUser = JFactory::getUser();
+$currentUser = MolajoFactory::getUser();
 
-$lang   = JFactory::getLanguage();
+$lang   = MolajoFactory::getLanguage();
 //$lang->load('mod_menu', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false);
 $lang->load('mod_menu', JPATH_ADMINISTRATOR, 'en-GB', true);
 $lang->load('mod_menu', JPATH_ADMINISTRATOR, $lang->getDefault(), true);

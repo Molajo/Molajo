@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 $shownew 	= (boolean)$params->get('shownew', 1);
 $showhelp 	= $params->get('showhelp', 1);
-$user		= JFactory::getUser();
+$user		= MolajoFactory::getUser();
 
 //
 // Site SubMenu

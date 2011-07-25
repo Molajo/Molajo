@@ -36,7 +36,7 @@ class PluginsHelper
 	 */
 	public static function getActions()
 	{
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$result		= new JObject;
 		$assetName	= 'com_plugins';
 
@@ -73,7 +73,7 @@ class PluginsHelper
 	 */
 	public static function folderOptions()
 	{
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('DISTINCT(folder) AS value, folder AS text');

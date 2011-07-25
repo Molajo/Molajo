@@ -29,7 +29,7 @@ class RokNavMenusHelper extends MenusHelper {
 			$set_params = new JParameter($item->params);
 			if (file_exists( $param_file ))
 			{
-				$xml =& JFactory::getXMLParser('Simple');
+				$xml =& MolajoFactory::getXMLParser('Simple');
 				if ($xml->loadFile($param_file)){
 					$document =& $xml->document;
 					$set_params->setXML( $document->params[0] );

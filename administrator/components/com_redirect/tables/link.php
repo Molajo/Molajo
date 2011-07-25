@@ -88,7 +88,7 @@ class RedirectTableLink extends JTable
 	public function store($updateNulls = false)
 	{
 		// Initialise variables.
-		$date = JFactory::getDate()->toMySQL();
+		$date = MolajoFactory::getDate()->toMySQL();
 
 		if ($this->id) {
 			// Existing item

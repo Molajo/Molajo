@@ -24,14 +24,14 @@ class MediaViewMediaList extends JView
 		// Do not allow cache
 		JResponse::allowCache(false);
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$style = $app->getUserStateFromRequest('media.list.layout', 'layout', 'thumbs', 'word');
 
-		$lang	= JFactory::getLanguage();
+		$lang	= MolajoFactory::getLanguage();
 
 		JHtml::_('behavior.framework', true);
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->addStyleSheet('../media/media/css/medialist-'.$style.'.css');
 		if ($lang->isRTL()) :
 			$document->addStyleSheet('../media/media/css/medialist-'.$style.'_rtl.css');

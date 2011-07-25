@@ -39,7 +39,7 @@ class ConfigController extends JController
 	public function display($cachable = false, $urlparams = false)
 	{
 		// Get the document object.
-		$document	= JFactory::getDocument();
+		$document	= MolajoFactory::getDocument();
 
 		// Set the default view name and format from the Request.
 		$vName		= JRequest::getCmd('view', 'application');
@@ -53,7 +53,7 @@ class ConfigController extends JController
 				$model = $this->getModel($vName);
 
 				// Access check.
-				if (!JFactory::getUser()->authorise('core.admin', $model->getState('component.option'))) {
+				if (!MolajoFactory::getUser()->authorise('core.admin', $model->getState('component.option'))) {
 					return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 				}
 

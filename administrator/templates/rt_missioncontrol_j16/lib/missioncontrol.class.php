@@ -135,8 +135,8 @@ class MissionControl extends RTCore {
 	
 	function displayUserInfo() {
 	
-		$db			=& JFactory::getDBO();
-        $user       =& JFactory::getUser();
+		$db			=& MolajoFactory::getDBO();
+        $user       =& MolajoFactory::getUser();
 		$task 		= JRequest::getString('task');
 		
 		$disabled = ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu'));
@@ -188,7 +188,7 @@ class MissionControl extends RTCore {
 	function displayTitle() {
 		
 		$option = JRequest::getString('option');
-		$mainframe =& JFactory::getApplication();
+		$mainframe =& MolajoFactory::getApplication();
 		
 		if ($option == "com_cpanel")
 			$title = JText::_('Site Dashboard');
@@ -198,7 +198,7 @@ class MissionControl extends RTCore {
 		if (!empty($title)) {
 			echo '<h1>'.strip_tags($title).'</h1>';
 		} else {
-			$document = JFactory::getDocument();
+			$document = MolajoFactory::getDocument();
 			$buffer = $document->getBuffer();
 			if(isset($buffer['modules']['title'])) echo '<h1>'.strip_tags($buffer['modules']['title']).'</h1>';
 		}
@@ -220,7 +220,7 @@ class MissionControl extends RTCore {
 		$task 		= JRequest::getString('task');
 		
 		$user		= $this->user;
-		$db			=& JFactory::getDBO();
+		$db			=& MolajoFactory::getDBO();
 		$output 	= array();
 		
 		$canConfig	= $user->authorize('com_config', 'manage');
@@ -266,7 +266,7 @@ class MissionControl extends RTCore {
 
     function _getEditors() {
 
-        $dbo = JFactory::getDBO();
+        $dbo = MolajoFactory::getDBO();
 		$query = 'SELECT element, name '.
 			'FROM #__extensions '.
 			'WHERE type = "plugin" '.
@@ -282,9 +282,9 @@ class MissionControl extends RTCore {
 
     function _renderEditorSelect() {
 
-        $conf = &JFactory::getConfig();
+        $conf = &MolajoFactory::getConfig();
         $myEditor = $conf->getValue('config.editor');
-        $user =& JFactory::getUser();
+        $user =& MolajoFactory::getUser();
 
         $editor_script = "\n
 			var updateEditor = function(){

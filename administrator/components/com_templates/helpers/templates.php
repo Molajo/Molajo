@@ -43,7 +43,7 @@ class TemplatesHelper
 	 */
 	public static function getActions()
 	{
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$result	= new JObject;
 
 		$actions = array(
@@ -80,7 +80,7 @@ class TemplatesHelper
 	public static function getTemplateOptions($applicationId = '*')
 	{
 		// Build the filter options.
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		if ($applicationId != '*') {

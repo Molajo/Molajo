@@ -25,7 +25,7 @@ class ModulesControllerModule extends JControllerForm
 	public function add()
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the result of the parent method. If an error, just return it.
 		$result = parent::add();
@@ -49,7 +49,7 @@ class ModulesControllerModule extends JControllerForm
 	public function cancel($key = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		parent::cancel();
 
@@ -82,7 +82,7 @@ class ModulesControllerModule extends JControllerForm
 	protected function postSaveHook(JModel &$model, $validData = array())
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$task = $this->getTask();
 
 		switch ($task)

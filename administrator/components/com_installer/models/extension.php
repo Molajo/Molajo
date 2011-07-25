@@ -65,7 +65,7 @@ class InstallerModel extends JModelList
 		if ($ordering == 'name' || (!empty($search) && stripos($search, 'id:') !== 0)) {
 			$db->setQuery($query);
 			$result = $db->loadObjectList();
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 			$this->translate($result);
 			if (!empty($search)) {
 				foreach($result as $i=>$item) {
@@ -98,7 +98,7 @@ class InstallerModel extends JModelList
 	 */
 	private function translate(&$items)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		foreach($items as &$item) {
 			if (strlen($item->manifest_cache)) {
 				$data = json_decode($item->manifest_cache);

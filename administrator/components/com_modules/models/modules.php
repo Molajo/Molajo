@@ -61,7 +61,7 @@ class ModulesModelModules extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
@@ -137,7 +137,7 @@ class ModulesModelModules extends JModelList
 			$this->_db->setQuery($query);
 			$result = $this->_db->loadObjectList();
 			$this->translate($result);
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 			JArrayHelper::sortObjects($result,$ordering, $this->getState('list.direction') == 'desc' ? -1 : 1, true, $lang->getLocale());
 			$total = count($result);
 			$this->cache[$this->getStoreId('getTotal')] = $total;
@@ -169,7 +169,7 @@ class ModulesModelModules extends JModelList
 	 */
 	protected function translate(&$items)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$application = $this->getState('filter.application_id') ? 'administrator' : 'site';
 		foreach($items as $item) {
 			$extension = $item->module;

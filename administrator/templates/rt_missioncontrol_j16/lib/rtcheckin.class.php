@@ -12,8 +12,8 @@ class RTCheckin {
 	
 	function checkin($ids = array())
 	{
-		$app		=& JFactory::getApplication();
-		$db			=& JFactory::getDBO();
+		$app		=& MolajoFactory::getApplication();
+		$db			=& MolajoFactory::getDBO();
 		$nullDate	= $db->getNullDate();
 
 		if (!is_array($ids)) {
@@ -55,8 +55,8 @@ class RTCheckin {
 
 	function getCheckouts($total = false) {
 
-			$app		=& JFactory::getApplication();
-			$db			=& JFactory::getDBO();
+			$app		=& MolajoFactory::getApplication();
+			$db			=& MolajoFactory::getDBO();
 			$nullDate	= $db->getNullDate();
 			$tables 	= $db->getTableList();
 

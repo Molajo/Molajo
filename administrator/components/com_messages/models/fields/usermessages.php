@@ -36,7 +36,7 @@ class JFormFieldUserMessages extends JFormFieldUser
 	protected function getGroups()
 	{
 		// Compute usergroups
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('id');
 		$query->from('#__usergroups');
@@ -74,6 +74,6 @@ class JFormFieldUserMessages extends JFormFieldUser
 	 */
 	protected function getExcluded()
 	{
-		return array(JFactory::getUser()->id);
+		return array(MolajoFactory::getUser()->id);
 	}
 }

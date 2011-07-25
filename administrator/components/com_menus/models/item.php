@@ -59,7 +59,7 @@ class MenusModelItem extends JModelAdmin
 			if ($record->published != -2) {
 				return ;
 			}
-			$user = JFactory::getUser();
+			$user = MolajoFactory::getUser();
 
 		return $user->authorise('core.delete', 'com_menus.item.'.(int) $record->id);
 		}
@@ -75,7 +75,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function canEditState($record)
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		if (!empty($record->id)) {
 			return $user->authorise('core.edit.state', 'com_menus.item.'.(int) $record->id);
@@ -185,7 +185,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Check that user has create permission for menus
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		if (!$user->authorise('core.create', 'com_menus')) {
 			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
@@ -342,7 +342,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Check that user has create and edit permission for menus
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		if (!$user->authorise('core.create', 'com_menus')) {
 			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
@@ -447,7 +447,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function canSave($data = array(), $key = 'id')
 	{
-		return JFactory::getUser()->authorise('core.edit', $this->option);
+		return MolajoFactory::getUser()->authorise('core.edit', $this->option);
 	}
 
 	/**
@@ -501,7 +501,7 @@ class MenusModelItem extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		return array_merge((array)$this->getItem(), (array)JFactory::getApplication()->getUserState('com_menus.edit.item.data', array()));
+		return array_merge((array)$this->getItem(), (array)MolajoFactory::getApplication()->getUserState('com_menus.edit.item.data', array()));
 	}
 
 	/**
@@ -592,7 +592,7 @@ class MenusModelItem extends JModelAdmin
 
 				if (isset($args['option'])) {
 					// Load the language file for the component.
-					$lang = JFactory::getLanguage();
+					$lang = MolajoFactory::getLanguage();
 					$lang->load($args['option'], JPATH_ADMINISTRATOR, null, false, false)
 					||	$lang->load($args['option'], JPATH_ADMINISTRATOR.'/components/'.$args['option'], null, false, false)
 					||	$lang->load($args['option'], JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
@@ -722,7 +722,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		$pk = (int) JRequest::getInt('id');
@@ -1066,7 +1066,7 @@ class MenusModelItem extends JModelAdmin
 		// Initialise variables.
 		$table		= $this->getTable();
 		$pks		= (array) $pks;
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 
 		$languages	= array();
 		$onehome	= false;

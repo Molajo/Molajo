@@ -30,7 +30,7 @@ class UsersControllerRemind extends UsersController
 		// Check the request token.
 		JRequest::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$model	= $this->getModel('Remind', 'UsersModel');
 		$data	= JRequest::getVar('jform', array(), 'post', 'array');
 

@@ -138,7 +138,7 @@ class UsersModelLevel extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_users.level', 'level', array('control' => 'jform', 'load_data' => $loadData));
@@ -159,7 +159,7 @@ class UsersModelLevel extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_users.edit.level.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_users.edit.level.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();

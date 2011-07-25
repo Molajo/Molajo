@@ -29,11 +29,11 @@ class MolajoRouterSite extends MolajoRouter
 	public function parse(&$uri)
 	{
 		$vars = array();
+		$app = MolajoFactory::getApplication();
 
-		$app = JFactory::getApplication();
-
-		if ($app->getCfg('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
-			//forward to https
+        /** redirect to https - shouldn't we use a 301? */
+		if ($app->getCfg('force_ssl') == 2
+            && strtolower($uri->getScheme()) != 'https') {
 			$uri->setScheme('https');
 			$app->redirect((string)$uri);
 		}
@@ -60,7 +60,7 @@ class MolajoRouterSite extends MolajoRouter
 			}
 		}
 
-		//Remove the suffix
+		// Remove the suffix
 		if ($this->_mode == JROUTER_MODE_SEF) {
 			if ($app->getCfg('sef_suffix') && !(substr($path, -9) == 'index.php' || substr($path, -1) == '/')) {
 				if ($suffix = pathinfo($path, PATHINFO_EXTENSION)) {
@@ -93,7 +93,7 @@ class MolajoRouterSite extends MolajoRouter
 
 		//Add the suffix to the uri
 		if ($this->_mode == JROUTER_MODE_SEF && $route) {
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 
 			if ($app->getCfg('sef_suffix') && !(substr($route, -9) == 'index.php' || substr($route, -1) == '/')) {
 				if ($format = $uri->getVar('format', 'html')) {
@@ -123,12 +123,12 @@ class MolajoRouterSite extends MolajoRouter
 	protected function _parseRawRoute(&$uri)
 	{
 		$vars	= array();
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$menu	= $app->getMenu(true);
-		 
+
 		//Handle an empty URL (special case)
 		if (!$uri->getVar('Itemid') && !$uri->getVar('option')) {
-			$item = $menu->getDefault(JFactory::getLanguage()->getTag());
+			$item = $menu->getDefault(MolajoFactory::getLanguage()->getTag());
 			if (!is_object($item)) {
 				// No default item set
 				return $vars;
@@ -177,7 +177,7 @@ class MolajoRouterSite extends MolajoRouter
 	protected function _parseSefRoute(&$uri)
 	{
 		$vars	= array();
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$menu	= $app->getMenu(true);
 
 		$route	= $uri->getPath();
@@ -192,7 +192,7 @@ class MolajoRouterSite extends MolajoRouter
 				return $this->_parseRawRoute($uri);
 			}
 
-			$item = $menu->getDefault(JFactory::getLanguage()->getTag());
+			$item = $menu->getDefault(MolajoFactory::getLanguage()->getTag());
 
 			//Set the information in the request
 			$vars = $item->query;
@@ -233,7 +233,7 @@ class MolajoRouterSite extends MolajoRouter
 			}
 			if (!$found)
 			{
-				$item = $menu->getDefault(JFactory::getLanguage()->getTag());
+				$item = $menu->getDefault(MolajoFactory::getLanguage()->getTag());
 			}
 			$vars['Itemid'] = $item->id;
 			$vars['option'] = $item->component;
@@ -318,7 +318,7 @@ class MolajoRouterSite extends MolajoRouter
 			return;
 		}
 
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$menu	= $app->getMenu();
 
 		/*
@@ -408,7 +408,7 @@ class MolajoRouterSite extends MolajoRouter
 
 		// Process the pagination support
 		if ($this->_mode == JROUTER_MODE_SEF) {
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 
 			if ($start = $uri->getVar('start')) {
 				$uri->delVar('start');
@@ -431,7 +431,7 @@ class MolajoRouterSite extends MolajoRouter
 		if (($this->_mode != JROUTER_MODE_SEF)
             && $uri->getVar('Itemid') && count($uri->getQuery(true)) == 2) {
 
-			$app	= JFactory::getApplication();
+			$app	= MolajoFactory::getApplication();
 			$menu	= $app->getMenu();
 
 			// Get the active menu item
@@ -451,7 +451,7 @@ class MolajoRouterSite extends MolajoRouter
 		$route = $uri->getPath();
 
 		if ($this->_mode == JROUTER_MODE_SEF && $route) {
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 
 			if ($limitstart = $uri->getVar('limitstart')) {
 				$uri->setVar('start', (int) $limitstart);
@@ -474,7 +474,7 @@ class MolajoRouterSite extends MolajoRouter
 		$uri = parent::_createURI($url);
 
 		// Set URI defaults
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$menu	= $app->getMenu();
 
 		// Get the itemid form the URI

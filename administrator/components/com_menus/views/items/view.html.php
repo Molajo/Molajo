@@ -32,7 +32,7 @@ class MenusViewItems extends JView
 	 */
 	public function display($tpl = null)
 	{
-		$lang 		= JFactory::getLanguage();
+		$lang 		= MolajoFactory::getLanguage();
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
@@ -181,7 +181,7 @@ class MenusViewItems extends JView
 			JToolBarHelper::publish('items.publish');
 			JToolBarHelper::unpublish('items.unpublish');
 		}
-		if (JFactory::getUser()->authorise('core.admin')) {
+		if (MolajoFactory::getUser()->authorise('core.admin')) {
 			JToolBarHelper::divider();
 			JToolBarHelper::checkin('items.checkin');
 		}
@@ -197,7 +197,7 @@ class MenusViewItems extends JView
 			JToolBarHelper::makeDefault('items.setDefault', 'COM_MENUS_TOOLBAR_SET_HOME');
 			JToolBarHelper::divider();
 		}
-		if (JFactory::getUser()->authorise('core.admin')) {
+		if (MolajoFactory::getUser()->authorise('core.admin')) {
 			JToolBarHelper::custom('items.rebuild', 'refresh.png', 'refresh_f2.png', 'JToolbar_Rebuild', false);
 			JToolBarHelper::divider();
 		}

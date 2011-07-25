@@ -135,7 +135,7 @@ class RokInstallerTemplate extends JInstallerTemplate
 		}
 
 		// Load template language file
-		$lang =& JFactory::getLanguage();
+		$lang =& MolajoFactory::getLanguage();
 		$lang->load('tpl_'.$name);
 
         $this->parent->finishExceptions();

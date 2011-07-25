@@ -119,7 +119,7 @@ class ConfigModelApplication extends JModelForm
 
 		// Clean the cache if disabled but previously enabled.
 		if (!$data['caching'] && $prev['caching']) {
-			$cache = JFactory::getCache();
+			$cache = MolajoFactory::getCache();
 			$cache->clean();
 		}
 
@@ -137,7 +137,7 @@ class ConfigModelApplication extends JModelForm
 		$file = JPATH_CONFIGURATION . '/configuration.php';
 
 		// Overwrite the old FTP credentials with the new ones.
-		$temp = JFactory::getConfig();
+		$temp = MolajoFactory::getConfig();
 		$temp->set('ftp_enable', $data['ftp_enable']);
 		$temp->set('ftp_host', $data['ftp_host']);
 		$temp->set('ftp_port', $data['ftp_port']);

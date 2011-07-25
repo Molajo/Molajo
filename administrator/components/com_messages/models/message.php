@@ -35,7 +35,7 @@ class MessagesModelMessage extends JModelAdmin
 	{
 		parent::populateState();
 
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		$this->setState('user.id', $user->get('id'));
 
 		$messageId = (int) JRequest::getInt('message_id');
@@ -100,7 +100,7 @@ class MessagesModelMessage extends JModelAdmin
 						}
 					}
 				}
-				elseif ($this->item->user_id_to != JFactory::getUser()->id)
+				elseif ($this->item->user_id_to != MolajoFactory::getUser()->id)
 				{
 					$this->setError(JText::_('JERROR_ALERTNOAUTHOR'));
 					return false;
@@ -152,7 +152,7 @@ class MessagesModelMessage extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_messages.edit.message.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_messages.edit.message.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -180,10 +180,10 @@ class MessagesModelMessage extends JModelAdmin
 
 		// Assign empty values.
 		if (empty($table->user_id_from)) {
-			$table->user_id_from = JFactory::getUser()->get('id');
+			$table->user_id_from = MolajoFactory::getUser()->get('id');
 		}
 		if (intval($table->date_time) == 0) {
-			$table->date_time = JFactory::getDate()->toMySQL();
+			$table->date_time = MolajoFactory::getDate()->toMySQL();
 		}
 
 		// Check the data.
@@ -216,13 +216,13 @@ class MessagesModelMessage extends JModelAdmin
 			// Load the user details (already valid from table check).
 			$fromUser = JUser::getInstance($table->user_id_from);
 			$toUser = JUser::getInstance($table->user_id_to);
-			$debug = JFactory::getConfig()->get('debug_lang');
+			$debug = MolajoFactory::getConfig()->get('debug_lang');
 			$default_language = JComponentHelper::getParams('com_languages')->get('administrator');
 			$lang = JLanguage::getInstance($toUser->getParam('admin_language', $default_language), $debug);
 			$lang->load('com_messages', JPATH_ADMINISTRATOR);
 
 			$siteURL	= JURI::root() . 'administrator/index.php?option=com_messages&view=message&message_id='.$table->message_id;
-			$sitename	= JFactory::getApplication()->getCfg('sitename');
+			$sitename	= MolajoFactory::getApplication()->getCfg('sitename');
 
 			$subject	= sprintf ($lang->_('COM_MESSAGES_NEW_MESSAGE_ARRIVED'), $sitename);
 			$msg		= sprintf ($lang->_('COM_MESSAGES_PLEASE_LOGIN'), $siteURL);

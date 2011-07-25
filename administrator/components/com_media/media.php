@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 // Access check.
 
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 $asset = JRequest::getCmd('asset');
 $author = JRequest::getCmd('author');
 

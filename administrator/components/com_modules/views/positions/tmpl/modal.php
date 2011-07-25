@@ -14,7 +14,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 
 $function	= JRequest::getCmd('function', 'jSelectPosition');
-$lang		= JFactory::getLanguage();
+$lang		= MolajoFactory::getLanguage();
 $ordering	= $this->escape($this->state->get('list.ordering'));
 $direction	= $this->escape($this->state->get('list.direction'));
 $applicationId	= $this->state->get('filter.application_id');

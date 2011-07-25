@@ -28,8 +28,8 @@ class MessagesModelConfig extends JModelForm
 	 */
 	protected function populateState()
 	{
-		$app	= JFactory::getApplication('administrator');
-		$user	= JFactory::getUser();
+		$app	= MolajoFactory::getApplication('administrator');
+		$user	= MolajoFactory::getUser();
 
 		$this->setState('user.id', $user->get('id'));
 

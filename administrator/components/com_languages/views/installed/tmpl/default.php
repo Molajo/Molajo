@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 // Add specific helper files for html generation
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-$user		= JFactory::getUser();
+$user		= MolajoFactory::getUser();
 $userId		= $user->get('id');
 $application		= $this->state->get('filter.application_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
 $applicationId	= $this->state->get('filter.application_id', 0);

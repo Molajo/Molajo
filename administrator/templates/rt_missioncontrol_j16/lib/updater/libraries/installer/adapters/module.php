@@ -239,7 +239,7 @@ class RokInstallerModule extends JInstallerModule
 		}
 
 		// Load module language file
-		$lang =& JFactory::getLanguage();
+		$lang =& MolajoFactory::getLanguage();
 		$lang->load($row->module, JPATH_BASE.DS.'..');
 
 		return true;

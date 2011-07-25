@@ -16,7 +16,7 @@ $darkerColor   = $this->params->get('darkerColor');
 // just to avoid user error when # is missing
 if (strrpos($templateColor, "#") === false) $templateColor = "#".$this->params->get('templateColor');
 
-$app = JFactory::getApplication();
+$app = MolajoFactory::getApplication();
 
 ?>
 <!DOCTYPE html>

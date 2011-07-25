@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', JRequest::getCmd('extension'))) {
+if (!MolajoFactory::getUser()->authorise('core.manage', JRequest::getCmd('extension'))) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 

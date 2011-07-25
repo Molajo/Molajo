@@ -36,6 +36,6 @@ class JAdapterInstance extends JObject {
 	public function __construct(&$parent, &$db)
 	{
 		$this->parent =& $parent;
-		$this->db =& $db ? $db : JFactory::getDBO(); // pull in the global dbo in case
+		$this->db =& $db ? $db : MolajoFactory::getDBO(); // pull in the global dbo in case
 	}
 }

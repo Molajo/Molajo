@@ -14,8 +14,8 @@ defined('_JEXEC') or die;
 require_once dirname(__FILE__).DS.'helper.php';
 
 // Initialise variables.
-$lang       = &JFactory::getLanguage();
-$user       = &JFactory::getUser();
+$lang       = &MolajoFactory::getLanguage();
+$user       = &MolajoFactory::getUser();
 $enabled    = JRequest::getInt('hidemainmenu') ? false : true;
 
 // Render the module layout

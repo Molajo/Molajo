@@ -30,7 +30,7 @@ class AdminModelProfile extends UsersModelUser
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_admin.profile', 'profile', array('control' => 'jform', 'load_data' => $loadData));
@@ -50,7 +50,7 @@ class AdminModelProfile extends UsersModelUser
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_users.edit.user.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_users.edit.user.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -80,7 +80,7 @@ class AdminModelProfile extends UsersModelUser
 	 */
 	public function getItem($pk = null)
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		return parent::getItem($user->get('id'));
 	}
@@ -96,7 +96,7 @@ class AdminModelProfile extends UsersModelUser
 	public function save($data)
 	{
 		// Initialise variables;
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		unset($data['id']);
 		unset($data['groups']);

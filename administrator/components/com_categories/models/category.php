@@ -38,7 +38,7 @@ class CategoriesModelCategory extends JModelAdmin
 			if ($record->published != -2) {
 				return ;
 			}
-			$user = JFactory::getUser();
+			$user = MolajoFactory::getUser();
 
 			return $user->authorise('core.delete', $record->extension.'.category.'.(int) $record->id);
 
@@ -54,7 +54,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 */
 	protected function canEditState($record)
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		// Check for existing category.
 		if (!empty($record->id)) {
@@ -93,7 +93,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		$parentId = JRequest::getInt('parent_id');
 		$this->setState('category.parent_id', $parentId);
@@ -141,7 +141,7 @@ class CategoriesModelCategory extends JModelAdmin
 
 			// Convert the created and modified dates to local user time for display in the form.
 			jimport('joomla.utilities.date');
-			$tz	= new DateTimeZone(JFactory::getApplication()->getCfg('offset'));
+			$tz	= new DateTimeZone(MolajoFactory::getApplication()->getCfg('offset'));
 
 			if (intval($result->created_time)) {
 				$date = new JDate($result->created_time);
@@ -237,7 +237,7 @@ class CategoriesModelCategory extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_categories.edit.'.$this->getName().'.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_categories.edit.'.$this->getName().'.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -257,7 +257,7 @@ class CategoriesModelCategory extends JModelAdmin
 		jimport('joomla.filesystem.path');
 
 		// Initialise variables.
-		$lang		= JFactory::getLanguage();
+		$lang		= MolajoFactory::getLanguage();
 		$extension	= $this->getState('category.extension');
 		$component	= $this->getState('category.component');
 		$section	= $this->getState('category.section');
@@ -463,7 +463,7 @@ class CategoriesModelCategory extends JModelAdmin
 	{
 		// Check that user has edit permission for every category being changed
 		// Note that the entire batch operation fails if any category lacks edit permission
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$extension = JRequest::getWord('extension');
 		foreach ($pks as $pk) {
 			if (!$user->authorise('core.edit', $extension.'.category.'.$pk)) {
@@ -503,7 +503,7 @@ class CategoriesModelCategory extends JModelAdmin
 
 		$table	= $this->getTable();
 		$db		= $this->getDbo();
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$extension = JRequest::getWord('extension');
 
 		// Check that the parent exists
@@ -663,7 +663,7 @@ class CategoriesModelCategory extends JModelAdmin
 
 		$table	= $this->getTable();
 		$db		= $this->getDbo();
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$extension = JRequest::getWord('extension');
 
 		// Check that the parent exists.

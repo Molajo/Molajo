@@ -14,7 +14,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 
-$user		= JFactory::getUser();
+$user		= MolajoFactory::getUser();
 $userId		= $user->get('id');
 $n			= count($this->items);
 $listOrder	= $this->escape($this->state->get('list.ordering'));

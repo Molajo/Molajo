@@ -26,7 +26,7 @@ $script .= 'window.parent.SqueezeBox.close();'."\n\t";
 $script .= 'return false;'."\n";
 $script .= '}'."\n";
 
-JFactory::getDocument()->addScriptDeclaration($script);
+$this->document->addScriptDeclaration($script);
 ?>
 		<form>
 		<table width="100%" align="center">
@@ -47,7 +47,7 @@ JFactory::getDocument()->addScriptDeclaration($script);
 					</label>
 				</td>
 				<td>
-					<input type="text" id="alt" name="alt" />
+					<input type="text" id="alias" name="alt" />
 				</td>
 			</tr>
 		</table>

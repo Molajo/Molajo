@@ -46,7 +46,7 @@ class AdminViewSysinfo extends JView
 	function display($tpl = null)
 	{
 		// Access check.
-		if (!JFactory::getUser()->authorise('core.admin')) {
+		if (!MolajoFactory::getUser()->authorise('core.admin')) {
 			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 		}
 
@@ -70,7 +70,7 @@ class AdminViewSysinfo extends JView
 	protected function _setSubMenu()
 	{
 		$contents = $this->loadTemplate('navigation');
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->setBuffer($contents, 'modules', 'submenu');
 	}
 

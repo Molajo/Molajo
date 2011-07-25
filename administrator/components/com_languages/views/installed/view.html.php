@@ -61,7 +61,7 @@ class LanguagesViewInstalled extends JView
 		$this->rows			= $this->get('Data');
 		$this->state		= $this->get('State');
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->setBuffer($this->loadTemplate('navigation'), 'modules', 'submenu');
 
 		$this->addToolbar();

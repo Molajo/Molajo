@@ -9,7 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 ?>
 <table width="100%">
 	<tr valign="top">

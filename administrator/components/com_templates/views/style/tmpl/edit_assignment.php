@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 // Initiasile related data.
 require_once JPATH_ADMINISTRATOR.'/components/com_menus/helpers/menus.php';
 $menuTypes = MenusHelper::getMenuLinks();
-$user = JFactory::getUser();
+$user = MolajoFactory::getUser();
 ?>
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('COM_TEMPLATES_MENUS_ASSIGNMENT'); ?></legend>

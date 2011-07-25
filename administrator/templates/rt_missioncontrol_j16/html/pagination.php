@@ -62,7 +62,7 @@ defined('_JEXEC') or die('Restricted access');
 function pagination_list_footer($list)
 {
 	// Initialize variables
-	$lang =& JFactory::getLanguage();
+	$lang =& MolajoFactory::getLanguage();
 	$html  = "<div class=\"mc-limit\">".$list['limitfield'].'<span>'.JText::_('Display Num')." </span></div>";
 	$html .= "<div class=\"mc-page-count\">".$list['pagescounter']."</div>";
 	$html .= "<del class=\"mc-pagination-container\">\n";
@@ -78,7 +78,7 @@ function pagination_list_footer($list)
 function pagination_list_render($list)
 {
 	// Initialize variables
-	$lang =& JFactory::getLanguage();
+	$lang =& MolajoFactory::getLanguage();
 	$html = null;
 
 	if ($list['start']['active']) {

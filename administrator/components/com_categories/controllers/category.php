@@ -53,7 +53,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 */
 	protected function allowAdd($data = array())
 	{
-		return JFactory::getUser()->authorise('core.create', $this->extension);
+		return MolajoFactory::getUser()->authorise('core.create', $this->extension);
 	}
 
 	/**
@@ -71,7 +71,7 @@ class CategoriesControllerCategory extends JControllerForm
 	{
 		// Initialise variables.
 		$recordId	= (int) isset($data[$key]) ? $data[$key] : 0;
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$userId		= $user->get('id');
 
 		// Check general edit permission first.

@@ -47,13 +47,13 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	function initialise($options = array())
 	{
-		$config = JFactory::getConfig();
+		$config = MolajoFactory::getConfig();
 
 		// if a language was specified it has priority
 		// otherwise use user or default language settings
 		if (empty($options['language']))
 		{
-			$user	= JFactory::getUser();
+			$user	= MolajoFactory::getUser();
 			$lang	= $user->getParam('admin_language');
 
 			// Make sure that the user's language exists
@@ -80,7 +80,7 @@ class MolajoAdministrator extends MolajoApplication
 		parent::initialise($options);
 
 		// Load Library language
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$lang->load('lib_joomla', JPATH_ADMINISTRATOR);
 	}
 
@@ -133,8 +133,8 @@ class MolajoAdministrator extends MolajoApplication
 				$component = JAdministratorHelper::findOption();
 			}
 
-			$document	= JFactory::getDocument();
-			$user		= JFactory::getUser();
+			$document	= MolajoFactory::getDocument();
+			$user		= MolajoFactory::getUser();
 
 			switch ($document->getType()) {
 				case 'html':
@@ -187,7 +187,7 @@ class MolajoAdministrator extends MolajoApplication
 			'params'	=> $template->params
 		);
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->parse($params);
 		$this->triggerEvent('onBeforeRender');
 		$data = $document->render(false, $params);
@@ -249,9 +249,9 @@ class MolajoAdministrator extends MolajoApplication
 
 		if (!isset($template))
 		{
-			$admin_style = JFactory::getUser()->getParam('admin_style');
+			$admin_style = MolajoFactory::getUser()->getParam('admin_style');
 			// Load the template name from the database
-			$db = JFactory::getDbo();
+			$db = MolajoFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('template, params');
 			$query->from('#__template_styles');
@@ -291,8 +291,8 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public static function purgeMessages()
 	{
-		$db		= JFactory::getDbo();
-		$user	= JFactory::getUser();
+		$db		= MolajoFactory::getDbo();
+		$user	= MolajoFactory::getUser();
 
 		$userid = $user->get('id');
 
@@ -316,7 +316,7 @@ class MolajoAdministrator extends MolajoApplication
 		// if purge value is not 0, then allow purging of old messages
 		if ($purge > 0) {
 			// purge old messages at day set in message configuration
-			$past = JFactory::getDate(time() - $purge * 86400);
+			$past = MolajoFactory::getDate(time() - $purge * 86400);
 			$pastStamp = $past->toMySQL();
 
 			$query = 'DELETE FROM #__messages'

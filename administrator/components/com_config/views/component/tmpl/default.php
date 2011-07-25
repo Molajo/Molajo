@@ -10,7 +10,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$template = JFactory::getApplication()->getTemplate();
+$template = MolajoFactory::getApplication()->getTemplate();
 
 // Load the tooltip behavior.
 JHtml::_('behavior.tooltip');

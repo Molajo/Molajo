@@ -23,7 +23,7 @@ abstract class ModMenuHelper
 	 */
 	public static function getMenus()
 	{
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('a.*, SUM(b.home) AS home');
@@ -55,9 +55,9 @@ abstract class ModMenuHelper
 	public static function getComponents($authCheck = true)
 	{
 		// Initialise variables.
-		$lang	= JFactory::getLanguage();
-		$user	= JFactory::getUser();
-		$db		= JFactory::getDbo();
+		$lang	= MolajoFactory::getLanguage();
+		$user	= MolajoFactory::getUser();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$result	= array();
 		$langs	= array();

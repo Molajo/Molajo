@@ -37,7 +37,7 @@ class UsersModelRegistration extends JModelForm
 	 */
 	public function activate($token)
 	{
-		$config	= JFactory::getConfig();
+		$config	= MolajoFactory::getConfig();
 		$userParams	= JComponentHelper::getParams('com_users');
 		$db		= $this->getDbo();
 
@@ -60,7 +60,7 @@ class UsersModelRegistration extends JModelForm
 		JPluginHelper::importPlugin('user');
 
 		// Activate the user.
-		$user = JFactory::getUser($userId);
+		$user = MolajoFactory::getUser($userId);
 
 		// Admin activation is on and user is verifying their email
 		if (($userParams->get('useractivation') == 2) && !$user->getParam('activate', 0))
@@ -181,7 +181,7 @@ class UsersModelRegistration extends JModelForm
 		if ($this->data === null) {
 
 			$this->data	= new stdClass();
-			$app	= JFactory::getApplication();
+			$app	= MolajoFactory::getApplication();
 			$params	= JComponentHelper::getParams('com_users');
 
 			// Override the base user data with any data in the session.
@@ -275,7 +275,7 @@ class UsersModelRegistration extends JModelForm
 	protected function populateState()
 	{
 		// Get the application object.
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$params	= $app->getParams('com_users');
 
 		// Load the parameters.
@@ -291,7 +291,7 @@ class UsersModelRegistration extends JModelForm
 	 */
 	public function register($temp)
 	{
-		$config = JFactory::getConfig();
+		$config = MolajoFactory::getConfig();
 		$params = JComponentHelper::getParams('com_users');
 
 		// Initialise the table with JUser.
@@ -407,7 +407,7 @@ class UsersModelRegistration extends JModelForm
 			$this->setError(JText::_('COM_USERS_REGISTRATION_SEND_MAIL_FAILED'));
 
 			// Send a system message to administrators receiving system mails
-			$db = JFactory::getDBO();
+			$db = MolajoFactory::getDBO();
 			$q = "SELECT id
 				FROM #__users
 				WHERE block = 0

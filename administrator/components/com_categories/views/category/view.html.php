@@ -53,7 +53,7 @@ class CategoriesViewCategory extends JView
 	{
 		// Initialise variables.
 		$extension	= JRequest::getCmd('extension');
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$userId		= $user->get('id');
 
 		$isNew		= ($this->item->id == 0);
@@ -70,7 +70,7 @@ class CategoriesViewCategory extends JView
 		$section = (count($parts) > 1) ? $parts[1] : null;
 
 		// Need to load the menu language file as mod_menu hasn't been loaded yet.
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 			$lang->load($component, JPATH_BASE, null, false, false)
 		||	$lang->load($component, JPATH_ADMINISTRATOR.'/components/'.$component, null, false, false)
 		||	$lang->load($component, JPATH_BASE, $lang->getDefault(), false, false)

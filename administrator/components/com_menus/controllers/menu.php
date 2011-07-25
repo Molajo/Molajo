@@ -43,7 +43,7 @@ class MenusControllerMenu extends JControllerForm
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Initialise variables.
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$data		= JRequest::getVar('jform', array(), 'post', 'array');
 		$context	= 'com_menus.edit.menu';
 		$task		= $this->getTask();

@@ -60,7 +60,7 @@ class MediaModelManager extends JModel
 		jimport('joomla.filesystem.folder');
 		$folders = JFolder::folders($base, '.', true, true);
 
-		$document = JFactory::getDocument();
+		$document = MolajoFactory::getDocument();
 		$document->setTitle(JText::_('COM_MEDIA_INSERT_IMAGE'));
 
 		// Build the array of select options for the folder list

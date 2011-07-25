@@ -28,7 +28,7 @@ class UsersHelperDebug
 	static function getComponents()
 	{
 		// Initialise variable.
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('name AS text, element AS value')
@@ -39,7 +39,7 @@ class UsersHelperDebug
 		$items = $db->setQuery($query)->loadObjectList();
 
 		if (count($items)) {
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 
 			foreach ($items as &$item)
 			{
@@ -115,7 +115,7 @@ class UsersHelperDebug
 				}
 
 				// Load language
-				$lang 		= JFactory::getLanguage();
+				$lang 		= MolajoFactory::getLanguage();
 				$extension 	= 'com_config';
 				$source 	= JPATH_ADMINISTRATOR . '/components/' . $extension;
 

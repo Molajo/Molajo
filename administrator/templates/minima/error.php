@@ -9,7 +9,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
-$app = JFactory::getApplication();
+$app = MolajoFactory::getApplication();
 if (!isset($this->params)) {$this->params = $app->getTemplate(true)->params;};
 
 ?>

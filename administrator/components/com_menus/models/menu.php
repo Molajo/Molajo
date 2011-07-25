@@ -42,7 +42,7 @@ class MenusModelMenu extends JModelForm
 	 */
 	protected function canDelete($record)
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		return $user->authorise('core.delete', 'com_menus.menu.'.(int) $record->id);
 	}
@@ -57,7 +57,7 @@ class MenusModelMenu extends JModelForm
 	 */
 	protected function canEditState($record)
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		return $user->authorise('core.edit.state', 'com_menus.menu.'.(int) $record->id);
 	}
@@ -84,7 +84,7 @@ class MenusModelMenu extends JModelForm
 	 */
 	protected function populateState()
 	{
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the User state.
 		$id = (int) JRequest::getInt('id');
@@ -153,7 +153,7 @@ class MenusModelMenu extends JModelForm
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_menus.edit.menu.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_menus.edit.menu.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();

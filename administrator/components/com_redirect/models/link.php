@@ -39,7 +39,7 @@ class RedirectModelLink extends JModelAdmin
 			if ($record->published != -2) {
 				return false;
 			}
-			$user = JFactory::getUser();
+			$user = MolajoFactory::getUser();
 			return $user->authorise('core.admin', 'com_redirect');
 
 	}
@@ -54,7 +54,7 @@ class RedirectModelLink extends JModelAdmin
 	 */
 	protected function canEditState($record)
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		// Check the component since there are no categories or other assets.
 			return $user->authorise('core.admin', 'com_redirect');
@@ -114,7 +114,7 @@ class RedirectModelLink extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_redirect.edit.link.data', array());
+		$data = MolajoFactory::getApplication()->getUserState('com_redirect.edit.link.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -135,7 +135,7 @@ class RedirectModelLink extends JModelAdmin
 	public function activate(&$pks, $url, $comment = null)
 	{
 		// Initialise variables.
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$db		= $this->getDbo();
 
 		// Sanitize the ids.

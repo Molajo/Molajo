@@ -48,7 +48,7 @@ class UsersModelLevels extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
@@ -135,7 +135,7 @@ class UsersModelLevels extends JModelList
 	{
 		// Sanitize the id and adjustment.
 		$pk	= (!empty($pk)) ? $pk : (int) $this->getState('level.id');
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 
 		// Get an instance of the record's table.
 		$table = JTable::getInstance('viewlevel');
@@ -172,7 +172,7 @@ class UsersModelLevels extends JModelList
 	{
 		// Initialise variables.
 		$table		= JTable::getInstance('viewlevel');
-		$user 		= JFactory::getUser();
+		$user 		= MolajoFactory::getUser();
 		$conditions	= array();
 
 		if (empty($pks)) {

@@ -51,13 +51,13 @@ class CacheViewCache extends JView
 	 */
 	protected function addToolbar()
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		$condition = ($this->application->name == 'site');
 
 		JToolBarHelper::title(JText::_('COM_CACHE_CLEAR_CACHE'), 'clear.png');
 		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'JTOOLBAR_DELETE', true);
 		JToolBarHelper::divider();
-		if (JFactory::getUser()->authorise('core.admin', 'com_cache')) {
+		if (MolajoFactory::getUser()->authorise('core.admin', 'com_cache')) {
 			JToolBarHelper::preferences('com_cache');
 		}
 		JToolBarHelper::divider();

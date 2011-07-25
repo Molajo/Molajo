@@ -53,7 +53,7 @@ class RedirectViewLink extends JView
 	{
 		JRequest::setVar('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$canDo		= RedirectHelper::getActions();
 

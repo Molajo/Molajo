@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 // Access check.
-if (!JFactory::getUser()->authorise('core.manage', 'com_installer')) {
+if (!MolajoFactory::getUser()->authorise('core.manage', 'com_installer')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 

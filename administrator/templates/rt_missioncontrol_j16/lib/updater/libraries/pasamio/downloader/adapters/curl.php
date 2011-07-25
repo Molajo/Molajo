@@ -27,7 +27,7 @@ class DownloadercURL extends JAdapterInstance {
 			return $error_object;
 		}
 		
-		$config =& JFactory::getConfig();
+		$config =& MolajoFactory::getConfig();
 		
 		if(is_null($params)) {
 			$params = new JParameter();

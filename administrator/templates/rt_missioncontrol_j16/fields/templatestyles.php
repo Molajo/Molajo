@@ -64,7 +64,7 @@ class JFormFieldTemplateStyles extends JFormFieldList
 
     protected function getTemplates()
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('id, home, template, params, title');
         $query->from('#__template_styles');

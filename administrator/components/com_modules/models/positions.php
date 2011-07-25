@@ -48,7 +48,7 @@ class ModulesModelPositions extends JModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication('administrator');
+		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
@@ -84,7 +84,7 @@ class ModulesModelPositions extends JModelList
 	{
 		if (!isset($this->items))
 		{
-			$lang				= JFactory::getLanguage();
+			$lang				= MolajoFactory::getLanguage();
 			$search				= $this->getState('filter.search');
 			$state				= $this->getState('filter.state');
 			$applicationId			= $this->getState('filter.application_id');

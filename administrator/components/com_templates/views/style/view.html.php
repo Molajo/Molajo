@@ -51,7 +51,7 @@ class TemplatesViewStyle extends JView
 	{
 		JRequest::setVar('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+		$user		= MolajoFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$canDo		= TemplatesHelper::getActions();
 
@@ -79,7 +79,7 @@ class TemplatesViewStyle extends JView
 		JToolBarHelper::divider();
 		// Get the help information for the template item.
 
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		$help = $this->get('Help');
 		if ($lang->hasKey($help->url)) {

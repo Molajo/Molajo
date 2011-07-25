@@ -44,7 +44,7 @@ class UsersViewRemind extends JView
 		}
 
 		// Check for layout override
-		$active = JFactory::getApplication()->getMenu()->getActive();
+		$active = MolajoFactory::getApplication()->getMenu()->getActive();
 		if (isset($active->query['layout'])) {
 			$this->setLayout($active->query['layout']);
 		}
@@ -64,7 +64,7 @@ class UsersViewRemind extends JView
 	 */
 	protected function prepareDocument()
 	{
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$menus		= $app->getMenu();
 		$title 		= null;
 

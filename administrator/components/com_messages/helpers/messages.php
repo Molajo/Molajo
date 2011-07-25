@@ -48,7 +48,7 @@ class MessagesHelper extends JController
 	 */
 	public static function getActions()
 	{
-		$user	= JFactory::getUser();
+		$user	= MolajoFactory::getUser();
 		$result	= new JObject;
 
 		$actions = array(
