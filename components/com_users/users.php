@@ -11,7 +11,10 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
-require_once JPATH_COMPONENT.'/helpers/route.php';
+require_once 'helpers/route.php';
+
+echo JRequest::getCmd('task', 'display');
+die();
 
 // Launch the controller.
 $controller = JController::getInstance('Users');

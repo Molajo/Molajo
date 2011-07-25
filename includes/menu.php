@@ -18,22 +18,27 @@ defined('MOLAJO') or die;
 class MolajoMenuSite extends JMenu
 {
 	/**
+     * load
+     *
 	 * Loads the entire menu table into memory.
 	 *
 	 * @return array
 	 */
 	public function load()
 	{
+        $user = JFactory::getUser();
 		$cache = MolajoFactory::getCache('mod_menu', '');  // has to be mod_menu or this cache won't get cleaned
 
-		if (!$data = $cache->get('menu_items'.MolajoFactory::getLanguage()->getTag())) {
-			// Initialise variables.
+		if ($data = $cache->get('menu_items'.JFactory::getLanguage()->getTag().$user->id)) {
+            $this->_items = $data;
+        } else {
 			$db		= MolajoFactory::getDbo();
 			$app	= MolajoFactory::getApplication();
 			$query	= $db->getQuery(true);
 
 			$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
-			$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id');
+			$query->select('m.access, m.asset_id');
+			$query->select('m.browserNav, m.params, m.home, m.img, m.template_style_id');
 			$query->select('m.component_id, m.parent_id, m.language');
 			$query->select('e.element as component');
 			$query->from('#__menu AS m');
@@ -45,12 +50,11 @@ class MolajoMenuSite extends JMenu
 
             $acl = new MolajoACL ();
             $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
-echo $query->__toString();
-            $db->setQuery($query->__toString());
-            $menus = $db->loadObjectList();
 
-            if ($db->getError()) {
-                MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            $db->setQuery($query->__toString());
+
+            if (!($menus = $db->loadObjectList('id'))) {
+                JError::raiseWarning(500, JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()));
                 return false;
             }
 
@@ -69,7 +73,7 @@ echo $query->__toString();
 
                     // Create the query array.
                     $url = str_replace('index.php?', '', $menu->link);
-                    $url = str_replace('&amp;','&',$url);
+                    $url = str_replace('&amp;', '&', $url);
 
                     parse_str($url, $menu->query);
                 }
@@ -77,8 +81,6 @@ echo $query->__toString();
 			$cache->store($menus, 'menu_items'.MolajoFactory::getLanguage()->getTag());
 
 			$this->_items = $menus;
-		} else {
-			$this->_items = $data;
 		}
 	}
     
@@ -96,10 +98,12 @@ echo $query->__toString();
 		$attributes = (array) $attributes;
 		$values = (array) $values;
 		$app	= MolajoFactory::getApplication();
-		// Filter by language if not set
-		if ($app->isSite() && $app->getLanguageFilter() && !array_key_exists('language',$attributes)) {
-			$attributes[]='language';
-			$values[]=array(MolajoFactory::getLanguage()->getTag(), '*');
+
+		if ($app->isSite()
+            && $app->getLanguageFilter()
+            && !array_key_exists('language',$attributes)) {
+			$attributes[] = 'language';
+			$values[] = array(MolajoFactory::getLanguage()->getTag(), '*');
 		}
 		return parent::getItems($attributes, $values, $firstonly);
 	}
@@ -114,13 +118,14 @@ echo $query->__toString();
 	 */
 	function getDefault($language='*')
 	{
-		if (array_key_exists($language, $this->_default) && MolajoFactory::getApplication()->getLanguageFilter()) {
+		if (array_key_exists($language, $this->_default)
+            && MolajoFactory::getApplication()->getLanguageFilter()) {
 			return $this->_items[$this->_default[$language]];
-		}
-		else if (array_key_exists('*', $this->_default)) {
+
+		} else if (array_key_exists('*', $this->_default)) {
 			return $this->_items[$this->_default['*']];
-		}
-		else {
+
+		} else {
 			return 0;
 		}
 	}

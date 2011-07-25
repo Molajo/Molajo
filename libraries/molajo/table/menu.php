@@ -115,6 +115,7 @@ class MolajoTableMenu extends MolajoTableNested
 
 		return true;
 	}
+
 	/**
 	 * Overloaded store function
 	 *

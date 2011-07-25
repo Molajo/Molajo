@@ -43,6 +43,8 @@ class MolajoMenu extends JObject
 	protected $_active = 0;
 
 	/**
+     * __construct
+     *
 	 * Class constructor
 	 *
 	 * @param   array    $options  An array of configuration options.
@@ -69,6 +71,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getInstance
+     *
 	 * Returns a MolajoMenu object
 	 *
 	 * @param   string  $application   The name of the application
@@ -106,6 +110,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getItem
+     *
 	 * Get menu item by id
 	 *
 	 * @param   integer  $id  The item id
@@ -124,6 +130,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * setDefault
+     *
 	 * Set the default item by id and language code.
 	 *
 	 * @param   integer  $id			The menu item id.
@@ -143,6 +151,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getDefault
+     *
 	 * Get the default item by language code.
 	 *
 	 * @param   string   $language   The language code, default * meaning all.
@@ -164,6 +174,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * setActive
+     *
 	 * Set the default item by id
 	 *
 	 * @param   integer  $id	The item id
@@ -182,6 +194,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getActive
+     *
 	 * Get menu item by id.
 	 *
 	 * @return  object  The item object.
@@ -197,6 +211,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getItems
+     *
 	 * Gets menu items by attribute
 	 *
 	 * @param   string   $attributes  The field name
@@ -247,6 +263,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getParams
+     *
 	 * Gets the parameter object for a certain menu item
 	 *
 	 * @param   integer  $id  The item id
@@ -264,6 +282,8 @@ class MolajoMenu extends JObject
 	}
 
 	/**
+     * getMenu
+     *
 	 * Getter for the menu array
 	 *
 	 * @return  array
@@ -274,6 +294,8 @@ class MolajoMenu extends JObject
 	}
 
     /**
+     * authorise
+     *
      * Method to check MolajoMenu object authorization against an access control
      * object and optionally an access extension object
      *
@@ -285,15 +307,18 @@ class MolajoMenu extends JObject
     public function authorise($id)
     {
         $menu	= $this->getItem($id);
+ 
         if ($menu) {
             $acl = new MolajoACL();
-            return $acl->checkPermissions ('user', MolajoFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset, $menu->access);
+            return $acl->checkPermissions ('user', MolajoFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset_id, $menu->access);
         } else {
             return true;
         }
     }
 
 	/**
+     * load
+     * 
 	 * Loads the menu items
 	 *
 	 * @return  array
