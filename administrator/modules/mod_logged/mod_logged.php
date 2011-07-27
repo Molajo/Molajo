@@ -13,4 +13,4 @@ defined('_JEXEC') or die;
 require_once dirname(__FILE__).'/helper.php';
 
 $users = modLoggedHelper::getList($params);
-require JModuleHelper::getLayoutPath('mod_logged', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_logged', $params->get('layout', 'default'));

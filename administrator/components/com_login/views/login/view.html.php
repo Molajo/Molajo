@@ -1,22 +1,19 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License, see LICENSE.php
+ * @package     Molajo
+ * @subpackage  View
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access.
-defined('_JEXEC') or die;
-
-jimport( 'joomla.application.component.view');
+defined('MOLAJO') or die;
 
 /**
- * HTML View class for the Login component
+ * LoginViewLogin
  *
- * @package		Joomla.Administrator
+ * Display View for com_login
+ *
+ * @package		Molajo
  * @subpackage	com_login
- * @since		1.6
+ * @since		1.0
  */
-class LoginViewLogin extends JView
-{
-}
+class LoginViewLogin extends MolajoViewDisplay {}

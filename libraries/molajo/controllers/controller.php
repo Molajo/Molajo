@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     controller.php
  * @package     Molajo
  * @subpackage  Primary Controller
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -18,68 +17,70 @@ defined('MOLAJO') or die;
 class MolajoController extends JController
 {
     /**
-    * $table
-    *
-    * @var object
-    */
+     * @var object $table
+     *
+     * @since 1.0
+     */
     protected $table = null;
 
     /**
-    * $model
-    *
-    * @var object
-    */
+     * @var object $model
+     *
+     * @since 1.0
+     */
     public $model = null;
 
     /**
-    * $params
-    *
-    * @var object
-    */
+     * @var object $params
+     *
+     * @since 1.0
+     */
     protected $params = null;
 
     /**
-    * $catid
-    *
-    * @var int
-    */
+     * @var object $catid
+     *
+     * @since 1.0
+     */
     protected $catid = null;
 
     /**
-    * $id
-    *
-    * @var int
-    */
+     * @var object $id
+     *
+     * @since 1.0
+     */
     protected $id = null;
 
     /**
-    * $isNew
-    *
-    * @var int
-    */
+     * @var object $isNew
+     *
+     * @since 1.0
+     */
     protected $isNew = null;
 
     /**
-    * $existingState
-    *
-    * @var int
-    */
+     * @var object $existingState
+     *
+     * @since 1.0
+     */
     protected $existingState = null;
 
     /**
-    * $dispatcher
-    *
-    * @var object
-    */
+     * @var object $dispatcher
+     *
+     * @since 1.0
+     */
     protected $dispatcher = null;
 
     /**
-    * Constructor.
-    *
-    * @param	array	$config	An optional associative array of configuration settings.
-    * @see	JController
-    * @since	1.0
-    */
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param	array   $config	An optional associative array of configuration settings.
+     * @see	    JController
+     * @since	1.0
+     */
     public function __construct($config = array())
     {
         parent::__construct($config);
@@ -106,7 +107,7 @@ class MolajoController extends JController
             }
         }
 
-       /** display view **/
+       /** display view */
        parent::display($cachable, $urlparams);
 
        return $this;
@@ -126,26 +127,25 @@ class MolajoController extends JController
      */
     public function initialise($task = null)
     {
-        /** task **/
+        /** $task */
         if ($task == null) {
             $task = JRequest::getCmd('task', 'display');
         }
 
-        /** ids **/
+        /** $id and $catid */
         $this->id = JRequest::getInt('id');
         if ((int) $this->id == 0) {
             $this->id = 0;
             $this->catid = 0;
         }
 
-        /** catid **/
         $this->catid = JRequest::getInt('catid');
 
         if ((int) $this->catid == 0) {
             $this->catid = 0;
         }
 
-        /** model **/
+        /** model */
         if ($this->model) {
 
         } else {
@@ -158,7 +158,7 @@ class MolajoController extends JController
             $this->model = $this->getModel($modelName, ucfirst(JRequest::getCmd('default_view').'Model'), array());
         }
 
-        /** table **/
+        /** table */
         $this->table = $this->model->getTable();
 
         if ($task == 'display' || $task == 'add') {
@@ -169,7 +169,7 @@ class MolajoController extends JController
             $this->catid = $this->table->catid;
         }
 
-        /** Preparation: $isNew **/
+        /** Preparation: $isNew */
         if ($this->id == 0) {
             $this->isNew = true;
             $this->existingState  = 0;
@@ -179,7 +179,7 @@ class MolajoController extends JController
             $this->existingState = $this->table->state;
         }
 
-        /** event dispatcher **/
+        /** event dispatcher */
         if ($this->dispatcher) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();

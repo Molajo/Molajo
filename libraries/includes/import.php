@@ -89,7 +89,7 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/categories.php', '
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/categories.php', 'MolajoCategoriesHelper');
 
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/application.php', 'MolajoApplication');
-require_once MOLAJO_PATH_BASE.'/includes/application.php';
+//require_once MOLAJO_PATH_BASE.'/includes/application.php';
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/application.php', 'JApplication');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/exception.php', 'MolajoException');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/applicationexception.php', 'ApplicationException');

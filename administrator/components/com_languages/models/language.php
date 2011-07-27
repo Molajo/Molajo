@@ -135,7 +135,7 @@ class LanguagesModelLanguage extends JModelAdmin
 		$isNew	= true;
 
 		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('extension');
+		MolajoPluginHelper::importPlugin('extension');
 
 		$table = $this->getTable();
 

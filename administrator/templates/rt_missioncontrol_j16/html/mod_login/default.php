@@ -16,12 +16,12 @@ $browserLang = null;
 $lang =& MolajoFactory::getLanguage();
 
 //manually get the params
-$module = JModuleHelper::getModule( 'mod_login', 'module-title' );
+$module = MolajoModuleHelper::getModule( 'mod_login', 'module-title' );
 $params = new JParameter( $module->params );
 
 
 ?>
-<?php if(JPluginHelper::isEnabled('authentication', 'openid')) :
+<?php if(MolajoPluginHelper::isEnabled('authentication', 'openid')) :
 		$lang->load( 'plg_authentication_openid', JPATH_ADMINISTRATOR );
 		$langScript = 	'var JLanguage = {};'.
 						' JLanguage.WHAT_IS_OPENID = \''.JText::_( 'WHAT_IS_OPENID' ).'\';'.

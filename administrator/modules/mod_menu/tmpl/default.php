@@ -10,6 +10,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-require JModuleHelper::getLayoutPath('mod_menu', $enabled ? 'default_enabled' : 'default_disabled');
+require MolajoModuleHelper::getLayoutPath('mod_menu', $enabled ? 'default_enabled' : 'default_disabled');
 
 $menu->renderMenu('menu', $enabled ? '' : 'disabled');

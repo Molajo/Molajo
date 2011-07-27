@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 
 if ($params->def('prepare_content', 1))
 {
-	JPluginHelper::importPlugin('content');
+	MolajoPluginHelper::importPlugin('content');
 	$module->content = JHtml::_('content.prepare', $module->content);
 }
 
-require JModuleHelper::getLayoutPath('mod_custom');
+require MolajoModuleHelper::getLayoutPath('mod_custom');

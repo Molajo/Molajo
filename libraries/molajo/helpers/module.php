@@ -180,7 +180,8 @@ abstract class MolajoModuleHelper
 		}
 
 		// Dynamically add outline style
-		if (JRequest::getBool('tp') && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
+		if (JRequest::getBool('tp')
+            && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
 			$attribs['style'] .= ' outline';
 		}
 

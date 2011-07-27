@@ -57,4 +57,4 @@ $query->where('guest = 0 AND application_id = 0');
 $db->setQuery($query);
 $online_num = (int) $db->loadResult();
 
-require JModuleHelper::getLayoutPath('mod_status', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_status', $params->get('layout', 'default'));

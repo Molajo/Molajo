@@ -154,30 +154,13 @@ class MolajoSite extends MolajoApplication
 			$params		= $this->getParams();
             $option     = $component;
 
-            if (defined('MOLAJO_PATH_COMPONENT')) {
-            } else {
-                define('MOLAJO_PATH_COMPONENT',	MOLAJO_PATH_BASE.'/components/'.$option);
-            }
-            if (defined('MOLAJO_PATH_COMPONENT_SITE')) {
-            } else {
-                define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE.'/components/'.$option);
-            }
-            if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) {
-            } else {
-                define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option);
-            }
-            if (defined('JPATH_COMPONENT')) {
-            } else {
-                define('JPATH_COMPONENT', 'MOLAJO_PATH_COMPONENT');
-            }
-            if (defined('JPATH_COMPONENT_SITE')) {
-            } else {
-                define('JPATH_COMPONENT_SITE', 'MOLAJO_PATH_COMPONENT_ADMINISTRATOR');
-            }
-            if (defined('JPATH_COMPONENT_ADMINISTRATOR')) {
-            } else {
-                define('JPATH_COMPONENT_ADMINISTRATOR', 'MOLAJO_PATH_COMPONENT_ADMINISTRATOR');
-            }
+            /** set component paths */
+            if (defined('MOLAJO_PATH_COMPONENT')) { } else { define('MOLAJO_PATH_COMPONENT', strtolower(MOLAJO_PATH_BASE.'/components/'.JRequest::getCmd('option'))); }
+            if (defined('MOLAJO_PATH_COMPONENT_SITE')) { } else { define('MOLAJO_PATH_COMPONENT_SITE', strtolower(MOLAJO_PATH_SITE.'/components/'.JRequest::getCmd('option'))); }
+            if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) { } else { define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', strtolower(MOLAJO_PATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option'))); }
+            if (defined('JPATH_COMPONENT')) { } else { define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT); }
+            if (defined('JPATH_COMPONENT_SITE')) { } else { define('JPATH_COMPONENT_SITE', MOLAJO_PATH_COMPONENT_SITE); }
+            if (defined('JPATH_COMPONENT_ADMINISTRATOR')) { } else { define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR); }
 
 			switch($document->getType())
 			{

@@ -7,10 +7,11 @@
  */
 define('MOLAJO_APPLICATION', 'administrator');
 
+
 /**
  * BEGIN: Common code for all Applications
  *
- * MOLAJO_PATH_BASE (same as JPATH_ADMINISTRATOR, JPATH_INSTALLATION, JPATH_SITE)
+ * MOLAJO_PATH_BASE (same as MOLAJO_PATH_ADMINISTRATOR, MOLAJO_PATH_INSTALLATION, MOLAJO_PATH_SITE)
  * MOLAJO_PATH_ROOT is the root path for the Joomla install regardless of BASE
  *
  */

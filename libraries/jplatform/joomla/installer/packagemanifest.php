@@ -32,7 +32,7 @@ class JPackageManifest extends JObject
 	var $packagename = '';
 
 	/**
-	 * @var string url Website for the package
+	 * @var string url website for the package
 	 */
 	var $url = '';
 

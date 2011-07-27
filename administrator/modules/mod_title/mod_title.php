@@ -13,4 +13,4 @@ defined('_JEXEC') or die;
 // Get the component title div
 $title = MolajoFactory::getApplication()->get('JComponentTitle');
 
-require JModuleHelper::getLayoutPath('mod_title', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_title', $params->get('layout', 'default'));

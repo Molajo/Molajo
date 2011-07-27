@@ -297,7 +297,7 @@ class PluginsModelPlugin extends JModelAdmin
 	public function save($data)
 	{
 		// Load the extension plugin group.
-		JPluginHelper::importPlugin('extension');
+		MolajoPluginHelper::importPlugin('extension');
 
 		// Setup type
 		$data['type'] = 'plugin';

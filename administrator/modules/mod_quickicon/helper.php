@@ -52,7 +52,7 @@ abstract class modQuickIconHelper
 		}
 
 		ob_start();
-		require JModuleHelper::getLayoutPath('mod_quickicon', 'default_button');
+		require MolajoModuleHelper::getLayoutPath('mod_quickicon', 'default_button');
 		$html = ob_get_clean();
 		return $html;
 	}

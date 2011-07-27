@@ -22,7 +22,7 @@ class MolajoApplication extends JObject
 	 * The application identifier.
 	 *
 	 * @var    integer
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_applicationId = null;
 
@@ -30,7 +30,7 @@ class MolajoApplication extends JObject
 	 * The application message queue.
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_messageQueue = array();
 
@@ -38,7 +38,7 @@ class MolajoApplication extends JObject
 	 * The name of the application.
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_name = null;
 
@@ -46,7 +46,7 @@ class MolajoApplication extends JObject
 	 * The scope of the application.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $scope = null;
 
@@ -54,7 +54,7 @@ class MolajoApplication extends JObject
 	 * The time the request was made.
 	 *
 	 * @var    date
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $requestTime = null;
 
@@ -62,17 +62,19 @@ class MolajoApplication extends JObject
 	 * The time the request was made as Unix timestamp.
 	 *
 	 * @var    integer
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $startTime = null;
 
 	/**
+     * __construct
+     * 
 	 * Class constructor.
 	 *
 	 * @param   array  $config  A configuration array including optional elements such as session
 	 *                   session_name, applicationId and others. This is not exhaustive.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -95,7 +97,7 @@ class MolajoApplication extends JObject
 		}
 
 		// Create the configuration object.
-		$this->_createConfiguration(MOLAJO_PATH_CONFIGURATION . '/' . $config['config_file']);
+		$this->_createConfiguration(MOLAJO_PATH_CONFIGURATION.'/'.$config['config_file']);
 
 		// Create the session if a session name is passed.
 		if ($config['session'] !== false) {
@@ -119,12 +121,11 @@ class MolajoApplication extends JObject
 	 * @param   strong  $prefx   A prefix for class names
 	 *
 	 * @return  MolajoApplication A MolajoApplication object.
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public static function getInstance($application, $config = array(), $prefix = 'Molajo')
 	{
 		static $instances;
-        $prefix = 'Molajo';
 
 		if (!isset($instances)) {
 			$instances = array();
@@ -157,7 +158,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @param   array  $options  An optional associative array of configuration settings.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function initialise($options = array())
 	{
@@ -197,7 +198,7 @@ class MolajoApplication extends JObject
 	 * dispatched.
 	 *
 	 * @return  void;
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function route()
 	{
@@ -222,7 +223,7 @@ class MolajoApplication extends JObject
 	 * @param   string  $component	The component to dispatch.
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function dispatch($component = null)
 	{
@@ -247,7 +248,7 @@ class MolajoApplication extends JObject
 	 * the JResponse buffer.
 	 *
 	 * @return  void;
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function render()
 	{
@@ -304,7 +305,7 @@ class MolajoApplication extends JObject
 	 * @return  void  Calls exit().
 	 *
 	 * @see     MolajoApplication::enqueueMessage()
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function redirect($url, $msg='', $msgType='message', $moved = false)
 	{
@@ -383,7 +384,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function enqueueMessage($msg, $type = 'message')
 	{
@@ -407,7 +408,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  array  The system message queue.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getMessageQueue()
 	{
@@ -435,7 +436,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  mixed    The user state.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getCfg($varname, $default=null)
 	{
@@ -451,7 +452,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  string  The name of the dispatcher.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getName()
 	{
@@ -476,7 +477,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  mixed  The user state or null.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getUserState($key, $default = null)
 	{
@@ -498,7 +499,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  mixed   The previous state, if one existed.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function setUserState($key, $value)
 	{
@@ -522,7 +523,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  The request user state.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
 	{
@@ -548,7 +549,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public static function registerEvent($event, $handler)
 	{
@@ -564,7 +565,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  array  An array of results from each function call.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	function triggerEvent($event, $args=null)
 	{
@@ -590,7 +591,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function login($credentials, $options = array())
 	{
@@ -664,7 +665,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function logout($userid = null, $options = array())
 	{
@@ -713,7 +714,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  string   System is the fallback.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getTemplate($params = false)
 	{
@@ -728,7 +729,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  JRouter  A JRouter object
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	static public function getRouter($name = null, array $options = array())
 	{
@@ -755,7 +756,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  string  Processed string
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	static public function stringURLSafe($string)
 	{
@@ -779,7 +780,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  JPathway  A JPathway object
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getPathway($name = null, $options = array())
 	{
@@ -804,7 +805,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  MolajoMenu  MolajoMenu object.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getMenu($name = null, $options = array())
 	{
@@ -828,7 +829,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  string   A secure hash
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public static function getHash($seed)
 	{
@@ -844,7 +845,7 @@ class MolajoApplication extends JObject
 	 *
 	 * return   object  A MolajoConfig object
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	protected function _createConfiguration($file = null)
 	{
@@ -874,7 +875,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  JSession  JSession on success. May call exit() on database error.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	protected function _createSession($name)
 	{
@@ -934,7 +935,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function checkSession()
 	{
@@ -982,7 +983,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  integer  A application identifier.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function getApplicationId()
 	{
@@ -994,7 +995,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  boolean  True if this application is administrator.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function isAdmin()
 	{
@@ -1006,7 +1007,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  boolean  True if this application is site.
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function isSite()
 	{
@@ -1018,7 +1019,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  boolean  True if Windows OS
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	static function isWinOS()
 	{
@@ -1030,7 +1031,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @return  string  The response
 	 *
-	 * @since   11.1
+	 * @since  1.0
 	 */
 	public function __toString()
 	{

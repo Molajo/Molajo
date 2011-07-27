@@ -77,9 +77,7 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
-     * database
-     *
-	 * @since	1.0
+	 * @since	1.6
 	 */
 	function database()
 	{
@@ -145,9 +143,7 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
-     * filesystem
-     *
-	 * @since	1.0
+	 * @since	1.6
 	 */
 	function filesystem()
 	{
@@ -192,9 +188,7 @@ class JInstallationControllerSetup extends JController
 	}
 
 	/**
-     * saveconfig
-     *
-	 * @since	1.0
+	 * @since	1.6
 	 */
 	function saveconfig()
 	{
@@ -249,11 +243,11 @@ class JInstallationControllerSetup extends JController
 		$return = $configuration->setup($vars);
 
 		// Ensure a language was set.
-		if (!$return) {
+		if ($return) {
+            $this->setRedirect('index.php?view=complete');
+		} else {
 			$this->setMessage($configuration->getError(), 'notice');
 			$this->setRedirect('index.php?view=site');
-		} else {
-			$this->setRedirect('index.php?view=complete');
 		}
 	}
 }

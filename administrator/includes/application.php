@@ -1,32 +1,36 @@
 <?php
 /**
- * @version		$Id: application.php 21320 2011-05-11 01:01:37Z dextercowley $
- * @package		Joomla.Administrator
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Application
+ *
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// no direct access
-defined('_JEXEC') or die;
+jimport('joomla.html.html');
 
 /**
- * Joomla! Application class
+ * Administrator Application class
  *
  * Provide many supporting API functions
  *
- * @package		Joomla.Administrator
- * @final
- * @since		1.5
+ * @package		Molajo
+ * @subpackage  Application
+ * @since		1.0
  */
 class MolajoAdministrator extends MolajoApplication
 {
 	/**
+     * __construct
+     *
 	 * Class constructor
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * Recognized key values include 'applicationId' (this list is not meant to be comprehensive).
 	 *
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -38,12 +42,14 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
+     * initialise
+     *
 	 * Initialise the application.
 	 *
 	 * @param	array	$options	An optional associative array of configuration settings.
 	 *
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function initialise($options = array())
 	{
@@ -61,7 +67,7 @@ class MolajoAdministrator extends MolajoApplication
 				$options['language'] = $lang;
 			} else {
 				$params = MolajoComponentHelper::getParams('com_languages');
-				$application	= MolajoApplicationHelper::getApplicationInfo($this->getApplicationId());
+				$application = MolajoApplicationHelper::getApplicationInfo($this->getApplicationId());
 				$options['language'] = $params->get($application->name, $config->get('language','en-GB'));
 			}
 		}
@@ -85,23 +91,25 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
+     * route
+     * 
 	 * Route the application
 	 *
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function route()
 	{
 		$uri = JURI::getInstance();
 
-		if ($this->getCfg('force_ssl') >= 1 && strtolower($uri->getScheme()) != 'https') {
-			//forward to https
+		if ($this->getCfg('force_ssl') >= 1
+            && strtolower($uri->getScheme()) != 'https') {
 			$uri->setScheme('https');
 			$this->redirect((string)$uri);
 		}
 
 		// Trigger the onAfterRoute event.
-		JPluginHelper::importPlugin('system');
+		MolajoPluginHelper::importPlugin('system');
 		$this->triggerEvent('onAfterRoute');
 	}
 
@@ -109,7 +117,7 @@ class MolajoAdministrator extends MolajoApplication
 	 * Return a reference to the JRouter object.
 	 *
 	 * @return	JRouter
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	static public function getRouter($name = null, array $options = array())
 	{
@@ -123,7 +131,7 @@ class MolajoAdministrator extends MolajoApplication
 	 * @param	string	$component	The component to dispatch.
 	 *
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function dispatch($component = null)
 	{
@@ -149,7 +157,7 @@ class MolajoAdministrator extends MolajoApplication
 			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
-			$contents = JComponentHelper::renderComponent($component);
+			$contents = MolajoComponentHelper::renderComponent($component);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.
@@ -168,7 +176,7 @@ class MolajoAdministrator extends MolajoApplication
 	 * Display the application.
 	 *
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function render()
 	{
@@ -204,7 +212,7 @@ class MolajoAdministrator extends MolajoApplication
 	 *
 	 * @return	boolean True on success.
 	 * @see		JApplication::login
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function login($credentials, $options = array())
 	{
@@ -287,7 +295,7 @@ class MolajoAdministrator extends MolajoApplication
 	 * Purge the table of old messages
 	 *
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public static function purgeMessages()
 	{

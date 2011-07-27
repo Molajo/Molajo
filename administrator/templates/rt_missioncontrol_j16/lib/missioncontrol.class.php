@@ -243,7 +243,7 @@ class MissionControl extends RTCore {
 		
 		//render all modules except mod_status
 		$renderer =&  $this->document->loadRenderer('module');
-		foreach (JModuleHelper::getModules('status') as $mod)  {
+		foreach (MolajoModuleHelper::getModules('status') as $mod)  {
 			if ($mod->module != 'mod_status') $output[] = $renderer->render($mod, null, null);
 		}
 

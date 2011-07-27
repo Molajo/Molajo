@@ -15,4 +15,4 @@ require_once dirname(__FILE__).DS.'helper.php';
 // set the params
 ModMyShortcutsHelper::setParams($params);
 
-require JModuleHelper::getLayoutPath('mod_myshortcuts');
+require MolajoModuleHelper::getLayoutPath('mod_myshortcuts');

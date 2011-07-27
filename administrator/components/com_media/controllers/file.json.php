@@ -71,7 +71,7 @@ class MediaControllerFile extends JController
 			}
 
 			// Trigger the onContentBeforeSave event.
-			JPluginHelper::importPlugin('content');
+			MolajoPluginHelper::importPlugin('content');
 			$dispatcher	= JDispatcher::getInstance();
 			$object_file = new JObject($file);
 			$object_file->filepath = $filepath;

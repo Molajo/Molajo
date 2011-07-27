@@ -46,7 +46,7 @@ abstract class ModMyshortcutsHelper
         }
 
         ob_start();
-        require JModuleHelper::getLayoutPath('mod_myshortcuts', 'button');
+        require MolajoModuleHelper::getLayoutPath('mod_myshortcuts', 'button');
         $html = ob_get_clean();
         return $html;
     }

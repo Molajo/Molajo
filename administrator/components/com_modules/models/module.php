@@ -535,7 +535,7 @@ class ModulesModelModule extends JModelAdmin
 		$isNew		= true;
 
 		// Include the content modules for the onSave events.
-		JPluginHelper::importPlugin('extension');
+		MolajoPluginHelper::importPlugin('extension');
 
 		// Load the row if saving an existing record.
 		if ($pk > 0) {

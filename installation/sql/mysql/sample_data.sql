@@ -21,7 +21,7 @@ INSERT INTO `#__articles` (
   `language`, `ordering`, `state`, `publish_up`, `publish_down`, `version`, `version_of_id`, `state_prior_to_version`,
   `created`, `created_by`, `created_by_alias`, `created_by_email`, `created_by_website`, `created_by_ip_address`,
   `created_by_referer`, `modified`, `modified_by`, `checked_out`, `checked_out_time`,
-  `content_table`, `component_id`, `parent_id`, `lft`, `rgt`, `level`, `metakey`, `metadesc`, `metadata`,
+  `component_option`, `component_id`, `parent_id`, `lft`, `rgt`, `level`, `metakey`, `metadesc`, `metadata`,
   `attribs`, `params`, `access`, `asset_id` )
   VALUES
     (1, 2, 'My First Article', 'my-first-article', 10, '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>', NULL, NULL, NULL, '', 1, 0, 1, 1, '*', 1, 1, '2011-05-06 00:00:00', '0000-00-00 00:00:00', 1, NULL, NULL, '2011-05-06 00:00:00', 42, 'Harry Potter', 'HarryPotter@example.com', 'http://example.com', '127.1.0.0', 'http://example.com', '2011-05-27 13:26:26', 42, 0, '0000-00-00 00:00:00', 'com_articles', 2, 0, NULL, NULL, 0, '', '', '{"robots":"","author":"","rights":""}', '{"text_entry_tag":"","tags":[""],"tag_category":[""]}', '', 1, 200),

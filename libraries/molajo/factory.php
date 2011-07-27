@@ -207,14 +207,7 @@ abstract class MolajoFactory
 	 *
 	 * @return JACL object
 	 */
-	public static function getACL()
-	{
-		if (!self::$acl) {
-			self::$acl = new JAccess();
-		}
-
-		return self::$acl;
-	}
+	public static function getACL() {}
 
 	/**
 	 * Get a database object
@@ -699,10 +692,10 @@ abstract class MolajoFactory
 				$prefix .= $SCPOptions['root'];
 			}
 			else {
-				$prefix = JPATH_ROOT . '/';
+				$prefix = MOLAJO_PATH_ROOT . '/';
 			}
 
-			$retval = new JStream($prefix, JPATH_ROOT, $context);
+			$retval = new JStream($prefix, MOLAJO_PATH_ROOT, $context);
 		}
 		else {
 			$retval = new JStream('', '', $context);

@@ -61,7 +61,7 @@ http://localhost/molajo2/administrator/index.php?option=com_samples&task=sample.
         $lookupView = '';
         $molajoConfig = new MolajoModelConfiguration;
 
-$debug = false;
+$debug = true;
 
         $layout = '';
         $format = '';
@@ -69,6 +69,11 @@ $debug = false;
 
         /** loads keys for configuration **/
         $molajoConfig->getOptionOverrides (JRequest::getCmd('option'));
+
+        if (JRequest::getCmd('option') == 'com_login') {
+            JRequest::setVar('view', 'login');
+            JRequest::setVar('layout', 'default');
+        }
 
         /** 1. Get View and Layout **/
         $view = JRequest::getCmd('view', '');

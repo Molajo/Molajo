@@ -38,7 +38,7 @@ class CpanelViewCpanel extends JView
 		JRequest::setVar('tmpl', 'cpanel');
 
 		// Display the cpanel modules
-		$this->modules = JModuleHelper::getModules('cpanel');
+		$this->modules = MolajoModuleHelper::getModules('cpanel');
 
 		parent::display($tpl);
 	}

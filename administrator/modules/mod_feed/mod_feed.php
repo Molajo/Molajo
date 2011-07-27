@@ -34,4 +34,4 @@ if (empty ($rssurl))
 	return;
 }
 
-require JModuleHelper::getLayoutPath('mod_feed');
+require MolajoModuleHelper::getLayoutPath('mod_feed');

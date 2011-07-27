@@ -19,5 +19,5 @@ if ($unread !== false) {
 	// Set the inbox link.
 	$inboxLink = JRequest::getInt('hidemainmenu') ? null : JRoute::_('index.php?option=com_messages');
 
-	require JModuleHelper::getLayoutPath('mod_unread', $params->get('layout', 'default'));
+	require MolajoModuleHelper::getLayoutPath('mod_unread', $params->get('layout', 'default'));
 }

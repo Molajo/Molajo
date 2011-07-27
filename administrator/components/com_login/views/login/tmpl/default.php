@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Get the login modules
-$modules = JModuleHelper::getModules('login');
+$modules = MolajoModuleHelper::getModules('login');
 
 foreach ($modules as $module)
 // Render the login modules
-	echo JModuleHelper::renderModule($module, array('style' => 'rounded', 'id' => 'section-box'));
+	echo MolajoModuleHelper::renderModule($module, array('style' => 'rounded', 'id' => 'section-box'));
 

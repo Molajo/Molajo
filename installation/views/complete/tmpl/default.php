@@ -59,7 +59,9 @@ defined('MOLAJO') or die;
 							</tr>
 							<tr>
 								<td class="notice">
-									<?php echo JText::_('JUSERNAME'); ?> : <strong><?php echo $this->options['admin_user']; ?></strong>
+									<?php echo JText::_('JUSERNAME'); ?> :
+                                    <?php var_dump($this->config); ?>
+                                        <strong><?php echo $this->options['admin_user']; ?></strong>
 								</td>
 							</tr>
 							<tr>
@@ -71,10 +73,8 @@ defined('MOLAJO') or die;
 										<div>
 											<div class="icon">
 												<p>
-													<a href="http://community.molajo.org/translations/joomla-16-translations.html" target="_blank">
-													<b><?php echo JText::_('INSTL_COMPLETE_LANGUAGE_1'); ?></b>
-													<br />
-													<?php echo JText::_('INSTL_COMPLETE_LANGUAGE_2'); ?>
+													<a href="http://molajo.org/" target="_blank">
+													<b><?php echo JText::_('INSTL_COMPLETE'); ?></b>
 													</a>
 												</p>
 											</div>

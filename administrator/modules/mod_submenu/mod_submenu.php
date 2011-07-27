@@ -12,5 +12,5 @@ defined('_JEXEC') or die;
 require_once dirname(__FILE__).'/helper.php';
 
 if ($list = modSubmenuHelper::getItems()) {
-	require JModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
+	require MolajoModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
 }

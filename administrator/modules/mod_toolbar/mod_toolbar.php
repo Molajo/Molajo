@@ -36,4 +36,4 @@ $toolbar->addButtonsDefaultLayout ($this->state->get('filter.option'), $this->pe
 // Get the toolbar.
 $toolbar = JToolBar::getInstance('toolbar')->render('toolbar');
 
-require JModuleHelper::getLayoutPath('mod_toolbar', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_toolbar', $params->get('layout', 'default'));

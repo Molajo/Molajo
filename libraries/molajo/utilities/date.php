@@ -479,7 +479,7 @@ class MolajoDate extends DateTime
 
 	/**
 	 * Gets the date as an ISO 8601 string.  IETF RFC 3339 defines the ISO 8601 format
-	 * and it can be found at the IETF Web site.
+	 * and it can be found at the IETF website.
 	 *
 	 * @param   boolean  $local  True to return the date string in the local time zone, false to return it in GMT.
 	 *
@@ -512,7 +512,7 @@ class MolajoDate extends DateTime
 
 	/**
 	 * Gets the date as an RFC 822 string.  IETF RFC 2822 supercedes RFC 822 and its definition
-	 * can be found at the IETF Web site.
+	 * can be found at the IETF website.
 	 *
 	 * @param   boolean  $local  True to return the date string in the local time zone, false to return it in GMT.
 	 *

@@ -16,4 +16,4 @@ require_once dirname(__FILE__).'/helper.php';
 $list = modPopularHelper::getList($params);
 
 // Render the module
-require JModuleHelper::getLayoutPath('mod_popular', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_popular', $params->get('layout', 'default'));

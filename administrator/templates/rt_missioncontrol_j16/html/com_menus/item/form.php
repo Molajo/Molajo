@@ -10,7 +10,7 @@ class RokNavMenusHelper extends MenusHelper {
 		$click[] = JHTML::_('select.option',  '0', JText::_( 'Parent Window With Browser Navigation' ) );
 		$click[] = JHTML::_('select.option',  '1', JText::_( 'New Window With Browser Navigation' ) );
 		$click[] = JHTML::_('select.option',  '2', JText::_( 'New Window Without Browser Navigation' ) );
-		JPluginHelper::importPlugin('roknavmenu');
+		MolajoPluginHelper::importPlugin('roknavmenu');
 		$dispatcher	   =& JDispatcher::getInstance();
 		$dispatcher->trigger('onRokNavMenuRegisterDisplayType', array (&$click));
 		$target = JHTML::_('select.genericlist',   $click, 'browserNav', 'class="inputbox" size="4"', 'value', 'text', intval( $row->browserNav ) );
@@ -18,7 +18,7 @@ class RokNavMenusHelper extends MenusHelper {
 	}
 	
 	function getPluginParams(&$item) {
-		JPluginHelper::importPlugin('roknavmenu');
+		MolajoPluginHelper::importPlugin('roknavmenu');
 		$param_files = array();
 		$param_sets = array();
 		$dispatcher	   =& JDispatcher::getInstance();

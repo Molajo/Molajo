@@ -153,7 +153,8 @@ class JPath
 		}
 
 		$path = JPath::clean($path);
-		if (strpos($path, JPath::clean(JPATH_ROOT)) !== 0) {
+/** amy */
+		if (stripos($path, JPath::clean(JPATH_ROOT)) !== 0) {
 			// Don't translate
 			JError::raiseError(20, 'JPath::check Snooping out of bounds @ '.$path);
 			jexit();

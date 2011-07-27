@@ -18,7 +18,7 @@ class plgSystemTamka_Router extends JPlugin	{
  * 	populated variables, but has not yet routed the request. attachBuildRule allows one to override these
  * 	settings and to compensate with information that the core Router does not have. Runs one time per page load.
  *
- * Build: runs one time for each internal Web site URL presented on the Web page. In the same sense,
+ * Build: runs one time for each internal website URL presented on the Web page. In the same sense,
  * 	Joomla! has already populated variables needed to write the URL to output. In attachBuildRule,
  * 	one can impact these Web links.
  *
@@ -684,7 +684,7 @@ class plgSystemTamka_Router extends JPlugin	{
 	 * 		b) If not, send to the 404 function to log the error and redirect to a custom 404 page
 	 *
 	 * 		Note: the #__301_redirects table can be used for URL Migrations from older implementations,
-	 * 			moving from a different Web site deployment, or minor navigation changes on the existing site
+	 * 			moving from a different website deployment, or minor navigation changes on the existing site
 	*/
 	function process_301_404_errors ($uriPathPreserved, $parameterExtension )	{
 

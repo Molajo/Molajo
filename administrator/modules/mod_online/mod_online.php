@@ -17,5 +17,5 @@ $count = modOnlineHelper::getOnlineCount();
 
 if ($count !== false) {
 	// Render the module.
-	require JModuleHelper::getLayoutPath('mod_online', $params->get('layout', 'default'));
+	require MolajoModuleHelper::getLayoutPath('mod_online', $params->get('layout', 'default'));
 }

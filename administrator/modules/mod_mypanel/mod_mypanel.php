@@ -19,4 +19,4 @@ $user       = &MolajoFactory::getUser();
 $enabled    = JRequest::getInt('hidemainmenu') ? false : true;
 
 // Render the module layout
-require JModuleHelper::getLayoutPath('mod_mypanel');
+require MolajoModuleHelper::getLayoutPath('mod_mypanel');

@@ -139,7 +139,7 @@ class SearchModelSearches extends JModelList
 		// Determine if number of results for search item should be calculated
 		// by default it is `off` as it is highly query intensive
 		if ($this->getState('filter.results')) {
-			JPluginHelper::importPlugin('search');
+			MolajoPluginHelper::importPlugin('search');
 			$app = MolajoFactory::getApplication();
 
 			if (!class_exists('JSite')) {

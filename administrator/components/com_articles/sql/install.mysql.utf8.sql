@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `title` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'Title',
   `alias` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
 
-  `content_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT 'Content Type: Links to #__configuration.option_id = 10 and content_table values matching ',
+  `content_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT 'Content Type: Links to #__configuration.option_id = 10 and component_option values matching ',
 
   `content_text` MEDIUMTEXT NULL COMMENT 'Content Primary Text Field, can include break to designate Introductory and Full text',
   `content_link` VARCHAR (2083) NULL COMMENT 'Content Link for Weblink or Newsfeed Field',
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
   `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
 
-  `content_table` VARCHAR(50) NOT NULL DEFAULT ' ' COMMENT 'Component Option Value',
+  `component_option` VARCHAR(50) NOT NULL DEFAULT ' ' COMMENT 'Component Option Value',
   `component_id` INT (11) UNSIGNED NOT NULL DEFAULT  0 COMMENT 'Primary Key for Component Content',
   `parent_id` INT (11) NULL COMMENT 'Nested set parent',
   `lft` INT (11) NULL COMMENT 'Nested set lft',
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
 
   PRIMARY KEY  (`id`),
 
-  KEY `idx_component_component_id_id` (`content_table`, `component_id`, `id`),
+  KEY `idx_component_component_id_id` (`component_option`, `component_id`, `id`),
   KEY `idx_access` (`access`),
   UNIQUE KEY `idx_asset_id` (`asset_id`),
   KEY `idx_checkout` (`checked_out`),
@@ -94,7 +94,7 @@ INSERT INTO `#__articles` (
   `language`, `ordering`, `state`, `publish_up`, `publish_down`, `version`, `version_of_id`, `state_prior_to_version`,
   `created`, `created_by`, `created_by_alias`, `created_by_email`, `created_by_website`, `created_by_ip_address`,
   `created_by_referer`, `modified`, `modified_by`, `checked_out`, `checked_out_time`,
-  `content_table`, `component_id`, `parent_id`, `lft`, `rgt`, `level`, `metakey`, `metadesc`, `metadata`,
+  `component_option`, `component_id`, `parent_id`, `lft`, `rgt`, `level`, `metakey`, `metadesc`, `metadata`,
   `attribs`, `params`, `access`, `asset_id` )
   VALUES
     (1, @catid, 'My First Article', 'my-first-article', 10, '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>', NULL, NULL, NULL, '', 1, 0, 1, 1, '*', 1, 1, '2011-05-06 00:00:00', '0000-00-00 00:00:00', 1, NULL, NULL, '2011-05-06 00:00:00', 42, 'Harry Potter', 'HarryPotter@example.com', 'http://example.com', '127.1.0.0', 'http://example.com', '2011-05-27 13:26:26', 42, 0, '0000-00-00 00:00:00', 'com_articles', 2, 0, NULL, NULL, 0, '', '', '{"robots":"","author":"","rights":""}', '{"text_entry_tag":"","tags":[""],"tag_category":[""]}', '', @default_view_access, @max_asset_id++),

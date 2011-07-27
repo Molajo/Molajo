@@ -22,7 +22,8 @@ $validate = new MolajoValidateHelper ();
 $results = $validate->checkRequest();
 
 /** establish controller **/
-$defaultController = substr(JRequest::getCmd('option'), (strpos(JRequest::getCmd('option'), '_') + 1), strlen(JRequest::getCmd('option')) - strpos(JRequest::getCmd('option'), '_'));
+$defaultController = substr(JRequest::getCmd('option'), (strpos(JRequest::getCmd('option'), '_') + 1),
+                            strlen(JRequest::getCmd('option')) - strpos(JRequest::getCmd('option'), '_'));
 $controller = JController::getInstance(ucfirst($defaultController));
 
 /** initialise **/
