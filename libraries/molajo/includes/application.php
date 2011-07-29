@@ -78,7 +78,7 @@ class MolajoApplication extends JObject
 	 */
 	public function __construct($config = array())
 	{
-		$this->_name		= $this->getName();
+		$this->_name		    = $this->getName();
 		$this->_applicationId	= $config['applicationId'];
 
 		// Enable sessions by default.
@@ -108,6 +108,7 @@ class MolajoApplication extends JObject
 
 		// Used by task system to ensure that the system doesn't go over time.
 		$this->set('startTime', JProfiler::getmicrotime());
+ 
 	}
 
 	/**

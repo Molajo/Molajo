@@ -39,7 +39,7 @@ class MolajoControllerLogin extends MolajoController
         parent::initialise('login');
 
         /** @var $app */
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		$model = $this->getModel('login');
 		$credentials = $model->getState('credentials');
@@ -66,7 +66,7 @@ class MolajoControllerLogin extends MolajoController
 	{
 		JRequest::checkToken('default') or jexit(JText::_('JInvalid_Token'));
 
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		$userid = JRequest::getInt('uid', null);
 

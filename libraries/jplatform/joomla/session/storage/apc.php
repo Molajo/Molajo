@@ -24,7 +24,8 @@ class JSessionStorageApc extends JSessionStorage
 	*
 	* @param   array  $options optional parameters
 	*/
-	public function __construct($options = array())
+	public function __construct($options =
+        array())
 	{
 		if (!$this->test()) {
 			return JError::raiseError(404, JText::_('JLIB_SESSION_APC_EXTENSION_NOT_AVAILABLE'));

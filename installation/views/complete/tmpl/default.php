@@ -40,7 +40,10 @@ defined('MOLAJO') or die;
 								</td>
 							</tr>
 							<tr>
-								<td><input class="button" type="button" name="instDefault" value="<?php echo JText::_('INSTL_COMPLETE_REMOVE_FOLDER'); ?>" onclick="Install.removeFolder(this);"/></td>
+								<td><input class="button" type="button" name="instDefault"
+                                           value="<?php echo JText::_('INSTL_COMPLETE_REMOVE_FOLDER'); ?>"
+                                           onclick="Install.removeFolder(this);"/>
+                                </td>
 							</tr>
 							<tr class="message inlineError" id="theDefaultError" style="display: none">
 								<td>
