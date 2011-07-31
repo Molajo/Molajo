@@ -103,7 +103,6 @@ class MolajoApplicationHelper
                     $obj->id	= $result->id;
                     $obj->name	= $result->name;
                     $obj->path	= MOLAJO_PATH_ROOT.'/'.$result->path;
-                    echo $obj->path	;
                     self::$_applications[$result->id] = clone $obj;
                 }
             }

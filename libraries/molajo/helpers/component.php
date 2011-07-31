@@ -416,6 +416,7 @@ die();
         /** @var $session */
         $session = JFactory::getSession();
 echo 'from last time '. $session->get('molajoComponent');
+
         // Validate request
         $results = self::getRequest();
         
