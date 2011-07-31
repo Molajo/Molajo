@@ -249,7 +249,7 @@ class MolajoControllerEdit extends MolajoController
         /** Model: Get Form **/
         /** Model Trigger_Event: onContentPrepareData **/
         /** Model Trigger_Event: onContentPrepareForm **/
-        /** Molajo_Note: Forms are named with the concatenated values of option, single_view, layout, task, id, datakey separated by '.' **/
+        /** Molajo_Note: Forms are named with the concatenated values of option, EditView, layout, task, id, datakey separated by '.' **/
         $form = $this->model->getForm($data, false);
         if ($form === false) {
             return $this->redirectClass->setSuccessIndicator(false);

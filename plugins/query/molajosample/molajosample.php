@@ -55,7 +55,7 @@ class plgQueryMolajosample extends JPlugin
 	 * @param	object	$params              Array of parameters
      *
      *                      application, initiating_extension_type, option, view, model, layout,
-     *                      task, format, component_table, default_view, single_view
+     *                      task, format, ComponentTable, DefaultView, EditView
      *
      *  echo $state->get('request.layout');
      *

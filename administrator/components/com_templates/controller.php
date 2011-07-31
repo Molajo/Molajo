@@ -23,7 +23,7 @@ class TemplatesController extends JController
 	 * @var		string	The default view.
 	 * @since	1.6
 	 */
-	protected $default_view = 'styles';
+	protected $DefaultView = 'styles';
 
 	/**
 	 * Method to display a view.

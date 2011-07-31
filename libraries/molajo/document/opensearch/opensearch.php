@@ -8,7 +8,7 @@
  */
 
 // No direct access
-defined('MOLAJO_PATH_BASE') or die;
+defined('MOLAJO') or die;
 
 jimport('joomla.document.document');
 jimport('joomla.methods');

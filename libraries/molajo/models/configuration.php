@@ -108,9 +108,9 @@ class MolajoModelConfiguration extends JModel
 
         if (count($results) > 0) {
             foreach ($results as $count => $item) {
-                $singleView = $item->option_value;
+                $editView = $item->option_value;
             }
-            return $singleView;
+            return $editView;
         }
 
         return false;
@@ -270,7 +270,7 @@ class MolajoModelConfiguration extends JModel
         /** for lowest ordering, retrieve default view **/
         $query = $db->getQuery(true);
 
-        $query->select($db->namequote('option_value_literal').' as default_view');
+        $query->select($db->namequote('option_value_literal').' as DefaultView');
         $query->from($db->namequote('#__configuration'));
         $query->where($db->namequote('option_id').' = '.(int) $option_id);
         $query->where($db->namequote('ordering').' = '. $ordering);
@@ -281,7 +281,7 @@ class MolajoModelConfiguration extends JModel
         if (!$results = $db->loadObjectList()) {
         } else {
             foreach ($results as $count => $item) {
-                $value = $item->default_view;
+                $value = $item->DefaultView;
             }
             return $value;
         }
@@ -349,8 +349,8 @@ class MolajoModelConfiguration extends JModel
 
         $query = $db->getQuery(true);
 
-        $query->select($db->namequote('option_value').' as single_view');
-        $query->select($db->namequote('option_value_literal').' as default_view');
+        $query->select($db->namequote('option_value').' as EditView');
+        $query->select($db->namequote('option_value_literal').' as DefaultView');
         $query->from($db->namequote('#__configuration'));
         $query->where($db->namequote('option_id').' = '.(int) $option_id);
         $query->where('('.$db->namequote('option_value').' = '. $db->quote(trim($value)).' or '.$db->namequote('option_value_literal').' = '. $db->quote(trim($value)).')');
@@ -361,7 +361,7 @@ class MolajoModelConfiguration extends JModel
         if (!$results = $db->loadObjectList()) {
         } else {
             foreach ($results as $count => $item) {
-                if ($value == $item->default_view) {
+                if ($value == $item->DefaultView) {
                     $return = 'default';
                 } else {
                     $return = 'single';
@@ -396,8 +396,8 @@ class MolajoModelConfiguration extends JModel
 
         $query = $db->getQuery(true);
 
-        $query->select($db->namequote('option_value').' as single_view');
-        $query->select($db->namequote('option_value_literal').' as default_view');
+        $query->select($db->namequote('option_value').' as EditView');
+        $query->select($db->namequote('option_value_literal').' as DefaultView');
         $query->from($db->namequote('#__configuration'));
         $query->where($db->namequote('option_id').' = '.(int) $option_id);
         $query->where('('.$db->namequote('option_value').' = '. $db->quote(trim($value)).' or '.$db->namequote('option_value_literal').' = '. $db->quote(trim($value)).')');
@@ -409,9 +409,9 @@ class MolajoModelConfiguration extends JModel
         } else {
             foreach ($results as $count => $item) {
                 if ($type == 'default') {
-                    $value = $item->single_view;
+                    $value = $item->EditView;
                 } else {
-                    $value = $item->default_view;
+                    $value = $item->DefaultView;
                 }
             }
  

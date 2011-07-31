@@ -87,7 +87,7 @@ class MolajoAdministrator extends MolajoApplication
 
 		// Load Library language
 		$lang = MolajoFactory::getLanguage();
-		$lang->load('lib_joomla', JPATH_ADMINISTRATOR);
+		$lang->load('lib_joomla', MOLAJO_PATH_ADMINISTRATOR);
 	}
 
 	/**
@@ -141,6 +141,8 @@ class MolajoAdministrator extends MolajoApplication
 				$component = JAdministratorHelper::findOption();
 			}
 
+			$results = MolajoComponentHelper::getRequest();
+
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
 
@@ -164,7 +166,7 @@ class MolajoAdministrator extends MolajoApplication
 			MolajoPluginHelper::importPlugin('system');
 			$this->triggerEvent('onAfterDispatch');
 		}
-		// Mop up any uncaught exceptions.
+		// Uncaught exceptions.
 		catch (Exception $e)
 		{
 			$code = $e->getCode();
@@ -191,7 +193,7 @@ class MolajoAdministrator extends MolajoApplication
 		$params = array(
 			'template'	=> $template->template,
 			'file'		=> $file.'.php',
-			'directory'	=> JPATH_THEMES,
+			'directory'	=> MOLAJO_PATH_THEMES,
 			'params'	=> $template->params
 		);
 
@@ -216,7 +218,6 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function login($credentials, $options = array())
 	{
-
 		//The minimum group
 		$options['group'] = 'Public Backend';
 
@@ -278,7 +279,7 @@ class MolajoAdministrator extends MolajoApplication
 			$template->template = JFilterInput::getInstance()->clean($template->template, 'cmd');
 			$template->params = new JRegistry($template->params);
 
-			if (!file_exists(JPATH_THEMES.DS.$template->template.DS.'index.php'))
+			if (!file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php'))
 			{
 				$template->params = new JRegistry();
 				$template->template = 'bluestork';

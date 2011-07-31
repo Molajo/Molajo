@@ -22,7 +22,7 @@ class RedirectController extends JController
 	 * @var		string	The default view.
 	 * @since	1.6
 	 */
-	protected $default_view = 'links';
+	protected $DefaultView = 'links';
 
 	/**
 	 * Method to display a view.

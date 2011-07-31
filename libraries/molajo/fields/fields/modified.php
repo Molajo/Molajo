@@ -41,7 +41,7 @@ class MolajoFieldModified extends MolajoField
      */
     public function getOptions ()
     {
-        $dateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $dateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $dateModel->getMonthsModified();
     }
 

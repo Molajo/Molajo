@@ -23,7 +23,7 @@ class SearchController extends JController
 	 * @var		string	The default view.
 	 * @since	1.6
 	 */
-	protected $default_view = 'searches';
+	protected $DefaultView = 'searches';
 
 	/**
 	 * Method to display a view.

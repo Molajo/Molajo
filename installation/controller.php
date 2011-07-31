@@ -41,17 +41,17 @@ class JInstallationController extends JController
 		if (file_exists(MOLAJO_PATH_CONFIGURATION.'/configuration.php')
             && (filesize(MOLAJO_PATH_CONFIGURATION.'/configuration.php') > 10)
             && file_exists(MOLAJO_PATH_INSTALLATION.'/index.php')) {
-			$default_view	= 'remove';
+			$DefaultView	= 'remove';
 		} else {
-			$default_view	= 'language';
+			$DefaultView	= 'language';
 		}
 
-		$vName		= JRequest::getWord('view', $default_view);
+		$vName		= JRequest::getWord('view', $DefaultView);
 		$vFormat	= $document->getType();
 		$lName		= JRequest::getWord('layout', 'default');
 
-		if (strcmp($vName, $default_view) == 0) {
-			JRequest::setVar('view', $default_view);
+		if (strcmp($vName, $DefaultView) == 0) {
+			JRequest::setVar('view', $DefaultView);
 		}
 
 		if ($view = $this->getView($vName, $vFormat)) {

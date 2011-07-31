@@ -191,7 +191,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_molajosamples', 50, '', '', 0),
 ('com_molajosamples', 50, 'molajosample', 'molajosample', 1);
 
-/* 060 MOLAJO_CONFIG_OPTION_ID_DEFAULT_LAYOUT */;
+/* 060 MOLAJO_CONFIG_OPTION_ID_DEFAULT_LAYOUT_APPLICATION1 */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_molajosamples', 60, '', '', 0),
 ('com_molajosamples', 60, 'molajosamples', 'molajosamples', 1);

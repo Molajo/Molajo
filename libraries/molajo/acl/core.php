@@ -160,7 +160,7 @@ class MolajoACLCore extends MolajoACL
      *  checkDeleteAuthorisation - delete
      *  checkEditAuthorisation - test before presenting the editor for an update
      *  checkEditownAuthorisation - test before presenting the editor for an update
-     *  checkEditstateAuthorisation - can update fields identified as 002 MOLAJO_CONFIG_OPTION_ID_EDITSTATE_FIELDS
+     *  checkPublishAuthorisation - can update fields identified as 002 MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS
      *  checkSaveAuthorisation - save
      *  checkSave2copyAuthorisation - view existing item and create new
      *  checkSave2newAuthorisation - view existing item and create new
@@ -209,7 +209,15 @@ class MolajoACLCore extends MolajoACL
      * testAuthorisation
      *
      * called from checkTaskUpdate to look through (possibly) multiple ACL checks for a single task
-     * @return <boolean>
+     * 
+     * @param $option
+     * @param $entity
+     * @param $task
+     * @param $catid
+     * @param $id
+     * @param $item
+     * @param $option_value_literal
+     * @return bool
      */
     public function testAuthorisation ($option, $entity, $task, $catid, $id, $item, $option_value_literal)
     {
@@ -266,7 +274,7 @@ class MolajoACLCore extends MolajoACL
     {
         return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkEditstateAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    public function checkPublishAuthorisation ($option, $entity, $task, $catid, $id, $item)
     {
         return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
     }
@@ -286,7 +294,7 @@ class MolajoACLCore extends MolajoACL
     {
         return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkPublishAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    public function checkEditstateAuthorisation ($option, $entity, $task, $catid, $id, $item)
     {
         return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
     }
@@ -370,7 +378,7 @@ class MolajoACLCore extends MolajoACL
         $query->select('a.access');
 //        $query->select('ag.title AS access_level');
 
-        $aclClass = ucfirst(strtolower(JRequest::getVar('default_view'))).'ACL';
+        $aclClass = ucfirst(strtolower(JRequest::getVar('DefaultView'))).'ACL';
         $acl = new $aclClass();
         $groupList = $acl->getList('viewaccess');
 
@@ -400,6 +408,11 @@ class MolajoACLCore extends MolajoACL
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getFilterQueryInformation
+     *
+     * @param $query
+     * @param $option
+     * @param $filterValue
+     * @return void
      */
     public function getFilterQueryInformation ($query, $option, $filterValue)
     {
@@ -411,9 +424,15 @@ class MolajoACLCore extends MolajoACL
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getViewaccessQueryInformation
+     *
      *  Usage:
      *  $acl = new MolajoACL ();
      *  $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m.'));
+     *
+     * @param $query
+     * @param $option
+     * @param $params
+     * @return
      */
     public function getViewaccessQueryInformation ($query, $option, $params)
     {
@@ -463,7 +482,8 @@ class MolajoACLCore extends MolajoACL
         $component = $params[0];
         $section = $params[1];
 
-		if (defined('MOLAJO_PATH_ADMINISTRATOR') && is_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml')) {
+		if (defined('MOLAJO_PATH_ADMINISTRATOR')
+            && is_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml')) {
 			$xml = simplexml_load_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml');
 
 			foreach ($xml->children() as $child)
@@ -625,6 +645,12 @@ class MolajoACLCore extends MolajoACL
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupingsList
+     *
+     * @param $id
+     * @param $option
+     * @param $task
+     * @param array $params
+     * @return void
      */
     public function getUsergroupingsList($id, $option, $task, $params=array())
     {
@@ -635,7 +661,11 @@ class MolajoACLCore extends MolajoACL
      * getAllUserGroups
      *
      * Get all defined groups
-     * @return array
+     *
+     * @param string $option
+     * @param string $task
+     * @param array $params
+     * @return void
      */
     public function getAllusergroupsList ($option='', $task='', $params=array())
     {
@@ -719,9 +749,16 @@ class MolajoACLCore extends MolajoACL
         }
     }
 
+    /**
+     * checkGroupPermissions
+     *
+     * @param $key
+     * @param $action
+     * @param null $asset
+     * @return void
+     */
     public function checkGroupPermissions ($key, $action, $asset=null)
     {
-
 
     }
 
@@ -742,11 +779,11 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkFormAuthorisations ($option, $entity, $task, $id, $form, $item)
     {
-        if ($item->canEditstate === true) {
+        if ($item->canPublish === true) {
             return;
         }
         $molajoConfig = new MolajoModelConfiguration ();
-        $fieldsEditState = $molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_EDITSTATE_FIELDS);
+        $fieldsEditState = $molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS);
         foreach ($fieldsEditState as $count => $editstateItem ) {
             $form->setFieldAttribute($editstateItem->value, 'disabled', 'true');
             $form->setFieldAttribute($editstateItem->value, 'filter', 'unset');

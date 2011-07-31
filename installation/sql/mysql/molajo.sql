@@ -687,9 +687,9 @@ CREATE TABLE `#__update_sites_extensions` (
 # CLIENTS
 #
 
-INSERT INTO `#__applications` (`id`, `application_id`, `name`, `path`, `access`, `asset_id`) VALUES (1, 0, 'site', 'MOLAJO_PATH_SITE', 1, 1);
-INSERT INTO `#__applications` (`id`, `application_id`, `name`, `path`, `access`, `asset_id`) VALUES (2, 1, 'administrator', 'MOLAJO_PATH_ADMINISTRATOR', 5, 2);
-INSERT INTO `#__applications` (`id`, `application_id`, `name`, `path`, `access`, `asset_id`) VALUES (3, 2, 'installation', 'MOLAJO_PATH_INSTALLATION', 0, 3);
+INSERT INTO `#__applications` (`id`, `application_id`, `name`, `path`, `access`, `asset_id`) VALUES (1, 0, 'site', '', 1, 1);
+INSERT INTO `#__applications` (`id`, `application_id`, `name`, `path`, `access`, `asset_id`) VALUES (2, 1, 'administrator', 'administrator', 5, 2);
+INSERT INTO `#__applications` (`id`, `application_id`, `name`, `path`, `access`, `asset_id`) VALUES (3, 2, 'installation', 'installation', 0, 3);
 
 #
 # USERS AND GROUPS
@@ -1033,7 +1033,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 1, 'version', 'MOLAJO_FIELD_VERSION_LABEL', 44),
 ('core', 1, 'version_of_id', 'MOLAJO_FIELD_VERSION_OF_ID_LABEL', 45);
 
-/* 002 MOLAJO_CONFIG_OPTION_ID_EDITSTATE_FIELDS */
+/* 002 MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 2, '', '', 0),
 ('core', 2, 'access', 'MOLAJO_FIELD_ACCESS_LABEL', 1),
@@ -1061,7 +1061,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 020 MOLAJO_CONFIG_OPTION_ID_VIEW_PAIRS */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 20, '', '', 0),
-('core', 20, 'single', 'multiple', 1);
+('core', 20, 'edit', 'display', 1);
 
 /* TABLE */
 
@@ -1075,9 +1075,14 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 075 MOLAJO_CONFIG_OPTION_ID_FORMAT */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 75, '', '', 0),
-('core', 75, 'html', 'html', 1),
-('core', 75, 'raw', 'raw', 2),
-('core', 75, 'feed', 'feed', 3);
+('core', 75, 'feed', 'feed', 1),
+('core', 75, 'html', 'html', 2),
+('core', 75, 'json', 'json', 3),
+('core', 75, 'opensearch', 'opensearch', 4),
+('core', 75, 'raw', 'raw', 5),
+('core', 75, 'xls', 'xls', 6),
+('core', 75, 'xml', 'xml', 7),
+('core', 75, 'xmlrpc', 'xmlrpc', 8);
 
 /* TASKS */
 
@@ -1088,7 +1093,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 80, 'edit', 'edit', 2),
 ('core', 80, 'display', 'display', 3);
 
-/** 085 MOLAJO_CONFIG_OPTION_ID_SINGLE_CONTROLLER_TASKS */
+/** 085 MOLAJO_CONFIG_OPTION_ID_EDIT_CONTROLLER_TASKS */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 85, '', '', 0),
 ('core', 85, 'apply', 'apply', 1),
@@ -1126,36 +1131,36 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 100, 'add', 'create', 1),
 ('core', 100, 'admin', 'admin', 2),
 ('core', 100, 'apply', 'edit', 3),
-('core', 100, 'archive', 'delete', 4),
+('core', 100, 'archive', 'publish', 4),
 ('core', 100, 'cancel', '', 5),
 ('core', 100, 'checkin', 'admin', 6),
 ('core', 100, 'close', '', 7),
 ('core', 100, 'copy', 'create', 8),
 ('core', 100, 'create', 'create', 9),
 ('core', 100, 'delete', 'delete', 10),
-('core', 100, 'display', 'view', 11),
+('core', 100, 'view', 'view', 11),
 ('core', 100, 'edit', 'edit', 12),
-('core', 100, 'editstate', 'delete', 13),
-('core', 100, 'feature', 'delete', 14),
+('core', 100, 'editstate', 'publish', 13),
+('core', 100, 'feature', 'publish', 14),
 ('core', 100, 'manage', '', 15),
 ('core', 100, 'move', 'edit', 16),
-('core', 100, 'orderdown', 'delete', 18),
-('core', 100, 'orderup', 'delete', 19),
-('core', 100, 'publish', 'delete', 20),
-('core', 100, 'reorder', 'delete', 21),
-('core', 100, 'restore', 'delete', 22),
+('core', 100, 'orderdown', 'publish', 18),
+('core', 100, 'orderup', 'publish', 19),
+('core', 100, 'publish', 'publish', 20),
+('core', 100, 'reorder', 'publish', 21),
+('core', 100, 'restore', 'publish', 22),
 ('core', 100, 'save', 'edit', 23),
 ('core', 100, 'save2copy', 'edit', 24),
 ('core', 100, 'save2new', 'edit', 25),
-('core', 100, 'saveorder', 'delete', 26),
+('core', 100, 'saveorder', 'publish', 26),
 ('core', 100, 'search', 'view', 27),
-('core', 100, 'spam', 'delete', 28),
-('core', 100, 'state', 'delete', 29),
-('core', 100, 'sticky', 'delete', 30),
-('core', 100, 'trash', 'delete', 31),
-('core', 100, 'unfeature', 'delete', 32),
-('core', 100, 'unpublish', 'delete', 33),
-('core', 100, 'unsticky', 'delete', 34);
+('core', 100, 'spam', 'publish', 28),
+('core', 100, 'state', 'publish', 29),
+('core', 100, 'sticky', 'publish', 30),
+('core', 100, 'trash', 'publish', 31),
+('core', 100, 'unfeature', 'publish', 32),
+('core', 100, 'unpublish', 'publish', 33),
+('core', 100, 'unsticky', 'publish', 34);
 
 /** 110 MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1165,12 +1170,13 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /** 120 MOLAJO_CONFIG_OPTION_ID_ACL_ITEM_TESTS **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 120, '', '', 0),
-('core', 120, 'display', 'display', 1),
-('core', 120, 'edit', 'edit', 2),
-('core', 120, 'editstate', 'editstate', 3),
-('core', 120, 'trash', 'trash', 4),
-('core', 120, 'delete', 'delete', 5),
-('core', 120, 'restore', 'restore', 6);
+('core', 120, 'create', 'create', 1),
+('core', 120, 'view', 'view', 2),
+('core', 120, 'edit', 'edit', 3),
+('core', 120, 'publish', 'publish', 4),
+('core', 120, 'trash', 'trash', 5),
+('core', 120, 'delete', 'delete', 6),
+('core', 120, 'restore', 'restore', 7);
 
 /* 200 MOLAJO_CONFIG_OPTION_ID_LIST_TOOLBAR_BUTTONS */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1252,7 +1258,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 250, '-2', 'MOLAJO_OPTION_SPAMMED', 5),
 ('core', 250, '-10', 'MOLAJO_OPTION_VERSION', 6);
 
-/* 500 MOLAJO_CONFIG_OPTION_ID_LAYOUTS */;
+/* 500 MOLAJO_CONFIG_OPTION_ID_DISPLAY_LAYOUTS_APPLICATION1 */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 500, '', '', 0),
 ('core', 500, 'article', 'MOLAJO_CONFIG_ITEM_LAYOUT_PARAMETER_ARTICLE', 1),
@@ -1434,13 +1440,6 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_articles', 10, '', '', 0),
 ('com_articles', 10, 'articles', 'Articles', 1);
 
-/* VIEWS */
-
-/* 020 MOLAJO_CONFIG_OPTION_ID_VIEW_PAIRS */
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_articles', 20, '', '', 0),
-('com_articles', 20, 'article', 'articles', 1);
-
 /* TABLE */
 
 /* 045 MOLAJO_CONFIG_OPTION_ID_TABLE */;
@@ -1448,16 +1447,47 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_articles', 45, '', '', 0),
 ('com_articles', 45, '__articles', '__articles', 1);
 
-/* 050 MOLAJO_CONFIG_OPTION_ID_EDIT_LAYOUTS */;
+/* 050 MOLAJO_CONFIG_OPTION_ID_EDIT_LAYOUTS_APPLICATION1 */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_articles', 50, '', '', 0),
-('com_articles', 50, 'article', 'article', 1);
+('com_articles', 50, 'default', 'default', 1);
 
-/* 060 MOLAJO_CONFIG_OPTION_ID_DEFAULT_LAYOUT */;
+/* 051 MOLAJO_CONFIG_OPTION_ID_DEFAULT_LAYOUTS_APPLICATION1 */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_articles', 60, '', '', 0),
-('com_articles', 60, 'articles', 'articles', 1);
+('com_articles', 51, '', '', 0),
+('com_articles', 51, 'default', 'default', 1);
 
+/* 052 MOLAJO_CONFIG_OPTION_ID_DISPLAY_LAYOUTS_APPLICATION1 */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('com_articles', 52, '', '', 0),
+('com_articles', 52, 'default', 'default', 1);
+
+/* 055 MOLAJO_CONFIG_OPTION_ID_EDIT_LAYOUTS_APPLICATION1 */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('com_articles', 55, '', '', 0),
+('com_articles', 55, 'default', 'default', 1);
+
+/* 056 MOLAJO_CONFIG_OPTION_ID_DEFAULT_LAYOUTS_APPLICATION1 */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('com_articles', 56, '', '', 0),
+('com_articles', 56, 'default', 'default', 1);
+
+/* 057 MOLAJO_CONFIG_OPTION_ID_DISPLAY_LAYOUTS_APPLICATION1 */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('com_articles', 57, '', '', 0),
+('com_articles', 57, 'default', 'default', 1),
+('com_articles', 57, 'item', 'item', 2),
+('com_articles', 57, 'items', 'items', 3),
+('com_articles', 57, 'table', 'table', 4);
+
+/* 075 MOLAJO_CONFIG_OPTION_ID_FORMAT */
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('com_articles', 75, '', '', 0),
+('com_articles', 75, 'feed', 'feed', 1),
+('com_articles', 75, 'html', 'html', 2),
+('com_articles', 75, 'json', 'json', 3),
+('com_articles', 75, 'raw', 'raw', 5),
+('com_articles', 75, 'xml', 'xml', 7);
 
 #
 # LANGUAGES

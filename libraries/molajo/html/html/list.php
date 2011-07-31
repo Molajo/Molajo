@@ -40,8 +40,8 @@ abstract class MolajoHtmlList
      */
     public static function authorOptions($config = array())
     {
-        $defaultView = JRequest::getCmd('default_view');   
-        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $defaultView = JRequest::getCmd('DefaultView');
+        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $authorModel->getAuthors();
     }
 
@@ -97,8 +97,8 @@ abstract class MolajoHtmlList
      */
     public static function publishDateOptions($config = array())
     {
-        $defaultView = JRequest::getCmd('default_view');
-        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $defaultView = JRequest::getCmd('DefaultView');
+        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $publishDateModel->getMonthsPublish();
     }
 
@@ -109,8 +109,8 @@ abstract class MolajoHtmlList
      */
     public static function createDateOptions($config = array())
     {
-        $defaultView = JRequest::getCmd('default_view');
-        $createDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $defaultView = JRequest::getCmd('DefaultView');
+        $createDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $createDateModel->getMonthsCreate();
     }
 
@@ -121,7 +121,7 @@ abstract class MolajoHtmlList
      */
     public static function updateDateOptions($config = array())
     {
-        $defaultView = JRequest::getCmd('default_view');
+        $defaultView = JRequest::getCmd('DefaultView');
         $updateDateModel = JModel::getInstance('Model'.ucfirst($defaultView), ucfirst($defaultView), array('ignore_request' => true));
         return $updateDateModel->getMonthsUpdate();
     }
@@ -135,7 +135,7 @@ abstract class MolajoHtmlList
      */
     public static function titleOptions($config = array())
     {
-        $defaultView = JRequest::getCmd('default_view');
+        $defaultView = JRequest::getCmd('DefaultView');
         $updateDateModel = JModel::getInstance('Model'.ucfirst($defaultView), ucfirst($defaultView), array('ignore_request' => true));
         return $updateDateModel->getTitles();
     }

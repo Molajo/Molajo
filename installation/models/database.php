@@ -153,8 +153,7 @@ class JInstallationModelDatabase extends JModel
 			}
 
 			// Attempt to update the table #__schema.
-			$files = JFolder::files(MOLAJO_PATH_ADMINISTRATOR . '/components/com_admin/sql/updates/mysql/', '\.sql$');
-
+			$files = JFolder::files(MOLAJO_PATH_ROOT.'/administrator/components/com_admin/sql/updates/mysql/', '\.sql$');
 			if (empty($files)) {
 				$this->setError(JText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
 				return false;
@@ -167,7 +166,6 @@ class JInstallationModelDatabase extends JModel
 			}
 			$query = $db->getQuery(true);
 			$query->insert('#__schemas');
-
 			$query->values('999, '. $db->quote($version));
 
 			$db->setQuery($query);

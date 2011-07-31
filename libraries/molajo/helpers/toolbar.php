@@ -26,7 +26,7 @@ class MolajoToolbarHelper
     {
         /** ToolBar title **/
         $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
-        $this->addTitle ($params->def('config_manager_title_image', 1), $params->def('config_manager_title', 1), JRequest::getCmd('default_view'), JRequest::getCmd('option'), JRequest::getCmd('view'));
+        $this->addTitle ($params->def('config_manager_title_image', 1), $params->def('config_manager_title', 1), JRequest::getCmd('DefaultView'), JRequest::getCmd('option'), JRequest::getCmd('view'));
 
         /** Process Buttons **/
         $buttonParameterFieldName = 'config_manager_button_bar_option';
@@ -49,7 +49,7 @@ class MolajoToolbarHelper
 
         /** ToolBar title **/
         $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
-        $this->addTitle ($params->def('config_manager_title_image', 1), $params->def('config_manager_title', 1), JRequest::getCmd('default_view'), JRequest::getCmd('option'), JRequest::getCmd('view'));
+        $this->addTitle ($params->def('config_manager_title_image', 1), $params->def('config_manager_title', 1), JRequest::getCmd('DefaultView'), JRequest::getCmd('option'), JRequest::getCmd('view'));
 
         if ((int) $id == 0) {
             $buttonParameterFieldName = 'config_manager_editor_button_bar_new_option';
@@ -70,7 +70,7 @@ class MolajoToolbarHelper
     public function addTitle ($imageParameter, $titleParameter)
     {
         if ($imageParameter == '1') {
-            $titleImage = JRequest::getCmd('default_view').'.png';
+            $titleImage = JRequest::getCmd('DefaultView').'.png';
         } else {
             $titleImage = '';
         }
@@ -150,7 +150,7 @@ class MolajoToolbarHelper
      */
     public function addArchiveButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::archiveList(JRequest::getCmd('default_view').'.archive','JToolBar_ARCHIVE');
+        JToolBarHelper::archiveList(JRequest::getCmd('DefaultView').'.archive','JToolBar_ARCHIVE');
     }
 
     /**
@@ -161,7 +161,7 @@ class MolajoToolbarHelper
      */
     public function addCheckinButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::custom(JRequest::getCmd('default_view').'.checkin', 'checkin.png', 'checkin_f2.png', 'JToolBar_CHECKIN', true);
+        JToolBarHelper::custom(JRequest::getCmd('DefaultView').'.checkin', 'checkin.png', 'checkin_f2.png', 'JToolBar_CHECKIN', true);
     }
 
     /**
@@ -173,7 +173,7 @@ class MolajoToolbarHelper
     public function addDeleteButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
         if ($state == -2) {
-            JToolBarHelper::deleteList('', JRequest::getCmd('default_view').'.delete','JToolBar_EMPTY_TRASH');
+            JToolBarHelper::deleteList('', JRequest::getCmd('DefaultView').'.delete','JToolBar_EMPTY_TRASH');
         }
     }
 
@@ -185,7 +185,7 @@ class MolajoToolbarHelper
      */
     public function addEditButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::editList(JRequest::getCmd('single_view').'.edit','JTOOLBAR_EDIT');
+        JToolBarHelper::editList(JRequest::getCmd('EditView').'.edit','JTOOLBAR_EDIT');
     }
 
     /**
@@ -196,7 +196,7 @@ class MolajoToolbarHelper
      */
     public function addFeatureButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::custom(JRequest::getCmd('default_view').'.feature', 'featured.png', 'featured_f2.png', 'JToolBar_FEATURED', true);
+        JToolBarHelper::custom(JRequest::getCmd('DefaultView').'.feature', 'featured.png', 'featured_f2.png', 'JToolBar_FEATURED', true);
     }
 
     /**
@@ -218,7 +218,7 @@ class MolajoToolbarHelper
      */
     public function addPublishButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::custom(JRequest::getCmd('default_view').'.publish', 'publish.png', 'publish_f2.png','JToolBar_PUBLISH', true);
+        JToolBarHelper::custom(JRequest::getCmd('DefaultView').'.publish', 'publish.png', 'publish_f2.png','JToolBar_PUBLISH', true);
     }
 
     /**
@@ -231,7 +231,7 @@ class MolajoToolbarHelper
     {
         $params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
         if ($params->def('config_component_state_spam', '0') == 1) {
-            JToolBarHelper::custom(JRequest::getCmd('default_view').'.spam', 'spam.png', 'spam_f2.png','JToolBar_SPAM', true);
+            JToolBarHelper::custom(JRequest::getCmd('DefaultView').'.spam', 'spam.png', 'spam_f2.png','JToolBar_SPAM', true);
         }
     }
 
@@ -243,7 +243,7 @@ class MolajoToolbarHelper
      */
     public function addStickyButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::custom(JRequest::getCmd('default_view').'.sticky', 'stickied.png', 'stickied_f2.png','JToolBar_STICKIED', true);
+        JToolBarHelper::custom(JRequest::getCmd('DefaultView').'.sticky', 'stickied.png', 'stickied_f2.png','JToolBar_STICKIED', true);
     }
 
     /**
@@ -256,7 +256,7 @@ class MolajoToolbarHelper
     {
         if ($state == -2) {
         } else {
-            JToolBarHelper::trash(JRequest::getCmd('default_view').'.trash','JToolBar_TRASH');
+            JToolBarHelper::trash(JRequest::getCmd('DefaultView').'.trash','JToolBar_TRASH');
         }
     }
 
@@ -268,7 +268,7 @@ class MolajoToolbarHelper
      */
     public function addUnpublishButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::custom(JRequest::getCmd('default_view').'.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolBar_UNPUBLISH', true);
+        JToolBarHelper::custom(JRequest::getCmd('DefaultView').'.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JToolBar_UNPUBLISH', true);
     }
 
     /**
@@ -286,7 +286,7 @@ class MolajoToolbarHelper
         if ($state == MOLAJO_STATE_ARCHIVED || $state == MOLAJO_STATE_VERSION) {
             return;
         }
-        JToolBarHelper::apply(JRequest::getCmd('single_view').'.apply', 'JTOOLBAR_APPLY');
+        JToolBarHelper::apply(JRequest::getCmd('EditView').'.apply', 'JTOOLBAR_APPLY');
     }
 
     /**
@@ -297,7 +297,7 @@ class MolajoToolbarHelper
      */
     public function addCloseButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::cancel(JRequest::getCmd('single_view').'.cancel', 'JToolBar_CLOSE');
+        JToolBarHelper::cancel(JRequest::getCmd('EditView').'.cancel', 'JToolBar_CLOSE');
     }
 
     /**
@@ -308,7 +308,7 @@ class MolajoToolbarHelper
      */
     public function addCancelButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::cancel(JRequest::getCmd('single_view').'.cancel', 'JToolBar_CANCEL');
+        JToolBarHelper::cancel(JRequest::getCmd('EditView').'.cancel', 'JToolBar_CANCEL');
     }
 
     /**
@@ -319,7 +319,7 @@ class MolajoToolbarHelper
      */
     public function addOpenButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::custom(JRequest::getCmd('single_view').'.open', 'open.png', 'open_f2.png', 'JTOOLBAR_OPEN', false);
+        JToolBarHelper::custom(JRequest::getCmd('EditView').'.open', 'open.png', 'open_f2.png', 'JTOOLBAR_OPEN', false);
     }
 
     /**
@@ -333,7 +333,7 @@ class MolajoToolbarHelper
         if ($state == MOLAJO_STATE_ARCHIVED || $state == MOLAJO_STATE_VERSION) {
             return;
         }
-        JToolBarHelper::save(JRequest::getCmd('single_view').'.save', 'JToolBar_SAVE');
+        JToolBarHelper::save(JRequest::getCmd('EditView').'.save', 'JToolBar_SAVE');
     }
     
     /**
@@ -353,7 +353,7 @@ class MolajoToolbarHelper
         if ($item->state == MOLAJO_STATE_ARCHIVED || $item->state == MOLAJO_STATE_VERSION) {
             return;
         }
-        JToolBarHelper::custom(JRequest::getCmd('single_view').'.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+        JToolBarHelper::custom(JRequest::getCmd('EditView').'.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
     }
 
     /**
@@ -367,7 +367,7 @@ class MolajoToolbarHelper
         if ((int) $id == 0) {
             return;
         }
-        JToolBarHelper::custom(JRequest::getCmd('single_view').'.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+        JToolBarHelper::custom(JRequest::getCmd('EditView').'.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
     }
 
     /**
@@ -404,7 +404,7 @@ class MolajoToolbarHelper
      */
     public function addNewButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        JToolBarHelper::addNew(JRequest::getCmd('single_view').'.add','JTOOLBAR_NEW');
+        JToolBarHelper::addNew(JRequest::getCmd('EditView').'.add','JTOOLBAR_NEW');
     }
 
     /**
@@ -421,7 +421,7 @@ class MolajoToolbarHelper
         }
         $params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
         if ($params->def('config_component_version_management', '1') == 1) {
-            JToolBarHelper::custom(JRequest::getCmd('single_view').'.restore', 'restore.png', 'restore_f2.png','JToolBar_RESTORE', false);
+            JToolBarHelper::custom(JRequest::getCmd('EditView').'.restore', 'restore.png', 'restore_f2.png','JToolBar_RESTORE', false);
         }
     }
 }

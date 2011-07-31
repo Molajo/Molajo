@@ -1,18 +1,17 @@
 <?php
 /**
- * @version     $id: edit.php
  * @package     Molajo
- * @subpackage  Single Controller
+ * @subpackage  Multiple View
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Single Controller
+ * Display View
  *
- * @package	Molajo
- * @subpackage	Controller
- * @since	1.6
+ * @package	    Molajo
+ * @subpackage	Display View
+ * @since	    1.0
  */
-class ArticlesControllerArticle extends MolajoControllerEdit {}
+class ArticlesViewDisplay extends MolajoViewDisplay {}

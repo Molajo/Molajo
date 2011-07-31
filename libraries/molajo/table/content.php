@@ -27,7 +27,7 @@ class MolajoTableContent extends MolajoTable
      */
     function __construct($db)
     {
-        parent::__construct('#'.JRequest::getCmd('component_table'), 'id', $db);
+        parent::__construct('#'.JRequest::getCmd('ComponentTable'), 'id', $db);
     }
 
     /**
@@ -243,7 +243,7 @@ class MolajoTableContent extends MolajoTable
                 $query	= $db->getQuery(true);
 
                 $query->select($db->namequote('alias'));
-                $query->from($db->namequote('#'.JRequest::getCmd('component_table')));
+                $query->from($db->namequote('#'.JRequest::getCmd('ComponentTable')));
                 $query->where($db->namequote('alias').' = '.$db->quote($this->alias));
                 $query->where($db->namequote('id').' <> '. (int) $this->id);
                 $query->where($db->namequote('state').' <> '.(int) MOLAJO_STATE_VERSION);

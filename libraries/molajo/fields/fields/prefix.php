@@ -66,7 +66,7 @@ class MolajoFieldPublish_down extends MolajoField
             $this->rowset[0]['prefix'] = strtolower(MOLAJO).'_';
         }
 
-        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $publishDateModel->getMonthsPublish();
     }
 

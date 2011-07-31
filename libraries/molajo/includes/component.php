@@ -17,10 +17,6 @@ if (JRequest::getCmd('option') == $current_folder) {
     return false;
 }
 
-/** validate request parameters **/
-$validate = new MolajoValidateHelper ();
-$results = $validate->checkRequest();
-
 /** establish controller **/
 $defaultController = substr(JRequest::getCmd('option'), (strpos(JRequest::getCmd('option'), '_') + 1),
                             strlen(JRequest::getCmd('option')) - strpos(JRequest::getCmd('option'), '_'));

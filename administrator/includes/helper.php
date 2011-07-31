@@ -6,7 +6,7 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 /**
  * Joomla! Administrator Application helper class.

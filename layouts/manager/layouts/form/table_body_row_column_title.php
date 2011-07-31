@@ -7,7 +7,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; 
-$defaultView = $this->state->get('request.default_view');
+$defaultView = $this->state->get('request.DefaultView');
 if ($this->render['column_name'] == 'title' && $this->params->def('config_manager_grid_column_display_alias', 1)) {
     $printAlias = '<br />'.$this->escape($this->row->alias);
 } else {

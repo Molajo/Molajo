@@ -82,18 +82,20 @@ if (class_exists('MolajoFileHelper')) {
 }
 $filehelper = new MolajoFileHelper();
 
+/** language */
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/language.php', 'JLanguage');
+
 /** Application */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/profiler.php', 'JProfiler');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/categories.php', 'MolajoCategories');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/categories.php', 'JCategories');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/categories.php', 'MolajoCategoriesHelper');
-
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/application.php', 'MolajoApplication');
-//require_once MOLAJO_PATH_BASE.'/includes/application.php';
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/application.php', 'JApplication');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/includes/exception.php', 'MolajoException');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
-if (MOLAJO_APPLICATION == 'administrator') {    /** no site helper */
+
+if (file_exists(MOLAJO_PATH_BASE.'/includes/helper.php')) {
     require_once MOLAJO_PATH_BASE.'/includes/helper.php';
 }
 if (MOLAJO_APPLICATION == 'installation') {
@@ -131,7 +133,6 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/helper.php', 'JUserHelper
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/user/user.php', 'MolajoUser');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/user.php', 'JUser');
 
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/validate.php', 'MolajoValidateHelper');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/user/authentication.php', 'JAuthentication');
 
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/uri.php', 'JURI');
@@ -161,9 +162,6 @@ $files = JFolder::files(JOOMLA_LIBRARY.'/base', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/language.php', 'JLanguage');
-
 /** Database and Table */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database.php', 'JDatabase');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databaseexception.php', 'DatabaseException');

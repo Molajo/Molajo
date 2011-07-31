@@ -50,7 +50,7 @@ class MolajoSubmenuHelper
                 $functionName = 'add'.ucfirst($subMenuValue).'Submenu';
                 if (method_exists('MolajoSubmenuHelper',$functionName)) {
                     $submenu = new MolajoSubmenuHelper ();
-                    $submenu->$functionName (JRequest::getCmd('option'), JRequest::getCmd('default_view'));
+                    $submenu->$functionName (JRequest::getCmd('option'), JRequest::getCmd('DefaultView'));
                 }
             }
         }        
@@ -82,9 +82,9 @@ class MolajoSubmenuHelper
     public function addDefaultSubmenu ()
     {
         JSubMenuHelper::addEntry(
-            JText::_('MOLAJO_SUBMENU_'.strtoupper(JRequest::getCmd('default_view'))),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view'),
-            JRequest::getCmd('default_view')
+            JText::_('MOLAJO_SUBMENU_'.strtoupper(JRequest::getCmd('DefaultView'))),
+            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView'),
+            JRequest::getCmd('DefaultView')
         );
     }
 
@@ -98,8 +98,8 @@ class MolajoSubmenuHelper
     {
         JSubMenuHelper::addEntry(
             JText::_('MOLAJO_SUBMENU_FEATURED'),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').'&feature=1',
-            JRequest::getCmd('default_view')
+            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&feature=1',
+            JRequest::getCmd('DefaultView')
         );
     }
 
@@ -113,8 +113,8 @@ class MolajoSubmenuHelper
     {
         JSubMenuHelper::addEntry(
             JText::_('MOLAJO_SUBMENU_STICKIED'),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').'&sticky=1',
-            JRequest::getCmd('default_view')
+            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&sticky=1',
+            JRequest::getCmd('DefaultView')
         );
     }
 
@@ -128,8 +128,8 @@ class MolajoSubmenuHelper
     {
         JSubMenuHelper::addEntry(
             JText::_('MOLAJO_SUBMENU_UNPUBLISHED'),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').'&publish=0',
-            JRequest::getCmd('default_view')
+            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&publish=0',
+            JRequest::getCmd('DefaultView')
         );
     }
 }

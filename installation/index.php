@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  index.php
+ * @subpackage  Bootstrap
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -10,9 +10,9 @@ define('MOLAJO_APPLICATION', 'installation');
 /**
  * BEGIN: Common code for all Applications
  *
- * MOLAJO_PATH_BASE (same as MOLAJO_PATH_ADMINISTRATOR, MOLAJO_PATH_INSTALLATION, MOLAJO_PATH_SITE)
- * MOLAJO_PATH_ROOT is the root path for the Joomla install regardless of BASE
- *
+ * MOLAJO_PATH_BASE 
+ *  Same as JPATH_ADMINISTRATOR, JPATH_INSTALLATION, JPATH_SITE
+ * MOLAJO_PATH_ROOT root path for the Molajo website regardless of BASE
  */
 define('MOLAJO', 'molajo');
 define('DS', DIRECTORY_SEPARATOR);
@@ -28,7 +28,8 @@ if (file_exists(dirname(__FILE__).'/defines.php')) {
  * 1 /Users/amystephen/Sites/molajo/administrator
  * 2 /Users/amystephen/Sites/molajo/installation
  */
-define('MOLAJO_PATH_BASE', dirname(__FILE__));
+$temp = strtolower(dirname(__FILE__));
+define('MOLAJO_PATH_BASE', $temp);
 
 /**
  * MOLAJO_PATH_ROOT - base for the website, example:
@@ -42,7 +43,7 @@ if (MOLAJO_APPLICATION == 'site') {
     define('MOLAJO_PATH_ROOT', implode(DS, $parts));
 }
 
-/** Molajo Library */
+/** Libraries */
 define('LIBRARIES', MOLAJO_PATH_ROOT.'/libraries/');
 
 /** index.php - shared between Applications */

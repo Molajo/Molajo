@@ -19,7 +19,7 @@ class MolajoCategoriesHelper extends MolajoCategories
 {
     public function __construct($options = array())
     {
-        $options['table'] = JRequest::getCmd('component_table');
+        $options['table'] = JRequest::getCmd('ComponentTable');
         $options['extension'] = JRequest::getCmd('option');
         parent::__construct($options);
     }

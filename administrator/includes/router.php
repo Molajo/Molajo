@@ -8,7 +8,7 @@
  */
 
 // No direct access
-defined('JPATH_BASE') or die;
+defined('MOLAJO') or die;
 
 /**
  * Class to create and parse routes

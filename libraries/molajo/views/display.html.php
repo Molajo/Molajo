@@ -29,7 +29,7 @@ class MolajoViewDisplay extends MolajoView
      *    B. And those parameters needed by the layout - ex. $this->option->get('layout.show_title')
      *
      * 3. Component Request Variables
-     *    $this->state->get('request.option'), and 'component_' + model, view, layout, default_view, single_view and task
+     *    $this->state->get('request.option'), and 'component_' + model, view, layout, DefaultView, EditView and task
      *
      * 4. 
      *

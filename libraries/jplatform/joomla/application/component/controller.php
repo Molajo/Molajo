@@ -52,7 +52,7 @@ class JController extends JObject
 	 * @var    string  The default view for the display method.
 	 * @since  11.1
 	 */
-	protected $default_view;
+	protected $DefaultView;
 
 	/**
 	 * The mapped task that was performed.
@@ -374,11 +374,11 @@ class JController extends JObject
 		}
 
 		// Set the default view.
-		if (array_key_exists('default_view', $config)) {
-			$this->default_view	= $config['default_view'];
+		if (array_key_exists('DefaultView', $config)) {
+			$this->DefaultView	= $config['DefaultView'];
 		}
-		else if (empty($this->default_view)) {
-			$this->default_view = $this->getName();
+		else if (empty($this->DefaultView)) {
+			$this->DefaultView = $this->getName();
 		}
 
 	}
@@ -595,7 +595,7 @@ class JController extends JObject
 	{
 		$document	= JFactory::getDocument();
 		$viewType	= $document->getType();
-		$viewName	= JRequest::getCmd('view', $this->default_view);
+		$viewName	= JRequest::getCmd('view', $this->DefaultView);
 		$viewLayout	= JRequest::getCmd('layout', 'default');
 
 		$view = $this->getView($viewName, $viewType, '', array('base_path' => $this->basePath));

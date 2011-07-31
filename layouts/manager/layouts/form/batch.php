@@ -21,11 +21,11 @@ defined('MOLAJO') or die; ?>
                     <?php } ?>
             </select>
 
-            <button type="submit" onclick="submitbutton('<?php echo $this->state->get('request.default_view'); ?>.copy');">
+            <button type="submit" onclick="submitbutton('<?php echo $this->state->get('request.DefaultView'); ?>.copy');">
                     <?php echo JText::_('MOLAJO_BATCH_COPY_PROCESS'); ?>
             </button>
 
-            <button type="submit" onclick="submitbutton('<?php echo $this->state->get('request.default_view'); ?>.move');">
+            <button type="submit" onclick="submitbutton('<?php echo $this->state->get('request.DefaultView'); ?>.move');">
                     <?php echo JText::_('MOLAJO_BATCH_MOVE_PROCESS'); ?>
             </button>
         </fieldset>

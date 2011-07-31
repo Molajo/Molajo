@@ -38,7 +38,7 @@ class MolajoFieldCreated_by extends MolajoField
      */
     public function getOptions ()
     {
-        $class = ucfirst(JRequest::getCmd('default_view')).'Model'.ucfirst(JRequest::getCmd('default_view'));
+        $class = ucfirst(JRequest::getCmd('DefaultView')).'Model'.ucfirst(JRequest::getCmd('DefaultView'));
         $authorModel = new $class();
         return $authorModel->getAuthors();
     }

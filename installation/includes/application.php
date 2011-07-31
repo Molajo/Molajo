@@ -39,7 +39,6 @@ class MolajoInstallation extends MolajoApplication
 	{
 		$config['applicationId'] = 2;
 		parent::__construct($config);
-
 		JError::setErrorHandling(E_ALL, 'Ignore');
 		$this->_createConfiguration();
 
@@ -123,11 +122,8 @@ class MolajoInstallation extends MolajoApplication
 
 		// Define component path
 		define('MOLAJO_PATH_COMPONENT', MOLAJO_PATH_BASE);
-		define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
 		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
-
 		define('JPATH_COMPONENT', MOLAJO_PATH_BASE);
-		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
 		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
 
 		// Import the controller.

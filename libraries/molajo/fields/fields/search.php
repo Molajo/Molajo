@@ -41,7 +41,7 @@ class MolajoFieldSearch extends MolajoField
      */
     public function getOptions ()
     {
-        $this->requestValueDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $this->requestValueDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $this->requestValueDateModel->getMonthsPublish();
     }
 

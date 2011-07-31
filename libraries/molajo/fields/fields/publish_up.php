@@ -41,7 +41,7 @@ class MolajoFieldPublish_up extends MolajoField
      */
     public function getOptions ()
     {
-        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $publishDateModel->getMonthsPublish();
     }
 

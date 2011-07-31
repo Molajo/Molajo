@@ -1,18 +1,19 @@
 <?php
 /**
- * @version     $id: view.feed.php
  * @package     Molajo
- * @subpackage  Display View
+ * @subpackage  Edit Model
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * View to display information
+ * Display Model
  *
- * @package	Molajo
- * @subpackage	Display View
- * @since	1.6
+ * ArticlesModelDisplay extends MolajoModelDisplay extends JModel extends JObject
+ *
+ * @package	    Molajo
+ * @subpackage	Model
+ * @since       1.0
  */
-class ArticlesViewArticles extends MolajoViewDisplay {}
+class ArticlesModelEdit extends MolajoModelEdit {}

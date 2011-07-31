@@ -97,8 +97,11 @@ class MolajoApplication extends JObject
 		}
 
 		// Create the configuration object.
-		$this->_createConfiguration(MOLAJO_PATH_CONFIGURATION.'/'.$config['config_file']);
-
+        if ($this->_name == 'installation') {
+        } else {
+		    $this->_createConfiguration(MOLAJO_PATH_CONFIGURATION.'/'.$config['config_file']);
+        }
+        
 		// Create the session if a session name is passed.
 		if ($config['session'] !== false) {
 			$this->_createSession(JUtility::getHash($config['session_name']));
@@ -108,7 +111,6 @@ class MolajoApplication extends JObject
 
 		// Used by task system to ensure that the system doesn't go over time.
 		$this->set('startTime', JProfiler::getmicrotime());
- 
 	}
 
 	/**
@@ -135,12 +137,13 @@ class MolajoApplication extends JObject
 		if (empty($instances[$application])) {
 
 			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
-			$path = $info->path . '/includes/application.php';
+			$path = $info->path.'/includes/application.php';
 
 			if (file_exists($path)) {
 				require_once $path;
 				$classname = $prefix.ucfirst($application);
 				$instance = new $classname($config);
+
 			} else {
 				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
@@ -257,7 +260,7 @@ class MolajoApplication extends JObject
 			'template'	=> $this->getTemplate(),
 			'file'		=> 'index.php',
 			'directory'	=> MOLAJO_PATH_THEMES,
-			'params'	=> $template->params
+			'params'	=> '$template->params'
 		);
 
 		// Parse the document.

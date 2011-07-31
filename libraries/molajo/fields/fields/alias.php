@@ -38,7 +38,7 @@ class MolajoFieldAlias extends MolajoField
      */
     public function getOptions ()
     {
-        $aliasModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $aliasModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $aliasModel->getOptionList('alias', 'alias', $showKey = false, $showKeyFirst = false, $table = '');
     }
 

@@ -41,7 +41,7 @@ class MolajoFieldModified_by extends MolajoField
      */
     public function getOptions ()
     {
-        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $authorModel->getAuthors();
     }
 

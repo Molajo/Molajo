@@ -39,7 +39,7 @@ class MolajoModelEdit extends JModel
     public function __construct($config = array())
     {
         parent::__construct($config);
-        JRequest::setVar('view', JRequest::getCmd('single_view'));
+        JRequest::setVar('view', JRequest::getCmd('EditView'));
         $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
     }
 
@@ -98,8 +98,8 @@ class MolajoModelEdit extends JModel
         }
 
         /** acl-append item-specific task permissions **/
-        $aclClass = ucfirst(JRequest::getCmd('default_view')).'ACL';
-        $aclClass::getUserItemPermissions (JRequest::getVar('option'), JRequest::getVar('single_view'), JRequest::getVar('task'), $item->catid, $item->id, $item);
+        $aclClass = ucfirst(JRequest::getCmd('DefaultView')).'ACL';
+        $aclClass::getUserItemPermissions (JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $item->catid, $item->id, $item);
 
         return $item;
     }
@@ -492,7 +492,7 @@ class MolajoModelEdit extends JModel
                 $columnList .= $db->namequote($column_name);
             }
         }
-        $insertQuery = ' INSERT INTO '.$db->namequote('#'.JRequest::getVar('component_table')).'('.$columnList.')';
+        $insertQuery = ' INSERT INTO '.$db->namequote('#'.JRequest::getVar('ComponentTable')).'('.$columnList.')';
 
         /** SELECT AND VALUES **/
         $columnList = '';
@@ -536,7 +536,7 @@ class MolajoModelEdit extends JModel
                 $columnList .= $column_name;
             }
         }
-        $insertQuery .= ' SELECT '.$columnList.' FROM '.$db->namequote('#'.JRequest::getVar('component_table')).' WHERE id = '.(int) $id;
+        $insertQuery .= ' SELECT '.$columnList.' FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')).' WHERE id = '.(int) $id;
 
         $db->setQuery( $insertQuery );
         if ($db->query()) {
@@ -548,7 +548,7 @@ class MolajoModelEdit extends JModel
         /** retrieve new id **/
         $db->setQuery(
                 'SELECT MAX(id) as newID ' .
-                ' FROM '.$db->namequote('#'.JRequest::getVar('component_table')).
+                ' FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')).
                 ' WHERE version_of_id = '.(int) $id 
         );
         $newID = $db->loadResultArray();
@@ -642,7 +642,7 @@ class MolajoModelEdit extends JModel
         $db = $this->getDbo();
         $db->setQuery(
                 'SELECT id' .
-                ' FROM '.$db->namequote('#'.JRequest::getVar('component_table')).
+                ' FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')).
                 ' WHERE version_of_id = '.(int) $id .
                 ' ORDER BY version DESC ' .
                 ' LIMIT '. (int) $maintainVersions
@@ -660,7 +660,7 @@ class MolajoModelEdit extends JModel
         if ($saveList == '') {
             return;
         }
-        $deleteQuery = 'DELETE FROM '.$db->namequote('#'.JRequest::getVar('component_table')).
+        $deleteQuery = 'DELETE FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')).
                         ' WHERE version_of_id = '.(int) $id .' AND id NOT IN ('.$saveList.')';
 
         $db->setQuery( $deleteQuery );
@@ -993,6 +993,6 @@ class MolajoModelEdit extends JModel
     */
     public function getTable($type='', $prefix='', $config = array())
     {
-        return MolajoTable::getInstance($type=ucfirst(JRequest::getCmd('view')), $prefix=ucfirst(JRequest::getVar('default_view').'Table'), $config);
+        return MolajoTable::getInstance($type=ucfirst(JRequest::getCmd('view')), $prefix=ucfirst(JRequest::getVar('DefaultView').'Table'), $config);
     }
 }

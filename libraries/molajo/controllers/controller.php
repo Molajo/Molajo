@@ -150,12 +150,12 @@ class MolajoController extends JController
 
         } else {
             if ($task == 'display') {
-                $modelName = JRequest::getCmd('default_view');
+                $modelName = JRequest::getCmd('DefaultView');
             } else {
-                $modelName = JRequest::getCmd('single_view');
+                $modelName = JRequest::getCmd('EditView');
             }
 
-            $this->model = $this->getModel($modelName, ucfirst(JRequest::getCmd('default_view').'Model'), array());
+            $this->model = $this->getModel($modelName, ucfirst(JRequest::getCmd('DefaultView').'Model'), array());
         }
 
         /** table */
@@ -235,9 +235,9 @@ class MolajoController extends JController
             $checkTable = $this->table;
         }
 
-        $aclClass = ucfirst(JRequest::getCmd('default_view')).'ACL';
+        $aclClass = ucfirst(JRequest::getCmd('DefaultView')).'ACL';
         $acl = new $aclClass ();
-        $results = $acl->authoriseTask (JRequest::getCmd('option'), JRequest::getCmd('single_view'), $checkTask, $checkId, $checkCatid, $checkTable);
+        $results = $acl->authoriseTask (JRequest::getCmd('option'), JRequest::getCmd('EditView'), $checkTask, $checkId, $checkCatid, $checkTable);
         if ($results === false) {
             $this->redirectClass = new MolajoControllerRedirect ();
             $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);

@@ -81,7 +81,7 @@ class MolajoEditorbuttonHelper extends JPlugin {
 
                     /** component  **/
                     if ($categoryFound === false) {
-                        $componentCategoriesModel = JModel::getInstance(ucfirst(JRequest::getCmd('default_view')).'Model', ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+                        $componentCategoriesModel = JModel::getInstance(ucfirst(JRequest::getCmd('DefaultView')).'Model', ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
                         if ($componentCategoriesModel->checkCategories ($categoryArray)) {
                             $categoryFound = true;
 //        echo 'found category for component<br />';

@@ -23,7 +23,7 @@ class LanguagesController extends JController
 	 * @var		string	The default view.
 	 * @since	1.6
 	 */
-	protected $default_view = 'installed';
+	protected $DefaultView = 'installed';
 
 	/**
 	 * Method to display a view.

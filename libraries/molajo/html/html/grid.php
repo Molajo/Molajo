@@ -48,17 +48,17 @@ abstract class MolajoHtmlGrid
 
         $arraySelected = array();
         if ($value == MOLAJO_STATE_ARCHIVED) {
-            $arraySelected = array(MOLAJO_STATE_ARCHIVED => array('archived.png', strtolower(JRequest::getCmd('default_view')).'.trash', 'Archived', 'Toggle to change state to Trashed', false, 'archive', 'archive'));
+            $arraySelected = array(MOLAJO_STATE_ARCHIVED => array('archived.png', strtolower(JRequest::getCmd('DefaultView')).'.trash', 'Archived', 'Toggle to change state to Trashed', false, 'archive', 'archive'));
         } else if ($value == MOLAJO_STATE_PUBLISHED) {
-            $arraySelected = array(MOLAJO_STATE_PUBLISHED => array('tick.png', strtolower(JRequest::getCmd('default_view')).'.archive', 'Published', 'Toggle to change state to Archived', false, 'publish', 'publish'));
+            $arraySelected = array(MOLAJO_STATE_PUBLISHED => array('tick.png', strtolower(JRequest::getCmd('DefaultView')).'.archive', 'Published', 'Toggle to change state to Archived', false, 'publish', 'publish'));
         } else if ($value == MOLAJO_STATE_UNPUBLISHED) {
-            $arraySelected = array(MOLAJO_STATE_UNPUBLISHED => array('disabled.png', strtolower(JRequest::getCmd('default_view')).'.publish', 'Unpublished', 'Toggle to change state to Published', false, 'unpublish', 'unpublish'),);
+            $arraySelected = array(MOLAJO_STATE_UNPUBLISHED => array('disabled.png', strtolower(JRequest::getCmd('DefaultView')).'.publish', 'Unpublished', 'Toggle to change state to Published', false, 'unpublish', 'unpublish'),);
         } else if ($value == MOLAJO_STATE_TRASHED) {
-            $arraySelected = array(MOLAJO_STATE_TRASHED => array('spam.png', strtolower(JRequest::getCmd('default_view')).'.unpublish', 'Spam', 'Toggle to change state to Unpublish', false, 'spam', 'spam'));
+            $arraySelected = array(MOLAJO_STATE_TRASHED => array('spam.png', strtolower(JRequest::getCmd('DefaultView')).'.unpublish', 'Spam', 'Toggle to change state to Unpublish', false, 'spam', 'spam'));
         } else if ($value == MOLAJO_STATE_SPAMMED) {
-            $arraySelected = array( MOLAJO_STATE_SPAMMED => array('trash.png', strtolower(JRequest::getCmd('default_view')).'.spam', 'Trash', 'Toggle to change state to Spammed', false, 'trash', 'trash'));
+            $arraySelected = array( MOLAJO_STATE_SPAMMED => array('trash.png', strtolower(JRequest::getCmd('DefaultView')).'.spam', 'Trash', 'Toggle to change state to Spammed', false, 'trash', 'trash'));
         } else if ($value == MOLAJO_STATE_VERSION) {
-            $arraySelected = array( MOLAJO_STATE_VERSION => array('restore.png', strtolower(JRequest::getCmd('default_view')).'.restore', 'Trash', 'Toggle to change state to Restored', false, 'restore', 'restore'));
+            $arraySelected = array( MOLAJO_STATE_VERSION => array('restore.png', strtolower(JRequest::getCmd('DefaultView')).'.restore', 'Trash', 'Toggle to change state to Restored', false, 'restore', 'restore'));
         }
 
         $state	= JArrayHelper::getValue($arraySelected, (int) $value, $states[1]);
@@ -84,8 +84,8 @@ abstract class MolajoHtmlGrid
     {
 
         $states	= array(
-                0	=> array('disabled.png', JRequest::getCmd('default_view').'.featured', 'MOLAJO_OPTION_UNFEATURED', 'MOLAJO_TOGGLE_TO_FEATURE'),
-                1	=> array('featured.png', JRequest::getCmd('default_view').'.unfeatured', 'MOLAJO_OPTION_FEATURED', 'MOLAJO_TOGGLE_TO_UNFEATURE'),
+                0	=> array('disabled.png', JRequest::getCmd('DefaultView').'.featured', 'MOLAJO_OPTION_UNFEATURED', 'MOLAJO_TOGGLE_TO_FEATURE'),
+                1	=> array('featured.png', JRequest::getCmd('DefaultView').'.unfeatured', 'MOLAJO_OPTION_FEATURED', 'MOLAJO_TOGGLE_TO_UNFEATURE'),
         );
 
         $state	= JArrayHelper::getValue($states, (int) $value, $states[1]);
@@ -111,7 +111,7 @@ abstract class MolajoHtmlGrid
     {
         /** request object **/
         $option = JRequest::getCmd('option');
-        $defaultView = JRequest::getCmd('default_view');
+        $defaultView = JRequest::getCmd('DefaultView');
 
         /** grid **/
         $states	= array(

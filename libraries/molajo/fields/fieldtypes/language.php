@@ -33,13 +33,11 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
 	 */
 	protected function getOptions()
 	{
-
-
 		// Initialise variables.
 		$app = MolajoFactory::getApplication();
 
 		// Detect the native language.
-		$native = JLanguageHelper::detectLanguage();
+		$native = MolajoLanguageHelper::detectLanguage();
 		if (empty($native)) {
 			$native = 'en-GB';
 		}
@@ -57,7 +55,7 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
 		}
 
 		// Get the list of available languages.
-		$options = JLanguageHelper::createLanguageList($native);
+		$options = MolajoLanguageHelper::createLanguageList($native);
 		if (!$options || JError::isError($options)) {
 			$options = array();
 		}

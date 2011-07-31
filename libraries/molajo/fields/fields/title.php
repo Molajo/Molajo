@@ -38,7 +38,7 @@ class MolajoFieldTitle extends MolajoField
      */
     public function getOptions ()
     {
-        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $titleModel->getOptionList('id', 'title', $showKey = true, $showKeyFirst = false, $table = '');
     }
 
@@ -71,7 +71,7 @@ class MolajoFieldTitle extends MolajoField
      */
     public function validateRequestValue ()
     {
-        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('default_view')), ucfirst(JRequest::getCmd('default_view')), array('ignore_request' => true));
+        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $titleModel->validateValue('id', $this->requestValue, 'numeric', null);
     }
 

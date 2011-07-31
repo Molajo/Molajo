@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: display.php
  * @package     Molajo
  * @subpackage  Display Model
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -9,12 +8,12 @@
 defined('MOLAJO') or die;
 
 /**
- * Component Display Model
+ * Display Model
  *
- * ArticlesModelArticles extends MolajoModelDisplay extends JModel extends JObject
+ * ArticlesModelDisplay extends MolajoModelDisplay extends JModel extends JObject
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Model
- * @since 1.6
+ * @since       1.0
  */
-class ArticlesModelArticles extends MolajoModelDisplay {}
+class ArticlesModelDisplay extends MolajoModelDisplay {}

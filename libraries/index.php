@@ -1,8 +1,7 @@
 <?php
 /**
- * @version     $id: index.php
- * @package     Molajo Library
- * @subpackage  Index.php
+ * @package     Molajo
+ * @subpackage  Application Flow
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -19,7 +18,6 @@ require_once LIBRARIES.'/molajo/factory.php';
 require_once LIBRARIES.'/overrides/factory.php';
 /** joomla platform */
 require_once JPATH_PLATFORM.'/import.php';
-
 /** molajo and joomla platform */
 require_once LIBRARIES.'/includes/import.php';
 /** other libraries */

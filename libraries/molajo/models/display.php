@@ -150,9 +150,9 @@ class MolajoModelDisplay extends JModel
 
         $this->setState('request.task', JRequest::getCmd('task'));
         $this->setState('request.format', JRequest::getCmd('format'));
-        $this->setState('request.component_table', JRequest::getCmd('component_table'));
-        $this->setState('request.default_view', JRequest::getCmd('default_view'));
-        $this->setState('request.single_view', JRequest::getCmd('single_view'));
+        $this->setState('request.ComponentTable', JRequest::getCmd('ComponentTable'));
+        $this->setState('request.DefaultView', JRequest::getCmd('DefaultView'));
+        $this->setState('request.EditView', JRequest::getCmd('EditView'));
 
         $this->setState('layout.loadSiteCSS', true);
         $this->setState('layout.loadSiteJS', true);
@@ -422,7 +422,7 @@ class MolajoModelDisplay extends JModel
         $jsonFields = $this->molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
 
         /** ACL **/
-        $aclClass = ucfirst($this->getState('request.default_view')).'ACL';
+        $aclClass = ucfirst($this->getState('request.DefaultView')).'ACL';
 
         /** process rowset */
         $rowCount = 0;
@@ -546,7 +546,7 @@ $items[$i]->checked_out = false;
                 /** acl-append item-specific task permissions **/
                 $acl = new $aclClass();
                 $results = $acl->getUserItemPermissions ($this->getState('request.option'),
-                                                              $this->getState('request.single_view'),
+                                                              $this->getState('request.EditView'),
                                                               $this->getState('request.task'),
                                                               $items[$i]->id,
                                                               $items[$i]->category_id,
@@ -637,7 +637,7 @@ $items[$i]->checked_out = false;
         $this->setQueryInformation ('search', false);
 
         /** primary table **/
-        $this->query->from('#'.$this->getState('request.component_table').' AS a');
+        $this->query->from('#'.$this->getState('request.ComponentTable').' AS a');
 
         /** parent category **/
         $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
@@ -673,9 +673,9 @@ $items[$i]->checked_out = false;
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 */
         /** set view access criteria for site visitor **/
-        $aclClass = ucfirst(strtolower($this->getState('request.default_view'))).'ACL';
+        $aclClass = ucfirst(strtolower($this->getState('request.DefaultView'))).'ACL';
         $acl = new $aclClass ();
-        $results = $acl->getQueryInformation ($this->getState('request.default_view'), $this->query, 'user', '', $this->getState('request.default_view'));
+        $results = $acl->getQueryInformation ($this->getState('request.DefaultView'), $this->query, 'user', '', $this->getState('request.DefaultView'));
 
         /** set ordering and direction **/
         $orderCol	= $this->state->get('list.ordering', 'a.title');
@@ -835,7 +835,7 @@ $items[$i]->checked_out = false;
      */
     public function getAuthors()
     {
-        $componentTable = '#'.$this->getState('request.component_table');
+        $componentTable = '#'.$this->getState('request.ComponentTable');
 
         $this->query = $this->_db->getQuery(true);
 
@@ -919,7 +919,7 @@ $items[$i]->checked_out = false;
                                             SUBSTRING(a.'.$this->_db->namequote($columnName).', 1, 7) AS text');
 
         if ($table == null) {
-            $this->queryTable = '#'.$this->getState('request.component_table');
+            $this->queryTable = '#'.$this->getState('request.ComponentTable');
         } else {
             $this->queryTable = $table;
         }
@@ -966,7 +966,7 @@ $items[$i]->checked_out = false;
 
         /** from **/
         if ($table == null) {
-            $this->queryTable = '#'.$this->getState('request.component_table');
+            $this->queryTable = '#'.$this->getState('request.ComponentTable');
         } else {
             $this->queryTable = $table;
         }
@@ -1024,7 +1024,7 @@ $items[$i]->checked_out = false;
         if (class_exists($fieldClassName)) {
             $value = $this->getState('filter.'.$fieldname);
             $molajoSpecificFieldClass = new $fieldClassName();
-            $molajoSpecificFieldClass->getQueryInformation($this->query, $value, $selectedState, $onlyWhereClause, $this->getState('request.default_view'));
+            $molajoSpecificFieldClass->getQueryInformation($this->query, $value, $selectedState, $onlyWhereClause, $this->getState('request.DefaultView'));
 
         } else {
             if ($onlyWhereClause === true) {
@@ -1053,7 +1053,7 @@ $items[$i]->checked_out = false;
         $this->query->select('DISTINCT '.$this->_db->namequote($columnName).' as value');
 
         if ($table == null) {
-            $this->query->from($this->_db->namequote('#'.$this->getState('request.component_table')));
+            $this->query->from($this->_db->namequote('#'.$this->getState('request.ComponentTable')));
         } else {
             $this->query->from($this->_db->namequote($table));
         }
@@ -1133,8 +1133,8 @@ $items[$i]->checked_out = false;
     */
     public function getTable($type='', $prefix='', $config = array())
     {
-        return MolajoTable::getInstance($type=ucfirst($this->getState('request.single_view')),
-                                   $prefix=ucfirst($this->getState('request.default_view').'Table'),
+        return MolajoTable::getInstance($type=ucfirst($this->getState('request.EditView')),
+                                   $prefix=ucfirst($this->getState('request.DefaultView').'Table'),
                                    $config);
     }
 

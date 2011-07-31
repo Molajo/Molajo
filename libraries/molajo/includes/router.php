@@ -82,7 +82,7 @@ class MolajoRouter extends JObject
 			// Load the router object
 			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
-			$path = $info->path.DS.'includes'.DS.'router.php';
+			$path = $info->path.'/'.'includes'.'/'.'router.php';
 			if (file_exists($path)) {
 				require_once $path;
 

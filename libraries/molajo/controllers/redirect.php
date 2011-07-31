@@ -134,25 +134,25 @@ class MolajoControllerRedirect extends MolajoController
                 if ($this->id == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').'&id='.$this->id.$extension.$component_specific;
+                    $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&id='.$this->id.$extension.$component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').'&id='.$this->id.$extension.$component_specific;
+                $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&id='.$this->id.$extension.$component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
         }
 
         /** multiple controller tasks **/
-        if (JRequest::getCmd('controller') == JRequest::getCmd('default_view')) {
-            $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').$extension.$component_specific;
+        if (JRequest::getCmd('controller') == JRequest::getCmd('DefaultView')) {
+            $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').$extension.$component_specific;
             $this->redirectReturn = $this->redirectSuccess;
             return;
         }            
 
         /** single controller tasks - item url with and without the layout=editor **/
-        $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('default_view').$extension.$component_specific;
-        $this->redirectReturn = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('single_view').$extension.$component_specific;
+        $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').$extension.$component_specific;
+        $this->redirectReturn = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('EditView').$extension.$component_specific;
 
         return;
     }
@@ -271,7 +271,7 @@ class MolajoControllerRedirect extends MolajoController
         }
 
         /** list **/
-        if (JRequest::getCmd('controller') == JRequest::getCmd('default_view')) {
+        if (JRequest::getCmd('controller') == JRequest::getCmd('DefaultView')) {
             $link = $this->redirectSuccess;
 
         /** redirect url **/
@@ -279,10 +279,10 @@ class MolajoControllerRedirect extends MolajoController
             $link = $this->redirectReturn;
             $id = JRequest::getInt('id');
             if ((int) $id == 0 || $task == 'save2new') {
-                $link .= '&task='.JRequest::getCmd('single_view').'.add'.'&datakey='.$this->datakey;
+                $link .= '&task='.JRequest::getCmd('EditView').'.add'.'&datakey='.$this->datakey;
 
             } else {
-                $link .= '&task='.JRequest::getCmd('single_view').'.edit&id='.$this->id.'&datakey='.$this->datakey;
+                $link .= '&task='.JRequest::getCmd('EditView').'.edit&id='.$this->id.'&datakey='.$this->datakey;
             }
 
         } else {
