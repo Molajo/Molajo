@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installation
  * @since		1.0
  */
-class JInstallationViewSite extends JView
+class MolajoInstallationViewSite extends JView
 {
 	/**
 	 * Display the view

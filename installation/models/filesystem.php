@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installation
  * @since		1.0
  */
-class JInstallationModelFilesystem extends JModel
+class MolajoInstallationModelFilesystem extends JModel
 {
 	/**
      * detectFtpRoot

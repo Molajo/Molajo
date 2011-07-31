@@ -128,7 +128,7 @@ class MolajoInstallation extends MolajoApplication
 
 		// Import the controller.
 		require_once MOLAJO_PATH_COMPONENT.'/controller.php';
-		$controller	= JController::getInstance('JInstallation');
+		$controller	= JController::getInstance('MolajoInstallation');
 
 		// Start the output buffer.
 		ob_start();

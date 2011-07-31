@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installation
  * @since		1.0
  */
-class JInstallationModelDatabase extends JModel
+class MolajoInstallationModelDatabase extends JModel
 {
 	function initialise($options)
 	{
@@ -255,7 +255,7 @@ class JInstallationModelDatabase extends JModel
 		$options = JArrayHelper::toObject($options, 'JObject');
 
 		// Get a database object.
-		$db = JInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
 		// Check for errors.
 		if (JError::isError($db)) {

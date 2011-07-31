@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @sub_package Installation
  * @since		1.0
  */
-class JInstallationControllerSetup extends JController
+class MolajoInstallationControllerSetup extends JController
 {
 	/**
 	 * Method to set the setup language for the application.
@@ -42,7 +42,7 @@ class JInstallationControllerSetup extends JController
 		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -88,7 +88,7 @@ class JInstallationControllerSetup extends JController
 		$app = JFactory::getApplication();
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -122,7 +122,7 @@ class JInstallationControllerSetup extends JController
 		$vars = $model->storeOptions($return);
 
 		// Get the database model.
-		$database = $this->getModel('Database', 'JInstallationModel', array('dbo' => null));
+		$database = $this->getModel('Database', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Attempt to initialise the database.
 		$return = $database->initialise($vars);
@@ -154,7 +154,7 @@ class JInstallationControllerSetup extends JController
 		$app = JFactory::getApplication();
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -199,7 +199,7 @@ class JInstallationControllerSetup extends JController
 		$app = JFactory::getApplication();
 
 		// Get the setup model.
-		$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Get the posted values from the request and validate them.
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
@@ -237,7 +237,7 @@ class JInstallationControllerSetup extends JController
 		$vars = $model->storeOptions($return);
 
 		// Get the configuration model.
-		$configuration = $this->getModel('Configuration', 'JInstallationModel', array('dbo' => null));
+		$configuration = $this->getModel('Configuration', 'MolajoInstallationModel', array('dbo' => null));
 
 		// Attempt to setup the configuration.
 		$return = $configuration->setup($vars);

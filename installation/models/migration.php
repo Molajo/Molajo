@@ -15,4 +15,4 @@ defined('MOLAJO') or die;
  * @subpackage  Installation
  * @since		1.0
  */
-class JInstallationModelMigration extends JModel {}
+class MolajoInstallationModelMigration extends JModel {}

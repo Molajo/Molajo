@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installation
  * @since		1.6
  */
-class JInstallationModelSetup extends JModel
+class MolajoInstallationModelSetup extends JModel
 {
 	/**
      * getOptions

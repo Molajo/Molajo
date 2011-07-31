@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Molajo
  * @since		1.0
  */
-class JInstallationController extends JController
+class MolajoInstallationController extends JController
 {
 	/**
      * display
@@ -58,7 +58,7 @@ class JInstallationController extends JController
 
 			switch ($vName) {
 				default:
-					$model = $this->getModel('Setup', 'JInstallationModel', array('dbo' => null));
+					$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
 					break;
 			}
 
