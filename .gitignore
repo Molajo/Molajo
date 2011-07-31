@@ -39,6 +39,7 @@ Thumbs.db
 logs
 tmp
 cache
+temp.php
 /configuration.php
 /xconfiguration.php
 /administrator/cache/

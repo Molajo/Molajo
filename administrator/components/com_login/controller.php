@@ -7,4 +7,11 @@
  */
 defined('MOLAJO') or die;
 
+/**
+ * Controller
+ *
+ * @package	    Molajo
+ * @subpackage	Controller
+ * @since	    1.0
+ */
 class LoginController extends MolajoController {}

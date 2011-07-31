@@ -1,8 +1,7 @@
 <?php
 /**
- * @version     $id: acl.php
  * @package     Molajo
- * @subpackage  Component ACL
+ * @subpackage  ACL
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -11,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Component ACL
  *
- * @package	Joomla
+ * @package	    Molajo
  * @subpackage	ACL
- * @since	1.6
+ * @since	    1.0
  */
 class MolajoACLArticles extends MolajoACL
 {

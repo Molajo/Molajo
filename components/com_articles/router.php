@@ -13,8 +13,9 @@ defined('MOLAJO') or die;
  *
  * Build the route for the com_articles component
  *
- * @param  $query
+ * @param $query
  * @return array
+ * @since 1.0
  */
 function ArticlesBuildRoute(&$query)
 {
@@ -31,6 +32,7 @@ function ArticlesBuildRoute(&$query)
  *
  * @param  $query
  * @return array
+ * since 1.0
  */
 function ArticlesParseRoute ($segments)
 {

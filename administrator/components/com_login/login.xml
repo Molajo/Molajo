@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: login.xml 21505 2011-06-10 07:21:09Z infograf768 $ -->
-<extension type="component" version="1.7" method="upgrade">
-	<name>com_login</name>
-	<author>Joomla! Project</author>
-	<creationDate>April 2006</creationDate>
-	<copyright>(C) 2005 - 2011 Open Source Matters. All rights reserved.	</copyright>
+<extension type="component" version="1.0.0" method="upgrade">
+	<name>COM_LOGIN</name>
+	<author>Amy Stephen</author>
+	<creationDate>August 2011</creationDate>
+	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
-	<authorEmail>admin@joomla.org</authorEmail>
-	<authorUrl>www.joomla.org</authorUrl>
-	<version>1.7.0</version>
+	<authorEmail>collaborate@molajo.org</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<version>1.0</version>
 	<description>COM_LOGIN_XML_DESCRIPTION</description>
+
 	<administration>
+
 		<files folder="admin">
 			<filename>controller.php</filename>
-			<filename>index.html</filename>
 			<filename>login.php</filename>
-			<folder>views</folder>
+			<folder>helpers</folder>
+            <folder>includes</folder>
+			<folder>language</folder>
 			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>views</folder>
 		</files>
-		<languages folder="admin">
-			<language tag="en-GB">language/en-GB.com_login.ini
-			</language>
-		</languages>
-	</administration>
-</extension>
 
+		<languages folder="admin">
+			<language tag="en-GB">com_login/language/en-GB/en-GB.com_login.ini</language>
+			<language tag="en-GB">com_login/language/en-GB/en-GB.com_login.sys.ini</language>
+		</languages>
+        
+	</administration>
+
+</extension>

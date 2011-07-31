@@ -757,45 +757,27 @@ INSERT INTO `#__extensions` (
     (220, 'com_search', 'component', 'com_search', '', 0, 1, 1, '', '{"enabled":"0","show_date":"1"}', '', '', 0, '0000-00-00 00:00:00', 17, 1, 1, 1220),
     (230, 'com_users', 'component', 'com_users', '', 0, 1, 1, '', '{"allowUserRegistration":"1","useractivation":"1","frontend_userparams":"1","mailSubjectPrefix":"","mailBodySuffix":""}', '', '', 0, '0000-00-00 00:00:00', 19, 1, 1, 1230);
 
-# Layouts: Extensions
+# Layouts
 INSERT INTO `#__extensions` (
   `extension_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`, `protected`,
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (2000, 'contact', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2000),
-    (2010, 'edit', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2010),
-    (2020, 'faq', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2020),
-    (2030, 'item', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2030),
-    (2040, 'items', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2040),
-    (2050, 'list', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2050),
-    (2060, 'manager', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2060),
-    (2070, 'modal', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2070),
-    (2080, 'pagination', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2080),
-    (2090, 'system', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2090),
-    (2100, 'table', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2100),
-    (2110, 'toolbar', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2110),
-    (2120, 'tree', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2120),
-    (2130, 'twig_example', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2130);
-
-# Layouts: Forms
-INSERT INTO `#__extensions` (
-  `extension_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`, `protected`,
-  `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
-  `ordering`, `state`, `access`, `asset_id` )
-    VALUES
-    (3000, 'button', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3000),
-    (3010, 'colorpicker', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3010),
-    (3020, 'datepicker', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3020),
-    (3030, 'list', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3030),
-    (3040, 'media', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3040),
-    (3050, 'number', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3050),
-    (3060, 'option', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3060),
-    (3070, 'rules', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3070),
-    (3080, 'spacer', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3080),
-    (3090, 'text', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3090),
-    (3100, 'textarea', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3100),
-    (3110, 'user', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3110);
+    (310, 'contact', 'layout', 'layout', 'contact', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1310),
+    (315, 'edit', 'layout', 'layout', 'edit', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1315),
+    (320, 'faq', 'layout', 'layout', 'faq', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1320),
+    (325, 'include', 'layout', 'layout', 'include', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1325),
+    (330, 'item', 'layout', 'layout', 'item', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1330),
+    (335, 'items', 'layout', 'layout', 'items', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1335),
+    (340, 'list', 'layout', 'layout', 'list', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1340),
+    (345, 'manager', 'layout', 'layout', 'manager', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1345),
+    (350, 'modal', 'layout', 'layout', 'modal', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1350),
+    (355, 'pagination', 'layout', 'layout', 'pagination', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1355),
+    (360, 'system', 'layout', 'layout', 'system', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1360),
+    (365, 'table', 'layout', 'layout', 'table', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1365),
+    (370, 'toolbar', 'layout', 'layout', 'toolbar', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1370),
+    (375, 'tree', 'layout', 'layout', 'tree', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1375),
+    (380, 'twig_example', 'layout', 'layout', 'twig_example', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1380);
 
 # Libraries
 INSERT INTO `#__extensions` (
@@ -805,17 +787,16 @@ INSERT INTO `#__extensions` (
     VALUES
     (401, 'Akismet', 'library', 'akismet', 'akismet', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1, 4, 1400),
     (402, 'Curl', 'library', 'curl', 'curl', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 5, 1402),
-    (403, 'Joomla Framework', 'library', 'joomla', 'jplatform', 1, 1, 1, '{"legacy":false,"name":"Joomla! Web Application Framework","type":"library","creationDate":"2008","author":"Joomla","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\\/\\/www.joomla.org","version":"1.6.0","description":"The Joomla! Web Application Framework","group":""}', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1, 4, 1404),
+    (403, 'Joomla Framework', 'library', 'joomla', 'joomla', 1, 1, 1, '{"legacy":false,"name":"Joomla! Web Application Framework","type":"library","creationDate":"2008","author":"Joomla","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\\/\\/www.joomla.org","version":"1.6.0","description":"The Joomla! Web Application Framework","group":""}', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1, 4, 1404),
     (404, 'Molajo Application', 'library', 'molajo', 'molajo', 1, 1, 1, '{"legacy":false,"name":"Molajo Application","type":"library","creationDate":"2011","author":"Molajo Project Team","copyright":"Copyright (C) 2011 Amy Stephen. All rights reserved.","authorEmail":"collaborate@molajo.org","authorUrl":"http:\\/\\/molajo.org","version":"1.0.0","description":"Molajo is a web development environment useful for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.","group":""}\r\n', '', '', '', 0, '0000-00-00 00:00:00', 4, 1, 4, 1406),
     (405, 'Mollom', 'library', 'mollom', 'mollom', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1410),
-    (406, 'Overrides', 'library', 'overrides', 'overrides', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1411),
-    (407, 'PHPMailer', 'library', 'phpmailer', 'phpmailer', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1, 4, 1415),
-    (408, 'phputf8', 'library', 'phputf8', 'phputf8', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1, 4, 1420),
-    (409, 'Recaptcha', 'library', 'recaptcha', 'recaptcha', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1, 4, 1425),
-    (410, 'Secureimage', 'library', 'secureimage', 'secureimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1, 4, 1430),
-    (411, 'SimplePie', 'library', 'simplepie', 'simplepie', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1, 4, 1435),
-    (412, 'Twig', 'library', 'twig', 'twig', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1, 4, 1440),
-    (413, 'WideImage', 'library', 'wideimage', 'wideimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 4, 1450);
+    (406, 'PHPMailer', 'library', 'phpmailer', 'phpmailer', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1, 4, 1415),
+    (407, 'phputf8', 'library', 'phputf8', 'phputf8', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1, 4, 1420),
+    (408, 'Recaptcha', 'library', 'recaptcha', 'recaptcha', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1, 4, 1425),
+    (409, 'Secureimage', 'library', 'secureimage', 'secureimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1, 4, 1430),
+    (410, 'SimplePie', 'library', 'simplepie', 'simplepie', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1, 4, 1435),
+    (411, 'Twig', 'library', 'twig', 'twig', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1, 4, 1440),
+    (412, 'WideImage', 'library', 'wideimage', 'wideimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 4, 1450);
 
 # Modules - Administrator
 INSERT INTO `#__extensions` (
@@ -860,30 +841,6 @@ INSERT INTO `#__extensions` (
     (612, 'mod_syndicate', 'module', 'mod_syndicate', 'mod_syndicate', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 5, 1612),
     (613, 'mod_users_latest', 'module', 'mod_users_latest', 'mod_users_latest', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 1, 5, 1613),
     (614, 'mod_whosonline', 'module', 'mod_whosonline', 'mod_whosonline', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 1, 5, 1614);
-
-# Parameters
-INSERT INTO `#__extensions` (
-  `extension_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`, `protected`,
-  `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
-  `ordering`, `state`, `access`, `asset_id` )
-    VALUES
-    (4000, 'adminlogin', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4000),
-    (4010, 'advanced', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4010),
-    (4020, 'article', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4020),
-    (4030, 'banner', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4030),
-    (4040, 'blog', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4040),
-    (4050, 'categories', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4050),
-    (4060, 'category', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4060),
-    (4070, 'contact', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4070),
-    (4080, 'contact_form', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4080),
-    (4090, 'integration', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4090),
-    (4100, 'item', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4100),
-    (4110, 'list', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4110),
-    (4120, 'newsfeed', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4120),
-    (4130, 'response', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4130),
-    (4140, 'search', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4140),
-    (4150, 'user', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4150),
-    (4160, 'weblink', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5160);
 
 #
 # Plugins

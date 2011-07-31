@@ -292,6 +292,7 @@ class JInstallationModelDatabase extends JModel
 
 	/**
      * getDbo
+     *
 	 * Method to get a JDatabase object.
 	 *
 	 * @param	string	$driver		The database driver to use.
