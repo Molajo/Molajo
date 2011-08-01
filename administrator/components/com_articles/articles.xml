@@ -43,7 +43,7 @@
 			<filename>articles.php</filename>
             <filename>config.xml</filename>
 			<filename>controller.php</filename>
-			<filename>readme.php</filename>
+			<filename>readme</filename>
 			<folder>controllers</folder>
 			<folder>fields</folder>
 			<folder>helpers</folder>

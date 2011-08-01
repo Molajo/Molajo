@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: configuration.php
  * @package     Molajo
  * @subpackage  Configuration Model
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -9,87 +8,56 @@
 defined('MOLAJO') or die;
 
 /**
- * Molajo Configuration Model
+ * Configuration Model
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Model
- * @since 1.6
+ * @since       1.0
  */
 class MolajoModelConfiguration extends JModel
 {
-   /**
-     * $table
-     * @var string
+    /**
+     * @var string $option
+     * @since 1.0
      */
-    public $table = '#__configuration';
+    protected $option;
 
     /**
-     * Build Array of Valid Views
-     *
-     * @param	None
-     * @return	void
+     * @var array $overrides
+     * @since 1.0 
      */
-    public function validateView ($view, $option_id)
-    {
+    protected $overrides = array();
 
-        return $this->validationQuery ($view, $option_id);
+    /**
+     * __construct
+     *
+     * Constructor.
+     *
+     * @param $option
+     * @since	1.0
+     */
+    public function __construct($option)
+    {
+        $this->option = $option;
+        $this->setOverridesArray();
     }
 
     /**
-     *  Build Array of Valid Layouts
-     *
-     *  @param  None
-     *  @return value or false
-     *  @since	1.6
-     */
-    public function validateLayout ($layout, $option_id)
-    {
-        return $this->validationQuery ($layout, $option_id);
-    }
-
-    /**
-     *  Build Array of Valid Format
-     *
-     *  @param  None
-     *  @return value or false
-     *  @since	1.6
-     */
-    public function validateFormat ($layout, $option_id)
-    {
-        return $this->validationQuery ($layout, $option_id);
-    }
-
-    /**
-     *  Validate Tasks
-     *
-     *  @param      None
-     *  @return     void
-     *  @since	1.6
-     */
-    public function validateTask ($task, $option_id)
-    {
-        return $this->validationQuery ($task, $option_id);
-    }
-
-    /**
-     * getSingleConfigurationValue
+     * getOptionValue
      *
      * Retrieve a Single Configuration Value for Option ID
      *
-     * @param int $option_id
-     * @return string
-     *
+     * @param $option_id
+     * @return bool
+     * @since   1.0
      */
-    public function getSingleConfigurationValue ($option_id)
+    public function getOptionValue ($option_id)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
         
-        /** check for override **/
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
+        /** option or core **/
+        $component_option = $this->getComponentOptionKey ($option_id);
 
         /** validation query **/
         $query->select($db->namequote('option_value'), $db->namequote('option_value_literal'));
@@ -116,44 +84,46 @@ class MolajoModelConfiguration extends JModel
         return false;
     }
 
-   /**
-     *  Validate Tasks
+    /**
+     * getOptionLiteralValue
      *
-     *  @param      None
-     *  @return     void
-     *  @since	1.6
+     * For a specific option_id and option_value, return the associated option_value_literal
+     *
+     * @param $option_id
+     * @param $option_value
+     * @return string or boolean option_value
+     * @since 1.0
      */
-    public function validationQuery ($value, $option_id)
+    public function getOptionLiteralValue ($option_id, $option_value)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
+        /** option or core **/
+        $component_option = $this->getComponentOptionKey ($option_id);
 
         /** retrieve value **/
         $query = $db->getQuery(true);
-        $query->select($db->namequote('option_id'), $db->namequote('option_value_literal'));
+
+        $query->select($db->namequote('option_value_literal'));
         $query->from($db->namequote('#__configuration'));
         $query->where($db->namequote('option_id').' = '.(int) $option_id);
         $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-        $query->where($db->namequote('option_value').' = '. $db->quote(trim($value)));
+        $query->where($db->namequote('option_value').' = '. $db->quote(trim($option_value)));
         $query->where($db->namequote('ordering').' > 0 ');
 
         $db->setQuery($query->__toString());
 
-        if (!$results = $db->loadObjectList()) {
+        if ($results = $db->loadObjectList()) {
+        } else {
             MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
         if (count($results) > 0) {
-            foreach ($results as $count => $item) {
-                $validated = $item->option_id;
+            foreach ($results as $result) {
+                return $result->option_value_literal;
             }
-            return $validated;
         }
 
         return false;
@@ -174,10 +144,8 @@ class MolajoModelConfiguration extends JModel
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
+        /** option or core **/
+        $component_option = $this->getComponentOptionKey ($option_id);
 
         /** validation query **/
         $query = $db->getQuery(true);
@@ -199,286 +167,25 @@ class MolajoModelConfiguration extends JModel
     }
 
     /**
-     * getOptionValueLiteral
-     *
-     * Retrieve Single Configuration Value for this Component and Option
-     *
-     * @param string $option
-     * @param int $option_id
-     * @return string
-     */
-    public function getOptionValueLiteral ($option_id, $option_value)
-    {
-        /** check for overrides **/
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
-
-        /** verify value **/
-        $query = $db->getQuery(true);
-
-        $query->select('DISTINCT '.$db->namequote('option_value_literal').' as text');
-        $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('option_value').' = '. $db->quote(trim($option_value)));
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-        $query->where($db->namequote('ordering').' > 0 ');
-
-        $db->setQuery($query->__toString());
-
-        if (!$results = $db->loadObjectList()) {
-            return false;
-        }
-
-        if (count($results) > 0) {
-            foreach ($results as $count => $item) {
-                $option_value = $item->text;
-            }
-            return $option_value;
-        }
-        return false;
-    }
-
-    /**
-     * getDefaultView
-     *
-     * Retrieve Default View
-     *
-     * @param int $option_id
-     * @return string
-     */
-    public function getDefaultView ($option_id)
-    {
-        /** check for overrides **/
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
-
-        $ordering = $this->getDefaultViewOrdering ($option_id);
-        if ($ordering === false) {
-            return false;
-        }
-
-        /** for lowest ordering, retrieve default view **/
-        $query = $db->getQuery(true);
-
-        $query->select($db->namequote('option_value_literal').' as DefaultView');
-        $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('ordering').' = '. $ordering);
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-
-        $db->setQuery($query->__toString());
-
-        if (!$results = $db->loadObjectList()) {
-        } else {
-            foreach ($results as $count => $item) {
-                $value = $item->DefaultView;
-            }
-            return $value;
-        }
-        return false;
-    }
-
-    /**
-     * getDefaultViewOrdering
-     *
-     * Retrieve Default View
-     *
-     * @param int $option_id
-     * @return string
-     */
-    public function getDefaultViewOrdering ($option_id)
-    {
-        /** check for overrides **/
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
-
-        /** retrieve lowest ordering value for default view **/
-        $query = $db->getQuery(true);
-
-        $query->select('MIN(ordering) as ordering');
-        $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-        $query->where($db->namequote('ordering').' > 0 ');
-
-        $db->setQuery($query->__toString());
-
-        if (!$results = $db->loadObjectList()) {
-            return false;
-        } else {
-            foreach ($results as $count => $item) {
-                $ordering = $item->ordering;
-            }
-            return $ordering;
-        }
-    }
-
-    /**
-     * getViewType
-     *
-     * Retrieve Default View
-     *
-     * @param int $option_id
-     * @return string
-     */
-    public function getViewType ($option_id, $value)
-    {
-         /** check for overrides **/
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
-
-        $query = $db->getQuery(true);
-
-        $query->select($db->namequote('option_value').' as EditView');
-        $query->select($db->namequote('option_value_literal').' as DefaultView');
-        $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where('('.$db->namequote('option_value').' = '. $db->quote(trim($value)).' or '.$db->namequote('option_value_literal').' = '. $db->quote(trim($value)).')');
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-
-        $db->setQuery($query->__toString());
-
-        if (!$results = $db->loadObjectList()) {
-        } else {
-            foreach ($results as $count => $item) {
-                if ($value == $item->DefaultView) {
-                    $return = 'default';
-                } else {
-                    $return = 'single';
-                }
-            }
-            return $return;
-        }
-        return false;
-    }
-
-
-    /**
-     * getViewType
-     *
-     * Retrieve Default View
-     *
-     * @param  $option_id
-     * @param  $value
-     * @param  $type
-     * @return bool|string
-     */
-    public function getViewMatch ($option_id, $value, $type)
-    {
-        /** check for overrides **/
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $component_option = $this->getOverrideKey ($option_id);
-        if ($component_option === false) {
-            $component_option = 'core';
-        }
-
-        $query = $db->getQuery(true);
-
-        $query->select($db->namequote('option_value').' as EditView');
-        $query->select($db->namequote('option_value_literal').' as DefaultView');
-        $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where('('.$db->namequote('option_value').' = '. $db->quote(trim($value)).' or '.$db->namequote('option_value_literal').' = '. $db->quote(trim($value)).')');
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-
-        $db->setQuery($query->__toString());
-
-        if (!$results = $db->loadObjectList()) {
-        } else {
-            foreach ($results as $count => $item) {
-                if ($type == 'default') {
-                    $value = $item->EditView;
-                } else {
-                    $value = $item->DefaultView;
-                }
-            }
- 
-            return $value;
-        }
-        return false;
-    }
-
-    /**
-     * getOverrideKey
+     * getComponentOptionKey
      *
      * Retrieve component_option key for option_id
      *
-     * @param string $option
-     * @param int $option_id
-     * @return string
+     * @return string option value
+     * @since 1.0
      */
-    public function getOverrideKey ($option_id)
+    public function getComponentOptionKey ()
     {
-        $configurationArray = JRequest::getVar('configurationArray', array());
-
-        foreach ($configurationArray
-                    as $confOption_id => $confComponent_option) {
-
-            if ($confOption_id == $option_id) {
-                return $confComponent_option;
+        foreach ($this->overrides as $configurationOverrides => $override) {
+            if ($configurationOverrides == $this->option) {
+                return $override;
             }
         }
-
-        return false;
+        return 'core';
     }
 
     /**
-     * getMolajoComponentList
-     *
-     * Retrieve Single Configuration Value for this Component and Option
-     *
-     * @param string $option
-     * @param int $option_id
-     * @return string
-     */
-    public function getMolajoComponentList ()
-    {
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        /** validation query **/
-        $query = $db->getQuery(true);
-        $option_id = 0;
-
-        $query->select('DISTINCT '.$db->namequote('option_value').' AS value, '.$db->namequote('option_value_literal').' as text');
-        $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('ordering').' > 0 ');
-        $query->order($db->namequote('ordering'));
-
-        $db->setQuery($query->__toString());
-
-        if (!$results = $db->loadObjectList()) {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-            return false;
-        }
-        return $results;
-    }
-
-    /**
-     * getOptionOverrides
+     * setOverridesArray
      *
      * To override the default Molajo configuration values, add a record for the option_id with an ordering of 0
      * This method creates an array for all option_id types and the associated component_option value
@@ -489,7 +196,7 @@ class MolajoModelConfiguration extends JModel
      * @param int $option_id
      * @return string
      */
-    public function getOptionOverrides ($component_option)
+    public function setOverridesArray ()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -499,38 +206,40 @@ class MolajoModelConfiguration extends JModel
         $query->from($db->namequote('#__configuration'));
         $query->where($db->namequote('ordering').' = 0');
         $query->where($db->namequote('option_id').' > 0');
-
+        $query->order($db->namequote('option_id'));
+        
         $db->setQuery($query->__toString());
 
-        if (!$results = $db->loadObjectList()) {
+        if ($results = $db->loadObjectList()) {
+        } else {
             MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
+        /** for each option_id, determine if there are overrides for the option */
         $optionArray = array();
         if (count($results) > 0) {
+            
             foreach ($results as $count => $item) {
 
                 /** retrieve override component_option, if existing **/
                 $query = $db->getQuery(true);
+                
                 $query->select($db->namequote('component_option'));
                 $query->from($db->namequote('#__configuration'));
                 $query->where($db->namequote('ordering').' = 0');
-                $query->where($db->namequote('option_id').' = '. (int) $item->option_id);
-                $query->where($db->namequote('component_option').' = '. $db->quote($component_option));
+                $query->where($db->namequote('option_id').' = '.(int) $item->option_id);
+                $query->where($db->namequote('component_option').' = '.$db->quote($this->option));
 
                 $db->setQuery($query->__toString());
 
                 if ($componentResults = $db->loadObjectList()) {
-                    $optionArray[$item->option_id] = $component_option;
+                    $optionArray[$item->option_id] = $this->option;
                 } else {
                     $optionArray[$item->option_id] = 'core';
                 }
             }
         }
-
-        JRequest::setVar('configurationArray', $optionArray);
-
         return;
     }
 }

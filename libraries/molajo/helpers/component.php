@@ -99,20 +99,25 @@ class MolajoComponentHelper
      */
     public function getRequest ()
     {
-        $molajoConfig = new MolajoModelConfiguration;
-
+        /** initialization */
+        $option = '';
+        $task = '';
+        $view = '';
         $layout = '';
         $format = '';
         $componentTable = '';
 
-        /** loads keys for configuration */
-        $option = JRequest::getCmd('option', 'com_articles');
-        $molajoConfig->getOptionOverrides ($option);
+        /** MolajoModelConfiguration Model */
+        $molajoConfig = new MolajoModelConfiguration ($option);
 
-        /** login - necessary to reset for timeout */
-        if ($option == 'com_login') {
-            JRequest::setVar('view', 'login');
-            JRequest::setVar('layout', 'default');
+        /** 1. Option */
+        $option = JRequest::getCmd('option', null);
+        if ($option == null) {
+            $option = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION + (int) MOLAJO_APPLICATION_ID);
+            if ($option === false) {
+                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_OPTION_DEFINED'), 'error');
+                return false;
+            }
         }
 
         /** set component paths */
@@ -121,179 +126,92 @@ class MolajoComponentHelper
         if (defined('JPATH_COMPONENT')) { } else { define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT); }
         if (defined('JPATH_COMPONENT_ADMINISTRATOR')) { } else { define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR); }
 
-        /** 1. View and Layout */
-        $view = JRequest::getCmd('view', '');
-        $layout = JRequest::getCmd('layout', 'default');
-
-        /** 2. Task **/
-        $task = JRequest::getCmd('task', null);
-        if ($task == null) {
-            if ($layout == 'editor') {
-                if (JRequest::getInt('id') == 0) {
-                    $task = 'add';
-                } else {
-                    $task = 'edit';
-                }
-            } else {
-                $task = 'display';
-            }
-        }
-
-        /** 3. Controller **/
+        /** 2. Task */
+        $task = JRequest::getCmd('task', 'display');
         if (strpos($task,'.')) {
-            $controller = substr($task, 0, strpos($task,'.'));
             $task = substr($task, (strpos($task,'.')+1), 99);
-        } else {
-            $controller = '';
         }
 
-        if ($view == '') {
-            $view = $controller;
-        }
-
-        /** 4. Default View **/
-        if ($view == '') {
-            $lookupView = $molajoConfig->getDefaultView (MOLAJO_CONFIG_OPTION_ID_VIEW_PAIRS);
-
-            if ($lookupView === false) {
-                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
-                return false;
-            }
-
-        }
-echo 'option '.$option.'<br />';
-echo 'view '.$view.'<br />';
-echo 'layout '.$layout.'<br />';
-echo 'task '.$task.'<br />';
-echo 'controller '.$controller.'<br />';
-die();
-        /** 5. For view in hand, determine if it's edit or display view */
-        if ($lookupView == '') {
-            $lookupView = $view;
-        }
-        $lookupViewType = $molajoConfig->getViewType (MOLAJO_CONFIG_OPTION_ID_VIEW_PAIRS, $lookupView);
-        if ($lookupViewType === false) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_VIEW_TYPE').' '.$lookupView, 'error');
-            return false;
-
-        }
-
-        /** 6. Knowing both view and type, determine values for single and default **/
-        $otherView = $molajoConfig->getViewMatch (MOLAJO_CONFIG_OPTION_ID_VIEW_PAIRS, $lookupView, $lookupViewType);
-        if ($otherView === false) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_MATCHING_VIEW').' '.$lookupView, 'error');
+        /** 3. Controller */
+        $controller = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER, $task);
+        if ($controller === false) {
+            JError::raiseError(500, JText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
             return false;
         }
 
-        if ($lookupViewType == 'default') {
-            $defaultView = $lookupView;
-            $editView = $otherView;
+        if ($task == 'display') {
+
+            /** 4. View **/
+            $view = JRequest::getCmd('view', null);
+            if ($view == null) {
+                $results = false;
+            } else {
+                $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_VIEWS, $view);
+            }
+
+            if ($results === false) {
+                $view = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_VIEW);
+                if ($view === false) {
+                    MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
+                    return false;
+                }
+            }
+
+            /** 5. Layout **/
+            $layout = JRequest::getCmd('layout', null);
+            if ($layout == null) {
+                $results = false;
+            } else {
+                if ($view == 'edit') {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_LAYOUTS, $layout);
+                } else {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS, $layout);
+                }
+            }
+
+            if ($results === false) {
+                if ($view == 'edit') {
+                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS);
+                } else {
+                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS);
+                }
+                if ($layout === false) {
+                    MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    return false;
+                }
+            }
+
+            /** 6. Format */
+            $format = JRequest::getCmd('format', null);
+            if ($format == null) {
+                $results = false;
+            } else {
+                if ($view == 'edit') {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_FORMATS, $format);
+                } else {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS, $format);
+                }
+            }
+
+            if ($results === false) {
+                if ($view == 'edit') {
+                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS);
+                } else {
+                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS);
+                }
+                if ($format === false) {
+                    MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    return false;
+                }
+            }
         } else {
-            $defaultView = $otherView;
-            $editView = $lookupView;
+            /** amy: come back and get redirect stuff later */
+            $view = '';
+            $layout = '';
+            $format = '';
         }
 
-        /** 8. display controller for add and edit */
-        if ($task == 'add' || $task == 'edit') {
-            $view = $editView;
-            $controller = '';
-
-        } else if ($task == 'display') {
-            $view = $defaultView;
-            $controller = '';
-
-        } else if ($view == '' && ($controller == $defaultView || $controller == $editView)) {
-            /** used in redirects, not for an actual view/layout **/
-            $view = $controller;
-        }
-
-        /** 9. validate task and controller **/
-        if ($controller == '') {
-            $results = $molajoConfig->validateTask($task, MOLAJO_CONFIG_OPTION_ID_MULTIPLE_CONTROLLER_TASKS);
-            if ($results == false) {
-                JError::raiseError(500, JText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
-                return false;
-            }
-
-        } else if ($controller == $defaultView) {
-            $results = $molajoConfig->validateTask ($task, MOLAJO_CONFIG_OPTION_ID_DISPLAY_CONTROLLER_TASKS);
-            if ($results == false) {
-                JError::raiseError(500, JText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
-                return false;
-            }
-
-        } else if ($controller == $editView) {
-            $results = $molajoConfig->validateTask ($task, MOLAJO_CONFIG_OPTION_ID_EDIT_CONTROLLER_TASKS);
-            if ($results == false) {
-                JError::raiseError(500, JText::_('MOLAJO_INVALID_TASK_EDIT_CONTROLLER').' '.$task);
-                return false;
-            }
-
-        } else  {
-                JError::raiseError(500, JText::_('MOLAJO_INVALID_CONTROLLER').' '.$controller);
-                return false;
-        }
-
-        if ($task == 'display' || $task == 'add' || $task == 'edit') {
-
-            /** 4. display controller */
-            if ($task == 'add' || $task == 'edit') {
-                $view = $editView;
-            } else {
-                $view = $defaultView;
-            }
-
-            /** 10. validate view (display only) **/
-            $folder = MOLAJO_PATH_COMPONENT.'/components/'.$option.'/views/'.$view;
-            if (JFolder::exists($folder)) {
-            } else {
-                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_VIEW_FOLDERNAMES').' '.$folder, 'error');
-                return false;
-            }
-
-           /** 12. validate format (display only) **/
-            $format = JRequest::getCmd('format', 'html');
-            $results = $molajoConfig->validateFormat ($format, MOLAJO_CONFIG_OPTION_ID_FORMAT);
-            if ($results == false) {
-                JError::raiseError(500, JText::_('MOLAJO_INVALID_FORMAT').' '.$format);
-                return false;
-            }
-
-            /** 13. validate layout (display only) **/
-            $layout = JRequest::getCmd('layout', '');
-
-            if ($layout == '') {
-                $layout = 'default';
-            }
-
-            if (MolajoFactory::getApplication()->getName() == 'administrator') {
-                $fileName = MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option.'/views/'.$view.'/tmpl/'.$layout.'.php';
-                if ($view == $defaultView && $layout == 'default') {
-                    $layout = 'manager';
-                }
-                if ($view == $editView && $layout == 'default') {
-                    $layout = 'edit';
-                }
-            } else {
-                $fileName = MOLAJO_PATH_SITE.'/components/'.$option.'/views/'.$view.'/tmpl/'.$layout.'.php';
-            }
-
-            if (JFile::exists($fileName)) {
-
-            } else {
-                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_LAYOUT').' '.$fileName, 'error');
-                return false;
-            }
-
-        }
-
-        /** 15. set acl implementation selected for component **/
-        $aclImplementation = $molajoConfig->getSingleConfigurationValue (MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
-        if ($aclImplementation == false) {
-            $aclImplementation = 'core';
-        }
-
-        /** 15. id **/
+        /** 7. id and cid */
         $id = JRequest::getInt('id');
         $cids = JRequest::getVar('cid', array(), '', 'array');
         JArrayHelper::toInteger($cids);
@@ -303,6 +221,7 @@ die();
             $cids = array();
 
         } else if ($task == 'edit' || $task == 'restore') {
+
             if ($id > 0 && count($cids) == 0) {
             } else if ($id == 0 && count($cids) == 1) {
                 $id = $cids[0];
@@ -311,91 +230,65 @@ die();
                 JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
                 return false;
             } else if (count($cids) > 1) {
-                JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_REQUEST_ID'));
+                JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
                 return false;
             }
         }
 
-
-        /** 11. validate table (display only) **/
-        $componentTable = $molajoConfig->getSingleConfigurationValue (MOLAJO_CONFIG_OPTION_ID_TABLE);
-        if ($componentTable == false || $componentTable == '') {
-             $componentTable = '__'.$defaultView;
+        /** 8. acl implementation */
+        $aclImplementation = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
+        if ($aclImplementation == false) {
+            $aclImplementation = 'core';
         }
 
-        /** frontend */
-
-        if ($layout == 'editor') {
-            if ((int) $id == 0) {
-                $task = 'add';
-            } else {
-                $task = 'edit';
-            }
+        /** 9. component table */
+        $componentTable = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_TABLE);
+        if ($aclImplementation == false) {
+            $aclImplementation = 'core';
         }
-
-        /** add '.' back to interface with JController **/
-        if ($task == 'edit') {
-            $layout = 'editor';
-        }
-
-        /** add '.' back to interface with JController **/
-        if ($task == 'add' || $task == 'edit' || $task == 'display') {
-        } else {
-            $task = $controller.'.'.$task;
-        }
-//                    $menus = MolajoFactory::getApplication()->getMenu('site');
-//                    $active = $menus->getActive();
-
-//                    if ($active && $active->component == $option) {
-//                        echo $active->id;
-//                    }
-
-        /** set request to validated values **/
-        JRequest::setVar('EditView', $editView);
-        JRequest::setVar('DefaultView', $defaultView);
-
-        JRequest::setVar('format', $format);
-        JRequest::setVar('id', (int) $id);
-        JRequest::setVar('cid', (array) $cids);
-
-        JRequest::setVar('ComponentTable', $componentTable);
-        JRequest::setVar('filterFieldName', 'config_manager_list_filters');
-        JRequest::setVar('selectFieldName', 'config_manager_grid_column');
-        JRequest::setVar('aclImplementation', $aclImplementation);
 
         JRequest::setVar('controller', $controller);
 
-        JRequest::setVar('task', $task);
-        JRequest::setVar('layout', $layout);
+        JRequest::setVar('option', $option);
         JRequest::setVar('view', $view);
+        JRequest::setVar('layout', $layout);
+        JRequest::setVar('task', $task);
+        JRequest::setVar('format', $format);
 
-        /** @var $session */
+        JRequest::setVar('id', (int) $id);
+        JRequest::setVar('cid', (array) $cids);
+
+        /** Set Session Variables for molajoPage */
         $session = JFactory::getSession();
 
-        $session->set('molajoPageOption', $option);
-        $session->set('molajoPageTask', $task);
-        $session->set('molajoPageView', $view);
-        $session->set('molajoPageLayout', $layout);
+        $session->set('molajoPageController', $controller);
 
-        $session->set('molajoPageEditView', $option);
-        $session->set('molajoPageTask', $task);
+        $session->set('molajoPageOption', $option);
         $session->set('molajoPageView', $view);
         $session->set('molajoPageLayout', $layout);
+        $session->set('molajoPageTask', $task);
+        $session->set('molajoPageFormat', $format);
+
+        $session->set('molajoPageID', (int) $id);
+        $session->set('molajoPageCID', (array) $cids);
+
+        $session->set('molajoPageComponentTable', $layout);
+        $session->set('molajoPageFilterFieldName', $task);
+        $session->set('molajoPageSelectFieldName', $format);
+        $session->set('molajoPageACLImplementation', $task);
+        $session->set('molajoPageInitiatingExtension', 'component');
 
 $debug == true;
 if ($debug) {
-echo 'the very end of validate'.'<br />';
-echo $session->get('molajoComponent');
-echo '$lookupViewType '.$lookupViewType.'<br />';
-echo '$controller '.$controller.'<br />';
-echo '$view '.$view.'<br />';
-echo '$defaultView '.$defaultView.'<br />';
-echo '$editView '.$editView.'<br />';
-echo '$layout '.$layout.'<br />';
-echo '$task '.$task.'<br />';
-echo '$controller '.$controller.'<br />';
-echo 'the very end of validate'.'<br />';
-die();
+
+    echo 'option '.$option.'<br />';
+    echo 'view '.$view.'<br />';
+    echo 'layout '.$layout.'<br />';
+    echo 'task '.$task.'<br />';
+    echo 'format '.$format.'<br />';
+    echo 'controller '.$controller.'<br />';
+    echo 'id '.$id.'<br />';
+    echo 'cid '.var_dump($cids).'<br />';
 }
         return true;
     }

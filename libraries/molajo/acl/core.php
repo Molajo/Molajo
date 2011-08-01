@@ -81,7 +81,7 @@ class MolajoACLCore extends MolajoACL
     public function checkTaskManage ($option, $entity, $task, $catid, $id, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ();
-        $taskTests = $molajoConfig->getOptionValueLiteral (MOLAJO_CONFIG_OPTION_ID_TASK_ACL_METHODS, $task);
+        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS, $task);
 
         if (is_array($taskTests)) {
         } else {
@@ -182,7 +182,7 @@ class MolajoACLCore extends MolajoACL
     public function checkTaskUpdate ($option, $entity, $task, $catid, $id, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ();
-        $taskTests = $molajoConfig->getOptionValueLiteral (MOLAJO_CONFIG_OPTION_ID_TASK_ACL_METHODS, $task);
+        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS, $task);
         if (is_array($taskTests)) {
         } else {
             $taskTests = array($taskTests);

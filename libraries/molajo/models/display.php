@@ -132,21 +132,14 @@ class MolajoModelDisplay extends JModel
      */
     protected function populateState ($ordering = 'ordering', $direction = 'ASC')
     {
-        /** request variables **/
         $this->setState('request.application', MOLAJO_APPLICATION);
+        $this->setState('request.application', MOLAJO_APPLICATION_ID);
+
         $this->setState('request.initiating_extension_type', JRequest::getCmd('initiating_extension_type'));
         $this->setState('request.option', JRequest::getCmd('option'));
         $this->setState('request.view', JRequest::getCmd('view'));
         $this->setState('request.model', JRequest::getCmd('model'));
-        if (JRequest::getCmd('layout') == 'default') {
-            if (JRequest::getInt('id') == 0) {
-                $this->setState('request.layout', 'list');
-            } else {
-                $this->setState('request.layout', 'item');
-            }
-        } else {
-            $this->setState('request.layout', JRequest::getCmd('layout'));
-        }
+        $this->setState('request.layout', JRequest::getCmd('layout'));
 
         $this->setState('request.task', JRequest::getCmd('task'));
         $this->setState('request.format', JRequest::getCmd('format'));
