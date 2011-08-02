@@ -7,6 +7,5 @@
  */
 defined('MOLAJO') or die; ?>
 <?php if ($this->row->grouped === true) { ?>
-<datalist
-	<?php if ($this->row->id == "") { } else { echo ' id="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
+</ul>
 <?php }
