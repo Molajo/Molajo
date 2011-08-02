@@ -23,7 +23,6 @@ defined('MOLAJO') or die; ?>
 			<?php if ($this->row->id == "") { } else { echo ' id="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
 			<?php if ($this->row->class == "") { } else { echo ' class="'.htmlspecialchars($this->row->class, ENT_COMPAT, 'UTF-8').'"'; } ?>
 			<?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
-			<?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
 			<?php echo $this->row->required; ?>
 			<?php echo $this->row->maxlength; ?>
 			<?php echo $this->row->size; ?>
