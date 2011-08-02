@@ -168,7 +168,7 @@ class MolajoInstallationModelConfiguration extends JModel
 			// Use FTP write buffer to file
 			if (!$ftp->write($file, $buffer)) {
 				// Set the config string to the session.
-				$session = JFactory::getSession();
+				$session = MolajoFactory::getSession();
 				$session->set('setup.config', $buffer);
 			}
 
@@ -176,11 +176,11 @@ class MolajoInstallationModelConfiguration extends JModel
 		} else {
 			if ($canWrite) {
 				file_put_contents($path, $buffer);
-				$session = JFactory::getSession();
+				$session = MolajoFactory::getSession();
 				$session->set('setup.config', null);
 			} else {
 				// Set the config string to the session.
-				$session = JFactory::getSession();
+				$session = MolajoFactory::getSession();
 				$session->set('setup.config', $buffer);
 			}
 		}

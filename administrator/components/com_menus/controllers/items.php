@@ -41,7 +41,7 @@ class MenusControllerItems extends JControllerAdmin
 	 */
 	public function rebuild()
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		$this->setRedirect('index.php?option=com_menus&view=items');
 
@@ -61,7 +61,7 @@ class MenusControllerItems extends JControllerAdmin
 
 	public function saveorder()
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the arrays from the Request
 		$order	= JRequest::getVar('order',	null,	'post',	'array');

@@ -24,7 +24,7 @@ class InstallerControllerUpdate extends JController {
 	function update()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		$model	= $this->getModel('update');
 		$uid	= JRequest::getVar('cid', array(), '', 'array');
@@ -58,7 +58,7 @@ class InstallerControllerUpdate extends JController {
 	{
 		// Find updates
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 		$model	= $this->getModel('update');
 		$model->purge();
 		$result = $model->findUpdates();
@@ -75,7 +75,7 @@ class InstallerControllerUpdate extends JController {
 	{
 		// Purge updates
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 		$model = $this->getModel('update');
 		$model->purge();
 		$model->enableSites();

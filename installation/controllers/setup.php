@@ -26,10 +26,10 @@ class MolajoInstallationControllerSetup extends JController
 	public function setlanguage()
 	{
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Check for potentially unwritable session
-		$session = JFactory::getSession();
+		$session = MolajoFactory::getSession();
 
 		if ($session->isNew()) {
 			JError::setErrorHandling(E_ERROR, 'message');
@@ -39,7 +39,7 @@ class MolajoInstallationControllerSetup extends JController
 		}
 
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
@@ -82,10 +82,10 @@ class MolajoInstallationControllerSetup extends JController
 	function database()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
@@ -148,10 +148,10 @@ class MolajoInstallationControllerSetup extends JController
 	function filesystem()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
@@ -193,10 +193,10 @@ class MolajoInstallationControllerSetup extends JController
 	function saveconfig()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));

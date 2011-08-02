@@ -68,7 +68,7 @@ class MolajoInstallation extends MolajoApplication
 
         // Check the session for the language.
         if (empty($options['language'])) {
-            $sessionLang = JFactory::getSession()->get('setup.language');
+            $sessionLang = MolajoFactory::getSession()->get('setup.language');
             if (!is_null($sessionLang)) {
                 $options['language'] = $sessionLang;
             }
@@ -92,7 +92,7 @@ class MolajoInstallation extends MolajoApplication
         }
 
         // Set the language in the class
-        $conf = JFactory::getConfig();
+        $conf = MolajoFactory::getConfig();
         $conf->set('language', $options['language']);
         $conf->set('debug_lang', $forced['debug']);
         $conf->set('sampledata', $forced['sampledata']);
@@ -107,9 +107,9 @@ class MolajoInstallation extends MolajoApplication
 	 */
 	public function render()
 	{
-		$document = JFactory::getDocument();
-		$config = JFactory::getConfig();
-		$user = JFactory::getUser();
+		$document = MolajoFactory::getDocument();
+		$config = MolajoFactory::getConfig();
+		$user = MolajoFactory::getUser();
 
 		switch($document->getType())
 		{
@@ -122,10 +122,12 @@ class MolajoInstallation extends MolajoApplication
 
 		// Define component path
 		define('MOLAJO_PATH_COMPONENT', MOLAJO_PATH_BASE);
+		define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
 		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
-		define('JPATH_COMPONENT', MOLAJO_PATH_BASE);
-		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
-
+		define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT);
+		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_COMPONENT_SITE);
+		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR);
+        
 		// Import the controller.
 		require_once MOLAJO_PATH_COMPONENT.'/controller.php';
 		$controller	= JController::getInstance('MolajoInstallation');
@@ -155,7 +157,7 @@ class MolajoInstallation extends MolajoApplication
 		$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
 		$data = $document->render(false, $params);
 		JResponse::setBody($data);
-		if (JFactory::getConfig()->get('debug_lang')) {
+		if (MolajoFactory::getConfig()->get('debug_lang')) {
 			$this->debugLanguage();
 		}
 	}
@@ -168,7 +170,7 @@ class MolajoInstallation extends MolajoApplication
 	public static function debugLanguage()
 	{
 		ob_start();
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		echo '<h4>Parsing errors in language files</h4>';
 		$errorfiles = $lang->getErrorFiles();
 
@@ -275,7 +277,7 @@ class MolajoInstallation extends MolajoApplication
 		$options = array();
 		$options['name'] = $name;
 
-		$session = JFactory::getSession($options);
+		$session = MolajoFactory::getSession($options);
 		if (!is_a($session->get('registry'), 'JRegistry')) {
 			$session->set('registry', new JRegistry('session'));
 		}
@@ -293,7 +295,7 @@ class MolajoInstallation extends MolajoApplication
 	 */
 	public function getLocalise()
 	{
-		$xml = JFactory::getXML(MOLAJO_PATH_SITE . '/installation/localise.xml');
+		$xml = MolajoFactory::getXML(MOLAJO_PATH_SITE . '/installation/localise.xml');
 
 		if (!$xml) {
 			return false;

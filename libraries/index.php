@@ -54,6 +54,6 @@ if (MOLAJO_APPLICATION == 'installation') {
 /** RENDER */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
-
+ 
 /** complete */
 echo $app;

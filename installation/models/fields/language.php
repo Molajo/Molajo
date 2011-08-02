@@ -38,7 +38,7 @@ class JFormFieldLanguage extends JFormFieldList
 	protected function getOptions()
 	{
 		// Initialise variables.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Detect the native language.
 		$native = JLanguageHelper::detectLanguage();
@@ -53,13 +53,13 @@ class JFormFieldLanguage extends JFormFieldList
 		}
 
 		// If a language is already set in the session, use this instead
-		$session = JFactory::getSession()->get('setup.options', array());
+		$session = MolajoFactory::getSession()->get('setup.options', array());
 		if (!empty($session['language'])){
 			$native = $session['language'];
 		}
 
 		// Get the list of available languages.
-		$options = JLanguageHelper::createLanguageList($native);
+		$options = MolajoLanguageHelper::createLanguageList($native);
 		if (!$options || JError::isError($options)) {
 			$options = array();
 		}

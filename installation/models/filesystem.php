@@ -464,7 +464,7 @@ class MolajoInstallationModelFilesystem extends JModel
 	 */
 	public function setFTPCfg($vars)
 	{
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$arr = array();
 		$arr['ftp_enable'] = $vars['ftp_enable'];
 		$arr['ftp_user'] = $vars['ftp_user'];
@@ -485,7 +485,7 @@ class MolajoInstallationModelFilesystem extends JModel
      */
 	function _chmod($path, $mode)
 	{
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$ret = false;
 
 		// Initialise variables.

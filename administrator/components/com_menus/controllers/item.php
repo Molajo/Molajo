@@ -51,7 +51,7 @@ class MenusControllerItem extends JControllerForm
 	 */
 	public function batch($model)
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$model	= $this->getModel('Item', '', array());
@@ -72,7 +72,7 @@ class MenusControllerItem extends JControllerForm
 	 */
 	public function cancel($key = null)
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$app		= MolajoFactory::getApplication();
@@ -116,7 +116,7 @@ class MenusControllerItem extends JControllerForm
 	public function save($key = null, $urlVar = null)
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$app		= MolajoFactory::getApplication();

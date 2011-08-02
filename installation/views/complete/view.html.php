@@ -27,7 +27,7 @@ class MolajoInstallationViewComplete extends JView
 		$options = $this->get('Options');
 
 		// Get the config string from the session.
-		$session = JFactory::getSession();
+		$session = MolajoFactory::getSession();
 		$config = $session->get('setup.config', null);
 
 		// Check for errors.

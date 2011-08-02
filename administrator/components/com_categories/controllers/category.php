@@ -115,7 +115,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 */
 	public function batch($model)
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Set the model
 		$model	= $this->getModel('Category');

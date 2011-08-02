@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: multiple.php
  * @package     Molajo
  * @subpackage  Multiple Controller
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -20,9 +19,9 @@ defined('MOLAJO') or die;
  * - Feature: feature and unfeature
  * - State: archive, publish, unpublish, spam, trash (Note: version is automatic with save and delete)
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Controller
- * @since	1.0
+ * @since	    1.0
  */
 class MolajoControllerMultiple extends MolajoControllerEdit
 {
@@ -175,7 +174,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
     public function processItems ($column=null)
     {
         /** security token **/
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
 
         /** initialize */
         $results = $this->initialise($this->data['task']);

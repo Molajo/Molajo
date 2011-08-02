@@ -70,7 +70,7 @@ class UsersControllerProfile extends UsersController
 	public function save()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$app	= MolajoFactory::getApplication();

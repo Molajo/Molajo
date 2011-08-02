@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.html.html');
 
-$doc = JFactory::getDocument();
+$doc = MolajoFactory::getDocument();
 
 // Include the component HTML helpers.
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');

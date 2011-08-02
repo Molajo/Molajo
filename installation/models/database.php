@@ -23,7 +23,7 @@ class MolajoInstallationModelDatabase extends JModel
 		$options = JArrayHelper::toObject($options, 'JObject');
 
 		// Load the back-end language files so that the DB error messages work
-		$jlang = JFactory::getLanguage();
+		$jlang = MolajoFactory::getLanguage();
 		// Pre-load en-GB in case the chosen language files do not exist
 		$jlang->load('joomla', MOLAJO_PATH_ADMINISTRATOR, 'en-GB', true);
 		// Load the selected language
@@ -186,7 +186,7 @@ class MolajoInstallationModelDatabase extends JModel
 				$this->setError($db->getErrorMsg());
 				$return = false;
 			}
-			JFactory::$database = $db;
+			MolajoFactory::$database = $db;
 			$installer = JInstaller::getInstance();
 //			foreach ($extensions as $extension) {
 //				if (!$installer->refreshManifestCache($extension->extension_id)) {
@@ -205,7 +205,7 @@ class MolajoInstallationModelDatabase extends JModel
 			}
 
 			// Handle default backend language setting. This feature is available for localized versions of Joomla 1.5.
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			$languages = $app->getLocaliseAdmin($db);
 			if (in_array($options->language, $languages['admin']) || in_array($options->language, $languages['site'])) {
 				// Build the language parameters for the language manager.

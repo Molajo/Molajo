@@ -29,7 +29,7 @@ class SearchControllerSearches extends JController
 	public function reset()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$model = $this->getModel('Searches');

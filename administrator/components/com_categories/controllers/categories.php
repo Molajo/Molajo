@@ -41,7 +41,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 	 */
 	public function rebuild()
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		$extension = JRequest::getCmd('extension');
 		$this->setRedirect(JRoute::_('index.php?option=com_categories&view=categories&extension='.$extension, false));
@@ -68,7 +68,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 	 */
 	public function saveorder()
 	{
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the arrays from the Request
 		$order	= JRequest::getVar('order',	null, 'post', 'array');

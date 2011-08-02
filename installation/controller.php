@@ -35,7 +35,7 @@ class MolajoInstallationController extends JController
 		$redirect	= base64_encode($uri);
 
 		// Get the document object.
-		$document	= JFactory::getDocument();
+		$document	= MolajoFactory::getDocument();
 
 		// Set the default view name and format from the Request.
 		if (file_exists(MOLAJO_PATH_CONFIGURATION.'/configuration.php')

@@ -39,7 +39,7 @@ class ConfigControllerApplication extends JController
 	public function save()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Check if the user is authorized to do this.
 		if (!MolajoFactory::getUser()->authorise('core.admin'))

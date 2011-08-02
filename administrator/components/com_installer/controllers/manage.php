@@ -39,7 +39,7 @@ class InstallerControllerManage extends JController
 	public function publish()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$user	= MolajoFactory::getUser();
@@ -79,7 +79,7 @@ class InstallerControllerManage extends JController
 	public function remove()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		$eid	= JRequest::getVar('cid', array(), '', 'array');
 		$model	= $this->getModel('manage');
@@ -99,7 +99,7 @@ class InstallerControllerManage extends JController
 	function refresh()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		$uid	= JRequest::getVar('cid', array(), '', 'array');
 		$model	= $this->getModel('manage');

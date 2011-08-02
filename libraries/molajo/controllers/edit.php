@@ -46,7 +46,7 @@ class MolajoControllerEdit extends MolajoController
     public function cancelItem()
     {
         /** security token **/
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
 
         /** initialisation */
         parent::initialise('cancel');
@@ -172,7 +172,7 @@ class MolajoControllerEdit extends MolajoController
     public function saveItemForm($task)
     {
         /** security token **/
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
 
         $results = parent::initialise('save');
 
@@ -203,7 +203,7 @@ class MolajoControllerEdit extends MolajoController
     public function saveItem ($data, $task=null)
     {
         /** security token **/
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
 
         /** task **/
         if ($task == null) {
@@ -379,7 +379,7 @@ class MolajoControllerEdit extends MolajoController
      */
     public function deleteItem ()
     {
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
 
         /** initialisation */
         $results = parent::initialise('delete');

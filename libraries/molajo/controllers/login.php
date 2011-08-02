@@ -33,7 +33,7 @@ class MolajoControllerLogin extends MolajoController
 	public function login()
 	{
         /** security token **/
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
 
         /** initialisation */
         parent::initialise('login');

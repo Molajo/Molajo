@@ -150,14 +150,12 @@ class MolajoController extends JController
      * @param null $task
      * @return bool
      */
-    public function initialise($task = null)
+    public function initialise($data)
     {
-        /** $task */
-        if ($task == null) {
-            $task = $this->data['task'];
-        }
+        $this->data = $data;
 
-        /** $id and $catid */
+        $this->params = MolajoComponentHelper::getParams($data['option']);
+
         $this->id = $this->data['id'];
         if ((int) $this->id == 0) {
             $this->id = 0;
@@ -165,23 +163,23 @@ class MolajoController extends JController
         }
 
         $this->catid = $this->data['catid'];
-
         if ((int) $this->catid == 0) {
             $this->catid = 0;
         }
 
-        /** model */
         if ($this->model) {
         } else {
-            $this->model = $this->getModel($this->data['model'], ucfirst($this->data['model'].'Model'), array());
+            if ($this->data['table'] == 'dummy') {
+            } else {
+                $this->model = $this->getModel($this->data['model'], ucfirst($this->data['model'].'Model'), array());
+            }
         }
 
-        /** table */
         $this->table = $this->model->getTable();
 
-        if ($task == 'display' || $task == 'add') {
+        if ($this->data['task'] == 'display'
+            || $this->data['task'] == 'add') {
         } else {
-            /** load row **/
             $this->table->reset();
             $this->table->load($this->id);
             $this->catid = $this->table->catid;
@@ -205,14 +203,14 @@ class MolajoController extends JController
         }
 
         /** authorisation **/
-        $results = MolajoController::checkTaskAuthorisation($task);
+        $results = MolajoController::checkTaskAuthorisation($this->data['task']);
         if ($results === false) {
             return false;
         }
 
         /** redirects **/
         $this->redirectClass = new MolajoControllerRedirect ();
-        $this->redirectClass->initializeRedirectLinks($task);
+        $this->redirectClass->initializeRedirectLinks($this->data['task']);
  
         /** success **/
         return true;

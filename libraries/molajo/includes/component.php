@@ -17,15 +17,8 @@ if ($data['option'] == $current_folder) {
     return false;
 }
 
-/** establish controller **/
+/** controller **/
 $defaultController = substr($data['option'], (strpos($data['option'], '_') + 1), strlen($data['option']) - strpos($data['option'], '_'));
 $controller = JController::getInstance(ucfirst($defaultController));
-$controller->data = $data;
-$controller->params = MolajoComponentHelper::getParams($data['option']);
-
-/** initialise **/
-$results = $controller->execute('initialise');
-
-
-/** task **/
-$controller->execute($data['task']);
+$controller->initialise($data);
+$controller->$data['task'];

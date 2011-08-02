@@ -70,7 +70,7 @@ class InstallerController extends JController
      */
     function create()
     {
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        JRequest::checkToken() or die;
         $model	= $this->getModel('create');
         $results = $model->create();
         $this->setRedirect(JRoute::_('index.php?option=com_installer&view=create', false));

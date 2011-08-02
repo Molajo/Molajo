@@ -126,7 +126,7 @@ class MediaControllerFolder extends JController
 	function create()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		$user = MolajoFactory::getUser();
 

@@ -40,7 +40,7 @@ class JFormFieldSample extends JFormFieldList
 	protected function getOptions()
 	{
 		// Initialize variables.
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$options = array();
 		$type = $this->form instanceof JForm ? $this->form->getValue('db_type') : 'mysql';
 		if ($type == 'mysqli') {
@@ -72,7 +72,7 @@ class JFormFieldSample extends JFormFieldList
 	protected function getInput()
 	{
 		if (!$this->value) {
-			$conf = JFactory::getConfig();
+			$conf = MolajoFactory::getConfig();
 			if ($conf->get('sampledata')) {
 				$this->value = $conf->get('sampledata');
 			} else {

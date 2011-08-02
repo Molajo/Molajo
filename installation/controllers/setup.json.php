@@ -29,13 +29,13 @@ class MolajoInstallationControllerSetup extends JController
 	public function setlanguage()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken() or die;
 		
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Check for potentially unwritable session
-		$session = JFactory::getSession();
+		$session = MolajoFactory::getSession();
 
 		if ($session->isNew()) {
 			$this->sendResponse(new JException(JText::_('INSTL_COOKIES_NOT_ENABLED'), 500));
@@ -87,10 +87,10 @@ class MolajoInstallationControllerSetup extends JController
 	public function database()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken() or die;
 
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
@@ -160,10 +160,10 @@ class MolajoInstallationControllerSetup extends JController
 	public function filesystem()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken() or die;
 
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
@@ -211,10 +211,10 @@ class MolajoInstallationControllerSetup extends JController
 	public function saveconfig()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken() or die;
 
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Get the setup model.
 		$model = $this->getModel('Setup', 'MolajoInstallationModel', array('dbo' => null));
@@ -281,7 +281,7 @@ class MolajoInstallationControllerSetup extends JController
 	public function loadSampleData()
 	{
 		// Check for a valid token. If invalid, send a 403 with the error message.
-		JRequest::checkToken('request') or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken('request') or die();
 
 		// Get the posted config options.
 		$vars = JRequest::getVar('jform', array());
@@ -326,7 +326,7 @@ class MolajoInstallationControllerSetup extends JController
 	public function detectFtpRoot()
 	{
 		// Check for a valid token. If invalid, send a 403 with the error message.
-		JRequest::checkToken('request') or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken('request') or die();
 
 		// Get the posted config options.
 		$vars = JRequest::getVar('jform', array());
@@ -365,7 +365,7 @@ class MolajoInstallationControllerSetup extends JController
 	public function verifyFtpSettings()
 	{
 		// Check for a valid token. If invalid, send a 403 with the error message.
-		JRequest::checkToken('request') or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken('request') or die;
 
 		// Get the posted config options.
 		$vars = JRequest::getVar('jform', array());
@@ -405,7 +405,7 @@ class MolajoInstallationControllerSetup extends JController
 	{
 
 		// Check for a valid token. If invalid, send a 403 with the error message.
-		JRequest::checkToken('request') or $this->sendResponse(new JException(JText::_('JINVALID_TOKEN'), 403));
+		JRequest::checkToken('request') or die;
 
 		// Get the posted config options.
 		$vars = JRequest::getVar('jform', array());
@@ -498,7 +498,7 @@ class MolajoInstallationControllerSetup extends JController
 		echo json_encode(new MolajoInstallationJsonResponse($response));
 
 		// Close the application.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$app->close();
 	}
 }
@@ -519,11 +519,11 @@ class MolajoInstallationJsonResponse
 		$this->token = JUtility::getToken(true);
 		
 		// Get the language and send it's code along
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$this->lang = $lang->getTag();
 
 		// Get the message queue
-		$messages = JFactory::getApplication()->getMessageQueue();
+		$messages = MolajoFactory::getApplication()->getMessageQueue();
 
 		// Build the sorted message list
 		if (is_array($messages) && count($messages)) {

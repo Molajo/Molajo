@@ -196,7 +196,7 @@ class JControllerAdmin extends JController
 	public function reorder()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$user	= JFactory::getUser();
@@ -228,7 +228,7 @@ class JControllerAdmin extends JController
 	public function saveorder()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Get the input
 		$pks	= JRequest::getVar('cid',	null,	'post',	'array');
@@ -269,7 +269,7 @@ class JControllerAdmin extends JController
 	public function checkin()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$user	= JFactory::getUser();

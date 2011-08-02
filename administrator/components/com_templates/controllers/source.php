@@ -129,7 +129,7 @@ class TemplatesControllerSource extends JController
 	public function cancel()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$app		= MolajoFactory::getApplication();
@@ -149,7 +149,7 @@ class TemplatesControllerSource extends JController
 	public function save()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$app		= MolajoFactory::getApplication();

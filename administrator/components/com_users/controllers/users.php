@@ -57,7 +57,7 @@ class UsersControllerUsers extends JControllerAdmin
 	public function changeBlock()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
@@ -94,7 +94,7 @@ class UsersControllerUsers extends JControllerAdmin
 	public function activate()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
@@ -125,7 +125,7 @@ class UsersControllerUsers extends JControllerAdmin
 	function batch()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		JRequest::checkToken() or die;
 
 		// Initialise variables.
 		$app	= MolajoFactory::getApplication();
