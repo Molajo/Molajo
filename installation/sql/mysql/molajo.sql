@@ -1612,6 +1612,34 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 4300, 'html', 'html', 1);
 
 
+/* 4000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS +application id */
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 4001, '', '', 0),
+('core', 4001, 'html', 'html', 1);
+
+/* 4100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS +application id */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 4101, '', '', 0),
+('core', 4101, 'html', 'html', 1);
+
+/* 4200 MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_FORMATS +application id */
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 4201, '', '', 0),
+('core', 4201, 'error', 'error', 1),
+('core', 4201, 'feed', 'feed', 2),
+('core', 4201, 'html', 'html', 3),
+('core', 4201, 'json', 'json', 4),
+('core', 4201, 'opensearch', 'opensearch', 5),
+('core', 4201, 'raw', 'raw', 6),
+('core', 4201, 'xls', 'xls', 7),
+('core', 4201, 'xml', 'xml', 8),
+('core', 4201, 'xmlrpc', 'xmlrpc', 9);
+
+/* 4300 MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS +application id */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 4301, '', '', 0),
+('core', 4301, 'html', 'html', 1);
+
 /** ACL Component Information */
 
 /** 10000 MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION **/
@@ -1791,12 +1819,8 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 4000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 4000, '', '', 0),
-('com_login', 4000, 'html', 'html', 1);
-
-/* 4100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS */;
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 4100, '', '', 0),
-('com_login', 4100, 'html', 'html', 1);
+('com_login', 4000, 'html', 'html', 1),
+('com_login', 4001, 'html', 'html', 1);
 
 /** ACL Component Information */
 

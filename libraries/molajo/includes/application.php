@@ -244,6 +244,201 @@ class MolajoApplication extends JObject
 		$this->triggerEvent('onAfterDispatch');
 	}
 
+    /**
+     * getRequest
+     *
+     * Gets the Request Object and populates Page Session Variables for Component
+     *
+     * @return bool
+     */
+    protected function getRequest ()
+    {
+        /** initialization */
+        $option = '';
+        $task = '';
+        $view = '';
+        $layout = '';
+        $format = '';
+        $component_table = '';
+
+        /** 1. Option */
+        $option = JRequest::getCmd('option', null);
+
+        $molajoConfig = new MolajoModelConfiguration ($option);
+        if ($option == null) {
+            $option = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION + (int) MOLAJO_APPLICATION_ID);
+            if ($option === false) {
+                $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_OPTION_DEFINED'), 'error');
+                return false;
+            }
+        }
+
+        /** 2. Paths */
+        if (defined('MOLAJO_PATH_COMPONENT')) { } else { define('MOLAJO_PATH_COMPONENT', strtolower(MOLAJO_PATH_BASE.'/components/'.$option)); }
+        if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) { } else { define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', strtolower(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option)); }
+        if (defined('JPATH_COMPONENT')) { } else { define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT); }
+        if (defined('JPATH_COMPONENT_ADMINISTRATOR')) { } else { define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR); }
+
+        /** 3. Task */
+        $task = JRequest::getCmd('task', 'display');
+        if (strpos($task,'.')) {
+            $task = substr($task, (strpos($task,'.')+1), 99);
+        }
+
+        /** 4. Controller */
+        $controller = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER, $task);
+        if ($controller === false) {
+            JError::raiseError(500, JText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
+            return false;
+        }
+
+        if ($task == 'display') {
+
+            /** 5. View **/
+            $view = JRequest::getCmd('view', null);
+            if ($view == null) {
+                $results = false;
+            } else {
+                $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_VIEWS + (int) MOLAJO_APPLICATION_ID, $view);
+            }
+
+            if ($results === false) {
+                $view = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_VIEW);
+                if ($view === false) {
+                    $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
+                    return false;
+                }
+            }
+
+            /** 6. Layout **/
+            $layout = JRequest::getCmd('layout', null);
+            if ($layout == null) {
+                $results = false;
+            } else {
+                if ($view == 'edit') {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID, $layout);
+                } else {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID, $layout);
+                }
+            }
+
+            if ($results === false) {
+                if ($view == 'edit') {
+                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID);
+                } else {
+                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID);
+                }
+                if ($layout === false) {
+                    $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    return false;
+                }
+            }
+
+            /** 7. Format */
+            $format = JRequest::getCmd('format', null);
+            if ($format == null) {
+                $results = false;
+            } else {
+                if ($view == 'edit') {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID, $format);
+                } else {
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID, $format);
+                }
+            }
+
+            if ($results === false) {
+                if ($view == 'edit') {
+                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID);
+                } else {
+                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID);
+                }
+                if ($format === false) {
+                    $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    return false;
+                }
+                echo $format;
+            }
+        } else {
+            /** amy: come back and get redirect stuff later */
+            $view = '';
+            $layout = '';
+            $format = '';
+        }
+
+        /** 8. id, cid and catid */
+        $id = JRequest::getInt('id');
+        $cids = JRequest::getVar('cid', array(), '', 'array');
+        JArrayHelper::toInteger($cids);
+
+        if ($task == 'add') {
+            $id = 0;
+            $cids = array();
+
+        } else if ($task == 'edit' || $task == 'restore') {
+
+            if ($id > 0 && count($cids) == 0) {
+            } else if ($id == 0 && count($cids) == 1) {
+                $id = $cids[0];
+                $cids = array();
+            } else if ($id == 0 && count($cids) == 0) {
+                JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
+                return false;
+            } else if (count($cids) > 1) {
+                JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
+                return false;
+            }
+        }
+        $catid = JRequest::getInt('catid');
+
+        /** 9. acl implementation */
+        $acl_implementation = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
+        if ($acl_implementation == false) {
+            $acl_implementation = 'core';
+        }
+
+        /** 10. component table */
+        $component_table = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_TABLE);
+        if ($component_table == false) {
+            $component_table = '_common';
+        }
+
+        /** Request Object */
+        JRequest::setVar('option', $option);
+        JRequest::setVar('view', $view);
+        JRequest::setVar('layout', $layout);
+        JRequest::setVar('task', $task);
+        JRequest::setVar('format', $format);
+
+        JRequest::setVar('id', (int) $id);
+        JRequest::setVar('cid', (array) $cids);
+
+        /** Page Session Variables */
+        $session = JFactory::getSession();
+
+        $session->set('page.application_id', MOLAJO_APPLICATION_ID);
+        $session->set('page.current_url', MOLAJO_CURRENT_URL);
+        $session->set('page.base_url', JURI::base());
+        $session->set('page.item_id', JRequest::getInt('Itemid', 0));
+
+        $session->set('page.controller', $controller);
+        $session->set('page.option', $option);
+        $session->set('page.view', $view);
+        $session->set('page.layout', $layout);
+        $session->set('page.task', $task);
+        $session->set('page.format', $format);
+
+        $session->set('page.id', (int) $id);
+        $session->set('page.cid', (array) $cids);
+        $session->set('page.catid', (int) $catid);
+
+        $session->set('page.acl_implementation', $acl_implementation);
+        $session->set('page.component_table', $component_table);
+        $session->set('page.filter_fieldname', 'config_manager_list_filters');
+        $session->set('page.select_fieldname', 'config_manager_grid_column');
+
+        return true;
+    }
+
 	/**
 	 * Render the application.
 	 *
@@ -289,6 +484,37 @@ class MolajoApplication extends JObject
 	 */
 	public function close($code = 0)
 	{
+        $session = JFactory::getSession();
+
+        $session->clear('page.application_id');
+        $session->clear('page.current_url');
+        $session->clear('page.base_url');
+
+        $session->clear('page.extension_id');
+        $session->clear('page.extension_access');
+        $session->clear('page.extension_asset_id');
+        $session->clear('page.extension_enabled');
+        $session->clear('page.extension_params');
+
+        $session->clear('page.item_id');
+
+        $session->clear('page.controller');
+        $session->clear('page.option');
+        $session->clear('page.view');
+        $session->clear('page.model');
+        $session->clear('page.layout');
+        $session->clear('page.task');
+        $session->clear('page.format');
+
+        $session->clear('page.id');
+        $session->clear('page.cid');
+        $session->clear('page.catid');
+
+        $session->clear('page.acl_implementation');
+        $session->clear('page.component_table');
+        $session->clear('page.filter_fieldname');
+        $session->clear('page.select_fieldname');
+
 		exit($code);
 	}
 

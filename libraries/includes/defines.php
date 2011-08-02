@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: defines.php
  * @package     Molajo
  * @subpackage  Defines
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -125,11 +124,11 @@ if (isset($_SERVER["REQUEST_URI"])) {
 define('MOLAJO_CURRENT_URL', strtolower($currentURL));
 
 /** Layouts, Forms, and Parameters */
-$temp = MOLAJO_PATH_ROOT.'/layouts';
-define('MOLAJO_LAYOUTS', $temp);
-$temp = MOLAJO_LAYOUTS.'/parameters';
+$temp = MOLAJO_PATH_ROOT.'/layouts/extensions';
+define('MOLAJO_EXTENSION_LAYOUTS', $temp);
+$temp = MOLAJO_PATH_ROOT.'/layouts/parameters';
 define('MOLAJO_PARAMETERS', $temp);
-$temp = MOLAJO_LAYOUTS.'/forms';
+$temp = MOLAJO_PATH_ROOT.'/layouts/forms';
 define('MOLAJO_FORM_LAYOUTS', $temp);
 
 /** joomla */

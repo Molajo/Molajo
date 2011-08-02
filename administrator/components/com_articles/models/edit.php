@@ -8,9 +8,9 @@
 defined('MOLAJO') or die;
 
 /**
- * Display Model
+ * Edit Model
  *
- * ArticlesModelDisplay extends MolajoModelDisplay extends JModel extends JObject
+ * ArticlesModelEdit extends MolajoModelEdit extends JModel extends JObject
  *
  * @package	    Molajo
  * @subpackage	Model

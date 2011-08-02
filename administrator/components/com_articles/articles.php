@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     articles.php
  * @package     Molajo
  * @subpackage  Entry point
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.

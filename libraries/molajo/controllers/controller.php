@@ -10,12 +10,45 @@ defined('MOLAJO') or die;
 /**
  * Primary Controller
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Controller
- * @since	1.0
+ * @since	    1.0
  */
 class MolajoController extends JController
 {
+
+    /**
+     * @var object $data
+     *
+     * ["application_id"]=> int(1)
+     * ["current_url"]=> string(38) "http://localhost/molajo/administrator/" 
+     * ["base_url"]=> string(38) "http://localhost/molajo/administrator/"
+     * ["item_id"]=> int(0)
+     * ["controller"]=> string(7) "display"
+     * ["option"]=> string(9) "com_login"
+     * ["view"]=> string(7) "display"
+     * ["layout"]=> string(7) "default"
+     * ["task"]=> string(7) "display"
+     * ["format"]=> string(4) "html"
+     * ["id"]=> int(0)
+     * ["cid"]=> array(0) { }
+     * ["catid"]=> int(0)
+     * ["acl_implementation"]=> string(4) "core"
+     * ["component_table"]=> string(8) "__common"
+     * ["filter_fieldname"]=> string(27) "config_manager_list_filters"
+     * ["select_fieldname"]=> string(26) "config_manager_grid_column"
+     *
+     * @since 1.0
+     */
+    public $data = null;
+
+    /**
+     * @var object $params
+     *
+     * @since 1.0
+     */
+    public $params = null;
+
     /**
      * @var object $table
      *
@@ -29,13 +62,6 @@ class MolajoController extends JController
      * @since 1.0
      */
     public $model = null;
-
-    /**
-     * @var object $params
-     *
-     * @since 1.0
-     */
-    protected $params = null;
 
     /**
      * @var object $catid
@@ -84,7 +110,6 @@ class MolajoController extends JController
     public function __construct($config = array())
     {
         parent::__construct($config);
-        $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
     }
 
     /**
@@ -100,7 +125,7 @@ class MolajoController extends JController
      */
     public function display($cachable = false, $urlparams = false)
     {
-        if (JRequest::getVar('task') == 'edit') {
+        if ($this->data['task'] == 'edit') {
             $results = $this->checkOutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -129,17 +154,17 @@ class MolajoController extends JController
     {
         /** $task */
         if ($task == null) {
-            $task = JRequest::getCmd('task', 'display');
+            $task = $this->data['task'];
         }
 
         /** $id and $catid */
-        $this->id = JRequest::getInt('id');
+        $this->id = $this->data['id'];
         if ((int) $this->id == 0) {
             $this->id = 0;
             $this->catid = 0;
         }
 
-        $this->catid = JRequest::getInt('catid');
+        $this->catid = $this->data['catid'];
 
         if ((int) $this->catid == 0) {
             $this->catid = 0;
@@ -147,15 +172,8 @@ class MolajoController extends JController
 
         /** model */
         if ($this->model) {
-
         } else {
-            if ($task == 'display') {
-                $modelName = JRequest::getCmd('DefaultView');
-            } else {
-                $modelName = JRequest::getCmd('EditView');
-            }
-
-            $this->model = $this->getModel($modelName, ucfirst(JRequest::getCmd('DefaultView').'Model'), array());
+            $this->model = $this->getModel($this->data['model'], ucfirst($this->data['model'].'Model'), array());
         }
 
         /** table */
@@ -235,9 +253,10 @@ class MolajoController extends JController
             $checkTable = $this->table;
         }
 
-        $aclClass = ucfirst(JRequest::getCmd('DefaultView')).'ACL';
+        $aclClass = $this->data['acl_implementation'].'ACL';
         $acl = new $aclClass ();
-        $results = $acl->authoriseTask (JRequest::getCmd('option'), JRequest::getCmd('EditView'), $checkTask, $checkId, $checkCatid, $checkTable);
+        $results = $acl->authoriseTask ($this->data['option'], $this->data['view'], $checkTask, $checkId, $checkCatid, $checkTable);
+
         if ($results === false) {
             $this->redirectClass = new MolajoControllerRedirect ();
             $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);
@@ -463,21 +482,7 @@ class MolajoController extends JController
     */
     public function cleanCache ()
     {
-        $cache = MolajoFactory::getCache(JRequest::getCmd('option'));
+        $cache = MolajoFactory::getCache($this->data['option']);
         $cache->clean();
-    }
-
-    /**
-    * postSaveHook
-    *
-    * Function that allows child controller access to model data after the data has been saved.
-    *
-    * @param	JModel	$this->model		The data model object.
-    * @param	array	$validData	The validated data.
-    *
-    * @return	void
-    */
-    protected function postSaveHook(JModel $model, $validData = array())
-    {
     }
 }

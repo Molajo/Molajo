@@ -246,7 +246,7 @@ class MolajoControllerRedirect extends MolajoController
 
         /** task **/
         if ($task == null) {
-            $task = JRequest::getVar('task');
+            $task = $this->data['task'];
         }
 
         /** message and message type **/
@@ -277,7 +277,7 @@ class MolajoControllerRedirect extends MolajoController
         /** redirect url **/
         } else if ($this->successIndicator === false || $task == 'apply' || $task == 'save2new') {
             $link = $this->redirectReturn;
-            $id = JRequest::getInt('id');
+            $id = $this->data['id'];
             if ((int) $id == 0 || $task == 'save2new') {
                 $link .= '&task='.JRequest::getCmd('EditView').'.add'.'&datakey='.$this->datakey;
 

@@ -44,7 +44,7 @@ class MolajoModelDisplay extends JModel
     protected $dispatcher = null;
 
     /**
-     * $filterFieldName
+     * $filterFieldName (REMOVE)
      *
      * @var		string
      * @since	1.0
@@ -132,6 +132,27 @@ class MolajoModelDisplay extends JModel
      */
     protected function populateState ($ordering = 'ordering', $direction = 'ASC')
     {
+        /** Set Session Variables for component. */
+              $session = JFactory::getSession();
+
+              echo $session->get('page.controller');
+
+              echo $session->get('component.Option');
+              echo $session->get('component.View');
+              echo $session->get('component.Layout');
+              echo $session->get('component.Task');
+              echo $session->get('component.Format');
+
+              echo $session->get('component.ID');
+              echo $session->get('component.CID');
+
+              echo $session->get('component.ComponentTable');
+              echo $session->get('component.FilterFieldName');
+              echo $session->get('component.SelectFieldName');
+              echo $session->get('component.ACLImplementation');
+              echo $session->get('component.InitiatingExtension');
+
+
         $this->setState('request.application', MOLAJO_APPLICATION);
         $this->setState('request.application', MOLAJO_APPLICATION_ID);
 

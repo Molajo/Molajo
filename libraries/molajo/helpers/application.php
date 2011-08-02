@@ -365,6 +365,10 @@ class MolajoApplicationHelper
 
 		$data = array();
 
+        /** Page Session Variables */
+
+        $data = array();
+
 		$data['name'] = (string)$xml->name;
 		$data['type'] = $xml->attributes()->type;
 

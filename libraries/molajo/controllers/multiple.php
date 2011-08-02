@@ -178,7 +178,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
         /** initialize */
-        $results = $this->initialise(JRequest::getVar('task'));
+        $results = $this->initialise($this->data['task']);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -193,7 +193,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         }
 
         /** context **/
-        $context = JRequest::getVar('option').'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task;
+        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task;
 
         /** ids **/
         $idArray = JRequest::getVar('cid', array(), '', 'array');

@@ -264,7 +264,7 @@ if ($isOnward && $catId && ($inheritStyle || $inheritLayout)) {
 	}
 	
 }
-
+$baseUrl = JURI::base();
 #--------------------------------- Alias ----------------------------------#
 
 $currentAlias = JSite::getMenu()->getActive()->alias;

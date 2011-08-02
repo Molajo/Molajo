@@ -250,7 +250,6 @@
     <fieldset
         name="config_layouts"
         label="MOLAJO_CONFIG_FIELDSET_COMPONENT_LAYOUT_LABEL"
-        addfieldpath="/plugins/molajo/libraries/joomla/form/fields/"
         >
 
         <field

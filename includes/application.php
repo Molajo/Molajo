@@ -9,9 +9,9 @@
 defined('MOLAJO') or die;
 
 /**
- * Joomla! Application class
+ * Molajo Site
  *
- * Provide many supporting API functions
+ * Interacts with the Application Class for the Site Application
  *
  * @package		Molajo
  * @subpackage	Application
@@ -171,6 +171,7 @@ class MolajoSite extends MolajoApplication
 			if (!$component) {
 				$component = JRequest::getCmd('option');
 			}
+
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
 			$router		= $this->getRouter();
@@ -208,9 +209,35 @@ class MolajoSite extends MolajoApplication
 					break;
 			}
 
+            /** prepare component MVC input */
+            $data = array();
+            
+            $session = JFactory::getSession();
+
+            $data['application_id'] = $session->set('page.application_id');
+            $data['current_url'] = $session->get('page.current_url');
+            $data['base_url'] = $session->get('page.base_url');
+            $data['item_id'] = $session->get('page.item_id');
+
+            $data['controller'] = $session->get('page.controller');
+            $data['option'] = $session->get('page.option');
+            $data['view'] = $session->get('page.view');
+            $data['layout'] = $session->get('page.layout');
+            $data['task'] = $session->get('page.task');
+            $data['format'] = $session->get('page.format');
+
+            $data['id'] = $session->get('page.id');
+            $data['cid'] = $session->get('page.cid');
+            $data['catid'] = $session->get('page.catid');
+
+            $data['acl_implementation'] = $session->get('page.acl_implementation');
+            $data['component_table'] = $session->get('page.component_table');
+            $data['filter_fieldname'] = $session->get('page.filter_fieldname');
+            $data['select_fieldname'] = $session->get('page.select_fieldname');
+
 			$document->setTitle($params->get('page_title'));
 			$document->setDescription($params->get('page_description'));
-			$contents = MolajoComponentHelper::renderComponent($component);
+			$contents = MolajoComponentHelper::renderComponent($data);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.

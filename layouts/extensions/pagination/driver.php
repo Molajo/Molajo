@@ -8,4 +8,4 @@
  */
 defined('MOLAJO') or die;
 
-require_once MOLAJO_LAYOUTS.'/_system/driver_standard_list.php';
+require_once MOLAJO_EXTENSION_LAYOUTS.'/_system/driver_standard_list.php';

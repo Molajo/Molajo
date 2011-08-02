@@ -9,15 +9,17 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * Module Helper
  *
  * @package     Molajo
- * @subpackage  Module Helper
+ * @subpackage  Helper
  * @since       1.0
  */
 abstract class MolajoModuleHelper
 {
 	/**
+     * getModule
+     *
 	 * Get module by name (real, eg 'Breadcrumbs' or folder, eg 'mod_breadcrumbs')
 	 *
 	 * @param   string  The name of the module

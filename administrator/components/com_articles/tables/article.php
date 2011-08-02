@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: table.php
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -11,8 +10,8 @@ defined('MOLAJO') or die;
 /**
  * Table Class
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Table
- * @since	1.6
+ * @since	    1.0
  */
 class ArticlesTableArticle extends MolajoTableContent {}

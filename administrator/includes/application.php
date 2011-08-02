@@ -12,13 +12,13 @@ defined('MOLAJO') or die;
 jimport('joomla.html.html');
 
 /**
- * Administrator Application class
+ * Molajo Site
  *
- * Provide many supporting API functions
+ * Interacts with the Application Class for the Site Application
  *
  * @package		Molajo
- * @subpackage  Application
- * @since		1.0
+ * @subpackage	Application
+ * @since       1.0
  */
 class MolajoAdministrator extends MolajoApplication
 {
@@ -73,7 +73,8 @@ class MolajoAdministrator extends MolajoApplication
 		}
 
 		// One last check to make sure we have something
-		if (!JLanguage::exists($options['language'])) {
+		if (JLanguage::exists($options['language'])) {
+        } else {
 			$lang = $config->get('language','en-GB');
 			if (JLanguage::exists($lang)) {
 				$options['language'] = $lang;
@@ -114,6 +115,8 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
+     * getRouter
+     *
 	 * Return a reference to the JRouter object.
 	 *
 	 * @return	JRouter
@@ -126,6 +129,8 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
+     * dispatch
+     *
 	 * Dispatch the application
 	 *
 	 * @param	string	$component	The component to dispatch.
@@ -141,7 +146,7 @@ class MolajoAdministrator extends MolajoApplication
 				$component = JAdministratorHelper::findOption();
 			}
 
-			$results = MolajoComponentHelper::getRequest();
+			parent::getRequest();
 
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
@@ -156,16 +161,43 @@ class MolajoAdministrator extends MolajoApplication
 					break;
 			}
 
+            /** prepare component MVC input */
+            $data = array();
+
+            $session = JFactory::getSession();
+
+            $data['application_id'] = $session->set('page.application_id');
+            $data['current_url'] = $session->get('page.current_url');
+            $data['base_url'] = $session->get('page.base_url');
+            $data['item_id'] = $session->get('page.item_id');
+
+            $data['controller'] = $session->get('page.controller');
+            $data['option'] = $session->get('page.option');
+            $data['view'] = $session->get('page.view');
+            $data['layout'] = $session->get('page.layout');
+            $data['task'] = $session->get('page.task');
+            $data['format'] = $session->get('page.format');
+
+            $data['id'] = $session->get('page.id');
+            $data['cid'] = $session->get('page.cid');
+            $data['catid'] = $session->get('page.catid');
+
+            $data['acl_implementation'] = $session->get('page.acl_implementation');
+            $data['component_table'] = $session->get('page.component_table');
+            $data['filter_fieldname'] = $session->get('page.filter_fieldname');
+            $data['select_fieldname'] = $session->get('page.select_fieldname');
+
 			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
-			$contents = MolajoComponentHelper::renderComponent($component);
+			$contents = MolajoComponentHelper::renderComponent($data);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.
 			MolajoPluginHelper::importPlugin('system');
 			$this->triggerEvent('onAfterDispatch');
 		}
+
 		// Uncaught exceptions.
 		catch (Exception $e)
 		{
@@ -175,6 +207,8 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
+     * render
+     *
 	 * Display the application.
 	 *
 	 * @return	void
@@ -207,6 +241,8 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
+     * login
+     *
 	 * Login authentication function
 	 *
 	 * @param	array	Array('username' => string, 'password' => string)
@@ -218,24 +254,22 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function login($credentials, $options = array())
 	{
-		//The minimum group
-		$options['group'] = 'Public Backend';
 
-		//Make sure users are not autoregistered
+		//  Make sure users are not autoregistered
 		$options['autoregister'] = false;
 
-		//Set the application login entry point
+		//  Set the application login entry point
 		if (!array_key_exists('entry_url', $options)) {
 			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=login';
 		}
 
 		// Set the access control action to check.
-		$options['action'] = 'core.login.admin';
+		$options['action'] = 'login';
 
 		$result = parent::login($credentials, $options);
 
-		if (!JError::isError($result))
-		{
+		if (JError::isError($result)) {
+        } else {
 			$lang = JRequest::getCmd('lang');
 			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
 			$this->setUserState('application.lang', $lang );
@@ -247,7 +281,9 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
-	 * Get the template
+	 * getTemplate
+     *
+     * Get the template
 	 *
 	 * @return	string	The template name
 	 * @since	1.0
@@ -256,33 +292,34 @@ class MolajoAdministrator extends MolajoApplication
 	{
 		static $template;
 
-		if (!isset($template))
-		{
+		if (isset($template)) {
+        } else {
 			$admin_style = MolajoFactory::getUser()->getParam('admin_style');
+
 			// Load the template name from the database
 			$db = MolajoFactory::getDbo();
 			$query = $db->getQuery(true);
+
 			$query->select('template, params');
 			$query->from('#__template_styles');
-			$query->where('application_id = 1');
-			if ($admin_style)
-			{
-				$query->where('id = '.(int)$admin_style);
-			}
-			else
-			{
+			$query->where('application_id = '. (int) MOLAJO_APPLICATION_ID);
+
+			if ($admin_style) {
+				$query->where('id = '.(int) $admin_style);
+			} else{
 				$query->where('home = 1');
 			}
+
 			$db->setQuery($query);
 			$template = $db->loadObject();
 
 			$template->template = JFilterInput::getInstance()->clean($template->template, 'cmd');
 			$template->params = new JRegistry($template->params);
 
-			if (!file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php'))
-			{
+			if (file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php')) {
+            } else {
 				$template->params = new JRegistry();
-				$template->template = 'bluestork';
+				$template->template = 'molajo';
 			}
 		}
 		if ($params) {
@@ -293,7 +330,9 @@ class MolajoAdministrator extends MolajoApplication
 	}
 
 	/**
-	 * Purge the table of old messages
+	 * purgeMessages
+     *
+     * Purge the table of old messages
 	 *
 	 * @return	void
 	 * @since	1.0

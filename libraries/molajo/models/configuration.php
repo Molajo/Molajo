@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage	Model
  * @since       1.0
  */
-class MolajoModelConfiguration extends JModel
+class MolajoModelConfiguration 
 {
     /**
      * @var string $option
@@ -174,7 +174,7 @@ class MolajoModelConfiguration extends JModel
      * @return string option value
      * @since 1.0
      */
-    public function getComponentOptionKey ()
+    private function getComponentOptionKey ()
     {
         foreach ($this->overrides as $configurationOverrides => $override) {
             if ($configurationOverrides == $this->option) {
@@ -196,7 +196,7 @@ class MolajoModelConfiguration extends JModel
      * @param int $option_id
      * @return string
      */
-    public function setOverridesArray ()
+    private function setOverridesArray ()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);

@@ -11,19 +11,21 @@ defined('MOLAJO') or die;
 require_once MOLAJO_PATH_COMPONENT.'/includes/include.php';
 
 /** validate option **/
-if (JRequest::getCmd('option') == $current_folder) {
+if ($data['option'] == $current_folder) {
 } else {
     JError::raiseError(500, JText::_('MOLAJO_INVALID_OPTION'));
     return false;
 }
 
 /** establish controller **/
-$defaultController = substr(JRequest::getCmd('option'), (strpos(JRequest::getCmd('option'), '_') + 1),
-                            strlen(JRequest::getCmd('option')) - strpos(JRequest::getCmd('option'), '_'));
+$defaultController = substr($data['option'], (strpos($data['option'], '_') + 1), strlen($data['option']) - strpos($data['option'], '_'));
 $controller = JController::getInstance(ucfirst($defaultController));
+$controller->data = $data;
+$controller->params = MolajoComponentHelper::getParams($data['option']);
 
 /** initialise **/
 $results = $controller->execute('initialise');
 
+
 /** task **/
-$controller->execute(JRequest::getCmd('task'));
+$controller->execute($data['task']);
