@@ -13,6 +13,5 @@ defined('MOLAJO') or die; ?>
 	<?php if ($this->row->name == "") { } else { echo ' name="'.$this->row->name.'"'; } ?>
 	value="<?php echo htmlspecialchars($this->row->value, ENT_COMPAT, 'UTF-8'); ?>"
 	<?php echo $this->row->disabled; ?>
-	<?php echo $this->row->autofocus; ?>
 	<?php if ($this->row->onclick == "") { } else { echo ' onclick="'.(string) $this->row->onclick.'"'; } ?>
 />
