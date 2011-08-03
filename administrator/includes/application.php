@@ -140,6 +140,7 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function dispatch($component = null)
 	{
+
 		try
 		{
 			if ($component === null) {
@@ -154,7 +155,7 @@ class MolajoAdministrator extends MolajoApplication
 			switch ($document->getType()) {
 				case 'html':
 					$document->setMetaData('keywords', $this->getCfg('MetaKeys'));
-					JHtml::_('behavior.framework', true);
+//JHtml::_('behavior.framework', true);
 					break;
 
 				default:
@@ -175,6 +176,7 @@ class MolajoAdministrator extends MolajoApplication
             $data['option'] = $session->get('page.option');
             $data['view'] = $session->get('page.view');
             $data['layout'] = $session->get('page.layout');
+            $data['model'] = $session->get('page.model');
             $data['task'] = $session->get('page.task');
             $data['format'] = $session->get('page.format');
 
@@ -191,6 +193,7 @@ class MolajoAdministrator extends MolajoApplication
 			$document->setDescription($this->getCfg('MetaDesc'));
 
 			$contents = MolajoComponentHelper::renderComponent($data);
+
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.
@@ -216,13 +219,10 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function render()
 	{
-		$component	= JRequest::getCmd('option', 'com_login');
+        $session = JFactory::getSession();
+		$component	= $session->get('page.option');
 		$template	= $this->getTemplate(true);
 		$file		= JRequest::getCmd('tmpl', 'index');
-
-		if ($component == 'com_login') {
-			$file = 'login';
-		}
 
 		$params = array(
 			'template'	=> $template->template,
@@ -233,9 +233,10 @@ class MolajoAdministrator extends MolajoApplication
 
 		$document = MolajoFactory::getDocument();
 		$document->parse($params);
+
 		$this->triggerEvent('onBeforeRender');
-		$data = $document->render(false, $params);
-		JResponse::setBody($data);
+		$renderedOutput = $document->render(false, $params);
+		JResponse::setBody($renderedOutput);
 		$this->triggerEvent('onAfterRender');
 
 	}
@@ -254,7 +255,6 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function login($credentials, $options = array())
 	{
-
 		//  Make sure users are not autoregistered
 		$options['autoregister'] = false;
 

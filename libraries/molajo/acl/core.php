@@ -80,7 +80,7 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkTaskManage ($option, $entity, $task, $catid, $id, $item)
     {
-        $molajoConfig = new MolajoModelConfiguration ();
+        $molajoConfig = new MolajoModelConfiguration ($option);
         $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS, $task);
 
         if (is_array($taskTests)) {
@@ -90,7 +90,8 @@ class MolajoACLCore extends MolajoACL
 
         $authorised = false;
         foreach ( $taskTests as $item )   {
-            $authorised = $this->authorise($item, $option);
+//amy            $authorised = $this->authorise($item, $option);
+            $authorised = true;
             if ($authorised) {
                 break;
             }
@@ -181,7 +182,7 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkTaskUpdate ($option, $entity, $task, $catid, $id, $item)
     {
-        $molajoConfig = new MolajoModelConfiguration ();
+        $molajoConfig = new MolajoModelConfiguration ($option);
         $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS, $task);
         if (is_array($taskTests)) {
         } else {
@@ -221,6 +222,9 @@ class MolajoACLCore extends MolajoACL
      */
     public function testAuthorisation ($option, $entity, $task, $catid, $id, $item, $option_value_literal)
     {
+    
+        return true;
+
         $authorised = false;
 
         if ((int) $id > 0) {
@@ -378,7 +382,7 @@ class MolajoACLCore extends MolajoACL
         $query->select('a.access');
 //        $query->select('ag.title AS access_level');
 
-        $aclClass = ucfirst(strtolower(JRequest::getVar('DefaultView'))).'ACL';
+        $aclClass = MolajoACL;
         $acl = new $aclClass();
         $groupList = $acl->getList('viewaccess');
 
@@ -441,9 +445,11 @@ class MolajoACLCore extends MolajoACL
         } else {
             $prefix = $prefix.'.';
         }
+
         $acl	= new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
         $query->where($prefix.'access IN ('.$list.')');
+
         return;
     }
 
@@ -522,7 +528,6 @@ class MolajoACLCore extends MolajoACL
      */
     public function getCategoriesList($id, $option, $task, $params=array())
     {
-
 		$db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
@@ -708,12 +713,15 @@ class MolajoACLCore extends MolajoACL
                 $query->select('content_table');
                 $query->from('#__assets a');
                 $query->where('asset_id = '.(int) $asset);
+
                 $db->setQuery($query);
                 $tableName = $db->loadResult();
+
                 if ($db->getErrorNum()) {
                     $this->setError($db->getErrorMsg());
                     return false;
                 }
+
                 $query = $db->getQuery(true);
                 $query->select('access');
                 $query->from($db->_nameQuote($tableName));
@@ -782,7 +790,8 @@ class MolajoACLCore extends MolajoACL
         if ($item->canPublish === true) {
             return;
         }
-        $molajoConfig = new MolajoModelConfiguration ();
+
+        $molajoConfig = new MolajoModelConfiguration ($option);
         $fieldsEditState = $molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS);
         foreach ($fieldsEditState as $count => $editstateItem ) {
             $form->setFieldAttribute($editstateItem->value, 'disabled', 'true');

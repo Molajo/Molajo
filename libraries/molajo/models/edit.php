@@ -98,7 +98,7 @@ class MolajoModelEdit extends JModel
         }
 
         /** acl-append item-specific task permissions **/
-        $aclClass = ucfirst(JRequest::getCmd('DefaultView')).'ACL';
+        $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
         $aclClass::getUserItemPermissions (JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $item->catid, $item->id, $item);
 
         return $item;

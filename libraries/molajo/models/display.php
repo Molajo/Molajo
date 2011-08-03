@@ -436,7 +436,7 @@ class MolajoModelDisplay extends JModel
         $jsonFields = $this->molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
 
         /** ACL **/
-        $aclClass = ucfirst($this->getState('request.DefaultView')).'ACL';
+        $aclClass = 'MolajoACL'.ucfirst($this->getState('request.DefaultView'));
 
         /** process rowset */
         $rowCount = 0;
@@ -687,7 +687,7 @@ $items[$i]->checked_out = false;
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 */
         /** set view access criteria for site visitor **/
-        $aclClass = ucfirst(strtolower($this->getState('request.DefaultView'))).'ACL';
+        $aclClass = 'MolajoACL'.ucfirst(strtolower($this->getState('request.DefaultView')));
         $acl = new $aclClass ();
         $results = $acl->getQueryInformation ($this->getState('request.DefaultView'), $this->query, 'user', '', $this->getState('request.DefaultView'));
 

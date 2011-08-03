@@ -94,7 +94,7 @@ class MolajoFieldAccess extends MolajoField
         if ((int) $value == 0) {
             return;
         }
-        $aclClass = ucfirst(strtolower(JRequest::getVar('DefaultView'))).'ACL';
+        $aclClass = 'MolajoACL'.ucfirst(strtolower(JRequest::getVar('DefaultView')));
         $aclClass::getQueryInformation (JRequest::getVar('option'), $query, 'filter', $value );
     }
 

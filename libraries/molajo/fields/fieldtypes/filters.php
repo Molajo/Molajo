@@ -35,7 +35,7 @@ class MolajoFormFieldFilters extends MolajoFormField
 	protected function getInput()
 	{
 		/** retrieve user's ACL groups **/
-        $className = ucfirst(JRequest::getCmd('DefaultView')).'ACL';
+        $className = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
         $acl = new $className ();
 		$groups = $acl->getList ('groups', $userid='', $actions='', JRequest::getCmd('option'), $asset='');
 

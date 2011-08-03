@@ -1705,7 +1705,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 100 MOLAJO_CONFIG_OPTION_ID_TABLE */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 100, '', '', 0),
-('com_login', 100, 'dummy', 'dummy', 1);
+('com_login', 100, '__dummy', '__dummy', 1);
 
 /* 200 MOLAJO_CONFIG_OPTION_ID_FIELDS */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES

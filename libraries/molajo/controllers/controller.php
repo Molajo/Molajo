@@ -169,30 +169,26 @@ class MolajoController extends JController
 
         if ($this->model) {
         } else {
-            if ($this->data['table'] == 'dummy') {
-            } else {
-                $this->model = $this->getModel($this->data['model'], ucfirst($this->data['model'].'Model'), array());
-            }
+            $this->model = $this->getModel($this->data['view'], ucfirst($this->data['model'].'Model'), array());
         }
-
-        $this->table = $this->model->getTable();
 
         if ($this->data['task'] == 'display'
             || $this->data['task'] == 'add') {
+            $this->isNew = false;
         } else {
+            $this->table = $this->model->getTable();
             $this->table->reset();
             $this->table->load($this->id);
             $this->catid = $this->table->catid;
-        }
 
-        /** Preparation: $isNew */
-        if ($this->id == 0) {
-            $this->isNew = true;
-            $this->existingState  = 0;
-        } else {
-            $this->isNew = false;
-            $this->catid = $this->table->catid;
-            $this->existingState = $this->table->state;
+            if ($this->id == 0) {
+                $this->isNew = true;
+                $this->existingState  = 0;
+            } else {
+                $this->isNew = false;
+                $this->catid = $this->table->catid;
+                $this->existingState = $this->table->state;
+            }
         }
 
         /** event dispatcher */
@@ -235,24 +231,33 @@ class MolajoController extends JController
             $checkTask = $this->getTask();
         }
 
-        if ($checkId == null) {
-            $checkId = $this->id;
-        }
+        if ($this->data['component_table'] == '__common') {
+            $checkId = 0;
+            $checkCatid = 0;
+            $checkTable = array();
+        } else {
 
-        if ($checkCatid == null) {
-            if ((int) $this->catid == 0) {
-                $checkCatid = (int) $this->table->catid;
-            } else {
-                $checkCatid = (int) $this->catid;
+            if ($checkId == null) {
+                $checkId = $this->id;
+            }
+
+            if ($checkCatid == null) {
+                if ((int) $this->catid == 0) {
+                    $checkCatid = (int) $this->table->catid;
+                } else {
+                    $checkCatid = (int) $this->catid;
+                }
+            }
+
+            if ($checkTable == null) {
+                $checkTable = $this->table;
             }
         }
 
-        if ($checkTable == null) {
-            $checkTable = $this->table;
-        }
-
-        $aclClass = $this->data['acl_implementation'].'ACL';
+ //       $aclClass = 'MolajoACL'.ucfirst(strtolower($this->data['acl_implementation']));
+        $aclClass = 'MolajoACL';
         $acl = new $aclClass ();
+//        echo $this->data['option']. $this->data['view']. $checkTask. $checkId. $checkCatid;
         $results = $acl->authoriseTask ($this->data['option'], $this->data['view'], $checkTask, $checkId, $checkCatid, $checkTable);
 
         if ($results === false) {
@@ -401,7 +406,8 @@ class MolajoController extends JController
         }
 
         /** versions deleted with delete **/
-        if ($this->task == 'delete' && $this->params->def('config_component_retain_versions_after_delete', 1) == 0) {
+        if ($this->task == 'delete'
+            && $this->params->def('config_component_retain_versions_after_delete', 1) == 0) {
             return true;
         }
 

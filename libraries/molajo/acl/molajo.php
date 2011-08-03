@@ -32,6 +32,7 @@ class MolajoACL
     {
         $authoriseTaskMethod = 'check'.ucfirst(strtolower($task)).'Authorisation';
         $class = $this->getMethodClass ($authoriseTaskMethod, $option);
+
         if ($class == false) {
             return false;
         }
@@ -254,26 +255,36 @@ class MolajoACL
     */
     public function getMethodClass ($method, $option='')
     {
+        /** Component Override */
         if ($option == '') {
         } else {
             if (substr($option, 0, 4) == 'com_') {
                 $option = substr($option, 4, strlen($option) - 4);
             }
-            $componentClass = ucfirst(strtolower($option)).'ACL';
+            $componentClass = 'MolajoACL'.ucfirst(strtolower($option));
             if (class_exists($componentClass)) {
                 if (method_exists($componentClass,$method)) {
                     return $componentClass;
                 }
             }
-        }
 
-        $implementedClass = ucfirst(strtolower(JRequest::getVar('aclImplementation', 'core'))).'ACL';
-        if (class_exists($implementedClass)) {
-            if (method_exists($implementedClass,$method)) {
-                return $implementedClass;
+            /** Component Option */
+            $session = JFactory::getSession();
+            if ($session->get('page.option') == $option) {
+                $acl_implementation = $session->get('page.acl_implementation');
+            } else {
+                $molajoConfig = new MolajoModelConfiguration ($option);
+                $acl_implementation = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
+            }
+
+            $implementedClass = 'MolajoACL'.ucfirst($acl_implementation);
+            if (class_exists($implementedClass)) {
+                if (method_exists($implementedClass,$method)) {
+                    return $implementedClass;
+                }
             }
         }
-
+        
         $default_class = 'MolajoACLCore';
         if (class_exists($default_class)) {
             if (method_exists($default_class,$method)) {

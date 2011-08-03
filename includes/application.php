@@ -225,6 +225,7 @@ class MolajoSite extends MolajoApplication
             $data['layout'] = $session->get('page.layout');
             $data['task'] = $session->get('page.task');
             $data['format'] = $session->get('page.format');
+            $data['table'] = $session->get('page.table');
 
             $data['id'] = $session->get('page.id');
             $data['cid'] = $session->get('page.cid');
@@ -237,6 +238,8 @@ class MolajoSite extends MolajoApplication
 
 			$document->setTitle($params->get('page_title'));
 			$document->setDescription($params->get('page_description'));
+
+            /** render the component */
 			$contents = MolajoComponentHelper::renderComponent($data);
 			$document->setBuffer($contents, 'component');
 

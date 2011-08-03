@@ -24,7 +24,7 @@ if ($this->state->get('component_task') == 'add') {
 } else {
     $set = 'config_manager_button_bar_option';
 }
-$aclClass = ucfirst($this->state->get('request.DefaultView')).'ACL';
+$aclClass = 'MolajoACL'.ucfirst(strtolower(JRequest::getVar('DefaultView')));
 $acl = new $aclClass ();
 $this->permissions = $acl->getUserPermissionSet ($this->state->get('request.option'),
                                                  $this->state->get('request.EditView'),

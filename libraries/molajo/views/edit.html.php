@@ -81,7 +81,7 @@ class MolajoViewEdit extends MolajoView
         }
 
         /** ACL: form field authorisations **/
-        $aclClass = ucfirst(JRequest::getCmd('DefaultView')).'ACL';
+        $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
         $acl = new $aclClass();
         $acl->getFormAuthorisations (JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
 

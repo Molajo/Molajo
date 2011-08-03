@@ -356,7 +356,6 @@ class MolajoApplication extends JObject
                     $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
                     return false;
                 }
-                echo $format;
             }
         } else {
             /** amy: come back and get redirect stuff later */
@@ -392,13 +391,13 @@ class MolajoApplication extends JObject
 
         /** 9. acl implementation */
         $acl_implementation = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
-        if ($acl_implementation == false) {
+        if ($acl_implementation === false) {
             $acl_implementation = 'core';
         }
 
         /** 10. component table */
         $component_table = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_TABLE);
-        if ($component_table == false) {
+        if ($component_table === false) {
             $component_table = '_common';
         }
 
@@ -423,6 +422,7 @@ class MolajoApplication extends JObject
         $session->set('page.controller', $controller);
         $session->set('page.option', $option);
         $session->set('page.view', $view);
+        $session->set('page.model', $view);
         $session->set('page.layout', $layout);
         $session->set('page.task', $task);
         $session->set('page.format', $format);
