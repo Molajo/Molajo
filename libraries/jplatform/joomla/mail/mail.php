@@ -13,7 +13,7 @@ jimport('phpmailer.phpmailer');
 jimport('joomla.mail.helper');
 
 /**
- * Email Class.  Provides a common interface to send email from the Joomla! Framework
+ * Email Class.  Provides a common interface to send email from the Molajo Framework
  *
  * @package     Joomla.Platform
  * @subpackage  Mail

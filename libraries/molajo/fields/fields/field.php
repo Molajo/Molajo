@@ -166,7 +166,7 @@ class MolajoField
     {
         if (class_exists('MolajoField'.ucfirst($fieldName))) {
         } else {
-            $fieldClassFile = MOLAJO_LIBRARY.'/component/fields/'.$fieldName.'.php';
+            $fieldClassFile = MOLAJO_LIBRARY.'/fields/fields/'.$fieldName.'.php';
             if (JFile::exists($fieldClassFile)) {
                 require_once $fieldClassFile;
             } else {

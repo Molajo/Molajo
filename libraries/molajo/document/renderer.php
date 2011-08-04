@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,9 +12,9 @@ defined('MOLAJO') or die;
 /**
  * Abstract class for a renderer
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
- * @since       11.1
+ * @since       1.0
  */
 class MolajoDocumentRenderer extends JObject
 {

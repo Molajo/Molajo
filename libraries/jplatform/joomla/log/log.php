@@ -20,7 +20,7 @@ JLoader::discover('JLogger', dirname(__FILE__).'/loggers');
 jimport('joomla.filesystem.path');
 
 /**
- * Joomla! Log Class
+ * Molajo Log Class
  *
  * This class hooks into the global log configuration settings to allow for user configured
  * logging events to be sent to where the user wishes them to be sent. On high load sites

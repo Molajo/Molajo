@@ -14,12 +14,12 @@ class plgSystemTamka_Router extends JPlugin	{
 /**
  * OnAfterInitialise
  *
- * Parse: for incoming requests - Joomla! has already parsed the incoming URL, looked up the menu item,
+ * Parse: for incoming requests - Molajo has already parsed the incoming URL, looked up the menu item,
  * 	populated variables, but has not yet routed the request. attachBuildRule allows one to override these
  * 	settings and to compensate with information that the core Router does not have. Runs one time per page load.
  *
  * Build: runs one time for each internal website URL presented on the Web page. In the same sense,
- * 	Joomla! has already populated variables needed to write the URL to output. In attachBuildRule,
+ * 	Molajo has already populated variables needed to write the URL to output. In attachBuildRule,
  * 	one can impact these Web links.
  *
  */
@@ -62,8 +62,8 @@ class plgSystemTamka_Router extends JPlugin	{
 
 /**
  * 	Modify Query Variables, if necessary, for the Router
- * 		Joomla!'s Route function, which is the next event in J's processing. This parse function runs after
- * 		Joomla!'s Parse and makes adjustments needed to implement Tamka URLs. The process also provides
+ * 		Molajo's Route function, which is the next event in J's processing. This parse function runs after
+ * 		Molajo's Parse and makes adjustments needed to implement Tamka URLs. The process also provides
  * 		additional URL-related functions (No WWW, 301 handling, Custom 404 handling).
  *
  * 	This is the basic logic and flow covered by this function:
@@ -80,7 +80,7 @@ class plgSystemTamka_Router extends JPlugin	{
  *
  * 	6.	Parameterized URLs - try to find good URL, then 301, else 404
  *
- *  7.	Normal Joomla! Menu Item URLs - Tamka uses these and relies on Joomla!'s normal processing
+ *  7.	Normal Molajo Menu Item URLs - Tamka uses these and relies on Molajo's normal processing
  * 		When normal Menu Item URLs are found, this process lets them pass unchanged
  *
  *  8.	Component/object-name URLs - find good URL, then 301
@@ -90,7 +90,7 @@ class plgSystemTamka_Router extends JPlugin	{
  *  10.	Tamka URLs
  *
  *  11.	Last Resort - Check if there is a 301 table entry for a changed Alias 
- * 		Or if there is a numeric value that matches an Article (should help automatically migrate Joomla! URLs)
+ * 		Or if there is a numeric value that matches an Article (should help automatically migrate Molajo URLs)
  *  		Or if the last slug matches the Article Alias, then 301 - or 404
  *
  */
@@ -306,7 +306,7 @@ class plgSystemTamka_Router extends JPlugin	{
 		}
 
 	 /**
-	 * 	7.	Normal Joomla! Menu Item URLs - these are identified and allowed to pass
+	 * 	7.	Normal Molajo Menu Item URLs - these are identified and allowed to pass
 	 * 		Function: cascadeMenuItems - matches URL segments to Menu Item Alias Tree
 	 */
 		$results = cascadeMenuItems ($uriArray, $uriArrayCount);
@@ -679,7 +679,7 @@ class plgSystemTamka_Router extends JPlugin	{
 	/**
 	 * 	Function: process_301_404_errors
 	 *
-	 * 		If a URL cannot be identified with a Joomla! Web page, this process is used to:
+	 * 		If a URL cannot be identified with a Molajo Web page, this process is used to:
 	 * 		a) See if a permanent 301 redirect has been defined in the #__301_redirect (if so, use it.)
 	 * 		b) If not, send to the 404 function to log the error and redirect to a custom 404 page
 	 *

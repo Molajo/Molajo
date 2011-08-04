@@ -14,7 +14,7 @@ jimport('joomla.environment.response');
 jimport('joomla.log.log');
 
 /**
- * Base class for a Joomla! application.
+ * Base class for a Molajo application.
  *
  * Acts as a Factory class for application specific objects and provides many
  * supporting API functions. Derived clases should supply the route(), dispatch()
@@ -377,7 +377,7 @@ class JApplication extends JObject
  				echo '<html><head><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /><script>document.location.href=\''.$url.'\';</script></head><body></body></html>';
 			}
 			elseif (!$moved and $navigator->isBrowser('konqueror')) {
-				// WebKit browser (identified as konqueror by Joomla!) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
+				// WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
 				echo '<html><head><meta http-equiv="refresh" content="0; url='. $url .'" /><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /></head><body></body></html>';
 			}
 			else {

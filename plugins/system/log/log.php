@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! System Logging Plugin
+ * Molajo System Logging Plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.log

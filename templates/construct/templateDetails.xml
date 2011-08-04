@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install PUBLIC "-//Joomla! 1.6//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.6/template-install.dtd">
-<extension version="1.6" type="template" application="site" method="upgrade">
+<!DOCTYPE install PUBLIC "-//Molajo 1.6//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.6/template-install.dtd">
+<extension version="1.0" type="template" application="site" method="upgrade">
 	<name>construct</name>
 	<creationDate>June 13th, 2011</creationDate>
 	<author>Joomla Engineering</author>
@@ -157,7 +157,7 @@
 					<option value="0">No</option>
 				</field>				
 				<field name="customStyleSheet" type="filelist" default="molajo.css" label="TPL_MOLAJO_CONSTRUCT_CUSTOM_STYLE_SHEET_LABEL" directory="templates/construct/css" filter="\.css" exclude="core-classes-ids\.css|diagnostic\.css|editor\.css|modal\.css|normal\.css|print\.css|rtl\.css|screen\.css|ie6\.css|wireframe\.css|mobile\.css" description="TPL_MOLAJO_CONSTRUCT_CUSTOM_STYLE_SHEET_DESC" />
-				<field name="setGeneratorTag" type="text" default="Molajo - Joomla! Based Distribution" label="Generator Meta Tag" description="Customize the generator meta tag output by your template." size="56" />		
+				<field name="setGeneratorTag" type="text" default="Molajo - Molajo Based Distribution" label="Generator Meta Tag" description="Customize the generator meta tag output by your template." size="56" />
 			</fieldset>
 			<fieldset name="IE">
 				<field name="IECSS3" type="radio" default="1" label="TPL_MOLAJO_CONSTRUCT_IE_CSS3_LABEL" description="TPL_MOLAJO_CONSTRUCT_IE_CSS3_DESC">

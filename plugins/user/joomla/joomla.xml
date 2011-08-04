@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6" type="plugin" group="user">
+<extension version="1.0" type="plugin" group="user">
 	<name>plg_user_joomla</name>
-	<author>Joomla! Project</author>
+	<author>Molajo Project</author>
 	<creationDate>December 2006</creationDate>
 	<copyright>(C) 2005 - 2009 Open Source Matters. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>

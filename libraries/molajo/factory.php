@@ -637,7 +637,7 @@ abstract class MolajoFactory
 	{
 		$lang	= self::getLanguage();
 
-		// Keep backwards compatibility with Joomla! 1.0
+		// Keep backwards compatibility with Molajo 1.0
 		$raw	= JRequest::getBool('no_html');
 		$type	= JRequest::getWord('format', $raw ? 'raw' : 'html');
 
@@ -669,9 +669,9 @@ abstract class MolajoFactory
 	{
 		jimport('joomla.filesystem.stream');
 
-		// Setup the context; Joomla! UA and overwrite
+		// Setup the context; Molajo UA and overwrite
 		$context = array();
-		$version = new JVersion;
+		$version = new MolajoVersion;
 		// set the UA for HTTP and overwrite for FTP
 		$context['http']['user_agent'] = $version->getUserAgent($ua, $uamask);
 		$context['ftp']['overwrite'] = true;

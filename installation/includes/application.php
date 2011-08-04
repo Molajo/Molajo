@@ -120,16 +120,8 @@ class MolajoInstallation extends MolajoApplication
 				break;
 		}
 
-		// Define component path
-		define('MOLAJO_PATH_COMPONENT', MOLAJO_PATH_BASE);
-		define('MOLAJO_PATH_COMPONENT_SITE', MOLAJO_PATH_SITE);
-		define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_ADMINISTRATOR);
-		define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT);
-		define('JPATH_COMPONENT_SITE', MOLAJO_PATH_COMPONENT_SITE);
-		define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR);
-        
 		// Import the controller.
-		require_once MOLAJO_PATH_COMPONENT.'/controller.php';
+		require_once MOLAJO_PATH_BASE.'/controller.php';
 		$controller	= JController::getInstance('MolajoInstallation');
 
 		// Start the output buffer.

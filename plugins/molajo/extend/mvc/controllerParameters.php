@@ -223,7 +223,7 @@ class extendControllerParameters {
      *      and, using a pattern file, automatically creates the Parameter XML
      *      and loads the Custom Field Form Data back into the Form Object
      *      Uses JForm to filter and validate the content
-     *      Retrieves the params field saved by Joomla! and appends in the Custom Field Params
+     *      Retrieves the params field saved by Molajo and appends in the Custom Field Params
      *      updating the Extensions table
      *
      * This function creates itself.

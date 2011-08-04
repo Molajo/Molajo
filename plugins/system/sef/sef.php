@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! SEF Plugin
+ * Molajo SEF Plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.sef

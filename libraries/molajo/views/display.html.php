@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: multiple.html.php
  * @package     Molajo
  * @subpackage  Display View
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -29,7 +28,7 @@ class MolajoViewDisplay extends MolajoView
      *    B. And those parameters needed by the layout - ex. $this->option->get('layout.show_title')
      *
      * 3. Component Request Variables
-     *    $this->state->get('request.option'), and 'component_' + model, view, layout, DefaultView, EditView and task
+     *    $this->request['option'], and 'component_' + model, view, layout, DefaultView, EditView and task
      *
      * 4. 
      *
@@ -68,29 +67,34 @@ class MolajoViewDisplay extends MolajoView
      */
     public function display($tpl = null)
     {
-        /** 1. Get State */
+        /** 1. Get Request */
+        $this->request    = $this->get('Request');
+
+        /** 2. Get State */
         $this->state      = $this->get('State');
 
-        /** 2. Get System Variables */
+        /** 3. Get System Variables */
         parent::display($tpl);
 
         /** 3. Output Layout for System Requests */
         //echo $this->getColumns ('system');
 
         /** 4. Retrieve Query Results */
-        $this->rowset     = $this->get('Items');
-
-        /** 5. Retrieve Layout Parameters */
-        if (MolajoFactory::getApplication()->getName() == 'site') {
-           $this->params = MolajoFactory::getApplication()->getParams();
-   //         $this->_mergeParams ();
-//		$this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
+        if ($this->request['table'] == '_dummy') {
+            $this->rowset = $this->get('Items');
         } else {
-           $this->params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
+            $this->rowset = array();
         }
 
+        /** 5. Retrieve Layout Parameters */
+        $this->params = $this->get('Params');
+        
         /** 6. Get Pagination data */
-        $this->pagination = $this->get('Pagination');
+        if ($this->request['table'] == '_dummy') {
+             $this->pagination = $this->get('Pagination');
+        } else {
+            $this->pagination = array();
+        }
 
         /** 7. Optional data */
 //		$this->category	            = $this->get('Category');
@@ -139,7 +143,7 @@ $this->params->get('layout_page_class_suffix', '')
 
         }
 
-        $layoutFolder = $this->findPath($this->state->get('request.layout'));
+        $layoutFolder = $this->findPath($this->request['layout']);
         if ($layoutFolder === false) {
             parent::display($tpl);
         } else {

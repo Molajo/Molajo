@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install PUBLIC "-//Joomla! 1.6//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.6/template-install.dtd">
+<!DOCTYPE install PUBLIC "-//Molajo 1.0//DTD template 1.0//EN" "http://molajo.org/xml/dtd/1.0/template-install.dtd">
 <extension
 	type="template"
-	version="1.6"
+	version="1.0"
 	application="administrator">
-	<name>bluestork</name>
-	<creationDate>07/02/09</creationDate>
-	<author>Ron Severdia</author>
-	<authorEmail>contact@kontentdesign.com</authorEmail>
-	<authorUrl>http://www.kontentdesign.com</authorUrl>
-	<copyright>Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.</copyright>
+	<name>molajo</name>
+	<creationDate>08/01/2011</creationDate>
+	<author>Molajo Contributors</author>
+	<authorEmail>contribute@molajo.org</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.6.0</version>
-	<description>TPL_BLUESTORK_XML_DESCRIPTION</description>
+	<version>1.0.0</version>
+	<description>TPL_MOLAJO_XML_DESCRIPTION</description>
 	<files>
-		<filename>index.php</filename>
-		<filename>login.php</filename>
 		<filename>component.php</filename>
 		<filename>cpanel.php</filename>
 		<filename>error.php</filename>
 		<filename>favicon.ico</filename>
-		<filename>index.html</filename>
+		<filename>index.php</filename>
+		<filename>login.php</filename>
 		<filename>params.ini</filename>
 		<filename>template_preview.png</filename>
 		<filename>template_thumbnail.png</filename>
 		<filename>templateDetails.xml</filename>
-		<folder>images</folder>
-		<folder>js</folder>
 		<folder>css</folder>
 		<folder>html</folder>
 		<folder>language</folder>
@@ -51,8 +48,8 @@
 					name="useRoundedCorners"
 					type="list"
 					default="1"
-					label="TPL_BLUESTORK_FIELD_ROUNDED_LABEL"
-					description="TPL_BLUESTORK_FIELD_ROUNDED_DESC">
+					label="TPL_MOLAJO_FIELD_ROUNDED_LABEL"
+					description="TPL_MOLAJO_FIELD_ROUNDED_DESC">
 					<option
 						value="0">JDISABLED</option>
 					<option
@@ -62,8 +59,8 @@
 					name="showSiteName"
 					type="list"
 					default="0"
-					label="TPL_BLUESTORK_FIELD_SITENAME_LABEL"
-					description="TPL_BLUESTORK_FIELD_SITENAME_DESC">
+					label="TPL_MOLAJO_FIELD_SITENAME_LABEL"
+					description="TPL_MOLAJO_FIELD_SITENAME_DESC">
 					<option
 						value="0">JDISABLED</option>
 					<option
@@ -74,8 +71,8 @@
 					name="textBig"
 					type="list"
 					default="0"
-					label="TPL_BLUESTORK_FIELD_TEXTBIG_LABEL"
-					description="TPL_BLUESTORK_FIELD_TEXTBIG_DESC">
+					label="TPL_MOLAJO_FIELD_TEXTBIG_LABEL"
+					description="TPL_MOLAJO_FIELD_TEXTBIG_DESC">
 					<option
 						value="0">JDISABLED</option>
 					<option
@@ -86,8 +83,8 @@
 					name="highContrast"
 					type="list"
 					default="0"
-					label="TPL_BLUESTORK_FIELD_CONTRAST_LABEL"
-					description="TPL_BLUESTORK_FIELD_CONTRAST_DESC">
+					label="TPL_MOLAJO_FIELD_CONTRAST_LABEL"
+					description="TPL_MOLAJO_FIELD_CONTRAST_DESC">
 					<option
 						value="0">JDISABLED</option>
 					<option

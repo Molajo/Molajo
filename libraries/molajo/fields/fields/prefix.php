@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  *  @subpackage Filter
  *  @since      1.6
  */
-class MolajoFieldPublish_down extends MolajoField
+class MolajoFieldPrefix extends MolajoField
 {
     /**
      *  __construct

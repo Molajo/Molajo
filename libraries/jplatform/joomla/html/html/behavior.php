@@ -231,7 +231,7 @@ abstract class JHtmlBehavior
 		// offsets needs an array in the format: array('x'=>20, 'y'=>30)
 		$opt['offset']			= (isset($params['offset']) && (is_array($params['offset']))) ? $params['offset'] : null;
 		if (!isset($opt['offset'])) {
-			// Suppporting offsets parameter which was working in mootools 1.2 (Joomla!1.5)
+			// Suppporting offsets parameter which was working in mootools 1.2 (Molajo1.5)
 			$opt['offset']			= (isset($params['offsets']) && (is_array($params['offsets']))) ? $params['offsets'] : null;
 		}
 		$opt['showDelay']		= (isset($params['showDelay'])) ? (int)$params['showDelay'] : null;

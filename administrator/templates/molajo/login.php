@@ -1,15 +1,12 @@
 <?php
 /**
- * @version		$Id: login.php 21097 2011-04-07 15:38:03Z dextercowley $
- * @package		Joomla.Administrator
- * @subpackage	Templates.bluestork
+ * @package     Molajo
+ * @subpackage  Template
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// no direct access
-defined('_JEXEC') or die;
-
+defined('MOLAJO') or die;
 $app = MolajoFactory::getApplication();
 JHtml::_('behavior.noframes');
 JHtml::_('behavior.framework');
@@ -47,7 +44,7 @@ JHtml::_('behavior.framework');
 	<div id="border-top" class="h_blue">
 		<div>
 			<div>
-				<span class="title"><a href="index.php"><?php echo $this->params->get('showSiteName') ? $app->getCfg('sitename') : JText::_('TPL_BLUESTORK_HEADER'); ?></a></span>
+				<span class="title"><a href="index.php"><?php echo $this->params->get('showSiteName') ? $app->getCfg('sitename') : JText::_('TPL_MOLAJO_HEADER'); ?></a></span>
 			</div>
 		</div>
 	</div>
@@ -85,8 +82,8 @@ JHtml::_('behavior.framework');
 </div>
 <div id="footer">
 	<p class="copyright">
-		<?php $joomla= '<a href="http://www.joomla.org">Joomla!&#174;</a>';
-		echo JText::sprintf('JGLOBAL_ISFREESOFTWARE', $joomla) ?>
+		<?php $molajo = '<a href="http://molajo.org">Molajo&#174;</a>';
+		echo JText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
 	</p>
 </div>
 </body>

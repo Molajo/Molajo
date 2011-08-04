@@ -1,24 +1,1383 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.6" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_MOLAJO_NAME</name>
-    <author>Amy Stephen</author>
-    <creationDate>June 2011</creationDate>
-    <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
+    <author>Molajo Project</author>
+    <creationDate>January 2011</creationDate>
+    <copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved. See http://molajo.org/copyright</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
-    <authorEmail>AmyStephen@molajo.org</authorEmail>
-    <authorUrl>http://molajo.org</authorUrl>
-    <version>1.0</version>
+    <authorEmail>SpecificMaintainerTeam@molajo.org</authorEmail>
+    <authorUrl>molajo.org/MaintainerTeam</authorUrl>
+    <version>1.6.0</version>
     <description>PLG_SYSTEM_MOLAJO_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="molajo">molajo.php</filename>
 		<filename>index.html</filename>
-		<folder>language</folder>
+		<folder>language</folder>		
 	</files>
 	<languages>
 		<language tag="language/en-GB">en-GB.plg_system_molajo.ini</language>
 		<language tag="language/en-GB">en-GB.plg_system_molajo.sys.ini</language>
 	</languages>
 	<config>
+            <fields name="params">
+
+        <!-- MOLAJO TAB  $ -->
+                <fieldset name="fieldset_molajo">
+                        <field 
+                            name="intro"
+                            label="PLG_SYSTEM_MOLAJO_FIELD_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_FIELD_DESC"
+                            type="spacer"
+                            hr="false"
+                        />
+                </fieldset>
+
+        <!-- BROADCAST TAB  $ -->
+                <fieldset
+                    name="fieldset_broadcast"
+                    label="PLG_SYSTEM_MOLAJO_BROADCAST_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_broadcast"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_BROADCAST_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_BROADCAST_SECTION_DESC"
+                            />
+
+                       <field
+                            name="enable_broadcast"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_ENABLE_BROADCASTING_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_ENABLE_BROADCASTING_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_broadcast_categories"
+                            type="category"
+                            multiple="true"
+                            size="10"
+                            label="PLG_SYSTEM_MOLAJO_ENABLE_BROADCASTING_CATEGORY_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_ENABLE_BROADCASTING_CATEGORY_DESC"
+                        >
+                        </field>
+
+                    <!-- Enable Feed Section  $ -->
+                        <field
+                            name="section_feed"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_RSS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_RSS_DESC"
+                            />
+
+                        <field
+                            name="enable_feeds"
+                            type="radio"
+                            default="0"
+                            label="PLG_SYSTEM_MOLAJO_SHOW_FEED_LINK_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SHOW_FEED_LINK_DESC"
+                            >
+                            <option value="0">JHIDE</option>
+                            <option value="1">JSHOW</option>
+                        </field>
+
+                    <!-- Enable Subscription Section  $ -->
+                        <field
+                            name="section_email"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_EMAIL_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_EMAIL_DESC"
+                            />
+
+                        <field
+                            name="enable_subscriptions"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_EMAIL_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_EMAIL_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="email_author_info"
+                            type="list"
+                            label="PLG_SYSTEM_MOLAJO_EMAIL_AUTHOR_INFO_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_EMAIL_AUTHOR_INFO_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">PLG_SYSTEM_MOLAJO_AUTHOR_NAME</option>
+                            <option
+                                    value="1">PLG_SYSTEM_MOLAJO_AUTHOR_USERNAME</option>
+                            <option
+                                    value="2">PLG_SYSTEM_MOLAJO_AUTHOR_NEITHER</option>
+                        </field>
+
+                        <field
+                            name="email_content_title"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_EMAIL_CONTENT_TITLE_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_EMAIL_CONTENT_TITLE_DESC"
+                            default="1"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="email_content_url"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_EMAIL_CONTENT_URL_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_EMAIL_CONTENT_URL_DESC"
+                            default="1"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                    <!-- Enable Ping Section  $ -->
+                        <field
+                            name="section_ping"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_PING_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_PING_DESC"
+                            />
+
+                        <field
+                            name="enable_ping"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-ping-o-matic"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_PINGOMATIC_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_PINGOMATIC_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-google"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_GOOGLE_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_GOOGLE_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-audioweblogs"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_AUDIOWEBLOGS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_AUDIOWEBLOGS_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-blogs"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_BLOGS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_BLOGS_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-feedburner"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_FEEDBURNER_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_FEEDBURNER_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-technorati"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_TECHNORATI_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_TECHNORATI_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="ping-weblogscom"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_PING_WEBLOGSCOM_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_PING_WEBLOGSCOM_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                    <!-- Enable Twitter Section  $ -->
+                        <field
+                            name="section_twitter"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_TWITTER_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_TWITTER_DESC"
+                            />
+
+                        <field
+                            name="enable_tweet"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_TWEET_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_TWEET_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="twitter_username"
+                            type="text"
+                            default=""
+                            label="PLG_SYSTEM_MOLAJO_TWITTER_ACCOUNT_USERNAME_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_TWITTER_ACCOUNT_USERNAME_DESC" >
+                        </field>
+
+                        <field
+                            name="twitter_password"
+                            type="password"
+                            default=""
+                            label="PLG_SYSTEM_MOLAJO_TWITTER_ACCOUNT_PASSWORD_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_TWITTER_ACCOUNT_PASSWORD_DESC" >
+                        </field>
+
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_content"
+                    label="PLG_SYSTEM_MOLAJO_CONTENT_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                   <!-- Content Plugin - Text $ -->
+                   
+                        <field
+                            name="section_content_text"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_SECTION_TEXT_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_SECTION_TEXT_DESC"
+                            />
+
+                        <field
+                            name="enable_add_line_breaks"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_ADD_LINE_BREAKS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_ADD_LINE_BREAKS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_smilies"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_ADD_SMILIES_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_ADD_SMILIES_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_hidden_notes"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_HIDDEN_NOTES_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_HIDDEN_NOTES_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_view_access"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_VIEW_ACCESS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_VIEW_ACCESS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_blockquotes"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_BLOCKQUOTES_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_BLOCKQUOTES_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_pullquotes"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_PULLQUOTES_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_PULLQUOTES_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_pirate_day"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_PIRATE_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_ENABLE_PIRATE_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                   <!-- Content Plugin - Syntax Highlighter $ -->
+                        <field
+                            name="section_content_syntax_highlighter"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_SECTION_SYNTAX_HIGHLIGHTER_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_SECTION_SYNTAX_HIGHLIGHTER_DESC"
+                            />
+
+                        <field
+                            name="enable_syntax_highlighter"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="syntax_highlighter_template"
+                            type="list"
+                            label="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_DESC"
+                            default="shThemeDefault.css">
+                            <option
+                                    value="shThemeDefault.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_DEFAULT</option>
+                            <option
+                                    value="shThemeDjango.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_DJANGO</option>
+                            <option
+                                    value="shThemeEclipse.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_ECLIPSE</option>
+                            <option
+                                    value="shThemeEmacs.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_EMACS</option>
+                            <option
+                                    value="shThemeFadeToGrey.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_FADE_TO_GREY</option>
+                            <option
+                                    value="shThemeMDUltra.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_MDULTRA</option>
+                            <option
+                                    value="shThemeMidnight.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_MIDNIGHT</option>
+                            <option
+                                    value="shThemeRDark.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_RDARK</option>
+                        </field>
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_editor"
+                    label="PLG_SYSTEM_MOLAJO_EDITOR_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_editor"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_EDITOR_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_EDITOR_SECTION_DESC"
+                            />
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_extend"
+                    label="PLG_SYSTEM_MOLAJO_EXTEND_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_editor"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_EXTEND_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_EXTEND_SECTION_DESC"
+                            />
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_language"
+                    label="PLG_SYSTEM_MOLAJO_LANGUAGE_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_language"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_LANGUAGE_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_LANGUAGE_SECTION_DESC"
+                            />
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_links"
+                    label="PLG_SYSTEM_MOLAJO_LINKS_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields"
+                    >
+
+                    <!-- Links Plugins - Link $ -->
+                        <field
+                            name="section_links"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_LINKS_SECTION_LINKS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_LINKS_SECTION_LINKS_DESC"
+                            />
+
+                        <field
+                            name="enable_add_links"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_LINKS_ENABLE_ADD_LINKS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_LINKS_ENABLE_ADD_LINKS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_external_links"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_LINKS_ENABLE_EXTERNAL_LINKS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_LINKS_ENABLE_EXTERNAL_LINKS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_footnotes"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_LINKS_FOOTNOTES_ON_PRINT_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_LINKS_FOOTNOTES_ON_PRINT_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+                </fieldset>
+<!-- Media Section  $ -->
+                <fieldset
+                    name="fieldset_media"
+                    label="PLG_SYSTEM_MOLAJO_MEDIA_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_media"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_MEDIA_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_MEDIA_SECTION_DESC"
+                            />
+            <!-- Audio Section  $ -->
+                        <field
+                            name="section_media_audio"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_MEDIA_SECTION_AUDIO_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_MEDIA_SECTION_AUDIO_DESC"
+                            />
+
+                        <field
+                            name="enable_audio"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_MEDIA_ENABLE_AUDIO_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_MEDIA_ENABLE_AUDIO_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="audio_folder"
+                            type="folderlist"
+                            directory="images"
+                            hide_none="true"
+                            label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_FOLDER_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_FOLDER_DESC"
+                            default="audio"
+                            >
+                        </field>
+
+                        <!-- Enable Audio Options Section  $ -->
+                        <field
+                                name="section_audio_options"
+                                type="spacer"
+                                hr="true"
+                                label="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_OPTIONS_LABEL"
+                                description="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_OPTIONS_DESC"
+                                />
+
+                            <field
+                                    name="audio_autostart"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_AUTOSTART_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_AUTOSTART_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_loop"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LOOP_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LOOP_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_animation"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_ANIMATION_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_ANIMATION_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_remaining"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_REMAINING_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_REMAINING_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_noinfo"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_NOINFO_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_NOINFO_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_initialvolume"
+                                    default="60"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_INITIALVOLUME_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_INITIALVOLUME_LABEL"
+                                    size="20"
+                                    type="text"
+                            />
+
+                            <field
+                                    name="audio_buffer"
+                                    default="5"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_BUFFER_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_BUFFER_LABEL"
+                                    size="20"
+                                    type="text"
+                            />
+
+                           <field
+                                    name="audio_encode"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_ENCODE_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_ENCODE_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_checkpolicy"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_CHECKPOLICY_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_CHECKPOLICY_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_rtl"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RTL_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RTL_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                        <!-- Enable Audio Flash Section  $ -->
+                        <field
+                                name="section_audio_flash"
+                                type="spacer"
+                                hr="true"
+                                label="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_FLASH_LABEL"
+                                description="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_FLASH_DESC"
+                                />
+
+                            <field
+                                    name="audio_width"
+                                    default="290"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_WIDTH_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_WIDTH_LABEL"
+                                    size="10"
+                                    type="text"
+                            />
+
+                            <field
+                                    name="audio_transparentpagebg"
+                                    type="radio"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TRANSPARENTPAGEBG_LABEL"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TRANSPARENTPAGEBG_DESC"
+                                    default="no">
+                                    <option
+                                            value="no">JNO</option>
+                                    <option
+                                            value="yes">JYES</option>
+                            </field>
+
+                            <field
+                                    name="audio_pagebg"
+                                    default=""
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_PAGEBG_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_PAGEBG_LABEL"
+                                    size=""
+                                    type="text"
+                            />
+
+                        <!-- Enable Audio Color Section  $ -->
+                        <field
+                                name="section_audio_color"
+                                type="spacer"
+                                hr="true"
+                                label="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_COLOR_LABEL"
+                                description="PLG_SYSTEM_MOLAJO_FIELDSET_AUDIO_COLOR_DESC"
+                                />
+
+                            <field
+                                    name="audio_bg"
+                                    default="E5E5E5"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_BG_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_BG_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+
+                            <field
+                                    name="audio_leftbg"
+                                    default="CCCCCC"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LEFTBG_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LEFTBG_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+
+                            <field
+                                    name="audio_lefticon"
+                                    default="333333"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LEFTICON_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LEFTICON_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_voltrack"
+                                    default="F2F2F2"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_VOLTRACK_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_VOLTRACK_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_volslider"
+                                    default="666666"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_VOLSLIDER_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_VOLSLIDER_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_rightbg"
+                                    default="B4B4B4"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTBG_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTBG_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_rightbghover"
+                                    default="999999"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTBGHOVER_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTBGHOVER_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_righticon"
+                                    default="333333"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTICON_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTICON_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_righticonhover"
+                                    default="FFFFFF"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTICONHOVER_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_RIGHTICONHOVER_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_rightloader"
+                                    default="009900"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LOADER_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_LOADER_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_track"
+                                    default="FFFFFF"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TRACK_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TRACK_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_tracker"
+                                    default="DDDDDD"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TRACKER_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TRACKER_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_border"
+                                    default="CCCCCC"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_BORDER_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_BORDER_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_skip"
+                                    default="666666"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_SKIP_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_SKIP_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                            <field
+                                    name="audio_text"
+                                    default="333333"
+                                    description="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TEXT_COLOR_DESC"
+                                    label="PLG_SYSTEM_MOLAJO_MEDIA_AUDIO_TEXT_COLOR_LABEL"
+                                    size="6"
+                                    maxLength="6"
+                                    type="colorpicker"
+                            />
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_minifier"
+                    label="PLG_SYSTEM_MOLAJO_MINIFIER_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_minifier"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_MINIFIER_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_MINIFIER_SECTION_DESC"
+                            />
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_protect"
+                    label="PLG_SYSTEM_MOLAJO_PROTECT_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                    <field
+                        name="section_protect"
+                        type="spacer"
+                        hr="false"
+                        label="PLG_SYSTEM_MOLAJO_PROTECT_SECTION_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_PROTECT_SECTION_DESC"
+                        />
+
+
+                    <field
+                        name="section_enable_spam_protection"
+                        type="spacer"
+                        hr="false"
+                        label="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_SPAM_PROTECTION_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_SECTION_ENABLE_SPAM_PROTECTION_DESC"
+                    />
+
+                   <field
+                        name="enable_spam_protection"
+                        type="radio"
+                        label="PLG_SYSTEM_MOLAJO_ENABLE_SPAM_PROTECTION_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_ENABLE_SPAM_PROTECTION_DESC"
+                        default="0"
+                        >
+                        <option
+                                value="0">JNO</option>
+                        <option
+                                value="1">JYES</option>
+                    </field>
+
+                    <field
+                        name="enable_spam_protection_categories"
+                        type="category"
+                        multiple="true"
+                        size="10"
+                        label="PLG_SYSTEM_MOLAJO_ENABLE_SPAM_PROTECTION_CATEGORY_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_ENABLE_SPAM_PROTECTION_CATEGORY_DESC"
+                        >
+                    </field>
+
+            <!-- SPAM PROTECTION TAB - FLOOD CONTROL -->
+                    <field
+			name="section_spam_flood_control"
+			type="spacer"
+			hr="true"
+                        label="PLG_SYSTEM_MOLAJO_SECTION_SPAM_FLOOD_CONTROL_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_SECTION_SPAM_FLOOD_CONTROL_DESC"
+			/>
+
+                    <field
+                        name="flood_control"
+                        type="text"
+                        default="1"
+                        label="PLG_SYSTEM_MOLAJO_FLOOD_CONTROL_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_FLOOD_CONTROL_DESC"
+                        >
+                    </field>
+
+                    <field
+                        name="flood_control_message"
+                        type="text"
+                        size="100"
+                        default="PLG_SYSTEM_MOLAJO_FLOOD_CONTROL_MESSAGE_DEFAULT"
+                        label="PLG_SYSTEM_MOLAJO_FLOOD_CONTROL_MESSAGE_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_FLOOD_CONTROL_MESSAGE_DESC"
+                        >
+                    </field>
+
+                    <field
+                        name="section_spam_captcha"
+                        type="spacer"
+                        hr="true"
+                        label="PLG_SYSTEM_MOLAJO_SECTION_SPAM_CAPTCHA_LABEL"
+                        desc="PLG_SYSTEM_MOLAJO_SECTION_SPAM_CAPTCHA_DESC"
+			/>
+
+                    <field
+                        name="spam_protection"
+                        type="radio"
+                        default="1"
+                        label="PLG_SYSTEM_MOLAJO_CAPTCHA_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_CAPTCHA_DESC"
+                        >
+                        <option
+                                value="0">JNO</option>
+                        <option
+                                value="1">JYES</option>
+                    </field>
+
+                    <field
+                        name="captcha_type"
+                        type="list"
+                        default="1"
+                        label="PLG_SYSTEM_MOLAJO_CAPTCHA_TYPE_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_CAPTCHA_TYPE_DESC"
+                        >
+                        <option
+                                value="0">JNO</option>
+                        <option
+                                value="1">JYES</option>
+                    </field>
+
+                    <field
+                        name="section_spam_entry_filter"
+                        type="spacer"
+                        hr="true"
+                        label="PLG_SYSTEM_MOLAJO_SECTION_SPAM_FILTER_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_SECTION_SPAM_FILTER_DESC"
+			/>
+
+                    <field
+                        name="filter_badwords"
+                        type="textarea"
+                        default=""
+                        label="PLG_SYSTEM_MOLAJO_FILTER_BADWORDS_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_FILTER_BADWORDS_DESC"
+                        />
+
+                    <field
+                        name="filter_email_addresses"
+                        type="textarea"
+                        default=""
+                        label="PLG_SYSTEM_MOLAJO_FILTER_EMAIL_ADDRESSES_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_FILTER_EMAIL_ADDRESSES_DESC"
+                        />
+
+                    <field
+                        name="filter_ip_addresses"
+                        type="textarea"
+                        default=""
+                        label="PLG_SYSTEM_MOLAJO_FILTER_IP_ADDRESSES_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_FILTER_IP_ADDRESSES_DESC"
+                        />
+
+                    <field
+                        name="filter_hosts"
+                        type="textarea"
+                        default=""
+                        label="PLG_SYSTEM_MOLAJO_FILTER_HOSTS_LABEL"
+                        description="PLG_SYSTEM_MOLAJO_FILTER_HOSTS_DESC"
+                        />
+
+                </fieldset>
+                
+                <fieldset
+                    name="fieldset_search"
+                    label="PLG_SYSTEM_MOLAJO_SEARCH_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_search"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_SEARCH_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SEARCH_SECTION_DESC"
+                            />
+                </fieldset>
+                
+                <fieldset
+                    name="fieldset_system"
+                    label="PLG_SYSTEM_MOLAJO_SYSTEM_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_system"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_DESC"
+                            />
+
+                    <!-- System Plugin - Cron Task $ -->
+                        <field
+                            name="section_cron"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_CRON_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_CRON_DESC"
+                            />
+
+                        <field
+                            name="enable_cron"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_ENABLE_CRON_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_ENABLE_CRON_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="cron_minutes"
+                            type="text"
+                            size="40"
+                            default="1440"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_CRON_MINUTES_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_CRON_MINUTES_DESC" >
+                        </field>
+
+                    <!-- System Plugin - Offline Bypass Phrase  $ -->
+                        <field
+                            name="section_offline_bypass"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_OFFLINE_BYPASS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_OFFLINE_BYPASS_DESC"
+                            />
+
+                        <field
+                            name="enable_offline_bypass"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_ENABLE_OFFLINE_BYPASS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_ENABLE_OFFLINE_BYPASS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="bypass"
+                            type="text"
+                            size="40"
+                            default=""
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_OFFLINE_BYPASS_PHRASE_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_OFFLINE_BYPASS_PHRASE_DESC" >
+                        </field>
+
+                    <!-- System Plugin - Backup  $ -->
+                        <field
+                            name="section_backup"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_BACKUP_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_BACKUP_DESC"
+                            />
+
+                        <field
+                            name="enable_backup"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_ENABLE_BACKUP_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_ENABLE_BACKUP_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="backup_days"
+                            type="text"
+                            size="40"
+                            default="7"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_BACKUP_DAYS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_BACKUP_DAYS_DESC" >
+                        </field>
+
+                    <!-- System Plugin - Meta  $ -->
+                        <field
+                            name="section_meta"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_META_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_SECTION_META_DESC"
+                            />
+
+                        <field
+                            name="remove_generator_tag"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_SYSTEM_REMOVE_GENERATOR_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_SYSTEM_REMOVE_GENERATOR_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_urls"
+                    label="PLG_SYSTEM_MOLAJO_URLS_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                        <field
+                            name="section_urls"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_URLS_SECTION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_URLS_SECTION_DESC"
+                            />
+                </fieldset>
+
+                <fieldset
+                    name="fieldset_webservices"
+                    label="PLG_SYSTEM_MOLAJO_WEBSERVICES_FIELDSET_LABEL"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields">
+
+                    <!-- Web Services Plugins - Link $ -->
+                        <field
+                            name="section_webservices_links"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_DESC"
+                            />
+
+                    <!-- Web Services Plugin - Flickr $ -->
+                        <field
+                            name="section_flickr"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_SECTION_FLICKR_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_SECTION_FLICKR_DESC"
+                            />
+
+                        <field
+                            name="flickr_api_key"
+                            type="hidden"
+                            default="5d729b040658a81a59caae49fdd6fc66" >
+                        </field>
+                        <field
+                            name="flickr_secret_key"
+                            type="hidden"
+                            default="24f3d4492ca34bf1" >
+                        </field>
+
+                        <field
+                            name="enable_flickr_embedding"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_FLICKR_EMBED_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_FLICKR_EMBED_DESC"
+                            default="0"
+                            >
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                    <!-- Web Services Plugin - Google Analytics  $ -->
+                        <field
+                            name="section_google_analytics"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_SECTION_GOOGLE_ANALYTICS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_SECTION_GOOGLE_ANALYTICS_DESC"
+                            />
+
+                        <field
+                            name="google_analytics_tracking_code"
+                            type="text"
+                            size="40"
+                            default=""
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_GOOGLE_ANALYTICS_TRACKING_CODE_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_GOOGLE_ANALYTICS_TRACKING_CODE_LABEL" >
+                        </field>
+
+                        <field
+                            name="enable_google_analytics"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_GOOGLE_ANALYTICS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_GOOGLE_ANALYTICS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                    <!-- Web Services Plugin - Google Maps $ -->
+                        <field
+                            name="section_google_maps"
+                            type="spacer"
+                            hr="true"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_SECTION_GOOGLE_MAPS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_SECTION_GOOGLE_MAPS_DESC"
+                            />
+
+                        <field
+                            name="google_maps_api_key"
+                            type="text"
+                            size="80"
+                            default=""
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_GOOGLE_MAPS_API_KEY_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_GOOGLE_MAPS_API_KEY_DESC" >
+                        </field>
+                        
+                        <field
+                            name="enable_google_maps"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_GOOGLE_MAPS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_GOOGLE_MAPS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                        <field
+                            name="enable_static_google_map"
+                            type="radio"
+                            label="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_STATIC_GOOGLE_MAPS_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_WEBSERVICES_ENABLE_STATIC_GOOGLE_MAPS_DESC"
+                            default="0">
+                            <option
+                                    value="0">JNO</option>
+                            <option
+                                    value="1">JYES</option>
+                        </field>
+
+                </fieldset>
+
+                <fieldset
+                    name="overrides"
+                    type="hidden"
+                    addfieldpath="/plugins/molajo/libraries/joomla/form/fields/">
+                        
+                    <field
+                            name="spacer"
+                            type="spacer"
+                            hr="false"
+                            label="PLG_SYSTEM_MOLAJO_FIELD_SPACER_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_FIELD_SPACER_DESC"
+                        />
+
+                    <field
+                            name="category"
+                            type="category"
+                            multiple="true"
+                            size="10"
+                            label="PLG_SYSTEM_MOLAJO_FIELD_CATEGORY_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_FIELD_CATEGORY_DESC"
+                    >
+                    </field>
+
+                    <field
+                            name="extension"
+                            type="extension"
+                            multiple="true"
+                            size="10"
+                            label="PLG_SYSTEM_MOLAJO_FIELD_EXTENSION_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_FIELD_EXTENSION_DESC"
+                    >
+                    </field>
+
+                    <field
+                            name="tag"
+                            type="tag"
+                            multiple="true"
+                            size="10"
+                            label="PLG_SYSTEM_MOLAJO_FIELD_TAG_LABEL"
+                            description="PLG_SYSTEM_MOLAJO_FIELD_TAG_DESC"
+                    >
+                    </field>
+                </fieldset>
+            </fields>
 	</config>
 </extension>

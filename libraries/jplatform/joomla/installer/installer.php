@@ -476,7 +476,7 @@ class JInstaller extends JAdapter
 
 		foreach ($this->_adapters as $adapter)
 		{
-			// Joomla! 1.5 installation adapter legacy support
+			// Molajo 1.5 installation adapter legacy support
 			if (method_exists($adapter,'discover')) {
 				$tmp = $adapter->discover();
 

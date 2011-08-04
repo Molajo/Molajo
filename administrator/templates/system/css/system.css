@@ -1,8 +1,8 @@
 /**
- * @version		$Id: system.css 20196 2011-01-09 02:40:25Z ian $
+ * @package		Molajo
+ * @subpackage	Template
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright 2011 Individual Molajo Contributors. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-
-/* Import project-level system CSS */
 @import url(../../../../media/system/css/system.css);

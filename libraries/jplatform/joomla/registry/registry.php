@@ -497,7 +497,7 @@ class JRegistry
 	}
 
 	/**
-	 * This method is added as an interim solution for API references in Joomla! 1.6 to the JRegistry
+	 * This method is added as an interim solution for API references in Molajo 1.6 to the JRegistry
 	 * object where in 1.5 a JParameter object existed.  Because many extensions may call this method
 	 * we add it here as a means of "pain relief" until the 1.7 release.
 	 *

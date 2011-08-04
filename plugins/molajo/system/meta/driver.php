@@ -29,7 +29,7 @@ class MolajoSystemMeta {
             return false;
         }
  
-//        $string = '<meta name="generator" content="Joomla! 1.6 - Open Source Content Management" />';
+//        $string = '<meta name="generator" content="Molajo 1.6 - Open Source Content Management" />';
 //        $length = strlen($string);
 //        $buffer = JResponse::getBody();
 //        $buffer = substr($buffer, 0, strripos ($buffer, $string)).substr($buffer, ((strripos ($buffer, $string)) + $length), 99999);

@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Base class for a Joomla! application.
+ * Base class for a Molajo application.
  *
  * Acts as a Factory class for application specific objects and provides many
  * supporting API functions. Derived clases should supply the route(), dispatch()

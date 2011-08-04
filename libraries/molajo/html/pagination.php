@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
- * Joomla! Framework.
+ * Molajo Framework.
  *
  * @package     Joomla.Platform
  * @subpackage  HTML

@@ -38,6 +38,11 @@ class MolajoView extends JView
         protected $user;
 
     /**
+     * @var $request object
+     */
+        protected $request;
+
+    /**
      * @var $state object
      */
         protected $state;
@@ -105,9 +110,9 @@ class MolajoView extends JView
 
         /** path: component **/
         if (MOLAJO_APPLICATION == 'site') {
-            $componentPath = MOLAJO_PATH_ROOT.'/components/'.$this->state->get('request.option').'/views/'.$this->state->get('request.view').'/tmpl/';
+            $componentPath = MOLAJO_PATH_ROOT.'/components/'.$this->request['option'].'/views/'.$this->state->get('request.view').'/tmpl/';
         } else {
-            $componentPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION.'/components/'.$this->state->get('request.option').'/views/'.$this->state->get('request.view').'/tmpl/';
+            $componentPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION.'/components/'.$this->request['option'].'/views/'.$this->state->get('request.view').'/tmpl/';
         }
 
         /** path: core **/
@@ -270,7 +275,7 @@ class MolajoView extends JView
     {
         $language = MolajoFactory::getLanguage();
         $language->load('layouts', MOLAJO_EXTENSION_LAYOUTS, $language->getDefault(), true, true);
-        $language->load('layouts_'.$this->state->get('request.layout'), $layoutFolder, $language->getDefault(), true, true);
+        $language->load('layouts_'.$this->request['layout'], $layoutFolder, $language->getDefault(), true, true);
     }
 
     /**
@@ -311,14 +316,14 @@ class MolajoView extends JView
 
         /** component specific css and js - media/site/css[js]/component_option.css[js] **/
         if ($this->state->get('layout.loadComponentCSS', true) === true) {
-            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/'.$this->state->get('request.option').'.css')) {
-                $this->document->addStyleSheet(JURI::base().'/media/site/css/'.$this->state->get('request.option').'.css');
+            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/'.$this->request['option'].'.css')) {
+                $this->document->addStyleSheet(JURI::base().'/media/site/css/'.$this->request['option'].'.css');
             }
         }
 
         if ($this->state->get('layout.loadComponentJS', true) === true) {
-            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/'.$this->state->get('request.option').'.js')) {
-                $this->document->addScript(JURI::base().'media/site/js/'.$this->state->get('request.option').'.js');
+            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/'.$this->request['option'].'.js')) {
+                $this->document->addScript(JURI::base().'media/site/js/'.$this->request['option'].'.js');
             }
         }
 

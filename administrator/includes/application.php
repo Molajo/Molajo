@@ -148,6 +148,7 @@ class MolajoAdministrator extends MolajoApplication
 			}
 
 			parent::getRequest();
+            $request = parent::loadComponentData();
 
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
@@ -155,44 +156,16 @@ class MolajoAdministrator extends MolajoApplication
 			switch ($document->getType()) {
 				case 'html':
 					$document->setMetaData('keywords', $this->getCfg('MetaKeys'));
-//JHtml::_('behavior.framework', true);
 					break;
 
 				default:
 					break;
 			}
 
-            /** prepare component MVC input */
-            $data = array();
-
-            $session = JFactory::getSession();
-
-            $data['application_id'] = $session->set('page.application_id');
-            $data['current_url'] = $session->get('page.current_url');
-            $data['base_url'] = $session->get('page.base_url');
-            $data['item_id'] = $session->get('page.item_id');
-
-            $data['controller'] = $session->get('page.controller');
-            $data['option'] = $session->get('page.option');
-            $data['view'] = $session->get('page.view');
-            $data['layout'] = $session->get('page.layout');
-            $data['model'] = $session->get('page.model');
-            $data['task'] = $session->get('page.task');
-            $data['format'] = $session->get('page.format');
-
-            $data['id'] = $session->get('page.id');
-            $data['cid'] = $session->get('page.cid');
-            $data['catid'] = $session->get('page.catid');
-
-            $data['acl_implementation'] = $session->get('page.acl_implementation');
-            $data['component_table'] = $session->get('page.component_table');
-            $data['filter_fieldname'] = $session->get('page.filter_fieldname');
-            $data['select_fieldname'] = $session->get('page.select_fieldname');
-
 			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
-			$contents = MolajoComponentHelper::renderComponent($data);
+			$contents = MolajoComponentHelper::renderComponent($request);
 
 			$document->setBuffer($contents, 'component');
 
@@ -222,6 +195,7 @@ class MolajoAdministrator extends MolajoApplication
         $session = JFactory::getSession();
 		$component	= $session->get('page.option');
 		$template	= $this->getTemplate(true);
+
 		$file		= JRequest::getCmd('tmpl', 'index');
 
 		$params = array(

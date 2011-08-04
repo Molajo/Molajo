@@ -34,7 +34,7 @@ class MolajoFormFieldHelpsite extends MolajoFormFieldList
 	protected function getOptions()
 	{
 		// Get Joomla version.
-		$version = new JVersion();
+		$version = new MolajoVersion();
 		$jver = explode( '.', $version->getShortVersion() );
 
 		// Merge any additional options in the XML definition.

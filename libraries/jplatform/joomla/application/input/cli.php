@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.application.input');
 
 /**
- * Joomla! Input CLI Class
+ * Molajo Input CLI Class
  *
  * @package     Joomla.Platform
  * @subpackage  Application

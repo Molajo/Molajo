@@ -40,7 +40,7 @@ class plgContenttamka_post_twitter extends JPlugin
 	}
 		
 	/**
-	 * After a Joomla! Article has been saved - Twitter the Title with a Tiny URL
+	 * After a Molajo Article has been saved - Twitter the Title with a Tiny URL
 	 */
 	function onAfterContentSave( &$article, $isNew )
 	{

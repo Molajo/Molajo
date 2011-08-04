@@ -12,7 +12,7 @@ jimport('joomla.language.helper');
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! Language Filter Plugin
+ * Molajo Language Filter Plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.languagefilter

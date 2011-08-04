@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,12 +12,10 @@ defined('MOLAJO') or die;
 /**
  * DocumentFeed class, provides an easy interface to parse and display any feed document
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
- * @since       11.1
+ * @since       1.0
  */
-
-jimport('joomla.document.document');
 
 class MolajoDocumentFeed extends MolajoDocument
 {
@@ -169,7 +167,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * Render the document
 	 *
 	 * @param   boolean  $cache		If true, cache the output
-	 * @param   array    $params		Associative array of attributes
+	 * @param   array    $params	Associative array of attributes
 	 * @return  The rendered data
 	 */
 	public function render($cache = false, $params = array())
@@ -230,9 +228,9 @@ class MolajoDocumentFeed extends MolajoDocument
 /**
  * JFeedItem is an internal class that stores feed item information
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
- * @since       11.1
+ * @since       1.0
  */
 class JFeedItem extends JObject
 {
@@ -360,9 +358,9 @@ class JFeedItem extends JObject
 /**
  * JFeedEnclosure is an internal class that stores feed enclosure information
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
- * @since       11.1
+ * @since       1.0
  */
 class JFeedEnclosure extends JObject
 {
@@ -397,9 +395,9 @@ class JFeedEnclosure extends JObject
 /**
  * JFeedImage is an internal class that stores feed image information
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
- * @since       11.1
+ * @since       1.0
  */
 class JFeedImage extends JObject
 {

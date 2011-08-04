@@ -41,7 +41,7 @@ $applicationId	= $this->state->get('filter.application_id', 0);
 					<?php echo JText::_('COM_LANGUAGES_HEADING_DEFAULT'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('JVERSION'); ?>
+					<?php echo JText::_('MOLAJOVERSION'); ?>
 				</th>
 				<th>
 					<?php echo JText::_('JDATE'); ?>

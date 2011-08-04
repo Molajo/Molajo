@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,10 +12,10 @@ defined('MOLAJO') or die;
 /**
  * MolajoDocumentRenderer_RSS is a feed that implements RSS 2.0 Specification
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
  * @see     	http://www.rssboard.org/rss-specification
- * @since       11.1
+ * @since       1.0
  */
 class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 {

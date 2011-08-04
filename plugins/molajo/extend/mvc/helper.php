@@ -161,7 +161,7 @@ class extendHelper
      *
      * Retrieves category value for item
      *
-     * Joomla! 1.7 Wish List
+     * Molajo 1.7 Wish List
      *
      * Provide good information on the form about standard integration values
      * For example, it should be simple to determine the category id, or what the key field and value is, etc.
@@ -252,7 +252,7 @@ class extendHelper
      *
      * Retrieves id value for item
      *
-     * Joomla! 1.7 Wish List
+     * Molajo 1.7 Wish List
      *
      * Consistency and/or APIs to overcome consistency issues
      *   Don't want to load a table object to find out the key

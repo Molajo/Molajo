@@ -71,7 +71,7 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 		</div>
 		<div id="copyright">
 			<?php $molajo= '<a href="http://molajo.org">Molajo&#174;</a>';
-			echo JText::sprintf('JGLOBAL_ISFREESOFTWARE', $molajo) ?>
+			echo JText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
 		</div>
 	</body>
 </html>

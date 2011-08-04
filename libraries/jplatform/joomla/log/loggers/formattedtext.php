@@ -14,7 +14,7 @@ jimport('joomla.log.logger');
 jimport('joomla.filesystem.folder');
 
 /**
- * Joomla! Formatted Text File Log class
+ * Molajo Formatted Text File Log class
  *
  * This class is designed to use as a base for building formatted text files for output. By
  * default it emulates the SysLog style format output. This is a disk based output format.

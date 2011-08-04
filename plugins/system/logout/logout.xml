@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6" type="plugin" group="system">
+<extension version="1.0" type="plugin" group="system">
 	<name>plg_system_logout</name>
-	<author>Joomla! Project</author>
+	<author>Molajo Project</author>
 	<creationDate>April 2009</creationDate>
 	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>

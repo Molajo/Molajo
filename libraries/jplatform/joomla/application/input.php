@@ -14,7 +14,7 @@ JLoader::discover('JInput', dirname(__FILE__).'/input');
 jimport('joomla.filter.filterinput');
 
 /**
- * Joomla! Input Base Class
+ * Molajo Input Base Class
  *
  * This is an abstracted input class used to manage retrieving data from the application environment.
  *

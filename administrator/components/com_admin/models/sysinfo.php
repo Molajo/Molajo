@@ -103,7 +103,7 @@ class AdminModelSysInfo extends JModel
 		if (is_null($this->info))
 		{
 			$this->info = array();
-			$version = new JVersion();
+			$version = new MolajoVersion();
 			$platform = new JPlatform();
 			$db = MolajoFactory::getDBO();
 			if (isset($_SERVER['SERVER_SOFTWARE'])) {

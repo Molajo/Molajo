@@ -178,12 +178,6 @@ class MolajoSite extends MolajoApplication
 			$params		= $this->getParams();
             $option     = $component;
 
-            /** set component paths */
-            if (defined('MOLAJO_PATH_COMPONENT')) { } else { define('MOLAJO_PATH_COMPONENT', strtolower(MOLAJO_PATH_BASE.'/components/'.JRequest::getCmd('option'))); }
-            if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) { } else { define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', strtolower(MOLAJO_PATH_ADMINISTRATOR.'/components/'.JRequest::getCmd('option'))); }
-            if (defined('JPATH_COMPONENT')) { } else { define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT); }
-            if (defined('JPATH_COMPONENT_ADMINISTRATOR')) { } else { define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR); }
-
 			switch($document->getType())
 			{
 				case 'html':
@@ -209,38 +203,13 @@ class MolajoSite extends MolajoApplication
 					break;
 			}
 
-            /** prepare component MVC input */
-            $data = array();
-            
-            $session = JFactory::getSession();
-
-            $data['application_id'] = $session->set('page.application_id');
-            $data['current_url'] = $session->get('page.current_url');
-            $data['base_url'] = $session->get('page.base_url');
-            $data['item_id'] = $session->get('page.item_id');
-
-            $data['controller'] = $session->get('page.controller');
-            $data['option'] = $session->get('page.option');
-            $data['view'] = $session->get('page.view');
-            $data['layout'] = $session->get('page.layout');
-            $data['task'] = $session->get('page.task');
-            $data['format'] = $session->get('page.format');
-            $data['table'] = $session->get('page.table');
-
-            $data['id'] = $session->get('page.id');
-            $data['cid'] = $session->get('page.cid');
-            $data['catid'] = $session->get('page.catid');
-
-            $data['acl_implementation'] = $session->get('page.acl_implementation');
-            $data['component_table'] = $session->get('page.component_table');
-            $data['filter_fieldname'] = $session->get('page.filter_fieldname');
-            $data['select_fieldname'] = $session->get('page.select_fieldname');
+            $request = parent::loadComponentData();
 
 			$document->setTitle($params->get('page_title'));
 			$document->setDescription($params->get('page_description'));
 
             /** render the component */
-			$contents = MolajoComponentHelper::renderComponent($data);
+			$contents = MolajoComponentHelper::renderComponent($request);
 			$document->setBuffer($contents, 'component');
 
 			// Trigger the onAfterDispatch event.

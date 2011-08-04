@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6" type="plugin" group="query" method="upgrade">
+<extension version="1.0" type="plugin" group="query" method="upgrade">
     <name>PLG_QUERY_MOLAJOSAMPLE_PLUGIN</name>
     <author>Amy Stephen</author>
     <creationDate>June 2011</creationDate>

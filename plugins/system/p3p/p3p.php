@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! P3P Header Plugin
+ * Molajo P3P Header Plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.p3p

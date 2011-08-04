@@ -18,7 +18,7 @@ class MolajoController extends JController
 {
 
     /**
-     * @var object $data
+     * @var object $request
      *
      * ["application_id"]=> int(1)
      * ["current_url"]=> string(38) "http://localhost/molajo/administrator/" 
@@ -40,7 +40,7 @@ class MolajoController extends JController
      *
      * @since 1.0
      */
-    public $data = null;
+    public $request = null;
 
     /**
      * @var object $params
@@ -105,6 +105,7 @@ class MolajoController extends JController
      *
      * @param	array   $config	An optional associative array of configuration settings.
      * @see	    JController
+     *
      * @since	1.0
      */
     public function __construct($config = array())
@@ -121,11 +122,12 @@ class MolajoController extends JController
      * @param	array		$urlparams	An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
      *
      * @return	JController	This object to support chaining.
+     *
      * @since	1.0
      */
     public function display($cachable = false, $urlparams = false)
     {
-        if ($this->data['task'] == 'edit') {
+        if ($this->request['task'] == 'edit') {
             $results = $this->checkOutItem();
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
@@ -150,31 +152,42 @@ class MolajoController extends JController
      * @param null $task
      * @return bool
      */
-    public function initialise($data)
+    public function initialise($request)
     {
-        $this->data = $data;
+        $this->request = $request;
 
-        $this->params = MolajoComponentHelper::getParams($data['option']);
+        $this->params = MolajoComponentHelper::getParams($request['option']);
 
-        $this->id = $this->data['id'];
+        $this->id = $this->request['id'];
         if ((int) $this->id == 0) {
             $this->id = 0;
             $this->catid = 0;
         }
 
-        $this->catid = $this->data['catid'];
+        $this->catid = $this->request['catid'];
         if ((int) $this->catid == 0) {
             $this->catid = 0;
         }
 
         if ($this->model) {
         } else {
-            $this->model = $this->getModel($this->data['view'], ucfirst($this->data['model'].'Model'), array());
+            $this->model = $this->getModel($this->request['model'], ucfirst($this->request['no_com_option'].'Model'), array());
+            $this->model->request = $this->request;
+            if ($this->request['component_table'] == '__dummy') {
+            } else {
+                if ($this->request['id'] == 0) {
+                    $this->model->populateStateMultiple ();
+                } else {
+                    $this->model->populateItemState ();
+                }
+            }
         }
 
-        if ($this->data['task'] == 'display'
-            || $this->data['task'] == 'add') {
+        if ($this->request['task'] == 'display'
+            || $this->request['task'] == 'add') {
+
             $this->isNew = false;
+
         } else {
             $this->table = $this->model->getTable();
             $this->table->reset();
@@ -195,18 +208,18 @@ class MolajoController extends JController
         if ($this->dispatcher) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
-            MolajoPluginHelper::importPlugin('content');
+            MolajoPluginHelper::importPlugin($this->request['plugin_type']);
         }
 
         /** authorisation **/
-        $results = MolajoController::checkTaskAuthorisation($this->data['task']);
+        $results = MolajoController::checkTaskAuthorisation($this->request['task']);
         if ($results === false) {
             return false;
         }
 
         /** redirects **/
         $this->redirectClass = new MolajoControllerRedirect ();
-        $this->redirectClass->initializeRedirectLinks($this->data['task']);
+        $this->redirectClass->initializeRedirectLinks($this->request['task']);
  
         /** success **/
         return true;
@@ -231,7 +244,7 @@ class MolajoController extends JController
             $checkTask = $this->getTask();
         }
 
-        if ($this->data['component_table'] == '__common') {
+        if ($this->request['component_table'] == '__dummy') {
             $checkId = 0;
             $checkCatid = 0;
             $checkTable = array();
@@ -254,11 +267,8 @@ class MolajoController extends JController
             }
         }
 
- //       $aclClass = 'MolajoACL'.ucfirst(strtolower($this->data['acl_implementation']));
-        $aclClass = 'MolajoACL';
-        $acl = new $aclClass ();
-//        echo $this->data['option']. $this->data['view']. $checkTask. $checkId. $checkCatid;
-        $results = $acl->authoriseTask ($this->data['option'], $this->data['view'], $checkTask, $checkId, $checkCatid, $checkTable);
+        $acl = new MolajoACL ();
+        $results = $acl->authoriseTask ($this->request['option'], $this->request['view'], $checkTask, $checkId, $checkCatid, $checkTable);
 
         if ($results === false) {
             $this->redirectClass = new MolajoControllerRedirect ();
@@ -271,6 +281,8 @@ class MolajoController extends JController
     }
 
     /**
+     * getModel
+     *
      * Proxy for getModel.
      *
      * @param	string	$name	The name of the model.
@@ -290,6 +302,8 @@ class MolajoController extends JController
 
     /**
      * checkInItem
+     *
+     * Used to check in item if it is already checked out
      *
      * @return bool
      */
@@ -486,7 +500,7 @@ class MolajoController extends JController
     */
     public function cleanCache ()
     {
-        $cache = MolajoFactory::getCache($this->data['option']);
+        $cache = MolajoFactory::getCache($this->request['option']);
         $cache->clean();
     }
 }

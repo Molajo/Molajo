@@ -51,7 +51,7 @@ class JDate extends DateTime
 
 	/**
 	 * An array of offsets and time zone strings representing the available
-	 * options from Joomla! 1.5 and below.
+	 * options from Molajo 1.5 and below.
 	 *
 	 * @deprecated	Deprecated since 1.6
 	 *

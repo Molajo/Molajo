@@ -372,7 +372,7 @@ class JInstallerComponent extends JAdapterInstance
 		}
 
 		// end legacy support
-		// Start Joomla! 1.6
+		// Start Molajo 1.6
 		ob_start();
 		ob_implicit_flush(false);
 
@@ -813,7 +813,7 @@ class JInstallerComponent extends JAdapterInstance
 		 * update method, and append the return value from the custom update
 		 * method to the installation message.
 		 */
-		// Start Joomla! 1.6
+		// Start Molajo 1.6
 		ob_start();
 		ob_implicit_flush(false);
 
@@ -1657,7 +1657,7 @@ class JInstallerComponent extends JAdapterInstance
 		}
 		// end legacy support
 
-		// Start Joomla! 1.6
+		// Start Molajo 1.6
 		ob_start();
 		ob_implicit_flush(false);
 

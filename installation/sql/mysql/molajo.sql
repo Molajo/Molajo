@@ -881,7 +881,7 @@ INSERT INTO `#__extensions` (
     VALUES
     (401, 'Akismet', 'library', 'akismet', 'akismet', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1, 4, 1400),
     (402, 'Curl', 'library', 'curl', 'curl', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 5, 1402),
-    (403, 'Joomla Framework', 'library', 'joomla', 'jplatform', 1, 1, 1, '{"legacy":false,"name":"Joomla! Web Application Framework","type":"library","creationDate":"2008","author":"Joomla","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\\/\\/www.joomla.org","version":"1.6.0","description":"The Joomla! Web Application Framework","group":""}', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1, 4, 1404),
+    (403, 'Joomla Framework', 'library', 'joomla', 'jplatform', 1, 1, 1, '{"legacy":false,"name":"Molajo Web Application Framework","type":"library","creationDate":"2008","author":"Joomla","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\\/\\/www.joomla.org","version":"1.6.0","description":"The Molajo Web Application Framework","group":""}', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1, 4, 1404),
     (404, 'Molajo Application', 'library', 'molajo', 'molajo', 1, 1, 1, '{"legacy":false,"name":"Molajo Application","type":"library","creationDate":"2011","author":"Molajo Project Team","copyright":"Copyright (C) 2011 Amy Stephen. All rights reserved.","authorEmail":"collaborate@molajo.org","authorUrl":"http:\\/\\/molajo.org","version":"1.0.0","description":"Molajo is a web development environment useful for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.","group":""}\r\n', '', '', '', 0, '0000-00-00 00:00:00', 4, 1, 4, 1406),
     (405, 'Mollom', 'library', 'mollom', 'mollom', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1410),
     (406, 'Overrides', 'library', 'overrides', 'overrides', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1411),
@@ -1640,6 +1640,11 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 4301, '', '', 0),
 ('core', 4301, 'html', 'html', 1);
 
+/* 5000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 5000, '', '', 0),
+('core', 5000, 'content', 'content', 1);
+
 /** ACL Component Information */
 
 /** 10000 MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION **/
@@ -1822,6 +1827,11 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_login', 4000, '', '', 0),
 ('com_login', 4000, 'html', 'html', 1),
 ('com_login', 4001, 'html', 'html', 1);
+
+/* 5000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 5000, '', '', 0),
+('core', 5000, '', '', 1);
 
 /** ACL Component Information */
 

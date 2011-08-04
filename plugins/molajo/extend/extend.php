@@ -50,7 +50,7 @@ class plgSystemExtend extends JPlugin
      *
      *  $content nearly always the value "text"
      *
-     *  Joomla! 1.7 Wish List:
+     *  Molajo 1.7 Wish List:
      *
      *  Provide descriptive $context values so that action can be taken or not taken, depending on the content
      *  All $context values and component table names should be available from component parameters
@@ -72,7 +72,7 @@ class plgSystemExtend extends JPlugin
      *
      * Event fired by JModelForm::preprocessForm for Add and Edit Tasks
      *
-     * Joomla! 1.7 Wish List:
+     * Molajo 1.7 Wish List:
      *
      * Fire OnContentPrepareFormData too like Core MVC Classes
      *
@@ -95,7 +95,7 @@ class plgSystemExtend extends JPlugin
     /**
      * onContentValidate
      *
-     * Joomla! 1.7 Wish List
+     * Molajo 1.7 Wish List
      *
      * 1. Create new onContentValidate event and fire from JModelForm::validate
      * 2. Make certain that Component Objects for Content and Form do not lose Custom Fields during error handling in parent MVC methods
@@ -116,7 +116,7 @@ class plgSystemExtend extends JPlugin
      * Article object is passed by reference, so changes made here are saved
      * Returning false aborts the save with $content->setError($message)
      *
-     * Joomla! 1.7 Wish List
+     * Molajo 1.7 Wish List
      *
      * Make certain that Component Objects for Content and Form do not lose Custom Fields during error handling in parent MVC methods
      *
@@ -136,7 +136,7 @@ class plgSystemExtend extends JPlugin
      *
      * Method called after primary content is saved so that Custom Fields for the Component can also be saved
      *
-     * Joomla! 1.7 Wish List
+     * Molajo 1.7 Wish List
      *
      * Make certain that Component Objects for Content and Form do not lose Custom Fields during error handling in parent MVC methods
      *

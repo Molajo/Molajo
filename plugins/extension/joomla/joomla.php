@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! master extension plugin.
+ * Molajo master extension plugin.
  *
  * @package		Joomla.Plugin
  * @subpackage	Extension.Joomla

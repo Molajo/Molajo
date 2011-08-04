@@ -80,9 +80,9 @@ class MolajoInstallationModelSetup extends JModel
 		}
 
 		// Get the form.
-		JForm::addFormPath(MOLAJO_PATH_COMPONENT.'/models/forms');
-		JForm::addFieldPath(MOLAJO_PATH_COMPONENT.'/models/fields');
-		JForm::addRulePath(MOLAJO_PATH_COMPONENT.'/models/rules');
+		JForm::addFormPath(MOLAJO_PATH_BASE.'/models/forms');
+		JForm::addFieldPath(MOLAJO_PATH_BASE.'/models/fields');
+		JForm::addRulePath(MOLAJO_PATH_BASE.'/models/rules');
 
 		try
 		{

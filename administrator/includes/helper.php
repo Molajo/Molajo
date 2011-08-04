@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Joomla! Administrator Application helper class.
+ * Molajo Administrator Application helper class.
  * Provide many supporting API functions.
  *
  * @package		Joomla.Administrator

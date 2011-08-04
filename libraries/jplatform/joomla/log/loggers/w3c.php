@@ -16,7 +16,7 @@ jimport('joomla.log.logger');
 JLoader::register('JLoggerFormattedText', dirname(__FILE__).'/formattedtext.php');
 
 /**
- * Joomla! W3C Logging class
+ * Molajo W3C Logging class
  *
  * This class is designed to build log files based on the W3C specification
  * at: http://www.w3.org/TR/WD-logfile.html

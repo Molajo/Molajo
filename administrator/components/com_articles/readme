@@ -65,3 +65,13 @@ Articles Manager Page - Multiple View - List
 How? *
 
 1. To update a language string...
+
+TO override:
+
+update the includes/includes to define classes needed using filehelper
+
+add folders - and place files into folders (will automatically be loaded)
+fields/attributes
+fields/fields
+fields/formfields
+fields/validation

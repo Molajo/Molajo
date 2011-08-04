@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! Debug plugin
+ * Molajo Debug plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.debug

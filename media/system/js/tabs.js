@@ -13,7 +13,7 @@ Object.append(Browser.Features, {
 /**
  * Tabs behavior
  *
- * @package		Joomla!
+ * @package		Molajo
  * @subpackage	JavaScript
  * @since		1.5
  */

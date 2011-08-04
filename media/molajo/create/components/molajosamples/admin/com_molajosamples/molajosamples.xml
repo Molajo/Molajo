@@ -94,7 +94,7 @@
 
 	<!--  Dependencies -->
 	<dependencies>
-		<dependency type="platform" name="joomla" operator="=" version="1.6" />
-		<dependency type="library" name="molajo" operator="=" version="1.6" />                
+		<dependency type="platform" name="joomla" operator="=" version="1.0" />
+		<dependency type="library" name="molajo" operator="=" version="1.0" />
 	</dependencies>
 </extension>

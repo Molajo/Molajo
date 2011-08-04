@@ -6,6 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 define('MOLAJO_APPLICATION', 'administrator');
+define('MOLAJO_APPLICATION_PATH', 'administrator');
 define('MOLAJO_APPLICATION_ID', 1);
 /**
  * BEGIN: Common code for all Applications

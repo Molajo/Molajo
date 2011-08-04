@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package	Molajo
  * @subpackage	Model
- * @since 1.6
+ * @since 1.0
  */
 class MolajoModelCategory extends JModel
 {

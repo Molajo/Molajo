@@ -23,7 +23,7 @@ class MolajoTableContent extends MolajoTable
      *
      * @param database A database connector object
      *
-     * @since 1.6
+     * @since 1.0
      */
     function __construct($db)
     {

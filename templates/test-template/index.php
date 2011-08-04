@@ -10,13 +10,13 @@ $doc				= JFactory::getDocument();
 // Get the menu item ID
 $itemId 			= JRequest::getInt('Itemid', 0);
 // Is version 1.6 and later
-$isOnward 			= (substr(JVERSION, 0, 3) >= '1.6');
+$isOnward 			= (substr(MOLAJOVERSION, 0, 3) >= '1.6');
 // Is version 1.5
-$isPresent 			= (substr(JVERSION, 0, 3) == '1.5');
+$isPresent 			= (substr(MOLAJOVERSION, 0, 3) == '1.5');
 // Get the current view
 $view     			= Jrequest::getCmd('view');
 
-// Joomla! 1.5 only
+// Molajo 1.5 only
 if ($isPresent) {	
 	function getSection($id) {
 		  $database = JFactory::getDBO();

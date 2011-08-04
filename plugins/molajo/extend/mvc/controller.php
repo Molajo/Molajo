@@ -18,7 +18,7 @@ require_once dirname(__FILE__).'/modelParameter.php';
 /**
  * extendController
  *
- * extend Listener responds to Joomla! events and passes control to extendController::initiation
+ * extend Listener responds to Molajo events and passes control to extendController::initiation
  * The initiation determines the course of action and hands of control to one of the controller task methods
  *
  */
@@ -270,7 +270,7 @@ die();
      * - Queries the Custom Fields Table for Component Item Custom Fields matching the Custom Fields list
      * - Appends retrieved Custom Field values into the Component Content Object
      *
-     *  Joomla! 1.7 Wish List:
+     *  Molajo 1.7 Wish List:
      *
      *  Provide a Model Event On BeforeQuery with access to state information that shares the Query object
      *      so that the select list, table list, and where clause can be modified

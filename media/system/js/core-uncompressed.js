@@ -49,7 +49,7 @@ Joomla.submitbutton = function(pressbutton) {
 }
 
 /**
- * Custom behavior for JavaScript I18N in Joomla! 1.6
+ * Custom behavior for JavaScript I18N in Molajo 1.6
  *
  * Allows you to call Joomla.JText._() to get a translated JavaScript string pushed in with JText::script() in Joomla.
  */

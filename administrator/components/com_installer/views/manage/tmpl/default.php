@@ -47,7 +47,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_TYPE', 'type', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%" class="center">
-					<?php echo JText::_('JVERSION'); ?>
+					<?php echo JText::_('MOLAJOVERSION'); ?>
 				</th>
 				<th width="10%">
 					<?php echo JText::_('JDATE'); ?>

@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! System Remember Me Plugin
+ * Molajo System Remember Me Plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.remember

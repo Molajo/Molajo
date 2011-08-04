@@ -76,9 +76,8 @@ class MolajoModelConfiguration
 
         if (count($results) > 0) {
             foreach ($results as $count => $item) {
-                $editView = $item->option_value;
+                return $item->option_value;
             }
-            return $editView;
         }
 
         return false;
@@ -177,8 +176,11 @@ class MolajoModelConfiguration
     private function getComponentOptionKey ()
     {
         foreach ($this->overrides as $configurationOverrides => $override) {
-            if ($configurationOverrides == $this->option) {
+            if ($override == $this->option) {
                 return $override;
+                break;
+            } else {
+                continue;
             }
         }
         return 'core';
@@ -207,7 +209,7 @@ class MolajoModelConfiguration
         $query->where($db->namequote('ordering').' = 0');
         $query->where($db->namequote('option_id').' > 0');
         $query->order($db->namequote('option_id'));
-        
+
         $db->setQuery($query->__toString());
 
         if ($results = $db->loadObjectList()) {
@@ -233,13 +235,16 @@ class MolajoModelConfiguration
 
                 $db->setQuery($query->__toString());
 
-                if ($componentResults = $db->loadObjectList()) {
-                    $optionArray[$item->option_id] = $this->option;
+                if ($componentResults = $db->loadResult()) {
+                    $optionArray[$item->option_id] = $componentResults;
                 } else {
                     $optionArray[$item->option_id] = 'core';
                 }
             }
         }
+
+        $this->overrides = $optionArray;
+
         return;
     }
 }

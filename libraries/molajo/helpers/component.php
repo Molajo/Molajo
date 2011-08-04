@@ -149,13 +149,13 @@ class MolajoComponentHelper
      *
      * Render the component.
 	 *
-	 * @param   string  $data       An array of component information
+	 * @param   string  $request An array of component information
 	 * @param   array   $params  The component parameters
 	 *
 	 * @return  object
 	 * @since  1.0
 	 */
-	public static function renderComponent($data, $params = array())
+	public static function renderComponent($request, $params = array())
 	{
 		// Initialise variables.
 		$app	= MolajoFactory::getApplication();
@@ -168,8 +168,8 @@ class MolajoComponentHelper
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", null, false, false)
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", $lang->getDefault(), false, false);
-
-		if (empty($data['option'])) {
+ 
+		if (empty($request['option'])) {
 			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 			return;
 		}
@@ -177,15 +177,15 @@ class MolajoComponentHelper
 		 // Record the scope
 		$scope = $app->scope;
 		// Set scope to component name
-		$app->scope = $data['option'];
+		$app->scope = $request['option'];
 
         /** component path and entry point */
-		$data['option']	= preg_replace('/[^A-Z0-9_\.-]/i', '', $data['option']);
-		$file	= substr($data['option'], 4);
-        $path   = MOLAJO_PATH_COMPONENT.'/'.$file.'.php';
+		$request['option']	= preg_replace('/[^A-Z0-9_\.-]/i', '', $request['option']);
+		$file = substr($request['option'], 4);
+        $path = $request['component_path'].'/'.$file.'.php';
 
         /** verify component is enabled */
-		if (self::isEnabled($data['option'])
+		if (self::isEnabled($request['option'])
                 && file_exists($path)) {
         } else {
 			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
@@ -194,10 +194,10 @@ class MolajoComponentHelper
 		$task = JRequest::getString('task');
 
 		// Load common and local language files.
-			$lang->load($data['option'], MOLAJO_PATH_BASE, null, false, false)
-		||	$lang->load($data['option'], MOLAJO_PATH_COMPONENT, null, false, false)
-		||	$lang->load($data['option'], MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load($data['option'], MOLAJO_PATH_COMPONENT, $lang->getDefault(), false, false);
+			$lang->load($request['option'], MOLAJO_PATH_BASE, null, false, false)
+		||	$lang->load($request['option'], $request['component_path'], null, false, false)
+		||	$lang->load($request['option'], MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load($request['option'], $request['component_path'], $lang->getDefault(), false, false);
 
 		// Handle template preview outlining.
 		$contents = null;

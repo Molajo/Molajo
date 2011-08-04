@@ -10,10 +10,10 @@ defined('MOLAJO') or die;
 
 /** custom css/js **/
 $document =& JFactory::getDocument();
-$document->addStyleSheet('../media/'.$this->state->get('request.option').'/css/administrator.css');
+$document->addStyleSheet('../media/'.$this->request['option'].'/css/administrator.css');
 
 /** component parameters **/
-$this->state = JComponentHelper::getParams($this->state->get('request.option'));
+$this->state = JComponentHelper::getParams($this->request['option']);
 
 /** output **/
 include $this->layoutHelper->getPath ('modal_item.php');

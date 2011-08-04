@@ -13,7 +13,7 @@ jimport('joomla.log.log');
 jimport('joomla.log.logger');
 
 /**
- * Joomla! SysLog Log class
+ * Molajo SysLog Log class
  *
  * This class is designed to call the PHP SysLog function call which is then sent to the
  * system wide log system. For Linux/Unix based systems this is the syslog subsystem, for

@@ -32,7 +32,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<th width="20"><input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" /></th>
 				<th class="nowrap"><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_NAME', 'name', $listDirn, $listOrder); ?></th>
 				<th class="center"><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_TYPE', 'type', $listDirn, $listOrder); ?></th>
-				<th width="10%" class="center"><?php echo JText::_('JVERSION'); ?></th>
+				<th width="10%" class="center"><?php echo JText::_('MOLAJOVERSION'); ?></th>
 				<th width="10%" class="center"><?php echo JText::_('JDATE'); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_FOLDER', 'folder', $listDirn, $listOrder); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_CLIENT', 'application_id', $listDirn, $listOrder); ?></th>

@@ -20,7 +20,7 @@ if ($this->render['column_name'] == 'title' && $this->params->def('config_manage
         <?php echo JHtml::_('jgrid.checkedout', $this->row->rowCount, $this->row->editor, $this->row->checked_out_time, $defaultView.'.', $this->row->canCheckin); ?>
 <?php endif; ?>
 <?php if ($this->row->canEdit) : ?>
-        <a href="<?php echo JRoute::_('index.php?option='.$this->state->get('request.option').'&task=edit&id='.$this->row->id);?>">
+        <a href="<?php echo JRoute::_('index.php?option='.$this->request['option'].'&task=edit&id='.$this->row->id);?>">
             <?php echo $this->row->title; ?>
         </a>
 <?php else : ?>

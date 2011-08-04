@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.plugin.plugin');
 
 /**
- * Joomla! Page Cache Plugin
+ * Molajo Page Cache Plugin
  *
  * @package		Joomla.Plugin
  * @subpackage	System.cache

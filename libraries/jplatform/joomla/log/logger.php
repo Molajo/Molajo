@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.log.logentry');
 
 /**
- * Joomla! Logger Base Class
+ * Molajo Logger Base Class
  *
  * This class is used to be the basis of logger classes to allow for defined functions
  * to exist regardless of the child class.

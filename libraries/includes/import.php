@@ -314,6 +314,8 @@ if (class_exists($formatClass)) {
     $formatClass = 'JDocument'.ucfirst($includeFormat);
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/document/'.$includeFormat.'/'.$includeFormat.'.php', $formatClass);
 }
+/** MolajoField */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/fields/fields/field.php', 'MolajoField');
 
 /** Controller */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/controller.php', 'JController');

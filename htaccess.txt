@@ -25,7 +25,7 @@ RewriteEngine On
 
 ## Begin - Rewrite rules to block out some common exploits.
 # If you experience problems on your site block out the operations listed below
-# This attempts to block the most common type of exploit `attempts` to Joomla!
+# This attempts to block the most common type of exploit `attempts` to Molajo
 #
 # Block out any script trying to base64_encode data within the URL.
 RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
@@ -51,12 +51,12 @@ RewriteRule .* index.php [F]
 ##
 # Uncomment following line if your webserver's URL
 # is not directly related to physical file paths.
-# Update Your Joomla! Directory (just / for root).
+# Update Your Molajo Directory (just / for root).
 ##
 
 # RewriteBase /
 
-## Begin - Joomla! core SEF Section.
+## Begin - Molajo core SEF Section.
 #
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 #
@@ -74,4 +74,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # internally rewrite the request to the index.php script
 RewriteRule .* index.php [L]
 #
-## End - Joomla! core SEF Section.
+## End - Molajo core SEF Section.

@@ -273,11 +273,9 @@ class MolajoApplication extends JObject
             }
         }
 
-        /** 2. Paths */
-        if (defined('MOLAJO_PATH_COMPONENT')) { } else { define('MOLAJO_PATH_COMPONENT', strtolower(MOLAJO_PATH_BASE.'/components/'.$option)); }
-        if (defined('MOLAJO_PATH_COMPONENT_ADMINISTRATOR')) { } else { define('MOLAJO_PATH_COMPONENT_ADMINISTRATOR', strtolower(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$option)); }
-        if (defined('JPATH_COMPONENT')) { } else { define('JPATH_COMPONENT', MOLAJO_PATH_COMPONENT); }
-        if (defined('JPATH_COMPONENT_ADMINISTRATOR')) { } else { define('JPATH_COMPONENT_ADMINISTRATOR', MOLAJO_PATH_COMPONENT_ADMINISTRATOR); }
+        /** 2. Component Path */
+        $component_path = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$option;
+        define('JPATH_COMPONENT', $component_path);
 
         /** 3. Task */
         $task = JRequest::getCmd('task', 'display');
@@ -353,8 +351,7 @@ class MolajoApplication extends JObject
                     $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID);
                 }
                 if ($format === false) {
-                    $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
-                    return false;
+                    $format = 'html';
                 }
             }
         } else {
@@ -401,6 +398,22 @@ class MolajoApplication extends JObject
             $component_table = '_common';
         }
 
+        /** 11. plugin helper */
+        $plugin_type = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE);
+        if ($plugin_type === false) {
+            $plugin_type = 'content';
+        }
+
+        /** 12. parameters */
+        if ($this->getName() == 'site') {
+            $params = MolajoComponentHelper::getParams($option);
+// $this->_mergeParams ();
+// $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
+        } else {
+            $params = MolajoComponentHelper::getParams($option);
+// $this->_mergeParams ();
+// $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
+        }
         /** Request Object */
         JRequest::setVar('option', $option);
         JRequest::setVar('view', $view);
@@ -421,22 +434,70 @@ class MolajoApplication extends JObject
 
         $session->set('page.controller', $controller);
         $session->set('page.option', $option);
+        $session->set('page.no_com_option', substr($option, 4, strlen($option) - 4));
         $session->set('page.view', $view);
         $session->set('page.model', $view);
         $session->set('page.layout', $layout);
         $session->set('page.task', $task);
         $session->set('page.format', $format);
+        $session->set('page.plugin_type', $plugin_type);
 
         $session->set('page.id', (int) $id);
         $session->set('page.cid', (array) $cids);
         $session->set('page.catid', (int) $catid);
 
+        $session->set('page.params', $params);
+
         $session->set('page.acl_implementation', $acl_implementation);
         $session->set('page.component_table', $component_table);
+        $session->set('page.component_path', $component_path);
         $session->set('page.filter_fieldname', 'config_manager_list_filters');
         $session->set('page.select_fieldname', 'config_manager_grid_column');
 
         return true;
+    }
+
+    /**
+     * loadComponentData
+     *
+     * Loads session page information into an array for passing into the component
+     *
+     * @return array
+     */
+    protected function loadComponentData ()
+    {
+        /** prepare component MVC input */
+        $request = array();
+
+        $session = JFactory::getSession();
+
+        $request['application_id'] = $session->set('page.application_id');
+        $request['current_url'] = $session->get('page.current_url');
+        $request['component_path'] = $session->get('page.component_path');
+        $request['base_url'] = $session->get('page.base_url');
+        $request['item_id'] = $session->get('page.item_id');
+
+        $request['controller'] = $session->get('page.controller');
+        $request['option'] = $session->get('page.option');
+        $request['no_com_option'] = $session->get('page.no_com_option');
+        $request['view'] = $session->get('page.view');
+        $request['layout'] = $session->get('page.layout');
+        $request['model'] = $session->get('page.model');
+        $request['task'] = $session->get('page.task');
+        $request['format'] = $session->get('page.format');
+        $request['plugin_type'] = $session->get('page.plugin_type');
+
+        $request['id'] = $session->get('page.id');
+        $request['cid'] = $session->get('page.cid');
+        $request['catid'] = $session->get('page.catid');
+        $request['params'] = $session->get('page.params');
+
+        $request['acl_implementation'] = $session->get('page.acl_implementation');
+        $request['component_table'] = $session->get('page.component_table');
+        $request['filter_fieldname'] = $session->get('page.filter_fieldname');
+        $request['select_fieldname'] = $session->get('page.select_fieldname');
+
+        return $request;
     }
 
 	/**
@@ -500,6 +561,7 @@ class MolajoApplication extends JObject
 
         $session->clear('page.controller');
         $session->clear('page.option');
+        $session->clear('page.no_com_option');
         $session->clear('page.view');
         $session->clear('page.model');
         $session->clear('page.layout');
@@ -593,7 +655,7 @@ class MolajoApplication extends JObject
  				echo '<html><head><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /><script>document.location.href=\''.$url.'\';</script></head><body></body></html>';
 			}
 			elseif (!$moved and $navigator->isBrowser('konqueror')) {
-				// WebKit browser (identified as konqueror by Joomla!) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
+				// WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
 				echo '<html><head><meta http-equiv="refresh" content="0; url='. $url .'" /><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /></head><body></body></html>';
 			}
 			else {

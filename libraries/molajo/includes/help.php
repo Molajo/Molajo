@@ -86,7 +86,7 @@ class MolajoHelp
 		 *  Replace substitution codes in the URL.
 		 */
 		$lang		= MolajoFactory::getLanguage();
-		$version 	= new JVersion;
+		$version 	= new MolajoVersion;
 		$jver		= explode( '.', $version->getShortVersion() );
 		$jlang		= explode( '-', $lang->getTag() );
 

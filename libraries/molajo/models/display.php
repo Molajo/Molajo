@@ -13,12 +13,20 @@ defined('MOLAJO') or die;
  *
  * Component Model for Display Views
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Model
- * @since 1.6
+ * @since 1.0
  */
 class MolajoModelDisplay extends JModel
 {
+    /**
+     * $request
+     *
+     * @var		array
+     * @since	1.0
+     */
+    public $request = null;
+
     /**
      * $params
      *
@@ -100,29 +108,6 @@ class MolajoModelDisplay extends JModel
     protected $molajoField = array();
 
     /**
-     * __construct
-     *
-     * Constructor.
-     *
-     * @param	array	An optional associative array of configuration settings.
-     * @since	1.0
-     */
-    public function __construct($config = array())
-    {
-        parent::__construct($config);
-    }
-
-    /**
-     * getState
-     *
-     * Do _not_ override getState - JModel::getState
-     *
-     * JModel::getState checks if the state has been set, if it hasn't then _it_ calls populateState
-     * ...unless $config['ignore_request'] is true, in which case it will not populateState
-     *
-     */
-
-    /**
      * populateState
      *
      * Method to auto-populate the model state.
@@ -130,81 +115,27 @@ class MolajoModelDisplay extends JModel
      * @return	void
      * @since	1.0
      */
-    protected function populateState ($ordering = 'ordering', $direction = 'ASC')
+    protected function populateState ()
     {
-        /** Set Session Variables for component. */
-              $session = JFactory::getSession();
+        $this->context = strtolower($this->request['option'].'.'.$this->getName()).'.'.$this->request['layout'];
 
-              echo $session->get('page.controller');
+        $this->params = $this->request['params'];
 
-              echo $session->get('component.Option');
-              echo $session->get('component.View');
-              echo $session->get('component.Layout');
-              echo $session->get('component.Task');
-              echo $session->get('component.Format');
+            $this->filterFieldName = $this->request['filterFieldName'];
 
-              echo $session->get('component.ID');
-              echo $session->get('component.CID');
+            $this->molajoConfig = new MolajoModelConfiguration($this->request['option']);
 
-              echo $session->get('component.ComponentTable');
-              echo $session->get('component.FilterFieldName');
-              echo $session->get('component.SelectFieldName');
-              echo $session->get('component.ACLImplementation');
-              echo $session->get('component.InitiatingExtension');
+            $this->molajoField  = new MolajoField();
+
+            $this->dispatcher = JDispatcher::getInstance();
+
+            MolajoPluginHelper::importPlugin('query');
+            MolajoPluginHelper::importPlugin($this->request['plugin_type']);
 
 
-        $this->setState('request.application', MOLAJO_APPLICATION);
-        $this->setState('request.application', MOLAJO_APPLICATION_ID);
 
-        $this->setState('request.initiating_extension_type', JRequest::getCmd('initiating_extension_type'));
-        $this->setState('request.option', JRequest::getCmd('option'));
-        $this->setState('request.view', JRequest::getCmd('view'));
-        $this->setState('request.model', JRequest::getCmd('model'));
-        $this->setState('request.layout', JRequest::getCmd('layout'));
+            $this->dispatcher->trigger('onQueryPopulateState', array (&$this->state, &$this->params));
 
-        $this->setState('request.task', JRequest::getCmd('task'));
-        $this->setState('request.format', JRequest::getCmd('format'));
-        $this->setState('request.ComponentTable', JRequest::getCmd('ComponentTable'));
-        $this->setState('request.DefaultView', JRequest::getCmd('DefaultView'));
-        $this->setState('request.EditView', JRequest::getCmd('EditView'));
-
-        $this->setState('layout.loadSiteCSS', true);
-        $this->setState('layout.loadSiteJS', true);
-        $this->setState('layout.loadComponentCSS', true);
-        $this->setState('layout.loadComponentJS', true);
-        $this->setState('layout.loadLayoutCSS', true);
-        $this->setState('layout.loadLayoutJS', true);
-
-        /** context **/
-        $this->context = strtolower(JRequest::getCmd('option').'.'.$this->getName());
-        if (trim(JRequest::getCmd('layout')) == '') {
-        } else {
-            $this->context .= '.'.JRequest::getCmd('layout');
-        }
-
-        if (MolajoFactory::getApplication()->getName() == 'site') {
-           $this->params = MolajoFactory::getApplication()->getParams();
-   //         $this->_mergeParams ();
-//		$this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
-        } else {
-           $this->params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
-        }
-
-        $this->filterFieldName = JRequest::getCmd('filterFieldName', 'config_manager_list_filters');
-        $this->molajoConfig = new MolajoModelConfiguration();
-        $this->molajoField  = new MolajoField();
-
-        $this->dispatcher = JDispatcher::getInstance();
-		MolajoPluginHelper::importPlugin('query');
-		MolajoPluginHelper::importPlugin('content');
-
-        if (JRequest::getInt('id') == 0) {
-            $this->populateStateMultiple ($ordering, $direction);
-        } else {
-            $this->populateItemState ();
-        }
-
-        $this->dispatcher->trigger('onQueryPopulateState', array (&$this->state, &$this->params));
     }
 
     /**
@@ -215,7 +146,7 @@ class MolajoModelDisplay extends JModel
      * @return	void
      * @since	1.0
      */
-    protected function populateStateMultiple ($ordering = 'ordering', $direction = 'ASC')
+    public function populateStateMultiple ()
     {
         /** search **/
         $this->processFilter ('search');
@@ -310,7 +241,7 @@ class MolajoModelDisplay extends JModel
      * @return	void
      * @since	1.0
      */
-    protected function populateItemState ()
+    public function populateItemState ()
     {
         $loadFilterArray[] = 'id';
         $this->processFilter('id');
@@ -436,7 +367,7 @@ class MolajoModelDisplay extends JModel
         $jsonFields = $this->molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
 
         /** ACL **/
-        $aclClass = 'MolajoACL'.ucfirst($this->getState('request.DefaultView'));
+        $aclClass = 'MolajoACL'.ucfirst($this->request['view']);
 
         /** process rowset */
         $rowCount = 0;
@@ -559,9 +490,9 @@ $items[$i]->checked_out = false;
 
                 /** acl-append item-specific task permissions **/
                 $acl = new $aclClass();
-                $results = $acl->getUserItemPermissions ($this->getState('request.option'),
-                                                              $this->getState('request.EditView'),
-                                                              $this->getState('request.task'),
+                $results = $acl->getUserItemPermissions ($this->request['option'],
+                                                              $this->request['view'],
+                                                              $this->request['task'],
                                                               $items[$i]->id,
                                                               $items[$i]->category_id,
                                                               $items[$i]);
@@ -651,7 +582,7 @@ $items[$i]->checked_out = false;
         $this->setQueryInformation ('search', false);
 
         /** primary table **/
-        $this->query->from('#'.$this->getState('request.ComponentTable').' AS a');
+        $this->query->from('#'.$this->request['component_table'].' AS a');
 
         /** parent category **/
         $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
@@ -664,7 +595,7 @@ $items[$i]->checked_out = false;
             $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
             $subQuery .= ' FROM #__categories AS cat ';
             $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-            $subQuery .= ' WHERE parent.extension = '.$this->_db->quote($this->getState('request.option'));
+            $subQuery .= ' WHERE parent.extension = '.$this->_db->quote($this->request['option']);
             $subQuery .= '   AND cat.published > '.MOLAJO_STATE_VERSION;
             $subQuery .= '   AND parent.published > '.MOLAJO_STATE_VERSION;
             $subQuery .= ' GROUP BY parent.id ';
@@ -675,7 +606,7 @@ $items[$i]->checked_out = false;
             $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
             $subQuery .= ' FROM #__categories AS cat ';
             $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-            $subQuery .= ' WHERE parent.extension = '.$this->_db->quote($this->getState('request.option'));
+            $subQuery .= ' WHERE parent.extension = '.$this->_db->quote($this->request['option']);
             $subQuery .= ' GROUP BY parent.id ';
         $this->query->join(' LEFT OUTER', '('.$subQuery.') AS maximumState ON maximumState.id = c.id ');
 
@@ -687,9 +618,8 @@ $items[$i]->checked_out = false;
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 */
         /** set view access criteria for site visitor **/
-        $aclClass = 'MolajoACL'.ucfirst(strtolower($this->getState('request.DefaultView')));
-        $acl = new $aclClass ();
-        $results = $acl->getQueryInformation ($this->getState('request.DefaultView'), $this->query, 'user', '', $this->getState('request.DefaultView'));
+        $acl = new MolajoACL ();
+        $results = $acl->getQueryInformation ($this->request['view'], $this->query, 'user', '', $this->request['view']);
 
         /** set ordering and direction **/
         $orderCol	= $this->state->get('list.ordering', 'a.title');
@@ -849,13 +779,11 @@ $items[$i]->checked_out = false;
      */
     public function getAuthors()
     {
-        $componentTable = '#'.$this->getState('request.ComponentTable');
-
         $this->query = $this->_db->getQuery(true);
 
         $this->query->select('u.id AS value, u.name AS text');
         $this->query->from('#__users AS u');
-        $this->query->join('INNER', $this->_db->namequote($componentTable).' AS c ON c.created_by = u.id');
+        $this->query->join('INNER', $this->_db->namequote('#'.$this->request['component_table']).' AS c ON c.created_by = u.id');
         $this->query->group('u.id');
         $this->query->order('u.name');
 
@@ -933,7 +861,7 @@ $items[$i]->checked_out = false;
                                             SUBSTRING(a.'.$this->_db->namequote($columnName).', 1, 7) AS text');
 
         if ($table == null) {
-            $this->queryTable = '#'.$this->getState('request.ComponentTable');
+            $this->queryTable = '#'.$this->request['component_table'];
         } else {
             $this->queryTable = $table;
         }
@@ -962,7 +890,7 @@ $items[$i]->checked_out = false;
      */
     public function getOptionList($field1, $field2, $showKey = false, $showKeyFirst = false, $table  = null)
     {
-        $this->params = MolajoComponentHelper::getParams($this->getState('request.option'));
+        $this->params = MolajoComponentHelper::getParams($this->request['option']);
 
         $this->query = $this->_db->getQuery(true);
 
@@ -980,7 +908,7 @@ $items[$i]->checked_out = false;
 
         /** from **/
         if ($table == null) {
-            $this->queryTable = '#'.$this->getState('request.ComponentTable');
+            $this->queryTable = '#'.$this->request['component_table'];
         } else {
             $this->queryTable = $table;
         }
@@ -1038,7 +966,7 @@ $items[$i]->checked_out = false;
         if (class_exists($fieldClassName)) {
             $value = $this->getState('filter.'.$fieldname);
             $molajoSpecificFieldClass = new $fieldClassName();
-            $molajoSpecificFieldClass->getQueryInformation($this->query, $value, $selectedState, $onlyWhereClause, $this->getState('request.DefaultView'));
+            $molajoSpecificFieldClass->getQueryInformation($this->query, $value, $selectedState, $onlyWhereClause, $this->request['view']);
 
         } else {
             if ($onlyWhereClause === true) {
@@ -1067,7 +995,7 @@ $items[$i]->checked_out = false;
         $this->query->select('DISTINCT '.$this->_db->namequote($columnName).' as value');
 
         if ($table == null) {
-            $this->query->from($this->_db->namequote('#'.$this->getState('request.ComponentTable')));
+            $this->query->from($this->_db->namequote('#'.$this->request['component_table']));
         } else {
             $this->query->from($this->_db->namequote($table));
         }
@@ -1118,7 +1046,7 @@ $items[$i]->checked_out = false;
             return;
         }
         $this->query->where($this->_db->namequote('id').' IN ('.$categoryArray.')');
-        $this->query->where($this->_db->namequote('extension').' = '.$this->_db->quote($this->getState('request.option')));
+        $this->query->where($this->_db->namequote('extension').' = '.$this->_db->quote($this->request['option']));
 
         $this->_db->setQuery($this->query->__toString());
 
@@ -1147,8 +1075,8 @@ $items[$i]->checked_out = false;
     */
     public function getTable($type='', $prefix='', $config = array())
     {
-        return MolajoTable::getInstance($type=ucfirst($this->getState('request.EditView')),
-                                   $prefix=ucfirst($this->getState('request.DefaultView').'Table'),
+        return MolajoTable::getInstance($type=ucfirst($this->request['view']),
+                                   $prefix=ucfirst($this->request['view'].'Table'),
                                    $config);
     }
 

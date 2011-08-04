@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -16,10 +16,10 @@ defined('MOLAJO') or die;
  * produce valid atom files. For example, you have to specify either an editor
  * for the feed or an author for every single feed item.
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Document
  * @see         http://www.atomenabled.org/developers/syndication/atom-format-spec.php
- * @since       11.1
+ * @since       1.0
  */
 
  class MolajoDocumentRendererAtom extends MolajoDocumentRenderer

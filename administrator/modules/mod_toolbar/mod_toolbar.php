@@ -26,12 +26,10 @@ if ($this->state->get('component_task') == 'add') {
 }
 $aclClass = 'MolajoACL'.ucfirst(strtolower(JRequest::getVar('DefaultView')));
 $acl = new $aclClass ();
-$this->permissions = $acl->getUserPermissionSet ($this->state->get('request.option'),
-                                                 $this->state->get('request.EditView'),
-                                                 $set);
+$this->permissions = $acl->getUserPermissionSet ($this->request['option'], $this->request['view'], $set);
 
 $toolbar = new MolajoToolbarHelper ();
-$toolbar->addButtonsDefaultLayout ($this->state->get('filter.option'), $this->permissions);
+$toolbar->addButtonsDefaultLayout ($this->request['option'], $this->permissions);
 
 // Get the toolbar.
 $toolbar = JToolBar::getInstance('toolbar')->render('toolbar');

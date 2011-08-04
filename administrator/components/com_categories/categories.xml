@@ -2,7 +2,7 @@
 <!-- $Id: categories.xml 21505 2011-06-10 07:21:09Z infograf768 $ -->
 <extension type="component" version="1.7" method="upgrade">
 	<name>com_categories</name>
-		<author>Joomla! Project</author>
+		<author>Molajo Project</author>
 	<creationDate>December 2007</creationDate>
 		<copyright>(C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
 		<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>

@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * modelParameters
  *
- * Retrieves and updates the params column in the Joomla! extensions table for the Extend Plugin
+ * Retrieves and updates the params column in the Molajo extensions table for the Extend Plugin
  *
  * @package	Content
  * @subpackage	Extend
@@ -22,7 +22,7 @@ class modelParameter
      * getData
      * 
      * Retrieves the params value from the extensions table for the extend plugin
-     * saved by normal Joomla! processing in order to append the dynamic Content Type
+     * saved by normal Molajo processing in order to append the dynamic Content Type
      * in order to append that value with the dynamic Content Type Parameters
      *
      * @return string params

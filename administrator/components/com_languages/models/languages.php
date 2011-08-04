@@ -5,7 +5,7 @@
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
+// Check to ensure this file is included in Molajo
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package		Joomla! 1.6 Developer Distribution http://AllTogetherAsAWhole.org
+ * @package		Molajo 1.6 Developer Distribution http://AllTogetherAsAWhole.org
  * @copyright	Copyright (C) 2010 Authors. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */

@@ -72,7 +72,7 @@
 			<option value="0">No</option>
 		</param>	
 		<param type="spacer" />
-		<param type="spacer" default="Note: Tamka URLs work in conjunction with Joomla! URL options." />
+		<param type="spacer" default="Note: Tamka URLs work in conjunction with Molajo URL options." />
 		<param type="spacer" />
 	</params>
 </install>
