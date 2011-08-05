@@ -46,7 +46,6 @@ class MolajoViewDisplay extends MolajoView
      */
     protected $saveOrder;
 
-
     /**
      * display
      *
@@ -63,60 +62,17 @@ class MolajoViewDisplay extends MolajoView
         /** 2. Get State */
         $this->state      = $this->get('State');
 
-        /** 3. Get System Variables */
-        parent::display($tpl);
+        /** 3. Retrieve Layout Parameters */
+        $this->params = $this->get('Params');
 
         /** 4. Retrieve Query Results */
         $this->rowset = $this->get('Items');
 
-        /** 5. Retrieve Layout Parameters */
-        $this->params = $this->get('Params');
-        
-        /** 6. Get Pagination data */
+        /** 5. Get Pagination data */
         $this->pagination = $this->get('Pagination');
 
-        /** 7. Optional data (put this into a model parent?) */
-//		$this->category	            = $this->get('Category');
-//		$this->categoryAncestors    = $this->get('Ancestors');
-//		$this->categoryParent       = $this->get('Parent');
-//		$this->categoryPeers	    = $this->get('Peers');
-//		$this->categoryChildren	    = $this->get('Children');
-
-//      $this->authorProfile        = $this->get('Author');
-
-//      $this->tags (tag cloud)
-//      $this->tagCategories (menu)
-//      $this->calendar
-
-    /** blog variables
-     move variables into $options
-     retrieve variables here in view - and split int rowset if needed
-
-	protected $category;
-	protected $children;
-	protected $lead_items = array();
-	protected $intro_items = array();
-	protected $link_items = array();
-	protected $columns = 1;
-     */
-//Navigation
-//$this->navigation->get('form_return_to_link')
-//$this->navigation->get('previous')
-//$this->navigation->get('next')
-//
-// Pagination
-//$this->navigation->get('pagination_start')
-//$this->navigation->get('pagination_limit')
-//$this->navigation->get('pagination_links')
-//$this->navigation->get('pagination_ordering')
-//$this->navigation->get('pagination_direction')
-//$this->breadcrumbs
-//$total = $this->getTotal();
-
-//$this->configuration
-//Parameters (Includes Global Options, Menu Item, Item)
-//$this->params->get('layout_show_page_heading', 1)
-//$this->params->get('layout_page_class_suffix', '')
+        /** 6. Get System Variables */
+        parent::display($tpl);
 
         /** process model errors */
         if (count($errors = $this->get('Errors'))) {
@@ -136,7 +92,51 @@ class MolajoViewDisplay extends MolajoView
         if ($layoutFolder === false) {
             parent::display($tpl);
         } else {
-            echo $this->renderMolajoLayout ($layoutFolder, $this->request['layout']);
+            echo $this->renderLayout ($layoutFolder, $this->request['layout']);
         }
     }
 }
+
+
+/** 7. Optional data (put this into a model parent?) */
+//		$this->category	            = $this->get('Category');
+//		$this->categoryAncestors    = $this->get('Ancestors');
+//		$this->categoryParent       = $this->get('Parent');
+//		$this->categoryPeers	    = $this->get('Peers');
+//		$this->categoryChildren	    = $this->get('Children');
+
+//      $this->authorProfile        = $this->get('Author');
+
+//      $this->tags (tag cloud)
+//      $this->tagCategories (menu)
+//      $this->calendar
+
+/** blog variables
+ move variables into $options
+ retrieve variables here in view - and split int rowset if needed
+
+protected $category;
+protected $children;
+protected $lead_items = array();
+protected $intro_items = array();
+protected $link_items = array();
+protected $columns = 1;
+ */
+//Navigation
+//$this->navigation->get('form_return_to_link')
+//$this->navigation->get('previous')
+//$this->navigation->get('next')
+//
+// Pagination
+//$this->navigation->get('pagination_start')
+//$this->navigation->get('pagination_limit')
+//$this->navigation->get('pagination_links')
+//$this->navigation->get('pagination_ordering')
+//$this->navigation->get('pagination_direction')
+//$this->breadcrumbs
+//$total = $this->getTotal();
+
+//$this->configuration
+//Parameters (Includes Global Options, Menu Item, Item)
+//$this->params->get('layout_show_page_heading', 1)
+//$this->params->get('layout_page_class_suffix', '')

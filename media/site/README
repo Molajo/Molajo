@@ -1,1 +1,10 @@
-To load CSS, JS
+Molajo will automatically load CSS and JS files according to these rules:
+
+1. Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js]
+2. Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js]
+3. Asset ID (for the page) specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js]
+
+Note:
+
+a. Layouts have CSS and JS folders for automatically loading these files.
+b. Name Right-to-left css files with rtl_ for Molajo to automatic load

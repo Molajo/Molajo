@@ -416,14 +416,18 @@ class MolajoApplication extends JObject
         /** 14. parameters */
         if ($this->getName() == 'site') {
             $params = MolajoComponentHelper::getParams($option);
-// $this->_mergeParams ();
+
+		// Setup the category parameters.
+//		$cparams = $category->getParams();
+//		$category->params = clone($params);
+//		$category->params->merge($cparams);
 // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
             $params = MolajoComponentHelper::getParams($option);
 // $this->_mergeParams ();
 // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         }
-        
+
         /** Request Object */
         JRequest::setVar('option', $option);
         JRequest::setVar('view', $view);

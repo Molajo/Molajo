@@ -135,7 +135,7 @@ class MolajoView extends JView
     }
 
     /**
-    * renderMolajoLayout
+    * renderLayout
     *
     * Can do one of two things:
     *
@@ -152,16 +152,16 @@ class MolajoView extends JView
     * @return string
     *
     */
-    protected function renderMolajoLayout ($layoutFolder, $layout)
+    protected function renderLayout ($layoutFolder, $layout)
     {
         /** @var $rowCount */
         $rowCount = 1;
 
         /** Media */
-        $this->renderMolajoLayoutHeadMedia ($layoutFolder);
+        $this->loadMedia ($layoutFolder);
 
         /** Language */
-        $this->renderMolajoLayoutLanguage ($layoutFolder);
+        $this->loadLanguage ($layoutFolder);
 
         /** start collecting output */
         ob_start();
@@ -259,7 +259,7 @@ class MolajoView extends JView
     }
 
     /**
-     * renderMolajoLayoutHead
+     * loadLanguage
      *
      * Language
      *
@@ -271,22 +271,22 @@ class MolajoView extends JView
      * @param $layoutFolder
      * @return void
      */
-    protected function renderMolajoLayoutLanguage ($layoutFolder)
+    protected function loadLanguage ($layoutFolder)
     {
         $language = MolajoFactory::getLanguage();
+        
         $language->load('layouts', MOLAJO_EXTENSION_LAYOUTS, $language->getDefault(), true, true);
         $language->load('layouts_'.$this->request['layout'], $layoutFolder, $language->getDefault(), true, true);
     }
 
     /**
-     * renderMolajoLayoutHeadMedia
+     * loadMedia
      *
      * Automatically includes the following files (if existing)
      *
-     * 1. Standard site-wide CSS and JS in => media/site/css[js]/site.css[js]
-     * 2. Component specific CSS and JS in => media/site/css[js]/component_option.css[js]
-     * 3. Any CSS file in the CSS sub-folder => css/filenames.css
-     * 4. Any JS file in the JS sub-folder => js/filenames.js
+     * 1. Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js]
+     * 2. Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js]
+     * 3. Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js]
      *
      * Note: Right-to-left css files should begin with rtl_
      *
@@ -294,60 +294,85 @@ class MolajoView extends JView
      *
      * @return void
      */
-    protected function renderMolajoLayoutHeadMedia ($layoutFolder)
+    protected function loadMedia ($layoutFolder)
     {
-        if ($this->state->get('layout.loadSiteCSS', true) === true) {
-            /** standard site-wide css and js - media/site/css[js]/viewname.css[js] **/
-            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/site.css')) {
-                $this->document->addStyleSheet(JURI::base().'/site/css/site.css');
-            }
-            if ($this->document->direction == 'rtl') {
-                if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/site_rtl.css')) {
-                    $this->document->addStyleSheet(JURI::base().'/media/site/css/site_rtl.css');
-                }
-            }
+        if (MOLAJO_APPLICATION_PATH == '') {
+            $applicationName = 'frontend';
+        } else {
+            $applicationName = MOLAJO_APPLICATION_PATH;
         }
 
-        if ($this->state->get('layout.loadSiteJS', true) === true) {
-            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/site.js')) {
-                $this->document->addScript(JURI::base().'/media/site/js/site.js');
-            }
+        /** Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_PATH_ROOT.'/media/site/'.$applicationName;
+        $urlPath = JURI::root().'media/site/'.$applicationName;
+
+        if ($this->params->get('load_application_css', true) === true) {
+            $this->loadMediaCSS ($filePath, $urlPath);
+        }
+        if ($this->params->get('load_application_js', true) === true) {
+            $this->loadMediaJS ($filePath, $urlPath);
         }
 
-        /** component specific css and js - media/site/css[js]/component_option.css[js] **/
-        if ($this->state->get('layout.loadComponentCSS', true) === true) {
-            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/css/'.$this->request['option'].'.css')) {
-                $this->document->addStyleSheet(JURI::base().'/media/site/css/'.$this->request['option'].'.css');
-            }
+        /** Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js] */
+        if ($this->params->get('load_component_css', true) === true) {
+            $this->loadMediaCSS ($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
+        }
+        if ($this->params->get('load_component_js', true) === true) {
+            $this->loadMediaJS ($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
         }
 
-        if ($this->state->get('layout.loadComponentJS', true) === true) {
-            if (JFile::exists(MOLAJO_PATH_BASE.'/media/site/js/'.$this->request['option'].'.js')) {
-                $this->document->addScript(JURI::base().'media/site/js/'.$this->request['option'].'.js');
-            }
+        /** Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js] */
+        if ($this->params->get('load_asset_id_css', true) === true) {
+//            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
+        }
+        if ($this->params->get('load_asset_id_js', true) === true) {
+//            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         }
 
-        /** Load Layout CSS (if exists in layout CSS folder) */
-        if ($this->state->get('layout.loadLayoutCSS', true) === true) {
-            $files = JFolder::files($layoutFolder.'/css', '\.css', false, false);
+    }
+
+    /**
+     * loadMediaCSS
+     *
+     * Loads the CS located within the folder, as specified by the filepath
+     *
+     * @param $filePath
+     * @param $urlPath
+     * @return void
+     */
+    protected function loadMediaCSS ($filePath, $urlPath)
+    {
+        $files = JFolder::files($filePath.'/css', '\.css$', false, false);
+
+        if (count($files) > 0) {
             foreach ($files as $file) {
-                if (substr(strtolower($file), 0, 4) == 'rtl_' && $this->document->direction == 'rtl') {
-                    $this->document->addStyleSheet($layoutFolder.'/css/'.$file);
+                if (substr($file, 0, 4) == 'rtl_') {
+                    if ($this->document->direction == 'rtl') {
+                         $this->document->addStyleSheet($urlPath.'/css/'.$file);
+                    }
                 } else {
-                    $this->document->addStyleSheet($layoutFolder.'/css/'.$file);
+                    $this->document->addStyleSheet($urlPath.'/css/'.$file);
                 }
             }
         }
+    }
 
-        /** Load Layout JS (if exists in layout JS folder) */
-        if ($this->state->get('layout.loadLayoutJS', true) === true) {
-            $files = JFolder::files($layoutFolder.'/js', '\.js', false, false);
+    /**
+     * loadMediaJS
+     *
+     * Loads the JS located within the folder, as specified by the filepath
+     *
+     * @param $filePath
+     * @param $urlPath
+     * @return void
+     */
+    protected function loadMediaJS ($filePath, $urlPath)
+    {
+        $files = JFolder::files($filePath.'/js', '\.js$', false, false);
+        
+        if (count($files) > 0) {
             foreach ($files as $file) {
-                if (substr(strtolower($file), 0, 4) == 'rtl_' && $this->document->direction == 'rtl') {
-                    $this->document->addStyleSheet($layoutFolder.'/js/'.$file);
-                } else {
-                    $this->document->addStyleSheet($layoutFolder.'/js/'.$file);
-                }
+                $this->document->addScript($urlPath.'/js/'.$file);
             }
         }
     }
@@ -399,10 +424,9 @@ class MolajoView extends JView
          *  Display Results
          */
         $layoutFolder = $this->findPath($layout);
-        echo $this->renderMolajoLayout ($layoutFolder, 'system');
+        echo $this->renderLayout ($layoutFolder, 'system');
 
         return;
-
     }
 
     /**
