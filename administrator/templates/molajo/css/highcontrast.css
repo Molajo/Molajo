@@ -21,15 +21,15 @@
 #menu li.hover li a,#menu li.hover li.hover li a{background-color:transparent;border:0 none;color:#000;font-weight:700 !important;margin:2px}
 #menu li.hover li.hover a,#menu li.hover li.hover li a:hover{background-color:#e8e8e8;border:1px solid #025a8d;color:#000;font-weight:700 !important;margin:1px}
 #menu ul{background:#000;border:0.1em solid #ccc;font-weight:700 !important}
-#menu ul li.node{background:transparent url(../../../../media/admin/j_arrow.png) no-repeat right 50%;font-weight:700 !important}
-#menu ul li.separator{background:#000 url(../../../../media/admin/bg-menu.gif);height:1px}
+#menu ul li.node{background:transparent url(../../../../media/site/administrator/templates/molajo/j_arrow.png) no-repeat right 50%;font-weight:700 !important}
+#menu ul li.separator{background:#000 url(../../../../media/site/administrator/templates/molajo/bg-menu.gif);height:1px}
 #permissions-sliders ul#rules .panel h3,#permissions-sliders ul#rules,#permissions-sliders ul#rules ul,#permissions-sliders ul#rules .mypanel,div#position-icon.pane-sliders .icon,#submenu a:hover,#submenu a.active,#submenu span.nolink.active,table#acl-config th{background:none repeat scroll 0 0 #000}
 #permissions-sliders ul#rules table.group-rules th{background:none repeat scroll 0 0 #383838;color:#fff}
 #submenu span.nolink{color:#999}
 #submenu-box{background:#000;margin-bottom:10px}
-#system-message dd.error ul{background:#000 url(../../../../media/admin/notice-alert.png) 4px top no-repeat;border-bottom:3px solid #666;border-top:3px solid #666;color:#fff}
-#system-message dd.message ul{background:#000 url(../../../../media/admin/notice-info.png) 4px center no-repeat}
-#system-message dd.notice ul{background:#000 url(../../../../media/admin/notice-note.png) 4px top no-repeat;border-bottom:3px solid #666;border-top:3px solid #666;color:#fff}
+#system-message dd.error ul{background:#000 url(../../../../media/site/administrator/templates/molajo/notice-alert.png) 4px top no-repeat;border-bottom:3px solid #666;border-top:3px solid #666;color:#fff}
+#system-message dd.message ul{background:#000 url(../../../../media/site/administrator/templates/molajo/notice-info.png) 4px center no-repeat}
+#system-message dd.notice ul{background:#000 url(../../../../media/site/administrator/templates/molajo/notice-note.png) 4px top no-repeat;border-bottom:3px solid #666;border-top:3px solid #666;color:#fff}
 .button2-left a,.button2-right a{color:#000}
 .filter-search button:hover{background-color:#383838}
 .mootree_selected{background-color:#999 !important}
@@ -40,10 +40,10 @@ a:hover{color:#FFF;text-decoration:none}
 a:link,a:visited,a:active{color:#FFF;text-decoration:underline}
 body,div#sbox-content{background-color:#000;color:#FFF;font-size:12px;font-weight:700 !important}
 div#element-box,div#toolbar-box,div#element-box div.section-box,table.adminlist tbody tr.row1,table.adminlist tbody tr td,table.adminlist tbody tr.row1 td,.pane-sliders .content,#folderframe,#mediamanager-form,body.contentpane,.manager{background:#000}
-div#submenu-box div.b div.b div.b,div#toolbar-box div.b div.b div.b,div#element-box div.section-box div.b div.b div.b,div#element-box div.b div.b div.b{background:url(../../../../media/admin/j_crn_bl_black.png) 0 0 no-repeat}
-div#submenu-box div.b div.b,div#toolbar-box div.b div.b,div#element-box div.section-box div.b div.b,div#element-box div.b div.b{background:url(../../../../media/admin/j_crn_br_black.png) 100% 0 no-repeat}
-div#submenu-box div.t div.t div.t,div#toolbar-box div.t div.t div.t,div#element-box div.section-box div.t div.t div.t,div#element-box div.t div.t div.t{background:url(../../../../media/admin/j_crn_tl_black.png) 0 0 no-repeat}
-div#submenu-box div.t div.t,div#toolbar-box div.t div.t,div#element-box div.section-box div.t div.t,div#element-box div.t div.t{background:url(../../../../media/admin/j_crn_tr_black.png) 100% 0 no-repeat}
+div#submenu-box div.b div.b div.b,div#toolbar-box div.b div.b div.b,div#element-box div.section-box div.b div.b div.b,div#element-box div.b div.b div.b{background:url(../../../../media/site/administrator/templates/molajo/j_crn_bl_black.png) 0 0 no-repeat}
+div#submenu-box div.b div.b,div#toolbar-box div.b div.b,div#element-box div.section-box div.b div.b,div#element-box div.b div.b{background:url(../../../../media/site/administrator/templates/molajo/j_crn_br_black.png) 100% 0 no-repeat}
+div#submenu-box div.t div.t div.t,div#toolbar-box div.t div.t div.t,div#element-box div.section-box div.t div.t div.t,div#element-box div.t div.t div.t{background:url(../../../../media/site/administrator/templates/molajo/j_crn_tl_black.png) 0 0 no-repeat}
+div#submenu-box div.t div.t,div#toolbar-box div.t div.t,div#element-box div.section-box div.t div.t,div#element-box div.t div.t{background:url(../../../../media/site/administrator/templates/molajo/j_crn_tr_black.png) 100% 0 no-repeat}
 div.pagetitle h2{color:#FFF}
 div.toolbar-list a{border:1px solid #000}
 legend{color:#fff;font-size:14px;font-weight:700}

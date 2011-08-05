@@ -1,0 +1,14 @@
+Chrome is used in conjunction with extension layouts to render HTML before and after
+layout output so that it can be styled using CSS.
+
+Traditionally, chrome has been used in the presentation of Modules to add styling effects,
+like rounded corners, but in Molajo, chrome can be specified for use with any extension layout
+to achieve different types of rendered output objectives.
+
+Within the Template, Module chrome is specified using the 'style' attribute
+in the jdoc statement, as pictured below:
+
+<jdoc:include type="modules" name="user1" style="rounded" />
+
+<jdoc:include type="component" style="xhtml" />
+

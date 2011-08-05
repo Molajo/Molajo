@@ -88,7 +88,8 @@ abstract class MolajoModuleHelper
 		}
 		if (count($result) == 0)
 		{
-			if (JRequest::getBool('tp') && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display'))
+			if (JRequest::getBool('tp')
+                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display'))
 			{
 				$result[0] = MolajoModuleHelper::getModule('mod_'.$position);
 				$result[0]->title = $position;
@@ -164,7 +165,7 @@ abstract class MolajoModuleHelper
 		if (!$chrome) {
 			$chrome = array();
 		}
-
+// layouts chrome
 		require_once MOLAJO_PATH_THEMES.'/system/html/modules.php';
 		$chromePath = MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
 

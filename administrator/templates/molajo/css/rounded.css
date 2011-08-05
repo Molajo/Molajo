@@ -6,22 +6,22 @@
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 .wbg{background-color:#fff !important}
-div#element-box div.b{background:url(../../../../media/admin/j_border.png) 0 100% repeat-x;width:100%}
+div#element-box div.b{background:url(../../../../media/site/administrator/templates/molajo/j_border.png) 0 100% repeat-x;width:100%}
 div#element-box div.m{padding:5px 10px}
 div#element-box div.section-box div.m{background:#fbfbfb}
-div#element-box div.t{background:url(../../../../media/admin/j_border.png) 0 0 repeat-x;width:100%}
+div#element-box div.t{background:url(../../../../media/site/administrator/templates/molajo/j_border.png) 0 0 repeat-x;width:100%}
 div#element-box,div#element-box.login div#section-box{background-color:#f4f4f4}
 div#element-box.login{background-color:#fff}
-div#element-box.login > div.b > div.b{background:transparent url(../../../../media/admin/j_crn_br_light.png) no-repeat scroll 100% 0}
-div#element-box.login > div.b > div.b > div.b{background:transparent url(../../../../media/admin/j_crn_bl_light.png) no-repeat}
-div#element-box.login > div.t > div.t{background:transparent url(../../../../media/admin/j_crn_tr_light.png) no-repeat scroll 100% 0}
-div#element-box.login > div.t > div.t > div.t{background:transparent url(../../../../media/admin/j_crn_tl_light.png) no-repeat}
-div#submenu-box div.b div.b div.b,div#toolbar-box div.b div.b div.b,div#element-box div.section-box div.b div.b div.b,div#element-box div.b div.b div.b{background:url(../../../../media/admin/j_crn_bl_dark.png) 0 0 no-repeat}
-div#submenu-box div.b div.b,div#toolbar-box div.b div.b,div#element-box div.section-box div.b div.b,div#element-box div.b div.b{background:url(../../../../media/admin/j_crn_br_dark.png) 100% 0 no-repeat}
-div#submenu-box div.b,div#toolbar-box div.b,div#element-box div.section-box div.b{background:url(../../../../media/admin/j_border.png) 0 100% repeat-x}
-div#submenu-box div.t div.t div.t,div#toolbar-box div.t div.t div.t,div#element-box div.section-box div.t div.t div.t,div#element-box div.t div.t div.t{background:url(../../../../media/admin/j_crn_tl_dark.png) 0 0 no-repeat}
-div#submenu-box div.t div.t,div#toolbar-box div.t div.t,div#element-box div.section-box div.t div.t,div#element-box div.t div.t{background:url(../../../../media/admin/j_crn_tr_dark.png) 100% 0 no-repeat}
-div#submenu-box div.t,div#toolbar-box div.t,div#element-box div.section-box div.t{background:url(../../../../media/admin/j_border.png) 0 0 repeat-x}
+div#element-box.login > div.b > div.b{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_br_light.png) no-repeat scroll 100% 0}
+div#element-box.login > div.b > div.b > div.b{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_bl_light.png) no-repeat}
+div#element-box.login > div.t > div.t{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_tr_light.png) no-repeat scroll 100% 0}
+div#element-box.login > div.t > div.t > div.t{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_tl_light.png) no-repeat}
+div#submenu-box div.b div.b div.b,div#toolbar-box div.b div.b div.b,div#element-box div.section-box div.b div.b div.b,div#element-box div.b div.b div.b{background:url(../../../../media/site/administrator/templates/molajo/j_crn_bl_dark.png) 0 0 no-repeat}
+div#submenu-box div.b div.b,div#toolbar-box div.b div.b,div#element-box div.section-box div.b div.b,div#element-box div.b div.b{background:url(../../../../media/site/administrator/templates/molajo/j_crn_br_dark.png) 100% 0 no-repeat}
+div#submenu-box div.b,div#toolbar-box div.b,div#element-box div.section-box div.b{background:url(../../../../media/site/administrator/templates/molajo/j_border.png) 0 100% repeat-x}
+div#submenu-box div.t div.t div.t,div#toolbar-box div.t div.t div.t,div#element-box div.section-box div.t div.t div.t,div#element-box div.t div.t div.t{background:url(../../../../media/site/administrator/templates/molajo/j_crn_tl_dark.png) 0 0 no-repeat}
+div#submenu-box div.t div.t,div#toolbar-box div.t div.t,div#element-box div.section-box div.t div.t,div#element-box div.t div.t{background:url(../../../../media/site/administrator/templates/molajo/j_crn_tr_dark.png) 100% 0 no-repeat}
+div#submenu-box div.t,div#toolbar-box div.t,div#element-box div.section-box div.t{background:url(../../../../media/site/administrator/templates/molajo/j_border.png) 0 0 repeat-x}
 div#toolbar-box div.m{padding:0}
 div#toolbar-box,div#toolbar-box,div#element-box div.section-box{background:#f4f4f4}
 div.m{background-color:#f4f4f4;border-left:1px solid #ccc;border-right:1px solid #ccc;padding:0 8px}

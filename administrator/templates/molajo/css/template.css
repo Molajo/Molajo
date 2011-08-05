@@ -63,14 +63,14 @@ textarea{border:1px solid silver;font-size:1.273em;}
 /* -- OVERALL STYLES ----------------------------- */
 
 /* Header */
-#border-bottom{background:url(../../../../media/admin/j_bottom.png) repeat-x;clear:both}
-#border-bottom div{background:url(../../../../media/admin/j_corner_br.png) 100% 0 no-repeat}
-#border-bottom div div{background:url(../../../../media/admin/j_corner_bl.png) no-repeat;height:11px}
+#border-bottom{background:url(../../../../media/site/administrator/templates/molajo/j_bottom.png) repeat-x;clear:both}
+#border-bottom div{background:url(../../../../media/site/administrator/templates/molajo/j_corner_br.png) 100% 0 no-repeat}
+#border-bottom div div{background:url(../../../../media/site/administrator/templates/molajo/j_corner_bl.png) no-repeat;height:11px}
 #border-top .logo{display:block;float:right;padding:7px 10px 0 0;width:auto}
 #border-top .title,#border-top .title a{color:#fff;font-size:1.364em;font-weight:700;line-height:44px;padding-left:14px}
-#border-top.h_blue{background:url(../../../../media/admin/j_header_middle.png) repeat-x}
-#border-top.h_blue div{background:url(../../../../media/admin/j_header_right.png) 100% 0 no-repeat}
-#border-top.h_blue div div{background:url(../../../../media/admin/j_header_left.png) no-repeat;height:54px}
+#border-top.h_blue{background:url(../../../../media/site/administrator/templates/molajo/j_header_middle.png) repeat-x}
+#border-top.h_blue div{background:url(../../../../media/site/administrator/templates/molajo/j_header_right.png) 100% 0 no-repeat}
+#border-top.h_blue div div{background:url(../../../../media/site/administrator/templates/molajo/j_header_left.png) no-repeat;height:54px}
 #header-box{background:#f0f0f0;border:1px solid #ccc}
 
 /* Body */
@@ -87,13 +87,13 @@ p.footer-tip{margin-top:15px}
 
 /* -- STATUS STYLES ----------------------------- */
 #module-status{float:right}
-#module-status .backloggedin-users{background:url(../../../../media/admin/menu/icon-16-back-user.png) 3px 3px no-repeat}
-#module-status .loggedin-users{background:url(../../../../media/admin/menu/icon-16-user.png) 3px 3px no-repeat}
-#module-status .logout{background:url(../../../../media/admin/menu/icon-16-logout.png) 3px 3px no-repeat}
-#module-status .preview{background:url(../../../../media/admin/menu/icon-16-media.png) 3px 3px no-repeat}
+#module-status .backloggedin-users{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-back-user.png) 3px 3px no-repeat}
+#module-status .loggedin-users{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-user.png) 3px 3px no-repeat}
+#module-status .logout{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-logout.png) 3px 3px no-repeat}
+#module-status .preview{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-media.png) 3px 3px no-repeat}
 #module-status .unread-messages a,span.stat-notice{font-weight:700}
-#module-status .unread-messages,#module-status .no-unread-messages{background:url(../../../../media/admin/menu/icon-16-messages.png) 3px 3px no-repeat}
-#module-status .viewsite{background:url(../../../../media/admin/menu/icon-16-viewsite.png) 3px 4px no-repeat}
+#module-status .unread-messages,#module-status .no-unread-messages{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-messages.png) 3px 3px no-repeat}
+#module-status .viewsite{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-viewsite.png) 3px 4px no-repeat}
 #module-status span{display:block;float:left;line-height:16px;margin-bottom:5px;padding:4px 10px 0 22px}
 #module-unread img,#module-unread-new img{border:0}
 #module-unread span{color:#000;text-decoration:none}
@@ -125,7 +125,7 @@ div.pagetitle h2{color:#146295;font-size:1.7em;font-weight:700;line-height:24px;
 div.pagetitle span{col
 
 /* Modal header */
-div.configuration{background:url(../../../../media/admin/menu/icon-16-config.png) 0 6px no-repeat;color:#146295;font-size:1.364em;font-weight:700;margin-left:10px;padding-left:30px;padding-top:4px}
+div.configuration{background:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-config.png) 0 6px no-repeat;color:#146295;font-size:1.364em;font-weight:700;margin-left:10px;padding-left:30px;padding-top:4px}
 
 /* Main toolbars */
 div.toolbar-list{float:right;padding:0;text-align:right}
@@ -153,9 +153,9 @@ textarea#mm_message{width:100%}
 .pane-sliders .panel{border:solid 1px #ccc;margin-bottom:3px}
 .pane-sliders .panel h3{background:#fafafa;color:#666}
 .pane-sliders .title{color:#666;cursor:pointer;margin:0;padding:2px 2px 2px 5px}
-.pane-toggler span{background:transparent url(../../../../media/admin/j_arrow.png) 5px 50% no-repeat;padding-left:20px}
+.pane-toggler span{background:transparent url(../../../../media/site/administrator/templates/molajo/j_arrow.png) 5px 50% no-repeat;padding-left:20px}
 .pane-toggler-down{border-bottom:1px solid #ccc}
-.pane-toggler-down span{background:transparent url(../../../../media/admin/j_arrow_down.png) 5px 50% no-repeat;padding-left:20px}
+.pane-toggler-down span{background:transparent url(../../../../media/site/administrator/templates/molajo/j_arrow_down.png) 5px 50% no-repeat;padding-left:20px}
 div#position-icon.pane-sliders div.pane-down .icon-wrapper .icon{margin:0;padding:5px 0 5px 10px}
 div#position-icon.pane-sliders div.pane-down div.icon-wrapper{margin:5px 0}
 h3.pane-toggler-down a:hover,h3.pane-toggler a:hover{text-decoration:none}
@@ -388,11 +388,11 @@ table.adminlist tr td.btns a{text-decoration:underline}
 .container{clear:both;text-align:center;text-decoration:none}
 .pagination div.limit{float:left;height:22px;line-height:22px;margin:0 10px}
 .pagination div.limit select#limit{width:50px}
-a.saveorder{background:url(../../../../media/admin/admin/filesave.png) no-repeat;display:block;float:right;height:16px;margin-right:8px;overflow:hidden;width:16px}
+a.saveorder{background:url(../../../../media/site/administrator/templates/molajo/admin/filesave.png) no-repeat;display:block;float:right;height:16px;margin-right:8px;overflow:hidden;width:16px}
 a.saveorder.inactive{background-position:0 -16px}
 div#element-box div.m form table.adminlist tr td a{font-size:1.1em}
 div#element-box div.m form table.adminlist tr td div.button2-left.smallsub a,div#element-box div.m form table.adminlist tr td p.smallsub a,div#element-box div.m div.pane-slider form table.adminlist a{font-size:1em}
-div.checkin-tick{background:url(../../../../media/admin/admin/tick.png) 20px 50% no-repeat;text-indent:-9999px}
+div.checkin-tick{background:url(../../../../media/site/administrator/templates/molajo/admin/tick.png) 20px 50% no-repeat;text-indent:-9999px}
 p.mod-purge-instruct{margin-top:20px}
 p.smallsub{margin:3px 0 0}
 p.smallsub span{color:#a0a0a0}
@@ -412,32 +412,32 @@ td.right,th.right{text-align:right}
 /* -- BUTTON STYLES ----------------------------- */
 
 /* Pagination on backend */
-.button1{background:url(../../../../media/admin/j_button1_left.png) no-repeat;margin-left:5px;padding-left:10px;white-space:nowrap}
-.button1 .next{background:url(../../../../media/admin/j_button1_next.png) 100% 0 no-repeat}
+.button1{background:url(../../../../media/site/administrator/templates/molajo/j_button1_left.png) no-repeat;margin-left:5px;padding-left:10px;white-space:nowrap}
+.button1 .next{background:url(../../../../media/site/administrator/templates/molajo/j_button1_next.png) 100% 0 no-repeat}
 .button1 a{color:#333;cursor:pointer;display:block;float:left;font-size:1.091em;font-weight:700;height:26px;line-height:26px;padding:0 35px 0 6px}
 .button1 a:hover,.button2-left a:hover,.button2-right a:hover,.button2-left button:hover,.button2-left button:hover{color:#0B55C4;text-decoration:none}
 .button1,.button1 div{float:right;height:1%}
-.button2-left{background:url(../../../../media/admin/j_button2_left.png) no-repeat;float:left;margin-right:10px}
-.button2-left .blank{background:url(../../../../media/admin/j_button2_blank.png) 100% 0 no-repeat}
-.button2-left .end{background:url(../../../../media/admin/j_button2_last.png) 100% 0 no-repeat}
-.button2-left .image{background:url(../../../../media/admin/j_button2_image.png) 100% 0 no-repeat}
-.button2-left .next{background:url(../../../../media/admin/j_button2_next.png) 100% 0 no-repeat}
+.button2-left{background:url(../../../../media/site/administrator/templates/molajo/j_button2_left.png) no-repeat;float:left;margin-right:10px}
+.button2-left .blank{background:url(../../../../media/site/administrator/templates/molajo/j_button2_blank.png) 100% 0 no-repeat}
+.button2-left .end{background:url(../../../../media/site/administrator/templates/molajo/j_button2_last.png) 100% 0 no-repeat}
+.button2-left .image{background:url(../../../../media/site/administrator/templates/molajo/j_button2_image.png) 100% 0 no-repeat}
+.button2-left .next{background:url(../../../../media/site/administrator/templates/molajo/j_button2_next.png) 100% 0 no-repeat}
 .button2-left .page a,.button2-right .page a,.button2-left .page span,.button2-right .page span,.button2-left .blank a,.button2-right .blank a,.button2-left .blank span,.button2-right .blank span,.button2-left .blank button,.button2-right .blank button{padding:0 6px}
-.button2-left .page,.button2-left .blank{background:url(../../../../media/admin/j_button2_right_cap.png) 100% 0 no-repeat}
-.button2-left .pagebreak{background:url(../../../../media/admin/j_button2_pagebreak.png) 100% 0 no-repeat}
-.button2-left .readmore,.button2-left .article{background:url(../../../../media/admin/j_button2_readmore.png) 100% 0 no-repeat}
+.button2-left .page,.button2-left .blank{background:url(../../../../media/site/administrator/templates/molajo/j_button2_right_cap.png) 100% 0 no-repeat}
+.button2-left .pagebreak{background:url(../../../../media/site/administrator/templates/molajo/j_button2_pagebreak.png) 100% 0 no-repeat}
+.button2-left .readmore,.button2-left .article{background:url(../../../../media/site/administrator/templates/molajo/j_button2_readmore.png) 100% 0 no-repeat}
 .button2-left a,.button2-left span,.button2-left button{padding:0 24px 0 6px}
 .button2-left a,.button2-right a,.button2-left button,.button2-right button,.button2-left span,.button2-right span{color:#333;cursor:pointer;display:block;float:left;font-size:1em;height:22px;line-height:22px}
 .button2-left span,.button2-right span{color:#999;cursor:default}
 .button2-left,.button2-right,.button2-left div,.button2-right div{float:left}
-.button2-left.off .end{background:url(../../../../media/admin/j_button2_last_off.png) 100% 0 no-repeat}
-.button2-left.off .next{background:url(../../../../media/admin/j_button2_next_off.png) 100% 0 no-repeat}
-.button2-right{background:url(../../../../media/admin/j_button2_right.png) 100% 0 no-repeat;float:left;margin-left:5px;margin-right:10px}
-.button2-right .prev{background:url(../../../../media/admin/j_button2_prev.png) no-repeat}
-.button2-right .start{background:url(../../../../media/admin/j_button2_first.png) no-repeat}
+.button2-left.off .end{background:url(../../../../media/site/administrator/templates/molajo/j_button2_last_off.png) 100% 0 no-repeat}
+.button2-left.off .next{background:url(../../../../media/site/administrator/templates/molajo/j_button2_next_off.png) 100% 0 no-repeat}
+.button2-right{background:url(../../../../media/site/administrator/templates/molajo/j_button2_right.png) 100% 0 no-repeat;float:left;margin-left:5px;margin-right:10px}
+.button2-right .prev{background:url(../../../../media/site/administrator/templates/molajo/j_button2_prev.png) no-repeat}
+.button2-right .start{background:url(../../../../media/site/administrator/templates/molajo/j_button2_first.png) no-repeat}
 .button2-right a,.button2-right span,.button2-right button{padding:0 6px 0 24px}
-.button2-right.off .prev{background:url(../../../../media/admin/j_button2_prev_off.png) no-repeat}
-.button2-right.off .start{background:url(../../../../media/admin/j_button2_first_off.png) no-repeat}
+.button2-right.off .prev{background:url(../../../../media/site/administrator/templates/molajo/j_button2_prev_off.png) no-repeat}
+.button2-right.off .start{background:url(../../../../media/site/administrator/templates/molajo/j_button2_first_off.png) no-repeat}
 .page span,.blank span{color:#000;font-weight:700}
 a.pointer{cursor:pointer}
 button{background:#fff;border:1px solid #ccc;margin-top:4px;text-decoration:none}
@@ -447,19 +447,19 @@ div.button2-left button{background:transparent;border:0 solid #aaa;margin-top:0}
 /* -- TOOLTIP STYLES ----------------------------- */
 .tip{background:#ffc;border:1px solid #D4D5AA;float:left;max-width:400px;padding:5px;z-index:50}
 .tip-text{font-size:1em;margin:0}
-.tip-title{background:url(../../../../media/admin/selector-arrow.png) no-repeat;font-size:1em;font-weight:700;margin:-15px 0 0;padding:15px 0 5px}
+.tip-title{background:url(../../../../media/site/administrator/templates/molajo/selector-arrow.png) no-repeat;font-size:1em;font-weight:700;margin:-15px 0 0;padding:15px 0 5px}
 
 /* -- CALENDAR STYLES ----------------------------- */
-a img.calendar{background:url(../../../../media/admin/calendar.png) no-repeat;cursor:pointer;height:16px;margin-left:3px;vertical-align:middle;width:16px}
+a img.calendar{background:url(../../../../media/site/administrator/templates/molajo/calendar.png) no-repeat;cursor:pointer;height:16px;margin-left:3px;vertical-align:middle;width:16px}
 
 /* -- SYSTEM MESSAGE STYLES ----------------------------- */
-#system-message dd.error ul{background-image:url(../../../../media/admin/notice-alert.png)}
-#system-message dd.message ul{background-image:url(../../../../media/admin/notice-info.png)}
-#system-message dd.warning ul,#system-message dd.notice ul{background-image:url(../../../../media/admin/notice-note.png)}
+#system-message dd.error ul{background-image:url(../../../../media/site/administrator/templates/molajo/notice-alert.png)}
+#system-message dd.message ul{background-image:url(../../../../media/site/administrator/templates/molajo/notice-info.png)}
+#system-message dd.warning ul,#system-message dd.notice ul{background-image:url(../../../../media/site/administrator/templates/molajo/notice-note.png)}
 
 /* -- LOGIN STYLES ----------------------------- */
 #form-login .button-holder{clear:right;float:right;margin-top:10px;padding-right:5px}
-#lock{background:url(../../../../media/admin/j_login_lock.png) 50% 0 no-repeat;height:137px;width:150px}
+#lock{background:url(../../../../media/site/administrator/templates/molajo/j_login_lock.png) 50% 0 no-repeat;height:137px;width:150px}
 #section-box{background-color:#fff;float:right;margin-left:10px;margin-right:10px;width:340px}
 #section-box .m{padding:5px}
 #section-box .padding{background:none;padding:0}
@@ -473,186 +473,186 @@ label#mod-login-password-lbl,label#mod-login-username-lbl,label#mod-login-langua
 p{font-size:1em;margin:0 0 15px 10px;padding:0}
 
 /* -- JGRID STYLES ----------------------------- */
-.jgrid span.archive{background-image:url(../../../../media/admin/menu/icon-16-archive.png)}
-.jgrid span.checkedout{background-image:url(../../../../media/admin/admin/checked_out.png)}
-.jgrid span.default{background-image:url(../../../../media/admin/menu/icon-16-default.png)}
-.jgrid span.downarrow{background-image:url(../../../../media/admin/admin/downarrow.png)}
-.jgrid span.downarrow_disabled{background-image:url(../../../../media/admin/admin/downarrow0.png);background-position:0 -12px}
-.jgrid span.expired{background-image:url(../../../../media/admin/admin/publish_r.png)}
-.jgrid span.notdefault{background-image:url(../../../../media/admin/menu/icon-16-notdefault.png)}
-.jgrid span.pending{background-image:url(../../../../media/admin/admin/publish_y.png)}
-.jgrid span.publish{background-image:url(../../../../media/admin/admin/tick.png)}
-.jgrid span.published{background-image:url(../../../../media/admin/admin/publish_g.png)}
+.jgrid span.archive{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-archive.png)}
+.jgrid span.checkedout{background-image:url(../../../../media/site/administrator/templates/molajo/admin/checked_out.png)}
+.jgrid span.default{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-default.png)}
+.jgrid span.downarrow{background-image:url(../../../../media/site/administrator/templates/molajo/admin/downarrow.png)}
+.jgrid span.downarrow_disabled{background-image:url(../../../../media/site/administrator/templates/molajo/admin/downarrow0.png);background-position:0 -12px}
+.jgrid span.expired{background-image:url(../../../../media/site/administrator/templates/molajo/admin/publish_r.png)}
+.jgrid span.notdefault{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-notdefault.png)}
+.jgrid span.pending{background-image:url(../../../../media/site/administrator/templates/molajo/admin/publish_y.png)}
+.jgrid span.publish{background-image:url(../../../../media/site/administrator/templates/molajo/admin/tick.png)}
+.jgrid span.published{background-image:url(../../../../media/site/administrator/templates/molajo/admin/publish_g.png)}
 .jgrid span.state{display:inline-block;height:16px;width:16px}
 .jgrid span.text{display:none}
-.jgrid span.trash{background-image:url(../../../../media/admin/menu/icon-16-trash.png)}
-.jgrid span.unpublish{background-image:url(../../../../media/admin/admin/publish_x.png)}
-.jgrid span.uparrow{background-image:url(../../../../media/admin/admin/uparrow.png)}
-.jgrid span.uparrow_disabled{background-image:url(../../../../media/admin/admin/uparrow0.png);background-position:0 -12px}
+.jgrid span.trash{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-trash.png)}
+.jgrid span.unpublish{background-image:url(../../../../media/site/administrator/templates/molajo/admin/publish_x.png)}
+.jgrid span.uparrow{background-image:url(../../../../media/site/administrator/templates/molajo/admin/uparrow.png)}
+.jgrid span.uparrow_disabled{background-image:url(../../../../media/site/administrator/templates/molajo/admin/uparrow0.png);background-position:0 -12px}
 a.jgrid:hover{text-decoration:none}
 
 /* -- ICON STYLES ----------------------------- */
-.icon-16-archive{background-image:url(../../../../media/admin/menu/icon-16-archive.png)}
-.icon-16-article{background-image:url(../../../../media/admin/menu/icon-16-article.png)}
-.icon-16-back-user{background-image:url(../../../../media/admin/menu/icon-16-back-user.png)}
-.icon-16-banners{background-image:url(../../../../media/admin/menu/icon-16-banner.png)}
-.icon-16-banners-applications{background-image:url(../../../../media/admin/menu/icon-16-banner-application.png)}
-.icon-16-banners-cat{background-image:url(../../../../media/admin/menu/icon-16-banner-categories.png)}
-.icon-16-banners-tracks{background-image:url(../../../../media/admin/menu/icon-16-banner-tracks.png)}
-.icon-16-category{background-image:url(../../../../media/admin/menu/icon-16-category.png)}
-.icon-16-checkin{background-image:url(../../../../media/admin/menu/icon-16-checkin.png)}
-.icon-16-clear{background-image:url(../../../../media/admin/menu/icon-16-clear.png)}
-.icon-16-component{background-image:url(../../../../media/admin/menu/icon-16-component.png)}
-.icon-16-config{background-image:url(../../../../media/admin/menu/icon-16-config.png)}
-.icon-16-contact{background-image:url(../../../../media/admin/menu/icon-16-contacts.png)}
-.icon-16-contact-cat{background-image:url(../../../../media/admin/menu/icon-16-contacts-categories.png)}
-.icon-16-content{background-image:url(../../../../media/admin/menu/icon-16-content.png)}
-.icon-16-cpanel{background-image:url(../../../../media/admin/menu/icon-16-cpanel.png)}
-.icon-16-default{background-image:url(../../../../media/admin/menu/icon-16-default.png)}
-.icon-16-featured{background-image:url(../../../../media/admin/menu/icon-16-featured.png)}
-.icon-16-groups{background-image:url(../../../../media/admin/menu/icon-16-groups.png)}
-.icon-16-help{background-image:url(../../../../media/admin/menu/icon-16-help.png)}
-.icon-16-help-community{background-image:url(../../../../media/admin/menu/icon-16-help-community.png)}
-.icon-16-help-dev{background-image:url(../../../../media/admin/menu/icon-16-help-dev.png)}
-.icon-16-help-docs{background-image:url(../../../../media/admin/menu/icon-16-help-docs.png)}
-.icon-16-help-forum{background-image:url(../../../../media/admin/menu/icon-16-help-forum.png)}
-.icon-16-help-jed{background-image:url(../../../../media/admin/menu/icon-16-help-jed.png)}
-.icon-16-help-jrd{background-image:url(../../../../media/admin/menu/icon-16-help-jrd.png)}
-.icon-16-help-security{background-image:url(../../../../media/admin/menu/icon-16-help-security.png)}
-.icon-16-help-shop{background-image:url(../../../../media/admin/menu/icon-16-help-shop.png)}
-.icon-16-help-this{background-image:url(../../../../media/admin/menu/icon-16-help-this.png)}
-.icon-16-help-trans{background-image:url(../../../../media/admin/menu/icon-16-help-trans.png)}
-.icon-16-info{background-image:url(../../../../media/admin/menu/icon-16-info.png)}
-.icon-16-install{background-image:url(../../../../media/admin/menu/icon-16-install.png)}
-.icon-16-language{background-image:url(../../../../media/admin/menu/icon-16-language.png)}
-.icon-16-levels{background-image:url(../../../../media/admin/menu/icon-16-levels.png)}
-.icon-16-logout{background-image:url(../../../../media/admin/menu/icon-16-logout.png)}
-.icon-16-maintenance{background-image:url(../../../../media/admin/menu/icon-16-maintenance.png)}
-.icon-16-massmail{background-image:url(../../../../media/admin/menu/icon-16-massmail.png)}
-.icon-16-media{background-image:url(../../../../media/admin/menu/icon-16-media.png)}
-.icon-16-menu{background-image:url(../../../../media/admin/menu/icon-16-menu.png)}
-.icon-16-menumgr{background-image:url(../../../../media/admin/menu/icon-16-menumgr.png)}
-.icon-16-messages{background-image:url(../../../../media/admin/menu/icon-16-messaging.png)}
-.icon-16-messages-add{background-image:url(../../../../media/admin/menu/icon-16-new-privatemessage.png)}
-.icon-16-messages-read{background-image:url(../../../../media/admin/menu/icon-16-messages.png)}
-.icon-16-module{background-image:url(../../../../media/admin/menu/icon-16-module.png)}
-.icon-16-newarticle{background-image:url(../../../../media/admin/menu/icon-16-newarticle.png)}
-.icon-16-newcategory{background-image:url(../../../../media/admin/menu/icon-16-newcategory.png)}
-.icon-16-newgroup{background-image:url(../../../../media/admin/menu/icon-16-newgroup.png)}
-.icon-16-newlevel{background-image:url(../../../../media/admin/menu/icon-16-newlevel.png)}
-.icon-16-newsfeeds{background-image:url(../../../../media/admin/menu/icon-16-newsfeeds.png)}
-.icon-16-newsfeeds-cat{background-image:url(../../../../media/admin/menu/icon-16-newsfeeds-cat.png)}
-.icon-16-newuser{background-image:url(../../../../media/admin/menu/icon-16-newuser.png)}
-.icon-16-plugin{background-image:url(../../../../media/admin/menu/icon-16-plugin.png)}
-.icon-16-profile,.icon-16-user{background-image:url(../../../../media/admin/menu/icon-16-user.png)}
-.icon-16-purge{background-image:url(../../../../media/admin/menu/icon-16-purge.png)}
-.icon-16-readmess{background-image:url(../../../../media/admin/menu/icon-16-readmess.png)}
-.icon-16-redirect{background-image:url(../../../../media/admin/menu/icon-16-redirect.png)}
-.icon-16-search{background-image:url(../../../../media/admin/menu/icon-16-search.png)}
-.icon-16-section{background-image:url(../../../../media/admin/menu/icon-16-section.png)}
-.icon-16-static{background-image:url(../../../../media/admin/menu/icon-16-static.png)}
-.icon-16-stats{background-image:url(../../../../media/admin/menu/icon-16-stats.png)}
-.icon-16-themes{background-image:url(../../../../media/admin/menu/icon-16-themes.png)}
-.icon-16-trash{background-image:url(../../../../media/admin/menu/icon-16-trash.png)}
-.icon-16-weblinks{background-image:url(../../../../media/admin/menu/icon-16-links.png)}
-.icon-16-weblinks-cat{background-image:url(../../../../media/admin/menu/icon-16-links-cat.png)}
-.icon-16-writemess{background-image:url(../../../../media/admin/menu/icon-16-writemess.png)}
+.icon-16-archive{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-archive.png)}
+.icon-16-article{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-article.png)}
+.icon-16-back-user{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-back-user.png)}
+.icon-16-banners{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-banner.png)}
+.icon-16-banners-applications{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-banner-application.png)}
+.icon-16-banners-cat{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-banner-categories.png)}
+.icon-16-banners-tracks{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-banner-tracks.png)}
+.icon-16-category{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-category.png)}
+.icon-16-checkin{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-checkin.png)}
+.icon-16-clear{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-clear.png)}
+.icon-16-component{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-component.png)}
+.icon-16-config{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-config.png)}
+.icon-16-contact{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-contacts.png)}
+.icon-16-contact-cat{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-contacts-categories.png)}
+.icon-16-content{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-content.png)}
+.icon-16-cpanel{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-cpanel.png)}
+.icon-16-default{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-default.png)}
+.icon-16-featured{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-featured.png)}
+.icon-16-groups{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-groups.png)}
+.icon-16-help{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help.png)}
+.icon-16-help-community{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-community.png)}
+.icon-16-help-dev{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-dev.png)}
+.icon-16-help-docs{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-docs.png)}
+.icon-16-help-forum{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-forum.png)}
+.icon-16-help-jed{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-jed.png)}
+.icon-16-help-jrd{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-jrd.png)}
+.icon-16-help-security{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-security.png)}
+.icon-16-help-shop{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-shop.png)}
+.icon-16-help-this{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-this.png)}
+.icon-16-help-trans{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-help-trans.png)}
+.icon-16-info{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-info.png)}
+.icon-16-install{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-install.png)}
+.icon-16-language{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-language.png)}
+.icon-16-levels{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-levels.png)}
+.icon-16-logout{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-logout.png)}
+.icon-16-maintenance{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-maintenance.png)}
+.icon-16-massmail{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-massmail.png)}
+.icon-16-media{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-media.png)}
+.icon-16-menu{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-menu.png)}
+.icon-16-menumgr{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-menumgr.png)}
+.icon-16-messages{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-messaging.png)}
+.icon-16-messages-add{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-new-privatemessage.png)}
+.icon-16-messages-read{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-messages.png)}
+.icon-16-module{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-module.png)}
+.icon-16-newarticle{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newarticle.png)}
+.icon-16-newcategory{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newcategory.png)}
+.icon-16-newgroup{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newgroup.png)}
+.icon-16-newlevel{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newlevel.png)}
+.icon-16-newsfeeds{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newsfeeds.png)}
+.icon-16-newsfeeds-cat{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newsfeeds-cat.png)}
+.icon-16-newuser{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-newuser.png)}
+.icon-16-plugin{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-plugin.png)}
+.icon-16-profile,.icon-16-user{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-user.png)}
+.icon-16-purge{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-purge.png)}
+.icon-16-readmess{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-readmess.png)}
+.icon-16-redirect{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-redirect.png)}
+.icon-16-search{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-search.png)}
+.icon-16-section{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-section.png)}
+.icon-16-static{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-static.png)}
+.icon-16-stats{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-stats.png)}
+.icon-16-themes{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-themes.png)}
+.icon-16-trash{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-trash.png)}
+.icon-16-weblinks{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-links.png)}
+.icon-16-weblinks-cat{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-links-cat.png)}
+.icon-16-writemess{background-image:url(../../../../media/site/administrator/templates/molajo/menu/icon-16-writemess.png)}
 
 /* -- TOOLBAR ICON STYLES ----------------------------- */
-.icon-32-apply{background-image:url(../../../../media/admin/toolbar/icon-32-apply.png)}
-.icon-32-archive{background-image:url(../../../../media/admin/toolbar/icon-32-archive.png)}
-.icon-32-assign,.icon-32-publish{background-image:url(../../../../media/admin/toolbar/icon-32-publish.png)}
-.icon-32-back{background-image:url(../../../../media/admin/toolbar/icon-32-back.png)}
-.icon-32-cancel{background-image:url(../../../../media/admin/toolbar/icon-32-cancel.png)}
-.icon-32-checkin{background-image:url(../../../../media/admin/toolbar/icon-32-checkin.png)}
-.icon-32-copy{background-image:url(../../../../media/admin/toolbar/icon-32-copy.png)}
-.icon-32-css{background-image:url(../../../../media/admin/toolbar/icon-32-css.png)}
-.icon-32-default{background-image:url(../../../../media/admin/toolbar/icon-32-default.png)}
-.icon-32-delete{background-image:url(../../../../media/admin/toolbar/icon-32-delete.png)}
-.icon-32-delete-style{background-image:url(../../../../media/admin/toolbar/icon-32-delete-style.png)}
-.icon-32-edit{background-image:url(../../../../media/admin/toolbar/icon-32-edit.png)}
-.icon-32-error{background-image:url(../../../../media/admin/toolbar/icon-32-error.png)}
-.icon-32-export{background-image:url(../../../../media/admin/toolbar/icon-32-export.png)}
-.icon-32-featured{background-image:url(../../../../media/admin/toolbar/icon-32-featured.png)}
-.icon-32-forward{background-image:url(../../../../media/admin/toolbar/icon-32-forward.png)}
-.icon-32-help{background-image:url(../../../../media/admin/toolbar/icon-32-help.png)}
-.icon-32-html{background-image:url(../../../../media/admin/toolbar/icon-32-html.png)}
-.icon-32-menus{background-image:url(../../../../media/admin/toolbar/icon-32-menu.png)}
-.icon-32-move{background-image:url(../../../../media/admin/toolbar/icon-32-move.png)}
-.icon-32-new{background-image:url(../../../../media/admin/toolbar/icon-32-new.png)}
-.icon-32-new-style{background-image:url(../../../../media/admin/toolbar/icon-32-new-style.png)}
-.icon-32-options{background-image:url(../../../../media/admin/toolbar/icon-32-config.png)}
-.icon-32-preview{background-image:url(../../../../media/admin/toolbar/icon-32-preview.png)}
-.icon-32-purge{background-image:url(../../../../media/admin/toolbar/icon-32-purge.png)}
-.icon-32-refresh{background-image:url(../../../../media/admin/toolbar/icon-32-refresh.png)}
-.icon-32-remove{background-image:url(../../../../media/admin/toolbar/icon-32-remove.png)}
-.icon-32-restore{background-image:url(../../../../media/admin/toolbar/icon-32-revert.png)}
-.icon-32-save{background-image:url(../../../../media/admin/toolbar/icon-32-save.png)}
-.icon-32-save-copy{background-image:url(../../../../media/admin/toolbar/icon-32-save-copy.png)}
-.icon-32-save-new{background-image:url(../../../../media/admin/toolbar/icon-32-save-new.png)}
-.icon-32-send{background-image:url(../../../../media/admin/toolbar/icon-32-send.png)}
-.icon-32-trash{background-image:url(../../../../media/admin/toolbar/icon-32-trash.png)}
-.icon-32-unarchive{background-image:url(../../../../media/admin/toolbar/icon-32-unarchive.png)}
-.icon-32-unblock{background-image:url(../../../../media/admin/toolbar/icon-32-unblock.png)}
-.icon-32-unpublish{background-image:url(../../../../media/admin/toolbar/icon-32-unpublish.png)}
-.icon-32-upload{background-image:url(../../../../media/admin/toolbar/icon-32-upload.png)}
+.icon-32-apply{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-apply.png)}
+.icon-32-archive{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-archive.png)}
+.icon-32-assign,.icon-32-publish{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-publish.png)}
+.icon-32-back{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-back.png)}
+.icon-32-cancel{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-cancel.png)}
+.icon-32-checkin{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-checkin.png)}
+.icon-32-copy{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-copy.png)}
+.icon-32-css{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-css.png)}
+.icon-32-default{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-default.png)}
+.icon-32-delete{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-delete.png)}
+.icon-32-delete-style{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-delete-style.png)}
+.icon-32-edit{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-edit.png)}
+.icon-32-error{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-error.png)}
+.icon-32-export{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-export.png)}
+.icon-32-featured{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-featured.png)}
+.icon-32-forward{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-forward.png)}
+.icon-32-help{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-help.png)}
+.icon-32-html{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-html.png)}
+.icon-32-menus{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-menu.png)}
+.icon-32-move{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-move.png)}
+.icon-32-new{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-new.png)}
+.icon-32-new-style{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-new-style.png)}
+.icon-32-options{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-config.png)}
+.icon-32-preview{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-preview.png)}
+.icon-32-purge{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-purge.png)}
+.icon-32-refresh{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-refresh.png)}
+.icon-32-remove{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-remove.png)}
+.icon-32-restore{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-revert.png)}
+.icon-32-save{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-save.png)}
+.icon-32-save-copy{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-save-copy.png)}
+.icon-32-save-new{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-save-new.png)}
+.icon-32-send{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-send.png)}
+.icon-32-trash{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-trash.png)}
+.icon-32-unarchive{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-unarchive.png)}
+.icon-32-unblock{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-unblock.png)}
+.icon-32-unpublish{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-unpublish.png)}
+.icon-32-upload{background-image:url(../../../../media/site/administrator/templates/molajo/toolbar/icon-32-upload.png)}
 .toolbar-inactive{background-position:0 32px}
 
 /* -- HEADER ICON STYLES ----------------------------- */
-.icon-48-article{background-image:url(../../../../media/admin/header/icon-48-article.png)}
-.icon-48-article-add{background-image:url(../../../../media/admin/header/icon-48-article-add.png)}
-.icon-48-article-edit{background-image:url(../../../../media/admin/header/icon-48-article-edit.png)}
-.icon-48-banners{background-image:url(../../../../media/admin/header/icon-48-banner.png)}
-.icon-48-banners-applications{background-image:url(../../../../media/admin/header/icon-48-banner-application.png)}
-.icon-48-banners-categories,.icon-48-banners-category-edit{background-image:url(../../../../media/admin/header/icon-48-banner-categories.png)}
-.icon-48-banners-tracks{background-image:url(../../../../media/admin/header/icon-48-banner-tracks.png)}
-.icon-48-categories,.icon-48-category-edit,.icon-48-content-categories,.icon-48-content-category-edit{background-image:url(../../../../media/admin/header/icon-48-category.png)}
-.icon-48-category-add,.icon-48-banners-category-add,.icon-48-contact-category-add,.icon-48-newsfeeds-category-add,.icon-48-content-category-add,.icon-48-weblinks-category-add{background-image:url(../../../../media/admin/header/icon-48-category-add.png)}
-.icon-48-checkin{background-image:url(../../../../media/admin/header/icon-48-checkin.png)}
-.icon-48-clear{background-image:url(../../../../media/admin/header/icon-48-clear.png)}
-.icon-48-config{background-image:url(../../../../media/admin/header/icon-48-config.png)}
-.icon-48-contact{background-image:url(../../../../media/admin/header/icon-48-contacts.png)}
-.icon-48-contact-categories,.icon-48-contact-category-edit{background-image:url(../../../../media/admin/header/icon-48-contacts-categories.png)}
-.icon-48-cpanel{background-image:url(../../../../media/admin/header/icon-48-cpanel.png)}
-.icon-48-dbbackup{background-image:url(../../../../media/admin/header/icon-48-backup.png)}
-.icon-48-dbquery{background-image:url(../../../../media/admin/header/icon-48-query.png)}
-.icon-48-dbrestore{background-image:url(../../../../media/admin/header/icon-48-dbrestore.png)}
-.icon-48-featured{background-image:url(../../../../media/admin/header/icon-48-featured.png)}
-.icon-48-generic{background-image:url(../../../../media/admin/header/icon-48-generic.png)}
-.icon-48-groups{background-image:url(../../../../media/admin/header/icon-48-groups.png)}
-.icon-48-groups-add{background-image:url(../../../../media/admin/header/icon-48-groups-add.png)}
-.icon-48-help_header{background-image:url(../../../../media/admin/header/icon-48-help_header.png)}
-.icon-48-impressions,.icon-48-browser,.icon-48-searchtext{background-image:url(../../../../media/admin/header/icon-48-stats.png)}
-.icon-48-inbox{background-image:url(../../../../media/admin/header/icon-48-inbox.png)}
-.icon-48-install{background-image:url(../../../../media/admin/header/icon-48-extension.png)}
-.icon-48-langmanager{background-image:url(../../../../media/admin/header/icon-48-language.png)}
-.icon-48-levels{background-image:url(../../../../media/admin/header/icon-48-levels.png)}
-.icon-48-levels-add{background-image:url(../../../../media/admin/header/icon-48-levels-add.png)}
-.icon-48-massmail{background-image:url(../../../../media/admin/header/icon-48-massmail.png)}
-.icon-48-mediamanager{background-image:url(../../../../media/admin/header/icon-48-media.png)}
-.icon-48-menu{background-image:url(../../../../media/admin/header/icon-48-menu.png)}
-.icon-48-menu-add{background-image:url(../../../../media/admin/header/icon-48-menu-add.png)}
-.icon-48-menumgr{background-image:url(../../../../media/admin/header/icon-48-menumgr.png)}
-.icon-48-module{background-image:url(../../../../media/admin/header/icon-48-module.png)}
-.icon-48-msgconfig{background-image:url(../../../../media/admin/header/icon-48-message_config.png)}
-.icon-48-new-privatemessage{background-image:url(../../../../media/admin/header/icon-48-new-privatemessage.png)}
-.icon-48-newsfeeds{background-image:url(../../../../media/admin/header/icon-48-newsfeeds.png)}
-.icon-48-newsfeeds-categories,.icon-48-newsfeeds-category-edit,.icon-48-newsfeeds-cat{background-image:url(../../../../media/admin/header/icon-48-newsfeeds-cat.png)}
-.icon-48-plugin{background-image:url(../../../../media/admin/header/icon-48-plugin.png)}
-.icon-48-purge{background-image:url(../../../../media/admin/header/icon-48-purge.png)}
-.icon-48-redirect{background-image:url(../../../../media/admin/header/icon-48-redirect.png)}
-.icon-48-search{background-image:url(../../../../media/admin/header/icon-48-search.png)}
-.icon-48-sections{background-image:url(../../../../media/admin/header/icon-48-section.png)}
-.icon-48-systeminfo{background-image:url(../../../../media/admin/header/icon-48-info.png)}
-.icon-48-thememanager{background-image:url(../../../../media/admin/header/icon-48-themes.png)}
-.icon-48-trash{background-image:url(../../../../media/admin/header/icon-48-trash.png)}
-.icon-48-user{background-image:url(../../../../media/admin/header/icon-48-user.png)}
-.icon-48-user-add{background-image:url(../../../../media/admin/header/icon-48-user-add.png)}
-.icon-48-user-edit{background-image:url(../../../../media/admin/header/icon-48-user-edit.png)}
-.icon-48-user-profile{background-image:url(../../../../media/admin/header/icon-48-user-profile.png)}
-.icon-48-weblinks{background-image:url(../../../../media/admin/header/icon-48-links.png)}
-.icon-48-weblinks-categories,.icon-48-weblinks-category-edit{background-image:url(../../../../media/admin/header/icon-48-links-cat.png)}
-.icon-48-writemess{background-image:url(../../../../media/admin/header/icon-48-writemess.png)}
+.icon-48-article{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-article.png)}
+.icon-48-article-add{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-article-add.png)}
+.icon-48-article-edit{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-article-edit.png)}
+.icon-48-banners{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-banner.png)}
+.icon-48-banners-applications{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-banner-application.png)}
+.icon-48-banners-categories,.icon-48-banners-category-edit{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-banner-categories.png)}
+.icon-48-banners-tracks{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-banner-tracks.png)}
+.icon-48-categories,.icon-48-category-edit,.icon-48-content-categories,.icon-48-content-category-edit{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-category.png)}
+.icon-48-category-add,.icon-48-banners-category-add,.icon-48-contact-category-add,.icon-48-newsfeeds-category-add,.icon-48-content-category-add,.icon-48-weblinks-category-add{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-category-add.png)}
+.icon-48-checkin{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-checkin.png)}
+.icon-48-clear{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-clear.png)}
+.icon-48-config{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-config.png)}
+.icon-48-contact{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-contacts.png)}
+.icon-48-contact-categories,.icon-48-contact-category-edit{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-contacts-categories.png)}
+.icon-48-cpanel{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-cpanel.png)}
+.icon-48-dbbackup{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-backup.png)}
+.icon-48-dbquery{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-query.png)}
+.icon-48-dbrestore{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-dbrestore.png)}
+.icon-48-featured{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-featured.png)}
+.icon-48-generic{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-generic.png)}
+.icon-48-groups{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-groups.png)}
+.icon-48-groups-add{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-groups-add.png)}
+.icon-48-help_header{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-help_header.png)}
+.icon-48-impressions,.icon-48-browser,.icon-48-searchtext{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-stats.png)}
+.icon-48-inbox{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-inbox.png)}
+.icon-48-install{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-extension.png)}
+.icon-48-langmanager{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-language.png)}
+.icon-48-levels{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-levels.png)}
+.icon-48-levels-add{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-levels-add.png)}
+.icon-48-massmail{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-massmail.png)}
+.icon-48-mediamanager{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-media.png)}
+.icon-48-menu{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-menu.png)}
+.icon-48-menu-add{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-menu-add.png)}
+.icon-48-menumgr{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-menumgr.png)}
+.icon-48-module{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-module.png)}
+.icon-48-msgconfig{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-message_config.png)}
+.icon-48-new-privatemessage{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-new-privatemessage.png)}
+.icon-48-newsfeeds{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-newsfeeds.png)}
+.icon-48-newsfeeds-categories,.icon-48-newsfeeds-category-edit,.icon-48-newsfeeds-cat{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-newsfeeds-cat.png)}
+.icon-48-plugin{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-plugin.png)}
+.icon-48-purge{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-purge.png)}
+.icon-48-redirect{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-redirect.png)}
+.icon-48-search{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-search.png)}
+.icon-48-sections{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-section.png)}
+.icon-48-systeminfo{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-info.png)}
+.icon-48-thememanager{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-themes.png)}
+.icon-48-trash{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-trash.png)}
+.icon-48-user{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-user.png)}
+.icon-48-user-add{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-user-add.png)}
+.icon-48-user-edit{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-user-edit.png)}
+.icon-48-user-profile{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-user-profile.png)}
+.icon-48-weblinks{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-links.png)}
+.icon-48-weblinks-categories,.icon-48-weblinks-category-edit{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-links-cat.png)}
+.icon-48-writemess{background-image:url(../../../../media/site/administrator/templates/molajo/header/icon-48-writemess.png)}
 
 /* -- BASIC MENU STYLES ----------------------------- */
 #menu{position:relative;z-index:100}
@@ -666,10 +666,10 @@ a.jgrid:hover{text-decoration:none}
 #menu li:hover li:hover ul{left:100%;visibility:visible}
 #menu li:hover ul{visibility:visible}
 #menu li:hover ul li ul{visibility:hidden}
-#menu ul{background:#f6f6f6 url(../../../../media/admin/bg-menu.gif) repeat-y left;border:0.1em solid #ccc}
+#menu ul{background:#f6f6f6 url(../../../../media/site/administrator/templates/molajo/bg-menu.gif) repeat-y left;border:0.1em solid #ccc}
 #menu ul a{font-size:1em;font-weight:400;line-height:1.2em;padding-left:25px;padding-right:20px}
-#menu ul li.node{background:transparent url(../../../../media/admin/j_arrow.png) no-repeat right 50%}
-#menu ul li.separator{background:#DDE1E6 url(../../../../media/admin/bg-menu.gif);height:1px}
+#menu ul li.node{background:transparent url(../../../../media/site/administrator/templates/molajo/j_arrow.png) no-repeat right 50%}
+#menu ul li.separator{background:#DDE1E6 url(../../../../media/site/administrator/templates/molajo/bg-menu.gif);height:1px}
 #menu,#menu ul,#menu li{border:0 none;margin:0;padding:0}
 /* 1 level - hover */
 #menu li:hover a{background-color:#dbe4e9;border-left:1px solid #025a8d;border-right:1px solid #025a8d;margin:0}
@@ -738,26 +738,26 @@ div#config #submenu li a,div#config #submenu span.nolink{border-right:1px solid 
 div#config #submenu li:last-child a{border-right:none}
 div#config #submenu-box{background:#F6F6F6 none repeat scroll 0;margin-bottom:10px}
 div#config #submenu-box .padding{padding:0}
-div#config #submenu-box div.b{background:transparent url(../../../../media/admin/j_border.png) repeat-x scroll 0 100%}
-div#config #submenu-box div.b div.b{background:transparent url(../../../../media/admin/j_crn_br_dark.png) no-repeat scroll 100% 0}
-div#config #submenu-box div.b div.b div.b{background:transparent url(../../../../media/admin/j_crn_bl_dark.png) no-repeat scroll 0}
-div#config #submenu-box div.t{background:transparent url(../../../../media/admin/j_border.png) 0 0 repeat-x}
-div#config #submenu-box div.t div.t{background:transparent url(../../../../media/admin/j_crn_tr_dark.png) no-repeat scroll 100% 0}
-div#config #submenu-box div.t div.t div.t{background:transparent url(../../../../media/admin/j_crn_tl_dark.png) no-repeat scroll 0}
+div#config #submenu-box div.b{background:transparent url(../../../../media/site/administrator/templates/molajo/j_border.png) repeat-x scroll 0 100%}
+div#config #submenu-box div.b div.b{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_br_dark.png) no-repeat scroll 100% 0}
+div#config #submenu-box div.b div.b div.b{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_bl_dark.png) no-repeat scroll 0}
+div#config #submenu-box div.t{background:transparent url(../../../../media/site/administrator/templates/molajo/j_border.png) 0 0 repeat-x}
+div#config #submenu-box div.t div.t{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_tr_dark.png) no-repeat scroll 100% 0}
+div#config #submenu-box div.t div.t div.t{background:transparent url(../../../../media/site/administrator/templates/molajo/j_crn_tl_dark.png) no-repeat scroll 0}
 div#config div.m{border-left:1px solid #CCC;border-right:1px solid #CCC;padding:0 8px}
 div#config div.t,div#config div.b{height:6px;margin:0;overflow:hidden;padding:0}
 
 /* -- Relocated from com_users/media/grid.css ----------- */
-a.grid_false{background-image:url('../../../../media/admin/admin/publish_x.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
-a.grid_trash{background-image:url('../../../../media/admin/admin/icon-16-trash.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
-a.grid_true{background-image:url('../../../../media/admin/admin/tick.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
-a.move_down{background-image:url('../../../../media/admin/admin/downarrow.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
-a.move_up{background-image:url('../../../../media/admin/admin/uparrow.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
-span.move_down{background-image:url('../../../../media/admin/admin/downarrow0.png');display:inline-block;height:16px;width:16px}
-span.move_up{background-image:url('../../../../media/admin/admin/uparrow0.png');display:inline-block;height:16px;width:16px}
+a.grid_false{background-image:url('../../../../media/site/administrator/templates/molajo/admin/publish_x.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
+a.grid_trash{background-image:url('../../../../media/site/administrator/templates/molajo/admin/icon-16-trash.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
+a.grid_true{background-image:url('../../../../media/site/administrator/templates/molajo/admin/tick.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
+a.move_down{background-image:url('../../../../media/site/administrator/templates/molajo/admin/downarrow.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
+a.move_up{background-image:url('../../../../media/site/administrator/templates/molajo/admin/uparrow.png');display:inline-block;height:16px;text-indent:-1000em;width:16px}
+span.move_down{background-image:url('../../../../media/site/administrator/templates/molajo/admin/downarrow0.png');display:inline-block;height:16px;width:16px}
+span.move_up{background-image:url('../../../../media/site/administrator/templates/molajo/admin/uparrow0.png');display:inline-block;height:16px;width:16px}
 
 /* -- ACL PANEL STYLES  ----------- */
-#jform_sef_rewrite-lbl{background:url(../../../../media/admin/admin/icon-16-notice-note.png) right top no-repeat}
+#jform_sef_rewrite-lbl{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-notice-note.png) right top no-repeat}
 #permissions-sliders .mypanel table.group-rules{margin:5px}
 #permissions-sliders .pane-toggler span,#permissions-sliders .pane-toggler-down span{padding-left:20px}
 #permissions-sliders .pane-toggler-down span.level,#permissions-sliders .pane-toggler span.level{background-image:none;color:#aaa;padding:0}
@@ -783,18 +783,18 @@ span.move_up{background-image:url('../../../../media/admin/admin/uparrow0.png');
 .check-d,table.adminlist tbody td.check-d{background-color:#FFCFCF}
 .red{color:#c00;font-weight:700}
 .swatch{padding:0 15px;text-align:center}
-a.icon-16-allowinactive{background:url(../../../../media/admin/admin/icon-16-allowinactive.png) no-repeat}
+a.icon-16-allowinactive{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-allowinactive.png) no-repeat}
 div.acl-options{width:100%}
 dl.tabs dt h3{font-size:1em;font-weight:400;margin:0;padding:0}
 dl.tabs dt h3 a:link{color:#333;outline:medium none;text-decoration:none}
 label#jform_rules-lbl,label#jform_filters-lbl{display:none;float:none;white-space:nowrap}
-label.icon-16-allow{background:url(../../../../media/admin/admin/icon-16-allow.png) no-repeat;left:40%;position:relative;text-indent:-9999em}
+label.icon-16-allow{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-allow.png) no-repeat;left:40%;position:relative;text-indent:-9999em}
 label.icon-16-allow,label.icon-16-deny,a.icon-16-allow,a.icon-16-deny,a.icon-16-allowinactive,a.icon-16-denyinactive{display:block;height:16px;margin:0 auto;width:16px}
-label.icon-16-deny{background:url(../../../../media/admin/admin/icon-16-deny.png) no-repeat;left:40%;position:relative;text-indent:-9999em}
-span.icon-16-allowed,a.icon-16-allow{background:url(../../../../media/admin/admin/icon-16-allow.png) no-repeat}
-span.icon-16-denied,a.icon-16-deny{background:url(../../../../media/admin/admin/icon-16-deny.png) no-repeat}
-span.icon-16-locked{background:url(../../../../media/admin/admin/checked_out.png) 0 0 no-repeat}
-span.icon-16-unset,a.icon-16-denyinactive{background:url(../../../../media/admin/admin/icon-16-denyinactive.png) no-repeat}
+label.icon-16-deny{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-deny.png) no-repeat;left:40%;position:relative;text-indent:-9999em}
+span.icon-16-allowed,a.icon-16-allow{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-allow.png) no-repeat}
+span.icon-16-denied,a.icon-16-deny{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-deny.png) no-repeat}
+span.icon-16-locked{background:url(../../../../media/site/administrator/templates/molajo/admin/checked_out.png) 0 0 no-repeat}
+span.icon-16-unset,a.icon-16-denyinactive{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-denyinactive.png) no-repeat}
 span.icon-16-unset,span.icon-16-allowed,span.icon-16-denied,span.icon-16-locked{padding-left:18px}
 table#acl-config{border-collapse:collapse;margin-top:15px;width:100%}
 table#acl-config td select{float:none}
@@ -819,8 +819,8 @@ ul#rules table.group-rules td label{border:solid 0 #000;margin:0 !important}
 ul#rules table.group-rules td span{padding-bottom:4px}
 ul.acllegend{font-size:1.091em;list-style:none;padding-bottom:10px}
 ul.acllegend li{display:block;float:left;margin:15px 0 15px 10px;padding-right:20px}
-ul.acllegend li.acl-allowed{background:url(../../../../media/admin/admin/icon-16-allow.png) no-repeat left;padding-left:20px;padding-right:10px}
-ul.acllegend li.acl-denied{background:url(../../../../media/admin/admin/icon-16-deny.png) no-repeat left;padding-left:20px;padding-right:20px}
+ul.acllegend li.acl-allowed{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-allow.png) no-repeat left;padding-left:20px;padding-right:10px}
+ul.acllegend li.acl-denied{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-deny.png) no-repeat left;padding-left:20px;padding-right:20px}
 ul.acllegend li.acl-editgroups{padding-right:10px}
 ul.acllegend li.acl-resetbtn{padding-right:0}
 ul.config-option-list fieldset{margin:0;padding-left:0;padding-right:0}

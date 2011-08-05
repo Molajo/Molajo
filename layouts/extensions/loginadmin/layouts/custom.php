@@ -11,13 +11,19 @@ defined('MOLAJO') or die;
 <form action="<?php //echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="form-login">
 	<fieldset class="loginform">
 
-				<label id="mod-login-username-lbl" for="mod-login-username"><?php echo JText::_('JGLOBAL_USERNAME'); ?></label>
+				<label id="mod-login-username-lbl" for="mod-login-username">
+                    <?php echo JText::_('JGLOBAL_USERNAME'); ?>
+                </label>
 				<input name="username" id="mod-login-username" type="text" class="inputbox" size="15" />
 
-				<label id="mod-login-password-lbl" for="mod-login-password"><?php echo JText::_('JGLOBAL_PASSWORD'); ?></label>
+				<label id="mod-login-password-lbl" for="mod-login-password">
+                    <?php echo JText::_('JGLOBAL_PASSWORD'); ?>
+                </label>
 				<input name="passwd" id="mod-login-password" type="password" class="inputbox" size="15" />
 
-				<label id="mod-login-language-lbl" for="lang"><?php echo JText::_('MOD_LOGIN_LANGUAGE'); ?></label>
+				<label id="mod-login-language-lbl" for="lang">
+                    <?php echo JText::_('MOD_LOGIN_LANGUAGE'); ?>
+                </label>
 				<?php //echo $langs; ?>
 
 				<div class="button-holder">
