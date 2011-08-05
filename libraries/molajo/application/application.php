@@ -145,7 +145,7 @@ class MolajoApplication extends JObject
 				$instance = new $classname($config);
 
 			} else {
-				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD', $application));
+				$error = JError::raiseError(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
 			}
 
@@ -767,7 +767,7 @@ class MolajoApplication extends JObject
 		if (empty($name)) {
 			$r = null;
 			if (!preg_match('/Molajo(.*)/i', get_class($this), $r)) {
-				JError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_APPLICATION_GET_NAME'));
+				JError::raiseError(500, JText::_('MOLAJO_APPLICATION_ERROR_APPLICATION_GET_NAME'));
 			}
 			$name = strtolower($r[1]);
 		}

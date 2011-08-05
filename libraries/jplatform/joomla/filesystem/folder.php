@@ -48,15 +48,15 @@ abstract class JFolder
 		$dest = rtrim($dest, DS);
 
 		if (!self::exists($src)) {
-			return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_FIND_SOURCE_FOLDER'));
+			return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_FIND_SOURCE_FOLDER'));
 		}
 		if (self::exists($dest) && !$force) {
-			return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_EXISTS'));
+			return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_EXISTS'));
 		}
 
 		// Make sure the destination exists
 		if (! self::create($dest)) {
-			return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_CREATE'));
+			return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_CREATE'));
 		}
 
 		// If we're using ftp and don't have streams enabled
@@ -70,7 +70,7 @@ abstract class JFolder
 			);
 
 			if (!($dh = @opendir($src))) {
-				return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_OPEN'));
+				return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_OPEN'));
 			}
 			// Walk through the directory copying files and recursing into folders.
 			while (($file = readdir($dh)) !== false)
@@ -93,7 +93,7 @@ abstract class JFolder
 						// Translate path for the FTP account
 						$dfid = JPath::clean(str_replace(JPATH_ROOT, $FTPOptions['root'], $dfid), '/');
 						if (! $ftp->store($sfid, $dfid)) {
-							return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_COPY_FAILED'));
+							return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_COPY_FAILED'));
 						}
 					break;
 				}
@@ -102,7 +102,7 @@ abstract class JFolder
 		else
 		{
 			if (!($dh = @opendir($src))) {
-				return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_OPEN'));
+				return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_OPEN'));
 			}
 			// Walk through the directory copying files and recursing into folders.
 			while (($file = readdir($dh)) !== false)
@@ -126,13 +126,13 @@ abstract class JFolder
 						{
 							$stream = JFactory::getStream();
 							if(!$stream->copy($sfid, $dfid)) {
-								return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_COPY_FAILED').': '. $stream->getError());
+								return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_COPY_FAILED').': '. $stream->getError());
 							}
 						}
 						else
 						{
 							if (!@copy($sfid, $dfid)) {
-								return JError::raiseError(-1, JText::_('JLIB_FILESYSTEM_ERROR_COPY_FAILED'));
+								return JError::raiseError(-1, JText::_('MOLAJO_FILESYSTEM_ERROR_COPY_FAILED'));
 							}
 						}
 					break;
@@ -171,7 +171,7 @@ abstract class JFolder
 			{
 				JError::raiseWarning(
 					'SOME_ERROR_CODE',
-					__METHOD__ . ': ' . JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_LOOP')
+					__METHOD__ . ': ' . JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_LOOP')
 				);
 				$nested--;
 				return false;
@@ -241,7 +241,7 @@ abstract class JFolder
 					// Return false for JFolder::create because the path to be created is not in open_basedir
 					JError::raiseWarning(
 						'SOME_ERROR_CODE',
-						__METHOD__ . ': ' . JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_PATH')
+						__METHOD__ . ': ' . JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_PATH')
 					);
 					return false;
 				}
@@ -256,7 +256,7 @@ abstract class JFolder
 				@umask($origmask);
 				JError::raiseWarning(
 					'SOME_ERROR_CODE',
-					__METHOD__ . ': ' . JText::_('JLIB_FILESYSTEM_ERROR_COULD_NOT_CREATE_DIRECTORY'),
+					__METHOD__ . ': ' . JText::_('MOLAJO_FILESYSTEM_ERROR_COULD_NOT_CREATE_DIRECTORY'),
 					'Path: ' . $path
 				);
 				return false;
@@ -282,7 +282,7 @@ abstract class JFolder
 		if (!$path)
 		{
 			// Bad programmer! Bad Bad programmer!
-			JError::raiseWarning(500, __METHOD__ . ': ' . JText::_('JLIB_FILESYSTEM_ERROR_DELETE_BASE_DIRECTORY'));
+			JError::raiseWarning(500, __METHOD__ . ': ' . JText::_('MOLAJO_FILESYSTEM_ERROR_DELETE_BASE_DIRECTORY'));
 			return false;
 		}
 
@@ -296,7 +296,7 @@ abstract class JFolder
 		// Is this really a folder?
 		if (!is_dir($path))
 		{
-			JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
+			JError::raiseWarning(21, JText::sprintf('MOLAJO_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
 			return false;
 		}
 
@@ -355,7 +355,7 @@ abstract class JFolder
 		}
 		else
 		{
-			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_DELETE', $path));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_FILESYSTEM_ERROR_FOLDER_DELETE', $path));
 			$ret = false;
 		}
 		return $ret;
@@ -385,16 +385,16 @@ abstract class JFolder
 		}
 
 		if (!self::exists($src)){
-			return JText::_('JLIB_FILESYSTEM_ERROR_FIND_SOURCE_FOLDER');
+			return JText::_('MOLAJO_FILESYSTEM_ERROR_FIND_SOURCE_FOLDER');
 		}
 		if (self::exists($dest)) {
-			return JText::_('JLIB_FILESYSTEM_ERROR_FOLDER_EXISTS');
+			return JText::_('MOLAJO_FILESYSTEM_ERROR_FOLDER_EXISTS');
 		}
 		if($use_streams)
 		{
 			$stream = JFactory::getStream();
 			if(!$stream->move($src, $dest)) {
-				return JText::sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_RENAME', $stream->getError());
+				return JText::sprintf('MOLAJO_FILESYSTEM_ERROR_FOLDER_RENAME', $stream->getError());
 			}
 			$ret = true;
 		}
@@ -466,7 +466,7 @@ abstract class JFolder
 		// Is the path a folder?
 		if (!is_dir($path))
 		{
-			JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FILES', $path));
+			JError::raiseWarning(21, JText::sprintf('MOLAJO_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FILES', $path));
 			return false;
 		}
 
@@ -510,7 +510,7 @@ abstract class JFolder
 		// Is the path a folder?
 		if (!is_dir($path))
 		{
-			JError::raiseWarning(21, JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FOLDER', $path));
+			JError::raiseWarning(21, JText::sprintf('MOLAJO_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER_FOLDER', $path));
 			return false;
 		}
 

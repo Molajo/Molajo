@@ -111,7 +111,7 @@ class TemplatesControllerSource extends JController
 
 		// Access check.
 		if (!$this->allowEdit()) {
-			return JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+			return JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 		}
 
 		// Check-out succeeded, push the new record id into the session.

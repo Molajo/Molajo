@@ -63,7 +63,7 @@ class MolajoButtonConfirm extends MolajoButton
 	protected function _getCommand($msg, $name, $task, $list)
 	{
 		JHtml::_('behavior.framework');
-		$message	= JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
+		$message	= JText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
 		$message	= addslashes($message);
 
 		if ($list) {

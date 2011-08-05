@@ -103,7 +103,7 @@ class JFormFieldRules extends JFormField
 		// Prepare output
 		$html = array();
 		$html[] = '<div id="permissions-sliders" class="pane-sliders">';
-		$html[] = '<p class="rule-desc">' . JText::_('JLIB_RULES_SETTINGS_DESC') . '</p>';
+		$html[] = '<p class="rule-desc">' . JText::_('MOLAJO_RULES_SETTINGS_DESC') . '</p>';
 		$html[] = '<ul id="rules">';
 
 		// Start a row for each user group.
@@ -131,18 +131,18 @@ class JFormFieldRules extends JFormField
 			$html[] =					'<tr>';
 
 			$html[] =						'<th class="actions" id="actions-th' . $group->value . '">';
-			$html[] =							'<span class="acl-action">' . JText::_('JLIB_RULES_ACTION') . '</span>';
+			$html[] =							'<span class="acl-action">' . JText::_('MOLAJO_RULES_ACTION') . '</span>';
 			$html[] =						'</th>';
 
 			$html[] =						'<th class="settings" id="settings-th' . $group->value . '">';
-			$html[] =							'<span class="acl-action">' . JText::_('JLIB_RULES_SELECT_SETTING') . '</span>';
+			$html[] =							'<span class="acl-action">' . JText::_('MOLAJO_RULES_SELECT_SETTING') . '</span>';
 			$html[] =						'</th>';
 
 			// The calculated setting is not shown for the root group of global configuration.
 			$canCalculateSettings = ($group->parent_id || !empty($component));
 			if ($canCalculateSettings) {
 				$html[] =					'<th id="aclactionth' . $group->value . '">';
-				$html[] =						'<span class="acl-action">' . JText::_('JLIB_RULES_CALCULATED_SETTING') . '</span>';
+				$html[] =						'<span class="acl-action">' . JText::_('MOLAJO_RULES_CALCULATED_SETTING') . '</span>';
 				$html[] =					'</th>';
 			}
 
@@ -161,7 +161,7 @@ class JFormFieldRules extends JFormField
 
 				$html[] =					'<td headers="settings-th' . $group->value . '">';
 
-				$html[] = '<select name="' . $this->name . '[' . $action->name . '][' . $group->value . ']" id="' . $this->id . '_' . $action->name . '_' . $group->value . '" title="' . JText::sprintf('JLIB_RULES_SELECT_ALLOW_DENY_GROUP', JText::_($action->title), trim($group->text)) . '">';
+				$html[] = '<select name="' . $this->name . '[' . $action->name . '][' . $group->value . ']" id="' . $this->id . '_' . $action->name . '_' . $group->value . '" title="' . JText::sprintf('MOLAJO_RULES_SELECT_ALLOW_DENY_GROUP', JText::_($action->title), trim($group->text)) . '">';
 
 				$inheritedRule	= JAccess::checkGroup($group->value, $action->name, $assetId);
 
@@ -172,17 +172,17 @@ class JFormFieldRules extends JFormField
 
 				// The parent group has "Not Set", all children can rightly "Inherit" from that.
 				$html[] = '<option value=""' . ($assetRule === null ? ' selected="selected"' : '') . '>' .
-							JText::_(empty($group->parent_id) && empty($component) ? 'JLIB_RULES_NOT_SET' : 'JLIB_RULES_INHERITED') . '</option>';
+							JText::_(empty($group->parent_id) && empty($component) ? 'MOLAJO_RULES_NOT_SET' : 'MOLAJO_RULES_INHERITED') . '</option>';
 				$html[] = '<option value="1"' . ($assetRule === true ? ' selected="selected"' : '') . '>' .
-							JText::_('JLIB_RULES_ALLOWED') . '</option>';
+							JText::_('MOLAJO_RULES_ALLOWED') . '</option>';
 				$html[] = '<option value="0"' . ($assetRule === false ? ' selected="selected"' : '') . '>' .
-							JText::_('JLIB_RULES_DENIED') . '</option>';
+							JText::_('MOLAJO_RULES_DENIED') . '</option>';
 
 				$html[] = '</select>&#160; ';
 
 				// If this asset's rule is allowed, but the inherited rule is deny, we have a conflict.
 				if (($assetRule === true) && ($inheritedRule === false)) {
-					$html[] = JText::_('JLIB_RULES_CONFLICT');
+					$html[] = JText::_('MOLAJO_RULES_CONFLICT');
 				}
 
 				$html[] = '</td>';
@@ -199,43 +199,43 @@ class JFormFieldRules extends JFormField
 					{
 						if ($inheritedRule === null) {
 							$html[] = '<span class="icon-16-unset">'.
-										JText::_('JLIB_RULES_NOT_ALLOWED').'</span>';
+										JText::_('MOLAJO_RULES_NOT_ALLOWED').'</span>';
 						}
 						else if ($inheritedRule === true)
 						{
 							$html[] = '<span class="icon-16-allowed">'.
-										JText::_('JLIB_RULES_ALLOWED').'</span>';
+										JText::_('MOLAJO_RULES_ALLOWED').'</span>';
 						}
 						else if ($inheritedRule === false) {
 							if ($assetRule === false) {
 								$html[] = '<span class="icon-16-denied">'.
-											JText::_('JLIB_RULES_NOT_ALLOWED').'</span>';
+											JText::_('MOLAJO_RULES_NOT_ALLOWED').'</span>';
 							}
 							else {
 								$html[] = '<span class="icon-16-denied"><span class="icon-16-locked">'.
-											JText::_('JLIB_RULES_NOT_ALLOWED_LOCKED').'</span></span>';
+											JText::_('MOLAJO_RULES_NOT_ALLOWED_LOCKED').'</span></span>';
 							}
 						}
 					}
 					else if (!empty($component)) {
 						$html[] = '<span class="icon-16-allowed"><span class="icon-16-locked">'.
-									JText::_('JLIB_RULES_ALLOWED_ADMIN').'</span></span>';
+									JText::_('MOLAJO_RULES_ALLOWED_ADMIN').'</span></span>';
 					}
 					else {
 						// Special handling for  groups that have global admin because they can't  be denied.
 						// The admin rights can be changed.
 						if ($action->name === 'core.admin') {
 							$html[] = '<span class="icon-16-allowed">'.
-										JText::_('JLIB_RULES_ALLOWED').'</span>';
+										JText::_('MOLAJO_RULES_ALLOWED').'</span>';
 						}
 						elseif ($inheritedRule === false) {
 							// Other actions cannot be changed.
 							$html[] = '<span class="icon-16-denied"><span class="icon-16-locked">'.
-										JText::_('JLIB_RULES_NOT_ALLOWED_ADMIN_CONFLICT').'</span></span>';
+										JText::_('MOLAJO_RULES_NOT_ALLOWED_ADMIN_CONFLICT').'</span></span>';
 						}
 						else {
 							$html[] = '<span class="icon-16-allowed"><span class="icon-16-locked">'.
-										JText::_('JLIB_RULES_ALLOWED_ADMIN').'</span></span>';
+										JText::_('MOLAJO_RULES_ALLOWED_ADMIN').'</span></span>';
 						}
 					}
 
@@ -256,9 +256,9 @@ class JFormFieldRules extends JFormField
 		$html[] = str_repeat('</ul></li>', $curLevel);
 		$html[] = '</ul><div class="rule-notes">';
 		if ($section == 'component' || $section == null ) {
-			$html[] = JText::_('JLIB_RULES_SETTING_NOTES');
+			$html[] = JText::_('MOLAJO_RULES_SETTING_NOTES');
 		} else {
-			$html[] = JText::_('JLIB_RULES_SETTING_NOTES_ITEM');
+			$html[] = JText::_('MOLAJO_RULES_SETTING_NOTES_ITEM');
 		}
 		$html[] = '</div></div>';
 

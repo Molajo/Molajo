@@ -316,7 +316,7 @@ class JEditor extends JObservable
 		if (!JFile::exists($path)) {
 			$path = JPATH_PLUGINS.'/editors/'.$name.'/'.$name.'.php';
 			if (!JFile::exists($path)) {
-				$message = JText::_('JLIB_HTML_EDITOR_CANNOT_LOAD');
+				$message = JText::_('MOLAJO_HTML_EDITOR_CANNOT_LOAD');
 				JError::raiseWarning(500, $message);
 				return false;
 			}

@@ -148,7 +148,7 @@ class RedirectModelLink extends JModelAdmin
 		// Access checks.
 		if (!$user->authorise('core.admin', 'com_redirect')) {
 			$pks = array();
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 			return false;
 		}
 

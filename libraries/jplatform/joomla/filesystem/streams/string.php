@@ -198,4 +198,4 @@ class JStreamString
 	}
 }
 
-stream_wrapper_register('string', 'JStreamString') or die(JText::_('JLIB_FILESYSTEM_STREAM_FAILED'));
+stream_wrapper_register('string', 'JStreamString') or die(JText::_('MOLAJO_FILESYSTEM_STREAM_FAILED'));

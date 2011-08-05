@@ -120,7 +120,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		// Make sure that we have an admin element
 		if (!$this->manifest->administration) {
-			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_COMP_INSTALL_ADMIN_ELEMENT'));
+			JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_COMP_INSTALL_ADMIN_ELEMENT'));
 			return false;
 		}
 
@@ -145,11 +145,11 @@ class JInstallerComponent extends JAdapterInstance
 				// We didn't have overwrite set, find an update function or find an update tag so lets call it safe
 				if (file_exists($this->parent->getPath('extension_site'))) {
 					// If the site exists say so
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_INSTALL_DIR_SITE', $this->parent->getPath('extension_site')));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_INSTALL_DIR_SITE', $this->parent->getPath('extension_site')));
 				}
 				else {
 					// If the admin exists say so
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_INSTALL_DIR_ADMIN', $this->parent->getPath('extension_administrator')));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_INSTALL_DIR_ADMIN', $this->parent->getPath('extension_administrator')));
 				}
 				return false;
 			}
@@ -187,7 +187,7 @@ class JInstallerComponent extends JAdapterInstance
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,'preflight')) {
 			if ($this->parent->manifestClass->preflight('install', $this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 				return false;
 			}
 		}
@@ -201,7 +201,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if (!file_exists($this->parent->getPath('extension_site'))) {
 			if (!$created = JFolder::create($this->parent->getPath('extension_site'))) {
-				JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_INSTALL_FAILED_TO_CREATE_DIRECTORY_SITE', $this->parent->getPath('extension_site')));
+				JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_INSTALL_FAILED_TO_CREATE_DIRECTORY_SITE', $this->parent->getPath('extension_site')));
 				return false;
 			}
 		}
@@ -218,7 +218,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if (!file_exists($this->parent->getPath('extension_administrator'))) {
 			if (!$created = JFolder::create($this->parent->getPath('extension_administrator'))) {
-				JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_INSTALL_FAILED_TO_CREATE_DIRECTORY_ADMIN', $this->parent->getPath('extension_administrator')));
+				JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_INSTALL_FAILED_TO_CREATE_DIRECTORY_ADMIN', $this->parent->getPath('extension_administrator')));
 				// Install failed, rollback any changes
 				$this->parent->abort();
 
@@ -271,7 +271,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (!$this->parent->copyFiles(array ($path))) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_PHP_INSTALL'));
+					$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_PHP_INSTALL'));
 
 					return false;
 				}
@@ -292,7 +292,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (!$this->parent->copyFiles(array ($path))) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_PHP_UNINSTALL'));
+					$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_PHP_UNINSTALL'));
 					return false;
 				}
 			}
@@ -306,7 +306,7 @@ class JInstallerComponent extends JAdapterInstance
 			if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
 				if (!$this->parent->copyFiles(array ($path))) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_MANIFEST'));
+					$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_MANIFEST'));
 
 					return false;
 				}
@@ -331,7 +331,7 @@ class JInstallerComponent extends JAdapterInstance
 
 			if ($utfresult === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_SQL_ERROR', $db->stderr(true)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_SQL_ERROR', $db->stderr(true)));
 
 				return false;
 			}
@@ -360,7 +360,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (function_exists('com_install')) {
 					if (com_install() === false) {
-						$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+						$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 						return false;
 					}
@@ -379,7 +379,7 @@ class JInstallerComponent extends JAdapterInstance
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,'install')) {
 			if ($this->parent->manifestClass->install($this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 				return false;
 			}
@@ -409,7 +409,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if (!$row->store()) {
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
 			return false;
 		}
 
@@ -433,14 +433,14 @@ class JInstallerComponent extends JAdapterInstance
 		// We will copy the manifest file to its appropriate place.
 		if (!$this->parent->copyManifest()) {
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_COPY_SETUP'));
+			$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_COPY_SETUP'));
 			return false;
 		}
 
 		// Time to build the admin menus
 		if (!$this->_buildAdminMenus($row->extension_id)) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED'));
-			//$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED'));
+			//$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
 			//return false;
 		}
 
@@ -458,7 +458,7 @@ class JInstallerComponent extends JAdapterInstance
 		$asset->setLocation(1, 'last-child');
 		if (!$asset->store()) {
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
 			return false;
 		}
 
@@ -566,7 +566,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		// Make sure that we have an admin element
 		if (!$this->manifest->administration) {
-			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_ADMIN_ELEMENT'));
+			JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_ADMIN_ELEMENT'));
 			return false;
 		}
 
@@ -605,7 +605,7 @@ class JInstallerComponent extends JAdapterInstance
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,'preflight')) {
 			if ($this->parent->manifestClass->preflight('update', $this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 				return false;
 			}
@@ -625,7 +625,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if (!file_exists($this->parent->getPath('extension_site'))) {
 			if (!$created = JFolder::create($this->parent->getPath('extension_site'))) {
-				JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_UPDATE_FAILED_TO_CREATE_DIRECTORY_SITE', $this->parent->getPath('extension_site')));
+				JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_UPDATE_FAILED_TO_CREATE_DIRECTORY_SITE', $this->parent->getPath('extension_site')));
 
 				return false;
 			}
@@ -644,7 +644,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if (!file_exists($this->parent->getPath('extension_administrator'))) {
 			if (!$created = JFolder::create($this->parent->getPath('extension_administrator'))) {
-				JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_UPDATE_FAILED_TO_CREATE_DIRECTORY_ADMIN', $this->parent->getPath('extension_administrator')));
+				JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_UPDATE_FAILED_TO_CREATE_DIRECTORY_ADMIN', $this->parent->getPath('extension_administrator')));
 				// Install failed, rollback any changes
 				$this->parent->abort();
 
@@ -696,7 +696,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (!$this->parent->copyFiles(array ($path))) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_PHP_INSTALL'));
+					$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_PHP_INSTALL'));
 					return false;
 				}
 			}
@@ -716,7 +716,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (!$this->parent->copyFiles(array ($path))) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_PHP_UNINSTALL'));
+					$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_PHP_UNINSTALL'));
 
 					return false;
 				}
@@ -731,7 +731,7 @@ class JInstallerComponent extends JAdapterInstance
 			if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
 				if (!$this->parent->copyFiles(array ($path))) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_MANIFEST'));
+					$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_MANIFEST'));
 
 					return false;
 				}
@@ -760,7 +760,7 @@ class JInstallerComponent extends JAdapterInstance
 
 			if ($result === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_UPDATE_SQL_ERROR', $db->stderr(true)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_SQL_ERROR', $db->stderr(true)));
 
 				return false;
 			}
@@ -768,8 +768,8 @@ class JInstallerComponent extends JAdapterInstance
 
 		// Time to build the admin menus
 		if (!$this->_buildAdminMenus($eid)) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED'));
-			//$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED'));
+			//$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
 
 			//return false;
 		}
@@ -797,7 +797,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (function_exists('com_install')) {
 					if (com_install() === false) {
-						$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+						$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 						return false;
 					}
@@ -820,7 +820,7 @@ class JInstallerComponent extends JAdapterInstance
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,'update')) {
 			if ($this->parent->manifestClass->update($this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 				return false;
 			}
@@ -870,7 +870,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if (!$row->store()) {
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_UPDATE_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_ROLLBACK', $db->stderr(true)));
 
 			return false;
 		}
@@ -878,7 +878,7 @@ class JInstallerComponent extends JAdapterInstance
 		// We will copy the manifest file to its appropriate place.
 		if (!$this->parent->copyManifest()) {
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_COPY_SETUP'));
+			$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_UPDATE_COPY_SETUP'));
 
 			return false;
 		}
@@ -920,14 +920,14 @@ class JInstallerComponent extends JAdapterInstance
 		// This should give us the necessary information to proceed.
 		$row = JTable::getInstance('extension');
 		if (!$row->load((int) $id)) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_ERRORUNKOWNEXTENSION'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_ERRORUNKOWNEXTENSION'));
 			return false;
 		}
 
 		// Is the component we are trying to uninstall a core one?
 		// Because that is not a good idea...
 		if ($row->protected) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_WARNCORECOMPONENT'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_WARNCORECOMPONENT'));
 			return false;
 		}
 
@@ -959,7 +959,7 @@ class JInstallerComponent extends JAdapterInstance
 			$this->_removeAdminMenus($row);
 
 			// Raise a warning
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_ERRORREMOVEMANUALLY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_ERRORREMOVEMANUALLY'));
 
 			// Return
 			return false;
@@ -1038,7 +1038,7 @@ class JInstallerComponent extends JAdapterInstance
 
 				if (function_exists('com_uninstall')) {
 					if (com_uninstall() === false) {
-						JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_CUSTOM'));
+						JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_CUSTOM'));
 						$retval = false;
 					}
 				}
@@ -1070,7 +1070,7 @@ class JInstallerComponent extends JAdapterInstance
 
 			if ($utfresult === false) {
 				// Install failed, rollback changes
-				JError::raiseWarning(100, JText::sprintf('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_SQL_ERROR', $db->stderr(true)));
+				JError::raiseWarning(100, JText::sprintf('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_SQL_ERROR', $db->stderr(true)));
 				$retval = false;
 			}
 		}
@@ -1109,7 +1109,7 @@ class JInstallerComponent extends JAdapterInstance
 		$db->query();
 		// Check for errors.
 		if ($db->getErrorNum()) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_DELETE_CATEGORIES'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_DELETE_CATEGORIES'));
 			$this->setError($db->getErrorMsg());
 			$retval = false;
 		}
@@ -1135,7 +1135,7 @@ class JInstallerComponent extends JAdapterInstance
 			// Delete the component site directory
 			if (is_dir($this->parent->getPath('extension_site'))) {
 				if (!JFolder::delete($this->parent->getPath('extension_site'))) {
-					JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_REMOVE_DIRECTORY_SITE'));
+					JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_REMOVE_DIRECTORY_SITE'));
 					$retval = false;
 				}
 			}
@@ -1143,7 +1143,7 @@ class JInstallerComponent extends JAdapterInstance
 			// Delete the component admin directory
 			if (is_dir($this->parent->getPath('extension_administrator'))) {
 				if (!JFolder::delete($this->parent->getPath('extension_administrator'))) {
-					JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_REMOVE_DIRECTORY_ADMIN'));
+					JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_FAILED_REMOVE_DIRECTORY_ADMIN'));
 					$retval = false;
 				}
 			}
@@ -1156,7 +1156,7 @@ class JInstallerComponent extends JAdapterInstance
 		}
 		else {
 			// No component option defined... cannot delete what we don't know about
-			JError::raiseWarning(100, 'JLIB_INSTALLER_ERROR_COMP_UNINSTALL_NO_OPTION');
+			JError::raiseWarning(100, 'MOLAJO_INSTALLER_ERROR_COMP_UNINSTALL_NO_OPTION');
 			return false;
 		}
 	}
@@ -1374,7 +1374,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		// Check for error
 		if ($error = $db->getErrorMsg() || empty($ids)){
-			JError::raiseWarning('', JText::_('JLIB_INSTALLER_ERROR_COMP_REMOVING_ADMIN_MENUS_FAILED'));
+			JError::raiseWarning('', JText::_('MOLAJO_INSTALLER_ERROR_COMP_REMOVING_ADMIN_MENUS_FAILED'));
 
 			if ($error && $error != 1) {
 				JError::raiseWarning(100, $error);
@@ -1481,7 +1481,7 @@ class JInstallerComponent extends JAdapterInstance
 			$this->parent->extension->store();
 		}
 		catch (JException $e) {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_COMP_DISCOVER_STORE_DETAILS'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_COMP_DISCOVER_STORE_DETAILS'));
 			return false;
 		}
 
@@ -1534,7 +1534,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		// Make sure that we have an admin element
 		if (!$this->manifest->administration) {
-			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_COMP_INSTALL_ADMIN_ELEMENT'));
+			JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_COMP_INSTALL_ADMIN_ELEMENT'));
 			return false;
 		}
 
@@ -1574,7 +1574,7 @@ class JInstallerComponent extends JAdapterInstance
 
 			if ($this->parent->manifestClass->preflight('discover_install', $this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 				return false;
 			}
 		}
@@ -1609,7 +1609,7 @@ class JInstallerComponent extends JAdapterInstance
 
 			if ($utfresult === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_SQL_ERROR', $db->stderr(true)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_SQL_ERROR', $db->stderr(true)));
 
 				return false;
 			}
@@ -1617,8 +1617,8 @@ class JInstallerComponent extends JAdapterInstance
 
 		// Time to build the admin menus
 		if (!$this->_buildAdminMenus($this->parent->extension->extension_id)) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED'));
-			//$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ABORT_COMP_BUILDADMINMENUS_FAILED'));
+			//$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
 
 			//return false;
 		}
@@ -1646,7 +1646,7 @@ class JInstallerComponent extends JAdapterInstance
 				if (function_exists('com_install')) {
 
 					if (com_install() === false) {
-						$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+						$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 						return false;
 					}
 				}
@@ -1665,7 +1665,7 @@ class JInstallerComponent extends JAdapterInstance
 
 			if ($this->parent->manifestClass->install($this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 				return false;
 			}
@@ -1735,7 +1735,7 @@ class JInstallerComponent extends JAdapterInstance
 			return $this->parent->extension->store();
 		}
 		catch(JException $e) {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_COMP_REFRESH_MANIFEST_CACHE'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_COMP_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

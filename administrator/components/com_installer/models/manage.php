@@ -125,7 +125,7 @@ class InstallerModelManage extends InstallerModel
 			}
 		} else {
 			$result = false;
-			JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 		return $result;
 	}

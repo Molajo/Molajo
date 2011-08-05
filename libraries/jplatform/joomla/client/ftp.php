@@ -250,7 +250,7 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			$this->_conn = @ftp_connect($host, $port, $this->_timeout);
 			if ($this->_conn === false) {
-				JError::raiseWarning('30', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_NO_CONNECT', $host, $port));
+				JError::raiseWarning('30', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_NO_CONNECT', $host, $port));
 				return false;
 			}
 			// Set the timeout for this connection
@@ -261,7 +261,7 @@ class JFTP extends JObject
 		// Connect to the FTP server.
 		$this->_conn = @ fsockopen($host, $port, $errno, $err, $this->_timeout);
 		if (!$this->_conn) {
-			JError::raiseWarning('30', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_NO_CONNECT_SOCKET', $host, $port, $errno, $err));
+			JError::raiseWarning('30', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_NO_CONNECT_SOCKET', $host, $port, $errno, $err));
 			return false;
 		}
 
@@ -270,7 +270,7 @@ class JFTP extends JObject
 
 		// Check for welcome response code
 		if (!$this->_verifyResponse(220)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_BAD_RESPONSE', $this->_response));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_BAD_RESPONSE', $this->_response));
 			return false;
 		}
 
@@ -310,7 +310,7 @@ class JFTP extends JObject
 
 		// Send the username
 		if (!$this->_putCmd('USER '.$user, array(331, 503))) {
-			JError::raiseWarning('33', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_BAD_USERNAME', $this->_response, $user));
+			JError::raiseWarning('33', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_BAD_USERNAME', $this->_response, $user));
 			return false;
 		}
 
@@ -321,7 +321,7 @@ class JFTP extends JObject
 
 		// Send the password
 		if (!$this->_putCmd('PASS '.$pass, 230)) {
-			JError::raiseWarning('34', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_BAD_PASSWORD', $this->_response, str_repeat('*', strlen($pass))));
+			JError::raiseWarning('34', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_BAD_PASSWORD', $this->_response, str_repeat('*', strlen($pass))));
 			return false;
 		}
 
@@ -360,7 +360,7 @@ class JFTP extends JObject
 		// If native FTP support is enabled let's use it...
 		if (FTP_NATIVE) {
 			if (($ret = @ftp_pwd($this->_conn)) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_PWD_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_PWD_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 			return $ret;
@@ -371,7 +371,7 @@ class JFTP extends JObject
 
 		// Send print working directory command and verify success
 		if (!$this->_putCmd('PWD', 257)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_PWD_BAD_RESPONSE', $this->_response));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_PWD_BAD_RESPONSE', $this->_response));
 			return false;
 		}
 
@@ -393,13 +393,13 @@ class JFTP extends JObject
 		// If native FTP support is enabled lets use it...
 		if (FTP_NATIVE) {
 			if (($ret = @ftp_systype($this->_conn)) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_SYS_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_SYS_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 		} else {
 			// Send print working directory command and verify success
 			if (!$this->_putCmd('SYST', 215)) {
-				JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_SYST_BAD_RESPONSE', $this->_response));
+				JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_SYST_BAD_RESPONSE', $this->_response));
 				return false;
 			}
 			$ret = $this->_response;
@@ -431,7 +431,7 @@ class JFTP extends JObject
 		// If native FTP support is enabled lets use it...
 		if (FTP_NATIVE) {
 			if (@ftp_chdir($this->_conn, $path) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 			return true;
@@ -439,7 +439,7 @@ class JFTP extends JObject
 
 		// Send change directory command and verify success
 		if (!$this->_putCmd('CWD '.$path, 250)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE', $this->_response, $path));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_CHDIR_BAD_RESPONSE', $this->_response, $path));
 			return false;
 		}
 
@@ -459,7 +459,7 @@ class JFTP extends JObject
 		// If native FTP support is enabled let's use it...
 		if (FTP_NATIVE) {
 			if (@ftp_site($this->_conn, 'REIN') === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_REINIT_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_REINIT_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 			return true;
@@ -467,7 +467,7 @@ class JFTP extends JObject
 
 		// Send reinitialise command to the server
 		if (!$this->_putCmd('REIN', 220)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_REINIT_BAD_RESPONSE', $this->_response));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_REINIT_BAD_RESPONSE', $this->_response));
 			return false;
 		}
 
@@ -488,7 +488,7 @@ class JFTP extends JObject
 		// If native FTP support is enabled let's use it...
 		if (FTP_NATIVE) {
 			if (@ftp_rename($this->_conn, $from, $to) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_RENAME_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_RENAME_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 			return true;
@@ -496,13 +496,13 @@ class JFTP extends JObject
 
 		// Send rename from command to the server
 		if (!$this->_putCmd('RNFR '.$from, 350)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_RENAME_BAD_RESPONSE_FROM', $this->_response, $from));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_RENAME_BAD_RESPONSE_FROM', $this->_response, $from));
 			return false;
 		}
 
 		// Send rename to command to the server
 		if (!$this->_putCmd('RNTO '.$to, 250)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_RENAME_BAD_RESPONSE_TO', $this->_response, $to));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_RENAME_BAD_RESPONSE_TO', $this->_response, $to));
 			return false;
 		}
 
@@ -534,7 +534,7 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			if (@ftp_site($this->_conn, 'CHMOD '.$mode.' '.$path) === false) {
 				if ($this->_OS != 'WIN') {
-					JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_CHMOD_BAD_RESPONSE_NATIVE'));
+					JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_CHMOD_BAD_RESPONSE_NATIVE'));
 				}
 				return false;
 			}
@@ -544,7 +544,7 @@ class JFTP extends JObject
 		// Send change mode command and verify success [must convert mode from octal]
 		if (!$this->_putCmd('SITE CHMOD '.$mode.' '.$path, array(200, 250))) {
 			if ($this->_OS != 'WIN') {
-				JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_CHMOD_BAD_RESPONSE', $this->_response, $path, $mode));
+				JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_CHMOD_BAD_RESPONSE', $this->_response, $path, $mode));
 			}
 			return false;
 		}
@@ -565,7 +565,7 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			if (@ftp_delete($this->_conn, $path) === false) {
 				if (@ftp_rmdir($this->_conn, $path) === false) {
-					JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_DELETE_BAD_RESPONSE_NATIVE'));
+					JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_DELETE_BAD_RESPONSE_NATIVE'));
 					return false;
 				}
 			}
@@ -575,7 +575,7 @@ class JFTP extends JObject
 		// Send delete file command and if that doesn't work, try to remove a directory
 		if (!$this->_putCmd('DELE '.$path, 250)) {
 			if (!$this->_putCmd('RMD '.$path, 250)) {
-				JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_DELETE_BAD_RESPONSE', $this->_response, $path));
+				JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_DELETE_BAD_RESPONSE', $this->_response, $path));
 				return false;
 			}
 		}
@@ -595,7 +595,7 @@ class JFTP extends JObject
 		// If native FTP support is enabled let's use it...
 		if (FTP_NATIVE) {
 			if (@ftp_mkdir($this->_conn, $path) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_MKDIR_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_MKDIR_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 			return true;
@@ -603,7 +603,7 @@ class JFTP extends JObject
 
 		// Send change directory command and verify success
 		if (!$this->_putCmd('MKD '.$path, 257)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_MKDIR_BAD_RESPONSE', $this->_response, $path));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_MKDIR_BAD_RESPONSE', $this->_response, $path));
 			return false;
 		}
 		return true;
@@ -622,7 +622,7 @@ class JFTP extends JObject
 		// If native FTP support is enabled let's use it...
 		if (FTP_NATIVE) {
 			if (@ftp_site($this->_conn, 'REST '.$point) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_RESTART_BAD_RESPONSE_NATIVE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_RESTART_BAD_RESPONSE_NATIVE'));
 				return false;
 			}
 			return true;
@@ -630,7 +630,7 @@ class JFTP extends JObject
 
 		// Send restart command and verify success
 		if (!$this->_putCmd('REST '.$point, 350)) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_RESTART_BAD_RESPONSE', $this->_response, $point));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_RESTART_BAD_RESPONSE', $this->_response, $point));
 			return false;
 		}
 
@@ -651,13 +651,13 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_PASSIVE'));
 				return false;
 			}
 
 			$buffer = fopen('buffer://tmp', 'r');
 			if (@ftp_fput($this->_conn, $path, $buffer, FTP_ASCII) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_BUFFER'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_BUFFER'));
 				fclose($buffer);
 				return false;
 			}
@@ -667,13 +667,13 @@ class JFTP extends JObject
 
 		// Start passive mode
 		if (!$this->_passive()) {
-			JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_PASSIVE'));
+			JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_PASSIVE'));
 			return false;
 		}
 
 		if (!$this->_putCmd('STOR '.$path, array (150, 125))) {
 			@ fclose($this->_dataconn);
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE', $this->_response, $path));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE', $this->_response, $path));
 			return false;
 		}
 
@@ -681,7 +681,7 @@ class JFTP extends JObject
 		fclose($this->_dataconn);
 
 		if (!$this->_verifyResponse(226)) {
-			JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_TRANSFER', $this->_response, $path));
+			JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_CREATE_BAD_RESPONSE_TRANSFER', $this->_response, $path));
 			return false;
 		}
 
@@ -706,14 +706,14 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// Turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_PASSIVE'));
 				return false;
 			}
 
 			$tmp = fopen('buffer://tmp', 'br+');
 			if (@ftp_fget($this->_conn, $tmp, $remote, $mode) === false) {
 				fclose($tmp);
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_BUFFER'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_BUFFER'));
 				return false;
 			}
 			// Read tmp buffer contents
@@ -730,13 +730,13 @@ class JFTP extends JObject
 
 		// Start passive mode
 		if (!$this->_passive()) {
-			JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_PASSIVE'));
+			JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_PASSIVE'));
 			return false;
 		}
 
 		if (!$this->_putCmd('RETR '.$remote, array (150, 125))) {
 			@ fclose($this->_dataconn);
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE', $this->_response, $remote));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE', $this->_response, $remote));
 			return false;
 		}
 
@@ -755,7 +755,7 @@ class JFTP extends JObject
 		}
 
 		if (!$this->_verifyResponse(226)) {
-			JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
+			JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_READ_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
 			return false;
 		}
 
@@ -780,12 +780,12 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// Turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_GET_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_GET_PASSIVE'));
 				return false;
 			}
 
 			if (@ftp_get($this->_conn, $local, $remote, $mode) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_GET_BAD_RESPONSE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_GET_BAD_RESPONSE'));
 				return false;
 			}
 			return true;
@@ -796,19 +796,19 @@ class JFTP extends JObject
 		// Check to see if the local file can be opened for writing
 		$fp = fopen($local, "wb");
 		if (!$fp) {
-			JError::raiseWarning('38', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_GET_WRITING_LOCAL', $local));
+			JError::raiseWarning('38', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_GET_WRITING_LOCAL', $local));
 			return false;
 		}
 
 		// Start passive mode
 		if (!$this->_passive()) {
-			JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_GET_PASSIVE'));
+			JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_GET_PASSIVE'));
 			return false;
 		}
 
 		if (!$this->_putCmd('RETR '.$remote, array (150, 125))) {
 			@ fclose($this->_dataconn);
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_GET_BAD_RESPONSE_RETR', $this->_response, $remote));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_GET_BAD_RESPONSE_RETR', $this->_response, $remote));
 			return false;
 		}
 
@@ -823,7 +823,7 @@ class JFTP extends JObject
 		fclose($fp);
 
 		if (!$this->_verifyResponse(226)) {
-			JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_GET_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
+			JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_GET_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
 			return false;
 		}
 
@@ -853,12 +853,12 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// Turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_STORE_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_STORE_PASSIVE'));
 				return false;
 			}
 
 			if (@ftp_put($this->_conn, $remote, $local, $mode) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_STORE_BAD_RESPONSE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_STORE_BAD_RESPONSE'));
 				return false;
 			}
 			return true;
@@ -870,18 +870,18 @@ class JFTP extends JObject
 		if (@ file_exists($local)) {
 			$fp = fopen($local, "rb");
 			if (!$fp) {
-				JError::raiseWarning('38', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_STORE_READING_LOCAL', $local));
+				JError::raiseWarning('38', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_STORE_READING_LOCAL', $local));
 				return false;
 			}
 		} else {
-			JError::raiseWarning('38', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_STORE_FIND_LOCAL', $local));
+			JError::raiseWarning('38', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_STORE_FIND_LOCAL', $local));
 			return false;
 		}
 
 		// Start passive mode
 		if (!$this->_passive()) {
 			@ fclose($fp);
-			JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_STORE_PASSIVE'));
+			JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_STORE_PASSIVE'));
 			return false;
 		}
 
@@ -889,7 +889,7 @@ class JFTP extends JObject
 		if (!$this->_putCmd('STOR '.$remote, array (150, 125))) {
 			@ fclose($fp);
 			@ fclose($this->_dataconn);
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_STORE_BAD_RESPONSE_STOR', $this->_response, $remote));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_STORE_BAD_RESPONSE_STOR', $this->_response, $remote));
 			return false;
 		}
 
@@ -898,7 +898,7 @@ class JFTP extends JObject
 			$line = fread($fp, 4096);
 			do {
 				if (($result = @ fwrite($this->_dataconn, $line)) === false) {
-					JError::raiseWarning('37', JText::_('JLIB_CLIENT_ERROR_JFTP_STORE_DATA_PORT'));
+					JError::raiseWarning('37', JText::_('MOLAJO_CLIENT_ERROR_JFTP_STORE_DATA_PORT'));
 					return false;
 				}
 				$line = substr($line, $result);
@@ -909,7 +909,7 @@ class JFTP extends JObject
 		fclose($this->_dataconn);
 
 		if (!$this->_verifyResponse(226)) {
-			JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_STORE_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
+			JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_STORE_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
 			return false;
 		}
 
@@ -934,7 +934,7 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// Turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_WRITE_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_WRITE_PASSIVE'));
 				return false;
 			}
 
@@ -943,7 +943,7 @@ class JFTP extends JObject
 			rewind($tmp);
 			if (@ftp_fput($this->_conn, $remote, $tmp, $mode) === false) {
 				fclose($tmp);
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_WRITE_BAD_RESPONSE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_WRITE_BAD_RESPONSE'));
 				return false;
 			}
 			fclose($tmp);
@@ -955,13 +955,13 @@ class JFTP extends JObject
 
 		// Start passive mode
 		if (!$this->_passive()) {
-			JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_WRITE_PASSIVE'));
+			JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_WRITE_PASSIVE'));
 			return false;
 		}
 
 		// Send store command to the FTP server
 		if (!$this->_putCmd('STOR '.$remote, array (150, 125))) {
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_WRITE_BAD_RESPONSE_STOR', $this->_response, $remote));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_WRITE_BAD_RESPONSE_STOR', $this->_response, $remote));
 			@ fclose($this->_dataconn);
 			return false;
 		}
@@ -969,7 +969,7 @@ class JFTP extends JObject
 		// Write buffer to the data connection port
 		do {
 			if (($result = @ fwrite($this->_dataconn, $buffer)) === false) {
-				JError::raiseWarning('37', JText::_('JLIB_CLIENT_ERROR_JFTP_WRITE_DATA_PORT'));
+				JError::raiseWarning('37', JText::_('MOLAJO_CLIENT_ERROR_JFTP_WRITE_DATA_PORT'));
 				return false;
 			}
 			$buffer = substr($buffer, $result);
@@ -980,7 +980,7 @@ class JFTP extends JObject
 
 		// Verify that the server recieved the transfer
 		if (!$this->_verifyResponse(226)) {
-			JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_WRITE_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
+			JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_WRITE_BAD_RESPONSE_TRANSFER', $this->_response, $remote));
 			return false;
 		}
 
@@ -1007,7 +1007,7 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// Turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTNAMES_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTNAMES_PASSIVE'));
 				return false;
 			}
 
@@ -1016,7 +1016,7 @@ class JFTP extends JObject
 				if ($this->listDetails($path, 'files') === array()) {
 					return array();
 				}
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTNAMES_BAD_RESPONSE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTNAMES_BAD_RESPONSE'));
 				return false;
 			}
 			$list = preg_replace('#^'.preg_quote($path, '#').'[/\\\\]?#', '', $list);
@@ -1037,7 +1037,7 @@ class JFTP extends JObject
 
 		// Start passive mode
 		if (!$this->_passive()) {
-			JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTNAMES_PASSIVE'));
+			JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTNAMES_PASSIVE'));
 			return false;
 		}
 
@@ -1047,7 +1047,7 @@ class JFTP extends JObject
 			if ($this->listDetails($path, 'files') === array()) {
 				return array();
 			}
-			JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_LISTNAMES_BAD_RESPONSE_NLST', $this->_response, $path));
+			JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_LISTNAMES_BAD_RESPONSE_NLST', $this->_response, $path));
 			return false;
 		}
 
@@ -1059,7 +1059,7 @@ class JFTP extends JObject
 
 		// Everything go okay?
 		if (!$this->_verifyResponse(226)) {
-			JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_LISTNAMES_BAD_RESPONSE_TRANSFER', $this->_response, $path));
+			JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_LISTNAMES_BAD_RESPONSE_TRANSFER', $this->_response, $path));
 			return false;
 		}
 
@@ -1096,12 +1096,12 @@ class JFTP extends JObject
 		if (FTP_NATIVE) {
 			// Turn passive mode on
 			if (@ftp_pasv($this->_conn, true) === false) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTDETAILS_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTDETAILS_PASSIVE'));
 				return false;
 			}
 
 			if (($contents = @ftp_rawlist($this->_conn, $path)) === false) {
-				JError::raiseWarning('35', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTDETAILS_BAD_RESPONSE'));
+				JError::raiseWarning('35', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTDETAILS_BAD_RESPONSE'));
 				return false;
 			}
 		} else {
@@ -1109,7 +1109,7 @@ class JFTP extends JObject
 
 			// Start passive mode
 			if (!$this->_passive()) {
-				JError::raiseWarning('36', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTDETAILS_PASSIVE'));
+				JError::raiseWarning('36', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTDETAILS_PASSIVE'));
 				return false;
 			}
 
@@ -1120,7 +1120,7 @@ class JFTP extends JObject
 
 			// Request the file listing
 			if (!$this->_putCmd(($recurse == true) ? 'LIST -R' : 'LIST'.$path, array (150, 125))) {
-				JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_LISTDETAILS_BAD_RESPONSE_LIST', $this->_response, $path));
+				JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_LISTDETAILS_BAD_RESPONSE_LIST', $this->_response, $path));
 				@ fclose($this->_dataconn);
 				return false;
 			}
@@ -1133,7 +1133,7 @@ class JFTP extends JObject
 
 			// Everything go okay?
 			if (!$this->_verifyResponse(226)) {
-				JError::raiseWarning('37', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_LISTDETAILS_BAD_RESPONSE_TRANSFER', $this->_response, $path));
+				JError::raiseWarning('37', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_LISTDETAILS_BAD_RESPONSE_TRANSFER', $this->_response, $path));
 				return false;
 			}
 
@@ -1173,7 +1173,7 @@ class JFTP extends JObject
 			}
 		}
 		if (!$osType) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_CLIENT_ERROR_JFTP_LISTDETAILS_UNRECOGNISED'));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::_('MOLAJO_CLIENT_ERROR_JFTP_LISTDETAILS_UNRECOGNISED'));
 			return false;
 		}
 
@@ -1283,13 +1283,13 @@ class JFTP extends JObject
 
 		// Make sure we have a connection to the server
 		if (!is_resource($this->_conn)) {
-			JError::raiseWarning('31', JText::_('JLIB_CLIENT_ERROR_JFTP_PUTCMD_UNCONNECTED'));
+			JError::raiseWarning('31', JText::_('MOLAJO_CLIENT_ERROR_JFTP_PUTCMD_UNCONNECTED'));
 			return false;
 		}
 
 		// Send the command to the server
 		if (!fwrite($this->_conn, $cmd."\r\n")) {
-			JError::raiseWarning('32', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_PUTCMD_SEND', $cmd));
+			JError::raiseWarning('32', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_PUTCMD_SEND', $cmd));
 		}
 
 		return $this->_verifyResponse($expectedResponse);
@@ -1316,7 +1316,7 @@ class JFTP extends JObject
 
 		// Catch a timeout or bad response
 		if (!isset($parts[1])) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_VERIFYRESPONSE', $this->_response));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_VERIFYRESPONSE', $this->_response));
 			return false;
 		}
 
@@ -1357,7 +1357,7 @@ class JFTP extends JObject
 
 		// Make sure we have a connection to the server
 		if (!is_resource($this->_conn)) {
-			JError::raiseWarning('31', JText::_('JLIB_CLIENT_ERROR_JFTP_PASSIVE_CONNECT_PORT'));
+			JError::raiseWarning('31', JText::_('MOLAJO_CLIENT_ERROR_JFTP_PASSIVE_CONNECT_PORT'));
 			return false;
 		}
 
@@ -1373,7 +1373,7 @@ class JFTP extends JObject
 
 		// Catch a timeout or bad response
 		if (!isset($parts[1])) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_PASSIVE_RESPONSE', $this->_response));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_PASSIVE_RESPONSE', $this->_response));
 			return false;
 		}
 
@@ -1383,13 +1383,13 @@ class JFTP extends JObject
 
 		// If it's not 227, we weren't given an IP and port, which means it failed.
 		if ($this->_responseCode != '227') {
-			JError::raiseWarning('36', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_PASSIVE_IP_OBTAIN', $this->_responseMsg));
+			JError::raiseWarning('36', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_PASSIVE_IP_OBTAIN', $this->_responseMsg));
 			return false;
 		}
 
 		// Snatch the IP and port information, or die horribly trying...
 		if (preg_match('~\((\d+),\s*(\d+),\s*(\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))\)~', $this->_responseMsg, $match) == 0) {
-			JError::raiseWarning('36', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_PASSIVE_IP_VALID', $this->_responseMsg));
+			JError::raiseWarning('36', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_PASSIVE_IP_VALID', $this->_responseMsg));
 			return false;
 		}
 
@@ -1399,7 +1399,7 @@ class JFTP extends JObject
 		// Connect, assuming we've got a connection.
 		$this->_dataconn =  @fsockopen($this->_pasv['ip'], $this->_pasv['port'], $errno, $err, $this->_timeout);
 		if (!$this->_dataconn) {
-			JError::raiseWarning('30', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_PASSIVE_CONNECT', $this->_pasv['ip'], $this->_pasv['port'], $errno, $err));
+			JError::raiseWarning('30', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_PASSIVE_CONNECT', $this->_pasv['ip'], $this->_pasv['port'], $errno, $err));
 			return false;
 		}
 
@@ -1447,12 +1447,12 @@ class JFTP extends JObject
 	function _mode($mode) {
 		if ($mode == FTP_BINARY) {
 			if (!$this->_putCmd("TYPE I", 200)) {
-				JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_MODE_BINARY', $this->_response));
+				JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_MODE_BINARY', $this->_response));
 				return false;
 			}
 		} else {
 			if (!$this->_putCmd("TYPE A", 200)) {
-				JError::raiseWarning('35', JText::sprintf('JLIB_CLIENT_ERROR_JFTP_MODE_ASCII', $this->_response));
+				JError::raiseWarning('35', JText::sprintf('MOLAJO_CLIENT_ERROR_JFTP_MODE_ASCII', $this->_response));
 				return false;
 			}
 		}

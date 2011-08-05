@@ -74,7 +74,7 @@ class JControllerAdmin extends JController
 		if (empty($this->view_list)) {
 			$r = null;
 			if (!preg_match('/(.*)Controller(.*)/i', get_class($this), $r)) {
-				JError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_CONTROLLER_GET_NAME'));
+				JError::raiseError(500, JText::_('MOLAJO_APPLICATION_ERROR_CONTROLLER_GET_NAME'));
 			}
 			$this->view_list = strtolower($r[2]);
 		}
@@ -207,12 +207,12 @@ class JControllerAdmin extends JController
 		$return = $model->reorder($ids, $inc);
 		if ($return === false) {
 			// Reorder failed.
-			$message = JText::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
+			$message = JText::sprintf('MOLAJO_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false), $message, 'error');
 			return false;
 		} else {
 			// Reorder succeeded.
-			$message = JText::_('JLIB_APPLICATION_SUCCESS_ITEM_REORDERED');
+			$message = JText::_('MOLAJO_APPLICATION_SUCCESS_ITEM_REORDERED');
 			$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false), $message);
 			return true;
 		}
@@ -247,13 +247,13 @@ class JControllerAdmin extends JController
 		if ($return === false)
 		{
 			// Reorder failed
-			$message = JText::sprintf('JLIB_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
+			$message = JText::sprintf('MOLAJO_APPLICATION_ERROR_REORDER_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false), $message, 'error');
 			return false;
 		} else
 		{
 			// Reorder succeeded.
-			$this->setMessage(JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
+			$this->setMessage(JText::_('MOLAJO_APPLICATION_SUCCESS_ORDERING_SAVED'));
 			$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
 			return true;
 		}
@@ -279,7 +279,7 @@ class JControllerAdmin extends JController
 		$return = $model->checkin($ids);
 		if ($return === false) {
 			// Checkin failed.
-			$message = JText::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
+			$message = JText::sprintf('MOLAJO_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
 			$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false), $message, 'error');
 			return false;
 		} else {

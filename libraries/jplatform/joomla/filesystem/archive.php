@@ -142,7 +142,7 @@ class JArchive
 				break;
 
 			default:
-				JError::raiseWarning(10, JText::_('JLIB_FILESYSTEM_UNKNOWNARCHIVETYPE'));
+				JError::raiseWarning(10, JText::_('MOLAJO_FILESYSTEM_UNKNOWNARCHIVETYPE'));
 				return false;
 				break;
 		}
@@ -180,7 +180,7 @@ class JArchive
 					require_once $path;
 				}
 				else {
-					JError::raiseError(500,JText::_('JLIB_FILESYSTEM_UNABLE_TO_LOAD_ARCHIVE'));
+					JError::raiseError(500,JText::_('MOLAJO_FILESYSTEM_UNABLE_TO_LOAD_ARCHIVE'));
 				}
 			}
 

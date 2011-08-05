@@ -40,7 +40,7 @@ class CheckinController extends JController
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'));
+			JError::raiseWarning(500, JText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'));
 		}
 		else {
 			// Get the model.

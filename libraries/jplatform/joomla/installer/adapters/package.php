@@ -80,7 +80,7 @@ class JInstallerPackage extends JAdapterInstance
 		}
 		else
 		{
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_PACK_INSTALL_NO_PACK', JText::_('JLIB_INSTALLER_'. strtoupper($this->route))));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_PACK_INSTALL_NO_PACK', JText::_('MOLAJO_INSTALLER_'. strtoupper($this->route))));
 			return false;
 		}
 
@@ -116,14 +116,14 @@ class JInstallerPackage extends JAdapterInstance
 				$tmpInstaller = new JInstaller();
 				if (!$tmpInstaller->install($package['dir']))
 				{
-					$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_PACK_INSTALL_ERROR_EXTENSION', JText::_('JLIB_INSTALLER_'. strtoupper($this->route)), basename($file)));
+					$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_PACK_INSTALL_ERROR_EXTENSION', JText::_('MOLAJO_INSTALLER_'. strtoupper($this->route)), basename($file)));
 					return false;
 				}
 			}
 		}
 		else
 		{
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_PACK_INSTALL_NO_FILES', JText::_('JLIB_INSTALLER_'. strtoupper($this->route))));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_PACK_INSTALL_NO_FILES', JText::_('MOLAJO_INSTALLER_'. strtoupper($this->route))));
 			return false;
 		}
 
@@ -157,7 +157,7 @@ class JInstallerPackage extends JAdapterInstance
 		if (!$row->store())
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_PACK_INSTALL_ROLLBACK', $row->getError()));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_PACK_INSTALL_ROLLBACK', $row->getError()));
 			return false;
 		}
 
@@ -171,7 +171,7 @@ class JInstallerPackage extends JAdapterInstance
 		if (!$this->parent->copyFiles(array($manifest), true))
 		{
 			// Install failed, rollback changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_PACK_INSTALL_COPY_SETUP', JText::_('JLIB_INSTALLER_ABORT_PACK_INSTALL_NO_FILES')));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_PACK_INSTALL_COPY_SETUP', JText::_('MOLAJO_INSTALLER_ABORT_PACK_INSTALL_NO_FILES')));
 			return false;
 		}
 		return true;
@@ -205,7 +205,7 @@ class JInstallerPackage extends JAdapterInstance
 		$row->load($id);
 
 		if ($row->protected) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_WARNCOREPACK'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_WARNCOREPACK'));
 			return false;
 		}
 
@@ -219,7 +219,7 @@ class JInstallerPackage extends JAdapterInstance
 		if (!file_exists($manifestFile))
 		{
 			// TODO: Fail?
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_MISSINGMANIFEST'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_MISSINGMANIFEST'));
 			return false;
 
 		}
@@ -229,7 +229,7 @@ class JInstallerPackage extends JAdapterInstance
 		// If we cannot load the XML file return false
 		if (!$xml)
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_LOAD_MANIFEST'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_LOAD_MANIFEST'));
 			return false;
 		}
 
@@ -240,7 +240,7 @@ class JInstallerPackage extends JAdapterInstance
 		 */
 		if ($xml->getName() != 'install' && $xml->getName() != 'extension')
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_INVALID_MANIFEST'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_INVALID_MANIFEST'));
 			return false;
 		}
 
@@ -254,10 +254,10 @@ class JInstallerPackage extends JAdapterInstance
 			{
 				if(!$tmpInstaller->uninstall($extension->type, $id, $client->id)) {
 					$error = true;
-					JError::raiseWarning(100, JText::sprintf('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_NOT_PROPER', basename($extension->filename)));
+					JError::raiseWarning(100, JText::sprintf('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_NOT_PROPER', basename($extension->filename)));
 				}
 			} else {
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_UNKNOWN_EXTENSION'));
+				JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_UNKNOWN_EXTENSION'));
 			}
 		}
 
@@ -271,7 +271,7 @@ class JInstallerPackage extends JAdapterInstance
 			$row->delete();
 		}
 		else {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_PACK_UNINSTALL_MANIFEST_NOT_REMOVED'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_PACK_UNINSTALL_MANIFEST_NOT_REMOVED'));
 		}
 
 		// Return the result up the line
@@ -341,7 +341,7 @@ class JInstallerPackage extends JAdapterInstance
 			return $this->parent->extension->store();
 		}
 		catch(JException $e) {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_PACK_REFRESH_MANIFEST_CACHE'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_PACK_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

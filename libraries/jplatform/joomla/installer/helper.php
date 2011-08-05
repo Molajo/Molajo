@@ -50,7 +50,7 @@ abstract class JInstallerHelper
 		$inputHandle = @ fopen($url, "r");
 		$error = strstr($php_errormsg,'failed to open stream:');
 		if (!$inputHandle) {
-			JError::raiseWarning(42, JText::sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
+			JError::raiseWarning(42, JText::sprintf('MOLAJO_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
 			return false;
 		}
 
@@ -80,7 +80,7 @@ abstract class JInstallerHelper
 			$contents .= fread($inputHandle, 4096);
 			if ($contents === false)
 			{
-				JError::raiseWarning(44, JText::sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
+				JError::raiseWarning(44, JText::sprintf('MOLAJO_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
 				return false;
 			}
 		}
@@ -187,7 +187,7 @@ abstract class JInstallerHelper
 
 		if ( ! count($files))
 		{
-			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+			JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
 			return false;
 		}
 
@@ -210,7 +210,7 @@ abstract class JInstallerHelper
 			return $type;
 		}
 
-		JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+		JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
 		// Free up memory.
 		unset ($xml);
 		return false;

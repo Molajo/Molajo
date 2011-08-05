@@ -101,7 +101,7 @@ class JUpdaterExtension extends JUpdateAdapter
 			$query->where('update_site_id = '. $this->_update_site_id);
 			$dbo->setQuery($query);
 			$dbo->Query();
-			JError::raiseWarning('101', JText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
+			JError::raiseWarning('101', JText::sprintf('MOLAJO_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
 			return false;
 		}
 

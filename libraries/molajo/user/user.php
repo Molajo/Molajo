@@ -193,7 +193,7 @@ class MolajoUser extends JObject
 		if (!is_numeric($identifier)) {
 //jimport('joomla.user.helper');
 			if (!$id = JUserHelper::getUserId($identifier)) {
-				JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
+				JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_USER_ERROR_ID_NOT_EXISTS', $identifier));
 				$retval = false;
 				return $retval;
 			}
@@ -460,7 +460,7 @@ class MolajoUser extends JObject
 			// TODO: Backend controller checks the password, frontend doesn't but should.
 			// Hence this code is required:
 			if (isset($array['password2']) && $array['password'] != $array['password2']) {
-				$this->setError(JText::_('JLIB_USER_ERROR_PASSWORD_NOT_MATCH'));
+				$this->setError(JText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
 				return false;
 			}
 
@@ -492,7 +492,7 @@ class MolajoUser extends JObject
 			// Updating an existing user
 			if (!empty($array['password'])) {
 				if ($array['password'] != $array['password2']) {
-					$this->setError(JText::_('JLIB_USER_ERROR_PASSWORD_NOT_MATCH'));
+					$this->setError(JText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
 					return false;
 				}
 
@@ -527,7 +527,7 @@ class MolajoUser extends JObject
 
 		// Bind the array
 		if (!$this->setProperties($array)) {
-			$this->setError(JText::_('JLIB_USER_ERROR_BIND_ARRAY'));
+			$this->setError(JText::_('MOLAJO_USER_ERROR_BIND_ARRAY'));
 			return false;
 		}
 
@@ -597,14 +597,14 @@ class MolajoUser extends JObject
 					foreach ($this->groups as $key => $groupId)
 					{
 						if ($acl->checkPermissions ('group', $groupId, 'admin', '', '')) {
-							throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
+							throw new Exception(JText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
 						}
 					}
 				}
 				else {
 					// I am not a Super Admin, and this one is, so fail.
 					if ($acl->checkPermissions ('user', $this->id, 'admin', '', '')) {
-						throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
+						throw new Exception(JText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
 					}
 
 					if ($this->groups != null) {
@@ -612,7 +612,7 @@ class MolajoUser extends JObject
 						foreach ($this->groups as $groupId)
 						{
 							if ($acl->checkPermissions ('group', $groupId, 'admin', '', '')) {
-								throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
+								throw new Exception(JText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
 							}
 						}
 					}
@@ -701,7 +701,7 @@ class MolajoUser extends JObject
 
 		// Load the JUserModel object based on the user id or throw a warning.
 		if (!$table->load($id)) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
 			return false;
 		}
 

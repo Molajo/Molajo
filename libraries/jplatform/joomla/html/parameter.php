@@ -169,7 +169,7 @@ class JParameter extends JRegistry
 		}
 
 		if (count($params) < 1) {
-			$html[] = "<p class=\"noparams\">".JText::_('JLIB_HTML_NO_PARAMETERS_FOR_THIS_ITEM')."</p>";
+			$html[] = "<p class=\"noparams\">".JText::_('MOLAJO_HTML_NO_PARAMETERS_FOR_THIS_ITEM')."</p>";
 		}
 
 		return implode(PHP_EOL, $html);

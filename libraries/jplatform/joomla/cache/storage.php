@@ -109,7 +109,7 @@ class JCacheStorage
 			$conf = JFactory::getConfig();
 			$handler = $conf->get('cache_handler');
 			if (empty($handler)) {
-				return JError::raiseWarning(500, JText::_('JLIB_CACHE_ERROR_CACHE_HANDLER_NOT_SET'));
+				return JError::raiseWarning(500, JText::_('MOLAJO_CACHE_ERROR_CACHE_HANDLER_NOT_SET'));
 			}
 		}
 
@@ -128,7 +128,7 @@ class JCacheStorage
 			if ($path = JPath::find(JCacheStorage::addIncludePath(), strtolower($handler).'.php')) {
 				require_once $path;
 			} else {
-				return JError::raiseWarning(500, JText::sprintf('JLIB_CACHE_ERROR_CACHE_STORAGE_LOAD', $handler));
+				return JError::raiseWarning(500, JText::sprintf('MOLAJO_CACHE_ERROR_CACHE_STORAGE_LOAD', $handler));
 			}
 		}
 

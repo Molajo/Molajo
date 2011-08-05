@@ -58,7 +58,7 @@ class JUpdater extends JAdapter {
 		// Check if fopen is allowed
 		$result = ini_get('allow_url_fopen');
 		if (empty($result)) {
-			JError::raiseWarning('101', JText::_('JLIB_UPDATER_ERROR_COLLECTION_FOPEN'));
+			JError::raiseWarning('101', JText::_('MOLAJO_UPDATER_ERROR_COLLECTION_FOPEN'));
 			return false;
 		}
 

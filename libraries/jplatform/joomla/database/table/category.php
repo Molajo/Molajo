@@ -114,7 +114,7 @@ class JTableCategory extends JTableNested
 	{
 		// Check for a title.
 		if (trim($this->title) == '') {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
 			return false;
 		}
 		$this->alias = trim($this->alias);
@@ -189,7 +189,7 @@ class JTableCategory extends JTableNested
 		$table = JTable::getInstance('Category','JTable');
 		if ($table->load(array('alias'=>$this->alias,'parent_id'=>$this->parent_id,'extension'=>$this->extension)) && ($table->id != $this->id || $this->id==0)) {
 
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
 			return false;
 		}
 		return parent::store($updateNulls);

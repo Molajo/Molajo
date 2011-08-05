@@ -265,7 +265,7 @@ class MolajoDocument extends JObject
                     if (file_exists($path)) {
 				    	require_once $path;
                     } else {
-					    JError::raiseError(500,JText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+					    JError::raiseError(500,JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
 				    }
                 }
 			}
@@ -822,7 +822,7 @@ class MolajoDocument extends JObject
                 if (file_exists($path)) {
                     require_once $path;
                 } else {
-                    JError::raiseError(500,JText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_RENDERER_CLASS'));
+                    JError::raiseError(500,JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_RENDERER_CLASS'));
                 }
             }
         }

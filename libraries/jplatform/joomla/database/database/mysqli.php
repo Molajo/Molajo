@@ -93,11 +93,11 @@ class JDatabaseMySQLi extends JDatabase
 			// @deprecated  11.3
 			if (JError::$legacy) {
 				$this->errorNum = 1;
-				$this->errorMsg = JText::_('JLIB_DATABASE_ERROR_ADAPTER_MYSQLI');
+				$this->errorMsg = JText::_('MOLAJO_DATABASE_ERROR_ADAPTER_MYSQLI');
 				return;
 			}
 			else {
-				throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_MYSQLI'));
+				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_ADAPTER_MYSQLI'));
 			}
 		}
 
@@ -108,11 +108,11 @@ class JDatabaseMySQLi extends JDatabase
 			// @deprecated  11.3
 			if (JError::$legacy) {
 				$this->errorNum = 2;
-				$this->errorMsg = JText::_('JLIB_DATABASE_ERROR_CONNECT_MYSQL');
+				$this->errorMsg = JText::_('MOLAJO_DATABASE_ERROR_CONNECT_MYSQL');
 				return;
 			}
 			else {
-				throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_CONNECT_MYSQL'));
+				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_CONNECT_MYSQL'));
 			}
 		}
 
@@ -254,7 +254,7 @@ class JDatabaseMySQLi extends JDatabase
 	{
 		// Make sure we have an exporter class for this driver.
 		if (!class_exists('JDatabaseExporterMySQLi')) {
-			throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
+			throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_MISSING_EXPORTER'));
 		}
 
 		$o = new JDatabaseExporterMySQLi;
@@ -275,7 +275,7 @@ class JDatabaseMySQLi extends JDatabase
 	{
 		// Make sure we have an importer class for this driver.
 		if (!class_exists('JDatabaseImporterMySQLi')) {
-			throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
+			throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_MISSING_IMPORTER'));
 		}
 
 		$o = new JDatabaseImporterMySQLi;
@@ -313,7 +313,7 @@ class JDatabaseMySQLi extends JDatabase
 		if ($new) {
 			// Make sure we have a query class for this driver.
 			if (!class_exists('JDatabaseQueryMySQLi')) {
-				throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
+				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_MISSING_QUERY'));
 			}
 			return new JDatabaseQueryMySQLi($this);
 		}
@@ -487,7 +487,7 @@ class JDatabaseMySQLi extends JDatabase
 				return false;
 			}
 			else {
-				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
+				JLog::add(JText::sprintf('MOLAJO_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
 				throw new DatabaseException();
 			}
 		}
@@ -530,7 +530,7 @@ class JDatabaseMySQLi extends JDatabase
 				return false;
 			}
 			else {
-				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
+				JLog::add(JText::sprintf('MOLAJO_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
 				throw new DatabaseException();
 			}
 		}
@@ -560,11 +560,11 @@ class JDatabaseMySQLi extends JDatabase
 			// @deprecated  11.3
 			if (JError::$legacy) {
 				$this->errorNum = 3;
-				$this->errorMsg = JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT');
+				$this->errorMsg = JText::_('MOLAJO_DATABASE_ERROR_DATABASE_CONNECT');
 				return false;
 			}
 			else {
-				throw new DatabaseException(JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT'));
+				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_DATABASE_CONNECT'));
 			}
 		}
 

@@ -37,11 +37,11 @@ class MolajoComponentHelper
 	 */
 	public static function getComponent($option, $strict = false)
 	{
-		if (isset(self::$_components[$option])) {
-            $result = self::$_components[$option];
+		if (isset(self::$_layouts[$option])) {
+            $result = self::$_layouts[$option];
         } else {
 			if (self::_load($option)){
-				$result = self::$_components[$option];
+				$result = self::$_layouts[$option];
 			} else {
 				$result				= new stdClass;
 				$result->enabled	= $strict ? false : true;
@@ -124,21 +124,21 @@ class MolajoComponentHelper
 
         if (JFactory::getConfig()->get('caching') > 0) {
             $cache = MolajoFactory::getCache('_system','callback');
-		    self::$_components[$option] = $cache->get(array($db, 'loadObject'), null, $option, false);
+		    self::$_layouts[$option] = $cache->get(array($db, 'loadObject'), null, $option, false);
         } else {
-            self::$_components[$option] = $db->loadObject();
+            self::$_layouts[$option] = $db->loadObject();
         }
 
 		if ($error = $db->getErrorMsg()
-            || empty(self::$_components[$option])) {
-			JError::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
+            || empty(self::$_layouts[$option])) {
+			JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
 			return false;
 		}
 
-		if (is_string(self::$_components[$option]->params)) {
+		if (is_string(self::$_layouts[$option]->params)) {
 			$temp = new JRegistry;
-			$temp->loadString(self::$_components[$option]->params);
-			self::$_components[$option]->params = $temp;
+			$temp->loadString(self::$_layouts[$option]->params);
+			self::$_layouts[$option]->params = $temp;
 		}
 
 		return true;
@@ -170,7 +170,7 @@ class MolajoComponentHelper
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", $lang->getDefault(), false, false);
  
 		if (empty($request['option'])) {
-			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 			return;
 		}
 
@@ -188,7 +188,7 @@ class MolajoComponentHelper
 		if (self::isEnabled($request['option'])
                 && file_exists($path)) {
         } else {
-			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
 		$task = JRequest::getString('task');

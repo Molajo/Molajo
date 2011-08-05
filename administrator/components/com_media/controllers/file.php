@@ -137,7 +137,7 @@ class MediaControllerFile extends JController
 		if (!$user->authorise('core.delete','com_media'))
 		{
 			// User is not authorised to delete
-			JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
+			JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
 			return false;
 		}
 		else

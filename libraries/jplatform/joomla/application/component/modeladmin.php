@@ -156,7 +156,7 @@ abstract class JModelAdmin extends JModelForm
 		}
 
 		if (!$done) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
 			return false;
 		}
 
@@ -181,7 +181,7 @@ abstract class JModelAdmin extends JModelForm
 		$extension = JRequest::getCmd('option');
 		$user	= JFactory::getUser();
 		if (!$user->authorise('core.edit', $extension)) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
 			return false;
 		}
 
@@ -232,14 +232,14 @@ abstract class JModelAdmin extends JModelForm
 					return false;
 				}
 				else {
-					$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
+					$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
 					return false;
 				}
 			}
 		}
 
 		if (empty($categoryId)) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
 			return false;
 		}
 
@@ -247,7 +247,7 @@ abstract class JModelAdmin extends JModelForm
 		$extension	= JRequest::getCmd('option');
 		$user		= JFactory::getUser();
 		if (!$user->authorise('core.create', $extension)) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
 			return false;
 		}
 
@@ -268,7 +268,7 @@ abstract class JModelAdmin extends JModelForm
 				}
 				else {
 					// Not fatal error
-					$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
 				}
 			}
@@ -333,14 +333,14 @@ abstract class JModelAdmin extends JModelForm
 					return false;
 				}
 				else {
-					$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
+					$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
 					return false;
 				}
 			}
 		}
 
 		if (empty($categoryId)) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
 			return false;
 		}
 
@@ -348,12 +348,12 @@ abstract class JModelAdmin extends JModelForm
 		$extension	= JRequest::getCmd('option');
 		$user		= JFactory::getUser();
 		if (!$user->authorise('core.create', $extension)) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
 			return false;
 		}
 
 		if (!$user->authorise('core.edit', $extension)) {
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+			$this->setError(JText::_('MOLAJO_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
 			return false;
 		}
 
@@ -369,7 +369,7 @@ abstract class JModelAdmin extends JModelForm
 				}
 				else {
 					// Not fatal error
-					$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
 				}
 			}
@@ -534,7 +534,7 @@ abstract class JModelAdmin extends JModelForm
 						JError::raiseWarning(500, $error);
 					}
 					else {
-						JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
+						JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
 					}
 				}
 
@@ -695,7 +695,7 @@ abstract class JModelAdmin extends JModelForm
 				if (!$this->canEditState($table)) {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 					return false;
 				}
 			}
@@ -754,7 +754,7 @@ abstract class JModelAdmin extends JModelForm
 					// Prune items that you can't change.
 					unset($pks[$i]);
 					$this->checkin($pk);
-					JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 					$allowed = false;
 					continue;
 				}
@@ -896,7 +896,7 @@ abstract class JModelAdmin extends JModelForm
 			if (!$this->canEditState($table)) {
 				// Prune items that you can't change.
 				unset($pks[$i]);
-				JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+				JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 			} else if ($table->ordering != $order[$i]) {
 				$table->ordering = $order[$i];
 

@@ -140,7 +140,7 @@ class UsersModelGroup extends JModelAdmin
         if ((!$iAmSuperAdmin) && ($groupSuperAdmin)) {
         	try
         	{
-				throw new Exception(JText::_('JLIB_USER_ERROR_NOT_SUPERADMIN'));
+				throw new Exception(JText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
         	}
 			catch (Exception $e)
 			{
@@ -166,7 +166,7 @@ class UsersModelGroup extends JModelAdmin
 				if ((!$otherSuperAdmin) && (!$groupSuperAdmin)) {
 					try
 					{
-						throw new Exception(JText::_('JLIB_USER_ERROR_CANNOT_DEMOTE_SELF'));
+						throw new Exception(JText::_('MOLAJO_USER_ERROR_CANNOT_DEMOTE_SELF'));
 					}
 					catch (Exception $e)
 					{

@@ -1587,7 +1587,7 @@ class JForm
 	{
 		// Make sure there is a valid JXMLElement.
 		if (!$element instanceof JXMLElement) {
-			return new JException(JText::_('JLIB_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
+			return new JException(JText::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
 		}
 
 		// Initialise variables.
@@ -1611,7 +1611,7 @@ class JForm
 					else {
 						$message = JText::_($element['name']);
 					}
-					$message = JText::sprintf('JLIB_FORM_VALIDATE_FIELD_REQUIRED', $message);
+					$message = JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_REQUIRED', $message);
 				}
 				return new JException($message, 2, E_WARNING);
 			}
@@ -1624,7 +1624,7 @@ class JForm
 
 			// If the object could not be loaded return an error message.
 			if ($rule === false) {
-				return new JException(JText::sprintf('JLIB_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
+				return new JException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
 			}
 
 			// Run the field validation rule test.
@@ -1646,7 +1646,7 @@ class JForm
 				return new JException(JText::_($message), 1, E_WARNING);
 			}
 			else {
-				return new JException(JText::sprintf('JLIB_FORM_VALIDATE_FIELD_INVALID', JText::_((string) $element['label'])), 1, E_WARNING);
+				return new JException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', JText::_((string) $element['label'])), 1, E_WARNING);
 			}
 		}
 
@@ -1721,7 +1721,7 @@ class JForm
 			$data = trim($data);
 
 			if (empty($data)) {
-				throw new Exception(JText::_('JLIB_FORM_ERROR_NO_DATA'));
+				throw new Exception(JText::_('MOLAJO_FORM_ERROR_NO_DATA'));
 			}
 
 			// Instantiate the form.
@@ -1730,14 +1730,14 @@ class JForm
 			// Load the data.
 			if (substr(trim($data), 0, 1) == '<') {
 				if ($forms[$name]->load($data, $replace, $xpath) == false) {
-					throw new Exception(JText::_('JLIB_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+					throw new Exception(JText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
 					return false;
 				}
 			}
 			else {
 				if ($forms[$name]->loadFile($data, $replace, $xpath) == false) {
-					throw new Exception(JText::_('JLIB_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+					throw new Exception(JText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
 					return false;
 				}

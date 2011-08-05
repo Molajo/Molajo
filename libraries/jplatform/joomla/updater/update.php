@@ -164,7 +164,7 @@ class JUpdate extends JObject
 		if (!($fp = @fopen($url, "r")))
 		{
 			// TODO: Add a 'mark bad' setting here somehow
-			JError::raiseWarning('101', JText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
+			JError::raiseWarning('101', JText::sprintf('MOLAJO_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
 			return false;
 		}
 

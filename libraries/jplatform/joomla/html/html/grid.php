@@ -184,7 +184,7 @@ abstract class JHtmlGrid
 		$img	= $value ? $img1 : $img0;
 		$task	= $value ? 'unpublish' : 'publish';
 		$alt	= $value ? JText::_('JPUBLISHED') : JText::_('JUNPUBLISHED');
-		$action = $value ? JText::_('JLIB_HTML_UNPUBLISH_ITEM') : JText::_('JLIB_HTML_PUBLISH_ITEM');
+		$action = $value ? JText::_('MOLAJO_HTML_UNPUBLISH_ITEM') : JText::_('MOLAJO_HTML_PUBLISH_ITEM');
 
 		$href = '
 		<a href="#" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" title="'. $action .'">'.
@@ -202,7 +202,7 @@ abstract class JHtmlGrid
 		$trashed = null
 	) {
 		$state = array(
-			'' => '- ' . JText::_('JLIB_HTML_SELECT_STATE') . ' -',
+			'' => '- ' . JText::_('MOLAJO_HTML_SELECT_STATE') . ' -',
 			'P' => JText::_($published),
 			'U' => JText::_($unpublished)
 		);
@@ -229,8 +229,8 @@ abstract class JHtmlGrid
 
 	public static function order($rows, $image = 'filesave.png', $task = 'saveorder')
 	{
-		// $image = JHtml::_('image','admin/'.$image, JText::_('JLIB_HTML_SAVE_ORDER'), NULL, true);
-		$href = '<a href="javascript:saveorder('.(count($rows)-1).', \''.$task.'\')" class="saveorder" title="'.JText::_('JLIB_HTML_SAVE_ORDER').'"></a>';
+		// $image = JHtml::_('image','admin/'.$image, JText::_('MOLAJO_HTML_SAVE_ORDER'), NULL, true);
+		$href = '<a href="javascript:saveorder('.(count($rows)-1).', \''.$task.'\')" class="saveorder" title="'.JText::_('MOLAJO_HTML_SAVE_ORDER').'"></a>';
 
 		return $href;
 	}
@@ -246,7 +246,7 @@ abstract class JHtmlGrid
 			$date	= JHtml::_('date',$row->checked_out_time, JText::_('DATE_FORMAT_LC1'));
 			$time	= JHtml::_('date',$row->checked_out_time, 'H:i');
 
-			$hover = '<span class="editlinktip hasTip" title="'. JText::_('JLIB_HTML_CHECKED_OUT') .'::'. $text .'<br />'. $date .'<br />'. $time .'">';
+			$hover = '<span class="editlinktip hasTip" title="'. JText::_('MOLAJO_HTML_CHECKED_OUT') .'::'. $text .'<br />'. $date .'<br />'. $time .'">';
 		}
 
 		$checked = $hover .JHtml::_('image','admin/checked_out.png', NULL, NULL, true).'</span>';

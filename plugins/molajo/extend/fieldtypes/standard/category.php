@@ -76,7 +76,7 @@ class JFormFieldCategory extends JFormFieldList
 			}
 		}
 		else {
-			JError::raiseWarning(500, JText::_('JLIB_FORM_ERROR_FIELDS_CATEGORY_ERROR_EXTENSION_EMPTY'));
+			JError::raiseWarning(500, JText::_('MOLAJO_FORM_ERROR_FIELDS_CATEGORY_ERROR_EXTENSION_EMPTY'));
 		}
 
 		// Merge any additional options in the XML definition.

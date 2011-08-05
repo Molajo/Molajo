@@ -228,7 +228,7 @@ class JTableContent extends JTable
 	// Verify that the alias is unique
 		$table = JTable::getInstance('Content','JTable');
 		if ($table->load(array('alias'=>$this->alias,'catid'=>$this->catid)) && ($table->id != $this->id || $this->id==0)) {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_ARTICLE_UNIQUE_ALIAS'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_ARTICLE_UNIQUE_ALIAS'));
 			return false;
 		}
 		return parent::store($updateNulls);
@@ -264,7 +264,7 @@ class JTableContent extends JTable
 			}
 			// Nothing to set publishing state on, return false.
 			else {
-				$this->setError(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
 				return false;
 			}
 		}

@@ -177,19 +177,19 @@ class JArchiveZip extends JObject
 		$this->_metadata = null;
 
 		if (!extension_loaded('zlib')) {
-			$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_NOT_SUPPORTED'));
+			$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_NOT_SUPPORTED'));
 
 			return false;
 		}
 
 		if (!$this->_data = JFile::read($archive)) {
-			$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_UNABLE_TO_READ'));
+			$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_UNABLE_TO_READ'));
 
 			return false;
 		}
 
 		if (!$this->_getZipInfo($this->_data)) {
-			$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_INFO_FAILED'));
+			$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_INFO_FAILED'));
 
 			return false;
 		}
@@ -204,13 +204,13 @@ class JArchiveZip extends JObject
 
 				// Make sure the destination folder exists
 				if (!JFolder::create(dirname($path))) {
-					$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_UNABLE_TO_CREATE_DESTINATION'));
+					$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_UNABLE_TO_CREATE_DESTINATION'));
 
 					return false;
 				}
 
 				if (JFile::write($path, $buffer) === false) {
-					$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_UNABLE_TO_WRITE_ENTRY'));
+					$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_UNABLE_TO_WRITE_ENTRY'));
 
 					return false;
 				}
@@ -256,7 +256,7 @@ class JArchiveZip extends JObject
 						}
 					}
 					else {
-						$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_UNABLE_TO_READ_ENTRY'));
+						$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_UNABLE_TO_READ_ENTRY'));
 
 						return false;
 					}
@@ -266,7 +266,7 @@ class JArchiveZip extends JObject
 			}
 		}
 		else {
-			$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_UNABLE_TO_OPEN_ARCHIVE'));
+			$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_UNABLE_TO_OPEN_ARCHIVE'));
 
 			return false;
 		}
@@ -323,7 +323,7 @@ class JArchiveZip extends JObject
 		do
 		{
 			if ($dataLength < $fhStart +31) {
-				$this->set('error.message', JText::_('JLIB_FILESYSTEM_ZIP_INVALID_ZIP_DATA'));
+				$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_ZIP_INVALID_ZIP_DATA'));
 
 				return false;
 			}

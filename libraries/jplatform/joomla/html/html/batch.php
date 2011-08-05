@@ -28,10 +28,10 @@ abstract class JHtmlBatch
 	{
 		// Create the batch selector to change an access level on a selection list.
 		$lines = array(
-			'<label id="batch-access-lbl" for="batch-access" class="hasTip" title="'.JText::_('JLIB_HTML_BATCH_ACCESS_LABEL').'::'.JText::_('JLIB_HTML_BATCH_ACCESS_LABEL_DESC').'">',
-			JText::_('JLIB_HTML_BATCH_ACCESS_LABEL'),
+			'<label id="batch-access-lbl" for="batch-access" class="hasTip" title="'.JText::_('MOLAJO_HTML_BATCH_ACCESS_LABEL').'::'.JText::_('MOLAJO_HTML_BATCH_ACCESS_LABEL_DESC').'">',
+			JText::_('MOLAJO_HTML_BATCH_ACCESS_LABEL'),
 			'</label>',
-			JHtml::_('access.assetgrouplist', 'batch[assetgroup_id]', '', 'class="inputbox"', array('title' => JText::_('JLIB_HTML_BATCH_NOCHANGE'), 'id' => 'batch-access'))
+			JHtml::_('access.assetgrouplist', 'batch[assetgroup_id]', '', 'class="inputbox"', array('title' => JText::_('MOLAJO_HTML_BATCH_NOCHANGE'), 'id' => 'batch-access'))
 		);
 
 		return implode("\n", $lines);
@@ -50,14 +50,14 @@ abstract class JHtmlBatch
 	{
 		// Create the copy/move options.
 		$options = array(
-			JHtml::_('select.option', 'c', JText::_('JLIB_HTML_BATCH_COPY')),
-			JHtml::_('select.option', 'm', JText::_('JLIB_HTML_BATCH_MOVE'))
+			JHtml::_('select.option', 'c', JText::_('MOLAJO_HTML_BATCH_COPY')),
+			JHtml::_('select.option', 'm', JText::_('MOLAJO_HTML_BATCH_MOVE'))
 		);
 
 		// Create the batch selector to change select the category by which to move or copy.
 		$lines = array(
 			'<label id="batch-choose-action-lbl" for="batch-choose-action">',
-			JText::_('JLIB_HTML_BATCH_MENU_LABEL'),
+			JText::_('MOLAJO_HTML_BATCH_MENU_LABEL'),
 			'</label>',
 			'<fieldset id="batch-choose-action" class="combo">',
 				'<select name="batch[category_id]" class="inputbox" id="batch-category-id">',

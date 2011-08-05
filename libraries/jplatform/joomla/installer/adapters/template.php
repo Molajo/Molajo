@@ -76,7 +76,7 @@ class JInstallerTemplate extends JAdapterInstance
 			jimport('joomla.application.helper');
 			$client = JApplicationHelper::getClientInfo($cname, true);
 			if ($client === false) {
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
 				return false;
 			}
 			$basePath = $client->path;
@@ -124,7 +124,7 @@ class JInstallerTemplate extends JAdapterInstance
 			{
 				// Overwrite is not set
 				// If we didn't have overwrite set, find an udpate function or find an update tag so let's call it safe
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', JText::_('JLIB_INSTALLER_'.$this->route), $this->parent->getPath('extension_root')));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', JText::_('MOLAJO_INSTALLER_'.$this->route), $this->parent->getPath('extension_root')));
 				return false;
 			}
 		}
@@ -134,7 +134,7 @@ class JInstallerTemplate extends JAdapterInstance
 		 * installed or another template is using that directory.
 		 */
 		if (file_exists($this->parent->getPath('extension_root')) && !$this->parent->getOverwrite()) {
-			JError::raiseWarning(100, JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ANOTHER_TEMPLATE_USING_DIRECTORY', $this->parent->getPath('extension_root')));
+			JError::raiseWarning(100, JText::sprintf('MOLAJO_INSTALLER_ABORT_TPL_INSTALL_ANOTHER_TEMPLATE_USING_DIRECTORY', $this->parent->getPath('extension_root')));
 			return false;
 		}
 
@@ -142,7 +142,7 @@ class JInstallerTemplate extends JAdapterInstance
 		$created = false;
 		if (!file_exists($this->parent->getPath('extension_root'))) {
 			if (!$created = JFolder::create($this->parent->getPath('extension_root'))) {
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
 
 				return false;
 			}
@@ -186,7 +186,7 @@ class JInstallerTemplate extends JAdapterInstance
 		// Lastly, we will copy the manifest file to its appropriate place.
 		if (!$this->parent->copyManifest(-1)) {
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_TPL_INSTALL_COPY_SETUP'));
+			$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_TPL_INSTALL_COPY_SETUP'));
 
 			return false;
 		}
@@ -217,7 +217,7 @@ class JInstallerTemplate extends JAdapterInstance
 
 		if (!$row->store()) {
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_TPL_INSTALL_ROLLBACK', $db->stderr(true)));
 
 			return false;
 		}
@@ -231,7 +231,7 @@ class JInstallerTemplate extends JAdapterInstance
 			$query->set('client_id='.$db->Quote($clientId));
 			$query->set('home=0');
 			$debug = $lang->setDebug(false);
-			$query->set('title='.$db->Quote(JText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', JText::_($this->get('name')))));
+			$query->set('title='.$db->Quote(JText::sprintf('MOLAJO_INSTALLER_DEFAULT_STYLE', JText::_($this->get('name')))));
 			$lang->setDebug($debug);
 			$query->set('params='.$db->Quote($row->params));
 			$db->setQuery($query);
@@ -271,14 +271,14 @@ class JInstallerTemplate extends JAdapterInstance
 		$row = JTable::getInstance('extension');
 
 		if (!$row->load((int) $id) || !strlen($row->element)) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
 			return false;
 		}
 
 		// Is the template we are trying to uninstall a core one?
 		// Because that is not a good idea...
 		if ($row->protected) {
-			JError::raiseWarning(100, JText::sprintf('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_WARNCORETEMPLATE', $row->name));
+			JError::raiseWarning(100, JText::sprintf('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_WARNCORETEMPLATE', $row->name));
 			return false;
 		}
 
@@ -287,7 +287,7 @@ class JInstallerTemplate extends JAdapterInstance
 
 		// For a template the id will be the template name which represents the subfolder of the templates folder that the template resides in.
 		if (!$name) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_ID_EMPTY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_ID_EMPTY'));
 
 			return false;
 		}
@@ -299,7 +299,7 @@ class JInstallerTemplate extends JAdapterInstance
 		$db->setQuery($query);
 
 		if ($db->loadResult() != 0) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DEFAULT'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DEFAULT'));
 
 			return false;
 		}
@@ -308,7 +308,7 @@ class JInstallerTemplate extends JAdapterInstance
 		$client = JApplicationHelper::getClientInfo($clientId);
 
 		if (!$client) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
 			return false;
 		}
 
@@ -324,7 +324,7 @@ class JInstallerTemplate extends JAdapterInstance
 			unset($row);
 			// Make sure we delete the folders
 			JFolder::delete($this->parent->getPath('extension_root'));
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 
 			return false;
 		}
@@ -338,7 +338,7 @@ class JInstallerTemplate extends JAdapterInstance
 			$retval = JFolder::delete($this->parent->getPath('extension_root'));
 		}
 		else {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DIRECTORY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DIRECTORY'));
 			$retval = false;
 		}
 
@@ -461,7 +461,7 @@ class JInstallerTemplate extends JAdapterInstance
 			$query->set('template='.$db->Quote($this->parent->extension->name));
 			$query->set('client_id='.$db->Quote($this->parent->extension->client_id));
 			$query->set('home=0');
-			$query->set('title='.$db->Quote(JText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
+			$query->set('title='.$db->Quote(JText::sprintf('MOLAJO_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
 			$query->set('params='.$db->Quote($this->parent->extension->params));
 			$db->setQuery($query);
 			$db->query();
@@ -469,7 +469,7 @@ class JInstallerTemplate extends JAdapterInstance
 			return $this->parent->extension->get('extension_id');
 		}
 		else {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_TPL_DISCOVER_STORE_DETAILS'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_TPL_DISCOVER_STORE_DETAILS'));
 
 			return false;
 		}
@@ -497,7 +497,7 @@ class JInstallerTemplate extends JAdapterInstance
 			return $this->parent->extension->store();
 		}
 		catch(JException $e) {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_TPL_REFRESH_MANIFEST_CACHE'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_TPL_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

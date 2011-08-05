@@ -58,7 +58,7 @@ class JArchiveGzip extends JObject
 		$this->_data = null;
 
 		if (!extension_loaded('zlib')) {
-			$this->set('error.message', JText::_('JLIB_FILESYSTEM_GZIP_NOT_SUPPORTED'));
+			$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_GZIP_NOT_SUPPORTED'));
 
 			return JError::raiseWarning(100, $this->get('error.message'));
 		}
@@ -89,7 +89,7 @@ class JArchiveGzip extends JObject
 			$input->set('processingmethod','gz'); // use gz
 
 			if (!$input->open($archive)) {
-				$this->set('error.message', JText::_('JLIB_FILESYSTEM_GZIP_UNABLE_TO_READ'));
+				$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_GZIP_UNABLE_TO_READ'));
 
 				return JError::raiseWarning(100, $this->get('error.message'));
 			}
@@ -97,7 +97,7 @@ class JArchiveGzip extends JObject
 			$output = JFactory::getStream();
 
 			if (!$output->open($destination, 'w')) {
-				$this->set('error.message', JText::_('JLIB_FILESYSTEM_GZIP_UNABLE_TO_WRITE'));
+				$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_GZIP_UNABLE_TO_WRITE'));
 				$input->close(); // close the previous file
 
 				return JError::raiseWarning(100, $this->get('error.message'));
@@ -109,7 +109,7 @@ class JArchiveGzip extends JObject
 				$this->_data = $input->read($input->get('chunksize', 8196));
 				if ($this->_data) {
 					if (!$output->write($this->_data)) {
-						$this->set('error.message', JText::_('JLIB_FILESYSTEM_GZIP_UNABLE_TO_WRITE_FILE'));
+						$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_GZIP_UNABLE_TO_WRITE_FILE'));
 
 						return JError::raiseWarning(100, $this->get('error.message'));
 					}
@@ -136,7 +136,7 @@ class JArchiveGzip extends JObject
 		$info = @ unpack('CCM/CFLG/VTime/CXFL/COS', substr($this->_data, $position +2));
 
 		if (!$info) {
-			$this->set('error.message', JText::_('JLIB_FILESYSTEM_GZIP_UNABLE_TO_DECOMPRESS'));
+			$this->set('error.message', JText::_('MOLAJO_FILESYSTEM_GZIP_UNABLE_TO_DECOMPRESS'));
 			return false;
 		}
 
