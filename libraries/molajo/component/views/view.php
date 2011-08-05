@@ -15,52 +15,8 @@ defined('MOLAJO') or die;
  * @subpackage	View
  * @since	    1.0
  */
-class MolajoView extends JView
+class MolajoView extends MolajoLayout
 {
-    /**
-     * @var $app object
-     */
-        protected $app;
-    
-    /**
-     * @var $system object
-     */
-        protected $system;
-
-    /**
-     * @var $document object
-     */
-        protected $document;
-
-    /**
-     * @var $user object
-     */
-        protected $user;
-
-    /**
-     * @var $request object
-     */
-        protected $request;
-
-    /**
-     * @var $state object
-     */
-        protected $state;
-
-    /**
-     * @var $params object
-     */
-        protected $params;
-
-    /**
-     * @var $rowset object
-     */
-        protected $rowset;
-
-    /**
-     * @var $row array
-     */
-        protected $row;
 
     /**
      * display
@@ -85,6 +41,8 @@ class MolajoView extends JView
         /** @var $this->user */
         $this->user = MolajoFactory::getUser();
 
+	$component = JComponentHelper::getComponent($type->request->option);
+				$data['component_id'] = $component->id;
         /** Set Page Meta */
 //		$pageModel = JModel::getInstance('Page', 'MolajoModel', array('ignore_request' => true));
 //		$pageModel->setState('params', $this->app->getParams());

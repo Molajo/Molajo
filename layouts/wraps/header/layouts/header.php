@@ -7,16 +7,44 @@
  */
 defined('MOLAJO') or die;
 $headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 1;
-$headerClass = 'TBD'; ?>
-<?php if ($html5) { ?>
+$headerClass = 'TBD';
+
+if ($this->params->get('html5', true) === true) : ?>
 <header class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
-	<!-- add only if subtitle present -->
-	<hgroup>
-<?php } else { ?>
+<?php else: ?>
 <div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
-<?php } ?>
-<?php if ($module->showtitle) : ?>
-    <h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>">
-        <?php echo $module->title; ?>
-<?php echo '</h'.$headerLevel; ?>>
-<?php endif; ?>
+<?php endif;
+
+if ($this->params->get('html5', true) === true) :
+    if ($this->params->get('showtitle', true)
+        && $this->params->get('showsubtitle', true)) : ?>
+	<hgroup>
+<?php endif;
+endif;
+
+if ($this->params->get('showtitle', true)) : ?>
+    <h<?php echo $params->get('header_level'); ?> class="<?php echo $params->get('header_class'); ?>">
+        <?php echo $this->escape($this->row->title); ?>
+    </h<?php echo $params->get('header_level'); ?>>
+<?php
+endif;
+
+if ($this->params->get('showsubtitle', true)) : ?>
+    <h<?php echo $params->get('header_level') + 1; ?> class="<?php echo $params->get('header_class'); ?>">
+        <?php echo $this->escape($this->row->title); ?>
+    </h<?php echo $params->get('header_level') + 1; ?>>
+<?php
+endif;
+
+if ($this->params->get('html5', true) === true) :
+    if ($this->params->get('showtitle', true)
+        && $this->params->get('showsubtitle', true)) : ?>
+	</hgroup>
+<?php endif;
+endif;
+
+if ($this->params->get('html5', true) === true) : ?>
+</header>
+<?php else: ?>
+</div>
+<?php endif;

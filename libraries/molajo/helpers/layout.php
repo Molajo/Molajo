@@ -17,15 +17,101 @@ defined('MOLAJO') or die;
 class MolajoLayoutHelper
 {
     /**
-     * @var array $_layouts  
+     * @var $app object
+     */
+    public $app;
+
+    /**
+     * @var $system object
+     */
+    public $system;
+
+    /**
+     * @var $document object
+     */
+    public $document;
+
+    /**
+     * @var $user object
+     */
+    public $user;
+
+    /**
+     * @var $request object
+     */
+    public $request;
+
+    /**
+     * @var $state object
+     */
+    public $state;
+
+    /**
+     * @var $params object
+     */
+    public $params;
+
+    /**
+     * @var $rowset object
+     */
+    public $rowset;
+
+    /**
+     * @var $row array
+     */
+    public $row;
+
+    /**
+     * @var array $_layouts
      *
 	 * @since  1.0
      */
-	protected static $_layouts = array();
-    
+	public static $_layouts = array();
+
+    /**
+     * __construct
+     *
+	 * Method to instantiate the attribute object.
+     *
+     * @param array $input
+     * @param array $rowset
+     *
+	 * @return  void
+	 *
+	 * @since   1.0
+     */
+	public function __construct($input = array(), $rowset = array()) {}
+
+    /**
+     * __get
+     *
+     * Retrieve Class Parameter
+     *
+     * @param $property
+     * @return null
+     */
+    public function __get($property) {
+        return (isset($this->{'_'. $property}) ? $this->{'_'. $property} : null);
+    }
+
+    /**
+     * __set
+     *
+     * Set Class Parameter
+     *
+     * @param $property
+     * @param $_value
+     * @return void
+     */
+    public function __set($property, $value) {
+        if (isset($this->{'_'. $property})) {
+            $this->{'_'. $property} = $value;
+        }
+    }
+
 	/**
 	 * getLayout
-     * 
+     *
      * Get layout information.
 	 *
      * @static
@@ -36,12 +122,12 @@ class MolajoLayoutHelper
      *
      * @since 1.0
      */
-	public function getLayout($layout, $type, $strict = false)
+	public function getLayout($layout, $type='extension', $strict = false)
 	{
 		if (isset(self::$_layouts[$layout])) {
             $result = self::$_layouts[$layout];
         } else {
-			if (self::_load($layout)){
+			if (self::_load($layout, $type)){
 				$result = self::$_layouts[$layout];
 			} else {
 				$result				= new stdClass;
@@ -64,9 +150,9 @@ class MolajoLayoutHelper
 	 * @return  boolean
 	 * @since  1.0
 	 */
-	public static function isEnabled($layout, $strict = false)
+	public static function isEnabled($layout, $type='extension', $strict = false)
 	{
-		$result = self::getLayout($layout, $strict);
+		$result = self::getLayout($layout, $type, $strict);
 
 		return $result->enabled;
 	}
@@ -84,9 +170,9 @@ class MolajoLayoutHelper
 	 * @see     JRegistry
 	 * @since  1.0
 	 */
-	public static function getParams($layout, $strict = false)
+	public static function getParams($layout, $type='extension', $strict = false)
 	{
-		$layout = self::getLayout($layout, $strict);
+		$layout = self::getLayout($layout, $type, $strict);
 
 		return $layout->params;
 	}
@@ -101,7 +187,7 @@ class MolajoLayoutHelper
 	 * @return  bool  True on success
 	 * @since  1.0
 	 */
-	protected static function _load($layout, $type)
+	protected static function _load($layout, $type='extension')
 	{
 		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
@@ -195,7 +281,7 @@ class MolajoLayoutHelper
                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$extension_name.'/views/'.$view.'/tmpl/';
         }
 
-        /** 4. layouts/[$layout_type]/[layout-folder] */
+        /** 4. $corePath layouts/[$layout_type]/[layout-folder] */
         $corePath = MOLAJO_LAYOUTS_EXTENSIONS.'/'.$layout_type;
 
         /** template extension override **/
