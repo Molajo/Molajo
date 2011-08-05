@@ -17,11 +17,18 @@ if ($request['controller'] == 'display') {
     $filehelper->requireClassFile($request['component_path'].'/controllers/'.$request['controller'].'.php', ucfirst($request['no_com_option']).'Controller'.ucfirst($request['controller']));
 }
 /** Models */
-$filehelper->requireClassFile($request['component_path'].'/models/'.$request['model'].'.php', ucfirst($request['no_com_option']).'Controller'.ucfirst($request['model']));
+$filehelper->requireClassFile($request['component_path'].'/models/'.$request['model'].'.php', ucfirst($request['no_com_option']).'Model'.ucfirst($request['model']));
 /** Views */
-$filehelper->requireClassFile($request['component_path'].'/views/'.$request['view'].'/'.'view'.$request['format'].'.php', ucfirst($request['no_com_option']).'View'.ucfirst($request['view']));
+$filehelper->requireClassFile($request['component_path'].'/views/'.$request['view'].'/'.'view.'.$request['format'].'.php', ucfirst($request['no_com_option']).'View'.ucfirst($request['view']));
 /** ACL */
-$filehelper->requireClassFile($request['component_path'].'/helpers/acl.php', 'MolajoACLArticles');
+if (file_exists($request['component_path'].'/helpers/router.php')) {
+    $filehelper->requireClassFile($request['component_path'].'/helpers/acl.php', 'MolajoACL'.strtolower($request['no_com_option']));
+}
 /** Router */
-$filehelper->requireClassFile($request['component_path'].'/helpers/router.php', 'ArticlesRouteHelper');
-
+if (file_exists($request['component_path'].'/helpers/router.php')) {
+    $filehelper->requireClassFile($request['component_path'].'/helpers/router.php', ucfirst($request['no_com_option']).'RouteHelper');
+}
+/** Router */
+if (file_exists($request['component_path'].'/helpers/'.strtolower($request['no_com_option']).'.php')) {
+    $filehelper->requireClassFile($request['component_path'].'/helpers/'.strtolower($request['no_com_option']).'.php', ucfirst($request['no_com_option']).'Helper');
+}

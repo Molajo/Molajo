@@ -40,14 +40,14 @@ class MolajoController extends JController
      *
      * @since 1.0
      */
-    public $request = null;
+    public $request = array();
 
     /**
      * @var object $params
      *
      * @since 1.0
      */
-    public $params = null;
+    public $params = array();
 
     /**
      * @var object $table
@@ -173,14 +173,6 @@ class MolajoController extends JController
         } else {
             $this->model = $this->getModel($this->request['model'], ucfirst($this->request['no_com_option'].'Model'), array());
             $this->model->request = $this->request;
-            if ($this->request['component_table'] == '__dummy') {
-            } else {
-                if ($this->request['id'] == 0) {
-                    $this->model->populateStateMultiple ();
-                } else {
-                    $this->model->populateItemState ();
-                }
-            }
         }
 
         if ($this->request['task'] == 'display'

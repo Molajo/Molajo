@@ -80,21 +80,13 @@ class MolajoViewDisplay extends MolajoView
         //echo $this->getColumns ('system');
 
         /** 4. Retrieve Query Results */
-        if ($this->request['table'] == '_dummy') {
-            $this->rowset = $this->get('Items');
-        } else {
-            $this->rowset = array();
-        }
+        $this->rowset = $this->get('Items');
 
         /** 5. Retrieve Layout Parameters */
         $this->params = $this->get('Params');
         
         /** 6. Get Pagination data */
-        if ($this->request['table'] == '_dummy') {
-             $this->pagination = $this->get('Pagination');
-        } else {
-            $this->pagination = array();
-        }
+        $this->pagination = $this->get('Pagination');
 
         /** 7. Optional data */
 //		$this->category	            = $this->get('Category');
@@ -122,15 +114,13 @@ class MolajoViewDisplay extends MolajoView
 //$this->navigation->get('pagination_direction')
 //$this->breadcrumbs
 //$total = $this->getTotal();
-        /**
-$this->configuration
 
-Parameters (Includes Global Options, Menu Item, Item)
-$this->params->get('layout_show_page_heading', 1)
-$this->params->get('layout_page_class_suffix', '')
- */
+//$this->configuration
+//Parameters (Includes Global Options, Menu Item, Item)
+//$this->params->get('layout_show_page_heading', 1)
+//$this->params->get('layout_page_class_suffix', '')
 
-        /** process model errors */
+         /** process model errors */
         if (count($errors = $this->get('Errors'))) {
             JError::raiseError(500, implode("\n", $errors));
             return false;
@@ -144,6 +134,7 @@ $this->params->get('layout_page_class_suffix', '')
         }
 
         $layoutFolder = $this->findPath($this->request['layout']);
+        
         if ($layoutFolder === false) {
             parent::display($tpl);
         } else {

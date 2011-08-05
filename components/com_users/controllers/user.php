@@ -73,7 +73,7 @@ class UsersControllerUser extends UsersController
 	 */
 	public function logout()
 	{
-		JRequest::checkToken('default') or jexit(JText::_('JInvalid_Token'));
+		JRequest::checkToken('default') or die;
 
 		$app = MolajoFactory::getApplication();
 

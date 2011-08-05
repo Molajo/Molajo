@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: display.php
  * @package     Molajo
  * @subpackage  Display Model
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -121,21 +120,24 @@ class MolajoModelDisplay extends JModel
 
         $this->params = $this->request['params'];
 
-            $this->filterFieldName = $this->request['filterFieldName'];
+        $this->filterFieldName = $this->request['filterFieldName'];
 
-            $this->molajoConfig = new MolajoModelConfiguration($this->request['option']);
+        $this->molajoConfig = new MolajoModelConfiguration($this->request['option']);
 
-            $this->molajoField  = new MolajoField();
+        $this->molajoField  = new MolajoField();
 
-            $this->dispatcher = JDispatcher::getInstance();
+        $this->dispatcher = JDispatcher::getInstance();
 
-            MolajoPluginHelper::importPlugin('query');
-            MolajoPluginHelper::importPlugin($this->request['plugin_type']);
+        MolajoPluginHelper::importPlugin('query');
+        MolajoPluginHelper::importPlugin($this->request['plugin_type']);
 
+        if ($this->request['id'] == 0) {
+            $this->model->populateStateMultiple ();
+        } else {
+            $this->model->populateItemState ();
+        }
 
-
-            $this->dispatcher->trigger('onQueryPopulateState', array (&$this->state, &$this->params));
-
+        $this->dispatcher->trigger('onQueryPopulateState', array (&$this->state, &$this->params));
     }
 
     /**
