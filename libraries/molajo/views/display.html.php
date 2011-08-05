@@ -56,39 +56,34 @@ class MolajoViewDisplay extends MolajoView
      */
     public function display($tpl = null)
     {
-        /** 1. Get Request */
-        $this->request    = $this->get('Request');
+        /** 1. Request */
+        $this->request = $this->get('Request');
 
-        /** 2. Get State */
-        $this->state      = $this->get('State');
+        /** 2. State */
+        $this->state = $this->get('State');
 
-        /** 3. Retrieve Layout Parameters */
+        /** 3. Parameters */
         $this->params = $this->get('Params');
 
-        /** 4. Retrieve Query Results */
+        /** 4. Query Results */
         $this->rowset = $this->get('Items');
 
-        /** 5. Get Pagination data */
+        /** 5. Pagination */
         $this->pagination = $this->get('Pagination');
 
-        /** 6. Get System Variables */
+        /** 6. System Variables */
         parent::display($tpl);
 
-        /** process model errors */
+        /** Model errors */
         if (count($errors = $this->get('Errors'))) {
             JError::raiseError(500, implode("\n", $errors));
             return false;
         }
 
-        /**
-         * Navigation
-         */
-        if (MolajoFactory::getApplication()->getName() == 'site') {
-
-        }
-
+        /** Find Layout Folder */
         $layoutFolder = $this->findPath($this->request['layout']);
 
+        /** Render Layout */
         if ($layoutFolder === false) {
             parent::display($tpl);
         } else {

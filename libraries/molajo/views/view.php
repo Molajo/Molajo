@@ -172,6 +172,7 @@ class MolajoView extends JView
         *  If the custom.php file exists in layoutFolder, layout handles $this->rowset processing
         *
         */
+
         if (file_exists($layoutFolder.'/layouts/custom.php')) {
             include $layoutFolder.'/layouts/custom.php';
 
@@ -342,6 +343,11 @@ class MolajoView extends JView
      */
     protected function loadMediaCSS ($filePath, $urlPath)
     {
+        if (JFolder::exists($filePath)) {
+        } else {
+            return;
+        }
+        
         $files = JFolder::files($filePath.'/css', '\.css$', false, false);
 
         if (count($files) > 0) {
@@ -368,6 +374,11 @@ class MolajoView extends JView
      */
     protected function loadMediaJS ($filePath, $urlPath)
     {
+        if (JFolder::exists($filePath)) {
+        } else {
+            return;
+        }
+        
         $files = JFolder::files($filePath.'/js', '\.js$', false, false);
         
         if (count($files) > 0) {

@@ -1830,7 +1830,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3101, '', '', 0),
-('com_login', 3101, 'default', 'default', 1);
+('com_login', 3101, 'loginadmin', 'loginadmin', 1);
 
 /* VIEW FORMATS */
 
