@@ -6,8 +6,4 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die; ?>
-if ($html5) { ?>
-</section>
-<?php } else { ?>
-</div>
-<?php }
+<?php echo $module->content; ?>

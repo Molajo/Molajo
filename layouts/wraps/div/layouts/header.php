@@ -6,9 +6,8 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
-$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
-$headerClass = 'hmmm'; ?>
+$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 1;
+$headerClass = 'TBD'; ?>
 <div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>
     <?php if ($module->showtitle) : ?>
         <h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>">

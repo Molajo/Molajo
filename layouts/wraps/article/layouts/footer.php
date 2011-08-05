@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die; ?>
 if ($html5) { ?>
-</section>
+</article>
 <?php } else { ?>
 </div>
 <?php }

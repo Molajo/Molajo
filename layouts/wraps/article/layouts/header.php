@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 $headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 1;
 $headerClass = 'TBD'; ?>
 <?php if ($html5) { ?>
-<section class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
+<article class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
 <?php } else { ?>
 <div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
 <?php } ?>
