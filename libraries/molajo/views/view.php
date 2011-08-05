@@ -172,7 +172,6 @@ class MolajoView extends JView
         *  If the custom.php file exists in layoutFolder, layout handles $this->rowset processing
         *
         */
-
         if (file_exists($layoutFolder.'/layouts/custom.php')) {
             include $layoutFolder.'/layouts/custom.php';
 

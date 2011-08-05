@@ -6,9 +6,9 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-JHtml::_('behavior.keepalive');
+//JHtml::_('behavior.keepalive');
 ?>
-<form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="form-login">
+<form action="<?php //echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="form-login">
 	<fieldset class="loginform">
 
 				<label id="mod-login-username-lbl" for="mod-login-username"><?php echo JText::_('JGLOBAL_USERNAME'); ?></label>
@@ -18,7 +18,7 @@ JHtml::_('behavior.keepalive');
 				<input name="passwd" id="mod-login-password" type="password" class="inputbox" size="15" />
 
 				<label id="mod-login-language-lbl" for="lang"><?php echo JText::_('MOD_LOGIN_LANGUAGE'); ?></label>
-				<?php echo $langs; ?>
+				<?php //echo $langs; ?>
 
 				<div class="button-holder">
 					<div class="button1">
@@ -33,7 +33,7 @@ JHtml::_('behavior.keepalive');
 		<input type="submit" class="hidebtn" value="<?php echo JText::_( 'MOD_LOGIN_LOGIN' ); ?>" />
 		<input type="hidden" name="option" value="com_login" />
 		<input type="hidden" name="task" value="login" />
-		<input type="hidden" name="return" value="<?php echo $return; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<input type="hidden" name="return" value="<?php //echo $return; ?>" />
+		<?php //echo JHtml::_('form.token'); ?>
 	</fieldset>
 </form>
