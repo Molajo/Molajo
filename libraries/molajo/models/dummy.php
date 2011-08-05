@@ -57,6 +57,29 @@ class MolajoModelDummy extends JModel
     }
 
     /**
+     * getRequest
+     *
+     * @return	array	An empty array
+     *
+     * @since	1.0
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * getRequest
+     *
+     * @return	array	An empty array
+     *
+     * @since	1.0
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+    /**
      * getItems
      *
      * @return	array	An empty array

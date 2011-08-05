@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 /**
  * Molajo View 
  *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	View
- * @since	1.0
+ * @since	    1.0
  */
 class MolajoView extends JView
 {
@@ -110,9 +110,9 @@ class MolajoView extends JView
 
         /** path: component **/
         if (MOLAJO_APPLICATION == 'site') {
-            $componentPath = MOLAJO_PATH_ROOT.'/components/'.$this->request['option'].'/views/'.$this->state->get('request.view').'/tmpl/';
+            $componentPath = MOLAJO_PATH_ROOT.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl/';
         } else {
-            $componentPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION.'/components/'.$this->request['option'].'/views/'.$this->state->get('request.view').'/tmpl/';
+            $componentPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl/';
         }
 
         /** path: core **/

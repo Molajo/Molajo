@@ -21,18 +21,23 @@ class MolajoController extends JController
      * @var object $request
      *
      * ["application_id"]=> int(1)
-     * ["current_url"]=> string(38) "http://localhost/molajo/administrator/" 
+     * ["current_url"]=> string(38) "http://localhost/molajo/administrator/"
+     * ["component_path"]=> string(65) "/users/amystephen/sites/molajo/administrator/components/com_login"
      * ["base_url"]=> string(38) "http://localhost/molajo/administrator/"
      * ["item_id"]=> int(0)
      * ["controller"]=> string(7) "display"
      * ["option"]=> string(9) "com_login"
+     * ["no_com_option"]=> string(5) "login"
      * ["view"]=> string(7) "display"
      * ["layout"]=> string(7) "default"
+     * ["model"]=> string(5) "dummy"
      * ["task"]=> string(7) "display"
      * ["format"]=> string(4) "html"
+     * ["plugin_type"]=> string(0) ""
      * ["id"]=> int(0)
      * ["cid"]=> array(0) { }
      * ["catid"]=> int(0)
+     * ["params"]=> object(JRegistry)#83 (1) { ["data":protected]=> object(stdClass)#84 (0) { } }
      * ["acl_implementation"]=> string(4) "core"
      * ["component_table"]=> string(8) "__common"
      * ["filter_fieldname"]=> string(27) "config_manager_list_filters"
@@ -55,6 +60,13 @@ class MolajoController extends JController
      * @since 1.0
      */
     protected $table = null;
+
+    /**
+     * @var object $model
+     *
+     * @since 1.0
+     */
+    public $view = null;
 
     /**
      * @var object $model
@@ -169,10 +181,25 @@ class MolajoController extends JController
             $this->catid = 0;
         }
 
-        if ($this->model) {
-        } else {
-            $this->model = $this->getModel($this->request['model'], ucfirst($this->request['no_com_option'].'Model'), array());
+        /** view */
+        if ($this->request['controller'] == 'display') {
+            $document = MolajoFactory::getDocument();
+
+            /** view format */
+		    $format = $document->getType();
+
+            /** view */
+            $this->view = $this->getView($this->request['view'], $format);
+
+            /** default model for view */
+            $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'].'Model'), array());
             $this->model->request = $this->request;
+
+            /** default model for view */
+            $this->view->setModel($this->model, true);
+
+		    /** layout */
+		    $this->view->setLayout($this->request['layout']);
         }
 
         if ($this->request['task'] == 'display'

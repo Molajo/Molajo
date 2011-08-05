@@ -46,16 +46,6 @@ class MolajoViewDisplay extends MolajoView
      */
     protected $saveOrder;
 
-    /** blog variables
-     move variables into $options
-     retrieve variables here in view - and split int rowset if needed
-     */
-	protected $category;
-	protected $children;
-	protected $lead_items = array();
-	protected $intro_items = array();
-	protected $link_items = array();
-	protected $columns = 1;
 
     /**
      * display
@@ -75,9 +65,6 @@ class MolajoViewDisplay extends MolajoView
 
         /** 3. Get System Variables */
         parent::display($tpl);
-
-        /** 3. Output Layout for System Requests */
-        //echo $this->getColumns ('system');
 
         /** 4. Retrieve Query Results */
         $this->rowset = $this->get('Items');
@@ -101,6 +88,17 @@ class MolajoViewDisplay extends MolajoView
 //      $this->tagCategories (menu)
 //      $this->calendar
 
+    /** blog variables
+     move variables into $options
+     retrieve variables here in view - and split int rowset if needed
+
+	protected $category;
+	protected $children;
+	protected $lead_items = array();
+	protected $intro_items = array();
+	protected $link_items = array();
+	protected $columns = 1;
+     */
 //Navigation
 //$this->navigation->get('form_return_to_link')
 //$this->navigation->get('previous')
@@ -132,14 +130,13 @@ class MolajoViewDisplay extends MolajoView
         if (MolajoFactory::getApplication()->getName() == 'site') {
 
         }
-var_dump($this->request);
-echo 'Layout'.$this->request['layout'];
+
         $layoutFolder = $this->findPath($this->request['layout']);
-        
+
         if ($layoutFolder === false) {
             parent::display($tpl);
         } else {
-            echo $this->renderMolajoLayout ($layoutFolder);
+            echo $this->renderMolajoLayout ($layoutFolder, $this->request['layout']);
         }
     }
 }

@@ -434,6 +434,7 @@ class JView extends JObject
 	 */
 	public function setModel(&$model, $default = false)
 	{
+
 		$name = strtolower($model->getName());
 		$this->_models[$name] = &$model;
 

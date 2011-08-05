@@ -46,6 +46,10 @@ if (MOLAJO_APPLICATION == 'installation') {
 
 /** DISPATCH */
 if (MOLAJO_APPLICATION == 'installation') {
+    if (defined('JPATH_COMPONENT')) {
+    } else {
+        define('JPATH_COMPONENT', MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH);
+    }
 } else {
     $app->dispatch();
     JDEBUG ? $_PROFILER->mark('afterDispatch') : null;

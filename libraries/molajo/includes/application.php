@@ -275,7 +275,10 @@ class MolajoApplication extends JObject
 
         /** 2. Component Path */
         $component_path = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$option;
-        define('JPATH_COMPONENT', $component_path);
+        if (defined('JPATH_COMPONENT')) {
+        } else {
+            define('JPATH_COMPONENT', $component_path);
+        }
 
         /** 3. Task */
         $task = JRequest::getCmd('task', 'display');
@@ -309,13 +312,7 @@ class MolajoApplication extends JObject
             }
 
             /** 7. Model **/
-            $model = JRequest::getCmd('model', null);
-            if ($model == null) {
-                $results = false;
-            } else {
-                $model = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_MODEL + (int) MOLAJO_APPLICATION_ID, $layout);
-            }
-
+            $model = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_MODEL + (int) MOLAJO_APPLICATION_ID);
             if ($model === false) {
                 $model = $view;
             }
