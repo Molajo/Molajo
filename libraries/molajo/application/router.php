@@ -90,7 +90,7 @@ class MolajoRouter extends JObject
 				$classname = 'MolajoRouter'.ucfirst($application);
 				$instance = new $classname($options);
 			} else {
-				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_ROUTER_LOAD', $application));
+				$error = JError::raiseError(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
 				return $error;
 			}
 

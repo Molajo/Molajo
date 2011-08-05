@@ -45,7 +45,7 @@ class JTableUsergroup extends JTable
 	{
 		// Validate the title.
 		if ((trim($this->title)) == '') {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE'));
 			return false;
 		}
 
@@ -61,7 +61,7 @@ class JTableUsergroup extends JTable
 		$db->setQuery($query);
 
 		if ($db->loadResult() > 0) {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
 			return false;
 		}
 
@@ -161,10 +161,10 @@ class JTableUsergroup extends JTable
 			return new JException(JText::_('JGLOBAL_CATEGORY_NOT_FOUND'));
 		}
 		if ($this->parent_id == 0) {
-			return new JException(JText::_('JLIB_DATABASE_ERROR_DELETE_ROOT_CATEGORIES'));
+			return new JException(JText::_('MOLAJO_DATABASE_ERROR_DELETE_ROOT_CATEGORIES'));
 		}
 		if ($this->lft == 0 or $this->rgt == 0) {
-			return new JException(JText::_('JLIB_DATABASE_ERROR_DELETE_CATEGORY'));
+			return new JException(JText::_('MOLAJO_DATABASE_ERROR_DELETE_CATEGORY'));
 		}
 
 		$db = $this->getDbo();
@@ -177,7 +177,7 @@ class JTableUsergroup extends JTable
 		);
 		$ids = $db->loadColumn();
 		if (empty($ids)) {
-			return new JException(JText::_('JLIB_DATABASE_ERROR_DELETE_CATEGORY'));
+			return new JException(JText::_('MOLAJO_DATABASE_ERROR_DELETE_CATEGORY'));
 		}
 
 		// Delete the category dependancies

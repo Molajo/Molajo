@@ -576,7 +576,7 @@ abstract class JDatabaseQuery
 	public function escape($text, $extra = false)
 	{
 		if (!($this->db instanceof JDatabase)) {
-			throw new DatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new DatabaseException('MOLAJO_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		$this->db->escape($text, $extra);
@@ -748,7 +748,7 @@ abstract class JDatabaseQuery
 	public function nullDate($quoted = true)
 	{
 		if (!($this->db instanceof JDatabase)) {
-			throw new DatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new DatabaseException('MOLAJO_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		$result = $this->db->getNullDate($quoted);
@@ -811,7 +811,7 @@ abstract class JDatabaseQuery
 	public function quote($text, $escape = true)
 	{
 		if (!($this->db instanceof JDatabase)) {
-			throw new DatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new DatabaseException('MOLAJO_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->quote(($escape ? $this->db->escape($text) : $text));
@@ -831,7 +831,7 @@ abstract class JDatabaseQuery
 	public function quoteName($name)
 	{
 		if (!($this->db instanceof JDatabase)) {
-			throw new DatabaseException('JLIB_DATABASE_ERROR_INVALID_DB_OBJECT');
+			throw new DatabaseException('MOLAJO_DATABASE_ERROR_INVALID_DB_OBJECT');
 		}
 
 		return $this->db->quoteName($name);

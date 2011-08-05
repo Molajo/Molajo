@@ -76,7 +76,7 @@ class JExtension extends JObject
 					$this->client = (string)$element->attributes()->client;
 					$tmp_client_id = JApplicationHelper::getClientInfo($this->client, 1);
 					if($tmp_client_id == null) {
-						JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
+						JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
 					} else {
 						$this->client_id = $tmp_client_id->id;
 					}

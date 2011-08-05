@@ -65,7 +65,7 @@ class UsersControllerUser extends JControllerForm
 		if (isset($data['password']) && isset($data['password2'])) {
 			// Check the passwords match.
 			if ($data['password'] != $data['password2']) {
-				$this->setMessage(JText::_('JLIB_USER_ERROR_PASSWORD_NOT_MATCH'), 'warning');
+				$this->setMessage(JText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'), 'warning');
 				$this->setRedirect(JRoute::_('index.php?option=com_users&view=user&layout=edit', false));
 			}
 

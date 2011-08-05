@@ -1132,7 +1132,7 @@ class MenusModelItem extends JModelAdmin
 						if (!$this->canSave($table)) {
 							// Prune items that you can't change.
 							unset($pks[$i]);
-							JError::raiseWarning(403, JText::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+							JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
 						}
 						else if (!$table->check()) {
 							// Prune the items that failed pre-save checks.
@@ -1183,7 +1183,7 @@ class MenusModelItem extends JModelAdmin
 			{
 				if ($table->load($pk) && $table->home && $table->language == '*') {
 					// Prune items that you can't change.
-					JError::raiseWarning(403, JText::_('JLIB_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
+					JError::raiseWarning(403, JText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
 					unset($pks[$i]);
 					break;
 				}

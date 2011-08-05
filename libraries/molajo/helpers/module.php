@@ -300,7 +300,7 @@ $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m')
 			$clean	= array();
 
 			if($db->getErrorNum()){
-				JError::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+				JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
 				return $clean;
 			}
 

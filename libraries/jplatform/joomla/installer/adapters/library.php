@@ -78,7 +78,7 @@ class JInstallerLibrary extends JAdapterInstance
 			else
 			{
 				// Abort the install, no upgrade possible
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_ALREADY_INSTALLED'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_LIB_INSTALL_ALREADY_INSTALLED'));
 				return false;
 			}
 		}
@@ -96,7 +96,7 @@ class JInstallerLibrary extends JAdapterInstance
 		// Set the installation path
 		$group = (string)$this->manifest->libraryname;
 		if ( ! $group) {
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_NOFILE'));
+			$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_LIB_INSTALL_NOFILE'));
 			return false;
 		}
 		else
@@ -112,7 +112,7 @@ class JInstallerLibrary extends JAdapterInstance
 		{
 			if (!$created = JFolder::create($this->parent->getPath('extension_root')))
 			{
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
 				return false;
 			}
 		}
@@ -153,7 +153,7 @@ class JInstallerLibrary extends JAdapterInstance
 		if (!$row->store())
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_LIB_INSTALL_ROLLBACK', $db->stderr(true)));
 			return false;
 		}
 
@@ -166,7 +166,7 @@ class JInstallerLibrary extends JAdapterInstance
 		if (!$this->parent->copyFiles(array($manifest), true))
 		{
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
+			$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
 			return false;
 		}
 		return $row->get('extension_id');
@@ -230,7 +230,7 @@ class JInstallerLibrary extends JAdapterInstance
 		// Because that is not a good idea...
 		if ($row->protected)
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_WARNCORELIBRARY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LIB_UNINSTALL_WARNCORELIBRARY'));
 			return false;
 		}
 
@@ -248,7 +248,7 @@ class JInstallerLibrary extends JAdapterInstance
 			// If we cannot load the XML file return null
 			if ( ! $xml)
 			{
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_LOAD_MANIFEST'));
+				JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LIB_UNINSTALL_LOAD_MANIFEST'));
 				return false;
 			}
 
@@ -258,7 +258,7 @@ class JInstallerLibrary extends JAdapterInstance
 
 			if ($xml->getName() != 'install' && $xml->getName() != 'extension')
 			{
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_MANIFEST'));
+				JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_MANIFEST'));
 				return false;
 			}
 
@@ -271,7 +271,7 @@ class JInstallerLibrary extends JAdapterInstance
 			// Remove this row entry since its invalid
 			$row->delete($row->extension_id);
 			unset($row);
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 			return false;
 		}
 
@@ -357,7 +357,7 @@ class JInstallerLibrary extends JAdapterInstance
 		}
 		else
 		{
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_LIB_DISCOVER_STORE_DETAILS'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_LIB_DISCOVER_STORE_DETAILS'));
 			return false;
 		}
 	}
@@ -382,7 +382,7 @@ class JInstallerLibrary extends JAdapterInstance
 			return $this->parent->extension->store();
 		}
 		catch(JException $e) {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

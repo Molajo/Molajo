@@ -359,7 +359,7 @@ class JCacheStorageFile extends JCacheStorage
 	// Sanity check
 		if (!$path || !is_dir($path) || empty($this->_root)) {
 			// Bad programmer! Bad Bad programmer!
-			JError::raiseWarning(500, 'JCacheStorageFile::_deleteFolder ' . JText::_('JLIB_FILESYSTEM_ERROR_DELETE_BASE_DIRECTORY'));
+			JError::raiseWarning(500, 'JCacheStorageFile::_deleteFolder ' . JText::_('MOLAJO_FILESYSTEM_ERROR_DELETE_BASE_DIRECTORY'));
 			return false;
 		}
 
@@ -369,7 +369,7 @@ class JCacheStorageFile extends JCacheStorage
 		$pos = strpos($path, $this->_cleanPath($this->_root));
 
 		if ($pos === false || $pos > 0) {
-			JError::raiseWarning(500, 'JCacheStorageFile::_deleteFolder' . JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
+			JError::raiseWarning(500, 'JCacheStorageFile::_deleteFolder' . JText::sprintf('MOLAJO_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
 			return false;
 		}
 
@@ -393,7 +393,7 @@ class JCacheStorageFile extends JCacheStorage
 					// Do nothing
 				} else {
 					$filename = basename($file);
-					JError::raiseWarning('SOME_ERROR_CODE', 'JCacheStorageFile::_deleteFolder' . JText::sprintf('JLIB_FILESYSTEM_DELETE_FAILED', $filename));
+					JError::raiseWarning('SOME_ERROR_CODE', 'JCacheStorageFile::_deleteFolder' . JText::sprintf('MOLAJO_FILESYSTEM_DELETE_FAILED', $filename));
 					return false;
 				}
 			}
@@ -420,7 +420,7 @@ class JCacheStorageFile extends JCacheStorage
 		if (@rmdir($path)) {
 			$ret = true;
 		} else {
-			JError::raiseWarning('SOME_ERROR_CODE', 'JCacheStorageFile::_deleteFolder' . JText::sprintf('JLIB_FILESYSTEM_ERROR_FOLDER_DELETE', $path));
+			JError::raiseWarning('SOME_ERROR_CODE', 'JCacheStorageFile::_deleteFolder' . JText::sprintf('MOLAJO_FILESYSTEM_ERROR_FOLDER_DELETE', $path));
 			$ret = false;
 		}
 		return $ret;
@@ -473,7 +473,7 @@ class JCacheStorageFile extends JCacheStorage
 
 		// Is the path a folder?
 		if (!is_dir($path)) {
-			JError::raiseWarning(21, 'JCacheStorageFile::_filesInFolder' . JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
+			JError::raiseWarning(21, 'JCacheStorageFile::_filesInFolder' . JText::sprintf('MOLAJO_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
 			return false;
 		}
 
@@ -540,7 +540,7 @@ class JCacheStorageFile extends JCacheStorage
 
 		// Is the path a folder?
 		if (!is_dir($path)) {
-			JError::raiseWarning(21, 'JCacheStorageFile::_folders' . JText::sprintf('JLIB_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
+			JError::raiseWarning(21, 'JCacheStorageFile::_folders' . JText::sprintf('MOLAJO_FILESYSTEM_ERROR_PATH_IS_NOT_A_FOLDER', $path));
 			return false;
 		}
 

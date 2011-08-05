@@ -109,7 +109,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 
 				// Unknown element type.
 				default:
-					JError::raiseError(500, JText::sprintf('JLIB_FORM_ERROR_FIELDS_GROUPEDLIST_ELEMENT_NAME', $element->getName()));
+					JError::raiseError(500, JText::sprintf('MOLAJO_FORM_ERROR_FIELDS_GROUPEDLIST_ELEMENT_NAME', $element->getName()));
 					break;
 			}
 		}

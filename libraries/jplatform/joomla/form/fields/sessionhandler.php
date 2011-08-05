@@ -46,7 +46,7 @@ class JFormFieldSessionHandler extends JFormFieldList
 
 		// Get the options from JSession.
 		foreach (JSession::getStores() as $store) {
-			$options[] = JHtml::_('select.option', $store, JText::_('JLIB_FORM_VALUE_SESSION_'.$store), 'value', 'text');
+			$options[] = JHtml::_('select.option', $store, JText::_('MOLAJO_FORM_VALUE_SESSION_'.$store), 'value', 'text');
 		}
 
 		// Merge any additional options in the XML definition.

@@ -518,7 +518,7 @@ class JLDAP extends JObject
 				$addr = substr($addr, 0, strlen($addr) - 1);
 			}
 		} else {
-			$addr .= JText::_('JLIB_CLIENT_ERROR_LDAP_ADDRESS_NOT_AVAILABLE');
+			$addr .= JText::_('MOLAJO_CLIENT_ERROR_LDAP_ADDRESS_NOT_AVAILABLE');
 		}
 		return Array('protocol'=>$addrtypes[$addrtype], 'address'=>$addr);
 	}

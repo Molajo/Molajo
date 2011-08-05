@@ -336,7 +336,7 @@ class JInstaller extends JAdapter
 		$debug = $conf->get('debug');
 
 		if ($debug) {
-			JError::raiseError(500, JText::_('JLIB_INSTALLER_ABORT_DEBUG').$msg);
+			JError::raiseError(500, JText::_('MOLAJO_INSTALLER_ABORT_DEBUG').$msg);
 		}
 
 		return $retval;
@@ -358,12 +358,12 @@ class JInstaller extends JAdapter
 			$this->setPath('source', $path);
 		}
 		else {
-			$this->abort(JText::_('JLIB_INSTALLER_ABORT_NOINSTALLPATH'));
+			$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_NOINSTALLPATH'));
 			return false;
 		}
 
 		if (!$this->setupInstall()) {
-			$this->abort(JText::_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
+			$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_DETECTMANIFEST'));
 
 			return false;
 		}
@@ -411,13 +411,13 @@ class JInstaller extends JAdapter
 			$this->extension = JTable::getInstance('extension');
 
 			if (!$this->extension->load($eid)) {
-				$this->abort(JText::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
+				$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_LOAD_DETAILS'));
 
 				return false;
 			}
 
 			if ($this->extension->state != -1) {
-				$this->abort(JText::_('JLIB_INSTALLER_ABORT_ALREADYINSTALLED'));
+				$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_ALREADYINSTALLED'));
 
 				return false;
 			}
@@ -448,7 +448,7 @@ class JInstaller extends JAdapter
 					if ($result !== false) return true; else return false;
 				}
 				else {
-					$this->abort(JText::_('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED'));
+					$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_METHODNOTSUPPORTED'));
 
 					return false;
 				}
@@ -457,7 +457,7 @@ class JInstaller extends JAdapter
 			return false;
 		}
 		else {
-			$this->abort(JText::_('JLIB_INSTALLER_ABORT_EXTENSIONNOTVALID'));
+			$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_EXTENSIONNOTVALID'));
 
 			return false;
 		}
@@ -505,11 +505,11 @@ class JInstaller extends JAdapter
 			$this->setPath('source', $path);
 		}
 		else {
-			$this->abort(JText::_('JLIB_INSTALLER_ABORT_NOUPDATEPATH'));
+			$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_NOUPDATEPATH'));
 		}
 
 		if (!$this->setupInstall()) {
-			return $this->abort(JText::_('JLIB_INSTALLER_ABORT_DETECTMANIFEST'));
+			return $this->abort(JText::_('MOLAJO_INSTALLER_ABORT_DETECTMANIFEST'));
 		}
 
 		$type = (string)$this->manifest->attributes()->type;
@@ -590,12 +590,12 @@ class JInstaller extends JAdapter
 			$this->extension = JTable::getInstance('extension');
 
 			if (!$this->extension->load($eid)) {
-				$this->abort(JText::_('JLIB_INSTALLER_ABORT_LOAD_DETAILS'));
+				$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_LOAD_DETAILS'));
 				return false;
 			}
 
 			if ($this->extension->state == -1) {
-				$this->abort(JText::_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE'));
+				$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE'));
 				return false;
 			}
 
@@ -618,7 +618,7 @@ class JInstaller extends JAdapter
 					}
 				}
 				else {
-					$this->abort(JText::sprintf('JLIB_INSTALLER_ABORT_METHODNOTSUPPORTED_TYPE', $this->extension->type));
+					$this->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_METHODNOTSUPPORTED_TYPE', $this->extension->type));
 
 					return false;
 				}
@@ -627,7 +627,7 @@ class JInstaller extends JAdapter
 			return false;
 		}
 		else {
-			$this->abort(JText::_('JLIB_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE_VALID'));
+			$this->abort(JText::_('MOLAJO_INSTALLER_ABORT_REFRESH_MANIFEST_CACHE_VALID'));
 
 			return false;
 		}
@@ -695,7 +695,7 @@ class JInstaller extends JAdapter
 			$db->setQuery($query->data());
 
 			if (!$db->query()) {
-				JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
+				JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
 
 				return false;
 			}
@@ -747,7 +747,7 @@ class JInstaller extends JAdapter
 
 				// Check that sql files exists before reading. Otherwise raise error for rollback
 				if (!file_exists($sqlfile)) {
-					JError::raiseWarning(1,JText::sprintf('JLIB_INSTALLER_ERROR_SQL_FILENOTFOUND', $sqlfile));
+					JError::raiseWarning(1,JText::sprintf('MOLAJO_INSTALLER_ERROR_SQL_FILENOTFOUND', $sqlfile));
 
 					return false;
 				}
@@ -756,7 +756,7 @@ class JInstaller extends JAdapter
 
 				// Graceful exit and rollback if read not successful
 				if ($buffer === false) {
-					JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
+					JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_SQL_READBUFFER'));
 
 					return false;
 				}
@@ -779,7 +779,7 @@ class JInstaller extends JAdapter
 						$db->setQuery($query);
 
 						if (!$db->query()) {
-							JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
+							JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
 
 							return false;
 						}
@@ -904,7 +904,7 @@ class JInstaller extends JAdapter
 
 								// Graceful exit and rollback if read not successful
 								if ($buffer === false) {
-									JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER'));
+									JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_SQL_READBUFFER'));
 
 									return false;
 								}
@@ -927,7 +927,7 @@ class JInstaller extends JAdapter
 
 										if (!$db->query())
 										{
-											JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
+											JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_SQL_ERROR', $db->stderr(true)));
 
 											return false;
 										}
@@ -1056,7 +1056,7 @@ class JInstaller extends JAdapter
 				$newdir = dirname($path['dest']);
 
 				if (!JFolder::create($newdir)) {
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 					return false;
 				}
 			}
@@ -1157,7 +1157,7 @@ class JInstaller extends JAdapter
 				$newdir = dirname($path['dest']);
 
 				if (!JFolder::create($newdir)) {
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 
 					return false;
 				}
@@ -1234,7 +1234,7 @@ class JInstaller extends JAdapter
 				$newdir = dirname($path['dest']);
 
 				if (!JFolder::create($newdir)) {
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir));
 
 					return false;
 				}
@@ -1335,7 +1335,7 @@ class JInstaller extends JAdapter
 					 * The source file does not exist.  Nothing to copy so set an error
 					 * and return false.
 					 */
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_NO_FILE', $filesource));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_NO_FILE', $filesource));
 
 					return false;
 				}
@@ -1349,7 +1349,7 @@ class JInstaller extends JAdapter
 					// The destination file already exists and the overwrite flag is false.
 					// Set an error and return false.
 
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_FILE_EXISTS', $filedest));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_FILE_EXISTS', $filedest));
 
 					return false;
 				}
@@ -1358,7 +1358,7 @@ class JInstaller extends JAdapter
 					if ($filetype == 'folder') {
 						if (!(JFolder::copy($filesource, $filedest, null, $overwrite)))
 						{
-							JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FOLDER', $filesource, $filedest));
+							JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_FAIL_COPY_FOLDER', $filesource, $filedest));
 							return false;
 						}
 
@@ -1366,7 +1366,7 @@ class JInstaller extends JAdapter
 					}
 					else {
 						if (!(JFile::copy($filesource, $filedest,null))) {
-							JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ERROR_FAIL_COPY_FILE', $filesource, $filedest));
+							JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ERROR_FAIL_COPY_FILE', $filesource, $filedest));
 
 							return false;
 						}
@@ -1606,13 +1606,13 @@ class JInstaller extends JAdapter
 			}
 
 			// None of the xml files found were valid install files
-			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+			JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
 
 			return false;
 		}
 		else {
 			// No xml files were found in the install folder
-			JError::raiseWarning(1, JText::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+			JError::raiseWarning(1, JText::_('MOLAJO_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
 			return false;
 		}
 	}

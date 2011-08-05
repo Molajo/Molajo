@@ -166,7 +166,7 @@ class JStream extends JObject
 		$filename = $this->_getFilename($filename, $mode, $use_prefix, $relative);
 
 		if (!$filename) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILENAME'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILENAME'));
 			return false;
 		}
 
@@ -272,7 +272,7 @@ class JStream extends JObject
 	function close()
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 			return true;
 		}
 
@@ -329,7 +329,7 @@ class JStream extends JObject
 	function eof()
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -374,7 +374,7 @@ class JStream extends JObject
 	function filesize()
 	{
 		if (!$this->filename) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -404,7 +404,7 @@ class JStream extends JObject
 				}
 				else {
 					// Error but nothing from php? How strange! Create our own
-					$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_SIZE'));
+					$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_SIZE'));
 				}
 			}
 			else {
@@ -434,7 +434,7 @@ class JStream extends JObject
 	function gets($length=0)
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -500,7 +500,7 @@ class JStream extends JObject
 		}
 
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -578,7 +578,7 @@ class JStream extends JObject
 	function seek($offset, $whence=SEEK_SET)
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -625,7 +625,7 @@ class JStream extends JObject
 	function tell()
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -684,7 +684,7 @@ class JStream extends JObject
 	function write(&$string, $length=0, $chunk=0)
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -722,7 +722,7 @@ class JStream extends JObject
 			else if ($res === 0) {
 				// Wrote nothing?
 				$remaining = 0;
-				$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_NO_DATA_WRITTEN'));
+				$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_NO_DATA_WRITTEN'));
 			}
 			else {
 				// Wrote something
@@ -752,7 +752,7 @@ class JStream extends JObject
 	{
 		if (!$filename) {
 			if (!isset($this->filename) || !$this->filename) {
-				$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILENAME'));
+				$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILENAME'));
 
 				return false;
 			}
@@ -811,7 +811,7 @@ class JStream extends JObject
 	function get_meta_data()
 	{
 		if (!$this->_fh) {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_FILE_NOT_OPEN'));
 
 			return false;
 		}
@@ -1103,12 +1103,12 @@ class JStream extends JObject
 				}
 				else {
 					@fclose($reader); // close the reader off
-					$php_errormsg = JText::sprintf('JLIB_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_WRITER', $this->getError());
+					$php_errormsg = JText::sprintf('MOLAJO_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_WRITER', $this->getError());
 				}
 			}
 			else {
 				if (!$php_errormsg) {
-					$php_errormsg = JText::sprintf('JLIB_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_READER', $this->getError());
+					$php_errormsg = JText::sprintf('MOLAJO_FILESYSTEM_ERROR_STREAMS_FAILED_TO_OPEN_READER', $this->getError());
 				}
 			}
 		}
@@ -1261,7 +1261,7 @@ class JStream extends JObject
 			return $this->copy($src, $dest, $context, $use_prefix, $relative);
 		}
 		else {
-			$this->setError(JText::_('JLIB_FILESYSTEM_ERROR_STREAMS_NOT_UPLOADED_FILE'));
+			$this->setError(JText::_('MOLAJO_FILESYSTEM_ERROR_STREAMS_NOT_UPLOADED_FILE'));
 
 			return false;
 		}

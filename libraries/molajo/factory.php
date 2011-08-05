@@ -282,7 +282,7 @@ abstract class MolajoFactory
 			return $simplepie;
 		}
 		else {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_UTIL_ERROR_LOADING_FEED_DATA'));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
 		}
 
 		return false;
@@ -316,7 +316,7 @@ abstract class MolajoFactory
 				break;
 
 			case 'dom':
-				JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_UTIL_ERROR_DOMIT'));
+				JError::raiseWarning('SOME_ERROR_CODE', JText::_('MOLAJO_UTIL_ERROR_DOMIT'));
 				$doc = null;
 				break;
 
@@ -354,7 +354,7 @@ abstract class MolajoFactory
 
 		if (empty($xml)) {
 			// There was an error
-			JError::raiseWarning(100, JText::_('JLIB_UTIL_ERROR_XML_LOAD'));
+			JError::raiseWarning(100, JText::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
 
 			if ($isFile) {
 				JError::raiseWarning(100, $data);
@@ -554,7 +554,7 @@ abstract class MolajoFactory
 		}
 
 		if ($db->getErrorNum() > 0) {
-			JError::raiseError(500, JText::sprintf('JLIB_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
+			JError::raiseError(500, JText::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
 		}
 
 		$db->debug($debug);

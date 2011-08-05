@@ -45,18 +45,18 @@ class MolajoTableMenu extends MolajoTableNested
 	{
 		// Verify that the default home menu is not unset
 		if ($this->home == '1' && $this->language == '*' && ($array['home'] == '0')) {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_CANNOT_UNSET_DEFAULT_DEFAULT'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_CANNOT_UNSET_DEFAULT_DEFAULT'));
 			return false;
 		}
 		//Verify that the default home menu set to "all" languages" is not unset
 		if ($this->home == '1' && $this->language == '*' && ($array['language'] != '*')) {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_CANNOT_UNSET_DEFAULT'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_CANNOT_UNSET_DEFAULT'));
 			return false;
 		}
 
 		// Verify that the default home menu is not unpublished
 		if ($this->home == '1' && $this->language == '*' && $array['published'] != '1') {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
 			return false;
 		}
 
@@ -96,20 +96,20 @@ class MolajoTableMenu extends MolajoTableNested
 
 		// Verify that a first level menu item alias is not 'component'.
 		if ($this->parent_id==1 && $this->alias == 'component') {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_ROOT_ALIAS_COMPONENT'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_ROOT_ALIAS_COMPONENT'));
 			return false;
 		}
 
 		// Verify that a first level menu item alias is not the name of a folder.
 		jimport('joomla.filesystem.folders');
 		if ($this->parent_id==1 && in_array($this->alias, JFolder::folders(MOLAJO_PATH_ROOT))) {
-			$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_MENU_ROOT_ALIAS_FOLDER', $this->alias, $this->alias));
+			$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_MENU_ROOT_ALIAS_FOLDER', $this->alias, $this->alias));
 			return false;
 		}
 
 		// Verify that the home item a component.
 		if ($this->home && $this->type != 'component') {
-			$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_HOME_NOT_COMPONENT'));
+			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_HOME_NOT_COMPONENT'));
 			return false;
 		}
 
@@ -130,10 +130,10 @@ class MolajoTableMenu extends MolajoTableNested
 		$table = MolajoTable::getInstance('Menu','MolajoTable');
 		if ($table->load(array('alias'=>$this->alias,'parent_id'=>$this->parent_id,'application_id'=>$this->application_id)) && ($table->id != $this->id || $this->id==0)) {
 			if ($this->menutype==$table->menutype) {
-				$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_UNIQUE_ALIAS'));
+				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNIQUE_ALIAS'));
 			}
 			else {
-				$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_UNIQUE_ALIAS_ROOT'));
+				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNIQUE_ALIAS_ROOT'));
 			}
 			return false;
 		}
@@ -142,7 +142,7 @@ class MolajoTableMenu extends MolajoTableNested
 			$table = MolajoTable::getInstance('Menu','MolajoTable');
 			if ($table->load(array('home'=>'1','language'=>$this->language))) {
 				if ($table->checked_out && $table->checked_out!=$this->checked_out) {
-					$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_DEFAULT_CHECKIN_USER_MISMATCH'));
+					$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_DEFAULT_CHECKIN_USER_MISMATCH'));
 					return false;
 				}
 				$table->home = 0;
@@ -152,7 +152,7 @@ class MolajoTableMenu extends MolajoTableNested
 			}
 			// Verify that the home page for this menu is unique.
 			if ($table->load(array('home'=>'1', 'menutype'=>$this->menutype)) && ($table->id != $this->id || $this->id==0)) {
-				$this->setError(JText::_('JLIB_DATABASE_ERROR_MENU_HOME_NOT_UNIQUE_IN_MENU'));
+				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_HOME_NOT_UNIQUE_IN_MENU'));
 				return false;
 			}
 		}

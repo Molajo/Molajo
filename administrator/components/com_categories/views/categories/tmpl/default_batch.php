@@ -11,8 +11,8 @@
 defined('_JEXEC') or die;
 
 $options = array(
-	JHtml::_('select.option', 'c', JText::_('JLIB_HTML_BATCH_COPY')),
-	JHtml::_('select.option', 'm', JText::_('JLIB_HTML_BATCH_MOVE'))
+	JHtml::_('select.option', 'c', JText::_('MOLAJO_HTML_BATCH_COPY')),
+	JHtml::_('select.option', 'm', JText::_('MOLAJO_HTML_BATCH_MOVE'))
 );
 $published	= $this->state->get('filter.published');
 $extension	= $this->escape($this->state->get('filter.extension'));

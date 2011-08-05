@@ -46,7 +46,7 @@ class JInstallerLanguage extends JAdapterInstance
 		// Get the client application target
 		if ((string)$this->manifest->attributes()->client == 'both')
 		{
-			JError::raiseWarning(42, JText::_('JLIB_INSTALLER_ERROR_DEPRECATED_FORMAT'));
+			JError::raiseWarning(42, JText::_('MOLAJO_INSTALLER_ERROR_DEPRECATED_FORMAT'));
 			$element = $this->manifest->site->files;
 			if (!$this->_install('site', JPATH_SITE, 0, $element)) {
 				return false;
@@ -65,7 +65,7 @@ class JInstallerLanguage extends JAdapterInstance
 			jimport('joomla.application.helper');
 			$client = JApplicationHelper::getClientInfo($cname, true);
 			if ($client === null) {
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
 				return false;
 			}
 			$basePath = $client->path;
@@ -104,7 +104,7 @@ class JInstallerLanguage extends JAdapterInstance
 		// Check if we found the tag - if we didn't, we may be trying to install from an older language package
 		if ( ! $tag)
 		{
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::_('JLIB_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::_('MOLAJO_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
 			return false;
 		}
 
@@ -129,7 +129,7 @@ class JInstallerLanguage extends JAdapterInstance
 		if (!$this->_core)
 		{
 			if (!JFile::exists($this->parent->getPath('extension_site') . '/' . $this->get('tag').'.xml')) {
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
 				return false;
 			}
 		}
@@ -140,7 +140,7 @@ class JInstallerLanguage extends JAdapterInstance
 		{
 			if (!$created = JFolder::create($this->parent->getPath('extension_site')))
 			{
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_CREATE_FOLDER_FAILED', $this->parent->getPath('extension_site'))));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_CREATE_FOLDER_FAILED', $this->parent->getPath('extension_site'))));
 				return false;
 			}
 		}
@@ -160,11 +160,11 @@ class JInstallerLanguage extends JAdapterInstance
 				// We didn't have overwrite set, find an update function or find an update tag so lets call it safe
 				if (file_exists($this->parent->getPath('extension_site'))) {
 					// If the site exists say so.
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_site'))));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_site'))));
 				}
 				else {
 					// If the admin exists say so.
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_administrator'))));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_FOLDER_IN_USE', $this->parent->getPath('extension_administrator'))));
 				}
 				return false;
 			}
@@ -227,7 +227,7 @@ class JInstallerLanguage extends JAdapterInstance
 		if (!$row->store())
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', $row->getError()));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', $row->getError()));
 			return false;
 		}
 
@@ -263,7 +263,7 @@ class JInstallerLanguage extends JAdapterInstance
 		$client = JApplicationHelper::getClientInfo($cname, true);
 		if ($client === null || (empty($cname) && $cname !== 0))
 		{
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_UNKNOWN_CLIENT_TYPE', $cname)));
 			return false;
 		}
 		$basePath = $client->path;
@@ -281,7 +281,7 @@ class JInstallerLanguage extends JAdapterInstance
 		// Check if we found the tag - if we didn't, we may be trying to install from an older language package
 		if (!$tag)
 		{
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::_('JLIB_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::_('MOLAJO_INSTALLER_ERROR_NO_LANGUAGE_TAG')));
 			return false;
 		}
 
@@ -309,7 +309,7 @@ class JInstallerLanguage extends JAdapterInstance
 		{
 			if (!JFile::exists($this->parent->getPath('extension_site') . '/' . $this->get('tag').'.xml'))
 			{
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', JText::sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', JText::sprintf('MOLAJO_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
 				return false;
 			}
 		}
@@ -376,7 +376,7 @@ class JInstallerLanguage extends JAdapterInstance
 		if (!$row->store())
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT', $row->getError()));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT', $row->getError()));
 			return false;
 		}
 
@@ -416,21 +416,21 @@ class JInstallerLanguage extends JAdapterInstance
 		$element = $extension->get('element');
 		if (empty($element))
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_ELEMENT_EMPTY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LANG_UNINSTALL_ELEMENT_EMPTY'));
 			return false;
 		}
 
 		// Check that the language is not protected, Normally en-GB.
 		$protected  = $extension->get('protected');
 		if ($protected == 1) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PROTECTED'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LANG_UNINSTALL_PROTECTED'));
 			return false;
 		}
 
 		// verify that it's not the default language for that client
 		$params = JComponentHelper::getParams('com_languages');
 		if ($params->get($client->name)==$element) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DEFAULT'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LANG_UNINSTALL_DEFAULT'));
 			return false;
 		}
 
@@ -449,14 +449,14 @@ class JInstallerLanguage extends JAdapterInstance
 		{
 			// If the folder doesn't exist lets just nuke the row as well and presume the user killed it for us
 			$extension->delete();
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_PATH_EMPTY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LANG_UNINSTALL_PATH_EMPTY'));
 			return false;
 		}
 
 		if (!JFolder::delete($path))
 		{
 			// If deleting failed we'll leave the extension entry in tact just in case
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DIRECTORY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_LANG_UNINSTALL_DIRECTORY'));
 			return false;
 		}
 
@@ -492,7 +492,7 @@ class JInstallerLanguage extends JAdapterInstance
 			}
 		}
 		if (!empty($count)) {
-			JError::raiseNotice(500, JText::plural('JLIB_INSTALLER_NOTICE_LANG_RESET_USERS', $count));
+			JError::raiseNotice(500, JText::plural('MOLAJO_INSTALLER_NOTICE_LANG_RESET_USERS', $count));
 		}
 
 		// All done!
@@ -566,7 +566,7 @@ class JInstallerLanguage extends JAdapterInstance
 		}
 		catch(JException $e)
 		{
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_LANG_DISCOVER_STORE_DETAILS'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_LANG_DISCOVER_STORE_DETAILS'));
 			return false;
 		}
 		return $this->parent->extension->get('extension_id');
@@ -592,7 +592,7 @@ class JInstallerLanguage extends JAdapterInstance
 			return true;
 		}
 		else {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_MOD_REFRESH_MANIFEST_CACHE'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_MOD_REFRESH_MANIFEST_CACHE'));
 
 			return false;
 		}

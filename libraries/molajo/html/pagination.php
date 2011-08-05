@@ -209,7 +209,7 @@ class MolajoPagination extends JObject
 		// Initialise variables.
 		$html = null;
 		if ($this->get('pages.total') > 1) {
-			$html .= JText::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL', $this->get('pages.current'), $this->get('pages.total'));
+			$html .= JText::sprintf('MOLAJO_HTML_PAGE_CURRENT_OF_TOTAL', $this->get('pages.current'), $this->get('pages.total'));
 		}
 		return $html;
 	}
@@ -236,11 +236,11 @@ class MolajoPagination extends JObject
 
 		// If there are results found.
 		if ($this->total > 0) {
-			$msg = JText::sprintf('JLIB_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
+			$msg = JText::sprintf('MOLAJO_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
 			$html .= "\n".$msg;
 		}
 		else {
-			$html .= "\n".JText::_('JLIB_HTML_NO_RECORDS_FOUND');
+			$html .= "\n".JText::_('MOLAJO_HTML_NO_RECORDS_FOUND');
 		}
 
 		return $html;
@@ -416,7 +416,7 @@ class MolajoPagination extends JObject
 	 * @return  string   Either the icon to move an item up or a space.
 	 * @since	1.0
 	 */
-	public function orderUpIcon($i, $condition = true, $task = 'orderup', $alt = 'JLIB_HTML_MOVE_UP', $enabled = true, $checkbox='cb')
+	public function orderUpIcon($i, $condition = true, $task = 'orderup', $alt = 'MOLAJO_HTML_MOVE_UP', $enabled = true, $checkbox='cb')
 	{
 		if (($i > 0 || ($i + $this->limitstart > 0)) && $condition) {
 			return JHtml::_('jgrid.orderUp', $i, $task, '', $alt, $enabled, $checkbox);
@@ -440,7 +440,7 @@ class MolajoPagination extends JObject
 	 * @return  string   Either the icon to move an item down or a space.
 	 * @since	1.0
 	 */
-	public function orderDownIcon($i, $n, $condition = true, $task = 'orderdown', $alt = 'JLIB_HTML_MOVE_DOWN', $enabled = true, $checkbox='cb')
+	public function orderDownIcon($i, $n, $condition = true, $task = 'orderdown', $alt = 'MOLAJO_HTML_MOVE_DOWN', $enabled = true, $checkbox='cb')
 	{
 		if (($i < $n -1 || $i + $this->limitstart < $this->total - 1) && $condition) {
 			return JHtml::_('jgrid.orderDown', $i, $task, '', $alt, $enabled, $checkbox);
@@ -529,14 +529,14 @@ class MolajoPagination extends JObject
 			}
 		}
 
-		$data->all = new MolajoPaginationObject(JText::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
+		$data->all = new MolajoPaginationObject(JText::_('MOLAJO_HTML_VIEW_ALL'), $this->prefix);
 		if (!$this->_viewall) {
 			$data->all->base	= '0';
 			$data->all->link	= JRoute::_($params.'&'.$this->prefix.'limitstart=');
 		}
 
 		// Set the start and previous data objects.
-		$data->start	= new MolajoPaginationObject(JText::_('JLIB_HTML_START'), $this->prefix);
+		$data->start	= new MolajoPaginationObject(JText::_('MOLAJO_HTML_START'), $this->prefix);
 		$data->previous	= new MolajoPaginationObject(JText::_('JPREV'), $this->prefix);
 
 		if ($this->get('pages.current') > 1)
@@ -554,7 +554,7 @@ class MolajoPagination extends JObject
 
 		// Set the next and end data objects.
 		$data->next	= new MolajoPaginationObject(JText::_('JNEXT'), $this->prefix);
-		$data->end	= new MolajoPaginationObject(JText::_('JLIB_HTML_END'), $this->prefix);
+		$data->end	= new MolajoPaginationObject(JText::_('MOLAJO_HTML_END'), $this->prefix);
 
 		if ($this->get('pages.current') < $this->get('pages.total'))
 		{

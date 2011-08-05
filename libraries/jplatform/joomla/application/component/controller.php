@@ -262,7 +262,7 @@ class JController extends JObject
 				require_once $path;
 			}
 			else {
-				throw new JException(JText::sprintf('JLIB_APPLICATION_ERROR_INVALID_CONTROLLER', $type, $format), 1056, E_ERROR, $type, true);
+				throw new JException(JText::sprintf('MOLAJO_APPLICATION_ERROR_INVALID_CONTROLLER', $type, $format), 1056, E_ERROR, $type, true);
 			}
 		}
 
@@ -271,7 +271,7 @@ class JController extends JObject
 			$instance = new $class($config);
 		}
 		else {
-			throw new JException(JText::sprintf('JLIB_APPLICATION_ERROR_INVALID_CONTROLLER_CLASS', $class), 1057, E_ERROR, $class, true);
+			throw new JException(JText::sprintf('MOLAJO_APPLICATION_ERROR_INVALID_CONTROLLER_CLASS', $class), 1057, E_ERROR, $class, true);
 		}
 
 		return $instance;
@@ -565,7 +565,7 @@ class JController extends JObject
 				if (!class_exists($viewClass)) {
 					$result = JError::raiseError(
 						500,
-						JText::sprintf('JLIB_APPLICATION_ERROR_VIEW_CLASS_NOT_FOUND', $viewClass, $path)
+						JText::sprintf('MOLAJO_APPLICATION_ERROR_VIEW_CLASS_NOT_FOUND', $viewClass, $path)
 					);
 
 					return null;
@@ -666,7 +666,7 @@ class JController extends JObject
 			$doTask = $this->taskMap['__default'];
 		}
 		else {
-			return JError::raiseError(404, JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task));
+			return JError::raiseError(404, JText::sprintf('MOLAJO_APPLICATION_ERROR_TASK_NOT_FOUND', $task));
 		}
 
 		// Record the actual task being fired
@@ -678,7 +678,7 @@ class JController extends JObject
 			return $retval;
 		}
 		else {
-			return JError::raiseError(403, JText::_('JLIB_APPLICATION_ERROR_ACCESS_FORBIDDEN'));
+			return JError::raiseError(403, JText::_('MOLAJO_APPLICATION_ERROR_ACCESS_FORBIDDEN'));
 		}
 	}
 
@@ -737,7 +737,7 @@ class JController extends JObject
 		if (empty($name)) {
 			$r = null;
 			if (!preg_match('/(.*)Controller/i', get_class($this), $r)) {
-				JError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_CONTROLLER_GET_NAME'));
+				JError::raiseError(500, JText::_('MOLAJO_APPLICATION_ERROR_CONTROLLER_GET_NAME'));
 			}
 			$name = strtolower($r[1]);
 		}
@@ -801,7 +801,7 @@ class JController extends JObject
 			else {
 				$result = JError::raiseError(
 					500,
-					JText::sprintf('JLIB_APPLICATION_ERROR_VIEW_NOT_FOUND', $name, $type, $prefix)
+					JText::sprintf('MOLAJO_APPLICATION_ERROR_VIEW_NOT_FOUND', $name, $type, $prefix)
 				);
 
 				return $result;

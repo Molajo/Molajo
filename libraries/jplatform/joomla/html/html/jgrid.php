@@ -127,10 +127,10 @@ abstract class JHtmlJGrid
 			$prefix		= array_key_exists('prefix',	$options) ? $options['prefix']		: '';
 		}
 		$states	= array(
-			1	=> array('unpublish',	'JPUBLISHED',	'JLIB_HTML_UNPUBLISH_ITEM',	'JPUBLISHED',	false,	'publish',		'publish'),
-			0	=> array('publish',		'JUNPUBLISHED',	'JLIB_HTML_PUBLISH_ITEM',	'JUNPUBLISHED',	false,	'unpublish',	'unpublish'),
-			2	=> array('unpublish',	'JARCHIVED',	'JLIB_HTML_UNPUBLISH_ITEM',	'JARCHIVED',	false,	'archive',		'archive'),
-			-2	=> array('publish',		'JTRASHED',		'JLIB_HTML_PUBLISH_ITEM',	'JTRASHED',		false,	'trash',		'trash'),
+			1	=> array('unpublish',	'JPUBLISHED',	'MOLAJO_HTML_UNPUBLISH_ITEM',	'JPUBLISHED',	false,	'publish',		'publish'),
+			0	=> array('publish',		'JUNPUBLISHED',	'MOLAJO_HTML_PUBLISH_ITEM',	'JUNPUBLISHED',	false,	'unpublish',	'unpublish'),
+			2	=> array('unpublish',	'JARCHIVED',	'MOLAJO_HTML_UNPUBLISH_ITEM',	'JARCHIVED',	false,	'archive',		'archive'),
+			-2	=> array('publish',		'JTRASHED',		'MOLAJO_HTML_PUBLISH_ITEM',	'JTRASHED',		false,	'trash',		'trash'),
 		);
 
 		// Special state for dates
@@ -147,10 +147,10 @@ abstract class JHtmlJGrid
 			// Create tip text, only we have publish up or down settings
 			$tips = array();
 			if ($publish_up) {
-				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_START', $publish_up->format(JDate::$format, true));
+				$tips[] = JText::sprintf('MOLAJO_HTML_PUBLISHED_START', $publish_up->format(JDate::$format, true));
 			}
 			if ($publish_down) {
-				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $publish_down->format(JDate::$format, true));
+				$tips[] = JText::sprintf('MOLAJO_HTML_PUBLISHED_FINISHED', $publish_down->format(JDate::$format, true));
 			}
 			$tip = empty($tips) ? false : implode('<br/>', $tips);
 
@@ -158,13 +158,13 @@ abstract class JHtmlJGrid
 			foreach($states as $key=>$state) {
 				// Create special titles for published items
 				if ($key == 1) {
-					$states[$key][2] = $states[$key][3] = 'JLIB_HTML_PUBLISHED_ITEM';
+					$states[$key][2] = $states[$key][3] = 'MOLAJO_HTML_PUBLISHED_ITEM';
 					if ($publish_up && $nowDate < $publish_up->toUnix()) {
-						$states[$key][2] = $states[$key][3] = 'JLIB_HTML_PUBLISHED_PENDING_ITEM';
+						$states[$key][2] = $states[$key][3] = 'MOLAJO_HTML_PUBLISHED_PENDING_ITEM';
 						$states[$key][5] = $states[$key][6] = 'pending';
 					}
 					if ($publish_down && $nowDate > $publish_down->toUnix()) {
-						$states[$key][2] = $states[$key][3] = 'JLIB_HTML_PUBLISHED_EXPIRED_ITEM';
+						$states[$key][2] = $states[$key][3] = 'MOLAJO_HTML_PUBLISHED_EXPIRED_ITEM';
 						$states[$key][5] = $states[$key][6] = 'expired';
 					}
 				}
@@ -207,8 +207,8 @@ abstract class JHtmlJGrid
 			$prefix		= array_key_exists('prefix',	$options) ? $options['prefix']		: '';
 		}
 		$states	= array(
-			1	=> array('unsetDefault',	'JDEFAULT', 'JLIB_HTML_UNSETDEFAULT_ITEM',	'JDEFAULT',	false,	'default',		'default'),
-			0	=> array('setDefault', 		'',			'JLIB_HTML_SETDEFAULT_ITEM',	'',			false,	'notdefault',	'notdefault'),
+			1	=> array('unsetDefault',	'JDEFAULT', 'MOLAJO_HTML_UNSETDEFAULT_ITEM',	'JDEFAULT',	false,	'default',		'default'),
+			0	=> array('setDefault', 		'',			'MOLAJO_HTML_SETDEFAULT_ITEM',	'',			false,	'notdefault',	'notdefault'),
 		);
 		return self::state($states, $value, $i, $prefix, $enabled, true, $checkbox);
 	}
@@ -271,10 +271,10 @@ abstract class JHtmlJGrid
 		$text			= addslashes(htmlspecialchars($editorName, ENT_COMPAT, 'UTF-8'));
 		$date			= addslashes(htmlspecialchars(JHtml::_('date',$time, JText::_('DATE_FORMAT_LC')), ENT_COMPAT, 'UTF-8'));
 		$time			= addslashes(htmlspecialchars(JHtml::_('date',$time, 'H:i'), ENT_COMPAT, 'UTF-8'));
-		$active_title	= JText::_('JLIB_HTML_CHECKIN') 	.'::'. $text .'<br />'. $date .'<br />'. $time;
-		$inactive_title	= JText::_('JLIB_HTML_CHECKED_OUT')	.'::'. $text .'<br />'. $date .'<br />'. $time;
+		$active_title	= JText::_('MOLAJO_HTML_CHECKIN') 	.'::'. $text .'<br />'. $date .'<br />'. $time;
+		$inactive_title	= JText::_('MOLAJO_HTML_CHECKED_OUT')	.'::'. $text .'<br />'. $date .'<br />'. $time;
 
-		return  self::action($i, 'checkin', $prefix, JText::_('JLIB_HTML_CHECKED_OUT'), $active_title, $inactive_title, true, 'checkedout', 'checkedout', $enabled, false, $checkbox);
+		return  self::action($i, 'checkin', $prefix, JText::_('MOLAJO_HTML_CHECKED_OUT'), $active_title, $inactive_title, true, 'checkedout', 'checkedout', $enabled, false, $checkbox);
 	}
 
 	/**
@@ -291,7 +291,7 @@ abstract class JHtmlJGrid
 	 *
 	 * @since   11.1
 	 */
-	public static function orderUp($i, $task='orderup', $prefix='', $text = 'JLIB_HTML_MOVE_UP', $enabled = true, $checkbox='cb')
+	public static function orderUp($i, $task='orderup', $prefix='', $text = 'MOLAJO_HTML_MOVE_UP', $enabled = true, $checkbox='cb')
 	{
 		if (is_array($prefix)) {
 			$options	= $prefix;
@@ -317,7 +317,7 @@ abstract class JHtmlJGrid
 	 *
 	 * @since   11.1
 	 */
-	public static function orderDown($i, $task='orderdown', $prefix='', $text = 'JLIB_HTML_MOVE_DOWN', $enabled = true, $checkbox='cb')
+	public static function orderDown($i, $task='orderdown', $prefix='', $text = 'MOLAJO_HTML_MOVE_DOWN', $enabled = true, $checkbox='cb')
 	{
 		if (is_array($prefix)) {
 			$options	= $prefix;

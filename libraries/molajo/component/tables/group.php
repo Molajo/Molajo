@@ -43,7 +43,7 @@ class MolajoTableGroup extends MolajoTable
     {
         // Validate the title.
         if ((trim($this->title)) == '') {
-            $this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE'));
+            $this->setError(JText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE'));
             return false;
         }
 
@@ -59,7 +59,7 @@ class MolajoTableGroup extends MolajoTable
         $db->setQuery($query);
 
         if ($db->loadResult() > 0) {
-            $this->setError(JText::_('JLIB_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
+            $this->setError(JText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
             return false;
         }
 

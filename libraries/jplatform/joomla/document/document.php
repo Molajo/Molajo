@@ -266,7 +266,7 @@ class JDocument extends JObject
 					require_once $path;
 				}
 				else {
-					JError::raiseError(500,JText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+					JError::raiseError(500,JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
 				}
 			}
 

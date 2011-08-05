@@ -24,7 +24,7 @@ class JComponentHelper
 	 * @var    array
 	 * @since  11.1
 	 */
-	protected static $_components = array();
+	protected static $_layouts = array();
 
 	/**
 	 * Get the component information.
@@ -37,16 +37,16 @@ class JComponentHelper
 	 */
 	public static function getComponent($option, $strict = false)
 	{
-		if (!isset(self::$_components[$option])) {
+		if (!isset(self::$_layouts[$option])) {
 			if (self::_load($option)){
-				$result = self::$_components[$option];
+				$result = self::$_layouts[$option];
 			} else {
 				$result				= new stdClass;
 				$result->enabled	= $strict ? false : true;
 				$result->params		= new JRegistry;
 			}
 		} else {
-			$result = self::$_components[$option];
+			$result = self::$_layouts[$option];
 		}
 
 		return $result;
@@ -110,7 +110,7 @@ class JComponentHelper
 
 		if (empty($option)) {
 			// Throw 404 if no component
-			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 			return;
 		}
 
@@ -137,7 +137,7 @@ class JComponentHelper
 
 		// If component is disabled throw error
 		if (!self::isEnabled($option) || !file_exists($path)) {
-			JError::raiseError(404, JText::_('JLIB_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
 		$task = JRequest::getString('task');
@@ -194,19 +194,19 @@ class JComponentHelper
 
 		$cache = JFactory::getCache('_system','callback');
 
-		self::$_components[$option] =  $cache->get(array($db, 'loadObject'), null, $option, false);
+		self::$_layouts[$option] =  $cache->get(array($db, 'loadObject'), null, $option, false);
 
-		if ($error = $db->getErrorMsg() || empty(self::$_components[$option])) {
+		if ($error = $db->getErrorMsg() || empty(self::$_layouts[$option])) {
 			// Fatal error.
-			JError::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
+			JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
 			return false;
 		}
 
 		// Convert the params to an object.
-		if (is_string(self::$_components[$option]->params)) {
+		if (is_string(self::$_layouts[$option]->params)) {
 			$temp = new JRegistry;
-			$temp->loadString(self::$_components[$option]->params);
-			self::$_components[$option]->params = $temp;
+			$temp->loadString(self::$_layouts[$option]->params);
+			self::$_layouts[$option]->params = $temp;
 		}
 
 		return true;

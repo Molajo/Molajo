@@ -479,7 +479,7 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Access checks.
 		if (!$user->authorise('core.edit.state', 'com_templates')) {
-			throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			throw new Exception(JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 
 		$style = JTable::getInstance('Style','TemplatesTable');
@@ -539,7 +539,7 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Access checks.
 		if (!$user->authorise('core.edit.state', 'com_templates')) {
-			throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			throw new Exception(JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 
 		// Lookup the application_id.

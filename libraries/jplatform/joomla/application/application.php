@@ -154,7 +154,7 @@ class JApplication extends JObject
 				$instance = new $classname($config);
 			}
 			else {
-				$error = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_APPLICATION_LOAD', $client));
+				$error = JError::raiseError(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $client));
 				return $error;
 			}
 
@@ -475,7 +475,7 @@ class JApplication extends JObject
 		if (empty($name)) {
 			$r = null;
 			if (!preg_match('/J(.*)/i', get_class($this), $r)) {
-				JError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_APPLICATION_GET_NAME'));
+				JError::raiseError(500, JText::_('MOLAJO_APPLICATION_ERROR_APPLICATION_GET_NAME'));
 			}
 			$name = strtolower($r[1]);
 		}
@@ -663,7 +663,7 @@ class JApplication extends JObject
 	
 		// If status is success, any error will ahve been raised by the user plugin
 		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
+			JError::raiseWarning('SOME_ERROR_CODE', JText::_('MOLAJO_LOGIN_AUTHENTICATE'));
 		}
 		
 		return false;

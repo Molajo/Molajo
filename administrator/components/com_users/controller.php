@@ -76,7 +76,7 @@ class UsersController extends JController
 		// Check for edit form.
 		if ($view == 'user' && $layout == 'edit' && !$this->checkEditId('com_users.edit.user', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(JRoute::_('index.php?option=com_users&view=users', false));
 
@@ -84,7 +84,7 @@ class UsersController extends JController
 		}
 		else if ($view == 'group' && $layout == 'edit' && !$this->checkEditId('com_users.edit.group', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(JRoute::_('index.php?option=com_users&view=groups', false));
 
@@ -92,7 +92,7 @@ class UsersController extends JController
 		}
 		else if ($view == 'level' && $layout == 'edit' && !$this->checkEditId('com_users.edit.level', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(JRoute::_('index.php?option=com_users&view=levels', false));
 

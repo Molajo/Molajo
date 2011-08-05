@@ -110,19 +110,19 @@ class JFormFieldMedia extends JFormField
 		// The button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
-		$html[] = '		<a class="modal" title="'.JText::_('JLIB_FORM_BUTTON_SELECT').'"' .
+		$html[] = '		<a class="modal" title="'.JText::_('MOLAJO_FORM_BUTTON_SELECT').'"' .
 					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)) . '&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
 					' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
-		$html[] = '			'.JText::_('JLIB_FORM_BUTTON_SELECT').'</a>';
+		$html[] = '			'.JText::_('MOLAJO_FORM_BUTTON_SELECT').'</a>';
 		$html[] = '	</div>';
 		$html[] = '</div>';
 
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
-		$html[] = '		<a title="'.JText::_('JLIB_FORM_BUTTON_CLEAR').'"' .
+		$html[] = '		<a title="'.JText::_('MOLAJO_FORM_BUTTON_CLEAR').'"' .
 					' href="#"'.
 					' onclick="document.getElementById(\''.$this->id.'\').value=\'\'; document.getElementById(\''.$this->id.'\').onchange();">';
-		$html[] = '			'.JText::_('JLIB_FORM_BUTTON_CLEAR').'</a>';
+		$html[] = '			'.JText::_('MOLAJO_FORM_BUTTON_CLEAR').'</a>';
 		$html[] = '	</div>';
 		$html[] = '</div>';
 

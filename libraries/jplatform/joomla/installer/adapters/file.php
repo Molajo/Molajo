@@ -79,7 +79,7 @@ class JInstallerFile extends JAdapterInstance
 			if(!$this->parent->getOverwrite())
 			{
 				// we're not overwriting so abort
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_FILE_SAME_NAME'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_FILE_SAME_NAME'));
 				return false;
 			}
 			else
@@ -129,7 +129,7 @@ class JInstallerFile extends JAdapterInstance
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,'preflight')) {
 			if ($this->parent->manifestClass->preflight($this->route, $this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_FILE_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 				return false;
 			}
@@ -151,7 +151,7 @@ class JInstallerFile extends JAdapterInstance
 
 				if (!$created = JFolder::create($folder))
 				{
-					JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ABORT_FILE_INSTALL_FAIL_SOURCE_DIRECTORY', $folder));
+					JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_FAIL_SOURCE_DIRECTORY', $folder));
 					// If installation fails, rollback
 					$this->parent->abort();
 					return false;
@@ -192,7 +192,7 @@ class JInstallerFile extends JAdapterInstance
 		catch(JException $e)
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_FILE_ROLLBACK', JText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_ROLLBACK', JText::_('MOLAJO_INSTALLER_'.$this->route), $db->stderr(true)));
 			return false;
 		}
 		$id = $db->loadResult();
@@ -208,7 +208,7 @@ class JInstallerFile extends JAdapterInstance
 			$row->manifest_cache = $this->parent->generateManifestCache();
 			if (!$row->store()) {
 				// Install failed, roll back changes
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_FILE_ROLLBACK', JText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_ROLLBACK', JText::_('MOLAJO_INSTALLER_'.$this->route), $db->stderr(true)));
 				return false;
 			}
 		}
@@ -231,7 +231,7 @@ class JInstallerFile extends JAdapterInstance
 			if (!$row->store())
 			{
 				// Install failed, roll back changes
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_FILE_INSTALL_ROLLBACK', $db->stderr(true)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_ROLLBACK', $db->stderr(true)));
 				return false;
 			}
 
@@ -253,7 +253,7 @@ class JInstallerFile extends JAdapterInstance
 
 			if ($utfresult === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_FILE_INSTALL_SQL_ERROR', JText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true)));
+				$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_SQL_ERROR', JText::_('MOLAJO_INSTALLER_'.$this->route), $db->stderr(true)));
 
 				return false;
 			}
@@ -268,7 +268,7 @@ class JInstallerFile extends JAdapterInstance
 				$result = $this->parent->parseSchemaUpdates($this->manifest->update->schemas, $row->extension_id);
 				if ($result === false) {
 					// Install failed, rollback changes
-					$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_FILE_UPDATE_SQL_ERROR', $db->stderr(true)));
+					$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_UPDATE_SQL_ERROR', $db->stderr(true)));
 					return false;
 				}
 			}
@@ -281,7 +281,7 @@ class JInstallerFile extends JAdapterInstance
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,$this->route)) {
 			if ($this->parent->manifestClass->{$this->route}($this) === false) {
 				// Install failed, rollback changes
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_FILE_INSTALL_CUSTOM_INSTALL_FAILURE'));
+				$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_CUSTOM_INSTALL_FAILURE'));
 
 				return false;
 			}
@@ -297,7 +297,7 @@ class JInstallerFile extends JAdapterInstance
 		if (!$this->parent->copyFiles(array($manifest), true))
 		{
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_FILE_INSTALL_COPY_SETUP'));
+			$this->parent->abort(JText::_('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_COPY_SETUP'));
 			return false;
 		}
 
@@ -365,12 +365,12 @@ class JInstallerFile extends JAdapterInstance
 		// Initialise variables.
 		$row	= JTable::getInstance('extension');
 		if(!$row->load($id)) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_LOAD_ENTRY'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_FILE_UNINSTALL_LOAD_ENTRY'));
 			return false;
 		}
 
 		if ($row->protected) {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_WARNCOREFILE'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_FILE_UNINSTALL_WARNCOREFILE'));
 			return false;
 		}
 
@@ -387,7 +387,7 @@ class JInstallerFile extends JAdapterInstance
 
 			// If we cannot load the XML file return null
 			if( ! $xml) {
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_LOAD_MANIFEST'));
+				JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_FILE_UNINSTALL_LOAD_MANIFEST'));
 				return false;
 			}
 
@@ -395,7 +395,7 @@ class JInstallerFile extends JAdapterInstance
 			 * Check for a valid XML root tag.
 			 */
 			if ($xml->getName() != 'extension') {
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_INVALID_MANIFEST'));
+				JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_FILE_UNINSTALL_INVALID_MANIFEST'));
 				return false;
 			}
 
@@ -447,7 +447,7 @@ class JInstallerFile extends JAdapterInstance
 
 			if ($utfresult === false) {
 				// Install failed, rollback changes
-				JError::raiseWarning(100, JText::sprintf('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_SQL_ERROR', $db->stderr(true)));
+				JError::raiseWarning(100, JText::sprintf('MOLAJO_INSTALLER_ERROR_FILE_UNINSTALL_SQL_ERROR', $db->stderr(true)));
 				$retval = false;
 			}
 
@@ -507,7 +507,7 @@ class JInstallerFile extends JAdapterInstance
 			JFile::delete($manifestFile);
 
 		} else {
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_FILE_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+			JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_FILE_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 			// Delete the row because its broken
 			$row->delete();
 			return false;
@@ -546,7 +546,7 @@ class JInstallerFile extends JAdapterInstance
 			$db->Query();
 		} catch(JException $e) {
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_FILE_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_ROLLBACK', $db->stderr(true)));
 			return false;
 		}
 		$id = $db->loadResult();
@@ -608,7 +608,7 @@ class JInstallerFile extends JAdapterInstance
 
 			//Check if source folder exists
 			if (! JFolder::exists($sourceFolder)) {
-				JError::raiseWarning(1, JText::sprintf('JLIB_INSTALLER_ABORT_FILE_INSTALL_FAIL_SOURCE_DIRECTORY', $sourceFolder));
+				JError::raiseWarning(1, JText::sprintf('MOLAJO_INSTALLER_ABORT_FILE_INSTALL_FAIL_SOURCE_DIRECTORY', $sourceFolder));
 				// If installation fails, rollback
 				$this->parent->abort();
 				return false;
@@ -664,7 +664,7 @@ class JInstallerFile extends JAdapterInstance
 			return $this->parent->extension->store();
 		}
 		catch(JException $e) {
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_PACK_REFRESH_MANIFEST_CACHE'));
+			JError::raiseWarning(101, JText::_('MOLAJO_INSTALLER_ERROR_PACK_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

@@ -244,10 +244,10 @@ abstract class JDatabase
 					// @deprecated  11.3
 					if (JError::$legacy) {
 						JError::setErrorHandling(E_ERROR, 'die');
-						return JError::raiseError(500, JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+						return JError::raiseError(500, JText::sprintf('MOLAJO_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
 					}
 					else {
-						throw new DatabaseException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+						throw new DatabaseException(JText::sprintf('MOLAJO_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
 					}
 				}
 			}
@@ -259,10 +259,10 @@ abstract class JDatabase
 				// @deprecated  11.3
 				if (JError::$legacy) {
 					JError::setErrorHandling(E_ERROR, 'die');
-					return JError::raiseError(500, JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+					return JError::raiseError(500, JText::sprintf('MOLAJO_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
 				}
 				else {
-					throw new DatabaseException(JText::sprintf('JLIB_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
+					throw new DatabaseException(JText::sprintf('MOLAJO_DATABASE_ERROR_LOAD_DATABASE_DRIVER', $options['driver']));
 				}
 			}
 
@@ -276,10 +276,10 @@ abstract class JDatabase
 				// @deprecated  11.3
 				if (JError::$legacy) {
 					JError::setErrorHandling(E_ERROR, 'ignore');
-					return JError::raiseError(500, JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
+					return JError::raiseError(500, JText::sprintf('MOLAJO_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
 				}
 				else {
-					throw new DatabaseException(JText::sprintf('JLIB_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
+					throw new DatabaseException(JText::sprintf('MOLAJO_DATABASE_ERROR_CONNECT_DATABASE', $e->getMessage()));
 				}
 			}
 
@@ -1605,11 +1605,11 @@ abstract class JDatabase
 		JLog::add('JDatabase::stderr() is deprecated.', JLog::WARNING, 'deprecated');
 
 		if ($this->errorNum != 0) {
-			return JText::sprintf('JLIB_DATABASE_ERROR_FUNCTION_FAILED', $this->errorNum, $this->errorMsg)
+			return JText::sprintf('MOLAJO_DATABASE_ERROR_FUNCTION_FAILED', $this->errorNum, $this->errorMsg)
 			.($showSQL ? "<br />SQL = <pre>$this->sql</pre>" : '');
 		}
 		else {
-			return JText::_('JLIB_DATABASE_FUNCTION_NOERROR');
+			return JText::_('MOLAJO_DATABASE_FUNCTION_NOERROR');
 		}
 	}
 }
