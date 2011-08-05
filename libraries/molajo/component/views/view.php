@@ -97,7 +97,7 @@ class MolajoView extends JView
      *
      *  1. CurrentTemplate/html/$layout-folder/
      *  2. components/com_component/views/$view/tmpl/$layout-folder/
-     *  3. MOLAJO_EXTENSION_LAYOUTS/$layout-folder/
+     *  3. MOLAJO_LAYOUTS_EXTENSIONS/$layout-folder/
      *
      * @param  $tpl
      * @return bool|string
@@ -116,7 +116,7 @@ class MolajoView extends JView
         }
 
         /** path: core **/
-        $corePath = MOLAJO_EXTENSION_LAYOUTS.'/';
+        $corePath = MOLAJO_LAYOUTS_EXTENSIONS.'/';
 
         /** template **/
         if (is_dir($templatePath.$layout)) {
@@ -275,7 +275,7 @@ class MolajoView extends JView
     {
         $language = MolajoFactory::getLanguage();
         
-        $language->load('layouts', MOLAJO_EXTENSION_LAYOUTS, $language->getDefault(), true, true);
+        $language->load('layouts', MOLAJO_LAYOUTS_EXTENSIONS, $language->getDefault(), true, true);
         $language->load('layouts_'.$this->request['layout'], $layoutFolder, $language->getDefault(), true, true);
     }
 

@@ -18,16 +18,37 @@ define('MOLAJO_PATH_CACHE',			MOLAJO_PATH_BASE.'/cache');
 define('MOLAJO_LIBRARY',		    MOLAJO_PATH_ROOT.'/libraries/molajo');
 define('MOLAJO_PATH_MANIFESTS',		MOLAJO_PATH_ADMINISTRATOR.'/manifests');
 
-define('MOLAJO_LIBRARY_FORM',       MOLAJO_LIBRARY.'/fields/form');
-define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY.'/fields/fields');
-define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY.'/fields/fieldtypes');
-define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY.'/fields/attributes');
+define('MOLAJO_LIBRARY_COMPONENT',  MOLAJO_LIBRARY.'/component');
+define('MOLAJO_LIBRARY_CONTROLLERS', MOLAJO_LIBRARY_COMPONENT.'/controllers');
+define('MOLAJO_LIBRARY_MODELS',     MOLAJO_LIBRARY_COMPONENT.'/models');
+define('MOLAJO_LIBRARY_TABLES',     MOLAJO_LIBRARY_COMPONENT.'/tables');
+define('MOLAJO_LIBRARY_VIEWS',      MOLAJO_LIBRARY_COMPONENT.'/views');
+
+define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY_COMPONENT.'/fields/attributes');
+define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY_COMPONENT.'/fields/fields');
+define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY_COMPONENT.'/fields/fieldtypes');
+define('MOLAJO_LIBRARY_FORM',       MOLAJO_LIBRARY_COMPONENT.'/fields/form');
 
 if (MOLAJO_APPLICATION == 'installation') {
     define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE);
 } else {
     define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE.'/templates');
 }
+
+/** Layouts, Forms, and Parameters */
+$temp = MOLAJO_PATH_ROOT.'/layouts';
+define('MOLAJO_LAYOUTS', $temp);
+$temp = MOLAJO_LAYOUTS.'/extensions';
+define('MOLAJO_LAYOUTS_EXTENSIONS', $temp);
+$temp = MOLAJO_LAYOUTS.'/forms';
+define('MOLAJO_LAYOUTS_FORMS', $temp);
+$temp = MOLAJO_LAYOUTS.'/head';
+define('MOLAJO_LAYOUTS_HEAD', $temp);
+$temp = MOLAJO_LAYOUTS.'/wraps';
+define('MOLAJO_LAYOUTS_WRAPS', $temp);
+
+$temp = MOLAJO_PATH_ROOT.'/layouts/parameters';
+define('MOLAJO_LAYOUTS_PARAMETERS', $temp);
 
 /** Table */
 define('MOLAJO_CONFIG_OPTION_ID_TABLE', 100);
@@ -134,13 +155,6 @@ if (strpos(MOLAJO_CURRENT_URL, MOLAJO_APPLICATION)) {
 } else {
     define('MOLAJO_BASE_URL', MOLAJO_CURRENT_URL);
 }
-/** Layouts, Forms, and Parameters */
-$temp = MOLAJO_PATH_ROOT.'/layouts/extensions';
-define('MOLAJO_EXTENSION_LAYOUTS', $temp);
-$temp = MOLAJO_PATH_ROOT.'/layouts/parameters';
-define('MOLAJO_PARAMETERS', $temp);
-$temp = MOLAJO_PATH_ROOT.'/layouts/forms';
-define('MOLAJO_FORM_LAYOUTS', $temp);
 
 /** joomla */
 define('_JEXEC', 1);

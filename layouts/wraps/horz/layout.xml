@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="layout" method="upgrade">
-    <name>LAYOUT_CHROME_HORZ_NAME</name>
+    <name>LAYOUT_WRAPS_HORZ_NAME</name>
     <author>Amy Stephen</author>
     <creationDate>June 2011</creationDate>
     <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
@@ -8,13 +8,13 @@
     <authorEmail>AmyStephen@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
-    <description>LAYOUT_CHROME_HORZ_XML_DESCRIPTION</description>
+    <description>LAYOUT_WRAPS_HORZ_XML_DESCRIPTION</description>
 	<files>
 		<folder>layouts</folder>
 		<folder>language</folder>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layouts_chrome_horz_name.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_chrome_horz_name.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_wraps_horz_name.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_wraps_horz_name.sys.ini</language>
 	</languages>
 </extension>

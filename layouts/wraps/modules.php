@@ -9,23 +9,23 @@
 defined('MOLAJO') or die;
 
 /**
- * This is a file to add template specific chrome to module rendering.  To use it you would
+ * This is a file to add template specific wraps to module rendering.  To use it you would
  * set the style attribute for the given module(s) include in your template to use the style
- * for each given modChrome function.
+ * for each given modWrap function.
  *
  * eg.  To render a module mod_test in the submenu style, you would use the following include:
  * <jdoc:include type="module" name="test" style="submenu" />
  *
  * This gives template designers ultimate control over how modules are rendered.
  *
- * NOTICE: All chrome wrapping methods should be named: modChrome_{STYLE} and take the same
+ * NOTICE: All wraps wrapping methods should be named: modWrap_{STYLE} and take the same
  * two arguments.
  */
 
 /*
- * Module chrome for rendering the module in a submenu
+ * Module wraps for rendering the module in a submenu
  */
-function modChrome_rounded($module, &$params, &$attribs)
+function modWrap_rounded($module, &$params, &$attribs)
 {
 	if ($module->content)
 	{
@@ -52,7 +52,7 @@ function modChrome_rounded($module, &$params, &$attribs)
 /*
  * none (output raw module content)
  */
-function modChrome_none($module, &$params, &$attribs)
+function modWrap_none($module, &$params, &$attribs)
 {
 	echo $module->content;
 }
@@ -60,7 +60,7 @@ function modChrome_none($module, &$params, &$attribs)
 /*
  * xhtml (divs and font header tags)
  */
-function modChrome_xhtml($module, &$params, &$attribs)
+function modWrap_xhtml($module, &$params, &$attribs)
 {
 	$content = trim($module->content);
 	if (!empty ($content)) : ?>
@@ -76,7 +76,7 @@ function modChrome_xhtml($module, &$params, &$attribs)
 /*
  * allows sliders
  */
-function modChrome_sliders($module, &$params, &$attribs)
+function modWrap_sliders($module, &$params, &$attribs)
 {
 	$content = trim($module->content);
 	if (!empty($content))
@@ -97,7 +97,7 @@ function modChrome_sliders($module, &$params, &$attribs)
 /*
  * allows tabs
  */
-function modChrome_tabs($module, &$params, &$attribs)
+function modWrap_tabs($module, &$params, &$attribs)
 {
 	$content = trim($module->content);
 	if (!empty($content))

@@ -35,9 +35,9 @@ class MolajoViewTwig_display extends MolajoViewDisplay
         Twig_Autoloader::register();
 
         /** @var $loader  */
-        $loader = new Twig_Loader_Filesystem(MOLAJO_EXTENSION_LAYOUTS);
+        $loader = new Twig_Loader_Filesystem(MOLAJO_LAYOUTS_EXTENSIONS);
         $this->twig = new Twig_Environment($loader, array(
-          'cache' => MOLAJO_EXTENSION_LAYOUTS.'/cache',
+          'cache' => MOLAJO_LAYOUTS_EXTENSIONS.'/cache',
         ));
 
         /** Display View */

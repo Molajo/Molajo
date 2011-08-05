@@ -261,7 +261,7 @@ class plgSystemMolajo extends JPlugin
             return $path;
         }
         /** library */
-        $path = JPATH_ROOT.MOLAJO_PARAMETERS.'/'.$parameterSet.'.xml';
+        $path = JPATH_ROOT.MOLAJO_LAYOUTS_PARAMETERS.'/'.$parameterSet.'.xml';
         if(is_file($path)) {
             return $path;
         }
