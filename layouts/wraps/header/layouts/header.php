@@ -6,8 +6,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 1;
-$headerClass = 'TBD';
 
 if ($this->params->get('html5', true) === true) : ?>
 <header class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
@@ -23,16 +21,16 @@ if ($this->params->get('html5', true) === true) :
 endif;
 
 if ($this->params->get('showtitle', true)) : ?>
-    <h<?php echo $params->get('header_level'); ?> class="<?php echo $params->get('header_class'); ?>">
+    <h<?php echo $params->get('header_level', '1'); ?> class="<?php echo $params->get('header_class'); ?>">
         <?php echo $this->escape($this->row->title); ?>
-    </h<?php echo $params->get('header_level'); ?>>
+    </h<?php echo $params->get('header_level', '1'); ?>>
 <?php
 endif;
 
 if ($this->params->get('showsubtitle', true)) : ?>
-    <h<?php echo $params->get('header_level') + 1; ?> class="<?php echo $params->get('header_class'); ?>">
-        <?php echo $this->escape($this->row->title); ?>
-    </h<?php echo $params->get('header_level') + 1; ?>>
+    <h<?php echo $params->get('header_level', '1') + 1; ?> class="<?php echo $params->get('header_class'); ?>">
+        <?php echo $this->escape($this->row->subtitle); ?>
+    </h<?php echo $params->get('header_level', '1') + 1; ?>>
 <?php
 endif;
 
