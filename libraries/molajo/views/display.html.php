@@ -88,7 +88,7 @@ class MolajoViewDisplay extends MolajoView
         /** 6. Get Pagination data */
         $this->pagination = $this->get('Pagination');
 
-        /** 7. Optional data */
+        /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');
 //		$this->categoryAncestors    = $this->get('Ancestors');
 //		$this->categoryParent       = $this->get('Parent');
@@ -120,7 +120,7 @@ class MolajoViewDisplay extends MolajoView
 //$this->params->get('layout_show_page_heading', 1)
 //$this->params->get('layout_page_class_suffix', '')
 
-         /** process model errors */
+        /** process model errors */
         if (count($errors = $this->get('Errors'))) {
             JError::raiseError(500, implode("\n", $errors));
             return false;
@@ -132,7 +132,8 @@ class MolajoViewDisplay extends MolajoView
         if (MolajoFactory::getApplication()->getName() == 'site') {
 
         }
-
+var_dump($this->request);
+echo 'Layout'.$this->request['layout'];
         $layoutFolder = $this->findPath($this->request['layout']);
         
         if ($layoutFolder === false) {

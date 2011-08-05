@@ -16,4 +16,4 @@ defined('MOLAJO') or die;
  * @subpackage	Model
  * @since       1.0
  */
-class LoginModelDisplay extends MolajoModelDummy {}
+class LoginModelDummy extends MolajoModelDummy {}

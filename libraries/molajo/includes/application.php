@@ -308,7 +308,19 @@ class MolajoApplication extends JObject
                 }
             }
 
-            /** 6. Layout **/
+            /** 7. Model **/
+            $model = JRequest::getCmd('model', null);
+            if ($model == null) {
+                $results = false;
+            } else {
+                $model = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_MODEL + (int) MOLAJO_APPLICATION_ID, $layout);
+            }
+
+            if ($model === false) {
+                $model = $view;
+            }
+
+            /** 8. Layout **/
             $layout = JRequest::getCmd('layout', null);
             if ($layout == null) {
                 $results = false;
@@ -332,7 +344,7 @@ class MolajoApplication extends JObject
                 }
             }
 
-            /** 7. Format */
+            /** 9. Format */
             $format = JRequest::getCmd('format', null);
             if ($format == null) {
                 $results = false;
@@ -361,7 +373,7 @@ class MolajoApplication extends JObject
             $format = '';
         }
 
-        /** 8. id, cid and catid */
+        /** 10. id, cid and catid */
         $id = JRequest::getInt('id');
         $cids = JRequest::getVar('cid', array(), '', 'array');
         JArrayHelper::toInteger($cids);
@@ -386,25 +398,25 @@ class MolajoApplication extends JObject
         }
         $catid = JRequest::getInt('catid');
 
-        /** 9. acl implementation */
+        /** 11. acl implementation */
         $acl_implementation = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
         if ($acl_implementation === false) {
             $acl_implementation = 'core';
         }
 
-        /** 10. component table */
+        /** 12. component table */
         $component_table = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_TABLE);
         if ($component_table === false) {
             $component_table = '_common';
         }
 
-        /** 11. plugin helper */
+        /** 13. plugin helper */
         $plugin_type = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE);
         if ($plugin_type === false) {
             $plugin_type = 'content';
         }
 
-        /** 12. parameters */
+        /** 14. parameters */
         if ($this->getName() == 'site') {
             $params = MolajoComponentHelper::getParams($option);
 // $this->_mergeParams ();
@@ -414,6 +426,7 @@ class MolajoApplication extends JObject
 // $this->_mergeParams ();
 // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         }
+        
         /** Request Object */
         JRequest::setVar('option', $option);
         JRequest::setVar('view', $view);
@@ -436,7 +449,7 @@ class MolajoApplication extends JObject
         $session->set('page.option', $option);
         $session->set('page.no_com_option', substr($option, 4, strlen($option) - 4));
         $session->set('page.view', $view);
-        $session->set('page.model', $view);
+        $session->set('page.model', $model);
         $session->set('page.layout', $layout);
         $session->set('page.task', $task);
         $session->set('page.format', $format);

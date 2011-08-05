@@ -1640,10 +1640,16 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 4301, '', '', 0),
 ('core', 4301, 'html', 'html', 1);
 
-/* 5000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
+/* 5000 MOLAJO_CONFIG_OPTION_ID_MODEL +application id */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 5000, '', '', 0),
-('core', 5000, 'content', 'content', 1);
+('core', 5000, 'display', 'display', 1),
+('core', 5000, 'edit', 'edit', 2);
+
+/* 6000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('core', 6000, '', '', 0),
+('core', 6000, 'content', 'content', 1);
 
 /** ACL Component Information */
 
@@ -1828,10 +1834,17 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_login', 4000, 'html', 'html', 1),
 ('com_login', 4001, 'html', 'html', 1);
 
-/* 5000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
+/* MODULES */
+
+/* 5000 MOLAJO_CONFIG_OPTION_ID_MODEL +application id */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('core', 5000, '', '', 0),
-('core', 5000, '', '', 1);
+('com_login', 5000, '', '', 0),
+('com_login', 5000, 'dummy', 'dummy', 1);
+
+/* 6000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
+INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
+('com_login', 6000, '', '', 0),
+('com_login', 6000, '', '', 1);
 
 /** ACL Component Information */
 
