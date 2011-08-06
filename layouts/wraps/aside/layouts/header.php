@@ -6,15 +6,13 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 1;
-$headerClass = 'TBD'; ?>
-<?php if ($html5) { ?>
+if ($this->params->get('html5', true) === true) : ?>
 <aside class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
-<?php } else { ?>
+<?php else: ?>
 <div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
-<?php } ?>
-<?php if ($module->showtitle) : ?>
-    <h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>">
-        <?php echo $module->title; ?>
-<?php echo '</h'.$headerLevel; ?>>
-<?php endif; ?>
+<?php endif;
+if ($this->params->get('showtitle', true)) : ?>
+  <h<?php echo $params->get('header_level', '1'); ?>>
+      <?php echo $this->escape($this->row->title);
+  </h<?php echo $params->get('header_level', 1); ?>>
+endif; ?>
