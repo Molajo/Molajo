@@ -343,10 +343,11 @@ foreach ($files as $file) {
 
 /** Views */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/view.php', 'JView');
+$filehelper->requireClassFile(MOLAJO_LIBRARY_VIEWS.'/layout.php', 'MolajoLayout');
 $filehelper->requireClassFile(MOLAJO_LIBRARY_VIEWS.'/view.php', 'MolajoView');
 $files = JFolder::files(MOLAJO_LIBRARY_VIEWS, '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'view.php') {
+    if ($file == 'layout.php' || $file == 'view.php') {
     } else {
         if (strpos($file, $includeFormat)) {
             $filehelper->requireClassFile(MOLAJO_LIBRARY_VIEWS.'/'.$file, 'MolajoView'.ucfirst(substr($file, 0, strpos($file, '.'))));

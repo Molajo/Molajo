@@ -7,6 +7,19 @@
  */
 defined('MOLAJO') or die;
 
+defined('MOLAJO') or die;
+if ($this->params->get('html5', true) === true) : ?>
+<footer class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
+<?php else: ?>
+<div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
+<?php endif;
+if ($this->params->get('showtitle', true)) : ?>
+   <h<?php echo $params->get('header_level', '1'); ?>>
+       <?php echo $this->escape($this->row->title);
+    echo '</h'.$headerLevel; ?>>
+endif; ?>
+
+
 if ($this->params->get('html5', true) === true) : ?>
 <header class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>">
 <?php else: ?>

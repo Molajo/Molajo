@@ -81,13 +81,15 @@ class MolajoViewDisplay extends MolajoView
         }
 
         /** Find Layout Folder */
-        $layoutFolder = $this->findPath($this->request['layout']);
+        $this->findPath($this->request['layout'], 'extensions', $this->request['option'], 'component', $this->request['view']);
 
+ // $layout='default', $layout_type='extensions', $extension_name='',
+// $extension_type='component', $view='display', $folder='')
         /** Render Layout */
-        if ($layoutFolder === false) {
+        if ($this->layout_path === false) {
             parent::display($tpl);
         } else {
-            echo $this->renderLayout ($layoutFolder, $this->request['layout']);
+            echo $this->renderLayout ();
         }
     }
 }

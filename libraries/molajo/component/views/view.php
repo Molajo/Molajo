@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: view.html.php
  * @package     Molajo
  * @subpackage  View
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -41,8 +40,6 @@ class MolajoView extends MolajoLayout
         /** @var $this->user */
         $this->user = MolajoFactory::getUser();
 
-	$component = JComponentHelper::getComponent($type->request->option);
-				$data['component_id'] = $component->id;
         /** Set Page Meta */
 //		$pageModel = JModel::getInstance('Page', 'MolajoModel', array('ignore_request' => true));
 //		$pageModel->setState('params', $this->app->getParams());
@@ -94,8 +91,8 @@ class MolajoView extends MolajoLayout
         /**
          *  Display Results
          */
-        $layoutFolder = $this->findPath($layout);
-        echo $this->renderLayout ($layoutFolder, 'system');
+        $this->layout_path = $this->findPath($layout);
+        echo $this->renderLayout ($this->layout_path, 'system');
 
         return;
     }

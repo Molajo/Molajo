@@ -37,11 +37,11 @@ class MolajoComponentHelper
 	 */
 	public static function getComponent($option, $strict = false)
 	{
-		if (isset(self::$_layouts[$option])) {
-            $result = self::$_layouts[$option];
+		if (isset(self::$_components[$option])) {
+            $result = self::$_components[$option];
         } else {
 			if (self::_load($option)){
-				$result = self::$_layouts[$option];
+				$result = self::$_components[$option];
 			} else {
 				$result				= new stdClass;
 				$result->enabled	= $strict ? false : true;
@@ -124,21 +124,21 @@ class MolajoComponentHelper
 
         if (JFactory::getConfig()->get('caching') > 0) {
             $cache = MolajoFactory::getCache('_system','callback');
-		    self::$_layouts[$option] = $cache->get(array($db, 'loadObject'), null, $option, false);
+		    self::$_components[$option] = $cache->get(array($db, 'loadObject'), null, $option, false);
         } else {
-            self::$_layouts[$option] = $db->loadObject();
+            self::$_components[$option] = $db->loadObject();
         }
 
 		if ($error = $db->getErrorMsg()
-            || empty(self::$_layouts[$option])) {
+            || empty(self::$_components[$option])) {
 			JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
 			return false;
 		}
 
-		if (is_string(self::$_layouts[$option]->params)) {
+		if (is_string(self::$_components[$option]->params)) {
 			$temp = new JRegistry;
-			$temp->loadString(self::$_layouts[$option]->params);
-			self::$_layouts[$option]->params = $temp;
+			$temp->loadString(self::$_components[$option]->params);
+			self::$_components[$option]->params = $temp;
 		}
 
 		return true;
