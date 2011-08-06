@@ -69,7 +69,7 @@ class MolajoLayout extends JView
      * @since 1.0
      */
     protected $row;
-
+    
     /**
      * @var array $layout_path
      * @since 1.0
@@ -89,7 +89,7 @@ class MolajoLayout extends JView
      * @param $this->layout_path
      * @return void
      */
-    public function getLayout ($layout, $layout_type='extensions')
+    public function getLayout ()
     {
     }
 
@@ -103,49 +103,59 @@ class MolajoLayout extends JView
      *  3. [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder]
      *  4. layouts/[$layout_type]/[layout-folder]
      *
-     * @param string $layout
-     * @param string $layout_type
-     * @param string $extension_type
-     * @param string $extension_name
-     * @param string $view
-     * @param string $folder
      * @return bool|string
      */
-    protected function findPath ($layout='default', $layout_type='extensions', $extension_name='',
-                                        $extension_type='component', $view='display', $folder='')
+    protected function findPath ($layout, $layout_type)
     {
         /** @var $template */
         $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication()->getTemplate().'/html';
 
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
         $templateExtensionPath = '';
-        if ($extension_type == 'plugin') {
-            $templateExtensionPath = $template.'/'.$folder.'/'.$extension_name;
-
-        } else if ($extension_type == 'module') {
-            $templateExtensionPath = $template.'/'.$extension_name;
-
-        } else if ($extension_type == 'component') {
-            $templateExtensionPath = $template.'/'.$extension_name.'/'.$view;
+        if ($layout_type == 'extension') {
+            if ($this->request['extension_type'] == 'plugin') {
+                $templateExtensionPath = $template.'/'.$this->request['plugin_folder'].'/'.$this->request['option'];
+    
+            } else if ($this->request['extension_type'] == 'module') {
+                $templateExtensionPath = $template.'/'.$this->request['option'];
+    
+            } else if ($this->request['extension_type'] == 'component') {
+                $templateExtensionPath = $template.'/'.$this->request['option'].'/'.$this->request['view'];
+            }
         }
-
+        
         /** 2. @var $templateLayoutPath [template]/html/[layout-folder] */
-        $templateLayoutPath = $template.'/'.$layout_type;
-
+        $templateLayoutPath = '';
+        if ($layout_type == 'extension') {
+            $templateLayoutPath = $template.'/'.$layout_type;
+        }
+        
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
         $extensionPath = '';
-        if ($extension_type == 'plugins') {
-            $extensionPath = MOLAJO_PATH_ROOT.'/plugins/'.$folder.'/'.$extension_name.'/tmpl/';
-
-        } else if ($extension_type == 'modules') {
-            $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$extension_name.'/tmpl/';
-
-        } else {
-            $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$extension_name.'/views/'.$view.'/tmpl/';
+        if ($layout_type == 'extension') {
+            if ($this->request['extension_type'] == 'plugins') {
+                $extensionPath = MOLAJO_PATH_ROOT.'/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl/';
+    
+            } else if ($this->request['extension_type'] == 'modules') {
+                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$this->request['option'].'/tmpl/';
+    
+            } else {
+                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl/';
+            }
         }
 
-        /** 4. $corePath layouts/[$layout_type]/[layout-folder] */
-        $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
+        /** 4. $corePath layouts/[layout_type]/[layout-folder] */
+        if ($layout_type == 'extension') {
+            $corePath = MOLAJO_LAYOUTS_EXTENSIONS;    
+        } else if ($layout_type == 'form') {
+            $corePath = MOLAJO_LAYOUTS_FORMS;    
+        } else if ($layout_type == 'head') {
+            $corePath = MOLAJO_LAYOUTS_EXTENSIONS;    
+        } else if ($layout_type == 'wrap') {
+            $corePath = MOLAJO_LAYOUTS_WRAPS;
+        } else {
+            return false;
+        }
 
         /** template extension override **/
         if (is_dir($templateExtensionPath.'/'.$layout)) {
@@ -184,12 +194,10 @@ class MolajoLayout extends JView
     *
     * Loops through rowset, one row at a time, including top, header, body, footer, and bottom files
     *
-    * @param $layout
-    * @param $this->layout_path
     * @return string
     *
     */
-    protected function renderLayout ()
+    protected function renderLayout ($layout)
     {
         /** @var $rowCount */
         $rowCount = 1;
@@ -242,7 +250,7 @@ class MolajoLayout extends JView
             foreach ($this->rowset as $this->row) {
 
                 /** layout: top */
-                if ($rowCount == 1 && (!$this->request['layout'] == 'system')) {
+                if ($rowCount == 1 && (!$layout == 'system')) {
 
                     /** event: Before Content Display */
                     if (isset($this->row->event->beforeDisplayContent)) {
@@ -365,7 +373,6 @@ class MolajoLayout extends JView
         if ($this->params->get('load_asset_id_js', true) === true) {
 //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         }
-
     }
 
     /**
