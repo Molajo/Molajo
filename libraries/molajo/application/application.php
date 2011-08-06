@@ -257,6 +257,7 @@ class MolajoApplication extends JObject
         $option = '';
         $task = '';
         $view = '';
+        $model = '';
         $layout = '';
         $format = '';
         $component_table = '';
@@ -447,11 +448,13 @@ class MolajoApplication extends JObject
         $session->set('page.item_id', JRequest::getInt('Itemid', 0));
 
         $session->set('page.controller', $controller);
+        $session->set('page.extension_type', 'component');
         $session->set('page.option', $option);
         $session->set('page.no_com_option', substr($option, 4, strlen($option) - 4));
         $session->set('page.view', $view);
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
+        $session->set('page.layout_type', 'extension');
         $session->set('page.task', $task);
         $session->set('page.format', $format);
         $session->set('page.plugin_type', $plugin_type);
@@ -468,22 +471,8 @@ class MolajoApplication extends JObject
         $session->set('page.filter_fieldname', 'config_manager_list_filters');
         $session->set('page.select_fieldname', 'config_manager_grid_column');
 
-        return true;
-    }
-
-    /**
-     * loadComponentData
-     *
-     * Loads session page information into an array for passing into the component
-     *
-     * @return array
-     */
-    protected function loadComponentData ()
-    {
-        /** prepare component MVC input */
+        /** load into $data array for creation of the request object */
         $request = array();
-
-        $session = JFactory::getSession();
 
         $request['application_id'] = $session->set('page.application_id');
         $request['current_url'] = $session->get('page.current_url');
@@ -492,10 +481,12 @@ class MolajoApplication extends JObject
         $request['item_id'] = $session->get('page.item_id');
 
         $request['controller'] = $session->get('page.controller');
+        $request['extension_type'] = $session->get('page.extension_type');          
         $request['option'] = $session->get('page.option');
         $request['no_com_option'] = $session->get('page.no_com_option');
         $request['view'] = $session->get('page.view');
         $request['layout'] = $session->get('page.layout');
+        $request['layout_type'] = $session->get('page.layout_type');
         $request['model'] = $session->get('page.model');
         $request['task'] = $session->get('page.task');
         $request['format'] = $session->get('page.format');
@@ -643,7 +634,6 @@ class MolajoApplication extends JObject
 				$url = $prefix . $path . $url;
 			}
 		}
-
 
 		// If the message exists, enqueue it.
 		if (trim($msg)) {

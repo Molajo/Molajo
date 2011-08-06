@@ -2,15 +2,11 @@
 /**
  * @package     Molajo
  * @subpackage  Wrap
- * @copyright   Copyright (C) 2011 Cristina Solana. All rights reserved.
+ * @copyright   Copyright (C)  2011 Amy Stephen, Cristina Solana. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 1;
-$headerClass = 'TBD'; ?>
-<div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?>
-    <?php if ($module->showtitle) : ?>
-        <h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>">
-            <?php echo $module->title; ?>
-        <?php echo '</h'.$headerLevel; ?>>
-    <?php endif; ?>
+
+$headertype = 'div';
+include MOLAJO_LAYOUTS_COMMON.'/headertype.php';
+include MOLAJO_LAYOUTS_COMMON.'/headings.php';

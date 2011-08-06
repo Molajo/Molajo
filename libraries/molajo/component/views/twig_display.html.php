@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: MolajoViewTwig_display
  * @package     Molajo
  * @subpackage  Twig Display View
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.

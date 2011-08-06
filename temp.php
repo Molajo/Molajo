@@ -1,0 +1,13 @@
+{ ["id"]=> string(1) "3"
+["title"]=> string(23) "Recently Added Articles"
+["subtitle"]=> string(23) "Recently Added Articles"
+["module"]=> string(10) "mod_latest"
+["position"]=> string(6) "cpanel"
+["content"]=> string(0) ""
+["showtitle"]=> string(1) "1"
+["showsubtitle"]=> string(1) "1"
+["params"]=> string(133) "{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}"
+["menuid"]=> string(1) "0"
+["user"]=> int(0)
+["name"]=> string(6) "latest"
+["style"]=> NULL }

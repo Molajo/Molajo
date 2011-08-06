@@ -34,6 +34,16 @@
         />
 
         <field
+            name="subtitle"
+            type="text"
+            label="MOLAJO_FIELD_SUBTITLE_LABEL"
+            description="MOLAJO_FIELD_SUBTITLE_DESC"
+            class="inputbox"
+            size="30"
+            required="false"
+        />
+
+        <field
             name="alias"
             type="text"
             label="MOLAJO_FIELD_ALIAS_LABEL"

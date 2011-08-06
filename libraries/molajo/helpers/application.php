@@ -191,7 +191,7 @@ class MolajoApplicationHelper
 
 			case 'html':
 			case 'front_html':
-				if (!($result = self::_checkPath('/templates/'.MolajoApplication::getTemplate() .'/'.'components/'.$name.'.html.php', 0))) {
+				if (!($result = self::_checkPath('/templates/'.MolajoFactory::getApplication()->getTemplate().'/'.'components/'.$name.'.html.php', 0))) {
 					$result = self::_checkPath('/components/'.$user_option.'/'.$name.'.html.php', 0);
 				}
 				break;
@@ -403,7 +403,7 @@ class MolajoApplicationHelper
 			return $file;
 		}
 
-		$file = MOLAJO_PATH_SITE . $path;
+		$file = MOLAJO_PATH_SITE.$path;
 		if ($checkAdmin > -1 && file_exists($file)) {
 			return $file;
 		}

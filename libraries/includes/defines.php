@@ -38,6 +38,8 @@ if (MOLAJO_APPLICATION == 'installation') {
 /** Layouts, Forms, and Parameters */
 $temp = MOLAJO_PATH_ROOT.'/layouts';
 define('MOLAJO_LAYOUTS', $temp);
+$temp = MOLAJO_LAYOUTS.'/common';
+define('MOLAJO_LAYOUTS_COMMON', $temp);
 $temp = MOLAJO_LAYOUTS.'/extensions';
 define('MOLAJO_LAYOUTS_EXTENSIONS', $temp);
 $temp = MOLAJO_LAYOUTS.'/forms';

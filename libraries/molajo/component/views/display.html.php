@@ -42,7 +42,7 @@ class MolajoViewDisplay extends MolajoView
     protected $render;
 
     /**
-     * @var s$aveOrder string
+     * @var $saveOrder string
      */
     protected $saveOrder;
 
@@ -81,32 +81,45 @@ class MolajoViewDisplay extends MolajoView
         }
 
         /**
-         * Render Layout
+         * Render
          */
 
-        /** Find Layout Folder */
+        /** Find Folder */
         $this->findPath($this->request['layout'], $this->request['layout_type']);
 
-        /** Render Layout */
+        /** Render */
         if ($this->layout_path === false) {
             parent::display($tpl);
             return;
         }
 
-        $renderedOutput = $this->renderLayout ();
-
+        $renderedOutput = $this->renderLayout ($this->request['layout']);
+ 
         /**
-         *  Wrap Rendered Layout
+         *  Wrap
          */
 
-        /** Find Wrap Folder */
-        $this->findPath($this->request['wrap'], 'wrap');
+        /** Find Folder */
+        if (0 == 9) {
+            echo $renderedOutput;
+        }
 
-        /** Wrap Rendered Layout */
+        $this->rowset = array();
+
+//        $rowset[0] = MolajoModuleHelper::getModule('mod_'.$position);
+		$this->rowset[0]->title = 'This is the title';
+		$this->rowset[0]->subtitle = 'This is the subtitle';
+		$this->rowset[0]->content = $renderedOutput;
+		$this->rowset[0]->position = '9';
+
+        $this->findPath($this->params->get('wrap', 'section'), 'wrap');
+
+        /** Wrap Rendered */
         if ($this->layout_path === false) {
         } else {
             /* title, subtitle, content, class, heading level */
-            echo $this->renderWrap ();
+            echo $this->renderLayout ('section');
+            die();
         } 
     }
 }

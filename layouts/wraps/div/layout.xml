@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="layout" group="wraps" method="upgrade">
     <name>LAYOUT_WRAPS_DIV_NAME</name>
-    <author>Cristina Solana</author>
+    <author>Molajo Contributors</author>
     <creationDate>June 2011</creationDate>
-    <copyright>Copyright (C) 2011 Cristina Solana. All rights reserved.</copyright>
+    <copyright>Copyright (C) Individual Molajo Contributors. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>

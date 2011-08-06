@@ -31,6 +31,8 @@ abstract class MolajoModuleHelper
 	{
 		$result		= null;
 		$modules	= MolajoModuleHelper::_load();
+var_dump($modules);
+die();
 		$total		= count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -49,16 +51,18 @@ abstract class MolajoModuleHelper
 		// If we didn't find it, and the name is mod_something, create a dummy object
 		if (is_null($result) && substr($name, 0, 4) == 'mod_')
 		{
-			$result				= new stdClass;
-			$result->id			= 0;
-			$result->title		= '';
-			$result->module		= $name;
-			$result->position	= '';
-			$result->content	= '';
-			$result->showtitle	= 0;
-			$result->control	= '';
-			$result->params		= '';
-			$result->user		= 0;
+			$result				    = new stdClass;
+			$result->id			    = 0;
+			$result->title		    = '';
+			$result->subtitle	    = '';
+			$result->module		    = $name;
+			$result->position	    = '';
+			$result->content	    = '';
+			$result->showtitle	    = 0;
+			$result->showsubtitle	= 0;
+			$result->control	    = '';
+			$result->params		    = '';
+			$result->user		    = 0;
 		}
 
 		return $result;
@@ -78,7 +82,7 @@ abstract class MolajoModuleHelper
 		$result		= array();
 
 		$modules = MolajoModuleHelper::_load();
-
+var_dump($modules);
 		$total = count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -280,8 +284,8 @@ abstract class MolajoModuleHelper
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 
-$acl = new MolajoACL ();
-$acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
+            $acl = new MolajoACL ();
+            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
 
 			$query->where('m.application_id = '. $applicationId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
@@ -294,7 +298,7 @@ $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m')
 			$query->order('position, ordering');
 
 			// Set the query
-			$db->setQuery($query);
+            $db->setQuery($query->__toString());
             
 			$modules = $db->loadObjectList();
 			$clean	= array();

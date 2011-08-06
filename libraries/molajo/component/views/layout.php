@@ -42,6 +42,15 @@ class MolajoLayout extends JView
 
     /**
      * @var object $request
+     *
+     * Populated:
+     *
+     * Components (Page) -  MolajoApplication::getRequest ()
+     * Modules
+     * Plugins
+     * Formfields
+     * Wraps
+     *
      * @since 1.0
      */
     protected $request;
@@ -56,7 +65,7 @@ class MolajoLayout extends JView
      * @var object $params
      * @since 1.0
      */
-    public $params;
+    protected $params;
 
     /**
      * @var object $rowset
@@ -69,7 +78,13 @@ class MolajoLayout extends JView
      * @since 1.0
      */
     protected $row;
-    
+
+    /**
+     * @var array $pagination
+     * @since 1.0
+     */
+    protected $pagination;
+
     /**
      * @var array $layout_path
      * @since 1.0

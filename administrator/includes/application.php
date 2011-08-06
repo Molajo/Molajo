@@ -147,9 +147,7 @@ class MolajoAdministrator extends MolajoApplication
 				$component = JAdministratorHelper::findOption();
 			}
 
-			parent::getRequest();
-            $request = parent::loadComponentData();
-
+			$request    = parent::getRequest();
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
 

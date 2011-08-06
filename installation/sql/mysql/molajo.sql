@@ -126,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `#__groups` (
   `lft` INT(11) NOT NULL DEFAULT 0 COMMENT 'Nested set lft.' ,
   `rgt` INT(11) NOT NULL DEFAULT 0 COMMENT 'Nested set rgt.' ,
   `title` VARCHAR(255) NOT NULL DEFAULT '' ,
+  `subtitle` VARCHAR(255) NOT NULL DEFAULT '',
   `description` MEDIUMTEXT NOT NULL ,
   `type_id` INT(11) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Users: 0, Groups: 1' ,
   `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.' ,
@@ -280,6 +281,7 @@ CREATE TABLE `#__categories` (
   `path` VARCHAR(255) NOT NULL DEFAULT '',
   `extension` VARCHAR(50) NOT NULL DEFAULT '',
   `title` VARCHAR(255) NOT NULL,
+  `subtitle` VARCHAR(255) NOT NULL DEFAULT '',
   `alias` VARCHAR(255) NOT NULL DEFAULT '',
   `note` VARCHAR(255) NOT NULL DEFAULT '',
   `description` MEDIUMTEXT NOT NULL DEFAULT '',
@@ -317,6 +319,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `catid` INT (11) UNSIGNED NOT NULL DEFAULT  0 COMMENT 'Category ID associated with the Primary Key',
 
   `title` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'Title',
+  `subtitle` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Subtitle',
   `alias` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
 
   `content_type` tinyint(3) NOT NULL DEFAULT 0 COMMENT 'Content Type: Links to #__configuration.option_id = 10 and component_option values matching ',
@@ -394,6 +397,7 @@ CREATE TABLE IF NOT EXISTS `#__articles` (
   `catid` INT (11) UNSIGNED NOT NULL DEFAULT  0 COMMENT 'Category ID associated with the Primary Key',
 
   `title` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'Title',
+  `subtitle` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Subtitle',
   `alias` VARCHAR (255) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
 
   `content_type` tinyint(3) NOT NULL DEFAULT 0 COMMENT 'Content Type: Links to #__configuration.option_id = 10 and component_option values matching ',
@@ -584,6 +588,7 @@ CREATE TABLE `#__modules_menu` (
 CREATE TABLE `#__modules` (
   `id` INT (11) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL DEFAULT '',
+  `subtitle` VARCHAR(255) NOT NULL DEFAULT '',
   `note` VARCHAR(255) NOT NULL DEFAULT '',
   `content` MEDIUMTEXT NOT NULL,
   `ordering` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering',
@@ -1156,8 +1161,9 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 200, 'user_default', 'MOLAJO_FIELD_USER_DEFAULT_LABEL', 43),
 ('core', 200, 'category_default', 'MOLAJO_FIELD_CATEGORY_DEFAULT_LABEL', 44),
 ('core', 200, 'title', 'MOLAJO_FIELD_TITLE_LABEL', 45),
-('core', 200, 'version', 'MOLAJO_FIELD_VERSION_LABEL', 46),
-('core', 200, 'version_of_id', 'MOLAJO_FIELD_VERSION_OF_ID_LABEL', 47);
+('core', 200, 'subtitle', 'MOLAJO_FIELD_SUBTITLE_LABEL', 46),
+('core', 200, 'version', 'MOLAJO_FIELD_VERSION_LABEL', 47),
+('core', 200, 'version_of_id', 'MOLAJO_FIELD_VERSION_OF_ID_LABEL', 48);
 
 /* 210 MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS */
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1250,7 +1256,8 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('core', 330, 'publish_up', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_PUBLISH_DATE', 11),
 ('core', 330, 'state', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_STATE', 12),
 ('core', 330, 'stickied', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_STICKIED', 13),
-('core', 330, 'title', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_TITLE', 14);
+('core', 330, 'title', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_TITLE', 14),
+('core', 330, 'subtitle', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_SUBTITLE', 15);
 
 /* 340 MOLAJO_CONFIG_OPTION_ID_EDITOR_BUTTONS */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1917,34 +1924,33 @@ INSERT INTO `#__menu` VALUES (12, 'mainmenu', 'Article Table', 'table', '', 'tab
 #
 
 # admin modules
-INSERT INTO `#__modules` (`id`, `title`,  `note`, `content`, `ordering`, `position`, `checked_out`,
+INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `ordering`, `position`, `checked_out`,
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `application_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (1, 'Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 5, 5001),
-    (2, 'Popular Articles', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5008),
-    (3, 'Recently Added Articles', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5010),
-    (4, 'Unread Messages', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 5, 5011),
-    (5, 'Online Users', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 5, 5015),
-    (6, 'Toolbar', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 5, 5020),
-    (7, 'Quick Icons', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 5, 5030),
-    (8, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 5, 5035),
-    (9, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 5, 5040),
-    (10, 'Admin Submenu', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 5, 5050),
-    (11, 'User Status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 5, 5055),
-    (12, 'Title', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 5, 5060),
-    (13, 'My Panel', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 5, 5062),
-    (14, 'My Shortcuts', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 5, 5063);
+    (1, 'Login', 'System Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 1, 5001),
+    (2, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 1, 5008),
+    (3, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 1, 5010),
+    (4, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 1, 5011),
+    (5, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 1, 5015),
+    (6, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 1, 5020),
+    (7, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 1, 5030),
+    (8, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 1, 5035),
+    (9, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 1, 5040),
+    (10, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 1, 5050),
+    (11, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 1, 5055),
+    (12, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 1, 5060),
+    (13, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 1, 5062),
+    (14, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 1, 5063);
 
 # site modules
-INSERT INTO `#__modules` (`id`, `title`,  `note`, `content`, `ordering`, `position`, `checked_out`,
+INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `ordering`, `position`, `checked_out`,
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `application_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (15, 'Main Menu', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
-    (16, 'Login Form', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
-    (17, 'Breadcrumbs', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
-
+    (15, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
+    (16, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
+    (17, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
 
 INSERT INTO `#__modules_menu` VALUES
 (1,0),
