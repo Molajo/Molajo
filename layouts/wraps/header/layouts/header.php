@@ -46,16 +46,3 @@ if ($this->params->get('showsubtitle', true)) : ?>
     </h<?php echo $params->get('header_level', '1') + 1; ?>>
 <?php
 endif;
-
-if ($this->params->get('html5', true) === true) :
-    if ($this->params->get('showtitle', true)
-        && $this->params->get('showsubtitle', true)) : ?>
-	</hgroup>
-<?php endif;
-endif;
-
-if ($this->params->get('html5', true) === true) : ?>
-</header>
-<?php else: ?>
-</div>
-<?php endif;
