@@ -80,29 +80,15 @@ class MolajoViewDisplay extends MolajoView
             return false;
         }
 
-        /**
-         * Render
-         */
-
-        /** Find Folder */
+        /** Render Layout */
         $this->findPath($this->request['layout'], $this->request['layout_type']);
-
-        /** Render */
         if ($this->layout_path === false) {
             parent::display($tpl);
             return;
         }
-
         $renderedOutput = $this->renderLayout ($this->request['layout']);
- 
-        /**
-         *  Wrap
-         */
 
-        /** Find Folder */
-        if (0 == 9) {
-            echo $renderedOutput;
-        }
+        /** Wrap Rendered Layout */
 
         $this->rowset = array();
 
@@ -112,14 +98,14 @@ class MolajoViewDisplay extends MolajoView
 		$this->rowset[0]->content = $renderedOutput;
 		$this->rowset[0]->position = '9';
 
-        $this->findPath($this->params->get('wrap', 'section'), 'wrap');
+        $this->findPath($this->params->get('wrap', 'rounded'), 'wrap');
 
         /** Wrap Rendered */
         if ($this->layout_path === false) {
+            echo $renderedOutput;
         } else {
             /* title, subtitle, content, class, heading level */
-            echo $this->renderLayout ('section');
-            die();
+            echo $this->renderLayout ('rounded');
         } 
     }
 }

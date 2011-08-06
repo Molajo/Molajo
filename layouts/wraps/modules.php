@@ -58,22 +58,6 @@ function modWrap_none($module, &$params, &$attribs)
 }
 
 /*
- * xhtml (divs and font header tags)
- */
-function modWrap_xhtml($module, &$params, &$attribs)
-{
-	$content = trim($module->content);
-	if (!empty ($content)) : ?>
-		<div class="module<?php echo htmlspecialchars($params->get('moduleclass_sfx')); ?>">
-		<?php if ($module->showtitle != 0) : ?>
-			<h3><?php echo $module->title; ?></h3>
-		<?php endif; ?>
-			<?php echo $content; ?>
-		</div>
-	<?php endif;
-}
-
-/*
  * allows sliders
  */
 function modWrap_sliders($module, &$params, &$attribs)
