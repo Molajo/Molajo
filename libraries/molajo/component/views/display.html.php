@@ -81,7 +81,7 @@ class MolajoViewDisplay extends MolajoView
         }
 
         /** No results */
-        if ($this->params->get('suppress_no_results', true) === true
+        if ($this->params->get('suppress_no_results', false) === true
             && count($this->rowset == 0)) {
             return;
         }
@@ -96,10 +96,9 @@ class MolajoViewDisplay extends MolajoView
 
         /** Wrap Rendered Layout */
         $session = JFactory::getSession();
-        if (isset($this->params->wrap)) {
-            $layout = $this->params->get('wrap', 'section');
-        } else {
-            $layout = 'section';
+        $layout = $this->params->get('wrap', 'horizontal');
+        if ($layout == 'horz') {
+            $layout = 'horizontal';
         }
 
         $this->rowset = array();
@@ -115,8 +114,9 @@ class MolajoViewDisplay extends MolajoView
         if ($this->layout_path === false) {
             echo $renderedOutput;
         } else {
-            echo $this->renderLayout ($layout, 'rounded');
+            echo $this->renderLayout ($layout);
         }
+        die();
     }
 }
 
