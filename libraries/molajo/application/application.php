@@ -10,7 +10,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Base class for an application.
+ * MolajoApplication
  *
  * Acts as a Factory class for application specific objects and provides many
  * supporting API functions. Derived clases should supply the route(), dispatch()
@@ -177,7 +177,8 @@ class MolajoApplication extends JObject
 		// Set user specific editor.
 		$user	= MolajoFactory::getUser();
 		$editor	= $user->getParam('editor', $this->getCfg('editor'));
-		if (!MolajoPluginHelper::isEnabled('editors', $editor)) {
+		if (MolajoPluginHelper::isEnabled('editors', $editor)) {
+        } else {
 			$editor	= $this->getCfg('editor');
 			if (!MolajoPluginHelper::isEnabled('editors', $editor)) {
 				$editor	= 'none';
@@ -463,110 +464,76 @@ class MolajoApplication extends JObject
         $session->set('page.cid', (array) $cids);
         $session->set('page.catid', (int) $catid);
 
-        $session->set('page.params', $params);
-
         $session->set('page.acl_implementation', $acl_implementation);
         $session->set('page.component_table', $component_table);
         $session->set('page.component_path', $component_path);
         $session->set('page.filter_fieldname', 'config_manager_list_filters');
         $session->set('page.select_fieldname', 'config_manager_grid_column');
 
-        /** Prepare Document Information */
-		$menus		= $this->getMenu();
-		$pathway	= $this->getPathway();
-		$title		= null;
+        /** retrieve from db */
+        $this->getContentInfo ();
 
-		// Because the application sets a default page title,
-		// we need to get it from the menu item itself
-		$menu = $menus->getActive();
-var_dump($menu);
-        die;
-		if ($menu) {
-			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
-		}
-		else {
-			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
-		}
+        /** Retrieve System Info */
+        /** @var $document */
+        $document = MolajoFactory::getDocument();
+		$menus		    = $this->getMenu();
+		$menu           = $menus->getActive();
+		$pathway	    = $this->getPathway();
+		$title		    = null;
+        $this->params   = MolajoComponentHelper::getParams($option);
 
-		$id = (int) @$menu->query['id'];
-
-		if ($menu && ($menu->query['option'] != 'com_content' || $menu->query['view'] == 'article' || $id != $this->category->id)) {
-			$path = array(array('title' => $this->category->title, 'link' => ''));
-			$category = $this->category->getParent();
-
-			while (($menu->query['option'] != 'com_content' || $menu->query['view'] == 'article' || $id != $category->id) && $category->id > 1)
-			{
-				$path[] = array('title' => $category->title, 'link' => ContentHelperRoute::getCategoryRoute($category->id));
-				$category = $category->getParent();
-			}
-
-			$path = array_reverse($path);
-
-			foreach ($path as $item)
-			{
-				$pathway->addItem($item['title'], $item['link']);
-			}
-		}
+        $id = (int) @$menu->query['id'];
 
 		$title = $this->params->get('page_title', '');
 
 		if (empty($title)) {
+			$title = $session->get('page.title');
+        }
+        if (empty($title)) {
 			$title = $this->getCfg('sitename');
-		}
-		elseif ($this->getCfg('sitename_pagetitles', 0) == 1) {
+        }
+
+		if ($this->getCfg('sitename_pagetitles', 0) == 1) {
 			$title = JText::sprintf('JPAGETITLE', $this->getCfg('sitename'), $title);
-		}
-		elseif ($this->getCfg('sitename_pagetitles', 0) == 2) {
+
+		} elseif ($this->getCfg('sitename_pagetitles', 0) == 2) {
 			$title = JText::sprintf('JPAGETITLE', $title, $this->getCfg('sitename'));
 		}
 
-		$this->document->setTitle($title);
+		$document->setTitle($title);
 
-		if ($this->category->metadesc)
-		{
-			$this->document->setDescription($this->category->metadesc);
-		}
-		elseif (!$this->category->metadesc && $this->params->get('menu-meta_description'))
-		{
-			$this->document->setDescription($this->params->get('menu-meta_description'));
-		}
+		$document->setDescription($session->get('page.metadesc'));
+		$document->setMetadata('keywords', $session->get('page.metakey'));
+		$document->setMetadata('robots', $session->get('page.robots'));
 
-		if ($this->category->metakey)
-		{
-			$this->document->setMetadata('keywords', $this->category->metakey);
-		}
-		elseif (!$this->category->metakey && $this->params->get('menu-meta_keywords'))
-		{
-			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
-		}
-
-		if ($this->params->get('robots'))
-		{
-			$this->document->setMetadata('robots', $this->params->get('robots'));
-		}
-
-		if ($this->getCfg('MetaAuthor') == '1') {
-			$this->document->setMetaData('author', $this->category->getMetadata()->get('author'));
-		}
-
-		$mdata = $this->category->getMetadata()->toArray();
-
-		foreach ($mdata as $k => $v)
-		{
+		$metadata = explode(',', $session->get('page.metadata'));
+		foreach ($metadata as $k => $v) {
 			if ($v) {
-				$this->document->setMetadata($k, $v);
+				$document->setMetadata($k, $v);
 			}
 		}
 
-		// Add feed links
 		if ($this->params->get('show_feed_link', 1)) {
 			$link = '&format=feed&limitstart=';
 			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
+			$document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
 			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-			$this->document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
+			$document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
 		}
+        
 
+        $session->set('page.params', $params);
+
+		// Load the parameters. Merge Global and Menu Item params into new object
+//		$params = $app->getParams();
+//		$menuParams = new JRegistry;
+
+//		if ($menu = $app->getMenu()->getActive()) {
+//			$menuParams->loadString($menu->params);
+//		}
+
+//		$mergedParams = clone $menuParams;
+//		$mergedParams->merge($params);
 
         /** load into $data array for creation of the request object */
         $request = array();
@@ -599,8 +566,85 @@ var_dump($menu);
         $request['filter_fieldname'] = $session->get('page.filter_fieldname');
         $request['select_fieldname'] = $session->get('page.select_fieldname');
 
+        $request['title'] = $session->get('page.title');
+        $request['subtitle'] = $session->get('page.subtitle');
+        $request['metakey'] = $session->get('page.metakey');
+        $request['metadesc'] = $session->get('page.metadesc');
+        $request['metadata'] = $session->get('page.metadata');
+
         return $request;
     }
+
+    /**
+     * getContentInfo
+     *
+     * @return	array
+     * @since	1.0
+     */
+    public function getContentInfo()
+    {
+        $session = JFactory::getSession();
+
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select($db->namequote('id'));
+        $query->select($db->namequote('title'));
+        $query->select('"" as ' .$db->namequote('subtitle'));
+
+
+        $session->get('page.item_id');
+        if ((int) $session->get('page.item_id') > 0) {
+            $query->select('"" as ' .$db->namequote('metakey'));
+            $query->select('"" as ' .$db->namequote('metadesc'));
+            $query->select('"" as ' .$db->namequote('metadata'));
+            $query->select($db->namequote('params'));
+            $query->from($db->namequote($session->get('page.component_table')));
+            $query->where($db->namequote('id').' = '.(int) $session->get('page.id'));
+
+        } else if ((int) $session->get('page.id') > 0) {
+            $query->select($db->namequote('metakey'));
+            $query->select($db->namequote('metadesc'));
+            $query->select($db->namequote('metadata'));
+            $query->select($db->namequote('params'));
+            $query->from($db->namequote($session->get('page.component_table')));
+            $query->where($db->namequote('id').' = '.(int) $session->get('page.id'));
+
+        } else {
+            $query->select($db->namequote('metakey'));
+            $query->select($db->namequote('metadesc'));
+            $query->select($db->namequote('metadata'));
+            $query->select($db->namequote('params'));
+            $query->from($db->namequote('#__categories'));
+            $query->where($db->namequote('id').' > '.(int) $session->get('page.catid'));
+        }
+
+        $db->setQuery($query->__toString());
+
+        if ($results = $db->loadObjectList()) {
+        } else {
+            $session->set('page.title', '');
+            $session->set('page.subtitle', '');
+            $session->set('page.metakey', '');
+            $session->set('page.metadesc', '');
+            $session->set('page.metadata', '');
+            $session->set('page.params', '');
+        }
+
+        if (count($results) > 0) {
+            foreach ($results as $count => $item) {
+                $session->set('page.title', $item->title);
+                $session->set('page.subtitle', $item->subtitle);
+                $session->set('page.metakey', $item->metakey);
+                $session->set('page.metadesc', $item->metadesc);
+                $session->set('page.metadata', $item->metadata);
+                $session->set('page.params', $item->params);
+            }
+        }
+
+        return;
+    }
+
 
 	/**
 	 * Render the application.

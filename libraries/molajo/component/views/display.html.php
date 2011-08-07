@@ -81,7 +81,8 @@ class MolajoViewDisplay extends MolajoView
         }
 
         /** No results */
-        if ($this->params->get('suppress_no_results', true) === true) {
+        if ($this->params->get('suppress_no_results', true) === true
+            && count($this->rowset == 0)) {
             return;
         }
 
@@ -94,25 +95,28 @@ class MolajoViewDisplay extends MolajoView
         $renderedOutput = $this->renderLayout ($this->request['layout']);
 
         /** Wrap Rendered Layout */
+        $session = JFactory::getSession();
+        if (isset($this->params->wrap)) {
+            $layout = $this->params->get('wrap', 'section');
+        } else {
+            $layout = 'section';
+        }
 
         $this->rowset = array();
 
-		$this->rowset[0]->title = $this->tempTitle;
-		$this->rowset[0]->subtitle = $this->tempSubtitle;
-		$this->rowset[0]->pub = $this->tempPublishedDate;
-		$this->rowset[0]->content = $renderedOutput;
-		$this->rowset[0]->position = '';
+		$this->rowset[0]->title     = $session->set('page.title', '');
+		$this->rowset[0]->subtitle  = $session->set('page.subtitle', '');
+		$this->rowset[0]->content   = $renderedOutput;
+		$this->rowset[0]->position  = '';
 
-        $this->findPath($this->params->get('wrap', 'rounded'), 'wrap');
+        $this->findPath($layout, 'wrap');
 
         /** Wrap Rendered */
         if ($this->layout_path === false) {
             echo $renderedOutput;
         } else {
-            /* title, subtitle, content, class, heading level */
-            echo $this->renderLayout ('rounded');
+            echo $this->renderLayout ($layout, 'rounded');
         }
-        die();
     }
 }
 

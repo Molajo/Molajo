@@ -140,7 +140,6 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function dispatch($component = null)
 	{
-
 		try
 		{
 			if ($component === null) {

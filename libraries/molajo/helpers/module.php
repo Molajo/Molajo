@@ -31,8 +31,7 @@ abstract class MolajoModuleHelper
 	{
 		$result		= null;
 		$modules	= MolajoModuleHelper::_load();
-var_dump($modules);
-die();
+
 		$total		= count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{

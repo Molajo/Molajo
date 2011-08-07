@@ -18,8 +18,9 @@ defined('MOLAJO') or die;
 class MolajoApplicationHelper
 {
 	/**
-	 * Application information array
-	 */
+     * @var null $_applications
+     * @since 1.0
+     */
 	protected static $_applications = null;
 
 	/**

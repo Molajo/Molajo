@@ -382,27 +382,32 @@ class MolajoLayout extends JView
         /** Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_PATH_ROOT.'/media/site/'.$applicationName;
         $urlPath = JURI::root().'media/site/'.$applicationName;
-
-        if ($this->params->get('load_application_css', true) === true) {
+        if (isset($this->params->load_application_css)
+            && $this->params->get('load_application_css', true) === true) {
             $this->loadMediaCSS ($filePath, $urlPath);
         }
-        if ($this->params->get('load_application_js', true) === true) {
+        if (isset($this->params->load_application_css)
+            && $this->params->get('load_application_css', true) === true) {
             $this->loadMediaJS ($filePath, $urlPath);
         }
 
         /** Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js] */
-        if ($this->params->get('load_component_css', true) === true) {
+        if (isset($this->params->load_component_css)
+            && $this->params->get('load_component_css', true) === true) {
             $this->loadMediaCSS ($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
         }
-        if ($this->params->get('load_component_js', true) === true) {
+        if (isset($this->params->load_component_js)
+            && $this->params->get('load_component_js', true) === true) {
             $this->loadMediaJS ($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
         }
 
         /** Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        if ($this->params->get('load_asset_id_css', true) === true) {
+        if (isset($this->params->load_application_css)
+            && $this->params->get('load_application_css', true) === true) {
 //            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         }
-        if ($this->params->get('load_asset_id_js', true) === true) {
+        if (isset($this->params->load_application_css)
+            && $this->params->get('load_application_css', true) === true) {
 //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         }
     }
