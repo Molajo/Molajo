@@ -258,7 +258,7 @@ abstract class MolajoFactory
 	 * @param   integer  $cache_time  time to cache feed for (using internal cache mechanism)
 	 *
 	 * @return  mixed  SimplePie parsed object on success, false on failure
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getFeedParser($url, $cache_time = 0)
 	{
@@ -395,7 +395,7 @@ abstract class MolajoFactory
 	 * @see JURI
 	 *
 	 * @return JURI object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getURI($uri = 'SERVER')
 	{
@@ -411,7 +411,7 @@ abstract class MolajoFactory
 	 * @see JDate
 	 *
 	 * @return JDate object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getDate($time = 'now', $tzOffset = null)
 	{
@@ -468,7 +468,7 @@ abstract class MolajoFactory
 	 *
 	 * @return  JRegistry
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _createConfig($file, $type = 'PHP', $namespace = '')
 	{
@@ -503,7 +503,7 @@ abstract class MolajoFactory
 	 * @param   array  $options An array containing session options
 	 *
 	 * @return JSession object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _createSession($options = array())
 	{
@@ -530,7 +530,7 @@ abstract class MolajoFactory
 	 *
 	 * @return JDatabase object
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _createDbo()
 	{
@@ -565,7 +565,7 @@ abstract class MolajoFactory
 	 * Create a mailer object
 	 *
 	 * @return  JMail object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _createMailer()
 	{
@@ -613,7 +613,7 @@ abstract class MolajoFactory
 	 * @see JLanguage
 	 *
 	 * @return JLanguage object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _createLanguage()
 	{
@@ -631,7 +631,7 @@ abstract class MolajoFactory
 	 * @see MolajoDocument
 	 *
 	 * @return MolajoDocument object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _createDocument()
 	{
@@ -663,7 +663,7 @@ abstract class MolajoFactory
 	 * @see JStream
 	 *
 	 * @return  JStream
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getStream($use_prefix=true, $use_network=true,$ua=null, $uamask=false)
 	{

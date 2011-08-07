@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldRules extends MolajoFormField
 {
@@ -22,7 +22,7 @@ class MolajoFormFieldRules extends MolajoFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $type = 'Rules';
 
@@ -32,7 +32,7 @@ class MolajoFormFieldRules extends MolajoFormField
 	 * TODO: Add access check.
 	 *
 	 * @return  string  The field calendar markup.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInput()
 	{

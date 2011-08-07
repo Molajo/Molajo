@@ -20,7 +20,7 @@ define('JROUTER_MODE_SEF', 1);
  *
  * @package     Joomla.Platform
  * @subpackage  Application
- * @since       11.1
+ * @since       1.0
  */
 class MolajoRouter extends JObject
 {
@@ -68,7 +68,7 @@ class MolajoRouter extends JObject
 	 * @param   array   $options An associative array of options
 	 *
 	 * @return  MolajoRouter  A MolajoRouter object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getInstance($application, $options = array())
 	{
@@ -134,7 +134,7 @@ class MolajoRouter extends JObject
 	 * @param   string  The internal URL
 	 *
 	 * @return  string  The absolute search engine friendly URL
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function build($url)
 	{
@@ -161,7 +161,7 @@ class MolajoRouter extends JObject
 	 * Get the router mode
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getMode()
 	{
@@ -171,7 +171,7 @@ class MolajoRouter extends JObject
 	/**
 	 * Get the router mode
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setMode($mode)
 	{
@@ -186,7 +186,7 @@ class MolajoRouter extends JObject
 	 * @param   boolean  $create  If True, the variable will be created if it doesn't exist yet
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setVar($key, $value, $create = true)
 	{
@@ -202,7 +202,7 @@ class MolajoRouter extends JObject
 	 * @param   boolean  $merge   If True, the array will be merged instead of overwritten
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setVars($vars = array(), $merge = true)
 	{
@@ -219,7 +219,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The name of the variable
 	 *
 	 * @return  mixed    Value of the variable
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getVar($key)
 	{
@@ -234,7 +234,7 @@ class MolajoRouter extends JObject
 	 * Get the router variable array
 	 *
 	 * @return  array    An associative array of router variables
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getVars()
 	{
@@ -247,7 +247,7 @@ class MolajoRouter extends JObject
 	 * @param  string  callback  The function to be called
 	 *
 	 * @return
-	 * @since   11.1.
+	 * @since   1.0.
 	 */
 	public function attachBuildRule($callback)
 	{
@@ -260,7 +260,7 @@ class MolajoRouter extends JObject
 	 * @param   string  $callback   The function to be called.
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function attachParseRule($callback)
 	{
@@ -273,7 +273,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The raw route
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _parseRawRoute(&$uri)
 	{
@@ -286,7 +286,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The sef URI
 	 *
 	 * @return  string   Internal URI
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _parseSefRoute(&$uri)
 	{
@@ -299,7 +299,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The internal URL
 	 *
 	 * @return           Raw Route
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _buildRawRoute(&$uri)
 	{
@@ -311,7 +311,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The uri
 	 *
 	 * @return  string   The SEF route
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _buildSefRoute(&$uri)
 	{
@@ -323,7 +323,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The URI to parse
 	 *
 	 * @return  array    The array of processed URI variables
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _processParseRules(&$uri)
 	{
@@ -342,7 +342,7 @@ class MolajoRouter extends JObject
 	 * @param   string   The URI
 	 * @return
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _processBuildRules(&$uri)
 	{
@@ -357,7 +357,7 @@ class MolajoRouter extends JObject
 	 * @param   string   $url  The URI
 	 *
 	 * @return  JURI           A JURI object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _createURI($url)
 	{
@@ -391,7 +391,7 @@ class MolajoRouter extends JObject
 	 * @param   array    An array of route segments
 	 *
 	 * @return  array    Array of encoded route segments
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _encodeSegments($segments)
 	{

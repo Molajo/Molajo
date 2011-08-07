@@ -14,20 +14,20 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Parameter
- * @since       11.1
+ * @since       1.0
  * @deprecated  Use MolajoForm instead
  */
 class MolajoParameter extends JRegistry
 {
 	/**
 	 * @var    string  The raw params string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_raw = null;
 
 	/**
 	 * @var    object  The XML params element
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_xml = null;
 
@@ -48,7 +48,7 @@ class MolajoParameter extends JRegistry
 	 *
 	 * @param   string   The raw parms text.
 	 * @param   string   Path to the XML setup file.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($data = '', $path = '')
 	{
@@ -80,7 +80,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group for the parameter.
 	 *
 	 * @return  string  The value set, or the default if the value was not previously set (or null).
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function def($key, $default = '', $group = '_default')
 	{
@@ -93,7 +93,7 @@ class MolajoParameter extends JRegistry
 	 * Sets the XML object from custom XML files.
 	 *
 	 * @param   JSimpleXMLElement	An XML object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setXML(&$xml)
 	{
@@ -117,7 +117,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group that the data should bind to. The default group is used if not supplied.
 	 *
 	 * @return  boolean  True if the data was successfully bound, false otherwise.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function bind($data, $group = '_default')
 	{
@@ -137,7 +137,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group to render.  The default group is used if not supplied.
 	 *
 	 * @return  string  HTML
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function render($name = 'params', $group = '_default')
 	{
@@ -177,7 +177,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group to render.  The default group is used if not supplied.
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function renderToArray($name = 'params', $group = '_default')
 	{
@@ -198,7 +198,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group.  The default group is used if not supplied.
 	 *
 	 * @return  mixed  False if no params exist or integer number of parameters that exist.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getNumParams($group = '_default')
 	{
@@ -213,7 +213,7 @@ class MolajoParameter extends JRegistry
 	 * Get the number of params in each group.
 	 *
 	 * @return  array  Array of all group names as key and parameters count as value.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getGroups()
 	{
@@ -235,7 +235,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group to render.  The default group is used if not supplied.
 	 *
 	 * @return  array  An array of all parameters, each as array of the label, the form element and the tooltip.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getParams($name = 'params', $group = '_default')
 	{
@@ -258,7 +258,7 @@ class MolajoParameter extends JRegistry
 	 * @param   string  An optional group to render.  The default group is used if not supplied.
 	 *
 	 * @return  array  Any array of the label, the form element and the tooltip.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getParam(&$node, $control_name = 'params', $group = '_default')
 	{
@@ -287,7 +287,7 @@ class MolajoParameter extends JRegistry
 	 *
 	 * @param   string  A path to the XML setup file.
 	 * @return  object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function loadSetupFile($path=null)
 	{
@@ -318,7 +318,7 @@ class MolajoParameter extends JRegistry
 	 * @param   boolean  False (default) to reuse parameter elements; true to load the parameter element type again.
 	 *
 	 * @return  object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function loadElement($type, $new = false)
 	{
@@ -368,7 +368,7 @@ class MolajoParameter extends JRegistry
 	 * JParameter/types.
 	 *
 	 * @param   string|array	Directory or directories to search.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function addElementPath($path)
 	{

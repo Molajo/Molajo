@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldGroupedList extends MolajoFormField
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $type = 'GroupedList';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 	 * Method to get the field option groups.
 	 *
 	 * @return  array  The field option objects as a nested array in groups.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getGroups()
 	{
@@ -123,7 +123,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 	 * Method to get the field calendar markup.
 	 *
 	 * @return  string  The field calendar markup.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInput()
 	{

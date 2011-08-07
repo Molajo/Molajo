@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  com_users
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldUser extends MolajoFormField
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldUser extends MolajoFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $type = 'User';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldUser extends MolajoFormField
 	 * Method to get the field calendar markup.
 	 *
 	 * @return  string  The field calendar markup.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInput()
 	{
@@ -102,7 +102,7 @@ class MolajoFormFieldUser extends MolajoFormField
 	 * Method to get the filtering groups (null means no filtering)
 	 *
 	 * @return  mixed  array of filtering groups or null.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getGroups()
 	{
@@ -113,7 +113,7 @@ class MolajoFormFieldUser extends MolajoFormField
 	 * Method to get the users to exclude from the list of users
 	 *
 	 * @return  mixed  array of users to exclude or null to to not exclude them
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getExcluded()
 	{

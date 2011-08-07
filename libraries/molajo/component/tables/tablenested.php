@@ -97,8 +97,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer  Primary key of the node for which to get the path.
 	 * @param   boolean  Only select diagnostic data for the nested sets.
 	 * @return  mixed    Boolean false on failure or array of node objects on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/getPath
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/getPath
 	 */
 	public function getPath($pk = null, $diagnostic = false)
 	{
@@ -135,8 +135,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer  Primary key of the node for which to get the tree.
 	 * @param   boolean  Only select diagnostic data for the nested sets.
 	 * @return  mixed    Boolean false on failure or array of node objects on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/getTree
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/getTree
 	 */
 	public function getTree($pk = null, $diagnostic = false)
 	{
@@ -171,8 +171,8 @@ class MolajoTableNested extends MolajoTable
 	 *
 	 * @param   integer  Primary key of the node to check.
 	 * @return  boolean  True if a leaf node.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/isLeaf
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/isLeaf
 	 */
 	public function isLeaf($pk = null)
 	{
@@ -198,8 +198,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer  The primary key of the node to reference new location by.
 	 * @param   string   Location type string. ['before', 'after', 'first-child', 'last-child']
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/setLocation
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/setLocation
 	 */
 	public function setLocation($referenceId, $position = 'after')
 	{
@@ -226,8 +226,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   string   WHERE clause to use for limiting the selection of rows to compact the
 	 *					ordering values.
 	 * @return  mixed    Boolean true on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/move
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/move
 	 */
 	public function move($delta, $where = '')
 	{
@@ -272,8 +272,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   string   Location type string. ['before', 'after', 'first-child', 'last-child']
 	 * @param   integer  The primary key of the node to move.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/moveByReference
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/moveByReference
 	 */
 
 	public function moveByReference($referenceId, $position = 'after', $pk = null)
@@ -487,8 +487,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer  The primary key of the node to delete.
 	 * @param   boolean  True to delete child nodes, false to move them up a level.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/delete
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/delete
 	 */
 	public function delete($pk = null, $children = true)
 	{
@@ -614,8 +614,8 @@ class MolajoTableNested extends MolajoTable
 	 * Asset that the nested set data is valid.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/check
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/check
 	 */
 	public function check()
 	{
@@ -659,8 +659,8 @@ class MolajoTableNested extends MolajoTable
 	 *
 	 * @param   boolean  True to update null values as well.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/store
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/store
 	 */
 	public function store($updateNulls = false)
 	{
@@ -815,8 +815,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer The publishing state. eg. [0 = unpublished, 1 = published]
 	 * @param   integer The user id of the user performing the operation.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/publish
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/publish
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{
@@ -947,8 +947,8 @@ class MolajoTableNested extends MolajoTable
 	 *
 	 * @param   integer  Primary key of the node to move.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/orderUp
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/orderUp
 	 */
 	public function orderUp($pk)
 	{
@@ -1041,8 +1041,8 @@ class MolajoTableNested extends MolajoTable
 	 *
 	 * @param   integer  Primary key of the node to move.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/orderDown
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/orderDown
 	 */
 	public function orderDown($pk)
 	{
@@ -1226,8 +1226,8 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer  The level to assign to the current nodes.
 	 * @param   string   The path to the current nodes.
 	 * @return  integer  1 + value of root rgt on success, false on failure
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/rebuild
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/rebuild
 	 */
 	public function rebuild($parentId = null, $leftId = 0, $level = 0, $path = '')
 	{
@@ -1307,8 +1307,8 @@ class MolajoTableNested extends MolajoTable
 	 *
 	 * @param   integer  Primary key of the node for which to get the path.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTableNested/rebuildPath
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTableNested/rebuildPath
 	 */
 	public function rebuildPath($pk = null)
 	{
@@ -1368,7 +1368,7 @@ class MolajoTableNested extends MolajoTable
 	 * @param   array    lft values of rows to be reordered
 	 *
 	 * @return  integer  1 + value of root rgt on success, false on failure
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function saveorder($idArray = null, $lft_array = null)
 	{
@@ -1412,7 +1412,7 @@ class MolajoTableNested extends MolajoTable
 	 * @param   integer  Value to look up the node by.
 	 * @param   string   Key to look up the node by.
 	 * @return  mixed    Boolean false on failure or node object on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getNode($id, $key = null)
 	{
@@ -1469,7 +1469,7 @@ class MolajoTableNested extends MolajoTable
 	 * @param   string   The position relative to the reference node where the room
 	 *					should be made.
 	 * @return  mixed    Boolean false on failure or data object on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getTreeRepositionData($referenceNode, $nodeWidth, $position = 'before')
 	{

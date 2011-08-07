@@ -548,12 +548,12 @@ class MolajoSite extends MolajoApplication
 	}
 
 	/**
-	 * Return a reference to the JPathway object.
+	 * Return a reference to the MolajoPathway object.
 	 *
 	 * @param	string	$name		The name of the application.
 	 * @param	array	$options	An optional associative array of configuration settings.
 	 *
-	 * @return	object JPathway.
+	 * @return	object MolajoPathway.
 	 * @since	1.5
 	 */
 	public function getPathway($name = null, $options = array())

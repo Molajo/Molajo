@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldTel extends MolajoFormFieldText
 {
@@ -20,7 +20,7 @@ class MolajoFormFieldTel extends MolajoFormFieldText
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $type = 'Tel';
 }

@@ -21,7 +21,7 @@ abstract class MolajoFormField
 	 * The description text for the form field.  Usually used in tooltips.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $description;
 
@@ -29,7 +29,7 @@ abstract class MolajoFormField
 	 * The JXMLElement object of the <field /> XML element that describes the form field.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $element;
 
@@ -37,7 +37,7 @@ abstract class MolajoFormField
 	 * The MolajoForm object of the form attached to the form field.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $form;
 
@@ -45,7 +45,7 @@ abstract class MolajoFormField
 	 * The form control prefix for field names from the MolajoForm object attached to the form field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $formControl;
 
@@ -53,7 +53,7 @@ abstract class MolajoFormField
 	 * The hidden state for the form field.
 	 *
 	 * @var    boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $hidden = false;
 
@@ -61,7 +61,7 @@ abstract class MolajoFormField
 	 * True to translate the field label string.
 	 *
 	 * @var    boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $translateLabel = true;
 
@@ -69,7 +69,7 @@ abstract class MolajoFormField
 	 * True to translate the field description string.
 	 *
 	 * @var    boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $translateDescription = true;
 
@@ -77,7 +77,7 @@ abstract class MolajoFormField
 	 * The document id for the form field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $id;
 
@@ -85,7 +85,7 @@ abstract class MolajoFormField
 	 * The calendar for the form field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $calendar;
 
@@ -93,7 +93,7 @@ abstract class MolajoFormField
 	 * The label for the form field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $label;
 
@@ -102,7 +102,7 @@ abstract class MolajoFormField
 	 * field.  Most often used for list field types.
 	 *
 	 * @var    boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $multiple = false;
 
@@ -110,7 +110,7 @@ abstract class MolajoFormField
 	 * The name of the form field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $name;
 
@@ -118,7 +118,7 @@ abstract class MolajoFormField
 	 * The name of the field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $fieldname;
 
@@ -126,7 +126,7 @@ abstract class MolajoFormField
 	 * The group of the field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $group;
 
@@ -135,7 +135,7 @@ abstract class MolajoFormField
 	 * be considered valid.
 	 *
 	 * @var    boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $required = false;
 
@@ -143,7 +143,7 @@ abstract class MolajoFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $type;
 
@@ -152,7 +152,7 @@ abstract class MolajoFormField
 	 * to validate the value for a field.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $validate;
 
@@ -160,7 +160,7 @@ abstract class MolajoFormField
 	 * The value of the form field.
 	 *
 	 * @var    mixed
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $value;
 
@@ -168,7 +168,7 @@ abstract class MolajoFormField
 	 * The count value for generated name field
 	 *
 	 * @var    integer
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	static protected $count = 0;
 
@@ -176,7 +176,7 @@ abstract class MolajoFormField
 	 * The string used for generated fields names
 	 *
 	 * @var    integer
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	static protected $generated_fieldname = '__field';
 
@@ -195,7 +195,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  MolajoFormField
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($form = null)
 	{
@@ -213,7 +213,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  mixed  The property value or null.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __get($name)
 	{
@@ -266,7 +266,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  object  The form field object so that the method can be used in a chain.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setForm(MolajoForm $form)
 	{
@@ -289,7 +289,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setup(& $element, $value, $group = null)
 	{
@@ -368,7 +368,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  string  The id to be used for the field calendar tag.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getId($fieldId, $fieldName)
 	{
@@ -411,7 +411,7 @@ abstract class MolajoFormField
 	 * Method to get the field calendar markup.
 	 *
 	 * @return  string  The field calendar markup.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInput()
     {
@@ -429,7 +429,7 @@ abstract class MolajoFormField
      * Method to Define Common Attributes for all FormFields
 	 *
 	 * @return  array  $this->rowset
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInputPreFieldTypeProcessing()
     {
@@ -610,7 +610,7 @@ abstract class MolajoFormField
      * Output Form Field to Layout
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInputPostFieldTypeProcessing()
     {
@@ -621,7 +621,7 @@ abstract class MolajoFormField
 	 * Method to get the field title.
 	 *
 	 * @return  string  The field title.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getTitle()
 	{
@@ -644,7 +644,7 @@ abstract class MolajoFormField
 	 * Method to get the field label markup.
 	 *
 	 * @return  string  The field label markup.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getLabel()
 	{
@@ -689,7 +689,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  string  The name to be used for the field calendar tag.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getName($fieldName)
 	{
@@ -740,7 +740,7 @@ abstract class MolajoFormField
 	 *
 	 * @return  string  The field name
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getFieldName($fieldName)
 	{

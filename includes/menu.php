@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage	Menu
  * @since		1.0
  */
-class MolajoMenuSite extends JMenu
+class MolajoMenuSite extends MolajoMenu
 {
 	/**
      * load

@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldEditors extends MolajoFormFieldList
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldEditors extends MolajoFormFieldList
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $type = 'Editors';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldEditors extends MolajoFormFieldList
 	 * Method to get the field options.
 	 *
 	 * @return  array  The field option objects.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getOptions()
 	{

@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $type = 'TemplateStyle';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 	 * Method to get the field option groups.
 	 *
 	 * @return  array  The field option objects as a nested array in groups.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getGroups()
 	{
@@ -39,7 +39,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 
 		// Get the application and application_id.
 		$applicationName = $this->element['application'] ? (string) $this->element['application'] : 'site';
-		$application = JApplicationHelper::getApplicationInfo($applicationName, true);
+		$application = MolajoApplicationHelper::getApplicationInfo($applicationName, true);
 
 		// Get the template.
 		$template = (string) $this->element['template'];

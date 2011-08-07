@@ -98,7 +98,7 @@ class MolajoTableExtension extends MolajoTable
 	 *
 	 * @return  bool  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{

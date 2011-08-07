@@ -15,4 +15,4 @@ defined('MOLAJO') or die;
  * @subpackage	Application
  * @since		1.5
  */
-class MolajoMenuAdministrator extends JMenu {}
+class MolajoMenuAdministrator extends MolajoMenu {}

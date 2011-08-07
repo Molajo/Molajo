@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldMenuItem extends MolajoFormFieldGroupedList
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldMenuItem extends MolajoFormFieldGroupedList
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $type = 'MenuItem';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldMenuItem extends MolajoFormFieldGroupedList
 	 * Method to get the field option groups.
 	 *
 	 * @return  array  The field option objects as a nested array in groups.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getGroups()
 	{

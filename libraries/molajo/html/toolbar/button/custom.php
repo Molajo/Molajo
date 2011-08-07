@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoButtonCustom extends MolajoButton
 {
@@ -34,7 +34,7 @@ class MolajoButtonCustom extends MolajoButton
 	 * Get the button CSS Id
 	 *
 	 * @return  string  Button CSS Id
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function fetchId($type='Custom', $html = '', $id = 'custom')
 	{

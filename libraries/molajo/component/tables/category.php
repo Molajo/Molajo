@@ -45,7 +45,7 @@ class MolajoTableCategory extends MolajoTableNested
 	 * Method to return the title to use for the asset table.
 	 *
 	 * @return  string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getAssetTitle()
 	{
@@ -106,7 +106,7 @@ class MolajoTableCategory extends MolajoTableNested
 	 * @return  bool
 	 *
 	 * @see		MolajoTable::check
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function check()
 	{
@@ -135,7 +135,7 @@ class MolajoTableCategory extends MolajoTableNested
 	 * @return  null|string	null is operation was satisfactory, otherwise returns an error
 	 *
 	 * @see		MolajoTable:bind
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function bind($array, $ignore = '')
 	{
@@ -167,7 +167,7 @@ class MolajoTableCategory extends MolajoTableNested
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function store($updateNulls = false)
 	{

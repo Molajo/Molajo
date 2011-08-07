@@ -30,7 +30,7 @@ class MolajoDocumentRenderer extends JObject
 	 * Renderer mime type
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_mime = "text/html";
 
@@ -54,7 +54,7 @@ class MolajoDocumentRenderer extends JObject
 	 * @param   string   $content  Override the output of the renderer
 	 *
 	 * @return  string   The output of the script
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function render($name, $params = null, $content = null)
 	{
@@ -64,7 +64,7 @@ class MolajoDocumentRenderer extends JObject
 	 * Return the content type of the renderer
 	 *
 	 * @return  string  The contentType
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getContentType() {
 		return $this->_mime;

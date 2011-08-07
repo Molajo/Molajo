@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 abstract class MolajoButton extends JObject
 {
@@ -83,7 +83,7 @@ abstract class MolajoButton extends JObject
 	 *
 	 * @param   string   $identifier	Icon identification string
 	 * @return  string   CSS class name
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function fetchIconClass($identifier)
 	{
@@ -95,7 +95,7 @@ abstract class MolajoButton extends JObject
 	 *
 	 * Defined in the final button class
 	 *
-	 * @since       11.1
+	 * @since       1.0
 	 */
 	abstract public function fetchButton();
 }

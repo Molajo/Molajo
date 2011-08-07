@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoPagination extends JObject
 {
@@ -59,7 +59,7 @@ class MolajoPagination extends JObject
 	 * may be useful for filters and extra values when dealing with lists and GET requests.
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_additionalUrlParams = array();
 
@@ -136,7 +136,7 @@ class MolajoPagination extends JObject
 	 *
 	 * @return  mixed    The old value for the parameter.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setAdditionalUrlParam($key, $value)
 	{
@@ -162,7 +162,7 @@ class MolajoPagination extends JObject
 	 *
 	 * @return  mixed    The value if it exists or null if it does not.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getAdditionalUrlParam($key)
 	{
@@ -176,7 +176,7 @@ class MolajoPagination extends JObject
 	 *
 	 * @param   integer  $index The row index
 	 * @return  integer  	Rationalised offset for a row with a given index.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getRowOffset($index)
 	{
@@ -187,7 +187,7 @@ class MolajoPagination extends JObject
 	 * Return the pagination data object, only creating it if it doesn't already exist.
 	 *
 	 * @return  object   Pagination data object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getData()
 	{
@@ -202,7 +202,7 @@ class MolajoPagination extends JObject
 	 * Create and return the pagination pages counter string, ie. Page 2 of 4.
 	 *
 	 * @return  string   Pagination pages counter string.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getPagesCounter()
 	{
@@ -218,7 +218,7 @@ class MolajoPagination extends JObject
 	 * Create and return the pagination result set counter string, ie. Results 1-10 of 42
 	 *
 	 * @return  string   Pagination result set counter string.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getResultsCounter()
 	{
@@ -512,7 +512,7 @@ class MolajoPagination extends JObject
 	 * Create and return the pagination data object.
 	 *
 	 * @return  object  Pagination data object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _buildDataObject()
 	{
@@ -591,7 +591,7 @@ class MolajoPagination extends JObject
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoPaginationObject extends JObject
 {

@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoToolbar extends JObject
 {
@@ -103,7 +103,7 @@ class MolajoToolbar extends JObject
 	 * Get the list of toolbar links.
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getItems()
 	{
@@ -114,7 +114,7 @@ class MolajoToolbar extends JObject
 	 * Get the name of the toolbar.
 	 *
 	 * @return  string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getName()
 	{
@@ -193,7 +193,7 @@ class MolajoToolbar extends JObject
 	 * @param   string  buttonType
 	 *
 	 * @return  object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function loadButtonType($type, $new = false)
 	{
@@ -248,7 +248,7 @@ class MolajoToolbar extends JObject
 	 * it will look in libraries/joomla/html/toolbar/button.
 	 *
 	 * @param   string|array	directory or directories to search.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function addButtonPath($path)
 	{

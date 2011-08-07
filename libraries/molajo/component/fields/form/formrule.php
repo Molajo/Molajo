@@ -25,7 +25,7 @@ class MolajoFormRule
 	 * The regular expression to use in testing a form field value.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $regex;
 
@@ -33,7 +33,7 @@ class MolajoFormRule
 	 * The regular expression modifiers to use when testing a form field value.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $modifiers;
 
@@ -53,7 +53,7 @@ class MolajoFormRule
 	 *
 	 * @return  boolean  True if the value is valid, false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 * @throws  JException on invalid rule.
 	 */
 	public function test(& $element, $value, $group = null, & $calendar = null, & $form = null)

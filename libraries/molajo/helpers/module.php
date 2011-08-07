@@ -219,7 +219,7 @@ var_dump($modules);
 	 * @param   string  $module	The name of the module
 	 * @param   string  $layout	The name of the module layout. If alternative layout, in the form template:filename.
 	 * @return  string  The path to the module layout
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getLayoutPath($module, $layout = 'default')
 	{

@@ -91,6 +91,14 @@ class MolajoLayout extends JView
      */
     protected $layout_path;
 
+
+    /**
+     * @var array $layout_path
+     * @since 1.0
+     */
+    protected $tempTitle;
+    protected $tempSubtitle;
+
     /**
      * loadLanguage
      *
@@ -216,6 +224,8 @@ class MolajoLayout extends JView
     {
         /** @var $rowCount */
         $rowCount = 1;
+        $this->tempTitle = 'pop';
+        $this->tempSubtitle = 'corn';
 
         /** Media */
         $this->loadMedia ();
@@ -266,6 +276,13 @@ class MolajoLayout extends JView
 
                 /** layout: top */
                 if ($rowCount == 1 && (!$layout == 'system')) {
+
+                    if (isset($this->row->title)) {
+                        $this->tempTitle = $this->row->title;
+                    }
+                    if (isset($this->row->title)) {
+                        $this->tempSubtitle = $this->row->title;
+                    }
 
                     /** event: Before Content Display */
                     if (isset($this->row->event->beforeDisplayContent)) {

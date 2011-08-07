@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoButtonStandard extends MolajoButton
 {
@@ -44,7 +44,7 @@ class MolajoButtonStandard extends MolajoButton
 	 * Get the button CSS Id
 	 *
 	 * @return  string  Button CSS Id
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function fetchId($type='Standard', $name = '', $text = '', $task = '', $list = true, $hideMenu = false)
 	{
@@ -59,7 +59,7 @@ class MolajoButtonStandard extends MolajoButton
 	 * @param   ???		$list
 	 *
 	 * @return  string   JavaScript command string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getCommand($name, $task, $list)
 	{

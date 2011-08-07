@@ -27,7 +27,7 @@ class MolajoLanguageHelper
 	 *
 	 * @return  array  List of system languages
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function createLanguageList($actualLanguage, $basePath = MOLAJO_PATH_BASE, $caching = false, $installed = false)
 	{
@@ -72,7 +72,7 @@ class MolajoLanguageHelper
 	 * Tries to detect the language.
 	 *
 	 * @return  string  locale or null if not found
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function detectLanguage()
 	{
@@ -118,7 +118,7 @@ class MolajoLanguageHelper
 	 *
 	 * @return  array  An array of published languages
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getLanguages($key='default')
 	{

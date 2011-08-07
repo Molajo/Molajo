@@ -144,7 +144,7 @@ class MolajoAdministrator extends MolajoApplication
 		try
 		{
 			if ($component === null) {
-				$component = JAdministratorHelper::findOption();
+				$component = MolajoAdministratorHelper::findOption();
 			}
 
 			$request    = parent::getRequest();

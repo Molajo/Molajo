@@ -25,7 +25,7 @@ class MolajoTableLanguage extends MolajoTable
 	 *
 	 * @return  MolajoTableLanguage
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct(&$db)
 	{
@@ -37,7 +37,7 @@ class MolajoTableLanguage extends MolajoTable
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function check()
 	{

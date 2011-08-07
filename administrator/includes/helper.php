@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Administrator
  * @subpackage	Application
  */
-class JAdministratorHelper
+class MolajoAdministratorHelper
 {
 	/**
 	 * Return the application option string [main component].

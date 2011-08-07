@@ -94,6 +94,8 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/application.php', 'Mo
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/application.php', 'JApplication');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/exception.php', 'MolajoException');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/pathway.php', 'MolajoPathway');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/pathway.php', 'JPathway');
 
 if (file_exists(MOLAJO_PATH_BASE.'/includes/helper.php')) {
     require_once MOLAJO_PATH_BASE.'/includes/helper.php';

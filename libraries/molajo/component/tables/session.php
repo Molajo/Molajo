@@ -103,7 +103,7 @@ class MolajoTableSession extends MolajoTable
 	 *
 	 * @return  boolean  True if a session for this user exists
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function exists($userid)
 	{

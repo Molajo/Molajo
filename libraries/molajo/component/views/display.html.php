@@ -80,6 +80,11 @@ class MolajoViewDisplay extends MolajoView
             return false;
         }
 
+        /** No results */
+        if ($this->params->get('suppress_no_results', true) === true) {
+            return;
+        }
+
         /** Render Layout */
         $this->findPath($this->request['layout'], $this->request['layout_type']);
         if ($this->layout_path === false) {
@@ -92,11 +97,11 @@ class MolajoViewDisplay extends MolajoView
 
         $this->rowset = array();
 
-//        $rowset[0] = MolajoModuleHelper::getModule('mod_'.$position);
-		$this->rowset[0]->title = 'This is the title';
-		$this->rowset[0]->subtitle = 'This is the subtitle';
+		$this->rowset[0]->title = $this->tempTitle;
+		$this->rowset[0]->subtitle = $this->tempSubtitle;
+		$this->rowset[0]->pub = $this->tempPublishedDate;
 		$this->rowset[0]->content = $renderedOutput;
-		$this->rowset[0]->position = '9';
+		$this->rowset[0]->position = '';
 
         $this->findPath($this->params->get('wrap', 'rounded'), 'wrap');
 
@@ -106,7 +111,8 @@ class MolajoViewDisplay extends MolajoView
         } else {
             /* title, subtitle, content, class, heading level */
             echo $this->renderLayout ('rounded');
-        } 
+        }
+        die();
     }
 }
 

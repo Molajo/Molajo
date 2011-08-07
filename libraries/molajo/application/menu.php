@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Application
- * @since       11.1
+ * @since       1.0
  */
 class MolajoMenu extends JObject
 {
@@ -22,7 +22,7 @@ class MolajoMenu extends JObject
 	 * Array to hold the menu items
 	 *
 	 * @var    array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected $_items = array ();
 
@@ -30,7 +30,7 @@ class MolajoMenu extends JObject
 	 * Identifier of the default menu item
 	 *
 	 * @var    integer
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected $_default = array();
 
@@ -38,7 +38,7 @@ class MolajoMenu extends JObject
 	 * Identifier of the active menu item
 	 *
 	 * @var    integer
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected $_active = 0;
 
@@ -50,7 +50,7 @@ class MolajoMenu extends JObject
 	 * @param   array    $options  An array of configuration options.
 	 *
 	 * @return  MolajoMenu  A MolajoMenu object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($options = array())
 	{
@@ -79,7 +79,7 @@ class MolajoMenu extends JObject
 	 * @param   array   $options  An associative array of options
 	 *
 	 * @return  MolajoMenu  A menu object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getInstance($application, $options = array())
 	{
@@ -98,7 +98,7 @@ class MolajoMenu extends JObject
 			if (file_exists($path)) {
 				require_once $path;
 
-				// Create a JPathway object
+				// Create a MolajoPathway object
 				$classname = 'MolajoMenu'.ucfirst($application);
 				$instance = new $classname($options);
 			}
@@ -117,7 +117,7 @@ class MolajoMenu extends JObject
 	 * @param   integer  $id  The item id
 	 *
 	 * @return  mixed  The item object, or null if not found
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getItem($id)
 	{
@@ -138,7 +138,7 @@ class MolajoMenu extends JObject
 	 * @param   string   $language	The language cod (since 1.6).
 	 *
 	 * @return  boolean  True, if succesfull
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setDefault($id, $language='')
 	{
@@ -158,7 +158,7 @@ class MolajoMenu extends JObject
 	 * @param   string   $language   The language code, default * meaning all.
 	 *
 	 * @return  object   The item object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getDefault($language='*')
 	{
@@ -322,7 +322,7 @@ class MolajoMenu extends JObject
 	 * Loads the menu items
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function load()
 	{

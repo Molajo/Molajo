@@ -28,7 +28,7 @@ abstract class MolajoUserHelper
 	 * @param   integer  $groupId	The id of the group.
 	 *
 	 * @return  mixed    	Boolean true on success, JException on error.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addUserToGroup($userId, $groupId)
 	{
@@ -84,7 +84,7 @@ abstract class MolajoUserHelper
 	 *
 	 * @param   integer  $userId		The id of the user.
 	 * @return  mixed  Array on success, JException on error.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getUserGroups($userId)
 	{
@@ -100,7 +100,7 @@ abstract class MolajoUserHelper
 	 * @param   integer  $userId		The id of the user.
 	 * @param   integer  $groupId	The id of the group.
 	 * @return  mixed  Boolean true on success, JException on error.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function removeUserFromGroup($userId, $groupId)
 	{
@@ -139,7 +139,7 @@ abstract class MolajoUserHelper
 	 * @param   array    $groups		An array of group ids to put the user in.
 	 *
 	 * @return  mixed  Boolean true on success, JException on error.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function setUserGroups($userId, $groups)
 	{
@@ -217,7 +217,7 @@ abstract class MolajoUserHelper
 	 * @param   string   $activation	Activation string
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function activateUser($activation)
 	{
@@ -462,7 +462,7 @@ abstract class MolajoUserHelper
 	 *
 	 * @param   integer  $length	Length of the password to generate
 	 * @return  string  Random Password
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function genRandomPassword($length = 8)
 	{
@@ -489,7 +489,7 @@ abstract class MolajoUserHelper
 	 * @param   integer  $count
 	 *
 	 * @return  string  $value converted to the 64 MD5 characters.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _toAPRMD5($value, $count)
 	{
@@ -511,7 +511,7 @@ abstract class MolajoUserHelper
 	 * @param   string   $hex  Hex data.
 	 *
 	 * @return  string  Binary data.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	private static function _bin($hex)
 	{

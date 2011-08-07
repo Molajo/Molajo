@@ -105,7 +105,7 @@ class MolajoUser extends JObject
 	/**
 	 * Associative array of user names => group ids
 	 *
-	 * @since  11.1
+	 * @since  1.0
 	 * @var    array
 	 */
 	public $groups = array();
@@ -152,7 +152,7 @@ class MolajoUser extends JObject
 	 * @param   integer  $identifier  The primary key of the user to load (optional).
 	 *
 	 * @return  object  JUser
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($identifier = 0)
 	{
@@ -179,7 +179,7 @@ class MolajoUser extends JObject
 	 * @param   integer  $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
 	 *
 	 * @return  object   JUser	The User object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getInstance($identifier = 0)
 	{
@@ -217,7 +217,7 @@ class MolajoUser extends JObject
 	 * @param   mixed    $default	Parameter default value
 	 *
 	 * @return  mixed    The value or the default if it did not exist
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getParam($key, $default = null)
 	{
@@ -231,7 +231,7 @@ class MolajoUser extends JObject
 	 * @param   mixed    $value	Parameter value
 	 *
 	 * @return  mixed    Set parameter value
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setParam($key, $value)
 	{
@@ -245,7 +245,7 @@ class MolajoUser extends JObject
 	 * @param   mixed    $value	Parameter value
 	 *
 	 * @return  mixed    Set parameter value
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function defParam($key, $value)
 	{
@@ -271,7 +271,7 @@ class MolajoUser extends JObject
 	 * @param   string   $assetname	The name of the asset on which to perform the action.
 	 *
 	 * @return  boolean  True if authorised
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function authorise($action, $assetname = null)
 	{
@@ -297,7 +297,7 @@ class MolajoUser extends JObject
 	 * @param   string   $action		The name of the section within the component from which to retrieve the actions.
 	 *
 	 * @return  array    List of categories that this group can do this action to (empty array if none). Categories must be published.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getAuthorisedCategories($component, $action)
     {
@@ -311,7 +311,7 @@ class MolajoUser extends JObject
 	 * Gets an array of the authorised access levels for the user
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getAuthorisedViewLevels()
 	{
@@ -326,7 +326,7 @@ class MolajoUser extends JObject
 	 * Gets an array of the authorised user groups
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getAuthorisedGroups()
 	{
@@ -339,7 +339,7 @@ class MolajoUser extends JObject
 	 * @param   integer  $timestamp	The timestamp, defaults to 'now'.
 	 *
 	 * @return  boolean  True on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setLastVisit($timestamp = null)
 	{
@@ -361,7 +361,7 @@ class MolajoUser extends JObject
 	 * @param   path	$path			Set the parameters setup file base path to be used to load the user parameters.
 	 *
 	 * @return  object   The user parameters object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getParameters($loadsetupfile = false, $path = null)
 	{
@@ -397,7 +397,7 @@ class MolajoUser extends JObject
 	 * @param   object   $params	The user parameters object
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setParameters($params)
 	{
@@ -415,7 +415,7 @@ class MolajoUser extends JObject
 	 * @param   string   $prefix	The user table prefix to be used
 	 *
 	 * @return  object   The user table object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getTable($type = null, $prefix = 'MolajoTable')
 	{
@@ -443,7 +443,7 @@ class MolajoUser extends JObject
 	 * @param   array  $array	The associative array to bind to the object
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function bind(& $array)
 	{
@@ -543,7 +543,7 @@ class MolajoUser extends JObject
 	 * @param   boolean  $updateOnly	Save the object only if not a new user
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function save($updateOnly = false)
 	{
@@ -662,7 +662,7 @@ class MolajoUser extends JObject
 	 * Method to delete the JUser object from the database
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function delete()
 	{
@@ -692,7 +692,7 @@ class MolajoUser extends JObject
 	 * @param   mixed  $id  The user id of the user to load
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function load($id)
 	{

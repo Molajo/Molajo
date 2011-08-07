@@ -39,7 +39,7 @@ class MolajoTableMenu extends MolajoTableNested
 	 * @return  mixed  null is operation was satisfactory, otherwise returns an error
 	 *
 	 * @see     MolajoTable:bind
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function bind($array, $ignore = '')
 	{
@@ -75,7 +75,7 @@ class MolajoTableMenu extends MolajoTableNested
 	 *
 	 * @return  boolean
 	 * @see     MolajoTable::check
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function check()
 	{
@@ -121,7 +121,7 @@ class MolajoTableMenu extends MolajoTableNested
 	 *
 	 * @return  boolean
 	 * @see     MolajoTable::store
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function store($updateNulls = false)
 	{

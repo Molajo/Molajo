@@ -8,22 +8,21 @@
  */
 defined('MOLAJO') or die;
 
-
 /**
- * Class to manage the site application pathway.
+ * Class to manage the application pathway.
  *
  * @package		Molajo
  * @subpackage	Pathway
  * @since		1.0
  */
-class MolajoPathwaySite extends MolajoPathway
+class MolajoPathwayAdministrator extends MolajoPathway
 {
 	/**
 	 * Class constructor.
 	 *
 	 * @param	array
 	 *
-	 * @return	MolajoPathwaySite
+	 * @return	MolajoPathwayAdministrator
 	 * @since	1.5
 	 */
 	public function __construct($options = array())
@@ -66,7 +65,7 @@ class MolajoPathwaySite extends MolajoPathway
 							break;
 
 						default:
-							$router = JSite::getRouter();
+							$router = MolajoAdministrator::getRouter();
 							if ($router->getMode() == JROUTER_MODE_SEF) {
 								$url = 'index.php?Itemid='.$link->id;
 							}

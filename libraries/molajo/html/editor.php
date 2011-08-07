@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoEditor extends JObservable
 {
@@ -253,7 +253,7 @@ class MolajoEditor extends JObservable
 	 * @param   mixed   $buttons	Can be boolean or array, if boolean defines if the buttons are
 	 * 								displayed, if array defines a list of buttons not to show.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getButtons($editor, $buttons = true)
 	{
@@ -294,7 +294,7 @@ class MolajoEditor extends JObservable
 	 * @param   array  $config	Associative array of editor config paramaters
 	 *
 	 * @return  mixed
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _loadEditor($config = array())
 	{

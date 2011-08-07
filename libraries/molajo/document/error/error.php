@@ -48,7 +48,7 @@ class MolajoDocumentError extends MolajoDocument
 	 * @param   object  $error	Error object to set
 	 *
 	 * @return  boolean  True on success
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setError($error)
 	{

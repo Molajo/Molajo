@@ -21,7 +21,7 @@ class MolajoTableUser extends MolajoTable
 	/**
 	 * Associative array of user names => group ids
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 * @var    array
 	 */
 	var $groups;
@@ -46,7 +46,7 @@ class MolajoTableUser extends MolajoTable
 	 *
 	 * @return  bool  True on success, false on failure.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function load($userId = null, $reset = true)
 	{
@@ -116,7 +116,7 @@ class MolajoTableUser extends MolajoTable
 	 *
 	 * @return  boolean  True on success, false on failure.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function bind($array, $ignore = '')
 	{
@@ -309,7 +309,7 @@ class MolajoTableUser extends MolajoTable
 	 *
 	 * @return  bool  True on success, false on failure.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function delete($userId = null)
 	{

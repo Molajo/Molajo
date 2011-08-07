@@ -31,7 +31,7 @@ class MolajoFormHelper
 	 * </code>
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 *
 	 */
 	protected static $paths;
@@ -48,7 +48,7 @@ class MolajoFormHelper
 	 * </code>
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected static $entities = array();
 
@@ -60,7 +60,7 @@ class MolajoFormHelper
 	 *
 	 * @return  mixed  MolajoFormField object on success, false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function loadFieldType($type, $new = true)
 	{
@@ -74,7 +74,7 @@ class MolajoFormHelper
 	 * @param   boolean  $new   Flag to toggle whether we should get a new instance of the object.
 	 *
 	 * @return  mixed  MolajoFormRule object on success, false otherwise.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function loadRuleType($type, $new = true)
 	{
@@ -91,7 +91,7 @@ class MolajoFormHelper
 	 *
 	 * @return  mixed  Entity object on success, false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function loadType($entity, $type, $new = true)
 	{
@@ -125,7 +125,7 @@ class MolajoFormHelper
 	 *
 	 * @return  mixed  Class name on success or false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function loadFieldClass($type)
 	{
@@ -140,7 +140,7 @@ class MolajoFormHelper
 	 *
 	 * @return  mixed  Class name on success or false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function loadRuleClass($type)
 	{
@@ -157,7 +157,7 @@ class MolajoFormHelper
 	 *
 	 * @return  mixed  Class name on success or false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function loadClass($entity, $type)
 	{
@@ -200,7 +200,7 @@ class MolajoFormHelper
 	 *
 	 * @return  array  The list of paths that have been added.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addFieldPath($new = null)
 	{
@@ -214,7 +214,7 @@ class MolajoFormHelper
 	 *
 	 * @return  array  The list of paths that have been added.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addFormPath($new = null)
 	{
@@ -228,7 +228,7 @@ class MolajoFormHelper
 	 *
 	 * @return  array  The list of paths that have been added.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addRulePath($new = null)
 	{
@@ -243,7 +243,7 @@ class MolajoFormHelper
 	 * @param   mixed   $new     A path or array of paths to add.
 	 *
 	 * @return  array  The list of paths that have been added.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function addPath($entity, $new = null)
 	{

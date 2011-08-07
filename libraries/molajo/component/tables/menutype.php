@@ -71,8 +71,8 @@ class MolajoTableMenuType extends MolajoTable
 	 *
 	 * @param   boolean True to update fields even if they are null.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/store
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/store
 	 */
 	public function store($updateNulls = false)
 	{
@@ -142,8 +142,8 @@ class MolajoTableMenuType extends MolajoTable
 	 * @param   mixed    An optional primary key value to delete.  If not set the
 	 *					instance property value is used.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/delete
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/delete
 	 */
 	public function delete($pk = null)
 	{

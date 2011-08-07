@@ -22,7 +22,7 @@ abstract class MolajoTable extends JObject
 	 * Name of the database table to model.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_tbl	= '';
 
@@ -30,7 +30,7 @@ abstract class MolajoTable extends JObject
 	 * Name of the primary key field in the table.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_tbl_key = '';
 
@@ -38,7 +38,7 @@ abstract class MolajoTable extends JObject
 	 * JDatabase connector object.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_db;
 
@@ -46,7 +46,7 @@ abstract class MolajoTable extends JObject
 	 * Indicator that the tables have been locked.
 	 *
 	 * @var    boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_locked = false;
 
@@ -59,7 +59,7 @@ abstract class MolajoTable extends JObject
 	 * @param   string Name of the primary key field in the table.
 	 * @param   object JDatabase connector object.
 	 *
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	function __construct($table, $key, &$db)
 	{
@@ -119,8 +119,8 @@ abstract class MolajoTable extends JObject
 	 * @param   string   An optional prefix for the table class name.
 	 * @param   array    An optional array of configuration values for the MolajoTable object.
 	 * @return  mixed    A MolajoTable object if found or boolean false if one could not be found.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/getInstance
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/getInstance
 	*/
 	public static function getInstance($type, $prefix = 'MolajoTable', $config = array())
 	{
@@ -163,8 +163,8 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @param   mixed  A filesystem path or array of filesystem paths to add.
 	 * @return  array  An array of filesystem paths to find MolajoTable classes in.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/addIncludePath
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/addIncludePath
 	 */
 	public static function addIncludePath($path = null)
 	{
@@ -199,8 +199,8 @@ abstract class MolajoTable extends JObject
 	 * Method to get the database table name for the class.
 	 *
 	 * @return  string  The name of the database table being modeled.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/getTableName
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/getTableName
 	 */
 	public function getTableName()
 	{
@@ -211,8 +211,8 @@ abstract class MolajoTable extends JObject
 	 * Method to get the primary key field name for the table.
 	 *
 	 * @return  string  The name of the primary key for the table.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/getKeyName
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/getKeyName
 	 */
 	public function getKeyName()
 	{
@@ -223,7 +223,7 @@ abstract class MolajoTable extends JObject
 	 * Method to get the JDatabase connector object.
 	 *
 	 * @return  object  The internal database connector object.
-	 * @link	http://docs.joomla.org/MolajoTable/getDBO
+	 * @link	http://docs.molajo.org/MolajoTable/getDBO
 	 */
 	public function getDbo()
 	{
@@ -235,7 +235,7 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @param   object   A JDatabase connector object to be used by the table object.
 	 * @return  boolean  True on success.
-	 * @link	http://docs.joomla.org/MolajoTable/setDBO
+	 * @link	http://docs.molajo.org/MolajoTable/setDBO
 	 */
 	public function setDBO(&$db)
 	{
@@ -255,8 +255,8 @@ abstract class MolajoTable extends JObject
 	 * properties.
 	 *
 	 * @return  void
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/reset
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/reset
 	 */
 	public function reset()
 	{
@@ -281,8 +281,8 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/bind
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/bind
 	 */
 	public function bind($src, $ignore = array())
 	{
@@ -327,8 +327,8 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  bool  True if successful. False if row not found or on error (internal error state set in that case).
 	 *
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/load
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/load
 	 */
 	public function load($keys = null, $reset = true)
 	{
@@ -399,8 +399,8 @@ abstract class MolajoTable extends JObject
 	 * as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/check
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/check
 	 */
 	public function check()
 	{
@@ -418,8 +418,8 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.joomla.org/MolajoTable/store
-	 * @since   11.1
+	 * @link	http://docs.molajo.org/MolajoTable/store
+	 * @since   1.0
 	 */
 	public function store($updateNulls = false)
 	{
@@ -525,8 +525,8 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.joomla.org/MolajoTable/save
-	 * @since   11.1
+	 * @link	http://docs.molajo.org/MolajoTable/save
+	 * @since   1.0
 	 */
 	public function save($src, $orderingFilter = '', $ignore = '')
 	{
@@ -568,8 +568,8 @@ abstract class MolajoTable extends JObject
 	 * @param   mixed    An optional primary key value to delete.  If not set the
 	 *					instance property value is used.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/delete
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/delete
 	 */
 	public function delete($pk = null)
 	{
@@ -632,8 +632,8 @@ abstract class MolajoTable extends JObject
 	 * @param   mixed    An optional primary key value to check out.  If not set
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/checkOut
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/checkOut
 	 */
 	public function checkOut($userId, $pk = null)
 	{
@@ -684,8 +684,8 @@ abstract class MolajoTable extends JObject
 	 * @param   mixed    An optional primary key value to check out.  If not set
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/checkIn
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/checkIn
 	 */
 	public function checkIn($pk = null)
 	{
@@ -733,8 +733,8 @@ abstract class MolajoTable extends JObject
 	 * @param   mixed    An optional primary key value to increment.  If not set
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/hit
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/hit
 	 */
 	public function hit($pk = null)
 	{
@@ -784,8 +784,8 @@ abstract class MolajoTable extends JObject
 	 * @param   integer  The userid to perform the match against when the function
 	 *					is used as a static function.
 	 * @return  boolean  True if checked out.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/isCheckedOut
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/isCheckedOut
 	 */
 	public function isCheckedOut($with = 0, $against = null)
 	{
@@ -817,8 +817,8 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @param   string   WHERE clause to use for selecting the MAX(ordering) for the table.
 	 * @return  mixed    Boolean false an failure or the next ordering value as an integer.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/getNextOrder
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/getNextOrder
 	 */
 	public function getNextOrder($where = '')
 	{
@@ -862,8 +862,8 @@ abstract class MolajoTable extends JObject
 	 * @param   string   WHERE clause to use for limiting the selection of rows to
 	 *					compact the ordering values.
 	 * @return  mixed    Boolean true on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/reorder
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/reorder
 	 */
 	public function reorder($where = '')
 	{
@@ -940,8 +940,8 @@ abstract class MolajoTable extends JObject
 	 * @param   string   WHERE clause to use for limiting the selection of rows to compact the
 	 *					ordering values.
 	 * @return  mixed    Boolean true on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/move
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/move
 	 */
 	public function move($delta, $where = '')
 	{
@@ -1051,8 +1051,8 @@ abstract class MolajoTable extends JObject
 	 * @param   integer The publishing state. eg. [0 = unpublished, 1 = published]
 	 * @param   integer The user id of the user performing the operation.
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/publish
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/publish
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{
@@ -1134,8 +1134,8 @@ abstract class MolajoTable extends JObject
 	 * @param   array    An optional array to compiles standard joins formatted like:
 	 *					[label => 'Label', name => 'table name' , idfield => 'field', joinfield => 'field']
 	 * @return  boolean  True on success.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/canDelete
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/canDelete
 	 */
 	public function canDelete($pk = null, $joins = null)
 	{
@@ -1208,8 +1208,8 @@ abstract class MolajoTable extends JObject
 	 * @deprecated
 	 * @param   boolean  True to map foreign keys to text values.
 	 * @return  string   XML string representation of the instance.
-	 * @since   11.1
-	 * @link	http://docs.joomla.org/MolajoTable/toXML
+	 * @since   1.0
+	 * @link	http://docs.molajo.org/MolajoTable/toXML
 	 */
 	public function toXML($mapKeysToText=false)
 	{
@@ -1242,7 +1242,7 @@ abstract class MolajoTable extends JObject
 	 * Method to lock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _lock()
 	{
@@ -1266,7 +1266,7 @@ abstract class MolajoTable extends JObject
 	 * Method to unlock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _unlock()
 	{

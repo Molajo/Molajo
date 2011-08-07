@@ -22,7 +22,7 @@ class MolajoDocument extends JObject
 	 * Document title
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $title = '';
 
@@ -30,7 +30,7 @@ class MolajoDocument extends JObject
 	 * Document description
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $description = '';
 
@@ -38,7 +38,7 @@ class MolajoDocument extends JObject
 	 * Document full URL
 	 *
 	 * @var    string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public $link = '';
 
@@ -46,7 +46,7 @@ class MolajoDocument extends JObject
 	 * Document base URL
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $base = '';
 
@@ -54,7 +54,7 @@ class MolajoDocument extends JObject
 	 * Contains the document language setting
 	 *
 	 * @var    string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public $language = 'en-gb';
 
@@ -62,7 +62,7 @@ class MolajoDocument extends JObject
 	 * Contains the document direction setting
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $direction = 'ltr';
 
@@ -77,7 +77,7 @@ class MolajoDocument extends JObject
 	 * Document modified date
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $_mdate = '';
 
@@ -169,7 +169,7 @@ class MolajoDocument extends JObject
 	 * The document type
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $_type = null;
 
@@ -187,7 +187,7 @@ class MolajoDocument extends JObject
 	 *
 	 * @return  MolajoDocument
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($options = array())
 	{
@@ -230,7 +230,7 @@ class MolajoDocument extends JObject
 	 * @param   array   $attribues  Array of attributes
 	 *
 	 * @return  object  The document object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getInstance($type = 'html', $attributes = array())
 	{
@@ -288,7 +288,7 @@ class MolajoDocument extends JObject
 	 * @param   string  $type
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setType($type)
 	{
@@ -299,7 +299,7 @@ class MolajoDocument extends JObject
 	 * Returns the document type
 	 *
 	 * @return  string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getType()
 	{
@@ -310,7 +310,7 @@ class MolajoDocument extends JObject
 	 * Get the document head data
 	 *
 	 * @return  array  The document head data in array form
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getHeadData()
 	{
@@ -323,7 +323,7 @@ class MolajoDocument extends JObject
 	 * @param   array  $data  The document head data in array form
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setHeadData($data)
 	{
@@ -336,7 +336,7 @@ class MolajoDocument extends JObject
 	 * @param   array  $data  The document head data in array form
 	 *
 	 * @return
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function mergeHeadData($data)
 	{
@@ -347,7 +347,7 @@ class MolajoDocument extends JObject
 	 * Get the contents of the document buffer
 	 *
 	 * @return  The contents of the document buffer
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getBuffer()
 	{
@@ -361,7 +361,7 @@ class MolajoDocument extends JObject
 	 * @param   array   $options  Array of optional elements.
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setBuffer($content, $options = array())
 	{
@@ -375,7 +375,7 @@ class MolajoDocument extends JObject
 	 * @param   bool    $http_equiv  META type "http-equiv" defaults to null
 	 *
 	 * @return  string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getMetaData($name, $http_equiv = false)
 	{
@@ -408,7 +408,7 @@ class MolajoDocument extends JObject
 	 * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setMetaData($name, $content, $http_equiv = false, $sync = true)
 	{

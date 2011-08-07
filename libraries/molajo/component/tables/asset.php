@@ -56,8 +56,8 @@ class MolajoTableAsset extends MolajoTable {
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.joomla.org/MolajoTable/save
-	 * @since   11.1
+	 * @link	http://docs.molajo.org/MolajoTable/save
+	 * @since   1.0
 	 */
 	public function save($src, $orderingFilter = '', $ignore = '')
 	{
@@ -84,7 +84,7 @@ class MolajoTableAsset extends MolajoTable {
      *
      * @return  bool  True if the instance is sane and able to be stored in the database.
      *
-     * @link	http://docs.joomla.org/MolajoTable/check
+     * @link	http://docs.molajo.org/MolajoTable/check
      * @since   11.1
      */
     public function check()

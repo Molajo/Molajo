@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoButtonHelp extends MolajoButton
 {
@@ -31,7 +31,7 @@ class MolajoButtonHelp extends MolajoButton
 	 * @param   string   $component	Name of component to get Help (null for current component)
 	 *
 	 * @return  string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function fetchButton($type = 'Help', $ref = '', $com = false, $override = null, $component = null)
 	{
@@ -54,7 +54,7 @@ class MolajoButtonHelp extends MolajoButton
 	 * Redefined from MolajoButton class
 	 *
 	 * @return  string	Button CSS Id
-	 * @since       11.1
+	 * @since       1.0
 	 */
 	public function fetchId()
 	{
@@ -70,7 +70,7 @@ class MolajoButtonHelp extends MolajoButton
 	 * @param   string   $component	Name of component to get Help (null for current component)
 	 *
 	 * @return  string   JavaScript command string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getCommand($ref, $com, $override, $component)
 	{

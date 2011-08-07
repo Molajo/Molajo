@@ -24,13 +24,13 @@ class JAdminCssMenu extends JTree
 
 	function __construct()
 	{
-		$this->_root = new JMenuNode('ROOT');
+		$this->_root = new MolajoMenuNode('ROOT');
 		$this->_current = & $this->_root;
 	}
 
 	function addSeparator()
 	{
-		$this->addChild(new JMenuNode(null, null, 'separator', false));
+		$this->addChild(new MolajoMenuNode(null, null, 'separator', false));
 	}
 
 	function renderMenu($id = 'menu', $class = '')
@@ -186,7 +186,7 @@ class JAdminCssMenu extends JTree
  * @package		Joomla.Administrator
  * @subpackage	mod_menu
  */
-class JMenuNode extends JNode
+class MolajoMenuNode extends JNode
 {
 	/**
 	 * Node Title

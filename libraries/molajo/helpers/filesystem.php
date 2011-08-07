@@ -29,7 +29,7 @@ class MolajoFilesystemHelper
 	 * @return  mixed
 	 *
 	 * @see		http://www.php.net/manual/en/function.filesize.php#71098
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function remotefsize($url)
 	{
@@ -113,7 +113,7 @@ class MolajoFilesystemHelper
 	 * @return  mixed
 	 *
 	 * @see		http://www.php.net/manual/en/function.ftp-chmod.php
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function ftpChmod($url, $mode)
 	{
@@ -176,7 +176,7 @@ class MolajoFilesystemHelper
 	 * Modes that require a write operation
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	static function getWriteModes()
 	{
@@ -190,7 +190,7 @@ class MolajoFilesystemHelper
 	 * Also includes Molajo streams as well as PHP streams
 	 *
 	 * @return  array  Streams
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getSupported()
 	{
@@ -211,7 +211,7 @@ class MolajoFilesystemHelper
 	 * Returns a list of transports
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getTransports()
 	{
@@ -223,7 +223,7 @@ class MolajoFilesystemHelper
 	 * Returns a list of filters
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getFilters()
 	{
@@ -236,7 +236,7 @@ class MolajoFilesystemHelper
 	 * Returns a list of J! streams
 	 *
 	 * @return  array
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getJStreams()
 	{
@@ -258,7 +258,7 @@ class MolajoFilesystemHelper
 	 * @param   string  $streamname  The name of a stream
 	 *
 	 * @return  boolean  True for a Joomla Stream
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function isJoomlaStream($streamname)
 	{

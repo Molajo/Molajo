@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldComponentlayout extends MolajoFormField
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $type = 'ComponentLayout';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 	 * Method to get the field calendar.
 	 *
 	 * @return  string   The field calendar.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInput()
 	{
@@ -43,7 +43,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 		}
 		$applicationId = (int) $applicationId;
 
-		$application	= JApplicationHelper::getApplicationInfo($applicationId);
+		$application	= MolajoApplicationHelper::getApplicationInfo($applicationId);
 
 		// Get the extension.
 		$extn = (string) $this->element['extension'];

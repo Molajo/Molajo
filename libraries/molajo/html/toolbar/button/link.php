@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
 class MolajoButtonLink extends MolajoButton
 {
@@ -46,7 +46,7 @@ class MolajoButtonLink extends MolajoButton
 	 * @param   string  $name	The name of the button.
 	 *
 	 * @return  string  Button CSS Id
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function fetchId($type = 'Link', $name = '')
 	{
@@ -59,7 +59,7 @@ class MolajoButtonLink extends MolajoButton
 	 * @param   object  $definition	Button definition
 	 *
 	 * @return  string  JavaScript command string
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getCommand($url)
 	{

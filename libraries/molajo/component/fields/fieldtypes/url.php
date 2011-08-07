@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldUrl extends MolajoFormFieldText
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldUrl extends MolajoFormFieldText
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $type = 'Url';
 }

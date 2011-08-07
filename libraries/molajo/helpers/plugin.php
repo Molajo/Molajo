@@ -25,7 +25,7 @@ abstract class MolajoPluginHelper
 	 * @param   string   $plugin	The plugin name.
 	 *
 	 * @return  mixed    An array of plugin data objects, or a plugin data object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getPlugin($type, $plugin = null)
 	{
@@ -60,7 +60,7 @@ abstract class MolajoPluginHelper
 	 * @param   string   $plugin	The plugin name.
 	 *
 	 * @return  boolean
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function isEnabled($type, $plugin = null)
 	{
@@ -78,7 +78,7 @@ abstract class MolajoPluginHelper
 	 * @param   JDispatcher	$dispatcher	Optionally allows the plugin to use a different dispatcher.
 	 *
 	 * @return  boolean		True on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function importPlugin($type, $plugin = null, $autocreate = true, $dispatcher = null)
 	{
@@ -122,7 +122,7 @@ abstract class MolajoPluginHelper
 	 * @param   JDispatcher	$dispatcher	Optionally allows the plugin to use a different dispatcher.
 	 *
 	 * @return  boolean		True on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _import(&$plugin, $autocreate = true, $dispatcher = null)
 	{
@@ -170,7 +170,7 @@ abstract class MolajoPluginHelper
 	 * Loads the published plugins.
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function _load()
 	{

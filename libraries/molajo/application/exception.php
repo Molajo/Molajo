@@ -14,6 +14,6 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Application
- * @since       11.1
+ * @since       1.0
  */
 class MolajoException extends Exception {}

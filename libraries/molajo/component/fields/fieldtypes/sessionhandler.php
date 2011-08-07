@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldSessionHandler extends MolajoFormFieldList
 {
@@ -20,7 +20,7 @@ class MolajoFormFieldSessionHandler extends MolajoFormFieldList
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $type = 'SessionHandler';
 
@@ -28,7 +28,7 @@ class MolajoFormFieldSessionHandler extends MolajoFormFieldList
 	 * Method to get the field options.
 	 *
 	 * @return  array  The field option objects.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getOptions()
 	{

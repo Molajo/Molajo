@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Application
- * @since       11.1
+ * @since       1.0
  */
 class MolajoCategories
 {
@@ -22,7 +22,7 @@ class MolajoCategories
 	 * Array to hold the object instances
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	static $instances = array();
 
@@ -30,7 +30,7 @@ class MolajoCategories
 	 * Array of category nodes
 	 *
 	 * @var    mixed
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_nodes;
 
@@ -38,7 +38,7 @@ class MolajoCategories
 	 * Array of checked categories -- used to save values when _nodes are null
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_checkedCategories;
 
@@ -46,7 +46,7 @@ class MolajoCategories
 	 * Name of the extension the categories belong to
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_extension = null;
 
@@ -54,7 +54,7 @@ class MolajoCategories
 	 * Name of the linked content table to get category content count
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_table = null;
 
@@ -62,7 +62,7 @@ class MolajoCategories
 	 * Name of the category field
 	 *
 	 * @var string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_field = null;
 
@@ -70,7 +70,7 @@ class MolajoCategories
 	 * Name of the key field
 	 *
 	 * @var string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_key = null;
 
@@ -78,7 +78,7 @@ class MolajoCategories
 	 * Name of the items state field
 	 *
 	 * @var string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_statefield = null;
 
@@ -86,7 +86,7 @@ class MolajoCategories
 	 * Array of options
 	 *
 	 * @var array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_options = null;
 
@@ -95,8 +95,8 @@ class MolajoCategories
 	 *
 	 * @param   array  $options  Array of options
 	 *
-	 * @return  MolajoCategories  MolajoCategories object
-	 * @since   11.1
+	 * @return  object Category object
+	 * @since   1.0
 	 */
 	public function __construct($options)
 	{
@@ -119,7 +119,7 @@ class MolajoCategories
 	 * @param   array   $options    An array of options
 	 *
 	 * @return  MolajoCategories  MolajoCategories object
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getInstance($extension, $options = array())
 	{
@@ -153,7 +153,7 @@ class MolajoCategories
 	 * @param   boolean  $forceload
 	 *
 	 * @return  MolajoCategoryNode|null
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function get($id = 'root', $forceload = false)
 	{
@@ -187,7 +187,7 @@ class MolajoCategories
 	 * @param   integer    $id
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _load($id)
 	{
@@ -327,7 +327,7 @@ class MolajoCategories
  *
  * @package     Joomla.Platform
  * @subpackage  Application
- * @since       11.1
+ * @since       1.0
  */
 class MolajoCategoryNode extends JObject
 {
@@ -351,13 +351,13 @@ class MolajoCategoryNode extends JObject
 
 	/**
 	 * @var string The menu title for the category (a short name)
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $title				= null;
 
 	/**
 	 * @var string The the alias for the category
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $alias				= null;
 
@@ -368,31 +368,31 @@ class MolajoCategoryNode extends JObject
 
 	/**
 	 * @var boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $published			= null;
 
 	/**
 	 * @var boolean
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $checked_out			= 0;
 
 	/**
 	 * @var time
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $checked_out_time	= 0;
 
 	/**
 	 * @var int
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $access				= null;
 
 	/**
 	 * @var string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 
 	public $params				= null;
@@ -425,43 +425,43 @@ class MolajoCategoryNode extends JObject
 
 	/**
 	 * @var Parent Category
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_parent = null;
 
 	/**
 	 * @var Array of Children
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_children = array();
 
 	/**
 	 * @var Path from root to this category
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_path = array();
 
 	/**
 	 * @var Category left of this one
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_leftSibling = null;
 
 	/**
 	 * @var Category right of this one
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_rightSibling = null;
 
 	/**
 	 * @var boolean true if all children have been loaded
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_allChildrenloaded = false;
 
 	/**
 	 * @var Constructor of this tree
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_constructor = null;
 
@@ -471,7 +471,7 @@ class MolajoCategoryNode extends JObject
 	 * @param   $category
 	 *
 	 * @return  MolajoCategoryNode
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($category = null, &$constructor = null)
 	{
@@ -495,7 +495,7 @@ class MolajoCategoryNode extends JObject
 	 * @param   MolajoCategoryNode|null	$parent	The parent to be setted
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function setParent(&$parent)
 	{
@@ -532,7 +532,7 @@ class MolajoCategoryNode extends JObject
 	 * @param   JNode	$child	The child to be added.
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function addChild(&$child)
 	{
@@ -547,7 +547,7 @@ class MolajoCategoryNode extends JObject
 	 * @param   integer  $id	ID of a category
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function removeChild($id)
 	{
@@ -561,7 +561,7 @@ class MolajoCategoryNode extends JObject
 	 * @param   boolean  $recursive
 	 *
 	 * @return  array    the children
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function &getChildren($recursive = false)
 	{
@@ -590,7 +590,7 @@ class MolajoCategoryNode extends JObject
 	 * Get the parent of this node
 	 *
 	 * @return  JNode|null the parent
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function &getParent()
 	{
@@ -601,7 +601,7 @@ class MolajoCategoryNode extends JObject
 	 * Test if this node has children
 	 *
 	 * @return  bool
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function hasChildren()
 	{
@@ -612,7 +612,7 @@ class MolajoCategoryNode extends JObject
 	 * Test if this node has a parent
 	 *
 	 * @return  boolean    True if there is a parent
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function hasParent()
 	{
@@ -666,7 +666,7 @@ class MolajoCategoryNode extends JObject
 	 * Returns the category parameters
 	 *
 	 * @return  JRegistry
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getParams()
 	{
@@ -683,7 +683,7 @@ class MolajoCategoryNode extends JObject
 	 * Returns the category metadata
 	 *
 	 * @return  JRegistry  A JRegistry object containing the metadata
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	function getMetadata()
 	{

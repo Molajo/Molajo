@@ -23,7 +23,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Utilities
- * @since       11.1
+ * @since       1.0
  */
 class MolajoDate extends DateTime
 {
@@ -36,7 +36,7 @@ class MolajoDate extends DateTime
 	 * The format string to be applied when using the __toString() magic method.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public static $format = 'Y-m-d H:i:s';
 
@@ -44,7 +44,7 @@ class MolajoDate extends DateTime
 	 * Placeholder for a DateTimeZone object with GMT as the time zone.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected static $gmt;
 
@@ -53,7 +53,7 @@ class MolajoDate extends DateTime
 	 * time zone as the time zone.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected static $stz;
 
@@ -64,7 +64,7 @@ class MolajoDate extends DateTime
 	 * @deprecated	Deprecated since 1.6
 	 *
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected static $offsets = array(
 		'-12' => 'Etc/GMT-12',
@@ -113,7 +113,7 @@ class MolajoDate extends DateTime
 	 * The DateTimeZone object for usage in rending dates as strings.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $_tz;
 
@@ -124,7 +124,7 @@ class MolajoDate extends DateTime
 	 * @param   mixed   $tz    Time zone to be used for the date.
 	 *
 	 * @return  void
-	 * @since   11.1
+	 * @since   1.0
 	 *
 	 * @throws	JException
 	 */
@@ -170,7 +170,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  mixed  A value if the property name is valid, null otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __get($name)
 	{
@@ -248,7 +248,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  string  The date as a formatted string.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __toString()
 	{
@@ -263,7 +263,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  string  The day of the week.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function dayToString($day, $abbr = false)
 	{
@@ -287,7 +287,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  string   The date string in the specified format format.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function calendar($format, $local = false, $translate = true)
 	{
@@ -303,7 +303,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  string   The date string in the specified format format.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function format($format, $local = false, $translate = true)
 	{
@@ -355,7 +355,7 @@ class MolajoDate extends DateTime
 	 * @param   boolean  $hours  True to return the value in hours.
 	 *
 	 * @return  float  The time offset from GMT either in hours in seconds.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getOffsetFromGMT($hours = false)
 	{
@@ -370,7 +370,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  string  The month of the year.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function monthToString($month, $abbr = false)
 	{
@@ -397,7 +397,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 * @deprecated	Deprecated since 1.6
 	 */
 	public function setOffset($offset)
@@ -420,7 +420,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  DateTimeZone  The old DateTimeZone object.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setTimezone($tz)
 	{
@@ -438,7 +438,7 @@ class MolajoDate extends DateTime
 	 * @param   boolean  $local   True to return the date string in the local time zone, false to return it in GMT.
 	 *
 	 * @return  string  The date as a formatted string.
-	 * @since   11.1
+	 * @since   1.0
 	 * @deprecated	Deprecated since 1.6, use JDate::format() instead.
 	 */
 	public function toFormat($format = '%Y-%m-%d %H:%M:%S', $local = false)
@@ -486,7 +486,7 @@ class MolajoDate extends DateTime
 	 * @return  string  The date string in ISO 8601 format.
 	 *
 	 * @link	http://www.ietf.org/rfc/rfc3339.txt
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function toISO8601($local = false)
 	{
@@ -502,7 +502,7 @@ class MolajoDate extends DateTime
 	 * @return  string  The date string in MySQL datetime format.
 	 *
 	 * @link http://dev.mysql.com/doc/refman/5.0/en/datetime.html
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function toMySQL($local = false)
 	{
@@ -519,7 +519,7 @@ class MolajoDate extends DateTime
 	 * @return  string   The date string in RFC 822 format.
 	 *
 	 * @link	http://www.ietf.org/rfc/rfc2822.txt
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function toRFC822($local = false)
 	{
@@ -531,7 +531,7 @@ class MolajoDate extends DateTime
 	 *
 	 * @return  integer  The date as a UNIX timestamp.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function toUnix()
 	{

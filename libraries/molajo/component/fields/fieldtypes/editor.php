@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Form
- * @since       11.1
+ * @since       1.0
  */
 class MolajoFormFieldEditor extends MolajoFormField
 {
@@ -21,7 +21,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	public $type = 'Editor';
 
@@ -29,7 +29,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 	 * The JEditor object.
 	 *
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $editor;
 
@@ -37,7 +37,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 	 * Method to get the field calendar markup.
 	 *
 	 * @return  string  The field calendar markup.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function getInput()
 	{
@@ -75,7 +75,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 	 * Method to get a JEditor object based on the form field.
 	 *
 	 * @return  object  The JEditor object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function &getEditor()
 	{
@@ -127,7 +127,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 	 * Method to get the JEditor output for an onSave event.
 	 *
 	 * @return  string  The JEditor object output.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function save()
 	{

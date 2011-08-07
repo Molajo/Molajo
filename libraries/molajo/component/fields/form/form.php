@@ -24,42 +24,42 @@ class MolajoForm
 	/**
 	 * The JRegistry data store for form fields during display.
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $data;
 
 	/**
 	 * The form object errors array.
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $errors = array();
 
 	/**
 	 * The name of the form instance.
 	 * @var    string
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $name;
 
 	/**
 	 * The form object options for use in rendering and validation.
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $options = array();
 
 	/**
 	 * The form XML definition.
 	 * @var    object
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected $xml;
 
 	/**
 	 * Form instances.
 	 * @var    array
-	 * @since  11.1
+	 * @since  1.0
 	 */
 	protected static $forms = array();
 
@@ -71,7 +71,7 @@ class MolajoForm
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __construct($name, array $options = array())
 	{
@@ -92,7 +92,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function bind($data)
 	{
@@ -146,7 +146,7 @@ class MolajoForm
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function bindLevel($group, $data)
 	{
@@ -175,7 +175,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  Array or false.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function filter($data, $group = null)
 	{
@@ -229,7 +229,7 @@ class MolajoForm
 	 *
 	 * @return  array  Array of error messages or JException objects.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getErrors()
 	{
@@ -245,7 +245,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  The MolajoFormField object for the field or boolean false on error.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getField($name, $group = null, $value = null)
 	{
@@ -276,7 +276,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  The attribute value for the field.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getFieldAttribute($name, $attribute, $default = null, $group = null)
 	{
@@ -308,7 +308,7 @@ class MolajoForm
 	 *
 	 * @return  array  The array of MolajoFormField objects in the fieldset.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getFieldset($set = null)
 	{
@@ -353,7 +353,7 @@ class MolajoForm
 	 *
 	 * @return  array  The array of fieldset objects.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getFieldsets($group = null)
 	{
@@ -449,7 +449,7 @@ class MolajoForm
 	 *
 	 * @return  string  The form control string.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getFormControl()
 	{
@@ -465,7 +465,7 @@ class MolajoForm
 	 *
 	 * @return  array    The array of MolajoFormField objects in the field group.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getGroup($group, $nested = false)
 	{
@@ -501,7 +501,7 @@ class MolajoForm
 	 *
 	 * @return  string  The form field markup.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getInput($name, $group = null, $value = null)
 	{
@@ -521,7 +521,7 @@ class MolajoForm
 	 *
 	 * @return  string  The form field markup.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getLabel($name, $group = null)
 	{
@@ -538,7 +538,7 @@ class MolajoForm
 	 *
 	 * @return  string  The name of the form.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getName()
 	{
@@ -554,7 +554,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  The value of the field or the default value if empty.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getValue($name, $group = null, $default = null)
 	{
@@ -585,7 +585,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function load($data, $replace = true, $xpath = false)
 	{
@@ -688,7 +688,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success, false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function loadFile($file, $reset = true, $xpath = false)
 	{
@@ -717,7 +717,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function removeField($name, $group = null)
 	{
@@ -746,7 +746,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function removeGroup($group)
 	{
@@ -774,7 +774,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function reset($xml = false)
 	{
@@ -800,7 +800,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setField(& $element, $group = null, $replace = true)
 	{
@@ -866,7 +866,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setFieldAttribute($name, $attribute, $value, $group = null)
 	{
@@ -907,7 +907,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setFields(& $elements, $group = null, $replace = true)
 	{
@@ -953,7 +953,7 @@ class MolajoForm
 	 * @param   mixed   $value  The value to set for the field.
 	 *
 	 * @return  boolean  True on success.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function setValue($name, $group = null, $value = null)
 	{
@@ -985,7 +985,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  True on sucess.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function validate($data, $group = null)
 	{
@@ -1057,7 +1057,7 @@ class MolajoForm
 	 * @param   mixed   $value    The value to filter for the field.
 	 *
 	 * @return  mixed   The filtered value.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function filterField($element, $value)
 	{
@@ -1228,7 +1228,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  The XML element object for the field or boolean false on error.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function findField($name, $group = null)
 	{
@@ -1311,7 +1311,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  Boolean false on error or array of JXMLElement objects.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function & findFieldsByFieldset($name)
 	{
@@ -1344,7 +1344,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  Boolean false on error or array of JXMLElement objects.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function & findFieldsByGroup($group = null, $nested = false)
 	{
@@ -1411,7 +1411,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  An array of XML element objects for the group or boolean false on error.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function &findGroup($group)
 	{
@@ -1491,7 +1491,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  The MolajoFormField object for the field or boolean false on error.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function loadField($element, $group = null, $value = null)
 	{
@@ -1553,7 +1553,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  MolajoFormField object on success, false otherwise.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function loadFieldType($type, $new = true)
 	{
@@ -1569,7 +1569,7 @@ class MolajoForm
 	 * @return  mixed  MolajoFormRule object on success, false otherwise.
 	 *
 	 * @see     MolajoFormHelper::loadRuleType()
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function loadRuleType($type, $new = true)
 	{
@@ -1581,7 +1581,7 @@ class MolajoForm
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 * @todo    Maybe we should receive all addXXXpaths attributes at once?
 	 */
 	protected function syncPaths()
@@ -1638,7 +1638,7 @@ class MolajoForm
 	 *
 	 * @return  mixed  Boolean true if field value is valid, JException on failure.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function validateField($element, $group = null, $value = null, $calendar = null)
 	{
@@ -1717,7 +1717,7 @@ class MolajoForm
 	 *
 	 * @return  array  The list of paths that have been added.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addFieldPath($new = null)
 	{
@@ -1732,7 +1732,7 @@ class MolajoForm
 	 * @return  array  The list of paths that have been added.
 	 *
 	 * @see     MolajoFormHelper::addFormPath()
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addFormPath($new = null)
 	{
@@ -1747,7 +1747,7 @@ class MolajoForm
 	 * @return  array  The list of paths that have been added.
 	 *
 	 * @see MolajoFormHelper::addRulePath()
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function addRulePath($new = null)
 	{
@@ -1766,7 +1766,7 @@ class MolajoForm
 	 *
 	 * @return  object  MolajoForm instance.
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 * @throws  Exception if an error occurs.
 	 */
 	public static function getInstance($name, $data = null, $options = array(), $replace = true, $xpath = false)
@@ -1814,7 +1814,7 @@ class MolajoForm
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 * @throws  Exception if an error occurs.
 	 */
 	protected static function addNode(SimpleXMLElement $source, SimpleXMLElement $new)
@@ -1843,7 +1843,7 @@ class MolajoForm
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function mergeNode(SimpleXMLElement $source, SimpleXMLElement $new)
 	{
@@ -1869,7 +1869,7 @@ class MolajoForm
 	 *
 	 * @return  void
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected static function mergeNodes(SimpleXMLElement $source, SimpleXMLElement $new)
 	{

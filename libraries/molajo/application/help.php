@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Language
- * @since       11.1
+ * @since       1.0
  */
 class MolajoHelp
 {
@@ -28,7 +28,7 @@ class MolajoHelp
 	 *
 	 * @return  string
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	static function createURL($ref, $useComponent = false, $override = null, $component = null)
 	{
@@ -36,7 +36,7 @@ class MolajoHelp
 		$app	= MolajoFactory::getApplication();
 
 		if (is_null($component)) {
-			$component = JApplicationHelper::getComponentName();
+			$component = MolajoApplicationHelper::getComponentName();
 		}
 
 
@@ -145,7 +145,7 @@ class MolajoHelp
 	 *
 	 * @return  array  An array of arrays (text, value, selected).
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	static function createSiteList($pathToXml, $selected = null)
 	{
@@ -158,8 +158,8 @@ class MolajoHelp
 		}
 
 		if (!$xml) {
-			$option['text'] = 'English (GB) help.joomla.org';
-			$option['value'] = 'http://help.joomla.org';
+			$option['text'] = 'English (GB) help.molajo.org';
+			$option['value'] = 'http://help.molajo.org';
 			$list[] = $option;
 		}
 		else {
