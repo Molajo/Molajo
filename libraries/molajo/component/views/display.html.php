@@ -96,15 +96,17 @@ class MolajoViewDisplay extends MolajoView
 
         /** Wrap Rendered Layout */
         $session = JFactory::getSession();
-        $layout = $this->params->get('wrap', 'horizontal');
+        $layout = $this->params->get('wrap', 'outline');
         if ($layout == 'horz') {
             $layout = 'horizontal';
         }
 
         $this->rowset = array();
 
-		$this->rowset[0]->title     = $session->set('page.title', '');
+		$this->rowset[0]->title     = $session->get('page.title', '');
 		$this->rowset[0]->subtitle  = $session->set('page.subtitle', '');
+		$this->rowset[0]->style     = $session->set('page.style', '');
+		$this->rowset[0]->position  = $session->set('page.position', '');
 		$this->rowset[0]->content   = $renderedOutput;
 		$this->rowset[0]->position  = '';
 

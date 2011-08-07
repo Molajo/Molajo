@@ -523,7 +523,8 @@ class MolajoApplication extends JObject
         
 
         $session->set('page.params', $params);
-
+        $session->set('page.style', '');
+        $session->set('page.position', 'component');
 		// Load the parameters. Merge Global and Menu Item params into new object
 //		$params = $app->getParams();
 //		$menuParams = new JRegistry;
@@ -571,7 +572,9 @@ class MolajoApplication extends JObject
         $request['metakey'] = $session->get('page.metakey');
         $request['metadesc'] = $session->get('page.metadesc');
         $request['metadata'] = $session->get('page.metadata');
-
+        $request['style'] = $session->get('page.style');
+        $request['position'] = $session->get('page.position');
+        
         return $request;
     }
 
