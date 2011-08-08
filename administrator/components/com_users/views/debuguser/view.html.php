@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
- * @since		1.6
+ * * * @since		1.0
  */
 class UsersViewDebugUser extends JView
 {
@@ -54,8 +54,8 @@ class UsersViewDebugUser extends JView
 	 */
 	protected function addToolbar()
 	{
-		JToolBarHelper::title(JText::sprintf('COM_USERS_VIEW_DEBUG_USER_TITLE', $this->user->id, $this->user->name), 'user');
+		MolajoToolbarHelper::title(JText::sprintf('COM_USERS_VIEW_DEBUG_USER_TITLE', $this->user->id, $this->user->name), 'user');
 
-		JToolBarHelper::help('JHELP_USERS_DEBUG_USERS');
+		MolajoToolbarHelper::help('JHELP_USERS_DEBUG_USERS');
 	}
 }

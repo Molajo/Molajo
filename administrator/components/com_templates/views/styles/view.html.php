@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_templates
- * @since		1.6
+ * * * @since		1.0
  */
 class TemplatesViewStyles extends JView
 {
@@ -53,30 +53,30 @@ class TemplatesViewStyles extends JView
 		$canDo	= TemplatesHelper::getActions();
 		$isSite	= ($state->get('filter.application_id') == 0);
 
-		JToolBarHelper::title(JText::_('COM_TEMPLATES_MANAGER_STYLES'), 'thememanager');
+		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER_STYLES'), 'thememanager');
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::makeDefault('styles.setDefault', 'COM_TEMPLATES_TOOLBAR_SET_HOME');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::makeDefault('styles.setDefault', 'COM_TEMPLATES_TOOLBAR_SET_HOME');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('style.edit');
+			MolajoToolbarHelper::editList('style.edit');
 		}
 		if ($canDo->get('core.create') && $isSite) {
-			JToolBarHelper::addNew('styles.duplicate', 'JTOOLBAR_DUPLICATE');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::addNew('styles.duplicate', 'JTOOLBAR_DUPLICATE');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.delete') && $isSite) {
-			JToolBarHelper::deleteList('', 'styles.delete');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'styles.delete');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_templates');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_templates');
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::help('JHELP_EXTENSIONS_TEMPLATE_MANAGER_STYLES');
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_TEMPLATE_MANAGER_STYLES');
 	}
 }

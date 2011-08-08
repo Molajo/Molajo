@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_admin
- * @since		1.6
+ * * * @since		1.0
  */
 class AdminViewSysinfo extends JView
 {
@@ -81,7 +81,7 @@ class AdminViewSysinfo extends JView
 	 */
 	protected function addToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_ADMIN_SYSTEM_INFORMATION'), 'systeminfo.png');
-		JToolBarHelper::help('JHELP_SITE_SYSTEM_INFORMATION');
+		MolajoToolbarHelper::title(JText::_('COM_ADMIN_SYSTEM_INFORMATION'), 'systeminfo.png');
+		MolajoToolbarHelper::help('JHELP_SITE_SYSTEM_INFORMATION');
 	}
 }

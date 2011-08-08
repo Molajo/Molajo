@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_languages
- * @since		1.6
+ * * * @since		1.0
  */
 class LanguagesViewInstalled extends JView
 {
@@ -78,18 +78,18 @@ class LanguagesViewInstalled extends JView
 
 		$canDo	= LanguagesHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_LANGUAGES_VIEW_INSTALLED_TITLE'), 'langmanager.png');
+		MolajoToolbarHelper::title(JText::_('COM_LANGUAGES_VIEW_INSTALLED_TITLE'), 'langmanager.png');
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::makeDefault('installed.setDefault');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::makeDefault('installed.setDefault');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_languages');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_languages');
+			MolajoToolbarHelper::divider();
 		}
 
-		JToolBarHelper::help('JHELP_EXTENSIONS_LANGUAGE_MANAGER_INSTALLED');
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_LANGUAGE_MANAGER_INSTALLED');
 	}
 }

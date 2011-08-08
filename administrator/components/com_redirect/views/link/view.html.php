@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_redirect
- * @since		1.6
+ * * * @since		1.0
  */
 class RedirectViewLink extends JView
 {
@@ -57,12 +57,12 @@ class RedirectViewLink extends JView
 		$isNew		= ($this->item->id == 0);
 		$canDo		= RedirectHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_REDIRECT_MANAGER_LINK'), 'redirect');
+		MolajoToolbarHelper::title(JText::_('COM_REDIRECT_MANAGER_LINK'), 'redirect');
 
 		// If not checked out, can save the item.
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::apply('link.apply');
-			JToolBarHelper::save('link.save');
+			MolajoToolbarHelper::apply('link.apply');
+			MolajoToolbarHelper::save('link.save');
 		}
 
 		// This component does not support Save as Copy due to uniqueness checks.
@@ -70,15 +70,15 @@ class RedirectViewLink extends JView
 		// not change the Old URL.
 
 		if ($canDo->get('core.edit') && $canDo->get('core.create')) {
-			JToolBarHelper::save2new('link.save2new');
+			MolajoToolbarHelper::save2new('link.save2new');
 		}
 
 		if (empty($this->item->id)) {
-			JToolBarHelper::cancel('link.cancel');
+			MolajoToolbarHelper::cancel('link.cancel');
 		} else {
-			JToolBarHelper::cancel('link.cancel', 'JTOOLBAR_CLOSE');
+			MolajoToolbarHelper::cancel('link.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-		JToolBarHelper::help('JHELP_COMPONENTS_REDIRECT_MANAGER_EDIT');
+		MolajoToolbarHelper::help('JHELP_COMPONENTS_REDIRECT_MANAGER_EDIT');
 	}
 }

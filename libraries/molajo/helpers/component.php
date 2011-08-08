@@ -157,60 +157,26 @@ class MolajoComponentHelper
 	 */
 	public static function renderComponent($request, $params = array())
 	{
-		// Initialise variables.
-		$app	= MolajoFactory::getApplication();
+		// Record the scope (what is this scope?)
+		$scope = MolajoFactory::getApplication()->scope;
 
-		// Load template language files.
-		$template	= $app->getTemplate(true)->template;
+		// Set scope to extension name
+		MolajoFactory::getApplication()->scope = $request['option'];
 
-		$lang = MolajoFactory::getLanguage();
-			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", $lang->getDefault(), false, false);
- 
-		if (empty($request['option'])) {
-			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
-			return;
-		}
+        /** extension path and entry point */
+        $path = $request['component_path'].'/'.$request['no_com_option'].'.php';
 
-		 // Record the scope
-		$scope = $app->scope;
-		// Set scope to component name
-		$app->scope = $request['option'];
-
-        /** component path and entry point */
-		$request['option']	= preg_replace('/[^A-Z0-9_\.-]/i', '', $request['option']);
-		$file = substr($request['option'], 4);
-        $path = $request['component_path'].'/'.$file.'.php';
-
-        /** verify component is enabled */
+        /** verify extension is enabled */
 		if (self::isEnabled($request['option'])
                 && file_exists($path)) {
         } else {
 			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
-		$task = JRequest::getString('task');
-
-		// Load common and local language files.
-			$lang->load($request['option'], MOLAJO_PATH_BASE, null, false, false)
-		||	$lang->load($request['option'], $request['component_path'], null, false, false)
-		||	$lang->load($request['option'], MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load($request['option'], $request['component_path'], $lang->getDefault(), false, false);
-
-		// Handle template preview outlining.
-		$contents = null;
-
-		// Execute the component.
-		ob_start();
+		//  Execute Extension
 		require_once $path;
-		$contents = ob_get_contents();
-		ob_end_clean();
 
-		// Revert the scope
-		$app->scope = $scope;
-
-		return $contents;
+		// Revert scope
+		MolajoFactory::getApplication()->scope = $scope;
 	}
 }

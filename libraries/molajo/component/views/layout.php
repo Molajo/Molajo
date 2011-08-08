@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Layout
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
@@ -92,23 +92,6 @@ class MolajoLayout extends JView
     protected $layout_path;
 
     /**
-     * loadLanguage
-     *
-     * Language
-     *
-     * Automatically includes the following files (if existing)
-     *
-     * 1. Master Layout folder Language Files found in => layout/[current-language]/
-     * 2. Current Layout folder Language Files found in => layout/current-layout/[current-language]/
-     *
-     * @param $this->layout_path
-     * @return void
-     */
-    public function getLayout ()
-    {
-    }
-
-    /**
      * findPath
      *
      * Looks for path of Request Layout as a layout folder, in this order:
@@ -140,11 +123,8 @@ class MolajoLayout extends JView
         }
         
         /** 2. @var $templateLayoutPath [template]/html/[layout-folder] */
-        $templateLayoutPath = '';
-        if ($layout_type == 'extension') {
-            $templateLayoutPath = $template.'/'.$layout_type;
-        }
-        
+        $templateLayoutPath = $template.'/'.$layout_type.'s';
+
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
         $extensionPath = '';
         if ($layout_type == 'extension') {
@@ -334,9 +314,8 @@ class MolajoLayout extends JView
     protected function loadLanguage ()
     {
         $language = MolajoFactory::getLanguage();
-
-        $language->load('layouts', MOLAJO_LAYOUTS_EXTENSIONS, $language->getDefault(), true, true);
-        $language->load('layouts_'.$this->request['layout'], $this->layout_path, $language->getDefault(), true, true);
+        $language->load('layouts', MOLAJO_LAYOUTS, $language->getDefault(), false, false);
+        $language->load('layouts_'.$this->request['layout_type'].'s'.$this->request['layout'], $this->layout_path, $language->getDefault(), false, false);
     }
 
     /**

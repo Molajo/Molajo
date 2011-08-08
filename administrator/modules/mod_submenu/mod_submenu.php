@@ -1,16 +1,15 @@
 <?php
 /**
- * @version		$Id:mod_menu.php 2463 2006-02-18 06:05:38Z webImagery $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Submenu
+ * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// no direct access
-defined('_JEXEC') or die;
-
-// Include dependancies.
+defined('MOLAJO') or die;
+//if (!JRequest::getInt('hidemainmenu')):
 require_once dirname(__FILE__).'/helper.php';
 
-if ($list = modSubmenuHelper::getItems()) {
-	require MolajoModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
+$list = modSubmenuHelper::getItems();
+if (count($list) > 0) {
+    require MolajoModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
 }

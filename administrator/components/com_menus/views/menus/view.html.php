@@ -54,25 +54,25 @@ class MenusViewMenus extends JView
 
 		$canDo	= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		JToolBarHelper::title(JText::_('COM_MENUS_VIEW_MENUS_TITLE'), 'menumgr.png');
+		MolajoToolbarHelper::title(JText::_('COM_MENUS_VIEW_MENUS_TITLE'), 'menumgr.png');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('menu.add');
+			MolajoToolbarHelper::addNew('menu.add');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('menu.edit');
+			MolajoToolbarHelper::editList('menu.edit');
 		}
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::deleteList('', 'menus.delete');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'menus.delete');
 		}
 
-		JToolBarHelper::custom('menus.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
+		MolajoToolbarHelper::custom('menus.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::preferences('com_menus');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::preferences('com_menus');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_MENUS_MENU_MANAGER');
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_MENUS_MENU_MANAGER');
 	}
 }

@@ -52,25 +52,25 @@ class PluginsViewPlugins extends JView
 		$state	= $this->get('State');
 		$canDo	= PluginsHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_PLUGINS_MANAGER_PLUGINS'), 'plugin');
+		MolajoToolbarHelper::title(JText::_('COM_PLUGINS_MANAGER_PLUGINS'), 'plugin');
 
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('plugin.edit');
+			MolajoToolbarHelper::editList('plugin.edit');
 		}
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::publish('plugins.publish', 'JTOOLBAR_ENABLE');
-			JToolBarHelper::unpublish('plugins.unpublish', 'JTOOLBAR_DISABLE');
-			JToolBarHelper::divider();
-			JToolBarHelper::checkin('plugins.checkin');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::publish('plugins.publish', 'JTOOLBAR_ENABLE');
+			MolajoToolbarHelper::unpublish('plugins.unpublish', 'JTOOLBAR_DISABLE');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::checkin('plugins.checkin');
 		}
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::preferences('com_plugins');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::preferences('com_plugins');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_EXTENSIONS_PLUGIN_MANAGER');
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_PLUGIN_MANAGER');
 	}
 }

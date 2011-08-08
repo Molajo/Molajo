@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_templates
- * @since		1.6
+ * * * @since		1.0
  */
 class TemplatesViewStyle extends JView
 {
@@ -55,28 +55,28 @@ class TemplatesViewStyle extends JView
 		$isNew		= ($this->item->id == 0);
 		$canDo		= TemplatesHelper::getActions();
 
-		JToolBarHelper::title(
+		MolajoToolbarHelper::title(
 			$isNew ? JText::_('COM_TEMPLATES_MANAGER_ADD_STYLE')
 			: JText::_('COM_TEMPLATES_MANAGER_EDIT_STYLE'), 'thememanager'
 		);
 
 		// If not checked out, can save the item.
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::apply('style.apply');
-			JToolBarHelper::save('style.save');
+			MolajoToolbarHelper::apply('style.apply');
+			MolajoToolbarHelper::save('style.save');
 		}
 
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::save2copy('style.save2copy');
+			MolajoToolbarHelper::save2copy('style.save2copy');
 		}
 
 		if (empty($this->item->id))  {
-			JToolBarHelper::cancel('style.cancel');
+			MolajoToolbarHelper::cancel('style.cancel');
 		} else {
-			JToolBarHelper::cancel('style.cancel', 'JTOOLBAR_CLOSE');
+			MolajoToolbarHelper::cancel('style.cancel', 'JTOOLBAR_CLOSE');
 		}
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::divider();
 		// Get the help information for the template item.
 
 		$lang = MolajoFactory::getLanguage();
@@ -90,6 +90,6 @@ class TemplatesViewStyle extends JView
 		else {
 			$url = null;
 		}
-		JToolBarHelper::help($help->key, false, $url);
+		MolajoToolbarHelper::help($help->key, false, $url);
 	}
 }

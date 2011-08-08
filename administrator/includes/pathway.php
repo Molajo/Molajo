@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package		Molajo
  * @subpackage	Pathway
- * @since		1.0
+ * * @since		1.0
  */
 class MolajoPathwayAdministrator extends MolajoPathway
 {

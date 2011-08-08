@@ -168,39 +168,39 @@ class MenusViewItems extends JView
 
 		$canDo	= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		JToolBarHelper::title(JText::_('COM_MENUS_VIEW_ITEMS_TITLE'), 'menumgr.png');
+		MolajoToolbarHelper::title(JText::_('COM_MENUS_VIEW_ITEMS_TITLE'), 'menumgr.png');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('item.add');
+			MolajoToolbarHelper::addNew('item.add');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('item.edit');
+			MolajoToolbarHelper::editList('item.edit');
 		}
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::publish('items.publish');
-			JToolBarHelper::unpublish('items.unpublish');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::publish('items.publish');
+			MolajoToolbarHelper::unpublish('items.unpublish');
 		}
 		if (MolajoFactory::getUser()->authorise('core.admin')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::checkin('items.checkin');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::checkin('items.checkin');
 		}
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::trash('items.trash');
+			MolajoToolbarHelper::trash('items.trash');
 		}
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'items.delete', 'JTOOLBAR_EMPTY_TRASH');
+			MolajoToolbarHelper::deleteList('', 'items.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
 
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::makeDefault('items.setDefault', 'COM_MENUS_TOOLBAR_SET_HOME');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::makeDefault('items.setDefault', 'COM_MENUS_TOOLBAR_SET_HOME');
+			MolajoToolbarHelper::divider();
 		}
 		if (MolajoFactory::getUser()->authorise('core.admin')) {
-			JToolBarHelper::custom('items.rebuild', 'refresh.png', 'refresh_f2.png', 'JToolbar_Rebuild', false);
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::custom('items.rebuild', 'refresh.png', 'refresh_f2.png', 'JToolbar_Rebuild', false);
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::help('JHELP_MENUS_MENU_ITEM_MANAGER');
+		MolajoToolbarHelper::help('JHELP_MENUS_MENU_ITEM_MANAGER');
 	}
 }

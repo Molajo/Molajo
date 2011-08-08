@@ -64,11 +64,11 @@ class InstallerViewDefault extends JView
 	protected function addToolbar()
 	{
 		$canDo	= InstallerHelper::getActions();
-		JToolBarHelper::title(JText::_('COM_INSTALLER_HEADER_' . $this->getName()), 'install.png');
+		MolajoToolbarHelper::title(JText::_('COM_INSTALLER_HEADER_' . $this->getName()), 'install.png');
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_installer');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_installer');
+			MolajoToolbarHelper::divider();
 		}
 
 		// Document

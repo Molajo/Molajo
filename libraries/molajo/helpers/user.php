@@ -27,7 +27,7 @@ abstract class MolajoUserHelper
 	 * @param   integer  $userId	The id of the user.
 	 * @param   integer  $groupId	The id of the group.
 	 *
-	 * @return  mixed    	Boolean true on success, JException on error.
+	 * @return  mixed    	Boolean true on success, MolajoException on error.
 	 * @since   1.0
 	 */
 	public static function addUserToGroup($userId, $groupId)
@@ -49,12 +49,12 @@ abstract class MolajoUserHelper
 
 			// Check for a database error.
 			if ($db->getErrorNum()) {
-				return new JException($db->getErrorMsg());
+				return new MolajoException($db->getErrorMsg());
 			}
 
 			// If the group does not exist, return an exception.
 			if (!$title) {
-				return new JException(JText::_('MOLAJO_USER_EXCEPTION_ACCESS_USERGROUP_INVALID'));
+				return new MolajoException(JText::_('MOLAJO_USER_EXCEPTION_ACCESS_USERGROUP_INVALID'));
 			}
 
 			// Add the group data to the user object.
@@ -62,7 +62,7 @@ abstract class MolajoUserHelper
 
 			// Store the user object.
 			if (!$user->save()) {
-				return new JException($user->getError());
+				return new MolajoException($user->getError());
 			}
 		}
 
@@ -83,7 +83,7 @@ abstract class MolajoUserHelper
 	 * Method to get a list of groups a user is in.
 	 *
 	 * @param   integer  $userId		The id of the user.
-	 * @return  mixed  Array on success, JException on error.
+	 * @return  mixed  Array on success, MolajoException on error.
 	 * @since   1.0
 	 */
 	public static function getUserGroups($userId)
@@ -99,7 +99,7 @@ abstract class MolajoUserHelper
 	 *
 	 * @param   integer  $userId		The id of the user.
 	 * @param   integer  $groupId	The id of the group.
-	 * @return  mixed  Boolean true on success, JException on error.
+	 * @return  mixed  Boolean true on success, MolajoException on error.
 	 * @since   1.0
 	 */
 	public static function removeUserFromGroup($userId, $groupId)
@@ -115,7 +115,7 @@ abstract class MolajoUserHelper
 
 			// Store the user object.
 			if (!$user->save()) {
-				return new JException($user->getError());
+				return new MolajoException($user->getError());
 			}
 		}
 
@@ -138,7 +138,7 @@ abstract class MolajoUserHelper
 	 * @param   integer  $userId		The id of the user.
 	 * @param   array    $groups		An array of group ids to put the user in.
 	 *
-	 * @return  mixed  Boolean true on success, JException on error.
+	 * @return  mixed  Boolean true on success, MolajoException on error.
 	 * @since   1.0
 	 */
 	public static function setUserGroups($userId, $groups)
@@ -161,7 +161,7 @@ abstract class MolajoUserHelper
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			return new JException($db->getErrorMsg());
+			return new MolajoException($db->getErrorMsg());
 		}
 
 		// Set the titles for the user groups.
@@ -171,7 +171,7 @@ abstract class MolajoUserHelper
 
 		// Store the user object.
 		if (!$user->save()) {
-			return new JException($user->getError());
+			return new MolajoException($user->getError());
 		}
 
 		// Set the group data for any preloaded user objects.

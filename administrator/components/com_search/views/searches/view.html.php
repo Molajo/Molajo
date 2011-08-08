@@ -53,16 +53,16 @@ class SearchViewSearches extends JView
 	{
 		$canDo	= SearchHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_SEARCH_MANAGER_SEARCHES'), 'search.png');
+		MolajoToolbarHelper::title(JText::_('COM_SEARCH_MANAGER_SEARCHES'), 'search.png');
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::custom('searches.reset', 'refresh.png', 'refresh_f2.png', 'JSEARCH_RESET', false);
+			MolajoToolbarHelper::custom('searches.reset', 'refresh.png', 'refresh_f2.png', 'JSEARCH_RESET', false);
 		}
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::divider();
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_search');
+			MolajoToolbarHelper::preferences('com_search');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_SEARCH');
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_COMPONENTS_SEARCH');
 	}
 }

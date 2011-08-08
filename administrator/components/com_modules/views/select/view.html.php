@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_modules
- * @since		1.6
+ * * * @since		1.0
  */
 class ModulesViewSelect extends JView
 {

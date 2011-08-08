@@ -123,11 +123,11 @@ class MediaViewMedia extends JView
 	protected function addToolbar()
 	{
 		// Get the toolbar object instance
-		$bar = JToolBar::getInstance('toolbar');
+		$bar = MolajoToolbar::getInstance('toolbar');
 		$user = MolajoFactory::getUser();
 
 		// Set the titlebar text
-		JToolBarHelper::title(JText::_('COM_MEDIA'), 'mediamanager.png');
+		MolajoToolbarHelper::title(JText::_('COM_MEDIA'), 'mediamanager.png');
 
 		// Add a delete button
 		if ($user->authorise('core.delete','com_media'))
@@ -137,15 +137,15 @@ class MediaViewMedia extends JView
 						<span class=\"icon-32-delete\" title=\"$title\"></span>
 						$title</a>";
 			$bar->appendButton('Custom', $dhtml, 'delete');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::divider();
 		}
 		// Add a delete button
 		if ($user->authorise('core.admin','com_media'))
 		{
-			JToolBarHelper::preferences('com_media', 450, 800, 'JToolbar_Options', '', 'window.location.reload()');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_media', 450, 800, 'JToolbar_Options', '', 'window.location.reload()');
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::help('JHELP_CONTENT_MEDIA_MANAGER');
+		MolajoToolbarHelper::help('JHELP_CONTENT_MEDIA_MANAGER');
 	}
 
 	function getFolderLevel($folder)

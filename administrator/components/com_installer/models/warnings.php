@@ -19,7 +19,7 @@ jimport('joomla.filesystem.folder');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_installer
- * @since		1.6
+ * * * @since		1.0
  */
 class InstallerModelWarnings extends JModelList
 {

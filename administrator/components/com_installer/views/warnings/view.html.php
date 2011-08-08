@@ -15,7 +15,7 @@ include_once dirname(__FILE__).'/../default/view.php';
  *
  * @package		Joomla.Administrator
  * @subpackage	com_installer
- * @since		1.6
+ * * * @since		1.0
  */
 class InstallerViewWarnings extends InstallerViewDefault
 {
@@ -37,6 +37,6 @@ class InstallerViewWarnings extends InstallerViewDefault
 	protected function addToolbar()
 	{
 		parent::addToolbar();
-		JToolBarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_WARNINGS');
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_WARNINGS');
 	}
 }

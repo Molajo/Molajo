@@ -1,0 +1,100 @@
+/*
+@version     $id: site.css
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2011 individual Molajo Contributors. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+
+/* -- ICON STYLES ----------------------------- */
+.icon-16-archive{background-image:url(../images/icon-16-archive.png)}
+.icon-16-article{background-image:url(../images/icon-16-article.png)}
+.icon-16-back-user{background-image:url(../images/icon-16-back-user.png)}
+.icon-16-banners{background-image:url(../images/icon-16-banner.png)}
+.icon-16-banners-cat{background-image:url(../images/icon-16-banner-categories.png)}
+.icon-16-banners-tracks{background-image:url(../images/icon-16-banner-tracks.png)}
+.icon-16-category{background-image:url(../images/icon-16-category.png)}
+.icon-16-checkin{background-image:url(../images/icon-16-checkin.png)}
+.icon-16-clear{background-image:url(../images/icon-16-clear.png)}
+.icon-16-component{background-image:url(../images/icon-16-component.png)}
+.icon-16-config{background-image:url(../images/icon-16-config.png)}
+.icon-16-contact{background-image:url(../images/icon-16-contacts.png)}
+.icon-16-contact-cat{background-image:url(../images/icon-16-contacts-categories.png)}
+.icon-16-content{background-image:url(../images/icon-16-content.png)}
+.icon-16-cpanel{background-image:url(../images/icon-16-cpanel.png)}
+.icon-16-default{background-image:url(../images/icon-16-default.png)}
+.icon-16-featured{background-image:url(../images/icon-16-featured.png)}
+.icon-16-groups{background-image:url(../images/icon-16-groups.png)}
+.icon-16-help{background-image:url(../images/icon-16-help.png)}
+.icon-16-help-community{background-image:url(../images/icon-16-help-community.png)}
+.icon-16-help-dev{background-image:url(../images/icon-16-help-dev.png)}
+.icon-16-help-docs{background-image:url(../images/icon-16-help-docs.png)}
+.icon-16-help-forum{background-image:url(../images/icon-16-help-forum.png)}
+.icon-16-help-jed{background-image:url(../images/icon-16-help-jed.png)}
+.icon-16-help-jrd{background-image:url(../images/icon-16-help-jrd.png)}
+.icon-16-help-security{background-image:url(../images/icon-16-help-security.png)}
+.icon-16-help-shop{background-image:url(../images/icon-16-help-shop.png)}
+.icon-16-help-this{background-image:url(../images/icon-16-help-this.png)}
+.icon-16-help-trans{background-image:url(../images/icon-16-help-trans.png)}
+.icon-16-info{background-image:url(../images/icon-16-info.png)}
+.icon-16-install{background-image:url(../images/icon-16-install.png)}
+.icon-16-language{background-image:url(../images/icon-16-language.png)}
+.icon-16-levels{background-image:url(../images/icon-16-levels.png)}
+.icon-16-logout{background-image:url(../images/icon-16-logout.png)}
+.icon-16-maintenance{background-image:url(../images/icon-16-maintenance.png)}
+.icon-16-massmail{background-image:url(../images/icon-16-massmail.png)}
+.icon-16-media{background-image:url(../images/icon-16-media.png)}
+.icon-16-menu{background-image:url(../images/icon-16-menu.png)}
+.icon-16-menumgr{background-image:url(../images/icon-16-menumgr.png)}
+.icon-16-messages{background-image:url(../images/icon-16-messaging.png)}
+.icon-16-messages-add{background-image:url(../images/icon-16-new-privatemessage.png)}
+.icon-16-messages-read{background-image:url(../images/icon-16-messages.png)}
+.icon-16-module{background-image:url(../images/icon-16-module.png)}
+.icon-16-newarticle{background-image:url(../images/icon-16-newarticle.png)}
+.icon-16-newcategory{background-image:url(../images/icon-16-newcategory.png)}
+.icon-16-newgroup{background-image:url(../images/icon-16-newgroup.png)}
+.icon-16-newlevel{background-image:url(../images/icon-16-newlevel.png)}
+.icon-16-newsfeeds{background-image:url(../images/icon-16-newsfeeds.png)}
+.icon-16-newsfeeds-cat{background-image:url(../images/icon-16-newsfeeds-cat.png)}
+.icon-16-newuser{background-image:url(../images/icon-16-newuser.png)}
+.icon-16-plugin{background-image:url(../images/icon-16-plugin.png)}
+.icon-16-profile,.icon-16-user{background-image:url(../images/icon-16-user.png)}
+.icon-16-purge{background-image:url(../images/icon-16-purge.png)}
+.icon-16-readmess{background-image:url(../images/icon-16-readmess.png)}
+.icon-16-redirect{background-image:url(../images/icon-16-redirect.png)}
+.icon-16-search{background-image:url(../images/icon-16-search.png)}
+.icon-16-stats{background-image:url(../images/icon-16-stats.png)}
+.icon-16-themes{background-image:url(../images/icon-16-themes.png)}
+.icon-16-trash{background-image:url(../images/icon-16-trash.png)}
+.icon-16-weblinks{background-image:url(../images/icon-16-links.png)}
+.icon-16-weblinks-cat{background-image:url(../images/icon-16-links-cat.png)}
+.icon-16-writemess{background-image:url(../images/icon-16-writemess.png)}
+
+/* -- BASIC MENU STYLES ----------------------------- */
+#menu{position:relative;z-index:100}
+#menu a,#menu div{background-position:left 50%;background-repeat:no-repeat;color:#333;cursor:default;font-size:1em;font-weight:700;line-height:1.6em;margin:0 1px;padding:0.35em 1em;text-decoration:none;vertical-align:middle}
+#menu li{border-left:1px solid #fff;border-right:1px solid #d8d8d8;display:inline;float:left;list-style:none;position:relative}
+#menu li a{display:block;white-space:nowrap}
+#menu li li{border:0;display:block;float:none}
+#menu li li ul{left:0;top:0}
+#menu li ul{position:absolute;visibility:hidden}
+#menu li.disabled a,#menu li.disabled:hover a{background-color:transparent;border-left-width:0;border-right-width:0;color:gray;margin:0 1px}
+#menu li:hover li:hover ul{left:100%;visibility:visible}
+#menu li:hover ul{visibility:visible}
+#menu li:hover ul li ul{visibility:hidden}
+#menu ul{background:#f6f6f6 url(../../../../media/site/administrator/templates/molajo/bg-menu.gif) repeat-y left;border:0.1em solid #ccc}
+#menu ul a{font-size:1em;font-weight:400;line-height:1.2em;padding-left:25px;padding-right:20px}
+#menu ul li.node{background:transparent url(../../../../media/site/administrator/templates/molajo/j_arrow.png) no-repeat right 50%}
+#menu ul li.separator{background:#DDE1E6 url(../../../../media/site/administrator/templates/molajo/bg-menu.gif);height:1px}
+#menu,#menu ul,#menu li{border:0 none;margin:0;padding:0}
+/* 1 level - hover */
+#menu li:hover a{background-color:#dbe4e9;border-left:1px solid #025a8d;border-right:1px solid #025a8d;margin:0}
+/* 2 level - normal */
+#menu li:hover li a{background-color:transparent;border:1px solid transparent;margin:1px}
+/* 2 level - hover */
+#menu li:hover li:hover a{background-color:#dbe4e9;border-color:#025a8d}
+/* 3 level - normal */
+#menu li:hover li:hover li a{background-color:transparent;border-color:transparent}
+/* 3 level - hover */
+#menu li:hover li:hover li a:hover{background-color:#dbe4e9;border-color:#025a8d}
+a.icon-16-menu span img {vertical-align: bottom;}

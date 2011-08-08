@@ -50,13 +50,13 @@ class InstallerViewCreate extends InstallerViewDefault
     protected function addToolbar()
     {
         $canDo	= InstallerHelper::getActions();
-        JToolBarHelper::title(JText::_('PLG_SYSTEM_CREATE_HEADER_' . $this->getName()), 'install.png');
+        MolajoToolbarHelper::title(JText::_('PLG_SYSTEM_CREATE_HEADER_' . $this->getName()), 'install.png');
 
         if ($canDo->get('admin')) {
-            JToolBarHelper::preferences('com_installer');
-            JToolBarHelper::divider();
+            MolajoToolbarHelper::preferences('com_installer');
+            MolajoToolbarHelper::divider();
         }
-        JToolBarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_INSTALL');
+        MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_INSTALL');
 
         $document = JFactory::getDocument();
         $document->setTitle(JText::_('PLG_SYSTEM_CREATE_TITLE_' . $this->getName()));

@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 /**
  * @package		Joomla.Administrator
  * @subpackage	com_modules
- * @since		1.6
+ * * * @since		1.0
  */
 abstract class JHtmlModules
 {

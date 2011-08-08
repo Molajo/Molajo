@@ -28,7 +28,11 @@ $app = MolajoFactory::getApplication();
 	<div id="border-top" class="h_blue">
 		<div>
 			<div>
-				<span class="logo"><a href="http://molajo.org" target="_blank"><img src="<?php echo MOLAJO_BASE_URL; ?>/media/admin/logo.png" alt="Molajo" /></a></span>
+				<span class="logo">
+                    <a href="http://molajo.org" target="_blank">
+                        <img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo  $this->template ?>/images/logo.png" alt="Molajo" />
+                    </a>
+                </span>
 			</div>
 		</div>
 	</div>

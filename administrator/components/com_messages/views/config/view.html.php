@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_messages
- * @since		1.6
+ * * * @since		1.0
  */
 class MessagesViewConfig extends JView
 {

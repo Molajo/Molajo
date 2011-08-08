@@ -13,7 +13,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_admin
- * @since		1.6
+ * * * @since		1.0
  */
 class AdminViewHelp extends JView
 {
@@ -64,7 +64,7 @@ class AdminViewHelp extends JView
 	 */
 	protected function addToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_ADMIN_HELP'), 'help_header.png');
+		MolajoToolbarHelper::title(JText::_('COM_ADMIN_HELP'), 'help_header.png');
 	}
 }
 

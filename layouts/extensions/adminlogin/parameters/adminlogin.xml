@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="basic">
+            <field
+                name="usesecure"
+                type="radio"
+                default="0"
+                label="MOD_LOGIN_FIELD_USESECURE_LABEL"
+                description="MOD_LOGIN_FIELD_USESECURE_DESC">
+                <option
+                    value="0">JNo</option>
+                <option
+                    value="1">JYes</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

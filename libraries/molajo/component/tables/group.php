@@ -157,11 +157,11 @@ class MolajoTableGroup extends MolajoTable
         //  4: Administrator
 
         if ((int) $id == 0) {
-            return new JException(JText::_('MOLAJO_GROUP_NUMBER_NOT_PROVIDED_FOR_DELETE'));
+            return new MolajoException(JText::_('MOLAJO_GROUP_NUMBER_NOT_PROVIDED_FOR_DELETE'));
         }
 
         if ((int) $id > 0 AND (int) $id < 5) {
-            return new JException(JText::_('MOLAJO_SYSTEM_GROUP_CANNOT_BE_DELETED'));
+            return new MolajoException(JText::_('MOLAJO_SYSTEM_GROUP_CANNOT_BE_DELETED'));
         }
 
         if ($id) {
@@ -181,7 +181,7 @@ class MolajoTableGroup extends MolajoTable
 
         $groupIds = $db->loadColumn();
         if (empty($groupIds)) {
-            return new JException(JText::_('MOLAJO_GROUP_DOES_NOT_EXIST'));
+            return new MolajoException(JText::_('MOLAJO_GROUP_DOES_NOT_EXIST'));
         }
 
         /**

@@ -14,7 +14,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @since		1.6
+ * * * @since		1.0
  */
 class MenusViewMenu extends JView
 {
@@ -54,32 +54,32 @@ class MenusViewMenu extends JView
 		$isNew		= ($this->item->id == 0);
 		$canDo		= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		JToolBarHelper::title(JText::_($isNew ? 'COM_MENUS_VIEW_NEW_MENU_TITLE' : 'COM_MENUS_VIEW_EDIT_MENU_TITLE'), 'menu.png');
+		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_MENUS_VIEW_NEW_MENU_TITLE' : 'COM_MENUS_VIEW_EDIT_MENU_TITLE'), 'menu.png');
 
 		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
 		if ($isNew && $canDo->get('core.create')) {
 			if ($canDo->get('core.edit')) {
-				JToolBarHelper::apply('menu.apply');
+				MolajoToolbarHelper::apply('menu.apply');
 			}
-			JToolBarHelper::save('menu.save');
+			MolajoToolbarHelper::save('menu.save');
 		}
 
 		// If user can edit, can save the item.
 		if (!$isNew && $canDo->get('core.edit')) {
-			JToolBarHelper::apply('menu.apply');
-			JToolBarHelper::save('menu.save');
+			MolajoToolbarHelper::apply('menu.apply');
+			MolajoToolbarHelper::save('menu.save');
 		}
 
 		// If the user can create new items, allow them to see Save & New
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::save2new('menu.save2new');
+			MolajoToolbarHelper::save2new('menu.save2new');
 		}
 		if ($isNew) {
-			JToolBarHelper::cancel('menu.cancel');
+			MolajoToolbarHelper::cancel('menu.cancel');
 		} else {
-			JToolBarHelper::cancel('menu.cancel', 'JTOOLBAR_CLOSE');
+			MolajoToolbarHelper::cancel('menu.cancel', 'JTOOLBAR_CLOSE');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_MENUS_MENU_MANAGER_EDIT');
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_MENUS_MENU_MANAGER_EDIT');
 	}
 }

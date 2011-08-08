@@ -15,7 +15,7 @@ jimport('joomla.application.categories');
 /**
  * @package		Joomla.Administrator
  * @subpackage	mod_popular
- * @since		1.6
+ * * * @since		1.0
  */
 abstract class modPopularHelper
 {

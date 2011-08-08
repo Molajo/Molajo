@@ -14,7 +14,7 @@ jimport( 'joomla.application.component.controller' );
  *
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @since		1.6
+ * * * @since		1.0
  */
 class MenusControllerMenus extends JController
 {

@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 /**
  * @package		Joomla.Administrator
  * @subpackage	mod_online
- * @since		1.6
+ * * * @since		1.0
  */
 abstract class modOnlineHelper
 {

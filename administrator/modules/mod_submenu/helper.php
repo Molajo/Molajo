@@ -1,38 +1,36 @@
-<?php
+<<?php
 /**
- * @version		$Id: helper.php 20196 2011-01-09 02:40:25Z ian $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Submenu
+ * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// no direct access
-defined('_JEXEC') or die;
-
-/**
- * @package		Joomla.Administrator
- * @subpackage	mod_submenu
- * @since		1.6
- */
 abstract class modSubmenuHelper
 {
 	/**
-	 * Get the member items of the submenu.
+	 * getItems()
+     *
+     * Get the member items of the submenu.
 	 *
 	 * @return	mixed	An arry of menu items, or false on error.
+     * @version 1.0
 	 */
 	public static function getItems()
 	{
-$submenu = new MolajoSubmenuHelper ();
-$submenu->add();
-		// Initialise variables.
-		$menu = JToolBar::getInstance('submenu');
-
-		$list = $menu->getItems();
-
-		if (!is_array($list) || !count($list)) {
+//		$menu = MolajoToolbar::getInstance('submenu');
+//var_dump($menu);
+//
+//		$list = $menu->getItems();
+//var_dump($list);
+//die();
+		if (is_array($list) && count($list) > 0) {
+        } else {
 			return false;
 		}
-
+//$submenu = new MolajoSubmenuHelper ();
+//$submenu->add();
 		return $list;
 	}
 }

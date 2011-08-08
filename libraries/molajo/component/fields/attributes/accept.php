@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class MolajoAttributeAccept extends MolajoAttribute
 {
-
     /**
      * __construct
      * 

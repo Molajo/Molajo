@@ -17,7 +17,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_templates
- * @since		1.6
+ * * * @since		1.0
  */
 class TemplatesViewPrevuuw extends JView
 {
@@ -63,7 +63,7 @@ class TemplatesViewPrevuuw extends JView
 	 */
 	protected function addToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_TEMPLATES_MANAGER'), 'thememanager');
-		JToolBarHelper::custom('edit', 'back.png', 'back_f2.png', 'Back', false, false);
+		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER'), 'thememanager');
+		MolajoToolbarHelper::custom('edit', 'back.png', 'back_f2.png', 'Back', false, false);
 	}
 }

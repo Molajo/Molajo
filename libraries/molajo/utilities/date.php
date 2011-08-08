@@ -126,7 +126,7 @@ class MolajoDate extends DateTime
 	 * @return  void
 	 * @since   1.0
 	 *
-	 * @throws	JException
+	 * @throws	MolajoException
 	 */
 	public function __construct($date = 'now', $tz = null)
 	{

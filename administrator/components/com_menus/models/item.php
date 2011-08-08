@@ -17,7 +17,7 @@ require_once JPATH_COMPONENT.'/helpers/menus.php';
  *
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @since		1.6
+ * * * @since		1.0
  */
 class MenusModelItem extends JModelAdmin
 {

@@ -30,7 +30,7 @@ abstract class MolajoModuleHelper
 	public static function &getModule($name, $title = null)
 	{
 		$result		= null;
-		$modules	= MolajoModuleHelper::_load();
+		$modules	= self::_load();
 
 		$total		= count($modules);
 		for ($i = 0; $i < $total; $i++)
@@ -80,8 +80,8 @@ abstract class MolajoModuleHelper
 		$position	= strtolower($position);
 		$result		= array();
 
-		$modules = MolajoModuleHelper::_load();
-var_dump($modules);
+		$modules    = self::_load();
+
 		$total = count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -89,12 +89,12 @@ var_dump($modules);
 				$result[] = &$modules[$i];
 			}
 		}
-		if (count($result) == 0)
-		{
+		if (count($result) == 0) {
+
 			if (JRequest::getBool('tp')
-                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display'))
-			{
-				$result[0] = MolajoModuleHelper::getModule('mod_'.$position);
+                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
+
+				$result[0] = self::getModule('mod_'.$position);
 				$result[0]->title = $position;
 				$result[0]->content = $position;
 				$result[0]->position = $position;
@@ -113,12 +113,14 @@ var_dump($modules);
 	 */
 	public static function isEnabled($module)
 	{
-		$result = MolajoModuleHelper::getModule($module);
+		$result = self::getModule($module);
 		return (!is_null($result));
 	}
 
 	/**
-	 * Render the module.
+	 * renderModule
+     *
+     * Render the module.
 	 *
 	 * @param   object  A module object.
 	 * @param   array   An array of attributes for the module (probably from the XML).
@@ -128,17 +130,15 @@ var_dump($modules);
 	public static function renderModule($module, $attribs = array())
 	{
 		static $chrome;
-
-		$option = JRequest::getCmd('option');
 		$app	= MolajoFactory::getApplication();
 
 		// Record the scope.
 		$scope	= $app->scope;
 
-		// Set scope to component name
+		// Set scope to module name
 		$app->scope = $module->module;
 
-		// Get module parameters
+		// Get parameters
 		$params = new JRegistry;
 		$params->loadJSON($module->params);
 
@@ -168,44 +168,47 @@ var_dump($modules);
 		if (!$chrome) {
 			$chrome = array();
 		}
+
+
 // layouts chrome
-		require_once MOLAJO_PATH_THEMES.'/system/html/modules.php';
-		$chromePath = MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
+//		require_once MOLAJO_PATH_THEMES.'/system/html/modules.php';
+//		$chromePath = MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
 
-		if (!isset($chrome[$chromePath]))
-		{
-			if (file_exists($chromePath)) {
-				require_once $chromePath;
-			}
-			$chrome[$chromePath] = true;
-		}
+//		if (!isset($chrome[$chromePath]))
+//		{
+//			if (file_exists($chromePath)) {
+//				require_once $chromePath;
+//			}
+//			$chrome[$chromePath] = true;
+//		}
 
-		// Make sure a style is set
-		if (!isset($attribs['style'])) {
-			$attribs['style'] = 'none';
-		}
+//		// Make sure a style is set
+//		if (!isset($attribs['style'])) {
+//			$attribs['style'] = 'none';
+//		}
 
 		// Dynamically add outline style
-		if (JRequest::getBool('tp')
-            && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
-			$attribs['style'] .= ' outline';
-		}
+//		if (JRequest::getBool('tp')
+//          && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
+//		$attribs['style'] .= ' outline';
+//		}
 
-		foreach(explode(' ', $attribs['style']) as $style)
-		{
-			$chromeMethod = 'modChrome_'.$style;
+//		foreach(explode(' ', $attribs['style']) as $style)
+//		{
+//			$chromeMethod = 'modChrome_'.$style;
 
 			// Apply chrome and render module
-			if (function_exists($chromeMethod))
-			{
-				$module->style = $attribs['style'];
-
-				ob_start();
-				$chromeMethod($module, $params, $attribs);
-				$module->content = ob_get_contents();
-				ob_end_clean();
-			}
-		}
+//			if (function_exists($chromeMethod))
+//			{
+//				$module->style = $attribs['style'];
+//
+//				ob_start();
+//				$chromeMethod($module, $params, $attribs);
+//				$module->content = ob_get_contents();
+//				ob_end_clean();
+//			}
+//		}
+//remove above
 
 		$app->scope = $scope; //revert the scope
 
@@ -226,7 +229,6 @@ var_dump($modules);
 		$defaultLayout = $layout;
 		if (strpos($layout, ':') !== false )
 		{
-			// Get the template and file name from the string
 			$temp = explode(':', $layout);
 			$template = ($temp[0] == '_') ? $template : $temp[0];
 			$layout = $temp[1];
@@ -251,7 +253,7 @@ var_dump($modules);
 	 *
 	 * @return  array
 	 */
-	protected static function &_load()
+	protected function &_load()
 	{
 		static $clean;
 

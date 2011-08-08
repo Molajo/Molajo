@@ -81,14 +81,14 @@ class MolajoControllerRedirect extends MolajoController
     protected $return_page = null;
 
     /**
-    * initializeRedirectLinks
+    * initialize
     *
     * Establish the Link needed for redirecting after the task is complete (or fails)
     *
     * @return	boolean
     * @since	1.0
     */
-    public function initializeRedirectLinks ($task=null)
+    public function initialize ($task=null)
     {
         /** no redirect: */
 

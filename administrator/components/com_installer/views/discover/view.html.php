@@ -17,7 +17,7 @@ include_once dirname(__FILE__).'/../default/view.php';
  *
  * @package		Joomla.Administrator
  * @subpackage	com_installer
- * @since		1.6
+ * * * @since		1.0
  */
 class InstallerViewDiscover extends InstallerViewDefault
 {
@@ -45,11 +45,11 @@ class InstallerViewDiscover extends InstallerViewDefault
 		/*
 		 * Set toolbar items for the page
 		 */
-		JToolBarHelper::custom('discover.install', 'upload', 'upload', 'JTOOLBAR_INSTALL', true, false);
-		JToolBarHelper::custom('discover.refresh', 'refresh', 'refresh','COM_INSTALLER_TOOLBAR_DISCOVER',false,false);
-		JToolBarHelper::custom('discover.purge', 'purge', 'purge', 'JTOOLBAR_PURGE_CACHE', false,false);
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::custom('discover.install', 'upload', 'upload', 'JTOOLBAR_INSTALL', true, false);
+		MolajoToolbarHelper::custom('discover.refresh', 'refresh', 'refresh','COM_INSTALLER_TOOLBAR_DISCOVER',false,false);
+		MolajoToolbarHelper::custom('discover.purge', 'purge', 'purge', 'JTOOLBAR_PURGE_CACHE', false,false);
+		MolajoToolbarHelper::divider();
 		parent::addToolbar();
-		JToolBarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_DISCOVER');
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_DISCOVER');
 	}
 }

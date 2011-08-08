@@ -61,20 +61,20 @@ class UsersViewUser extends JView
 
 		$isNew	= ($this->item->id == 0);
 		$isProfile = $this->item->id == $user->id;
-		JToolBarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_USER_TITLE' : ($isProfile ? 'COM_USERS_VIEW_EDIT_PROFILE_TITLE' : 'COM_USERS_VIEW_EDIT_USER_TITLE')), $isNew ? 'user-add' : ($isProfile ? 'user-profile' : 'user-edit'));
+		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_USER_TITLE' : ($isProfile ? 'COM_USERS_VIEW_EDIT_PROFILE_TITLE' : 'COM_USERS_VIEW_EDIT_USER_TITLE')), $isNew ? 'user-add' : ($isProfile ? 'user-profile' : 'user-edit'));
 		if ($canDo->get('core.edit')||$canDo->get('core.edit.own')||$canDo->get('core.create')) {
-			JToolBarHelper::apply('user.apply');
-			JToolBarHelper::save('user.save');
+			MolajoToolbarHelper::apply('user.apply');
+			MolajoToolbarHelper::save('user.save');
 		}
 		if ($canDo->get('core.create')&&$canDo->get('core.manage')) {
-			JToolBarHelper::save2new('user.save2new');
+			MolajoToolbarHelper::save2new('user.save2new');
 		}
 		if (empty($this->item->id))  {
-			JToolBarHelper::cancel('user.cancel');
+			MolajoToolbarHelper::cancel('user.cancel');
 		} else {
-			JToolBarHelper::cancel('user.cancel', 'JTOOLBAR_CLOSE');
+			MolajoToolbarHelper::cancel('user.cancel', 'JTOOLBAR_CLOSE');
 		}
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_USERS_USER_MANAGER_EDIT');
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_USERS_USER_MANAGER_EDIT');
 	}
 }

@@ -14,7 +14,7 @@ jimport('joomla.application.component.controllerform');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_categories
- * @since		1.6
+ * * * @since		1.0
  */
 class CategoriesControllerCategory extends JControllerForm
 {

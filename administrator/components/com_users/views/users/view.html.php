@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
- * @since		1.6
+ * * * @since		1.0
  */
 class UsersViewUsers extends JView
 {
@@ -51,33 +51,33 @@ class UsersViewUsers extends JView
 	{
 		$canDo	= UsersHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_USERS_VIEW_USERS_TITLE'), 'user');
+		MolajoToolbarHelper::title(JText::_('COM_USERS_VIEW_USERS_TITLE'), 'user');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('user.add');
+			MolajoToolbarHelper::addNew('user.add');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('user.edit');
+			MolajoToolbarHelper::editList('user.edit');
 		}
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::publish('users.activate', 'COM_USERS_TOOLBAR_ACTIVATE');
-			JToolBarHelper::unpublish('users.block', 'COM_USERS_TOOLBAR_BLOCK');
-			JToolBarHelper::custom('users.unblock', 'unblock.png', 'unblock_f2.png', 'COM_USERS_TOOLBAR_UNBLOCK', true);
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::publish('users.activate', 'COM_USERS_TOOLBAR_ACTIVATE');
+			MolajoToolbarHelper::unpublish('users.block', 'COM_USERS_TOOLBAR_BLOCK');
+			MolajoToolbarHelper::custom('users.unblock', 'unblock.png', 'unblock_f2.png', 'COM_USERS_TOOLBAR_UNBLOCK', true);
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'users.delete');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'users.delete');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_users');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_users');
+			MolajoToolbarHelper::divider();
 		}
 
-		JToolBarHelper::help('JHELP_USERS_USER_MANAGER');
+		MolajoToolbarHelper::help('JHELP_USERS_USER_MANAGER');
 	}
 }

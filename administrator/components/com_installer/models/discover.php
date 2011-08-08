@@ -19,7 +19,7 @@ jimport('joomla.installer.installer');
  *
  * @package		Joomla.Administator
  * @subpackage	com_installer
- * @since		1.6
+ * * * @since		1.0
  */
 class InstallerModelDiscover extends InstallerModel
 {

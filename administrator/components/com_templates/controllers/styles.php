@@ -15,7 +15,7 @@ jimport('joomla.application.component.controlleradmin');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_templates
- * @since		1.6
+ * * * @since		1.0
  */
 class TemplatesControllerStyles extends JControllerAdmin
 {

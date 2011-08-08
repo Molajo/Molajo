@@ -54,15 +54,15 @@ class PluginsViewPlugin extends JView
 		$user		= MolajoFactory::getUser();
 		$canDo		= PluginsHelper::getActions();
 
-		JToolBarHelper::title(JText::sprintf('COM_PLUGINS_MANAGER_PLUGIN', JText::_($this->item->name)), 'plugin');
+		MolajoToolbarHelper::title(JText::sprintf('COM_PLUGINS_MANAGER_PLUGIN', JText::_($this->item->name)), 'plugin');
 
 		// If not checked out, can save the item.
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::apply('plugin.apply');
-			JToolBarHelper::save('plugin.save');
+			MolajoToolbarHelper::apply('plugin.apply');
+			MolajoToolbarHelper::save('plugin.save');
 		}
-		JToolBarHelper::cancel('plugin.cancel', 'JTOOLBAR_CLOSE');
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::cancel('plugin.cancel', 'JTOOLBAR_CLOSE');
+		MolajoToolbarHelper::divider();
 		// Get the help information for the plugin item.
 
 		$lang = MolajoFactory::getLanguage();
@@ -76,6 +76,6 @@ class PluginsViewPlugin extends JView
 		else {
 			$url = null;
 		}
-		JToolBarHelper::help($help->key, false, $url);
+		MolajoToolbarHelper::help($help->key, false, $url);
 	}
 }

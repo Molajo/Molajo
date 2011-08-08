@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_messages
- * @since		1.6
+ * * * @since		1.0
  */
 class MessagesViewMessages extends JView
 {
@@ -52,36 +52,36 @@ class MessagesViewMessages extends JView
 		$state	= $this->get('State');
 		$canDo	= MessagesHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_MESSAGES_MANAGER_MESSAGES'), 'inbox.png');
+		MolajoToolbarHelper::title(JText::_('COM_MESSAGES_MANAGER_MESSAGES'), 'inbox.png');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('message.add');
+			MolajoToolbarHelper::addNew('message.add');
 		}
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::publish('messages.publish', 'COM_MESSAGES_TOOLBAR_MARK_AS_READ');
-			JToolBarHelper::unpublish('messages.unpublish', 'COM_MESSAGES_TOOLBAR_MARK_AS_UNREAD');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::publish('messages.publish', 'COM_MESSAGES_TOOLBAR_MARK_AS_READ');
+			MolajoToolbarHelper::unpublish('messages.unpublish', 'COM_MESSAGES_TOOLBAR_MARK_AS_UNREAD');
 		}
 
 		if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::deleteList('', 'messages.delete','JTOOLBAR_EMPTY_TRASH');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'messages.delete','JTOOLBAR_EMPTY_TRASH');
 		} else if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::trash('messages.trash');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::trash('messages.trash');
 		}
 
-		//JToolBarHelper::addNew('module.add');
-		JToolBarHelper::divider();
-		$bar = JToolBar::getInstance('toolbar');
+		//MolajoToolbarHelper::addNew('module.add');
+		MolajoToolbarHelper::divider();
+		$bar = MolajoToolbar::getInstance('toolbar');
 		$bar->appendButton('Popup', 'options', 'COM_MESSAGES_TOOLBAR_MY_SETTINGS', 'index.php?option=com_messages&amp;view=config&amp;tmpl=component', 850, 400);
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_messages');
+			MolajoToolbarHelper::preferences('com_messages');
 		}
 
-		JToolBarHelper::divider();
-		JToolBarHelper::help('JHELP_COMPONENTS_MESSAGING_INBOX');
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_COMPONENTS_MESSAGING_INBOX');
 	}
 }

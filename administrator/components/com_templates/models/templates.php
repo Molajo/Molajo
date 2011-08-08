@@ -14,7 +14,7 @@ jimport('joomla.application.component.modellist');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_templates
- * @since		1.6
+ * * * @since		1.0
  */
 class TemplatesModelTemplates extends JModelList
 {

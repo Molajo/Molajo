@@ -227,7 +227,7 @@ class MolajoForm
 	/**
 	 * Return all errors, if any.
 	 *
-	 * @return  array  Array of error messages or JException objects.
+	 * @return  array  Array of error messages or MolajoException objects.
 	 *
 	 * @since   1.0
 	 */
@@ -1636,7 +1636,7 @@ class MolajoForm
 	 * @param   object  $calendar    An optional JRegistry object with the entire data set to validate
 	 *                            against the entire form.
 	 *
-	 * @return  mixed  Boolean true if field value is valid, JException on failure.
+	 * @return  mixed  Boolean true if field value is valid, MolajoException on failure.
 	 *
 	 * @since   1.0
 	 */
@@ -1644,7 +1644,7 @@ class MolajoForm
 	{
 		// Make sure there is a valid JXMLElement.
 		if (!$element instanceof JXMLElement) {
-			return new JException(JText::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
+			return new MolajoException(JText::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
 		}
 
 		// Initialise variables.
@@ -1670,7 +1670,7 @@ class MolajoForm
 					}
 					$message = JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_REQUIRED', $message);
 				}
-				return new JException($message, 2, E_WARNING);
+				return new MolajoException($message, 2, E_WARNING);
 			}
 		}
 
@@ -1681,7 +1681,7 @@ class MolajoForm
 
 			// If the object could not be loaded return an error message.
 			if ($rule === false) {
-				return new JException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
+				return new MolajoException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
 			}
 
 			// Run the field validation rule test.
@@ -1700,10 +1700,10 @@ class MolajoForm
 			$message = (string) $element['message'];
 
 			if ($message) {
-				return new JException(JText::_($message), 1, E_WARNING);
+				return new MolajoException(JText::_($message), 1, E_WARNING);
 			}
 			else {
-				return new JException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', JText::_((string) $element['label'])), 1, E_WARNING);
+				return new MolajoException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', JText::_((string) $element['label'])), 1, E_WARNING);
 			}
 		}
 

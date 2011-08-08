@@ -39,10 +39,6 @@ class MolajoView extends MolajoLayout
 
         /** @var $this->user */
         $this->user = MolajoFactory::getUser();
-
-        /** Set Page Meta */
-//		$pageModel = JModel::getInstance('Page', 'MolajoModel', array('ignore_request' => true));
-//		$pageModel->setState('params', $this->app->getParams());
     }
 
     /**

@@ -904,22 +904,23 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (501, 'mod_custom', 'module', 'mod_custom', 'mod_custom', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 0, 5, 1501),
-    (502, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 0, 5, 1502),
-    (503, 'mod_latest', 'module', 'mod_latest', 'mod_latest', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 0, 5, 1503),
-    (504, 'mod_logged', 'module', 'mod_logged', 'mod_logged', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 0, 5, 1504),
-    (505, 'mod_login', 'module', 'mod_login', 'mod_login', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 0, 5, 1505),
-    (506, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 0, 5, 1506),
-    (507, 'mod_mypanel', 'module', 'mod_mypanel', 'mod_mypanel', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 0, 5, 1507),
-    (508, 'mod_myshortcuts', 'module', 'mod_myshortcuts', 'mod_myshortcuts', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 0, 5, 1508),
-    (509, 'mod_online', 'module', 'mod_online', 'mod_online', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 0, 5, 1509),
-    (510, 'mod_popular', 'module', 'mod_popular', 'mod_popular', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 0, 5, 1510),
-    (511, 'mod_quickicon', 'module', 'mod_quickicon', 'mod_quickicon', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 0, 5, 1511),
-    (512, 'mod_status', 'module', 'mod_status', 'mod_status', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 0, 5, 1512),
-    (513, 'mod_submenu', 'module', 'mod_submenu', 'mod_submenu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 0, 5, 1513),
-    (514, 'mod_title', 'module', 'mod_title', 'mod_title', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 0, 5, 1514),
-    (515, 'mod_toolbar', 'module', 'mod_toolbar', 'mod_toolbar', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 15, 0, 5, 1515),
-    (516, 'mod_unread', 'module', 'mod_unread', 'mod_unread', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 16, 0, 5, 1516);
+    (501, 'mod_custom', 'module', 'mod_custom', 'mod_custom', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 0, 2, 1501),
+    (502, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 0, 2, 1502),
+    (503, 'mod_latest', 'module', 'mod_latest', 'mod_latest', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 0, 2, 1503),
+    (504, 'mod_logged', 'module', 'mod_logged', 'mod_logged', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 0, 1, 1504),
+    (505, 'mod_login', 'module', 'mod_login', 'mod_login', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 0, 2, 1505),
+    (506, 'mod_logout', 'module', 'mod_logout', 'mod_logout', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 0, 2, 1506);
+    (507, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 0, 2, 1507),
+    (508, 'mod_mypanel', 'module', 'mod_mypanel', 'mod_mypanel', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 0, 2, 1508),
+    (509, 'mod_myshortcuts', 'module', 'mod_myshortcuts', 'mod_myshortcuts', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 0, 2, 1509),
+    (510, 'mod_online', 'module', 'mod_online', 'mod_online', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 0, 2, 1510),
+    (511, 'mod_popular', 'module', 'mod_popular', 'mod_popular', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 0, 2, 1511),
+    (512, 'mod_quickicon', 'module', 'mod_quickicon', 'mod_quickicon', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 0, 2, 1512),
+    (513, 'mod_status', 'module', 'mod_status', 'mod_status', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 0, 2, 1513),
+    (514, 'mod_submenu', 'module', 'mod_submenu', 'mod_submenu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 0, 2, 1514),
+    (515, 'mod_title', 'module', 'mod_title', 'mod_title', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 15, 0, 2, 1515),
+    (516, 'mod_toolbar', 'module', 'mod_toolbar', 'mod_toolbar', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 16, 0, 2, 1516),
+    (517, 'mod_unread', 'module', 'mod_unread', 'mod_unread', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 17, 0, 2, 1517);
 
 # Modules - Site
 INSERT INTO `#__extensions` (
@@ -927,20 +928,20 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (601, 'mod_articles', 'module', 'mod_articles', 'mod_articles', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1, 5, 1601),
-    (602, 'mod_breadcrumbs', 'module', 'mod_breadcrumbs', 'mod_breadcrumbs', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 5, 1602),
-    (603, 'mod_custom', 'module', 'mod_custom', 'mod_custom', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 1, 5, 1603),
-    (604, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 1, 5, 1604),
-    (605, 'mod_footer', 'module', 'mod_footer', 'mod_footer', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 5, 1605),
-    (606, 'mod_languages', 'module', 'mod_languages', 'mod_languages', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1, 5, 1606),
-    (607, 'mod_login', 'module', 'mod_login', 'mod_login', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1, 5, 1607),
-    (608, 'mod_media', 'module', 'mod_media', 'mod_media', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1, 5, 1608),
-    (609, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1, 5, 1609),
-    (610, 'mod_related_items', 'module', 'mod_related_items', 'mod_related_items', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1, 5, 1610),
-    (611, 'mod_search', 'module', 'mod_search', 'mod_search', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1, 5, 1611),
-    (612, 'mod_syndicate', 'module', 'mod_syndicate', 'mod_syndicate', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 5, 1612),
-    (613, 'mod_users_latest', 'module', 'mod_users_latest', 'mod_users_latest', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 1, 5, 1613),
-    (614, 'mod_whosonline', 'module', 'mod_whosonline', 'mod_whosonline', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 1, 5, 1614);
+    (601, 'mod_articles', 'module', 'mod_articles', 'mod_articles', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 1601),
+    (602, 'mod_breadcrumbs', 'module', 'mod_breadcrumbs', 'mod_breadcrumbs', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 1, 1602),
+    (603, 'mod_custom', 'module', 'mod_custom', 'mod_custom', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 1, 1, 1603),
+    (604, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 1, 1, 1604),
+    (605, 'mod_footer', 'module', 'mod_footer', 'mod_footer', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 1, 1605),
+    (606, 'mod_languages', 'module', 'mod_languages', 'mod_languages', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1, 1, 1606),
+    (607, 'mod_login', 'module', 'mod_login', 'mod_login', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1, 1, 1607),
+    (608, 'mod_media', 'module', 'mod_media', 'mod_media', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1, 1, 1608),
+    (609, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1, 1, 1609),
+    (610, 'mod_related_items', 'module', 'mod_related_items', 'mod_related_items', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1, 1, 1610),
+    (611, 'mod_search', 'module', 'mod_search', 'mod_search', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1, 1, 1611),
+    (612, 'mod_syndicate', 'module', 'mod_syndicate', 'mod_syndicate', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 1, 1612),
+    (613, 'mod_users_latest', 'module', 'mod_users_latest', 'mod_users_latest', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 1, 2, 1613),
+    (614, 'mod_whosonline', 'module', 'mod_whosonline', 'mod_whosonline', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 1, 2, 1614);
 
 # Parameters
 INSERT INTO `#__extensions` (
@@ -1090,9 +1091,8 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUE
-    (1300, 'molajo-construct', 'template', 'molajo-construct', '', 0, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 42, 1, 4, 13000),
-    (1305, 'bluestork', 'template', 'bluestork', '', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 43, 1, 4, 13050),
-    (1310, 'minima', 'template', 'minima', '', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 43, 1, 4, 13100);
+    (1300, 'construct', 'template', 'molajo-construct', '', 0, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 42, 1, 4, 13000),
+    (1305, 'molajo', 'template', 'molajo', '', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 43, 1, 4, 13050);
 
 ## Users
 INSERT INTO `#__extensions` (
@@ -1837,7 +1837,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3101, '', '', 0),
-('com_login', 3101, 'loginadmin', 'loginadmin', 1);
+('com_login', 3101, 'adminlogin', 'adminlogin', 1);
 
 /* VIEW FORMATS */
 

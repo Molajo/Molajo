@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_languages
- * @since		1.6
+ * * * @since		1.0
  */
 class LanguagesViewLanguages extends JView
 {
@@ -52,37 +52,37 @@ class LanguagesViewLanguages extends JView
 		require_once JPATH_COMPONENT.'/helpers/languages.php';
 		$canDo	= LanguagesHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_LANGUAGES_VIEW_LANGUAGES_TITLE'), 'langmanager.png');
+		MolajoToolbarHelper::title(JText::_('COM_LANGUAGES_VIEW_LANGUAGES_TITLE'), 'langmanager.png');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('language.add');
+			MolajoToolbarHelper::addNew('language.add');
 		}
 
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('language.edit');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::editList('language.edit');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.edit.state')) {
 			if ($this->state->get('filter.published') != 2) {
-				JToolBarHelper::publishList('languages.publish');
-				JToolBarHelper::unpublishList('languages.unpublish');
+				MolajoToolbarHelper::publishList('languages.publish');
+				MolajoToolbarHelper::unpublishList('languages.unpublish');
 			}
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'languages.delete','JTOOLBAR_EMPTY_TRASH');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'languages.delete','JTOOLBAR_EMPTY_TRASH');
+			MolajoToolbarHelper::divider();
 		} else if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::trash('languages.trash');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::trash('languages.trash');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_languages');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_languages');
+			MolajoToolbarHelper::divider();
 		}
 
-		JToolBarHelper::help('JHELP_EXTENSIONS_LANGUAGE_MANAGER_CONTENT');
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_LANGUAGE_MANAGER_CONTENT');
 	}
 }

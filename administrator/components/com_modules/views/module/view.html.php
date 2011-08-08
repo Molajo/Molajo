@@ -18,7 +18,7 @@ jimport('joomla.application.component.view');
  * @static
  * @package		Joomla.Administrator
  * @subpackage	com_modules
- * @since		1.6
+ * * * @since		1.0
  */
 class ModulesViewModule extends JView
 {
@@ -60,24 +60,24 @@ class ModulesViewModule extends JView
 		$canDo		= ModulesHelper::getActions($this->state->get('filter.category_id'), $this->item->id);
 		$item		= $this->get('Item');
 
-		JToolBarHelper::title( JText::sprintf('COM_MODULES_MANAGER_MODULE', JText::_($this->item->module)), 'module.png');
+		MolajoToolbarHelper::title( JText::sprintf('COM_MODULES_MANAGER_MODULE', JText::_($this->item->module)), 'module.png');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit') || $canDo->get('core.create') )) {
-			JToolBarHelper::apply('module.apply');
-			JToolBarHelper::save('module.save');
+			MolajoToolbarHelper::apply('module.apply');
+			MolajoToolbarHelper::save('module.save');
 		}
 		if (!$checkedOut && $canDo->get('core.create')) {
-			JToolBarHelper::save2new('module.save2new');
+			MolajoToolbarHelper::save2new('module.save2new');
 		}
 			// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::save2copy('module.save2copy');
+			MolajoToolbarHelper::save2copy('module.save2copy');
 		}
 		if (empty($this->item->id))  {
-			JToolBarHelper::cancel('module.cancel');
+			MolajoToolbarHelper::cancel('module.cancel');
 		} else {
-			JToolBarHelper::cancel('module.cancel', 'JTOOLBAR_CLOSE');
+			MolajoToolbarHelper::cancel('module.cancel', 'JTOOLBAR_CLOSE');
 		}
 
 		// Get the help information for the menu item.
@@ -92,6 +92,6 @@ class ModulesViewModule extends JView
 		else {
 			$url = null;
 		}
-		JToolBarHelper::help($help->key, false, $url);
+		MolajoToolbarHelper::help($help->key, false, $url);
 	}
 }

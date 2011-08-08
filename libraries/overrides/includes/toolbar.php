@@ -14,4 +14,4 @@ defined('JPATH_PLATFORM') or die;
  * @package		Joomla.Administrator
  * @subpackage	Application
  */
-abstract class JToolBarHelper extends MolajoRenderToolbarHelper {}
+abstract class MolajoToolbarHelper extends MolajoRenderToolbarHelper {}

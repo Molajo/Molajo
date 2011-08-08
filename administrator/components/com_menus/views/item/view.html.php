@@ -14,7 +14,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @since		1.6
+ * * * @since		1.0
  */
 class MenusViewItem extends JView
 {
@@ -57,39 +57,39 @@ class MenusViewItem extends JView
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo		= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		JToolBarHelper::title(JText::_($isNew ? 'COM_MENUS_VIEW_NEW_ITEM_TITLE' : 'COM_MENUS_VIEW_EDIT_ITEM_TITLE'), 'menu-add');
+		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_MENUS_VIEW_NEW_ITEM_TITLE' : 'COM_MENUS_VIEW_EDIT_ITEM_TITLE'), 'menu-add');
 
 		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
 		if ($isNew && $canDo->get('core.create')) {
 			if ($canDo->get('core.edit')) {
-				JToolBarHelper::apply('item.apply');
+				MolajoToolbarHelper::apply('item.apply');
 			}
-			JToolBarHelper::save('item.save');
+			MolajoToolbarHelper::save('item.save');
 		}
 
 		// If not checked out, can save the item.
 		if (!$isNew && !$checkedOut && $canDo->get('core.edit')) {
-			JToolBarHelper::apply('item.apply');
-			JToolBarHelper::save('item.save');
+			MolajoToolbarHelper::apply('item.apply');
+			MolajoToolbarHelper::save('item.save');
 		}
 
 		// If the user can create new items, allow them to see Save & New
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::save2new('item.save2new');
+			MolajoToolbarHelper::save2new('item.save2new');
 		}
 
 		// If an existing item, can save to a copy only if we have create rights.
 		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::save2copy('item.save2copy');
+			MolajoToolbarHelper::save2copy('item.save2copy');
 		}
 
 		if ($isNew)  {
-			JToolBarHelper::cancel('item.cancel');
+			MolajoToolbarHelper::cancel('item.cancel');
 		} else {
-			JToolBarHelper::cancel('item.cancel', 'JTOOLBAR_CLOSE');
+			MolajoToolbarHelper::cancel('item.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::divider();
 
 		// Get the help information for the menu item.
 		$lang = MolajoFactory::getLanguage();
@@ -103,6 +103,6 @@ class MenusViewItem extends JView
 		else {
 			$url = $help->url;
 		}
-		JToolBarHelper::help($help->key, $help->local, $url);
+		MolajoToolbarHelper::help($help->key, $help->local, $url);
 	}
 }

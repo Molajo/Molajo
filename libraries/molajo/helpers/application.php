@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Application Helper
+ * MolajoApplicationHelper
  *
  * @package     Molajo
  * @subpackage  Application Helper
@@ -51,7 +51,9 @@ class MolajoApplicationHelper
 	}
 
 	/**
-	 * Retrieves Application info from database
+	 * getApplicationInfo
+     *
+     * Retrieves Application info from database
 	 *
 	 * This method will return a application information array if called
 	 * with no arguments which can be used to add custom application information.
@@ -78,8 +80,6 @@ class MolajoApplicationHelper
             } else {
 
                 $db = MolajoFactory::getDbo();
-
-                // Warning: mysqli::ping() [mysqli.ping]: Couldn't fetch mysqli in /Users/amystephen/Sites/molajo/libraries/joomla/database/database/mysqli.php on line 188
                 $query = $db->getQuery(true);
 
                 /** validation query **/
@@ -97,7 +97,7 @@ class MolajoApplicationHelper
                 }
 
                 if ($db->getErrorNum()) {
-                    return new JException($db->getErrorMsg());
+                    return new MolajoException($db->getErrorMsg());
                 }
 
                 foreach ($results as $result) {
@@ -115,18 +115,19 @@ class MolajoApplicationHelper
 		}
 
 		// Are we looking for application information by id or by name?
-		if (!$byName)
-		{
-			if (isset(self::$_applications[$id])){
-				return self::$_applications[$id];
-			}
+		if ($byName) {
 
-		} else {
-			foreach (self::$_applications as $application)
-			{
+			foreach (self::$_applications as $application) {
+
 				if ($application->name == strtolower($id)) {
 					return $application;
 				}
+			}
+
+		} else {
+
+			if (isset(self::$_applications[$id])){
+				return self::$_applications[$id];
 			}
 		}
 
@@ -134,7 +135,9 @@ class MolajoApplicationHelper
 	}
 
 	/**
-	 * Adds information for a application.
+	 * addApplicationInfo
+     *
+     * Adds information for a application.
 	 *
 	 * @param   mixed  A application identifier either an array or object
 	 *
@@ -163,6 +166,8 @@ class MolajoApplicationHelper
 	}
 
     /**
+     * getPath
+     *
      * @static
      * @param string $varname
      * @param string $user_option
@@ -291,8 +296,8 @@ class MolajoApplicationHelper
 	public static function parseXMLInstallFile($path)
 	{
 		// Read the file to see if it's a valid component XML file
-		if( ! $xml = MolajoFactory::getXML($path))
-		{
+		if($xml = MolajoFactory::getXML($path)) {
+        } else {
 			return false;
 		}
 
@@ -302,9 +307,8 @@ class MolajoApplicationHelper
 		// Languages use 'metafile' instead
 
 		if($xml->getName() != 'install'
-		&& $xml->getName() != 'extension'
-		&& $xml->getName() != 'metafile')
-		{
+            && $xml->getName() != 'extension'
+            && $xml->getName() != 'metafile') {
 			unset($xml);
 			return false;
 		}
@@ -349,8 +353,8 @@ class MolajoApplicationHelper
 		// Read the file to see if it's a valid component XML file
 		$xml = MolajoFactory::getXML($path);
 
-		if( ! $xml)
-		{
+		if($xml) {
+        } else {
 			return false;
 		}
 
@@ -359,7 +363,8 @@ class MolajoApplicationHelper
 		 *
 		 * Should be 'langMetaData'.
 		 */
-		if ($xml->getName() != 'metafile') {
+		if ($xml->getName() == 'metafile') {
+        } else {
 			unset($xml);
 			return false;
 		}
@@ -407,9 +412,8 @@ class MolajoApplicationHelper
 		$file = MOLAJO_PATH_SITE.$path;
 		if ($checkAdmin > -1 && file_exists($file)) {
 			return $file;
-		}
-		else if ($checkAdmin != 0)
-		{
+
+		} else if ($checkAdmin != 0) {
 			$file = MOLAJO_PATH_ADMINISTRATOR.$path;
 			if (file_exists($file)) {
 				return $file;

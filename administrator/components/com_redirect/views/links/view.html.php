@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_redirect
- * @since		1.6
+ * * * @since		1.0
  */
 class RedirectViewLinks extends JView
 {
@@ -56,39 +56,39 @@ class RedirectViewLinks extends JView
 		$state	= $this->get('State');
 		$canDo	= RedirectHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_REDIRECT_MANAGER_LINKS'), 'redirect');
+		MolajoToolbarHelper::title(JText::_('COM_REDIRECT_MANAGER_LINKS'), 'redirect');
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('link.add');
+			MolajoToolbarHelper::addNew('link.add');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('link.edit');
+			MolajoToolbarHelper::editList('link.edit');
 		}
 		if ($canDo->get('core.edit.state')) {
 			if ($state->get('filter.state') != 2){
-				JToolBarHelper::divider();
-				JToolBarHelper::publish('links.publish', 'JTOOLBAR_ENABLE');
-				JToolBarHelper::unpublish('links.unpublish', 'JTOOLBAR_DISABLE');
+				MolajoToolbarHelper::divider();
+				MolajoToolbarHelper::publish('links.publish', 'JTOOLBAR_ENABLE');
+				MolajoToolbarHelper::unpublish('links.unpublish', 'JTOOLBAR_DISABLE');
 			}
 			if ($state->get('filter.state') != -1 ) {
-				JToolBarHelper::divider();
+				MolajoToolbarHelper::divider();
 				if ($state->get('filter.state') != 2) {
-					JToolBarHelper::archiveList('links.archive');
+					MolajoToolbarHelper::archiveList('links.archive');
 				}
 				else if ($state->get('filter.state') == 2) {
-					JToolBarHelper::unarchiveList('links.publish', 'JTOOLBAR_UNARCHIVE');
+					MolajoToolbarHelper::unarchiveList('links.publish', 'JTOOLBAR_UNARCHIVE');
 				}
 			}
 		}
 		if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'links.delete', 'JTOOLBAR_EMPTY_TRASH');
+			MolajoToolbarHelper::deleteList('', 'links.delete', 'JTOOLBAR_EMPTY_TRASH');
 		} else if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::trash('links.trash');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::trash('links.trash');
+			MolajoToolbarHelper::divider();
 		}
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_redirect');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_redirect');
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::help('JHELP_COMPONENTS_REDIRECT_MANAGER');
+		MolajoToolbarHelper::help('JHELP_COMPONENTS_REDIRECT_MANAGER');
 	}
 }

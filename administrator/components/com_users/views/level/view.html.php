@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
- * @since		1.6
+ * * * @since		1.0
  */
 class UsersViewLevel extends JView
 {
@@ -56,26 +56,26 @@ class UsersViewLevel extends JView
 		$isNew	= ($this->item->id == 0);
 		$canDo		= UsersHelper::getActions();
 
-		JToolBarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_LEVEL_TITLE' : 'COM_USERS_VIEW_EDIT_LEVEL_TITLE'), 'levels-add');
+		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_LEVEL_TITLE' : 'COM_USERS_VIEW_EDIT_LEVEL_TITLE'), 'levels-add');
 
 		if ($canDo->get('core.edit')||$canDo->get('core.create')) {
-			JToolBarHelper::apply('level.apply');
-			JToolBarHelper::save('level.save');
+			MolajoToolbarHelper::apply('level.apply');
+			MolajoToolbarHelper::save('level.save');
 		}
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::save2new('level.save2new');
+			MolajoToolbarHelper::save2new('level.save2new');
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')){
-				JToolBarHelper::save2copy('level.save2copy');
+				MolajoToolbarHelper::save2copy('level.save2copy');
 			}
 		if (empty($this->item->id)){
-				JToolBarHelper::cancel('level.cancel');
+				MolajoToolbarHelper::cancel('level.cancel');
 		} else {
-				JToolBarHelper::cancel('level.cancel', 'JTOOLBAR_CLOSE');
+				MolajoToolbarHelper::cancel('level.cancel', 'JTOOLBAR_CLOSE');
 		}
 
-			JToolBarHelper::divider();
-			JToolBarHelper::help('JHELP_USERS_ACCESS_LEVELS_EDIT');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::help('JHELP_USERS_ACCESS_LEVELS_EDIT');
 	}
 }

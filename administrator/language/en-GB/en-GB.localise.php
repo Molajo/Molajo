@@ -9,7 +9,7 @@
  * en-GB localise class
  *
  * @package		Joomla.Site
- * @since		1.6
+ * * * @since		1.0
  */
 abstract class en_GBLocalise {
 	/**

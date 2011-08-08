@@ -1,0 +1,13 @@
+/*
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2011 individual Molajo Contributors. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+#cpanel div.icon{background-color:#fff;float:left;margin-bottom:15px;margin-right:15px;text-align:center}
+#cpanel div.icon a{border:1px solid #eaeaea;color:#565656;display:block;float:left;height:97px;text-decoration:none;vertical-align:middle;width:108px}
+#cpanel div.icon a:hover,#cpanel div.icon a:focus,#cpanel div.icon a:active{background:#fbfbfb;border-bottom:1px solid #ccc;border-left:1px solid #eee;border-right:1px solid #ccc;border-top:1px solid #eee;color:#025A8D}
+#cpanel img{margin:0 auto;padding:10px 0}
+#cpanel span{display:block;text-align:center}
+div.cpanel-left{float:left;width:54%}
+div.cpanel-right{float:right;width:45%}

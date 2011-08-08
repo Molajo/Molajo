@@ -15,7 +15,7 @@ jimport('joomla.application.component.modeladmin');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_categories
- * @since		1.6
+ * * * @since		1.0
  */
 class CategoriesModelCategory extends JModelAdmin
 {

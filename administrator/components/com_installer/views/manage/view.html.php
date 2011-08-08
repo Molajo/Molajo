@@ -17,7 +17,7 @@ include_once dirname(__FILE__).'/../default/view.php';
  *
  * @package		Joomla.Administrator
  * @subpackage	com_installer
- * @since		1.6
+ * * * @since		1.0
  */
 class InstallerViewManage extends InstallerViewDefault
 {
@@ -63,17 +63,17 @@ class InstallerViewManage extends InstallerViewDefault
 	{
 		$canDo	= InstallerHelper::getActions();
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::publish('manage.publish', 'JTOOLBAR_ENABLE');
-			JToolBarHelper::unpublish('manage.unpublish', 'JTOOLBAR_DISABLE');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::publish('manage.publish', 'JTOOLBAR_ENABLE');
+			MolajoToolbarHelper::unpublish('manage.unpublish', 'JTOOLBAR_DISABLE');
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::custom('manage.refresh', 'refresh', 'refresh', 'JTOOLBAR_REFRESH_CACHE',true);
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::custom('manage.refresh', 'refresh', 'refresh', 'JTOOLBAR_REFRESH_CACHE',true);
+		MolajoToolbarHelper::divider();
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'manage.remove', 'JTOOLBAR_UNINSTALL');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'manage.remove', 'JTOOLBAR_UNINSTALL');
+			MolajoToolbarHelper::divider();
 		}
 		parent::addToolbar();
-		JToolBarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_MANAGE');
+		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_MANAGE');
 	}
 }

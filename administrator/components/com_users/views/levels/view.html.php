@@ -14,7 +14,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
- * @since		1.6
+ * * * @since		1.0
  */
 class UsersViewLevels extends JView
 {
@@ -50,23 +50,23 @@ class UsersViewLevels extends JView
 	{
 		$canDo	= UsersHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_USERS_VIEW_LEVELS_TITLE'), 'levels');
+		MolajoToolbarHelper::title(JText::_('COM_USERS_VIEW_LEVELS_TITLE'), 'levels');
 
 		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('level.add');
+			MolajoToolbarHelper::addNew('level.add');
 		}
 		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('level.edit');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::editList('level.edit');
+			MolajoToolbarHelper::divider();
 		}
 		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'level.delete');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::deleteList('', 'level.delete');
+			MolajoToolbarHelper::divider();
 		}
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_users');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_users');
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::help('JHELP_USERS_ACCESS_LEVELS');
+		MolajoToolbarHelper::help('JHELP_USERS_ACCESS_LEVELS');
 	}
 }

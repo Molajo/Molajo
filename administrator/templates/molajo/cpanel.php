@@ -44,7 +44,7 @@ $app = MolajoFactory::getApplication();
 	<div id="border-top" class="h_blue">
 		<div>
 			<div>
-				<span class="logo"><a href="http://molajo.org" target="_blank"><img src="<?php echo MOLAJO_BASE_URL; ?>/media/admin/logo.png" alt="Molajo" /></a></span>
+				<span class="logo"><a href="http://molajo.org" target="_blank"><img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo  $this->template ?>/images/logo.png" alt="Molajo" /></a></span>
 				<span class="title"><a href="index.php"><?php echo $this->params->get('showSiteName') ? $app->getCfg('sitename') : JText::_('TPL_MOLAJO_HEADER'); ?></a></span>
 			</div>
 		</div>
@@ -52,27 +52,7 @@ $app = MolajoFactory::getApplication();
 	<div id="header-box">
 		<div id="module-status">
 			<jdoc:include type="modules" name="status"/>
-			<?php
-				//Display an harcoded logout
-				$task = JRequest::getCmd('task');
-				if ($task == 'edit' || JRequest::getInt('hidemainmenu')) {
-					$logoutLink = '';
-				} else {
-					$logoutLink = JRoute::_('index.php?option=com_login&task=logout&'. JUtility::getToken() .'=1');
-				}
-				$hideLinks	= JRequest::getBool('hidemainmenu');
-				$output = array();
-				// Print the logout link.
-				$output[] = '<span class="logout">' .($hideLinks ? '' : '<a href="'.$logoutLink.'">').JText::_('JLOGOUT').($hideLinks ? '' : '</a>').'</span>';
-				// Reverse rendering order for rtl display.
-				if ($this->direction == "rtl") :
-					$output = array_reverse($output);
-				endif;
-				// Output the items.
-				foreach ($output as $item) :
-				echo $item;
-				endforeach;
-			?>
+            <jdoc:include type="modules" name="logout" />
 		</div>
 		<div id="module-menu">
 			<jdoc:include type="modules" name="menu"/>
@@ -125,7 +105,9 @@ $app = MolajoFactory::getApplication();
 		<p class="copyright">
 			<?php $molajo = '<a href="http://molajo.org">Molajo&#174;</a>';
 				echo JText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
-			<span class="version"><?php echo  JText::_('MOLAJOVERSION') ?> <?php echo MOLAJOVERSION; ?></span>
+			<span class="version">
+                <?php echo  JText::_('MOLAJOVERSION') ?> <?php echo MOLAJOVERSION; ?>
+            </span>
 		</p>
 	</div>
 </body>

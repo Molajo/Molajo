@@ -17,7 +17,7 @@ JFormHelper::loadFieldClass('list');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
- * @since		1.6
+ * * * @since		1.0
  */
 class JFormFieldGroupParent extends JFormFieldList
 {

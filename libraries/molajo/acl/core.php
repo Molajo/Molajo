@@ -590,7 +590,7 @@ class MolajoACLCore extends MolajoACL
 		$db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
-        $query->select('a.id');
+        $query->select('c.id');
 
         if ($action == MOLAJO_ACL_ACTION_VIEW) {
             $query->from('#__groupings a');
@@ -624,12 +624,14 @@ class MolajoACLCore extends MolajoACL
         if ($authorised) {
         } else {
 
-            $db->setQuery($query);
+            $db->setQuery($query->__toString());
             $options = $db->loadObjectList();
 
             /** error handling */
             if ($db->getErrorNum()) {
-                $this->setError($db->getErrorMsg());
+               //amy $this->setError($db->getErrorMsg());
+                echo 'fuck';
+                die();
                 return false;
 
             } else if (count($options) == 0) {
@@ -746,7 +748,7 @@ class MolajoACLCore extends MolajoACL
         $db->setQuery($query);
         $accessResult = $db->loadObjectList();
         if ($db->getErrorNum()) {
-            return new JException($db->getErrorMsg());
+            return new MolajoException($db->getErrorMsg());
         }
 
         if (count($accessResult) == 0) {

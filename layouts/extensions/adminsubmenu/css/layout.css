@@ -1,0 +1,14 @@
+/*
+@version     $id: site.css
+@package     Molajo
+@copyright	 Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+@copyright   Copyright (C) 2011 individual Molajo Contributors. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+
+/* ---- Submenu styles -------------------------- */
+#submenu{line-height:115%;list-style:none;margin:0;padding:0}
+#submenu a:hover,#submenu a.active,#submenu span.nolink.active{background:#FFF;color:#146295}
+#submenu li{float:left;margin:0;padding:0}
+#submenu li a,#submenu span.nolink{border-right:1px solid #ccc;color:gray;cursor:pointer;font-size:1.1em;font-weight:700;height:12px;line-height:14px;padding:0 15px}
+#submenu span.nolink{color:#999}

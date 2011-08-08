@@ -54,7 +54,7 @@ class MolajoFormRule
 	 * @return  boolean  True if the value is valid, false otherwise.
 	 *
 	 * @since   1.0
-	 * @throws  JException on invalid rule.
+	 * @throws  MolajoException on invalid rule.
 	 */
 	public function test(& $element, $value, $group = null, & $calendar = null, & $form = null)
 	{
@@ -63,7 +63,7 @@ class MolajoFormRule
 
 		// Check for a valid regex.
 		if (empty($this->regex)) {
-			throw new JException(JText::sprintf('MOLAJO_FORM_INVALID_FORM_RULE', get_class($this)));
+			throw new MolajoException(JText::sprintf('MOLAJO_FORM_INVALID_FORM_RULE', get_class($this)));
 		}
 
 		// Add unicode property support if available.

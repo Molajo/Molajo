@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
  * @static
  * @package		Joomla.Administrator
  * @subpackage	com_redirect
- * @since		1.6
+ * * * @since		1.0
  */
 class JHtmlRedirect
 {

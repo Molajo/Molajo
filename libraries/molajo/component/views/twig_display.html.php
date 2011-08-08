@@ -1,17 +1,17 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Twig Display View
+ * @subpackage  Display View
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * View to Display Display Layouts with Twig
+ *  Twig Display View
  *
  * @package	    Molajo
- * @subpackage	Twig Display View
+ * @subpackage	View
  * @since	    1.0
  */
 class MolajoViewTwig_display extends MolajoViewDisplay

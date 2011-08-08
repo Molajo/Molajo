@@ -16,9 +16,8 @@ defined('MOLAJO') or die;
  */
 class MolajoController extends JController
 {
-
     /**
-     * @var object $request
+     * @var object $this->request
      *
      * ["application_id"]=> int(1)
      * ["current_url"]=> string(38) "http://localhost/molajo/administrator/"
@@ -54,6 +53,13 @@ class MolajoController extends JController
      */
     public $params = array();
 
+    /**
+     * @var object $this->document
+     *
+     * @since 1.0
+     */
+    protected $document = null;
+    
     /**
      * @var object $table
      *
@@ -111,6 +117,13 @@ class MolajoController extends JController
     protected $dispatcher = null;
 
     /**
+     * $redirectClass
+     *
+     * @var string
+     */
+    protected $redirectClass = null;
+
+    /**
      * __construct
      *
      * Constructor.
@@ -139,6 +152,21 @@ class MolajoController extends JController
      */
     public function display($cachable = false, $urlparams = false)
     {
+        /** language files */
+        $lang = MolajoFactory::getLanguage();
+		
+		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
+
+		$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", $lang->getDefault(), false, false);
+
+		$lang->load($this->request['option'], MOLAJO_PATH_BASE, null, false, false)
+		||	$lang->load($this->request['option'], $this->request['component_path'], null, false, false)
+		||	$lang->load($this->request['option'], MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
+        
         if ($this->request['task'] == 'edit') {
             $results = $this->checkOutItem();
             if ($results === false) {
@@ -166,9 +194,10 @@ class MolajoController extends JController
      */
     public function initialise($request)
     {
+        $this->document = MolajoFactory::getDocument();        
         $this->request = $request;
-
-        $this->params = MolajoComponentHelper::getParams($request['option']);
+        $this->params = $this->request['params'];
+        $this->redirectClass = new MolajoControllerRedirect();
 
         $this->id = $this->request['id'];
         if ((int) $this->id == 0) {
@@ -183,10 +212,9 @@ class MolajoController extends JController
 
         /** view */
         if ($this->request['controller'] == 'display') {
-            $document = MolajoFactory::getDocument();
 
             /** view format */
-		    $format = $document->getType();
+		    $format = $this->document->getType();
 
             /** view */
             $this->view = $this->getView($this->request['view'], $format);
@@ -237,8 +265,7 @@ class MolajoController extends JController
         }
 
         /** redirects **/
-        $this->redirectClass = new MolajoControllerRedirect ();
-        $this->redirectClass->initializeRedirectLinks($this->request['task']);
+        $this->redirectClass->initialize($this->request['task']);
  
         /** success **/
         return true;
@@ -290,7 +317,6 @@ class MolajoController extends JController
         $results = $acl->authoriseTask ($this->request['option'], $this->request['view'], $checkTask, $checkId, $checkCatid, $checkTable);
 
         if ($results === false) {
-            $this->redirectClass = new MolajoControllerRedirect ();
             $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);
             $this->redirectClass->setRedirectMessageType('warning');
             return false;

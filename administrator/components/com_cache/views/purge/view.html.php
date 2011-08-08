@@ -37,13 +37,13 @@ class CacheViewPurge extends JView
 	{
 		//JSubMenuHelper::addEntry(JText::_('COM_CACHE_BACK_CACHE_MANAGER'), 'index.php?option=com_cache', false);
 
-		JToolBarHelper::title(JText::_('COM_CACHE_PURGE_EXPIRED_CACHE'), 'purge.png');
-		JToolBarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_CACHE_PURGE_EXPIRED', false);
-		JToolBarHelper::divider();
+		MolajoToolbarHelper::title(JText::_('COM_CACHE_PURGE_EXPIRED_CACHE'), 'purge.png');
+		MolajoToolbarHelper::custom('purge', 'delete.png', 'delete_f2.png', 'COM_CACHE_PURGE_EXPIRED', false);
+		MolajoToolbarHelper::divider();
 		if (MolajoFactory::getUser()->authorise('core.admin', 'com_cache')) {
-			JToolBarHelper::preferences('com_cache');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::preferences('com_cache');
+			MolajoToolbarHelper::divider();
 		}
-		JToolBarHelper::help('JHELP_SITE_MAINTENANCE_PURGE_EXPIRED_CACHE');
+		MolajoToolbarHelper::help('JHELP_SITE_MAINTENANCE_PURGE_EXPIRED_CACHE');
 	}
 }

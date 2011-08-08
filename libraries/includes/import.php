@@ -127,7 +127,6 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/router.php', 'MolajoR
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/router.php', 'JRouter');
 
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/toolbar.php', 'MolajoToolbarHelper');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/rendertoolbar.php', 'MolajoRendertoolbarHelper');
 
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/user.php', 'MolajoUserHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/helper.php', 'JUserHelper');

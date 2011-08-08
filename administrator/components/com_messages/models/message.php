@@ -15,7 +15,7 @@ jimport('joomla.application.component.modeladmin');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_messages
- * @since		1.6
+ * * * @since		1.0
  */
 class MessagesModelMessage extends JModelAdmin
 {

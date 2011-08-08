@@ -9,18 +9,18 @@
 #border-top .version{float:left;padding:25px 0 0 5px}
 #border-top span{padding-right:15px}
 #border-top span.logo{float:left;padding-left:15px}
-#border-top.h_green div{background-image:url(../../../../media/site/administrator/templates/molajo/j_header_right_rtl.png)}
-#border-top.h_green div div{background-image:url(../../../../media/site/administrator/templates/molajo/j_header_left_rtl.png)}
+#border-top.h_green div{background-image:url(../images/j_header_right_rtl.png)}
+#border-top.h_green div div{background-image:url(../images/j_header_left_rtl.png)}
 #cpanel div.icon{float:right;margin-left:5px;margin-right:0}
 #form-login .button-holder{clear:left;float:left;padding-left:5px}
 #form-login div.button_holder{padding-left:0}
 #form-login label,#user-groups li{float:right;text-align:right}
-#jform_sef_rewrite-lbl{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-notice-note.png) left top no-repeat}
+#jform_sef_rewrite-lbl{background:url(../images/icon-16-notice-note.png) left top no-repeat}
 #menu li{border-left:1px solid #D8D8D8;border-right:1px solid #FFF;float:right}
 #menu li ul{left:auto;right:0}
 #menu li:hover li:hover ul{left:auto;right:100%}
 #menu ul a{padding-left:20px;padding-right:25px}
-#menu ul li.node{background:transparent url(../../../../media/site/administrator/templates/molajo/j_arrow_left.png) no-repeat scroll left 50%}
+#menu ul li.node{background:transparent url(../images/j_arrow_left.png) no-repeat scroll left 50%}
 #module-status *{float:right !important}
 #module-status .legacy-mode,#module-status .viewsite{background-position:right 5px}
 #module-status .preview,#module-status .unread-messages,#module-status .no-unread-messages,#module-status .loggedin-users,#module-status .logout,#module-status .backloggedin-users{background-position:right 3px}
@@ -38,32 +38,32 @@
 #system-debug ol,#system-debug ul{direction:ltr}
 #system-message dd{text-indent:35px}
 #system-message dd.message ul{background-position:99% center}
-.button1{background:url(../../../../media/site/administrator/templates/molajo/j_button1_right.png) 100% 0 no-repeat;margin-left:5px;padding-left:0;padding-right:10px;white-space:nowrap}
-.button1 .next{background:url(../../../../media/site/administrator/templates/molajo/j_button1_prev.png) no-repeat}
+.button1{background:url(../images/j_button1_right.png) 100% 0 no-repeat;margin-left:5px;padding-left:0;padding-right:10px;white-space:nowrap}
+.button1 .next{background:url(../images/j_button1_prev.png) no-repeat}
 .button1 a{padding:0 6px 0 30px}
 .button1,.button1 div,#module-status,div.right,div.toolbar-list,.fltrt{float:left}
-.button2-left{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_right.png) no-repeat scroll 100%;float:right}
-.button2-left .article,.button2-left .readmore{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_readmore_rtl.png) no-repeat scroll 0 0}
-.button2-left .end{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_first.png) no-repeat scroll 0 0}
-.button2-left .image{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_image_rtl.png) no-repeat scroll 0 0}
-.button2-left .next{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_prev.png) no-repeat scroll 0 0}
-.button2-left .page,.button2-left .blank{background:url(../../../../media/site/administrator/templates/molajo/j_button2_left_cap.png) 0 no-repeat}
-.button2-left .pagebreak{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_pagebreak_rtl.png) no-repeat scroll 0 0}
+.button2-left{background:transparent url(../images/j_button2_right.png) no-repeat scroll 100%;float:right}
+.button2-left .article,.button2-left .readmore{background:transparent url(../images/j_button2_readmore_rtl.png) no-repeat scroll 0 0}
+.button2-left .end{background:transparent url(../images/j_button2_first.png) no-repeat scroll 0 0}
+.button2-left .image{background:transparent url(../images/j_button2_image_rtl.png) no-repeat scroll 0 0}
+.button2-left .next{background:transparent url(../images/j_button2_prev.png) no-repeat scroll 0 0}
+.button2-left .page,.button2-left .blank{background:url(../images/j_button2_left_cap.png) 0 no-repeat}
+.button2-left .pagebreak{background:transparent url(../images/j_button2_pagebreak_rtl.png) no-repeat scroll 0 0}
 .button2-left a,.button2-left span{padding:0 6px 0 24px}
-.button2-left.off .end{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_first_off.png) no-repeat scroll 0 0}
-.button2-left.off .next{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_prev_off.png) no-repeat scroll 0 0}
-.button2-right{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_left.png) no-repeat scroll 0 0;float:right}
-.button2-right .prev{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_next.png) no-repeat scroll 100%}
-.button2-right .start{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_last.png) no-repeat scroll 100%}
+.button2-left.off .end{background:transparent url(../images/j_button2_first_off.png) no-repeat scroll 0 0}
+.button2-left.off .next{background:transparent url(../images/j_button2_prev_off.png) no-repeat scroll 0 0}
+.button2-right{background:transparent url(../images/j_button2_left.png) no-repeat scroll 0 0;float:right}
+.button2-right .prev{background:transparent url(../images/j_button2_next.png) no-repeat scroll 100%}
+.button2-right .start{background:transparent url(../images/j_button2_last.png) no-repeat scroll 100%}
 .button2-right a,.button2-right span{padding:0 24px 0 6px}
-.button2-right.off .prev{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_next_off.png) no-repeat scroll 100%}
-.button2-right.off .start{background:transparent url(../../../../media/site/administrator/templates/molajo/j_button2_last_off.png) no-repeat scroll 100%}
+.button2-right.off .prev{background:transparent url(../images/j_button2_next_off.png) no-repeat scroll 100%}
+.button2-right.off .start{background:transparent url(../images/j_button2_last_off.png) no-repeat scroll 100%}
 .clrlft,fieldset#batch-choose-action,fieldset label#batch-choose-action-lbl,div#menu-assignment,div#menu-assignment h3{clear:right}
 .fltnone{float:none}
 .header,#menu a,#menu div,#menu ul{background-position:right}
 .mod-desc{float:none !important;margin-right:135px !important}
 .pagination div.limit{float:right;margin:0 0 0 10px}
-.pane-toggler span{background-image:url(../../../../media/site/administrator/templates/molajo/j_arrow_left.png)}
+.pane-toggler span{background-image:url(../images/j_arrow_left.png)}
 .pane-toggler span,.pane-toggler-down span{background-position:right;padding-left:0;padding-right:20px}
 body{direction:rtl}
 div#menu-assignment ul.menu-links li.menu-link input{clear:right;float:right}
@@ -98,10 +98,7 @@ h2.modal-title{margin:5px 15px 0 0}
 input#mod-login-username,input#mod-login-password,select#lang{clear:left;float:left;margin:0 20px 0 0}
 label#batch-access-lbl{margin-left:10px;margin-right:0}
 select#batch-menu-id{margin-left:30px;margin-right:0}
-span.icon-16-allowed{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-allow.png) no-repeat right}
-span.icon-16-denied{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-deny.png) no-repeat right}
-span.icon-16-locked{background:url(../../../../media/site/administrator/templates/molajo/admin/checked_out.png) no-repeat right}
-span.icon-16-unset{background:url(../../../../media/site/administrator/templates/molajo/admin/icon-16-denyinactive.png) no-repeat right}
+
 span.icon-16-unset,span.icon-16-allowed,span.icon-16-denied,span.icon-16-locked{padding-left:0;padding-right:18px}
 table.adminform td,table.adminlist thead th.left,table.adminlist tbody tr,fieldset,table.adminform td.filter,td.left,th.left,td.col1,div#sbox-window{text-align:right}
 table.adminform td.helpmenu{text-align:left}

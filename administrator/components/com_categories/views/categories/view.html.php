@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_categories
- * @since		1.6
+ * * * @since		1.0
  */
 class CategoriesViewCategories extends JView
 {
@@ -110,40 +110,40 @@ class CategoriesViewCategories extends JView
 		JHtml::_('stylesheet',$component.'/administrator/categories.css', array(), true);
 
 		// Prepare the toolbar.
-		JToolBarHelper::title($title, 'categories '.substr($component,4).($section?"-$section":'').'-categories');
+		MolajoToolbarHelper::title($title, 'categories '.substr($component,4).($section?"-$section":'').'-categories');
 
 		if ($canDo->get('core.create')) {
-			 JToolBarHelper::addNew('category.add');
+			 MolajoToolbarHelper::addNew('category.add');
 		}
 
 		if ($canDo->get('core.edit' ) || $canDo->get('core.edit.own')) {
-			JToolBarHelper::editList('category.edit');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::editList('category.edit');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::publish('categories.publish');
-			JToolBarHelper::unpublish('categories.unpublish');
-			JToolBarHelper::divider();
-			JToolBarHelper::archiveList('categories.archive');
+			MolajoToolbarHelper::publish('categories.publish');
+			MolajoToolbarHelper::unpublish('categories.unpublish');
+			MolajoToolbarHelper::divider();
+			MolajoToolbarHelper::archiveList('categories.archive');
 		}
 
 		if (MolajoFactory::getUser()->authorise('core.admin')) {
-			JToolBarHelper::checkin('categories.checkin');
+			MolajoToolbarHelper::checkin('categories.checkin');
 		}
 
 		if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete', $component)) {
-			JToolBarHelper::deleteList('', 'categories.delete', 'JTOOLBAR_EMPTY_TRASH');
+			MolajoToolbarHelper::deleteList('', 'categories.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
 		else if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::trash('categories.trash');
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::trash('categories.trash');
+			MolajoToolbarHelper::divider();
 		}
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::custom('categories.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
-			JToolBarHelper::preferences($component);
-			JToolBarHelper::divider();
+			MolajoToolbarHelper::custom('categories.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
+			MolajoToolbarHelper::preferences($component);
+			MolajoToolbarHelper::divider();
 		}
 
 		// Compute the ref_key if it does exist in the component
@@ -163,6 +163,6 @@ class CategoriesViewCategories extends JView
 		else {
 			$url = null;
 		}
-		JToolBarHelper::help($ref_key, JComponentHelper::getParams( $component )->exists('helpURL'), $url);
+		MolajoToolbarHelper::help($ref_key, JComponentHelper::getParams( $component )->exists('helpURL'), $url);
 	}
 }

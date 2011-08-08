@@ -89,14 +89,14 @@ class MolajoViewDisplay extends MolajoView
         /** Render Layout */
         $this->findPath($this->request['layout'], $this->request['layout_type']);
         if ($this->layout_path === false) {
-            parent::display($tpl);
+            // load an error layout
             return;
         }
         $renderedOutput = $this->renderLayout ($this->request['layout']);
 
         /** Wrap Rendered Layout */
         $session = JFactory::getSession();
-        $layout = $this->params->get('wrap', 'outline');
+        $layout = $this->params->get('wrap', 'none');
         if ($layout == 'horz') {
             $layout = 'horizontal';
         }
@@ -114,14 +114,12 @@ class MolajoViewDisplay extends MolajoView
 
         /** Wrap Rendered */
         if ($this->layout_path === false) {
-            echo $renderedOutput;
+            return $renderedOutput;
         } else {
-            echo $this->renderLayout ($layout);
+            return $this->renderLayout ($layout);
         }
-        die();
     }
 }
-
 
 /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');

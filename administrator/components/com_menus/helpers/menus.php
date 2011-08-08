@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
  *
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @since		1.6
+ * * * @since		1.0
  */
 class MenusHelper
 {
@@ -116,7 +116,7 @@ class MenusHelper
 	 * Get the menu list for create a menu module
 	 *
 	 * @return		array	The menu array list
-	 * @since		1.6
+	 * * * @since		1.0
 	 */
 	public static function getMenuTypes()
 	{

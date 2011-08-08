@@ -15,7 +15,7 @@ jimport('joomla.application.component.modellist');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_menus
- * @since		1.6
+ * * * @since		1.0
  */
 class MenusModelMenus extends JModelList
 {

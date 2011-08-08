@@ -15,7 +15,7 @@ jimport('joomla.application.component.controller');
  *
  * @package		Joomla.Administrator
  * @subpackage	com_search
- * @since		1.6
+ * * * @since		1.0
  */
 class SearchController extends JController
 {
