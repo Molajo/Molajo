@@ -38,13 +38,13 @@ class MessagesTableMessage extends JTable
 	function check()
 	{
 		// Check the to and from users.
-		$user = new JUser($this->user_id_from);
+		$user = new MolajoUser($this->user_id_from);
 		if (empty($user->id)) {
 			$this->setError(JText::_('COM_MESSAGES_ERROR_INVALID_FROM_USER'));
 			return false;
 		}
 
-		$user = new JUser($this->user_id_to);
+		$user = new MolajoUser($this->user_id_to);
 		if (empty($user->id)) {
 			$this->setError(JText::_('COM_MESSAGES_ERROR_INVALID_TO_USER'));
 			return false;
@@ -73,7 +73,7 @@ class MessagesTableMessage extends JTable
 	 * @param	integer The publishing state. eg. [0 = unpublished, 1 = published]
 	 * @param	integer The user id of the user performing the operation.
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{

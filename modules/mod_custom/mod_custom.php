@@ -18,4 +18,4 @@ if ($params->def('prepare_content', 1))
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
-require JModuleHelper::getLayoutPath('mod_custom', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_custom', $params->get('layout', 'default'));

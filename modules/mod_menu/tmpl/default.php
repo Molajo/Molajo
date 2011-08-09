@@ -51,11 +51,11 @@ foreach ($list as $i => &$item) :
 		case 'separator':
 		case 'url':
 		case 'component':
-			require JModuleHelper::getLayoutPath('mod_menu', 'default_'.$item->type);
+			require MolajoModuleHelper::getLayoutPath('mod_menu', 'default_'.$item->type);
 			break;
 
 		default:
-			require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+			require MolajoModuleHelper::getLayoutPath('mod_menu', 'default_url');
 			break;
 	endswitch;
 

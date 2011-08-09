@@ -47,7 +47,7 @@ class CacheModelCache extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

@@ -25,7 +25,7 @@ class UsersModelMail extends JModelAdmin
 	 * @param	array	$data		An optional array of data for the form to interogate.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -45,7 +45,7 @@ class UsersModelMail extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -61,7 +61,7 @@ class UsersModelMail extends JModelAdmin
 	 * @param	object	A form object.
 	 * @param	mixed	The data expected for the form.
 	 * @throws	Exception if there is an error in the form event.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'user')
 	{

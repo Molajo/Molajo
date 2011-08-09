@@ -17,4 +17,4 @@ $names	= moduserslatestHelper::getUsers($params);
 $linknames = $params->get('linknames', 0);
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
-require JModuleHelper::getLayoutPath('mod_users_latest', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_users_latest', $params->get('layout', 'default'));

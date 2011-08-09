@@ -70,7 +70,7 @@ class UsersModelRegistration extends JModelForm
 
 			// Compile the admin notification mail values.
 			$data = $user->getProperties();
-			$data['activation'] = JUtility::getHash(JUserHelper::genRandomPassword());
+			$data['activation'] = JUtility::getHash(MolajoUserHelper::genRandomPassword());
 			$user->set('activation', $data['activation']);
 			$data['siteurl']	= JUri::base();
 			$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
@@ -294,8 +294,8 @@ class UsersModelRegistration extends JModelForm
 		$config = MolajoFactory::getConfig();
 		$params = JComponentHelper::getParams('com_users');
 
-		// Initialise the table with JUser.
-		$user = new JUser;
+		// Initialise the table with MolajoUser.
+		$user = new MolajoUser;
 		$data = (array)$this->getData();
 
 		// Merge in the registration data.
@@ -311,7 +311,7 @@ class UsersModelRegistration extends JModelForm
 		// Check if the user needs to activate their account.
 		if (($useractivation == 1) || ($useractivation == 2)) {
 			jimport('joomla.user.helper');
-			$data['activation'] = JUtility::getHash(JUserHelper::genRandomPassword());
+			$data['activation'] = JUtility::getHash(MolajoUserHelper::genRandomPassword());
 			$data['block'] = 1;
 		}
 

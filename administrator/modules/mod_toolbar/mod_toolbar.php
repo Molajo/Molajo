@@ -7,7 +7,7 @@
  */
 
 /** 1. should the module run? */
-$session = JFactory::getSession();
+$session = MolajoFactory::getSession();
 if ($session->get('page.format') == 'html') {
     return;
 } else {

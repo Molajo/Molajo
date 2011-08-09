@@ -57,7 +57,7 @@ class InstallerHelper
 	 * Gets a list of the actions that can be performed.
 	 *
 	 * @return	JObject
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getActions()
 	{

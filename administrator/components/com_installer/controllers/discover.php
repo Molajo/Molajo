@@ -19,7 +19,7 @@ class InstallerControllerDiscover extends JController
 	/**
 	 * Refreshes the cache of discovered extensions.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function refresh()
 	{
@@ -31,7 +31,7 @@ class InstallerControllerDiscover extends JController
 	/**
 	 * Install a discovered extension.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function install()
 	{
@@ -43,7 +43,7 @@ class InstallerControllerDiscover extends JController
 	/**
 	 * Clean out the discovered extension cache.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function purge()
 	{

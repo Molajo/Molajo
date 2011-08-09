@@ -26,7 +26,7 @@ class LanguagesControllerLanguage extends JControllerForm
 	 * @param	string	$key		The name of the primary key variable.
 	 *
 	 * @return	string	The arguments to append to the redirect URL.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getRedirectToItemAppend($recordId = null, $key = 'lang_id')
 	{

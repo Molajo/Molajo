@@ -58,7 +58,7 @@ class InstallerViewCreate extends InstallerViewDefault
         }
         MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_INSTALL');
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
         $document->setTitle(JText::_('PLG_SYSTEM_CREATE_TITLE_' . $this->getName()));
     }
 }

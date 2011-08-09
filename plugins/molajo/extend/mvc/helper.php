@@ -47,8 +47,8 @@ class extendHelper
      */
     public function verifyComponentOption ($component_option)
     {
-        $db = JFactory::getDbo();
-        $app = JFactory::getApplication();
+        $db = MolajoFactory::getDbo();
+        $app = MolajoFactory::getApplication();
 
         $db->setQuery(
             'SELECT element ' .
@@ -97,7 +97,7 @@ class extendHelper
      */
     public function verifyComponentView ($component_option, $component_view)
     {
-        $app = JFactory::getApplication();
+        $app = MolajoFactory::getApplication();
         if ($app->getName() == 'administrator') {
             $folder = JPATH_ADMINISTRATOR.'/components/'.$component_option.'/views/'.$component_view;
         } else {
@@ -140,7 +140,7 @@ class extendHelper
      */
     public function verifyComponentLayout ($component_option, $component_view, $component_layout)
     {
-        $app = JFactory::getApplication();
+        $app = MolajoFactory::getApplication();
 
         if ($app->getName() == 'administrator') {
             $file = JPATH_ADMINISTRATOR.'/components/'.$component_option.'/views/'.$component_view.'/tmpl/'.$component_layout.'.php';
@@ -226,7 +226,7 @@ class extendHelper
      */
     public function verifyCategory ($component_option, $category)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
 
         $db->setQuery(
             'SELECT id ' .
@@ -335,8 +335,8 @@ class extendHelper
      */
     public function verifyComponentID ($component_option, $id, $field_name)
     {
-        $db = JFactory::getDbo();
-        $app = JFactory::getApplication();
+        $db = MolajoFactory::getDbo();
+        $app = MolajoFactory::getApplication();
 
         /** known table names **/
         $tableInfo = array (

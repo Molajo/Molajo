@@ -17,36 +17,6 @@ defined('MOLAJO') or die;
 class MolajoViewDisplay extends MolajoView
 {
     /**
-     * @var $options object
-     *
-     * Contains all options which can be retrieved as this->state->get('option_name')
-     *
-     * 1. Filters and filtered values (for Administrator) - ex. $this->state->get('filter.category')
-     *
-     * 2. Merged Component Parameters (Global Options, Menu Item, Item)
-     *    A. Including those used as selection criteria - ex. $this->state->get('filter.category')
-     *    B. And those parameters needed by the layout - ex. $this->option->get('layout.show_title')
-     *
-     * 3. Component Request Variables
-     *    $this->request['option'], and 'component_' + model, view, layout, DefaultView, EditView and task
-     *
-     * 4. 
-     *
-     */
-
-    /** used in manager */
-
-    /**
-     * @var $render object
-     */
-    protected $render;
-
-    /**
-     * @var $saveOrder string
-     */
-    protected $saveOrder;
-
-    /**
      * display
      *
      * View for Display View that uses no forms
@@ -95,11 +65,11 @@ class MolajoViewDisplay extends MolajoView
         $renderedOutput = $this->renderLayout ($this->request['layout']);
 
         /** Wrap Rendered Layout */
-        $session = JFactory::getSession();
+        $session = MolajoFactory::getSession();
         $layout = $this->params->get('wrap', 'none');
-        if ($layout == 'horz') {
-            $layout = 'horizontal';
-        }
+        if ($layout == 'horz') { $layout = 'horizontal'; }
+        if ($layout == 'xhtml') { $layout = 'div'; }
+        if ($layout == 'rounded') { $layout = 'div'; }
 
         $this->rowset = array();
 
@@ -128,6 +98,17 @@ class MolajoViewDisplay extends MolajoView
 //		$this->categoryPeers	    = $this->get('Peers');
 //		$this->categoryChildren	    = $this->get('Children');
 
+    /** used in manager */
+
+    /**
+     * @var $render object
+     */
+//protected $render;
+
+    /**
+     * @var $saveOrder string
+     */
+// protected $saveOrder;
 //      $this->authorProfile        = $this->get('Author');
 
 //      $this->tags (tag cloud)

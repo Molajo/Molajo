@@ -27,9 +27,9 @@ class modMenuHelper
 	{
 		// Initialise variables.
 		$list		= array();
-		$db			= JFactory::getDbo();
-		$user		= JFactory::getUser();
-		$app		= JFactory::getApplication();
+		$db			= MolajoFactory::getDbo();
+		$user		= MolajoFactory::getUser();
+		$app		= MolajoFactory::getApplication();
 		$menu		= $app->getMenu();
 
 		// If no active menu, use default

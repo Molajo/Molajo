@@ -27,24 +27,7 @@ class MolajoViewModule extends MolajoView
      */
     public function display($tpl = null)
     {
-        echo 'yellow!';
-
-        /** 1. Request */
-        $this->request = $this->get('Request');
-
-        /** 2. State */
-        $this->state = $this->get('State');
-
-        /** 3. Parameters */
-        $this->params = $this->get('Params');
-
-        /** 4. Query Results */
-        $this->rowset = $this->get('Items');
-
-        /** 5. Pagination */
-        $this->pagination = $this->get('Pagination');
-
-        /** 6. System Variables */
+        /** 7. System Variables */
         parent::display($tpl);
 
         /** Model errors */
@@ -60,28 +43,40 @@ class MolajoViewModule extends MolajoView
         }
 
         /** Render Layout */
+//var_dump($this->state);
+//echo 'layout '.$this->request['layout'].'<br />';
+//echo 'type '.$this->request['layout_type'].'<br />';
         $this->findPath($this->request['layout'], $this->request['layout_type']);
+//echo 'layout_path '.$this->layout_path.'<br />';
         if ($this->layout_path === false) {
             // load an error layout
             return;
         }
         $renderedOutput = $this->renderLayout ($this->request['layout']);
 
-        /** Wrap Rendered Layout */
-        $session = JFactory::getSession();
-        $layout = $this->params->get('wrap', 'div');
-        if ($layout == 'horz') {
-            $layout = 'horizontal';
-        }
+/** Wrap Rendered Layout */
+// Dynamically add outline style
+//  if (JRequest::getBool('tp')
+//      && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
+//      $attribs['style'] .= ' outline';
+//  }
+
+//consolidate with view.html - consider $this->state for wrap (module is there)
+
+       /** Wrap Rendered Layout */
+        $layout = $this->params->get('wrap', 'none');
+        if ($layout == 'horz') { $layout = 'horizontal'; }
+        if ($layout == 'xhtml') { $layout = 'div'; }
+        if ($layout == 'rounded') { $layout = 'div'; }
 
         $this->rowset = array();
 
-		$this->rowset[0]->title     = $session->get('page.title', '');
-		$this->rowset[0]->subtitle  = $session->set('page.subtitle', '');
-		$this->rowset[0]->style     = $session->set('page.style', '');
-		$this->rowset[0]->position  = $session->set('page.position', '');
+		$this->rowset[0]->title     = $this->state->title;
+		$this->rowset[0]->subtitle  = $this->state->subtitle;
+		$this->rowset[0]->style     = $this->state->style;
+		$this->rowset[0]->position  = $this->state->position;
+
 		$this->rowset[0]->content   = $renderedOutput;
-		$this->rowset[0]->position  = '';
 
         $this->findPath($layout, 'wrap');
 

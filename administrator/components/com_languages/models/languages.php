@@ -24,7 +24,7 @@ class LanguagesModelLanguages extends JModelList
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -50,7 +50,7 @@ class LanguagesModelLanguages extends JModelList
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -82,7 +82,7 @@ class LanguagesModelLanguages extends JModelList
 	 * @param	string		$id	A prefix for the store id.
 	 *
 	 * @return	string		A store id.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -97,7 +97,7 @@ class LanguagesModelLanguages extends JModelList
 	 * Method to build an SQL query to load the list data.
 	 *
 	 * @return	string	An SQL query
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getListQuery()
 	{
@@ -142,7 +142,7 @@ class LanguagesModelLanguages extends JModelList
 	 * @param	int		$value	The value of the published state.
 	 *
 	 * @return	boolean	True on success, false otherwise.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function setPublished($cid, $value = 0)
 	{
@@ -155,7 +155,7 @@ class LanguagesModelLanguages extends JModelList
 	 * @param	array	An array of item primary keys.
 	 *
 	 * @return	boolean	Returns true on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function delete($pks)
 	{
@@ -184,7 +184,7 @@ class LanguagesModelLanguages extends JModelList
 	/**
 	 * Custom clean cache method, 2 places for 2 applications
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function cleanCache() {
 		parent::cleanCache('_system', 0);

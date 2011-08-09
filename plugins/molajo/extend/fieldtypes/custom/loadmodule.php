@@ -46,7 +46,7 @@ class JFormFieldLoadModule extends JFormField
     protected function getLabel()
     {
         return;
-			$document	= JFactory::getDocument();
+			$document	= MolajoFactory::getDocument();
 			$renderer	= $document->loadRenderer('module');
 			$modules	= JModuleHelper::getModules($position);
                         $style = 'raw';

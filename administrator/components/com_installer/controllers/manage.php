@@ -21,7 +21,7 @@ class InstallerControllerManage extends JController
 	 *
 	 * @param	array An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -34,7 +34,7 @@ class InstallerControllerManage extends JController
 	/**
 	 * Enable/Disable an extension (if supported).
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function publish()
 	{
@@ -94,7 +94,7 @@ class InstallerControllerManage extends JController
 	 *
 	 * Useful for debugging and testing purposes when the XML file might change.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function refresh()
 	{

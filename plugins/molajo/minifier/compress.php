@@ -45,13 +45,13 @@ class plgMolajoBackup extends JPlugin	{
          * 	Retrieve Configuration Data
          */
 
-        $config         = JFactory::getConfig();
+        $config         = MolajoFactory::getConfig();
         $sitename       = $config->get('sitename');
         $fromname       = $config->get('fromname');
         $mailfrom       = $config->get('mailfrom');
         $databaseName   = $config->get('db');
 
-        $db		= &JFactory::getDBO();
+        $db		= &MolajoFactory::getDBO();
 
         /**
          * 	Retrieve Mailing Address and Zip Option

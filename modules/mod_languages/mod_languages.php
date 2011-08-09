@@ -25,8 +25,8 @@ $cacheparams->method = 'getList';
 $cacheparams->methodparams = $params;
 $cacheparams->modeparams = $cacheid;
 
-$list = JModuleHelper::moduleCache ($module, $params, $cacheparams);
+$list = MolajoModuleHelper::moduleCache ($module, $params, $cacheparams);
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
-require JModuleHelper::getLayoutPath('mod_languages', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_languages', $params->get('layout', 'default'));

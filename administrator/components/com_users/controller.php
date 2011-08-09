@@ -25,7 +25,7 @@ class UsersController extends JController
 	 * @param	string	$view	The view name.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canView($view)
 	{

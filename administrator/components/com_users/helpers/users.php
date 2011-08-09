@@ -21,7 +21,7 @@ class UsersHelper
 {
 	/**
 	 * @var		JObject	A cache for the available actions.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected static $actions;
 
@@ -31,7 +31,7 @@ class UsersHelper
 	 * @param	string	The name of the active view.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function addSubmenu($vName)
 	{
@@ -62,7 +62,7 @@ class UsersHelper
 	 * Gets a list of the actions that can be performed.
 	 *
 	 * @return	JObject
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getActions()
 	{
@@ -86,7 +86,7 @@ class UsersHelper
 	 * Get a list of filter options for the blocked state of a user.
 	 *
 	 * @return	array	An array of JHtmlOption elements.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	static function getStateOptions()
 	{
@@ -102,7 +102,7 @@ class UsersHelper
 	 * Get a list of filter options for the activated state of a user.
 	 *
 	 * @return	array	An array of JHtmlOption elements.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	static function getActiveOptions()
 	{
@@ -118,7 +118,7 @@ class UsersHelper
 	 * Get a list of the user groups for filtering.
 	 *
 	 * @return	array	An array of JHtmlOption elements.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	static function getGroups()
 	{

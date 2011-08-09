@@ -62,7 +62,7 @@ class JFormFieldRules extends JFormField
 		// Get the explicit rules for this asset.
 		if ($section == 'component') {
 			// Need to find the asset id by the name of the component.
-			$db = JFactory::getDbo();
+			$db = MolajoFactory::getDbo();
 			$db->setQuery('SELECT id FROM #__assets WHERE name = ' . $db->quote($component));
 			$assetId = (int) $db->loadResult();
 
@@ -260,7 +260,7 @@ class JFormFieldRules extends JFormField
 
 		$js = "window.addEvent('domready', function(){ new Accordion($$('div#permissions-sliders.pane-sliders .panel h3.pane-toggler'), $$('div#permissions-sliders.pane-sliders .panel div.pane-slider'), {onActive: function(toggler, i) {toggler.addClass('pane-toggler-down');toggler.removeClass('pane-toggler');i.addClass('pane-down');i.removeClass('pane-hide');Cookie.write('jpanesliders_permissions-sliders".$component."',$$('div#permissions-sliders.pane-sliders .panel h3').indexOf(toggler));},onBackground: function(toggler, i) {toggler.addClass('pane-toggler');toggler.removeClass('pane-toggler-down');i.addClass('pane-hide');i.removeClass('pane-down');},duration: 300,display: ".JRequest::getInt('jpanesliders_permissions-sliders'.$component, 0, 'cookie').",show: ".JRequest::getInt('jpanesliders_permissions-sliders'.$component, 0, 'cookie').", alwaysHide:true, opacity: false}); });";
 
-		JFactory::getDocument()->addScriptDeclaration($js);
+		MolajoFactory::getDocument()->addScriptDeclaration($js);
 
 		return implode("\n", $html);
 	}
@@ -273,7 +273,7 @@ class JFormFieldRules extends JFormField
 	 */
 	protected function getUserGroups()
 	{
-		$db		= JFactory::getDBO();
+		$db		= MolajoFactory::getDBO();
 		$query	= $db->getQuery(true)
 			->select('a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level, a.parent_id')
 			->from('#__groups AS a')

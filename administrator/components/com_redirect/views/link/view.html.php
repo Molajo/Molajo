@@ -26,7 +26,7 @@ class RedirectViewLink extends JView
 	/**
 	 * Display the view
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function display($tpl = null)
 	{
@@ -47,7 +47,7 @@ class RedirectViewLink extends JView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function addToolbar()
 	{

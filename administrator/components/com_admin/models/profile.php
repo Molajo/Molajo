@@ -25,7 +25,7 @@ class AdminModelProfile extends UsersModelUser
 	 * @param	array	$data		An optional array of data for the form to interogate.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -45,7 +45,7 @@ class AdminModelProfile extends UsersModelUser
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -76,7 +76,7 @@ class AdminModelProfile extends UsersModelUser
 	 * Method to get a single record.
 	 *
 	 * @return	mixed	Object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -91,7 +91,7 @@ class AdminModelProfile extends UsersModelUser
 	 * @param	array	$data	The form data.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{

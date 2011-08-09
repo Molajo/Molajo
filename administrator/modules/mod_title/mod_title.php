@@ -1,16 +1,11 @@
 <?php
 /**
- * @version		$Id: mod_title.php 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla.Administrator
- * @subpackage	mod_title
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Module
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// No direct access.
-defined('_JEXEC') or die;
-
-// Get the component title div
-$title = MolajoFactory::getApplication()->get('JComponentTitle');
-
-require MolajoModuleHelper::getLayoutPath('mod_title', $params->get('layout', 'default'));
+$rowset[0]->title = MolajoFactory::getApplication()->get('MolajoComponentTitle');
+$request['layout'] = 'admintitle';

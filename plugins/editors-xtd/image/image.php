@@ -40,9 +40,9 @@ class plgButtonImage extends JPlugin
 	 */
 	function onDisplay($name, $asset, $author)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$params = JComponentHelper::getParams('com_media');
- 		$user = JFactory::getUser();
+ 		$user = MolajoFactory::getUser();
 		if (	$user->authorise('edit', $asset)
 			||	$user->authorise('create', $asset)
 			||  count($user->getAuthorisedCategories($asset, 'create')) > 0

@@ -29,8 +29,8 @@ class modelParameter
      */
     public function getData ()
     {
-        $db = JFactory::getDbo();
-        $app = JFactory::getApplication();
+        $db = MolajoFactory::getDbo();
+        $app = MolajoFactory::getApplication();
 
         $query = $db->getQuery(true);
         $query->select('params');
@@ -64,8 +64,8 @@ class modelParameter
      */
     public function updateData ($params)
     {
-        $db = JFactory::getDbo();
-        $app = JFactory::getApplication();
+        $db = MolajoFactory::getDbo();
+        $app = MolajoFactory::getApplication();
         
         $query = 'UPDATE '
                     .$db->namequote(trim('#__extensions'))

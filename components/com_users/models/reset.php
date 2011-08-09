@@ -148,7 +148,7 @@ class UsersModelReset extends JModelForm
 		}
 
 		// Get the user object.
-		$user = JUser::getInstance($userId);
+		$user = MolajoUser::getInstance($userId);
 
 		// Check for a user and that the tokens match.
 		if (empty($user) || $user->activation !== $token) {
@@ -164,8 +164,8 @@ class UsersModelReset extends JModelForm
 
 		// Generate the new password hash.
 		jimport('joomla.user.helper');
-		$salt		= JUserHelper::genRandomPassword(32);
-		$crypted	= JUserHelper::getCryptedPassword($data['password1'], $salt);
+		$salt		= MolajoUserHelper::genRandomPassword(32);
+		$crypted	= MolajoUserHelper::getCryptedPassword($data['password1'], $salt);
 		$password	= $crypted.':'.$salt;
 
 		// Update the user object.
@@ -249,7 +249,7 @@ class UsersModelReset extends JModelForm
 			return false;
 		}
 		$salt	= $parts[1];
-		$testcrypt = JUserHelper::getCryptedPassword($data['token'], $salt);
+		$testcrypt = MolajoUserHelper::getCryptedPassword($data['token'], $salt);
 
 		// Verify the token
 		if (!($crypt == $testcrypt))
@@ -333,7 +333,7 @@ class UsersModelReset extends JModelForm
 		}
 
 		// Get the user object.
-		$user = JUser::getInstance($userId);
+		$user = MolajoUser::getInstance($userId);
 
 		// Make sure the user isn't blocked.
 		if ($user->block) {
@@ -348,8 +348,8 @@ class UsersModelReset extends JModelForm
 		}
 
 		// Set the confirmation token.
-		$token = JUtility::getHash(JUserHelper::genRandomPassword());
-		$salt = JUserHelper::getSalt('crypt-md5');
+		$token = JUtility::getHash(MolajoUserHelper::genRandomPassword());
+		$salt = MolajoUserHelper::getSalt('crypt-md5');
 		$hashedToken = md5($token.$salt).':'.$salt;
 
 		$user->activation = $hashedToken;

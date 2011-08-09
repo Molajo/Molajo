@@ -42,7 +42,7 @@ class MessagesViewMessage extends JView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function addToolbar()
 	{
@@ -53,7 +53,7 @@ class MessagesViewMessage extends JView
 			MolajoToolbarHelper::help('JHELP_COMPONENTS_MESSAGING_WRITE');
 		} else {
 			MolajoToolbarHelper::title(JText::_('COM_MESSAGES_VIEW_PRIVATE_MESSAGE'), 'inbox.png');
-			$sender = JUser::getInstance($this->item->user_id_from);
+			$sender = MolajoUser::getInstance($this->item->user_id_from);
 			if ($sender->authorise('core.admin') || $sender->authorise('core.manage','com_messages') && $sender->authorise('core.login.admin')) {
 				MolajoToolbarHelper::custom('message.reply', 'restore.png', 'restore_f2.png', 'COM_MESSAGES_TOOLBAR_REPLY', false);
 			}

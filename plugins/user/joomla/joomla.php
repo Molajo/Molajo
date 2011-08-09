@@ -37,7 +37,7 @@ class plgUserJoomla extends JPlugin
 			return false;
 		}
 
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 		$db->setQuery(
 			'DELETE FROM `#__session`' .
 			' WHERE `userid` = '.(int) $user['id']
@@ -63,8 +63,8 @@ class plgUserJoomla extends JPlugin
 	public function onUserAfterSave($user, $isnew, $success, $msg)
 	{
 		// Initialise variables.
-		$app	= JFactory::getApplication();
-		$config	= JFactory::getConfig();
+		$app	= MolajoFactory::getApplication();
+		$config	= MolajoFactory::getConfig();
 
 		if ($isnew) {
 			// TODO: Suck in the frontend registration emails here as well. Job for a rainy day.
@@ -72,7 +72,7 @@ class plgUserJoomla extends JPlugin
 			if ($app->isAdmin()) {
 
 				// Load user_joomla plugin language (not done automatically).
-				$lang = JFactory::getLanguage();
+				$lang = MolajoFactory::getLanguage();
 				$lang->load('plg_user_joomla', JPATH_ADMINISTRATOR);
 
 				// Compute the mail subject.
@@ -93,7 +93,7 @@ class plgUserJoomla extends JPlugin
 				);
 
 				// Assemble the email data...the sexy way!
-				$mail = JFactory::getMailer()
+				$mail = MolajoFactory::getMailer()
 					->setSender(
 						array(
 							$config->get('mailfrom'),
@@ -155,13 +155,13 @@ class plgUserJoomla extends JPlugin
 		$instance->set('guest', 0);
 
 		// Register the needed session variables
-		$session = JFactory::getSession();
+		$session = MolajoFactory::getSession();
 		$session->set('user', $instance);
 
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 		
 		// Check to see the the session already exists.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$app->checkSession();
 
 		// Update the user related fields for the Joomla sessions table.
@@ -191,9 +191,9 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onUserLogout($user, $options = array())
 	{
-		$my 		= JFactory::getUser();
-		$session 	= JFactory::getSession();
-		$app 		= JFactory::getApplication();
+		$my 		= MolajoFactory::getUser();
+		$session 	= MolajoFactory::getSession();
+		$app 		= MolajoFactory::getApplication();
 
 		// Make sure we're a valid user first
 		if ($user['id'] == 0 && !$my->get('tmp_user')) {
@@ -210,7 +210,7 @@ class plgUserJoomla extends JPlugin
 		}
 		
 		// Force logout all users with that userid
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 		$db->setQuery(
 			'DELETE FROM `#__session`' .
 			' WHERE `userid` = '.(int) $user['id'] .
@@ -229,13 +229,13 @@ class plgUserJoomla extends JPlugin
 	 * @param	array	$user		Holds the user data.
 	 * @param	array	$options	Array holding options (remember, autoregister, group).
 	 *
-	 * @return	object	A JUser object
+	 * @return	object	A MolajoUser object
 	 * @since	1.5
 	 */
 	protected function &_getUser($user, $options = array())
 	{
-		$instance = JUser::getInstance();
-		if ($id = intval(JUserHelper::getUserId($user['username'])))  {
+		$instance = MolajoUser::getInstance();
+		if ($id = intval(MolajoUserHelper::getUserId($user['username'])))  {
 			$instance->load($id);
 			return $instance;
 		}
@@ -246,7 +246,7 @@ class plgUserJoomla extends JPlugin
 		// Default to Registered.
 		$defaultUserGroup = $config->get('new_usertype', 2);
 
-		$acl = JFactory::getACL();
+		$acl = MolajoFactory::getACL();
 
 		$instance->set('id'			, 0);
 		$instance->set('name'			, $user['fullname']);

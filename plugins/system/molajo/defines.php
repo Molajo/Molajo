@@ -55,4 +55,4 @@ if (!class_exists('JLoader')) {
 
 
 /** Class Overrides **/
-JLoader::register('JUser', JPATH_PLUGINS.'/molajo/libraries/joomla/user/user.php');
+JLoader::register('MolajoUser', JPATH_PLUGINS.'/molajo/libraries/joomla/user/user.php');

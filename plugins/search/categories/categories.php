@@ -59,9 +59,9 @@ class plgSearchCategories extends JPlugin
 	 */
 	function onContentSearch($text, $phrase='', $ordering='', $areas=null)
 	{
-		$db		= JFactory::getDbo();
-		$user	= JFactory::getUser();
-		$app	= JFactory::getApplication();
+		$db		= MolajoFactory::getDbo();
+		$user	= MolajoFactory::getUser();
+		$app	= MolajoFactory::getApplication();
 
 		$searchText = $text;
 
@@ -115,7 +115,7 @@ class plgSearchCategories extends JPlugin
 			$query->group('a.id');
 			$query->order($order);
 			if ($app->isSite() && $app->getLanguageFilter()) {
-				$query->where('a.language in (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
+				$query->where('a.language in (' . $db->Quote(MolajoFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
 			}
 
 			$db->setQuery($query, 0, $limit);

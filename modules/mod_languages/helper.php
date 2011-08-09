@@ -17,10 +17,10 @@ abstract class modLanguagesHelper
 {
 	public static function getList(&$params)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$languages	= JLanguageHelper::getLanguages();
-		$db			= JFactory::getDBO();
-		$app		= JFactory::getApplication();
+		$db			= MolajoFactory::getDBO();
+		$app		= MolajoFactory::getApplication();
 		$query		= $db->getQuery(true);
 
 		$query->select('id');

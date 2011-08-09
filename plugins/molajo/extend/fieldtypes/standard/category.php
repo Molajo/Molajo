@@ -57,7 +57,7 @@ class JFormFieldCategory extends JFormFieldList
 			if ($action	= (string) $this->element['action']) {
 
 				// Get the current user object.
-				$user = JFactory::getUser();
+				$user = MolajoFactory::getUser();
 			
 				foreach($options as $i => $option)
 				{

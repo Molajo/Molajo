@@ -23,19 +23,19 @@ class ModulesModelModule extends JModelAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_MODULES';
 
 	/**
 	 * @var		string	The help screen key for the module.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpKey = 'JHELP_EXTENSIONS_MODULE_MANAGER_EDIT';
 
 	/**
 	 * @var		string	The help screen base URL for the module.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpURL;
 
@@ -45,7 +45,7 @@ class ModulesModelModule extends JModelAdmin
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -70,7 +70,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	array	$pks	An array of item ids.
 	 *
 	 * @return	boolean	Returns true on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function delete(&$pks)
 	{
@@ -126,7 +126,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	array	$pks	An array of primary key IDs.
 	 *
 	 * @return	boolean	True if successful.
-	 * @since	1.6
+	 * @since	1.0
 	 * @throws	Exception
 	 */
 	public function duplicate(&$pks)
@@ -206,7 +206,7 @@ class ModulesModelModule extends JModelAdmin
 	 * Method to get the application object
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function &getApplication()
 	{
@@ -220,7 +220,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -270,7 +270,7 @@ class ModulesModelModule extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -290,7 +290,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	integer	$pk	The id of the primary key.
 	 *
 	 * @return	mixed	Object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -404,7 +404,7 @@ class ModulesModelModule extends JModelAdmin
 	 * Get the necessary data to load an item help screen.
 	 *
 	 * @return	object	An object with key, url, and local properties for loading the item help screen.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getHelp()
 	{
@@ -419,7 +419,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	array	Configuration array for model. Optional.
 	 *
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function getTable($type = 'Module', $prefix = 'JTable', $config = array())
 	{
@@ -430,7 +430,7 @@ class ModulesModelModule extends JModelAdmin
 	 * Prepare and sanitise the table prior to saving.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function prepareTable(&$table)
 	{
@@ -457,7 +457,7 @@ class ModulesModelModule extends JModelAdmin
 	 *
 	 * @return	void
 	 * @throws	Exception if there is an error loading the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = '')
 	{
@@ -524,7 +524,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	array	$data	The form data.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{
@@ -696,7 +696,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @param	object	$table	A record object.
 	 *
 	 * @return	array	An array of conditions to add to add to ordering queries.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getReorderConditions($table)
 	{
@@ -710,7 +710,7 @@ class ModulesModelModule extends JModelAdmin
 	/**
 	 * Custom clean cache method for different applications
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function cleanCache() {
 		parent::cleanCache('com_modules', $this->getApplication());

@@ -23,7 +23,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 * Override to get the table
 	 *
 	 * @return	JTable
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getTable($name='', $prefix='', $options = array())
 	{
@@ -36,7 +36,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -90,7 +90,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -107,7 +107,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -127,7 +127,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 * @param	array	The form data.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{
@@ -189,7 +189,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	 * @param	integer	$cid	An array of	numeric ids of the rows.
 	 *
 	 * @return	boolean	True on success/false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function delete($cid)
 	{
@@ -225,7 +225,7 @@ class LanguagesModelLanguage extends JModelAdmin
 	/**
 	 * Custom clean cache method
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function cleanCache() {
 		parent::cleanCache('_system', 0);

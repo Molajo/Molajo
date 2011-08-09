@@ -13,7 +13,7 @@ if ($css) {
 } else {
     $css=true;
     jimport('joomla.environment.browser');
-    $this->document = JFactory::getDocument();
+    $this->document = MolajoFactory::getDocument();
     $browser = JBrowser::getInstance();
 
     $this->document->addStyleDeclaration(".mod-preview-info { padding: 2px 4px 2px 4px; border: 1px solid black; position: absolute; background-color: white; color: red;}");

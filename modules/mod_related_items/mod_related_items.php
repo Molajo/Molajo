@@ -20,7 +20,7 @@ $cacheparams->method = 'getList';
 $cacheparams->methodparams = $params;
 $cacheparams->modeparams = array('id'=>'int','Itemid'=>'int');
 
-$list = JModuleHelper::moduleCache ($module, $params, $cacheparams);
+$list = MolajoModuleHelper::moduleCache ($module, $params, $cacheparams);
 
 if (!count($list)) {
 	return;
@@ -29,4 +29,4 @@ if (!count($list)) {
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $showDate = $params->get('showDate', 0);
 
-require JModuleHelper::getLayoutPath('mod_related_items', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_related_items', $params->get('layout', 'default'));

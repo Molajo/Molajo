@@ -34,7 +34,7 @@ class plgSystemCreate extends JPlugin
     function onAfterInitialise()
     {
         if ($this->params->def('enable_installer_create_extensions', 1) == 1
-                && JFactory::getApplication()->getName() == 'administrator'
+                && MolajoFactory::getApplication()->getName() == 'administrator'
                 && (JRequest::getCmd('option') == 'com_installer' || JRequest::getCmd('option') == 'com_plugins')) {
 
             define('COM_INSTALLER_OVERRIDES', dirname(__FILE__));

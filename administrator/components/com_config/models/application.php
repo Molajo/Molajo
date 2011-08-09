@@ -24,7 +24,7 @@ class ConfigModelApplication extends JModelForm
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -45,7 +45,7 @@ class ConfigModelApplication extends JModelForm
 	 * data will be merged into the original data, overwriting it.
 	 *
 	 * @return	array		An array containg all global config data.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getData()
 	{
@@ -57,7 +57,7 @@ class ConfigModelApplication extends JModelForm
 	 *
 	 * @param	array	An array containing all global config data.
 	 * @return	bool	True on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{

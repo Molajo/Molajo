@@ -21,13 +21,13 @@ class UsersModelGroup extends JModelAdmin
 {
 	/**
 	 * @var		string	The event to trigger after saving the data.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $event_after_save = 'onUserAfterSaveGroup';
 
 	/**
 	 * @var		string	The event to trigger after before the data.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $event_before_save = 'onUserBeforeSaveGroup';
 
@@ -38,7 +38,7 @@ class UsersModelGroup extends JModelAdmin
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function getTable($type = 'Usergroup', $prefix = 'JTable', $config = array())
 	{
@@ -52,7 +52,7 @@ class UsersModelGroup extends JModelAdmin
 	 * @param	array	$data		An optional array of data for the form to interogate.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -72,7 +72,7 @@ class UsersModelGroup extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -92,7 +92,7 @@ class UsersModelGroup extends JModelAdmin
 	 * @param	object	A form object.
 	 * @param	mixed	The data expected for the form.
 	 * @throws	Exception if there is an error in the form event.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function preprocessForm(JForm $form, $data, $groups = '')
 	{
@@ -109,7 +109,7 @@ class UsersModelGroup extends JModelAdmin
 	 *
 	 * @param	array	The form data.
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{
@@ -186,7 +186,7 @@ class UsersModelGroup extends JModelAdmin
 	 *
 	 * @param	array	An array of item ids.
 	 * @return	boolean	Returns true on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function delete(&$pks)
 	{

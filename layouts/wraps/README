@@ -1,14 +1,19 @@
-Chrome is used in conjunction with extension layouts to render HTML before and after
-layout output so that it can be styled using CSS.
+Wraps are used in conjunction with other layouts in order to render HTML before and after layout output.
 
-Traditionally, chrome has been used in the presentation of Modules to add styling effects,
-like rounded corners, but in Molajo, chrome can be specified for use with any extension layout
-to achieve different types of rendered output objectives.
+Traditionally, wraps have been used in the presentation of Modules, but in Molajo, a wrap
+can be specified for use with any extension layout to achieve different types of rendered output objectives.
 
-Within the Template, Module chrome is specified using the 'style' attribute
-in the jdoc statement, as pictured below:
+Within the Template, use the 'wrap' attribute in the jdoc statement, as shown below, to wrap the layout output
+using the wrap layout specified as the attribute.
 
-<jdoc:include type="modules" name="user1" style="rounded" />
+<jdoc:include type="modules" name="user1" wrap="rounded" />
 
-<jdoc:include type="component" style="xhtml" />
+<jdoc:include type="component" wrap="div" />
 
+Backwards compatability:
+ chrome => will be treated as 'wrap'.
+
+Attributes:
+ Horz => treated as 'horizontal'.
+ xhtml => treated as 'div'.
+ rounded => treated as 'div'.

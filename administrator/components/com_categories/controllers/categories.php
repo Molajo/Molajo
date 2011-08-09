@@ -25,7 +25,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function getModel($name = 'Category', $prefix = 'CategoriesModel', $config = array('ignore_request' => true))
 	{
@@ -37,7 +37,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 	 * Rebuild the nested set tree.
 	 *
 	 * @return	bool	False on failure or error, true on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function rebuild()
 	{
@@ -64,7 +64,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 	 * Save the manual order inputs from the categories list page.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function saveorder()
 	{

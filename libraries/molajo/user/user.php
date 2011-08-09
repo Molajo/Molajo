@@ -151,7 +151,7 @@ class MolajoUser extends JObject
 	 *
 	 * @param   integer  $identifier  The primary key of the user to load (optional).
 	 *
-	 * @return  object  JUser
+	 * @return  object  MolajoUser
 	 * @since   1.0
 	 */
 	public function __construct($identifier = 0)
@@ -178,7 +178,7 @@ class MolajoUser extends JObject
 	 *
 	 * @param   integer  $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
 	 *
-	 * @return  object   JUser	The User object.
+	 * @return  object   MolajoUser	The User object.
 	 * @since   1.0
 	 */
 	public static function getInstance($identifier = 0)
@@ -192,7 +192,7 @@ class MolajoUser extends JObject
 		// Find the user id
 		if (!is_numeric($identifier)) {
 //jimport('joomla.user.helper');
-			if (!$id = JUserHelper::getUserId($identifier)) {
+			if (!$id = MolajoUserHelper::getUserId($identifier)) {
 				JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_USER_ERROR_ID_NOT_EXISTS', $identifier));
 				$retval = false;
 				return $retval;
@@ -203,7 +203,7 @@ class MolajoUser extends JObject
 		}
 
 		if (empty($instances[$id])) {
-			$user = new JUser($id);
+			$user = new MolajoUser($id);
 			$instances[$id] = $user;
 		}
 
@@ -264,7 +264,7 @@ class MolajoUser extends JObject
 	/**
 	 * @deprecated 1.6	Use MolajoACL::checkPermissions method instead.
      *
-	 * Method to check JUser object authorisation against an access control
+	 * Method to check MolajoUser object authorisation against an access control
 	 * object and optionally an access extension object
 	 *
 	 * @param   string   $action		The name of the action to check for permission.
@@ -538,7 +538,7 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to save the JUser object to the database
+	 * Method to save the MolajoUser object to the database
 	 *
 	 * @param   boolean  $updateOnly	Save the object only if not a new user
 	 *
@@ -577,7 +577,7 @@ class MolajoUser extends JObject
 			}
 
 			// Get the old user
-			$oldUser = new JUser($this->id);
+			$oldUser = new MolajoUser($this->id);
 
 			//
 			// Access Checks
@@ -634,7 +634,7 @@ class MolajoUser extends JObject
 				throw new Exception($table->getError());
 			}
 
-			// Set the id for the JUser object in case we created a new user.
+			// Set the id for the MolajoUser object in case we created a new user.
 			if (empty($this->id)) {
 				$this->id = $table->get('id');
 			}
@@ -659,7 +659,7 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to delete the JUser object from the database
+	 * Method to delete the MolajoUser object from the database
 	 *
 	 * @return  boolean  True on success
 	 * @since   1.0
@@ -687,7 +687,7 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to load a JUser object by user id number
+	 * Method to load a MolajoUser object by user id number
 	 *
 	 * @param   mixed  $id  The user id of the user to load
 	 *
@@ -699,7 +699,7 @@ class MolajoUser extends JObject
 		// Create the user table object
 		$table	= $this->getTable();
 
-		// Load the JUserModel object based on the user id or throw a warning.
+		// Load the MolajoUserModel object based on the user id or throw a warning.
 		if (!$table->load($id)) {
 			JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
 			return false;

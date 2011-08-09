@@ -24,7 +24,7 @@ class RedirectTableLink extends JTable
 	 * @param	object	Database object
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct(&$db)
 	{
@@ -35,7 +35,7 @@ class RedirectTableLink extends JTable
 	 * Overloaded check function
 	 *
 	 * @return boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function check()
 	{
@@ -83,7 +83,7 @@ class RedirectTableLink extends JTable
 	 *
 	 * @return	boolean	True on success.
 	 * @see		JTable::store
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function store($updateNulls = false)
 	{

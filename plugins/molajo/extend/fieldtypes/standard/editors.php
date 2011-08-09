@@ -40,7 +40,7 @@ class JFormFieldEditors extends JFormFieldList
 	protected function getOptions()
 	{
 		// Get the database object and a new query object.
-		$db		= JFactory::getDBO();
+		$db		= MolajoFactory::getDBO();
 		$query	= $db->getQuery(true);
 
 		// Build the query.
@@ -53,7 +53,7 @@ class JFormFieldEditors extends JFormFieldList
 		// Set the query and load the options.
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		foreach ($options as $i=>$option) {
 				$lang->load('plg_editors_'.$option->value, JPATH_ADMINISTRATOR, null, false, false)
 			||	$lang->load('plg_editors_'.$option->value, JPATH_PLUGINS .'/editors/'.$option->value, null, false, false)

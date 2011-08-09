@@ -53,43 +53,43 @@ class MolajoLayout extends JView
      *
      * @since 1.0
      */
-    protected $request;
+    public $request;
 
     /**
      * @var object $state
      * @since 1.0
      */
-    protected $state;
+    public $state;
 
     /**
      * @var object $params
      * @since 1.0
      */
-    protected $params;
+    public $params;
 
     /**
      * @var object $rowset
      * @since 1.0
      */
-    protected $rowset;
+    public $rowset;
 
     /**
      * @var array $row
      * @since 1.0
      */
-    protected $row;
+    public $row;
 
     /**
      * @var array $pagination
      * @since 1.0
      */
-    protected $pagination;
+    public $pagination;
 
     /**
      * @var array $layout_path
      * @since 1.0
      */
-    protected $layout_path;
+    public $layout_path;
 
     /**
      * findPath

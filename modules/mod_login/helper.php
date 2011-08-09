@@ -14,12 +14,12 @@ class modLoginHelper
 {
 	static function getReturnURL($params, $type)
 	{
-		$app	= JFactory::getApplication();
+		$app	= MolajoFactory::getApplication();
 		$router = $app->getRouter();
 		$url = null;
 		if ($itemid =  $params->get($type))
 		{
-			$db		= JFactory::getDbo();
+			$db		= MolajoFactory::getDbo();
 			$query	= $db->getQuery(true);
 
 			$query->select($db->nameQuote('link'));
@@ -40,7 +40,7 @@ class modLoginHelper
 		if (!$url)
 		{
 			// stay on the same page
-			$uri = JFactory::getURI();
+			$uri = MolajoFactory::getURI();
 			$vars = $router->parse($uri);
 			unset($vars['lang']);
 			if ($router->getMode() == JROUTER_MODE_SEF)
@@ -74,7 +74,7 @@ class modLoginHelper
 	
 	static function getType()
 	{
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		return (!$user->get('guest')) ? 'logout' : 'login';
 	}
 }

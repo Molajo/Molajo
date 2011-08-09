@@ -21,7 +21,7 @@ class CategoriesModelCategory extends JModelAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_CATEGORIES';
 
@@ -30,7 +30,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 *
 	 * @param	object	A record object.
 	 * @return	boolean	True if allowed to delete the record. Defaults to the permission set in the component.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canDelete($record)
 	{
@@ -50,7 +50,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 *
 	 * @param	object	A record object.
 	 * @return	boolean	True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canEditState($record)
 	{
@@ -77,7 +77,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function getTable($type = 'Category', $prefix = 'JTable', $config = array())
 	{
@@ -89,7 +89,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -122,7 +122,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 *
 	 * @param	integer	An optional id of the object to get, otherwise the id from the model state is used.
 	 * @return	mixed	Category data object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -171,7 +171,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -221,7 +221,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	JCategoryTable	current table instance
 	 *
 	 * @return	array	An array of conditions to add to add to ordering queries.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getReorderConditions($table)
 	{
@@ -232,7 +232,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -250,7 +250,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	object	A form object.
 	 * @param	mixed	The data expected for the form.
 	 * @throws	Exception if there is an error loading the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function preprocessForm(JForm $form, $data, $groups = '')
 	{
@@ -319,7 +319,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 *
 	 * @param	array	The form data.
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{
@@ -408,7 +408,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * Method rebuild the entire nested set tree.
 	 *
 	 * @return	boolean	False on failure or error, true otherwise.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function rebuild()
 	{
@@ -432,7 +432,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * Then we invoke the table rebuild to implement the new ordering.
 	 *
 	 * @return	boolean false on failuer or error, true otherwise
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function saveorder($idArray = null, $lft_array = null)
 	{
@@ -457,7 +457,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	int		The new value matching an Asset Group ID.
 	 * @param	array	An array of row IDs.
 	 * @return	booelan	True if successful, false otherwise and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function batchAccess($value, $pks)
 	{
@@ -493,7 +493,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	array	$pks	An array of row IDs.
 	 *
 	 * @return	booelan	True if successful, false otherwise and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function batchCopy($value, $pks)
 	{
@@ -655,7 +655,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 * @param	array	$pks	An array of row IDs.
 	 *
 	 * @return	booelan	True if successful, false otherwise and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function batchMove($value, $pks)
 	{
@@ -768,7 +768,7 @@ class CategoriesModelCategory extends JModelAdmin
 	/**
 	 * Custom clean the cache of com_content and content modules
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function cleanCache()
 	{

@@ -26,7 +26,7 @@ class plgSystemTamka_Router extends JPlugin	{
 	function onAfterInitialise() {
 
 		//	Only for Frontend, not Administrator
-		$application =& JFactory::getApplication('JSite');
+		$application =& MolajoFactory::getApplication('JSite');
 		$router =& $application->getRouter();
 
 		if ($router->getMode() == JROUTER_MODE_SEF) {
@@ -142,7 +142,7 @@ class plgSystemTamka_Router extends JPlugin	{
 		tamkaimport('tamka.routehelper.content');
 
 	 	/*	Get Path and Query */
-		$uri				= &JFactory::getURI();
+		$uri				= &MolajoFactory::getURI();
 		$uriString			= strtolower($uri->toString(array('path', 'query')));
 
 	 	/*	Remove base and left forward slash '/' */
@@ -211,7 +211,7 @@ class plgSystemTamka_Router extends JPlugin	{
 			global $mainframe;
 			header('Location: ' . htmlspecialchars( $redirectTo ), true, '301');
 			$mainframe->redirect($redirectTo);
-			$app = & JFactory::getApplication();
+			$app = & MolajoFactory::getApplication();
 			$app->close();
 			return;	
     	}
@@ -394,7 +394,7 @@ class plgSystemTamka_Router extends JPlugin	{
 		$pagebaseValue = trim(strtolower($pluginParams->def('page', 'page')));		
 
 		/* 	Needed in order to check for /index.php/ */
-		$app =& JFactory::getApplication();
+		$app =& MolajoFactory::getApplication();
 				
 	/**
 	 *	10A. Menu item portion of URL will be next (possibly) 
@@ -561,7 +561,7 @@ class plgSystemTamka_Router extends JPlugin	{
 			
 			/*	Update the path */
 			$uri->setQuery('');
-			$uri = &JFactory::getURI();
+			$uri = &MolajoFactory::getURI();
 			$uri->setQuery($vars);
 			return $vars;
 		}
@@ -688,7 +688,7 @@ class plgSystemTamka_Router extends JPlugin	{
 	*/
 	function process_301_404_errors ($uriPathPreserved, $parameterExtension )	{
 
-		$db	=& JFactory::getDBO();
+		$db	=& MolajoFactory::getDBO();
 		$redirectTo = '';
 
 		$query = 'SELECT new_path ' .
@@ -754,7 +754,7 @@ class plgSystemTamka_Router extends JPlugin	{
 
 		header('Location: ' . htmlspecialchars( $redirectTo ), true, '301');
 		$mainframe->redirect($redirectTo);
-		$app = & JFactory::getApplication();
+		$app = & MolajoFactory::getApplication();
 		$app->close();
 		return;
 	}
@@ -767,7 +767,7 @@ class plgSystemTamka_Router extends JPlugin	{
 	function process404s ($uriPathPreserved, $parameterExtension)	{
 
 		global $mainframe;
-		$db	=& JFactory::getDBO();
+		$db	=& MolajoFactory::getDBO();
 
 		try {
 				$referer = ' ';
@@ -804,7 +804,7 @@ class plgSystemTamka_Router extends JPlugin	{
 		JResponse::setHeader('HTTP/1.0', '404 Not Found');
 		$redirectTo = JURI::base() . $TamkaErrorUrl . $parameterExtension;
 		$mainframe->redirect($redirectTo);
-		$app = & JFactory::getApplication();
+		$app = & MolajoFactory::getApplication();
 		$app->close();
 		return;
 	}

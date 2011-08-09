@@ -27,7 +27,7 @@ class TemplatesModelTemplate extends JModel
 	 * @param	string The base path.
 	 * @param	string The file name.
 	 * @return	object
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getFile($path, $name)
 	{
@@ -45,7 +45,7 @@ class TemplatesModelTemplate extends JModel
 	 * Method to get a list of all the files to edit in a template.
 	 *
 	 * @return	array	A nested array of relevant files.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getFiles()
 	{
@@ -91,7 +91,7 @@ class TemplatesModelTemplate extends JModel
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -110,7 +110,7 @@ class TemplatesModelTemplate extends JModel
 	 * Method to get the template information.
 	 *
 	 * @return	mixed	Object if successful, false if not and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getTemplate()
 	{

@@ -10,7 +10,9 @@
 defined('MOLAJO') or die;
 
 /**
- * DocumentError class, provides an easy interface to parse and display an error page
+ * DocumentError class
+ *
+ * Displays an error page
  *
  * @package     Molajo
  * @subpackage  Document

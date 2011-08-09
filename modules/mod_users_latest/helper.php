@@ -15,7 +15,7 @@ class modUsersLatestHelper
 	// get users sorted by activation date
 	static function getUsers($params)
 	{
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$query->select('a.id, a.name, a.username, a.registerDate');
 		$query->order('a.registerDate DESC');

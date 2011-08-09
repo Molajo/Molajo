@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__).'/helper.php';
 
-$lang = JFactory::getLanguage();
+$lang = MolajoFactory::getLanguage();
 $upper_limit = $lang->getUpperLimitSearchWord();
 
 $button			= $params->get('button', '');
@@ -31,4 +31,4 @@ if ($imagebutton) {
 	$img = modSearchHelper::getSearchImage($button_text);
 }
 $mitemid = $set_Itemid > 0 ? $set_Itemid : JRequest::getInt('Itemid');
-require JModuleHelper::getLayoutPath('mod_search', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_search', $params->get('layout', 'default'));

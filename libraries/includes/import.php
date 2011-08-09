@@ -104,7 +104,8 @@ if (MOLAJO_APPLICATION == 'installation') {
     require_once MOLAJO_PATH_BASE.'/helpers/database.php';
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/installer/installer.php', 'JInstaller');
 }
-
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/node.php', 'JNode');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/tree.php', 'JTree');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/application.php', 'MolajoApplicationHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/helper.php', 'JApplicationHelper');
 

@@ -58,7 +58,7 @@ abstract class JHtmlLanguages {
 	 * Returns an array of published state filter options.
 	 *
 	 * @return	string			The HTML code for the select tag
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function publishedOptions()
 	{

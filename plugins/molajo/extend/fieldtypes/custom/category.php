@@ -41,7 +41,7 @@ class JFormFieldCategory extends JFormFieldList
 	{
             
 		// Initialize variables.
-		$session = JFactory::getSession();
+		$session = MolajoFactory::getSession();
 		$options = array();
 
 		// Initialize some field attributes.
@@ -60,7 +60,7 @@ class JFormFieldCategory extends JFormFieldList
                 if ($action	= (string) $this->element['action']) {
 
                         // Get the current user object.
-                        $user = JFactory::getUser();
+                        $user = MolajoFactory::getUser();
 
                         // TODO: Add a preload method to JAccess so that we can get all the asset rules in one query and cache them.
                         // eg JAccess::preload('create', 'com_articles.category')

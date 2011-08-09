@@ -21,7 +21,7 @@ class CategoriesController extends JController
 {
 	/**
 	 * @var		string	The extension for which the categories apply.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $extension;
 
@@ -30,7 +30,7 @@ class CategoriesController extends JController
 	 *
 	 * @param	array An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{

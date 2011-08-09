@@ -17,6 +17,6 @@ $params->def('greeting', 1);
 
 $type	= modLoginHelper::getType();
 $return	= modLoginHelper::getReturnURL($params, $type);
-$user	= JFactory::getUser();
+$user	= MolajoFactory::getUser();
 
-require JModuleHelper::getLayoutPath('mod_login', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_login', $params->get('layout', 'default'));

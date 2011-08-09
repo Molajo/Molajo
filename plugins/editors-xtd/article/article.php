@@ -54,7 +54,7 @@ class plgButtonArticle extends JPlugin
 			SqueezeBox.close();
 		}";
 
-		$doc = JFactory::getDocument();
+		$doc = MolajoFactory::getDocument();
 		$doc->addScriptDeclaration($js);
 
 		JHtml::_('behavior.modal');

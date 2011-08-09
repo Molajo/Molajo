@@ -33,7 +33,7 @@ abstract class MolajoUserHelper
 	public static function addUserToGroup($userId, $groupId)
 	{
 		// Get the user object.
-		$user = new JUser((int) $userId);
+		$user = new MolajoUser((int) $userId);
 
 		// Add the user to the group if necessary.
 		if (!in_array($groupId, $user->groups))
@@ -89,7 +89,7 @@ abstract class MolajoUserHelper
 	public static function getUserGroups($userId)
 	{
 		// Get the user object.
-		$user = JUser::getInstance((int) $userId);
+		$user = MolajoUser::getInstance((int) $userId);
 
 		return isset($user->groups) ? $user->groups : array();
 	}
@@ -105,7 +105,7 @@ abstract class MolajoUserHelper
 	public static function removeUserFromGroup($userId, $groupId)
 	{
 		// Get the user object.
-		$user = JUser::getInstance((int) $userId);
+		$user = MolajoUser::getInstance((int) $userId);
 
 		// Remove the user from the group if necessary.
 		if (in_array($groupId, $user->groups))
@@ -144,7 +144,7 @@ abstract class MolajoUserHelper
 	public static function setUserGroups($userId, $groups)
 	{
 		// Get the user object.
-		$user = JUser::getInstance((int) $userId);
+		$user = MolajoUser::getInstance((int) $userId);
 
 		// Set the group ids.
 		JArrayHelper::toInteger($groups);
@@ -237,7 +237,7 @@ abstract class MolajoUserHelper
 		// Is it a valid user to activate?
 		if ($id)
 		{
-			$user = JUser::getInstance((int) $id);
+			$user = MolajoUser::getInstance((int) $id);
 
 			$user->set('block', '0');
 			$user->set('activation', '');

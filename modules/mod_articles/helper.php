@@ -17,13 +17,13 @@ abstract class modArticlesHelper
 	public static function getList(&$params)
 	{
 		// Get the dbo
-		$db = JFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		// Get an instance of the generic articles model
 		$model = JModel::getInstance('Articles', 'ArticlesModel', array('ignore_request' => true));
 
 		// Set application parameters in model
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$appParams = $app->getParams();
 		$model->setState('params', $appParams);
 
@@ -41,7 +41,7 @@ abstract class modArticlesHelper
 		$model->setState('filter.category_id', $params->get('catid', array()));
 
 		// User filter
-		$userId = JFactory::getUser()->get('id');
+		$userId = MolajoFactory::getUser()->get('id');
 		switch ($params->get('user_id'))
 		{
 			case 'by_me':
@@ -97,7 +97,7 @@ abstract class modArticlesHelper
 
 			if ($parameterAccess) {
             } else {
-                $itemAccess = $acl->checkPermissions ('user', JFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $item->asset, $item->access);
+                $itemAccess = $acl->checkPermissions ('user', MolajoFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $item->asset, $item->access);
             }
             if ($parameterAccess || $itemAccess) {
 				$item->link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catslug));

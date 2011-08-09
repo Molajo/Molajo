@@ -14,7 +14,7 @@ class modWhosonlineHelper
 {
 	// show online count
 	static function getOnlineCount() {
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		// calculate number of guests and users
 		$result	= array();
 		$user_array  = 0;
@@ -47,7 +47,7 @@ class modWhosonlineHelper
 
 	// show online member names
 	static function getOnlineUserNames() {
-		$db		= JFactory::getDbo();
+		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 		$query->select('a.username, a.time, a.userid, a.usertype, a.application_id');
 		$query->from('#__session AS a');

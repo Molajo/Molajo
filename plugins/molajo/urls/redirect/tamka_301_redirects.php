@@ -14,7 +14,7 @@ class plgSystemTamka_301_redirects extends JPlugin
 
 	function onAfterInitialise() {
 
-		$application =& JFactory::getApplication('JSite');
+		$application =& MolajoFactory::getApplication('JSite');
 		$router =& $application->getRouter();
 
 		if ($router->getMode() == JROUTER_MODE_SEF) {
@@ -41,7 +41,7 @@ class plgSystemTamka_301_redirects extends JPlugin
 		$vars 				= $uri->getQuery(true);
 
 	 	/*	Get Path and Query */
-		$uri				= &JFactory::getURI();
+		$uri				= &MolajoFactory::getURI();
 		$uriString			= strtolower($uri->toString(array('path', 'query')));
 
 		$ret = $uri->toString();
@@ -60,7 +60,7 @@ class plgSystemTamka_301_redirects extends JPlugin
 	 /**
 	  * See if URL should be redirected
 	  */
-		$db	=& JFactory::getDBO();
+		$db	=& MolajoFactory::getDBO();
 		$redirectTo = '';
 
 		$query = 'SELECT new_path ' .
@@ -79,7 +79,7 @@ class plgSystemTamka_301_redirects extends JPlugin
 
 		header('Location: ' . htmlspecialchars( $redirectTo ), true, '301');
 		$mainframe->redirect($redirectTo);
-		$app = & JFactory::getApplication();
+		$app = & MolajoFactory::getApplication();
 		$app->close();
 		return;
 

@@ -32,7 +32,7 @@ class plgSystemDebug extends JPlugin
 
 		// Only if debugging is enabled
 		if (JDEBUG) {
-			$config  = JFactory::getConfig(); 
+			$config  = MolajoFactory::getConfig();
 			$config->set('gzip', 0);
 			ob_start();
 			ob_implicit_flush(false);
@@ -69,7 +69,7 @@ class plgSystemDebug extends JPlugin
 			return;
 		}
 
-		$document	= JFactory::getDocument();
+		$document	= MolajoFactory::getDocument();
 		$doctype	= $document->getType();
 
 		// Only render for HTML output
@@ -81,7 +81,7 @@ class plgSystemDebug extends JPlugin
 		// If the user is not allowed to view the output then end here
 		$filterGroups = (array) $this->params->get('filter_groups', null);
 		if (!empty($filterGroups)) {
-			$userGroups = JFactory::getUser()->get('groups');
+			$userGroups = MolajoFactory::getUser()->get('groups');
 			if (!array_intersect($filterGroups, array_keys($userGroups))) {
 				echo $contents;
 				return;
@@ -122,7 +122,7 @@ class plgSystemDebug extends JPlugin
 		if ($this->params->get('queries', 1)) {
 			$newlineKeywords = '#\b(FROM|LEFT|INNER|OUTER|WHERE|SET|VALUES|ORDER|GROUP|HAVING|LIMIT|ON|AND)\b#i';
 
-			$db	= JFactory::getDbo();
+			$db	= MolajoFactory::getDbo();
 
 			echo '<h4>'.JText::sprintf('PLG_DEBUG_QUERIES_LOGGED',  $db->getTicker()).'</h4>';
 
@@ -212,8 +212,8 @@ class plgSystemDebug extends JPlugin
 		}
 
 		// Show language debug only if enabled
-		if (JFactory::getApplication()->getCfg('debug_lang')) {
-			$lang = JFactory::getLanguage();
+		if (MolajoFactory::getApplication()->getCfg('debug_lang')) {
+			$lang = MolajoFactory::getLanguage();
 
 			if ($this->params->get('language_errorfiles', 1)) {
 				echo '<h4>'.JText::_('PLG_DEBUG_LANGUAGE_FILES_IN_ERROR').'</h4>';

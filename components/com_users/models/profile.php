@@ -41,7 +41,7 @@ class UsersModelProfile extends JModelForm
 		$userId = (!empty($userId)) ? $userId : (int)$this->getState('user.id');
 
 		if ($userId) {
-			// Initialise the table with JUser.
+			// Initialise the table with MolajoUser.
 			$table = JTable::getInstance('User');
 
 			// Attempt to check the row in.
@@ -67,7 +67,7 @@ class UsersModelProfile extends JModelForm
 		$userId = (!empty($userId)) ? $userId : (int)$this->getState('user.id');
 
 		if ($userId) {
-			// Initialise the table with JUser.
+			// Initialise the table with MolajoUser.
 			$table = JTable::getInstance('User');
 
 			// Get the current user object.
@@ -98,8 +98,8 @@ class UsersModelProfile extends JModelForm
 
 			$userId = $this->getState('user.id');
 
-			// Initialise the table with JUser.
-			$this->data	= new JUser($userId);
+			// Initialise the table with MolajoUser.
+			$this->data	= new MolajoUser($userId);
 
 			// Set the base user data.
 			$this->data->email1 = $this->data->get('email');
@@ -222,7 +222,7 @@ class UsersModelProfile extends JModelForm
 	{
 		$userId = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('user.id');
 
-		$user = new JUser($userId);
+		$user = new MolajoUser($userId);
 
 		// Prepare the data for the user object.
 		$data['email']		= $data['email1'];

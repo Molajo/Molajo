@@ -24,7 +24,7 @@ class ModulesModelModules extends JModelList
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -56,7 +56,7 @@ class ModulesModelModules extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

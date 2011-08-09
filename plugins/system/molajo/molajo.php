@@ -24,7 +24,7 @@ class plgSystemMolajo extends JPlugin
         define('MOLAJO', true);
         parent::__construct($subject, $config);
 	$this->loadLanguage();
-        $this->app =& JFactory::getApplication();
+        $this->app =& MolajoFactory::getApplication();
         $this->dispatcher = JDispatcher::getInstance();
     }
     

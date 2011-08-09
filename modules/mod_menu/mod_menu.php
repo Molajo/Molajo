@@ -14,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
 require_once dirname(__FILE__).'/helper.php';
 
 $list	= modMenuHelper::getList($params);
-$app	= JFactory::getApplication();
+$app	= MolajoFactory::getApplication();
 $menu	= $app->getMenu();
 $active	= $menu->getActive();
 $active_id = isset($active) ? $active->id : $menu->getDefault()->id;
@@ -23,5 +23,5 @@ $showAll	= $params->get('showAllChildren');
 $class_sfx	= htmlspecialchars($params->get('class_sfx'));
 
 if(count($list)) {
-	require JModuleHelper::getLayoutPath('mod_menu', $params->get('layout', 'default'));
+	require MolajoModuleHelper::getLayoutPath('mod_menu', $params->get('layout', 'default'));
 }

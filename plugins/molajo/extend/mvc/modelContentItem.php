@@ -30,7 +30,7 @@ class modelContentItem
      */
     public function getData ($component_option, $id, $whereString = null, $sql_table_name=null, $sql_table_name=null)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -72,8 +72,8 @@ class modelContentItem
      */
     public function insert ($component_option, $id, $name, $value, $ordering, $sql_table_name=null)
     {
-        $db = JFactory::getDbo();
-        $app = JFactory::getApplication();
+        $db = MolajoFactory::getDbo();
+        $app = MolajoFactory::getApplication();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -108,8 +108,8 @@ class modelContentItem
      */
     public function delete ($component_option, $id, $sql_table_name=null)
     {
-        $app = JFactory::getApplication();
-        $db = JFactory::getDbo();
+        $app = MolajoFactory::getApplication();
+        $db = MolajoFactory::getDbo();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -139,7 +139,7 @@ class modelContentItem
      */
     public function deleteMatching ($component_option, $id, $custom_field, $sql_table_name=null)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -193,7 +193,7 @@ class modelContentItem
      */
     public function checkTable ($sql_table_name, $sql_table_name=null)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -230,7 +230,7 @@ class modelContentItem
      */
      public function createTable ($sql_table_name=null)
     {
-        $db = JFactory::getDbo();
+        $db = MolajoFactory::getDbo();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 

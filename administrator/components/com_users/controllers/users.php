@@ -21,7 +21,7 @@ class UsersControllerUsers extends JControllerAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_USERS_USERS';
 
@@ -30,7 +30,7 @@ class UsersControllerUsers extends JControllerAdmin
 	 *
 	 * @param	array An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -42,7 +42,7 @@ class UsersControllerUsers extends JControllerAdmin
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getModel($name = 'User', $prefix = 'UsersModel', $config = array('ignore_request' => true))
 	{
@@ -52,7 +52,7 @@ class UsersControllerUsers extends JControllerAdmin
 	/**
 	 * Method to remove a record.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function changeBlock()
 	{
@@ -89,7 +89,7 @@ class UsersControllerUsers extends JControllerAdmin
 	/**
 	 * Method to remove a record.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function activate()
 	{
@@ -120,7 +120,7 @@ class UsersControllerUsers extends JControllerAdmin
 	 * Method to run batch opterations.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function batch()
 	{

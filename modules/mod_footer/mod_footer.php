@@ -10,8 +10,8 @@
 // no direct access
 defined('JPATH_PLATFORM') or die;
 
-$app		= JFactory::getApplication();
-$date		= JFactory::getDate();
+$app		= MolajoFactory::getApplication();
+$date		= MolajoFactory::getDate();
 $cur_year	= $date->format('Y');
 $csite_name	= $app->getCfg('sitename');
 
@@ -29,4 +29,4 @@ else {
 	$lineone = $line1;
 }
 
-require JModuleHelper::getLayoutPath('mod_footer', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_footer', $params->get('layout', 'default'));

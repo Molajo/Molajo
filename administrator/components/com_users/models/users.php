@@ -23,7 +23,7 @@ class UsersModelUsers extends JModelList
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -50,7 +50,7 @@ class UsersModelUsers extends JModelList
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -105,7 +105,7 @@ class UsersModelUsers extends JModelList
 	 * @param	string		$id	A prefix for the store id.
 	 *
 	 * @return	string		A store id.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -122,7 +122,7 @@ class UsersModelUsers extends JModelList
 	 * Gets the list of users and adds expensive joins to the result set.
 	 *
 	 * @return	mixed	An array of data items on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItems()
 	{
@@ -205,7 +205,7 @@ class UsersModelUsers extends JModelList
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return	JDatabaseQuery
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getListQuery()
 	{

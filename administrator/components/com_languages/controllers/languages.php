@@ -19,7 +19,7 @@ class LanguagesControllerLanguages extends JControllerAdmin
 {
 	/**
 	 * Proxy for getModel
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function &getModel($name = 'Language', $prefix = 'LanguagesModel')
 	{

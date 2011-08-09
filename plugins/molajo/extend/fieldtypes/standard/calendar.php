@@ -67,8 +67,8 @@ class JFormFieldCalendar extends JFormField
 		}
 
 		// Get some system objects.
-		$config = JFactory::getConfig();
-		$user	= JFactory::getUser();
+		$config = MolajoFactory::getConfig();
+		$user	= MolajoFactory::getUser();
 
 		// If a known filter is given use it.
 		switch (strtoupper((string) $this->element['filter']))
@@ -77,7 +77,7 @@ class JFormFieldCalendar extends JFormField
 				// Convert a date to UTC based on the server timezone.
 				if (intval($this->value)) {
 					// Get a date object based on the correct timezone.
-					$date = JFactory::getDate($this->value, 'UTC');
+					$date = MolajoFactory::getDate($this->value, 'UTC');
 					$date->setTimezone(new DateTimeZone($config->get('offset')));
 
 					// Transform the date string.
@@ -89,7 +89,7 @@ class JFormFieldCalendar extends JFormField
 				// Convert a date to UTC based on the user timezone.
 				if (intval($this->value)) {
 					// Get a date object based on the correct timezone.
-					$date = JFactory::getDate($this->value, 'UTC');
+					$date = MolajoFactory::getDate($this->value, 'UTC');
 					$date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
 
 					// Transform the date string.

@@ -29,7 +29,7 @@ class MessagesModelMessage extends JModelAdmin
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -52,7 +52,7 @@ class MessagesModelMessage extends JModelAdmin
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function getTable($type = 'Message', $prefix = 'MessagesTable', $config = array())
 	{
@@ -64,7 +64,7 @@ class MessagesModelMessage extends JModelAdmin
 	 *
 	 * @param	integer	The id of the primary key.
 	 * @return	mixed	Object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -117,7 +117,7 @@ class MessagesModelMessage extends JModelAdmin
 			}
 
 			// Get the user name for an existing messasge.
-			if ($this->item->user_id_from && $fromUser = new JUser($this->item->user_id_from)) {
+			if ($this->item->user_id_from && $fromUser = new MolajoUser($this->item->user_id_from)) {
 				$this->item->set('from_user_name', $fromUser->name);
 			}
 		}
@@ -130,7 +130,7 @@ class MessagesModelMessage extends JModelAdmin
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -147,7 +147,7 @@ class MessagesModelMessage extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -214,8 +214,8 @@ class MessagesModelMessage extends JModelAdmin
 
 		if ($config->get('mail_on_new', true)) {
 			// Load the user details (already valid from table check).
-			$fromUser = JUser::getInstance($table->user_id_from);
-			$toUser = JUser::getInstance($table->user_id_to);
+			$fromUser = MolajoUser::getInstance($table->user_id_from);
+			$toUser = MolajoUser::getInstance($table->user_id_to);
 			$debug = MolajoFactory::getConfig()->get('debug_lang');
 			$default_language = JComponentHelper::getParams('com_languages')->get('administrator');
 			$lang = JLanguage::getInstance($toUser->getParam('admin_language', $default_language), $debug);

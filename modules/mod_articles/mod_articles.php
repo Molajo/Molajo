@@ -16,4 +16,4 @@ require_once dirname(__FILE__).'/helper.php';
 $list = modArticlesHelper::getList($params);
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
-require JModuleHelper::getLayoutPath('mod_articles', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_articles', $params->get('layout', 'default'));

@@ -21,7 +21,7 @@ class RedirectModelLink extends JModelAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_REDIRECT';
 
@@ -31,7 +31,7 @@ class RedirectModelLink extends JModelAdmin
 	 * @param	object	$record	A record object.
 	 *
 	 * @return	boolean	True if allowed to delete the record. Defaults to the permission set in the component.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canDelete($record)
 	{
@@ -50,7 +50,7 @@ class RedirectModelLink extends JModelAdmin
 	 * @param	object	$record	A record object.
 	 *
 	 * @return	boolean	True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canEditState($record)
 	{
@@ -69,7 +69,7 @@ class RedirectModelLink extends JModelAdmin
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function getTable($type = 'Link', $prefix = 'RedirectTable', $config = array())
 	{
@@ -82,7 +82,7 @@ class RedirectModelLink extends JModelAdmin
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -109,7 +109,7 @@ class RedirectModelLink extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -130,7 +130,7 @@ class RedirectModelLink extends JModelAdmin
 	 * @param	string	The new URL to set for the redirect.
 	 * @param	string	A comment for the redirect links.
 	 * @return	boolean	Returns true on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function activate(&$pks, $url, $comment = null)
 	{

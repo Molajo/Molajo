@@ -40,9 +40,9 @@ class plgButtonPagebreak extends JPlugin
 	 */
 	public function onDisplay($name)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
-		$doc = JFactory::getDocument();
+		$doc = MolajoFactory::getDocument();
 		$template = $app->getTemplate();
 
 		$link = 'index.php?option=com_articles&amp;view=article&amp;layout=pagebreak&amp;tmpl=component&amp;e_name='.$name;

@@ -844,20 +844,31 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (2000, 'contact', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2000),
-    (2010, 'edit', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2010),
-    (2020, 'faq', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2020),
-    (2030, 'item', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2030),
-    (2040, 'items', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2040),
-    (2050, 'list', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2050),
-    (2060, 'manager', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2060),
-    (2070, 'modal', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2070),
-    (2080, 'pagination', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2080),
-    (2090, 'system', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2090),
-    (2100, 'table', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2100),
-    (2110, 'toolbar', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2110),
-    (2120, 'tree', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2120),
-    (2130, 'twig_example', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2130);
+    (2000, 'adminaclpanel', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2000),
+    (2001, 'admincontrolpanel', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2001),
+    (2002, 'adminedit', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2002),
+    (2003, 'adminlogin', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2003),
+    (2004, 'adminmanager', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2004),
+    (2005, 'adminmenu', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2005),
+    (2006, 'adminmodal', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2006),
+    (2007, 'adminpagination', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2007),
+    (2008, 'adminsubmenu', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2008),
+    (2009, 'admintoolbar', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2009),
+    (2010, 'audio', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2010),
+    (2011, 'contact', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2011),
+    (2012, 'default', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2012),
+    (2013, 'faq', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2013),
+    (2014, 'item', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2014),
+    (2015, 'items', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2015),
+    (2016, 'list', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2016),
+    (2017, 'pagination', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2017),
+    (2018, 'syntaxhighlighter', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2018),
+    (2019, 'system', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2019),
+    (2020, 'table', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2020),
+    (2021, 'toolbar', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2021),
+    (2022, 'tree', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2022),
+    (2023, 'video', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2023),
+    (2024, 'twig_example', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 2024);
 
 # Layouts: Forms
 INSERT INTO `#__extensions` (
@@ -865,18 +876,35 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (3000, 'button', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3000),
-    (3010, 'colorpicker', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3010),
-    (3020, 'datepicker', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3020),
-    (3030, 'list', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3030),
-    (3040, 'media', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3040),
-    (3050, 'number', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3050),
-    (3060, 'option', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3060),
-    (3070, 'rules', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3070),
-    (3080, 'spacer', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3080),
-    (3090, 'text', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3090),
-    (3100, 'textarea', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3100),
-    (3110, 'user', 'layout', 'layout', 'forms', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3110);
+    (3000, 'button', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3000),
+    (3010, 'colorpicker', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3010),
+    (3020, 'datepicker', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3020),
+    (3030, 'list', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3030),
+    (3040, 'media', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3040),
+    (3050, 'number', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3050),
+    (3060, 'option', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3060),
+    (3070, 'rules', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3070),
+    (3080, 'spacer', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3080),
+    (3090, 'text', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3090),
+    (3100, 'textarea', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3100),
+    (3110, 'user', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 3110);
+
+# Layouts: Wraps
+INSERT INTO `#__extensions` (
+  `extension_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`, `protected`,
+  `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
+  `ordering`, `state`, `access`, `asset_id` )
+    VALUES
+    (4000, 'article', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4000),
+    (4010, 'aside', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4010),
+    (4020, 'div', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4020),
+    (4030, 'footer', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4030),
+    (4040, 'header', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4040),
+    (4050, 'horizontal', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4050),
+    (4060, 'none', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4060),
+    (4070, 'outline', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4070),
+    (4080, 'section', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4080),
+    (4090, 'table', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4090);
 
 # Libraries
 INSERT INTO `#__extensions` (
@@ -886,17 +914,17 @@ INSERT INTO `#__extensions` (
     VALUES
     (401, 'Akismet', 'library', 'akismet', 'akismet', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1, 4, 1400),
     (402, 'Curl', 'library', 'curl', 'curl', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1, 5, 1402),
-    (403, 'Joomla Framework', 'library', 'joomla', 'jplatform', 1, 1, 1, '{"legacy":false,"name":"Molajo Web Application Framework","type":"library","creationDate":"2008","author":"Joomla","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\\/\\/www.joomla.org","version":"1.6.0","description":"The Molajo Web Application Framework","group":""}', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1, 4, 1404),
-    (404, 'Molajo Application', 'library', 'molajo', 'molajo', 1, 1, 1, '{"legacy":false,"name":"Molajo Application","type":"library","creationDate":"2011","author":"Molajo Project Team","copyright":"Copyright (C) 2011 Amy Stephen. All rights reserved.","authorEmail":"collaborate@molajo.org","authorUrl":"http:\\/\\/molajo.org","version":"1.0.0","description":"Molajo is a web development environment useful for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.","group":""}\r\n', '', '', '', 0, '0000-00-00 00:00:00', 4, 1, 4, 1406),
-    (405, 'Mollom', 'library', 'mollom', 'mollom', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1410),
-    (406, 'Overrides', 'library', 'overrides', 'overrides', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1411),
-    (407, 'PHPMailer', 'library', 'phpmailer', 'phpmailer', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1, 4, 1415),
-    (408, 'phputf8', 'library', 'phputf8', 'phputf8', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1, 4, 1420),
-    (409, 'Recaptcha', 'library', 'recaptcha', 'recaptcha', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1, 4, 1425),
-    (410, 'Secureimage', 'library', 'secureimage', 'secureimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1, 4, 1430),
-    (411, 'SimplePie', 'library', 'simplepie', 'simplepie', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1, 4, 1435),
-    (412, 'Twig', 'library', 'twig', 'twig', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1, 4, 1440),
-    (413, 'WideImage', 'library', 'wideimage', 'wideimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 4, 1450);
+    (403, 'Joomla Framework', 'library', 'joomla', 'jplatform', 1, 1, 1, '{"legacy":false,"name":"Molajo Web Application Framework","type":"library","creationDate":"2008","author":"Joomla","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"http:\\/\\/www.joomla.org","version":"1.6.0","description":"The Molajo Web Application Framework","group":""}', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1, 4, 1403),
+    (404, 'Molajo Application', 'library', 'molajo', 'molajo', 1, 1, 1, '{"legacy":false,"name":"Molajo Application","type":"library","creationDate":"2011","author":"Molajo Project Team","copyright":"Copyright (C) 2011 Amy Stephen. All rights reserved.","authorEmail":"collaborate@molajo.org","authorUrl":"http:\\/\\/molajo.org","version":"1.0.0","description":"Molajo is a web development environment useful for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.","group":""}\r\n', '', '', '', 0, '0000-00-00 00:00:00', 4, 1, 4, 1404),
+    (405, 'Mollom', 'library', 'mollom', 'mollom', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1405),
+    (406, 'Overrides', 'library', 'overrides', 'overrides', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1, 4, 1406),
+    (407, 'PHPMailer', 'library', 'phpmailer', 'phpmailer', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1, 4, 1407),
+    (408, 'phputf8', 'library', 'phputf8', 'phputf8', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1, 4, 1408),
+    (409, 'Recaptcha', 'library', 'recaptcha', 'recaptcha', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1, 4, 1409),
+    (410, 'Secureimage', 'library', 'secureimage', 'secureimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1, 4, 1410),
+    (411, 'SimplePie', 'library', 'simplepie', 'simplepie', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1, 4, 1411),
+    (412, 'Twig', 'library', 'twig', 'twig', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1, 4, 1412),
+    (413, 'WideImage', 'library', 'wideimage', 'wideimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1, 4, 1413);
 
 # Modules - Administrator
 INSERT INTO `#__extensions` (
@@ -908,7 +936,7 @@ INSERT INTO `#__extensions` (
     (502, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 0, 2, 1502),
     (503, 'mod_latest', 'module', 'mod_latest', 'mod_latest', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 0, 2, 1503),
     (504, 'mod_logged', 'module', 'mod_logged', 'mod_logged', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 0, 1, 1504),
-    (505, 'mod_login', 'module', 'mod_login', 'mod_login', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 0, 2, 1505),
+    (505, 'mod_login', 'module', 'mod_login', 'mod_login', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 0, 1, 1505),
     (506, 'mod_logout', 'module', 'mod_logout', 'mod_logout', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 0, 2, 1506);
     (507, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 0, 2, 1507),
     (508, 'mod_mypanel', 'module', 'mod_mypanel', 'mod_mypanel', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 0, 2, 1508),
@@ -976,9 +1004,7 @@ INSERT INTO `#__extensions` (`extension_id`, `name`, `type`, `element`, `folder`
   `application_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`,
   `custom_data`, `system_data`, `checked_out`, `checked_out_time`, `ordering`, `state`)
   VALUES
-  (615, 'plg_authentication_gmail', 'plugin', 'gmail', 'authentication',
-    0, 0, 1, 0, '', '{"applysuffix":"0","suffix":"","verifypeer":"1","user_blacklist":""}',
-    '', '', 0, '0000-00-00 00:00:00', 4, 1616);
+  (616, 'plg_authentication_molajo', 'plugin', 'molajo', 'authentication', 0, 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 4, 616);
 
 ## Content
 INSERT INTO `#__extensions` (
@@ -1006,12 +1032,12 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (900, 'plg_editors-xtd_article', 'plugin', 'article', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 8, 0, 1, 1900),
-    (905, 'plg_editors-xtd_audio', 'plugin', 'audio', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 8, 0, 1, 1905),
-    (910, 'plg_editors-xtd_file', 'plugin', 'file', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 9, 0, 1, 1910),
-    (915, 'plg_editors-xtd_pagebreak', 'plugin', 'pagebreak', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 10, 0, 1, 1915),
-    (920, 'plg_editors-xtd_readmore', 'plugin', 'readmore', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 11, 0, 1, 1920),
-    (925, 'plg_editors-xtd_video', 'plugin', 'image', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 12, 0, 1, 1925);
+    (900, 'plg_editors-xtd_article', 'plugin', 'article', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 8, 0, 1, 900),
+    (905, 'plg_editors-xtd_audio', 'plugin', 'audio', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 8, 0, 1, 905),
+    (910, 'plg_editors-xtd_file', 'plugin', 'file', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 9, 0, 1, 910),
+    (915, 'plg_editors-xtd_pagebreak', 'plugin', 'pagebreak', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 10, 0, 1, 915),
+    (920, 'plg_editors-xtd_readmore', 'plugin', 'readmore', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 11, 0, 1, 920),
+    (925, 'plg_editors-xtd_video', 'plugin', 'image', 'editors-xtd', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 12, 0, 1, 925);
 
 ## Extension
 INSERT INTO `#__extensions` (
@@ -1019,7 +1045,7 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (926, 'plg_extension_joomla', 'plugin', 'joomla', 'extension', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 13, 0, 1, 926);
+    (926, 'plg_extension_molajo', 'plugin', 'molajo', 'extension', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 13, 0, 1, 926);
 
 ## Language
 INSERT INTO `#__extensions` (
@@ -1027,8 +1053,8 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUE
-    (950, 'English (United Kingdom)', 'language', 'en-GB', '', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 44, 1, 4, 1950),
-    (951, 'English (United Kingdom)', 'language', 'en-GB', '', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 45, 1, 4, 1951);
+    (950, 'English (United Kingdom)', 'language', 'en-GB', '', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 44, 1, 4, 950),
+    (951, 'English (United Kingdom)', 'language', 'en-GB', '', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 45, 1, 4, 951);
 
 ## Molajo
 INSERT INTO `#__extensions` (
@@ -1929,53 +1955,56 @@ INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `orderin
   `application_id`, `language`, `access`,  `asset_id`)
     VALUES
     (1, 'Login', 'System Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 1, 5001),
-    (2, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 1, 5008),
-    (3, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 1, 5010),
-    (4, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 1, 5011),
-    (5, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 1, 5015),
-    (6, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 1, 5020),
-    (7, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 1, 5030),
-    (8, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 1, 5035),
-    (9, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 1, 5040),
-    (10, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 1, 5050),
-    (11, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 1, 5055),
-    (12, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 1, 5060),
-    (13, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 1, 5062),
-    (14, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 1, 5063);
+    (2, 'Logout', 'System Logout', '', '', 1, 'logout', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logout', 1, '', 1, '*', 2, 5002),
+    (3, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 5008),
+    (4, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 5010),
+    (5, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 2, 5011),
+    (6, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 2, 5015),
+    (7, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 2, 5020),
+    (8, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 2, 5030),
+    (9, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 5035),
+    (10, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 2, 5040),
+    (11, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 2, 5050),
+    (12, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 2, 5055),
+    (13, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 2, 5060),
+    (14, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 2, 5062),
+    (15, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 2, 5063);
 
 # site modules
 INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `ordering`, `position`, `checked_out`,
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `application_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (15, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
-    (16, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
-    (17, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
+    (16, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
+    (17, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
+    (18, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
 
 INSERT INTO `#__modules_menu` VALUES
 (1,0),
 (2,0),
 (3,0),
 (4,0),
+(5,0),
 (6,0),
 (7,0),
 (8,0),
 (9,0),
 (10,0),
+(11,0),
 (12,0),
 (13,0),
 (14,0),
 (15,0),
 (16,0),
-(17,0);
+(17,0),
+(18,0);
 
 #
 # TEMPLATES
 #
-INSERT INTO `#__template_styles` VALUES (1, 'molajo-construct', '0', '0', 'Molajo Construct', '{}');
+INSERT INTO `#__template_styles` VALUES (1, 'construct', '0', '0', 'Molajo Construct', '{}');
 INSERT INTO `#__template_styles` VALUES (2, 'Blank Slate', '0', '1', 'Molajo Blankslate - DEFAULT', '{}');
-INSERT INTO `#__template_styles` VALUES (3, 'bluestork', '1', '1', 'Bluestork - DEFAULT', '{"useRoundedCorners":"1","showSiteName":"0"}');
-INSERT INTO `#__template_styles` VALUES (4, 'minima', '1', '0', 'Minima', '{}');
+INSERT INTO `#__template_styles` VALUES (3, 'molajo', '1', '1', 'Molajo - DEFAULT', '{"useRoundedCorners":"1","showSiteName":"0"}');
 
 #
 # UPDATES
@@ -1994,5 +2023,6 @@ INSERT INTO `#__actions` (`id` ,`title`)
         (2, 'create'),
         (3, 'view'),
         (4, 'edit'),
-        (5, 'delete'),
-        (6, 'admin');
+        (5, 'publish'),
+        (6, 'delete'),
+        (7, 'admin');

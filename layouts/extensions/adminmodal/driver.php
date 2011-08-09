@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /** custom css/js **/
-$document =& JFactory::getDocument();
+$document =& MolajoFactory::getDocument();
 $document->addStyleSheet('../media/'.$this->request['option'].'/css/administrator.css');
 
 /** component parameters **/

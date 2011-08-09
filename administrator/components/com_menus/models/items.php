@@ -23,7 +23,7 @@ class MenusModelItems extends JModelList
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -56,7 +56,7 @@ class MenusModelItems extends JModelList
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -115,7 +115,7 @@ class MenusModelItems extends JModelList
 	 * @param	string		$id	A prefix for the store id.
 	 *
 	 * @return	string		A store id.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -136,7 +136,7 @@ class MenusModelItems extends JModelList
 	 * In the absence of better information, this is the first menu ordered by title.
 	 *
 	 * @return	string	The default menu type
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getDefaultMenuType()
 	{

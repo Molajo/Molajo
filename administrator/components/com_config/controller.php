@@ -23,7 +23,7 @@ class ConfigController extends JController
 {
 	/**
 	 * @var		string	The default view.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $DefaultView = 'application';
 

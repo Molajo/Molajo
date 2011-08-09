@@ -20,14 +20,14 @@ class plgSystemRemember extends JPlugin
 {
 	function onAfterInitialise()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// No remember me for admin
 		if ($app->isAdmin()) {
 			return;
 		}
 
-		$user = JFactory::getUser();
+		$user = MolajoFactory::getUser();
 		if ($user->get('guest'))
 		{
 			jimport('joomla.utilities.utility');
@@ -46,7 +46,7 @@ class plgSystemRemember extends JPlugin
 				$options = array();
 				$options['silent'] = true;
 				if (!$app->login(@unserialize($str), $options)) {
-					$config = JFactory::getConfig();
+					$config = MolajoFactory::getConfig();
 					$cookie_domain = $config->get('cookie_domain', '');
 					$cookie_path = $config->get('cookie_path', '/');
 					// Clear the remember me cookie

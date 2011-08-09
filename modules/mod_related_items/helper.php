@@ -16,12 +16,12 @@ abstract class modRelatedItemsHelper
 {
 	public static function getList($params)
 	{
-		$db			= JFactory::getDbo();
-		$app		= JFactory::getApplication();
-		$user		= JFactory::getUser();
+		$db			= MolajoFactory::getDbo();
+		$app		= MolajoFactory::getApplication();
+		$user		= MolajoFactory::getUser();
 		$userId		= (int) $user->get('id');
 		$count		= intval($params->get('count', 5));
-		$date		= JFactory::getDate();
+		$date		= MolajoFactory::getDate();
 
 		$option		= JRequest::getCmd('option');
 		$view		= JRequest::getCmd('view');
@@ -84,7 +84,7 @@ abstract class modRelatedItemsHelper
 
 					// Filter by language
 					if ($app->getLanguageFilter()) {
-						$query->where('a.language in (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
+						$query->where('a.language in (' . $db->Quote(MolajoFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
 					}
 
                     $acl = new MolajoACL ();

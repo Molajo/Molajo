@@ -80,14 +80,14 @@ class JFormFieldComponentLayout extends JFormField
 		if ($extn && $view && $application) {
 
 			// Load language file
-			$lang = JFactory::getLanguage();
+			$lang = MolajoFactory::getLanguage();
 			$lang->load($extn.'.sys', JPATH_ADMINISTRATOR, null, false, false)
 			||	$lang->load($extn.'.sys', JPATH_ADMINISTRATOR.'/components/'.$extn, null, false, false)
 			||	$lang->load($extn.'.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 			||	$lang->load($extn.'.sys', JPATH_ADMINISTRATOR.'/components/'.$extn, $lang->getDefault(), false, false);
 
 			// Get the database object and a new query object.
-			$db		= JFactory::getDBO();
+			$db		= MolajoFactory::getDBO();
 			$query	= $db->getQuery(true);
 
 			// Build the query.

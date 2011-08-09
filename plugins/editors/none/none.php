@@ -99,7 +99,7 @@ class plgEditorNone extends JPlugin
 
 		// Do this only once.
 		if (!$done) {
-			$doc = JFactory::getDocument();
+			$doc = MolajoFactory::getDocument();
 			$js = "\tfunction jInsertEditorText(text, editor) {
 				insertAtCursor(document.getElementById(editor), text);
 			}";

@@ -23,13 +23,13 @@ class TemplatesModelStyle extends JModelAdmin
 {
 	/**
 	 * @var		string	The help screen key for the module.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpKey = 'JHELP_EXTENSIONS_TEMPLATE_MANAGER_STYLES_EDIT';
 
 	/**
 	 * @var		string	The help screen base URL for the module.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpURL;
 
@@ -43,7 +43,7 @@ class TemplatesModelStyle extends JModelAdmin
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -163,7 +163,7 @@ class TemplatesModelStyle extends JModelAdmin
 	 * @param	array	$data		An optional array of data for the form to interogate.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -208,7 +208,7 @@ class TemplatesModelStyle extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -290,7 +290,7 @@ class TemplatesModelStyle extends JModelAdmin
 	 * @param	object	A form object.
 	 * @param	mixed	The data expected for the form.
 	 * @throws	Exception if there is an error in the form event.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = '')
 	{
@@ -581,7 +581,7 @@ class TemplatesModelStyle extends JModelAdmin
 	 * Get the necessary data to load an item help screen.
 	 *
 	 * @return	object	An object with key, url, and local properties for loading the item help screen.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getHelp()
 	{
@@ -591,7 +591,7 @@ class TemplatesModelStyle extends JModelAdmin
 	/**
 	 * Custom clean cache method
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function cleanCache() {
 		parent::cleanCache('com_templates');

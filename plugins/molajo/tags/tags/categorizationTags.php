@@ -23,7 +23,7 @@ class plgMolajoCategorizationTags extends JPlugin
 	/**
 	 * 		Get Print Parameter
 	*/
-		$uri =& JFactory::getURI();
+		$uri =& MolajoFactory::getURI();
 		$query = $uri->getQuery(true);
 		if(isset($query['print'])) {
 			$print = $query['print'];
@@ -52,7 +52,7 @@ class plgMolajoCategorizationTags extends JPlugin
 		tamkaimport('tamka.routehelper.content');
 		
 		//	Add CSS
-		$document =& JFactory::getDocument();
+		$document =& MolajoFactory::getDocument();
 		$document->addStyleSheet( JURI::base() . 'plugins/content/tamka_article_tags/tamkatags.css' );
 
 		$formatOutput = "";
@@ -65,8 +65,8 @@ class plgMolajoCategorizationTags extends JPlugin
 		$routerParams 	= new JParameter($routerPlugin->params);
 
 		//	Database call
-		$db		= &JFactory::getDBO();
-		$config	= &JFactory::getConfig();
+		$db		= &MolajoFactory::getDBO();
+		$config	= &MolajoFactory::getConfig();
 
 		$query	= 'SELECT tag, alias FROM ' . $db->nameQuote('#__tamka_tags') .
 			' WHERE ' . $db->nameQuote('component') . ' = "com_articles" ' .
@@ -95,8 +95,8 @@ class plgMolajoCategorizationTags extends JPlugin
 	/**
 	 * 	Initialization
 	 */
-		$db		= &JFactory::getDBO();
-		$config	= &JFactory::getConfig();
+		$db		= &MolajoFactory::getDBO();
+		$config	= &MolajoFactory::getConfig();
 
 	/**
 	 * 	Delete Existing Tags

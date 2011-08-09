@@ -17,7 +17,7 @@ abstract class en_GBLocalise {
 	 *
 	 * @param	int $count  The number of items.
 	 * @return	array  An array of potential suffixes.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getPluralSuffixes($count) {
 		if ($count == 0) {
@@ -35,7 +35,7 @@ abstract class en_GBLocalise {
 	 * Returns the ignored search words
 	 *
 	 * @return	array  An array of ignored search words.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getIgnoredSearchWords() {
 		$search_ignore = array();
@@ -48,7 +48,7 @@ abstract class en_GBLocalise {
 	 * Returns the lower length limit of search words
 	 *
 	 * @return	integer  The lower length limit of search words.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getLowerLimitSearchWord() {
 		return 3;
@@ -57,7 +57,7 @@ abstract class en_GBLocalise {
 	 * Returns the upper length limit of search words
 	 *
 	 * @return	integer  The upper length limit of search words.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getUpperLimitSearchWord() {
 		return 20;
@@ -66,7 +66,7 @@ abstract class en_GBLocalise {
 	 * Returns the number of chars to display when searching
 	 *
 	 * @return	integer  The number of chars to display when searching.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getSearchDisplayedCharactersNumber() {
 		return 200;

@@ -1,20 +1,17 @@
 <?php
 /**
- * @version		$Id: menu.php 20770 2011-02-18 11:17:28Z infograf768 $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Menu
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
+ * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access
-defined('_JEXEC') or die;
-
-jimport('joomla.base.tree');
+defined('MOLAJO') or die;
 
 /**
- * @package		Joomla.Administrator
- * @subpackage	mod_menu
+ * MolajoAdminCSSMenu
  */
-class JAdminCssMenu extends JTree
+class MolajoAdminCSSMenu extends JTree
 {
 	/**
 	 * CSS string to add to document head
@@ -37,17 +34,16 @@ class JAdminCssMenu extends JTree
 	{
 		$depth = 1;
 
-		if (!empty($id)) {
-			$id='id="'.$id.'"';
+		if (empty($id)) {
+        } else {
+			$id = 'id="'.$id.'"';
 		}
 
-		if (!empty($class)) {
+		if (empty($class)) {
+        } else {
 			$class='class="'.$class.'"';
 		}
 
-		/*
-		 * Recurse through children if they exist
-		 */
 		while ($this->_current->hasChildren())
 		{
 			echo "<ul ".$id." ".$class.">\n";
@@ -60,18 +56,19 @@ class JAdminCssMenu extends JTree
 		}
 
 		if ($this->_css) {
-			// Add style to document head
 			$doc = MolajoFactory::getDocument();
 			$doc->addStyleDeclaration($this->_css);
 		}
 	}
 
+    /**
+     * renderLevel
+     * @param $depth
+     * @return void
+     */
 	function renderLevel($depth)
 	{
-		/*
-		 * Build the CSS class suffix
-		 */
-		$class = '';
+        $class = '';
 		if ($this->_current->hasChildren()) {
 			$class = ' class="node"';
 		}
@@ -95,9 +92,11 @@ class JAdminCssMenu extends JTree
 
 		$linkClass = '';
 
-		if ($this->_current->link != null) {
+		if ($this->_current->link == null) {
+        } else {
 			$linkClass = $this->getIconClass($this->_current->class);
-			if (!empty($linkClass)) {
+			if (empty($linkClass)) {
+            } else {
 				$linkClass = ' class="'.$linkClass.'"';
 			}
 		}

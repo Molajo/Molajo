@@ -23,7 +23,7 @@ class CategoriesHelper
 	 * @param	string	The extension being used for the categories.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function addSubmenu($extension)
 	{
@@ -72,7 +72,7 @@ class CategoriesHelper
 	 * @param	int		$categoryId	The category ID.
 	 *
 	 * @return	JObject
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getActions($extension, $categoryId = 0)
 	{

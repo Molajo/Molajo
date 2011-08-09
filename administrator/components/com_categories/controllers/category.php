@@ -20,7 +20,7 @@ class CategoriesControllerCategory extends JControllerForm
 {
 	/**
 	 * @var		string	The extension for which the categories apply.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $extension;
 
@@ -29,7 +29,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 *
 	 * @param	array An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -49,7 +49,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 * @param	array	An array of input data.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function allowAdd($data = array())
 	{
@@ -65,7 +65,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 * @param	string	The name of the key for the primary key.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function allowEdit($data = array(), $key = 'parent_id')
 	{
@@ -137,7 +137,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 * @param	int		$recordId	The primary key id for the item.
 	 *
 	 * @return	string	The arguments to append to the redirect URL.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
 	{
@@ -151,7 +151,7 @@ class CategoriesControllerCategory extends JControllerForm
 	 * Gets the URL arguments to append to a list redirect.
 	 *
 	 * @return	string	The arguments to append to the redirect URL.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getRedirectToListAppend()
 	{

@@ -26,10 +26,10 @@ class MolajoMenuSite extends MolajoMenu
 	 */
 	public function load()
 	{
-        $user = JFactory::getUser();
+        $user = MolajoFactory::getUser();
 		$cache = MolajoFactory::getCache('mod_menu', '');  // has to be mod_menu or this cache won't get cleaned
 
-		if ($data = $cache->get('menu_items'.JFactory::getLanguage()->getTag().$user->id)) {
+		if ($data = $cache->get('menu_items'.MolajoFactory::getLanguage()->getTag().$user->id)) {
             $this->_items = $data;
         } else {
 			$db		= MolajoFactory::getDbo();

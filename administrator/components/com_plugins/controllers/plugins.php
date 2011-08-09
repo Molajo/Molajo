@@ -21,7 +21,7 @@ class PluginsControllerPlugins extends JControllerAdmin
 {
 	/**
 	 * Proxy for getModel.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getModel($name = 'Plugin', $prefix = 'PluginsModel')
 	{

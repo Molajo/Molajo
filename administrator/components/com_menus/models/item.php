@@ -23,25 +23,25 @@ class MenusModelItem extends JModelAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_MENUS_ITEM';
 
 	/**
 	 * @var		string	The help screen key for the menu item.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpKey = 'JHELP_MENUS_MENU_ITEM_MANAGER_EDIT';
 
 	/**
 	 * @var		string	The help screen base URL for the menu item.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpURL;
 
 	/**
 	 * @var		boolean	True to use local lookup for the help screen.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $helpLocal = false;
 
@@ -51,7 +51,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	object	A record object.
 	 *
 	 * @return	boolean	True if allowed to delete the record. Defaults to the permission set in the component.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canDelete($record)
 	{
@@ -71,7 +71,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	object	A record object.
 	 *
 	 * @return	boolean	True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canEditState($record)
 	{
@@ -93,7 +93,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$pks		An array of category ids.
 	 *
 	 * @return	boolean	Returns true on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function batch($commands, $pks)
 	{
@@ -148,7 +148,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$pks	An array of row IDs.
 	 *
 	 * @return	booelan	True if successful, false otherwise and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function batchCopy($value, $pks)
 	{
@@ -312,7 +312,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$pks	An array of row IDs.
 	 *
 	 * @return	booelan	True if successful, false otherwise and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function batchMove($value, $pks)
 	{
@@ -443,7 +443,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	string	$key	The name of the key for the primary key.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function canSave($data = array(), $key = 'id')
 	{
@@ -456,7 +456,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -496,7 +496,7 @@ class MenusModelItem extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -508,7 +508,7 @@ class MenusModelItem extends JModelAdmin
 	 * Get the necessary data to load an item help screen.
 	 *
 	 * @return	object	An object with key, url, and local properties for loading the item help screen.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getHelp()
 	{
@@ -521,7 +521,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	integer	$pk	An optional id of the object to get, otherwise the id from the model state is used.
 	 *
 	 * @return	mixed	Menu item data object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -647,7 +647,7 @@ class MenusModelItem extends JModelAdmin
 	 * Get the list of modules not in trash.
 	 *
 	 * @return	mixed	An array of module records (id, title, position), or false on error.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getModules()
 	{
@@ -690,7 +690,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	JTableMenu $table instance
 	 *
 	 * @return	array	An array of conditions to add to add to ordering queries.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getReorderConditions($table)
 	{
@@ -705,7 +705,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$config	Configuration array for model. Optional.
 	 *
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getTable($type = 'Menu', $prefix = 'JTable', $config = array())
 	{
@@ -718,7 +718,7 @@ class MenusModelItem extends JModelAdmin
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -759,7 +759,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	mixed	$data	The data expected for the form.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 * @throws	Exception if there is an error in the form event.
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'content')
@@ -896,7 +896,7 @@ class MenusModelItem extends JModelAdmin
 	 * Method rebuild the entire nested set tree.
 	 *
 	 * @return	boolean	False on failure or error, true otherwise.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function rebuild()
 	{
@@ -954,7 +954,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$data	The form data.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{
@@ -1034,7 +1034,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	array	$lft_array	lft values of rows to be reordered
 	 *
 	 * @return	boolean false on failuer or error, true otherwise
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function saveorder($idArray = null, $lft_array = null)
 	{
@@ -1059,7 +1059,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	int		$value	The value of the home state.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function setHome(&$pks, $value = 1)
 	{
@@ -1129,7 +1129,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param	int		$value	The value of the published state.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function publish(&$pks, $value = 1)
 	{
@@ -1163,7 +1163,7 @@ class MenusModelItem extends JModelAdmin
 	 * @param   sting   The value of the menu Alias.
 	 * @param   sting   The value of the menu Title.
 	 * @return	array   Contains title and alias.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function generateNewTitle(&$parent_id, &$alias, &$title)
 	{
@@ -1189,7 +1189,7 @@ class MenusModelItem extends JModelAdmin
 	/**
 	 * Custom clean cache method
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function cleanCache() {
 		parent::cleanCache('com_modules');

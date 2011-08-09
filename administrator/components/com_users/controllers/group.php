@@ -21,7 +21,7 @@ class UsersControllerGroup extends JControllerForm
 {
 		/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_USERS_GROUP';
 
@@ -34,7 +34,7 @@ class UsersControllerGroup extends JControllerForm
 	 * @param	string	The name of the key for the primary key.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function allowSave($data, $key = 'id')
 	{
@@ -50,7 +50,7 @@ class UsersControllerGroup extends JControllerForm
 	 * @param	string	The name of the key for the primary key.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{

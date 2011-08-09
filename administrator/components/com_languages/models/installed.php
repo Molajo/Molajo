@@ -65,7 +65,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Note. Calling getState in this method will result in recursion.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -94,7 +94,7 @@ class LanguagesModelInstalled extends JModelList
 	 * @param	string		$id	A prefix for the store id.
 	 *
 	 * @return	string		A store id.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -108,7 +108,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get the application object
 	 *
 	 * @return	object
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getApplication()
 	{
@@ -123,7 +123,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get the ftp credentials
 	 *
 	 * @return	object
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getFtp()
 	{
@@ -138,7 +138,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get the option
 	 *
 	 * @return	object
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getOption()
 	{
@@ -151,7 +151,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get Languages item data
 	 *
 	 * @return	array
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getData()
 	{
@@ -229,7 +229,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get installed languages data.
 	 *
 	 * @return	string	An SQL query
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getLanguageList()
 	{
@@ -262,7 +262,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get the total number of Languages items
 	 *
 	 * @return	integer
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getTotal()
 	{
@@ -278,7 +278,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to set the default language
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function publish($cid)
 	{
@@ -327,7 +327,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get the folders
 	 *
 	 * @return	array	Languages folders
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getFolders()
 	{
@@ -344,7 +344,7 @@ class LanguagesModelInstalled extends JModelList
 	 * Method to get the path
 	 *
 	 * @return	string	The path to the languages folders
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getPath()
 	{
@@ -363,7 +363,7 @@ class LanguagesModelInstalled extends JModelList
 	 * @param	object	$lang2 the second language
 	 *
 	 * @return	integer
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function compareLanguages($lang1,$lang2)
 	{

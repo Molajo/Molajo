@@ -1,25 +1,26 @@
 <?php
 /**
- * @version		$Id:mod_menu.php 2463 2006-02-18 06:05:38Z webImagery $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Menu
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// no direct access
-defined('_JEXEC') or die;
+defined('MOLAJO') or die;
 
 /**
- * @package		Joomla.Administrator
- * @subpackage	mod_menu
- * @since		1.5
+ * @package		Molajo
+ * @subpackage	ModMenuHelper
+ * @since		1.0
  */
 abstract class ModMenuHelper
 {
 	/**
-	 * Get a list of the available menus.
+	 * getMenus
+     *
+     * Get a list of the available menus.
 	 *
 	 * @return	array	An array of the available menus (from the menu types table).
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getMenus()
 	{
@@ -50,7 +51,7 @@ abstract class ModMenuHelper
 	 * @param	boolean	$authCheck	An optional switch to turn off the auth check (to support custom layouts 'grey out' behaviour).
 	 *
 	 * @return	array	A nest array of component objects and submenus
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getComponents($authCheck = true)
 	{

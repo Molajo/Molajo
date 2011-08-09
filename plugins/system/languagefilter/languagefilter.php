@@ -32,7 +32,7 @@ class plgSystemLanguageFilter extends JPlugin
 
 	public function __construct(&$subject, $config)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		$router = $app->getRouter();
 		if ($app->isSite()) {
 			// setup language data
@@ -43,13 +43,13 @@ class plgSystemLanguageFilter extends JPlugin
 			self::$default_sef 	= self::$lang_codes[self::$default_lang]->sef;
 
 			$app->setLanguageFilter(true);
-			$uri = JFactory::getURI();
+			$uri = MolajoFactory::getURI();
 			if (self::$mode_sef) {
 				// Get the route path from the request.
 				$path = JString::substr($uri->toString(), JString::strlen($uri->base()));
 
 				// Apache mod_rewrite is Off
-				$path = JFactory::getConfig()->get('sef_rewrite') ? $path : JString::substr($path, 10);
+				$path = MolajoFactory::getConfig()->get('sef_rewrite') ? $path : JString::substr($path, 10);
 
 				// Trim any spaces or slashes from the ends of the path and explode into segments.
 				$path  = JString::trim($path, '/ ');
@@ -68,7 +68,7 @@ class plgSystemLanguageFilter extends JPlugin
 			if (isset(self::$sefs[$sef])) {
 				$lang_code = self::$sefs[$sef]->lang_code;
 				// Create a cookie
-				$conf = JFactory::getConfig();
+				$conf = MolajoFactory::getConfig();
 				$cookie_domain 	= $conf->get('config.cookie_domain', '');
 				$cookie_path 	= $conf->get('config.cookie_path', '/');
 				setcookie(JUtility::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
@@ -86,9 +86,9 @@ class plgSystemLanguageFilter extends JPlugin
 
 	public function onAfterInitialise()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		if ($app->isSite()) {
-			self::$tag 			= JFactory::getLanguage()->getTag();
+			self::$tag 			= MolajoFactory::getLanguage()->getTag();
 
 			$router = $app->getRouter();
 			// attach build rules for language SEF
@@ -111,7 +111,7 @@ class plgSystemLanguageFilter extends JPlugin
 
 		$Itemid = $uri->getVar('Itemid');
 		if (!is_null($Itemid)) {
-			if ($item = JFactory::getApplication()->getMenu()->getItem($Itemid))
+			if ($item = MolajoFactory::getApplication()->getMenu()->getItem($Itemid))
 			{
 				if ($item->home && $uri->getVar('option')!='com_search')
 				{
@@ -176,7 +176,7 @@ class plgSystemLanguageFilter extends JPlugin
 				$post = JRequest::get('POST');
 				if (JRequest::getMethod() != "POST" || count($post) == 0)
 				{
-					$app = JFactory::getApplication();
+					$app = MolajoFactory::getApplication();
 					if ($app->getCfg('sef_rewrite')) {
 						$app->redirect($uri->base().$uri->toString(array('path', 'query', 'fragment')));
 					}
@@ -199,7 +199,7 @@ class plgSystemLanguageFilter extends JPlugin
 				$post = JRequest::get('POST');
 				if (JRequest::getMethod() != "POST" || count($post) == 0)
 				{
-					$app = JFactory::getApplication();
+					$app = MolajoFactory::getApplication();
 					$app->redirect(JURI::base(true).'/index.php?'.$uri->getQuery());
 				}
 			}
@@ -257,7 +257,7 @@ class plgSystemLanguageFilter extends JPlugin
 			if (empty($lang_code)) {
 				$lang_code = self::$default_lang;
 			}
-			$app = JFactory::getApplication();
+			$app = MolajoFactory::getApplication();
 			if ($lang_code == self::$_user_lang_code || !isset(self::$lang_codes[$lang_code]))
 			{
 				if ($app->isSite())
@@ -272,7 +272,7 @@ class plgSystemLanguageFilter extends JPlugin
 					$app->setUserState('com_users.edit.profile.redirect','index.php?Itemid='.$app->getMenu()->getDefault($lang_code)->id.'&lang='.$lang_codes[$lang_code]->sef);
 					self::$tag = $lang_code;
 					// Create a cookie
-					$conf = JFactory::getConfig();
+					$conf = MolajoFactory::getConfig();
 					$cookie_domain 	= $conf->get('config.cookie_domain', '');
 					$cookie_path 	= $conf->get('config.cookie_path', '/');
 					setcookie(JUtility::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);
@@ -292,7 +292,7 @@ class plgSystemLanguageFilter extends JPlugin
 	 */
 	public function onUserLogin($user, $options = array())
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 		if ($app->isSite())
 		{
 			$lang_code = $user['language'];
@@ -301,7 +301,7 @@ class plgSystemLanguageFilter extends JPlugin
 			}
 			self::$tag = $lang_code;
 			// Create a cookie
-			$conf = JFactory::getConfig();
+			$conf = MolajoFactory::getConfig();
 			$cookie_domain 	= $conf->get('config.cookie_domain', '');
 			$cookie_path 	= $conf->get('config.cookie_path', '/');
 			setcookie(JUtility::getHash('language'), $lang_code, time() + 365 * 86400, $cookie_path, $cookie_domain);

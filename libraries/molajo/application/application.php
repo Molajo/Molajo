@@ -441,7 +441,7 @@ class MolajoApplication extends JObject
         JRequest::setVar('cid', (array) $cids);
 
         /** Page Session Variables */
-        $session = JFactory::getSession();
+        $session = MolajoFactory::getSession();
 
         $session->set('page.application_id', MOLAJO_APPLICATION_ID);
         $session->set('page.current_url', MOLAJO_CURRENT_URL);
@@ -539,7 +539,7 @@ class MolajoApplication extends JObject
         /** load into $data array for creation of the request object */
         $request = array();
 
-        $request['application_id'] = $session->set('page.application_id');
+        $request['application_id'] = $session->get('page.application_id');
         $request['current_url'] = $session->get('page.current_url');
         $request['component_path'] = $session->get('page.component_path');
         $request['base_url'] = $session->get('page.base_url');
@@ -586,7 +586,7 @@ class MolajoApplication extends JObject
      */
     public function getContentInfo()
     {
-        $session = JFactory::getSession();
+        $session = MolajoFactory::getSession();
 
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -694,7 +694,7 @@ class MolajoApplication extends JObject
 	 */
 	public function close($code = 0)
 	{
-        $session = JFactory::getSession();
+        $session = MolajoFactory::getSession();
 
         $session->clear('page.application_id');
         $session->clear('page.current_url');
@@ -1280,7 +1280,7 @@ class MolajoApplication extends JObject
 			// Session doesn't exist yet, so create session variables
 			if ($session->isNew()) {
 				$session->set('registry',	new JRegistry('session'));
-				$session->set('user',		new JUser());
+				$session->set('user',		new MolajoUser());
 			}
 		}
 	}

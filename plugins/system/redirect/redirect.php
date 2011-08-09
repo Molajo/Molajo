@@ -37,7 +37,7 @@ class plgSystemRedirect extends JPlugin
 	static function handleError(&$error)
 	{
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Make sure the error is a 404 and we are not in the administrator.
 		if (!$app->isAdmin() and ($error->getCode() == 404))
@@ -53,7 +53,7 @@ class plgSystemRedirect extends JPlugin
 			}
 
 			// See if the current url exists in the database as a redirect.
-			$db = JFactory::getDBO();
+			$db = MolajoFactory::getDBO();
 			$db->setQuery(
 				'SELECT `new_url`, `published`' .
 				' FROM `#__redirect_links`' .
@@ -73,7 +73,7 @@ class plgSystemRedirect extends JPlugin
 				// If not, add the new url to the database.
 				$db->setQuery(
 					'INSERT IGNORE INTO `#__redirect_links` (`old_url`, `referer`, `published`, `created_date`)' .
-					' VALUES ('.$db->Quote($current).', '.$db->Quote($referer).', 0, '.$db->Quote(JFactory::getDate()->toMySQL()).')'
+					' VALUES ('.$db->Quote($current).', '.$db->Quote($referer).', 0, '.$db->Quote(MolajoFactory::getDate()->toMySQL()).')'
 				);
 				$db->query();
 

@@ -41,7 +41,7 @@ class JFormFieldTemplateStyle extends JFormFieldGroupedList
 	{
 		// Initialize variables.
 		$groups = array();
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		// Get the client and application_id.
 		$clientName = $this->element['client'] ? (string) $this->element['client'] : 'site';
@@ -51,7 +51,7 @@ class JFormFieldTemplateStyle extends JFormFieldGroupedList
 		$template = (string) $this->element['template'];
 
 		// Get the database object and a new query object.
-		$db		= JFactory::getDBO();
+		$db		= MolajoFactory::getDBO();
 		$query	= $db->getQuery(true);
 
 		// Build the query.

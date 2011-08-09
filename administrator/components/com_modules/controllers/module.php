@@ -77,7 +77,7 @@ class ModulesControllerModule extends JControllerForm
 	 * @param	JModel	$model	The data model object.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function postSaveHook(JModel &$model, $validData = array())
 	{

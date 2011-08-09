@@ -27,7 +27,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	array	$config	Configuration array for model. Optional.
 	 *
 	 * @return	JTable	A database object
-	 * @since	1.6
+	 * @since	1.0
 	*/
 	public function getTable($type = 'User', $prefix = 'JTable', $config = array())
 	{
@@ -42,7 +42,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	integer	$pk		The id of the primary key.
 	 *
 	 * @return	mixed	Object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -64,7 +64,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	array	$data		An optional array of data for the form to interogate.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -84,7 +84,7 @@ class UsersModelUser extends JModelAdmin
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -119,7 +119,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	string	$group	The name of the plugin group to import (defaults to "content").
 	 *
 	 * @throws	Exception if there is an error in the form event.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function preprocessForm(JForm $form, $data, $group = 'user')
 	{
@@ -132,13 +132,13 @@ class UsersModelUser extends JModelAdmin
 	 * @param	array	$data	The form data.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{
 		// Initialise variables;
 		$pk			= (!empty($data['id'])) ? $data['id'] : (int) $this->getState('user.id');
-		$user		= JUser::getInstance($pk);
+		$user		= MolajoUser::getInstance($pk);
 
 		$my = MolajoFactory::getUser();
 
@@ -185,7 +185,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	array	$pks	An array of item ids.
 	 *
 	 * @return	boolean	Returns true on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function delete(&$pks)
 	{
@@ -252,7 +252,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	int		$value	The value of the published state
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function block(&$pks, $value = 1)
 	{
@@ -349,7 +349,7 @@ class UsersModelUser extends JModelAdmin
 	 * @param	array	$pks	The ids of the items to activate.
 	 *
 	 * @return	boolean	True on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function activate(&$pks)
 	{
@@ -427,7 +427,7 @@ class UsersModelUser extends JModelAdmin
 	 *
 	 * @param	array	$config		An array of variable for the batch operation
 	 * @param	array	$user_ids	An array of IDs on which to operate
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function batch($config, $user_ids)
 	{
@@ -531,7 +531,7 @@ class UsersModelUser extends JModelAdmin
 	 * Gets the available groups.
 	 *
 	 * @return	array
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getGroups()
 	{
@@ -551,7 +551,7 @@ class UsersModelUser extends JModelAdmin
 	 * Gets the groups this object is assigned to
 	 *
 	 * @return	array
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getAssignedGroups($userId = null)
 	{
@@ -567,7 +567,7 @@ class UsersModelUser extends JModelAdmin
 		}
 		else {
 			jimport('joomla.user.helper');
-			$result = JUserHelper::getUserGroups($userId);
+			$result = MolajoUserHelper::getUserGroups($userId);
 		}
 
 		return $result;

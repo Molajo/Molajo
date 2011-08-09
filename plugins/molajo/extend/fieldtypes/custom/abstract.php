@@ -43,7 +43,7 @@ class JFormFieldAbstract extends JFormFieldList
 
         /** initialization **/
         $options = array();
-        $db = JFactory::getDBO();
+        $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
         /** build query **/

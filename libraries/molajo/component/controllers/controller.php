@@ -210,7 +210,7 @@ class MolajoController extends JController
             $this->catid = 0;
         }
 
-        /** view */
+        /** display controller: set model and view */
         if ($this->request['controller'] == 'display') {
 
             /** view format */
@@ -333,10 +333,6 @@ class MolajoController extends JController
      * @param	string	$name	The name of the model.
      * @param	string	$prefix	The prefix for the PHP class name.
      * @param	array	$config	Configuration data
-     *
-     * @param string $name
-     * @param string $prefix
-     * @param array $config
      * 
      * @return object model
      */
@@ -532,7 +528,6 @@ class MolajoController extends JController
         }
 
         /** Trigger_Event: onContentMaintainVersions **/
-        /** Molajo_Note: New Event onContentMaintainVersions so that all data stays in sync **/
         return $this->dispatcher->trigger('onContentMaintainVersions', array($context, $this->id, $maintainVersions));
     }
 

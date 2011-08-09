@@ -26,7 +26,7 @@ class CategoriesModelCategories extends JModelList
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -61,7 +61,7 @@ class CategoriesModelCategories extends JModelList
 	 * @param	string	An optional direction (asc|desc).
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -109,7 +109,7 @@ class CategoriesModelCategories extends JModelList
 	 * @param	string		$id	A prefix for the store id.
 	 *
 	 * @return	string		A store id.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -124,7 +124,7 @@ class CategoriesModelCategories extends JModelList
 
 	/**
 	 * @return	string
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function getListQuery()
 	{

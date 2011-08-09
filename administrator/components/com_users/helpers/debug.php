@@ -23,7 +23,7 @@ class UsersHelperDebug
 	 * Get a list of the components.
 	 *
 	 * @return	array
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	static function getComponents()
 	{
@@ -68,7 +68,7 @@ class UsersHelperDebug
 	 * @param	string	The name of the component.
 	 *
 	 * @return	array
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function getDebugActions($component = null)
 	{

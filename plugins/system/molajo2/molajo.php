@@ -241,12 +241,12 @@ class plgSystemMolajo extends JPlugin
     function getParameterSetPath ($parameterSet)
     {
         /** Amy_TODO: figure this out. site template parameters */
-        $path = JPATH_SITE.'/templates/'.JFactory::getApplication('site')->getTemplate().'/'.'parameters/'.$parameterSet.'.xml';
+        $path = JPATH_SITE.'/templates/'.MolajoFactory::getApplication('site')->getTemplate().'/'.'parameters/'.$parameterSet.'.xml';
         if(is_file($path)) {
             return $path;
         }
         /** admin template parameters */
-        $path = JPATH_ADMINISTRATOR.'/templates/'.JFactory::getApplication('administrator')->getTemplate().'/'.'parameters/'.$parameterSet.'.xml';
+        $path = JPATH_ADMINISTRATOR.'/templates/'.MolajoFactory::getApplication('administrator')->getTemplate().'/'.'parameters/'.$parameterSet.'.xml';
         if(is_file($path)) {
             return $path;
         }

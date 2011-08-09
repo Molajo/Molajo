@@ -31,7 +31,7 @@ class TemplatesModelSource extends JModelForm
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState()
 	{
@@ -63,7 +63,7 @@ class TemplatesModelSource extends JModelForm
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -95,7 +95,7 @@ class TemplatesModelSource extends JModelForm
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{
@@ -113,7 +113,7 @@ class TemplatesModelSource extends JModelForm
 	 * Method to get a single record.
 	 *
 	 * @return	mixed	Object on success, false on failure.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getSource()
 	{
@@ -145,7 +145,7 @@ class TemplatesModelSource extends JModelForm
 	 * Method to get the template information.
 	 *
 	 * @return	mixed	Object if successful, false if not and internal error is set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getTemplate()
 	{
@@ -184,7 +184,7 @@ class TemplatesModelSource extends JModelForm
 	 * @param	array	The souce data to save.
 	 *
 	 * @return	boolean	True on success, false otherwise and internal error set.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($data)
 	{

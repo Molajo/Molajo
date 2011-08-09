@@ -42,9 +42,9 @@ class plgSearchWeblinks extends JPlugin
 	 */
 	function onContentSearch($text, $phrase='', $ordering='', $areas=null)
 	{
-		$db		= JFactory::getDbo();
-		$app	= JFactory::getApplication();
-		$user	= JFactory::getUser();
+		$db		= MolajoFactory::getDbo();
+		$app	= MolajoFactory::getApplication();
+		$user	= MolajoFactory::getUser();
 
 		$searchText = $text;
 
@@ -142,7 +142,7 @@ class plgSearchWeblinks extends JPlugin
 
 			// Filter by language
 			if ($app->isSite() && $app->getLanguageFilter()) {
-				$tag = JFactory::getLanguage()->getTag();
+				$tag = MolajoFactory::getLanguage()->getTag();
 				$query->where('a.language in (' . $db->Quote($tag) . ',' . $db->Quote('*') . ')');
 				$query->where('c.language in (' . $db->Quote($tag) . ',' . $db->Quote('*') . ')');
 			}

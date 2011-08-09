@@ -39,9 +39,9 @@ class plgButtonReadmore extends JPlugin
 	 */
 	public function onDisplay($name)
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
-		$doc		= JFactory::getDocument();
+		$doc		= MolajoFactory::getDocument();
 		$template	= $app->getTemplate();
 
 		// button is not active in specific content components

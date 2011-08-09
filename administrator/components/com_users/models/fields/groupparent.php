@@ -25,7 +25,7 @@ class JFormFieldGroupParent extends JFormFieldList
 	 * The form field type.
 	 *
 	 * @var		string
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $type = 'GroupParent';
 
@@ -33,7 +33,7 @@ class JFormFieldGroupParent extends JFormFieldList
 	 * Method to get the field options.
 	 *
 	 * @return	array	The field option objects.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getOptions()
 	{

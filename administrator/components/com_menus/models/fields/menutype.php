@@ -25,7 +25,7 @@ class JFormFieldMenuType extends JFormFieldList
 	 * The form field type.
 	 *
 	 * @var		string
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $type = 'MenuType';
 
@@ -40,7 +40,7 @@ class JFormFieldMenuType extends JFormFieldList
 	 * Method to get the field input markup.
 	 *
 	 * @return	string	The field input markup.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getInput()
 	{
@@ -162,7 +162,7 @@ class JFormFieldMenuType extends JFormFieldList
 	 * Method to get the available menu item type options.
 	 *
 	 * @return	array	Array of groups with menu item types.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function _getTypeOptions()
 	{

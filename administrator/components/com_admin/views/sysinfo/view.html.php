@@ -65,7 +65,7 @@ class AdminViewSysinfo extends JView
 	/**
 	 * Setup the SubMenu
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function _setSubMenu()
 	{
@@ -77,7 +77,7 @@ class AdminViewSysinfo extends JView
 	/**
 	 * Setup the Toolbar
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function addToolbar()
 	{

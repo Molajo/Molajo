@@ -77,7 +77,7 @@ class plgEditorAloha extends JPlugin
 		static $done = false;
 		if ($done) {
         } else {
-            $doc = JFactory::getDocument();
+            $doc = MolajoFactory::getDocument();
             $js = "\tfunction jInsertEditorText(text, editor) {
                 document.id(editor).retrieve('Aloha').selection.insertContent(text);
             }";
@@ -112,7 +112,7 @@ class plgEditorAloha extends JPlugin
 		$this->params->def('baseURL', JURI::root());
 		$this->params->set('actions', implode('', (array)$this->params->get('buttons', 'bold italic underline strikethrough insertunorderedlist insertorderedlist indent outdent undo redo unlink createlink urlimage')));
 		$this->params->set('buttons', '');
-		$doc = JFactory::getDocument();
+		$doc = MolajoFactory::getDocument();
 		$doc->addScriptDeclaration('window.addEvent(\'domready\', function() {
 			$(\''.$id.'\').Aloha('.$this->params->toString().');
 		});');

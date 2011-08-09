@@ -27,7 +27,7 @@ class InstallerModelManage extends InstallerModel
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -50,7 +50,7 @@ class InstallerModelManage extends InstallerModel
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -135,7 +135,7 @@ class InstallerModelManage extends InstallerModel
 	 *
 	 * @param	int		extension identifier (key in #__extensions)
 	 * @return	boolean	result of refresh
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function refresh($eid)
 	{
@@ -242,7 +242,7 @@ class InstallerModelManage extends InstallerModel
 	 * Method to get the database query
 	 *
 	 * @return	JDatabaseQuery	The database query
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getListQuery()
 	{
@@ -287,7 +287,7 @@ class InstallerModelManage extends InstallerModel
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -318,7 +318,7 @@ class InstallerModelManage extends InstallerModel
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function loadFormData()
 	{

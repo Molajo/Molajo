@@ -102,6 +102,7 @@ class MolajoComponentHelper
 	 */
 	protected static function _load($option)
 	{
+
 		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
@@ -122,7 +123,7 @@ class MolajoComponentHelper
 
 		$db->setQuery($query->__toString());
 
-        if (JFactory::getConfig()->get('caching') > 0) {
+        if (MolajoFactory::getConfig()->get('caching') > 0) {
             $cache = MolajoFactory::getCache('_system','callback');
 		    self::$_components[$option] = $cache->get(array($db, 'loadObject'), null, $option, false);
         } else {

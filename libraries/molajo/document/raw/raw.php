@@ -17,8 +17,6 @@ defined('MOLAJO') or die;
  * @since       1.0
  */
 
-jimport('joomla.document.document');
-
 class MolajoDocumentRAW extends MolajoDocument
 {
 

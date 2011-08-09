@@ -33,10 +33,10 @@ class plgSystemLogout extends JPlugin
 		parent::__construct($subject, $config);
 
 		$hash = JUtility::getHash('plgSystemLogout');
-		if (JFactory::getApplication()->isSite() and JRequest::getString($hash, null ,'cookie'))
+		if (MolajoFactory::getApplication()->isSite() and JRequest::getString($hash, null ,'cookie'))
 		{
 			// Destroy the cookie
-			$conf = JFactory::getConfig();
+			$conf = MolajoFactory::getConfig();
 			$cookie_domain 	= $conf->get('config.cookie_domain', '');
 			$cookie_path 	= $conf->get('config.cookie_path', '/');
 			setcookie($hash, false, time() - 86400, $cookie_path, $cookie_domain);
@@ -57,11 +57,11 @@ class plgSystemLogout extends JPlugin
 	 */
 	public function onUserLogout($user, $options = array())
 	{
-		if (JFactory::getApplication()->isSite())
+		if (MolajoFactory::getApplication()->isSite())
 		{
 			// Create the cookie
 			$hash = JUtility::getHash('plgSystemLogout');
-			$conf = JFactory::getConfig();
+			$conf = MolajoFactory::getConfig();
 			$cookie_domain 	= $conf->get('config.cookie_domain', '');
 			$cookie_path 	= $conf->get('config.cookie_path', '/');
 			setcookie($hash, true, time() + 86400, $cookie_path, $cookie_domain);
@@ -72,7 +72,7 @@ class plgSystemLogout extends JPlugin
 	static function handleError(&$error)
 	{
 		// Get the application object.
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		// Make sure the error is a 403 and we are in the frontend.
 		if ($error->getCode() == 403 and $app->isSite()) {

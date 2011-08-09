@@ -97,7 +97,7 @@ class modelForm
     public function addCustomFieldsForm ($contentType, $form, $path=null)
     {
         /** load language files **/
-        $language = JFactory::getLanguage();
+        $language = MolajoFactory::getLanguage();
         $language->load('plg_system_extend_'.$contentType, MOLAJO_EXTEND_ROOT, $language->getDefault(), true, true);
 
         /** default path **/

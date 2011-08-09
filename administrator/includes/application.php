@@ -189,7 +189,7 @@ class MolajoAdministrator extends MolajoApplication
 	 */
 	public function render()
 	{
-        $session = JFactory::getSession();
+        $session = MolajoFactory::getSession();
 		$component	= $session->get('page.option');
 		$template	= $this->getTemplate(true);
 

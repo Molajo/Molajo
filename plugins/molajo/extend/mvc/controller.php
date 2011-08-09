@@ -148,9 +148,9 @@ class extendController extends plgSystemExtend {
 
         /** load application support **/
 	$this->loadLanguage();
-        $this->app = JFactory::getApplication();
-        $this->db = JFactory::getDbo();
-        $this->user = JFactory::getUser();
+        $this->app = MolajoFactory::getApplication();
+        $this->db = MolajoFactory::getDbo();
+        $this->user = MolajoFactory::getUser();
         $this->sql_table_name = $this->fieldParams->def('sql_table_name', '#__molajo_custom_fields');
 
         /** verify table exists **/

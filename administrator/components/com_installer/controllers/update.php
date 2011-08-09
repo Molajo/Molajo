@@ -19,7 +19,7 @@ class InstallerControllerUpdate extends JController {
 	/**
 	 * Update a set of extensions.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function update()
 	{
@@ -52,7 +52,7 @@ class InstallerControllerUpdate extends JController {
 	/**
 	 * Find new updates.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function find()
 	{
@@ -69,7 +69,7 @@ class InstallerControllerUpdate extends JController {
 	/**
 	 * Purges updates.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function purge()
 	{

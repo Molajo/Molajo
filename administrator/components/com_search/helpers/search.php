@@ -20,7 +20,7 @@ class SearchHelper
 	 * Configure the Linkbar.
 	 *
 	 * @param	string	The name of the active view.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function addSubmenu($vName)
 	{

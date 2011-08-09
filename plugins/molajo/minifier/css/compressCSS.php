@@ -17,7 +17,7 @@ class compressCSS extends JPlugin	{
 	/**
 	 * 	Initialization
 	 */
-		$app =& JFactory::getApplication();
+		$app =& MolajoFactory::getApplication();
 		if($app->getName() != 'site') {
 			return;
 		}
@@ -55,7 +55,7 @@ class compressCSS extends JPlugin	{
 	/**
 	 * 	Initialization 
 	 */ 
-		$document =& JFactory::getDocument();		
+		$document =& MolajoFactory::getDocument();
 		$lnEnd = $document->_getLineEnd();
 		$tab = $document->_getTab();
 		$tagEnd	= ' />';
@@ -64,7 +64,7 @@ class compressCSS extends JPlugin	{
 		$headers = $document->getHeadData();
 		$buffer = JResponse::getBody();		
 		
-		$uri	 = &JFactory::getURI();
+		$uri	 = &MolajoFactory::getURI();
 		$urlhost = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));		
 		$urlhost .= JURI::base(true);		
 

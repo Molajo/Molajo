@@ -26,14 +26,14 @@ class URLSCanonical extends JPlugin
 	/**
 	 * rel="canonical" http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html
 	 */		
-		$document =& JFactory::getDocument();
+		$document =& MolajoFactory::getDocument();
 
-		$uri =& JFactory::getURI();
+		$uri =& MolajoFactory::getURI();
 		$query = $uri->getQuery(true);
 		$urlhost = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 		$ArticleURL = $urlhost . $article->readmore_link;
 						
-		$document =& JFactory::getDocument();
+		$document =& MolajoFactory::getDocument();
 		$document->addHeadLink($ArticleURL, 'canonical', 'rel', '');
     }
 }

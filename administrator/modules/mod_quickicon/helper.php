@@ -20,7 +20,7 @@ abstract class modQuickIconHelper
 	/**
 	 * Stack to hold default buttons
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected static $buttons = array();
 
@@ -30,7 +30,7 @@ abstract class modQuickIconHelper
 	 * @param	array	A named array with keys link, image, text, access and imagePath
 	 *
 	 * @return	string	HTML for button
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function button($button)
 	{
@@ -64,7 +64,7 @@ abstract class modQuickIconHelper
 	 * used to add custom buttons or remove default ones.
 	 *
 	 * @return	array	An array of buttons
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function &getButtons()
 	{

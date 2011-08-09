@@ -15,7 +15,7 @@ class modBreadCrumbsHelper
 	public static function getList(&$params)
 	{
 		// Get the PathWay object from the application
-		$app		= JFactory::getApplication();
+		$app		= MolajoFactory::getApplication();
 		$pathway	= $app->getPathway();
 		$items		= $pathway->getPathWay();
 
@@ -47,7 +47,7 @@ class modBreadCrumbsHelper
 	 */
 	public static function setSeparator($custom = null)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 
 		// If a custom separator has not been provided we try to load a template
 		// specific one first, and if that is not present we load the default separator

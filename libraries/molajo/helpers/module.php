@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Module Helper
+ * MolajoModuleHelper
  *
  * @package     Molajo
  * @subpackage  Helper
@@ -68,7 +68,9 @@ abstract class MolajoModuleHelper
 	}
 
 	/**
-	 * Get modules by position
+	 * getModules
+     *
+     * Get modules by position
 	 *
 	 * @param   string  $position	The position of the module
 	 *
@@ -105,7 +107,9 @@ abstract class MolajoModuleHelper
 	}
 
 	/**
-	 * Checks if a module is enabled
+	 * isEnabled
+     *
+     * Checks if a module is enabled
 	 *
 	 * @param   string  The module name
 	 *
@@ -129,14 +133,19 @@ abstract class MolajoModuleHelper
 	 */
 	public static function renderModule($module, $attribs = array())
 	{
-		static $chrome;
-		$app	= MolajoFactory::getApplication();
+        /** initialization */
+        $request = array();
+        $state = array();
+        $params = array();
+        $rowset = array();
+        $pagination = array();
+        $layout = 'default'; 
 
 		// Record the scope.
-		$scope	= $app->scope;
+		$scope = MolajoFactory::getApplication()->scope;
 
 		// Set scope to module name
-		$app->scope = $module->module;
+		MolajoFactory::getApplication()->scope = $module->module;
 
 		// Get parameters
 		$params = new JRegistry;
@@ -146,77 +155,108 @@ abstract class MolajoModuleHelper
 		$module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
 		$path = MOLAJO_PATH_BASE.'/modules/'.$module->module.'/'.$module->module.'.php';
 
+        // Request
+        $request = self::getRequest($module, $params);
+
 		// Load the module
-		if (!$module->user && file_exists($path))
-		{
-			$lang = MolajoFactory::getLanguage();
-			// 1.5 or Core then 1.6 3PD
-				$lang->load($module->module, MOLAJO_PATH_BASE, null, false, false)
-			||	$lang->load($module->module, dirname($path), null, false, false)
-			||	$lang->load($module->module, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-			||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
+		if ($module->user) {
+        } else if (file_exists($path)) {
 
-			$content = '';
-			ob_start();
+            $lang = MolajoFactory::getLanguage();
+
+            $lang->load($module->module, MOLAJO_PATH_BASE, null, false, false)
+            ||	$lang->load($module->module, dirname($path), null, false, false)
+            ||	$lang->load($module->module, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+            ||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
+
+            /** view */
+            $view = new MolajoViewModule ();
+echo $path.'<br />';
+            /** include module */
 			require $path;
-			$module->content = ob_get_contents().$content;
-			ob_end_clean();
 
+            /** 1. Request */
+            $view->request = $request;
+
+            /** 2. State */
+            $view->state = $module;
+
+            /** 3. Parameters */
+            $view->params = $params;
+
+            /** 4. Query Results */
+            $view->rowset = $rowset;
+
+            /** 5. Pagination */
+            $view->pagination = $pagination;
+
+            /** 6. Layout */
+            $view->layout = $layout;
+
+            $module->content = $view->display();
 		}
 
-		// Load the module chrome functions
-		if (!$chrome) {
-			$chrome = array();
-		}
-
-
-// layouts chrome
-//		require_once MOLAJO_PATH_THEMES.'/system/html/modules.php';
-//		$chromePath = MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/html/modules.php';
-
-//		if (!isset($chrome[$chromePath]))
-//		{
-//			if (file_exists($chromePath)) {
-//				require_once $chromePath;
-//			}
-//			$chrome[$chromePath] = true;
-//		}
-
-//		// Make sure a style is set
-//		if (!isset($attribs['style'])) {
-//			$attribs['style'] = 'none';
-//		}
-
-		// Dynamically add outline style
-//		if (JRequest::getBool('tp')
-//          && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
-//		$attribs['style'] .= ' outline';
-//		}
-
-//		foreach(explode(' ', $attribs['style']) as $style)
-//		{
-//			$chromeMethod = 'modChrome_'.$style;
-
-			// Apply chrome and render module
-//			if (function_exists($chromeMethod))
-//			{
-//				$module->style = $attribs['style'];
-//
-//				ob_start();
-//				$chromeMethod($module, $params, $attribs);
-//				$module->content = ob_get_contents();
-//				ob_end_clean();
-//			}
-//		}
-//remove above
-
-		$app->scope = $scope; //revert the scope
+		MolajoFactory::getApplication()->scope = $scope; //revert the scope
 
 		return $module->content;
 	}
 
+    /**
+     * getRequest
+     *
+     * Gets the Request Object and populates Page Session Variables for Component
+     *
+     * @return bool
+     */
+    protected function getRequest ($module, $params)
+    {
+        $session = MolajoFactory::getSession();
+
+        /** 1. Request */
+        $request = array();
+        $request['application_id'] = $session->get('page.application_id');
+        $request['current_url'] = $session->get('page.current_url');
+        $request['component_path'] = $session->get('page.component_path');
+        $request['base_url'] = $session->get('page.base_url');
+        $request['item_id'] = $session->get('page.item_id');
+
+        $request['controller'] = 'module';
+        $request['extension_type'] = 'module';
+        $request['option'] = $session->get('page.option');
+        $request['no_com_option'] = $session->get('page.no_com_option');
+        $request['view'] = 'module';
+        $request['layout'] = '';
+        $request['layout_type'] = 'extension';
+        $request['model'] = 'module';
+        $request['task'] = 'display';
+        $request['format'] = 'html';
+        $request['plugin_type'] = 'content';
+
+        $request['id'] = $session->get('page.id');
+        $request['cid'] = $session->get('page.cid');
+        $request['catid'] = $session->get('page.catid');
+        $request['params'] = $module->params;
+
+        $request['acl_implementation'] = $session->get('page.acl_implementation');
+        $request['component_table'] = $session->get('page.component_table');
+        $request['filter_fieldname'] = $session->get('page.filter_fieldname');
+        $request['select_fieldname'] = $session->get('page.select_fieldname');
+
+        $request['title'] = $module->title;
+        $request['subtitle'] =  $module->subtitle;
+        $request['metakey'] = $session->get('page.metakey');
+        $request['metadesc'] = $session->get('page.metadesc');
+        $request['metadata'] = $session->get('page.metadata');
+        $request['wrap'] = $module->style;
+        $request['position'] = $module->position;
+
+        return $request;
+    }
+
 	/**
-	 * Get the path to a layout for a module
+	 * getLayoutPath
+     *
+     * Get the path to a layout for a module
 	 *
 	 * @param   string  $module	The name of the module
 	 * @param   string  $layout	The name of the module layout. If alternative layout, in the form template:filename.
@@ -249,7 +289,9 @@ abstract class MolajoModuleHelper
 	}
 
 	/**
-	 * Load published modules
+	 * _load
+     *
+     * Load published modules
 	 *
 	 * @return  array
 	 */
@@ -262,26 +304,29 @@ abstract class MolajoModuleHelper
 		}
 
 		$Itemid 	= JRequest::getInt('Itemid');
-		$app		= MolajoFactory::getApplication();
 		$user		= MolajoFactory::getUser();
 		$lang 		= MolajoFactory::getLanguage()->getTag();
-		$applicationId 	= (int) $app->getApplicationId();
+		$applicationId 	= (int) MolajoFactory::getApplication()->getApplicationId();
 
 		$cache 		= MolajoFactory::getCache ('com_modules', '');
 		$cacheid 	= md5(serialize(array($Itemid, $applicationId, $lang)));
 
-		if (!($clean = $cache->get($cacheid))) {
+		if ($clean = $cache->get($cacheid)) {
+        } else {
 			$db	= MolajoFactory::getDbo();
-
 			$query = $db->getQuery(true);
-			$query->select('id, title, module, position, content, showtitle, params, mm.menuid');
-			$query->from('#__modules AS m');
-			$query->join('LEFT','#__modules_menu AS mm ON mm.moduleid = m.id');
-			$query->where('m.published = 1');
 
 			$date = MolajoFactory::getDate();
 			$now = $date->toMySQL();
 			$nullDate = $db->getNullDate();
+
+            $query->select('id, title, title as subtitle ');
+            $query->select('module, position, content, showtitle ');
+            $query->select('showtitle, showtitle as showsubtitle, params, mm.menuid');
+			$query->from('#__modules AS m');
+			$query->join('LEFT','#__modules_menu AS mm ON mm.moduleid = m.id');
+			$query->where('m.published = 1');
+			$query->where('m.id <> 1');
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 
@@ -291,14 +336,12 @@ abstract class MolajoModuleHelper
 			$query->where('m.application_id = '. $applicationId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
 
-			// Filter by language
-			if ($app->isSite() && $app->getLanguageFilter()) {
+			if (MolajoFactory::getApplication()->isSite()
+                && MolajoFactory::getApplication()->getLanguageFilter()) {
 				$query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
 			}
-
 			$query->order('position, ordering');
 
-			// Set the query
             $db->setQuery($query->__toString());
             
 			$modules = $db->loadObjectList();

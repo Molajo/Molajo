@@ -24,7 +24,7 @@ class MenusModelMenus extends JModelList
 	 *
 	 * @param	array	An optional associative array of configuration settings.
 	 * @see		JController
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function __construct($config = array())
 	{
@@ -43,7 +43,7 @@ class MenusModelMenus extends JModelList
 	 * Overrides the getItems method to attach additional metrics to the list.
 	 *
 	 * @return	mixed	An array of data items on success, false on failure.
-	 * @since	1.6.1
+	 * @since	1.0.1
 	 */
 	public function getItems()
 	{
@@ -160,7 +160,7 @@ class MenusModelMenus extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{

@@ -36,7 +36,7 @@ abstract class JHtmlCategory
 
 		if (!isset(self::$items[$hash])) {
 			$config	= (array) $config;
-			$db	= JFactory::getDbo();
+			$db	= MolajoFactory::getDbo();
 			$query	= $db->getQuery(true);
 
 			$query->select('a.id, a.title, a.level, a.extension');
@@ -63,7 +63,7 @@ abstract class JHtmlCategory
 			$db->setQuery($query);
 			$results = $db->loadObjectList();
 
-                        $lang = JFactory::getLanguage();
+                        $lang = MolajoFactory::getLanguage();
 			self::$items[$hash] = array();
 
                         $categoryExtension = '';

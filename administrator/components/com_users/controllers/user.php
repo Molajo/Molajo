@@ -23,7 +23,7 @@ class UsersControllerUser extends JControllerForm
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $text_prefix = 'COM_USERS_USER';
 
@@ -36,7 +36,7 @@ class UsersControllerUser extends JControllerForm
 	 * @param	string	The name of the key for the primary key.
 	 *
 	 * @return	boolean
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{
@@ -55,7 +55,7 @@ class UsersControllerUser extends JControllerForm
 	 * Overrides parent save method to check the submitted passwords match.
 	 *
 	 * @return	mixed	Boolean or JError.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($key = null, $urlVar = null)
 	{

@@ -23,7 +23,7 @@ class JFormFieldModulePosition extends JFormFieldText
 	 * The form field type.
 	 *
 	 * @var		string
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $type = 'ModulePosition';
 
@@ -31,7 +31,7 @@ class JFormFieldModulePosition extends JFormFieldText
 	 * Method to get the field input markup.
 	 *
 	 * @return	string	The field input markup.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getInput()
 	{

@@ -6,10 +6,14 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-//if (!JRequest::getInt('hidemainmenu')):
-require_once dirname(__FILE__).'/helper.php';
 
-$list = modSubmenuHelper::getItems();
-if (count($list) > 0) {
-    require MolajoModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
-}
+
+
+
+//if (!JRequest::getInt('hidemainmenu')):
+//require_once dirname(__FILE__).'/helper.php';
+
+//$list = modSubmenuHelper::getItems();
+//if (count($list) > 0) {
+//    require MolajoModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
+//}

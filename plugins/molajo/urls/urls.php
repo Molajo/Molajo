@@ -21,7 +21,7 @@ class plgMolajoURLs extends JPlugin	{
      */
     function MolajoOnAfterInitialise () {
 
-        $app =& JFactory::getApplication('JSite');
+        $app =& MolajoFactory::getApplication('JSite');
         $router =& $app->getRouter();
 
         if ($router->getMode() == JROUTER_MODE_SEF) {
@@ -68,7 +68,7 @@ class plgMolajoURLs extends JPlugin	{
      */
     function MolajoParseURL (&$router, &$uri)	{
 
-        $app =& JFactory::getApplication();
+        $app =& MolajoFactory::getApplication();
         if ($app->isAdmin()) {
                 return $vars;
         }

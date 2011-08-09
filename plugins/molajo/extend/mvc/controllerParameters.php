@@ -29,7 +29,7 @@ class extendControllerParameters {
      */
     public function verifyGlobal ($task, $component_option, $category, $form)
     {
-        $app = JFactory::getApplication();
+        $app = MolajoFactory::getApplication();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -88,9 +88,9 @@ class extendControllerParameters {
      */
     public function verifyContentType ($task, $component_option, $category, $form, $contentType)
     {
-        $user = JFactory::getUser();
-        $db = JFactory::getDbo();
-        $app = JFactory::getApplication();
+        $user = MolajoFactory::getUser();
+        $db = MolajoFactory::getDbo();
+        $app = MolajoFactory::getApplication();
         $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
         $fieldParams = new JParameter($systemPlugin->params);
 
@@ -194,7 +194,7 @@ class extendControllerParameters {
     {
 
         /** language files per content type must be loaded **/
-        $language = JFactory::getLanguage();
+        $language = MolajoFactory::getLanguage();
         if ($path == null) {
             $path = MOLAJO_EXTEND_ROOT.'/parameters/';
         }
@@ -239,7 +239,7 @@ class extendControllerParameters {
         $contentTypeForm = new JForm ('params');
 
         /** initialization **/
-        $language = JFactory::getLanguage();
+        $language = MolajoFactory::getLanguage();
         if ($path == null) {
             $path = MOLAJO_EXTEND_ROOT.'/parameters/';
         }

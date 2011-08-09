@@ -32,7 +32,7 @@ class JFormFieldSearch extends JFormField
 	 * Method to get the field input.
 	 *
 	 * @return	string		The field input.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function getInput()
 	{

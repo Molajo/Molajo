@@ -21,7 +21,7 @@ class SearchController extends JController
 {
 	/**
 	 * @var		string	The default view.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected $DefaultView = 'searches';
 

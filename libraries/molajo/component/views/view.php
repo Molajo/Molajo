@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoView extends MolajoLayout
 {
-
     /**
      * display
      *

@@ -21,7 +21,7 @@ class ModulesControllerModules extends JControllerAdmin
 {
 	/**
 	 * Method to clone an existing module.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function duplicate()
 	{
@@ -48,7 +48,7 @@ class ModulesControllerModules extends JControllerAdmin
 
 	/**
 	 * Proxy for getModel.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function &getModel($name = 'Module', $prefix = 'ModulesModel', $config = array())
 	{

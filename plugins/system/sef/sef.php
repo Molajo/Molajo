@@ -23,7 +23,7 @@ class plgSystemSef extends JPlugin
 	 */
 	public function onAfterRender()
 	{
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		if ($app->getName() != 'site' || $app->getCfg('sef')=='0') {
 			return true;

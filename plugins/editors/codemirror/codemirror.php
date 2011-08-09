@@ -32,7 +32,7 @@ class plgEditorCodemirror extends JPlugin
 	public function onInit()
 	{
 		JHtml::_('core');
-		$uncompressed	= JFactory::getApplication()->getCfg('debug') ? '-uncompressed' : '';
+		$uncompressed	= MolajoFactory::getApplication()->getCfg('debug') ? '-uncompressed' : '';
 		JHtml::_('script',$this->_basePath . 'js/codemirror'.$uncompressed.'.js', false, false, false, false);
 		JHtml::_('stylesheet',$this->_basePath . 'css/codemirror.css');
 
@@ -89,7 +89,7 @@ class plgEditorCodemirror extends JPlugin
 		if (!$done)
 		{
 			$done = true;
-			$doc = JFactory::getDocument();
+			$doc = MolajoFactory::getDocument();
 			$js = "\tfunction jInsertEditorText(text, editor) {
 					Joomla.editors.instances[editor].replaceSelection(text);\n
 			}";
@@ -134,14 +134,14 @@ class plgEditorCodemirror extends JPlugin
 		// Must pass the field id to the buttons in this editor.
 		$buttons = $this->_displayButtons($id, $buttons, $asset, $author);
 
-		$compressed	= JFactory::getApplication()->getCfg('debug') ? '-uncompressed' : '';
+		$compressed	= MolajoFactory::getApplication()->getCfg('debug') ? '-uncompressed' : '';
 
 		// Default syntax
 		$parserFile = 'parsexml.js';
 		$styleSheet = 'xmlcolors.css';
 
 		// Look if we need special syntax coloring.
-		$syntax = JFactory::getApplication()->getUserState('editor.source.syntax');
+		$syntax = MolajoFactory::getApplication()->getUserState('editor.source.syntax');
 
 		if ($syntax) {
 			switch($syntax)

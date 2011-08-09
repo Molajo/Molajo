@@ -26,7 +26,7 @@ class MenusControllerItems extends JControllerAdmin
 
 	/**
 	 * Proxy for getModel
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function getModel($name = 'Item', $prefix = 'MenusModel', $config = array())
 	{
@@ -37,7 +37,7 @@ class MenusControllerItems extends JControllerAdmin
 	 * Rebuild the nested set tree.
 	 *
 	 * @return	bool	False on failure or error, true on success.
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function rebuild()
 	{
@@ -83,7 +83,7 @@ class MenusControllerItems extends JControllerAdmin
 	/**
 	 * Method to set the home property for a list of items
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function setDefault()
 	{

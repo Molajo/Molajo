@@ -38,7 +38,7 @@ class CacheHelper
 	 * @param	string	The name of the active view.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public static function addSubmenu($vName)
 	{

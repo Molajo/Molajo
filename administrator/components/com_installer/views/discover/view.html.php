@@ -22,7 +22,7 @@ include_once dirname(__FILE__).'/../default/view.php';
 class InstallerViewDiscover extends InstallerViewDefault
 {
 	/**
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function display($tpl=null)
 	{
@@ -37,7 +37,7 @@ class InstallerViewDiscover extends InstallerViewDefault
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	protected function addToolbar()
 	{

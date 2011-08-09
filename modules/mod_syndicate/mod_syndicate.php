@@ -26,4 +26,4 @@ $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 $text = htmlspecialchars($params->get('text'));
 
-require JModuleHelper::getLayoutPath('mod_syndicate', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_syndicate', $params->get('layout', 'default'));

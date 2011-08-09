@@ -56,7 +56,7 @@ class InstallerModelWarnings extends JModelList
 	/**
 	 * Load the data.
 	 *
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function getItems()
 	{

@@ -18,7 +18,7 @@ $app = MolajoFactory::getApplication();
 <link href="templates/<?php echo  $this->template ?>/css/template.css" rel="stylesheet" type="text/css" />
 
 <?php if ($this->direction == 'rtl') : ?>
-	<link href="templates/<?php echo  $this->template ?>/css/template_rtl.css" rel="stylesheet" type="text/css" />
+	<link href="templates/<?php echo $this->template ?>/css/template_rtl.css" rel="stylesheet" type="text/css" />
 <?php endif; ?>
 
 <!--[if IE 7]>

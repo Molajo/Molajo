@@ -22,7 +22,7 @@ class MenusControllerItem extends JControllerForm
 	 * Method to add a new menu item.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function add()
 	{
@@ -47,7 +47,7 @@ class MenusControllerItem extends JControllerForm
 	 * Method to run batch opterations.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function batch($model)
 	{
@@ -68,7 +68,7 @@ class MenusControllerItem extends JControllerForm
 	 * Checks the item in, sets item ID in the session to null, and then redirects to the list page.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function cancel($key = null)
 	{
@@ -90,7 +90,7 @@ class MenusControllerItem extends JControllerForm
 	 * Method to edit an existing menu item.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
@@ -111,7 +111,7 @@ class MenusControllerItem extends JControllerForm
 	 * Method to save a menu item.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	public function save($key = null, $urlVar = null)
 	{
@@ -265,7 +265,7 @@ class MenusControllerItem extends JControllerForm
 	 * Sets the type of the menu item currently being editted.
 	 *
 	 * @return	void
-	 * @since	1.6
+	 * @since	1.0
 	 */
 	function setType()
 	{
