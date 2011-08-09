@@ -937,7 +937,7 @@ INSERT INTO `#__extensions` (
     (503, 'mod_latest', 'module', 'mod_latest', 'mod_latest', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 0, 2, 1503),
     (504, 'mod_logged', 'module', 'mod_logged', 'mod_logged', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 0, 1, 1504),
     (505, 'mod_login', 'module', 'mod_login', 'mod_login', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 0, 1, 1505),
-    (506, 'mod_logout', 'module', 'mod_logout', 'mod_logout', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 0, 2, 1506);
+    (506, 'mod_logout', 'module', 'mod_logout', 'mod_logout', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 0, 2, 1506),
     (507, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 0, 2, 1507),
     (508, 'mod_mypanel', 'module', 'mod_mypanel', 'mod_mypanel', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 0, 2, 1508),
     (509, 'mod_myshortcuts', 'module', 'mod_myshortcuts', 'mod_myshortcuts', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 0, 2, 1509),
@@ -977,23 +977,23 @@ INSERT INTO `#__extensions` (
   `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`, `access`, `asset_id` )
     VALUES
-    (4000, 'adminlogin', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4000),
-    (4010, 'advanced', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4010),
-    (4020, 'article', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4020),
-    (4030, 'banner', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4030),
-    (4040, 'blog', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4040),
-    (4050, 'categories', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4050),
-    (4060, 'category', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4060),
-    (4070, 'contact', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4070),
-    (4080, 'contact_form', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4080),
-    (4090, 'integration', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4090),
-    (4100, 'item', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4100),
-    (4110, 'list', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4110),
-    (4120, 'newsfeed', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4120),
-    (4130, 'response', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4130),
-    (4140, 'search', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4140),
-    (4150, 'user', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 4150),
-    (4160, 'weblink', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5160);
+    (5000, 'adminlogin', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5000),
+    (5010, 'advanced', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5010),
+    (5020, 'article', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5020),
+    (5030, 'banner', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5030),
+    (5040, 'blog', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5040),
+    (5050, 'categories', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5050),
+    (5060, 'category', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5060),
+    (5070, 'contact', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5070),
+    (5080, 'contact_form', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5080),
+    (5090, 'integration', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5090),
+    (5100, 'item', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5100),
+    (5110, 'list', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5110),
+    (5120, 'newsfeed', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5120),
+    (5130, 'response', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5130),
+    (5140, 'search', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5140),
+    (5150, 'user', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5150),
+    (5160, 'weblink', 'parameter', 'parameter', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1, 1, 5160);
 
 #
 # Plugins
@@ -1954,30 +1954,30 @@ INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `orderin
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `application_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (1, 'Login', 'System Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 1, 5001),
-    (2, 'Logout', 'System Logout', '', '', 1, 'logout', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logout', 1, '', 1, '*', 2, 5002),
-    (3, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 5008),
-    (4, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 5010),
-    (5, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 2, 5011),
-    (6, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 2, 5015),
-    (7, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 2, 5020),
-    (8, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 2, 5030),
-    (9, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 5035),
-    (10, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 2, 5040),
-    (11, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 2, 5050),
-    (12, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 2, 5055),
-    (13, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 2, 5060),
-    (14, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 2, 5062),
-    (15, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 2, 5063);
+    (1, 'Login', 'System Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 1, 7001),
+    (2, 'Logout', 'System Logout', '', '', 1, 'logout', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logout', 1, '', 1, '*', 2, 7002),
+    (3, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 7008),
+    (4, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 7010),
+    (5, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 2, 7011),
+    (6, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 2, 7015),
+    (7, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 2, 7020),
+    (8, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 2, 7030),
+    (9, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 7035),
+    (10, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 2, 7040),
+    (11, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 2, 7050),
+    (12, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 2, 7055),
+    (13, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 2, 7060),
+    (14, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 2, 7062),
+    (15, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 2, 7063);
 
 # site modules
 INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `ordering`, `position`, `checked_out`,
   `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
   `application_id`, `language`, `access`,  `asset_id`)
     VALUES
-    (16, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5070),
-    (17, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 5085),
-    (18, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 5080);
+    (16, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 7070),
+    (17, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 7085),
+    (18, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 7080);
 
 INSERT INTO `#__modules_menu` VALUES
 (1,0),
