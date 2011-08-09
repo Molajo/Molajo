@@ -1,15 +1,15 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Layout
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @subpackage  Submenu
+ * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
 /** 1. should the module run? */
 $session = MolajoFactory::getSession();
 if ($session->get('page.format') == 'html') {
-    return;
 } else {
     return;
 }
@@ -34,3 +34,8 @@ $toolbar->addButtonsDisplayLayout ($session->get('page.option'), $permissions);
 $toolbar = MolajoToolbar::getInstance('toolbar')->render('toolbar');
 require MolajoModuleHelper::getLayoutPath('mod_toolbar', $params->get('layout', 'default'));
 */
+
+$request['wrap'] = $module->style;
+$request['position'] = $module->position;
+$request['layout'] = 'admintitle';
+$request['layout_type'] = 'extension';

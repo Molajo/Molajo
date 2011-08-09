@@ -344,6 +344,7 @@ class MolajoLayout extends JView
         /** Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_PATH_ROOT.'/media/site/'.$applicationName;
         $urlPath = JURI::root().'media/site/'.$applicationName;
+
         if (isset($this->params->load_application_css)
             && $this->params->get('load_application_css', true) === true) {
             $this->loadMediaCSS ($filePath, $urlPath);
@@ -364,14 +365,29 @@ class MolajoLayout extends JView
         }
 
         /** Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        if (isset($this->params->load_application_css)
-            && $this->params->get('load_application_css', true) === true) {
+//        if (isset($this->params->load_application_css)
+//            && $this->params->get('load_application_css', true) === true) {
 //            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-        }
-        if (isset($this->params->load_application_css)
-            && $this->params->get('load_application_css', true) === true) {
+//        }
+//        if (isset($this->params->load_application_css)
+//            && $this->params->get('load_application_css', true) === true) {
 //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-        }
+//        }
+
+        /** Layout specific CSS and JS in => layouts/[layout_type]/[asset_id]/css[js]/XYZ.css[js] */
+
+        $filePath = $this->layout_path;
+        $urlPath = JURI::root().'/layouts/'.$this->request['layout_type'].'s'.'/'.$this->request['layout'];
+
+//        if (isset($this->params->load_application_css)
+//            && $this->params->get('load_application_css', true) === true) {
+            $this->loadMediaCSS ($filePath, $urlPath);
+//        }
+//        if (isset($this->params->load_application_css)
+//            && $this->params->get('load_application_css', true) === true) {
+//            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
+            $this->loadMediaJS ($filePath, $urlPath);
+//        }
     }
 
     /**
@@ -385,13 +401,14 @@ class MolajoLayout extends JView
      */
     protected function loadMediaCSS ($filePath, $urlPath)
     {
-        if (JFolder::exists($filePath)) {
+        if (JFolder::exists($filePath.'/css')) {
         } else {
             return;
         }
 
         $files = JFolder::files($filePath.'/css', '\.css$', false, false);
-
+var_dump($files);
+echo '<br /><br />';
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
@@ -416,7 +433,7 @@ class MolajoLayout extends JView
      */
     protected function loadMediaJS ($filePath, $urlPath)
     {
-        if (JFolder::exists($filePath)) {
+        if (JFolder::exists($filePath.'/js')) {
         } else {
             return;
         }

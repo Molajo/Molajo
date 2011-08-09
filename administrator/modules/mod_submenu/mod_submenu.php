@@ -9,6 +9,13 @@ defined('MOLAJO') or die;
 
 
 
+$request['wrap'] = $module->style;
+$request['position'] = $module->position;
+$request['layout'] = 'admintitle';
+$request['layout_type'] = 'extension';
+
+
+
 
 //if (!JRequest::getInt('hidemainmenu')):
 //require_once dirname(__FILE__).'/helper.php';

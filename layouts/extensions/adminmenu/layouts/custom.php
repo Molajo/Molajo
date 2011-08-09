@@ -7,8 +7,6 @@
  */
 defined('MOLAJO') or die;
 
-$filehelper = new MolajoFileHelper();
-$filehelper->requireClassFile(dirname(__FILE__).'/menu.php', 'MolajoAdminCSSMenu');
 $menu = new MolajoAdminCSSMenu();
 
 $disableMenu = JRequest::getInt('hidemainmenu');
@@ -20,5 +18,4 @@ if ($disableMenu == 1) {
     include dirname(__FILE__).'/menu_enabled.php';
 }
 
-// adminmenu
 $menu->renderMenu('menu', $enabled ? '' : 'disabled');
