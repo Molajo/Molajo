@@ -383,17 +383,12 @@ class MolajoDocument extends JObject
 		$name = strtolower($name);
 		if ($name == 'generator') {
 			$result = $this->getGenerator();
-		}
-		else if ($name == 'description') {
+		} else if ($name == 'description') {
 			$result = $this->getDescription();
-		}
-		else {
-			if ($http_equiv == true) {
-				$result = @$this->_metaTags['http-equiv'][$name];
-			}
-			else {
-				$result = @$this->_metaTags['standard'][$name];
-			}
+		} else if ($http_equiv == true) {
+			$result = @$this->_metaTags['http-equiv'][$name];
+        } else {
+			$result = @$this->_metaTags['standard'][$name];
 		}
 
 		return $result;
@@ -416,22 +411,16 @@ class MolajoDocument extends JObject
 
 		if ($name == 'generator') {
 			$this->setGenerator($content);
-		}
-		else if ($name == 'description') {
+		} else if ($name == 'description') {
 			$this->setDescription($content);
-		}
-		else {
-			if ($http_equiv == true) {
-				$this->_metaTags['http-equiv'][$name] = $content;
-
-				// Syncing with HTTP-header
-				if($sync && strtolower($name) == 'content-type') {
-					$this->setMimeEncoding($content, false);
-				}
+		} else if ($http_equiv == true) {
+			$this->_metaTags['http-equiv'][$name] = $content;
+        	// Syncing with HTTP-header
+			if ($sync && strtolower($name) == 'content-type') {
+				$this->setMimeEncoding($content, false);
 			}
-			else {
+        } else {
 				$this->_metaTags['standard'][$name] = $content;
-			}
 		}
 	}
 
@@ -445,11 +434,12 @@ class MolajoDocument extends JObject
 	 * @return
 	 * @since    11.1
 	 */
-	public function addScript($url, $type = "text/javascript", $defer = false, $async = false)
+	public function addScript($url, $type = "text/javascript", $defer = false, $async = false, $priority = 0)
 	{
 		$this->_scripts[$url]['mime'] = $type;
 		$this->_scripts[$url]['defer'] = $defer;
 		$this->_scripts[$url]['async'] = $async;
+        $this->_scripts[$url]['priority'] = $priority;
 	}
 
 	/**
@@ -461,14 +451,14 @@ class MolajoDocument extends JObject
 	 * @return  void
 	 * @since    11.1
 	 */
-	public function addScriptDeclaration($content, $type = 'text/javascript')
+	public function addScriptDeclaration($content, $type = 'text/javascript', $priority = 0)
 	{
 		if (!isset($this->_script[strtolower($type)])) {
 			$this->_script[strtolower($type)] = $content;
-		}
-		else {
+		} else {
 			$this->_script[strtolower($type)] .= chr(13).$content;
 		}
+        $this->_script['priority'] = $priority;
 	}
 
 	/**
@@ -482,11 +472,12 @@ class MolajoDocument extends JObject
 	 * @return  void
 	 * @since    11.1
 	 */
-	public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array())
+	public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array(), $priority = 0)
 	{
 		$this->_styleSheets[$url]['mime']		= $type;
 		$this->_styleSheets[$url]['media']		= $media;
 		$this->_styleSheets[$url]['attribs']	= $attribs;
+		$this->_styleSheets[$url]['priority']	= $priority;
 	}
 
 	/**
@@ -497,14 +488,14 @@ class MolajoDocument extends JObject
 	 *
 	 * @return  void
 	 */
-	public function addStyleDeclaration($content, $type = 'text/css')
+	public function addStyleDeclaration($content, $type = 'text/css', $priority = 0)
 	{
 		if (!isset($this->_style[strtolower($type)])) {
 			$this->_style[strtolower($type)] = $content;
-		}
-		else {
+		} else {
 			$this->_style[strtolower($type)] .= chr(13).$content;
 		}
+		$this->_style['priority']	= $priority;
 	}
 
 	/**

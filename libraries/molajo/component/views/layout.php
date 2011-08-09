@@ -152,22 +152,26 @@ class MolajoLayout extends JView
             return false;
         }
 
-        /** template extension override **/
+        /**
+         * Determine path in order of priority
+         */
+
+        /** 1. template extension override **/
         if (is_dir($templateExtensionPath.'/'.$layout)) {
             $this->layout_path = $templateExtensionPath.'/'.$layout;
             return;
 
-        /** template layout override **/
+        /** 2. template layout override **/
         } else if (is_dir($templateLayoutPath.'/'.$layout)) {
             $this->layout_path = $templateLayoutPath.'/'.$layout;
             return;
 
-        /** extension layout **/
+        /** 3. extension layout **/
         } else if (is_dir($extensionPath.'/'.$layout)) {
             $this->layout_path = $extensionPath.'/'.$layout;
             return;
 
-        /** molajao library **/
+        /** 4. molajao library **/
         } else if (is_dir($corePath.'/'.$layout)) {
             $this->layout_path = $corePath.'/'.$layout;
             return;
@@ -377,7 +381,7 @@ class MolajoLayout extends JView
         /** Layout specific CSS and JS in => layouts/[layout_type]/[asset_id]/css[js]/XYZ.css[js] */
 
         $filePath = $this->layout_path;
-        $urlPath = JURI::root().'/layouts/'.$this->request['layout_type'].'s'.'/'.$this->request['layout'];
+        $urlPath = JURI::root().'layouts/'.$this->request['layout_type'].'s'.'/'.$this->request['layout'];
 
 //        if (isset($this->params->load_application_css)
 //            && $this->params->get('load_application_css', true) === true) {
@@ -407,8 +411,7 @@ class MolajoLayout extends JView
         }
 
         $files = JFolder::files($filePath.'/css', '\.css$', false, false);
-var_dump($files);
-echo '<br /><br />';
+
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
@@ -437,7 +440,7 @@ echo '<br /><br />';
         } else {
             return;
         }
-
+//todo: differentiate between script and scripts
         $files = JFolder::files($filePath.'/js', '\.js$', false, false);
 
         if (count($files) > 0) {

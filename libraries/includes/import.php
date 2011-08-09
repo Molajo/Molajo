@@ -138,6 +138,8 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/user.php', 'JUser');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/user/authentication.php', 'JAuthentication');
 
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/uri.php', 'JURI');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/browser.php', 'JBrowser');
+
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/event.php', 'JEvent');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/dispatcher.php', 'JDispatcher');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilterInput');

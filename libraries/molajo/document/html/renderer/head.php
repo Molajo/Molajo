@@ -45,6 +45,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 		// Trigger the onBeforeCompileHead event (skip for installation, since it causes an error)
 		$app = MolajoFactory::getApplication();
 		$app->triggerEvent('onBeforeCompileHead');
+
 		// Get line endings
 		$lnEnd	= $document->_getLineEnd();
 		$tab	= $document->_getTab();
@@ -86,6 +87,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			$buffer .= $tab.$link.$tagEnd.$lnEnd;
 		}
 
+        
 		// Generate stylesheet links
 		foreach ($document->_styleSheets as $strSrc => $strAttr)
 		{

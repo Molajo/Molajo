@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="1.0" application="administrator" method="upgrade">
+	<name>MOD_FOOTER_NAME</name>
+	<author>Amy Stephen</author>
+	<creationDate>August 2011</creationDate>
+	<copyright>Copyright 2011 Amy Stephen. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
+	<authorEmail>collaborate@molajo.org</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<version>1.0</version>
+	<description>MOD_FOOTER_XML_DESCRIPTION</description>
+	<files>
+		<filename module="mod_footer">mod_footer.php</filename>
+		<folder>language</folder>
+	</files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.mod_footer.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.mod_footer.sys.ini</language>
+    </languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+                <field
+                    name="link"
+                    type="url"
+                    class="inputbox"
+                    label="MOLAJO_FIELD_LINK_LABEL"
+                    description="MOLAJO_FIELD_LINK_DESC"
+                    filter="MolajoFilterHelper::filterURL"
+                    size="60"
+                />
+                <field
+                    name="linked_text"
+                    type="text"
+                    label="MOLAJO_FIELD_LINKED_TEXT_LABEL"
+                    description="MOLAJO_FIELD_LINKED_TEXT_DESC"
+                    class="inputbox"
+                    size="45"
+                />
+                <field
+                    name="remaining_text"
+                    type="textarea"
+                    label="MOLAJO_FIELD_REMAINING_TEXT_LABEL"
+                    description="MOLAJO_FIELD_REMAINING_TEXT_DESC"
+                    class="inputbox"
+                    rows="3"
+                    cols="30"
+                />
+                <field
+                    name="version"
+                    type="textarea"
+                    label="MOLAJO_FIELD_VERSION_TEXT_LABEL"
+                    description="MOLAJO_FIELD_VERSION_TEXT_DESC"
+                    class="inputbox"
+                    rows="3"
+                    cols="30"
+                />
+			</fieldset>
+			<fieldset
+				name="advanced">
+				<field
+					name="layout"
+					type="extensionlayout"
+					label="MOLAJO_FIELD_EXTENSION_LAYOUT_LABEL"
+					description="MOLAJO_FIELD_EXTENSION_LAYOUT_DESC" />
+
+                <field
+					name="wrap"
+					type="wraplayout"
+					label="MOLAJO_FIELD_WRAP_LAYOUT_LABEL"
+					description="MOLAJO_FIELD_WRAP_LAYOUT_DESC" />
+
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="MOLAJO_FIELD_MODULECLASS_SUFFIX_LABEL"
+					description="MOLAJO_FIELD_MODULECLASS_SUFFIX_DESC" />
+
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="MOLAJO_FIELD_CACHE_LABEL"
+					description="MOLAJO_FIELD_CACHE_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="MOLAJO_FIELD_CACHE_TIME_LABEL"
+					description="MOLAJO_FIELD_CACHE_TIME_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

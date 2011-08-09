@@ -54,7 +54,7 @@ class MolajoController extends JController
     public $params = array();
 
     /**
-     * @var object $this->document
+     * @var object $document
      *
      * @since 1.0
      */
