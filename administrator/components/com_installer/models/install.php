@@ -69,7 +69,7 @@ class InstallerModelInstall extends JModel
 	 * Install an extension from either folder, url or upload.
 	 *
 	 * @return	boolean result of install
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function install()
 	{
@@ -194,7 +194,7 @@ class InstallerModelInstall extends JModel
 	 * Install an extension from a directory
 	 *
 	 * @return	Package details or false on failure
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	protected function _getPackageFromFolder()
 	{
@@ -229,7 +229,7 @@ class InstallerModelInstall extends JModel
 	 * Install an extension from a URL
 	 *
 	 * @return	Package details or false on failure
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	protected function _getPackageFromUrl()
 	{

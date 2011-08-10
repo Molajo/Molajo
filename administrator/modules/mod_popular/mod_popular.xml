@@ -79,7 +79,7 @@
 					label="COM_MODULES_FIELD_CACHING_LABEL"
 					description="COM_MODULES_FIELD_CACHING_DESC">
 					<option
-						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+						value="0">MOLAJO_FIELD_VALUE_NOCACHING</option>
 				</field>
 
 				<field

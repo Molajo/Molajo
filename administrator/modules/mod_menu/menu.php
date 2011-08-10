@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Menu
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.
- * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -63,6 +63,7 @@ class MolajoAdminCSSMenu extends JTree
 
     /**
      * renderLevel
+     *
      * @param $depth
      * @return void
      */
@@ -142,7 +143,7 @@ class MolajoAdminCSSMenu extends JTree
 	 * @access	public
 	 * @param	string	$identifier	Icon identification string
 	 * @return	string	CSS class name
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function getIconClass($identifier)
 	{

@@ -20,7 +20,7 @@ class ConfigControllerApplication extends JController
 	 *
 	 * @param	array	$config		An optional associative array of configuration settings.
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function __construct($config = array())
 	{
@@ -34,7 +34,7 @@ class ConfigControllerApplication extends JController
 	 * Method to save the configuration.
 	 *
 	 * @return	bool	True on success, false on failure.
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function save()
 	{
@@ -160,7 +160,7 @@ class ConfigControllerApplication extends JController
 	 * Method to remove the root property from the configuration.
 	 *
 	 * @return	bool	True on success, false on failure.
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function removeroot() {}
 }

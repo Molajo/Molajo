@@ -23,7 +23,7 @@ class MolajoPathwayAdministrator extends MolajoPathway
 	 * @param	array
 	 *
 	 * @return	MolajoPathwayAdministrator
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function __construct($options = array())
 	{

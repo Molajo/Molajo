@@ -92,6 +92,18 @@ class MolajoLayout extends JView
     public $layout_path;
 
     /**
+     * @var object $layout
+     * @since 1.0
+     */
+    public $layout;
+
+    /**
+     * @var object $wrap
+     * @since 1.0
+     */
+    public $wrap;
+
+    /**
      * findPath
      *
      * Looks for path of Request Layout as a layout folder, in this order:

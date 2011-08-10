@@ -1,19 +1,18 @@
 <?php
 /**
- * @version		$Id: mod_custom.php 21097 2011-04-07 15:38:03Z dextercowley $
- * @package		Joomla.Administrator
- * @subpackage	mod_custom
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Menu
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// no direct access
-defined('_JEXEC') or die;
+$layout = $params->def('layout', 'custom');
+$wrap = $params->def('wrap', 'div');
 
-if ($params->def('prepare_content', 1))
-{
+if ($params->def('prepare_content', 1)) {
 	MolajoPluginHelper::importPlugin('content');
-	$module->content = JHtml::_('content.prepare', $module->content);
+	JHtml::_('content.prepare', $module->content);
 }
+$rowset[0]->content = $module->content;
 
-require MolajoModuleHelper::getLayoutPath('mod_custom');

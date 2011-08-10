@@ -22,7 +22,7 @@ jimport('joomla.application.component.view');
 class InstallerViewDefault extends JView
 {
 	/**
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function __construct($config = null)
 	{
@@ -33,7 +33,7 @@ class InstallerViewDefault extends JView
 	}
 
 	/**
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function display($tpl=null)
 	{

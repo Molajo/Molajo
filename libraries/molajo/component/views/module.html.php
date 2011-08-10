@@ -30,62 +30,6 @@ class MolajoViewModule extends MolajoView
         /** 7. System Variables */
         parent::display($tpl);
 
-        /** Model errors */
-        if (count($errors = $this->get('Errors'))) {
-            JError::raiseError(500, implode("\n", $errors));
-            return false;
-        }
-
-        /** No results */
-        if ($this->params->get('suppress_no_results', false) === true
-            && count($this->rowset == 0)) {
-            return;
-        }
-
-        /** Render Layout */
-//var_dump($this->state);
-//echo 'layout '.$this->request['layout'].'<br />';
-//echo 'type '.$this->request['layout_type'].'<br />';
-        $this->findPath($this->request['layout'], $this->request['layout_type']);
-//echo 'layout_path '.$this->layout_path.'<br />';
-        if ($this->layout_path === false) {
-            // load an error layout
-            return;
-        }
-        $renderedOutput = $this->renderLayout ($this->request['layout']);
-
-/** Wrap Rendered Layout */
-// Dynamically add outline style
-//  if (JRequest::getBool('tp')
-//      && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
-//      $attribs['style'] .= ' outline';
-//  }
-
-//consolidate with view.html - consider $this->state for wrap (module is there)
-
-       /** Wrap Rendered Layout */
-        $layout = $this->params->get('wrap', 'none');
-        if ($layout == 'horz') { $layout = 'horizontal'; }
-        if ($layout == 'xhtml') { $layout = 'div'; }
-        if ($layout == 'rounded') { $layout = 'div'; }
-
-        $this->rowset = array();
-
-		$this->rowset[0]->title     = $this->state->title;
-		$this->rowset[0]->subtitle  = $this->state->subtitle;
-		$this->rowset[0]->style     = $this->state->style;
-		$this->rowset[0]->position  = $this->state->position;
-
-		$this->rowset[0]->content   = $renderedOutput;
-
-        $this->findPath($layout, 'wrap');
-
-        /** Wrap Rendered */
-        if ($this->layout_path === false) {
-            return $renderedOutput;
-        } else {
-            return $this->renderLayout ($layout);
-        }
     }
 }
 

@@ -122,9 +122,9 @@
 					label="COM_MODULES_FIELD_CACHING_LABEL"
 					description="COM_MODULES_FIELD_CACHING_DESC">
 					<option
-						value="1">JGLOBAL_USE_GLOBAL</option>
+						value="1">MOLAJO_VALUE_USE_GLOBAL</option>
 					<option
-						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+						value="0">MOLAJO_FIELD_VALUE_NOCACHING</option>
 				</field>
 
 				<field

@@ -74,7 +74,7 @@ class InstallerControllerManage extends JController
 	 * Remove an extension (Uninstall).
 	 *
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function remove()
 	{

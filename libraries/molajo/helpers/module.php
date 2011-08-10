@@ -133,30 +133,15 @@ abstract class MolajoModuleHelper
 	 */
 	public static function renderModule($module, $attribs = array())
 	{
-        /** initialization */
-        $request = array();
-        $state = array();
-        $params = array();
-        $rowset = array();
-        $pagination = array();
-        $layout = 'default'; 
-
 		// Record the scope.
 		$scope = MolajoFactory::getApplication()->scope;
 
 		// Set scope to module name
 		MolajoFactory::getApplication()->scope = $module->module;
 
-		// Get parameters
-		$params = new JRegistry;
-		$params->loadJSON($module->params);
-
 		// Get module path
 		$module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
 		$path = MOLAJO_PATH_BASE.'/modules/'.$module->module.'/'.$module->module.'.php';
-
-        // Request
-        $request = self::getRequest($module, $params);
 
 		// Load the module
 		if ($module->user) {
@@ -171,9 +156,32 @@ abstract class MolajoModuleHelper
 
             /** view */
             $view = new MolajoViewModule ();
-echo $path.'<br />';
+
+            /** defaults */
+            $request = array();
+            $state = array();
+            $params = array();
+            $rowset = array();
+            $pagination = array();
+            $layout = 'default';
+            $wrap = 'none';
+            
+            $params = new JRegistry;
+            $params->loadJSON($module->params);
+
+            $request = self::getRequest($module, $params);
+
             /** include module */
 			require $path;
+
+            /** 1. Application */
+            $view->app = MolajoFactory::getApplication();
+
+            /** @var $this->document */
+            $view->document = MolajoFactory::getDocument();
+
+            /** @var $this->user */
+            $view->user = MolajoFactory::getUser();
 
             /** 1. Request */
             $view->request = $request;
@@ -193,10 +201,14 @@ echo $path.'<br />';
             /** 6. Layout */
             $view->layout = $layout;
 
+            /** 7. Wrap */
+            $view->wrap = $wrap;
+
+            /** render layout and wrap */
             $module->content = $view->display();
 		}
 
-		MolajoFactory::getApplication()->scope = $scope; //revert the scope
+		MolajoFactory::getApplication()->scope = $scope;
 
 		return $module->content;
 	}
@@ -225,8 +237,6 @@ echo $path.'<br />';
         $request['option'] = $session->get('page.option');
         $request['no_com_option'] = $session->get('page.no_com_option');
         $request['view'] = 'module';
-        $request['layout'] = '';
-        $request['layout_type'] = 'extension';
         $request['model'] = 'module';
         $request['task'] = 'display';
         $request['format'] = 'html';
@@ -235,13 +245,12 @@ echo $path.'<br />';
         $request['id'] = $session->get('page.id');
         $request['cid'] = $session->get('page.cid');
         $request['catid'] = $session->get('page.catid');
-        $request['params'] = $module->params;
+        $request['params'] = $params;
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');
         $request['filter_fieldname'] = $session->get('page.filter_fieldname');
         $request['select_fieldname'] = $session->get('page.select_fieldname');
-
         $request['title'] = $module->title;
         $request['subtitle'] =  $module->subtitle;
         $request['metakey'] = $session->get('page.metakey');

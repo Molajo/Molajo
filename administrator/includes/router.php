@@ -32,7 +32,7 @@ class MolajoRouterAdministrator extends JRouter
 	 * @param	string	$uri	The internal URL
 	 *
 	 * @return	string	The absolute search engine friendly URL
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function build($url)
 	{

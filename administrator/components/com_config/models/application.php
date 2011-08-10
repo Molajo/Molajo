@@ -174,7 +174,7 @@ class ConfigModelApplication extends JModelForm
 	 * Method to remove the root property from the configuration.
 	 *
 	 * @return	bool	True on success, false on failure.
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function removeroot() {}
 }

@@ -2,13 +2,13 @@
 /**
  * @package     Molajo
  * @subpackage  Menu
- * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-$request['layout'] = $params->def('layout', 'adminfooter');
-$request['wrap'] = $params->def('wrap', 'div');
+$layout = $params->def('layout', 'admin_footer');
+$wrap = $params->def('wrap', 'div');
 
 /**
  *  Line 1
@@ -30,6 +30,7 @@ $rowset[0]->line1 = $line1;
 /**
  *  Line 2
  */
+var_dump($params);
 $rowset[0]->link = $params->def('link', 'http://molajo.org');
 $rowset[0]->linked_text = $params->def('linked_text', 'Molajo&#174;');
 $rowset[0]->remaining_text = $params->def('remaining_text', 'is free software.');

@@ -24,7 +24,7 @@ class MolajoModelDummy extends JModel
      * @var		array
      * @since	1.0
      */
-    public $request = null;
+    public $request = array();
 
     /**
      * $params
@@ -32,7 +32,23 @@ class MolajoModelDummy extends JModel
      * @var		string
      * @since	1.0
      */
-    protected $params = null;
+    public $params = array();
+
+    /**
+     * $items
+     *
+     * @var		string
+     * @since	1.0
+     */
+    public $items = array();
+
+    /**
+     * $pagination
+     *
+     * @var		string
+     * @since	1.0
+     */
+    public $pagination = array();
 
     /**
      * $context
@@ -40,7 +56,7 @@ class MolajoModelDummy extends JModel
      * @var		string
      * @since	1.0
      */
-    protected $context = null;
+    public $context = null;
 
     /**
      * populateState
@@ -88,7 +104,7 @@ class MolajoModelDummy extends JModel
      */
     public function getItems()
     {
-        return array();
+        return $this->items;
     }
 
     /**
@@ -100,6 +116,6 @@ class MolajoModelDummy extends JModel
      */
     public function getPagination ()
     {
-        return array();
+        return $this->pagination;
     }
 }

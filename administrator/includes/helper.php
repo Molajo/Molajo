@@ -21,7 +21,7 @@ class MolajoAdministratorHelper
 	 * Return the application option string [main component].
 	 *
 	 * @return	string		Option.
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public static function findOption()
 	{

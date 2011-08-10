@@ -22,7 +22,7 @@ class ConfigControllerComponent extends JController
 	 *
 	 * @param	array	$config		An optional associative array of configuration settings.
 	 * @return	void
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function __construct($config = array())
 	{

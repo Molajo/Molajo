@@ -83,7 +83,7 @@ class InstallerModelManage extends InstallerModel
 	 * Enable/Disable an extension.
 	 *
 	 * @return	boolean True on success
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function publish(&$eid = array(), $value = 1)
 	{
@@ -164,7 +164,7 @@ class InstallerModelManage extends InstallerModel
 	 *
 	 * @param	array	An array of identifiers
 	 * @return	boolean	True on success
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	function remove($eid = array())
 	{

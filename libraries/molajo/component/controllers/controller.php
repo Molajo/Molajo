@@ -174,11 +174,28 @@ class MolajoController extends JController
             }
         }
 
-       /** display view */
-       parent::display($cachable, $urlparams);
+        /** push model results into view */
 
-       return $this;
-   }
+        /** 1. Request */
+        $this->view->request = $this->model->get('Request');
+
+        /** 2. State */
+        $this->view->state = $this->model->get('State');
+
+        /** 3. Parameters */
+        $this->view->params = $this->model->get('Params');
+
+        /** 4. Query Results */
+        $this->view->rowset = $this->model->get('Items');
+
+        /** 5. Pagination */
+        $this->view->pagination = $this->model->get('Pagination');
+
+        /** display view */
+        parent::display($cachable, $urlparams);
+
+        return $this;
+    }
 
     /**
      * Shared methods for all controllers follow:

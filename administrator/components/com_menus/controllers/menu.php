@@ -25,7 +25,7 @@ class MenusControllerMenu extends JControllerForm
 	 * @param	array			An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @return	JController		This object to support chaining.
-	 * @since	1.5
+	 * @since	1.0
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{

@@ -43,51 +43,6 @@ class MolajoViewDisplay extends MolajoView
 
         /** 6. System Variables */
         parent::display($tpl);
-
-        /** Model errors */
-        if (count($errors = $this->get('Errors'))) {
-            JError::raiseError(500, implode("\n", $errors));
-            return false;
-        }
-
-        /** No results */
-        if ($this->params->get('suppress_no_results', false) === true
-            && count($this->rowset == 0)) {
-            return;
-        }
-
-        /** Render Layout */
-        $this->findPath($this->request['layout'], $this->request['layout_type']);
-        if ($this->layout_path === false) {
-            // load an error layout
-            return;
-        }
-        $renderedOutput = $this->renderLayout ($this->request['layout']);
-
-        /** Wrap Rendered Layout */
-        $session = MolajoFactory::getSession();
-        $layout = $this->params->get('wrap', 'none');
-        if ($layout == 'horz') { $layout = 'horizontal'; }
-        if ($layout == 'xhtml') { $layout = 'div'; }
-        if ($layout == 'rounded') { $layout = 'div'; }
-
-        $this->rowset = array();
-
-		$this->rowset[0]->title     = $session->get('page.title', '');
-		$this->rowset[0]->subtitle  = $session->set('page.subtitle', '');
-		$this->rowset[0]->style     = $session->set('page.style', '');
-		$this->rowset[0]->position  = $session->set('page.position', '');
-		$this->rowset[0]->content   = $renderedOutput;
-		$this->rowset[0]->position  = '';
-
-        $this->findPath($layout, 'wrap');
-
-        /** Wrap Rendered */
-        if ($this->layout_path === false) {
-            return $renderedOutput;
-        } else {
-            return $this->renderLayout ($layout);
-        }
     }
 }
 
