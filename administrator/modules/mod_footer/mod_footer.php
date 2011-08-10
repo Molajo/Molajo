@@ -30,7 +30,6 @@ $rowset[0]->line1 = $line1;
 /**
  *  Line 2
  */
-var_dump($params);
 $rowset[0]->link = $params->def('link', 'http://molajo.org');
 $rowset[0]->linked_text = $params->def('linked_text', 'Molajo&#174;');
 $rowset[0]->remaining_text = $params->def('remaining_text', 'is free software.');

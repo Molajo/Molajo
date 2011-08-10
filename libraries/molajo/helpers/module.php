@@ -155,7 +155,7 @@ abstract class MolajoModuleHelper
             ||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
 
             /** view */
-            $view = new MolajoViewModule ();
+            $view = new MolajoView ();
 
             /** defaults */
             $request = array();
@@ -165,43 +165,55 @@ abstract class MolajoModuleHelper
             $pagination = array();
             $layout = 'default';
             $wrap = 'none';
-            
+
+            $application = MolajoFactory::getApplication();
+            $document = MolajoFactory::getDocument();
+            $user = MolajoFactory::getUser();
+
             $params = new JRegistry;
             $params->loadJSON($module->params);
 
             $request = self::getRequest($module, $params);
 
+            $request['wrap_title'] = $module->title;
+            $request['wrap_subtitle'] = $module->subtitle;
+            $request['wrap_date'] = '';
+            $request['wrap_author'] = '';
+            $request['position'] = $module->position;
+            $request['wrap_more_array'] = array();
+
             /** include module */
+echo $path.'<br />';
 			require $path;
 
             /** 1. Application */
-            $view->app = MolajoFactory::getApplication();
+            $view->app = $application;
 
-            /** @var $this->document */
-            $view->document = MolajoFactory::getDocument();
+            /** 2. Document */
+            $view->document = $document;
 
-            /** @var $this->user */
-            $view->user = MolajoFactory::getUser();
+            /** 3. User */
+            $view->user = $user;
 
-            /** 1. Request */
+            /** 4. Request */
             $view->request = $request;
 
-            /** 2. State */
+            /** 5. State */
             $view->state = $module;
 
-            /** 3. Parameters */
+            /** 6. Parameters */
             $view->params = $params;
 
-            /** 4. Query Results */
+            /** 7. Query */
             $view->rowset = $rowset;
 
-            /** 5. Pagination */
+            /** 8. Pagination */
             $view->pagination = $pagination;
 
-            /** 6. Layout */
+            /** 9. Layout */
             $view->layout = $layout;
 
-            /** 7. Wrap */
+            /** 10. Wrap */
             $view->wrap = $wrap;
 
             /** render layout and wrap */

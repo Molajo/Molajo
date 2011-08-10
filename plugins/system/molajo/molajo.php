@@ -1,19 +1,17 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Molajo System Plugin
- * @copyright   Copyright (C) 2010-2011 Amy Stephen. All rights reserved. See http://Molajo.org/Copyright
+ * @subpackage  System Plugin
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('MOLAJO') or die;
 
 /**
  * Molajo System Plugin
  */
 class plgSystemMolajo extends JPlugin
 {
-    var $app;
-
     /**
      * System Event: onAfterInitialise
      *
@@ -21,478 +19,281 @@ class plgSystemMolajo extends JPlugin
      */
     public function __construct(& $subject, $config = array())
     {
-        define('MOLAJO', true);
         parent::__construct($subject, $config);
-	$this->loadLanguage();
-        $this->app =& MolajoFactory::getApplication();
-        $this->dispatcher = JDispatcher::getInstance();
+	    $this->loadLanguage();
     }
-    
+
     /**
      * System Event: onAfterInitialise
-     *
-     * @return	string
+     * @return	bool
      */
-    function onAfterInitialise()
-    {
+    function onAfterInitialise() {}
 
-    /**                                                                                                 **/
-    /** Overriding Core Molajo 1.6 and loading Molajo Library                                          **/
-    /**                                                                                                 **/
-
-    /**                                                                                                 **/
-    /** 1. defines.php can be used to move sensitive files http://tinyurl.com/MoveSensitiveFiles16      **/
-    /**                                                                                                 **/
-
-    /**                                                                                                 **/
-    /** 2. JForm Field Definitions                                                                      **/
-    /**                                                                                                 **/
-
-    /** Overriden JForm fields are in the molajo.xml file - addfieldpath contains link to files         **/
-
-    /**                                                                                                 **/
-    /** 3. JHTML Field Definitions                                                                      **/
-    /**                                                                                                 **/
-
-    /** view the JForm field previously mentioned for include that overrides core JHTML Field           **/
-
-    /**                                                                                                 **/
-    /** 4. Load Molajo library and classes (uncomment enqueueMessage to see in the Administrator)       **/
-    /**                                                                                                 **/
-        require_once JPATH_PLUGINS.'/molajo/libraries/mloader.php';        
-        mimport('molajo.application.plugins.pluginhelper');
-        mimport('molajo.helper.date');
-        mimport('molajo.helper.image');
-        mimport('molajo.helper.oembed');
-        mimport('molajo.helper.text');
-        mimport('molajo.helper.url');
-
-        require_once JPATH_PLUGINS.'/molajo/libraries/curl.php';
-
-    /**                                                                                                 **/
-    /** 5. Register specific Classes (Note: those loaded in defines are needed before framework loads   **/
-    /**                                                                                                 **/
-//        JLoader::register('PageHelper', JPATH_PLUGINS.'/molajo/libraries/molajo/administrator/helper/page.php');
-
-    /**                                                                                                 **/
-    /** 6. Trigger Molajo Plugins for OnAfterInitialize                                                 **/
-    /**                                                                                                 **/
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnAfterInitialise', array());
-    }
-
-    /**
-     * System Event: onAfterRoute
-     *
-     * @return	string
-     */
-    function onAfterRoute()
-    {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnAfterRoute', array());
-    }
-
-    /**
-     * Example prepare content method
-     *
-     * Method is called by the view
-     *
-     * @param	string	The context of the content being passed to the plugin.
-     * @param	object	The form object.
-     * @param	object	The form data
-     * @param	int	The 'page' number
-     * @since	1.6
-     */
-    function onContentPrepare($context, &$content, &$params, $page = 0)
-    {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentPrepare', array($context, &$content, &$params, $page = 0));
-    }
-
-    /**
+	/**
      * onContentPrepareData
      *
-     * Method is called by the view
+     * Not needed since all parameter data is stored in the database in the params column
      *
-     * @param	object	The context for the content passed to the plugin.
-     * @param	object	The form data
-     * @since	1.6
-     */
-    function onContentPrepareData($context, $data)
-    {
-        if ($this->app->getName() == 'administrator') { return; }
+	 * @param	string	$context    The context for the content passed to the plugin.
+	 * @param	object	$data       The data relating to the content that is being prepared for save.
+	 * @return	boolean
+	 * @since	1.6
+	 */
+	public function onContentPrepareData($context, $data) {}
 
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentPrepareData', array($context, $data));
+	/**
+	 * onContentPrepareForm
+     *
+     * Save Method: augments primary form fields with additional custom data
+     *
+	 * @param	object	$form  Form object to be used during save
+	 * @param	object	$data  Data returned from the model as validated
+	 * @return	boolean
+	 * @return	string
+	 * @since	1.6
+	 */
+	public function onContentPrepareForm($form, $data)
+	{
+        /** Only run for Component Configuration */
+		if (($form instanceof JForm)) {
+        } else {
+			return false;
+		}
+
+        /** initialize */
+        $loadParameterSetsArray = array();
+
+        /** retrieve parameter sets required for this component */
+		if ($form->getName() == 'com_config.component') {
+            $loadParameterSetsArray = $this->getComponentParameterSets();
+            if ($loadParameterSetsArray === false || count($loadParameterSetsArray) == 0) {
+                return true;
+            }
+
+        /** retrieve parameter sets required for this menu item */
+        } else if ($form->getName() == 'com_menus.item') {
+            $loadParameterSetsArray = $this->getMenuItemParameterSets($data);
+            if ($loadParameterSetsArray === false || count($loadParameterSetsArray) == 0) {
+                return true;
+            }
+
+		} else if ($form->getName() == JRequest::getVar('option').'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.JRequest::getCmd('task').'.'.JRequest::getInt('id').'.'.JRequest::getVar('datakey')) {
+            $loadParameterSetsArray = $this->getDetailItemParameterSets($data);
+            if ($loadParameterSetsArray === false || count($loadParameterSetsArray) == 0) {
+                return true;
+            }
+        }
+
+        /** load each parameter set one at a time  */
+		$parameterSetAdded = false;
+		foreach($loadParameterSetsArray as $parameterSet) {
+			$results = $this->loadParameterSetsToForm ($parameterSet, $form);
+            if ($results === true) {
+                $parameterSetAdded = true;
+            }
+		}
+
+        /** if any parameter sets were loaded, bind data to form (data stored in database and therefore already available) */
+		if ($parameterSetAdded) {
+			$form->bind($data);
+		}
+
+        return true;
+	}
+
+    /**
+     * getComponentParameterSets
+     *
+     * Retrieve the set of Layouts for which Parameter sets are needed
+     *
+     * @return object
+     */
+    function getComponentParameterSets ()
+    {
+        $params = JComponentHelper::getParams(JRequest::getVar('component'));
+        $layoutParameters = $this->getSiteLayouts (JRequest::getVar('component'));
+        return $this->getLayoutParameterOptions ($layoutParameters, $params);
     }
 
     /**
-     * onContentPrepareForm
+     * getMenuItemParameterSets
      *
-     * Method is called by the view and the results are imploded and displayed in a placeholder
-     *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content params
-     * @param	int		The 'page' number
-     * @return	string
-     * @since	1.6
+     * Retrieve the set of Layouts for which Parameter sets are needed
+     * @param $params
+     * @param $data
+     * @return object
      */
-    function onContentPrepareForm ($form, $data)
+    function getDetailItemParameterSets($data)
     {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentPrepareForm', array($form, $data));
+        $params = JComponentHelper::getParams(JRequest::getVar('option'));
+        return $this->getLayoutParameterOptions (array('config_component_single_item_parameter'), $params);
     }
 
     /**
-     * onContentAfterTitle
+     * getMenuItemParameterSets
      *
-     * Method is called by the view and the results are imploded and displayed in a placeholder
-     *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content params
-     * @param	int		The 'page' number
-     * @return	string
-     * @since	1.6
+     * Retrieve the set of Layouts for which Parameter sets are needed
+     * @param $params
+     * @param $data
+     * @return object
      */
-    function onContentAfterTitle($context, &$content, &$params, $page = 0)
+    function getMenuItemParameterSets($data)
     {
-        if ($this->app->getName() == 'administrator') { return; }
+        $option = '';
+        $view = '';
+        $layout = 'default';
+        foreach ($data['request'] as $name => $value ) {
+            if ($name == 'option') {
+                $option = $value;
+            } else if ($name == 'view') {
+                $view = $value;
+            } else if ($name == 'layout') {
+                $layout = $value;
+            }
+        }
+        if ($option == '') {
+            return true;
+        }
+        $this->getSiteLayouts($option);
 
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentAfterTitle', array($context, &$content, &$params, $limitstart));
+        $typeArray = array('config_component_'.$view.'_'.$layout.'_parameter');
+        $params = JComponentHelper::getParams($option);
+
+        return $this->getLayoutParameterOptions ($typeArray, $params);
     }
 
     /**
-     * Example before display content method
+     * getLayoutParameterOptions
      *
-     * Method is called by the view and the results are imploded and displayed in a placeholder
-     *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content params
-     * @param	int		The 'page' number
-     * @return	string
-     * @since	1.6
+     * Given values specified in $typeArray, retrieve the parameter form object file names
+     * @param  $typeArray
+     * @return
      */
-    function onContentBeforeDisplay ($context, &$content, &$params, $page = 0)
+    function getLayoutParameterOptions ($typeArray, $params)
     {
-        if ($this->app->getName() == 'administrator') { return; }
+        $loadParameterSetsArray = array();
 
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentBeforeDisplay', array($context, &$content, &$params, $page = 0));
+        /** loop through layout parameter types */
+        foreach ($typeArray as $layoutParameterType) {
+
+            /** loop thru ParameterSet options **/
+            for ($i=1; $i < 1000; $i++) {
+
+                $parameterSetName = $params->def($layoutParameterType.$i);
+
+                /** encountered end of ParameterSets **/
+                if ($parameterSetName == null) {
+                    break;
+                }
+                /** no ParameterSet was selected for configuration option **/
+                if (in_array($parameterSetName, $loadParameterSetsArray)) {
+
+                /** no ParameterSet was selected for configuration option **/
+                } else if ($parameterSetName == '0') {
+
+                /** configuration option set for ParameterSet list **/
+                } else {
+                    /** save so it does not get added multiple times **/
+                    $loadParameterSetsArray[] = $parameterSetName;
+                }
+            }
+        }
+
+        return $loadParameterSetsArray;
     }
 
     /**
-     * Example after display content method
+     * loadParameterSetToForm
      *
-     * Method is called by the view and the results are imploded and displayed in a placeholder
+     * Loads Parameter Sets into the Form
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content params
-     * @param	int		The 'page' number
-     * @return	string
-     * @since	1.6
+     * @param string $parameterSet
+     * @param object $form
+     * @param object $content
+     * @return boolean
      */
-    function onContentAfterDisplay ($context, &$content, &$params, $page = 0)
+    function loadParameterSetsToForm ($parameterSet, $form)
     {
-        if ($this->app->getName() == 'administrator') { return; }
+        $path = $this->getParameterSetPath ($parameterSet);
+        if ($path === false) {
+            return false;
+        }
+        $form->loadFile($path, false);
 
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentAfterDisplay', array($context, &$content, &$params, $page = 0));
+        return true;
     }
 
     /**
-     * System Event: onAfterDispatch
+     * getParameterSetPath
      *
-     * @return	string
+     * Loads Custom Fields into the Form for a specific Content Type
+     *
+     * @param string $parameterSet
+     * @param object $form
+     * @param object $content
+     * @return boolean
      */
-    function onAfterDispatch()
+    function getParameterSetPath ($parameterSet)
     {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnAfterDispatch', array());
+        /** Amy_TODO: figure this out. site template parameters */
+        $path = JPATH_SITE.'/templates/'.MolajoFactory::getApplication('site')->getTemplate().'/'.'parameters/'.$parameterSet.'.xml';
+        if(is_file($path)) {
+            return $path;
+        }
+        /** admin template parameters */
+        $path = JPATH_ADMINISTRATOR.'/templates/'.MolajoFactory::getApplication('administrator')->getTemplate().'/'.'parameters/'.$parameterSet.'.xml';
+        if(is_file($path)) {
+            return $path;
+        }
+        /** component parameters */
+        $path = JPATH_SITE.'/components/'.JRequest::getVar('component').'/'.'parameters/'.$parameterSet.'.xml';
+        if(is_file($path)) {
+            return $path;
+        }
+        /** administrator component */
+        $path = JPATH_ADMINISTRATOR.'/components/'.JRequest::getVar('component').'/'.'parameters/'.$parameterSet.'.xml';
+        if(is_file($path)) {
+            return $path;
+        }
+        /** library */
+        $path = JPATH_ROOT.MOLAJO_LAYOUTS_PARAMETERS.'/'.$parameterSet.'.xml';
+        if(is_file($path)) {
+            return $path;
+        }
     }
 
     /**
-     * System Event: onBeforeRender
-     *
-     * @return	string
+     * getSiteLayouts
+     * @param  $option
+     * @return void
      */
-    function onBeforeRender()
+    function getSiteLayouts ($option)
     {
-        if ($this->app->getName() == 'administrator') { return; }
+        /** component view location */
+        $path = JPATH_SITE.'/components/'.$option.'/views';
 
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnBeforeRender', array());
-    }
+        /** retrieve all folder names for destination **/
+        $folders = JFolder::folders($path, $filter='', $recurse=true, $fullpath=true, $exclude = array('.svn', 'CVS'));
 
-    /**
-     * System Event: onAfterRender
-     *
-     * @return	string
-     */
-    function onAfterRender()
-    {
-        if ($this->app->getName() == 'administrator') { return; }
+        $view = '';
+        $layout = '';
+        $viewLayout = array();
+        /** process files in each folder **/
+        foreach ($folders as $folder) {
 
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnAfterRender', array());
-    }
+            /** rename files that do not fit the pattern **/
+            if (basename($folder) == 'tmpl') {
+                $files = JFolder::files($folder, $filter = '.php', $recurse = false, $full = false, $exclude = array(), $excludefilter = array('^\..*','.*~','*_*.php'));
 
-    /**
-     * System Event: onBeforeCompileHead
-     *
-     * @return	string
-     */
-    function onBeforeCompileHead()
-    {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnBeforeCompileHead', array());
-    }
-
-    /**
-     * System Event: onSearch
-     *
-     * @return	string
-     */
-    function onSearch()
-    {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnSearch', array());
-    }
-
-    /**
-     * System Event: onSearchAreas
-     *
-     * @return	string
-     */
-    function onSearchAreas()
-    {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnSearchAreas', array());
-    }
-
-    /**
-     * System Event: onGetWebServices
-     *
-     * @return	string
-     */
-    function onGetWebServices()
-    {
-        if ($this->app->getName() == 'administrator') { return; }
-
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnGetWebServices', array());
-    }
-
-   /**
-     * CONTENT CRUD
-     */
-
-    /**
-     * Content Event: onContentChangeState
-     *
-     * @param	string	The context for the content passed to the plugin.
-     * @param	array	A list of primary key ids of the content that has changed state.
-     * @param	int		The value of the state that the content has been changed to.
-     * @return	boolean
-     * @since	1.6
-     */
-    public function onContentChangeState($context, $pks, $value)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentChangeState', array($context, $pks, $value));
-    }
-
-    /**
-     * Content Event: onContentBeforeSave
-     *
-     * Method is called right before content is saved into the database.
-     * Article object is passed by reference, so any changes will be saved!
-     * NOTE:  Returning false will abort the save with an error.
-     * You can set the error by calling $content->setError($message)
-     *
-     * @param	string		The context of the content passed to the plugin.
-     * @param	object		A JTableContent object
-     * @param	bool		If the content is just about to be created
-     * @return	bool		If false, abort the save
-     * @since	1.6
-     */
-    public function onContentBeforeSave ($context, &$content, $isNew)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentBeforeSave', array($context, &$content, $isNew));
-    }
-
-    /**
-     * Content Event: onContentAfterSave
-     * Article is passed by reference, but after the save, so no changes will be saved.
-     * Method is called right after the content is saved
-     *
-     * @param	string		The context of the content passed to the plugin (added in 1.6)
-     * @param	object		A JTableContent object
-     * @param	bool		If the content is just about to be created
-     * @since	1.6
-     */
-    public function onContentAfterSave ($context, &$content, $isNew)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentAfterSave', array($context, &$content, $isNew));
-    }
-
-    /**
-     * Content Event: onContentBeforeDelete
-     *
-     * @param	string	The context for the content passed to the plugin.
-     * @param	object	The data relating to the content that is to be deleted.
-     * @return	boolean
-     * @since	1.6
-     */
-    public function onContentBeforeDelete($context, $data)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentBeforeDelete', array($context, $data));
-    }
-
-   /**
-     * Content Event: onContentAfterDelete
-     *
-     * @param	string	The context for the content passed to the plugin.
-     * @param	object	The data relating to the content that was deleted.
-     * @return	boolean
-     * @since	1.6
-     */
-    public function onContentAfterDelete ($context, $data)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnContentAfterDelete', array($context, $data));
-    }
-
-   /**
-     * USER
-     */
-
-    /**
-     * onUserBeforeSave
-     *
-     * Method is called before user data is stored in the database
-     *
-     * @param	array		$user	Holds the old user data.
-     * @param	boolean		$isnew	True if a new user is stored.
-     * @param	array		$new	Holds the new user data.
-     *
-     * @return	void
-     * @since	1.6
-     * @throws	Exception on error.
-     */
-    public function onUserBeforeSave($user, $isnew, $new)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnUserBeforeSave', array($user, $isnew, $new));
-    }
-
-    /**
-     * onUserAfterSave
-     *
-     * Method is called after user data is stored in the database
-     *
-     * @param	array		$user		Holds the new user data.
-     * @param	boolean		$isnew		True if a new user is stored.
-     * @param	boolean		$success	True if user was succesfully stored in the database.
-     * @param	string		$msg		Message.
-     *
-     * @return	void
-     * @since	1.6
-     * @throws	Exception on error.
-     */
-    public function onUserAfterSave($user, $isnew, $success, $msg)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnUserAfterSave', array($user, $isnew, $success, $msg));
-    }
-
-    /**
-     * onUserBeforeDelete
-     *
-     * Method is called before user data is deleted from the database
-     *
-     * @param	array		$user	Holds the user data.
-     *
-     * @return	void
-     * @since	1.6
-     */
-    public function onUserBeforeDelete($user)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnUserBeforeDelete', array($user));
-    }
-
-    /**
-     * onUserAfterDelete
-     *
-     * Method is called after user data is deleted from the database
-     *
-     * @param	array		$user	Holds the user data.
-     * @param	boolean		$succes	True if user was succesfully stored in the database.
-     * @param	string		$msg	Message.
-     *
-     * @return	void
-     * @since	1.6
-     */
-    public function onUserAfterDelete($user, $success, $msg)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnUserAfterDelete', array($user, $success, $msg));
-    }
-
-    /**
-     * onUserLogin
-     *
-     * This method should handle any login logic and report back to the subject
-     *
-     * @param	array	$user		Holds the user data.
-     * @param	array	$options	Extra options.
-     *
-     * @return	boolean	True on success
-     * @since	1.5
-     */
-    public function onUserLogin($user, $options)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnUserLogin', array($user, $options));
-    }
-
-    /**
-     * onUserLogout
-     *
-     * This method should handle any logout logic and report back to the subject
-     *
-     * @param	array	$user	Holds the user data.
-     *
-     * @return	boolean	True on success
-     * @since	1.5
-     */
-    public function onUserLogout($user)
-    {
-        JPluginHelper::importPlugin('molajo');
-        $results = $this->dispatcher->trigger('MolajoOnUserLogout', array($user));
+                /** process each file **/
+                foreach ($files as $file) {
+                    $layout = substr($file, 0, strlen($file)-4);
+                    $viewLayout[] = 'config_component_'.$view.'_'.$layout.'_parameter';
+                }
+            } else {
+                $view = basename($folder);
+            }
+        }
+        return array_unique($viewLayout);
     }
 }

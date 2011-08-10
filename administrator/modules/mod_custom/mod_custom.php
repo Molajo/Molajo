@@ -15,4 +15,3 @@ if ($params->def('prepare_content', 1)) {
 	JHtml::_('content.prepare', $module->content);
 }
 $rowset[0]->content = $module->content;
-

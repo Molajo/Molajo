@@ -426,6 +426,7 @@ class MolajoApplication extends JObject
 // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
             $params = MolajoComponentHelper::getParams($option);
+
 // $this->_mergeParams ();
 // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         }
@@ -455,6 +456,7 @@ class MolajoApplication extends JObject
         $session->set('page.view', $view);
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
+        $session->set('page.wrap', $params->def('wrap', 'none'));
         $session->set('page.layout_type', 'extension');
         $session->set('page.task', $task);
         $session->set('page.format', $format);
@@ -551,7 +553,7 @@ class MolajoApplication extends JObject
         $request['no_com_option'] = $session->get('page.no_com_option');
         $request['view'] = $session->get('page.view');
         $request['layout'] = $session->get('page.layout');
-        $request['layout_type'] = $session->get('page.layout_type');
+        $request['wrap'] = $session->get('page.wrap');
         $request['model'] = $session->get('page.model');
         $request['task'] = $session->get('page.task');
         $request['format'] = $session->get('page.format');
@@ -574,7 +576,14 @@ class MolajoApplication extends JObject
         $request['metadata'] = $session->get('page.metadata');
         $request['style'] = $session->get('page.style');
         $request['position'] = $session->get('page.position');
-        
+
+
+            $request['wrap_title'] = $request['title'];
+            $request['wrap_subtitle'] = $request['subtitle'];
+            $request['wrap_date'] = '';
+            $request['wrap_author'] = '';
+            $request['wrap_more_array'] = array();
+
         return $request;
     }
 
@@ -594,7 +603,6 @@ class MolajoApplication extends JObject
         $query->select($db->namequote('id'));
         $query->select($db->namequote('title'));
         $query->select('"" as ' .$db->namequote('subtitle'));
-
 
         $session->get('page.item_id');
         if ((int) $session->get('page.item_id') > 0) {

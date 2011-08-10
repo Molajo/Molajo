@@ -176,20 +176,35 @@ class MolajoController extends JController
 
         /** push model results into view */
 
-        /** 1. Request */
-        $this->view->request = $this->model->get('Request');
+        /** 1. Application */
+        $this->view->app = MolajoFactory::getApplication();
 
-        /** 2. State */
-        $this->view->state = $this->model->get('State');
+        /** 2. Document */
+        $this->view->document = MolajoFactory::getDocument();
 
-        /** 3. Parameters */
-        $this->view->params = $this->model->get('Params');
+        /** 3. User */
+        $this->view->user = MolajoFactory::getUser();
 
-        /** 4. Query Results */
-        $this->view->rowset = $this->model->get('Items');
+        /** 4. Request */
+        $this->view->request = $this->view->get('Request');
 
-        /** 5. Pagination */
-        $this->view->pagination = $this->model->get('Pagination');
+        /** 5. State */
+        $this->view->state = $this->view->get('State');
+
+        /** 6. Parameters */
+        $this->view->params = $this->view->get('Params');
+
+        /** 7. Query Results */
+        $this->view->rowset = $this->view->get('Items');
+
+        /** 8. Pagination */
+        $this->view->pagination = $this->view->get('Pagination');
+
+        /** 9. Layout */
+        $this->view->layout = $this->request['layout'];
+
+        /** 10. Wrap */
+        $this->view->wrap = $this->request['wrap'];
 
         /** display view */
         parent::display($cachable, $urlparams);
@@ -227,26 +242,21 @@ class MolajoController extends JController
             $this->catid = 0;
         }
 
-        /** display controller: set model and view */
+        /** set model and view for display controller */
         if ($this->request['controller'] == 'display') {
 
-            /** view format */
-		    $format = $this->document->getType();
-
-            /** view */
-            $this->view = $this->getView($this->request['view'], $format);
-
-            /** default model for view */
+            /** model */
             $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'].'Model'), array());
             $this->model->request = $this->request;
+            $this->model->params = $this->request['params'];
 
-            /** default model for view */
+            /** view format */
+            $this->view = $this->getView($this->request['view'], $this->document->getType());
             $this->view->setModel($this->model, true);
-
-		    /** layout */
 		    $this->view->setLayout($this->request['layout']);
         }
 
+        /** load table */
         if ($this->request['task'] == 'display'
             || $this->request['task'] == 'add') {
 
@@ -268,20 +278,20 @@ class MolajoController extends JController
             }
         }
 
-        /** event dispatcher */
+        /** dispatch events */
         if ($this->dispatcher) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
             MolajoPluginHelper::importPlugin($this->request['plugin_type']);
         }
 
-        /** authorisation **/
+        /** check authorisation **/
         $results = MolajoController::checkTaskAuthorisation($this->request['task']);
         if ($results === false) {
             return false;
         }
 
-        /** redirects **/
+        /** set redirects **/
         $this->redirectClass->initialize($this->request['task']);
  
         /** success **/

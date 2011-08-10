@@ -17,7 +17,7 @@
 		<folder>layouts</folder>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layouts_audio.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_audio.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_extensions_audio.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_extensions_audio.sys.ini</language>
 	</languages>
 </extension>

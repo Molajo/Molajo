@@ -14,7 +14,7 @@
 		<folder>layouts</folder>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layouts_videoplayer.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_videoplayer.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_extensions_videoplayer.ini</language>
+		<language tag="language/en-GB">en-GB.layouts_extensions_videoplayer.sys.ini</language>
 	</languages>
 </extension>

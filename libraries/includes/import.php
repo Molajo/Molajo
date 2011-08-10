@@ -347,7 +347,6 @@ foreach ($files as $file) {
 
 /** Views */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/view.php', 'JView');
-$filehelper->requireClassFile(MOLAJO_LIBRARY_VIEWS.'/layout.php', 'MolajoLayout');
 $filehelper->requireClassFile(MOLAJO_LIBRARY_VIEWS.'/view.php', 'MolajoView');
 $files = JFolder::files(MOLAJO_LIBRARY_VIEWS, '\.php$', false, false);
 foreach ($files as $file) {

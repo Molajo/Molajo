@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage	View
  * @since	    1.0
  */
-class LoginViewDisplay extends MolajoViewDisplay {}
+class LoginViewDisplay extends MolajoView {}

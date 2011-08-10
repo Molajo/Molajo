@@ -1,29 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-	<!-- $Id: article.xml $ -->
-<form>
-    <fields name="params">
-			<fieldset
-				name="advanced">
-				<field
-					name="layout"
-					type="modulelayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
-				<field
-					name="moduleclass_sfx"
-					type="text"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+<fieldset name="advanced">
+    <field
+        name="layout"
+        type="layout"
+        layouttype="extension"
+        label="MOLAJO_FIELD_EXTENSION_LAYOUT_LABEL"
+        description="MOLAJO_FIELD_EXTENSION_LAYOUT_DESC"
+    />
 
-				<field
-					name="cache"
-					type="list"
-					default="0"
-					label="COM_MODULES_FIELD_CACHING_LABEL"
-					description="COM_MODULES_FIELD_CACHING_DESC">
-					<option
-						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
-				</field>
-        </fieldset>
-    </fields>
-</form>
+    <field
+        name="wrap"
+        type="layout"
+        layouttype="wrap"
+        label="MOLAJO_FIELD_WRAP_LAYOUT_LABEL"
+        description="MOLAJO_FIELD_WRAP_LAYOUT_DESC"
+    />
+
+    <field
+        name="moduleclass_sfx"
+        type="text"
+        label="MOLAJO_FIELD_MODULECLASS_SUFFIX_LABEL"
+        description="MOLAJO_FIELD_MODULECLASS_SUFFIX_DESC"
+    />
+
+    <field
+        name="cache"
+        type="list"
+        default="1"
+        label="MOLAJO_FIELD_CACHE_LABEL"
+        description="MOLAJO_FIELD_CACHE_DESC">
+        <option
+            value="1">MOLAJO_VALUE_USE_GLOBAL</option>
+        <option
+            value="0">MOLAJO_FIELD_VALUE_NOCACHING</option>
+    </field>
+
+    <field
+        name="cache_time"
+        type="text"
+        default="900"
+        label="MOLAJO_FIELD_CACHE_TIME_LABEL"
+        description="MOLAJO_FIELD_CACHE_TIME_DESC"
+    />
+</fieldset>
