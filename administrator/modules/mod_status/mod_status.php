@@ -1,19 +1,19 @@
 <?php
 /**
- * @version		$Id: mod_status.php 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla.Administrator
- * @subpackage	mod_status
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Menu
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// No direct access.
-defined('_JEXEC') or die;
-return;
+$layout = $params->def('layout', 'plain');
+$wrap = $params->def('wrap', 'none');
+$rowset[0]->content = '';
 
 // Initialise variables.
 $config	= MolajoFactory::getConfig();
-$user	= MolajoFactory::getUser();
 $db		= MolajoFactory::getDbo();
 $lang	= MolajoFactory::getLanguage();
 
@@ -58,4 +58,38 @@ $query->where('guest = 0 AND application_id = 0');
 $db->setQuery($query);
 $online_num = (int) $db->loadResult();
 
-require MolajoModuleHelper::getLayoutPath('mod_status', $params->get('layout', 'default'));
+
+$hideLinks	= JRequest::getBool('hidemainmenu');
+$output = array();
+
+// Print the logged in users.
+if ($params->get('show_loggedin_users', 1)) :
+	$output[] = '<span class="loggedin-users">'.JText::plural('MOD_STATUS_USERS', $online_num).'</span>';
+endif;
+
+// Print the back-end logged in users.
+if ($params->get('show_loggedin_users_admin', 1)) :
+	$output[] = '<span class="backloggedin-users">'.JText::plural('MOD_STATUS_BACKEND_USERS', $count).'</span>';
+endif;
+
+//  Print the inbox message.
+if ($params->get('show_messages', 1)) :
+	$output[] = '<span class="'.$inboxClass.'">'.
+			($hideLinks ? '' : '<a href="'.$inboxLink.'">').
+			JText::plural('MOD_STATUS_MESSAGES', $unread).
+			($hideLinks ? '' : '</a>').
+			'</span>';
+endif;
+
+// Print the Preview link to Main site.
+$output[] = '<span class="viewsite"><a href="'.JURI::root().'" target="_blank">'.JText::_('MOD_STATUS_VIEW_SITE').'</a></span>';
+
+// Reverse rendering order for rtl display.
+if ($lang->isRTL()) :
+	$output = array_reverse($output);
+endif;
+
+/** output into content array */
+foreach ($output as $item) :
+    $rowset[0]->content .= $item;
+endforeach;

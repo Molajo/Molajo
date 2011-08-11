@@ -2,12 +2,13 @@
 /**
  * @package     Molajo
  * @subpackage  Menu
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'admin_footer');
+$layout = $params->def('layout', 'custom');
 $wrap = $params->def('wrap', 'div');
 
 /**
@@ -39,9 +40,9 @@ if ($params->def('version', '')) {
     $rowset[0]->version = $params->def('version', '');
 }
 
-$line2 = '<a href="'.$rowset[0]->link.'">'.$rowset[0]->linked_text.'</a>';
-$line2 .= $rowset[0]->remaining_text;
-$line2 .= $rowset[0]->version;
+$rowset[0]->line2 = '<a href="'.$rowset[0]->link.'">'.$rowset[0]->linked_text.'</a>';
+$rowset[0]->line2 .= $rowset[0]->remaining_text;
+$rowset[0]->line2 .= $rowset[0]->version;
 
-$rowset[0]->version = $line2;
+$rowset[0]->version = $rowset[0]->line2;
 

@@ -80,11 +80,6 @@ textarea{border:1px solid silver;font-size:1.273em;}
 #submenu-box .padding{padding:0}
 #toolbar-box{background:#fbfbfb;margin-bottom:10px}
 
-/* Footer */
-#footer .copyright{line-height:160%;margin:10px;text-align:center}
-#footer .version{margin:10px;text-align:center}
-p.footer-tip{margin-top:15px}
-
 /* -- STATUS STYLES ----------------------------- */
 #module-status{float:right}
 #module-status .backloggedin-users{background:url(../images/icon-16-back-user.png) 3px 3px no-repeat}

@@ -5,7 +5,6 @@
 @copyright   Copyright (C) 2011 individual Molajo Contributors. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-
 #form-login .button-holder{clear:right;float:right;margin-top:10px;padding-right:5px}
 #lock{background:url(../images/j_login_lock.png) 50% 0 no-repeat;height:137px;width:150px}
 #section-box{background-color:#fff;float:right;margin-left:10px;margin-right:10px;width:340px}

@@ -8,14 +8,9 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'admin_footer');
-$wrap = $params->def('wrap', 'div');
+$layout = $params->def('layout', 'plain');
+$wrap = $params->def('wrap', 'none');
 $rowset[0]->content = '';
-
-/** not logged on */
-if ($user-> id == 0) {
-//    return;
-}
 
 /** logout link */
 $task = $request['task'];

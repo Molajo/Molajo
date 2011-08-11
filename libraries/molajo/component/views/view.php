@@ -112,7 +112,7 @@ class MolajoView extends JView
             return;
         }
         $renderedOutput = $this->renderLayout ($this->layout, 'extension');
-
+  
         /** Render Wrap around Rendered Layout */
         if ($this->wrap == 'horz') { $this->wrap = 'horizontal'; }
         if ($this->wrap == 'xhtml') { $this->wrap = 'div'; }

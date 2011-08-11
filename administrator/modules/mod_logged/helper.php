@@ -33,8 +33,10 @@ abstract class modLoggedHelper
 		$query->from('#__session AS s');
 		$query->leftJoin('#__users AS u ON s.userid = u.id');
 		$query->where('s.guest = 0');
+
 		$db->setQuery($query, 0, $params->get('count', 5));
-		$results = $db->loadObjectList();
+
+        $results = $db->loadObjectList();
 
 		// Check for database errors
 		if ($error = $db->getErrorMsg()) {
@@ -42,20 +44,50 @@ abstract class modLoggedHelper
 			return false;
 		};
 
-		foreach($results as $k => $result)
-		{
-			$results[$k]->logoutLink = '';
+        /** Add information to query results */
+        $i = 1;
+        $acl = new MolajoACL ();
+        
+        if (count($results) == 0) {
+            $results[0]->columncount = '5';
+            if ($params->get('name', 1)) {
+                $results[0]->columnheading1 = JText::_('MOD_LOGGED_NAME');
+            } else {
+                $results[0]->columnheading1 = JText::_('JGLOBAL_USERNAME');
+            }
+            $results[0]->columnheading2 = JText::_('JCLIENT');
+            $results[0]->columnheading3 = JText::_('JGRID_HEADING_ID');
+            $results[0]->columnheading4 = JText::_('MOD_LOGGED_LAST_ACTIVITY');
+            $results[0]->columnheading5 = JText::_('MOD_LOGGED_LOGOUT');
+        
+        } else {
 
-			if($user->authorise('core.manage', 'com_users'))
-			{
-				$results[$k]->editLink = JRoute::_('index.php?option=com_users&task=user.edit&id='.$result->id);
-				$results[$k]->logoutLink = JRoute::_('index.php?option=com_login&task=logout&uid='.$result->id .'&'. JUtility::getToken() .'=1');
-			}
-			if($params->get('name', 1) == 0) {
-				$results[$k]->name = $results[$k]->username;
-			}
-		}
+            $permission = $acl->authoriseTask ('administer', 'com_users', '', '', '');
 
+            foreach($results as $k => $result) {
+                $results[$k]->logoutLink = '';
+                
+                $results[$k]->columncount = '5';
+                if($params->get('name', 1)) {
+                    $results[$k]->columnheading1 = JText::_('MOD_LOGGED_NAME');
+                } else {
+                    $results[$k]->columnheading1 = JText::_('JGLOBAL_USERNAME');
+                }
+                $results[$k]->columnheading2 = JText::_('JCLIENT');
+                $results[$k]->columnheading3 = JText::_('JGRID_HEADING_ID');
+                $results[$k]->columnheading4 = JText::_('MOD_LOGGED_LAST_ACTIVITY');
+                $results[$k]->columnheading5 = JText::_('MOD_LOGGED_LOGOUT');     
+                $permission = true;
+                if($permission) {
+                    $results[$k]->editLink = JRoute::_('index.php?option=com_users&task=user.edit&id='.$result->id);
+                    $results[$k]->logoutLink = JRoute::_('index.php?option=com_login&task=logout&uid='.$result->id .'&'. JUtility::getToken() .'=1');
+                }
+                if($params->get('name', 1) == 0) {
+                    $results[$k]->name = $results[$k]->username;
+                }
+            }
+        }
+        
 		return $results;
 	}
 
@@ -70,3 +102,4 @@ abstract class modLoggedHelper
 		return JText::plural('MOD_LOGGED_TITLE',$params->get('count'));
 	}
 }
+

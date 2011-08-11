@@ -1,0 +1,9 @@
+/*
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2011 individual Molajo Contributors. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+.footer .copyright { margin: 10px; text-align: center; line-height: 160%; }
+.footer .version { margin: 10px; text-align: center; }
+p.footer-tip { margin-top: 15px; }

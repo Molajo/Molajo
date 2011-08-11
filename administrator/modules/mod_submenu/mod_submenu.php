@@ -10,19 +10,6 @@ defined('MOLAJO') or die;
 $layout = $params->def('layout', 'submenu');
 $wrap = $params->def('wrap', 'div');
 
+require_once dirname(__FILE__).'/helper.php';
 
-$request['wrap'] = $module->style;
-$request['position'] = $module->position;
-$request['layout'] = 'admintitle';
-$request['layout_type'] = 'extension';
-
-
-
-
-//if (!JRequest::getInt('hidemainmenu')):
-//require_once dirname(__FILE__).'/helper.php';
-
-//$list = modSubmenuHelper::getItems();
-//if (count($list) > 0) {
-//    require MolajoModuleHelper::getLayoutPath('mod_submenu', $params->get('layout', 'default'));
-//}
+$list = modSubmenuHelper::getItems();

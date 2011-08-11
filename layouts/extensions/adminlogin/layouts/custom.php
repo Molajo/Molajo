@@ -6,9 +6,9 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-//JHtml::_('behavior.keepalive');
+JHtml::_('behavior.keepalive');
 ?>
-<form action="<?php //echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="form-login">
+<form action="<?php echo JRoute::_('index.php', true, $this->params->get('usesecure')); ?>" method="post" id="form-login">
 	<fieldset class="loginform">
 
 				<label id="mod-login-username-lbl" for="mod-login-username">

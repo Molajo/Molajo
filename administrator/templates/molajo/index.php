@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 
-include dirname(__FILE__).'/css/index.php';
+include dirname(__FILE__).'/include/css.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_PATH_ROOT; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
@@ -42,50 +42,15 @@ include dirname(__FILE__).'/css/index.php';
 		</div>
 		<div class="clr"></div>
 	</div>
-	<div id="content-box">
-		<div class="border">
-			<div class="padding">
-				<div id="toolbar-box">
-				<div class="t">
-				<div class="t">
-					<div class="t"></div>
-				</div>
-			</div>
-			<div class="m">
-				<jdoc:include type="modules" name="toolbar" />
-				<jdoc:include type="modules" name="title" />
-				<div class="clr"></div>
-			</div>
-			<div class="b">
-				<div class="b">
-					<div class="b"></div>
-				</div>
-			</div>
-		</div>
-		<div class="clr"></div>
-		<jdoc:include type="modules" name="submenu" style="rounded" id="submenu-box" />
-		<jdoc:include type="message" />
-		<div id="element-box">
-			<div class="t">
-				<div class="t">
-					<div class="t"></div>
-				</div>
-			</div>
-			<div class="m">
-				<jdoc:include type="component" />
-				<div class="clr"></div>
-			</div>
-			<div class="b">
-				<div class="b">
-					<div class="b"></div>
-				</div>
-			</div>
-		</div>
-		<noscript>
-			<?php echo  JText::_('JGLOBAL_WARNJAVASCRIPT') ?>
-		</noscript>
-		<div class="clr"></div>
-	</div>
+<?
+if (MolajoFactory::getUser()->id == 0) :
+    include dirname(__FILE__).'/include/login.php';
+elseif (MolajoFactory::getSession()->get('page.option') == 'com_cpanel') :
+    include dirname(__FILE__).'/include/cpanel.php';
+else :
+    include dirname(__FILE__).'/include/login.php';
+endif;
+?>
 	<div class="clr"></div>
 </div>
 </div>

@@ -3,19 +3,22 @@
 <extension
 	type="template"
 	version="1.0"
-	application="administrator">
-	<name>molajo</name>
+	application="administrator"
+    method="upgrade">
+
+    <name>Molajo</name>
 	<creationDate>08/01/2011</creationDate>
 	<author>Molajo Contributors</author>
-	<authorEmail>contribute@molajo.org</authorEmail>
-	<authorUrl>http://molajo.org</authorUrl>
+	<creationDate>August 2011</creationDate>
 	<copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.0.0</version>
+	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
+	<authorEmail>collaborate@molajo.org</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<version>1.0</version>
 	<description>TPL_MOLAJO_XML_DESCRIPTION</description>
+
 	<files>
 		<filename>component.php</filename>
-		<filename>cpanel.php</filename>
 		<filename>error.php</filename>
 		<filename>favicon.ico</filename>
 		<filename>index.php</filename>

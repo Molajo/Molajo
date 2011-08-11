@@ -109,7 +109,6 @@ abstract class modLatestHelper
             return $clean;
         }
 
-
 		/** Add information to query results */
         $i = 1;
         $acl = new MolajoACL ();
@@ -133,7 +132,7 @@ abstract class modLatestHelper
                 $item->columnheading.$i = JText::_('MOD_LATEST_CREATED_BY');
 
                 /** ACL */
-                if ($acl->authoriseTask ('com_articles', 'display', 'view', $item->id, $item->catid, $item)){
+                if ($acl->authoriseTask ('com_articles', 'display', 'view', $item->id, $item->catid, $item)) {
                     $item->link = JRoute::_('index.php?option=com_articles&task=edit&id='.$item->id);
                 } else {
                     $item->link = '';
