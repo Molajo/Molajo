@@ -17,20 +17,16 @@ include dirname(__FILE__).'/include/css.php';
 </head>
 <body id="minwidth-body">
 	<div id="border-top" class="h_blue">
-		<div>
-			<div>
-				<span class="logo">
-                    <a href="http://molajo.org" target="_blank">
-                        <img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo  $this->template ?>/images/logo.png" alt="Molajo" />
-                    </a>
-                </span>
-				<span class="title">
-                    <a href="index.php">
-                        <?php echo $this->params->get('showSiteName') ? MolajoFactory::getApplication()->getCfg('sitename') : JText::_('TPL_MOLAJO_HEADER'); ?>
-                    </a>
-                </span>
-			</div>
-		</div>
+        <span class="logo">
+            <a href="http://molajo.org" target="_blank">
+                <img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo  $this->template ?>/images/logo.png" alt="Molajo" />
+            </a>
+        </span>
+        <span class="title">
+            <a href="index.php">
+                <?php echo $this->params->get('showSiteName') ? MolajoFactory::getApplication()->getCfg('sitename') : JText::_('TPL_MOLAJO_HEADER'); ?>
+            </a>
+        </span>
 	</div>
 	<div id="header-box">
 		<div id="module-menu">
@@ -51,10 +47,6 @@ else :
     include dirname(__FILE__).'/include/login.php';
 endif;
 ?>
-	<div class="clr"></div>
-</div>
-</div>
-	<div id="border-bottom"><div><div></div></div></div>
 		<jdoc:include type="modules" name="footer" style="none"  />
 </body>
 </html>

@@ -22,13 +22,13 @@
 		<filename>error.php</filename>
 		<filename>favicon.ico</filename>
 		<filename>index.php</filename>
-		<filename>login.php</filename>
-		<filename>params.ini</filename>
+    	<filename>params.ini</filename>
 		<filename>template_preview.png</filename>
 		<filename>template_thumbnail.png</filename>
 		<filename>templateDetails.xml</filename>
 		<folder>css</folder>
-		<folder>html</folder>
+		<folder>images</folder>
+        <folder>include</folder>
 		<folder>language</folder>
 	</files>
 	<positions>

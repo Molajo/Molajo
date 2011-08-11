@@ -9,6 +9,7 @@ defined('MOLAJO') or die;
 
 $document = MolajoFactory::getDocument();
 $browser = JBrowser::getInstance();
+$lang = JFactory::getLanguage();
 
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/system.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/template.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
@@ -38,3 +39,9 @@ endif;
 if ($this->params->get('highContrast')) :
     $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/highcontrast.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
 endif;
+
+/** Load specific language related css */
+$file = $url=JURI::base().'language/'.$lang->getTag().'/'.$lang->getTag().'.css';
+if (JFile::exists($file)) {
+	$doc->addStyleSheet($file);
+}
