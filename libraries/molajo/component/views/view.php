@@ -118,6 +118,7 @@ class MolajoView extends JView
         if ($this->wrap == 'xhtml') { $this->wrap = 'div'; }
         if ($this->wrap == 'rounded') { $this->wrap = 'div'; }
         if ($this->wrap == 'raw') { $this->wrap = 'none'; }
+        if ($this->wrap == '') { $this->wrap = 'none'; }
 
         $this->findPath($this->wrap, 'wrap');
 
@@ -134,9 +135,9 @@ class MolajoView extends JView
 		$this->rowset[0]->content           = $renderedOutput;
 
         if ($this->layout_path === false) {
-            return $renderedOutput;
+            echo $renderedOutput;
         }
-        $renderedOutput = $this->renderLayout ($this->wrap, 'wrap');
+        echo $this->renderLayout ($this->wrap, 'wrap');
     }
 
     /**

@@ -261,22 +261,22 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/access/access.php', 'JAccess')
  *  Installer still using JFramework for MVC/JForm/JHTML
  */
 
-if (MOLAJO_APPLICATION == 'installation') {
+//if (MOLAJO_APPLICATION == 'installation') {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/html.php', 'JHtml');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/formfield.php', 'JFormField');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/formrule.php', 'JFormRule');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/helper.php', 'JFormHelper');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/form.php', 'JForm');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/fields/list.php', 'JFormFieldList');
-    $files = JFolder::files(MOLAJO_PATH_BASE.'/models/fields/', '\.php$', false, false);
-    foreach ($files as $file) {
-        $filehelper->requireClassFile(MOLAJO_PATH_BASE.'/models/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
+//    $files = JFolder::files(MOLAJO_PATH_BASE.'/models/fields/', '\.php$', false, false);
+//    foreach ($files as $file) {
+//        $filehelper->requireClassFile(MOLAJO_PATH_BASE.'/models/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
+//    }
     $files = JFolder::files(JOOMLA_LIBRARY.'/form/fields/', '\.php$', false, false);
     foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
-} else {
+//} else {
     $filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/formfield.php', 'MolajoFormField');
     $filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/formrule.php', 'MolajoFormRule');
     $filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/helper.php', 'MolajoFormHelper');
@@ -286,7 +286,7 @@ if (MOLAJO_APPLICATION == 'installation') {
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/formrule.php', 'MolajoFormRule');
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/helper.php', 'MolajoFormHelper');
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/form.php', 'MolajoForm');
-}
+//}
 
 /** Plugins */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/plugin/plugin.php', 'JPlugin');

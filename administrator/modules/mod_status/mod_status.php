@@ -9,6 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
+return;
 
 // Initialise variables.
 $config	= MolajoFactory::getConfig();

@@ -25,70 +25,124 @@ abstract class modLatestHelper
 	 *
 	 * @return	mixed		An array of articles, or false on error.
 	 */
-	public static function getList($params)
+	public static function getList($params, $user)
 	{
-		// Initialise variables
-		$user = MolajoFactory::getuser();
 
-		// Get an instance of the generic articles model
-		$model = JModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
+//todo: change to use MolajoModelDisplay
 
-		// Set List SELECT
-		$model->setState('list.select', 'a.id, a.title, a.checked_out, a.checked_out_time, ' .
-				' a.access, a.created, a.created_by, a.created_by_alias, a.featured, a.state');
+        $db	= MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+        $lang = MolajoFactory::getLanguage()->getTag();
 
-		// Set Ordering filter
-		switch ($params->get('ordering')) {
-			case 'm_dsc':
-				$model->setState('list.ordering', 'modified DESC, created');
-				$model->setState('list.direction', 'DESC');
-				break;
+        $date = MolajoFactory::getDate();
+        $now = $date->toMySQL();
+        $nullDate = $db->getNullDate();
 
-			case 'c_dsc':
-			default:
-				$model->setState('list.ordering', 'created');
-				$model->setState('list.direction', 'DESC');
-				break;
-		}
+        $query->select('a.id, a.title, a.checked_out, a.checked_out_time');
+        $query->select('a.access, a.created, a.created_by, a.created_by_alias, a.featured, a.state');
+        $query->select('a.catid, b.title as category_title');
 
-		// Set Category Filter
-		$categoryId = $params->get('catid');
-		if (is_numeric($categoryId)){
-			$model->setState('filter.category_id', $categoryId);
-		}
+        $query->from('#'.$params->get('component_table', '_articles').' AS a');
+        $query->join('LEFT','#__categories AS b ON b.id = a.catid');
 
-		// Set User Filter.
-		$userId = $user->get('id');
-		switch ($params->get('user_id')) {
-			case 'by_me':
-				$model->setState('filter.author_id', $userId);
-				break;
+        $query->where('a.published = 1');
+        $query->where('(a.publish_up = '.$db->Quote($nullDate).' OR a.publish_up <= '.$db->Quote($now).')');
+        $query->where('(a.publish_down = '.$db->Quote($nullDate).' OR a.publish_down >= '.$db->Quote($now).')');
 
-			case 'not_me':
-				$model->setState('filter.author_id', $userId);
-				$model->setState('filter.author_id.include', false);
-				break;
-		}
+        $query->where('b.published = 1');
+        $query->where('(b.publish_up = '.$db->Quote($nullDate).' OR b.publish_up <= '.$db->Quote($now).')');
+        $query->where('(b.publish_down = '.$db->Quote($nullDate).' OR b.publish_down >= '.$db->Quote($now).')');
 
-		// Set the Start and Limit
+        $acl = new MolajoACL ();
+        $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
+
+        if (MolajoFactory::getApplication()->isSite()
+            && MolajoFactory::getApplication()->getLanguageFilter()) {
+            $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+        }
+
+        /** category filter */
+        $categoryId = $params->def('catid', 0);
+        if ((int) $categoryId > 0) {
+            $query->where('category_id', $categoryId);
+        }
+
+//        $categoryIds = $params->get('catid', array());
+
+        /** user id filter */
+        $userId = $user->get('id');
+        switch ($params->get('user_id')) {
+            case 'by_me':
+                $model->setState('filter.author_id', $userId);
+                break;
+
+            case 'not_me':
+                $model->setState('filter.author_id', $userId);
+                $model->setState('filter.author_id.include', false);
+                break;
+        }
+
+       /** ordering */
+        switch ($params->get('ordering')) {
+            case 'm_dsc':
+                $query->ordering('list.ordering', 'modified DESC, created');
+                $query->ordering('list.direction', 'DESC');
+                break;
+
+            case 'c_dsc':
+            default:
+                $query->ordering('list.ordering', 'created');
+                $query->ordering('list.direction', 'DESC');
+                break;
+        }
+
+		/** limit */
 		$model->setState('list.start', 0);
 		$model->setState('list.limit', $params->get('count', 5));
 
-		$items = $model->getItems();
+        $db->setQuery($query->__toString());
 
-		if ($error = $model->getError()) {
-			JError::raiseError(500, $error);
-			return false;
-		}
+        $items = $db->loadObjectList();
 
-		// Set the links
-		foreach ($items as &$item) {
-			if ($user->authorise('core.edit','com_content.article.'.$item->id)){
-				$item->link = JRoute::_('index.php?option=com_content&task=article.edit&id='.$item->id);
-			} else {
-				$item->link = '';
-			}
-		}
+        if($db->getErrorNum()){
+            JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+            return $clean;
+        }
+
+
+		/** Add information to query results */
+        $i = 1;
+        $acl = new MolajoACL ();
+
+        if (count($items) == 0) {
+            $items[0]->columncount = '4';
+            $items[0]->columnheading1 = JText::_('MOD_LATEST_LATEST_ITEMS');
+            $items[0]->columnheading2 = JText::_('JSTATUS');
+            $items[0]->columnheading3 = JText::_('MOD_LATEST_CREATED');
+            $items[0]->columnheading4 = JText::_('MOD_LATEST_CREATED_BY');
+
+        } else {
+
+            foreach ($items as $item) {
+
+                /** Headings */
+                $item->columncount = '4';
+                $item->columnheading.$i = JText::_('MOD_LATEST_LATEST_ITEMS');
+                $item->columnheading.$i = JText::_('JSTATUS');
+                $item->columnheading.$i = JText::_('MOD_LATEST_CREATED');
+                $item->columnheading.$i = JText::_('MOD_LATEST_CREATED_BY');
+
+                /** ACL */
+                if ($acl->authoriseTask ('com_articles', 'display', 'view', $item->id, $item->catid, $item)){
+                    $item->link = JRoute::_('index.php?option=com_articles&task=edit&id='.$item->id);
+                } else {
+                    $item->link = '';
+                }
+
+                /** Rowcount */
+                $item->rowcount = $i++;
+            }
+        }
 
 		return $items;
 	}

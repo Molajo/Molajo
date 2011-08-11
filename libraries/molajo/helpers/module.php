@@ -27,7 +27,7 @@ abstract class MolajoModuleHelper
 	 *
 	 * @return  object  The Module object
 	 */
-	public static function &getModule($name, $title = null)
+	public static function getModule($name, $title = null)
 	{
 		$result		= null;
 		$modules	= self::_load();
@@ -182,9 +182,9 @@ abstract class MolajoModuleHelper
             $request['position'] = $module->position;
             $request['wrap_more_array'] = array();
 
-            /** include module */
-echo $path.'<br />';
-			require $path;
+            /** execute the module */
+            ob_start();
+            include $path;
 
             /** 1. Application */
             $view->app = $application;
@@ -217,12 +217,15 @@ echo $path.'<br />';
             $view->wrap = $wrap;
 
             /** render layout and wrap */
-            $module->content = $view->display();
+        ob_start();
+		$view->display();
+        $output = ob_get_contents();
+        ob_end_clean();
 		}
 
 		MolajoFactory::getApplication()->scope = $scope;
 
-		return $module->content;
+		return $output;
 	}
 
     /**
@@ -352,7 +355,7 @@ echo $path.'<br />';
 			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
 
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'m'));
+            $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
 
 			$query->where('m.application_id = '. $applicationId);
 			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
@@ -364,7 +367,7 @@ echo $path.'<br />';
 			$query->order('position, ordering');
 
             $db->setQuery($query->__toString());
-            
+
 			$modules = $db->loadObjectList();
 			$clean	= array();
 

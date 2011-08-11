@@ -18,4 +18,4 @@ if ($disableMenu == 1) {
     include dirname(__FILE__).'/menu_enabled.php';
 }
 
-$menu->renderMenu('menu', $enabled ? '' : 'disabled');
+//todo fix the menu $menu->renderMenu('menu', $enabled ? '' : 'disabled');

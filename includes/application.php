@@ -203,7 +203,7 @@ class MolajoSite extends MolajoApplication
 					break;
 			}
 
-            $request = parent::loadComponentData();
+            $request = parent::getRequest();
 
 			$document->setTitle($params->get('page_title'));
 			$document->setDescription($params->get('page_description'));

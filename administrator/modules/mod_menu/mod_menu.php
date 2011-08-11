@@ -8,9 +8,9 @@
  */
 defined('MOLAJO') or die;
 
+$layout = $params->def('layout', 'adminmenu');
+$wrap = $params->def('wrap', 'none');
+
 $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'ModMenuHelper');
 $filehelper->requireClassFile(dirname(__FILE__).'/menu.php', 'MolajoAdminCSSMenu');
-
-$layout = $params->def('layout', 'adminmenu');
-$wrap = $params->def('wrap', 'none');

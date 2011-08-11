@@ -174,10 +174,15 @@ class MolajoComponentHelper
 			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
-		//  Execute Extension
-		require_once $path;
+        /** execute the component */
+        ob_start();
+		include $path;
+        $output = ob_get_contents();
+        ob_end_clean();
 
-		// Revert scope
+		/** Revert scope */
 		MolajoFactory::getApplication()->scope = $scope;
+
+        return $output;
 	}
 }
