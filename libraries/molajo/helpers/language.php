@@ -41,13 +41,12 @@ class MolajoLanguageHelper
 			$query = $db->getQuery(true);
 			$query->select('element');
 			$query->from('#__extensions');
-			$query->where('type='.$db->quote('language'));
-			$query->where('state=0');
-			$query->where('enabled=1');
-			$query->where('application_id='.($basePath==MOLAJO_PATH_ADMINISTRATOR?1:0));
+			$query->where('type = '.$db->quote('language'));
+			$query->where('state = 1');
+			$query->where('enabled = 1');
+			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
 			$db->setQuery($query);
 			$installed_languages = $db->loadObjectList('element');
-            die();
 		}
 
 		foreach ($langs as $lang => $metadata)

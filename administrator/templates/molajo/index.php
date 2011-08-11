@@ -7,7 +7,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
 include dirname(__FILE__).'/include/css.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -19,7 +18,7 @@ include dirname(__FILE__).'/include/css.php';
 	<div id="border-top" class="h_blue">
         <span class="logo">
             <a href="http://molajo.org" target="_blank">
-                <img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo  $this->template ?>/images/logo.png" alt="Molajo" />
+                <img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo $this->template; ?>/images/logo.png" alt="Molajo" />
             </a>
         </span>
         <span class="title">
@@ -28,6 +27,11 @@ include dirname(__FILE__).'/include/css.php';
             </a>
         </span>
 	</div>
+<?php
+if (MolajoFactory::getUser()->id == 0) :
+    include dirname(__FILE__).'/include/login.php';
+else :
+?>
 	<div id="header-box">
 		<div id="module-menu">
 			<jdoc:include type="modules" name="menu" />
@@ -38,13 +42,12 @@ include dirname(__FILE__).'/include/css.php';
 		</div>
 		<div class="clr"></div>
 	</div>
-<?
-if (MolajoFactory::getUser()->id == 0) :
-    include dirname(__FILE__).'/include/login.php';
-elseif (MolajoFactory::getSession()->get('page.option') == 'com_cpanel') :
-    include dirname(__FILE__).'/include/cpanel.php';
-else :
-    include dirname(__FILE__).'/include/login.php';
+<?php
+    if (MolajoFactory::getSession()->get('page.option') == 'com_cpanel') :
+        include dirname(__FILE__).'/include/cpanel.php';
+    else :
+        include dirname(__FILE__).'/include/login.php';
+    endif;
 endif;
 ?>
 		<jdoc:include type="modules" name="footer" style="none"  />

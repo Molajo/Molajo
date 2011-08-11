@@ -7,7 +7,7 @@
 */
 #form-login .button-holder{clear:right;float:right;margin-top:10px;padding-right:5px}
 #lock{background:url(../images/j_login_lock.png) 50% 0 no-repeat;height:137px;width:150px}
-#section-box{background-color:#fff;float:right;margin-left:10px;margin-right:10px;width:340px}
+#section-box {background-color:#fff;float:right;margin-left:10px;margin-right:10px;width:340px}
 #section-box .m{padding:5px}
 #section-box .padding{background:none;padding:0}
 .login{margin:50px auto 100px;width:575px}
