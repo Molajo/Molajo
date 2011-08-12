@@ -59,7 +59,7 @@ class JFormFieldLanguage extends JFormFieldList
 		}
 
 		// Get the list of available languages.
-		$options = MolajoLanguageHelper::createLanguageList($native);
+		$options = JLanguageHelper::createLanguageList($native);
 		if (!$options || JError::isError($options)) {
 			$options = array();
 		}

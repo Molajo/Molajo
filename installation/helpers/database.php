@@ -38,7 +38,8 @@ class MolajoInstallationHelperDatabase
 	{
 		static $db;
 
-		if (!$db) {
+		if ($db) {
+        } else {
 			// Build the connection options array.
 			$options = array (
 				'driver' => $driver,

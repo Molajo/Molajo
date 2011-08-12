@@ -48,7 +48,7 @@ class MolajoLanguageHelper
 			$db->setQuery($query);
 			$installed_languages = $db->loadObjectList('element');
 		}
-
+var_dump($installed_languages);
 		foreach ($langs as $lang => $metadata)
 		{
 			if (!$installed || array_key_exists($lang, $installed_languages))
