@@ -8,11 +8,9 @@
  */
 defined('MOLAJO') or die;?>
 
-<?php foreach ($this->rows as $row) : ?>
 	<dt>
 		<a href="#"><?php echo $this->row->title; ?></a>
 	</dt>
 	<dd>
 		<?php echo $this->row->content; ?>
-	</dd>	
-<?php endforeach;?>
+	</dd>

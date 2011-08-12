@@ -17,3 +17,16 @@ Attributes:
  Horz => treated as 'horizontal'.
  xhtml => treated as 'div'.
  rounded => treated as 'div'.
+ 
+CSS and JS:
+ CSS and JS files, located within CSS and JS directories in your wrap directory, will be loaded when that layout is used
+ CSS files beginning with rtl_ will be loaded when the language is an rtl language 
+
+6 possible files within the layouts folder of a wrap:
+ top.php runs one time => before the set of rows are processed
+ bottom.php runs one time => after the set of rows are processed 
+ header.php, body.php, and then footer.php will be run for or each row returned, even if it's just one row
+ - you don't have to worry about the loop - molajo will do it for you
+ - you don't HAVE to have each of these files => but if they exist, that's how they are used
+ 
+ custom.php: if that file exists in the layouts folder => then molajo sends the entire $rowset object => and you have to handle the loop yourself
