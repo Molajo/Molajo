@@ -936,7 +936,6 @@ INSERT INTO `#__extensions` (
     (502, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 0, 2, 1502),
     (503, 'mod_latest', 'module', 'mod_latest', 'mod_latest', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 0, 2, 1503),
     (504, 'mod_logged', 'module', 'mod_logged', 'mod_logged', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 0, 1, 1504),
-    (505, 'mod_login', 'module', 'mod_login', 'mod_login', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 0, 1, 1505),
     (506, 'mod_logout', 'module', 'mod_logout', 'mod_logout', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 0, 2, 1506),
     (507, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 0, 2, 1507),
     (508, 'mod_mypanel', 'module', 'mod_mypanel', 'mod_mypanel', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 0, 2, 1508),
@@ -1495,7 +1494,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 1100, 'login', 'login', 28),
-('core', 1100, 'logout', 'login', 29);
+('core', 1100, 'logout', 'logout', 29);
 
 /* 1100 MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER +application id */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1757,48 +1756,6 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_login', 100, '', '', 0),
 ('com_login', 100, '__dummy', '__dummy', 1);
 
-/* 200 MOLAJO_CONFIG_OPTION_ID_FIELDS */
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 200, '', '', 0);
-
-/* 210 MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS */
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 210, '', '', 0);
-
-/* 220 MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS */
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 220, '', '', 0);
-
-/* 230 MOLAJO_CONFIG_OPTION_ID_CONTENT_TYPES */
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 230, '', '', 0);
-
-/* 250 MOLAJO_CONFIG_OPTION_ID_STATE */;
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 250, '', '', 0);
-
-/* USER INTERFACE */
-
-/* 300 MOLAJO_CONFIG_OPTION_ID_LIST_TOOLBAR_BUTTONS */;
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 300, '', '', 0);
-
-/* 310 MOLAJO_CONFIG_OPTION_ID_EDIT_TOOLBAR_BUTTONS */
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 310, '', '', 0);
-
-/* 320 MOLAJO_CONFIG_OPTION_ID_TOOLBAR_SUBMENU_LINKS */;
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 320, '', '', 0);
-
-/* 330 MOLAJO_CONFIG_OPTION_ID_LISTBOX_FILTER */;
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 330, '', '', 0);
-
-/* 340 MOLAJO_CONFIG_OPTION_ID_EDITOR_BUTTONS */;
-INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 340, '', '', 0);
-
 /** MVC */
 
 /* CONTROLLER TASKS */
@@ -1848,17 +1805,17 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 3000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3000, '', '', 0),
-('com_login', 3000, 'default', 'default', 1);
+('com_login', 3000, 'login', 'login', 1);
 
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3100, '', '', 0),
-('com_login', 3100, 'default', 'default', 1);
+('com_login', 3100, 'login', 'login', 1);
 
 /* 3000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3001, '', '', 0),
-('com_login', 3001, 'default', 'default', 1);
+('com_login', 3001, 'adminlogin', 'adminlogin', 1);
 
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1873,7 +1830,7 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 ('com_login', 4000, 'html', 'html', 1),
 ('com_login', 4001, 'html', 'html', 1);
 
-/* MODULES */
+/* MODELS */
 
 /* 5000 MOLAJO_CONFIG_OPTION_ID_MODEL +application id */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -1887,8 +1844,8 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 
 /* 6000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-('com_login', 6000, 'x', '', 0),
-('com_login', 6000, '', '', 1);
+('com_login', 6000, '', '', 0),
+('com_login', 6000, 'user', 'user', 1);
 
 /** ACL Component Information */
 
@@ -1949,36 +1906,25 @@ INSERT INTO `#__menu` VALUES (12, 'mainmenu', 'Article Table', 'table', '', 'tab
 # MODULES
 #
 
-# admin modules
-INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `ordering`, `position`, `checked_out`,
-  `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
-  `application_id`, `language`, `access`,  `asset_id`)
-    VALUES
-    (1, 'Login', 'System Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '', 1, '*', 1, 7001),
-    (2, 'Logout', 'System Logout', '', '', 1, 'logout', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logout', 1, '', 1, '*', 2, 7002),
-    (3, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 7008),
-    (4, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 7010),
-    (5, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 1, '', 1, '*', 2, 7011),
-    (6, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 1, '', 1, '*', 2, 7015),
-    (7, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 1, '', 1, '*', 2, 7020),
-    (8, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 1, '', 1, '*', 2, 7030),
-    (9, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*', 2, 7035),
-    (10, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*', 2, 7040),
-    (11, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 1, '', 1, '*', 2, 7050),
-    (12, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 1, '', 1, '*', 2, 7055),
-    (13, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 1, '', 1, '*', 2, 7060),
-    (14, 'Footer', '', '', '', 1, 'footer', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_footer', 1, '{"link":"http://molajo.org","linked_text":"Molajo&#174;","remaining_text":" is free software.","layout":"adminfooter","wrap":"div","moduleclass_sfx":"footer","cache":"0","automatic_title":"1"}', 1, '*', 2, 7061),
-    (15, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 1, '', 1, '*', 2, 7062),
-    (16, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 1, '{"show_add_link":"1"}', 1, '*', 2, 7063);
-
-# site modules
-INSERT INTO `#__modules` (`id`, `title`, `subtitle`, `note`, `content`, `ordering`, `position`, `checked_out`,
-  `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`,`showtitle`, `params`,
-  `application_id`, `language`, `access`,  `asset_id`)
-    VALUES
-    (17, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 7070),
-    (18, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, '{"greeting":"1","name":"0"}', 0, '*', 5, 7085),
-    (19, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*', 5, 7080);
+INSERT INTO `amy_modules` VALUES(1, 'Login', 'System Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 7001, 1, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(2, 'Logout', 'System Logout', '', '', 1, 'logout', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logout', 7002, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(3, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 7008, 2, 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(4, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 7010, 2, 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(5, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 7011, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(6, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 7015, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(7, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_toolbar', 7020, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(8, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 7030, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(9, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 7035, 2, 1, '{"count":"5","name":"1","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(10, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 7040, 2, 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(11, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_submenu', 7050, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(12, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 7055, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(13, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 7060, 2, 1, '{"title":"1","subtitle":"1", "layout":"admintitle","wrap":"div","moduleclass_sfx":" pagetitle icon-48-article","cache":"0","automatic_title":"1"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(14, 'Footer', '', '', '', 1, 'footer', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_footer', 7061, 2, 1, '{"link":"http://molajo.org","linked_text":"Molajo&#174;","remaining_text":" is free software.","title":"","subtitle":"", "layout":"adminfooter","wrap":"div","moduleclass_sfx":"footer","cache":"0","automatic_title":"1"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(15, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 7062, 2, 1, '', 1, '*');
+INSERT INTO `amy_modules` VALUES(16, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 7063, 2, 1, '{"show_add_link":"1"}', 1, '*');
+INSERT INTO `amy_modules` VALUES(17, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 7070, 5, 1, '{"menutype":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*');
+INSERT INTO `amy_modules` VALUES(18, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 7085, 5, 1, '{"greeting":"1","name":"0"}', 0, '*');
+INSERT INTO `amy_modules` VALUES(19, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 7080, 5, 1, '{"moduleclass_sfx":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*');
 
 INSERT INTO `#__modules_menu` VALUES
 (1,0),
@@ -1998,7 +1944,8 @@ INSERT INTO `#__modules_menu` VALUES
 (15,0),
 (16,0),
 (17,0),
-(18,0);
+(18,0),
+(19,0);
 
 #
 # TEMPLATES

@@ -258,7 +258,8 @@ class MolajoController extends JController
 
         /** load table */
         if ($this->request['task'] == 'display'
-            || $this->request['task'] == 'add') {
+            || $this->request['task'] == 'add'
+            || $this->request['task'] == 'login') {
 
             $this->isNew = false;
 
@@ -277,7 +278,8 @@ class MolajoController extends JController
                 $this->existingState = $this->table->state;
             }
         }
-
+echo 'plugin type'.$this->request['plugin_type'];
+die();
         /** dispatch events */
         if ($this->dispatcher) {
         } else {
@@ -309,6 +311,7 @@ class MolajoController extends JController
      * @param null $checkId
      * @param null $checkCatid
      * @param null $checkTable
+     * 
      * @return bool
      */
     public function checkTaskAuthorisation($checkTask=null, $checkId=null, $checkCatid=null, $checkTable=null)

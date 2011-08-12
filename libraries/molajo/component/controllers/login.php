@@ -10,21 +10,14 @@ defined('MOLAJO') or die;
 /**
  * Login Controller
  *
- * Handles the standard single-item save, delete, and cancel tasks
+ * Handles Login and Logout Methods
  *
- * Cancel: cancel and close
- * Save: apply, create, save, save2copy, save2new, restore
- * Delete: delete
- *
- * Called from the Multiple Controller for batch (copy, move) and delete
- *
- * @package	Molajo
+ * @package	    Molajo
  * @subpackage	Controller
- * @since	1.0
+ * @since	    1.0
  */
 class MolajoControllerLogin extends MolajoController
 {
-
 	/**
 	 * login
      * 
@@ -36,18 +29,30 @@ class MolajoControllerLogin extends MolajoController
 	{
         /** security token **/
         JRequest::checkToken() or die;
-
+echo 'herere in the login';
+die();
         /** initialisation */
         parent::initialise('login');
 
-        /** @var $app */
-		$app = MolajoFactory::getApplication();
+		$credentials = array(
+			'username' => JRequest::getVar('username', '', 'method', 'username'),
+			'password' => JRequest::getVar('passwd', '', 'post', 'string', JREQUEST_ALLOWRAW)
+		);
 
-		$this->model = $this->getModel('login');
-		$credentials = $this->model->getState('credentials');
-		$return = $this->model->getState('return');
+		/** security check: internal URL only */
+		if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
+			$return = base64_decode($return);
+			if (JURI::isInternal($return)) {
+            } else {
+				$return = '';
+			}
+		}
+		if (empty($return)) {
+			$return = 'index.php';
+		}
 
 		$result = $app->login($credentials, array('action' => 'core.login.admin'));
+
         /** success message **/
         $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_LOGIN_SUCCESSFUL'));
         $this->redirectClass->setSuccessIndicator(true);
@@ -56,87 +61,42 @@ class MolajoControllerLogin extends MolajoController
 			$app->redirect($return);
 		}
 
+        /** what to display? */
 		parent::display();
+
+///
+//The minimum group
+		$options['group'] = 'Public Backend';
+
+		//Make sure users are not autoregistered
+		$options['autoregister'] = false;
+
+		//Set the application login entry point
+		if (!array_key_exists('entry_url', $options)) {
+			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=login';
+		}
+
+		// Set the access control action to check.
+		$options['action'] = 'core.login.admin';
+
+		$result = parent::login($credentials, $options);
+
+		if (!JError::isError($result))
+		{
+			$lang = JRequest::getCmd('lang');
+			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
+			$this->setUserState('application.lang', $lang );
+
+			JAdministrator::purgeMessages();
+		}
+
+		return $result;
 	}
 
-    /**
-     * Login authentication function.
-     *
-     * Username and encoded password are passed the the onUserLogin event which
-     * is responsible for the user validation. A successful validation updates
-     * the current session record with the user's details.
-     *
-     * Username and encoded password are sent as credentials (along with other
-     * possibilities) to each observer (authentication plugin) for user
-     * validation.  Successful validation will update the current session with
-     * the user details.
-     *
-     * @param   array  $credentials  Array('username' => string, 'password' => string)
-     * @param   array  $options      Array('remember' => boolean)
-     *
-     * @return  boolean  True on success.
-     *
-     * @since  1.0
-     */
-    public function adminlogin($credentials, $options = array())
-    {
-        $authenticate = JAuthentication::getInstance();
-        $response	= $authenticate->authenticate($credentials, $options);
-
-        if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
-            // Import the user plugin group.
-            MolajoPluginHelper::importPlugin('user');
-
-            // OK, the credentials are authenticated.  Lets fire the onLogin event.
-            $results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
-
-            /*
-             * If any of the user plugins did not successfully complete the login routine
-             * then the whole method fails.
-             *
-             * Any errors raised should be done in the plugin as this provides the ability
-             * to provide much more information about why the routine may have failed.
-             */
-
-            if (!in_array(false, $results, true)) {
-                // Set the remember me cookie if enabled.
-                if (isset($options['remember']) && $options['remember']) {
-
-                    // Create the encryption key, apply extra hardening using the user agent string.
-                    $key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
-
-                    $crypt = new JSimpleCrypt($key);
-                    $rcookie = $crypt->encrypt(serialize($credentials));
-                    $lifetime = time() + 365*24*60*60;
-
-                    // Use domain and path set in config for cookie if it exists.
-                    $cookie_domain = $this->getCfg('cookie_domain', '');
-                    $cookie_path = $this->getCfg('cookie_path', '/');
-                    setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
-                }
-
-                return true;
-            }
-        }
-
-        // Trigger onUserLoginFailure Event.
-        $this->triggerEvent('onUserLoginFailure', array((array)$response));
-
-        // If silent is set, just return false.
-        if (isset($options['silent']) && $options['silent']) {
-            return false;
-        }
-
-        // If status is success, any error will ahve been raised by the user plugin
-        if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
-            JError::raiseWarning('SOME_ERROR_CODE', JText::_('MOLAJO_LOGIN_AUTHENTICATE'));
-        }
-
-        return false;
-    }
-
 	/**
-	 * Method to log out a user.
+	 * logout
+     *
+     * Method to log out a user.
 	 *
 	 * @return	void
 	 */
@@ -163,62 +123,142 @@ class MolajoControllerLogin extends MolajoController
 		parent::display();
 	}
 
+	/**
+	 * Login authentication function.
+	 *
+	 * Username and encoded password are passed the the onUserLogin event which
+	 * is responsible for the user validation. A successful validation updates
+	 * the current session record with the user's details.
+	 *
+	 * Username and encoded password are sent as credentials (along with other
+	 * possibilities) to each observer (authentication plugin) for user
+	 * validation.  Successful validation will update the current session with
+	 * the user details.
+	 *
+	 * @param   array  $credentials  Array('username' => string, 'password' => string)
+	 * @param   array  $options      Array('remember' => boolean)
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   11.1
+	 */
+	public function login2($credentials, $options = array())
+	{
+		// Get the global JAuthentication object.
+		jimport('joomla.user.authentication');
 
-    /**
-     * Logout authentication function.
-     *
-     * Passed the current user information to the onUserLogout event and reverts the current
-     * session record back to 'anonymous' parameters.
-     * If any of the authentication plugins did not successfully complete
-     * the logout routine then the whole method fails.  Any errors raised
-     * should be done in the plugin as this provides the ability to give
-     * much more information about why the routine may have failed.
-     *
-     * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
-     * @param   array    $options  Array('applicationid' => array of application id's)
-     *
-     * @return  boolean  True on success
-     *
-     * @since  1.0
-     */
-    public function adminlogout($userid = null, $options = array())
-    {
-        // Initialise variables.
-        $retval = false;
+		$authenticate = JAuthentication::getInstance();
+		$response	= $authenticate->authenticate($credentials, $options);
 
-        // Get a user object from the MolajoApplication.
-        $user = MolajoFactory::getUser($userid);
+		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
+			// Import the user plugin group.
+			JPluginHelper::importPlugin('user');
 
-        // Build the credentials array.
-        $parameters['username']	= $user->get('username');
-        $parameters['id']		= $user->get('id');
+			// OK, the credentials are authenticated.  Lets fire the onLogin event.
+			$results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
 
-        // Set applicationid in the options array if it hasn't been set already.
-        if (!isset($options['applicationid'])) {
-            $options['applicationid']= $this->getApplicationId();
-        }
+			/*
+			 * If any of the user plugins did not successfully complete the login routine
+			 * then the whole method fails.
+			 *
+			 * Any errors raised should be done in the plugin as this provides the ability
+			 * to provide much more information about why the routine may have failed.
+			 */
 
-        // Import the user plugin group.
-        MolajoPluginHelper::importPlugin('user');
+			if (!in_array(false, $results, true)) {
+				// Set the remember me cookie if enabled.
+				if (isset($options['remember']) && $options['remember']) {
+					jimport('joomla.utilities.simplecrypt');
+					jimport('joomla.utilities.utility');
 
-        // OK, the credentials are built. Lets fire the onLogout event.
-        $results = $this->triggerEvent('onUserLogout', array($parameters, $options));
+					// Create the encryption key, apply extra hardening using the user agent string.
+					$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
 
-        // Check if any of the plugins failed. If none did, success.
+					$crypt = new JSimpleCrypt($key);
+					$rcookie = $crypt->encrypt(serialize($credentials));
+					$lifetime = time() + 365*24*60*60;
 
-        if (!in_array(false, $results, true)) {
-            // Use domain and path set in config for cookie if it exists.
-            $cookie_domain = $this->getCfg('cookie_domain', '');
-            $cookie_path = $this->getCfg('cookie_path', '/');
-            setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+					// Use domain and path set in config for cookie if it exists.
+					$cookie_domain = $this->getCfg('cookie_domain', '');
+					$cookie_path = $this->getCfg('cookie_path', '/');
+					setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
+				}
 
-            return true;
-        }
+				return true;
+			}
+		}
 
-        // Trigger onUserLoginFailure Event.
-        $this->triggerEvent('onUserLogoutFailure', array($parameters));
+		// Trigger onUserLoginFailure Event.
+		$this->triggerEvent('onUserLoginFailure', array((array)$response));
 
-        return false;
-    }
+		// If silent is set, just return false.
+		if (isset($options['silent']) && $options['silent']) {
+			return false;
+		}
+
+		// If status is success, any error will ahve been raised by the user plugin
+		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
+			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
+		}
+
+		return false;
+	}
+
+	/**
+	 * Logout authentication function.
+	 *
+	 * Passed the current user information to the onUserLogout event and reverts the current
+	 * session record back to 'anonymous' parameters.
+	 * If any of the authentication plugins did not successfully complete
+	 * the logout routine then the whole method fails.  Any errors raised
+	 * should be done in the plugin as this provides the ability to give
+	 * much more information about why the routine may have failed.
+	 *
+	 * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
+	 * @param   array    $options  Array('clientid' => array of client id's)
+	 *
+	 * @return  boolean  True on success
+	 *
+	 * @since   11.1
+	 */
+	public function logout2($userid = null, $options = array())
+	{
+		// Initialise variables.
+		$retval = false;
+
+		// Get a user object from the JApplication.
+		$user = JFactory::getUser($userid);
+
+		// Build the credentials array.
+		$parameters['username']	= $user->get('username');
+		$parameters['id']		= $user->get('id');
+
+		// Set clientid in the options array if it hasn't been set already.
+		if (!isset($options['clientid'])) {
+			$options['clientid']= $this->getClientId();
+		}
+
+		// Import the user plugin group.
+		JPluginHelper::importPlugin('user');
+
+		// OK, the credentials are built. Lets fire the onLogout event.
+		$results = $this->triggerEvent('onUserLogout', array($parameters, $options));
+
+		// Check if any of the plugins failed. If none did, success.
+
+		if (!in_array(false, $results, true)) {
+			// Use domain and path set in config for cookie if it exists.
+			$cookie_domain = $this->getCfg('cookie_domain', '');
+			$cookie_path = $this->getCfg('cookie_path', '/');
+			setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+
+			return true;
+		}
+
+		// Trigger onUserLoginFailure Event.
+		$this->triggerEvent('onUserLogoutFailure', array($parameters));
+
+		return false;
+	}
 
 }

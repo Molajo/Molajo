@@ -473,70 +473,9 @@ class MolajoApplication extends JObject
         $session->set('page.select_fieldname', 'config_manager_grid_column');
 
         /** retrieve from db */
-        $this->getContentInfo ();
-
-        /** Retrieve System Info */
-        /** @var $document */
-        $document = MolajoFactory::getDocument();
-		$menus		    = $this->getMenu();
-		$menu           = $menus->getActive();
-		$pathway	    = $this->getPathway();
-		$title		    = null;
-        $this->params   = MolajoComponentHelper::getParams($option);
-
-        $id = (int) @$menu->query['id'];
-
-		$title = $this->params->get('page_title', '');
-
-		if (empty($title)) {
-			$title = $session->get('page.title');
+        if ($controller == 'display') {
+            $this->getContentInfo ();
         }
-        if (empty($title)) {
-			$title = $this->getCfg('sitename');
-        }
-
-		if ($this->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', $this->getCfg('sitename'), $title);
-
-		} elseif ($this->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $title, $this->getCfg('sitename'));
-		}
-
-		$document->setTitle($title);
-
-		$document->setDescription($session->get('page.metadesc'));
-		$document->setMetadata('keywords', $session->get('page.metakey'));
-		$document->setMetadata('robots', $session->get('page.robots'));
-
-		$metadata = explode(',', $session->get('page.metadata'));
-		foreach ($metadata as $k => $v) {
-			if ($v) {
-				$document->setMetadata($k, $v);
-			}
-		}
-
-		if ($this->params->get('show_feed_link', 1)) {
-			$link = '&format=feed&limitstart=';
-			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-			$document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
-			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-			$document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
-		}
-        
-
-        $session->set('page.params', $params);
-        $session->set('page.style', '');
-        $session->set('page.position', 'component');
-		// Load the parameters. Merge Global and Menu Item params into new object
-//		$params = $app->getParams();
-//		$menuParams = new JRegistry;
-
-//		if ($menu = $app->getMenu()->getActive()) {
-//			$menuParams->loadString($menu->params);
-//		}
-
-//		$mergedParams = clone $menuParams;
-//		$mergedParams->merge($params);
 
         /** load into $data array for creation of the request object */
         $request = array();
@@ -574,15 +513,13 @@ class MolajoApplication extends JObject
         $request['metakey'] = $session->get('page.metakey');
         $request['metadesc'] = $session->get('page.metadesc');
         $request['metadata'] = $session->get('page.metadata');
-        $request['style'] = $session->get('page.style');
         $request['position'] = $session->get('page.position');
 
-
-            $request['wrap_title'] = $request['title'];
-            $request['wrap_subtitle'] = $request['subtitle'];
-            $request['wrap_date'] = '';
-            $request['wrap_author'] = '';
-            $request['wrap_more_array'] = array();
+        $request['wrap_title'] = $request['title'];
+        $request['wrap_subtitle'] = $request['subtitle'];
+        $request['wrap_date'] = '';
+        $request['wrap_author'] = '';
+        $request['wrap_more_array'] = array();
 
         return $request;
     }
@@ -653,6 +590,67 @@ class MolajoApplication extends JObject
             }
         }
 
+        /** Set Document Information */
+        $document       = MolajoFactory::getDocument();
+        $menus		    = $this->getMenu();
+        $menu           = $menus->getActive();
+        $pathway	    = $this->getPathway();
+        $title		    = null;
+        $this->params   = MolajoComponentHelper::getParams($session->get('page.option'));
+
+        $id = (int) @$menu->query['id'];
+
+        $title = $this->params->get('page_title', '');
+
+        if (empty($title)) {
+            $title = $session->get('page.title');
+        }
+        if (empty($title)) {
+            $title = $this->getCfg('sitename');
+        }
+
+        if ($this->getCfg('sitename_pagetitles', 0) == 1) {
+            $title = JText::sprintf('JPAGETITLE', $this->getCfg('sitename'), $title);
+
+        } elseif ($this->getCfg('sitename_pagetitles', 0) == 2) {
+            $title = JText::sprintf('JPAGETITLE', $title, $this->getCfg('sitename'));
+        }
+
+        $document->setTitle($title);
+        $document->setDescription($session->get('page.metadesc'));
+        $document->setMetadata('keywords', $session->get('page.metakey'));
+        $document->setMetadata('robots', $session->get('page.robots'));
+
+        $metadata = explode(',', $session->get('page.metadata'));
+        foreach ($metadata as $k => $v) {
+            if ($v) {
+                $document->setMetadata($k, $v);
+            }
+        }
+
+        if ($this->params->get('show_feed_link', 1)) {
+            $link = '&format=feed&limitstart=';
+            $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
+            $document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
+            $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
+            $document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
+        }
+
+        $session->set('page.params', $this->params);
+        $session->set('page.wrap', '');
+        $session->set('page.position', 'component');
+
+             // Load the parameters. Merge Global and Menu Item params into new object
+     //		$params = $app->getParams();
+     //		$menuParams = new JRegistry;
+
+     //		if ($menu = $app->getMenu()->getActive()) {
+     //			$menuParams->loadString($menu->params);
+     //		}
+
+     //		$mergedParams = clone $menuParams;
+     //		$mergedParams->merge($params);
+
         return;
     }
 
@@ -703,7 +701,7 @@ class MolajoApplication extends JObject
 	public function close($code = 0)
 	{
         $session = MolajoFactory::getSession();
-
+//todo: amy finalize this list
         $session->clear('page.application_id');
         $session->clear('page.current_url');
         $session->clear('page.base_url');
