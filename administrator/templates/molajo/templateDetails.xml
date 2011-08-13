@@ -39,7 +39,7 @@
 		<position>status</position>
 		<position>icon</position>
 		<position>cp_shell</position>
-		<position>cpanel</position>
+		<position>control-panel</position>
 		<position>footer</position>
 		<position>login</position>
 		<position>debug</position>

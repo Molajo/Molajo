@@ -15,38 +15,29 @@ include dirname(__FILE__).'/include/css.php';
     <jdoc:include type="head" />
 </head>
 <body id="minwidth-body">
-	<div id="border-top" class="h_blue">
-        <span class="logo">
-            <a href="http://molajo.org" target="_blank">
-                <img src="<?php echo MOLAJO_BASE_URL; ?>/administrator/templates/<?php echo $this->template; ?>/images/logo.png" alt="Molajo" />
-            </a>
-        </span>
-        <span class="title">
-            <a href="index.php">
-                <?php echo $this->params->get('showSiteName') ? MolajoFactory::getApplication()->getCfg('sitename') : JText::_('TPL_MOLAJO_HEADER'); ?>
-            </a>
-        </span>
-	</div>
-<?php
-if (MolajoFactory::getUser()->id == 0) :
-    include dirname(__FILE__).'/include/login.php';
-else :
-?>
-	<div id="header-box">
-		<div id="module-menu">
-			<jdoc:include type="modules" name="menu" />
-		</div>
-		<div id="module-status">
-			<jdoc:include type="modules" name="status" />
-			<jdoc:include type="modules" name="logout" />
-		</div>
-		<div class="clr"></div>
-	</div>
-<?php
-    if (MolajoFactory::getSession()->get('page.option') == 'com_cpanel') :
-        include dirname(__FILE__).'/include/cpanel.php';
-    else :
+    <div id="border-top" class="h_blue">
+        <jdoc:include type="modules" name="header" />
+    </div>
+    <?php
+    if (MolajoFactory::getUser()->id == 0) :
         include dirname(__FILE__).'/include/login.php';
+    else :
+    ?>
+        <div id="header-box">
+            <div id="module-menu">
+                <jdoc:include type="modules" name="menu" />
+            </div>
+            <div id="module-status">
+                <jdoc:include type="modules" name="status" />
+                <jdoc:include type="modules" name="logout" />
+            </div>
+            <div class="clr"></div>
+        </div>
+<?php
+    if (MolajoFactory::getSession()->get('page.option') == 'com_control-panel') :
+        include dirname(__FILE__).'/include/control_panel.php';
+    else :
+        include dirname(__FILE__).'/include/default.php';
     endif;
 endif;
 ?>

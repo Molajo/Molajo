@@ -8,11 +8,11 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'plain');
+$layout = $params->def('layout', 'default');
 $wrap = $params->def('wrap', 'none');
 
 require_once dirname(__FILE__).'/helper.php';
 
 $count = modOnlineHelper::getOnlineCount();
 
-$rowset[0]->content = $count.'<img src="images/users.png" alt="'.JText::_('MOD_ONLINE_USERS_ONLINE').'/>';
+$rowset[0]->text = $count.'<img src="images/users.png" alt="'.JText::_('MOD_ONLINE_USERS_ONLINE').'/>';

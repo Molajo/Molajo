@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'plain');
+$layout = $params->def('layout', 'default');
 $wrap = $params->def('wrap', 'none');
 $rowset[0]->content = '';
 
@@ -31,5 +31,5 @@ endif;
 
 /** output into content array */
 foreach ($output as $item) :
-    $rowset[0]->content .= $item;
+    $rowset[0]->text .= $item;
 endforeach;

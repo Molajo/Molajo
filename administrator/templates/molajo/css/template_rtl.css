@@ -9,9 +9,9 @@
 #border-top .version{float:left;padding:25px 0 0 5px}
 #border-top span{padding-right:15px}
 #border-top span.logo{float:left;padding-left:15px}
-#border-top.h_green div{background-image:url(../images/j_header_right_rtl.png)}
-#border-top.h_green div div{background-image:url(../images/j_header_left_rtl.png)}
-#cpanel div.icon{float:right;margin-left:5px;margin-right:0}
+#border-top.h_green div{background-image:url(../../../../layouts/extensions/admin_header/images/j_header_right_rtl.png)}
+#border-top.h_green div div{background-image:url(../../../../layouts/extensions/admin_header/images/j_header_left_rtl.png)}
+#control-panel div.icon{float:right;margin-left:5px;margin-right:0}
 #form-login .button-holder{clear:left;float:left;padding-left:5px}
 #form-login div.button_holder{padding-left:0}
 #form-login label,#user-groups li{float:right;text-align:right}
@@ -68,8 +68,8 @@
 body{direction:rtl}
 div#menu-assignment ul.menu-links li.menu-link input{clear:right;float:right}
 div#position-icon.pane-sliders div.pane-down .icon-wrapper .icon{margin:0;padding:5px 10px 5px 0}
-div.cpanel-left{float:right;width:54%}
-div.cpanel-right{float:left;width:45%}
+div.control-panel-left{float:right;width:54%}
+div.control-panel-right{float:left;width:45%}
 div.current #permissions-sliders select{float:right;margin:3px 2px 0}
 div.current fieldset.checkboxes{clear:left;float:right}
 div.current fieldset.checkboxes input{clear:right;float:right;margin:3px 2px 0 0}

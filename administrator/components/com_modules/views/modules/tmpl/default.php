@@ -49,13 +49,10 @@ $saveOrder	= $listOrder == 'ordering';
 				<?php echo JHtml::_('select.options', ModulesHelper::getModules($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.module'));?>
 			</select>
 
-
-
 			<select name="filter_access" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('JOPTION_SELECT_ACCESS');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'));?>
 			</select>
-
 
 			<select name="filter_language" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('JOPTION_SELECT_LANGUAGE');?></option>

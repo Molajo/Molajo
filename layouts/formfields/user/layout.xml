@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0" type="layout" group="extension" method="upgrade">
+<extension version="1.0" type="layout" group="formfield" method="upgrade">
     <name>LAYOUT_FORM_USER_NAME</name>
     <author>Molajo Contributors</author>
     <creationDate>July 2011</creationDate>

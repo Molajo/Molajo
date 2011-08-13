@@ -9,8 +9,8 @@
 #border-bottom div div{background:none;height:11px}
 #border-top.h_green,#border-top.h_green div,#border-top.h_green div div,#border-top.h_teal,#border-top.h_teal div,#border-top.h_teal div div,#border-top.h_cherry,#border-top.h_cherry div,#border-top.h_cherry div div,#border-top.h_blue,#border-top.h_blue div,#border-top.h_blue div div,#border-bottom div,#border-bottom{background:none}
 #content-box{background:#000;border-bottom:1px solid #ccc;padding-bottom:10px}
-#cpanel div.icon a{background:#000;border:1px solid #f0f0f0;color:#fff}
-#cpanel div.icon a:hover{background:#000;color:#fff}
+#control-panel div.icon a{background:#000;border:1px solid #f0f0f0;color:#fff}
+#control-panel div.icon a:hover{background:#000;color:#fff}
 #header-box{background:#000;border:1px solid #ccc}
 #menu a,#menu div{color:#fff;font-weight:700 !important}
 #menu a:hover{color:#000;font-weight:700 !important}
