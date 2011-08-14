@@ -1,16 +1,11 @@
 <?php
 /**
- * @version     $id: audio.php
  * @package     Molajo
- * @subpackage  Responses Component
+ * @subpackage  Audio
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
-$document =& MolajoFactory::getDocument();
-$document->addStyleSheet(JURI::base().'media/molajo/audio/audio.css' );
-$document->addScript(JURI::base().'media/molajo/audio/audio-player.js' );
 
 /** swf player and parameters **/
 $js = "window.addEvent('domready', function() { "."\n";
