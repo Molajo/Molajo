@@ -16,6 +16,6 @@ if ($params->def('prepare_content', 1))
 	$module->content = JHtml::_('content.prepare', $module->content);
 }
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 require MolajoModuleHelper::getLayoutPath('mod_custom', $params->get('layout', 'default'));

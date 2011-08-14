@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.7" method="upgrade">
+<extension type="component" version="1.0" method="upgrade">
 	<name>com_checkin</name>
 	<author>Molajo Project</author>
 	<copyright>(C) 2005 - 2008 Open Source Matters. All rights reserved.

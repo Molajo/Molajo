@@ -10,6 +10,6 @@
 // no direct access
 defined('JPATH_PLATFORM') or die;
 ?>
-<div class="custom<?php echo $moduleclass_sfx ?>">
+<div class="custom<?php echo $layout_class_suffix ?>">
 	<?php echo $module->content;?>
 </div>

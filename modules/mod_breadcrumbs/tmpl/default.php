@@ -11,7 +11,7 @@
 defined('JPATH_PLATFORM') or die;
 ?>
 
-<div class="breadcrumbs<?php echo $params->get('moduleclass_sfx'); ?>">
+<div class="breadcrumbs<?php echo $params->get('layout_class_suffix'); ?>">
 <?php if ($params->get('showHere', 1))
 	{
 		echo JText::_('MOD_BREADCRUMBS_HERE');

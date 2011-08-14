@@ -27,6 +27,6 @@ $cacheparams->modeparams = $cacheid;
 
 $list = MolajoModuleHelper::moduleCache ($module, $params, $cacheparams);
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 require MolajoModuleHelper::getLayoutPath('mod_languages', $params->get('layout', 'default'));

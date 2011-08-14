@@ -14,6 +14,6 @@ defined('_JEXEC') or die;
 require_once dirname(__FILE__).'/helper.php';
 
 $list = modArticlesHelper::getList($params);
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 require MolajoModuleHelper::getLayoutPath('mod_articles', $params->get('layout', 'default'));

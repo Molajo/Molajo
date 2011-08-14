@@ -12,7 +12,7 @@
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content)){ ?>
-		<div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">		
+		<div class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<?php if ($module->showtitle) : ?>
 				<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
 			<?php endif; ?>
@@ -29,7 +29,7 @@
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<div class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<div class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>
 				<div>
 					<div>		 
@@ -52,7 +52,7 @@
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<section class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<section class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>		 
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -71,7 +71,7 @@
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<article class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">	 
+		<article class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -90,7 +90,7 @@
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<nav class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<nav class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>		
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -109,7 +109,7 @@
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<aside class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<aside class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>	 
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -127,7 +127,7 @@
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<footer class="moduletable<?php echo $params->get('moduleclass_sfx'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<footer class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>	 
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>

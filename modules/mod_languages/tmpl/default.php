@@ -11,7 +11,7 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('stylesheet', 'mod_languages/template.css', array(), true);
 ?>
-<div class="mod-languages<?php echo $moduleclass_sfx ?>">
+<div class="mod-languages<?php echo $layout_class_suffix ?>">
 <?php if ($headerText) : ?>
 	<div class="pretext"><p><?php echo $headerText; ?></p></div>
 <?php endif; ?>

@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 ?>
-<table cellpadding="0" cellspacing="0" class="moduletable<?php echo $this->params->get('moduleclass_sfx'); ?>">
+<table cellpadding="0" cellspacing="0" class="moduletable<?php echo $this->params->get('layout_class_suffix'); ?>">
 <?php if ($this->params->get('showtitle', true) === true) :  ?>
     <tr>
         <th>

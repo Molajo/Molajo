@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 ?>
-<table cellpadding="0" cellspacing="0" class="moduletable<?php echo htmlspecialchars($params->get('moduleclass_sfx')); ?>">
+<table cellpadding="0" cellspacing="0" class="moduletable<?php echo htmlspecialchars($params->get('layout_class_suffix')); ?>">
 <?php
 // feed description
 if (!is_null($channel['title']) && $rsstitle) {
@@ -56,4 +56,4 @@ if ($setItems > $actualItems) {
 }
 ?>
 <td>
-    <ul class="newsfeed<?php echo htmlspecialchars($moduleclass_sfx); ?>"  >
+    <ul class="newsfeed<?php echo htmlspecialchars($layout_class_suffix); ?>"  >

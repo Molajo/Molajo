@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Id: categories.xml 21505 2011-06-10 07:21:09Z infograf768 $ -->
-<extension type="component" version="1.7" method="upgrade">
+<extension type="component" version="1.0" method="upgrade">
 	<name>com_categories</name>
 		<author>Molajo Project</author>
 	<creationDate>December 2007</creationDate>

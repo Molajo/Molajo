@@ -18,7 +18,7 @@ if ($feed != false)
 	$iUrl	= isset($feed->image->url)	? $feed->image->url	: null;
 	$iTitle = isset($feed->image->title) ? $feed->image->title : null;
 	?>
-	<div style="direction: <?php echo $rssrtl ? 'rtl' :'ltr'; ?>; text-align: <?php echo $rssrtl ? 'right' :'left'; ?> ! important"  class="feed<?php echo $moduleclass_sfx; ?>">
+	<div style="direction: <?php echo $rssrtl ? 'rtl' :'ltr'; ?>; text-align: <?php echo $rssrtl ? 'right' :'left'; ?> ! important"  class="feed<?php echo $layout_class_suffix; ?>">
 	<?php
 	// feed description
 	if (!is_null($feed->title) && $params->get('rsstitle', 1)) {
@@ -58,7 +58,7 @@ if ($feed != false)
 	}
 	?>
 
-			<ul class="newsfeed<?php echo $params->get('moduleclass_sfx'); ?>">
+			<ul class="newsfeed<?php echo $params->get('layout_class_suffix'); ?>">
 			<?php
 			$words = $params->def('word_count', 0);
 			for ($j = 0; $j < $totalItems; $j ++)

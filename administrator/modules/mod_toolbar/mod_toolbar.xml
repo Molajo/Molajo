@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension
 	type="module"
-	version="1.7"
+	version="1.0"
 	application="administrator">
 	<name>mod_toolbar</name>
 	<author>Molajo Project</author>
@@ -10,7 +10,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>molajo.org</authorUrl>
-	<version>1.7.0</version>
+	<version>1.0</version>
 	<description>MOD_TOOLBAR_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_toolbar">mod_toolbar.php</filename>
@@ -32,7 +32,7 @@
 					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
 
 				<field
-					name="moduleclass_sfx"
+					name="layout_class_suffix"
 					type="text"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
 					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />

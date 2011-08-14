@@ -26,7 +26,7 @@ if (!count($list)) {
 	return;
 }
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 $showDate = $params->get('showDate', 0);
 
 require MolajoModuleHelper::getLayoutPath('mod_related_items', $params->get('layout', 'default'));

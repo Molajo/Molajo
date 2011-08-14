@@ -25,7 +25,7 @@ $maxlength		= $upper_limit;
 $text			= htmlspecialchars($params->get('text', JText::_('MOD_SEARCH_SEARCHBOX_TEXT')));
 $label			= htmlspecialchars($params->get('label', JText::_('MOD_SEARCH_LABEL_TEXT')));
 $set_Itemid		= intval($params->get('set_itemid', 0));
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 if ($imagebutton) {
 	$img = modSearchHelper::getSearchImage($button_text);

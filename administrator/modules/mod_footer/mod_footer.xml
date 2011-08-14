@@ -56,45 +56,7 @@
                     cols="30"
                 />
 			</fieldset>
-			<fieldset
-				name="advanced">
-				<field
-					name="layout"
-					type="extensionlayout"
-					label="MOLAJO_FIELD_EXTENSION_LAYOUT_LABEL"
-					description="MOLAJO_FIELD_EXTENSION_LAYOUT_DESC" />
-
-                <field
-					name="wrap"
-					type="wraplayout"
-					label="MOLAJO_FIELD_WRAP_LAYOUT_LABEL"
-					description="MOLAJO_FIELD_WRAP_LAYOUT_DESC" />
-
-				<field
-					name="moduleclass_sfx"
-					type="text"
-					label="MOLAJO_FIELD_MODULECLASS_SUFFIX_LABEL"
-					description="MOLAJO_FIELD_MODULECLASS_SUFFIX_DESC" />
-
-				<field
-					name="cache"
-					type="list"
-					default="1"
-					label="MOLAJO_FIELD_CACHE_LABEL"
-					description="MOLAJO_FIELD_CACHE_DESC">
-					<option
-						value="1">MOLAJO_VALUE_USE_GLOBAL</option>
-					<option
-						value="0">MOLAJO_FIELD_VALUE_NOCACHING</option>
-				</field>
-
-				<field
-					name="cache_time"
-					type="text"
-					default="900"
-					label="MOLAJO_FIELD_CACHE_TIME_LABEL"
-					description="MOLAJO_FIELD_CACHE_TIME_DESC" />
-			</fieldset>
+            <fieldset include="advanced" />
 		</fields>
 	</config>
 </extension>
