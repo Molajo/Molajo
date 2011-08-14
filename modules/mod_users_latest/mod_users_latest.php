@@ -15,6 +15,6 @@ require_once dirname(__FILE__).'/helper.php';
 $shownumber = $params->get('shownumber', 5);
 $names	= moduserslatestHelper::getUsers($params);
 $linknames = $params->get('linknames', 0);
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 require MolajoModuleHelper::getLayoutPath('mod_users_latest', $params->get('layout', 'default'));

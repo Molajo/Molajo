@@ -146,7 +146,7 @@ if ($this->user->authorise('core.manage', 'com_menus'))
 	$menu->addSeparator();
 
 	// Menu Types
-	foreach (ModMenuHelper::getMenus() as $menuType)
+	foreach (MolajoLaunchpadHelper::getMenus() as $menuType)
 	{
 		$alt = '*' .$menuType->sef. '*';
 		if ($menuType->home == 0)
@@ -231,7 +231,7 @@ if ($this->user->authorise('core.manage', 'com_content'))
 //
 
 // Get the authorised components and sub-menus.
-$components = ModMenuHelper::getComponents( true );
+$components = MolajoLaunchpadHelper::getComponents( true );
 
 // Check if there are any components, otherwise, don't render the menu
 if ($components) {

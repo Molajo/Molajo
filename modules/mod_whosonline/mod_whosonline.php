@@ -24,6 +24,6 @@ if ($showmode > 0) {
 }
 
 $linknames = $params->get('linknames', 0);
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 require MolajoModuleHelper::getLayoutPath('mod_whosonline', $params->get('layout', 'default'));

@@ -55,7 +55,7 @@
 					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
 
 				<field
-					name="moduleclass_sfx"
+					name="layout_class_suffix"
 					type="text"
 					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
 					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />

@@ -26,6 +26,6 @@ if (empty ($rssurl))
 }
 
 $feed = modFeedHelper::getFeed($params);
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 require MolajoModuleHelper::getLayoutPath('mod_feed', $params->get('layout', 'default'));

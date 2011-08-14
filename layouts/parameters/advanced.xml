@@ -16,7 +16,7 @@
     />
 
     <field
-        name="moduleclass_sfx"
+        name="layout_class_suffix"
         type="text"
         label="MOLAJO_FIELD_MODULECLASS_SUFFIX_LABEL"
         description="MOLAJO_FIELD_MODULECLASS_SUFFIX_DESC"

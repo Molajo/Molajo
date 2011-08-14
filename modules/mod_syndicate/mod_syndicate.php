@@ -22,7 +22,7 @@ if (is_null($link)) {
 	return;
 }
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
 
 $text = htmlspecialchars($params->get('text'));
 

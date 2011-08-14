@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 <?php endif; ?>
 
 <?php if (($showmode > 0) && count($names)) : ?>
-	<ul  class="whosonline<?php echo $moduleclass_sfx ?>" >
+	<ul  class="whosonline<?php echo $layout_class_suffix ?>" >
 	<?php foreach($names as $name) : ?>
 		<li>
 			<?php if ($linknames == 1) : ?>

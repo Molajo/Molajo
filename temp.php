@@ -6,7 +6,7 @@
 ["content"]=> string(0) ""
 ["showtitle"]=> string(1) "1"
 ["showsubtitle"]=> string(1) "1"
-["params"]=> string(133) "{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","moduleclass_sfx":"","cache":"0","automatic_title":"1"}"
+["params"]=> string(133) "{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","layout_class_suffix":"","cache":"0","automatic_title":"1"}"
 ["menuid"]=> string(1) "0"
 ["user"]=> int(0)
 ["name"]=> string(6) "latest"

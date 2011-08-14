@@ -10,7 +10,7 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<ul class="latestnews<?php echo $moduleclass_sfx; ?>">
+<ul class="latestnews<?php echo $layout_class_suffix; ?>">
 <?php foreach ($list as $item) :  ?>
 	<li>
 		<a href="<?php echo $item->link; ?>">
