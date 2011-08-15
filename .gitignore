@@ -46,3 +46,8 @@ temp.php
 /.project
 /.buildpath
 /.settings
+
+# Molajito #
+############
+
+administrator/templates/molajito/js/ul/assets
