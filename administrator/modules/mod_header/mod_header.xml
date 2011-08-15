@@ -2,13 +2,13 @@
 <extension type="module" version="1.0" application="administrator" method="upgrade">
 	<name>MOD_HEADER_NAME</name>
 	<author>Amy Stephen</author>
-	<creationDate>August 2011</creationDate>
+	<creationDate>September 2011</creationDate>
 	<copyright>Copyright 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>MOD_HEADER_XML_DESCRIPTION</description>
+	<description>MOD_HEADER_DESCRIPTION</description>
 	<files>
 		<filename module="mod_header">mod_header.php</filename>
 		<folder>language</folder>
@@ -19,36 +19,6 @@
     </languages>
 	<config>
 		<fields name="params">
-			<fieldset name="basic">
-                <field
-                    name="link"
-                    type="url"
-                    class="inputbox"
-                    label="MOLAJO_FIELD_LINK_LABEL"
-                    description="MOLAJO_FIELD_LINK_DESC"
-                    filter="MolajoFilterHelper::filterURL"
-                    size="60"
-                />
-                <field
-                    name="linked_text"
-                    type="text"
-                    label="MOLAJO_FIELD_LINKED_TEXT_LABEL"
-                    description="MOLAJO_FIELD_LINKED_TEXT_DESC"
-                    class="inputbox"
-                    size="45"
-                />
-                <field name="target"
-                    type="list"
-                    default="0"
-                    description="MOLAJO_FIELD_LINKED_TARGET_DESC"
-                    label="MOLAJO_FIELD_LINKED_TARGET_LABEL"
-                    >
-                    <option value="0">JBROWSERTARGET_PARENT</option>
-                    <option value="1">JBROWSERTARGET_NEW</option>
-                    <option value="2">JBROWSERTARGET_POPUP</option>
-                    <option value="3">JBROWSERTARGET_MODAL</option>
-                </field>
-			</fieldset>
             <fieldset include="advanced" />
 		</fields>
 	</config>

@@ -2,13 +2,13 @@
 <extension type="module" version="1.0" application="administrator" method="upgrade">
 	<name>MOD_MENU</name>
 	<author>Molajo Project</author>
-	<creationDate>August 2011</creationDate>
+	<creationDate>September 2011</creationDate>
 	<copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>MOD_MENU_XML_DESCRIPTION</description>
+	<description>MOD_MENU_DESCRIPTION</description>
 
 	<files>
 		<filename module="mod_menu">mod_menu.php</filename>

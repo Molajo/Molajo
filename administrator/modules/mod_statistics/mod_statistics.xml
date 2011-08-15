@@ -11,7 +11,7 @@
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>MOD_STATUS_XML_DESCRIPTION</description>
+	<description>MOD_STATUS_DESCRIPTION</description>
 	<files>
 		<filename module="mod_status">mod_status.php</filename>
 		<filename>index.html</filename>

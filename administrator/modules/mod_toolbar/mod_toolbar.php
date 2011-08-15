@@ -34,7 +34,7 @@ $toolbar->addButtonsDisplayLayout ($session->get('page.option'), $permissions);
 $toolbar = MolajoToolbar::getInstance('toolbar')->render('toolbar');
 require MolajoModuleHelper::getLayoutPath('mod_toolbar', $params->get('layout', 'default'));
 */
-
+// wrap div == cf
 $request['wrap'] = $module->style;
 $request['position'] = $module->position;
 $request['layout'] = 'admintitle';

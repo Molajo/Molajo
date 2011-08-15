@@ -7,8 +7,8 @@
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
     <authorEmail>SpecificMaintainerTeam@molajo.org</authorEmail>
     <authorUrl>molajo.org/MaintainerTeam</authorUrl>
-    <version>1.6.0</version>
-    <description>PLG_SYSTEM_MOLAJO_XML_DESCRIPTION</description>
+    <version>1.0</version>
+    <description>PLG_SYSTEM_MOLAJO_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="molajo">molajo.php</filename>

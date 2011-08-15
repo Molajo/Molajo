@@ -8,7 +8,7 @@
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
-    <description>PLG_SYSTEM_MOLAJO_XML_DESCRIPTION</description>
+    <description>PLG_SYSTEM_MOLAJO_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="molajo">molajo.php</filename>

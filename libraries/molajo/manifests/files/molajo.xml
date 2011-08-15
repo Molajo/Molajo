@@ -8,7 +8,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>1.0</version>
 	<creationDate>May 2011</creationDate>
-	<description>FILES_MOLAJO_XML_DESCRIPTION</description>
+	<description>FILES_MOLAJO_DESCRIPTION</description>
 
 	<fileset>
 		<files>

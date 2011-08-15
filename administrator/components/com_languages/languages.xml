@@ -10,8 +10,8 @@
 		LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>molajo.org</authorUrl>
-	<version>1.7.0</version>
-	<description>COM_LANGUAGES_XML_DESCRIPTION</description>
+	<version>1.0</version>
+	<description>COM_LANGUAGES_DESCRIPTION</description>
 	<administration>
 		<files folder="admin">
 			<filename>config.xml</filename>

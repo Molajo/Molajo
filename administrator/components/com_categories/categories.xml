@@ -8,8 +8,8 @@
 		<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 		<authorEmail>collaborate@molajo.org</authorEmail>
 		<authorUrl>molajo.org</authorUrl>
-		<version>1.7.0</version>
-		<description>COM_CATEGORIES_XML_DESCRIPTION</description>
+		<version>1.0</version>
+		<description>COM_CATEGORIES_DESCRIPTION</description>
 	<administration>
 		<files folder="admin">
 			<filename>categories.php</filename>

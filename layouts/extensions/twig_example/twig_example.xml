@@ -2,13 +2,13 @@
 <extension version="1.0" type="layout" group="extension" method="upgrade">
     <name>LAYOUT_TWIG_EXAMPLE_NAME</name>
     <author>Amy Stephen</author>
-    <creationDate>August 2011</creationDate>
+    <creationDate>September 2011</creationDate>
     <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
-    <description>LAYOUT_TWIG_EXAMPLE_XML_DESCRIPTION</description>
+    <description>LAYOUT_TWIG_EXAMPLE_DESCRIPTION</description>
 	<files>
 		<filename>index.html</filename>
 		<folder>css</folder>

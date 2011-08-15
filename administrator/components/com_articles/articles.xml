@@ -2,13 +2,13 @@
 <extension type="component" version="1.0.0" method="upgrade">
 	<name>COM_ARTICLES</name>
 	<author>Amy Stephen</author>
-	<creationDate>August 2011</creationDate>
+	<creationDate>September 2011</creationDate>
 	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>COM_ARTICLES_XML_DESCRIPTION</description>
+	<description>COM_ARTICLES_DESCRIPTION</description>
 
 	<!-- Site -->
 	<files folder="site">
@@ -30,14 +30,6 @@
 
 	<administration>
         
-		<menu img="../media/com_articles/images/icon-16-articles">COM_ARTICLES_MENU</menu>
-		<submenu>
-			<menu link="option=com_articles&amp;view=articles"
-				alt="Articles/Articles">COM_ARTICLES_SUBMENU_ARTICLES</menu>
-			<menu link="option=com_categories&amp;extension=com_articles"
-				alt="Articles/Categories">COM_ARTICLES_SUBMENU_CATEGORIES</menu>
-		</submenu>
-
 		<files folder="admin">
 			<filename>access.xml</filename>
 			<filename>articles.php</filename>
