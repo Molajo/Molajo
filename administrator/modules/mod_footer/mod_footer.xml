@@ -2,13 +2,13 @@
 <extension type="module" version="1.0" application="administrator" method="upgrade">
 	<name>MOD_FOOTER_NAME</name>
 	<author>Amy Stephen</author>
-	<creationDate>August 2011</creationDate>
+	<creationDate>September 2011</creationDate>
 	<copyright>Copyright 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>MOD_FOOTER_XML_DESCRIPTION</description>
+	<description>MOD_FOOTER_DESCRIPTION</description>
 	<files>
 		<filename module="mod_footer">mod_footer.php</filename>
 		<folder>language</folder>

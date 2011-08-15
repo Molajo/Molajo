@@ -7,8 +7,8 @@
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
-    <version>1.6.0</version>
-    <description>PLG_MOLAJO_SEARCH_XML_DESCRIPTION</description>
+    <version>1.0</version>
+    <description>PLG_MOLAJO_SEARCH_DESCRIPTION</description>
 	<files>
 		<filename plugin="search.php">search.php</filename>
 		<filename>index.html</filename>

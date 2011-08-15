@@ -11,7 +11,7 @@
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>MOD_UNREAD_XML_DESCRIPTION</description>
+	<description>MOD_UNREAD_DESCRIPTION</description>
 	<files>
 		<filename module="mod_unread">mod_unread.php</filename>
 		<filename>helper.php</filename>

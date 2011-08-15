@@ -8,7 +8,7 @@
 	<license>GNU/GPL v 2, or later</license>
 	<version>1.0</version>
 	<creationDate>May 2011</creationDate>
-	<description>MOLAJOSAMPLES_XML_DESCRIPTION</description>
+	<description>MOLAJOSAMPLES_DESCRIPTION</description>
 
 	<!-- Installer Hooks -->
         <scriptfile>file.script.php</scriptfile>

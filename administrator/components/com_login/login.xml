@@ -2,13 +2,13 @@
 <extension type="component" version="1.0.0" method="upgrade">
 	<name>COM_LOGIN</name>
 	<author>Amy Stephen</author>
-	<creationDate>August 2011</creationDate>
+	<creationDate>September 2011</creationDate>
 	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>COM_LOGIN_XML_DESCRIPTION</description>
+	<description>COM_LOGIN_DESCRIPTION</description>
 
 	<administration>
 

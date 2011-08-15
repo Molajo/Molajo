@@ -12,7 +12,7 @@
 	<authorUrl>molajo.org</authorUrl>
 	<version>1.0</version>
 
-	<description>MOD_QUICKICONS_XML_DESCRIPTION</description>
+	<description>MOD_QUICKICONS_DESCRIPTION</description>
 
 	<files>
 		<filename module="mod_quickicons">mod_quickicons.php</filename>

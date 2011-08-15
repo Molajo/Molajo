@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Molajo 1.0//DTD template 1.0//EN" "http://molajo.org/xml/dtd/1.0/template-install.dtd">
+<extension type="template" version="1.0" application="administrator" method="upgrade">
+
+    <name>TEMPLATE_MOLAJO_NAME</name>
+	<author>Cristina Solana</author>
+	<creationDate>September 2011</creationDate>
+	<copyright>Copyright (C) 2011 Cristina Solana. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
+	<authorEmail>collaborate@molajo.org</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<version>1.0</version>
+	<description>TEMPLATE_MOLAJO_DESCRIPTION</description>
+
+	<files>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>index.php</filename>
+    	<filename>params.ini</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>templateDetails.xml</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+        <folder>include</folder>
+		<folder>language</folder>
+	</files>
+
+	<positions>
+		<position>header</position>
+		<position>launchpad</position>
+		<position>toolbar</position>
+		<position>dashboard</position>
+		<position>activity</position>
+		<position>favorites</position>
+		<position>footer</position>
+		<position>login</position>
+		<position>debug</position>
+	</positions>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="choice"
+					type="list"
+					default="1"
+					label="TEMPLATE_MOLAJO_FIELD_CHOICE_LABEL"
+					description="TEMPLATE_MOLAJO_FIELD_CHOICE_DESC">
+					<option
+						value="0">JDISABLED</option>
+					<option
+						value="1">JENABLED</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
