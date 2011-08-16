@@ -25,7 +25,7 @@ class MolajoTableMenuType extends MolajoTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__menu_types', 'id', $db);
+		parent::__construct('#__menus', 'id', $db);
 	}
 
 	/**
@@ -33,30 +33,30 @@ class MolajoTableMenuType extends MolajoTable
 	 */
 	function check()
 	{
-		$this->menutype = JApplication::stringURLSafe($this->menutype);
-		if (empty($this->menutype)) {
+		$this->menu_id = JApplication::stringURLSafe($this->menu_id);
+		if (empty($this->menu_id)) {
 			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_EMPTY'));
 			return false;
 		}
 
 		// Sanitise data.
 		if (trim($this->title) == '') {
-			$this->title = $this->menutype;
+			$this->title = $this->menu_id;
 		}
 
 		$db	= $this->getDbo();
 
-		// Check for unique menutype.
+		// Check for unique menu_id.
 		$db->setQuery(
 			'SELECT COUNT(id)' .
-			' FROM #__menu_types' .
-			' WHERE menutype = '.$db->quote($this->menutype).
+			' FROM #__menus' .
+			' WHERE menu_id = '.$db->quote($this->menu_id).
 			'  AND id <> '.(int) $this->id
 		);
 
 		if ($db->loadResult())
 		{
-			$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_MENUTYPE_EXISTS', $this->menutype));
+			$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_MENUTYPE_EXISTS', $this->menu_id));
 			return false;
 		}
 
@@ -87,8 +87,8 @@ class MolajoTableMenuType extends MolajoTable
 			// Verify that no items are cheched out
 			$query = $this->_db->getQuery(true);
 			$query->select('id');
-			$query->from('#__menu');
-			$query->where('menutype='.$this->_db->quote($table->menutype));
+			$query->from('#__menu_items');
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
 			$query->where('checked_out !='.(int) $userId);
 			$query->where('checked_out !=0');
 			$this->_db->setQuery($query);
@@ -102,7 +102,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->select('id');
 			$query->from('#__modules');
 			$query->where('module='.$this->_db->quote('mod_menu'));
-			$query->where('params LIKE '.$this->_db->quote('%"menutype":'.json_encode($table->menutype).'%'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
 			$query->where('checked_out !='.(int) $userId);
 			$query->where('checked_out !=0');
 			$this->_db->setQuery($query);
@@ -113,9 +113,9 @@ class MolajoTableMenuType extends MolajoTable
 
 			// Update the menu items
 			$query = $this->_db->getQuery(true);
-			$query->update('#__menu');
-			$query->set('menutype='.$this->_db->quote($this->menutype));
-			$query->where('menutype='.$this->_db->quote($table->menutype));
+			$query->update('#__menu_items');
+			$query->set('menu_id='.$this->_db->quote($this->menu_id));
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
 				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
@@ -125,9 +125,9 @@ class MolajoTableMenuType extends MolajoTable
 			// Update the module items
 			$query = $this->_db->getQuery(true);
 			$query->update('#__modules');
-			$query->set('params=REPLACE(params,'.$this->_db->quote('"menutype":'.json_encode($table->menutype)).','.$this->_db->quote('"menutype":'.json_encode($this->menutype)).')');
+			$query->set('params=REPLACE(params,'.$this->_db->quote('"menu_id":'.json_encode($table->menu_id)).','.$this->_db->quote('"menu_id":'.json_encode($this->menu_id)).')');
 			$query->where('module='.$this->_db->quote('mod_menu'));
-			$query->where('params LIKE '.$this->_db->quote('%"menutype":'.json_encode($table->menutype).'%'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
 				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
@@ -164,8 +164,8 @@ class MolajoTableMenuType extends MolajoTable
 			// Verify that no items are cheched out
 			$query = $this->_db->getQuery(true);
 			$query->select('id');
-			$query->from('#__menu');
-			$query->where('menutype='.$this->_db->quote($table->menutype));
+			$query->from('#__menu_items');
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
 			$query->where('application_id=0');
 			$query->where('(checked_out NOT IN (0,'.(int) $userId.') OR home=1 AND language='.$this->_db->quote('*').')');
 			$this->_db->setQuery($query);
@@ -179,7 +179,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->select('id');
 			$query->from('#__modules');
 			$query->where('module='.$this->_db->quote('mod_menu'));
-			$query->where('params LIKE '.$this->_db->quote('%"menutype":'.json_encode($table->menutype).'%'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
 			$query->where('checked_out !='.(int) $userId);
 			$query->where('checked_out !=0');
 			$this->_db->setQuery($query);
@@ -191,8 +191,8 @@ class MolajoTableMenuType extends MolajoTable
 			// Delete the menu items
 			$query = $this->_db->getQuery(true);
 			$query->delete();
-			$query->from('#__menu');
-			$query->where('menutype='.$this->_db->quote($table->menutype));
+			$query->from('#__menu_items');
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
 			$query->where('application_id=0');
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
@@ -205,7 +205,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->delete();
 			$query->from('#__modules');
 			$query->where('module='.$this->_db->quote('mod_menu'));
-			$query->where('params LIKE '.$this->_db->quote('%"menutype":'.json_encode($table->menutype).'%'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
 				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));

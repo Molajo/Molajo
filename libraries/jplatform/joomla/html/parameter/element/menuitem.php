@@ -33,15 +33,15 @@ class JElementMenuItem extends JElement
 
 		$menuType = $this->_parent->get('menu_type');
 		if (!empty($menuType)) {
-			$where = ' WHERE menutype = '.$db->Quote($menuType);
+			$where = ' WHERE menu_id = '.$db->Quote($menuType);
 		} else {
 			$where = ' WHERE 1';
 		}
 
 		// Load the list of menu types
 		// TODO: move query to model
-		$query = 'SELECT menutype, title' .
-				' FROM #__menu_types' .
+		$query = 'SELECT menu_id, title' .
+				' FROM #__menus' .
 				' ORDER BY title';
 		$db->setQuery($query);
 		$menuTypes = $db->loadObjectList();
@@ -52,10 +52,10 @@ class JElementMenuItem extends JElement
 
 		// load the list of menu items
 		// TODO: move query to model
-		$query = 'SELECT id, parent_id, name, menutype, type' .
-				' FROM #__menu' .
+		$query = 'SELECT id, parent_id, name, menu_id, type' .
+				' FROM #__menu_items' .
 				$where .
-				' ORDER BY menutype, parent_id, ordering'
+				' ORDER BY menu_id, parent_id, ordering'
 				;
 
 		$db->setQuery($query);
@@ -80,11 +80,11 @@ class JElementMenuItem extends JElement
 		// Second pass - get an indent list of the items
 		$list = JHtml::_('menu.treerecurse', 0, '', array(), $children, 9999, 0, 0);
 
-		// Assemble into menutype groups
+		// Assemble into menu_id groups
 		$n = count($list);
 		$groupedList = array();
 		foreach ($list as $k => $v) {
-			$groupedList[$v->menutype][] = &$list[$k];
+			$groupedList[$v->menu_id][] = &$list[$k];
 		}
 
 		// Assemble menu items to the array
@@ -96,16 +96,16 @@ class JElementMenuItem extends JElement
 			if ($menuType == '')
 			{
 				$options[]	= JHtml::_('select.option',  '0', '&#160;', 'value', 'text', true);
-				$options[]	= JHtml::_('select.option',  $type->menutype, $type->title . ' - ' . JText::_('JGLOBAL_TOP'), 'value', 'text', true);
+				$options[]	= JHtml::_('select.option',  $type->menu_id, $type->title . ' - ' . JText::_('JGLOBAL_TOP'), 'value', 'text', true);
 			}
-			if (isset($groupedList[$type->menutype]))
+			if (isset($groupedList[$type->menu_id]))
 			{
-				$n = count($groupedList[$type->menutype]);
+				$n = count($groupedList[$type->menu_id]);
 				for ($i = 0; $i < $n; $i++)
 				{
-					$item = &$groupedList[$type->menutype][$i];
+					$item = &$groupedList[$type->menu_id][$i];
 
-					// If menutype is changed but item is not saved yet, use the new type in the list
+					// If menu_id is changed but item is not saved yet, use the new type in the list
 					if (JRequest::getString('option', '', 'get') == 'com_menus') {
 						$currentItemArray = JRequest::getVar('cid', array(0), '', 'array');
 						$currentItemId = (int) $currentItemArray[0];

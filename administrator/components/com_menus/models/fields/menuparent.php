@@ -44,19 +44,19 @@ class JFormFieldMenuParent extends JFormFieldList
 		$query = $db->getQuery(true);
 
 		$query->select('a.id AS value, a.title AS text, a.level');
-		$query->from('#__menu AS a');
-		$query->join('LEFT', '`#__menu` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+		$query->from('#__menu_items AS a');
+		$query->join('LEFT', '`#__menu_items` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
 
-		if ($menuType = $this->form->getValue('menutype')) {
-			$query->where('a.menutype = '.$db->quote($menuType));
+		if ($menuType = $this->form->getValue('menu_id')) {
+			$query->where('a.menu_id = '.$db->quote($menuType));
 		}
 		else {
-			$query->where('a.menutype != '.$db->quote(''));
+			$query->where('a.menu_id != '.$db->quote(''));
 		}
 
 		// Prevent parenting to children of this item.
 		if ($id = $this->form->getValue('id')) {
-			$query->join('LEFT', '`#__menu` AS p ON p.id = '.(int) $id);
+			$query->join('LEFT', '`#__menu_items` AS p ON p.id = '.(int) $id);
 			$query->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
 		}
 

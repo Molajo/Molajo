@@ -286,9 +286,9 @@ abstract class JModuleHelper
 			$db	= JFactory::getDbo();
 
 			$query = $db->getQuery(true);
-			$query->select('m.id, m.title, m.module, m.position, m.content, m.showtitle, m.params, mm.menuid');
+			$query->select('m.id, m.title, m.module, m.position, m.content, m.showtitle, m.params, mm.menu_item_id');
 			$query->from('#__modules AS m');
-			$query->join('LEFT','#__modules_menu AS mm ON mm.moduleid = m.id');
+			$query->join('LEFT','#__modules_menu AS mm ON mm.module_id = m.id');
 			$query->where('m.published = 1');
 
 			$query->join('LEFT','#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id');
@@ -302,7 +302,7 @@ abstract class JModuleHelper
 
 			$query->where('m.access IN ('.$groups.')');
 			$query->where('m.client_id = '. $clientId);
-			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
+			$query->where('(mm.menu_item_id = '. (int) $Itemid .' OR mm.menu_item_id <= 0)');
 
 			// Filter by language
 			if ($app->isSite() && $app->getLanguageFilter()) {
@@ -330,8 +330,8 @@ abstract class JModuleHelper
 
 				// The module is excluded if there is an explicit prohibition or if
 				// the Itemid is missing or zero and the module is in exclude mode.
-				$negHit	= ($negId === (int) $module->menuid)
-						|| (!$negId && (int)$module->menuid < 0);
+				$negHit	= ($negId === (int) $module->menu_item_id)
+						|| (!$negId && (int)$module->menu_item_id < 0);
 
 				if (isset($dupes[$module->id])) {
 					// If this item has been excluded, keep the duplicate flag set,

@@ -27,7 +27,7 @@ class JTableMenu extends JTableNested
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__menu', 'id', $db);
+		parent::__construct('#__menu_items', 'id', $db);
 
 		// Set the default access level.
 		$this->access = (int) JFactory::getConfig()->get('access');
@@ -130,7 +130,7 @@ class JTableMenu extends JTableNested
 		// Verify that the alias is unique
 		$table = JTable::getInstance('Menu','JTable');
 		if ($table->load(array('alias'=>$this->alias,'parent_id'=>$this->parent_id,'client_id'=>$this->client_id)) && ($table->id != $this->id || $this->id==0)) {
-			if ($this->menutype==$table->menutype) {
+			if ($this->menu_id==$table->menu_id) {
 				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNIQUE_ALIAS'));
 			}
 			else {
@@ -152,7 +152,7 @@ class JTableMenu extends JTableNested
 				$table->store();
 			}
 			// Verify that the home page for this menu is unique.
-			if ($table->load(array('home'=>'1', 'menutype'=>$this->menutype)) && ($table->id != $this->id || $this->id==0)) {
+			if ($table->load(array('home'=>'1', 'menu_id'=>$this->menu_id)) && ($table->id != $this->id || $this->id==0)) {
 				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_HOME_NOT_UNIQUE_IN_MENU'));
 				return false;
 			}

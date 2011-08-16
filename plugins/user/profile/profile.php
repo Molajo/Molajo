@@ -6,7 +6,7 @@
  */
 
 defined('JPATH_BASE') or die;
-jimport('joomla.utilities.date');
+jimport('molajo.utilities.date');
 
 /**
  * An example custom profile plugin.

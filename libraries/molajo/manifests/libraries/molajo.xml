@@ -105,7 +105,7 @@
 		<file>database/table/aro.php</file>
 		<file>database/table/user.php</file>
 		<file>database/table/category.php</file>
-		<file>database/table/menutypes.php</file>
+		<file>database/table/menu_ids.php</file>
 		<file>database/index.html</file>
 		<file>database/database.php</file>
 		<file>database/query.php</file>

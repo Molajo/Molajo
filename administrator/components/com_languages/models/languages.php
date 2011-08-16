@@ -111,7 +111,7 @@ class LanguagesModelLanguages extends JModelList
 
 		// Select the language home pages
 		$query->select('l.home AS home');
-		$query->join('LEFT', '`#__menu`  AS l  ON  l.language = a.lang_code AND l.home=1  AND l.language <> \'*\'' );
+		$query->join('LEFT', '`#__menu_items`  AS l  ON  l.language = a.lang_code AND l.home=1  AND l.language <> \'*\'' );
 
 		// Filter on the published state.
 		$published = $this->getState('filter.published');

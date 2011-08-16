@@ -34,8 +34,8 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 		</div>
 		<div class="filter-select fltrt">
 
-			<select name="menutype" class="inputbox" onchange="this.form.submit()">
-				<?php echo JHtml::_('select.options', JHtml::_('menu.menus'), 'value', 'text', $this->state->get('filter.menutype'));?>
+			<select name="menu_id" class="inputbox" onchange="this.form.submit()">
+				<?php echo JHtml::_('select.options', JHtml::_('menu.menus'), 'value', 'text', $this->state->get('filter.menu_id'));?>
 			</select>
 
 			<select name="filter_level" class="inputbox" onchange="this.form.submit()">

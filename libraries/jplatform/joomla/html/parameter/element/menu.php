@@ -32,8 +32,8 @@ class JElementMenu extends JElement
 		require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
 		$menuTypes	= MenusHelper::getMenuTypes();
 
-		foreach ($menuTypes as $menutype) {
-			$options[] = JHtml::_('select.option', $menutype, $menutype);
+		foreach ($menuTypes as $menu_id) {
+			$options[] = JHtml::_('select.option', $menu_id, $menu_id);
 		}
 		array_unshift($options, JHtml::_('select.option', '', JText::_('JOPTION_SELECT_MENU')));
 

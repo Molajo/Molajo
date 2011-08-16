@@ -225,8 +225,8 @@ class ModulesModelModules extends JModelList
 		$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
 		// Join over the module menus
-		$query->select('MIN(mm.menuid) AS pages');
-		$query->join('LEFT', '#__modules_menu AS mm ON mm.moduleid = a.id');
+		$query->select('MIN(mm.menu_item_id) AS pages');
+		$query->join('LEFT', '#__modules_menu AS mm ON mm.module_id = a.id');
 		$query->group('a.id');
 
 		// Join over the extensions

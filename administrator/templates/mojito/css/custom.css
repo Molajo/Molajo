@@ -1,13 +1,4 @@
-/**
- * @package     Molajo
- * @subpackage  Mojito
- * @copyright   Copyright (C) 2011 Cristina Solana. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
- */
-
-/* If all these damn lines and spaces make you want to kick kittens, then I should warn you:
-I know the really cool designers like to keep all their properties on one line, but I am not very cool, just very practical.
-We can use a tool to minify. */
+/* If all these damn lines and spaces make you want to kick kittens, then I should warn you: I know the really cool designers like to keep all their properties on one line, but I am not very cool, just very practical. We can use a tool to minify. */
 
 * html .cf {
     height: 1%;

@@ -40,8 +40,8 @@ abstract class JHtmlMenu
 		{
 			$db = JFactory::getDbo();
 			$db->setQuery(
-				'SELECT menutype As value, title As text' .
-				' FROM #__menu_types' .
+				'SELECT menu_id As value, title As text' .
+				' FROM #__menus' .
 				' ORDER BY title'
 			);
 			self::$menus = $db->loadObjectList();
@@ -63,15 +63,15 @@ abstract class JHtmlMenu
 		{
 			$db = JFactory::getDbo();
 			$db->setQuery(
-				'SELECT menutype AS value, title AS text' .
-				' FROM #__menu_types' .
+				'SELECT menu_id AS value, title AS text' .
+				' FROM #__menus' .
 				' ORDER BY title'
 			);
 			$menus = $db->loadObjectList();
 
 			$query	= $db->getQuery(true);
-			$query->select('a.id AS value, a.title AS text, a.level, a.menutype');
-			$query->from('#__menu AS a');
+			$query->select('a.id AS value, a.title AS text, a.level, a.menu_id');
+			$query->from('#__menu_items AS a');
 			$query->where('a.parent_id > 0');
 			$query->where('a.type <> '.$db->quote('url'));
 			$query->where('a.client_id = 0');
@@ -90,13 +90,13 @@ abstract class JHtmlMenu
 			$db->setQuery($query);
 			$items = $db->loadObjectList();
 
-			// Collate menu items based on menutype
+			// Collate menu items based on menu_id
 			$lookup = array();
 			foreach ($items as &$item) {
-				if (!isset($lookup[$item->menutype])) {
-					$lookup[$item->menutype] = array();
+				if (!isset($lookup[$item->menu_id])) {
+					$lookup[$item->menu_id] = array();
 				}
-				$lookup[$item->menutype][] = &$item;
+				$lookup[$item->menu_id][] = &$item;
 
 				$item->text = str_repeat('- ',$item->level).$item->text;
 			}
@@ -164,8 +164,8 @@ abstract class JHtmlMenu
 		if ($id)
 		{
 			$query = 'SELECT ordering AS value, title AS text'
-			. ' FROM #__menu'
-			. ' WHERE menutype = '.$db->Quote($row->menutype)
+			. ' FROM #__menu_items'
+			. ' WHERE menu_id = '.$db->Quote($row->menu_id)
 			. ' AND parent_id = '.(int) $row->parent_id
 			. ' AND published != -2'
 			. ' ORDER BY ordering';
@@ -192,10 +192,10 @@ abstract class JHtmlMenu
 		$db = JFactory::getDbo();
 
 		// get a list of the menu items
-		$query = 'SELECT m.id, m.parent_id, m.title, m.menutype'
-		. ' FROM #__menu AS m'
+		$query = 'SELECT m.id, m.parent_id, m.title, m.menu_id'
+		. ' FROM #__menu_items AS m'
 		. ' WHERE m.published = 1'
-		. ' ORDER BY m.menutype, m.parent_id, m.ordering'
+		. ' ORDER BY m.menu_id, m.parent_id, m.ordering'
 		;
 		$db->setQuery($query);
 
@@ -227,7 +227,7 @@ abstract class JHtmlMenu
 		$list = JHtmlMenu::TreeRecurse(intval($mitems[0]->parent_id), '', array(), $children, 9999, 0, 0);
 
 		// Code that adds menu name to Display of Page(s)
-		$mitems_spacer	= $mitems_temp[0]->menutype;
+		$mitems_spacer	= $mitems_temp[0]->menu_id;
 
 		$mitems = array();
 		if ($all | $unassigned) {
@@ -247,14 +247,14 @@ abstract class JHtmlMenu
 		$tmpMenuType	= null;
 		foreach ($list as $list_a)
 		{
-			if ($list_a->menutype != $lastMenuType)
+			if ($list_a->menu_id != $lastMenuType)
 			{
 				if ($tmpMenuType) {
 					$mitems[] = JHtml::_('select.option',  '</OPTGROUP>');
 				}
-				$mitems[] = JHtml::_('select.option',  '<OPTGROUP>', $list_a->menutype);
-				$lastMenuType = $list_a->menutype;
-				$tmpMenuType  = $list_a->menutype;
+				$mitems[] = JHtml::_('select.option',  '<OPTGROUP>', $list_a->menu_id);
+				$lastMenuType = $list_a->menu_id;
+				$tmpMenuType  = $list_a->menu_id;
 			}
 
 			$mitems[] = JHtml::_('select.option',  $list_a->id, $list_a->title);

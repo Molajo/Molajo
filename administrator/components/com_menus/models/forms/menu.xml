@@ -11,8 +11,8 @@
 			readonly="true"/>
 
 		<field
-			id="menutype"
-			name="menutype"
+			id="menu_id"
+			name="menu_id"
 			type="text"
 			label="COM_MENUS_MENU_MENUTYPE_LABEL"
 			description="COM_MENUS_MENU_MENUTYPE_DESC"

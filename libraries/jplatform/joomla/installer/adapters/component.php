@@ -1177,7 +1177,7 @@ class JInstallerComponent extends JAdapterInstance
 		// If a component exists with this option in the table then we don't need to add menus
 		$query	= $db->getQuery(true);
 		$query->select('m.id, e.extension_id');
-		$query->from('#__menu AS m');
+		$query->from('#__menu_items AS m');
 		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
 		$query->where('m.parent_id = 1');
 		$query->where("m.client_id = 1");
@@ -1219,7 +1219,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		if ($menuElement) {
 			$data = array();
-			$data['menutype'] = 'main';
+			$data['menu_id'] = 'main';
 			$data['client_id'] = 1;
 			$data['title'] = (string)$menuElement;
 			$data['alias'] = (string)$menuElement;
@@ -1245,7 +1245,7 @@ class JInstallerComponent extends JAdapterInstance
 		// No menu element was specified, Let's make a generic menu item
 		else {
 			$data = array();
-			$data['menutype'] = 'main';
+			$data['menu_id'] = 'main';
 			$data['client_id'] = 1;
 			$data['title'] = $option;
 			$data['alias'] = $option;
@@ -1283,7 +1283,7 @@ class JInstallerComponent extends JAdapterInstance
 
 		foreach ($this->manifest->administration->submenu->menu as $child) {
 			$data = array();
-			$data['menutype'] = 'main';
+			$data['menu_id'] = 'main';
 			$data['client_id'] = 1;
 			$data['title'] = (string)$child;
 			$data['alias'] = (string)$child;
@@ -1364,7 +1364,7 @@ class JInstallerComponent extends JAdapterInstance
 		// Get the ids of the menu items
 		$query	= $db->getQuery(true);
 		$query->select('id');
-		$query->from('#__menu');
+		$query->from('#__menu_items');
 		$query->where('`client_id` = 1');
 		$query->where('`component_id` = '.(int) $id);
 
@@ -1384,8 +1384,8 @@ class JInstallerComponent extends JAdapterInstance
 		}
 		else {
 			// Iterate the items to delete each one.
-			foreach($ids as $menuid){
-				if (!$table->delete((int) $menuid)) {
+			foreach($ids as $menu_item_id){
+				if (!$table->delete((int) $menu_item_id)) {
 					$this->setError($table->getError());
 					return false;
 				}

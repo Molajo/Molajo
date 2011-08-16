@@ -241,7 +241,7 @@ class MenusModelMenu extends JModelForm
 	}
 
 	/**
-	 * Gets a list of all mod_mainmenu modules and collates them by menutype
+	 * Gets a list of all mod_mainmenu modules and collates them by menu_id
 	 *
 	 * @return	array
 	 */
@@ -265,7 +265,7 @@ class MenusModelMenu extends JModelForm
 			$params = new JRegistry;
 			$params->loadString($module->params);
 
-			$menuType = $params->get('menutype');
+			$menuType = $params->get('menu_id');
 			if (!isset($result[$menuType])) {
 				$result[$menuType] = array();
 			}

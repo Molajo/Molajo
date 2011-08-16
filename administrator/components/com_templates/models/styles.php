@@ -114,7 +114,7 @@ class TemplatesModelStyles extends JModelList
 
 		// Join on menus.
 		$query->select('COUNT(m.template_style_id) AS assigned');
-		$query->leftjoin('#__menu AS m ON m.template_style_id = a.id');
+		$query->leftjoin('#__menu_items AS m ON m.template_style_id = a.id');
 		$query->group('a.id');
 
 		// Join over the language

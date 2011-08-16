@@ -26,7 +26,7 @@ JHtml::_('behavior.modal');
 				document.id('item-form').elements['jform[type]'].value = type;
 				document.id('fieldtype').value = 'type';
 			} else {
-				document.id('item-form').elements['jform[menutype]'].value = type;
+				document.id('item-form').elements['jform[menu_id]'].value = type;
 			}
 			Joomla.submitform('item.setType', document.id('item-form'));
 		} else if (task == 'item.cancel' || document.formvalidator.isValid(document.id('item-form'))) {
@@ -85,8 +85,8 @@ JHtml::_('behavior.modal');
 				<li><?php echo $this->form->getLabel('access'); ?>
 				<?php echo $this->form->getInput('access'); ?></li>
 
-				<li><?php echo $this->form->getLabel('menutype'); ?>
-				<?php echo $this->form->getInput('menutype'); ?></li>
+				<li><?php echo $this->form->getLabel('menu_id'); ?>
+				<?php echo $this->form->getInput('menu_id'); ?></li>
 
 				<li><?php echo $this->form->getLabel('parent_id'); ?>
 				<?php echo $this->form->getInput('parent_id'); ?></li>

@@ -40,7 +40,7 @@ class modMenuHelper
 		$end		= (int) $params->get('endLevel');
 		$showAll	= $params->get('showAllChildren');
 		$maxdepth	= $params->get('maxdepth');
-		$items 		= $menu->getItems('menutype',$params->get('menutype'));
+		$items 		= $menu->getItems('menu_id',$params->get('menu_id'));
 
 		$lastitem	= 0;
 

@@ -120,7 +120,7 @@ class MenusControllerMenus extends JController
 		// Load all the component menu links
 		$items = $db->setQuery(
 			'SELECT id, link, component_id' .
-			' FROM #__menu' .
+			' FROM #__menu_items' .
 			' WHERE type = '.$db->quote('component')
 		)->loadObjectList();
 
@@ -151,7 +151,7 @@ class MenusControllerMenus extends JController
 					echo "<br/>$log";
 
 					$db->setQuery(
-						'UPDATE #__menu' .
+						'UPDATE #__menu_items' .
 						' SET component_id = '.$componentId.
 						' WHERE id = '.$item->id
 					)->query();

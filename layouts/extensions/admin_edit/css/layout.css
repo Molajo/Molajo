@@ -172,7 +172,7 @@ input.text-area-order{margin-right:5px;text-align:center}
 label.filter-hide-lbl{clear:none;margin-left:5px}
 label.filter-published-lbl{clear:none;margin-left:10px}
 label.filter-search-lbl{margin-left:5px}
-li#jform_menutype_label,li#jform_parentid_label,li#jform_published_label,li#jform_access_label,fieldset.adminform fieldset.checkboxes input[type="checkbox"],fieldset.panelform fieldset.checkboxes input[type="checkbox"]{clear:left;float:left}
+li#jform_menu_id_label,li#jform_parentid_label,li#jform_published_label,li#jform_access_label,fieldset.adminform fieldset.checkboxes input[type="checkbox"],fieldset.panelform fieldset.checkboxes input[type="checkbox"]{clear:left;float:left}
 p.jform_desc{clear:left}
 span.gi{color:#d7d7d7;font-weight:700;margin-right:5px}
 span.gtr{margin-right:5px;visibility:hidden}

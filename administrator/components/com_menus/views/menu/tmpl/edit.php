@@ -34,8 +34,8 @@ JHtml::_('behavior.formvalidation');
 				<li><?php echo $this->form->getLabel('title'); ?>
 				<?php echo $this->form->getInput('title'); ?></li>
 
-				<li><?php echo $this->form->getLabel('menutype'); ?>
-				<?php echo $this->form->getInput('menutype'); ?></li>
+				<li><?php echo $this->form->getLabel('menu_id'); ?>
+				<?php echo $this->form->getInput('menu_id'); ?></li>
 
 				<li><?php echo $this->form->getLabel('description'); ?>
 				<?php echo $this->form->getInput('description'); ?></li>

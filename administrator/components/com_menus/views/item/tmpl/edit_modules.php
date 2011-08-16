@@ -30,15 +30,15 @@ defined('_JEXEC') or die;
 
 				</td>
 				<td class="center">
-					<?php if (is_null($module->menuid)) : ?>
+					<?php if (is_null($module->menu_item_id)) : ?>
 						<?php if ($module->except):?>
 							<?php echo JText::_('JYES'); ?>
 						<?php else : ?>
 							<?php echo JText::_('JNO'); ?>
 						<?php endif;?>
-					<?php elseif ($module->menuid > 0) : ?>
+					<?php elseif ($module->menu_item_id > 0) : ?>
 						<?php echo JText::_('JYES'); ?>
-					<?php elseif ($module->menuid < 0) : ?>
+					<?php elseif ($module->menu_item_id < 0) : ?>
 						<?php echo JText::_('JNO'); ?>
 					<?php else : ?>
 						<?php echo JText::_('JALL'); ?>

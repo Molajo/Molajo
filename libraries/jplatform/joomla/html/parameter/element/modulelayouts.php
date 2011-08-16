@@ -36,7 +36,7 @@ class JElementModuleLayouts extends JElementList
 		$path1		= null;
 		$path2		= null;
 
-		// Load template entries for each menuid
+		// Load template entries for each menu_item_id
 		$db		= JFactory::getDBO();
 		$query	= $db->getQuery(true);
 		$query->select('template');

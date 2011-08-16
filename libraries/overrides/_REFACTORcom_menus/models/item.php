@@ -184,7 +184,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function batchCopy($value, $pks)
 	{
-		// $value comes as {menutype}.{parent_id}
+		// $value comes as {menu_id}.{parent_id}
 		$parts		= explode('.', $value);
 		$menuType	= $parts[0];
 		$parentId	= (int) JArrayHelper::getValue($parts, 1, 0);
@@ -229,7 +229,7 @@ class MenusModelItem extends JModelAdmin
 		// Calculate the emergency stop count as a precaution against a runaway loop bug
 		$db->setQuery(
 			'SELECT COUNT(id)' .
-			' FROM #__menu'
+			' FROM #__menu_items'
 			);
 		$count = $db->loadResult();
 
@@ -263,7 +263,7 @@ class MenusModelItem extends JModelAdmin
 			// Copy is a bit tricky, because we also need to copy the children
 			$db->setQuery(
 			'SELECT id' .
-			' FROM #__menu' .
+			' FROM #__menu_items' .
 			' WHERE lft > '.(int) $table->lft.' AND rgt < '.(int) $table->rgt
 			);
 			$childIds = $db->loadResultArray();
@@ -286,7 +286,7 @@ class MenusModelItem extends JModelAdmin
 			// If we a copying children, the Old ID will turn up in the parents list
 			// otherwise it's a new top level item
 			$table->parent_id	= isset($parents[$oldParentId]) ? $parents[$oldParentId] : $parentId;
-			$table->menutype	= $menuType;
+			$table->menu_id	= $menuType;
 
 			// Set the new location in the tree for the node.
 			$table->setLocation($table->parent_id, 'last-child');
@@ -347,7 +347,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function batchMove($value, $pks)
 	{
-		// $value comes as {menutype}.{parent_id}
+		// $value comes as {menu_id}.{parent_id}
 		$parts		= explode('.', $value);
 		$menuType	= $parts[0];
 		$parentId	= (int) JArrayHelper::getValue($parts, 1, 0);
@@ -384,7 +384,7 @@ class MenusModelItem extends JModelAdmin
 			return false;
 		}
 
-		// We are going to store all the children and just moved the menutype
+		// We are going to store all the children and just moved the menu_id
 		$children = array();
 
 		// Parent exists so we let's proceed
@@ -411,11 +411,11 @@ class MenusModelItem extends JModelAdmin
 			$table->parent_id = $parentId;
 
 			// Check if we are moving to a different menu
-			if ($menuType != $table->menutype) {
+			if ($menuType != $table->menu_id) {
 				// Add the child node ids to the children array.
 				$db->setQuery(
 					'SELECT `id`' .
-					' FROM `#__menu`' .
+					' FROM `#__menu_items`' .
 					' WHERE `lft` BETWEEN '.(int) $table->lft.' AND '.(int) $table->rgt
 				);
 				$children = array_merge($children, (array) $db->loadResultArray());
@@ -446,10 +446,10 @@ class MenusModelItem extends JModelAdmin
 			$children = array_unique($children);
 			JArrayHelper::toInteger($children);
 
-			// Update the menutype field in all nodes where necessary.
+			// Update the menu_id field in all nodes where necessary.
 			$db->setQuery(
-				'UPDATE `#__menu`' .
-				' SET `menutype` = '.$db->quote($menuType).
+				'UPDATE `#__menu_items`' .
+				' SET `menu_id` = '.$db->quote($menuType).
 				' WHERE `id` IN ('.implode(',', $children).')'
 				);
 				$db->query();
@@ -590,7 +590,7 @@ class MenusModelItem extends JModelAdmin
 
 		if (empty($table->id)) {
 			$table->parent_id	= $this->getState('item.parent_id');
-			$table->menutype	= $this->getState('item.menutype');
+			$table->menu_id	= $this->getState('item.menu_id');
 			$table->params		= '{}';
 		}
 
@@ -700,10 +700,10 @@ class MenusModelItem extends JModelAdmin
 
 		// Join on the module-to-menu mapping table.
 		// We are only interested if the module is displayed on ALL or THIS menu item (or the inverse ID number).
-		$query->select('map.menuid');
-		$query->select('map2.menuid < 0 as except');
-		$query->join('LEFT', '#__modules_menu AS map ON map.moduleid = a.id AND (map.menuid = 0 OR ABS(map.menuid) = '.(int) $this->getState('item.id').')');
-		$query->join('LEFT', '#__modules_menu AS map2 ON map2.moduleid = a.id AND map2.menuid < 0');
+		$query->select('map.menu_item_id');
+		$query->select('map2.menu_item_id < 0 as except');
+		$query->join('LEFT', '#__modules_menu AS map ON map.module_id = a.id AND (map.menu_item_id = 0 OR ABS(map.menu_item_id) = '.(int) $this->getState('item.id').')');
+		$query->join('LEFT', '#__modules_menu AS map2 ON map2.module_id = a.id AND map2.menu_item_id < 0');
 		$query->group('a.id');
 
 		// Join on the asset groups table.
@@ -726,7 +726,7 @@ class MenusModelItem extends JModelAdmin
 
 	/**
 	 * A protected method to get the where clause for the reorder
-	 * This ensures that the row will be moved relative to a row with the same menutype
+	 * This ensures that the row will be moved relative to a row with the same menu_id
 	 *
 	 * @param	JTableMenu $table instance
 	 *
@@ -735,7 +735,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function getReorderConditions($table)
 	{
-		return 'menutype = ' . $this->_db->Quote($table->menutype);
+		return 'menu_id = ' . $this->_db->Quote($table->menu_id);
 	}
 
 	/**
@@ -774,10 +774,10 @@ class MenusModelItem extends JModelAdmin
 		}
 		$this->setState('item.parent_id', $parentId);
 
-		if (!($menuType = $app->getUserState('com_menus.edit.item.menutype'))) {
-			$menuType = JRequest::getCmd('menutype', 'mainmenu');
+		if (!($menuType = $app->getUserState('com_menus.edit.item.menu_id'))) {
+			$menuType = JRequest::getCmd('menu_id', 'mainmenu');
 		}
-		$this->setState('item.menutype', $menuType);
+		$this->setState('item.menu_id', $menuType);
 
 		if (!($type = $app->getUserState('com_menus.edit.item.type'))){
 			$type = JRequest::getCmd('type');
@@ -953,7 +953,7 @@ class MenusModelItem extends JModelAdmin
 		// Convert the parameters not in JSON format.
 		$db->setQuery(
 			'SELECT id, params' .
-			' FROM #__menu' .
+			' FROM #__menu_items' .
 			' WHERE params NOT LIKE '.$db->quote('{%') .
 			'  AND params <> '.$db->quote('')
 		);
@@ -971,7 +971,7 @@ class MenusModelItem extends JModelAdmin
 			$params = (string)$registry;
 
 			$db->setQuery(
-				'UPDATE #__menu' .
+				'UPDATE #__menu_items' .
 				' SET params = '.$db->quote($params).
 				' WHERE id = '.(int) $item->id
 			);
@@ -1048,7 +1048,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		$this->setState('item.id', $table->id);
-		$this->setState('item.menutype', $table->menutype);
+		$this->setState('item.menu_id', $table->menu_id);
 
 		// Clean the cache
 		$this->cleanCache();

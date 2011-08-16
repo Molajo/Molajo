@@ -346,9 +346,9 @@ abstract class MolajoModuleHelper
 
             $query->select('id, title, title as subtitle ');
             $query->select('module, position, content, showtitle ');
-            $query->select('showtitle, showtitle as showsubtitle, params, mm.menuid');
+            $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
 			$query->from('#__modules AS m');
-			$query->join('LEFT','#__modules_menu AS mm ON mm.moduleid = m.id');
+			$query->join('LEFT','#__modules_menu AS mm ON mm.module_id = m.id');
 			$query->where('m.published = 1');
 			$query->where('m.id <> 1');
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
@@ -358,7 +358,7 @@ abstract class MolajoModuleHelper
             $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
 
 			$query->where('m.application_id = '. $applicationId);
-			$query->where('(mm.menuid = '. (int) $Itemid .' OR mm.menuid <= 0)');
+			$query->where('(mm.menu_item_id = '. (int) $Itemid .' OR mm.menu_item_id <= 0)');
 
 			if (MolajoFactory::getApplication()->isSite()
                 && MolajoFactory::getApplication()->getLanguageFilter()) {
@@ -385,8 +385,8 @@ abstract class MolajoModuleHelper
 
 				// The module is excluded if there is an explicit prohibition or if
 				// the Itemid is missing or zero and the module is in exclude mode.
-				$negHit	= ($negId === (int) $module->menuid)
-						|| (!$negId && (int)$module->menuid < 0);
+				$negHit	= ($negId === (int) $module->menu_item_id)
+						|| (!$negId && (int)$module->menu_item_id < 0);
 
 				if (isset($dupes[$module->id]))
 				{

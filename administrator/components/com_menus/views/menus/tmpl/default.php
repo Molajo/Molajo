@@ -80,34 +80,34 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 				</td>
 				<td>
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menutype='.$item->menutype) ?> ">
+					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id) ?> ">
 						<?php echo $this->escape($item->title); ?></a>
 					<p class="smallsub">(<span><?php echo JText::_('COM_MENUS_MENU_MENUTYPE_LABEL') ?></span>
 						<?php if ($canEdit) : ?>
 							<?php echo '<a href="'.JRoute::_('index.php?option=com_menus&task=menu.edit&id='.$item->id).' title='.$this->escape($item->description).'">'.
-							$this->escape($item->menutype).'</a>'; ?>)
+							$this->escape($item->menu_id).'</a>'; ?>)
 						<?php else : ?>
-							<?php echo $this->escape($item->menutype)?>)
+							<?php echo $this->escape($item->menu_id)?>)
 						<?php endif; ?>
 					</p>
 				</td>
 				<td class="center btns">
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menutype='.$item->menutype.'&filter_published=1');?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=1');?>">
 						<?php echo $item->count_published; ?></a>
 				</td>
 				<td class="center btns">
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menutype='.$item->menutype.'&filter_published=0');?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=0');?>">
 						<?php echo $item->count_unpublished; ?></a>
 				</td>
 				<td class="center btns">
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menutype='.$item->menutype.'&filter_published=-2');?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=-2');?>">
 						<?php echo $item->count_trashed; ?></a>
 				</td>
 				<td class="left">
 				<ul>
 					<?php
-					if (isset($this->modules[$item->menutype])) :
-						foreach ($this->modules[$item->menutype] as &$module) :
+					if (isset($this->modules[$item->menu_id])) :
+						foreach ($this->modules[$item->menu_id] as &$module) :
 						?>
 						<li>
 							<?php if ($canEdit) : ?>

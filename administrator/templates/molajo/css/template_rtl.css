@@ -86,7 +86,7 @@ dl.menu_type dd ul{margin-left:0;margin-right:-40px}
 dl.menu_type dd ul li{margin:0}
 dl.menu_type dt{float:right;margin:13px 0 5px}
 fieldset input,fieldset textarea,fieldset select,fieldset img,fieldset button{float:right;margin:5px 5px 0;text-align:right}
-fieldset label,fieldset span.faux-label,li#jform_menutype_label,li#jform_parentid_label,li#jform_published_label,li#jform_access_label,fieldset.adminform fieldset.checkboxes input[type="checkbox"],fieldset.panelform fieldset.checkboxes input[type="checkbox"]{clear:right;float:right}
+fieldset label,fieldset span.faux-label,li#jform_menu_id_label,li#jform_parentid_label,li#jform_published_label,li#jform_access_label,fieldset.adminform fieldset.checkboxes input[type="checkbox"],fieldset.panelform fieldset.checkboxes input[type="checkbox"]{clear:right;float:right}
 fieldset.adminform fieldset.checkboxes label,fieldset.panelform fieldset.checkboxes label,fieldset.adminform fieldset.checkboxes span.faux-label,fieldset.panelform fieldset.checkboxes span.faux-label,.clrrt{clear:left}
 fieldset.adminform fieldset.checkboxes,fieldset.panelform fieldset.checkboxes,fieldset.adminform-legacy fieldset.checkboxes{clear:left;float:right;margin:0 0 5px}
 fieldset.adminform fieldset.radio,fieldset.panelform fieldset.radio,fieldset.adminform-legacy fieldset.radio{border:0;clear:left;float:right;margin:0 5px 5px 0;padding:0}

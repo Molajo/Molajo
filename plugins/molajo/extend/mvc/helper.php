@@ -345,7 +345,7 @@ class extendHelper
             'com_categories' => array('table_name' => '#__categories'),
             'com_articles' => array('table_name' => '#__content'),
             'com_languages' => array('table_name' => '#__languages'),
-            'com_menu' => array('table_name' => '#__menu'),
+            'com_menu' => array('table_name' => '#__menu_items'),
             'com_messages' => array('table_name' => '#__messages'),
             'com_modules' => array('table_name' => '#__modules'),
             'com_newsfeeds' => array('table_name' => '#__newsfeeds'),

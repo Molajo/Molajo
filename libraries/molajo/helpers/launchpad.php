@@ -28,8 +28,8 @@ class MolajoLaunchpadHelper
 		$query	= $db->getQuery(true);
 
 		$query->select('a.*, SUM(b.home) AS home');
-		$query->from('#__menu_types AS a');
-		$query->leftJoin('#__menu AS b ON b.menutype = a.menutype AND b.home != 0');
+		$query->from('#__menus AS a');
+		$query->leftJoin('#__menu_items AS b ON b.menu_id = a.menu_id AND b.home != 0');
 		$query->select('b.language');
 		$query->leftJoin('#__languages AS l ON l.lang_code = language');
 		$query->select('l.image');
@@ -65,7 +65,7 @@ class MolajoLaunchpadHelper
 
 		// Prepare the query.
 		$query->select('m.id, m.title, m.alias, m.link, m.parent_id, m.img, e.element');
-		$query->from('#__menu AS m');
+		$query->from('#__menu_items AS m');
 
 		// Filter on the enabled states.
 		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');

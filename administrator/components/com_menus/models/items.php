@@ -30,7 +30,7 @@ class MenusModelItems extends JModelList
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.id',
-				'menutype', 'a.menutype',
+				'menu_id', 'a.menu_id',
 				'title', 'a.title',
 				'alias', 'a.alias',
 				'published', 'a.published',
@@ -77,22 +77,22 @@ class MenusModelItems extends JModelList
 		$level = $this->getUserStateFromRequest($this->context.'.filter.level', 'filter_level', 0, 'int');
 		$this->setState('filter.level', $level);
 
-		$menuType = JRequest::getVar('menutype',null);
+		$menuType = JRequest::getVar('menu_id',null);
 		if ($menuType) {
-			if ($menuType != $app->getUserState($this->context.'.filter.menutype')) {
-				$app->setUserState($this->context.'.filter.menutype', $menuType);
+			if ($menuType != $app->getUserState($this->context.'.filter.menu_id')) {
+				$app->setUserState($this->context.'.filter.menu_id', $menuType);
 				JRequest::setVar('limitstart', 0);
 			}
 		}
 		else {
-			$menuType = $app->getUserState($this->context.'.filter.menutype');
+			$menuType = $app->getUserState($this->context.'.filter.menu_id');
 
 			if (!$menuType) {
 				$menuType = $this->getDefaultMenuType();
 			}
 		}
 
-		$this->setState('filter.menutype', $menuType);
+		$this->setState('filter.menu_id', $menuType);
 
 		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
@@ -125,7 +125,7 @@ class MenusModelItems extends JModelList
 		$id	.= ':'.$this->getState('filter.language');
 		$id	.= ':'.$this->getState('filter.search');
 		$id	.= ':'.$this->getState('filter.parent_id');
-		$id	.= ':'.$this->getState('filter.menutype');
+		$id	.= ':'.$this->getState('filter.menu_id');
 
 		return parent::getStoreId($id);
 	}
@@ -143,8 +143,8 @@ class MenusModelItems extends JModelList
 		// Create a new query object.
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true)
-			->select('menutype')
-			->from('#__menu_types')
+			->select('menu_id')
+			->from('#__menus')
 			->order('title');
 		$db->setQuery($query, 0, 1);
 		$menuType = $db->loadResult();
@@ -166,7 +166,7 @@ class MenusModelItems extends JModelList
 
 		// Select all fields from the table.
 		$query->select($this->getState('list.select', 'a.*'));
-		$query->from('`#__menu` AS a');
+		$query->from('`#__menu_items` AS a');
 
 		// Join over the language
 		$query->select('l.title AS language_title, l.image as image');
@@ -218,9 +218,9 @@ class MenusModelItems extends JModelList
 		}
 
 		// Filter the items over the menu id if set.
-		$menuType = $this->getState('filter.menutype');
+		$menuType = $this->getState('filter.menu_id');
 		if (!empty($menuType)) {
-			$query->where('a.menutype = '.$db->quote($menuType));
+			$query->where('a.menu_id = '.$db->quote($menuType));
 		}
 
 		// Filter on the access level.

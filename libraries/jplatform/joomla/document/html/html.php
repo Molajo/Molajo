@@ -374,7 +374,7 @@ class JDocumentHTML extends JDocument
 			if ($active) {
 				$where[] = 'parent = ' . $active->id;
 				$where[] = 'published = 1';
-				$dbo->setQuery('SELECT COUNT(*) FROM #__menu WHERE '. implode(' AND ', $where));
+				$dbo->setQuery('SELECT COUNT(*) FROM #__menu_items WHERE '. implode(' AND ', $where));
 				$children = $dbo->loadResult();
 			} else {
 				$children = 0;

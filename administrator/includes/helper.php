@@ -33,7 +33,7 @@ class MolajoAdministratorHelper
 		}
 
 		if (empty($option)) {
-			$option = 'com_cpanel';
+			$option = 'com_dashboard';
 		}
 
 		JRequest::setVar('option', $option);

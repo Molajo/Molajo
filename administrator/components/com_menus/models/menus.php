@@ -32,7 +32,7 @@ class MenusModelMenus extends JModelList
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'title', 'a.title',
-				'menutype', 'a.menutype',
+				'menu_id', 'a.menu_id',
 			);
 		}
 
@@ -68,7 +68,7 @@ class MenusModelMenus extends JModelList
 
 		// Get the menu types of menus in the list.
 		$db = $this->getDbo();
-		$menuTypes = JArrayHelper::getColumn($items, 'menutype');
+		$menuTypes = JArrayHelper::getColumn($items, 'menu_id');
 
 		// Quote the strings.
 		$menuTypes = implode(
@@ -78,14 +78,14 @@ class MenusModelMenus extends JModelList
 
 		// Get the published menu counts.
 		$query = $db->getQuery(true)
-			->select('m.menutype, COUNT(DISTINCT m.id) AS count_published')
-			->from('#__menu AS m')
+			->select('m.menu_id, COUNT(DISTINCT m.id) AS count_published')
+			->from('#__menu_items AS m')
 			->where('m.published = 1')
-			->where('m.menutype IN ('.$menuTypes.')')
-			->group('m.menutype')
+			->where('m.menu_id IN ('.$menuTypes.')')
+			->group('m.menu_id')
 			;
 		$db->setQuery($query);
-		$countPublished = $db->loadAssocList('menutype', 'count_published');
+		$countPublished = $db->loadAssocList('menu_id', 'count_published');
 
 		if ($db->getErrorNum()) {
 			$this->setError($db->getErrorMsg());
@@ -95,10 +95,10 @@ class MenusModelMenus extends JModelList
 		// Get the unpublished menu counts.
 		$query->clear('where')
 			->where('m.published = 0')
-			->where('m.menutype IN ('.$menuTypes.')')
+			->where('m.menu_id IN ('.$menuTypes.')')
 			;
 		$db->setQuery($query);
-		$countUnpublished = $db->loadAssocList('menutype', 'count_published');
+		$countUnpublished = $db->loadAssocList('menu_id', 'count_published');
 
 		if ($db->getErrorNum()) {
 			$this->setError($db->getErrorMsg());
@@ -108,10 +108,10 @@ class MenusModelMenus extends JModelList
 		// Get the trashed menu counts.
 		$query->clear('where')
 			->where('m.published = -2')
-			->where('m.menutype IN ('.$menuTypes.')')
+			->where('m.menu_id IN ('.$menuTypes.')')
 			;
 		$db->setQuery($query);
-		$countTrashed = $db->loadAssocList('menutype', 'count_published');
+		$countTrashed = $db->loadAssocList('menu_id', 'count_published');
 
 		if ($db->getErrorNum()) {
 			$this->setError($db->getErrorMsg());
@@ -121,9 +121,9 @@ class MenusModelMenus extends JModelList
 		// Inject the values back into the array.
 		foreach ($items as $item)
 		{
-			$item->count_published		= isset($countPublished[$item->menutype]) ? $countPublished[$item->menutype] : 0;
-			$item->count_unpublished	= isset($countUnpublished[$item->menutype]) ? $countUnpublished[$item->menutype] : 0;
-			$item->count_trashed		= isset($countTrashed[$item->menutype]) ? $countTrashed[$item->menutype] : 0;
+			$item->count_published		= isset($countPublished[$item->menu_id]) ? $countPublished[$item->menu_id] : 0;
+			$item->count_unpublished	= isset($countUnpublished[$item->menu_id]) ? $countUnpublished[$item->menu_id] : 0;
+			$item->count_trashed		= isset($countTrashed[$item->menu_id]) ? $countTrashed[$item->menu_id] : 0;
 		}
 
 		// Add the items to the internal cache.
@@ -145,7 +145,7 @@ class MenusModelMenus extends JModelList
 
 		// Select all fields from the table.
 		$query->select($this->getState('list.select', 'a.*'));
-		$query->from('`#__menu_types` AS a');
+		$query->from('`#__menus` AS a');
 
 		$query->group('a.id');
 
@@ -172,7 +172,7 @@ class MenusModelMenus extends JModelList
 	}
 
 	/**
-	 * Gets a list of all mod_mainmenu modules and collates them by menutype
+	 * Gets a list of all mod_mainmenu modules and collates them by menu_id
 	 *
 	 * @return	array
 	 */

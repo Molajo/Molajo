@@ -38,11 +38,11 @@ INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DIS
 INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__articles` a, `#__actions` b where b.id = 3;
 
 # menus
-INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, 'menu' FROM `#__menu`;
+INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, 'menu' FROM `#__menu_items`;
 # administrator has full control
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__menu` a, `#__actions` b where b.id <> 1;
+INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT 1, a.asset_id, b.id FROM `#__menu_items` a, `#__actions` b where b.id <> 1;
 # load access (View Level Access) permissions
-INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__menu` a, `#__actions` b where b.id = 3;
+INSERT INTO `#__temp_permissions` (`group_id`,`asset_id`,`action_id`) SELECT DISTINCT a.access, a.asset_id, b.id FROM `#__menu_items` a, `#__actions` b where b.id = 3;
 
 # extensions
 INSERT INTO `#__assets` SELECT DISTINCT `asset_id`, 'extensions' FROM `#__extensions`;

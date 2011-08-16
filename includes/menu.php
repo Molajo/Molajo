@@ -36,12 +36,12 @@ class MolajoMenuSite extends MolajoMenu
 			$app	= MolajoFactory::getApplication();
 			$query	= $db->getQuery(true);
 
-			$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
+			$query->select('m.id, m.menu_id, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
 			$query->select('m.access, m.asset_id');
 			$query->select('m.browserNav, m.params, m.home, m.img, m.template_style_id');
 			$query->select('m.component_id, m.parent_id, m.language');
 			$query->select('e.element as component');
-			$query->from('#__menu AS m');
+			$query->from('#__menu_items AS m');
 			$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
 			$query->where('m.published = 1');
 			$query->where('m.parent_id > 0');

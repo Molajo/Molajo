@@ -51,7 +51,7 @@
 			size="50"/>
 
 		<field
-			name="menutype"
+			name="menu_id"
 			type="menu"
 			label="COM_MENUS_ITEM_FIELD_ASSIGNED_LABEL"
 			description="COM_MENUS_ITEM_FIELD_ASSIGNED_DESC"
@@ -62,7 +62,7 @@
 
 		<field
 			name="type"
-			type="menutype"
+			type="menu_id"
 			label="COM_MENUS_ITEM_FIELD_TYPE_LABEL"
 			description="COM_MENUS_ITEM_FIELD_TYPE_DESC"
 			class="inputbox"

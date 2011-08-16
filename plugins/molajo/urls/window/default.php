@@ -786,7 +786,7 @@ class plgSystemTamka_Router extends JPlugin	{
 
 		//	Retrieve URL for Custom Error Page		//
 		$query = 'SELECT alias 													' .
-			' FROM #__menu	 													' .
+			' FROM #__menu_items	 													' .
 			' WHERE link = "index.php?option=com_tamka_error&view=error" 		' .
 			'   AND published = 1 												';
 

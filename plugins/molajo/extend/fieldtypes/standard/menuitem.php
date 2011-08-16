@@ -70,11 +70,11 @@ class JFormFieldMenuItem extends JFormFieldGroupedList
 			foreach($items as $menu)
 			{
 				// Initialize the group.
-				$groups[$menu->menutype] = array();
+				$groups[$menu->menu_id] = array();
 
 				// Build the options array.
 				foreach($menu->links as $link) {
-					$groups[$menu->menutype][] = JHtml::_('select.option', $link->value, $link->text, 'value', 'text', in_array($link->type, $disable));
+					$groups[$menu->menu_id][] = JHtml::_('select.option', $link->value, $link->text, 'value', 'text', in_array($link->type, $disable));
 				}
 			}
 		}

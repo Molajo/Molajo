@@ -121,7 +121,7 @@ class MenusHelper
 	public static function getMenuTypes()
 	{
 		$db = MolajoFactory::getDbo();
-		$db->setQuery('SELECT a.menutype FROM #__menu_types AS a');
+		$db->setQuery('SELECT a.menu_id FROM #__menus AS a');
 		return $db->loadResultArray();
 	}
 
@@ -138,19 +138,19 @@ class MenusHelper
 		$db = MolajoFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('a.id AS value, a.title AS text, a.level, a.menutype, a.type, a.template_style_id, a.checked_out');
-		$query->from('#__menu AS a');
-		$query->join('LEFT', '`#__menu` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+		$query->select('a.id AS value, a.title AS text, a.level, a.menu_id, a.type, a.template_style_id, a.checked_out');
+		$query->from('#__menu_items AS a');
+		$query->join('LEFT', '`#__menu_items` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
 
 		// Filter by the type
 		if ($menuType) {
-			$query->where('(a.menutype = '.$db->quote($menuType).' OR a.parent_id = 0)');
+			$query->where('(a.menu_id = '.$db->quote($menuType).' OR a.parent_id = 0)');
 		}
 
 		if ($parentId) {
 			if ($mode == 2) {
 				// Prevent the parent and children from showing.
-				$query->join('LEFT', '`#__menu` AS p ON p.id = '.(int) $parentId);
+				$query->join('LEFT', '`#__menu_items` AS p ON p.id = '.(int) $parentId);
 				$query->where('(a.lft <= p.lft OR a.rgt >= p.rgt)');
 			}
 		}
@@ -181,12 +181,12 @@ class MenusHelper
 		}
 
 		if (empty($menuType)) {
-			// If the menutype is empty, group the items by menutype.
+			// If the menu_id is empty, group the items by menu_id.
 			$query->clear();
 			$query->select('*');
-			$query->from('#__menu_types');
-			$query->where('menutype <> '.$db->quote(''));
-			$query->order('title, menutype');
+			$query->from('#__menus');
+			$query->where('menu_id <> '.$db->quote(''));
+			$query->order('title, menu_id');
 			$db->setQuery($query);
 
 			$menuTypes = $db->loadObjectList();
@@ -200,17 +200,17 @@ class MenusHelper
 			// Create a reverse lookup and aggregate the links.
 			$rlu = array();
 			foreach ($menuTypes as &$type) {
-				$rlu[$type->menutype] = &$type;
+				$rlu[$type->menu_id] = &$type;
 				$type->links = array();
 			}
 
 			// Loop through the list of menu links.
 			foreach ($links as &$link) {
-				if (isset($rlu[$link->menutype])) {
-					$rlu[$link->menutype]->links[] = &$link;
+				if (isset($rlu[$link->menu_id])) {
+					$rlu[$link->menu_id]->links[] = &$link;
 
 					// Cleanup garbage.
-					unset($link->menutype);
+					unset($link->menu_id);
 				}
 			}
 

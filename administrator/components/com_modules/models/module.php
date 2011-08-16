@@ -101,7 +101,7 @@ class ModulesModelModule extends JModelAdmin
 					$query	= $db->getQuery(true);
 					$query->delete();
 					$query->from('#__modules_menu');
-					$query->where('moduleid='.(int)$pk);
+					$query->where('module_id='.(int)$pk);
 					$db->setQuery((string)$query);
 					$db->query();
 				}
@@ -163,22 +163,22 @@ class ModulesModelModule extends JModelAdmin
 					throw new Exception($table->getError());
 				}
 
-				// $query = 'SELECT menuid'
+				// $query = 'SELECT menu_item_id'
 				//	. ' FROM #__modules_menu'
-				//	. ' WHERE moduleid = '.(int) $pk
+				//	. ' WHERE module_id = '.(int) $pk
 				//	;
 
 				$query	= $db->getQuery(true);
-				$query->select('menuid');
+				$query->select('menu_item_id');
 				$query->from('#__modules_menu');
-				$query->where('moduleid='.(int)$pk);
+				$query->where('module_id='.(int)$pk);
 
 				$this->_db->setQuery((string)$query);
 				$rows = $this->_db->loadResultArray();
 
-				foreach ($rows as $menuid)
+				foreach ($rows as $menu_item_id)
 				{
-					$tuples[] = '('.(int) $table->id.','.(int) $menuid.')';
+					$tuples[] = '('.(int) $table->id.','.(int) $menu_item_id.')';
 				}
 			}
 			else {
@@ -188,7 +188,7 @@ class ModulesModelModule extends JModelAdmin
 
 		if (!empty($tuples)) {
 			// Module-Menu Mapping: Do it in one query
-			$query = 'INSERT INTO #__modules_menu (moduleid,menuid) VALUES '.implode(',', $tuples);
+			$query = 'INSERT INTO #__modules_menu (module_id,menu_item_id) VALUES '.implode(',', $tuples);
 			$this->_db->setQuery($query);
 
 			if (!$this->_db->query()) {
@@ -356,9 +356,9 @@ class ModulesModelModule extends JModelAdmin
 
 			// Determine the page assignment mode.
 			$db->setQuery(
-				'SELECT menuid' .
+				'SELECT menu_item_id' .
 				' FROM #__modules_menu' .
-				' WHERE moduleid = '.$pk
+				' WHERE module_id = '.$pk
 			);
 			$assigned = $db->loadResultArray();
 
@@ -593,14 +593,14 @@ class ModulesModelModule extends JModelAdmin
 		// Delete old module to menu item associations
 		// $db->setQuery(
 		//	'DELETE FROM #__modules_menu'.
-		//	' WHERE moduleid = '.(int) $table->id
+		//	' WHERE module_id = '.(int) $table->id
 		// );
 
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
 		$query->delete();
 		$query->from('#__modules_menu');
-		$query->where('moduleid = '.(int)$table->id);
+		$query->where('module_id = '.(int)$table->id);
 		$db->setQuery((string)$query);
 		$db->query();
 
@@ -625,13 +625,13 @@ class ModulesModelModule extends JModelAdmin
 				// assign new module to `all` menu item associations
 				// $this->_db->setQuery(
 				//	'INSERT INTO #__modules_menu'.
-				//	' SET moduleid = '.(int) $table->id.', menuid = 0'
+				//	' SET module_id = '.(int) $table->id.', menu_item_id = 0'
 				// );
 
 				$query->clear();
 				$query->insert('#__modules_menu');
-				$query->set('moduleid='.(int)$table->id);
-				$query->set('menuid=0');
+				$query->set('module_id='.(int)$table->id);
+				$query->set('menu_item_id=0');
 				$db->setQuery((string)$query);
 				if (!$db->query()) {
 					$this->setError($db->getErrorMsg());
@@ -649,7 +649,7 @@ class ModulesModelModule extends JModelAdmin
 				}
 
 				$this->_db->setQuery(
-					'INSERT INTO #__modules_menu (moduleid, menuid) VALUES '.
+					'INSERT INTO #__modules_menu (module_id, menu_item_id) VALUES '.
 					implode(',', $tuples)
 				);
 

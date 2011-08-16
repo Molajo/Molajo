@@ -713,7 +713,7 @@ class JInstallerModule extends JAdapterInstance
 			// Wipe out any items assigned to menus
 			$query = 'DELETE' .
 					' FROM #__modules_menu' .
-					' WHERE moduleid IN ('.$modID.')';
+					' WHERE module_id IN ('.$modID.')';
 			$db->setQuery($query);
 			try
 			{
@@ -785,7 +785,7 @@ class JInstallerModule extends JAdapterInstance
 		// Remove the entry from the #__modules_menu table
 		$query = 'DELETE' .
 				' FROM `#__modules_menu`' .
-				' WHERE moduleid='.(int)$arg['id'];
+				' WHERE module_id='.(int)$arg['id'];
 		$db->setQuery($query);
 
 		try
