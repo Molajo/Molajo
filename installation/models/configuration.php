@@ -233,7 +233,8 @@ class MolajoInstallationModelConfiguration extends JModel
 				. ', registerDate = '.$db->quote($installdate)
 				. ', lastvisitDate = '.$db->quote($nullDate)
 				. ', activation = '.$db->quote('')
-				. ', params = '.$db->quote('');
+				. ', params = '.$db->quote('')
+				. ', asset_id = 5 ';
 
 		$db->setQuery($query);
 		if (!$db->query()) {
@@ -266,9 +267,21 @@ class MolajoInstallationModelConfiguration extends JModel
 			return false;
 		}
 
+		// Map the super admin to login to all applications
+		$query = 'INSERT INTO #__user_applications (user_id, application_id) ' .
+				' VALUES ' .
+                '('.$randomID.', 0), ' .
+                '('.$randomID.', 1), ' .
+                '('.$randomID.', 3); ';
+		$db->setQuery($query);
+		if (!$db->query()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
 		// Add user as group - type_id = 0 for User
-		$query	= 'INSERT INTO #__groups (parent_id, lft, rgt, title, asset_id, access, type_id) '
-				. ' SELECT 5, 0, 0, '.$db->quote('Administrator').', 51, 4, 0';
+		$query	= 'INSERT INTO #__groups (id, parent_id, lft, rgt, title, asset_id, type_id, protected) '
+				. ' SELECT 5, 0, 0, 0, '.$db->quote('Administrator').', 6, 0, 1';
 		$db->setQuery($query);
 		if (!$db->query()) {
 			$this->setError($db->getErrorMsg());
@@ -282,6 +295,119 @@ class MolajoInstallationModelConfiguration extends JModel
 			$this->setError($db->getErrorMsg());
 			return false;
 		}
+
+        MolajoInstallationModelConfiguration::createPermissions($options);
 		return true;
 	}
+
+    /**
+     * createPermissions
+     *
+     * Populates the Permissions Tables
+     * 
+     * @param $options
+     * @return bool
+     */
+    function createPermissions ($options)
+    {
+		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+
+		$query = 'INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
+                  SELECT DISTINCT c.group_id as group_id, b.id as asset_id, 3 as `action_id`
+                    FROM `#__groups`          a,
+                      `#__assets`             b,
+                      `#__group_to_groupings` c
+                    WHERE a.id = c.group_id
+                      AND b.access = c.grouping_id';
+
+		$db->setQuery($query);
+		if ($db->query()) {
+        } else {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+        /** 4-Edit, 5-Publish, 6-Delete */
+		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
+                      SELECT DISTINCT a.id as group_id, b.id as asset_id, c.id as action_id
+                        FROM `#__groups`          a,
+                          `#__assets`             b,
+                          `#__actions`            c
+                        WHERE a.id = 4
+                          AND c.id IN (4, 5, 6)';
+
+		$db->setQuery($query);
+		if ($db->query()) {
+        } else {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+        /** 2-Create, 7-Admin for Components */
+		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
+                      SELECT DISTINCT a.id as group_id, b.asset_id, c.id as action_id
+                        FROM `#__groups`          a,
+                          `#__extensions`         b,
+                          `#__actions`            c
+                        WHERE a.id = 4
+                          AND c.id IN (2, 7)
+                          AND b.type = "component"
+                          AND b.application_id = 1';
+
+		$db->setQuery($query);
+		if ($db->query()) {
+        } else {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+        /** 1-Login in Site Application */
+		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
+                      SELECT DISTINCT a.id as group_id, b.asset_id, c.id as action_id
+                        FROM `#__groups`          a,
+                          `#__extensions`         b,
+                          `#__actions`            c
+                        WHERE a.id = 4
+                          AND c.id IN (2, 7)
+                          AND b.type = "component"
+                          AND b.application_id = 1';
+
+		$db->setQuery($query);
+		if ($db->query()) {
+        } else {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+        /** 1-Login in Site Application */
+		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
+                      SELECT DISTINCT a.id as group_id, b.asset_id, c.id as action_id
+                        FROM `#__groups`        a,
+                          `#__applications`     b,
+                          `#__actions`          c
+                        WHERE a.id = 4
+                          AND c.id IN (1)
+                          AND b.application_id = 0';
+
+		$db->setQuery($query);
+		if ($db->query()) {
+        } else {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+        /** Permission Groupings */
+		$query = 'INSERT INTO `#__permissions_groupings` ( `grouping_id`, `asset_id`, `action_id`)
+                      SELECT DISTINCT b.grouping_id, a.asset_id, a.action_id
+                      FROM #__permissions_groups a,
+                        #__group_to_groupings b
+                      WHERE a.group_id = b.group_id';
+
+		$db->setQuery($query);
+		if ($db->query()) {
+        } else {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+    }
 }

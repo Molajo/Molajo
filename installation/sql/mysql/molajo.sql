@@ -764,7 +764,7 @@ INSERT INTO `#__assets` ( `content_id`, `id`, `content_table`, `option`, `path`,
 
 #
 # USERS AND GROUPS
-#
+#  5,6 asset id reserved for administrator .. MolajoInstallationModelConfiguration::_createRootUser
 
 INSERT INTO `#__groups`
   (`id`, `asset_id`, `parent_id`, `lft`, `rgt`, `title`, `protected`)

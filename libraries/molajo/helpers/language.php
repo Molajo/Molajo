@@ -35,9 +35,12 @@ class MolajoLanguageHelper
 		$langs = JLanguage::getKnownLanguages($basePath);
 
         if (MOLAJO_APPLICATION_ID == 2) {
-            $installed = false;
+            $installed == false;
+            $installed_languages = array();
 
         } elseif ($installed === true) {
+
+			$db = MolajoFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('element');
 			$query->from('#__extensions');
@@ -51,17 +54,14 @@ class MolajoLanguageHelper
 
 		foreach ($langs as $lang => $metadata)
 		{
-			if (!$installed || array_key_exists($lang, $installed_languages))
-			{
-				$option = array ();
+            $option = array ();
 
-				$option['text'] = $metadata['name'];
-				$option['value'] = $lang;
-				if ($lang == $actualLanguage) {
-					$option['selected'] = 'selected="selected"';
-				}
-				$list[] = $option;
-			}
+            $option['text'] = $metadata['name'];
+            $option['value'] = $lang;
+            if ($lang == $actualLanguage) {
+                $option['selected'] = 'selected="selected"';
+            }
+            $list[] = $option;
 		}
 
 		return $list;
