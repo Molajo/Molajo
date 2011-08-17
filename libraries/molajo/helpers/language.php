@@ -32,12 +32,12 @@ class MolajoLanguageHelper
 	public static function createLanguageList($actualLanguage, $basePath = MOLAJO_PATH_BASE, $caching = false, $installed = false)
 	{
 		$list = array ();
-
-		// Cache activation
 		$langs = JLanguage::getKnownLanguages($basePath);
-		if ($installed)
-		{
-			$db = MolajoFactory::getDBO();
+
+        if (MOLAJO_APPLICATION_ID == 2) {
+            $installed = false;
+
+        } elseif ($installed === true) {
 			$query = $db->getQuery(true);
 			$query->select('element');
 			$query->from('#__extensions');
@@ -48,7 +48,7 @@ class MolajoLanguageHelper
 			$db->setQuery($query);
 			$installed_languages = $db->loadObjectList('element');
 		}
-var_dump($installed_languages);
+
 		foreach ($langs as $lang => $metadata)
 		{
 			if (!$installed || array_key_exists($lang, $installed_languages))
