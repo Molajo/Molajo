@@ -515,6 +515,7 @@ CREATE TABLE `#__menu_items` (
   KEY `idx_menu_id` (`menu_id`, `ordering`),
   KEY `idx_left_right` (`lft`, `rgt`),
   KEY `idx_alias` (`alias`),
+  KEY `idx_path` (`path`(333)),
   KEY `idx_language` (`language`)
 )   DEFAULT CHARSET=utf8;
 
@@ -1668,6 +1669,7 @@ INSERT INTO `#__actions` (`id` ,`title`)
 #
 
 # Actions
+
 CREATE UNIQUE INDEX `idx_actions_table_title` ON `#__actions` (`title` ASC) ;
 
 # Assets
