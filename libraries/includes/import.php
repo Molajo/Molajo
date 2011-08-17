@@ -118,12 +118,9 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/component/helper.p
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/module.php', 'MolajoModuleHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/module/helper.php', 'JModuleHelper');
 
-if (MOLAJO_APPLICATION == 'installation') {
-    $filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/helper.php', 'JLanguageHelper');
-} else {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/language.php', 'MolajoLanguageHelper');
-    $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/language/helper.php', 'JLanguageHelper');
-}
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/language.php', 'MolajoLanguageHelper');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/language/helper.php', 'JLanguageHelper');
+
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/menu.php', 'MolajoMenu');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/menu.php', 'JMenu');
 
