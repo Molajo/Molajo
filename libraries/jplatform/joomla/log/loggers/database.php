@@ -14,7 +14,7 @@ jimport('joomla.log.logger');
 jimport('joomla.database.database');
 
 /**
- * Molajo MySQL Database Log class
+ * Joomla MySQL Database Log class
  *
  * This class is designed to output logs to a specific MySQL database table. Fields in this
  * table are based on the SysLog style of log output. This is designed to allow quick and

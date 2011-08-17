@@ -667,7 +667,7 @@ abstract class JFactory
 
 		$lang	= self::getLanguage();
 
-		// Keep backwards compatibility with Molajo 1.0
+		// Keep backwards compatibility with Joomla 1.0
 		$raw	= JRequest::getBool('no_html');
 		$type	= JRequest::getWord('format', $raw ? 'raw' : 'html');
 
@@ -699,7 +699,7 @@ abstract class JFactory
 	{
 		jimport('joomla.filesystem.stream');
 
-		// Setup the context; Molajo UA and overwrite
+		// Setup the context; Joomla UA and overwrite
 		$context = array();
 		$version = new JVersion;
 		// set the UA for HTTP and overwrite for FTP

@@ -11,7 +11,7 @@ defined('JPATH_PLATFORM') or die;
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
- * Molajo Framework.
+ * Joomla Framework.
  *
  * @package     Joomla.Platform
  * @subpackage  HTML

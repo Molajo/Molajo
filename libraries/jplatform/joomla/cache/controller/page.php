@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Molajo Cache page type object
+ * Joomla Cache page type object
  *
  * @package     Joomla.Platform
  * @subpackage  Cache

@@ -36,7 +36,7 @@ final class MolajoVersion
 	public $CODE_NAME = 'Phoenix';
 
 	/** @var  string  Release date. */
-	public $RELEASE_DATE = '01-Aug-2011';
+	public $RELEASE_DATE = '01-Sept-2011';
 
 	/** @var  string  Release time. */
 	public $RELEASE_TIME = '06:00';

@@ -10,7 +10,7 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Molajo Exception object.
+ * Joomla Exception object.
  *
  * @package     Joomla.Platform
  * @subpackage  Error

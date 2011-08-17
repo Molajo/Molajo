@@ -193,7 +193,7 @@ class JFilesystemHelper
 	 * Stream and Filter Support Operations
 	 *
 	 * Returns the supported streams, in addition to direct file access
-	 * Also includes Molajo streams as well as PHP streams
+	 * Also includes Joomla streams as well as PHP streams
 	 *
 	 * @return  array  Streams
 	 * @since   11.1
