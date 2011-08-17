@@ -1,5 +1,6 @@
 /* If all these damn lines and spaces make you want to kick kittens, then I should warn you: I know the really cool designers like to keep all their properties on one line, but I am not very cool, just very practical. We can use a tool to minify. */
 
+/* Temporary resets, will move */
 * html .cf {
     height: 1%;
 }
@@ -18,15 +19,21 @@ body, h1 {
 	padding: 0;
 	border: 0;
 	}
+	
 body {
 	background: #f4f4f4 url(images/bg_body.jpg) repeat-y 0 0;
 	font: normal 13px/1.5em Helvetica, Arial, sans-serif;
 	}
+/*
+ * Header
+ */
 header {
 	margin: 0;
 	padding: 20px 24px;
-	background: -moz-linear-gradient(100% 100% 90deg, #222, #000); 
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#222), to(#000));
+	border-bottom: 1px solid #fff;
+	background: #111;
+	background: -moz-linear-gradient(100% 100% 90deg, #111, #000); 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#111), to(#000));
 	}
 header h1 {
 	height: 40px;
@@ -34,7 +41,6 @@ header h1 {
 	color: #f9f9f9;
 	text-indent: -99999px;
 	}
-
 /*
  * Launchpad
  */
@@ -76,20 +82,20 @@ nav#launchpad {
  * Launchpad: Icons
  */
 .menu_main li a.icon_configure {
-	background-position: 0 -144px;
+	background-position: 0 -240px;
 	}
 .menu_main li a.icon_access{
-	background-position: 0 -720px;
+	background-position: 0 -1104px;
 	}
 .menu_main li a.icon_create {
-	background-position: 0 -192px;
+	background-position: 0 -336px;
 	}
 .menu_main li a.icon_build {
-	background-position: 0 0;
+	background-position: 0 -48px;
 	}
 .menu_main li a.icon_search {
 	float: right;
-	background-position: 0 -288px;
+	background-position: 0 -576px;
 	}
 /*
  * Dashboard
@@ -141,52 +147,74 @@ section {
  * Dashboard: Icons
  */ 
  .com_dashboard li a.save {
-	background-position: 0 -96px;
+	background-position: 0 -192px;
 	}
 .com_dashboard li a.save-copy{
-	background-position: 0 -96px;
+	background-position: 0 -144px;
 	}
 .com_dashboard li a.revert {
-	background-position: 0 -576px;
+	background-position: 0 -960px;
 	}
 .com_dashboard li a.close {
-	background-position: 0 -768px;
+	background-position: 0 -1248px;
 	}
 .com_dashboard li a.edit-new {
-	background-position: 0 -528px;
+	background-position: 0 -816px;
 	}
  .com_dashboard li a.delete {
-	background-position: 0 -672px;
+	background-position: 0 -1200px;
 	}
 .com_dashboard li a.new {
-	background-position: 0 -528px;
+	background-position: 0 -912px;
 	}
 .com_dashboard li a.edit {
-	background-position: 0 -432px;
+	background-position: 0 -816px;
 	}
 .com_dashboard li a.feature {
-	background-position: 0 -240px;
+	background-position: 0 -432px;
 	}
 .com_dashboard li a.sticky {
-	background-position: 0 -480px;
+	background-position: 0 -864px;
 	}
 .com_dashboard li a.archive {
-	background-position: 0 -48px;
+	background-position: 0 -96px;
 	}
 .com_dashboard li a.spam {
-	background-position: 0 -672px;
+	background-position: 0 -288px;
 	}
 .com_dashboard li a.checkin {
-	background-position: 0 -336px;
-	}
-.com_dashboard li a.trash {
-	background-position: 0 -672px;
-	}
-.com_dashboard li a.publish {
 	background-position: 0 -624px;
 	}
+.com_dashboard li a.trash {
+	background-position: 0 -1056px;
+	}
+.com_dashboard li a.publish {
+	background-position: 0 -1008px;
+	}
 .com_dashboard li a.unpublish {
+	background-position: 0 -672px;
+	}
+/* editor */
+.com_dashboard li a.audio {
+	background-position: 0 -1152px;
+	}
+.com_dashboard li a.file {
 	background-position: 0 -384px;
+	}
+.com_dashboard li a.image {
+	background-position: 0 -480px;
+	}
+.com_dashboard li a.link {
+	background-position: 0 -528px;
+	}
+.com_dashboard li a.pagebreak {
+	background-position: 0 -768px;
+	}
+.com_dashboard li a.readmore {
+	background-position: 0 0;
+	}
+.com_dashboard li a.video {
+	background-position: 0 -720px;
 	}
 /*
  * Dashboard: Edit | Content

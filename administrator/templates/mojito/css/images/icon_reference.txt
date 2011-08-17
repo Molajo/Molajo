@@ -1,57 +1,27 @@
-License info:
-http://somerandomdude.com/projects/iconic/
-This set is currently licensed under the Creative Commons Attribution-Share Alike 3.0 license. While I designed these icons specifically for myself, I want them to be everyone’s icons now.
-
-.beaker_alt_8x16{ background-position: 0 0; width: 16px; height: 16px; } 
-.box_16x16{ background-position: 0 -48px; width: 16px; height: 16px; } 
-.check_16x13{ background-position: 0 -96px; width: 16px; height: 16px; } 
-.cog_alt_16x16{ background-position: 0 -144px; width: 16px; height: 16px; } 
-.document_stroke_16x16{ background-position: 0 -192px; width: 16px; height: 16px; } 
-.heart_stroke_16x14{ background-position: 0 -240px; width: 16px; height: 16px; } 
-.magnifying_glass_16x16{ background-position: 0 -288px; width: 16px; height: 16px; } 
-.map_pin_stroke_16x16{ background-position: 0 -336px; width: 16px; height: 16px; } 
-.moon_stroke_16x16{ background-position: 0 -384px; width: 16px; height: 16px; } 
-.pen_16x16{ background-position: 0 -432px; width: 16px; height: 16px; } 
-.pin_16x16{ background-position: 0 -480px; width: 16px; height: 16px; } 
-.plus_16x16{ background-position: 0 -528px; width: 16px; height: 16px; } 
-.reload_alt1_12x14{ background-position: 0 -576px; width: 16px; height: 16px; } 
-.sun_16x16{ background-position: 0 -624px; width: 16px; height: 16px; } 
-.trash_stroke_16x16{ background-position: 0 -672px; width: 16px; height: 16px; } 
-.user_12x16{ background-position: 0 -720px; width: 16px; height: 16px; } 
-.x_14x14{ background-position: 0 -768px; width: 16px; height: 16px; } 
-
-.beaker_alt_12x24{ background-position: 0 0; width: 24px; height: 24px; } 
-.box_24x24{ background-position: 0 -72px; width: 24px; height: 24px; } 
-.check_24x20{ background-position: 0 -144px; width: 24px; height: 24px; } 
-.cog_alt_24x24{ background-position: 0 -216px; width: 24px; height: 24px; } 
-.document_stroke_24x24{ background-position: 0 -288px; width: 24px; height: 24px; } 
-.heart_stroke_24x21{ background-position: 0 -360px; width: 24px; height: 24px; } 
-.magnifying_glass_24x24{ background-position: 0 -432px; width: 24px; height: 24px; } 
-.map_pin_stroke_24x24{ background-position: 0 -504px; width: 24px; height: 24px; } 
-.moon_stroke_24x24{ background-position: 0 -576px; width: 24px; height: 24px; } 
-.pen_24x24{ background-position: 0 -648px; width: 24px; height: 24px; } 
-.pin_24x24{ background-position: 0 -720px; width: 24px; height: 24px; } 
-.plus_24x24{ background-position: 0 -792px; width: 24px; height: 24px; } 
-.reload_alt1_18x21{ background-position: 0 -864px; width: 24px; height: 24px; } 
-.sun_24x24{ background-position: 0 -936px; width: 24px; height: 24px; } 
-.trash_stroke_24x24{ background-position: 0 -1008px; width: 24px; height: 24px; } 
-.user_18x24{ background-position: 0 -1080px; width: 24px; height: 24px; } 
-.x_21x21{ background-position: 0 -1152px; width: 24px; height: 24px; } 
-
-.beaker_alt_16x32{ background-position: 0 0; width: 32px; height: 32px; } 
-.box_32x32{ background-position: 0 -96px; width: 32px; height: 32px; } 
-.check_32x26{ background-position: 0 -192px; width: 32px; height: 32px; } 
-.cog_alt_32x32{ background-position: 0 -288px; width: 32px; height: 32px; } 
-.document_stroke_32x32{ background-position: 0 -384px; width: 32px; height: 32px; } 
-.heart_stroke_32x28{ background-position: 0 -480px; width: 32px; height: 32px; } 
-.magnifying_glass_32x32{ background-position: 0 -576px; width: 32px; height: 32px; } 
-.map_pin_stroke_32x32{ background-position: 0 -672px; width: 32px; height: 32px; } 
-.moon_stroke_32x32{ background-position: 0 -768px; width: 32px; height: 32px; } 
-.pen_32x32{ background-position: 0 -864px; width: 32px; height: 32px; } 
-.pin_32x32{ background-position: 0 -960px; width: 32px; height: 32px; } 
-.plus_32x32{ background-position: 0 -1056px; width: 32px; height: 32px; } 
-.reload_alt1_24x28{ background-position: 0 -1152px; width: 32px; height: 32px; } 
-.sun_32x32{ background-position: 0 -1248px; width: 32px; height: 32px; } 
-.trash_stroke_32x32{ background-position: 0 -1344px; width: 32px; height: 32px; } 
-.user_24x32{ background-position: 0 -1440px; width: 32px; height: 32px; } 
-.x_28x28{ background-position: 0 -1536px; width: 32px; height: 32px; } 
+access { background-position: 0 -1104px; width: 16px; height: 16px; }
+archive { background-position: 0 -96px; width: 16px; height: 16px; }
+audio { background-position: 0 -1152px; width: 16px; height: 16px; }
+build { background-position: 0 -48px; width: 16px; height: 16px; }
+checkin { background-position: 0 -624px; width: 16px; height: 16px; }
+close { background-position: 0 -1248px; width: 16px; height: 16px; }
+config { background-position: 0 -240px; width: 16px; height: 16px; } 
+create { background-position: 0 -336px; width: 16px; height: 16px; }
+copy { background-position: 0 -144px; width: 16px; height: 16px; }
+delete { background-position: 0 -1200px; width: 16px; height: 16px; }
+edit { background-position: 0 -816px; width: 16px; height: 16px; }
+file { background-position: 0 -384px; width: 16px; height: 16px; } 
+feature { background-position: 0 -432px; width: 16px; height: 16px; } 
+image{ background-position: 0 -480px; width: 16px; height: 16px; } 
+link { background-position: 0 -528px; width: 16px; height: 16px; }
+new { background-position: 0 -912px; width: 16px; height: 16px; }
+pagebreak { background-position: 0 -768px; width: 16px; height: 16px; }
+publish { background-position: 0 -1008px; width: 16px; height: 16px; }
+readmore { background-position: 0 0; width: 16px; height: 16px; }
+revert{ background-position: 0 -960px; width: 16px; height: 16px; }
+save { background-position: 0 -192px; width: 16px; height: 16px; }
+search { background-position: 0 -576px; width: 16px; height: 16px; }
+spam { background-position: 0 -288px; width: 16px; height: 16px; }
+sticky { background-position: 0 -864px; width: 16px; height: 16px; } 
+trash { background-position: 0 -1056px; width: 16px; height: 16px; }
+unpublish { background-position: 0 -672px; width: 16px; height: 16px; }
+video { background-position: 0 -720px; width: 16px; height: 16px; }
