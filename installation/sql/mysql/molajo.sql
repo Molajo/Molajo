@@ -32,8 +32,11 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `#__assets` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Assets Primary Key' ,
-  `content_table` VARCHAR(100) NOT NULL DEFAULT '  ',
+  `content_table` VARCHAR(255) NOT NULL DEFAULT ' ',
   `content_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Content Primary Key',
+  `option` VARCHAR(255) NOT NULL DEFAULT ' ',
+  `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL',
+  `link` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.',
   `access` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table',
   PRIMARY KEY (`id`) )
 AUTO_INCREMENT = 1
@@ -50,7 +53,7 @@ CREATE TABLE `#__applications` (
   `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Application Primary Key',
   `application_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Numeric value associated with the application',
   `name` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title',
-  `path` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
+  `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `description` mediumtext NOT NULL,
   `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
   `metakey` text COMMENT 'Meta Key',
@@ -232,7 +235,7 @@ CREATE TABLE `#__categories` (
   `lft` INT (11) NOT NULL DEFAULT 0,
   `rgt` INT (11) NOT NULL DEFAULT 0,
   `level` INT (11) UNSIGNED NOT NULL DEFAULT 0,
-  `path` VARCHAR(255) NOT NULL DEFAULT ' ',
+  `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL Alias',
   `extension` VARCHAR(50) NOT NULL DEFAULT ' ',
   `title` VARCHAR(255) NOT NULL,
   `subtitle` VARCHAR(255) NOT NULL DEFAULT ' ',
@@ -255,7 +258,7 @@ CREATE TABLE `#__categories` (
   PRIMARY KEY  (`id`),
   KEY `cat_idx` (`extension`,`published`),
   KEY `idx_checkout` (`checked_out`),
-  KEY `idx_path` (`path`),
+  KEY `idx_path` (`path` (333)),
   KEY `idx_left_right` (`lft`,`rgt`),
   KEY `idx_alias` (`alias`),
   INDEX `idx_language` (`language`)
@@ -487,7 +490,7 @@ CREATE TABLE `#__menu_items` (
   `title` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'The display title of the menu item.',
   `alias` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'The SEF alias of the menu item.',
   `note` VARCHAR(255) NOT NULL DEFAULT ' ',
-  `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The computed path of the menu item based on the alias field.',
+  `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL',
   `link` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.',
   `type` VARCHAR(16) NOT NULL DEFAULT ' ' COMMENT 'The type of link: Component, URL, Alias, Separator',
   `published` INT (11) NOT NULL DEFAULT 0 COMMENT 'The published state of the menu link.',
@@ -537,6 +540,7 @@ CREATE TABLE `#__modules` (
   `note` VARCHAR(255) NOT NULL DEFAULT ' ',
   `content` MEDIUMTEXT NOT NULL,
   `ordering` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering',
+  `asset_id` INT (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
   `position` VARCHAR(50) DEFAULT NULL,
   `checked_out` INT (11) UNSIGNED NOT NULL DEFAULT 0,
   `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -750,31 +754,52 @@ INSERT INTO `#__applications` (`id`, `asset_id`, `application_id`, `name`, `path
     (3, 3, 2, 'installation', 'installation'),
     (4, 4, 3, 'content', 'content');
 
+INSERT INTO `#__assets` ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+  VALUES
+    (1, 1, '__applications', '', '', '', 1),
+    (2, 2, '__applications', '', 'administrator', '', 1),
+    (3, 3, '__applications', '', 'installation', '', 1),
+    (4, 4, '__applications', '', 'content', '', 1);
+
+
 #
 # USERS AND GROUPS
 #
 
-INSERT INTO `#__groups` (`id`, `asset_id`, `parent_id`, `lft`, `rgt`, `title`, `protected`)
-  VALUES
-    (1, 11, 0, 0, 1, 'Public',        1),
-    (2, 12, 0, 2, 3, 'Guest',         1),
-    (3, 13, 0, 4, 5, 'Registered',    1),
-    (4, 14, 0, 6, 7, 'Administrator', 1);
+INSERT INTO `#__groups`
+  (`id`, `asset_id`, `parent_id`, `lft`, `rgt`, `title`, `protected`)
+    VALUES
+      (1, 11, 0, 0, 1, 'Public',        1),
+      (2, 12, 0, 2, 3, 'Guest',         1),
+      (3, 13, 0, 4, 5, 'Registered',    1),
+      (4, 14, 0, 6, 7, 'Administrator', 1);
 
-INSERT INTO `#__groupings` (`id`, `group_name_list`, `group_id_list` )
-  VALUES
-    (1, 'Public', '1'),
-    (2, 'Guest', '2'),
-    (3, 'Registered', '3'),
-    (4, 'Administrator', '4'),
-    (5, 'Registered, Administrator', '4,5');
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1, 11, '__groups', 'com_groups', '', 'index.php?option=com_groups', 4),
+      (2, 12, '__groups', 'com_groups', '', 'index.php?option=com_groups', 4),
+      (3, 13, '__groups', 'com_groups', '', 'index.php?option=com_groups', 4),
+      (4, 14, '__groups', 'com_groups', '', 'index.php?option=com_groups', 4);
 
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 1, 1;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 2, 2;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 3, 3;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 4, 4;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 3, 5;
-INSERT INTO `#__group_to_groupings` ( `group_id` ,`grouping_id` ) SELECT 4, 5;
+INSERT INTO `#__groupings`
+  (`id`, `group_name_list`, `group_id_list` )
+    VALUES
+      (1, 'Public', '1'),
+      (2, 'Guest', '2'),
+      (3, 'Registered', '3'),
+      (4, 'Administrator', '4'),
+      (5, 'Registered, Administrator', '4,5');
+
+INSERT INTO `#__group_to_groupings`
+  ( `group_id` ,`grouping_id` )
+  VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (3, 5),
+    (4, 5);
 
 #
 # EXTENSIONS
@@ -808,6 +833,30 @@ INSERT INTO `#__extensions` (
     (19, 119, 'com_templates', 'component', 'com_templates', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 18, 1),
     (20, 120, 'com_users', 'component', 'com_users', '', 1, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 19, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (1, 101, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2, 102, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (3, 103, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (4, 104, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (5, 105, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (6, 106, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (7, 107, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (8, 108, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (9, 109, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (10, 110, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (11, 111, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (12, 112, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (13, 113, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (14, 114, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (15, 115, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (16, 116, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (17, 117, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (18, 118, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (19, 119, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (20, 120, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 # Components - Site
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
@@ -817,6 +866,13 @@ INSERT INTO `#__extensions` (
     (201, 201, 'com_articles', 'component', 'com_articles', '', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1),
     (202, 202, 'com_search', 'component', 'com_search', '', 0, 1, 1, '', '{"enabled":"0","show_date":"1"}', '', '', 0, '0000-00-00 00:00:00', 17, 1),
     (203, 203, 'com_users', 'component', 'com_users', '', 0, 1, 1, '', '{"allowUserRegistration":"1","useractivation":"1","frontend_userparams":"1","mailSubjectPrefix":"","mailBodySuffix":""}', '', '', 0, '0000-00-00 00:00:00', 19, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (201, 201, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (202, 202, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (203, 203, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 # Layouts: Extensions
 
@@ -854,6 +910,38 @@ INSERT INTO `#__extensions` (
     (326, 326, 'twig_example', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (327, 327, 'video', 'layout', 'layout', 'extensions', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (300, 300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (301, 301, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (302, 302, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (303, 303, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (304, 304, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (305, 305, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (306, 306, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (307, 307, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (308, 308, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (309, 309, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (310, 310, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (311, 311, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (312, 312, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (313, 313, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (314, 314, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (315, 315, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (316, 316, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (317, 317, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (318, 318, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (319, 319, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (320, 320, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (321, 321, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (322, 322, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (323, 323, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (324, 324, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (325, 325, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (326, 326, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (327, 327, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 # Layouts: Forms
 
 INSERT INTO `#__extensions` (
@@ -873,6 +961,22 @@ INSERT INTO `#__extensions` (
     (409, 409, 'text', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (410, 410, 'textarea', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (411, 411, 'user', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (400, 400, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (401, 401, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (402, 402, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (403, 403, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (404, 404, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (405, 405, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (406, 406, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (407, 407, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (408, 408, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (409, 409, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (410, 410, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (411, 411, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 # Layouts: Wraps
 
@@ -894,6 +998,22 @@ INSERT INTO `#__extensions` (
     (510, 510, 'table', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (511, 511, 'tabs', 'layout', 'layout', 'formfields', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (500, 500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (501, 501, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (502, 502, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (503, 503, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (504, 504, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (505, 505, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (506, 506, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (507, 507, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (508, 508, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (509, 509, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (510, 510, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (511, 511, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 # Libraries
 
 INSERT INTO `#__extensions` (
@@ -913,6 +1033,23 @@ INSERT INTO `#__extensions` (
     (610, 610, 'Secureimage', 'library', 'secureimage', 'secureimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1),
     (611, 611, 'Twig', 'library', 'twig', 'twig', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1),
     (612, 612, 'WideImage', 'library', 'wideimage', 'wideimage', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (601, 601, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (602, 602, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (603, 603, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (604, 604, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (605, 605, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (606, 606, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (607, 607, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (608, 608, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (609, 609, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (610, 610, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (611, 611, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (612, 612, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 
 # Modules - Administrator
 
@@ -934,28 +1071,61 @@ INSERT INTO `#__extensions` (
     (710, 710, 'mod_statistics', 'module', 'mod_statistics', 'mod_statistics', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1),
     (711, 711, 'mod_toolbar', 'module', 'mod_toolbar', 'mod_toolbar', 1, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (700, 700, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (701, 701, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (702, 702, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (703, 703, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (704, 704, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (705, 705, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (706, 706, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (707, 707, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (708, 708, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (709, 709, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (710, 710, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (711, 711, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 # Modules - Site
 
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
   `protected`, `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`,
   `ordering`, `state`)
-  VALUES
-    (801, 801, 'mod_articles', 'module', 'mod_articles', 'mod_articles', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1),
-    (802, 802, 'mod_breadcrumbs', 'module', 'mod_breadcrumbs', 'mod_breadcrumbs', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1),
-    (803, 803, 'mod_custom', 'module', 'mod_custom', 'mod_custom', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 1),
-    (804, 804, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 1),
-    (805, 805, 'mod_footer', 'module', 'mod_footer', 'mod_footer', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1),
-    (806, 806, 'mod_languages', 'module', 'mod_languages', 'mod_languages', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1),
-    (807, 807, 'mod_login', 'module', 'mod_login', 'mod_login', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1),
-    (808, 808, 'mod_media', 'module', 'mod_media', 'mod_media', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1),
-    (809, 809, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1),
-    (810, 810, 'mod_related_items', 'module', 'mod_related_items', 'mod_related_items', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1),
-    (811, 811, 'mod_search', 'module', 'mod_search', 'mod_search', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1),
-    (812, 812, 'mod_syndicate', 'module', 'mod_syndicate', 'mod_syndicate', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1),
-    (813, 813, 'mod_users_latest', 'module', 'mod_users_latest', 'mod_users_latest', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 1),
-    (814, 814, 'mod_whosonline', 'module', 'mod_whosonline', 'mod_whosonline', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 1);
+    VALUES
+      (801, 801, 'mod_articles', 'module', 'mod_articles', 'mod_articles', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, 1),
+      (802, 802, 'mod_breadcrumbs', 'module', 'mod_breadcrumbs', 'mod_breadcrumbs', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 2, 1),
+      (803, 803, 'mod_custom', 'module', 'mod_custom', 'mod_custom', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 3, 1),
+      (804, 804, 'mod_feed', 'module', 'mod_feed', 'mod_feed', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 4, 1),
+      (805, 805, 'mod_footer', 'module', 'mod_footer', 'mod_footer', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 5, 1),
+      (806, 806, 'mod_languages', 'module', 'mod_languages', 'mod_languages', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 6, 1),
+      (807, 807, 'mod_login', 'module', 'mod_login', 'mod_login', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 7, 1),
+      (808, 808, 'mod_media', 'module', 'mod_media', 'mod_media', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 8, 1),
+      (809, 809, 'mod_menu', 'module', 'mod_menu', 'mod_menu', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 9, 1),
+      (810, 810, 'mod_related_items', 'module', 'mod_related_items', 'mod_related_items', 0, 1, 1, '', '', '', '', 0, '0000-00-00 00:00:00', 10, 1),
+      (811, 811, 'mod_search', 'module', 'mod_search', 'mod_search', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 11, 1),
+      (812, 812, 'mod_syndicate', 'module', 'mod_syndicate', 'mod_syndicate', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 12, 1),
+      (813, 813, 'mod_users_latest', 'module', 'mod_users_latest', 'mod_users_latest', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 13, 1),
+      (814, 814, 'mod_whosonline', 'module', 'mod_whosonline', 'mod_whosonline', 0, 1, 0, '', '', '', '', 0, '0000-00-00 00:00:00', 14, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (801, 801, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (802, 802, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (803, 803, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (804, 804, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (805, 805, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (806, 806, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (807, 807, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (808, 808, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (809, 809, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (810, 810, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (811, 811, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (812, 812, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (813, 813, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (814, 814, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 #
 # Plugins
 #
@@ -968,6 +1138,11 @@ INSERT INTO `#__extensions` (
   VALUES
     (1000, 1000, 'plg_acl_example', 'plugin', 'example', 'acl', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1000, 1000, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 ## Authentication
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
@@ -975,6 +1150,11 @@ INSERT INTO `#__extensions` (
   `ordering`, `state`)
   VALUES
     (1100, 1100, 'plg_authentication_molajo', 'plugin', 'molajo', 'authentication', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1100, 1100, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 ## Content
 INSERT INTO `#__extensions` (
@@ -986,6 +1166,13 @@ INSERT INTO `#__extensions` (
     (1210, 1210, 'plg_content_loadmodule', 'plugin', 'loadmodule', 'content', 1, 1, 1, '', '{"wrap":"none"}', '', '', 0, '0000-00-00 00:00:00', 2, 1),
     (1220, 1220, 'plg_content_example', 'plugin', 'example', 'content', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1200, 1200, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (1210, 1210, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (1220, 1220, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 ## Editors
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
@@ -995,6 +1182,13 @@ INSERT INTO `#__extensions` (
     (1300, 1300, 'plg_editors_aloha', 'plugin', 'aloha', 'editors', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (1310, 1310, 'plg_editors_codemirror', 'plugin', 'codemirror', 'editors', 1, 1, 1, '', '{"linenumbers":"0","tabmode":"indent"}', '', '', 0, '0000-00-00 00:00:00', 2, 1),
     (1320, 1320, 'plg_editors_none', 'plugin', 'none', 'editors', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 3, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1300, 1300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (1310, 1310, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+      (1320, 1320, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 ## Extended Editors
 INSERT INTO `#__extensions` (
@@ -1009,6 +1203,16 @@ INSERT INTO `#__extensions` (
     (1440, 1440, 'plg_editors-xtd_readmore', 'readmore', 'codemirror', 'editors-xtd', 1, 1, 1, '', '{"linenumbers":"0","tabmode":"indent"}', '', '', 0, '0000-00-00 00:00:00', 5, 1),
     (1450, 1450, 'plg_editors-xtd_video', 'image', 'none', 'editors-xtd', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 6, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (1400, 1400, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (1410, 1410, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (1420, 1420, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (1430, 1430, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (1440, 1440, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (1450, 1450, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 ## Extension Plugins
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
@@ -1016,6 +1220,11 @@ INSERT INTO `#__extensions` (
   `ordering`, `state`)
   VALUES
     (1500, 1500, 'plg_extension_molajo', 'plugin', 'molajo', 'extension', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (1500, 1500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 ## Language
 INSERT INTO `#__extensions` (
@@ -1025,6 +1234,12 @@ INSERT INTO `#__extensions` (
   VALUES
     (1600, 1600, 'English (United Kingdom)', 'language', 'en-GB', '', 0, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (1601, 1601, 'English (United Kingdom)', 'language', 'en-GB', '', 1, 1, 1, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1600, 1600, '__languages', 'com_languages', '', 'index.php?option=com_languages', 4),
+      (1601, 1601, '__languages', 'com_languages', '', 'index.php?option=com_languages', 4);
 
 ## Molajo
 INSERT INTO `#__extensions` (
@@ -1046,6 +1261,23 @@ INSERT INTO `#__extensions` (
     (2060, 2060, 'plg_molajo_urls', 'plugin', 'urls', 'molajo', 1, 1, 0, '{"legacy":false,"name":"PLG_MOLAJO_URLS_NAME","type":"module","creationDate":"May 2011","author":"Molajo Project","copyright":"Copyright (C) 2011 Amy Stephen. All rights reserved. See http:\\/\\/molajo.org\\/copyright","authorEmail":"collaborate@molajo.org","authorUrl":"molajo.org\\/MaintainerTeam","version":"1.6.0","description":"PLG_MOLAJO_URLS_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 12, 1),
     (2065, 2065, 'plg_molajo_webservices', 'plugin', 'webservices', 'molajo', 1, 1, 0, '{"legacy":false,"name":"PLG_MOLAJO_WEBSERVICES_NAME","type":"module","creationDate":"May 2011","author":"Molajo Project","copyright":"Copyright (C) 2011 Amy Stephen. All rights reserved. See http:\\/\\/molajo.org\\/copyright","authorEmail":"collaborate@molajo.org","authorUrl":"molajo.org\\/MaintainerTeam","version":"1.6.0","description":"PLG_MOLAJO_WEBSERVICES_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 13, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (2005, 2005, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2010, 2010, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2015, 2015, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2020, 2020, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2025, 2025, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2030, 2030, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2035, 2035, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2040, 2040, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2045, 2045, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2050, 2050, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2055, 2055, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2060, 2060, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2065, 2065, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 ## Search
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
@@ -1055,6 +1287,13 @@ INSERT INTO `#__extensions` (
     (2100, 2100, 'plg_search_categories', 'plugin', 'categories', 'search', 1, 1, 0, '', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (2105, 2105, 'plg_search_articles', 'plugin', 'articles', 'search', 1, 1, 0, '', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 2, 1),
     (2110, 2110, 'plg_search_media', 'plugin', 'media', 'search', 1, 1, 0, '', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 3, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (2100, 2100, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2105, 2105, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2110, 2110, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 ## System
 INSERT INTO `#__extensions` (
@@ -1073,6 +1312,20 @@ INSERT INTO `#__extensions` (
     (2240, 2240, 'plg_system_remember', 'plugin', 'remember', 'system', 1, 1, 0, '', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 9, 1),
     (2245, 2245, 'plg_system_sef', 'plugin', 'sef', 'system', 1, 1, 0, '', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 10, 1);
 
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (2200, 2200, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2205, 2205, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2210, 2210, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2215, 2215, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2220, 2220, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2225, 2225, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2230, 2230, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2235, 2235, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2240, 2240, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2245, 2245, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
 ## Query
 INSERT INTO `#__extensions` (
   `extension_id`, `asset_id`, `name`, `type`, `element`, `folder`, `application_id`, `enabled`,
@@ -1080,6 +1333,11 @@ INSERT INTO `#__extensions` (
   `ordering`, `state`)
   VALUES
     (2300, 2300, 'plg_query_example', 'plugin', 'example', 'query', 1, 1, 0, '', '{"enable_example_feature":"1"}', '', '', 0, '0000-00-00 00:00:00', 1, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (2300, 2300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
 
 ## Template
 INSERT INTO `#__extensions` (
@@ -1098,6 +1356,385 @@ INSERT INTO `#__extensions` (
   VALUES
     (2500, 2500, 'plg_user_molajo', 'plugin', 'molajo', 'user', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 1, 1),
     (2550, 2550, 'plg_user_profile', 'plugin', 'profile', 'user', 1, 1, 0, '', '{}', '', '', 0, '0000-00-00 00:00:00', 2, 1);
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+    (2500, 2500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
+    (2550, 2550, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+
+#
+# LANGUAGES
+#
+INSERT INTO `#__languages` (`lang_id`,`lang_code`,`title`,`title_native`,`sef`,`image`,`description`,`metakey`,`metadesc`,`published`)
+  VALUES
+    (1, 'en-GB', 'English (UK)', 'English (UK)', 'en', 'en', '', '', '', 1);
+
+#
+# Menu - Administrator
+#
+
+INSERT INTO `#__menus`
+  (`id`, `application_id`, `title`, `description`, `created`, `created_by`,
+    `checked_out`,`checked_out_time`,`version`,`version_of_id`,`state_prior_to_version`)
+    VALUES
+      (1, 1, 'Launchpad Main Menu', 'Main Menu for the Molajo Administrator linking to Home, Configure, Access, Create, and Build', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
+      (2, 1, 'Launchpad Configure', 'Configure Menu for the Molajo Administrator that enables access to the Global and Personal Configuration Options and system functions such as Global Check-in, Cache, Redirects and System Information.', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
+      (3, 1, 'Launchpad Access', 'Access Menu for the Molajo Administrator that enables access to the User, Mass Mail, Group, and ACL Configuration Options.', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
+      (4, 1, 'Launchpad Create', 'Main Menu for the Molajo Administrator enabling access to Content Components, like Articles, Comments, and Tags', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
+      (5, 1, 'Launchpad Build', 'Main Menu for the Molajo Administrator that allows site builders to access Create, Installer, and the various Managers for Plugins, Modules, Templates, and Layouts', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL);
+
+INSERT INTO `#__menu_items`
+  (`id`, `menu_id`, `ordering`,  `application_id`, `asset_id`,
+    `title`, `alias`, `note`, `path`, `link`, `type`,
+    `published`, `parent_id`, `level`, `component_id`, `checked_out`, `checked_out_time`,
+    `browserNav`, `img`, `template_style_id`, `params`,
+    `lft`, `rgt`, `home`, `language`)
+    VALUES
+      (1, 1, 1, 0, 3000, 'Home', 'home', '', '', 'index.php?option=com_dashboard', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 1, '*'),
+
+      (2, 1, 1, 0, 3010, 'Configure', 'configure', '', 'configure', 'index.php?option=com_dashboard&type=configure', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (3, 1, 2, 0, 3020, 'Access', 'access', '', 'access', 'index.php?option=com_dashboard&type=access', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (4, 1, 3, 0, 3030, 'Create', 'create', '', 'create', 'index.php?option=com_dashboard&type=create', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (5, 1, 4, 0, 3040, 'Build', 'build', '', 'build', 'index.php?option=com_dashboard&type=build', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (6, 1, 5, 0, 3050, 'Search', 'search', '', 'search', 'index.php?option=com_dashboard&type=search', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+
+      (7, 2, 1, 0, 3100, 'Profile', 'profile', '', 'configure/profile', 'option=com_profile', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (8, 2, 2, 0, 3110, 'System', 'system', '', 'configure/system', 'index.php?option=com_config', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (9, 2, 3, 0, 3120, 'Checkin', 'checkin', '', 'configure/checkin', 'index.php?option=com_checkin', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (10, 2, 4, 0, 3130, 'Cache', 'cache', '', 'configure/cache', 'index.php?option=com_cache', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (11, 2, 5, 0, 3140, 'Backup', 'backup', '', 'configure/backup', 'index.php?option=com_backup', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (12, 2, 6, 0, 3150, 'Redirects', 'redirects', '', 'configure/redirects', 'index.php?option=com_redirects', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+
+      (13, 3, 1, 0, 3210, 'Users', 'users', '', 'access/users', 'index.php?option=com_users', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (14, 3, 2, 0, 3220, 'Groups', 'groups', '', 'access/groups', 'index.php?option=com_groups', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (15, 3, 3, 0, 3230, 'Permissions', 'permissions', '', 'access/permissions', 'index.php?option=com_permissions', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (16, 3, 4, 0, 3240, 'Messages', 'messages', '', 'access/messages', 'index.php?option=com_messages', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (17, 3, 5, 0, 3250, 'Activity', 'activity', '', 'access/activity', 'index.php?option=com_activity', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+
+      (18, 4, 1, 0, 3310, 'Articles', 'articles', '', 'create/articles', 'index.php?option=com_articles', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (19, 4, 2, 0, 3320, 'Tags', 'tags', '', 'create/tags', 'index.php?option=com_tags', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (20, 4, 3, 0, 3330, 'Comments', 'comments', '', 'create/comments', 'index.php?option=com_comments', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (21, 4, 4, 0, 3340, 'Media', 'media', '', 'create/media', 'index.php?option=com_media', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (22, 4, 5, 0, 3350, 'Categories', 'categories', '', 'create/categories', 'index.php?option=com_categories', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+
+      (23, 5, 1, 0, 3400, 'Extensions', 'extensions', '', 'build/extensions', 'index.php?option=com_extensions', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (24, 5, 2, 0, 3410, 'Languages', 'languages', '', 'build/languages', 'index.php?option=com_languages', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (25, 5, 3, 0, 3420, 'Layouts', 'layouts', '', 'build/layouts', 'index.php?option=com_layouts', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (26, 5, 4, 0, 3430, 'Modules', 'modules', '', 'build/modules', 'index.php?option=com_modules', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (27, 5, 5, 0, 3440, 'Plugins', 'plugins', '', 'build/plugins', 'index.php?option=com_plugins', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (28, 5, 6, 0, 3450, 'Templates', 'templates', '', 'build/templates', 'index.php?option=com_templates', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*');
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1, 3000, '__menu_items', 'com_menus', '', 'index.php?option=com_extensions', 4),
+
+      (2, 3010, '__menu_items', 'com_menus', 'configure', 'index.php?option=com_dashboard&type=configure', 4),
+      (3, 3020, '__menu_items', 'com_menus', 'access', 'index.php?option=com_dashboard&type=access', 4),
+      (4, 3030, '__menu_items', 'com_menus', 'create', 'index.php?option=com_dashboard&type=create', 4),
+      (5, 3040, '__menu_items', 'com_menus', 'build', 'index.php?option=com_dashboard&type=build', 4),
+      (6, 3050, '__menu_items', 'com_menus', 'search', 'index.php?option=com_dashboard&type=search', 4),
+
+      (7, 3100, '__menu_items', 'com_menus', 'configure/profile', 'option=com_profile', 4),
+      (8, 3110, '__menu_items', 'com_menus', 'configure/system', 'index.php?option=com_config', 4),
+      (9, 3120, '__menu_items', 'com_menus', 'configure/checkin', 'index.php?option=com_checkin', 4),
+      (10, 3130, '__menu_items', 'com_menus', 'configure/cache', 'index.php?option=com_cache', 4),
+      (11, 3140, '__menu_items', 'com_menus', 'configure/backup', 'index.php?option=com_backup', 4),
+      (12, 3150, '__menu_items', 'com_menus', 'configure/redirects', 'index.php?option=com_redirects', 4),
+
+      (13, 3210, '__menu_items', 'com_menus', 'access/users', 'index.php?option=com_users', 4),
+      (14, 3220, '__menu_items', 'com_menus', 'access/groups', 'index.php?option=com_groups', 4),
+      (15, 3230, '__menu_items', 'com_menus', 'access/permissions', 'index.php?option=com_permissions', 4),
+      (16, 3240, '__menu_items', 'com_menus', 'access/messages', 'index.php?option=com_messages', 4),
+      (17, 3250, '__menu_items', 'com_menus', 'access/activity', 'index.php?option=com_activity', 4),
+
+      (18, 3310, '__menu_items', 'com_menus', 'create/articles', 'index.php?option=com_articles', 4),
+      (19, 3320, '__menu_items', 'com_menus', 'create/tags', 'index.php?option=com_tags', 4),
+      (20, 3330, '__menu_items', 'com_menus', 'create/comments', 'index.php?option=com_comments', 4),
+      (21, 3340, '__menu_items', 'com_menus', 'create/media', 'index.php?option=com_media', 4),
+      (22, 3350, '__menu_items', 'com_menus', 'create/categories', 'index.php?option=com_categories', 4),
+
+      (23, 3400, '__menu_items', 'com_menus', 'build/extensions', 'index.php?option=com_extensions', 4),
+      (24, 3410, '__menu_items', 'com_menus', 'build/languages', 'index.php?option=com_languages', 4),
+      (25, 3420, '__menu_items', 'com_menus', 'build/layouts', 'index.php?option=com_layouts', 4),
+      (26, 3430, '__menu_items', 'com_menus', 'build/modules', 'index.php?option=com_modules', 4),
+      (27, 3440, '__menu_items', 'com_menus', 'build/plugins', 'index.php?option=com_plugins', 4),
+      (28, 3450, '__menu_items', 'com_menus', 'build/templates', 'index.php?option=com_templates', 4);
+
+#
+# Menu - Site
+#
+
+INSERT INTO `#__menus`
+  (`id`, `application_id`, `title`, `description`, `created`, `created_by`,
+    `checked_out`,`checked_out_time`,`version`,`version_of_id`,`state_prior_to_version`)
+    VALUES
+      (100, 1, 'Main Menu', 'Default Main Menu for the Site Application', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL);
+
+#
+# Menu Items
+#
+
+INSERT INTO `#__menu_items`
+  (`id`, `menu_id`, `ordering`,  `application_id`, `asset_id`,
+    `title`, `alias`, `note`, `path`, `link`, `type`,
+    `published`, `parent_id`, `level`, `component_id`, `checked_out`, `checked_out_time`,
+    `browserNav`, `img`, `template_style_id`, `params`,
+    `lft`, `rgt`, `home`, `language`)
+    VALUES
+      (100, 100, 1, 1, 3500, 'Home', 'home', '', '', 'index.php?option=com_articles', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 1, '*'),
+      (101, 100, 2, 1, 3510, 'New Article', 'new-article', '', 'new-article', 'index.php?option=com_articles&view=article&layout=edit', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (102, 100, 3, 1, 3520, 'Article', 'article', '', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (103, 100, 4, 1, 3530, 'Blog', 'blog', '', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (104, 100, 5, 1, 3540, 'List', 'list', '', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (105, 100, 6, 1, 3550, 'Table', 'table', '', 'table', 'index.php?option=com_articles&type=search', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (106, 100, 7, 1, 3560, 'Login', 'login', '', 'login', 'index.php?option=com_users&view=login', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
+      (107, 100, 8, 1, 3570, 'Search', 'search', '', 'search', 'index.php?option=com_search&type=search', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*');
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (100, 3500, '__articles', 'com_articles', '', 'index.php?option=com_articles', 4),
+      (101, 3510, '__articles', 'com_articles', 'new-article', 'index.php?option=com_articles&view=article&layout=edit', 4),
+      (102, 3520, '__articles', 'com_articles', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5', 4),
+      (103, 3530, '__articles', 'com_articles', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2', 4),
+      (104, 3540, '__articles', 'com_articles', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2', 4),
+      (105, 3550, '__articles', 'com_articles', 'table', 'index.php?option=com_articles&type=search', 4),
+      (106, 3560, '__dummy', 'com_users', 'login', 'index.php?option=com_users&view=login', 4),
+      (107, 3570, '__dummy', 'com_search', 'search', 'index.php?option=com_search&type=search', 4);
+#
+# MODULES
+#
+
+INSERT INTO `#__modules`
+  ( `id`, `asset_id`, `title`, `subtitle`, `position`, `application_id`, `ordering`, `published`, `module`,
+    `note`, `content`, `checked_out`, `checked_out_time`,
+    `publish_up`, `publish_down`, `showtitle`, `params`, `language`)
+  VALUES
+    (1, 4010, 'Articles', '', 'content', 1, 1, 1, 'mod_content', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (2, 4020, 'Custom', '', 'content', 1, 2, 1, 'mod_custom', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (3, 4030, 'Favorites', '', 'content', 1, 3, 1, 'mod_favorites', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (4, 4040, 'Feed', '', 'home', 1, 1, 1, 'mod_feed', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (5, 4050, 'Footer', '', 'footer', 1, 1, 1, 'mod_footer', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (6, 4060, 'Header', '', 'header', 1, 1, 1, 'mod_header', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (7, 4070, 'Launchpad', '', 'launchpad', 1, 1, 1, 'mod_launchpad', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (8, 4080, 'Logout', '', 'logout', 1, 1, 1, 'mod_logout', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (9, 4090, 'Members', '', 'access', 1, 1, 1, 'mod_members', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (10, 4100, 'Messages', '', 'messages', 1, 1, 1, 'mod_messages', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (11, 4110, 'Statistics', '', 'home', 1, 2, 1, 'mod_statistics', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (12, 4120, 'Toolbar', '', 'toolbar', 1, 1, 1, 'mod_toolbar', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*');
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1, 4010, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (2, 4020, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (3, 4030, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (4, 4040, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (5, 4050, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (6, 4060, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (7, 4070, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (8, 4080, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (9, 4090, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (10, 4100, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (11, 4110, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (12, 4120, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4');
+
+INSERT INTO `#__modules`
+  ( `id`, `asset_id`, `title`, `subtitle`, `position`, `application_id`, `ordering`, `published`, `module`,
+    `note`, `content`, `checked_out`, `checked_out_time`,
+    `publish_up`, `publish_down`, `showtitle`, `params`, `language`)
+  VALUES
+    (13, 4510, 'Articles', '', 'aside', 0, 1, 1, 'mod_content', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (14, 4520, 'Breadcrumbs', '', 'breadcrumbs', 0, 1, 1, 'mod_breadcrumbs', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (15, 4530, 'Custom', '', 'aside', 0, 2, 1, 'mod_custom', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (16, 4540, 'Feed', '', 'aside', 0, 3, 1, 'mod_feed', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (17, 4550, 'Footer', '', 'footer', 0, 1, 1, 'mod_footer', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (18, 4560, 'Languages', '', 'language', 0, 1, 1, 'mod_languages', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (19, 4570, 'Login', '', 'user', 0, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (20, 4580, 'Logout', '', 'user', 0, 2, 1, 'mod_logout', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (21, 4590, 'Main Menu', '', 'mainmenu', 0, 1, 1, 'mod_menu', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (22, 4600, 'Page Navigation', '', 'navigation', 0, 1, 1, 'mod_pagination', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (23, 4610, 'Related Items', '', 'aside', 0, 4, 1, 'mod_related', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (24, 4620, 'Search', '', 'search', 0, 1, 1, 'mod_search', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (25, 4630, 'Syndicate', '', 'syndicate', 0, 1, 1, 'mod_syndicate', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (26, 4640, 'Users', '', 'online', 0, 1, 1, 'mod_users', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
+    (27, 4650, 'Online', '', 'online', 0, 2, 1, 'mod_online', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*');
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (13, 4510, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (14, 4520, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (15, 4530, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (16, 4540, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (17, 4550, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (18, 4560, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (19, 4570, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (20, 4580, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (21, 4590, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (22, 4600, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (23, 4610, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (24, 4620, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (25, 4630, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (26, 4640, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
+      (27, 4650, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4');
+
+INSERT INTO `#__modules_menu`
+ ( `module_id`, `menu_item_id`)
+  VALUES
+  (1, 0),
+  (2, 0),
+  (3, 0),
+  (4, 0),
+  (5, 0),
+  (6, 0),
+  (7, 0),
+  (8, 0),
+  (9, 0),
+  (10, 0),
+  (11, 0),
+  (12, 0),
+  (13, 0),
+  (14, 0),
+  (15, 0),
+  (16, 0),
+  (17, 0),
+  (18, 0),
+  (19, 0),
+  (20, 0),
+  (21, 0),
+  (22, 0),
+  (23, 0),
+  (24, 0),
+  (25, 0),
+  (26, 0),
+  (27, 0);
+
+#
+# TEMPLATES
+#
+
+INSERT INTO `#__templates`
+  (`id`, `application_id`, `title`, `description`,
+    `created`, `created_by`, `checked_out`, `checked_out_time`,
+    `publish_up`, `publish_down`, `published`,
+    `version`, `version_of_id`, `state_prior_to_version` )
+  VALUES
+    (1, 0, 'Construct', 'Construct is a code-based Template Development Framework. It is designed to be flexible and easily used for creating one-of-a-kind templates.', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, NULL, NULL, NULL),
+    (2, 1, 'Mojito', 'Mojito is (cristina?).', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, NULL, NULL, NULL);
+
+INSERT INTO `#__template_styles`
+  (`id`, `template_id`, `asset_id`, `title`, `description`, `default`,
+    `created`, `created_by`, `checked_out`, `checked_out_time`,
+    `publish_up`, `publish_down`, `published`,
+    `params`, `version`, `version_of_id`, `state_prior_to_version`)
+  VALUES
+    (1, 1, 7000, 'Blank Slate', 'Blank Slate is (Cristina?)', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', NULL, NULL, NULL),
+    (2, 2, 7010, 'Mojito - Style 1', 'Mojito Style 1 is (Cristina?)', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', NULL, NULL, NULL);
+
+
+INSERT INTO `#__assets`
+  ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
+    VALUES
+      (1, 7000, '__template_styles', 'com_templates', '', 'index.php?option=com_templates', '4'),
+      (2, 7010, '__template_styles', 'com_templates', '', 'index.php?option=com_templates', '4');
+
+#
+# UPDATES
+#
+INSERT INTO `#__update_sites`
+  VALUES
+    (1, 'Molajo Core', 'collection', 'http://update.molajo.org/core/list.xml', 1),
+    (2, 'Molajo Directory', 'collection', 'http://update.molajo.org/directory/list.xml', 1);
+
+INSERT INTO `#__update_sites_extensions` VALUES (1, 700), (2, 700);
+
+#
+# Actions
+#
+INSERT INTO `#__actions` (`id` ,`title`)
+  VALUES
+    (1, 'login'),
+    (2, 'create'),
+    (3, 'view'),
+    (4, 'edit'),
+    (5, 'publish'),
+    (6, 'delete'),
+    (7, 'admin');
+
+#
+# Build Indexes
+#
+
+# Actions
+CREATE UNIQUE INDEX `idx_actions_table_id_join` ON `#__actions` (`id` ASC) ;
+CREATE UNIQUE INDEX `idx_actions_table_title` ON `#__actions` (`title` ASC) ;
+
+# Assets
+CREATE UNIQUE INDEX `idx_content_table_id_join` ON `#__assets` (`content_table` ASC, `id` ASC) ;
+CREATE UNIQUE INDEX `idx_content_table_content_id_join` ON `#__assets` (`content_table` ASC, `content_id` ASC) ;
+
+# Applications
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__applications` (`asset_id` ASC) ;
+
+# Users
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__users` (`asset_id` ASC) ;
+
+# Groups
+CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `#__groups` (`parent_id` ASC, `title` ASC, `type_id` ASC) ;
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__groups` (`asset_id` ASC) ;
+CREATE INDEX `idx_usergroup_title_lookup` ON `#__groups` (`title` ASC) ;
+CREATE INDEX `idx_usergroup_adjacency_lookup` ON `#__groups` (`parent_id` ASC) ;
+CREATE INDEX `idx_usergroup_type_id` ON `#__groups` (`type_id` ASC) ;
+CREATE INDEX `idx_usergroup_nested_set_lookup` USING BTREE ON `#__groups` (`lft` ASC, `rgt` ASC) ;
+
+# User Groups
+CREATE INDEX `fk_molajo_user_groups_molajo_users1` ON `#__user_groups` (`user_id` ASC) ;
+CREATE INDEX `fk_molajo_user_groups_molajo_groups1` ON `#__user_groups` (`group_id` ASC) ;
+
+# Group to Groupings
+CREATE UNIQUE INDEX `idx_group_to_groupings_id` ON `#__group_to_groupings` (`group_id` ASC, `grouping_id` ASC) ;
+CREATE INDEX `fk_molajo_group_to_groupings_molajo_groups1` ON `#__group_to_groupings` (`group_id` ASC) ;
+CREATE INDEX `fk_molajo_group_to_groupings_molajo_groupings1` ON `#__group_to_groupings` (`grouping_id` ASC) ;
+
+# User Groupings
+CREATE INDEX `fk_molajo_user_groupings_molajo_users1` ON `#__user_groupings` (`user_id` ASC) ;
+CREATE INDEX `fk_molajo_user_groupings_molajo_groupings1` ON `#__user_groupings` (`grouping_id` ASC) ;
+
+# User Applications
+CREATE INDEX `user_id` ON `#__user_applications` (`user_id` ASC) ;
+CREATE INDEX `fk_molajo_user_applications_molajo_users1` ON `#__user_applications` (`application_id` ASC) ;
+
+# Permissions Groups
+CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#__permissions_groups` (`asset_id` ASC, `action_id` ASC, `group_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#__permissions_groups` (`group_id` ASC, `asset_id` ASC, `action_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groups_molajo_groups1` ON `#__permissions_groups` (`group_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groups_molajo_assets1` ON `#__permissions_groups` (`asset_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groups_molajo_actions1` ON `#__permissions_groups` (`action_id` ASC) ;
+
+# Permissions Groupings
+CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#__permissions_groupings` (`asset_id` ASC, `action_id` ASC, `grouping_id` ASC) ;
+CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#__permissions_groupings` (`grouping_id` ASC, `asset_id` ASC, `action_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groupings_molajo_groupings1` ON `#__permissions_groupings` (`grouping_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groupings_molajo_assets1` ON `#__permissions_groupings` (`asset_id` ASC) ;
+CREATE INDEX `fk_molajo_permissions_groupings_molajo_actions1` ON `#__permissions_groupings` (`action_id` ASC) ;
+
+# Categories
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__categories` (`asset_id` ASC) ;
+
+# Articles
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__articles` (`asset_id` ASC) ;
+
+# Common
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__common` (`asset_id` ASC) ;
+
+# Extensions
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__extensions` (`asset_id` ASC) ;
+
+# Menu Items
+CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__menu_items` (`asset_id` ASC) ;
 
 #
 # Configuration
@@ -1843,289 +2480,3 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_articles', 100, '', '', 0),
 ('com_articles', 100, '__articles', '__articles', 1);
-
-#
-# LANGUAGES
-#
-INSERT INTO `#__languages` (`lang_id`,`lang_code`,`title`,`title_native`,`sef`,`image`,`description`,`metakey`,`metadesc`,`published`)
-  VALUES
-    (1, 'en-GB', 'English (UK)', 'English (UK)', 'en', 'en', '', '', '', 1);
-
-#
-# Menu - Administrator
-#
-
-INSERT INTO `#__menus`
-  (`id`, `application_id`, `title`, `description`, `created`, `created_by`,
-    `checked_out`,`checked_out_time`,`version`,`version_of_id`,`state_prior_to_version`)
-    VALUES
-      (1, 1, 'Launchpad Main Menu', 'Main Menu for the Molajo Administrator linking to Home, Configure, Access, Create, and Build', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
-      (2, 1, 'Launchpad Configure', 'Configure Menu for the Molajo Administrator that enables access to the Global and Personal Configuration Options and system functions such as Global Check-in, Cache, Redirects and System Information.', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
-      (3, 1, 'Launchpad Access', 'Access Menu for the Molajo Administrator that enables access to the User, Mass Mail, Group, and ACL Configuration Options.', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
-      (4, 1, 'Launchpad Create', 'Main Menu for the Molajo Administrator enabling access to Content Components, like Articles, Comments, and Tags', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL),
-      (5, 1, 'Launchpad Build', 'Main Menu for the Molajo Administrator that allows site builders to access Create, Installer, and the various Managers for Plugins, Modules, Templates, and Layouts', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL);
-
-INSERT INTO `#__menu_items`
-  (`id`, `menu_id`, `ordering`,  `application_id`, `asset_id`,
-    `title`, `alias`, `note`, `path`, `link`, `type`,
-    `published`, `parent_id`, `level`, `component_id`, `checked_out`, `checked_out_time`,
-    `browserNav`, `img`, `template_style_id`, `params`,
-    `lft`, `rgt`, `home`, `language`)
-    VALUES
-      (1, 1, 1, 0, 3000, 'Home', 'home', '', '', 'index.php?option=com_dashboard', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 1, '*'),
-
-      (2, 1, 1, 0, 3010, 'Configure', 'configure', '', 'configure', 'index.php?option=com_dashboard&type=configure', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (3, 1, 2, 0, 3020, 'Access', 'access', '', 'access', 'index.php?option=com_dashboard&type=access', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (4, 1, 3, 0, 3030, 'Create', 'create', '', 'create', 'index.php?option=com_dashboard&type=create', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (5, 1, 4, 0, 3040, 'Build', 'build', '', 'build', 'index.php?option=com_dashboard&type=build', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (6, 1, 5, 0, 3050, 'Search', 'search', '', 'search', 'index.php?option=com_dashboard&type=search', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-
-      (7, 2, 1, 0, 3100, 'Profile', 'profile', '', 'configure/profile', 'option=com_profile', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (8, 2, 2, 0, 3110, 'System', 'system', '', 'configure/system', 'index.php?option=com_config', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (9, 2, 3, 0, 3120, 'Checkin', 'checkin', '', 'configure/checkin', 'index.php?option=com_checkin', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (10, 2, 4, 0, 3130, 'Cache', 'cache', '', 'configure/cache', 'index.php?option=com_cache', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (11, 2, 5, 0, 3140, 'Backup', 'backup', '', 'configure/backup', 'index.php?option=com_backup', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (12, 2, 6, 0, 3150, 'Redirects', 'redirects', '', 'configure/redirects', 'index.php?option=com_redirects', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-
-      (13, 3, 1, 0, 3210, 'Users', 'users', '', 'access/users', 'index.php?option=com_users', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (14, 3, 2, 0, 3220, 'Groups', 'groups', '', 'access/groups', 'index.php?option=com_groups', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (15, 3, 3, 0, 3230, 'Permissions', 'permissions', '', 'access/permissions', 'index.php?option=com_permissions', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (16, 3, 4, 0, 3240, 'Messages', 'messages', '', 'access/messages', 'index.php?option=com_messages', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (17, 3, 5, 0, 3250, 'Activity', 'activity', '', 'access/activity', 'index.php?option=com_activity', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-
-      (18, 4, 1, 0, 3310, 'Articles', 'articles', '', 'create/articles', 'index.php?option=com_articles', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (19, 4, 2, 0, 3320, 'Tags', 'tags', '', 'create/tags', 'index.php?option=com_tags', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (20, 4, 3, 0, 3330, 'Comments', 'comments', '', 'create/comments', 'index.php?option=com_comments', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (21, 4, 4, 0, 3340, 'Media', 'media', '', 'create/media', 'index.php?option=com_media', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (22, 4, 5, 0, 3350, 'Categories', 'categories', '', 'create/categories', 'index.php?option=com_categories', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-
-      (23, 5, 1, 0, 3400, 'Extensions', 'extensions', '', 'build/extensions', 'index.php?option=com_extensions', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (24, 5, 2, 0, 3410, 'Languages', 'languages', '', 'build/languages', 'index.php?option=com_languages', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (25, 5, 3, 0, 3420, 'Layouts', 'layouts', '', 'build/layouts', 'index.php?option=com_layouts', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (26, 5, 4, 0, 3430, 'Modules', 'modules', '', 'build/modules', 'index.php?option=com_modules', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (27, 5, 5, 0, 3440, 'Plugins', 'plugins', '', 'build/plugins', 'index.php?option=com_plugins', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (28, 5, 6, 0, 3450, 'Templates', 'templates', '', 'build/templates', 'index.php?option=com_templates', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*');
-
-#
-# Menu - Site
-#
-
-INSERT INTO `#__menus`
-  (`id`, `application_id`, `title`, `description`, `created`, `created_by`,
-    `checked_out`,`checked_out_time`,`version`,`version_of_id`,`state_prior_to_version`)
-    VALUES
-      (100, 1, 'Main Menu', 'Default Main Menu for the Site Application', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 1, NULL, NULL);
-
-#
-# Menu Items
-#
-
-INSERT INTO `#__menu_items`
-  (`id`, `menu_id`, `ordering`,  `application_id`, `asset_id`,
-    `title`, `alias`, `note`, `path`, `link`, `type`,
-    `published`, `parent_id`, `level`, `component_id`, `checked_out`, `checked_out_time`,
-    `browserNav`, `img`, `template_style_id`, `params`,
-    `lft`, `rgt`, `home`, `language`)
-    VALUES
-      (100, 100, 1, 1, 5000, 'Home', 'home', '', '', 'index.php?option=com_articles', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 1, '*'),
-      (101, 100, 2, 1, 5010, 'New Article', 'new-article', '', 'new-article', 'index.php?option=com_articles&view=article&layout=edit', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (102, 100, 3, 1, 5020, 'Article', 'article', '', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (103, 100, 4, 1, 5030, 'Blog', 'blog', '', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (104, 100, 5, 1, 5040, 'List', 'list', '', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (105, 100, 6, 1, 5050, 'Table', 'table', '', 'table', 'index.php?option=com_articles&type=search', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (106, 100, 7, 1, 5060, 'Login', 'login', '', 'login', 'index.php?option=com_users&view=login', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*'),
-      (107, 100, 8, 1, 5070, 'Search', 'search', '', 'search', 'index.php?option=com_search&type=search', '', 1, 0, 1, 7, 0, '0000-00-00 00:00:00', 0, '', 0, '{}', 0, 0, 0, '*');
-
-#
-# MODULES
-#
-
-INSERT INTO `#__modules`
-  ( `id`, `title`, `subtitle`, `position`, `ordering`, `application_id`,  `published`, `module`,
-    `note`, `content`, `checked_out`, `checked_out_time`,
-    `publish_up`, `publish_down`, `showtitle`, `params`, `language`)
-  VALUES
-    (1, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (2, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (3, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (4, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (5, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (6, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (7, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (8, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (9, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (10, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*');
-
-INSERT INTO `#__modules`
-  ( `id`, `title`, `subtitle`, `position`, `ordering`, `application_id`,  `published`, `module`,
-    `note`, `content`, `checked_out`, `checked_out_time`,
-    `publish_up`, `publish_down`, `showtitle`, `params`, `language`)
-  VALUES
-    (11, 'Articles', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (12, 'Breadcrumbs', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (13, 'Custom', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (14, 'Feed', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (15, 'Footer', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (16, 'Languages', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (17, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (18, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (19, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*'),
-    (20, 'Login', 'System Login', 'login', 1, 1, 1, 'mod_login', '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', '*');
-
-    (2, 'Logout', 'System Logout', '', '', 1, 'logout', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logout', 7002, 2, 1, '', 1, '*');
-    (3, 'Popular Articles', 'For your reading pleasure...', '', '', 1, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 7008, 2, 1, '{"count":"5","catid":"","user_id":"0","layout":"_:DEFAULT","layout_class_suffix":"","cache":"0","automatic_title":"1"}', 1, '*');
-    (4, 'Recently Added Articles', 'Hot off the press', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 7010, 2, 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:DEFAULT","layout_class_suffix":"","cache":"0","automatic_title":"1"}', 1, '*');
-    (5, 'Unread Messages', '', '', '', 1, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_unread', 7011, 2, 1, '', 1, '*');
-    (6, 'Online Users', '', '', '', 2, 'header', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_online', 7015, 2, 1, '', 1, '*');
-    (7, 'Toolbar', '', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_toolbar', 7020, 2, 1, '', 1, '*');
-    (8, 'Quick Icons', '', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 7030, 2, 1, '', 1, '*');
-    (9, 'Logged-in Users', '', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 7035, 2, 1, '{"count":"5","name":"1","layout":"_:DEFAULT","layout_class_suffix":"","cache":"0","automatic_title":"1"}', 1, '*');
-    (10, 'Admin Menu', '', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 7040, 2, 1, '{"layout":"","layout_class_suffix":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*');
-    (11, 'Admin Submenu', '', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_submenu', 7050, 2, 1, '', 1, '*');
-    (12, 'User Status', '', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 7055, 2, 1, '', 1, '*');
-    (13, 'Title', 'Subtitle', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 7060, 2, 1, '{"title":"1","subtitle":"1", "layout":"admintitle","wrap":"div","layout_class_suffix":" pagetitle icon-48-article","cache":"0","automatic_title":"1"}', 1, '*');
-    (14, 'Footer', '', '', '', 1, 'footer', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_footer', 7061, 2, 1, '{"link":"http://molajo.org","linked_text":"Molajo&#174;","remaining_text":" is free software.","title":"","subtitle":"", "layout":"adminfooter","wrap":"div","layout_class_suffix":"footer","cache":"0","automatic_title":"1"}', 1, '*');
-    (15, 'My Panel', 'With my things', '', '', 1, 'widgets-first', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_mypanel', 7062, 2, 1, '', 1, '*');
-    (16, 'My Shortcuts', 'With my links', '', '', 2, 'widgets-last', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_myshortcuts', 7063, 2, 1, '{"show_add_link":"1"}', 1, '*');
-    (17, 'Main Menu', '', '', '', 1, 'nav', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 7070, 5, 1, '{"menu_id":"mainmenu","startLevel":"1","endLevel":"0","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:DEFAULT","layout_class_suffix":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*');
-    (18, 'Login Form', 'To access private areas of the website', '', '', 7, 'content-above-1', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 7085, 5, 1, '{"greeting":"1","name":"0"}', 0, '*');
-    (19, 'Breadcrumbs', '', '', '', 1, 'breadcrumbs', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 7080, 5, 1, '{"layout_class_suffix":"","showHome":"1","homeText":"Home","showComponent":"1","separator":"","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*');
-
-INSERT INTO `#__modules_menu`
-  VALUES
-    (1,0),
-    (2,0),
-    (3,0),
-    (4,0),
-    (5,0),
-    (6,0),
-    (7,0),
-    (8,0),
-    (9,0),
-    (10,0),
-    (11,0),
-    (12,0),
-    (13,0),
-    (14,0),
-    (15,0),
-    (16,0),
-    (17,0),
-    (18,0),
-    (19,0);
-
-#
-# TEMPLATES
-#
-
-INSERT INTO `#__templates`
-  (`id`, `application_id`, `title`, `description`,
-    `created`, `created_by`, `checked_out`, `checked_out_time`,
-    `publish_up`, `publish_down`, `published`,
-    `version`, `version_of_id`, `state_prior_to_version` )
-  VALUES
-    (1, 0, 'Construct', 'Construct is a code-based Template Development Framework. It is designed to be flexible and easily used for creating one-of-a-kind templates.', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, NULL, NULL, NULL),
-    (1, 1, 'Mojito', 'Mojito is (cristina?).', '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, NULL, NULL, NULL);
-
-INSERT INTO `#__template_styles`
-  (`id`, `template_id`, `asset_id`, `title`, `description`, `default`,
-    `created`, `created_by`, `checked_out`, `checked_out_time`,
-    `publish_up`, `publish_down`, `published`,
-    `params`, `version`, `version_of_id`, `state_prior_to_version`)
-  VALUES
-    (1, 1, 7000, 'Blank Slate', 'Blank Slate is (Cristina?)', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', NULL, NULL, NULL),
-    (2, 2, 7010, 'Mojito - Style 1', 'Mojito Style 1 is (Cristina?)', 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, '{}', NULL, NULL, NULL);
-
-#
-# UPDATES
-#
-INSERT INTO `#__update_sites`
-  VALUES
-    (1, 'Molajo Core', 'collection', 'http://update.molajo.org/core/list.xml', 1),
-    (2, 'Molajo Directory', 'collection', 'http://update.molajo.org/directory/list.xml', 1);
-
-INSERT INTO `#__update_sites_extensions` VALUES (1, 700), (2, 700);
-
-#
-# Actions
-#
-INSERT INTO `#__actions` (`id` ,`title`)
-  VALUES
-    (1, 'login'),
-    (2, 'create'),
-    (3, 'view'),
-    (4, 'edit'),
-    (5, 'publish'),
-    (6, 'delete'),
-    (7, 'admin');
-
-#
-# Build Indexes
-#
-
-# Actions
-CREATE UNIQUE INDEX `idx_actions_table_id_join` ON `#__actions` (`id` ASC) ;
-CREATE UNIQUE INDEX `idx_actions_table_title` ON `#__actions` (`title` ASC) ;
-
-# Assets
-CREATE UNIQUE INDEX `idx_content_table_id_join` ON `#__assets` (`content_table` ASC, `id` ASC) ;
-CREATE UNIQUE INDEX `idx_content_table_content_id_join` ON `#__assets` (`content_table` ASC, `content_id` ASC) ;
-
-# Applications
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__applications` (`asset_id` ASC) ;
-
-# Users
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__users` (`asset_id` ASC) ;
-
-# Groups
-CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `#__groups` (`parent_id` ASC, `title` ASC, `type_id` ASC) ;
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__groups` (`asset_id` ASC) ;
-CREATE INDEX `idx_usergroup_title_lookup` ON `#__groups` (`title` ASC) ;
-CREATE INDEX `idx_usergroup_adjacency_lookup` ON `#__groups` (`parent_id` ASC) ;
-CREATE INDEX `idx_usergroup_type_id` ON `#__groups` (`type_id` ASC) ;
-CREATE INDEX `idx_usergroup_nested_set_lookup` USING BTREE ON `#__groups` (`lft` ASC, `rgt` ASC) ;
-
-# User Groups
-CREATE INDEX `fk_molajo_user_groups_molajo_users1` ON `#__user_groups` (`user_id` ASC) ;
-CREATE INDEX `fk_molajo_user_groups_molajo_groups1` ON `#__user_groups` (`group_id` ASC) ;
-
-# Group to Groupings
-CREATE UNIQUE INDEX `idx_group_to_groupings_id` ON `#__group_to_groupings` (`group_id` ASC, `grouping_id` ASC) ;
-CREATE INDEX `fk_molajo_group_to_groupings_molajo_groups1` ON `#__group_to_groupings` (`group_id` ASC) ;
-CREATE INDEX `fk_molajo_group_to_groupings_molajo_groupings1` ON `#__group_to_groupings` (`grouping_id` ASC) ;
-
-# User Groupings
-CREATE INDEX `fk_molajo_user_groupings_molajo_users1` ON `#__user_groupings` (`user_id` ASC) ;
-CREATE INDEX `fk_molajo_user_groupings_molajo_groupings1` ON `#__user_groupings` (`grouping_id` ASC) ;
-
-# User Applications
-CREATE INDEX `user_id` ON `#__user_applications` (`user_id` ASC) ;
-CREATE INDEX `fk_molajo_user_applications_molajo_users1` ON `#__user_applications` (`application_id` ASC) ;
-
-# Permissions Groups
-CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#__permissions_groups` (`asset_id` ASC, `action_id` ASC, `group_id` ASC) ;
-CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#__permissions_groups` (`group_id` ASC, `asset_id` ASC, `action_id` ASC) ;
-CREATE INDEX `fk_molajo_permissions_groups_molajo_groups1` ON `#__permissions_groups` (`group_id` ASC) ;
-CREATE INDEX `fk_molajo_permissions_groups_molajo_assets1` ON `#__permissions_groups` (`asset_id` ASC) ;
-CREATE INDEX `fk_molajo_permissions_groups_molajo_actions1` ON `#__permissions_groups` (`action_id` ASC) ;
-
-# Permissions Groupings
-CREATE UNIQUE INDEX `idx_asset_action_to_group_lookup` ON `#__permissions_groupings` (`asset_id` ASC, `action_id` ASC, `grouping_id` ASC) ;
-CREATE UNIQUE INDEX `idx_group_to_asset_action_lookup` ON `#__permissions_groupings` (`grouping_id` ASC, `asset_id` ASC, `action_id` ASC) ;
-CREATE INDEX `fk_molajo_permissions_groupings_molajo_groupings1` ON `#__permissions_groupings` (`grouping_id` ASC) ;
-CREATE INDEX `fk_molajo_permissions_groupings_molajo_assets1` ON `#__permissions_groupings` (`asset_id` ASC) ;
-CREATE INDEX `fk_molajo_permissions_groupings_molajo_actions1` ON `#__permissions_groupings` (`action_id` ASC) ;
-
-# Categories
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__categories` (`asset_id` ASC) ;
-
-# Articles
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__articles` (`asset_id` ASC) ;
-
-# Common
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__common` (`asset_id` ASC) ;
-
-# Extensions
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__extensions` (`asset_id` ASC) ;
-
-# Menu Items
-CREATE UNIQUE INDEX `idx_asset_table_id_join` ON `#__menu_items` (`asset_id` ASC) ;
