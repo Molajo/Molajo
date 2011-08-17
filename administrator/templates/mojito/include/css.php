@@ -13,10 +13,10 @@ $lang = JFactory::getLanguage();
 
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.all.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/custom.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
-$this->document->addScript($urlPath.'/js/jquery-1.6.2.js');
-$this->document->addScript($urlPath.'/js/ui/jquery-ui-1.8.15.custom.js');
+$this->document->addScript($url=JURI::base().'templates/'.$this->template.'/js/jquery-1.6.2.js');
+$this->document->addScript($url=JURI::base().'templates/'.$this->template.'/js/ui/jquery-ui-1.8.15.custom.js');
 
-/** cristina - is there RTL and/or IE concerns? */
+/** cristina - is there RTL and/or IE concerns? What is IE? */
 if ($this->direction == 'rtl') :
 
 endif;
