@@ -536,12 +536,8 @@ class MolajoApplication extends JObject
 
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
+        $doquery = false;
 
-        $query->select($db->namequote('id'));
-        $query->select($db->namequote('title'));
-        $query->select('"" as ' .$db->namequote('subtitle'));
-
-        $session->get('page.item_id');
         if ((int) $session->get('page.item_id') > 0) {
             $query->select('"" as ' .$db->namequote('metakey'));
             $query->select('"" as ' .$db->namequote('metadesc'));
@@ -549,6 +545,7 @@ class MolajoApplication extends JObject
             $query->select($db->namequote('params'));
             $query->from($db->namequote($session->get('page.component_table')));
             $query->where($db->namequote('id').' = '.(int) $session->get('page.id'));
+            $doquery = true;
 
         } else if ((int) $session->get('page.id') > 0) {
             $query->select($db->namequote('metakey'));
@@ -557,19 +554,27 @@ class MolajoApplication extends JObject
             $query->select($db->namequote('params'));
             $query->from($db->namequote($session->get('page.component_table')));
             $query->where($db->namequote('id').' = '.(int) $session->get('page.id'));
+            $doquery = true;
 
-        } else {
+        } else if ((int) $session->get('page.cid') > 0) {
             $query->select($db->namequote('metakey'));
             $query->select($db->namequote('metadesc'));
             $query->select($db->namequote('metadata'));
             $query->select($db->namequote('params'));
             $query->from($db->namequote('#__categories'));
             $query->where($db->namequote('id').' > '.(int) $session->get('page.catid'));
+            $doquery = true;
         }
 
-        $db->setQuery($query->__toString());
+        if ($doquery === true) {
+            $query->select($db->namequote('id'));
+            $query->select($db->namequote('title'));
+            $query->select('"" as ' .$db->namequote('subtitle'));
 
-        if ($results = $db->loadObjectList()) {
+            $db->setQuery($query->__toString());
+
+            $results = $db->loadObjectList();
+
         } else {
             $session->set('page.title', '');
             $session->set('page.subtitle', '');
@@ -577,6 +582,7 @@ class MolajoApplication extends JObject
             $session->set('page.metadesc', '');
             $session->set('page.metadata', '');
             $session->set('page.params', '');
+            $results = array();
         }
 
         if (count($results) > 0) {
@@ -588,6 +594,13 @@ class MolajoApplication extends JObject
                 $session->set('page.metadata', $item->metadata);
                 $session->set('page.params', $item->params);
             }
+        } else {
+            $session->set('page.title', $this->getCfg('sitename'));
+            $session->set('page.subtitle', '');
+            $session->set('page.metakey', '');
+            $session->set('page.metadesc', '');
+            $session->set('page.metadata', '');
+            $session->set('page.params', '');
         }
 
         /** Set Document Information */
@@ -642,7 +655,7 @@ class MolajoApplication extends JObject
 
              // Load the parameters. Merge Global and Menu Item params into new object
      //		$params = $app->getParams();
-     //		$menuParams = new JRegistry;
+     //		$menuParams = new MolajoRegistry;
 
      //		if ($menu = $app->getMenu()->getActive()) {
      //			$menuParams->loadString($menu->params);
@@ -653,7 +666,6 @@ class MolajoApplication extends JObject
 
         return;
     }
-
 
 	/**
 	 * Render the application.
@@ -1285,7 +1297,7 @@ class MolajoApplication extends JObject
 
 			// Session doesn't exist yet, so create session variables
 			if ($session->isNew()) {
-				$session->set('registry',	new JRegistry('session'));
+				$session->set('registry',	new MolajoRegistry('session'));
 				$session->set('user',		new MolajoUser());
 			}
 		}

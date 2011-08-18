@@ -1,22 +1,19 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Registry
- *
+ * @package     Molajo
+ * @subpackage  MolajoFactory
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-
 defined('MOLAJO') or die;
 
-JLoader::register('JRegistryFormat', dirname(__FILE__).'/format.php');
-
 /**
- * JRegistry class
+ * MolajoRegistry class
  *
  * @package     Joomla.Platform
  * @subpackage  Registry
- * @since       1.0
+ * @since       11.1
  */
 class MolajoRegistry
 {
@@ -31,7 +28,7 @@ class MolajoRegistry
 	 * Constructor
 	 *
 	 * @return  void
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function __construct($data = null)
 	{
@@ -70,7 +67,7 @@ class MolajoRegistry
 	 * @param   string   An optional value for the parameter.
 	 * @param   string   An optional group for the parameter.
 	 * @return  string   The value set, or the default if the value was not previously set (or null).
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function def($key, $default = '')
 	{
@@ -84,7 +81,7 @@ class MolajoRegistry
 	 *
 	 * @param   string  Registry path (e.g. joomla.content.showauthor)
 	 * @return  boolean
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function exists($path)
 	{
@@ -116,7 +113,7 @@ class MolajoRegistry
 	 * @param   string   Registry path (e.g. joomla.content.showauthor)
 	 * @param   mixed    Optional default value, returned if the internal value is null.
 	 * @return  mixed    Value of entry or null
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function get($path, $default = null)
 	{
@@ -151,15 +148,15 @@ class MolajoRegistry
 	}
 
 	/**
-	 * Returns a reference to a global JRegistry object, only creating it
+	 * Returns a reference to a global MolajoRegistry object, only creating it
 	 * if it doesn't already exist.
 	 *
 	 * This method must be invoked as:
-	 *		<pre>$registry = JRegistry::getInstance($id);</pre>
+	 *		<pre>$registry = MolajoRegistry::getInstance($id);</pre>
 	 *
 	 * @param   string   An ID for the registry instance
-	 * @return  object   The JRegistry object.
-	 * @since   1.0
+	 * @return  object   The MolajoRegistry object.
+	 * @since   11.1
 	 */
 	public static function getInstance($id)
 	{
@@ -170,7 +167,7 @@ class MolajoRegistry
 		}
 
 		if (empty ($instances[$id])) {
-			$instances[$id] = new JRegistry();
+			$instances[$id] = new MolajoRegistry();
 		}
 
 		return $instances[$id];
@@ -182,7 +179,7 @@ class MolajoRegistry
 	 * @param   array    Associative array of value to load
 	 * @param   string   The name of the namespace
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function loadArray($array)
 	{
@@ -197,7 +194,7 @@ class MolajoRegistry
 	 * @param   object   The object holding the publics to load
 	 * @param   string   Namespace to load the INI string into [optional]
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function loadObject($object)
 	{
@@ -213,11 +210,10 @@ class MolajoRegistry
 	 * @param   string   Format of the file [optional: defaults to JSON]
 	 * @param   mixed    Options used by the formatter
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function loadFile($file, $format = 'JSON', $options = array())
 	{
-		// Get the contents of the file
 		$data = JFile::read($file);
 
 		return $this->loadString($data, $format, $options);
@@ -230,12 +226,12 @@ class MolajoRegistry
 	 * @param   string   format of the string
 	 * @param   mixed    Options used by the formatter
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function loadString($data, $format = 'JSON', $options = array())
 	{
 		// Load a string into the given namespace [or default namespace if not given]
-		$handler = JRegistryFormat::getInstance($format);
+		$handler = MolajoRegistryFormat::getInstance($format);
 
 		$obj = $handler->stringToObject($data, $options);
 		$this->loadObject($obj);
@@ -244,15 +240,15 @@ class MolajoRegistry
 	}
 
 	/**
-	 * Merge a JRegistry object into this one
+	 * Merge a MolajoRegistry object into this one
 	 *
-	 * @param   object   Source JRegistry object ot merge
+	 * @param   object   Source MolajoRegistry object ot merge
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function merge(&$source)
 	{
-		if ($source instanceof JRegistry) {
+		if ($source instanceof MolajoRegistry) {
 			// Load the variables into the registry's default namespace.
 			foreach ($source->toArray() as $k => $v) {
 				if (($v !== null) && ($v !== '')){
@@ -270,7 +266,7 @@ class MolajoRegistry
 	 * @param   string   Registry Path (e.g. joomla.content.showauthor)
 	 * @param   mixed	Value of entry
 	 * @return  mixed	The value of the that has been set.
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function set($path, $value)
 	{
@@ -301,7 +297,7 @@ class MolajoRegistry
 	 *
 	 * @param   string   Namespace to return [optional: null returns the default namespace]
 	 * @return  array    An associative array holding the namespace data
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function toArray()
 	{
@@ -313,7 +309,7 @@ class MolajoRegistry
 	 *
 	 * @param   string   Namespace to return [optional: null returns the default namespace]
 	 * @return  object   An an object holding the namespace data
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function toObject()
 	{
@@ -326,12 +322,12 @@ class MolajoRegistry
 	 * @param   string   Format to return the string in
 	 * @param   mixed    Parameters used by the formatter, see formatters for more info
 	 * @return  string   Namespace in string format
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function toString($format = 'JSON', $options = array())
 	{
 		// Return a namespace in a given format
-		$handler = JRegistryFormat::getInstance($format);
+		$handler = MolajoRegistryFormat::getInstance($format);
 
 		return $handler->objectToString($this->data, $options);
 	}
@@ -343,7 +339,7 @@ class MolajoRegistry
 	 * @param   mixed    $data	An array or object of data to bind to the parent object.
 	 *
 	 * @return  void
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	protected function bindData(& $parent, $data)
 	{
@@ -370,7 +366,7 @@ class MolajoRegistry
 	 * @param   object   $data	An object of data to return as an array.
 	 *
 	 * @return  array    Array representation of the input object.
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	protected function asArray($data)
 	{
@@ -397,7 +393,7 @@ class MolajoRegistry
 	 * @param   string   XML formatted string to load into the registry
 	 * @param   string   Namespace to load the XML string into [optional]
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 * @deprecated 1.6 - Oct 25, 2010
 	 */
 	public function loadXML($data, $namespace = null)
@@ -412,7 +408,7 @@ class MolajoRegistry
 	 * @param   string   Namespace to load the INI string into [optional]
 	 * @param   mixed    An array of options for the formatter, or boolean to process sections.
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 * @deprecated 1.6 - Oct 25, 2010
 	 */
 	public function loadINI($data, $namespace = null, $options = array())
@@ -425,7 +421,7 @@ class MolajoRegistry
 	 *
 	 * @param   string   JSON formatted string to load into the registry
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 * @deprecated 1.6 - Oct 25, 2010
 	 */
 	public function loadJSON($data)
@@ -438,7 +434,7 @@ class MolajoRegistry
 	 *
 	 * @param   string   Name of the namespace to create
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 * @since   11.1
 	 * @deprecated 1.6 - Jan 19, 2010
 	 */
 	public function makeNameSpace($namespace)
@@ -493,20 +489,5 @@ class MolajoRegistry
 			$path = implode('.', $parts);
 		}
 		return $this->set($path, $value);
-	}
-
-	/**
-	 * This method is added as an interim solution for API references in Molajo 1.6 to the JRegistry
-	 * object where in 1.5 a JParameter object existed.  Because many extensions may call this method
-	 * we add it here as a means of "pain relief" until the 1.7 release.
-	 *
-	 * @return  boolean  True.
-	 *
-	 * @deprecated  1.6 - Jun 17, 2010
-	 * @todo        Remove this method for the 1.7 release.
-	 */
-	public function loadSetupFile($path=null)
-	{
-		return true;
 	}
 }

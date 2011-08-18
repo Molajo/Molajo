@@ -170,7 +170,7 @@ abstract class MolajoModuleHelper
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new JRegistry;
+            $params = new MolajoRegistry;
             $params->loadJSON($module->params);
 
             $request = self::getRequest($module, $params);
@@ -344,11 +344,12 @@ abstract class MolajoModuleHelper
 			$now = $date->toMySQL();
 			$nullDate = $db->getNullDate();
 
-            $query->select('id, title, title as subtitle ');
+            $query->select('m.id as id, title, title as subtitle ');
             $query->select('module, position, content, showtitle ');
             $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
 			$query->from('#__modules AS m');
-			$query->join('LEFT','#__modules_menu AS mm ON mm.module_id = m.id');
+			$query->from('#__modules_menu AS mm');
+			$query->where('mm.module_id = m.id');
 			$query->where('m.published = 1');
 			$query->where('m.id <> 1');
 			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
@@ -365,7 +366,7 @@ abstract class MolajoModuleHelper
 				$query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
 			}
 			$query->order('position, ordering');
-
+ 
             $db->setQuery($query->__toString());
 
 			$modules = $db->loadObjectList();

@@ -29,12 +29,11 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
         ?>
         <div class="container">
             <section>
-                <?php
-                    if (MolajoFactory::getSession()->get('page.option') == 'com_dashboard') :
-                        include dirname(__FILE__).'/include/dashboard.php';
-                    else :
-                        include dirname(__FILE__).'/include/component.php';
-                    endif;
+            <?php
+                if (MolajoFactory::getSession()->get('page.option') == 'com_dashboard') :
+                    include dirname(__FILE__).'/include/dashboard.php';
+                else :
+                    include dirname(__FILE__).'/include/component.php';
                 endif;
                 ?>
             </section>

@@ -91,7 +91,7 @@ class MolajoModelEdit extends JModel
             $attribute = $jsonField->value;
 
             if (property_exists($item, $attribute)) {
-                $registry = new JRegistry;
+                $registry = new MolajoRegistry;
                 $registry->loadJSON($item->$attribute);
                 $item->$attribute = $registry->toArray();
             }

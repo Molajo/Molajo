@@ -447,7 +447,9 @@ class MolajoACLCore extends MolajoACL
 
         $acl	= new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
-        $query->where($prefix.'access IN ('.$list.')');
+        $query->from('#__assets as assets');
+        $query->where($prefix.'asset_id = assets.id');
+        $query->where('assets.access IN ('.$list.')');
 
         return;
     }

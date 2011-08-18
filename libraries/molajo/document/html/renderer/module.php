@@ -64,12 +64,12 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		// Get module parameters
-		$params = new JRegistry;
+		$params = new MolajoRegistry;
 		$params->loadString($module->params);
 
 		// Use parameters from template
 		if (isset($attribs['params'])) {
-			$template_params = new JRegistry;
+			$template_params = new MolajoRegistry;
 			$template_params->loadString(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
 			$params->merge($template_params);
 			$module = clone $module;

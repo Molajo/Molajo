@@ -36,7 +36,6 @@ class MolajoLanguageHelper
 
         if (MOLAJO_APPLICATION_ID == 2) {
             $installed == false;
-            $installed_languages = array();
 
         } elseif ($installed === true) {
 
@@ -49,7 +48,7 @@ class MolajoLanguageHelper
 			$query->where('enabled = 1');
 			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
 			$db->setQuery($query);
-			$installed_languages = $db->loadObjectList('element');
+			$langs = $db->loadObjectList('element');
 		}
 
 		foreach ($langs as $lang => $metadata)

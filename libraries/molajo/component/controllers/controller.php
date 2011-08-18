@@ -36,7 +36,7 @@ class MolajoController extends JController
      * ["id"]=> int(0)
      * ["cid"]=> array(0) { }
      * ["catid"]=> int(0)
-     * ["params"]=> object(JRegistry)#83 (1) { ["data":protected]=> object(stdClass)#84 (0) { } }
+     * ["params"]=> object(MolajoRegistry)#83 (1) { ["data":protected]=> object(stdClass)#84 (0) { } }
      * ["acl_implementation"]=> string(4) "core"
      * ["component_table"]=> string(8) "__common"
      * ["filter_fieldname"]=> string(27) "config_manager_list_filters"
@@ -154,7 +154,7 @@ class MolajoController extends JController
     {
         /** language files */
         $lang = MolajoFactory::getLanguage();
-		
+
 		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
 
 		$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
@@ -278,8 +278,7 @@ class MolajoController extends JController
                 $this->existingState = $this->table->state;
             }
         }
-echo 'plugin type'.$this->request['plugin_type'];
-die();
+
         /** dispatch events */
         if ($this->dispatcher) {
         } else {

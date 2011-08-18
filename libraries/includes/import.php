@@ -228,7 +228,7 @@ foreach ($files as $file) {
 }
 
 /** registry */
-JLoader::register('JRegistryFormat', JOOMLA_LIBRARY.'/registry/format.php');
+JLoader::register('MolajoRegistryFormat', MOLAJO_LIBRARY.'/utilities/format.php');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/registry.php', 'MolajoRegistry');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
 
