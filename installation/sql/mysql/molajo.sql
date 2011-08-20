@@ -870,9 +870,9 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (201, 201, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (202, 202, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (203, 203, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (201, 201, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (202, 202, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (203, 203, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 # Layouts: Extensions
 
@@ -913,34 +913,34 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (300, 300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (301, 301, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (302, 302, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (303, 303, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (304, 304, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (305, 305, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (306, 306, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (307, 307, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (308, 308, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (309, 309, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (310, 310, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (311, 311, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (312, 312, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (313, 313, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (314, 314, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (315, 315, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (316, 316, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (317, 317, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (318, 318, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (319, 319, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (320, 320, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (321, 321, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (322, 322, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (323, 323, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (324, 324, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (325, 325, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (326, 326, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (327, 327, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (300, 300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (301, 301, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (302, 302, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (303, 303, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (304, 304, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (305, 305, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (306, 306, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (307, 307, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (308, 308, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (309, 309, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (310, 310, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (311, 311, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (312, 312, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (313, 313, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (314, 314, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (315, 315, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (316, 316, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (317, 317, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (318, 318, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (319, 319, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (320, 320, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (321, 321, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (322, 322, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (323, 323, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (324, 324, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (325, 325, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (326, 326, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (327, 327, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 # Layouts: Forms
 
@@ -965,18 +965,18 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (400, 400, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (401, 401, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (402, 402, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (403, 403, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (404, 404, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (405, 405, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (406, 406, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (407, 407, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (408, 408, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (409, 409, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (410, 410, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (411, 411, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (400, 400, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (401, 401, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (402, 402, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (403, 403, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (404, 404, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (405, 405, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (406, 406, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (407, 407, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (408, 408, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (409, 409, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (410, 410, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (411, 411, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 # Layouts: Wraps
 
@@ -1001,18 +1001,18 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (500, 500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (501, 501, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (502, 502, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (503, 503, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (504, 504, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (505, 505, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (506, 506, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (507, 507, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (508, 508, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (509, 509, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (510, 510, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (511, 511, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (500, 500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (501, 501, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (502, 502, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (503, 503, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (504, 504, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (505, 505, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (506, 506, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (507, 507, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (508, 508, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (509, 509, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (510, 510, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (511, 511, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 # Libraries
 
@@ -1037,18 +1037,18 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (601, 601, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (602, 602, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (603, 603, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (604, 604, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (605, 605, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (606, 606, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (607, 607, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (608, 608, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (609, 609, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (610, 610, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (611, 611, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (612, 612, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (601, 601, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (602, 602, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (603, 603, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (604, 604, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (605, 605, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (606, 606, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (607, 607, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (608, 608, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (609, 609, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (610, 610, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (611, 611, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (612, 612, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 
 # Modules - Administrator
@@ -1074,18 +1074,18 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (700, 700, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (701, 701, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (702, 702, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (703, 703, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (704, 704, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (705, 705, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (706, 706, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (707, 707, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (708, 708, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (709, 709, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (710, 710, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (711, 711, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (700, 700, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (701, 701, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (702, 702, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (703, 703, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (704, 704, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (705, 705, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (706, 706, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (707, 707, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (708, 708, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (709, 709, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (710, 710, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (711, 711, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 # Modules - Site
 
@@ -1112,20 +1112,20 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (801, 801, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (802, 802, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (803, 803, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (804, 804, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (805, 805, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (806, 806, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (807, 807, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (808, 808, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (809, 809, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (810, 810, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (811, 811, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (812, 812, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (813, 813, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (814, 814, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (801, 801, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (802, 802, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (803, 803, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (804, 804, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (805, 805, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (806, 806, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (807, 807, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (808, 808, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (809, 809, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (810, 810, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (811, 811, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (812, 812, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (813, 813, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (814, 814, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 #
 # Plugins
 #
@@ -1141,7 +1141,7 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1000, 1000, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (1000, 1000, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Authentication
 INSERT INTO `#__extensions` (
@@ -1154,7 +1154,7 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1100, 1100, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (1100, 1100, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Content
 INSERT INTO `#__extensions` (
@@ -1169,9 +1169,9 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1200, 1200, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (1210, 1210, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (1220, 1220, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (1200, 1200, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (1210, 1210, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (1220, 1220, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Editors
 INSERT INTO `#__extensions` (
@@ -1186,9 +1186,9 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1300, 1300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (1310, 1310, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-      (1320, 1320, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (1300, 1300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (1310, 1310, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+      (1320, 1320, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Extended Editors
 INSERT INTO `#__extensions` (
@@ -1206,12 +1206,12 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (1400, 1400, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (1410, 1410, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (1420, 1420, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (1430, 1430, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (1440, 1440, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (1450, 1450, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (1400, 1400, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (1410, 1410, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (1420, 1420, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (1430, 1430, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (1440, 1440, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (1450, 1450, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Extension Plugins
 INSERT INTO `#__extensions` (
@@ -1224,7 +1224,7 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (1500, 1500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (1500, 1500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Language
 INSERT INTO `#__extensions` (
@@ -1238,8 +1238,8 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1600, 1600, '__languages', 'com_languages', '', 'index.php?option=com_languages', 4),
-      (1601, 1601, '__languages', 'com_languages', '', 'index.php?option=com_languages', 4);
+      (1600, 1600, '__languages', 'com_languages', '', 'index.php?option=com_languages', 1),
+      (1601, 1601, '__languages', 'com_languages', '', 'index.php?option=com_languages', 1);
 
 ## Molajo
 INSERT INTO `#__extensions` (
@@ -1264,19 +1264,19 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (2005, 2005, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2010, 2010, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2015, 2015, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2020, 2020, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2025, 2025, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2030, 2030, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2035, 2035, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2040, 2040, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2045, 2045, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2050, 2050, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2055, 2055, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2060, 2060, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2065, 2065, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (2005, 2005, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2010, 2010, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2015, 2015, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2020, 2020, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2025, 2025, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2030, 2030, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2035, 2035, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2040, 2040, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2045, 2045, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2050, 2050, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2055, 2055, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2060, 2060, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2065, 2065, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Search
 INSERT INTO `#__extensions` (
@@ -1291,9 +1291,9 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (2100, 2100, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2105, 2105, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2110, 2110, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (2100, 2100, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2105, 2105, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2110, 2110, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## System
 INSERT INTO `#__extensions` (
@@ -1315,16 +1315,16 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (2200, 2200, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2205, 2205, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2210, 2210, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2215, 2215, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2220, 2220, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2225, 2225, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2230, 2230, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2235, 2235, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2240, 2240, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2245, 2245, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (2200, 2200, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2205, 2205, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2210, 2210, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2215, 2215, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2220, 2220, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2225, 2225, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2230, 2230, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2235, 2235, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2240, 2240, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2245, 2245, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Query
 INSERT INTO `#__extensions` (
@@ -1337,7 +1337,7 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (2300, 2300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+      (2300, 2300, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 ## Template
 INSERT INTO `#__extensions` (
@@ -1360,8 +1360,8 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (2500, 2500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2550, 2550, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (2500, 2500, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (2550, 2550, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1);
 
 #
 # LANGUAGES
@@ -1428,7 +1428,7 @@ INSERT INTO `#__menu_items`
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1, 3000, '__menu_items', 'com_menus', '', 'index.php?option=com_extensions', 4),
+      (1, 3000, '__menu_items', 'com_menus', '', 'index.php?option=com_extensions', 1),
 
       (2, 3010, '__menu_items', 'com_menus', 'configure', 'index.php?option=com_dashboard&type=configure', 4),
       (3, 3020, '__menu_items', 'com_menus', 'access', 'index.php?option=com_dashboard&type=access', 4),
@@ -1495,14 +1495,14 @@ INSERT INTO `#__menu_items`
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (100, 3500, '__articles', 'com_articles', '', 'index.php?option=com_articles', 4),
-      (101, 3510, '__articles', 'com_articles', 'new-article', 'index.php?option=com_articles&view=article&layout=edit', 4),
-      (102, 3520, '__articles', 'com_articles', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5', 4),
-      (103, 3530, '__articles', 'com_articles', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2', 4),
-      (104, 3540, '__articles', 'com_articles', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2', 4),
-      (105, 3550, '__articles', 'com_articles', 'table', 'index.php?option=com_articles&type=search', 4),
-      (106, 3560, '__dummy', 'com_users', 'login', 'index.php?option=com_users&view=login', 4),
-      (107, 3570, '__dummy', 'com_search', 'search', 'index.php?option=com_search&type=search', 4);
+      (100, 3500, '__articles', 'com_articles', '', 'index.php?option=com_articles', 1),
+      (101, 3510, '__articles', 'com_articles', 'new-article', 'index.php?option=com_articles&view=article&layout=edit', 5),
+      (102, 3520, '__articles', 'com_articles', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5', 1),
+      (103, 3530, '__articles', 'com_articles', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2', 1),
+      (104, 3540, '__articles', 'com_articles', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2', 1),
+      (105, 3550, '__articles', 'com_articles', 'table', 'index.php?option=com_articles&type=search', 1),
+      (106, 3560, '__dummy', 'com_users', 'login', 'index.php?option=com_users&view=login', 1),
+      (107, 3570, '__dummy', 'com_search', 'search', 'index.php?option=com_search&type=search', 1);
 #
 # MODULES
 #
@@ -1528,18 +1528,18 @@ INSERT INTO `#__modules`
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1, 4010, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (2, 4020, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (3, 4030, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (4, 4040, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (5, 4050, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (6, 4060, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (7, 4070, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (8, 4080, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (9, 4090, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (10, 4100, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (11, 4110, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (12, 4120, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4');
+      (1, 4010, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (2, 4020, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (3, 4030, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (4, 4040, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (5, 4050, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (6, 4060, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (7, 4070, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (8, 4080, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (9, 4090, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (10, 4100, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (11, 4110, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (12, 4120, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1);
 
 INSERT INTO `#__modules`
   ( `id`, `asset_id`, `title`, `subtitle`, `position`, `application_id`, `ordering`, `published`, `module`,
@@ -1565,21 +1565,21 @@ INSERT INTO `#__modules`
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (13, 4510, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (14, 4520, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (15, 4530, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (16, 4540, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (17, 4550, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (18, 4560, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (19, 4570, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (20, 4580, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (21, 4590, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (22, 4600, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (23, 4610, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (24, 4620, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (25, 4630, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (26, 4640, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4'),
-      (27, 4650, '__modules', 'com_modules', '', 'index.php?option=com_modules', '4');
+      (13, 4510, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (14, 4520, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (15, 4530, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (16, 4540, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (17, 4550, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (18, 4560, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (19, 4570, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (20, 4580, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (21, 4590, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (22, 4600, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (23, 4610, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (24, 4620, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (25, 4630, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (26, 4640, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1),
+      (27, 4650, '__modules', 'com_modules', '', 'index.php?option=com_modules', 1);
 
 INSERT INTO `#__modules_menu`
  ( `module_id`, `menu_item_id`)
@@ -1638,8 +1638,8 @@ INSERT INTO `#__template_styles`
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-      (1, 7000, '__template_styles', 'com_templates', '', 'index.php?option=com_templates', '4'),
-      (2, 7010, '__template_styles', 'com_templates', '', 'index.php?option=com_templates', '4');
+      (1, 7000, '__template_styles', 'com_templates', '', 'index.php?option=com_templates', 1),
+      (2, 7010, '__template_styles', 'com_templates', '', 'index.php?option=com_templates', 1);
 
 #
 # UPDATES

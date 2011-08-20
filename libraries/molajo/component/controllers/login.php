@@ -51,18 +51,15 @@ class MolajoControllerLogin extends MolajoController
 			$return = 'index.php';
 		}
 
-// Get the global JAuthentication object.
-		jimport('joomla.user.authentication');
-
 		$authenticate = JAuthentication::getInstance();
 		$response	= $authenticate->authenticate($credentials, $options);
  
 		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
 			// Import the user plugin group.
-			JPluginHelper::importPlugin('user');
+			MolajoPluginHelper::importPlugin('user');
 
 			// OK, the credentials are authenticated.  Lets fire the onLogin event.
-			$results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
+			$results = $this->dispatcher->trigger('onUserLogin', array((array)$response, $options));
 
 			/*
 			 * If any of the user plugins did not successfully complete the login routine
@@ -96,8 +93,9 @@ class MolajoControllerLogin extends MolajoController
 		}
 
 		// Trigger onUserLoginFailure Event.
-		$this->triggerEvent('onUserLoginFailure', array((array)$response));
-
+        $results = $this->dispatcher->trigger('onUserLoginFailure', array((array)$response));
+       echo 'hello'.var_dump($results);
+        die();
 		// If silent is set, just return false.
 		if (isset($options['silent']) && $options['silent']) {
 			return false;
@@ -165,7 +163,7 @@ class MolajoControllerLogin extends MolajoController
 		$auth = false;
 
 		// Get plugins
-		$plugins = JPluginHelper::getPlugin('authentication');
+		$plugins = MolajoPluginHelper::getPlugin('authentication');
 
 		// Create authencication response
 		$response = new MolajoAuthenticationResponse();
@@ -180,6 +178,8 @@ class MolajoControllerLogin extends MolajoController
 		foreach ($plugins as $plugin)
 		{
 			$className = 'plg'.$plugin->type.$plugin->name;
+            echo $className;
+            die;
 			if (class_exists($className)) {
 				$plugin = new $className($this, (array)$plugin);
 			}
@@ -283,7 +283,7 @@ class MolajoControllerLogin extends MolajoController
         }
 
         // Import the user plugin group.
-        JPluginHelper::importPlugin('user');
+        MolajoPluginHelper::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
         $results = $this->triggerEvent('onUserLogout', array($parameters, $options));
