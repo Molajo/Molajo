@@ -357,6 +357,10 @@ class MolajoACLCore extends MolajoACL
     {
         return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
     }
+    public function checkLoginAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    {
+        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+    }
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getXYZQueryInformation

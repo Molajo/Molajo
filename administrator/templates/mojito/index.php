@@ -6,7 +6,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
 include dirname(__FILE__).'/include/css.php';
 
 if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>

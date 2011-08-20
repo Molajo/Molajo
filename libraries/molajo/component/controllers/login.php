@@ -18,6 +18,7 @@ defined('MOLAJO') or die;
  */
 class MolajoControllerLogin extends MolajoController
 {
+
 	/**
 	 * login
      * 
@@ -28,11 +29,10 @@ class MolajoControllerLogin extends MolajoController
 	public function login()
 	{
         /** security token **/
-        JRequest::checkToken() or die;
-echo 'herere in the login';
-die();
-        /** initialisation */
-        parent::initialise('login');
+//        JRequest::checkToken() or die;
+
+        $options = array();
+        $options = array('action' => 'login');
 
 		$credentials = array(
 			'username' => JRequest::getVar('username', '', 'method', 'username'),
@@ -51,7 +51,64 @@ die();
 			$return = 'index.php';
 		}
 
-		$result = $app->login($credentials, array('action' => 'core.login.admin'));
+// Get the global JAuthentication object.
+		jimport('joomla.user.authentication');
+
+		$authenticate = JAuthentication::getInstance();
+		$response	= $authenticate->authenticate($credentials, $options);
+ 
+		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
+			// Import the user plugin group.
+			JPluginHelper::importPlugin('user');
+
+			// OK, the credentials are authenticated.  Lets fire the onLogin event.
+			$results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
+
+			/*
+			 * If any of the user plugins did not successfully complete the login routine
+			 * then the whole method fails.
+			 *
+			 * Any errors raised should be done in the plugin as this provides the ability
+			 * to provide much more information about why the routine may have failed.
+			 */
+
+			if (!in_array(false, $results, true)) {
+				// Set the remember me cookie if enabled.
+				if (isset($options['remember']) && $options['remember']) {
+					jimport('joomla.utilities.simplecrypt');
+					jimport('joomla.utilities.utility');
+
+					// Create the encryption key, apply extra hardening using the user agent string.
+					$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
+
+					$crypt = new JSimpleCrypt($key);
+					$rcookie = $crypt->encrypt(serialize($credentials));
+					$lifetime = time() + 365*24*60*60;
+
+					// Use domain and path set in config for cookie if it exists.
+					$cookie_domain = $this->getCfg('cookie_domain', '');
+					$cookie_path = $this->getCfg('cookie_path', '/');
+					setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
+				}
+
+				return true;
+			}
+		}
+
+		// Trigger onUserLoginFailure Event.
+		$this->triggerEvent('onUserLoginFailure', array((array)$response));
+
+		// If silent is set, just return false.
+		if (isset($options['silent']) && $options['silent']) {
+			return false;
+		}
+
+		// If status is success, any error will ahve been raised by the user plugin
+		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
+			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
+		}
+
+		return false;
 
         /** success message **/
         $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_LOGIN_SUCCESSFUL'));
@@ -144,64 +201,7 @@ die();
 	 */
 	public function login2($credentials, $options = array())
 	{
-		// Get the global JAuthentication object.
-		jimport('joomla.user.authentication');
 
-		$authenticate = JAuthentication::getInstance();
-		$response	= $authenticate->authenticate($credentials, $options);
-
-		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
-			// Import the user plugin group.
-			JPluginHelper::importPlugin('user');
-
-			// OK, the credentials are authenticated.  Lets fire the onLogin event.
-			$results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
-
-			/*
-			 * If any of the user plugins did not successfully complete the login routine
-			 * then the whole method fails.
-			 *
-			 * Any errors raised should be done in the plugin as this provides the ability
-			 * to provide much more information about why the routine may have failed.
-			 */
-
-			if (!in_array(false, $results, true)) {
-				// Set the remember me cookie if enabled.
-				if (isset($options['remember']) && $options['remember']) {
-					jimport('joomla.utilities.simplecrypt');
-					jimport('joomla.utilities.utility');
-
-					// Create the encryption key, apply extra hardening using the user agent string.
-					$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
-
-					$crypt = new JSimpleCrypt($key);
-					$rcookie = $crypt->encrypt(serialize($credentials));
-					$lifetime = time() + 365*24*60*60;
-
-					// Use domain and path set in config for cookie if it exists.
-					$cookie_domain = $this->getCfg('cookie_domain', '');
-					$cookie_path = $this->getCfg('cookie_path', '/');
-					setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
-				}
-
-				return true;
-			}
-		}
-
-		// Trigger onUserLoginFailure Event.
-		$this->triggerEvent('onUserLoginFailure', array((array)$response));
-
-		// If silent is set, just return false.
-		if (isset($options['silent']) && $options['silent']) {
-			return false;
-		}
-
-		// If status is success, any error will ahve been raised by the user plugin
-		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
-		}
-
-		return false;
 	}
 
 	/**
