@@ -11,7 +11,9 @@ $document = MolajoFactory::getDocument();
 $browser = JBrowser::getInstance();
 $lang = JFactory::getLanguage();
 
-$document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.all.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
+$document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.core.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
+$document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.accordion.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
+$document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.tabs.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/custom.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
 $document->addScript($url=JURI::base().'templates/'.$this->template.'/js/jquery-1.6.2.js');
 $document->addScript($url=JURI::base().'templates/'.$this->template.'/js/jquery-ui-1.8.15.custom.js');

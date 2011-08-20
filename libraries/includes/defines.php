@@ -132,6 +132,11 @@ define('MOLAJO_ACL_ACTION_PUBLISH', 'publish');
 define('MOLAJO_ACL_ACTION_DELETE', 'delete');
 define('MOLAJO_ACL_ACTION_ADMIN', 'admin');
 
+/** Authentication */
+define('MOLAJO_AUTHENTICATE_STATUS_SUCCESS', 1);
+define('MOLAJO_AUTHENTICATE_STATUS_CANCEL', 2);
+define('MOLAJO_AUTHENTICATE_STATUS_FAILURE', 4);
+
 /** current url */
 $currentURL = 'http';
 if (isset($_SERVER['HTTPS'])) {

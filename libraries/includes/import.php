@@ -231,6 +231,8 @@ foreach ($files as $file) {
 JLoader::register('MolajoRegistryFormat', MOLAJO_LIBRARY.'/utilities/format.php');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/registry.php', 'MolajoRegistry');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/authentication.php', 'MolajoAuthenticationResponse');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/authentication.php', 'JAuthenticationResponse');
 
 /** cache */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/controller.php', 'JCacheController');

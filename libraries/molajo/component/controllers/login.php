@@ -151,114 +151,157 @@ class MolajoControllerLogin extends MolajoController
 	}
 
 	/**
-	 * logout
-     *
-     * Method to log out a user.
+	 * Finds out if a set of login credentials are valid by asking all obvserving
+	 * objects to run their respective authentication routines.
 	 *
-	 * @return	void
-	 */
-	public function logout()
-	{
-		JRequest::checkToken('default') or die;
-
-		$app = MolajoFactory::getApplication();
-
-		$userid = JRequest::getInt('uid', null);
-
-		$options = array(
-			'applicationid' => ($userid) ? 0 : 1
-		);
-
-		$result = $app->logout($userid, $options);
-
-		if (!JError::isError($result)) {
-			$this->model 	= $this->getModel('login');
-			$return = $this->model->getState('return');
-			$app->redirect($return);
-		}
-
-		parent::display();
-	}
-
-	/**
-	 * Login authentication function.
-	 *
-	 * Username and encoded password are passed the the onUserLogin event which
-	 * is responsible for the user validation. A successful validation updates
-	 * the current session record with the user's details.
-	 *
-	 * Username and encoded password are sent as credentials (along with other
-	 * possibilities) to each observer (authentication plugin) for user
-	 * validation.  Successful validation will update the current session with
-	 * the user details.
-	 *
-	 * @param   array  $credentials  Array('username' => string, 'password' => string)
-	 * @param   array  $options      Array('remember' => boolean)
-	 *
-	 * @return  boolean  True on success.
-	 *
+	 * @param   array  Array holding the user credentials
+	 * @return  mixed  Integer userid for valid user if credentials are valid or
+	 *					boolean false if they are not
 	 * @since   11.1
 	 */
-	public function login2($credentials, $options = array())
-	{
-
-	}
-
-	/**
-	 * Logout authentication function.
-	 *
-	 * Passed the current user information to the onUserLogout event and reverts the current
-	 * session record back to 'anonymous' parameters.
-	 * If any of the authentication plugins did not successfully complete
-	 * the logout routine then the whole method fails.  Any errors raised
-	 * should be done in the plugin as this provides the ability to give
-	 * much more information about why the routine may have failed.
-	 *
-	 * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
-	 * @param   array    $options  Array('clientid' => array of client id's)
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since   11.1
-	 */
-	public function logout2($userid = null, $options = array())
+	public function authenticate($credentials, $options)
 	{
 		// Initialise variables.
-		$retval = false;
+		$auth = false;
 
-		// Get a user object from the JApplication.
-		$user = JFactory::getUser($userid);
+		// Get plugins
+		$plugins = JPluginHelper::getPlugin('authentication');
 
-		// Build the credentials array.
-		$parameters['username']	= $user->get('username');
-		$parameters['id']		= $user->get('id');
+		// Create authencication response
+		$response = new MolajoAuthenticationResponse();
 
-		// Set clientid in the options array if it hasn't been set already.
-		if (!isset($options['clientid'])) {
-			$options['clientid']= $this->getClientId();
+		/*
+		 * Loop through the plugins and check of the creditials can be used to authenticate
+		 * the user
+		 *
+		 * Any errors raised in the plugin should be returned via the JAuthenticationResponse
+		 * and handled appropriately.
+		 */
+		foreach ($plugins as $plugin)
+		{
+			$className = 'plg'.$plugin->type.$plugin->name;
+			if (class_exists($className)) {
+				$plugin = new $className($this, (array)$plugin);
+			}
+			else {
+				// Bail here if the plugin can't be created
+				JError::raiseWarning(50, JText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+				continue;
+			}
+
+			// Try to authenticate
+			$plugin->onUserAuthenticate($credentials, $options, $response);
+
+			// If authentication is successful break out of the loop
+			if ($response->status === JAUTHENTICATE_STATUS_SUCCESS)
+			{
+				if (empty($response->type)) {
+					$response->type = isset($plugin->_name) ? $plugin->_name : $plugin->name;
+				}
+				break;
+			}
 		}
 
-		// Import the user plugin group.
-		JPluginHelper::importPlugin('user');
-
-		// OK, the credentials are built. Lets fire the onLogout event.
-		$results = $this->triggerEvent('onUserLogout', array($parameters, $options));
-
-		// Check if any of the plugins failed. If none did, success.
-
-		if (!in_array(false, $results, true)) {
-			// Use domain and path set in config for cookie if it exists.
-			$cookie_domain = $this->getCfg('cookie_domain', '');
-			$cookie_path = $this->getCfg('cookie_path', '/');
-			setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
-
-			return true;
+		if (empty($response->username)) {
+			$response->username = $credentials['username'];
 		}
 
-		// Trigger onUserLoginFailure Event.
-		$this->triggerEvent('onUserLogoutFailure', array($parameters));
+		if (empty($response->fullname)) {
+			$response->fullname = $credentials['username'];
+		}
 
-		return false;
+		if (empty($response->password)) {
+			$response->password = $credentials['password'];
+		}
+
+		return $response;
 	}
 
+
+    /**
+     * logout
+     *
+     * Method to log out a user.
+     *
+     * @return	void
+     */
+    public function logout()
+    {
+        JRequest::checkToken('default') or die;
+
+        $app = MolajoFactory::getApplication();
+
+        $userid = JRequest::getInt('uid', null);
+
+        $options = array(
+            'applicationid' => ($userid) ? 0 : 1
+        );
+
+        $result = $app->logout($userid, $options);
+
+        if (!JError::isError($result)) {
+            $this->model 	= $this->getModel('login');
+            $return = $this->model->getState('return');
+            $app->redirect($return);
+        }
+
+        parent::display();
+    }
+
+    /**
+     * Logout authentication function.
+     *
+     * Passed the current user information to the onUserLogout event and reverts the current
+     * session record back to 'anonymous' parameters.
+     * If any of the authentication plugins did not successfully complete
+     * the logout routine then the whole method fails.  Any errors raised
+     * should be done in the plugin as this provides the ability to give
+     * much more information about why the routine may have failed.
+     *
+     * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
+     * @param   array    $options  Array('clientid' => array of client id's)
+     *
+     * @return  boolean  True on success
+     *
+     * @since   11.1
+     */
+    public function logout2($userid = null, $options = array())
+    {
+        // Initialise variables.
+        $retval = false;
+
+        // Get a user object from the JApplication.
+        $user = JFactory::getUser($userid);
+
+        // Build the credentials array.
+        $parameters['username']	= $user->get('username');
+        $parameters['id']		= $user->get('id');
+
+        // Set clientid in the options array if it hasn't been set already.
+        if (!isset($options['clientid'])) {
+            $options['clientid']= $this->getClientId();
+        }
+
+        // Import the user plugin group.
+        JPluginHelper::importPlugin('user');
+
+        // OK, the credentials are built. Lets fire the onLogout event.
+        $results = $this->triggerEvent('onUserLogout', array($parameters, $options));
+
+        // Check if any of the plugins failed. If none did, success.
+
+        if (!in_array(false, $results, true)) {
+            // Use domain and path set in config for cookie if it exists.
+            $cookie_domain = $this->getCfg('cookie_domain', '');
+            $cookie_path = $this->getCfg('cookie_path', '/');
+            setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+
+            return true;
+        }
+
+        // Trigger onUserLoginFailure Event.
+        $this->triggerEvent('onUserLogoutFailure', array($parameters));
+
+        return false;
+    }
 }
