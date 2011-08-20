@@ -48,11 +48,12 @@ class MolajoLanguageHelper
 			$query->where('enabled = 1');
 			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
 			$db->setQuery($query);
-			$langs = $db->loadObjectList('element');
+            $installed_languages = $db->loadObjectList('element');
 		}
 
 		foreach ($langs as $lang => $metadata)
 		{
+//if (!$installed || array_key_exists($lang, $installed_languages))
             $option = array ();
 
             $option['text'] = $metadata['name'];

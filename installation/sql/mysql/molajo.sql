@@ -2424,12 +2424,12 @@ INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`,
 /* 3000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3001, '', '', 0),
-('com_login', 3001, 'adminlogin', 'adminlogin', 1);
+('com_login', 3001, 'admin_login', 'admin_login', 1);
 
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `#__configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('com_login', 3101, '', '', 0),
-('com_login', 3101, 'adminlogin', 'adminlogin', 1);
+('com_login', 3101, 'admin_login', 'admin_login', 1);
 
 /* VIEW FORMATS */
 

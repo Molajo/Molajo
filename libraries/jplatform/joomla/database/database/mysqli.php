@@ -185,7 +185,9 @@ class JDatabaseMySQLi extends JDatabase
 	 */
 	public function connected()
 	{
-		return $this->connection->ping();
+		if (isset($this->options)) {
+            return $this->connection->ping();
+    	}
 	}
 
 	/**
