@@ -53,7 +53,6 @@ class MolajoLanguageHelper
 
 		foreach ($langs as $lang => $metadata)
 		{
-//if (!$installed || array_key_exists($lang, $installed_languages))
             $option = array ();
 
             $option['text'] = $metadata['name'];

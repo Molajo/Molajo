@@ -66,7 +66,6 @@ class MolajoComponentHelper
 	public static function isEnabled($option, $strict = false)
 	{
 		$result = self::getComponent($option, $strict);
-
 		return $result->enabled;
 	}
 
@@ -86,7 +85,6 @@ class MolajoComponentHelper
 	public static function getParams($option, $strict = false)
 	{
 		$component = self::getComponent($option, $strict);
-
 		return $component->params;
 	}
 

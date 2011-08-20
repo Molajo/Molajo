@@ -836,26 +836,26 @@ INSERT INTO `#__extensions` (
 INSERT INTO `#__assets`
   ( `content_id`, `id`, `content_table`, `option`, `path`, `link`, `access`)
     VALUES
-    (1, 101, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (2, 102, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (3, 103, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (4, 104, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (5, 105, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (6, 106, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (7, 107, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (8, 108, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (9, 109, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (10, 110, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (11, 111, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (12, 112, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (13, 113, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (14, 114, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (15, 115, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (16, 116, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (17, 117, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (18, 118, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (19, 119, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4),
-    (20, 120, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 4);
+    (1, 101, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (2, 102, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (3, 103, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (4, 104, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (5, 105, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (6, 106, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (7, 107, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (8, 108, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (9, 109, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (10, 110, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (11, 111, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 1),
+    (12, 112, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (13, 113, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (14, 114, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (15, 115, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (16, 116, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (17, 117, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (18, 118, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (19, 119, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5),
+    (20, 120, '__extensions', 'com_extensions', '', 'index.php?option=com_extensions', 5);
 
 # Components - Site
 INSERT INTO `#__extensions` (
