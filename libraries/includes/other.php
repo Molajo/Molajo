@@ -13,7 +13,3 @@ $filehelper->requireClassFile(LIBRARIES.'/mollom/mollom.php', 'Mollom');
 require_once LIBRARIES.'/recaptcha/recaptchalib.php';
 $filehelper->requireClassFile(LIBRARIES.'/securimage/securimage.php', 'Securimage');
 $filehelper->requireClassFile(LIBRARIES.'/wideimage/WideImage.php', 'WideImage');
-
-/** Note: Krumo Configuration INI file must be managed */
-include LIBRARIES.'/krumo/class.krumo.php';
-krumo::disable();

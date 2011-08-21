@@ -113,6 +113,8 @@ class JDatabaseMySQL extends JDatabase
 	 */
 	public function __destruct()
 	{
+$session = JFactory::getSession();
+$session->destruct();
 		if (is_resource($this->connection)) {
 			mysql_close($this->connection);
 		}

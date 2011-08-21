@@ -47,10 +47,9 @@ abstract class MolajoFactory
 			if (!$id) {
 				JError::raiseError(500, 'Application Instantiation Error');
 			}
-
 			self::$application = MolajoApplication::getInstance($id, $config, $prefix);
 		}
-
+        
 		return self::$application;
 	}
 
