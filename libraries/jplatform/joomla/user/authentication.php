@@ -86,7 +86,7 @@ class JAuthentication extends JObservable
 
 		// Get plugins
 		$plugins = JPluginHelper::getPlugin('authentication');
-var_dump($plugins);
+ 
 		// Create authencication response
 		$response = new JAuthenticationResponse();
 
