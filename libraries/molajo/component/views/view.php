@@ -106,13 +106,13 @@ class MolajoView extends JView
         }
 
         /** Render Layout */
-        $this->findPath($this->layout, 'extension');
+        $this->findPath($this->layout, 'extensions');
         if ($this->layout_path === false) {
             // load an error layout
             return;
         }
-        $renderedOutput = $this->renderLayout ($this->layout, 'extension');
-  
+        $renderedOutput = $this->renderLayout ($this->layout, 'extensions');
+
         /** Render Wrap around Rendered Layout */
         if ($this->wrap == 'horz') { $this->wrap = 'horizontal'; }
         if ($this->wrap == 'xhtml') { $this->wrap = 'div'; }
@@ -159,7 +159,7 @@ class MolajoView extends JView
 
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
         $templateExtensionPath = '';
-        if ($layout_type == 'extension') {
+        if ($layout_type == 'extensions') {
             if ($this->request['extension_type'] == 'plugin') {
                 $templateExtensionPath = $template.'/'.$this->request['plugin_folder'].'/'.$this->request['option'];
 
@@ -172,30 +172,30 @@ class MolajoView extends JView
         }
 
         /** 2. @var $templateLayoutPath [template]/html/[layout-folder] */
-        $templateLayoutPath = $template.'/'.$layout_type.'s';
+        $templateLayoutPath = $template.'/'.$layout_type;
 
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
         $extensionPath = '';
-        if ($layout_type == 'extension') {
+        if ($layout_type == 'extensions') {
             if ($this->request['extension_type'] == 'plugins') {
-                $extensionPath = MOLAJO_PATH_ROOT.'/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl/';
+                $extensionPath = MOLAJO_PATH_ROOT.'/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl';
 
             } else if ($this->request['extension_type'] == 'modules') {
-                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$this->request['option'].'/tmpl/';
+                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$this->request['option'].'/tmpl';
 
             } else {
-                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl/';
+                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
             }
         }
 
         /** 4. $corePath layouts/[layout_type]/[layout-folder] */
-        if ($layout_type == 'extension') {
+        if ($layout_type == 'extensions') {
             $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
-        } else if ($layout_type == 'form') {
+        } else if ($layout_type == 'forms') {
             $corePath = MOLAJO_LAYOUTS_FORMS;
         } else if ($layout_type == 'head') {
             $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
-        } else if ($layout_type == 'wrap') {
+        } else if ($layout_type == 'wraps') {
             $corePath = MOLAJO_LAYOUTS_WRAPS;
         } else {
             return false;
@@ -359,16 +359,19 @@ class MolajoView extends JView
      * Automatically includes the following files (if existing)
      *
      * 1. Master Layout folder Language Files found in => layout/[current-language]/
-     * 2. Current Layout folder Language Files found in => layout/current-layout/[current-language]/
+     * 2. Current Layout folder Language Files found in => layout/[layout-type]/[layout-name]/[current-language]/
      *
      * @param $this->layout_path
      * @return void
      */
     protected function loadLanguage ($layout, $layout_type)
     {
-        $language = MolajoFactory::getLanguage();
-        $language->load('layouts', MOLAJO_LAYOUTS, $language->getDefault(), false, false);
-        $language->load('layouts_'.$layout_type.'s_'.$layout, $this->layout_path, $language->getDefault(), false, false);
+        $defaultLanguage = MolajoFactory::getLanguage()->getDefault();
+        MolajoFactory::getLanguage()->load('layout', MOLAJO_LAYOUTS, $defaultLanguage, false, false);
+        /** not plural */
+        MolajoFactory::getLanguage()->load('layout_'.substr($layout_type, 0, strlen($layout_type) -1).'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
+        /** head does not have an s at the end */
+        MolajoFactory::getLanguage()->load('layout_'.$layout_type.'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
     }
 
     /**

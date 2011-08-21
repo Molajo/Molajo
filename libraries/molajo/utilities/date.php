@@ -1,12 +1,12 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Utilities
- *
+ * @package     Molajo
+ * @subpackage  MolajoFactory
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-
+defined('MOLAJO') or die;
 /**
  *  Hack changing:
  * 	public function setTimezone(DateTimeZone $tz)
@@ -15,7 +15,6 @@
  *  For PHP Strict
  *
  */
-defined('MOLAJO') or die;
 
 /**
  * JDate is a class that stores a date and provides logic to manipulate

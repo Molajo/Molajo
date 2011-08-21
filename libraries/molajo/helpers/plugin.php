@@ -33,21 +33,23 @@ abstract class MolajoPluginHelper
 		$plugins	= self::_load();
 
 		// Find the correct plugin(s) to return.
-		if (!$plugin) {
-			foreach($plugins as $p) {
-				// Is this the right plugin?
-				if ($p->type == $type) {
-					$result[] = $p;
-				}
-			}
+		if ($plugin) {
+
+            foreach($plugins as $p) {
+                // Is this plugin in the right group?
+                if ($p->type == $type && $p->name == $plugin) {
+                    $result = $p;
+                    break;
+                }
+            }
+
 		} else {
-			foreach($plugins as $p) {
-				// Is this plugin in the right group?
-				if ($p->type == $type && $p->name == $plugin) {
-					$result = $p;
-					break;
-				}
-			}
+            foreach($plugins as $p) {
+                // Is this the right plugin?
+                if ($p->type == $type) {
+                    $result[] = $p;
+                }
+            }
 		}
 
 		return $result;
@@ -110,7 +112,7 @@ abstract class MolajoPluginHelper
 			}
 			$loaded[$type] = $results;
 		}
-
+ 
 		return $loaded[$type];
 	}
 
@@ -139,7 +141,6 @@ abstract class MolajoPluginHelper
 			if ($pathExists || file_exists($legacypath)) {
 				$path = $pathExists ? $path : $legacypath;
 
-				jimport('joomla.plugin.plugin');
 				if (!isset($paths[$path])) {
 					require_once $path;
 				}

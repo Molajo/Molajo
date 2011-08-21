@@ -32,11 +32,13 @@ class MolajoLanguageHelper
 	public static function createLanguageList($actualLanguage, $basePath = MOLAJO_PATH_BASE, $caching = false, $installed = false)
 	{
 		$list = array ();
-
-		// Cache activation
 		$langs = JLanguage::getKnownLanguages($basePath);
-		if ($installed)
-		{
+
+        if (MOLAJO_APPLICATION_ID == 2) {
+            $installed == false;
+
+        } elseif ($installed === true) {
+
 			$db = MolajoFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('element');
@@ -46,22 +48,19 @@ class MolajoLanguageHelper
 			$query->where('enabled = 1');
 			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
 			$db->setQuery($query);
-			$installed_languages = $db->loadObjectList('element');
+            $installed_languages = $db->loadObjectList('element');
 		}
-var_dump($installed_languages);
+
 		foreach ($langs as $lang => $metadata)
 		{
-			if (!$installed || array_key_exists($lang, $installed_languages))
-			{
-				$option = array ();
+            $option = array ();
 
-				$option['text'] = $metadata['name'];
-				$option['value'] = $lang;
-				if ($lang == $actualLanguage) {
-					$option['selected'] = 'selected="selected"';
-				}
-				$list[] = $option;
-			}
+            $option['text'] = $metadata['name'];
+            $option['value'] = $lang;
+            if ($lang == $actualLanguage) {
+                $option['selected'] = 'selected="selected"';
+            }
+            $list[] = $option;
 		}
 
 		return $list;

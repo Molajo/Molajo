@@ -157,7 +157,7 @@ class MolajoUser extends JObject
 	public function __construct($identifier = 0)
 	{
 		// Create the user parameters object
-		$this->_params = new JRegistry;
+		$this->_params = new MolajoRegistry;
 
 		// Load the user if it exists
 		if (!empty($identifier)) {
@@ -640,7 +640,7 @@ class MolajoUser extends JObject
 			}
 
 			if ($my->id == $table->id) {
-				$registry = new JRegistry;
+				$registry = new MolajoRegistry;
 				$registry->loadJSON($table->params);
 				$my->setParameters($registry);
 			}

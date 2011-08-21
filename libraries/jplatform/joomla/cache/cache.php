@@ -16,7 +16,7 @@ JLoader::register('JCacheStorage', dirname(__FILE__) . '/storage.php');
 JLoader::register('JCacheController', dirname(__FILE__) . '/controller.php');
 
 /**
- * Molajo Cache base object
+ * Joomla Cache base object
  *
  * @package     Joomla.Platform
  * @subpackage  Cache

@@ -376,7 +376,7 @@ class JInstallerPlugin extends JAdapterInstance
 			}
 		}
 
-		// Start Molajo 1.6
+		// Start Joomla 1.6
 		ob_start();
 		ob_implicit_flush(false);
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,$this->route))
@@ -576,7 +576,7 @@ class JInstallerPlugin extends JAdapterInstance
 			return false;
 		}
 
-		// Start Molajo 1.6
+		// Start Joomla 1.6
 		ob_start();
 		ob_implicit_flush(false);
 		if ($this->parent->manifestClass && method_exists($this->parent->manifestClass,'uninstall'))

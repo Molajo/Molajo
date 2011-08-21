@@ -13,7 +13,7 @@ jimport('joomla.log.log');
 jimport('joomla.utilities.date');
 
 /**
- * Molajo Log Entry class
+ * Joomla Log Entry class
  *
  * This class is designed to hold log entries for either writing to an engine, or for
  * supported engines, retrieving lists and building in memory (PHP based) search operations.

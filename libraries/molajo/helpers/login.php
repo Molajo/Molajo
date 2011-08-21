@@ -43,10 +43,10 @@ class MolajoLoginHelper
 	{
 		$uri = MolajoFactory::getURI();
 		$return = 'index.php'.$uri->toString(array('query'));
-		if($return != 'index.php?option=com_login'){
-			return base64_encode($return);
-		} else {
+		if($return == 'index.php?option=com_login'){
 			return base64_encode('index.php');
+        } else {
+            return base64_encode($return);
 		}
 	}
 }

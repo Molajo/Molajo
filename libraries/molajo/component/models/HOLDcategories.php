@@ -96,7 +96,7 @@ class MolajoModelCategories extends JModel
 			$app = MolajoFactory::getApplication();
 			$menu = $app->getMenu();
 			$active = $menu->getActive();
-			$params = new JRegistry();
+			$params = new MolajoRegistry();
 
 			if ($active) {
 				$params->loadJSON($active->params);

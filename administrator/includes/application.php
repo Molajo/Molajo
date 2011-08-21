@@ -9,8 +9,6 @@
  */
 defined('MOLAJO') or die;
 
-jimport('joomla.html.html');
-
 /**
  * Molajo Site
  *
@@ -271,17 +269,19 @@ class MolajoAdministrator extends MolajoApplication
 			$db = MolajoFactory::getDbo();
 			$query = $db->getQuery(true);
 
-			$query->select('template, params');
-			$query->from('#__template_styles');
-			$query->where('application_id = '. (int) MOLAJO_APPLICATION_ID);
+			$query->select('a.title as template, b.params as params');
+			$query->from('#__templates as a');
+			$query->from('#__template_styles as b');
+			$query->where('a.application_id = '. (int) MOLAJO_APPLICATION_ID);
+			$query->where('a.id = b.template_id');
 
 			if ($admin_style) {
 				$query->where('id = '.(int) $admin_style);
 			} else{
-				$query->where('home = 1');
+				$query->where('`default` = 1');
 			}
 
-			$db->setQuery($query);
+			$db->setQuery($query->__toString());
 			$template = $db->loadObject();
 
 			$template->template = JFilterInput::getInstance()->clean($template->template, 'cmd');
@@ -290,7 +290,7 @@ class MolajoAdministrator extends MolajoApplication
 			if (file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php')) {
             } else {
 				$template->params = new JRegistry();
-				$template->template = 'molajo';
+				$template->template = 'mojito';
 			}
 		}
 		if ($params) {

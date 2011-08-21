@@ -394,7 +394,7 @@ class JInstallerModule extends JAdapterInstance
 			}
 		}
 
-		// Start Molajo 1.6
+		// Start Joomla 1.6
 		ob_start();
 		ob_implicit_flush(false);
 

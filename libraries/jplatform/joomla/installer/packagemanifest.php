@@ -13,7 +13,7 @@ jimport('joomla.filesystem.file');
 jimport('joomla.installer.extension');
 
 /**
- * Molajo Package Manifest File
+ * Joomla Package Manifest File
  *
  * @package     Joomla.Platform
  * @subpackage  Installer

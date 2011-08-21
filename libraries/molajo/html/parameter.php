@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @deprecated  Use MolajoForm instead
  */
-class MolajoParameter extends JRegistry
+class MolajoParameter extends MolajoRegistry
 {
 	/**
 	 * @var    string  The raw params string

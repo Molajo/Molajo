@@ -19,7 +19,7 @@ JLoader::register('JButton', dirname(__FILE__) . '/toolbar/button.php');
  * @subpackage  HTML
  * @since       11.1
  */
-class MolajoToolbar extends JObject
+class JToolbar extends JObject
 {
 	/**
 	 * Toolbar name
@@ -64,12 +64,12 @@ class MolajoToolbar extends JObject
 	}
 
 	/**
-	 * Returns the global MolajoToolbar object, only creating it if it
+	 * Returns the global JToolbar object, only creating it if it
 	 * doesn't already exist.
 	 *
 	 * @param   string  $name  The name of the toolbar.
 	 *
-	 * @return  MolajoToolbar	The MolajoToolbar object.
+	 * @return  JToolbar	The JToolbar object.
 	 */
 	public static function getInstance($name = 'toolbar')
 	{
@@ -80,7 +80,7 @@ class MolajoToolbar extends JObject
 		}
 
 		if (empty($instances[$name])) {
-			$instances[$name] = new MolajoToolbar($name);
+			$instances[$name] = new JToolbar($name);
 		}
 
 		return $instances[$name];
@@ -242,7 +242,7 @@ class MolajoToolbar extends JObject
 	}
 
 	/**
-	 * Add a directory where MolajoToolbar should search for button types in LIFO order.
+	 * Add a directory where JToolbar should search for button types in LIFO order.
 	 *
 	 * You may either pass a string or an array of directories.
 	 *

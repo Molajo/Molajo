@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.cache.controller');
 
 /**
- * Molajo Cache callback type object
+ * Joomla Cache callback type object
  *
  * @package     Joomla.Platform
  * @subpackage  Cache

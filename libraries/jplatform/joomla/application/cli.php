@@ -16,7 +16,7 @@ jimport('joomla.log.log');
 jimport('joomla.registry.registry');
 
 /**
- * Base class for a Molajo command line application.
+ * Base class for a Joomla command line application.
  *
  * @package     Joomla.Platform
  * @subpackage  Application

@@ -118,12 +118,9 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/component/helper.p
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/module.php', 'MolajoModuleHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/module/helper.php', 'JModuleHelper');
 
-if (MOLAJO_APPLICATION == 'installation') {
-    $filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/helper.php', 'JLanguageHelper');
-} else {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/language.php', 'MolajoLanguageHelper');
-    $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/language/helper.php', 'JLanguageHelper');
-}
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/language.php', 'MolajoLanguageHelper');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/language/helper.php', 'JLanguageHelper');
+
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/menu.php', 'MolajoMenu');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/application/menu.php', 'JMenu');
 
@@ -231,9 +228,11 @@ foreach ($files as $file) {
 }
 
 /** registry */
-JLoader::register('JRegistryFormat', JOOMLA_LIBRARY.'/registry/format.php');
+JLoader::register('MolajoRegistryFormat', MOLAJO_LIBRARY.'/utilities/format.php');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/registry.php', 'MolajoRegistry');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/authentication.php', 'MolajoAuthenticationResponse');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/authentication.php', 'JAuthenticationResponse');
 
 /** cache */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/controller.php', 'JCacheController');

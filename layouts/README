@@ -1,123 +1,203 @@
+This readme contains the following information:
+
+    I. INTRODUCTION
+    II. WHAT IS A MOLAJO LAYOUT?
+    III. WHERE ARE LAYOUTS LOCATED?
+    IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING:
+    V. HOW DO I OVERRIDE A CORE LAYOUT?
+    VI. WORKING WITH APPLICATION, COMPONENT, ASSET, AND LAYOUT MEDIA
+    V. WORKING WITH QUERY RESULTS IN LAYOUTS
+    VI. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
+    VII. WORKING WITH DATES
+    VIII. INTEGRATING OTHER OUTPUT
+    IX. TEMPLATE SYSTEMS
+
+Please check the README file on the root for the location of other README files.
+
+
+
 I. INTRODUCTION
 
-1. What is a View?
-A View is a set of files used to format and display data.
+1. What is a Layout?
 
-2. What is a Model?
-A Model retrieves data needed to produce a View.
+A Layout is a set of files used to format and display data.
 
-3. What is a Controller?
-A Controller provides instructions to the Model to retrieve a rowset and activitates the View, pushing in the data from the Model.
+Layouts can be shared between extensions.
 
-4. What is a rowset?
-A rowset is the collection of data retrieved by the Model at the request of the Controller.
-The Controller processes each rowset, one at a time, in a loop, passing the data into the View for display.
+There are several different types of layouts, called 'layout types'.
 
-4. What is a row?
+2. What is a Layout Type?
+
+Layout Types are specific types of rendered output, including:
+
+a) extensions - layouts shared by components, modules, and plugins
+b) formfields - layouts used to generate form fields
+c) head - layouts used to render document head information
+d) wraps - layouts used to wrap extension output (these are called "styles" or "chrome" in Joomla)
+
+3. What is a Model?
+
+A Model retrieves data needed to produce a Layout.
+
+4. What is a View?
+
+A View retrieves a rowset from the Model and pushes it into the Layout.
+
+5. What is a Rowset?
+
+A rowset is the collection of data retrieved by the View from the Model.
+
+The View processes each rowset, one at a time, in a loop, passing the data into the View for display.
+
+6. What is a row?
+
 A row is set of columns with specific data about a single item contained within the $this->row array. To view all columns at one time, use this command:
 
-<? echo $this->row; ?>
+<? var_dump($this->row); ?>
 
-5. What is a column?
+7. What is a column?
+
 A column is a single piece of information about an item. Display the data for a column, as follows:
 
-<? echo $this->row->column; ?>
+<? echo $this->row->title; ?>
+
+
 
 II. WHAT IS A MOLAJO LAYOUT?
 
 1. What is a Molajo Layout?
+
 A Molajo Layout is a collection of files used to display output from Molajo Extensions.
 
 Layouts can be reused by any Component, Module, or Plugin. Even Form Field Types use Layouts.
 
+There are four layout types: extensions, formfields, head, and wraps.
+
 2. What is the structure of a Layout?
-A Layout is a set of files, contained within one folder.
 
-A Layout file structure is organized in the following way:
+A Layout is organized in the following way:
 
-layout-name
-...css
-.....All files with a CSS extension are automatically loaded
-.....Name files rtl_ to indicate those files which should be loaded only for sites configured for a Right-to-left Language.
-...images
-.....Any images needed for the layout can be stored in the images subfolder.
-...js
-.....All files with a JS extension are automatically loaded
-...language
-... ... en-GB
-... ... ... en-GB.layouts_layouttype_layoutname.ini
-... ... ... en-GB.layouts_layouttype_layoutname.sys.ini
-...layouts
-... ... top.php
-... ... header.php
-... ... body.php
-... ... footer.php
-... ... bottom.php
-...parameters
-... ... Amy - come back here
-... ... name-of-file.xml
-...item.xml
+layout-type
+...layout-name
+... ... css
+... ... ... All files with a CSS extension are automatically loaded
+... ... ... Name files rtl_ to indicate those files which should be loaded only for sites configured for a Right-to-left Language.
+... ... images
+... ... ... Any images needed for the layout can be stored in the images subfolder.
+... ... js
+... ... ... All files with a JS extension are automatically loaded
+... ... language
+... ... ... en-GB
+... ... ... ... en-GB.layouts_layouttype_layoutname.ini
+... ... ... ... en-GB.layouts_layouttype_layoutname.sys.ini
+... ... layouts
+... ... ... top.php
+... ... ... header.php
+... ... ... body.php
+... ... ... footer.php
+... ... ... bottom.php
+... ... layout-name.xml
 
-3. Where are Layouts located?
+III. WHERE ARE LAYOUTS LOCATED?
 
-Core Molajo Layouts are located on the root directory in the Layouts folder and can be used to display output from any Molajo Extension.
-Layouts can also be a folder in the component/view/tmpl folder, or within the modules/
-Layouts can also be located in the templates/html/layouts folder.
+The Core Molajo Layouts are located within the layouts/layout-type/layout-name folder
 
-4. How can I override a core Layout?
+Valid Layout types include extensions, formfields, head, and wraps.
 
-To override a core Layout, you can place the Layout folder in the component/view/tmpl folder or the templates/html/layouts folder.
-The Template is the first place Molajo will look, then the Component, and finally, the Core Layouts folder.
+For example, the list layout will be found in layouts/extensions/list.
+
+IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING:
+
+
+V. HOW DO I OVERRIDE A CORE LAYOUT?
+
+Molajo searches for layout in this order, using the first found:
+
+a) template/html/component-name/view-name/layout-name
+
+b) template/layouts/layout-type/layout-name
+
+c) component/view/tmpl/layout-name
+
+d) layouts/layout-type/layout-name
+
+To override a core Layout, place the layout in A, B, or C above.
 
 5. How can I create a Layout?
+
 To create a Layout, navigate to the Molajo Administrator Extension Manager.
+
 Use the 'Create' Submenu Item.
 
 6. How can I install a Molajo Layout?
+
 To install a Molajo Layout someone shared with you, use the Molajo Administrator-Extension Manager
 
 7. How can I share my Layout with other Molajo users?
-xyz?
+
+Zip up your GPL, free of charge Layout and post it XYZ
 
 
-II. HEAD AND PAGE INFORMATION
-1. Explain include/head.php
 
-2. Document
-meta, etc.
 
-3. Toolbar
-
-4. Submenu
-
-3. What Meta is automatically defined and how do I change it?
-
-4. How can I add Meta?
-
-5. Language files
-
-6. CSS and JS
-
-II. WORKING WITH MEDIA
+VI. WORKING WITH APPLICATION, COMPONENT, ASSET, AND LAYOUT MEDIA
 
 1. How do I add CSS for a Layout?
 
+Place the CSS files into the layout/css folder. All files with a CSS extension are automatically loaded
+
+Name files rtl_ to indicate those files which should be loaded only for sites configured for a Right-to-left Language.
+
 2. How do I add JS to a Layout?
+
+All files with a JS extension are automatically loaded
 
 3. How can I include images?
 
-4. Re-use
+Add images to the layout/images folder and use <img src="../images/name.jpg" /> within the layout files.
 
-III. WORKING WITH QUERY RESULTS IN LAYOUTS
+4. What about Language files?
+
+Place language files within the project in the languages/xx-XX/ folder.
+
+Name files:
+xx-XX.layout_[layout-type]_[layout-name].ini
+xx-XX.layout_[layout-type]_[layout-name].sys.ini
+
+5. How else does Molajo load CSS and JSS?
+
+Application-specific CSS and JS in
+    => media/site/[application]/css[js]/XYZ.css[js]
+
+Component specific CSS and JS in
+    => media/site/[application]/[com_component]/css[js]/XYZ.css[js]
+
+Asset ID specific CSS and JS in
+    => media/site/[application]/[asset_id]/css[js]/XYZ.css[js]
+
+
+
+V. WORKING WITH QUERY RESULTS IN LAYOUTS
 
 1. How are the layout files processed by Molajo?
+
 There are two options for using query results:
-A. To process the recordset within your layout file, include the custom.php layout file, but no other layout files.
-B. To allow Molajo to handle recordset process, the body.php file must be available.
+
+A. To process the recordset within your layout file, include the custom.php layout file.
+
+When Molajo finds a custom.php file, it pushes the $this->rowset object into the file.
+
+The layout must handle it's own loop processing for the recordset.
+
+B. To allow Molajo to handle recordset process, don't include the custom.php file.
+
+Instead, use the top.php, header.php, body.php, footer.php and bottom.php files, as described below.
 
 2. How does the Molajo View process the recordset and render the layout files?
+
 The Molajo View loops through each row, one at a time.
-The following layoutFolder/layouts/ files are included, if existing.
+
+The following layout-type/layout-name/layouts/ files are included, if existing:
 
 A. Before any rows and if there is a top.php file:
     * beforeDisplayContent output is rendered;
@@ -132,44 +212,60 @@ C. After all rows have been processed, and if there is a footer.php file:
     * the footer.php file is included;
     * afterDisplayContent output is rendered;
 
-2. What columns are available in the row for the layout?
-To display the columns available for each row, set Show Column Information to true in the Menu Item parameters,
-    or if you are rendering a layout in the Administrator, use the Component Options.
-    Once the parameter has been saved, refresh the page. The system information will be displayed on the page.
 
-3. How is a column value displayed in a layout?
+VI. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
 
-4. Do I need to escape the output before displaying it in a layout?
+1. What data is available within the Layout file?
 
-No, the View will do this for you.
+A. $this->app
+
+<?php var_dump($this->app); ?>
+
+B. $this->document
+
+<?php var_dump($this->document); ?>
+
+C. $this->user
+
+<?php var_dump($this->user); ?>
+
+D. $this->request
+
+<?php var_dump($this->request); ?>
+
+E. $this->state
+
+<?php var_dump($this->state); ?>
+
+F. $this->params
+
+<?php var_dump($this->params); ?>
+
+G. $this->rowset
+
+<?php var_dump($this->app); ?>
+
+H. $this->row
+
+<?php var_dump($this->app); ?>
+
+I. $this->pagination
+
+<?php var_dump($this->app); ?>
+
+J. $this->layout_path
+
+<?php var_dump($this->app); ?>
+
+K. $this->layout
+
+<?php var_dump($this->app); ?>
+
+L. $this->$wrap;
+
+<?php var_dump($this->app); ?>
 
 
-IV. STATE
-
-1. What is "state?"
-
-2. What state values are available within a layout?
-
-3. How can state values be used in a layout?
-
-
-V. PARAMETERS
-
-1. What are parameters?
-
-2. What parameters values are available within a layout?
-
-3. How can parameter values be used in a layout?
-
-4. How can I create or modify parameter sets?
-
-VI. LAYOUT OUTPUT
-
-1. Classes and IDs - Parameters, etc.
-
-2. Adding Semanatic Data
-
-3. HMTL5
 
 VII. WORKING WITH DATES
 
@@ -177,14 +273,14 @@ VII. WORKING WITH DATES
 
 Dates can be formatted one of two ways, using PHP date or the JHtml class.
 
-1. How can PHP's Date function be used in a layout?
+2. How can PHP's Date function be used in a layout?
 
 http://php.net/manual/en/function.date.php
 
 Example:
 $today = date("F j, Y, g:i a"); // March 10, 2001, 5:16 pm
 
-2. How can Joomla's JHtml function be used in a layout to format dates?
+3. How can Joomla's JHtml function be used in a layout to format dates?
 
 $date	= JHtml::_('date', $this->row->created, JText::_('DATE_FORMAT_LC1'));
 $time	= JHtml::_('date', $this->row->checked_out_time, 'H:i');
@@ -197,21 +293,32 @@ DATE_FORMAT_LC3="d F Y"
 DATE_FORMAT_LC4="Y-m-d"
 DATE_FORMAT_JS1="y-m-d"
 
-4. How can I change the date formats for Joomla?
-Date formats can be changed by overriding the language file for your implementation.
+4. How can I change the date formats for Molajo?
 
-VIII. INTEGRATING WITH OTHER VIEW OUTPUT
+Date formats can be changed by overriding the language file.
 
-1. How can I render the output for another View?
 
-2. How can I feed the View properties for the given row?
 
-3. 
+
+VIII. INTEGRATING OTHER OUTPUT
+
+1. How can I render the output for another Component View within the Layout file?
+
+2. How can I render Module output within the Layout File?
+
+
+
 
 IX. TEMPLATE SYSTEMS
 
-1. What does Molajo use as a default layout environemnt?
+1. What does Molajo use as a default layout environment?
+
+The MolajoView class handles layout processing. Normal PHP are used in core Layout files.
 
 2. How can I use Twig to render Molajo output?
 
+Babs?
+
 3. How can I add <insert name of your favorite Template System here> to render Molajo Output?
+
+Simply load the files needed within your component entry point file and then use them in your Layout.

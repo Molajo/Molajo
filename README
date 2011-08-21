@@ -1,0 +1,22 @@
+Molajo has several README files located:
+
+1. Layouts - root of the layouts folder.
+
+      I. INTRODUCTION
+      II. WHAT IS A MOLAJO LAYOUT?
+      III. WHERE ARE LAYOUTS LOCATED?
+      IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING:
+      V. HOW DO I OVERRIDE A CORE LAYOUT?
+      VI. WORKING WITH APPLICATION, COMPONENT, ASSET, AND LAYOUT MEDIA
+      V. WORKING WITH QUERY RESULTS IN LAYOUTS
+      VI. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
+      VII. WORKING WITH DATES
+      VIII. INTEGRATING OTHER OUTPUT
+      IX. TEMPLATE SYSTEMS
+
+
+2. Components - administrator/component/your-component-name root of your generated Component
+
+
+This README file on the root of the website lists all README files available.
+

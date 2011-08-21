@@ -357,6 +357,10 @@ class MolajoACLCore extends MolajoACL
     {
         return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
     }
+    public function checkLoginAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    {
+        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+    }
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getXYZQueryInformation
@@ -447,7 +451,9 @@ class MolajoACLCore extends MolajoACL
 
         $acl	= new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
-        $query->where($prefix.'access IN ('.$list.')');
+        $query->from('#__assets as assets');
+        $query->where($prefix.'asset_id = assets.id');
+        $query->where('assets.access IN ('.$list.')');
 
         return;
     }
@@ -630,8 +636,6 @@ class MolajoACLCore extends MolajoACL
             /** error handling */
             if ($db->getErrorNum()) {
                //amy $this->setError($db->getErrorMsg());
-                echo 'fuck';
-                die();
                 return false;
 
             } else if (count($options) == 0) {

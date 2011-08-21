@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.application.input');
 
 /**
- * Molajo Input Cookie Class
+ * Joomla Input Cookie Class
  *
  * @package     Joomla.Platform
  * @subpackage  Application

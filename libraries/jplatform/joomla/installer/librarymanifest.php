@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.filesystem.file');
 
 /**
- * Molajo Library Manifest File
+ * Joomla Library Manifest File
  *
  * @package     Joomla.Platform
  * @subpackage  Installer

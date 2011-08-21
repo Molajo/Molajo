@@ -13,9 +13,9 @@ jimport('joomla.filesystem.helper');
 jimport('joomla.utilities.utility');
 
 /**
- * Molajo Stream Interface
+ * Joomla Stream Interface
  *
- * The Molajo stream interface is designed to handle files as streams
+ * The Joomla stream interface is designed to handle files as streams
  * where as the legacy JFile static class treated files in a rather
  * atomic manner.
  *
@@ -177,7 +177,7 @@ class JStream extends JObject
 		$retval = false;
 
 		if (isset($url['scheme'])) {
-			// If we're dealing with a Molajo stream, load it
+			// If we're dealing with a Joomla stream, load it
 			if (JFilesystemHelper::isJoomlaStream($url['scheme'])) {
 				require_once dirname(__FILE__).'/streams/'.$url['scheme'].'.php';
 			}
