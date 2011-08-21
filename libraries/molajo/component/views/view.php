@@ -146,9 +146,9 @@ class MolajoView extends JView
      * Looks for path of Request Layout as a layout folder, in this order:
      *
      *  1. [template]/html/[extension-name]/[viewname(if component)]/[layout-folder]
-     *  2. [template]/html/[layout-folder]
-     *  3. [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder]
-     *  4. layouts/[$layout_type]/[layout-folder]
+     *  2. [template]/[layout-type]/[layout-folder]
+     *  3. [extension_type]/[extension-name]/[views/viewname(if component)]/tmpl/[layout-folder]
+     *  4. layouts/[layout_type]/[layout-folder]
      *
      * @return bool|string
      */
@@ -171,7 +171,7 @@ class MolajoView extends JView
             }
         }
 
-        /** 2. @var $templateLayoutPath [template]/html/[layout-folder] */
+        /** 2. @var $templateLayoutPath [template]/[layout-folder] */
         $templateLayoutPath = $template.'/'.$layout_type;
 
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
@@ -220,7 +220,7 @@ class MolajoView extends JView
             $this->layout_path = $extensionPath.'/'.$layout;
             return;
 
-        /** 4. molajao library **/
+        /** 4. molajo library **/
         } else if (is_dir($corePath.'/'.$layout)) {
             $this->layout_path = $corePath.'/'.$layout;
             return;
@@ -382,6 +382,7 @@ class MolajoView extends JView
      * 1. Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js]
      * 2. Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js]
      * 3. Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js]
+     * 4. Layout specific CSS and JS in => layouts/[layout-type]/[layout-name]/css[js]/XYZ.css[js]
      *
      * Note: Right-to-left css files should begin with rtl_
      *

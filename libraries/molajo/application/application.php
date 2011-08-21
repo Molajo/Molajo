@@ -138,7 +138,6 @@ class MolajoApplication extends JObject
 
 			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 			$path = $info->path.'/includes/application.php';
-
 			if (file_exists($path)) {
 				require_once $path;
 				$classname = $prefix.ucfirst($application);
