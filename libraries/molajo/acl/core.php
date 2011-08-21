@@ -636,8 +636,6 @@ class MolajoACLCore extends MolajoACL
             /** error handling */
             if ($db->getErrorNum()) {
                //amy $this->setError($db->getErrorMsg());
-                echo 'fuck';
-                die();
                 return false;
 
             } else if (count($options) == 0) {

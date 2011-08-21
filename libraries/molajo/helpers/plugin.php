@@ -194,7 +194,7 @@ abstract class MolajoPluginHelper
             ->order('ordering');
 
         $acl = new MolajoACL ();
-//        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
+        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
 
         /** run query **/
         $hash = hash('md5',$query->__toString(), false);
