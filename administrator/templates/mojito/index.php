@@ -6,7 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-include dirname(__FILE__).'/include/css.php';
+include dirname(__FILE__).'/include/head.php';
 
 if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
 <!DOCTYPE html>
@@ -17,17 +17,18 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
 <head>
     <jdoc:include type="head" />
 </head>
-<body id="minwidth-body">
+<body>
 	<div class="container">
         <jdoc:include type="modules" name="header" wrap="header" />
-        <jdoc:include type="modules" name="launchpad" wrap="nav" />
-        <?php
-        if (MolajoFactory::getUser()->id == 0) :
-            include dirname(__FILE__).'/include/login.php';
+		<jdoc:include type="message" />
+		<?php
+        if (MolajoFactory::getUser()->id == 0) : ?>
+            <jdoc:include type="component" />
+        <?php 
         else :
         ?>
-        <div class="container">
             <section>
+			<jdoc:include type="modules" name="launchpad" wrap="nav" />
             <?php
                 if (MolajoFactory::getSession()->get('page.option') == 'com_dashboard') :
                     include dirname(__FILE__).'/include/dashboard.php';
@@ -36,7 +37,6 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
                 endif;
                 ?>
             </section>
-        </div>
         <?php
         endif;
         ?>

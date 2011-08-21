@@ -7,4 +7,6 @@
  */
 defined('MOLAJO') or die;
 ?>
-<h1><?php echo $this->rowset[0]->site_title; ?></h1>
+<header>
+	<h1><?php echo $this->rowset[0]->site_title; ?></h1>
+</header>
