@@ -161,7 +161,7 @@ abstract class MolajoModuleHelper
             $request = array();
             $state = array();
             $params = array();
-            $rowset = array();
+            $rowset = array ();
             $pagination = array();
             $layout = 'default';
             $wrap = 'none';
@@ -216,16 +216,14 @@ abstract class MolajoModuleHelper
             /** 10. Wrap */
             $view->wrap = $wrap;
 
-            /** render layout and wrap */
-        ob_start();
-		$view->display();
-        $output = ob_get_contents();
-        ob_end_clean();
+            /** display view */
+            $view->display();
+
 		}
 
 		MolajoFactory::getApplication()->scope = $scope;
 
-		return $output;
+		return; 
 	}
 
     /**
@@ -475,9 +473,9 @@ abstract class MolajoModuleHelper
 
 		$wrkarounds = true;
 
-//        $acl = new MolajoACL();
-//		$view_levels = md5(serialize ($acl->getList('viewaccess')));
-$view_levels='';
+        $acl = new MolajoACL();
+		$view_levels = md5(serialize ($acl->getList('viewaccess')));
+
 		switch ($cacheparams->cachemode) {
 
 			case 'id':

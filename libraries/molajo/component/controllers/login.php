@@ -94,8 +94,7 @@ class MolajoControllerLogin extends MolajoController
 
 		// Trigger onUserLoginFailure Event.
         $results = $this->dispatcher->trigger('onUserLoginFailure', array((array)$response));
-       echo 'hello'.var_dump($results);
-        die();
+
 		// If silent is set, just return false.
 		if (isset($options['silent']) && $options['silent']) {
 			return false;

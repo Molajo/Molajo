@@ -111,33 +111,36 @@ class MolajoView extends JView
             // load an error layout
             return;
         }
+
         $renderedOutput = $this->renderLayout ($this->layout, 'extensions');
 
-        /** Render Wrap around Rendered Layout */
+        /** Wrap Rendered Output */
         if ($this->wrap == 'horz') { $this->wrap = 'horizontal'; }
         if ($this->wrap == 'xhtml') { $this->wrap = 'div'; }
         if ($this->wrap == 'rounded') { $this->wrap = 'div'; }
         if ($this->wrap == 'raw') { $this->wrap = 'none'; }
         if ($this->wrap == '') { $this->wrap = 'none'; }
+        if ($this->wrap == null) { $this->wrap = 'none'; }
 
-        $this->findPath($this->wrap, 'wrap');
-
-        /** Wrap rowset */
-        $this->rowset = array();
-
-		$this->rowset[0]->title             = $this->request['wrap_title'];
-		$this->rowset[0]->subtitle          = $this->request['wrap_subtitle'];
-        $this->rowset[0]->published_date    = $this->request['wrap_date'];
-        $this->rowset[0]->author            = $this->request['wrap_author'];
-		$this->rowset[0]->position          = $this->request['position'];
-		$this->rowset[0]->more_array        = $this->request['wrap_more_array'];
-
-		$this->rowset[0]->content           = $renderedOutput;
-
+        $this->findPath($this->wrap, 'wraps');
         if ($this->layout_path === false) {
             echo $renderedOutput;
+            return;
         }
-        echo $this->renderLayout ($this->wrap, 'wrap');
+
+        $this->rowset = array();
+        $tmpobj = new JObject();
+        $tmpobj->set('title', $this->request['wrap_title']);
+        $tmpobj->set('subtitle', $this->request['wrap_subtitle']);
+        $tmpobj->set('published_date', $this->request['wrap_date']);
+        $tmpobj->set('author', $this->request['wrap_author']);
+        $tmpobj->set('position', $this->request['position']);
+        $tmpobj->set('content', $renderedOutput);
+        $this->rowset[] = $tmpobj;
+
+        echo $this->renderLayout ($this->wrap, 'wraps');
+        
+        return;
     }
 
     /**
@@ -154,6 +157,9 @@ class MolajoView extends JView
      */
     protected function findPath ($layout, $layout_type)
     {
+        /** initialize layout */
+        $this->layout_path = false;
+
         /** @var $template */
         $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication()->getTemplate().'/html';
 
@@ -173,6 +179,10 @@ class MolajoView extends JView
 
         /** 2. @var $templateLayoutPath [template]/[layout-folder] */
         $templateLayoutPath = $template.'/'.$layout_type;
+        if ($layout_type == 'extensions') {
+        } else {
+            $templateExtensionPath = $templateLayoutPath;
+        }
 
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
         $extensionPath = '';
@@ -186,6 +196,8 @@ class MolajoView extends JView
             } else {
                 $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
             }
+        } else {
+            $extensionPath = $templateLayoutPath;
         }
 
         /** 4. $corePath layouts/[layout_type]/[layout-folder] */
@@ -247,6 +259,12 @@ class MolajoView extends JView
     */
     protected function renderLayout ($layout, $layout_type)
     {
+
+//echo 'layout path '.$this->layout_path.' <br />';
+//echo 'in view renderLayout rowset <pre>';print_r($this->rowset);echo '</pre>';
+//echo 'in view renderLayout request <pre>';print_r($this->request);echo '</pre>';
+
+
         /** @var $rowCount */
         $rowCount = 1;
 
@@ -298,7 +316,7 @@ class MolajoView extends JView
             foreach ($this->rowset as $this->row) {
 
                 /** layout: top */
-                if ($rowCount == 1 && (!$layout == 'system')) {
+                if ($rowCount == 1) {
 
                     /** event: Before Content Display */
                     if (isset($this->row->event->beforeDisplayContent)) {
@@ -309,37 +327,41 @@ class MolajoView extends JView
                         include $this->layout_path.'/layouts/top.php';
                     }
                 }
+          
+                if ($this->row == null) {
+                } else {
 
-                /** item: header */
-                if (file_exists($this->layout_path.'/layouts/header.php')) {
-                    include $this->layout_path.'/layouts/header.php';
+                    /** item: header */
+                    if (file_exists($this->layout_path.'/layouts/header.php')) {
+                        include $this->layout_path.'/layouts/header.php';
 
-                    /** event: After Display of Title */
-                    if (isset($this->row->event->afterDisplayTitle)) {
-                        echo $this->row->event->afterDisplayTitle;
+                        /** event: After Display of Title */
+                        if (isset($this->row->event->afterDisplayTitle)) {
+                            echo $this->row->event->afterDisplayTitle;
+                        }
                     }
+
+                    /** item: body */
+                    if (file_exists($this->layout_path.'/layouts/body.php')) {
+                        include $this->layout_path.'/layouts/body.php';
+                    }
+
+                    /** item: footer */
+                    if (file_exists($this->layout_path.'/layouts/footer.php')) {
+                        include $this->layout_path.'/layouts/footer.php';
+                    }
+
+                    $rowCount++;
                 }
 
-                /** item: body */
-                if (file_exists($this->layout_path.'/layouts/body.php')) {
-                    include $this->layout_path.'/layouts/body.php';
-                }
+                /** layout: bottom */
+                if (file_exists($this->layout_path.'/layouts/bottom.php')) {
+                    include $this->layout_path.'/layouts/bottom.php';
 
-                /** item: footer */
-                if (file_exists($this->layout_path.'/layouts/footer.php')) {
-                    include $this->layout_path.'/layouts/footer.php';
-                }
-
-                $rowCount++;
-            }
-
-            /** layout: bottom */
-            if (file_exists($this->layout_path.'/layouts/bottom.php')) {
-                include $this->layout_path.'/layouts/bottom.php';
-
-                /** event: After Layout is finished */
-                if (isset($this->row->event->afterDisplayContent)) {
-                    echo $this->row->event->afterDisplayContent;
+                    /** event: After Layout is finished */
+                    if (isset($this->row->event->afterDisplayContent)) {
+                        echo $this->row->event->afterDisplayContent;
+                    }
                 }
             }
         }

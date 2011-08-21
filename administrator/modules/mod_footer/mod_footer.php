@@ -1,48 +1,46 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Menu
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @subpackage  Footer
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'custom');
-$wrap = $params->def('wrap', 'div');
+/** initialize  */
+$tmpobj = new JObject();
+$layout = $params->def('layout', 'admin_footer');
+$wrap = $params->def('wrap', 'footer');
 
 /**
  *  Line 1
  */
-$current_year	= MolajoFactory::getDate()->format('Y');
-$csite_name	    = MolajoFactory::getApplication()->getCfg('sitename');
-
 if (JString::strpos(JText :: _('MOD_FOOTER_LINE1'), '%date%')) {
-	$line1 = str_replace('%date%', $current_year, JText :: _('MOD_FOOTER_LINE1'));
+	$line1 = str_replace('%date%', MolajoFactory::getDate()->format('Y'), JText :: _('MOD_FOOTER_LINE1'));
 } else {
-	$line1 = JText :: _('MOD_FOOTER_LINE1');
+    $line1 = JText :: _('MOD_FOOTER_LINE1');
 }
-
 if (JString::strpos($line1, '%sitename%')) {
-	$line1 = str_replace('%sitename%', $csite_name, $line1);
+	$line1 = str_replace('%sitename%', MolajoFactory::getApplication()->getCfg('sitename', 'Molajo'), $line1);
 }
-$rowset[0]->line1 = $line1;
+$tmpobj->set('line1', $line1);
 
 /**
  *  Line 2
  */
-$rowset[0]->link = $params->def('link', 'http://molajo.org');
-$rowset[0]->linked_text = $params->def('linked_text', 'Molajo&#174;');
-$rowset[0]->remaining_text = $params->def('remaining_text', 'is free software.');
-if ($params->def('version', '')) {
-    $rowset[0]->version = JText::_(MOLAJOVERSION). ' '.MOLAJOVERSION;
-} else {
-    $rowset[0]->version = $params->def('version', '');
-}
+$link = $params->def('link', 'http://molajo.org');
+$linked_text = $params->def('linked_text', 'Molajo&#153;');
+$remaining_text = $params->def('remaining_text', ' is free software.');
+$version = $params->def('version', JText::_(MOLAJOVERSION));
 
-$rowset[0]->line2 = '<a href="'.$rowset[0]->link.'">'.$rowset[0]->linked_text.'</a>';
-$rowset[0]->line2 .= $rowset[0]->remaining_text;
-$rowset[0]->line2 .= $rowset[0]->version;
+$tmpobj->set('link', $link);
+$tmpobj->set('linked_text', $linked_text);
+$tmpobj->set('remaining_text', $remaining_text);
+$tmpobj->set('version', $version);
 
-$rowset[0]->version = $rowset[0]->line2;
+$line2 = '<a href="'.$link.'">'.$linked_text.' v.'.$version.'</a>';
+$line2 .= $remaining_text;
+$tmpobj->set('line2', $line2);
 
+/** save recordset */
+$rowset[] = $tmpobj;
