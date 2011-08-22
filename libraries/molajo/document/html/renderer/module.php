@@ -35,7 +35,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		{
 			$title	= isset($attribs['title']) ? $attribs['title'] : null;
 
-			$module = JModuleHelper::getModule($module, $title);
+			$module = MolajoModuleHelper::getModule($module, $title);
 
 			if (!is_object($module))
 			{
@@ -58,8 +58,8 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		// Get the user and configuration object
-		// $user = JFactory::getUser();
-		$conf = JFactory::getConfig();
+		// $user = MolajoFactory::getUser();
+		$conf = MolajoFactory::getConfig();
 
 		// Set the module content
 		if (!is_null($content)) {
@@ -80,7 +80,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		$contents = '';
-		// Default for compatibility purposes. Set cachemode parameter or use JModuleHelper::moduleCache from within the
+		// Default for compatibility purposes. Set cachemode parameter or use MolajoModuleHelper::moduleCache from within the
 		// module instead
 		$cachemode = $params->get('cachemode', 'oldstatic');
 
@@ -90,15 +90,15 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 			// Default to itemid creating method and workarounds on
 			$cacheparams = new stdClass;
 			$cacheparams->cachemode = $cachemode;
-			$cacheparams->class = 'JModuleHelper';
+			$cacheparams->class = 'MolajoModuleHelper';
 			$cacheparams->method = 'renderModule';
 			$cacheparams->methodparams = array($module, $attribs);
 
-			$contents = JModuleHelper::ModuleCache($module, $params, $cacheparams);
+			$contents = MolajoModuleHelper::ModuleCache($module, $params, $cacheparams);
 
 		}
 		else {
-			$contents = JModuleHelper::renderModule($module, $attribs);
+			$contents = MolajoModuleHelper::renderModule($module, $attribs);
 		}
 
 		return $contents;

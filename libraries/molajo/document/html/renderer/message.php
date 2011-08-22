@@ -36,7 +36,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 		$lists	= null;
 
 		// Get the message queue
-		$messages = JFactory::getApplication()->getMessageQueue();
+		$messages = MolajoFactory::getApplication()->getMessageQueue();
 
 		// Build the sorted message list
 		if (is_array($messages) && !empty($messages)) {

@@ -17,8 +17,6 @@ defined('MOLAJO') or die;
  * @since       1.0
  */
 
-jimport('joomla.document.document');
-
 class MolajoDocumentFeed extends MolajoDocument
 {
 	/**
@@ -236,9 +234,9 @@ class MolajoDocumentFeed extends MolajoDocument
 	}
 
 	/**
-	 * Adds an JFeedItem to the feed.
+	 * Adds an MolajoFeedItem to the feed.
 	 *
-	 * @param   object JFeedItem $item The feeditem to add to the feed.
+	 * @param   object MolajoFeedItem $item The feeditem to add to the feed.
 	 *
 	 * @since  1.0
 	 */
@@ -250,13 +248,13 @@ class MolajoDocumentFeed extends MolajoDocument
 }
 
 /**
- * JFeedItem is an internal class that stores feed item information
+ * MolajoFeedItem is an internal class that stores feed item information
  *
  * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
-class JFeedItem extends JObject
+class MolajoFeedItem extends JObject
 {
 	/**
 	 * Title item element
@@ -380,9 +378,9 @@ class JFeedItem extends JObject
 
 
 	 /**
-	 * Set the JFeedEnclosure for this item
+	 * Set the MolajoFeedEnclosure for this item
 	 *
-	 * @param   object  $enclosure  The JFeedItem to add to the feed.
+	 * @param   object  $enclosure  The MolajoFeedItem to add to the feed.
 	 *
 	 * @since  1.0
 	 */
@@ -392,13 +390,13 @@ class JFeedItem extends JObject
 }
 
 /**
- * JFeedEnclosure is an internal class that stores feed enclosure information
+ * MolajoFeedEnclosure is an internal class that stores feed enclosure information
  *
  * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
-class JFeedEnclosure extends JObject
+class MolajoFeedEnclosure extends JObject
 {
 	/**
 	 * URL enclosure element
@@ -432,13 +430,13 @@ class JFeedEnclosure extends JObject
 }
 
 /**
- * JFeedImage is an internal class that stores feed image information
+ * MolajoFeedImage is an internal class that stores feed image information
  *
  * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
-class JFeedImage extends JObject
+class MolajoFeedImage extends JObject
 {
 	/**
 	 * Title image attribute

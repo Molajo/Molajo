@@ -16,9 +16,6 @@ defined('MOLAJO') or die;
  * @subpackage  Document
  * @since       1.0
  */
-
-jimport('joomla.document.document');
-
 class MolajoDocumentError extends MolajoDocument
 {
 	/**

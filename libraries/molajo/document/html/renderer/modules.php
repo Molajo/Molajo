@@ -33,7 +33,7 @@ class MolajoDocumentRendererModules extends MolajoDocumentRenderer
 		$renderer	= $this->_doc->loadRenderer('module');
 		$buffer		= '';
 
-		foreach (JModuleHelper::getModules($position) as $mod) {
+		foreach (MolajoModuleHelper::getModules($position) as $mod) {
 			$buffer .= $renderer->render($mod, $params, $content);
 		}
 		return $buffer;
