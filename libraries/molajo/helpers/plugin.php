@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * Plugin Helper
  *
  * @package     Molajo
  * @subpackage  Plugin Helper

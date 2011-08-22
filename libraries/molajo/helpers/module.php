@@ -133,6 +133,8 @@ abstract class MolajoModuleHelper
 	 */
 	public static function renderModule($module, $attribs = array())
 	{
+        $output = '';
+
 		// Record the scope.
 		$scope = MolajoFactory::getApplication()->scope;
 

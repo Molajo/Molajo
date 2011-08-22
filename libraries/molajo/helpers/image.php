@@ -29,8 +29,82 @@ class MolajoImageHelper   {
      * @return String containing either just a URL or a complete image tag
      * @source http://gravatar.com/site/implement/images/php/
      */
-    function getMe ( $email )
-    {
-        return $email;
-    }
+
+	/**
+	 * getImage
+     *
+     * Build an SQL query to select an image.
+	 *
+	 * @return	JDatabaseQuery
+	 * @since	1.0
+	 */
+	public function getImage($id, $size=0)
+	{
+		$db = JFactory::getDBO();
+		$query	= $db->getQuery(true);
+
+        $query->select('a.c_filename');
+		$query->select('a.c_file');
+		$query->select('a.c_filesize');
+		$query->from('`#__images` AS a');
+        if (is_numeric($id)) {
+            $query->where('a.id = '.(int) $id);
+        }
+        $db->setQuery($query->__toString());
+        $results = $db->loadAssocList();
+
+        /** write the file */
+        jimport('joomla.filesystem.file');
+        jimport('joomla.filesystem.folder');
+        require_once dirname(__FILE__).'/resize-class.php';
+
+        /** folders */
+        if (JFolder::exists(MOLAO_PATH_SITE.'/images/lc')) {
+        } else {
+            JFolder::create(MOLAO_PATH_SITE.'/images/lc');
+        }
+        if (JFolder::exists(MOLAO_PATH_SITE.'/images/lc/thumbs')) {
+        } else {
+            JFolder::create(MOLAO_PATH_SITE.'/images/lc/thumbs');
+        }
+
+        /** paths */
+        $imagePath = MOLAO_PATH_SITE.'/images/lc/'.$results[0]['c_filename'];
+        $imagePathThumb = MOLAO_PATH_SITE.'/images/lc/thumbs/'.$results[0]['c_filename'];
+        $imagePathSrc = '../images/lc/'.$results[0]['c_filename'];
+        $imagePathSrcThumb = '../images/lc/thumbs/'.$results[0]['c_filename'];
+
+        /** save normal size */
+        if (JFile::exists($imagePath)) {
+        } else {
+            header('Content-type: '.'jpg');
+            header('Content-length: '.$results[0]['c_filesize']);
+
+            if(JFile::write($imagePath, $results[0]['c_file'])) {
+            } else {
+                echo JText::_( 'Error writing image to images folder' );
+                return;
+            }
+        }
+
+        /** create thumb */
+        if (JFile::exists($imagePathThumb)) {
+        } else {
+            // *** 1) Initialise / load image
+            $resizeObj = new resize($imagePath);
+
+            // *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+            $resizeObj -> resizeImage(75, 75, 'crop');
+
+            // *** 3) Save image
+            $resizeObj -> saveImage($imagePathThumb, 100);
+        }
+
+        /** return image thumb or normal size */
+        if ($size == 1) {
+            return $imagePathSrcThumb;
+        } else {
+            return $imagePathSrc;
+        }
+	}
 }

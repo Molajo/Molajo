@@ -207,8 +207,6 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/helper.php', 'JUserHelper
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/user/user.php', 'MolajoUser');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/user.php', 'JUser');
 
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/user/authentication.php', 'JAuthentication');
-
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/uri.php', 'JURI');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/browser.php', 'JBrowser');
 

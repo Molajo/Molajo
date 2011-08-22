@@ -12,4 +12,3 @@ $filehelper->requireClassFile(LIBRARIES.'/akismet/Akismet.class.php', 'Akismet')
 $filehelper->requireClassFile(LIBRARIES.'/mollom/mollom.php', 'Mollom');
 require_once LIBRARIES.'/recaptcha/recaptchalib.php';
 $filehelper->requireClassFile(LIBRARIES.'/securimage/securimage.php', 'Securimage');
-$filehelper->requireClassFile(LIBRARIES.'/wideimage/WideImage.php', 'WideImage');
