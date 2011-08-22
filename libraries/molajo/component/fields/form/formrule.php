@@ -63,7 +63,7 @@ class MolajoFormRule
 
 		// Check for a valid regex.
 		if (empty($this->regex)) {
-			throw new MolajoException(JText::sprintf('MOLAJO_FORM_INVALID_FORM_RULE', get_class($this)));
+			throw new MolajoException(MolajoText::sprintf('MOLAJO_FORM_INVALID_FORM_RULE', get_class($this)));
 		}
 
 		// Add unicode property support if available.

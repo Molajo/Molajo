@@ -35,7 +35,7 @@ class MolajoTableMenuType extends MolajoTable
 	{
 		$this->menu_id = JApplication::stringURLSafe($this->menu_id);
 		if (empty($this->menu_id)) {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_EMPTY'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_EMPTY'));
 			return false;
 		}
 
@@ -56,7 +56,7 @@ class MolajoTableMenuType extends MolajoTable
 
 		if ($db->loadResult())
 		{
-			$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_MENUTYPE_EXISTS', $this->menu_id));
+			$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MENUTYPE_EXISTS', $this->menu_id));
 			return false;
 		}
 
@@ -93,7 +93,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('checked_out !=0');
 			$this->_db->setQuery($query);
 			if ($this->_db->loadRowList()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), JText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_CHECKOUT')));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_CHECKOUT')));
 				return false;
 			}
 
@@ -107,7 +107,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('checked_out !=0');
 			$this->_db->setQuery($query);
 			if ($this->_db->loadRowList()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), JText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_CHECKOUT')));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENUTYPE_CHECKOUT')));
 				return false;
 			}
 
@@ -118,7 +118,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('menu_id='.$this->_db->quote($table->menu_id));
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				return false;
 			}
 
@@ -130,7 +130,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				return false;
 			}
 		}
@@ -170,7 +170,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('(checked_out NOT IN (0,'.(int) $userId.') OR home=1 AND language='.$this->_db->quote('*').')');
 			$this->_db->setQuery($query);
 			if ($this->_db->loadRowList()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), JText::_('MOLAJO_DATABASE_ERROR_MENUTYPE')));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENUTYPE')));
 				return false;
 			}
 
@@ -184,7 +184,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('checked_out !=0');
 			$this->_db->setQuery($query);
 			if ($this->_db->loadRowList()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), JText::_('MOLAJO_DATABASE_ERROR_MENUTYPE')));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENUTYPE')));
 				return false;
 			}
 
@@ -196,7 +196,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('application_id=0');
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				return false;
 			}
 
@@ -208,7 +208,7 @@ class MolajoTableMenuType extends MolajoTable
 			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
 			$this->_db->setQuery($query);
 			if (!$this->_db->query()) {
-				$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				return false;
 			}
 		}

@@ -8,8 +8,6 @@
 // Check to ensure this file is included in Molajo
 defined('MOLAJO') or die;
 
-jimport('joomla.application.component.model');
-
 /**
  * This models supports retrieving lists of article categories.
  *

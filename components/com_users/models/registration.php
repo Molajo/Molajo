@@ -74,7 +74,7 @@ class UsersModelRegistration extends JModelForm
 			$user->set('activation', $data['activation']);
 			$data['siteurl']	= JUri::base();
 			$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-			$data['activate'] = $base.JRoute::_('index.php?option=com_users&task=registration.activate&token='.$data['activation'], false);
+			$data['activate'] = $base.MolajoRoute::_('index.php?option=com_users&task=registration.activate&token='.$data['activation'], false);
 			$data['fromname'] = $config->get('fromname');
 			$data['mailfrom'] = $config->get('mailfrom');
 			$data['sitename'] = $config->get('sitename');
@@ -343,7 +343,7 @@ class UsersModelRegistration extends JModelForm
 			// Set the link to confirm the user email.
 			$uri = JURI::getInstance();
 			$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-			$data['activate'] = $base.JRoute::_('index.php?option=com_users&task=registration.activate&token='.$data['activation'], false);
+			$data['activate'] = $base.MolajoRoute::_('index.php?option=com_users&task=registration.activate&token='.$data['activation'], false);
 
 			$emailSubject	= JText::sprintf(
 				'COM_USERS_EMAIL_ACCOUNT_DETAILS',
@@ -366,7 +366,7 @@ class UsersModelRegistration extends JModelForm
 			// Set the link to activate the user account.
 			$uri = JURI::getInstance();
 			$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-			$data['activate'] = $base.JRoute::_('index.php?option=com_users&task=registration.activate&token='.$data['activation'], false);
+			$data['activate'] = $base.MolajoRoute::_('index.php?option=com_users&task=registration.activate&token='.$data['activation'], false);
 
 			$emailSubject	= JText::sprintf(
 				'COM_USERS_EMAIL_ACCOUNT_DETAILS',

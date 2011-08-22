@@ -121,7 +121,7 @@ class MolajoFieldPublish_up extends MolajoField
             if ($item->publish_up == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->publish_up, JText::_('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->publish_up, MolajoText::_('DATE_FORMAT_LC4'));
             }
 
             return $render;

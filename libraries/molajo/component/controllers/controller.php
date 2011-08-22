@@ -346,7 +346,7 @@ class MolajoController extends JController
         $results = $acl->authoriseTask ($this->request['option'], $this->request['view'], $checkTask, $checkId, $checkCatid, $checkTable);
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -395,7 +395,7 @@ class MolajoController extends JController
         
         /** error processing **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_CHECK_IN_FAILED'));
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_CHECK_IN_FAILED'));
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -427,7 +427,7 @@ class MolajoController extends JController
         /** model: checkin **/
         if ($this->table->checked_out == MolajoFactory::getUser()->get('id')) {
         } else {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER').' '.$this->getTask());
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER').' '.$this->getTask());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -461,7 +461,7 @@ class MolajoController extends JController
         
         /** error processing **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -500,7 +500,7 @@ class MolajoController extends JController
 
         /** error processing **/
         if ($versionKey === false) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_VERSION_SAVE_FAILED'));
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_VERSION_SAVE_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -509,7 +509,7 @@ class MolajoController extends JController
         /** Molajo_Note: New Event onContentCreateVersion so that all data stays in sync **/
         $results = $this->dispatcher->trigger('onContentCreateVersion', array($context, $this->id, $versionKey));
         if (count($results) && in_array(false, $results, true)) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_ON_CONTENT_CREATE_VERSION_EVENT_FAILED'));
             $this->redirectClass->setRedirectMessageType('error');
             return false;
         }
@@ -551,7 +551,7 @@ class MolajoController extends JController
 
         /** version delete failed **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED').' '.$this->model->getError());
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED').' '.$this->model->getError());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }

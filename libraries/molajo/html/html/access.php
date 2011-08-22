@@ -61,7 +61,7 @@ abstract class MolajoHtmlAccess
 		}
 		// If all levels is allowed, push it into the array.
 		elseif ($params) {
-			array_unshift($options, JHtml::_('select.option', '', JText::_('JOPTION_ACCESS_SHOW_ALL_LEVELS')));
+			array_unshift($options, JHtml::_('select.option', '', MolajoText::_('JOPTION_ACCESS_SHOW_ALL_LEVELS')));
 		}
 
 		return JHtml::_('select.genericlist', $options, $name,
@@ -106,7 +106,7 @@ abstract class MolajoHtmlAccess
 
 		// If all usergroups is allowed, push it into the array.
 		if ($allowAll) {
-			array_unshift($options, JHtml::_('select.option', '', JText::_('JOPTION_ACCESS_SHOW_ALL_GROUPS')));
+			array_unshift($options, JHtml::_('select.option', '', MolajoText::_('JOPTION_ACCESS_SHOW_ALL_GROUPS')));
 		}
 
 		return JHtml::_('select.genericlist', $options, $name,
@@ -214,7 +214,7 @@ abstract class MolajoHtmlAccess
 			$html[] = '		<input type="checkbox" name="'.$name.'[]" value="'.$item->id.'" id="'.$eid.'"';
 			$html[] = '			'.$checked.' />';
 			$html[] = '		<label for="'.$eid.'">';
-			$html[] = '			'.JText::_($item->title);
+			$html[] = '			'.MolajoText::_($item->title);
 			$html[] = '		</label>';
 			$html[] = '	</li>';
 		}

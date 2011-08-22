@@ -11,14 +11,103 @@ defined('MOLAJO') or die;
 @ini_set('magic_quotes_runtime', 0);
 @ini_set('zend.ze1_compatibility_mode', '0');
 
-if (!class_exists('MolajoVersion')) {
+if (class_exists('MolajoVersion')) {
+} else {
     require LIBRARIES.'/includes/version.php';
 }
+
+if (defined('JPATH_PLATFORM')) {
+} else {
+	define('JPATH_PLATFORM', LIBRARIES.'/jplatform');
+}
+
+// Detect the native operating system type.
+$os = strtoupper(substr(PHP_OS, 0, 3));
+if (!defined('IS_WIN')) {
+	define('IS_WIN', ($os === 'WIN') ? true : false);
+}
+if (!defined('IS_MAC')) {
+	define('IS_MAC', ($os === 'MAC') ? true : false);
+}
+if (!defined('IS_UNIX')) {
+	define('IS_UNIX', (($os !== 'MAC') && ($os !== 'WIN')) ? true : false);
+}
+
+// Import the platform version library if necessary.
+if (class_exists('JPlatform')) {
+} else {
+    require_once JPATH_PLATFORM.'/platform.php';
+}
+
+// Import the library loader if necessary.
+if (class_exists('JLoader')) {
+} else {
+    require_once JPATH_PLATFORM.'/loader.php';
+}
+
+/** factory */
+require_once LIBRARIES.'/molajo/application/factory.php';
+require_once LIBRARIES.'/overrides/factory.php';
+
+// Import the exception and error handling libraries.
+JLoader::import('joomla.error.error');
+JLoader::import('joomla.error.exception');
+
+/*
+ * If the HTTP_HOST environment variable is set we assume a Web request and
+ * thus we import the request library and most likely clean the request input.
+ */
+if (isset($_SERVER['HTTP_HOST'])) {
+	JLoader::import('joomla.environment.request');
+
+	// If an application flags it doesn't want this, adhere to that.
+	if (defined('_JREQUEST_NO_CLEAN')) {
+    } else {
+		JRequest::clean();
+	}
+}
+
+// Import the base object library.
+JLoader::import('joomla.base.object');
+
+/** MolajoText */
+if (class_exists('MolajoText')) {
+} else {
+    require_once MOLAJO_LIBRARY.'/application/text.php';
+}
+
+/**
+ *  File Helper
+ */
+if (class_exists('MolajoFileHelper')) {
+} else {
+    if (file_exists(MOLAJO_LIBRARY.'/helpers/file.php')) {
+        JLoader::register('MolajoFileHelper', MOLAJO_LIBRARY.'/helpers/file.php');
+    } else {
+        JError::raiseNotice(500, JText::_('MOLAJO_OVERRIDE_CREATE_MISSING_CLASS_FILE'.' '.'MolajoFileHelper'));
+        return;
+    }
+}
+$filehelper = new MolajoFileHelper();
+
+/** language */
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/language.php', 'JLanguage');
+
+/** text */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/route.php', 'MolajoRoute');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/methods.php', 'JRoute');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/methods.php', 'JText');
+
+/** registry */
+JLoader::register('MolajoRegistryFormat', MOLAJO_LIBRARY.'/utilities/format.php');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/registry.php', 'MolajoRegistry');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/authentication.php', 'MolajoAuthenticationResponse');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/authentication.php', 'JAuthenticationResponse');
 
 /**
  *  Installation Check
  */
-
 define('INSTALL_CHECK', false);
 if (MOLAJO_APPLICATION == 'installation'
     || (INSTALL_CHECK === false
@@ -67,23 +156,6 @@ if (MOLAJO_APPLICATION == 'installation') {
         $_PROFILER = JProfiler::getInstance('Application');
     }
 }
-
-/**
- *  File Helper
- */
-if (class_exists('MolajoFileHelper')) {
-} else {
-    if (file_exists(MOLAJO_LIBRARY.'/helpers/file.php')) {
-        JLoader::register('MolajoFileHelper', MOLAJO_LIBRARY.'/helpers/file.php');
-    } else {
-        JError::raiseNotice(500, JText::_('MOLAJO_OVERRIDE_CREATE_MISSING_CLASS_FILE'.' '.'MolajoFileHelper'));
-        return;
-    }
-}
-$filehelper = new MolajoFileHelper();
-
-/** language */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/language.php', 'JLanguage');
 
 /** Application */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/profiler.php', 'JProfiler');
@@ -145,6 +217,7 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/dispatcher.php', 'JDispatch
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilterInput');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filteroutput.php', 'JFilterOutput');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/utility.php', 'JUtility');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/simplecrypt.php', 'JSimplecrypt');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/string.php', 'JString');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/arrayhelper.php', 'JArrayHelper');
 
@@ -226,13 +299,6 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-
-/** registry */
-JLoader::register('MolajoRegistryFormat', MOLAJO_LIBRARY.'/utilities/format.php');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/registry.php', 'MolajoRegistry');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/authentication.php', 'MolajoAuthenticationResponse');
-$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/authentication.php', 'JAuthenticationResponse');
 
 /** cache */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/cache/controller.php', 'JCacheController');

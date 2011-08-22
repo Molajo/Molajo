@@ -120,14 +120,14 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 				// Create the group for the module
 				$groups['_']=array();
 				$groups['_']['id']=$this->id.'__';
-				$groups['_']['text']=JText::sprintf('JOPTION_FROM_MODULE');
+				$groups['_']['text']=MolajoText::sprintf('JOPTION_FROM_MODULE');
 				$groups['_']['items']=array();
 
 				foreach ($module_layouts as $file)
 				{
 					// Add an option to the module group
 					$value = JFile::stripExt($file);
-					$text = $lang->hasKey($key = strtoupper($module.'_LAYOUT_'.$value)) ? JText::_($key) : $value;
+					$text = $lang->hasKey($key = strtoupper($module.'_LAYOUT_'.$value)) ? MolajoText::_($key) : $value;
 					$groups['_']['items'][]	= JHtml::_('select.option', '_:'.$value, $text);
 				}
 			}
@@ -158,14 +158,14 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 							// Create the group for the template
 							$groups[$template->element]=array();
 							$groups[$template->element]['id']=$this->id.'_'.$template->element;
-							$groups[$template->element]['text']=JText::sprintf('JOPTION_FROM_TEMPLATE', $template->name);
+							$groups[$template->element]['text']=MolajoText::sprintf('JOPTION_FROM_TEMPLATE', $template->name);
 							$groups[$template->element]['items']=array();
 
 							foreach ($files as $file)
 							{
 								// Add an option to the template group
 								$value = JFile::stripExt($file);
-								$text = $lang->hasKey($key = strtoupper('TPL_'.$template->element.'_'.$module.'_LAYOUT_'.$value)) ? JText::_($key) : $value;
+								$text = $lang->hasKey($key = strtoupper('TPL_'.$template->element.'_'.$module.'_LAYOUT_'.$value)) ? MolajoText::_($key) : $value;
 								$groups[$template->element]['items'][]	= JHtml::_('select.option', $template->element.':'.$value, $text);
 							}
 						}

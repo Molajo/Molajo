@@ -153,10 +153,10 @@ class MolajoDateHelper {
         }
 
         if ($numeric_value == 1) {
-            return ', '.$numeric_value.' '.strtolower(JText::_($singular_literal));
+            return ', '.$numeric_value.' '.strtolower(MolajoText::_($singular_literal));
         }
 
-        return ', '.$numeric_value.' '.strtolower(JText::_($plural_literal));
+        return ', '.$numeric_value.' '.strtolower(MolajoText::_($plural_literal));
     }
 
     /**

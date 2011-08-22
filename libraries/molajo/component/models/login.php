@@ -64,10 +64,9 @@ class MolajoModelLogin extends JModel
 
 	public static function getLanguageList()
 	{
-		jimport('joomla.language.helper');
 		$languages = array();
-		$languages = MolajoLanguageHelper::createLanguageList(null, JPATH_BASE, false, true);
-		array_unshift($languages, JHtml::_('select.option', '', JText::_('JDEFAULT')));
+		$languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_PATH_BASE, false, true);
+		array_unshift($languages, JHtml::_('select.option', '', MolajoText::_('JDEFAULT')));
 		return JHtml::_('select.genericlist', $languages, 'lang', ' class="inputbox"', 'value', 'text', null);
 	}
 

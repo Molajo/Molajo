@@ -37,7 +37,7 @@ class MolajoElementContent extends JElement
 		if ($value) {
 			$article->load($value);
 		} else {
-			$article->title = JText::_('COM_CONTENT_SELECT_AN_ARTICLE');
+			$article->title = MolajoText::_('COM_CONTENT_SELECT_AN_ARTICLE');
 		}
 
 		$js = "
@@ -52,8 +52,8 @@ class MolajoElementContent extends JElement
 
 		JHtml::_('behavior.modal', 'a.modal');
 		$html = "\n".'<div class="fltlft"><input type="text" id="'.$name.'_name" value="'.htmlspecialchars($article->title, ENT_QUOTES, 'UTF-8').'" disabled="disabled" /></div>';
-//		$html .= "\n &#160; <input class=\"inputbox modal-button\" type=\"button\" value=\"".JText::_('JSELECT')."\" />";
-		$html .= '<div class="button2-left"><div class="blank"><a class="modal" title="'.JText::_('COM_CONTENT_SELECT_AN_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 650, y: 375}}">'.JText::_('JSELECT').'</a></div></div>'."\n";
+//		$html .= "\n &#160; <input class=\"inputbox modal-button\" type=\"button\" value=\"".MolajoText::_('JSELECT')."\" />";
+		$html .= '<div class="button2-left"><div class="blank"><a class="modal" title="'.MolajoText::_('COM_CONTENT_SELECT_AN_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 650, y: 375}}">'.MolajoText::_('JSELECT').'</a></div></div>'."\n";
 		$html .= "\n".'<input type="hidden" id="'.$name.'_id" name="'.$fieldName.'" value="'.(int)$value.'" />';
 
 		return $html;

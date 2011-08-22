@@ -39,7 +39,7 @@ $count = (int) $db->loadResult();
 if (JRequest::getInt('hidemainmenu')) {
 	$inboxLink = '';
 } else {
-	$inboxLink = JRoute::_('index.php?option=com_messages');
+	$inboxLink = MolajoRoute::_('index.php?option=com_messages');
 }
 
 // Set the inbox class.

@@ -33,7 +33,7 @@ JHtml::_('behavior.tooltip');
 MolajoFactory::getDocument()->addScriptDeclaration($script);
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_users&view=mail'); ?>" name="adminForm" method="post" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=mail'); ?>" name="adminForm" method="post" id="adminForm">
 
 	<div class="width-30 fltlft">
 		<fieldset class="adminform">

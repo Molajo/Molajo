@@ -38,7 +38,7 @@ class InstallerControllerUpdate extends JController {
 		$app = MolajoFactory::getApplication();
 		$redirect_url = $app->getUserState('com_installer.redirect_url');
 		if(empty($redirect_url)) {
-			$redirect_url = JRoute::_('index.php?option=com_installer&view=update',false);
+			$redirect_url = MolajoRoute::_('index.php?option=com_installer&view=update',false);
 		} else
 		{
 			// wipe out the user state when we're going to redirect
@@ -62,7 +62,7 @@ class InstallerControllerUpdate extends JController {
 		$model	= $this->getModel('update');
 		$model->purge();
 		$result = $model->findUpdates();
-		$this->setRedirect(JRoute::_('index.php?option=com_installer&view=update',false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=update',false));
 		//$view->display();
 	}
 
@@ -79,6 +79,6 @@ class InstallerControllerUpdate extends JController {
 		$model = $this->getModel('update');
 		$model->purge();
 		$model->enableSites();
-		$this->setRedirect(JRoute::_('index.php?option=com_installer&view=update',false), $model->_message);
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=update',false), $model->_message);
 	}
 }

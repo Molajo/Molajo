@@ -125,7 +125,7 @@ class MolajoTableContent extends MolajoTable
     {
         /** title **/
         if (trim($this->title) == '') {
-            $this->setError(JText::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
+            $this->setError(MolajoText::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
             return false;
         }
 

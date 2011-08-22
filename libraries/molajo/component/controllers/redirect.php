@@ -253,7 +253,7 @@ class MolajoControllerRedirect extends MolajoController
 		if ($this->successIndicator === false) {
 
             if ($this->redirectMessage == null || $this->redirectMessage == '') {
-                $this->redirectMessage = JText::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
+                $this->redirectMessage = MolajoText::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'error';
@@ -263,7 +263,7 @@ class MolajoControllerRedirect extends MolajoController
 
             /** defaults to success **/
             if ($this->redirectMessage == null) {
-                $this->redirectMessage = JText::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
+                $this->redirectMessage = MolajoText::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'message';
@@ -295,6 +295,6 @@ class MolajoControllerRedirect extends MolajoController
         }
         
         /** redirect **/
-        MolajoFactory::getApplication()->redirect(JRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
+        MolajoFactory::getApplication()->redirect(MolajoRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
     }
 }

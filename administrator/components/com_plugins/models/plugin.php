@@ -226,7 +226,7 @@ class PluginsModelPlugin extends JModelAdmin
 
 		if (empty($folder) || empty($element)) {
 			$app = MolajoFactory::getApplication();
-			$app->redirect(JRoute::_('index.php?option=com_plugins&view=plugins',false));
+			$app->redirect(MolajoRoute::_('index.php?option=com_plugins&view=plugins',false));
 		}
 		// Try 1.6 format: /plugins/folder/element/element.xml
 		$formFile = JPath::clean(JPATH_PLUGINS.'/'.$folder.'/'.$element.'/'.$element.'.xml');

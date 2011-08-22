@@ -33,7 +33,7 @@ $script .= "	Joomla.submitform(task, document.getElementById('module-form'));
 
 MolajoFactory::getDocument()->addScriptDeclaration($script);
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_modules&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="module-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_modules&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="module-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('JDETAILS'); ?></legend>

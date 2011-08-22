@@ -45,7 +45,7 @@ JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 		Joomla.submitform(task);
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_users&view=groups');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=groups');?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_USERS_SEARCH_GROUPS_LABEL'); ?></label>
@@ -99,13 +99,13 @@ JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 				<td>
 					<?php echo str_repeat('<span class="gi">|&mdash;</span>', $item->level) ?>
 					<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_users&task=group.edit&id='.$item->id);?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_users&task=group.edit&id='.$item->id);?>">
 						<?php echo $this->escape($item->title); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->title); ?>
 					<?php endif; ?>
 					<?php if (JDEBUG) : ?>
-						<div class="fltrt"><div class="button2-left smallsub"><div class="blank"><a href="<?php echo JRoute::_('index.php?option=com_users&view=debuggroup&group_id='.(int) $item->id);?>">
+						<div class="fltrt"><div class="button2-left smallsub"><div class="blank"><a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=debuggroup&group_id='.(int) $item->id);?>">
 						<?php echo JText::_('COM_USERS_DEBUG_GROUP');?></a></div></div></div>
 					<?php endif; ?>
 				</td>

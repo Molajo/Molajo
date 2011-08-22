@@ -41,17 +41,17 @@ class MolajoFieldState extends MolajoField
         $this->config_component_state_spam = JRequest::getCmd('config_component_state_spam', '0');
 
         $options	= array();
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_ARCHIVED, JText::_('MOLAJO_OPTION_ARCHIVED'));
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_PUBLISHED, JText::_('MOLAJO_OPTION_PUBLISHED'));
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_UNPUBLISHED, JText::_('MOLAJO_OPTION_UNPUBLISHED'));
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_TRASHED, JText::_('MOLAJO_OPTION_TRASHED'));
+        $options[]	= JHtml::_('select.option', MOLAJO_STATE_ARCHIVED, MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
+        $options[]	= JHtml::_('select.option', MOLAJO_STATE_PUBLISHED, MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
+        $options[]	= JHtml::_('select.option', MOLAJO_STATE_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
+        $options[]	= JHtml::_('select.option', MOLAJO_STATE_TRASHED, MolajoText::_('MOLAJO_OPTION_TRASHED'));
         if ($this->params->def('config_component_state_spam', '0') == 1) {
-            $options[]	= JHtml::_('select.option', MOLAJO_STATE_SPAMMED, JText::_('MOLAJO_OPTION_SPAMMED'));
+            $options[]	= JHtml::_('select.option', MOLAJO_STATE_SPAMMED, MolajoText::_('MOLAJO_OPTION_SPAMMED'));
         }
         if ($this->params->def('config_component_version_management', '1') == 1) {
-            $options[]	= JHtml::_('select.option', MOLAJO_STATE_VERSION, JText::_('MOLAJO_OPTION_VERSION'));
+            $options[]	= JHtml::_('select.option', MOLAJO_STATE_VERSION, MolajoText::_('MOLAJO_OPTION_VERSION'));
         }
-        $options[]	= JHtml::_('select.option', '*', JText::_('MOLAJO_OPTION_ALL'));
+        $options[]	= JHtml::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
 
         return $options;
     }

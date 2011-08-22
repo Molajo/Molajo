@@ -89,7 +89,7 @@ class TemplatesControllerSource extends JController
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		$this->setRedirect(JRoute::_('index.php?option=com_templates&view=templates', false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=templates', false));
 	}
 
 	/**
@@ -140,7 +140,7 @@ class TemplatesControllerSource extends JController
 		// Clean the session data and redirect.
 		$app->setUserState($context.'.id',		null);
 		$app->setUserState($context.'.data',	null);
-		$this->setRedirect(JRoute::_('index.php?option=com_templates&view=template&id='.$returnId, false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=template&id='.$returnId, false));
 	}
 
 	/**
@@ -204,7 +204,7 @@ class TemplatesControllerSource extends JController
 			$app->setUserState($context.'.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(JRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
 			return false;
 		}
 
@@ -216,7 +216,7 @@ class TemplatesControllerSource extends JController
 
 			// Redirect back to the edit screen.
 			$this->setMessage(JText::sprintf('JERROR_SAVE_FAILED', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
 			return false;
 		}
 
@@ -230,7 +230,7 @@ class TemplatesControllerSource extends JController
 				$app->setUserState($context.'.data',	null);
 
 				// Redirect back to the edit screen.
-				$this->setRedirect(JRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
+				$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
 				break;
 
 			default:
@@ -239,7 +239,7 @@ class TemplatesControllerSource extends JController
 				$app->setUserState($context.'.data', null);
 
 				// Redirect to the list screen.
-				$this->setRedirect(JRoute::_('index.php?option=com_templates&view=template&id='.$model->getState('extension.id'), false));
+				$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=template&id='.$model->getState('extension.id'), false));
 				break;
 		}
 	}

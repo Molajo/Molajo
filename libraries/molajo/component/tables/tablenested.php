@@ -121,7 +121,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if ($this->_db->getErrorNum())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_GET_PATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GET_PATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -158,7 +158,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if ($this->_db->getErrorNum())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_GET_TREE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GET_TREE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -206,7 +206,7 @@ class MolajoTableNested extends MolajoTable
 		// Make sure the location is valid.
 		if (($position != 'before') && ($position != 'after') &&
 			($position != 'first-child') && ($position != 'last-child')) {
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_LOCATION', get_class($this)));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_LOCATION', get_class($this)));
 			$this->setError($e);
 			return false;
 		}
@@ -303,7 +303,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if ($this->_db->getErrorNum())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -314,7 +314,7 @@ class MolajoTableNested extends MolajoTable
 		// Cannot move the node to be a child of itself.
 		if (in_array($referenceId, $children))
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_NODE_RECURSION', get_class($this)));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_NODE_RECURSION', get_class($this)));
 			$this->setError($e);
 			return false;
 		}
@@ -391,7 +391,7 @@ class MolajoTableNested extends MolajoTable
 			// Check for a database error.
 			if ($this->_db->getErrorNum())
 			{
-				$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				$this->setError($e);
 				$this->_unlock();
 				return false;
@@ -635,19 +635,19 @@ class MolajoTableNested extends MolajoTable
 			{
 				if ($this->_db->getErrorNum())
 				{
-					$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_CHECK_FAILED', get_class($this), $this->_db->getErrorMsg()));
+					$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CHECK_FAILED', get_class($this), $this->_db->getErrorMsg()));
 					$this->setError($e);
 				}
 				else
 				{
-					$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID', get_class($this)));
+					$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID', get_class($this)));
 					$this->setError($e);
 				}
 			}
 		}
 		else
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID', get_class($this)));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID', get_class($this)));
 			$this->setError($e);
 		}
 
@@ -705,7 +705,7 @@ class MolajoTableNested extends MolajoTable
 					// Check for a database error.
 					if ($this->_db->getErrorNum())
 					{
-						$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+						$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 						$this->setError($e);
 						$this->_unlock();
 						return false;
@@ -758,7 +758,7 @@ class MolajoTableNested extends MolajoTable
 			else
 			{
 				// Negative parent ids are invalid
-				$e = new MolajoException(JText::_('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID'));
+				$e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID'));
 				$this->setError($e);
 				return false;
 			}
@@ -840,7 +840,7 @@ class MolajoTableNested extends MolajoTable
 			// Nothing to set publishing state on, return false.
 			else
 			{
-				$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED', get_class($this)));
+				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED', get_class($this)));
 				$this->setError($e);
 				return false;
 			}
@@ -872,7 +872,7 @@ class MolajoTableNested extends MolajoTable
 				// Check for checked out children.
 				if ($this->_db->loadResult())
 				{
-					$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_CHILD_ROWS_CHECKED_OUT', get_class($this)));
+					$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CHILD_ROWS_CHECKED_OUT', get_class($this)));
 					$this->setError($e);
 					return false;
 				}
@@ -896,14 +896,14 @@ class MolajoTableNested extends MolajoTable
 
 				// Check for a database error.
 				if ($this->_db->getErrorNum()) {
-					$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+					$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
 					$this->setError($e);
 					return false;
 				}
 
 				if (!empty($rows)) {
 					$e = new MolajoException(
-						JText::_('MOLAJO_DATABASE_ERROR_ANCESTOR_NODES_LOWER_STATE')
+						MolajoText::_('MOLAJO_DATABASE_ERROR_ANCESTOR_NODES_LOWER_STATE')
 					);
 					$this->setError($e);
 					return false;
@@ -922,7 +922,7 @@ class MolajoTableNested extends MolajoTable
 
 			// Check for a database error.
 			if (!$this->_db->query()) {
-				$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				$this->setError($e);
 				return false;
 			}
@@ -989,7 +989,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if ($this->_db->getErrorNum())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;
@@ -1006,7 +1006,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;
@@ -1024,7 +1024,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_ORDERUP_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;
@@ -1084,7 +1084,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if ($this->_db->getErrorNum())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;
@@ -1101,7 +1101,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;
@@ -1119,7 +1119,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_ORDERDOWN_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;
@@ -1152,7 +1152,7 @@ class MolajoTableNested extends MolajoTable
 
 		if ($this->_db->getErrorNum())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -1172,7 +1172,7 @@ class MolajoTableNested extends MolajoTable
 			$result = $this->_db->loadColumn();
 			if ($this->_db->getErrorNum())
 			{
-				$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				$this->setError($e);
 				return false;
 			}
@@ -1192,7 +1192,7 @@ class MolajoTableNested extends MolajoTable
 				$result = $this->_db->loadColumn();
 				if ($this->_db->getErrorNum())
 				{
-					$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
+					$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GETROOTID_FAILED', get_class($this), $this->_db->getErrorMsg()));
 					$this->setError($e);
 					return false;
 				}
@@ -1202,14 +1202,14 @@ class MolajoTableNested extends MolajoTable
 				}
 				else
 				{
-					$e = new MolajoException(JText::_('MOLAJO_DATABASE_ERROR_ROOT_NODE_NOT_FOUND'));
+					$e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_ROOT_NODE_NOT_FOUND'));
 					$this->setError($e);
 					return false;
 				}
 			}
 			else
 			{
-				$e = new MolajoException(JText::_('MOLAJO_DATABASE_ERROR_ROOT_NODE_NOT_FOUND'));
+				$e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_ROOT_NODE_NOT_FOUND'));
 				$this->setError($e);
 				return false;
 			}
@@ -1292,7 +1292,7 @@ class MolajoTableNested extends MolajoTable
 		// If there is an update failure, return false to break out of the recursion.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_REBUILD_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_REBUILD_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -1350,7 +1350,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_REBUILDPATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_REBUILDPATH_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -1387,7 +1387,7 @@ class MolajoTableNested extends MolajoTable
 				// Check for a database error.
 				if (!$this->_db->query())
 				{
-					$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
+					$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
 					$this->setError($e);
 					$this->_unlock();
 					return false;
@@ -1445,7 +1445,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error or no $row returned
 		if ((!$row) || ($this->_db->getErrorNum()))
 		{
-			$e = new MolajoException(JText::sprintf('MOLAJO_DATABASE_ERROR_GETNODE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GETNODE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
 		}
@@ -1582,7 +1582,7 @@ class MolajoTableNested extends MolajoTable
 		// Check for a database error.
 		if (!$this->_db->query())
 		{
-			$e = new MolajoException(JText::sprintf('$errorMessage', get_class($this), $this->_db->getErrorMsg()));
+			$e = new MolajoException(MolajoText::sprintf('$errorMessage', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			$this->_unlock();
 			return false;

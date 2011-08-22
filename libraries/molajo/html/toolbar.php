@@ -182,7 +182,7 @@ class MolajoToolbar extends JObject
 
 		// Check for error.
 		if ($button === false) {
-			return JText::sprintf('MOLAJO_HTML_BUTTON_NOT_DEFINED', $type);
+			return MolajoText::sprintf('MOLAJO_HTML_BUTTON_NOT_DEFINED', $type);
 		}
 		return $button->render($node);
 	}
@@ -204,7 +204,7 @@ class MolajoToolbar extends JObject
 
 		if (!class_exists('JButton'))
 		{
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
+			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
 			return false;
 		}
 
@@ -219,11 +219,10 @@ class MolajoToolbar extends JObject
 
 			$file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)).'.php', 'path');
 
-			jimport('joomla.filesystem.path');
 			if ($buttonFile = JPath::find($dirs, $file)) {
 				include_once $buttonFile;
 			} else {
-				JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
+				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
 				return false;
 			}
 		}

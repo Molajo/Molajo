@@ -19,7 +19,7 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 $canDo		= SearchHelper::getActions();
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_search&view=searches'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_search&view=searches'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
@@ -36,10 +36,10 @@ $canDo		= SearchHelper::getActions();
 
 			<span class="adminlist-searchstatus">
 			<?php if ($this->state->get('filter.results')) : ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_search&filter_results=0');?>">
+				<a href="<?php echo MolajoRoute::_('index.php?option=com_search&filter_results=0');?>">
 					<?php echo JText::_('COM_SEARCH_HIDE_SEARCH_RESULTS'); ?></a>
 			<?php else : ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_search&filter_results=1');?>">
+				<a href="<?php echo MolajoRoute::_('index.php?option=com_search&filter_results=1');?>">
 					<?php echo JText::_('COM_SEARCH_SHOW_SEARCH_RESULTS'); ?></a>
 			<?php endif; ?>
 			</span>

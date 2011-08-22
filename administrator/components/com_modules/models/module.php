@@ -340,7 +340,7 @@ class ModulesModelModule extends JModelAdmin
 				}
 				else {
 					$app = MolajoFactory::getApplication();
-					$app->redirect(JRoute::_('index.php?option=com_modules&view=modules',false));
+					$app->redirect(MolajoRoute::_('index.php?option=com_modules&view=modules',false));
 					return false;
 				}
 			}

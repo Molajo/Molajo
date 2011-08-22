@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_checkin');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_checkin');?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>

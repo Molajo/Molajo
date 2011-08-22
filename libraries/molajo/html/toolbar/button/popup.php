@@ -29,7 +29,7 @@ class MolajoButtonPopup extends MolajoButton
 	{
 		JHtml::_('behavior.modal');
 
-		$text	= JText::_($text);
+		$text	= MolajoText::_($text);
 		$class	= $this->fetchIconClass($name);
 		$doTask	= $this->_getCommand($name, $url, $width, $height, $top, $left);
 

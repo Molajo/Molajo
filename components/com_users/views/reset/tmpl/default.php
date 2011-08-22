@@ -21,7 +21,7 @@ JHtml::_('behavior.formvalidation');
 	</h1>
 	<?php endif; ?>
 
-	<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate">
+	<form id="user-registration" action="<?php echo MolajoRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate">
 
 		<?php foreach ($this->form->getFieldsets() as $fieldset): ?>
 		<p><?php echo JText::_($fieldset->label); ?></p>		<fieldset>

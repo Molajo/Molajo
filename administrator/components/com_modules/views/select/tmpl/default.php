@@ -28,7 +28,7 @@ JHtml::_('behavior.tooltip');
 		$desc	= $this->escape($item->desc);
 		?>
 		<span class="editlinktip hasTip" title="<?php echo $name.' :: '.$desc; ?>">
-			<a href="<?php echo JRoute::_($link);?>" target="_top">
+			<a href="<?php echo MolajoRoute::_($link);?>" target="_top">
 				<?php echo $name; ?></a></span>
 	</li>
 <?php endforeach; ?>

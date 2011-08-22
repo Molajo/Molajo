@@ -74,7 +74,7 @@ class MolajoPathway extends JObject
 			}
 			else
 			{
-				$error = JError::raiseError(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_PATHWAY_LOAD', $application));
+				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_PATHWAY_LOAD', $application));
 				return $error;
 			}
 

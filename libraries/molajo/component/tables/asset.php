@@ -90,7 +90,7 @@ class MolajoTableAsset extends MolajoTable {
     public function check()
     {
         if ($this->content_table == null) {
-            $this->setError(JText::_('ASSET_TABLE_MUST_HAVE_CONTENT_TABLE_VALUE'));
+            $this->setError(MolajoText::_('ASSET_TABLE_MUST_HAVE_CONTENT_TABLE_VALUE'));
             return false;
         }
         return true;

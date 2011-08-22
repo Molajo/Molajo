@@ -150,7 +150,7 @@ class MolajoParameter extends MolajoRegistry
 
 		if ($description = $this->_xml[$group]->attributes('description')) {
 			// Add the params description to the display
-			$desc	= JText::_($description);
+			$desc	= MolajoText::_($description);
 			$html[]	= '<p class="paramrow_desc">'.$desc.'</p>';
 		}
 
@@ -164,7 +164,7 @@ class MolajoParameter extends MolajoRegistry
 		}
 
 		if (count($params) < 1) {
-			$html[] = "<p class=\"noparams\">".JText::_('MOLAJO_HTML_NO_PARAMETERS_FOR_THIS_ITEM')."</p>";
+			$html[] = "<p class=\"noparams\">".MolajoText::_('MOLAJO_HTML_NO_PARAMETERS_FOR_THIS_ITEM')."</p>";
 		}
 
 		return implode(PHP_EOL, $html);
@@ -271,7 +271,7 @@ class MolajoParameter extends MolajoRegistry
 		if ($element === false) {
 			$result = array();
 			$result[0] = $node->attributes('name');
-			$result[1] = JText::_('Element not defined for type').' = '.$type;
+			$result[1] = MolajoText::_('Element not defined for type').' = '.$type;
 			$result[5] = $result[0];
 			return $result;
 		}
@@ -338,7 +338,6 @@ class MolajoParameter extends MolajoRegistry
 
 			$file = JFilterInput::getInstance()->clean(str_replace('_', DS, $type).'.php', 'path');
 
-			jimport('joomla.filesystem.path');
 			if ($elementFile = JPath::find($dirs, $file)) {
 				include_once $elementFile;
 			} else {

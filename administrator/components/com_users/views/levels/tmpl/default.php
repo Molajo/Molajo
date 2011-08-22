@@ -23,7 +23,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $canOrder	= $user->authorise('core.edit.state', 'com_users');
 $saveOrder	= $listOrder == 'a.ordering';
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_users&view=levels');?>" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=levels');?>" method="post" id="adminForm" name="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_USERS_SEARCH_ACCESS_LEVELS'); ?></label>
@@ -78,7 +78,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 				</td>
 				<td>
 					<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_users&task=level.edit&id='.$item->id);?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_users&task=level.edit&id='.$item->id);?>">
 						<?php echo $this->escape($item->title); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->title); ?>

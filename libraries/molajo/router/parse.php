@@ -21,7 +21,7 @@ class MolajoRouterParse extends MolajoRouter
     /**
      * parseRoute
      *
-     * called out of ArticlesParseRoute (ex), which is activated by JRouterSite::_parseSefRoute()
+     * called out of ArticlesParseRoute (ex), which is activated by MolajoRouterSite::_parseSefRoute()
      *
      * @param array     $segments An array of URL arguments
      * @param string    $componentParam ex com_articles

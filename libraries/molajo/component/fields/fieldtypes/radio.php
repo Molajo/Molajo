@@ -60,7 +60,7 @@ class MolajoFormFieldRadio extends MolajoFormField
 					' value="'.htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8').'"'
 					.$checked.$class.$onclick.$disabled.'/>';
 
-			$html[] = '<label for="'.$this->id.$i.'"'.$class.'>'.JText::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)).'</label>';
+			$html[] = '<label for="'.$this->id.$i.'"'.$class.'>'.MolajoText::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)).'</label>';
 		}
 
 		// End the radio field output.

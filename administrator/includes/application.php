@@ -115,9 +115,9 @@ class MolajoAdministrator extends MolajoApplication
 	/**
      * getRouter
      *
-	 * Return a reference to the JRouter object.
+	 * Return a reference to the MolajoRouter object.
 	 *
-	 * @return	JRouter
+	 * @return	MolajoRouter
 	 * @since	1.0
 	 */
 	static public function getRouter($name = null, array $options = array())

@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_cache'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_cache'); ?>" method="post" name="adminForm" id="adminForm">
 <table class="adminlist">
 	<thead>
 		<tr>

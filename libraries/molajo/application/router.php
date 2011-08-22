@@ -86,11 +86,10 @@ class MolajoRouter extends JObject
 			if (file_exists($path)) {
 				require_once $path;
 
-				// Create a MolajoRouter object
 				$classname = 'MolajoRouter'.ucfirst($application);
 				$instance = new $classname($options);
 			} else {
-				$error = JError::raiseError(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
+				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
 				return $error;
 			}
 

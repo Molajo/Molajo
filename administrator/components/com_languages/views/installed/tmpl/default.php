@@ -16,7 +16,7 @@ $userId		= $user->get('id');
 $application		= $this->state->get('filter.application_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
 $applicationId	= $this->state->get('filter.application_id', 0);
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_languages&view=installed&application='.$applicationId); ?>" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_languages&view=installed&application='.$applicationId); ?>" method="post" id="adminForm" name="adminForm">
 
 	<?php if ($this->ftp): ?>
 		<?php echo $this->loadTemplate('ftp');?>

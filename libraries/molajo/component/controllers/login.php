@@ -72,9 +72,6 @@ class MolajoControllerLogin extends MolajoController
 			if (!in_array(false, $results, true)) {
 				// Set the remember me cookie if enabled.
 				if (isset($options['remember']) && $options['remember']) {
-					jimport('joomla.utilities.simplecrypt');
-					jimport('joomla.utilities.utility');
-
 					// Create the encryption key, apply extra hardening using the user agent string.
 					$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
 
@@ -102,13 +99,13 @@ class MolajoControllerLogin extends MolajoController
 
 		// If status is success, any error will ahve been raised by the user plugin
 		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
+			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('JLIB_LOGIN_AUTHENTICATE'));
 		}
 
 		return false;
 
         /** success message **/
-        $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_LOGIN_SUCCESSFUL'));
+        $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_LOGIN_SUCCESSFUL'));
         $this->redirectClass->setSuccessIndicator(true);
 
 		if (!JError::isError($result)) {
@@ -184,7 +181,7 @@ class MolajoControllerLogin extends MolajoController
 			}
 			else {
 				// Bail here if the plugin can't be created
-				JError::raiseWarning(50, JText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+				JError::raiseWarning(50, MolajoText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
 

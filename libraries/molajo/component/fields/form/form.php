@@ -1523,12 +1523,12 @@ class MolajoForm
 				if ($lang->hasKey($default))
 				{
 					$debug = $lang->setDebug(false);
-					$default = JText::_($default);
+					$default = MolajoText::_($default);
 					$lang->setDebug($debug);
 				}
 				else
 				{
-					$default = JText::_($default);
+					$default = MolajoText::_($default);
 				}
 			}
 			$value = $this->getValue((string) $element['name'], $group, $default);
@@ -1644,7 +1644,7 @@ class MolajoForm
 	{
 		// Make sure there is a valid JXMLElement.
 		if (!$element instanceof JXMLElement) {
-			return new MolajoException(JText::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
+			return new MolajoException(MolajoText::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
 		}
 
 		// Initialise variables.
@@ -1663,12 +1663,12 @@ class MolajoForm
 				}
 				else {
 					if ($element['label']) {
-						$message = JText::_($element['label']);
+						$message = MolajoText::_($element['label']);
 					}
 					else {
-						$message = JText::_($element['name']);
+						$message = MolajoText::_($element['name']);
 					}
-					$message = JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_REQUIRED', $message);
+					$message = MolajoText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_REQUIRED', $message);
 				}
 				return new MolajoException($message, 2, E_WARNING);
 			}
@@ -1681,7 +1681,7 @@ class MolajoForm
 
 			// If the object could not be loaded return an error message.
 			if ($rule === false) {
-				return new MolajoException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
+				return new MolajoException(MolajoText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
 			}
 
 			// Run the field validation rule test.
@@ -1700,10 +1700,10 @@ class MolajoForm
 			$message = (string) $element['message'];
 
 			if ($message) {
-				return new MolajoException(JText::_($message), 1, E_WARNING);
+				return new MolajoException(MolajoText::_($message), 1, E_WARNING);
 			}
 			else {
-				return new MolajoException(JText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', JText::_((string) $element['label'])), 1, E_WARNING);
+				return new MolajoException(MolajoText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', MolajoText::_((string) $element['label'])), 1, E_WARNING);
 			}
 		}
 
@@ -1780,7 +1780,7 @@ class MolajoForm
 			$data = trim($data);
 
 			if (empty($data)) {
-				throw new Exception(JText::_('MOLAJO_FORM_ERROR_NO_DATA'));
+				throw new Exception(MolajoText::_('MOLAJO_FORM_ERROR_NO_DATA'));
 			}
 
 			// Instantiate the form.
@@ -1789,14 +1789,14 @@ class MolajoForm
 			// Load the data.
 			if (substr(trim($data), 0, 1) == '<') {
 				if ($forms[$name]->load($data, $replace, $xpath) == false) {
-					throw new Exception(JText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+					throw new Exception(MolajoText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
 					return false;
 				}
 			}
 			else {
 				if ($forms[$name]->loadFile($data, $replace, $xpath) == false) {
-					throw new Exception(JText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+					throw new Exception(MolajoText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
 					return false;
 				}

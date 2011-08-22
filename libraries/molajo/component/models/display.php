@@ -269,7 +269,7 @@ class MolajoModelDisplay extends JModel
         if (class_exists($fieldClassName)) {
             $molajoSpecificFieldClass = new $fieldClassName();
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
             return false;
         }
 
@@ -441,7 +441,7 @@ $items[$i]->checked_out = false;
                 $items[$i]->url		= '';
                 $items[$i]->readmore_link		= '';
                 // TODO: Change based on shownoauth
-//                $items[$i]->readmore_link = JRoute::_(ContentHelperRoute::getArticleRoute($items[$i]->slug, $items[$i]->catslug));
+//                $items[$i]->readmore_link = MolajoRoute::_(ContentHelperRoute::getArticleRoute($items[$i]->slug, $items[$i]->catslug));
 
                 /** trigger events */
 //                $this->_triggerEvents();
@@ -972,7 +972,7 @@ $items[$i]->checked_out = false;
 
         } else {
             if ($onlyWhereClause === true) {
-                MolajoFactory::getApplication()->enqueueMessage(JText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+                MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.'.$fieldname);

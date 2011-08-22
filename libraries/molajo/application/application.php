@@ -2,7 +2,6 @@
 /**
  * @package     Molajo
  * @subpackage  Application
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -144,7 +143,7 @@ class MolajoApplication extends JObject
 				$instance = new $classname($config);
 
 			} else {
-				$error = JError::raiseError(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $application));
+				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
 			}
 
@@ -233,7 +232,7 @@ class MolajoApplication extends JObject
 	{
 		$document = MolajoFactory::getDocument();
 
-		$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
+		$document->setTitle($this->getCfg('sitename'). ' - ' .MolajoText::_('JADMINISTRATION'));
 		$document->setDescription($this->getCfg('MetaDesc'));
 
 		$contents = MolajoComponentHelper::renderComponent($component);
@@ -269,7 +268,7 @@ class MolajoApplication extends JObject
         if ($option == null) {
             $option = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION + (int) MOLAJO_APPLICATION_ID);
             if ($option === false) {
-                $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_OPTION_DEFINED'), 'error');
+                $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_OPTION_DEFINED'), 'error');
                 return false;
             }
         }
@@ -290,7 +289,7 @@ class MolajoApplication extends JObject
         /** 4. Controller */
         $controller = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER, $task);
         if ($controller === false) {
-            JError::raiseError(500, JText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
+            JError::raiseError(500, MolajoText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
             return false;
         }
 
@@ -307,7 +306,7 @@ class MolajoApplication extends JObject
             if ($results === false) {
                 $view = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_VIEW);
                 if ($view === false) {
-                    $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
+                    $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -337,7 +336,7 @@ class MolajoApplication extends JObject
                     $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID);
                 }
                 if ($layout === false) {
-                    $this->enqueueMessage(JText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -387,10 +386,10 @@ class MolajoApplication extends JObject
                 $id = $cids[0];
                 $cids = array();
             } else if ($id == 0 && count($cids) == 0) {
-                JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
+                JError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
                 return false;
             } else if (count($cids) > 1) {
-                JError::raiseError(500, JText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
+                JError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
                 return false;
             }
         }
@@ -622,10 +621,10 @@ class MolajoApplication extends JObject
         }
 
         if ($this->getCfg('sitename_pagetitles', 0) == 1) {
-            $title = JText::sprintf('JPAGETITLE', $this->getCfg('sitename'), $title);
+            $title = MolajoText::sprintf('JPAGETITLE', $this->getCfg('sitename'), $title);
 
         } elseif ($this->getCfg('sitename_pagetitles', 0) == 2) {
-            $title = JText::sprintf('JPAGETITLE', $title, $this->getCfg('sitename'));
+            $title = MolajoText::sprintf('JPAGETITLE', $title, $this->getCfg('sitename'));
         }
 
         $document->setTitle($title);
@@ -643,9 +642,9 @@ class MolajoApplication extends JObject
         if ($this->params->get('show_feed_link', 1)) {
             $link = '&format=feed&limitstart=';
             $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-            $document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
+            $document->addHeadLink(MolajoRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
             $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-            $document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
+            $document->addHeadLink(MolajoRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
         }
 
         $session->set('page.params', $this->params);
@@ -918,7 +917,7 @@ class MolajoApplication extends JObject
 		if (empty($name)) {
 			$r = null;
 			if (!preg_match('/Molajo(.*)/i', get_class($this), $r)) {
-				JError::raiseError(500, JText::_('MOLAJO_APPLICATION_ERROR_APPLICATION_GET_NAME'));
+				JError::raiseError(500, MolajoText::_('MOLAJO_APPLICATION_ERROR_APPLICATION_GET_NAME'));
 			}
 			$name = strtolower($r[1]);
 		}
@@ -1046,12 +1045,12 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Returns the application JRouter object.
+	 * Returns the application MolajoRouter object.
 	 *
 	 * @param   string  $name     The name of the application.
 	 * @param   array   $options  An optional associative array of configuration settings.
 	 *
-	 * @return  JRouter  A JRouter object
+	 * @return  MolajoRouter  A MolajoRouter object
 	 *
 	 * @since  1.0
 	 */
@@ -1062,7 +1061,7 @@ class MolajoApplication extends JObject
 			$name = $app->getName();
 		}
 
-		$router = JRouter::getInstance($name, $options);
+		$router = MolajoRouter::getInstance($name, $options);
 
 		if (JError::isError($router)) {
 			return null;

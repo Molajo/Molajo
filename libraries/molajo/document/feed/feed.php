@@ -1,12 +1,11 @@
 <?php
 /**
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
@@ -212,7 +211,7 @@ class MolajoDocumentFeed extends MolajoDocument
 		// Instantiate feed renderer and set the mime encoding
 		$renderer = $this->loadRenderer(($type) ? $type : 'rss');
 		if (!is_a($renderer, 'MolajoDocumentRenderer')) {
-			JError::raiseError(404, JText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
+			JError::raiseError(404, MolajoText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
 		}
 		$this->setMimeEncoding($renderer->getContentType());
 

@@ -24,7 +24,7 @@ JHtml::_('behavior.formvalidation');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
 	<fieldset>
 		<div class="fltrt">
 			<button type="button" onclick="Joomla.submitform('component.apply', this.form);">

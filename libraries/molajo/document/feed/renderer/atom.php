@@ -1,12 +1,11 @@
 <?php
 /**
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
@@ -51,13 +50,13 @@ defined('MOLAJO') or die;
 
 		$uri = MolajoFactory::getURI();
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-		$syndicationURL = JRoute::_('&format=feed&type=atom');
+		$syndicationURL = MolajoRoute::_('&format=feed&type=atom');
 
 		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $data->title);
+			$title = MolajoText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $data->title);
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $data->title, $app->getCfg('sitename'));
+			$title = MolajoText::sprintf('JPAGETITLE', $data->title, $app->getCfg('sitename'));
 		}
 		else {
 			$title = $data->title;

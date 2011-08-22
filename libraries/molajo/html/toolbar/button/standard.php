@@ -27,7 +27,7 @@ class MolajoButtonStandard extends MolajoButton
 
 	public function fetchButton($type='Standard', $name = '', $text = '', $task = '', $list = true)
 	{
-		$i18n_text	= JText::_($text);
+		$i18n_text	= MolajoText::_($text);
 		$class	= $this->fetchIconClass($name);
 		$doTask	= $this->_getCommand($text, $task, $list);
 
@@ -64,7 +64,7 @@ class MolajoButtonStandard extends MolajoButton
 	protected function _getCommand($name, $task, $list)
 	{
 		JHtml::_('behavior.framework');
-		$message	= JText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
+		$message	= MolajoText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
 		$message	= addslashes($message);
 
 		if ($list) {

@@ -84,7 +84,7 @@ class MolajoToolbarHelper
         }
 
         if ($titleParameter == '1') {
-            self::title(JText::_('MOLAJO_MANAGER_'.strtoupper(JRequest::getCmd('view'))), $titleImage);
+            self::title(MolajoText::_('MOLAJO_MANAGER_'.strtoupper(JRequest::getCmd('view'))), $titleImage);
         } else {
             if ($titleImage == '') {
             } else {

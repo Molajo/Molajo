@@ -91,7 +91,7 @@ class MolajoHelp
 		$jlang		= explode( '-', $lang->getTag() );
 
 		$debug		= $lang->setDebug(false);
-		$keyref     = JText::_($ref);
+		$keyref     = MolajoText::_($ref);
 		$lang->setDebug($debug);
 
 		// Replace substitution codes in help URL.
@@ -123,7 +123,6 @@ class MolajoHelp
 		// If it doesn't then fallback to English.
 		if ($local) {
 			$try = str_replace($search, $replace, $url);
-			jimport('joomla.filesystem.file');
 
 			if (!JFile::exists(MOLAJO_PATH_BASE.'/'.$try)) {
 				$replace[3] = 'en-GB';

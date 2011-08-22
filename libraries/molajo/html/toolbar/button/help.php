@@ -35,7 +35,7 @@ class MolajoButtonHelp extends MolajoButton
 	 */
 	public function fetchButton($type = 'Help', $ref = '', $com = false, $override = null, $component = null)
 	{
-		$text	= JText::_('JTOOLBAR_HELP');
+		$text	= MolajoText::_('JTOOLBAR_HELP');
 		$class	= $this->fetchIconClass('help');
 		$doTask	= $this->_getCommand($ref, $com, $override, $component);
 
@@ -75,10 +75,9 @@ class MolajoButtonHelp extends MolajoButton
 	protected function _getCommand($ref, $com, $override, $component)
 	{
 		// Get Help URL
-		jimport('joomla.language.help');
 		$url = MolajoHelp::createURL($ref, $com, $override, $component);
 		$url = htmlspecialchars($url, ENT_QUOTES);
-		$cmd = "popupWindow('$url', '".JText::_('JHELP', true)."', 700, 500, 1)";
+		$cmd = "popupWindow('$url', '".MolajoText::_('JHELP', true)."', 700, 500, 1)";
 
 		return $cmd;
 	}

@@ -2,6 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Document
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -262,7 +263,7 @@ class MolajoDocument extends JObject
 					require_once $path;
 				}
 				else {
-					JError::raiseError(500,JText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+					JError::raiseError(500,MolajoText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
 				}
 			}
 
@@ -776,7 +777,7 @@ class MolajoDocument extends JObject
 			if (file_exists($path)) {
 				require_once $path;
 			} else {
-				JError::raiseError(500,JText::_('Unable to load renderer class'));
+				JError::raiseError(500,MolajoText::_('Unable to load renderer class'));
 			}
 		}
 

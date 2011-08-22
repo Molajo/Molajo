@@ -1,12 +1,11 @@
 <?php
 /**
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
@@ -67,12 +66,12 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		// Get module parameters
-		$params = new JRegistry;
+		$params = new MolajoRegistry;
 		$params->loadString($module->params);
 
 		// Use parameters from template
 		if (isset($attribs['params'])) {
-			$template_params = new JRegistry;
+			$template_params = new MolajoRegistry;
 			$template_params->loadString(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
 			$params->merge($template_params);
 			$module = clone $module;

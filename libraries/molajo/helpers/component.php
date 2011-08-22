@@ -129,7 +129,7 @@ class MolajoComponentHelper
 
 		if ($error = $db->getErrorMsg()
             || empty(self::$_components[$option])) {
-			JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
+			JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
 			return false;
 		}
 
@@ -168,7 +168,7 @@ class MolajoComponentHelper
 		if (self::isEnabled($request['option'])
                 && file_exists($path)) {
         } else {
-			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			JError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
         /** execute the component */

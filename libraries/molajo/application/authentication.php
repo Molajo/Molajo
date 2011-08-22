@@ -122,7 +122,5 @@ class MolajoAuthenticationResponse extends JObject
 	 * @param   string  $name  The type of the response
 	 * @since   11.1
 	 */
-	function __construct()
-	{
-	}
+	function __construct() {}
 }

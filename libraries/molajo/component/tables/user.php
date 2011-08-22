@@ -162,22 +162,22 @@ class MolajoTableUser extends MolajoTable
 	function check()
 	{
 		if (trim($this->name) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
 			return false;
 		}
 
 		if (trim($this->username) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
 			return false;
 		}
 
 		if (preg_match( "#[<>\"'%;()&]#i", $this->username) || strlen(utf8_decode($this->username )) < 2) {
-			$this->setError( JText::sprintf( 'MOLAJO_DATABASE_ERROR_VALID_AZ09', 2 ));
+			$this->setError( MolajoText::sprintf( 'MOLAJO_DATABASE_ERROR_VALID_AZ09', 2 ));
 			return false;
 		}
 
 		if ((trim($this->email) == "") || ! JMailHelper::isEmailAddress($this->email)) {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_VALID_MAIL'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_VALID_MAIL'));
 			return false;
 		}
 
@@ -196,7 +196,7 @@ class MolajoTableUser extends MolajoTable
 		$this->_db->setQuery($query);
 		$xid = intval($this->_db->loadResult());
 		if ($xid && $xid != intval($this->id)) {
-			$this->setError( JText::_('MOLAJO_DATABASE_ERROR_USERNAME_INUSE'));
+			$this->setError( MolajoText::_('MOLAJO_DATABASE_ERROR_USERNAME_INUSE'));
 			return false;
 		}
 
@@ -209,7 +209,7 @@ class MolajoTableUser extends MolajoTable
 		$this->_db->setQuery($query);
 		$xid = intval($this->_db->loadResult());
 		if ($xid && $xid != intval($this->id)) {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_EMAIL_INUSE'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_EMAIL_INUSE'));
 			return false;
 		}
 
@@ -223,7 +223,7 @@ class MolajoTableUser extends MolajoTable
 //			$this->_db->setQuery($query);
 //			$xid = intval($this->_db->loadResult());
 //			if ($rootUser==$this->username && (!$xid || $xid && $xid != intval($this->id))  || $xid && $xid == intval($this->id) && $rootUser!=$this->username) {
-//				$this->setError( JText::_('MOLAJO_DATABASE_ERROR_USERNAME_CANNOT_CHANGE'));
+//				$this->setError( MolajoText::_('MOLAJO_DATABASE_ERROR_USERNAME_CANNOT_CHANGE'));
 //				return false;
 //			}
 
@@ -260,7 +260,7 @@ class MolajoTableUser extends MolajoTable
 		// Handle error if it exists.
 		if (!$return)
 		{
-			$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
+			$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
 			return false;
 		}
 
@@ -392,7 +392,7 @@ class MolajoTableUser extends MolajoTable
 				$userId = $this->id;
 			} else {
 				// do not translate
-				jexit(JText::_('MOLAJO_DATABASE_ERROR_SETLASTVISIT'));
+				jexit(MolajoText::_('MOLAJO_DATABASE_ERROR_SETLASTVISIT'));
 			}
 		}
 

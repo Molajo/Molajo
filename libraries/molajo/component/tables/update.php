@@ -38,7 +38,7 @@ class MolajoTableUpdate extends MolajoTable
 	{
 		// check for valid name
 		if (trim( $this->name ) == '' || trim( $this->element ) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
 			return false;
 		}
 		return true;

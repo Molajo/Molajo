@@ -28,7 +28,7 @@ $this->document->setBuffer($this->loadTemplate('navigation'), 'modules', 'submen
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="application-form" method="post" name="adminForm" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_config');?>" id="application-form" method="post" name="adminForm" class="form-validate">
 	<?php if ($this->ftp) : ?>
 		<?php echo $this->loadTemplate('ftplogin'); ?>
 	<?php endif; ?>

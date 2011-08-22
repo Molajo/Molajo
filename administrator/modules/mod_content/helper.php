@@ -107,7 +107,7 @@ class modContentHelper
 
                 /** ACL */
                 if ($acl->authoriseTask ('com_articles', 'display', 'view', $item->id, $item->catid, $item)) {
-                    $item->link = JRoute::_('index.php?option=com_articles&task=edit&id='.$item->id);
+                    $item->link = MolajoRoute::_('index.php?option=com_articles&task=edit&id='.$item->id);
                 } else {
                     $item->link = '';
                 }

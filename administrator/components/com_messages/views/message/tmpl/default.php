@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 JHtml::_('behavior.framework');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_messages'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_messages'); ?>" method="post" name="adminForm" id="adminForm">
 	<div class="width-60 fltlft">
 		<ul class="adminformlist">
 		<li><?php echo JText::_('COM_MESSAGES_FIELD_USER_ID_FROM_LABEL'); ?>

@@ -48,7 +48,7 @@ class MolajoModelPage extends JModel
         if ($menu) {
             $params->def('page_heading', $params->get('page_title', $menu->title));
         } else {
-            $params->def('page_heading', JText::_('COM_'.strtoupper($content_item).'_DEFAULT_PAGE_TITLE'));
+            $params->def('page_heading', MolajoText::_('COM_'.strtoupper($content_item).'_DEFAULT_PAGE_TITLE'));
         }
 
         $title = $params->get('page_title', '');
@@ -92,7 +92,7 @@ class MolajoModelPage extends JModel
             $title = MolajoFactory::getApplication()->getCfg('sitename');
 
         } elseif (MolajoFactory::getApplication()->getCfg('sitename_pagetitles', 0)) {
-            $title = JText::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getCfg('sitename'), $title);
+            $title = MolajoText::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getCfg('sitename'), $title);
         }
 
         if (empty($title)) {

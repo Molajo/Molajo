@@ -349,7 +349,7 @@ class MolajoSite extends MolajoApplication
 				$this->setUserState('users.login.form.data',array( 'return' => $return ) );
 
 				$url	= 'index.php?option=com_users&view=login';
-				$url	= JRoute::_($url, false);
+				$url	= MolajoRoute::_($url, false);
 
 				$this->redirect($url, JText::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
 			} else {
@@ -569,7 +569,7 @@ class MolajoSite extends MolajoApplication
 	 * @param	string	$name		The name of the application.
 	 * @param	array	$options	An optional associative array of configuration settings.
 	 *
-	 * @return	JRouter
+	 * @return	MolajoRouter
 	 * @since	1.5
 	 */
 	static public function getRouter($name = null, array $options = array())

@@ -21,7 +21,7 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_languages&view=languages'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_languages&view=languages'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 
 		<div class="filter-search fltlft">
@@ -100,7 +100,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<td>
 					<span class="editlinktip hasTip" title="<?php echo JText::_('JGLOBAL_EDIT_ITEM');?>::<?php echo $this->escape($item->title); ?>">
 					<?php if ($canEdit) : ?>
-						<a href="<?php echo JRoute::_('index.php?option=com_languages&task=language.edit&lang_id='.(int) $item->lang_id); ?>">
+						<a href="<?php echo MolajoRoute::_('index.php?option=com_languages&task=language.edit&lang_id='.(int) $item->lang_id); ?>">
 							<?php echo $this->escape($item->title); ?></a>
 					<?php else : ?>
 							<?php echo $this->escape($item->title); ?>

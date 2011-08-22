@@ -53,7 +53,7 @@ abstract class MolajoHtmlMolajoComponent
 
                 $translated = array();
                 foreach($results as $item) {
-                    $translated[$i]->value = JText::_($item->value);
+                    $translated[$i]->value = MolajoText::_($item->value);
                     $translated[$i]->text = $item->text;
                     $i++;
                 }
@@ -65,7 +65,7 @@ abstract class MolajoHtmlMolajoComponent
 
                 /** load into select list **/
                 foreach ($translatedSorted as $item) {
-                    $options[]	= JHtml::_('select.option', $item->value, JText::_($item->text));
+                    $options[]	= JHtml::_('select.option', $item->value, MolajoText::_($item->text));
                 }
             }
 

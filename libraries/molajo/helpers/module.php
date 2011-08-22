@@ -76,7 +76,7 @@ abstract class MolajoModuleHelper
 	 *
 	 * @return  array  An array of module objects
 	 */
-	public static function &getModules($position)
+	public static function getModules($position)
 	{
 		$app		= MolajoFactory::getApplication();
 		$position	= strtolower($position);
@@ -183,7 +183,6 @@ abstract class MolajoModuleHelper
             $request['wrap_more_array'] = array();
 
             /** execute the module */
-            ob_start();
             include $path;
 
             /** 1. Application */
@@ -217,13 +216,12 @@ abstract class MolajoModuleHelper
             $view->wrap = $wrap;
 
             /** display view */
-            $view->display();
-
+            $output = $view->display();
 		}
 
 		MolajoFactory::getApplication()->scope = $scope;
 
-		return; 
+		return $output;
 	}
 
     /**
@@ -371,7 +369,7 @@ abstract class MolajoModuleHelper
 			$clean	= array();
 
 			if($db->getErrorNum()){
-				JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+				JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
 				return $clean;
 			}
 

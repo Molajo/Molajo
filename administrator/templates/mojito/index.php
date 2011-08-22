@@ -6,6 +6,11 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+
+//$document = MolajoFactory::getDocument();
+//$modules = $document->loadRenderer('modules');
+//echo $modules->render('header', array( 'wrap' => 'header' ), null);
+
 include dirname(__FILE__).'/include/head.php';
 
 if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
@@ -20,7 +25,7 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
 <body>
 	<div class="container">
         <jdoc:include type="modules" name="header" wrap="header" />
-		<jdoc:include type="message" />
+        <jdoc:include type="message" />
 		<?php
         if (MolajoFactory::getUser()->id == 0) : ?>
             <jdoc:include type="component" />
@@ -28,13 +33,13 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
         else :
         ?>
             <section>
-			<jdoc:include type="modules" name="launchpad" wrap="nav" />
-            <?php
-                if (MolajoFactory::getSession()->get('page.option') == 'com_dashboard') :
-                    include dirname(__FILE__).'/include/dashboard.php';
-                else :
-                    include dirname(__FILE__).'/include/component.php';
-                endif;
+                <jdoc:include type="modules" name="launchpad" wrap="div" />
+                <?php
+                    if (MolajoFactory::getSession()->get('page.option') == 'com_dashboard') :
+                        include dirname(__FILE__).'/include/dashboard.php';
+                    else :
+                        include dirname(__FILE__).'/include/component.php';
+                    endif;
                 ?>
             </section>
         <?php

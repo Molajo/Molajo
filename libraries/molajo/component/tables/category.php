@@ -112,7 +112,7 @@ class MolajoTableCategory extends MolajoTableNested
 	{
 		// Check for a title.
 		if (trim($this->title) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
 			return false;
 		}
 		$this->alias = trim($this->alias);
@@ -190,7 +190,7 @@ class MolajoTableCategory extends MolajoTableNested
                                 'extension'=>$this->extension))
                                 && ($table->id != $this->id || $this->id==0)) {
 
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
 			return false;
 		}
 		return parent::store($updateNulls);

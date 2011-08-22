@@ -13,12 +13,7 @@ defined('MOLAJO') or die;
 require_once LIBRARIES.'/includes/phpversion.php';
 /** defines */
 require_once LIBRARIES.'/includes/defines.php';
-/** factory */
-require_once LIBRARIES.'/molajo/factory.php';
-require_once LIBRARIES.'/overrides/factory.php';
-/** joomla platform */
-require_once JPATH_PLATFORM.'/import.php';
-/** molajo and joomla platform */
+/** platform */
 require_once LIBRARIES.'/includes/import.php';
 /** other libraries */
 require_once LIBRARIES.'/includes/other.php';

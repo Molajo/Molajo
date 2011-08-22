@@ -54,7 +54,7 @@ abstract class MolajoUserHelper
 
 			// If the group does not exist, return an exception.
 			if (!$title) {
-				return new MolajoException(JText::_('MOLAJO_USER_EXCEPTION_ACCESS_USERGROUP_INVALID'));
+				return new MolajoException(MolajoText::_('MOLAJO_USER_EXCEPTION_ACCESS_USERGROUP_INVALID'));
 			}
 
 			// Add the group data to the user object.
@@ -251,7 +251,7 @@ abstract class MolajoUserHelper
 		}
 		else
 		{
-			JError::raiseWarning("SOME_ERROR_CODE", JText::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
+			JError::raiseWarning("SOME_ERROR_CODE", MolajoText::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
 			return false;
 		}
 

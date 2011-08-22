@@ -71,7 +71,7 @@ class MolajoApplicationHelper
         {
             $obj = new stdClass();
 
-            if ($id == 'installation') {
+            if ($id == 2 || $id == 'installation') {
 			    $obj->id	= 2;
 			    $obj->name	= 'installation';
 			    $obj->path	=  MOLAJO_PATH_ROOT.'/'.'installation';
@@ -82,7 +82,6 @@ class MolajoApplicationHelper
                 $db = MolajoFactory::getDbo();
                 $query = $db->getQuery(true);
 
-                /** validation query **/
                 $query->select('application_id as id');
                 $query->select('name');
                 $query->select('path');
@@ -118,7 +117,6 @@ class MolajoApplicationHelper
 		if ($byName) {
 
 			foreach (self::$_applications as $application) {
-
 				if ($application->name == strtolower($id)) {
 					return $application;
 				}
@@ -178,107 +176,11 @@ class MolajoApplicationHelper
      */
 	public static function getPath($varname, $user_option=null)
 	{
-		// Check needed for handling of custom/new module XML file loading
-		$check = (($varname == 'mod0_xml') || ($varname == 'mod1_xml'));
 
-		if (!$user_option && !$check) {
-			$user_option = JRequest::getCmd('option');
-		} else {
-			$user_option = JFilterInput::getInstance()->clean($user_option, 'path');
-		}
+        /** amy remove **/
 
-		$result = null;
-		$name	= substr($user_option, 4);
+        return;
 
-		switch ($varname) {
-			case 'front':
-				$result = self::_checkPath('/components/'.$user_option.'/'.$name.'.php', 0);
-				break;
-
-			case 'html':
-			case 'front_html':
-				if (!($result = self::_checkPath('/templates/'.MolajoFactory::getApplication()->getTemplate().'/'.'components/'.$name.'.html.php', 0))) {
-					$result = self::_checkPath('/components/'.$user_option.'/'.$name.'.html.php', 0);
-				}
-				break;
-
-			case 'toolbar':
-				$result = self::_checkPath('/components/'.$user_option.'/'.'toolbar.'.$name.'.php', -1);
-				break;
-
-			case 'toolbar_html':
-				$result = self::_checkPath('/components/'.$user_option.'/'.'toolbar.'.$name.'.html.php', -1);
-				break;
-
-			case 'toolbar_default':
-			case 'toolbar_front':
-				$result = self::_checkPath('/includes/'.'HTML_toolbar.php', 0);
-				break;
-
-			case 'admin':
-				$path	= '/components/'.$user_option.'/'.'admin.'.$name.'.php';
-				$result = self::_checkPath($path, -1);
-				if ($result == null) {
-					$path = '/components/'.$user_option.'/'.$name.'.php';
-					$result = self::_checkPath($path, -1);
-				}
-				break;
-
-			case 'admin_html':
-				$path	= '/components/'.$user_option.'/'.'admin.'. $name.'.html.php';
-				$result = self::_checkPath($path, -1);
-				break;
-
-			case 'admin_functions':
-				$path	= '/components/'.$user_option.'/'.$name.'.functions.php';
-				$result = self::_checkPath($path, -1);
-				break;
-
-			case 'class':
-				if (!($result = self::_checkPath('/components/'.$user_option.'/'.$name.'.class.php'))) {
-					$result = self::_checkPath('/includes/'.$name.'.php');
-				}
-				break;
-
-			case 'helper':
-				$path	= '/components/'.$user_option.'/'.$name.'.helper.php';
-				$result = self::_checkPath($path);
-				break;
-
-			case 'com_xml':
-				$path	= '/components/'.$user_option.'/'.$name.'.xml';
-				$result = self::_checkPath($path, 1);
-				break;
-
-			case 'mod0_xml':
-				$path = '/modules/'.$user_option.'/'.$user_option. '.xml';
-				$result = self::_checkPath($path);
-				break;
-
-			case 'mod1_xml':
-				// Admin modules
-				$path = '/modules/'.$user_option.'/'.$user_option. '.xml';
-				$result = self::_checkPath($path, -1);
-				break;
-
-			case 'plg_xml':
-				// Site plugins
-				$j15path = '/plugins/'.$user_option.'.xml';
-				$parts = explode(DS, $user_option);
-				$j16path = '/plugins/'.$user_option.'/'.$parts[1].'.xml';
-				$j15 = self::_checkPath($j15path, 0);
-				$j16 = self::_checkPath($j16path, 0);
-				// Return 1.6 if working otherwise default to whatever 1.5 gives us
-				$result = $j16 ? $j16 : $j15;
-				break;
-
-			case 'menu_xml':
-				$path	= '/components/'.'com_menus/'.$user_option.'/'.$user_option.'.xml';
-				$result = self::_checkPath($path, -1);
-				break;
-		}
-
-		return $result;
 	}
 
 	/**
@@ -322,8 +224,8 @@ class MolajoApplicationHelper
 		// Check if we're a language. If so use metafile.
 		$data['type'] = $xml->getName() == 'metafile' ? 'language' : (string)$xml->attributes()->type;
 
-		$data['creationDate'] =((string)$xml->creationDate) ? (string)$xml->creationDate : JText::_('Unknown');
-		$data['author'] =((string)$xml->author) ? (string)$xml->author : JText::_('Unknown');
+		$data['creationDate'] =((string)$xml->creationDate) ? (string)$xml->creationDate : MolajoText::_('Unknown');
+		$data['author'] =((string)$xml->author) ? (string)$xml->author : MolajoText::_('Unknown');
 
 		$data['copyright'] = (string)$xml->copyright;
 		$data['authorEmail'] = (string)$xml->authorEmail;
@@ -378,8 +280,8 @@ class MolajoApplicationHelper
 		$data['name'] = (string)$xml->name;
 		$data['type'] = $xml->attributes()->type;
 
-		$data['creationDate'] =((string)$xml->creationDate) ? (string)$xml->creationDate : JText::_('MOLAJO_UNKNOWN');
-		$data['author'] =((string)$xml->author) ? (string)$xml->author : JText::_('MOLAJO_UNKNOWN');
+		$data['creationDate'] =((string)$xml->creationDate) ? (string)$xml->creationDate : MolajoText::_('MOLAJO_UNKNOWN');
+		$data['author'] =((string)$xml->author) ? (string)$xml->author : MolajoText::_('MOLAJO_UNKNOWN');
 
 		$data['copyright'] = (string)$xml->copyright;
 		$data['authorEmail'] = (string)$xml->authorEmail;

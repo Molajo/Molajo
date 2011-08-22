@@ -16,7 +16,7 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.modal');
 $canDo	= TemplatesHelper::getActions();
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_templates&view=template'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_templates&view=template'); ?>" method="post" name="adminForm" id="adminForm">
 	<div class="width-50 fltlft">
 		<fieldset class="adminform" id="template-manager">
 			<legend><?php echo JText::_('COM_TEMPLATES_TEMPLATE_MASTER_FILES');?></legend>
@@ -28,7 +28,7 @@ $canDo	= TemplatesHelper::getActions();
 				<li>
 					<?php $id = $this->files['main']['index']->id; ?>
 					<?php if ($canDo->get('core.edit')) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
 					<?php endif; ?>
 						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_EDIT_MAIN');?>
 					<?php if ($canDo->get('core.edit')) : ?>
@@ -39,7 +39,7 @@ $canDo	= TemplatesHelper::getActions();
 				<li>
 					<?php $id = $this->files['main']['error']->id; ?>
 					<?php if ($canDo->get('core.edit')) : ?>
-						<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
+						<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
 					<?php endif; ?>
 						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_EDIT_ERROR');?>
 					<?php if ($canDo->get('core.edit')) : ?>
@@ -51,7 +51,7 @@ $canDo	= TemplatesHelper::getActions();
 				<li>
 					<?php $id = $this->files['main']['print']->id; ?>
 					<?php if ($canDo->get('core.edit')) : ?>
-						<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
+						<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&task=source.edit&id='.$id);?>">
 					<?php endif; ?>
 						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_EDIT_PRINTVIEW');?>
 					<?php if ($canDo->get('core.edit')) : ?>
@@ -75,7 +75,7 @@ $canDo	= TemplatesHelper::getActions();
 				<?php foreach ($this->files['css'] as $file) : ?>
 				<li>
 					<?php if ($canDo->get('core.edit')) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_templates&task=source.edit&id='.$file->id);?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&task=source.edit&id='.$file->id);?>">
 					<?php endif; ?>
 
 						<?php echo JText::sprintf('COM_TEMPLATES_TEMPLATE_EDIT_CSS', $file->name);?>

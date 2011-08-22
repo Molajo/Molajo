@@ -121,7 +121,7 @@ class MolajoFieldCreated extends MolajoField
             if ($item->created == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->created, JText::_('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->created, MolajoText::_('DATE_FORMAT_LC4'));
             }
 
             return $render;

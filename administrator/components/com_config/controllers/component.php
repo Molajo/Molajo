@@ -79,7 +79,7 @@ class ConfigControllerComponent extends JController
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(JRoute::_('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', false));
 			return false;
 		}
 

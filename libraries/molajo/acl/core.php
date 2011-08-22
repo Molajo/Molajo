@@ -188,7 +188,7 @@ class MolajoACLCore extends MolajoACL
             $taskTests = array($taskTests);
         }
         if (count($taskTests) == 0) {
-            JError::raiseError(500, JText::_('MOLAJO_ACL_NOT_IDENTIFIED_TASK_ACL_METHOD'). ' '.$task);
+            JError::raiseError(500, MolajoText::_('MOLAJO_ACL_NOT_IDENTIFIED_TASK_ACL_METHOD'). ' '.$task);
             return false;
         }
         

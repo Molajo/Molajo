@@ -30,12 +30,12 @@ class MolajoMenuHelper
 	public static function addSubmenu($vName)
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('COM_MENUS_SUBMENU_MENUS'),
+			MolajoText::_('COM_MENUS_SUBMENU_MENUS'),
 			'index.php?option=com_menus&view=menus',
 			$vName == 'menus'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_MENUS_SUBMENU_ITEMS'),
+			MolajoText::_('COM_MENUS_SUBMENU_ITEMS'),
 			'index.php?option=com_menus&view=items',
 			$vName == 'items'
 		);

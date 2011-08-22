@@ -25,7 +25,7 @@ JHtml::_('behavior.tooltip');
 <?php echo $this->loadTemplate('custom'); ?>
 
 <?php if (MolajoFactory::getUser()->id == $this->data->id) : ?>
-<a href="<?php echo JRoute::_('index.php?option=com_users&task=profile.edit&user_id='.(int) $this->data->id);?>">
+<a href="<?php echo MolajoRoute::_('index.php?option=com_users&task=profile.edit&user_id='.(int) $this->data->id);?>">
 	<?php echo JText::_('COM_USERS_Edit_Profile'); ?></a>
 <?php endif; ?>
 </div>

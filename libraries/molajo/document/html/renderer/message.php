@@ -1,12 +1,11 @@
 <?php
 /**
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
@@ -40,8 +39,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 
 		// Build the sorted message list
 		if (is_array($messages) && !empty($messages)) {
-			foreach ($messages as $msg)
-			{
+			foreach ($messages as $msg) {
 				if (isset($msg['type']) && isset($msg['message'])) {
 					$lists[$msg['type']][] = $msg['message'];
 				}
@@ -57,7 +55,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 			foreach ($lists as $type => $msgs)
 			{
 				if (count($msgs)) {
-					$buffer .= "\n<dt class=\"".strtolower($type)."\">".JText::_($type)."</dt>";
+					$buffer .= "\n<dt class=\"".strtolower($type)."\">".MolajoText::_($type)."</dt>";
 					$buffer .= "\n<dd class=\"".strtolower($type)." message\">";
 					$buffer .= "\n\t<ul>";
 					foreach ($msgs as $msg)

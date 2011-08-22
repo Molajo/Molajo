@@ -303,8 +303,6 @@ class MolajoEditor extends JObservable
 			return;
 		}
 
-		jimport('joomla.filesystem.file');
-
 		// Build the path to the needed editor plugin
 		$name = JFilterInput::getInstance()->clean($this->_name, 'cmd');
 		$path = MOLAJO_PATH_PLUGINS.'/editors/'.$name.'.php';
@@ -312,7 +310,7 @@ class MolajoEditor extends JObservable
 		if (!JFile::exists($path)) {
 			$path = MOLAJO_PATH_PLUGINS.'/editors/'.$name.'/'.$name.'.php';
 			if (!JFile::exists($path)) {
-				$message = JText::_('MOLAJO_HTML_EDITOR_CANNOT_LOAD');
+				$message = MolajoText::_('MOLAJO_HTML_EDITOR_CANNOT_LOAD');
 				JError::raiseWarning(500, $message);
 				return false;
 			}

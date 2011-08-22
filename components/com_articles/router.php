@@ -28,7 +28,7 @@ function ArticlesBuildRoute(&$query)
  *
  * Parse the segments of a URL.
  *
- * called out of JRouterSite::_parseSefRoute()
+ * called out of MolajoRouterSite::_parseSefRoute()
  *
  * @param  $query
  * @return array
@@ -36,8 +36,6 @@ function ArticlesBuildRoute(&$query)
  */
 function ArticlesParseRoute ($segments)
 {
-    var_dump($segments);
-    die();
     $router = new MolajoRouterParse();
     return $router->parseRoute($segments, 'com_articles', 'article', 'articles', 'Article', '#__articles');
 }

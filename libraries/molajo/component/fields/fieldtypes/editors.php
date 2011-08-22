@@ -53,7 +53,7 @@ class MolajoFormFieldEditors extends MolajoFormFieldList
 			||	$lang->load('plg_editors_'.$option->value, MOLAJO_PATH_PLUGINS .'/editors/'.$option->value, null, false, false)
 			||	$lang->load('plg_editors_'.$option->value, MOLAJO_PATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 			||	$lang->load('plg_editors_'.$option->value, MOLAJO_PATH_PLUGINS .'/editors/'.$option->value, $lang->getDefault(), false, false);
-			$options[$i]->text = JText::_($option->text);
+			$options[$i]->text = MolajoText::_($option->text);
 		}
 
 		// Check for a database error.
