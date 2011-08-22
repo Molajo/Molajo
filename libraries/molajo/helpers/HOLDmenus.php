@@ -156,8 +156,8 @@ class MenusHelper
 		}
 
 		if (!empty($published)) {
-			if (is_array($published)) $published = '(' . implode(',',$published) .')';
-			$query->where('a.published IN ' . $published);
+			if (is_array($published)) $published = '('.implode(',',$published) .')';
+			$query->where('a.published IN '.$published);
 		}
 
 		$query->where('a.published != -2');

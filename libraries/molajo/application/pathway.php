@@ -63,7 +63,7 @@ class MolajoPathway extends JObject
 			//Load the router object
 			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
-			$path = $info->path . '/includes/pathway.php';
+			$path = $info->path.'/includes/pathway.php';
             
 			if (file_exists($path))
 			{

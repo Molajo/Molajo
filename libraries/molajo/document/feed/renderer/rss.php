@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,9 +12,9 @@ defined('MOLAJO') or die;
 /**
  * MolajoDocumentRenderer_RSS is a feed that implements RSS 2.0 Specification
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
- * @see     	http://www.rssboard.org/rss-specification
+ * @see         http://www.rssboard.org/rss-specification
  * @since       1.0
  */
 class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
@@ -23,6 +23,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	 * Renderer mime type
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	protected $_mime = "application/rss+xml";
 
@@ -30,19 +31,21 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	 * Render the feed
 	 *
 	 * @return  string
+	 *
+	 * @since   11.1
 	 */
 	public function render()
 	{
-		$app	= MolajoFactory::getApplication();
+		$app	= JFactory::getApplication();
 
 		// Gets and sets timezone offset from site configuration
 		$tz	= new DateTimeZone($app->getCfg('offset'));
-		$now	= MolajoFactory::getDate();
+		$now	= JFactory::getDate();
 		$now->setTimeZone($tz);
 
 		$data	= &$this->_doc;
 
-		$uri = MolajoFactory::getURI();
+		$uri = JFactory::getURI();
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 		$syndicationURL = JRoute::_('&format=feed&type=rss');
 
@@ -55,7 +58,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 		else {
 			$title = $data->title;
 		}
-		
+
 		$feed_title = htmlspecialchars($title, ENT_COMPAT, 'UTF-8');
 
 		$feed = "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n";
@@ -67,8 +70,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 		$feed.= "		<generator>".$data->getGenerator()."</generator>\n";
 		$feed.= '		<atom:link rel="self" type="application/rss+xml" href="'.str_replace(' ','%20',$url.$syndicationURL)."\"/>\n";
 
-		if ($data->image!=null)
-		{
+		if ($data->image!=null) {
 			$feed.= "		<image>\n";
 			$feed.= "			<url>".$data->image->url."</url>\n";
 			$feed.= "			<title>".htmlspecialchars($data->image->title, ENT_COMPAT, 'UTF-8')."</title>\n";
@@ -98,7 +100,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 			$feed.= "		<webMaster>".htmlspecialchars($data->webmaster, ENT_COMPAT, 'UTF-8')."</webMaster>\n";
 		}
 		if ($data->pubDate!="") {
-			$pubDate = MolajoFactory::getDate($data->pubDate);
+			$pubDate = JFactory::getDate($data->pubDate);
 			$pubDate->setTimeZone($tz);
 			$feed.= "		<pubDate>".htmlspecialchars($pubDate->toRFC822(true), ENT_COMPAT, 'UTF-8')."</pubDate>\n";
 		}
@@ -147,11 +149,11 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 			$feed.= "			<description><![CDATA[".$this->_relToAbs($data->items[$i]->description)."]]></description>\n";
 
 			if ($data->items[$i]->authorEmail!="") {
-				$feed.= "			<author>".htmlspecialchars($data->items[$i]->authorEmail . ' (' .
-										$data->items[$i]->author . ')', ENT_COMPAT, 'UTF-8')."</author>\n";
+				$feed.= "			<author>".htmlspecialchars($data->items[$i]->authorEmail.' (' .
+										$data->items[$i]->author.')', ENT_COMPAT, 'UTF-8')."</author>\n";
 			}
 			/*
-			// on hold
+			// On hold
 			if ($data->items[$i]->source!="") {
 					$data.= "			<source>".htmlspecialchars($data->items[$i]->source, ENT_COMPAT, 'UTF-8')."</source>\n";
 			}
@@ -170,7 +172,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 				$feed.= "			<comments>".htmlspecialchars($data->items[$i]->comments, ENT_COMPAT, 'UTF-8')."</comments>\n";
 			}
 			if ($data->items[$i]->date!="") {
-				$itemDate = MolajoFactory::getDate($data->items[$i]->date);
+				$itemDate = JFactory::getDate($data->items[$i]->date);
 				$itemDate->setTimeZone($tz);
 				$feed.= "			<pubDate>".htmlspecialchars($itemDate->toRFC822(true), ENT_COMPAT, 'UTF-8')."</pubDate>\n";
 			}
@@ -195,7 +197,11 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	/**
 	 * Convert links in a text from relative to absolute
 	 *
-	 * @return  string
+	 * @param   string  $text  The text processed
+	 *
+	 * @return  string   Text with converted links
+	 *
+	 * @since   11.1
 	 */
 	public function _relToAbs($text)
 	{

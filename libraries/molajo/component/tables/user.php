@@ -190,7 +190,7 @@ class MolajoTableUser extends MolajoTable
 		// check for existing username
 		$query = 'SELECT id'
 		. ' FROM #__users '
-		. ' WHERE username = ' . $this->_db->Quote($this->username)
+		. ' WHERE username = '.$this->_db->Quote($this->username)
 		. ' AND id != '. (int) $this->id;
 		;
 		$this->_db->setQuery($query);

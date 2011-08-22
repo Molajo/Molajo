@@ -406,8 +406,8 @@ class MolajoACLCore extends MolajoACL
             $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
             $nowDate = $this->getDbo()->Quote(MolajoFactory::getDate()->toMySQL());
 
-            $query->where('(a.publish_up = ' . $nullDate . ' OR a.publish_up <= ' . $nowDate . ')');
-            $query->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+            $query->where('(a.publish_up = '.$nullDate.' OR a.publish_up <= '.$nowDate.')');
+            $query->where('(a.publish_down = '.$nullDate.' OR a.publish_down >= '.$nowDate.')');
         }
         */
         return;
@@ -747,7 +747,7 @@ class MolajoACLCore extends MolajoACL
         $query->join('LEFT', '#__assets AS b ON b.id = a.asset_id');
         $query->join('LEFT', '#__actions AS c ON c.id = a.action_id');
         $query->where('c.title = '.$db->_quoted($action));
-        $query->where('a.group IN (' . implode(',', $userGroups) . ')');
+        $query->where('a.group IN ('.implode(',', $userGroups).')');
 
         $db->setQuery($query);
         $accessResult = $db->loadObjectList();

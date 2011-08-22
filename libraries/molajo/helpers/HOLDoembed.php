@@ -103,7 +103,7 @@ class MolajoOembedHelper {
 		$this->option_width = 200;
 		$this->option_height = 151;
 		$this->output_Class= trim($primarysecondaryClass.$listitemClass.$option_MediaClass.$providerClass.$mediaClass);
-		$this->prepared_URL = trim($providerEndPoint).'?url='.rawurlencode($option_URL) . '&width='.$this->option_width.'&height='.$this->option_height;
+		$this->prepared_URL = trim($providerEndPoint).'?url='.rawurlencode($option_URL).'&width='.$this->option_width.'&height='.$this->option_height;
 
 		if ($providerHandling == 'embed') {
 			return MolajoFunctionsOembed::createEmbed ();

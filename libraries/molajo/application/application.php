@@ -643,9 +643,9 @@ class MolajoApplication extends JObject
         if ($this->params->get('show_feed_link', 1)) {
             $link = '&format=feed&limitstart=';
             $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-            $document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
+            $document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
             $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-            $document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
+            $document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
         }
 
         $session->set('page.params', $this->params);
@@ -769,7 +769,7 @@ class MolajoApplication extends JObject
 	{
 		// Check for relative internal links.
 		if (preg_match('#^index2?\.php#', $url)) {
-			$url = JURI::base() . $url;
+			$url = JURI::base().$url;
 		}
 
 		// Strip out any line breaks.
@@ -785,14 +785,14 @@ class MolajoApplication extends JObject
 
 			if ($url[0] == '/') {
 				// We just need the prefix since we have a path relative to the root.
-				$url = $prefix . $url;
+				$url = $prefix.$url;
 			}
 			else {
 				// It's relative to where we are now, so lets add that.
 				$parts = explode('/', $uri->toString(Array('path')));
 				array_pop($parts);
 				$path = implode('/',$parts).'/';
-				$url = $prefix . $path . $url;
+				$url = $prefix.$path.$url;
 			}
 		}
 
@@ -898,7 +898,7 @@ class MolajoApplication extends JObject
 	public function getCfg($varname, $default=null)
 	{
 		$config = MolajoFactory::getConfig();
-		return $config->get('' . $varname, $default);
+		return $config->get(''.$varname, $default);
 	}
 
 	/**

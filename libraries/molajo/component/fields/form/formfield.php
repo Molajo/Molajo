@@ -749,7 +749,7 @@ abstract class MolajoFormField
 		}
 		else {
 			self::$count = self::$count + 1;
-			return self::$generated_fieldname . self::$count;
+			return self::$generated_fieldname.self::$count;
 		}
 	}
 }

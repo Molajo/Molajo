@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Abstract class for a renderer
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -54,7 +54,7 @@ class MolajoDocumentRenderer extends JObject
 	 * @param   string   $content  Override the output of the renderer
 	 *
 	 * @return  string   The output of the script
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function render($name, $params = null, $content = null)
 	{
@@ -64,7 +64,7 @@ class MolajoDocumentRenderer extends JObject
 	 * Return the content type of the renderer
 	 *
 	 * @return  string  The contentType
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	function getContentType() {
 		return $this->_mime;

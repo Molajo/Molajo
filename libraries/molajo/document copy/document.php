@@ -1,0 +1,851 @@
+<?php
+/**
+ * @package     Molajo
+ * @subpackage  Document
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ */
+defined('MOLAJO') or die;
+
+/**
+ * Document class, provides an easy interface to parse and display a document
+ *
+ * @package     Molajo
+ * @subpackage  Document
+ * @since       1.0
+ */
+class MolajoDocument extends JObject
+{
+	/**
+	 * Document title
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $title = '';
+
+	/**
+	 * Document description
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $description = '';
+
+	/**
+	 * Document full URL
+	 *
+	 * @var    string
+	 * @since   1.0
+	 */
+	public $link = '';
+
+	/**
+	 * Document base URL
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $base = '';
+
+	/**
+	 * Contains the document language setting
+	 *
+	 * @var    string
+	 * @since   1.0
+	 */
+	public $language = 'en-GB';
+
+	/**
+	 * Contains the document direction setting
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $direction = 'ltr';
+
+	/**
+	 * Document generator
+	 *
+	 * @var    string
+	 */
+	public $_generator = 'Molajo - Web Application Development Framework';
+
+	/**
+	 * Document modified date
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $_mdate = '';
+
+	/**
+	 * Tab string
+	 *
+	 * @var		string
+	 */
+	public $_tab = "\11";
+
+	/**
+	 * Contains the line end string
+	 *
+	 * @var		string
+	 */
+	public $_lineEnd = "\12";
+
+	/**
+	 * Contains the character encoding string
+	 *
+	 * @var	string
+	 */
+	public $_charset = 'utf-8';
+
+	/**
+	 * Document mime type
+	 *
+	 * @var		string
+	 */
+	public $_mime = '';
+
+	/**
+	 * Document namespace
+	 *
+	 * @var		string
+	 */
+	public $_namespace = '';
+
+	/**
+	 * Document profile
+	 *
+	 * @var		string
+	 */
+	public $_profile = '';
+
+	/**
+	 * Array of linked scripts
+	 *
+	 * @var		array
+	 */
+	public $_scripts = array();
+
+	/**
+	 * Array of scripts placed in the header
+	 *
+	 * @var  array
+	 */
+	public $_script = array();
+
+	/**
+	 * Array of linked style sheets
+	 *
+	 * @var	array
+	 */
+	public $_styleSheets = array();
+
+	/**
+	 * Array of included style declarations
+	 *
+	 * @var	array
+	 */
+	public $_style = array();
+
+	/**
+	 * Array of meta tags
+	 *
+	 * @var	array
+	 */
+	public $_metaTags = array();
+
+	/**
+	 * The rendering engine
+	 *
+	 * @var	object
+	 */
+	public $_engine = null;
+
+	/**
+	 * The document type
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	public $_type = null;
+
+	/**
+	 * Array of buffered output
+	 *
+	 * @var    mixed (depends on the renderer)
+	 */
+	public static $_buffer = null;
+
+	/**
+	 * Class constructor.
+	 *
+	 * @param   array  $options  Associative array of options
+	 *
+	 * @return  MolajoDocument
+	 *
+	 * @since   1.0
+	 */
+	public function __construct($options = array())
+	{
+		parent::__construct();
+
+		if (array_key_exists('lineend', $options)) {
+			$this->setLineEnd($options['lineend']);
+		}
+
+		if (array_key_exists('charset', $options)) {
+			$this->setCharset($options['charset']);
+		}
+
+		if (array_key_exists('language', $options)) {
+			$this->setLanguage($options['language']);
+		}
+
+		if (array_key_exists('direction', $options)) {
+			$this->setDirection($options['direction']);
+		}
+
+		if (array_key_exists('tab', $options)) {
+			$this->setTab($options['tab']);
+		}
+
+		if (array_key_exists('link', $options)) {
+			$this->setLink($options['link']);
+		}
+
+		if (array_key_exists('base', $options)) {
+			$this->setBase($options['base']);
+		}
+	}
+
+	/**
+	 * Returns the global MolajoDocument object, only creating it
+	 * if it doesn't already exist.
+	 *
+	 * @param   string  $type       The document type to instantiate
+	 * @param   array   $attribues  Array of attributes
+	 *
+	 * @return  object  The document object.
+	 * @since   1.0
+	 */
+	public static function getInstance($type = 'html', $attributes = array())
+	{
+		static $instances;
+
+		if (isset($instances)) {
+        } else {
+			$instances = array();
+		}
+
+		$signature = serialize(array($type, $attributes));
+
+		if (empty($instances[$signature])) {
+			$type	= preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
+			$path	= dirname(__FILE__).'/'.$type.'/'.$type.'.php';
+			$ntype	= null;
+			if (file_exists($path)) {
+            } else {
+				$ntype	= $type;
+				$type	= 'raw';
+			}
+
+			$class = 'MolajoDocument'.$type;
+            echo $class.'<br />';
+
+    		if (class_exists($class)) {
+            } else {
+				$path = dirname(__FILE__).'/'.$type.'/'.$type.'.php';
+				if (file_exists($path)) {
+					require_once $path;
+                } else {
+                    JError::raiseError(500,JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+                }
+			}
+
+			$instance	= new $class($attributes);
+			$instances[$signature] = &$instance;
+
+			if (is_null($ntype)) {
+            } else {
+				$instance->setType($ntype);
+			}
+		}
+
+		return $instances[$signature];
+	}
+
+	/**
+	 * Set the document type
+	 *
+	 * @param   string  $type
+	 *
+	 * @return
+	 * @since   1.0
+	 */
+	public function setType($type)
+	{
+		$this->_type = $type;
+	}
+
+	/**
+	 * Returns the document type
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
+	public function getType()
+	{
+		return $this->_type;
+	}
+
+	/**
+	 * Get the document head data
+	 *
+	 * @return  array  The document head data in array form
+	 * @since   1.0
+	 */
+	public function getHeadData()
+	{
+		// Impelemented in child classes
+	}
+
+	/**
+	 * Set the document head data
+	 *
+	 * @param   array  $data  The document head data in array form
+	 *
+	 * @return  void
+	 * @since   1.0
+	 */
+	public function setHeadData($data)
+	{
+		// Implemented in child classes
+	}
+
+	/**
+	 * Set the document head data
+	 *
+	 * @param   array  $data  The document head data in array form
+	 *
+	 * @return
+	 * @since   1.0
+	 */
+	public function mergeHeadData($data)
+	{
+		// Implemented in child classes
+	}
+
+	/**
+	 * Get the contents of the document buffer
+	 *
+	 * @return  The contents of the document buffer
+	 * @since   1.0
+	 */
+	public function getBuffer()
+	{
+		return self::$_buffer;
+	}
+
+	/**
+	 * Set the contents of the document buffer
+	 *
+	 * @param   string  $content  The content to be set in the buffer.
+	 * @param   array   $options  Array of optional elements.
+	 *
+	 * @return  void
+	 * @since   1.0
+	 */
+	public function setBuffer($content, $options = array())
+	{
+		self::$_buffer = $content;
+	}
+
+	/**
+	 * Gets a meta tag.
+	 *
+	 * @param   string  $name        Value of name or http-equiv tag
+	 * @param   bool    $http_equiv  META type "http-equiv" defaults to null
+	 *
+	 * @return  string
+	 * @since   1.0
+	 */
+	public function getMetaData($name, $http_equiv = false)
+	{
+		$result = '';
+		$name = strtolower($name);
+		if ($name == 'generator') {
+			$result = $this->getGenerator();
+		} else if ($name == 'description') {
+			$result = $this->getDescription();
+		} else if ($http_equiv == true) {
+			$result = @$this->_metaTags['http-equiv'][$name];
+        } else {
+			$result = @$this->_metaTags['standard'][$name];
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Sets or alters a meta tag.
+	 *
+	 * @param   string   $name        Value of name or http-equiv tag
+	 * @param   string   $content     Value of the content tag
+	 * @param   bool     $http_equiv  META type "http-equiv" defaults to null
+	 * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
+	 *
+	 * @return  void
+	 * @since   1.0
+	 */
+	public function setMetaData($name, $content, $http_equiv = false, $sync = true)
+	{
+		$name = strtolower($name);
+
+		if ($name == 'generator') {
+			$this->setGenerator($content);
+
+		} else if ($name == 'description') {
+			$this->setDescription($content);
+
+		} else if ($http_equiv == true) {
+			$this->_metaTags['http-equiv'][$name] = $content;
+        	// Syncing with HTTP-header
+			if ($sync && strtolower($name) == 'content-type') {
+				$this->setMimeEncoding($content, false);
+			}
+
+        } else {
+				$this->_metaTags['standard'][$name] = $content;
+		}
+	}
+
+	/**
+	 * Adds a linked script to the page
+	 *
+	 * @param   string  $url		URL to the linked script
+	 * @param   string  $type		Type of script. Defaults to 'text/javascript'
+	 * @param   bool    $defer		Adds the defer attribute.
+	 * @param   bool    $async		Adds the async attribute.
+	 * @return
+	 * @since    11.1
+	 */
+	public function addScript($url, $type = "text/javascript", $defer = false, $async = false, $priority = 0)
+	{
+		$this->_scripts[$url]['mime'] = $type;
+		$this->_scripts[$url]['defer'] = $defer;
+		$this->_scripts[$url]['async'] = $async;
+        $this->_scripts[$url]['priority'] = $priority;
+	}
+
+	/**
+	 * Adds a script to the page
+	 *
+	 * @param   string  $content	Script
+	 * @param   string  $type	Scripting mime (defaults to 'text/javascript')
+	 *
+	 * @return  void
+	 * @since    11.1
+	 */
+	public function addScriptDeclaration($content, $type = 'text/javascript', $priority = 0)
+	{
+		if (!isset($this->_script[strtolower($type)])) {
+			$this->_script[strtolower($type)] = $content;
+		} else {
+			$this->_script[strtolower($type)] .= chr(13).$content;
+		}
+        $this->_script['priority'] = $priority;
+	}
+
+	/**
+	 * Adds a linked stylesheet to the page
+	 *
+	 * @param   string  $url      URL to the linked style sheet
+	 * @param   string  $type     Mime encoding type
+	 * @param   string  $media    Media type that this stylesheet applies to
+	 * @param   array   $attribs  Array of attributes
+	 *
+	 * @return  void
+	 * @since    11.1
+	 */
+	public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array(), $priority = 0)
+	{
+		$this->_styleSheets[$url]['mime']		= $type;
+		$this->_styleSheets[$url]['media']		= $media;
+		$this->_styleSheets[$url]['attribs']	= $attribs;
+		$this->_styleSheets[$url]['priority']	= $priority;
+	}
+
+	/**
+	 * Adds a stylesheet declaration to the page
+	 *
+	 * @param   string  $content  Style declarations
+	 * @param   string  $type     Type of stylesheet (defaults to 'text/css')
+	 *
+	 * @return  void
+	 */
+	public function addStyleDeclaration($content, $type = 'text/css', $priority = 0)
+	{
+		if (!isset($this->_style[strtolower($type)])) {
+			$this->_style[strtolower($type)] = $content;
+		} else {
+			$this->_style[strtolower($type)] .= chr(13).$content;
+		}
+		$this->_style['priority']	= $priority;
+	}
+
+	/**
+	 * Sets the document charset
+	 *
+	 * @param   string  $type  Charset encoding string
+	 *
+	 * @return  void
+	 */
+	public function setCharset($type = 'utf-8')
+	{
+		$this->_charset = $type;
+	}
+
+	/**
+	 * Returns the document charset encoding.
+	 *
+	 * @return string
+	 */
+	public function getCharset()
+	{
+		return $this->_charset;
+	}
+
+	/**
+	 * Sets the global document language declaration. Default is English (en-gb).
+	 *
+	 * @param   string	$lang
+	 *
+	 * @return  void
+	 */
+	public function setLanguage($lang = "en-GB")
+	{
+		$this->language = strtolower($lang);
+	}
+
+	/**
+	 * Returns the document language.
+	 *
+	 * @return string
+	 */
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+
+	/**
+	 * Sets the global document direction declaration. Default is left-to-right (ltr).
+	 *
+	 * @param   string  $lang
+	 *
+	 * @return  void
+	 */
+	public function setDirection($dir = "ltr")
+	{
+		$this->direction = strtolower($dir);
+	}
+
+	/**
+	 * Returns the document direction declaration.
+	 *
+	 * @return string
+	 *
+	 */
+	public function getDirection()
+	{
+		return $this->direction;
+	}
+
+	/**
+	 * Sets the title of the document
+	 *
+	 * @param   string	$title
+	 *
+	 * @return  void
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
+	}
+
+	/**
+	 * Return the title of the document.
+	 *
+	 * @return  string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * Sets the base URI of the document
+	 *
+	 * @param  string  $base
+	 *
+	 * @return void
+	 */
+	public function setBase($base)
+	{
+		$this->base = $base;
+	}
+
+	/**
+	 * Return the base URI of the document.
+	 *
+	 * @return  string
+	 *
+	 */
+	public function getBase()
+	{
+		return $this->base;
+	}
+
+	/**
+	 * Sets the description of the document
+	 *
+	 * @param  string  $title
+	 *
+	 * @return void
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
+	}
+
+	/**
+	 * Return the title of the page.
+	 *
+	 * @return  string
+	 *
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	/**
+	 * Sets the document link
+	 *
+	 * @param  string  $url  A url
+	 *
+	 * @return  void
+	 */
+	public function setLink($url)
+	{
+		$this->link = $url;
+	}
+
+	/**
+	 * Returns the document base url
+	 *
+	 * @return string
+	 */
+	public function getLink()
+	{
+		return $this->link;
+	}
+
+	/**
+	 * Sets the document generator
+	 *
+	 * @param  string
+	 *
+	 * @return  void
+	 */
+	public function setGenerator($generator)
+	{
+		$this->_generator = $generator;
+	}
+
+	/**
+	 * Returns the document generator
+	 *
+	 * @return string
+	 */
+	public function getGenerator()
+	{
+		return $this->_generator;
+	}
+
+	/**
+	 * Sets the document modified date
+	 *
+	 * @param  string
+	 *
+	 * @return  void
+	 */
+	public function setModifiedDate($date)
+	{
+		$this->_mdate = $date;
+	}
+
+	/**
+	 * Returns the document modified date
+	 *
+	 * @return string
+	 */
+	public function getModifiedDate()
+	{
+		return $this->_mdate;
+	}
+
+	/**
+	 * Sets the document MIME encoding that is sent to the browser.
+	 *
+	 * This usually will be text/html because most browsers cannot yet
+	 * accept the proper mime settings for XHTML: application/xhtml+xml
+	 * and to a lesser extent application/xml and text/xml. See the W3C note
+	 * ({@link http://www.w3.org/TR/xhtml-media-types/
+	 * http://www.w3.org/TR/xhtml-media-types/}) for more details.
+	 *
+	 * @param   string  $type
+	 * @param   bool    $sync  Should the type be synced with HTML?
+	 *
+	 * @return  void
+	 */
+	public function setMimeEncoding($type = 'text/html', $sync = true)
+	{
+		$this->_mime = strtolower($type);
+
+		// Syncing with meta-data
+		if ($sync) {
+			$this->setMetaData('content-type', $type, true, false);
+		}
+	}
+
+	/**
+	 * Return the document MIME encoding that is sent to the browser.
+	 *
+	 * @return  string
+	 */
+	public function getMimeEncoding()
+	{
+		return $this->_mime;
+	}
+
+	/**
+	 * Sets the line end style to Windows, Mac, Unix or a custom string.
+	 *
+	 * @param   string  $style  "win", "mac", "unix" or custom string.
+	 *
+	 * @return  void
+	 */
+	public function setLineEnd($style)
+	{
+		switch ($style)
+		{
+			case 'win':
+				$this->_lineEnd = "\15\12";
+				break;
+			case 'unix':
+				$this->_lineEnd = "\12";
+				break;
+			case 'mac':
+				$this->_lineEnd = "\15";
+				break;
+			default:
+				$this->_lineEnd = $style;
+		}
+	}
+
+	/**
+	 * Returns the lineEnd
+	 *
+	 * @return  string
+	 */
+	public function _getLineEnd()
+	{
+		return $this->_lineEnd;
+	}
+
+	/**
+	 * Sets the string used to indent HTML
+	 *
+	 * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
+	 *
+	 * @return  void
+	 */
+	public function setTab($string)
+	{
+		$this->_tab = $string;
+	}
+
+	/**
+	 * Returns a string containing the unit for indenting HTML
+	 *
+	 * @return  string
+	 */
+	public function _getTab()
+	{
+		return $this->_tab;
+	}
+
+	/**
+	* Load a renderer
+	*
+	* @param   string  $type  The renderer type
+	*
+	* @return  mixed  Object or null if class does not exist
+	* @since   11.1
+	*/
+	public function loadRenderer($type)
+	{
+		$rendererClass	= 'MolajoDocumentRenderer'.$type;
+        $format = JRequest::getCmd('format', 'html');
+        
+        if (class_exists($rendererClass)) {
+        } else {
+            $path = MOLAJO_LIBRARY.'/document/'.$format.'/renderer/'.$type.'.php';
+            if (file_exists($path)) {
+                require_once $path;
+            } else {
+                JError::raiseError(500, JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_RENDERER_CLASS'));
+            }
+        }
+
+		if (class_exists($rendererClass)) {
+        } else {
+			return null;
+		}
+
+		$instance = new $rendererClass($this);
+
+		return $instance;
+	}
+
+	/**
+	 * Parses the document and prepares the buffers
+	 *
+	 * @return null
+	 */
+	public function parse($params = array())
+	{
+		return null;
+	}
+
+	/**
+	 * Outputs the document
+	 *
+	 * @param   boolean  $cache     If true, cache the output
+	 * @param   boolean  $compress  If true, compress the output
+	 * @param   array    $params    Associative array of attributes
+	 *
+	 * @return  The rendered data
+	 */
+	public function render($cache = false, $params = array())
+	{
+		if ($mdate = $this->getModifiedDate()) {
+			JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);
+		}
+
+		JResponse::setHeader('Content-Type', $this->_mime. '; charset='.$this->_charset);
+	}
+}

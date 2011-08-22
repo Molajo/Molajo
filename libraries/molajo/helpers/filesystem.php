@@ -245,7 +245,7 @@ class MolajoFilesystemHelper
 		if (!$streams) {
 			$streams = array_map(
 				array('JFile', 'stripExt'),
-				JFolder::files(dirname(__FILE__) . '/streams', '.php')
+				JFolder::files(dirname(__FILE__).'/streams', '.php')
 			);
 		}
 

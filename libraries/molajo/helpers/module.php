@@ -361,7 +361,7 @@ abstract class MolajoModuleHelper
 
 			if (MolajoFactory::getApplication()->isSite()
                 && MolajoFactory::getApplication()->getLanguageFilter()) {
-				$query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+				$query->where('m.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
 			}
 			$query->order('position, ordering');
  

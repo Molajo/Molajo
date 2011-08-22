@@ -86,12 +86,12 @@ class MolajoDateHelper {
         /** difference in days */
         $remove_years_months = array();
         if ($years > 0) {
-            $remove_years_months[] = $years . (($years == 1) ? ' year' : ' years');
+            $remove_years_months[] = $years.(($years == 1) ? ' year' : ' years');
         }
         if ($months > 0) {
-            $remove_years_months[] = $months . (($months == 1) ? ' month' : ' months');
+            $remove_years_months[] = $months.(($months == 1) ? ' month' : ' months');
         }
-        $remove_years_months = count($remove_years_months) > 0 ? '+' . implode(' ', $remove_years_months) : 'now';
+        $remove_years_months = count($remove_years_months) > 0 ? '+'.implode(' ', $remove_years_months) : 'now';
 
         $days = $current_date - strtotime($remove_years_months, $parameter_date);
         $days = date('z', $days);
@@ -221,7 +221,7 @@ class MolajoDateHelper {
     }
 
     /**
-     * @package     Joomla.Platform
+     * @package    Molajo
      * @subpackage  Adapted from MolajoFormFieldCalendar
      *
      * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.

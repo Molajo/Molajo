@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * produce valid atom files. For example, you have to specify either an editor
  * for the feed or an author for every single feed item.
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @see         http://www.atomenabled.org/developers/syndication/atom-format-spec.php
  * @since       1.0
@@ -28,6 +28,7 @@ defined('MOLAJO') or die;
 	 * Document mime type
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	protected $_mime = "application/atom+xml";
 
@@ -35,19 +36,20 @@ defined('MOLAJO') or die;
 	 * Render the feed
 	 *
 	 * @return  string
+	 * @since  1.0
 	 */
 	public function render()
 	{
-		$app	= MolajoFactory::getApplication();
+		$app	= JFactory::getApplication();
 
 		// Gets and sets timezone offset from site configuration
 		$tz	= new DateTimeZone($app->getCfg('offset'));
-		$now	= MolajoFactory::getDate();
+		$now	= JFactory::getDate();
 		$now->setTimeZone($tz);
 
 		$data	= &$this->_doc;
 
-		$uri = MolajoFactory::getURI();
+		$uri = JFactory::getURI();
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 		$syndicationURL = JRoute::_('&format=feed&type=atom');
 
@@ -60,7 +62,7 @@ defined('MOLAJO') or die;
 		else {
 			$title = $data->title;
 		}
-		
+
 		$feed_title = htmlspecialchars($title, ENT_COMPAT, 'UTF-8');
 
 		$feed = "<feed xmlns=\"http://www.w3.org/2005/Atom\" ";
@@ -91,7 +93,7 @@ defined('MOLAJO') or die;
 			}
 			$feed.= "	</author>\n";
 		}
-		$feed.= "	<generator uri=\"http://molajo.org\" version=\"1.6\">".$data->getGenerator()."</generator>\n";
+		$feed.= "	<generator uri=\"http://joomla.org\" version=\"1.6\">".$data->getGenerator()."</generator>\n";
 		$feed.= '	<link rel="self" type="application/atom+xml" href="'.str_replace(' ','%20',$url.$syndicationURL)."\"/>\n";
 
 		for ($i = 0, $count = count($data->items); $i < $count; $i++)
@@ -103,7 +105,7 @@ defined('MOLAJO') or die;
 			if ($data->items[$i]->date=="") {
 				$data->items[$i]->date = $now->toUnix();
 			}
-			$itemDate = MolajoFactory::getDate($data->items[$i]->date);
+			$itemDate = JFactory::getDate($data->items[$i]->date);
 			$itemDate->setTimeZone($tz);
 			$feed.= "		<published>".htmlspecialchars($itemDate->toISO8601(true), ENT_COMPAT, 'UTF-8')."</published>\n";
 			$feed.= "		<updated>".htmlspecialchars($itemDate->toISO8601(true), ENT_COMPAT, 'UTF-8')."</updated>\n";
@@ -138,7 +140,7 @@ defined('MOLAJO') or die;
 				}
 			}
 			if ($data->items[$i]->enclosure != NULL) {
-			$feed.="		<link rel=\"enclosure\" href=\"". $data->items[$i]->enclosure->url ."\" type=\"". $data->items[$i]->enclosure->type."\"  length=\"". $data->items[$i]->enclosure->length . "\" />\n";
+			$feed.="		<link rel=\"enclosure\" href=\"". $data->items[$i]->enclosure->url ."\" type=\"". $data->items[$i]->enclosure->type."\"  length=\"". $data->items[$i]->enclosure->length."\" />\n";
 			}
 			$feed.= "	</entry>\n";
 		}

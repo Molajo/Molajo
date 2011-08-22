@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */

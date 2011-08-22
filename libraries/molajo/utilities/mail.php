@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
 /**
  * Email Class.  Provides a common interface to send email from the Molajo Framework
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Mail
  * @since       1.0
  */

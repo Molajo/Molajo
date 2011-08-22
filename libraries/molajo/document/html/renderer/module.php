@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoDocument Module renderer
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -21,10 +21,13 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 	/**
 	 * Renders a module script and returns the results as a string
 	 *
-	 * @param   string  $name	The name of the module to render
-	 * @param   array   $attribs	Associative array of values
+	 * @param   string  $name      The name of the module to render
+	 * @param   array   $attribs   Associative array of values
+	 * @param   string  $content   If present, module information from the buffer will be used
 	 *
 	 * @return  string  The output of the script
+	 *
+	 * @since   11.1
 	 */
 	public function render($module, $attribs = array(), $content = null)
 	{
@@ -45,7 +48,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 					 * we want to render it
 					 */
 					$tmp = $module;
-					$module = new stdClass();
+					$module = new stdClass;
 					$module->params = null;
 					$module->module = $tmp;
 					$module->id = 0;
@@ -55,8 +58,8 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		// Get the user and configuration object
-		// $user = MolajoFactory::getUser();
-		$conf = MolajoFactory::getConfig();
+		// $user = JFactory::getUser();
+		$conf = JFactory::getConfig();
 
 		// Set the module content
 		if (!is_null($content)) {
@@ -64,12 +67,12 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 		}
 
 		// Get module parameters
-		$params = new MolajoRegistry;
+		$params = new JRegistry;
 		$params->loadString($module->params);
 
 		// Use parameters from template
 		if (isset($attribs['params'])) {
-			$template_params = new MolajoRegistry;
+			$template_params = new JRegistry;
 			$template_params->loadString(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
 			$params->merge($template_params);
 			$module = clone $module;

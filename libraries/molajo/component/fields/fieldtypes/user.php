@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Field to select a user id from a modal list.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  com_users
  * @since       1.0
  */

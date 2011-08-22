@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  User
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * User class.  Handles all application interaction with a user
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  User
  * @since      11.1
  */

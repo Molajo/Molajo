@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 /**
  * Abstract Format for MolajoRegistry
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Registry
- * @since       11.1
+ * @since       1.0
  */
 abstract class MolajoRegistryFormat
 {

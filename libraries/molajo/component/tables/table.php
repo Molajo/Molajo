@@ -173,7 +173,7 @@ abstract class MolajoTable extends JObject
 
 		// If the internal paths have not been initialised, do so with the base table path.
 		if (!isset($_paths)) {
-			$_paths = array(dirname(__FILE__) . '/table');
+			$_paths = array(dirname(__FILE__).'/table');
 		}
 
 		// Convert the passed path(s) to add to an array.
@@ -1180,7 +1180,7 @@ abstract class MolajoTable extends JObject
 			$i = 0;
 
 			foreach ($joins as $table) {
-				$k = $table['idfield'] . $i;
+				$k = $table['idfield'].$i;
 
 				if ($obj->$k) {
 					$msg[] = JText::_($table['label']);
@@ -1190,7 +1190,7 @@ abstract class MolajoTable extends JObject
 			}
 
 			if (count($msg)) {
-				$this->setError("noDeleteRecord" . ": " . implode(', ', $msg));
+				$this->setError("noDeleteRecord".": ".implode(', ', $msg));
 
 				return false;
 			}

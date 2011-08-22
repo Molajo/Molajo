@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoEditor class to handle WYSIWYG editors
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */

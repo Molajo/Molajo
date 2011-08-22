@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -90,13 +90,13 @@ class MolajoFormFieldMedia extends MolajoFormField
 		$html[] = '</div>';
 
 		$directory = (string)$this->element['directory'];
-		if ($this->value && file_exists(MOLAJO_PATH_ROOT . '/' . $this->value)) {
+		if ($this->value && file_exists(MOLAJO_PATH_ROOT.'/'.$this->value)) {
 			$folder = explode ('/',$this->value);
 			array_shift($folder);
 			array_pop($folder);
 			$folder = implode('/',$folder);
 		}
-		elseif (file_exists(MOLAJO_PATH_ROOT . '/' . MolajoComponentHelper::getParams('com_media')->get('image_path', 'images') . '/' . $directory)) {
+		elseif (file_exists(MOLAJO_PATH_ROOT.'/'.MolajoComponentHelper::getParams('com_media')->get('image_path', 'images').'/'.$directory)) {
 			$folder = $directory;
 		}
 		else {
@@ -106,7 +106,7 @@ class MolajoFormFieldMedia extends MolajoFormField
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
 		$html[] = '		<a class="modal" title="'.JText::_('MOLAJO_FORM_BUTTON_SELECT').'"' .
-					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)) . '&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
+					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
 					' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
 		$html[] = '			'.JText::_('MOLAJO_FORM_BUTTON_SELECT').'</a>';
 		$html[] = '	</div>';

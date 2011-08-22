@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoDocument system message renderer
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -21,10 +21,13 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 	/**
 	 * Renders the error stack and returns the results as a string
 	 *
-	 * @param   string  $name	(unused)
-	 * @param   array  $params	Associative array of values
+	 * @param   string  $name    (unused)
+	 * @param   array   $params  Associative array of values
+	 * @param   string  $content
 	 *
 	 * @return  string  The output of the script
+	 *
+	 * @since   11.1
 	 */
 	public function render($name, $params = array (), $content = null)
 	{
@@ -33,7 +36,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 		$lists	= null;
 
 		// Get the message queue
-		$messages = MolajoFactory::getApplication()->getMessageQueue();
+		$messages = JFactory::getApplication()->getMessageQueue();
 
 		// Build the sorted message list
 		if (is_array($messages) && !empty($messages)) {

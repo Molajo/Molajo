@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Molajo
  * @subpackage  User
- * @since       11.1
+ * @since       1.0
  */
 class MolajoAuthenticationResponse extends JObject
 {

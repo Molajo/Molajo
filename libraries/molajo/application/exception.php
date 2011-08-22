@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Exception class definition for the Application subpackage.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Application
  * @since       1.0
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Extended Utility class for all HTML drawing classes.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */
@@ -160,20 +160,20 @@ abstract class MolajoHtmlAccess
 			// If checkSuperAdmin is true, only add item if the user is superadmin or the group is not super admin
 			if ((!$checkSuperAdmin) || $isSuperAdmin || (!JAccess::checkGroup($item->id, 'admin'))) {
 				// Setup  the variable attributes.
-				$eid = $count . 'group_' . $item->id;
+				$eid = $count.'group_'.$item->id;
 				// Don't call in_array unless something is selected
 				$checked = '';
 				if ($selected) {
 					$checked = in_array($item->id, $selected) ? ' checked="checked"' : '';
 				}
-				$rel = ($item->parent_id > 0) ? ' rel="' . $count . 'group_' . $item->parent_id . '"' : '';
+				$rel = ($item->parent_id > 0) ? ' rel="'.$count.'group_'.$item->parent_id.'"' : '';
 
 				// Build the HTML for the item.
 				$html[] = '	<li>';
-				$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item->id . '" id="' . $eid . '"';
-				$html[] = '				' . $checked . $rel . ' />';
-				$html[] = '		<label for="' . $eid . '">';
-				$html[] = '		' . str_repeat('<span class="gi">|&mdash;</span>', $item->level) . $item->title;
+				$html[] = '		<input type="checkbox" name="'.$name.'[]" value="'.$item->id.'" id="'.$eid.'"';
+				$html[] = '				'.$checked.$rel.' />';
+				$html[] = '		<label for="'.$eid.'">';
+				$html[] = '		'.str_repeat('<span class="gi">|&mdash;</span>', $item->level).$item->title;
 				$html[] = '		</label>';
 				$html[] = '	</li>';
 			}

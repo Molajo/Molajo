@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Supports an HTML select list of folder
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */

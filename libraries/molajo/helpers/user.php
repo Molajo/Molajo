@@ -270,7 +270,7 @@ abstract class MolajoUserHelper
 		// Initialise some variables
 		$db = MolajoFactory::getDbo();
 
-		$query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
+		$query = 'SELECT id FROM #__users WHERE username = '.$db->Quote($username);
 		$db->setQuery($query, 0, 1);
 		return $db->loadResult();
 	}
@@ -473,7 +473,7 @@ abstract class MolajoUserHelper
 		$stat = @stat(__FILE__);
 		if (empty($stat) || !is_array($stat)) $stat = array(php_uname());
 
-		mt_srand(crc32(microtime() . implode('|', $stat)));
+		mt_srand(crc32(microtime().implode('|', $stat)));
 
 		for ($i = 0; $i < $length; $i ++) {
 			$makepass .= $salt[mt_rand(0, $len -1)];

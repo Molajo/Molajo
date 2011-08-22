@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field to display a list of the layouts for a module view from the module or template overrides.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */

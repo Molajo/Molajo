@@ -1380,8 +1380,8 @@ class MolajoTableNested extends MolajoTable
 				// Do an update to change the lft values in the table for each id
 				$query = $this->_db->getQuery(true);
 				$query->update($this->_tbl);
-				$query->where($this->_tbl_key . ' = ' . (int) $idArray[$i]);
-				$query->set('lft = ' . (int) $lft_array[$i]);
+				$query->where($this->_tbl_key.' = '.(int) $idArray[$i]);
+				$query->set('lft = '.(int) $lft_array[$i]);
 				$this->_db->setQuery($query);
 
 				// Check for a database error.

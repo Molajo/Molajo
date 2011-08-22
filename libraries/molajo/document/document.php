@@ -2,14 +2,14 @@
 /**
  * @package     Molajo
  * @subpackage  Document
- *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
+ * MolajoDocument
+ *
  * Document class, provides an easy interface to parse and display a document
  *
  * @package     Molajo
@@ -38,7 +38,7 @@ class MolajoDocument extends JObject
 	 * Document full URL
 	 *
 	 * @var    string
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public $link = '';
 
@@ -54,7 +54,7 @@ class MolajoDocument extends JObject
 	 * Contains the document language setting
 	 *
 	 * @var    string
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public $language = 'en-gb';
 
@@ -71,7 +71,7 @@ class MolajoDocument extends JObject
 	 *
 	 * @var    string
 	 */
-	public $_generator = 'Molajo - Web Application Development Framework';
+	public $_generator = 'Molajo 1.0 - Flexible Content Management';
 
 	/**
 	 * Document modified date
@@ -187,7 +187,7 @@ class MolajoDocument extends JObject
 	 *
 	 * @return  MolajoDocument
 	 *
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function __construct($options = array())
 	{
@@ -230,7 +230,7 @@ class MolajoDocument extends JObject
 	 * @param   array   $attribues  Array of attributes
 	 *
 	 * @return  object  The document object.
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public static function getInstance($type = 'html', $attributes = array())
 	{
@@ -244,7 +244,7 @@ class MolajoDocument extends JObject
 
 		if (empty($instances[$signature])) {
 			$type	= preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-			$path	= dirname(__FILE__) . '/' . $type . '/' . $type.'.php';
+			$path	= dirname(__FILE__).'/'.$type.'/'.$type.'.php';
 			$ntype	= null;
 
 			// Check if the document type exists
@@ -256,18 +256,14 @@ class MolajoDocument extends JObject
 
 			// Determine the path and class
 			$class = 'MolajoDocument'.$type;
-    		if (!class_exists($class)) {
-				$path	= dirname(__FILE__) . '/' . $type . '/' . $type.'.php';
+			if (!class_exists($class)) {
+				$path	= dirname(__FILE__).'/'.$type.'/'.$type.'.php';
 				if (file_exists($path)) {
 					require_once $path;
-				} else {
-                    $path = JOOMLA_LIBRARY.'/document/'.$type.'/'.$type.'.php';
-                    if (file_exists($path)) {
-				    	require_once $path;
-                    } else {
-					    JError::raiseError(500,JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
-				    }
-                }
+				}
+				else {
+					JError::raiseError(500,JText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+				}
 			}
 
 			$instance	= new $class($attributes);
@@ -288,7 +284,7 @@ class MolajoDocument extends JObject
 	 * @param   string  $type
 	 *
 	 * @return
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function setType($type)
 	{
@@ -299,7 +295,7 @@ class MolajoDocument extends JObject
 	 * Returns the document type
 	 *
 	 * @return  string
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function getType()
 	{
@@ -307,47 +303,10 @@ class MolajoDocument extends JObject
 	}
 
 	/**
-	 * Get the document head data
-	 *
-	 * @return  array  The document head data in array form
-	 * @since   1.0
-	 */
-	public function getHeadData()
-	{
-		// Impelemented in child classes
-	}
-
-	/**
-	 * Set the document head data
-	 *
-	 * @param   array  $data  The document head data in array form
-	 *
-	 * @return  void
-	 * @since   1.0
-	 */
-	public function setHeadData($data)
-	{
-		// Impelemented in child classes
-	}
-
-	/**
-	 * Set the document head data
-	 *
-	 * @param   array  $data  The document head data in array form
-	 *
-	 * @return
-	 * @since   1.0
-	 */
-	public function mergeHeadData($data)
-	{
-		// Impelemented in child classes
-	}
-
-	/**
 	 * Get the contents of the document buffer
 	 *
 	 * @return  The contents of the document buffer
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function getBuffer()
 	{
@@ -361,7 +320,7 @@ class MolajoDocument extends JObject
 	 * @param   array   $options  Array of optional elements.
 	 *
 	 * @return  void
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function setBuffer($content, $options = array())
 	{
@@ -375,7 +334,7 @@ class MolajoDocument extends JObject
 	 * @param   bool    $http_equiv  META type "http-equiv" defaults to null
 	 *
 	 * @return  string
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function getMetaData($name, $http_equiv = false)
 	{
@@ -383,12 +342,17 @@ class MolajoDocument extends JObject
 		$name = strtolower($name);
 		if ($name == 'generator') {
 			$result = $this->getGenerator();
-		} else if ($name == 'description') {
+		}
+		else if ($name == 'description') {
 			$result = $this->getDescription();
-		} else if ($http_equiv == true) {
-			$result = @$this->_metaTags['http-equiv'][$name];
-        } else {
-			$result = @$this->_metaTags['standard'][$name];
+		}
+		else {
+			if ($http_equiv == true) {
+				$result = @$this->_metaTags['http-equiv'][$name];
+			}
+			else {
+				$result = @$this->_metaTags['standard'][$name];
+			}
 		}
 
 		return $result;
@@ -403,7 +367,7 @@ class MolajoDocument extends JObject
 	 * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
 	 *
 	 * @return  void
-	 * @since   1.0
+	 * @since   11.1
 	 */
 	public function setMetaData($name, $content, $http_equiv = false, $sync = true)
 	{
@@ -411,16 +375,22 @@ class MolajoDocument extends JObject
 
 		if ($name == 'generator') {
 			$this->setGenerator($content);
-		} else if ($name == 'description') {
+		}
+		else if ($name == 'description') {
 			$this->setDescription($content);
-		} else if ($http_equiv == true) {
-			$this->_metaTags['http-equiv'][$name] = $content;
-        	// Syncing with HTTP-header
-			if ($sync && strtolower($name) == 'content-type') {
-				$this->setMimeEncoding($content, false);
+		}
+		else {
+			if ($http_equiv == true) {
+				$this->_metaTags['http-equiv'][$name] = $content;
+
+				// Syncing with HTTP-header
+				if($sync && strtolower($name) == 'content-type') {
+					$this->setMimeEncoding($content, false);
+				}
 			}
-        } else {
+			else {
 				$this->_metaTags['standard'][$name] = $content;
+			}
 		}
 	}
 
@@ -434,12 +404,11 @@ class MolajoDocument extends JObject
 	 * @return
 	 * @since    11.1
 	 */
-	public function addScript($url, $type = "text/javascript", $defer = false, $async = false, $priority = 0)
+	public function addScript($url, $type = "text/javascript", $defer = false, $async = false)
 	{
 		$this->_scripts[$url]['mime'] = $type;
 		$this->_scripts[$url]['defer'] = $defer;
 		$this->_scripts[$url]['async'] = $async;
-        $this->_scripts[$url]['priority'] = $priority;
 	}
 
 	/**
@@ -451,14 +420,14 @@ class MolajoDocument extends JObject
 	 * @return  void
 	 * @since    11.1
 	 */
-	public function addScriptDeclaration($content, $type = 'text/javascript', $priority = 0)
+	public function addScriptDeclaration($content, $type = 'text/javascript')
 	{
 		if (!isset($this->_script[strtolower($type)])) {
 			$this->_script[strtolower($type)] = $content;
-		} else {
+		}
+		else {
 			$this->_script[strtolower($type)] .= chr(13).$content;
 		}
-        $this->_script['priority'] = $priority;
 	}
 
 	/**
@@ -472,12 +441,11 @@ class MolajoDocument extends JObject
 	 * @return  void
 	 * @since    11.1
 	 */
-	public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array(), $priority = 0)
+	public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array())
 	{
 		$this->_styleSheets[$url]['mime']		= $type;
 		$this->_styleSheets[$url]['media']		= $media;
 		$this->_styleSheets[$url]['attribs']	= $attribs;
-		$this->_styleSheets[$url]['priority']	= $priority;
 	}
 
 	/**
@@ -488,14 +456,14 @@ class MolajoDocument extends JObject
 	 *
 	 * @return  void
 	 */
-	public function addStyleDeclaration($content, $type = 'text/css', $priority = 0)
+	public function addStyleDeclaration($content, $type = 'text/css')
 	{
 		if (!isset($this->_style[strtolower($type)])) {
 			$this->_style[strtolower($type)] = $content;
-		} else {
+		}
+		else {
 			$this->_style[strtolower($type)] .= chr(13).$content;
 		}
-		$this->_style['priority']	= $priority;
 	}
 
 	/**
@@ -800,29 +768,23 @@ class MolajoDocument extends JObject
 	*/
 	public function loadRenderer($type)
 	{
-		$rendererClass	= 'MolajoDocumentRenderer'.$type;
-        $format = JRequest::getCmd('format', 'html');
-        
-        if (class_exists($rendererClass)) {
-        } else {
-            $path = MOLAJO_LIBRARY.'/document/'.$format.'/renderer/'.$type.'.php';
-            if (file_exists($path)) {
-                require_once $path;
-            } else {
-                $path = JOOMLA_LIBRARY.'/document/'.$format.'/renderer/'.$type.'.php';
-                if (file_exists($path)) {
-                    require_once $path;
-                } else {
-                    JError::raiseError(500,JText::_('MOLAJO_DOCUMENT_ERROR_UNABLE_LOAD_RENDERER_CLASS'));
-                }
-            }
-        }
+		$class	= 'MolajoDocumentRenderer'.$type;
 
-		if (!class_exists($rendererClass)) {
+		if (!class_exists($class)) {
+			$path = dirname(__FILE__).'/'.$this->_type.'/renderer/'.$type.'.php';
+
+			if (file_exists($path)) {
+				require_once $path;
+			} else {
+				JError::raiseError(500,JText::_('Unable to load renderer class'));
+			}
+		}
+
+		if (!class_exists($class)) {
 			return null;
 		}
 
-		$instance = new $rendererClass($this);
+		$instance = new $class($this);
 
 		return $instance;
 	}
@@ -849,9 +811,9 @@ class MolajoDocument extends JObject
 	public function render($cache = false, $params = array())
 	{
 		if ($mdate = $this->getModifiedDate()) {
-			JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900) . ' GMT' */);
+			JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);
 		}
 
-		JResponse::setHeader('Content-Type', $this->_mime .  '; charset=' . $this->_charset);
+		JResponse::setHeader('Content-Type', $this->_mime. '; charset='.$this->_charset);
 	}
 }

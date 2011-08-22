@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  * Pagination Class.  Provides a common interface for content pagination for the
  * Molajo Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */
@@ -395,10 +395,10 @@ class MolajoPagination extends JObject
 
 		// Build the select list.
 		if ($app->isAdmin()) {
-			$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
+			$html = JHtml::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
 		}
 		else {
-			$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
+			$html = JHtml::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
 		}
 		return $html;
 	}
@@ -458,7 +458,7 @@ class MolajoPagination extends JObject
 		$html .= $list['pageslinks'];
 		$html .= "\n<div class=\"counter\">".$list['pagescounter']."</div>";
 
-		$html .= "\n<input type=\"hidden\" name=\"" . $list['prefix'] . "limitstart\" value=\"".$list['limitstart']."\" />";
+		$html .= "\n<input type=\"hidden\" name=\"".$list['prefix']."limitstart\" value=\"".$list['limitstart']."\" />";
 		$html .= "\n</div>";
 
 		return $html;
@@ -486,10 +486,10 @@ class MolajoPagination extends JObject
 		if ($app->isAdmin())
 		{
 			if ($item->base > 0) {
-				return "<a title=\"".$item->text."\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
+				return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
 			else {
-				return "<a title=\"".$item->text."\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
+				return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
 		}
 		else {
@@ -589,7 +589,7 @@ class MolajoPagination extends JObject
 /**
  * Pagination object representing a particular item in the pagination lists.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,10 +12,12 @@ defined('MOLAJO') or die;
 /**
  * DocumentFeed class, provides an easy interface to parse and display any feed document
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
+
+jimport('joomla.document.document');
 
 class MolajoDocumentFeed extends MolajoDocument
 {
@@ -25,6 +27,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $syndicationURL = "";
 
@@ -34,6 +37,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    object
+	 * @since  1.0
 	 */
 	public $image = null;
 
@@ -43,6 +47,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $copyright = "";
 
@@ -52,6 +57,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 *  optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $pubDate = "";
 
@@ -61,6 +67,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $lastBuildDate = "";
 
@@ -70,6 +77,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $editor = "";
 
@@ -77,6 +85,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * Docs feed element
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $docs = "";
 
@@ -86,6 +95,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $editorEmail = "";
 
@@ -95,6 +105,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $webmaster = "";
 
@@ -104,6 +115,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $category = "";
 
@@ -113,6 +125,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $ttl = "";
 
@@ -122,6 +135,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $rating = "";
 
@@ -131,6 +145,7 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $skipHours = "";
 
@@ -140,13 +155,15 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $skipDays = "";
 
 	/**
 	 * The feed items collection
 	 *
-	 * @var array
+	 * @var    array
+	 * @since  1.0
 	 */
 	public $items = array();
 
@@ -154,6 +171,8 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * Class constructor
 	 *
 	 * @param   array  $options Associative array of options
+	 *
+	 * @since  1.0
 	 */
 	public function __construct($options = array())
 	{
@@ -166,9 +185,12 @@ class MolajoDocumentFeed extends MolajoDocument
 	/**
 	 * Render the document
 	 *
-	 * @param   boolean  $cache		If true, cache the output
-	 * @param   array    $params	Associative array of attributes
+	 * @param   boolean  $cache   If true, cache the output
+	 * @param   array    $params  Associative array of attributes
+	 *
 	 * @return  The rendered data
+	 *
+	 * @since  1.0
 	 */
 	public function render($cache = false, $params = array())
 	{
@@ -182,11 +204,11 @@ class MolajoDocumentFeed extends MolajoDocument
 		 */
 		$cache		= 0;
 		$cache_time = 3600;
-		$cache_path = MOLAJO_PATH_CACHE;
+		$cache_path = JPATH_CACHE;
 
 		// set filename for rss feeds
 		$file = strtolower(str_replace('.', '', $type));
-		$file = $cache_path . '/' . $file.'_'.$option.'.xml';
+		$file = $cache_path.'/'.$file.'_'.$option.'.xml';
 
 
 		// Instantiate feed renderer and set the mime encoding
@@ -217,6 +239,8 @@ class MolajoDocumentFeed extends MolajoDocument
 	 * Adds an JFeedItem to the feed.
 	 *
 	 * @param   object JFeedItem $item The feeditem to add to the feed.
+	 *
+	 * @since  1.0
 	 */
 	public function addItem(&$item)
 	{
@@ -228,7 +252,7 @@ class MolajoDocumentFeed extends MolajoDocument
 /**
  * JFeedItem is an internal class that stores feed item information
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -240,6 +264,7 @@ class JFeedItem extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $title;
 
@@ -249,6 +274,7 @@ class JFeedItem extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $link;
 
@@ -258,6 +284,7 @@ class JFeedItem extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $description;
 
@@ -267,6 +294,7 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $author;
 
@@ -276,9 +304,9 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $authorEmail;
-
 
 	/**
 	 * Category element
@@ -286,6 +314,7 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    array or string
+	 * @since  1.0
 	 */
 	 public $category;
 
@@ -295,6 +324,7 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $comments;
 
@@ -302,6 +332,7 @@ class JFeedItem extends JObject
 	 * Enclosure element
 	 *
 	 * @var    object
+	 * @since  1.0
 	 */
 	 public $enclosure =  null;
 
@@ -311,6 +342,7 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 var $guid;
 
@@ -332,6 +364,7 @@ class JFeedItem extends JObject
 	 *	1043082341
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $date;
 
@@ -341,6 +374,7 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $source;
 
@@ -349,6 +383,8 @@ class JFeedItem extends JObject
 	 * Set the JFeedEnclosure for this item
 	 *
 	 * @param   object  $enclosure  The JFeedItem to add to the feed.
+	 *
+	 * @since  1.0
 	 */
 	 public function setEnclosure($enclosure)	{
 		 $this->enclosure = $enclosure;
@@ -358,7 +394,7 @@ class JFeedItem extends JObject
 /**
  * JFeedEnclosure is an internal class that stores feed enclosure information
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -370,6 +406,7 @@ class JFeedEnclosure extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $url = "";
 
@@ -379,6 +416,7 @@ class JFeedEnclosure extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $length = "";
 
@@ -388,6 +426,7 @@ class JFeedEnclosure extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $type = "";
 }
@@ -395,7 +434,7 @@ class JFeedEnclosure extends JObject
 /**
  * JFeedImage is an internal class that stores feed image information
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -407,6 +446,7 @@ class JFeedImage extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $title = "";
 
@@ -416,6 +456,7 @@ class JFeedImage extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	public $url = "";
 
@@ -425,6 +466,7 @@ class JFeedImage extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $link = "";
 
@@ -434,6 +476,7 @@ class JFeedImage extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $width;
 
@@ -443,6 +486,7 @@ class JFeedImage extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $height;
 
@@ -452,6 +496,7 @@ class JFeedImage extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	 public $description;
 }

@@ -442,7 +442,7 @@ abstract class MolajoFactory
 				$classname = 'JDate';
 			}
 		}
-		$key = $time . '-' . $tzOffset;
+		$key = $time.'-'.$tzOffset;
 
 		//		if (!isset($instances[$classname][$key])) {
 		$tmp = new $classname($time, $tzOffset);
@@ -549,7 +549,7 @@ abstract class MolajoFactory
 
 		if (JError::isError($db)) {
 			header('HTTP/1.1 500 Internal Server Error');
-			jexit('Database Error: ' . (string) $db);
+			jexit('Database Error: '.(string) $db);
 		}
 
 		if ($db->getErrorNum() > 0) {
@@ -691,7 +691,7 @@ abstract class MolajoFactory
 				$prefix .= $SCPOptions['root'];
 			}
 			else {
-				$prefix = MOLAJO_PATH_ROOT . '/';
+				$prefix = MOLAJO_PATH_ROOT.'/';
 			}
 
 			$retval = new JStream($prefix, MOLAJO_PATH_ROOT, $context);

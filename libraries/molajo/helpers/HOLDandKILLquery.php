@@ -69,7 +69,7 @@ class MolajoQueryHelper
 				break;
 
 			case 'rdate' :
-				$orderby = $queryDate . ' DESC ';
+				$orderby = $queryDate.' DESC ';
 				break;
 
 			case 'alpha' :

@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  * JDate is a class that stores a date and provides logic to manipulate
  * and render that date in a variety of formats.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Utilities
  * @since       1.0
  */
@@ -231,9 +231,9 @@ class MolajoDate extends DateTime
 			default:
 				$trace = debug_backtrace();
 				trigger_error(
-					'Undefined property via __get(): ' . $name .
-					' in ' . $trace[0]['file'] .
-					' on line ' . $trace[0]['line'],
+					'Undefined property via __get(): '.$name .
+					' in '.$trace[0]['file'] .
+					' on line '.$trace[0]['line'],
 					E_USER_NOTICE
 				);
 		}

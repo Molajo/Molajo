@@ -67,7 +67,7 @@ abstract class MolajoHtmlGrid
 
         if ($canChange) {
                 $html	= '<a href="javascript:void(0);" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.JText::_($state[3]).'">'
-                                . $html.'</a>';
+                               .$html.'</a>';
         }
         return $html;
     }
@@ -94,7 +94,7 @@ abstract class MolajoHtmlGrid
 
         if ($canChange) {
                 $html	= '<a href="javascript:void(0);" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.JText::_($state[3]).'">'
-                                . $html.'</a>';
+                               .$html.'</a>';
         }
         return $html;
     }
@@ -125,7 +125,7 @@ abstract class MolajoHtmlGrid
 
         if ($canChange) {
                 $html	= '<a href="javascript:void(0);" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.JText::_($state[3]).'">'
-                                . $html.'</a>';
+                               .$html.'</a>';
         }
         
         return $html;

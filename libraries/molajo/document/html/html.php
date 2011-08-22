@@ -1,95 +1,112 @@
 <?php
 /**
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
 defined('MOLAJO') or die;
 
+jimport('joomla.application.module.helper');
+
 /**
- * MolajoDocumentHTML
+ * DocumentHTML class, provides an easy interface to parse and display a HTML document
  *
- * DocumentHTML class, provides an easy interface to parse and display an HTML document
- *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
+
+jimport('joomla.document.document');
+
 class MolajoDocumentHTML extends MolajoDocument
 {
 	/**
 	 * Array of Header <link> tags
 	 *
-	 * @var    array $_links
-     * @since   1.0
-     */
+	 * @var    array
+	 * @since  1.0
+	 */
 	public $_links = array();
 
 	/**
 	 * Array of custom tags
 	 *
-	 * @var    array $_custom
-     * @since   1.0
-     */
+	 * @var    array
+	 * @since  1.0
+	 */
 	public $_custom = array();
 
-    /**
-     * @var string $template
-     * @since   1.0
-     */
+	/**
+	 * Name of the template
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
 	public $template = null;
 
-    /**
-     * @var string $baseurl
-     * @since   1.0
-     */
+	/**
+	 * Base url
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
 	public $baseurl = null;
 
-    /**
-     * @var string $params
-     * @since   1.0
-     */
+	/**
+	 * Array of template parameterss
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
 	public $params = null;
 
-    /**
-     * @var string $_file
-     * @since   1.0
-     */
+	/**
+	 * File name
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
 	public $_file = null;
 
-    /**
-     * @var string $_template
-     * @since   1.0
-     */
+	/**
+	 * String holding parsed template
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
 	protected $_template = '';
 
-    /**
-     * @var null $_template_tags
-     * @since   1.0
-     */
+	/**
+	 * Array of parsed template JDoc tags
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
 	protected $_template_tags = array();
 
-    /**
-     * @var null $_caching
-     * @since   1.0
-     */
+	/**
+	 * Integer with caching setting
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
 	protected $_caching = null;
 
 	/**
-	 * __construct
-     *
-     * Class constructor
+	 * Class constructor
 	 *
-	 * @param   array  $options Associative array of options
-     * @since   1.0
+	 * @param   array  $options  Associative array of options
+	 *
+	 * @since   11.1
 	 */
 	public function __construct($options = array())
 	{
 		parent::__construct($options);
 
+		// Set document type
 		$this->_type = 'html';
 
 		// Set default mime type and document metadata (meta data syncs with mime type by default)
@@ -98,12 +115,11 @@ class MolajoDocumentHTML extends MolajoDocument
 	}
 
 	/**
-     * getHeadData
-     *
 	 * Get the HTML document head data
 	 *
 	 * @return  array  The document head data in array form
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function getHeadData()
 	{
@@ -122,12 +138,13 @@ class MolajoDocumentHTML extends MolajoDocument
 	}
 
 	/**
-     * setHeadData
-     *
 	 * Set the HTML document head data
 	 *
-	 * @param   array  $data	The document head data in array form
-     * @since   1.0
+	 * @param   array  $data  The document head data in array form
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
 	 */
 	public function setHeadData($data)
 	{
@@ -135,25 +152,26 @@ class MolajoDocumentHTML extends MolajoDocument
 			return;
 		}
 
-		$this->title		= (isset($data['title']) && !empty($data['title'])) ? $data['title'] : '';
-		$this->description	= (isset($data['description']) && !empty($data['description'])) ? $data['description'] : '';
-		$this->link			= (isset($data['link']) && !empty($data['link'])) ? $data['link'] : '';
-		$this->_metaTags	= (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags'] : array();
-		$this->_links		= (isset($data['links']) && !empty($data['links'])) ? $data['links'] : array();
-		$this->_styleSheets	= (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets'] : array();
-		$this->_style		= (isset($data['style']) && !empty($data['style'])) ? $data['style'] : array();
-		$this->_scripts		= (isset($data['scripts']) && !empty($data['scripts'])) ? $data['scripts'] : array();
-		$this->_script		= (isset($data['script']) && !empty($data['script'])) ? $data['script'] : array();
-		$this->_custom		= (isset($data['custom']) && !empty($data['custom'])) ? $data['custom'] : array();
+		$this->title		= (isset($data['title']) && !empty($data['title'])) ? $data['title'] : $this->title;
+		$this->description	= (isset($data['description']) && !empty($data['description'])) ? $data['description'] : $this->description;
+		$this->link			= (isset($data['link']) && !empty($data['link'])) ? $data['link'] : $this->link;
+		$this->_metaTags	= (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags'] : $this->_metaTags;
+		$this->_links		= (isset($data['links']) && !empty($data['links'])) ? $data['links'] : $this->_links;
+		$this->_styleSheets	= (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets'] : $this->_styleSheets;
+		$this->_style		= (isset($data['style']) && !empty($data['style'])) ? $data['style'] : $this->_style;
+		$this->_scripts		= (isset($data['scripts']) && !empty($data['scripts'])) ? $data['scripts'] : $this->_scripts;
+		$this->_script		= (isset($data['script']) && !empty($data['script'])) ? $data['script'] : $this->_script;
+		$this->_custom		= (isset($data['custom']) && !empty($data['custom'])) ? $data['custom'] : $this->_custom;
 	}
 
 	/**
-     * mergeHeadData
-     *
 	 * Merge the HTML document head data
 	 *
-	 * @param   array  $data	The document head data in array form
-     * @since   1.0
+	 * @param   array  $data  The document head data in array form
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
 	 */
 	public function mergeHeadData($data)
 	{
@@ -211,19 +229,20 @@ class MolajoDocumentHTML extends MolajoDocument
 	 * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
 	 * Typical tag: <link href="index.php" rel="Start">
 	 *
-	 * @param   string  $href		The link that is being related.
-	 * @param   string  $relation	Relation of link.
-	 * @param   string  $relType	Relation type attribute.  Either rel or rev (default: 'rel').
-	 * @param   array   $attributes Associative array of remaining attributes.
+	 * @param   string  $href        The link that is being related.
+	 * @param   string  $relation    Relation of link.
+	 * @param   string  $relType     Relation type attribute.  Either rel or rev (default: 'rel').
+	 * @param   array   $attributes  Associative array of remaining attributes.
 	 *
 	 * @return  void
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
 	{
-		$attribs = JArrayHelper::toString($attribs);
-		$generatedTag = '<link href="'.$href.'" '.$relType.'="'.$relation.'" '.$attribs;
-		$this->_links[] = $generatedTag;
+		$this->_links[$href]['relation']	= $relation;
+		$this->_links[$href]['relType']		= $relType;
+		$this->_links[$href]['attribs']		= $attribs;
 	}
 
 	/**
@@ -233,24 +252,30 @@ class MolajoDocumentHTML extends MolajoDocument
 	 * the left of the url in the address bar. Some browsers display
 	 * it on the tab, as well.
 	 *
-	 * @param   string  $href		The link that is being related.
-	 * @param   string  $type		File type
-	 * @param   string  $relation	Relation of link
-     * @since   1.0
+	 * @param   string  $href      The link that is being related.
+	 * @param   string  $type      File type
+	 * @param   string  $relation  Relation of link
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
 	 */
 	public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
 	{
 		$href = str_replace('\\', '/', $href);
-		$this->_links[] = '<link href="'.$href.'" rel="'.$relation.'" type="'.$type.'"';
+		$this->addHeadLink($href, $relation, 'rel', array('type' => $type));
 	}
 
 	/**
 	 * Adds a custom HTML string to the head block
 	 *
 	 * @param   string  $html  The HTML to add to the head
+	 *
 	 * @return  void
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
+
 	public function addCustomTag($html)
 	{
 		$this->_custom[] = trim($html);
@@ -259,12 +284,13 @@ class MolajoDocumentHTML extends MolajoDocument
 	/**
 	 * Get the contents of a document include
 	 *
-	 * @param   string  $type	The type of renderer
-	 * @param   string  $name	The name of the element to render
-	 * @param   array   $attribs Associative array of remaining attributes.
+	 * @param   string  $type     The type of renderer
+	 * @param   string  $name     The name of the element to render
+	 * @param   array   $attribs  Associative array of remaining attributes.
 	 *
 	 * @return  The output of the renderer
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function getBuffer($type = null, $name = null, $attribs = array())
 	{
@@ -285,7 +311,7 @@ class MolajoDocumentHTML extends MolajoDocument
 
 			$renderer = $this->loadRenderer($type);
 			if ($this->_caching == true && $type == 'modules') {
-				$cache = MolajoFactory::getCache('com_modules','');
+				$cache = JFactory::getCache('com_modules','');
 				$hash = md5(serialize(array($name, $attribs, $result, $renderer)));
 				$cbuffer = $cache->get('cbuffer_'.$type);
 
@@ -321,7 +347,10 @@ class MolajoDocumentHTML extends MolajoDocument
 	 *
 	 * @param   string  $content	The content to be set in the buffer.
 	 * @param   array   $options	Array of optional elements.
-     * @since   1.0
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
 	 */
 	public function setBuffer($content, $options = array())
 	{
@@ -338,10 +367,14 @@ class MolajoDocumentHTML extends MolajoDocument
 	/**
 	 * Parses the template and populates the buffer
 	 *
-	 * @param   array  $params  parameters for fetching the template
-     * @since   1.0
+	 * @param   array  $params  Parameters for fetching the template
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
 	 */
-	public function parse($params = array()) {
+	public function parse($params = array())
+	{
 		$this->_fetchTemplate($params);
 		$this->_parseTemplate();
 	}
@@ -349,10 +382,12 @@ class MolajoDocumentHTML extends MolajoDocument
 	/**
 	 * Outputs the template to the browser.
 	 *
-	 * @param   boolean  $cache		If true, cache the output
-	 * @param   array    $params		Associative array of attributes
+	 * @param   boolean  $cache   If true, cache the output
+	 * @param   array    $params  Associative array of attributes
+	 *
 	 * @return  The rendered data
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function render($caching = false, $params = array())
 	{
@@ -375,7 +410,8 @@ class MolajoDocumentHTML extends MolajoDocument
 	 * @param   string  $condition  The condition to use
 	 *
 	 * @return  integer  Number of modules found
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function countModules($condition)
 	{
@@ -399,22 +435,23 @@ class MolajoDocumentHTML extends MolajoDocument
 	 * Count the number of child menu items
 	 *
 	 * @return  integer  Number of child menu items
-     * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function countMenuChildren()
 	{
 		static $children;
 
 		if (!isset($children)) {
-			$dbo	= MolajoFactory::getDbo();
-			$app	= MolajoFactory::getApplication();
+			$dbo	= JFactory::getDbo();
+			$app	= JFactory::getApplication();
 			$menu	= $app->getMenu();
 			$where	= Array();
 			$active	= $menu->getActive();
 			if ($active) {
-				$where[] = 'parent = ' . $active->id;
+				$where[] = 'parent = '.$active->id;
 				$where[] = 'published = 1';
-				$dbo->setQuery('SELECT COUNT(*) FROM #__menu_items WHERE '. implode(' AND ', $where));
+				$dbo->setQuery('SELECT COUNT(*) FROM #__menu WHERE '. implode(' AND ', $where));
 				$children = $dbo->loadResult();
 			} else {
 				$children = 0;
@@ -427,39 +464,41 @@ class MolajoDocumentHTML extends MolajoDocument
 	/**
 	 * Load a template file
 	 *
-	 * @param string	$template	The name of the template
-	 * @param string	$filename	The actual filename
-	 * @return string The contents of the template
-     * @since   1.0
+	 * @param   string  $template  The name of the template
+	 * @param   string  $filename  The actual filename
+	 *
+	 * @return  string  The contents of the template
+	 *
+	 * @since   11.1
 	 */
 	protected function _loadTemplate($directory, $filename)
 	{
-//		$component	= MolajoApplicationHelper::getComponentName();
+//		$component	= JApplicationHelper::getComponentName();
 
 		$contents = '';
 
 		// Check to see if we have a valid template file
-		if (file_exists($directory . '/' . $filename))
+		if (file_exists($directory.'/'.$filename))
 		{
 			// Store the file path
-			$this->_file = $directory . '/' . $filename;
+			$this->_file = $directory.'/'.$filename;
 
 			//get the file content
 			ob_start();
-			require $directory . '/' . $filename;
+			require $directory.'/'.$filename;
 			$contents = ob_get_contents();
 			ob_end_clean();
 		}
 
 		// Try to find a favicon by checking the template and root folder
-		$path = $directory . '/';
-		$dirs = array($path, MOLAJO_PATH_BASE . '/');
+		$path = $directory.'/';
+		$dirs = array($path, JPATH_BASE.'/');
 		foreach ($dirs as $dir)
 		{
 			$icon = $dir.'favicon.ico';
 			if (file_exists($icon))
 			{
-				$path = str_replace(MOLAJO_PATH_BASE . '/', '', $dir);
+				$path = str_replace(JPATH_BASE.'/', '', $dir);
 				$path = str_replace('\\', '/', $path);
 				$this->addFavicon(JURI::base(true).'/'.$path.'favicon.ico');
 				break;
@@ -472,7 +511,11 @@ class MolajoDocumentHTML extends MolajoDocument
 	/**
 	 * Fetch the template, and initialise the params
 	 *
-	 * @param   array  $params  parameters to determine the template
+	 * @param   array  $params  Parameters to determine the template
+	 *
+	 * @return  void
+	 *
+	 * @since   11.1
 	 */
 	protected function _fetchTemplate($params = array())
 	{
@@ -482,32 +525,34 @@ class MolajoDocumentHTML extends MolajoDocument
 		$template	= $filter->clean($params['template'], 'cmd');
 		$file		= $filter->clean($params['file'], 'cmd');
 
-		if (!file_exists($directory . '/' . $template . '/' . $file)) {
+		if (!file_exists($directory.'/'.$template.'/'.$file)) {
 			$template = 'system';
 		}
 
 		// Load the language file for the template
-		$lang = MolajoFactory::getLanguage();
+		$lang = JFactory::getLanguage();
 		// 1.5 or core then 1.6
 
-			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
-		||	$lang->load('tpl_'.$template, $directory . '/' . $template, null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, $directory . '/' . $template, $lang->getDefault(), false, false);
+			$lang->load('tpl_'.$template, JPATH_BASE, null, false, false)
+		||	$lang->load('tpl_'.$template, $directory.'/'.$template, null, false, false)
+		||	$lang->load('tpl_'.$template, JPATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, $directory.'/'.$template, $lang->getDefault(), false, false);
 
 		// Assign the variables
 		$this->template = $template;
 		$this->baseurl  = JURI::base(true);
-		$this->params	= isset($params['params']) ? $params['params'] : new MolajoRegistry;
+		$this->params	= isset($params['params']) ? $params['params'] : new JRegistry;
 
 		// Load
-		$this->_template = $this->_loadTemplate($directory . '/' . $template, $file);
+		$this->_template = $this->_loadTemplate($directory.'/'.$template, $file);
 	}
 
 	/**
 	 * Parse a document template
 	 *
 	 * @return  The parsed contents of the template
+	 *
+	 * @since   11.1
 	 */
 	protected function _parseTemplate()
 	{
@@ -542,6 +587,8 @@ class MolajoDocumentHTML extends MolajoDocument
 	 * Render pre-parsed template
 	 *
 	 * @return string rendered template
+	 *
+	 * @since   11.1
 	 */
 	protected function _renderTemplate() {
 		$replace = array();

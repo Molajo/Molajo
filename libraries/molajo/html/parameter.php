@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Parameter handler
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Parameter
  * @since       1.0
  * @deprecated  Use MolajoForm instead
@@ -105,7 +105,7 @@ class MolajoParameter extends MolajoRegistry
 			}
 
 			if ($dir = $xml->attributes('addpath')) {
-				$this->addElementPath(MOLAJO_PATH_ROOT . str_replace('/', DS, $dir));
+				$this->addElementPath(MOLAJO_PATH_ROOT.str_replace('/', DS, $dir));
 			}
 		}
 	}

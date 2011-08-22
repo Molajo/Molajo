@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Application
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoMenu class
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Application
  * @since       1.0
  */
