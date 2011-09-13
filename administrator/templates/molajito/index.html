@@ -1,9 +1,11 @@
+<!--
 /**
  * @package     Molajo
  * @subpackage  Mojito
  * @copyright   Copyright (C) 2011 Cristina Solana. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+ -->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,27 +35,27 @@
 			<!-- TODO: Get rid of the jUI icons, possibly add east facing arrowhead on hover/active -->
 			<div id="accordion" class="menu_sub">
 				<div>
-					<h2><a href="#">Articles</a></h2>
+					<h2><a href="#">Pages</a></h2>
 					<ul>
-						<li><a href="#">Add</a></li>
-						<li><a href="#">Edit</a></li>
-						<li><a href="#">Whatever</a></li>
+						<li><a href="#">Categories</a></li>
+						<li><a href="#">Items</a></li>
+						<li><a href="#">Options</a></li>
+					</ul>
+				</div>
+				<div>
+					<h2><a href="#">Blog</a></h2>
+					<ul>
+						<li><a href="#">Categories</a></li>
+						<li><a href="#">Items</a></li>
+						<li><a href="#">Options</a></li>
 					</ul>
 				</div>
 				<div>
 					<h2><a href="#">Media</a></h2>
 					<ul>
-						<li><a href="#">Add</a></li>
-						<li><a href="#">Edit</a></li>
-						<li><a href="#">Etcetera</a></li>
-					</ul>
-				</div>
-				<div>
-					<h2><a href="#">Other Com</a></h2>
-					<ul>
-						<li><a href="#">Add</a></li>
-						<li><a href="#">Edit</a></li>
-						<li><a href="#">Like you know better</a></li>
+						<li><a href="#">Categories</a></li>
+						<li><a href="#">Items</a></li>
+						<li><a href="#">Options</a></li>
 					</ul>
 				</div>
 			</div>
@@ -64,23 +66,24 @@
 				<ul class="com_dashboard cf">
 					<!-- TODO: Think, do I like the button look, or is it best to use the 32px icons on top of the text. I have no idea. ofc, I am sure someone will have a useful opinion. -->
 					<!-- Editor View Buttons -->
-					<!-- DISABLED FOR MY VIEWING PLEASURE
+
 					<li><a href="#" class="save"><span>Save</span></a></li>
 					<li><a href="#" class="copy"><span>Save As Copy</span></a></li>
 					<li><a href="#" class="revert"><span>Revert</span></a></li>
 					<li><a href="#" class="close"><span>Close</span></a></li>
 					<li><a href="#" class="edit-new"><span>New</span></a></li>
 					<li><a href="#" class="delete"><span>Delete</span></a></li>
-					<li><a href="#" class="trash"><span>Empty</span></a></li>
-					-->
 					<!-- List View Buttons -->
+					<!-- DISABLED FOR MY VIEWING PLEASURE
 					<li><a href="#" class="new"><span>New</span></a></li>
 					<li><a href="#" class="edit"><span>Edit</span></a></li>
+					<li><a href="#" class="delete"><span>Delete</span></a></li>
+					<li><a href="#" class="trash"><span>Empty</span></a></li>
 					<li><a href="#" class="feature"><span>Feature</span></a></li>
 					<li><a href="#" class="sticky"><span>Sticky</span></a></li>
 					<li><a href="#" class="publish"><span>Publish</span></a></li>
 					<li><a href="#" class="unpublish"><span>Unpublish</span></a></li>
-					<li><a href="#" class="delete"><span>Delete</span></a></li>
+					-->
 					<!--
 					<li><a href="#" class="spam"><span>Spam</span></a></li>
 					<li><a href="#" class="archive"><span>Archive</span></a></li>
@@ -94,14 +97,13 @@
 					<li><a href="#tabs-3">Properties</a></li>
 				</ul>
 				<div id="tabs-1">
-					<form class="com_search">
+<!--					<form class="com_search">
 						<label><span>Search /Filter </span><input type="email" /></label><select><option>Filter Something</option><option>Nothing to see here</option></select> Yes, yes, I know there is more.<br /><br />
-					</form>
+					</form>-->
 					<form>
 						<!-- TODO: Get rid of the damn linebreaks. I need display: block or something - depends on how the form should look eventually. -->
-						<label><span>Title </span><br /><input type="text" /></label><br /><br />
-						<label><span>I am your wysiwyg </span><br /><textarea rows="10" cols="80" resizable></textarea></label><br />
-						I know there is supposed to be more going on here, buttons and such things, but well, get over it. I also know the use of linebreaks is very unfashionable, but forgive me because, to be frank, I was just being lazy. I left myself a note.
+						<label><span>Title </span><br /><input type="text" /></label><br /><label><span>Subtitle </span><br /><input type="text" /></label><br /><br />
+						<label><textarea rows="10" cols="80" resizable></textarea></label>
 					</form>
 				</div>
 				<div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>

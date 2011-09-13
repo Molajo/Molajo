@@ -103,17 +103,18 @@ nav#launchpad {
 section {
 	position: relative;
 	margin: 0 0 0 225px;
-	padding: 28px 4em 4em;
+	padding: 4px 4em 4em;
 	box-shadow: -5px -5px 10px rgba(150,150,150,.1);
 	}
 .com_dashboard {
-	margin: 0 0 28px;
-	padding: 0;
-	}
+	margin-top: 28px;
+	border-bottom: 1px dashed #d0d0d0;
+	padding: 0 0 1.6em 0;
+}
 .com_dashboard li {
 	float: left;
 	margin-right: 16px;
-	padding: 4px 6px; /* really should be on a, but I can't be bothered with details right now. :P */
+	padding: 6px 12px; /* really should be on a, but I can't be bothered with details right now. :P */
 	border: 1px solid #ddd;
 	border-radius: 2px; 
 	background: #ddd;
@@ -143,6 +144,12 @@ section {
 	margin: 0 0 0 22px;
 	padding: 8px 0;
 	}
+#tabs {
+	margin-top: 2em;
+}
+input {
+	width: 250px;
+}
 /*
  * Dashboard: Icons
  */ 
