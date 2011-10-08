@@ -8,6 +8,8 @@
 define('MOLAJO_APPLICATION', 'administrator');
 define('MOLAJO_APPLICATION_PATH', 'administrator');
 define('MOLAJO_APPLICATION_ID', 1);
+define('MOLAJO_APPLICATION_DEFAULT_TEMPLATE', 'mojito');
+
 /**
  * BEGIN: Common code for all Applications
  *

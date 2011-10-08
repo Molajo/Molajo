@@ -141,6 +141,7 @@ class MolajoACLCore extends MolajoACL
             return true;
         }
     }
+
     /** members **/
     public function checkDisplayAuthorisation ($option, $entity, $task, $catid, $id, $item)
     {
@@ -468,7 +469,6 @@ class MolajoACLCore extends MolajoACL
      *  getCategoriesList
      *  getGroupsList
      *  getGroupingsList 
-     *  getRulesList 
      *  getUsergroupsList
      *  getUsergroupingsList
      *
@@ -501,14 +501,14 @@ class MolajoACLCore extends MolajoACL
 			{
 				if ($section == (string) $child['name']) {
 					foreach ($child->children() as $action) {
-						$actions[] = (object) array('name' => (string) $action['name'], 'title' => (string) $action['title'], 'description' => (string) $action['description']);
+						$actions[] = (object) array('name' => (string) $action['name'],
+                                                    'title' => (string) $action['title'],
+                                                    'description' => (string) $action['description']);
 					}
-
 					break;
 				}
 			}
 		}
-
 		return $actions;
     }
 
@@ -533,15 +533,31 @@ class MolajoACLCore extends MolajoACL
      */
     public function getCategoriesList($id, $option, $task, $params=array())
     {
+        echo 'Finish getCategoriesList';
+        die();
+
 		$db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
-        $query->select('DISTINCT c.id');
-        $query->from('#__groupings a');
+        $query->select('DISTINCT a.id, a.title');
+
+        $query->from('#__categories a');
+        $query->from('#__assets b');
+        $query->from('#__groupings c');
+        $query->from('#__permissions_groupings d');
+
+        $query->where('a.asset_id = b.id');
+        $query->where('b.access = c.id');
+        $query->where('d.grouping_id = c.id');
+                $query->from('#__groupings c');
         $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
-        $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
-        $query->join('LEFT', '#__categories AS d ON d.access = a.id');
-        $query->where('e.extension = '.$db->escape($option));
+        $query->join('LEFT', '#__groupings AS d ON d.access = a.id');
+
+        if ($option == '') {
+        } else {
+            $query->where('a.extension = '.$db->escape($option));
+        }
+
         $query->join('ORDER BY c.id ASC');
 
 		$results = $db->loadObjectList();
@@ -569,15 +585,6 @@ class MolajoACLCore extends MolajoACL
 		$options = $db->loadObjectList();
 		return $options;
     }
-
-    /**
-     *  TYPE 3 --> MolajoACL::getList -> getRulesList
-     */
-    public function getRulesList($id, $option, $task, $params=array())
-    {
-
-    }
-
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupsList
@@ -679,7 +686,8 @@ class MolajoACLCore extends MolajoACL
      */
     public function getAllusergroupsList ($option='', $task='', $params=array())
     {
-
+echo 'bang';
+        die();
 	}
 
    /**
@@ -697,14 +705,19 @@ class MolajoACLCore extends MolajoACL
      */
     public function checkUserPermissions ($userid, $action, $asset='', $access='')
     {
-        $acl = new MolajoACL ();
-
-        /** $key */
         if ((int) $userid == 0) {
             $userid = MolajoFactory::getUser()->id;
         }
 
+        if ($action == 'login') {
+            if ((int) $userid == 0) {
+                return false;
+            }
+            return $this->checkUserPermissionsLogin($userid);
+        }
+
         /** user groups */
+        $acl = new MolajoACL ();
         $userGroups = $acl->getList('Usergroups', $userid, '', $action);
 
         /** query  */
@@ -759,6 +772,39 @@ class MolajoACLCore extends MolajoACL
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     * checkUserPermissionsLogin
+     *
+     * @param $key
+     * @param $action
+     * @param null $asset
+     * @return void
+     */
+    public function checkUserPermissionsLogin ($userid)
+    {
+		$db = MolajoFactory::getDBO();
+        $query = $db->getQuery(true);
+
+        $query->select('count(*) as count');
+        $query->from('#__user_applications a');
+        $query->where('application_id = '.(int) MOLAJO_APPLICATION_ID);
+        $query->where('user_id = '.(int) $userid);
+
+        $db->setQuery($query->__toString());
+        $result = $db->loadResult();
+
+        if ($db->getErrorNum()) {
+            $this->setError($db->getErrorMsg());
+            return false;
+        }
+
+        if ($result == 1) {
+            return true;
+        } else {
+            return false;
         }
     }
 

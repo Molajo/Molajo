@@ -40,7 +40,7 @@ class MolajoLinksExternalLinks {
         for ( $i=0; $i < count($matches[0]); $i++ ) {
             if ($firsttime) {
                 $firsttime = false;
-                $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+                $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
                 $systemParams = new JParameter($molajoSystemPlugin->params);
 
                 $rel = $systemParams->def('index_external_links', 'noindex');

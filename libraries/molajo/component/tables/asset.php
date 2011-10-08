@@ -43,11 +43,6 @@ class MolajoTableAsset extends MolajoTable {
 
 	/**
 	 * Method to provide a shortcut to binding, checking and storing a MolajoTable
-	 * instance to the database table.  The method will check a row in once the
-	 * data has been stored and if an ordering filter is present will attempt to
-	 * reorder the table rows based on the filter.  The ordering filter is an instance
-	 * property name.  The rows that will be reordered are those whose value matches
-	 * the MolajoTable instance for the property specified.
 	 *
 	 * @param   mixed   An associative array or object to bind to the MolajoTable instance.
 	 * @param   string  Filter for the order updating
@@ -55,31 +50,28 @@ class MolajoTableAsset extends MolajoTable {
 	 *					to ignore while binding.
 	 *
 	 * @return  boolean  True on success.
-	 *
-	 * @link	http://docs.molajo.org/MolajoTable/save
 	 * @since   1.0
 	 */
 	public function save($src, $orderingFilter = '', $ignore = '')
 	{
-
-		// Run any sanity checks on the instance and verify that it is ready for storage.
-		if (!$this->check()) {
+		if ($this->check()) {
+        } else {
 			return false;
 		}
 
-		// Attempt to store the properties to the database table.
-		if (!$this->store()) {
+		if ($this->store()) {
+        } else {
 			return false;
 		}
 
-		// Set the error to empty and return true.
 		$this->setError('');
 
 		return true;
 	}
 
-
     /**
+     * check
+     *
      * Check for necessary data
      *
      * @return  bool  True if the instance is sane and able to be stored in the database.

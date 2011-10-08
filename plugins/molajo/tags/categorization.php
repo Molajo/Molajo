@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 
-class plgMolajoTags extends JPlugin	{
+class plgMolajoTags extends MolajoPlugin	{
 
     /**
      * plgMolajoTags::MolajoOnContentChangeState

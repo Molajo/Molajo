@@ -8,8 +8,6 @@
 // No direct access
 defined('JPATH_PLATFORM') or die;
 
-jimport('molajo.plugin.plugin');
-
 /**
  * Joomla User plugin
  *
@@ -17,7 +15,7 @@ jimport('molajo.plugin.plugin');
  * @subpackage	User.molajo
  * @since		1.5
  */
-class plgUserMolajo extends JPlugin
+class plgUserMolajo extends MolajoPlugin
 {
 	/**
 	 * Remove all sessions for the user name
@@ -31,9 +29,10 @@ class plgUserMolajo extends JPlugin
 	 * @return	boolean
 	 * @since	1.6
 	 */
-	public function onUserAfterDelete($user, $succes, $msg)
+	public function onUserAfterDelete($user, $success, $msg)
 	{
-		if (!$succes) {
+		if ($success) {
+        } else {
 			return false;
 		}
 
@@ -129,25 +128,12 @@ class plgUserMolajo extends JPlugin
 
 		$instance = $this->_getUser($user, $options);
 
-		// If _getUser returned an error, then pass it back.
 		if (JError::isError($instance)) {
 			return $instance;
 		}
 
-		// If the user is blocked, redirect with an error
 		if ($instance->get('block') == 1) {
 			return JError::raiseWarning('SOME_ERROR_CODE', JText::_('JERROR_NOLOGIN_BLOCKED'));
-		}
-
-		// Authorise the user based on the group information
-		if (!isset($options['group'])) {
-			$options['group'] = 'USERS';
-		}
-
-		// Chek the user can login.
-		$result	= $instance->authorise($options['action']);
-		if (!$result) {
-			return JError::raiseWarning(401, JText::_('JERROR_LOGIN_DENIED'));
 		}
 
 		// Mark the user as logged in
@@ -158,8 +144,6 @@ class plgUserMolajo extends JPlugin
 		$session->set('user', $instance);
 
 		$db = MolajoFactory::getDBO();
-		
-		// Check to see the the session already exists.
 		$app = MolajoFactory::getApplication();
 		$app->checkSession();
 
@@ -190,9 +174,9 @@ class plgUserMolajo extends JPlugin
 	 */
 	public function onUserLogout($user, $options = array())
 	{
-		$my 		= MolajoFactory::getUser();
-		$session 	= MolajoFactory::getSession();
-		$app 		= MolajoFactory::getApplication();
+		$my 	 = MolajoFactory::getUser();
+		$session = MolajoFactory::getSession();
+		$app 	 = MolajoFactory::getApplication();
 
 		// Make sure we're a valid user first
 		if ($user['id'] == 0 && !$my->get('tmp_user')) {
@@ -231,16 +215,16 @@ class plgUserMolajo extends JPlugin
 	 * @return	object	A MolajoUser object
 	 * @since	1.5
 	 */
-	protected function &_getUser($user, $options = array())
+	protected function _getUser($user, $options = array())
 	{
 		$instance = MolajoUser::getInstance();
+
 		if ($id = intval(MolajoUserHelper::getUserId($user['username'])))  {
 			$instance->load($id);
 			return $instance;
 		}
 
 		//TODO : move this out of the plugin
-		jimport('molajo.application.component.helper');
 		$config	= JComponentHelper::getParams('com_users');
 		// Default to Registered.
 		$defaultUserGroup = $config->get('new_usertype', 2);

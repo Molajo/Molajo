@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	Extension.Joomla
  * @since		1.6
  */
-class plgExtensionMolajo extends JPlugin
+class plgExtensionMolajo extends MolajoPlugin
 {
 	/**
 	 * @var		integer Extension Identifier

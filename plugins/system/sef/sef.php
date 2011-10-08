@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.sef
  */
-class plgSystemSef extends JPlugin
+class plgSystemSef extends MolajoPlugin
 {
 	/**
 	 * Converting the site URL to fit to the HTTP request

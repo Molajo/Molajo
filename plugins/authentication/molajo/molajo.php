@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage	Authentication
  * @since       1.0
  */
-class plgAuthenticationMolajo extends JPlugin
+class plgAuthenticationMolajo extends MolajoPlugin
 {
 	/**
 	 * This method should handle any authentication and report back to the subject
@@ -26,13 +26,14 @@ class plgAuthenticationMolajo extends JPlugin
 	 * @return	boolean
 	 * @since   1.0
 	 */
-	function onUserAuthenticate($credentials, $options, &$response)
+	function onUserAuthenticate($credentials, $options, $response)
 	{
-		$response->type = 'Joomla';
-
+		$response->type = 'Molajo';
+        echo $response->type;
+        die();
 		// Joomla does not like blank passwords
 		if (empty($credentials['password'])) {
-			$response->status = JAUTHENTICATE_STATUS_FAILURE;
+			$response->status = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 			$response->error_message = JText::_('JGLOBAL_AUTH_EMPTY_PASS_NOT_ALLOWED');
 			return false;
 		}
@@ -53,7 +54,7 @@ class plgAuthenticationMolajo extends JPlugin
 
 		if ($result) {
 		} else {
-			$response->status = JAUTHENTICATE_STATUS_FAILURE;
+			$response->status = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 			$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
             return;
         }
@@ -65,7 +66,7 @@ class plgAuthenticationMolajo extends JPlugin
 
         if ($crypt == $testcrypt) {
         } else {
-            $response->status = JAUTHENTICATE_STATUS_FAILURE;
+            $response->status = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
             $response->error_message = JText::_('JGLOBAL_AUTH_INVALID_PASS');
             return;
         }
@@ -79,7 +80,7 @@ class plgAuthenticationMolajo extends JPlugin
         else {
             $response->language = $user->getParam('language');
         }
-        $response->status = JAUTHENTICATE_STATUS_SUCCESS;
+        $response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
         $response->error_message = '';
 	}
 }

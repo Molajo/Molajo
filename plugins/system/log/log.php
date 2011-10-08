@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.log
  */
-class  plgSystemLog extends JPlugin
+class  plgSystemLog extends MolajoPlugin
 {
 	function onUserLoginFailure($response)
 	{
@@ -27,14 +27,14 @@ class  plgSystemLog extends JPlugin
 
 		switch($response['status'])
 		{
-			case JAUTHENTICATE_STATUS_CANCEL :
+			case MOLAJO_AUTHENTICATE_STATUS_CANCEL :
 			{
 				$errorlog['status']  = $response['type'] . " CANCELED: ";
 				$errorlog['comment'] = $response['error_message'];
 				$log->addEntry($errorlog);
 			} break;
 
-			case JAUTHENTICATE_STATUS_FAILURE :
+			case MOLAJO_AUTHENTICATE_STATUS_FAILURE :
 			{
 				$errorlog['status']  = $response['type'] . " FAILURE: ";
 				$errorlog['comment'] = $response['error_message'];

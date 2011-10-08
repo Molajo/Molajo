@@ -17,30 +17,7 @@ defined('MOLAJO') or die;
 class MolajoController extends JController
 {
     /**
-     * @var object $this->request
-     *
-     * ["application_id"]=> int(1)
-     * ["current_url"]=> string(38) "http://localhost/molajo/administrator/"
-     * ["component_path"]=> string(65) "/users/amystephen/sites/molajo/administrator/components/com_login"
-     * ["base_url"]=> string(38) "http://localhost/molajo/administrator/"
-     * ["item_id"]=> int(0)
-     * ["controller"]=> string(7) "display"
-     * ["option"]=> string(9) "com_login"
-     * ["no_com_option"]=> string(5) "login"
-     * ["view"]=> string(7) "display"
-     * ["layout"]=> string(7) "default"
-     * ["model"]=> string(5) "dummy"
-     * ["task"]=> string(7) "display"
-     * ["format"]=> string(4) "html"
-     * ["plugin_type"]=> string(0) ""
-     * ["id"]=> int(0)
-     * ["cid"]=> array(0) { }
-     * ["catid"]=> int(0)
-     * ["params"]=> object(MolajoRegistry)#83 (1) { ["data":protected]=> object(stdClass)#84 (0) { } }
-     * ["acl_implementation"]=> string(4) "core"
-     * ["component_table"]=> string(8) "__common"
-     * ["filter_fieldname"]=> string(27) "config_manager_list_filters"
-     * ["select_fieldname"]=> string(26) "config_manager_grid_column"
+     * @var object $request
      *
      * @since 1.0
      */
@@ -200,10 +177,13 @@ class MolajoController extends JController
         /** 8. Pagination */
         $this->view->pagination = $this->view->get('Pagination');
 
-        /** 9. Layout */
+        /** 9. Layout Type */
+        $this->view->layout_type = 'extensions';
+
+        /** 10. Layout */
         $this->view->layout = $this->request['layout'];
 
-        /** 10. Wrap */
+        /** 11. Wrap */
         $this->view->wrap = $this->request['wrap'];
 
         /** display view */
@@ -230,6 +210,7 @@ class MolajoController extends JController
         $this->request = $request;
         $this->params = $this->request['params'];
         $this->redirectClass = new MolajoControllerRedirect();
+        $this->redirectClass->request = $this->request;
 
         $this->id = $this->request['id'];
         if ((int) $this->id == 0) {
@@ -293,7 +274,7 @@ class MolajoController extends JController
         }
 
         /** set redirects **/
-        $this->redirectClass->initialize($this->request['task']);
+        $this->redirectClass->initialize();
  
         /** success **/
         return true;

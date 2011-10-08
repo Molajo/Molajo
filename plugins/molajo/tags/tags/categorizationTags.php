@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class plgMolajoCategorizationTags extends JPlugin
+class plgMolajoCategorizationTags extends MolajoPlugin
 {
 
 	function onAfterDisplayContent( &$article, &$params, $limitstart )
@@ -61,7 +61,7 @@ class plgMolajoCategorizationTags extends JPlugin
 		$blogHomeURL = TamkaContentHelperRoute::getBlogHomeURLforArticle ($article->id);
 		
 		//	Retrieve Plugin Parameters for Router
-		$routerPlugin 	=& JPluginHelper::getPlugin( 'system', 'tamka_router');
+		$routerPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka_router');
 		$routerParams 	= new JParameter($routerPlugin->params);
 
 		//	Database call

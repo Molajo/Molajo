@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 jimport('joomla.plugin.plugin');
 
-class plgMolajoContent extends JPlugin	{
+class plgMolajoContent extends MolajoPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object
@@ -37,7 +37,7 @@ class plgMolajoContent extends JPlugin	{
 //        }
         $this->location = 'introtext';
         /** parameters **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
         $loc = $this->location;
 
@@ -90,7 +90,7 @@ class plgMolajoContent extends JPlugin	{
         if ($app->getName() == 'administrator') { return; }
 
         /** retrieve parameters for system plugin molajo library **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 
         /** talk like a pirate day **/

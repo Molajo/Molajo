@@ -79,15 +79,16 @@ class MolajoTableUser extends MolajoTable
 			return false;
 		}
 
-		if(!count($data))
-		{
+		if(count($data)) {
+        } else {
 			return false;
 		}
+
 		// Bind the data to the table.
 		$return = $this->bind($data);
 
-		if ($return !== false)
-		{
+		if ($return == false) {
+        } else {
 			// Load the user groups.
 			$this->_db->setQuery(
 				'SELECT g.id, g.title' .
@@ -176,7 +177,7 @@ class MolajoTableUser extends MolajoTable
 			return false;
 		}
 
-		if ((trim($this->email) == "") || ! JMailHelper::isEmailAddress($this->email)) {
+		if ((trim($this->email) == "") || ! MolajoMailHelper::isEmailAddress($this->email)) {
 			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_VALID_MAIL'));
 			return false;
 		}

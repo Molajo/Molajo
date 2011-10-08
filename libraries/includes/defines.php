@@ -44,8 +44,8 @@ $temp = MOLAJO_LAYOUTS.'/extensions';
 define('MOLAJO_LAYOUTS_EXTENSIONS', $temp);
 $temp = MOLAJO_LAYOUTS.'/forms';
 define('MOLAJO_LAYOUTS_FORMS', $temp);
-$temp = MOLAJO_LAYOUTS.'/head';
-define('MOLAJO_LAYOUTS_HEAD', $temp);
+$temp = MOLAJO_LAYOUTS.'/document';
+define('MOLAJO_LAYOUTS_DOCUMENT', $temp);
 $temp = MOLAJO_LAYOUTS.'/wraps';
 define('MOLAJO_LAYOUTS_WRAPS', $temp);
 

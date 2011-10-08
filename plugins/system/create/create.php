@@ -10,7 +10,7 @@ defined( 'JPATH_PLATFORM' ) or die( 'Restricted access' );
 /**
  * Molajo System Plugin
  */
-class plgSystemCreate extends JPlugin
+class plgSystemCreate extends MolajoPlugin
 {
 
     /**

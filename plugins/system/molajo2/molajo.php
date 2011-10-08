@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  * 
  * Manages Parameter Set additions for Configuration and Menu Items
  */
-class plgSystemMolajo extends JPlugin
+class plgSystemMolajo extends MolajoPlugin
 {
     /**
      * System Event: onAfterInitialise

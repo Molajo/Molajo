@@ -120,7 +120,7 @@ class extendController extends plgSystemExtend {
     public function initiation ($task, $form, $context, $content, $param, $limitstart, $isNew, $event)
     {
 
-        $systemPlugin =& JPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
         $this->fieldParams = new JParameter($systemPlugin->params);
 /**
             echo 'Task: '.$task.'<br />';

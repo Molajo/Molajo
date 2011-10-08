@@ -15,7 +15,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.redirect
  */
-class plgSystemRedirect extends JPlugin
+class plgSystemRedirect extends MolajoPlugin
 {
 	/**
 	 * Object Constructor.

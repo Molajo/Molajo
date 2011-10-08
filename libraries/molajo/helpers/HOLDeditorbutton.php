@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Editor Button Helper
  * @since       1.0
  */
-class MolajoEditorbuttonHelper extends JPlugin {
+class MolajoEditorbuttonHelper extends MolajoPlugin {
     
     /**
      * MolajoHelperEditorbutton::MolajoOnDisplay

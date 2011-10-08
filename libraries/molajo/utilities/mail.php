@@ -43,7 +43,7 @@ class MolajoMail extends PHPMailer
 	 * @return  object  The global JMail object
 	 * @since   1.0
 	 */
-	public static function getInstance($id = 'Joomla')
+	public static function getInstance($id = 'Molajo')
 	{
 		static $instances;
 
@@ -95,11 +95,11 @@ class MolajoMail extends PHPMailer
 	{
 		if (is_array($from)) {
 			// If $from is an array we assume it has an address and a name
-			$this->SetFrom(JMailHelper::cleanLine($from[0]), JMailHelper::cleanLine($from[1]));
+			$this->SetFrom(MolajoMailHelper::cleanLine($from[0]), MolajoMailHelper::cleanLine($from[1]));
 		}
 		elseif (is_string($from)) {
 			// If it is a string we assume it is just the address
-			$this->SetFrom(JMailHelper::cleanLine($from));
+			$this->SetFrom(MolajoMailHelper::cleanLine($from));
 		}
 		else {
 			// If it is neither, we throw a warning
@@ -119,7 +119,7 @@ class MolajoMail extends PHPMailer
 	 */
 	public function setSubject($subject)
 	{
-		$this->Subject = JMailHelper::cleanLine($subject);
+		$this->Subject = MolajoMailHelper::cleanLine($subject);
 
 		return $this;
 	}
@@ -138,7 +138,7 @@ class MolajoMail extends PHPMailer
 		 * Filter the Body
 		 * TODO: Check for XSS
 		 */
-		$this->Body = JMailHelper::cleanText($content);
+		$this->Body = MolajoMailHelper::cleanText($content);
 
 		return $this;
 	}
@@ -157,12 +157,12 @@ class MolajoMail extends PHPMailer
 		if (is_array($recipient)) {
 			foreach ($recipient as $to)
 			{
-				$to = JMailHelper::cleanLine($to);
+				$to = MolajoMailHelper::cleanLine($to);
 				$this->AddAddress($to);
 			}
 		}
 		else {
-			$recipient = JMailHelper::cleanLine($recipient);
+			$recipient = MolajoMailHelper::cleanLine($recipient);
 			$this->AddAddress($recipient);
 		}
 
@@ -184,12 +184,12 @@ class MolajoMail extends PHPMailer
 			if (is_array($cc)) {
 				foreach ($cc as $to)
 				{
-					$to = JMailHelper::cleanLine($to);
+					$to = MolajoMailHelper::cleanLine($to);
 					parent::AddCC($to);
 				}
 			}
 			else {
-				$cc = JMailHelper::cleanLine($cc);
+				$cc = MolajoMailHelper::cleanLine($cc);
 				parent::AddCC($cc);
 			}
 		}
@@ -212,12 +212,12 @@ class MolajoMail extends PHPMailer
 			if (is_array($bcc)) {
 				foreach ($bcc as $to)
 				{
-					$to = JMailHelper::cleanLine($to);
+					$to = MolajoMailHelper::cleanLine($to);
 					parent::AddBCC($to);
 				}
 			}
 			else {
-				$bcc = JMailHelper::cleanLine($bcc);
+				$bcc = MolajoMailHelper::cleanLine($bcc);
 				parent::AddBCC($bcc);
 			}
 		}
@@ -268,14 +268,14 @@ class MolajoMail extends PHPMailer
 		if (is_array($replyto[0])) {
 			foreach ($replyto as $to)
 			{
-				$to0 = JMailHelper::cleanLine($to[0]);
-				$to1 = JMailHelper::cleanLine($to[1]);
+				$to0 = MolajoMailHelper::cleanLine($to[0]);
+				$to1 = MolajoMailHelper::cleanLine($to[1]);
 				parent::AddReplyTo($to0, $to1);
 			}
 		}
 		else {
-			$replyto0 = JMailHelper::cleanLine($replyto[0]);
-			$replyto1 = JMailHelper::cleanLine($replyto[1]);
+			$replyto0 = MolajoMailHelper::cleanLine($replyto[0]);
+			$replyto1 = MolajoMailHelper::cleanLine($replyto[1]);
 			parent::AddReplyTo($replyto0, $replyto1);
 		}
 

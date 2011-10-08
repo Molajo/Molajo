@@ -48,4 +48,4 @@ class JAuthentication
  * @subpackage  User
  * @since       11.1
  */
-class JAuthenticationResponse extends MolajoAuthenticationResponse {}
+class JAuthenticationResponse extends MolajoAuthentication {}

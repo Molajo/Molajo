@@ -8,12 +8,12 @@
 defined('MOLAJO') or die;
 jimport( 'joomla.plugin.plugin' );
 
-class plgContenttamka_media_video extends JPlugin
+class plgContenttamka_media_video extends MolajoPlugin
 {
 	function onPrepareContent( &$article, &$params, $limitstart )
 	{
 		//	Get Parameters
-		$plugin =& JPluginHelper::getPlugin('content', 'tamka_media_video');
+		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_media_video');
 		$pluginParams = new JParameter( $plugin->params );
 
 		//	Document

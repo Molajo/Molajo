@@ -30,38 +30,32 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 	 */
 	public function render($module, $attribs = array(), $content = null)
 	{
-		if (!is_object($module))
-		{
+		if (is_object($module)) {
+        } else {
 			$title	= isset($attribs['title']) ? $attribs['title'] : null;
 
 			$module = MolajoModuleHelper::getModule($module, $title);
 
-			if (!is_object($module))
-			{
+			if (is_object($module)) {
+            } else {
 				if (is_null($content)) {
 					return '';
 				}
-				else {
-					/**
-					 * If module isn't found in the database but data has been pushed in the buffer
-					 * we want to render it
-					 */
-					$tmp = $module;
-					$module = new stdClass;
-					$module->params = null;
-					$module->module = $tmp;
-					$module->id = 0;
-					$module->user = 0;
-				}
+                /** Render data */
+                $tmp = $module;
+                $module = new stdClass;
+                $module->params = null;
+                $module->module = $tmp;
+                $module->id = 0;
+                $module->user = 0;
 			}
 		}
 
-		// Get the user and configuration object
-		// $user = MolajoFactory::getUser();
 		$conf = MolajoFactory::getConfig();
 
 		// Set the module content
-		if (!is_null($content)) {
+		if (is_null($content)) {
+        } else {
 			$module->content = $content;
 		}
 

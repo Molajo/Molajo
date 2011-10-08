@@ -205,9 +205,9 @@ class MolajoAdministrator extends MolajoApplication
 
 		$this->triggerEvent('onBeforeRender');
 		$renderedOutput = $document->render(false, $params);
+
 		JResponse::setBody($renderedOutput);
 		$this->triggerEvent('onAfterRender');
-
 	}
 
 	/**
@@ -290,7 +290,7 @@ class MolajoAdministrator extends MolajoApplication
 			if (file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php')) {
             } else {
 				$template->params = new JRegistry();
-				$template->template = 'mojito';
+				$template->template = MOLAJO_APPLICATION_DEFAULT_TEMPLATE;
 			}
 		}
 		if ($params) {

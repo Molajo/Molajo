@@ -179,6 +179,8 @@ abstract class MolajoModuleHelper
 
             $request['wrap_title'] = $module->title;
             $request['wrap_subtitle'] = $module->subtitle;
+            $request['wrap_id'] = '';
+            $request['wrap_class'] = '';
             $request['wrap_date'] = '';
             $request['wrap_author'] = '';
             $request['position'] = $module->position;
@@ -211,14 +213,20 @@ abstract class MolajoModuleHelper
             /** 8. Pagination */
             $view->pagination = $pagination;
 
-            /** 9. Layout */
+            /** 9. Layout Type */
+            $view->layout_type = 'extensions';
+
+            /** 10. Layout */
             $view->layout = $layout;
 
-            /** 10. Wrap */
+            /** 11. Wrap */
             $view->wrap = $wrap;
 
             /** display view */
-            $output = $view->display();
+            ob_start();
+            $view->display();
+            $output = ob_get_contents();
+            ob_end_clean();
 		}
 
 		MolajoFactory::getApplication()->scope = $scope;

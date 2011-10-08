@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @package Editors-xtd
  * @since 1.5
  */
-class plgButtonPagebreak extends JPlugin
+class plgButtonPagebreak extends MolajoPlugin
 {
 	/**
 	 * Display the button

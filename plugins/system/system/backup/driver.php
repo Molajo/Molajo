@@ -29,7 +29,7 @@ class MolajoSystemBackup {
     function driver ()
     {
         /** system plugin **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 
         /** backup **/

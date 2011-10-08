@@ -18,7 +18,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	System.languagefilter
  * @since		1.6
  */
-class plgSystemLanguageFilter extends JPlugin
+class plgSystemLanguageFilter extends MolajoPlugin
 {
 	protected static $mode_sef;
 	protected static $tag;

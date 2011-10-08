@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Category Table Class
+ * Update Table Class
  *
  * @package     Molajo
  * @subpackage  Table

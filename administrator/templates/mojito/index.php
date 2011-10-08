@@ -6,11 +6,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
-//$document = MolajoFactory::getDocument();
-//$modules = $document->loadRenderer('modules');
-//echo $modules->render('header', array( 'wrap' => 'header' ), null);
-
 include dirname(__FILE__).'/include/head.php';
 
 if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>

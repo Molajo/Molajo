@@ -73,7 +73,7 @@ class MolajoMediaAudio {
         /** initialization **/
         $workText = $content->$location;
 
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $this->systemParams = new JParameter($molajoSystemPlugin->params);
         $this->audio_folder = 'images/'.$this->systemParams->def('audio_folder', 'audio');
 

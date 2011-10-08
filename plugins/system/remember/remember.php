@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.remember
  */
-class plgSystemRemember extends JPlugin
+class plgSystemRemember extends MolajoPlugin
 {
 	function onAfterInitialise()
 	{

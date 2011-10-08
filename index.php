@@ -8,6 +8,8 @@
 define('MOLAJO_APPLICATION', 'site');
 define('MOLAJO_APPLICATION_PATH', '');
 define('MOLAJO_APPLICATION_ID', 0);
+define('MOLAJO_APPLICATION_DEFAULT_TEMPLATE', 'construct');
+
 /**
  * BEGIN: Common code for all Applications
  *

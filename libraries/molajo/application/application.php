@@ -81,17 +81,20 @@ class MolajoApplication extends JObject
 		$this->_applicationId	= $config['applicationId'];
 
 		// Enable sessions by default.
-		if (!isset($config['session'])) {
+		if (isset($config['session'])) {
+        } else {
 			$config['session'] = true;
 		}
 
 		// Set the session default name.
-		if (!isset($config['session_name'])) {
+		if (isset($config['session_name'])) {
+        } else {
 			$config['session_name'] = $this->_name;
 		}
 
 		// Set the default configuration file.
-		if (!isset($config['config_file'])) {
+		if (isset($config['config_file'])) {
+        } else {
 			$config['config_file'] = 'configuration.php';
 		}
 
@@ -102,7 +105,8 @@ class MolajoApplication extends JObject
         }
         
 		// Create the session if a session name is passed.
-		if ($config['session'] !== false) {
+		if ($config['session'] === false) {
+        } else {
 			$this->_createSession(JUtility::getHash($config['session_name']));
 		}
 
@@ -129,7 +133,8 @@ class MolajoApplication extends JObject
 	{
 		static $instances;
 
-		if (!isset($instances)) {
+		if (isset($instances)) {
+        } else {
 			$instances = array();
 		}
 
@@ -275,10 +280,11 @@ class MolajoApplication extends JObject
 
         /** 2. Component Path */
         $component_path = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$option;
-        if (defined('JPATH_COMPONENT')) {
+        if (defined('MOLAJO_PATH_COMPONENT')) {
         } else {
-            define('JPATH_COMPONENT', $component_path);
+            define('MOLAJO_PATH_COMPONENT', $component_path);
         }
+        define('JPATH_COMPONENT', $component_path);
 
         /** 3. Task */
         $task = JRequest::getCmd('task', 'display');
@@ -429,6 +435,10 @@ class MolajoApplication extends JObject
 // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         }
 
+        /** other */
+        $extension = JRequest::getCmd('extension', '');
+        $component_specific = JRequest::getCmd('component_specific', '');
+
         /** Request Object */
         JRequest::setVar('option', $option);
         JRequest::setVar('view', $view);
@@ -455,6 +465,8 @@ class MolajoApplication extends JObject
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
         $session->set('page.wrap', $params->def('wrap', 'none'));
+        $session->set('page.wrap_id', $params->def('wrap_id', ''));
+        $session->set('page.wrap_class', $params->def('wrap_class', ''));
         $session->set('page.layout_type', 'extension');
         $session->set('page.task', $task);
         $session->set('page.format', $format);
@@ -469,6 +481,10 @@ class MolajoApplication extends JObject
         $session->set('page.component_path', $component_path);
         $session->set('page.filter_fieldname', 'config_manager_list_filters');
         $session->set('page.select_fieldname', 'config_manager_grid_column');
+
+        /** other */
+        $session->set('page.extension', $extension);
+        $session->set('page.component_specific', $component_specific);
 
         /** retrieve from db */
         if ($controller == 'display') {
@@ -491,6 +507,9 @@ class MolajoApplication extends JObject
         $request['view'] = $session->get('page.view');
         $request['layout'] = $session->get('page.layout');
         $request['wrap'] = $session->get('page.wrap');
+        $request['wrap_id'] = $session->get('page.wrap_id');
+        $request['wrap_class'] = $session->get('page.wrap_class');         
+
         $request['model'] = $session->get('page.model');
         $request['task'] = $session->get('page.task');
         $request['format'] = $session->get('page.format');
@@ -500,6 +519,8 @@ class MolajoApplication extends JObject
         $request['cid'] = $session->get('page.cid');
         $request['catid'] = $session->get('page.catid');
         $request['params'] = $session->get('page.params');
+        $request['extension'] = $session->get('page.extension');
+        $request['component_specific'] = $session->get('page.component_specific');
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');
@@ -778,7 +799,8 @@ class MolajoApplication extends JObject
 		// If we don't start with a http we need to fix this before we proceed.
 		// We could validly start with something else (e.g. ftp), though this would
 		// be unlikely and isn't supported by this API.
-		if (!preg_match('#^http#i', $url)) {
+		if (preg_match('#^http#i', $url)) {
+        } else {
 			$uri = JURI::getInstance();
 			$prefix = $uri->toString(Array('scheme', 'user', 'pass', 'host', 'port'));
 
@@ -810,19 +832,18 @@ class MolajoApplication extends JObject
 		// so we will output a javascript redirect statement.
 		if (headers_sent()) {
 			echo "<script>document.location.href='$url';</script>\n";
-		}
-		else {
+
+		} else {
 			$document = MolajoFactory::getDocument();
 			$navigator = JBrowser::getInstance();
 			if ($navigator->isBrowser('msie')) {
 				// MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
  				echo '<html><head><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /><script>document.location.href=\''.$url.'\';</script></head><body></body></html>';
-			}
-			elseif (!$moved and $navigator->isBrowser('konqueror')) {
+
+			} elseif (!$moved and $navigator->isBrowser('konqueror')) {
 				// WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
 				echo '<html><head><meta http-equiv="refresh" content="0; url='. $url .'" /><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /></head><body></body></html>';
-			}
-			else {
+			} else {
 				// All other browsers, use the more efficient HTTP header method
 				header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
 				header('Location: '.$url);
@@ -845,7 +866,8 @@ class MolajoApplication extends JObject
 	public function enqueueMessage($msg, $type = 'message')
 	{
 		// For empty queue, if messages exists in the session, enqueue them first.
-		if (!count($this->_messageQueue)) {
+		if (count($this->_messageQueue)) {
+        } else {
 			$session = MolajoFactory::getSession();
 			$sessionQueue = $session->get('application.queue');
 
@@ -868,24 +890,57 @@ class MolajoApplication extends JObject
 	 */
 	public function getMessageQueue()
 	{
-		// For empty queue, if messages exists in the session, enqueue them.
-		if (!count($this->_messageQueue)) {
-			$session = MolajoFactory::getSession();
-			$sessionQueue = $session->get('application.queue');
+        /** initialize */
+        $tmpmsg = array();
+        $tmpobj = new JObject();
+        $count = 0;
 
-			if (count($sessionQueue)) {
-				$this->_messageQueue = $sessionQueue;
-				$session->set('application.queue', null);
+        /** are there messages? */
+        foreach ($this->_messageQueue as $msg) {
+            if ($msg['message'] == '') {
+            } else {
+                $count++;
+            }
+        }
+
+        /** pull in application session messages */
+        if ($count == 0) {
+			if (count(MolajoFactory::getSession()->get('application.queue'))) {
+				$this->_messageQueue = MolajoFactory::getSession()->get('application.queue');
+				MolajoFactory::getSession()->set('application.queue', null);
 			}
-		}
+        }
 
-		return $this->_messageQueue;
+        /** exit if no messages */
+        if ($count == 0) {
+            $_messageQueue = array();
+            return $_messageQueue;
+        }
+
+        /** edit message queue */
+        foreach ($this->_messageQueue as $msg) {
+
+            if ($msg['message'] == '') {
+            } else {
+                $tmpobj->set('message', $msg['message']);
+                if ($msg['type'] == 'message' || $msg['type'] == 'notice' || $msg['type'] == 'warning' || $msg['type'] == 'error') {
+                } else {
+                    $msg['type'] == 'message';
+                }
+                $tmpobj->set('type', $msg['type']);
+                $tmpmsg[] = $tmpobj;
+                $count++;
+            }
+        }
+        $_messageQueue = $tmpmsg;
+
+		return $_messageQueue;
 	}
 
 	/**
+     * getCfg
+     *
 	 * Gets a configuration value.
-	 *
-	 * An example is in application/japplication-getcfg.php Getting a configuration
 	 *
 	 * @param   string   The name of the value to get.
 	 * @param   string   Default value to return
@@ -901,6 +956,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * getName
+     *
 	 * Method to get the application name.
 	 *
 	 * The dispatcher name is by default parsed using the classname, or it can be set
@@ -916,7 +973,8 @@ class MolajoApplication extends JObject
 
 		if (empty($name)) {
 			$r = null;
-			if (!preg_match('/Molajo(.*)/i', get_class($this), $r)) {
+			if (preg_match('/Molajo(.*)/i', get_class($this), $r)) {
+            } else {
 				JError::raiseError(500, MolajoText::_('MOLAJO_APPLICATION_ERROR_APPLICATION_GET_NAME'));
 			}
 			$name = strtolower($r[1]);
@@ -926,6 +984,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * getUserState
+     *
 	 * Gets a user state.
 	 *
 	 * @param   string  The path of the state.
@@ -940,7 +1000,8 @@ class MolajoApplication extends JObject
 		$session	= MolajoFactory::getSession();
 		$registry	= $session->get('registry');
 
-		if (!is_null($registry)) {
+		if (is_null($registry)) {
+        } else {
 			return $registry->get($key, $default);
 		}
 
@@ -948,6 +1009,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * setUserState
+     *
 	 * Sets the value of a user state variable.
 	 *
 	 * @param   string  The path of the state.
@@ -962,7 +1025,8 @@ class MolajoApplication extends JObject
 		$session	= MolajoFactory::getSession();
 		$registry	= $session->get('registry');
 
-		if (!is_null($registry)) {
+		if (is_null($registry)) {
+        } else {
 			return $registry->set($key, $value);
 		}
 
@@ -970,6 +1034,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * getUserStateFromRequest
+     *
 	 * Gets the value of a user state variable.
 	 *
 	 * @param   string   $key      The key of the user state variable.
@@ -987,17 +1053,18 @@ class MolajoApplication extends JObject
 		$new_state = JRequest::getVar($request, null, 'default', $type);
 
 		// Save the new value only if it was set in this request.
-		if ($new_state !== null) {
+		if ($new_state == null) {
+            $new_state = $cur_state;
+		} else {
 			$this->setUserState($key, $new_state);
-		}
-		else {
-			$new_state = $cur_state;
 		}
 
 		return $new_state;
 	}
 
 	/**
+     * registerEvent
+     *
 	 * Registers a handler to a particular event group.
 	 *
 	 * @param   string  $event    The event name.
@@ -1014,6 +1081,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * triggerEvent
+     *
 	 * Calls all handlers associated with an event group.
 	 *
 	 * @param   string  $event  The event name.
@@ -1025,12 +1094,12 @@ class MolajoApplication extends JObject
 	 */
 	function triggerEvent($event, $args=null)
 	{
-		$dispatcher = JDispatcher::getInstance();
-
-		return $dispatcher->trigger($event, $args);
+		return JDispatcher::getInstance()->trigger($event, $args);
 	}
 
 	/**
+     * getTemplate
+     *
 	 * Gets the name of the current template.
 	 *
 	 * @param   array    $params  An optional associative array of configuration settings
@@ -1045,6 +1114,8 @@ class MolajoApplication extends JObject
 	}
 
 	/**
+     * getRouter
+     *
 	 * Returns the application MolajoRouter object.
 	 *
 	 * @param   string  $name     The name of the application.
@@ -1056,9 +1127,9 @@ class MolajoApplication extends JObject
 	 */
 	static public function getRouter($name = null, array $options = array())
 	{
-		if (!isset($name)) {
-			$app = MolajoFactory::getApplication();
-			$name = $app->getName();
+		if (isset($name)) {
+        } else {
+			$name = MolajoFactory::getApplication()->getName();
 		}
 
 		$router = MolajoRouter::getInstance($name, $options);
@@ -1071,7 +1142,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * This method transliterates a string into an URL
+	 * stringURLSafe
+     *
+     * This method transliterates a string into an URL
 	 * safe string or returns a URL safe UTF-8 string
 	 * based on the global configuration
 	 *
@@ -1083,12 +1156,10 @@ class MolajoApplication extends JObject
 	 */
 	static public function stringURLSafe($string)
 	{
-		$app = MolajoFactory::getApplication();
-
 		if (self::getCfg('unicodeslugs') == 1) {
 			$output = JFilterOutput::stringURLUnicodeSlug($string);
-		}
-		else {
+
+		} else {
 			$output = JFilterOutput::stringURLSafe($string);
 		}
 
@@ -1096,7 +1167,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Returns the application MolajoPathway object.
+	 * getPathway
+     *
+     * Returns the application MolajoPathway object.
 	 *
 	 * @param   string  $name     The name of the application.
 	 * @param   array   $options  An optional associative array of configuration settings.
@@ -1107,7 +1180,8 @@ class MolajoApplication extends JObject
 	 */
 	public function getPathway($name = null, $options = array())
 	{
-		if (!isset($name)) {
+		if (isset($name)) {
+        } else {
 			$name = $this->_name;
 		}
 
@@ -1121,7 +1195,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Returns the Menu object.
+	 * getMenu
+     *
+     * Returns the Menu object.
 	 *
 	 * @param   string  $name     The name of the application/application.
 	 * @param   array   $options  An optional associative array of configuration settings.
@@ -1132,7 +1208,8 @@ class MolajoApplication extends JObject
 	 */
 	public function getMenu($name = null, $options = array())
 	{
-		if (!isset($name)) {
+		if (isset($name)) {
+        } else {
 			$name = $this->_name;
 		}
 
@@ -1146,7 +1223,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Provides a secure hash based on a seed
+	 * getHash
+     *
+     * Provides a secure hash based on a seed
 	 *
 	 * @param   string   $seed  Seed string.
 	 *
@@ -1157,12 +1236,13 @@ class MolajoApplication extends JObject
 	public static function getHash($seed)
 	{
 		$conf = MolajoFactory::getConfig();
-
 		return md5($conf->get('secret').$seed);
 	}
 
 	/**
-	 * Create the configuration registry.
+	 * _createConfiguration
+     *
+     * Create the configuration registry.
 	 *
 	 * @param   string  $file  The path to the configuration file
 	 *
@@ -1187,7 +1267,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Create the user session.
+	 * _createSession
+     *
+     * Create the user session.
 	 *
 	 * Old sessions are flushed based on the configuration value for the cookie
 	 * lifetime. If an existing session, then the last access time is updated.
@@ -1251,7 +1333,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Checks the user session.
+	 * checkSession
+     *
+     * Checks the user session.
 	 *
 	 * If the session record doesn't exist, initialise it.
 	 * If session is new, create session variables
@@ -1274,14 +1358,16 @@ class MolajoApplication extends JObject
 		$exists = $db->loadResult();
 
 		// If the session record doesn't exist initialise it.
-		if (!$exists) {
+		if ($exists) {
+        } else {
+
 			if ($session->isNew()) {
 				$db->setQuery(
 					'INSERT INTO `#__session` (`session_id`, `application_id`, `time`)' .
 					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getApplicationId().', '.(int) time().')'
 				);
-			}
-			else {
+
+			} else {
 				$db->setQuery(
 					'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `time`, `userid`, `username`)' .
 					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getApplicationId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$db->quote($user->get('username')).')'
@@ -1289,7 +1375,8 @@ class MolajoApplication extends JObject
 			}
 
 			// If the insert failed, exit the application.
-			if (!$db->query()) {
+			if ($db->query()) {
+            } else {
 				jexit($db->getErrorMSG());
 			}
 
@@ -1314,7 +1401,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Is admin interface?
+	 * isAdmin
+     *
+     * Is admin interface?
 	 *
 	 * @return  boolean  True if this application is administrator.
 	 *
@@ -1326,7 +1415,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Is site interface?
+	 * isSite
+     *
+     * Is site interface?
 	 *
 	 * @return  boolean  True if this application is site.
 	 *
@@ -1338,7 +1429,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Method to determine if the host OS is  Windows
+	 * isWinOS
+     *
+     * Method to determine if the host OS is Windows
 	 *
 	 * @return  boolean  True if Windows OS
 	 *
@@ -1350,7 +1443,9 @@ class MolajoApplication extends JObject
 	}
 
 	/**
-	 * Returns the response as a string.
+	 * __toString
+     *
+     * Returns the response as a string.
 	 *
 	 * @return  string  The response
 	 *

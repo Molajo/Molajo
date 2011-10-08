@@ -10,7 +10,6 @@ defined('MOLAJO') or die;
 
 class MolajoACL
 {
-
     /**
     *  Type 1 --> authoriseTask
     *
@@ -108,7 +107,7 @@ class MolajoACL
     */
     public function getUserItemPermissions ($option, $entity, $task, $catid, $id, $item)
     {
-        $molajoConfig = new MolajoModelConfiguration ();
+        $molajoConfig = new MolajoModelConfiguration ($option);
         $tasks = $molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_ACL_ITEM_TESTS);
 
         foreach ( $tasks as $single )   {
@@ -163,7 +162,6 @@ class MolajoACL
      * getViewaccessList - produces a View Access List parameter combinations
      * getCategoriesList - produces a list of Categories parameter combinations
      * getGroupsList - produces a list of Groups parameter combinations
-     * getRulesList - produces a list of Rules for parameter combinations
      * getUsergroupsList - produces a list of Usergroups for parameter combinations
      * getUsergroupingsList - produces a list of Usergroupings for parameter combinations
      *

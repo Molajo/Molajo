@@ -15,14 +15,14 @@ defined('MOLAJO') or die;
  * @subpackage  User
  * @since       1.0
  */
-class MolajoAuthenticationResponse extends JObject
+class MolajoAuthentication extends JObject
 {
 	/**
 	 * Response status (see status codes)
 	 *
 	 * @var type string
 	 */
-	public $status		= JAUTHENTICATE_STATUS_FAILURE;
+	public $status		= MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 
 	/**
 	 * The type of authentication that was successful

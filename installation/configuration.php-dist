@@ -100,4 +100,14 @@ class MolajoConfig {
 	/* Feed Settings */
 	public $feed_limit = 10;
 	public $feed_email = 'author';
+
+	/* Other */
+    public $html5 = '1';
+    public $image_xsmall = '50';
+    public $image_small = '75';
+    public $image_medium = '150';
+    public $image_large = '300';
+    public $image_xlarge = '500';
+    public $image_folder = 'images';
+    public $thumb_folder = 'thumbs';
 }

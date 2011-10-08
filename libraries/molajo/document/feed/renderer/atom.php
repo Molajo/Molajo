@@ -92,7 +92,7 @@ defined('MOLAJO') or die;
 			}
 			$feed.= "	</author>\n";
 		}
-		$feed.= "	<generator uri=\"http://joomla.org\" version=\"1.6\">".$data->getGenerator()."</generator>\n";
+		$feed.= "	<generator uri=\"http://molajo.org\" version=\"1.7\">".$data->getGenerator()."</generator>\n";
 		$feed.= '	<link rel="self" type="application/atom+xml" href="'.str_replace(' ','%20',$url.$syndicationURL)."\"/>\n";
 
 		for ($i = 0, $count = count($data->items); $i < $count; $i++)

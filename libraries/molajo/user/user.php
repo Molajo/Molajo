@@ -1,12 +1,11 @@
 <?php
 /**
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  User
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
@@ -147,7 +146,9 @@ class MolajoUser extends JObject
 	protected $_errorMsg	= null;
 
 	/**
-	 * Constructor activating the default information of the language
+	 * __construct
+     *
+     * Constructor activating the default information of the language
 	 *
 	 * @param   integer  $identifier  The primary key of the user to load (optional).
 	 *
@@ -160,21 +161,20 @@ class MolajoUser extends JObject
 		$this->_params = new MolajoRegistry;
 
 		// Load the user if it exists
-		if (!empty($identifier)) {
-			$this->load($identifier);
-		}
-		else {
-			//initialise
+		if (empty($identifier)) {
 			$this->id		= 0;
 			$this->sendEmail = 0;
 			$this->aid		= 0;
 			$this->guest	= 1;
-		}
+		} else {
+            $this->load($identifier);
+        }
 	}
 
 	/**
-	 * Returns the global User object, only creating it if it
-	 * doesn't already exist.
+	 * getInstance
+     *
+     * Returns the global User object, only creating it if it doesn't already exist.
 	 *
 	 * @param   integer  $identifier	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
 	 *
@@ -185,20 +185,21 @@ class MolajoUser extends JObject
 	{
 		static $instances;
 
-		if (!isset ($instances)) {
+		if (isset ($instances)) {
+        } else {
 			$instances = array ();
 		}
 
 		// Find the user id
-		if (!is_numeric($identifier)) {
-			if (!$id = MolajoUserHelper::getUserId($identifier)) {
-				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_ID_NOT_EXISTS', $identifier));
-				$retval = false;
-				return $retval;
-			}
-		}
-		else {
+		if (is_numeric($identifier)) {
 			$id = $identifier;
+
+        } else {
+			if ($id = MolajoUserHelper::getUserId($identifier)) {
+            } else {
+				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_ID_NOT_EXISTS', $identifier));
+				return false;
+			}
 		}
 
 		if (empty($instances[$id])) {
@@ -210,7 +211,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to get a parameter value
+	 * getParam
+     *
+     * Method to get a parameter value
 	 *
 	 * @param   string   $key		Parameter key
 	 * @param   mixed    $default	Parameter default value
@@ -224,7 +227,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to set a parameter
+	 * setParam
+     *
+     * Method to set a parameter
 	 *
 	 * @param   string   $key	Parameter key
 	 * @param   mixed    $value	Parameter value
@@ -238,7 +243,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to set a default parameter if it does not exist
+	 * defParam
+     *
+     * Method to set a default parameter if it does not exist
 	 *
 	 * @param   string   $key	Parameter key
 	 * @param   mixed    $value	Parameter value
@@ -251,87 +258,6 @@ class MolajoUser extends JObject
 		return $this->_params->def($key, $value);
 	}
 
-	/**
-	 * @deprecated 1.6	Use MolajoACL::checkPermissions method instead.
-	 */
-	public function authorize($action, $assetname = null)
-	{
-        $acl = new MolajoACL ();
-        return $acl->checkPermissions('user', $userId='', $action, $assetname, '');
-	}
-
-	/**
-	 * @deprecated 1.6	Use MolajoACL::checkPermissions method instead.
-     *
-	 * Method to check MolajoUser object authorisation against an access control
-	 * object and optionally an access extension object
-	 *
-	 * @param   string   $action		The name of the action to check for permission.
-	 * @param   string   $assetname	The name of the asset on which to perform the action.
-	 *
-	 * @return  boolean  True if authorised
-	 * @since   1.0
-	 */
-	public function authorise($action, $assetname = null)
-	{
-        $acl = new MolajoACL ();
-        return $acl->checkPermissions('user', $userId='', $action, $assetname, '');
-	}
-
-	/**
-	 * @deprecated 1.6	Use the getList method instead.
-	 */
-	public function authorisedLevels()
-	{
-        $acl = new MolajoACL ();
-        return $acl->getList ('Usergroupings', $userId='', $option='', $task='', $params=array());
-	}
-
-	/**
-	 * @deprecated 1.6	Use the getList method instead.
-	 *
-	 * Method to return a list of all categories that a user has permission for a given action
-	 *
-	 * @param   string   $component	The component from which to retrieve the categories
-	 * @param   string   $action		The name of the section within the component from which to retrieve the actions.
-	 *
-	 * @return  array    List of categories that this group can do this action to (empty array if none). Categories must be published.
-	 * @since   1.0
-	 */
-	public function getAuthorisedCategories($component, $action)
-    {
-        $acl = new MolajoACL ();
-        return $acl->getList ('Usercategories', $userId='', $option='', $task='', $params=array());
-	}
-
-	/**
-	 * @deprecated 1.6	Use the getList method instead.
-     *
-	 * Gets an array of the authorised access levels for the user
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function getAuthorisedViewLevels()
-	{
-        $acl = new MolajoACL();
-        return $acl->getList ('viewaccess', $userId='', $option='', $task='', $params=array());
-	}
-
-
-	/**
-	 * @deprecated 1.6	Use the getList method instead.
-     *
-	 * Gets an array of the authorised user groups
-	 *
-	 * @return  array
-	 * @since   1.0
-	 */
-	public function getAuthorisedGroups()
-	{
-        $acl = new MolajoACL ();
-        return $acl->getList ('Usergroups’', $userId='', $option='', $task='', $params=array());
-	}
 	/**
 	 * Pass through method to the table for setting the last visit date
 	 *
@@ -350,7 +276,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to get the user parameters
+	 * getParameters
+     *
+     * Method to get the user parameters
 	 *
 	 * This function tries to load an XML file based on the users usertype. The filename of the xml
 	 * file is the same as the usertype. The functionals has a static variable to store the parameters
@@ -372,7 +300,8 @@ class MolajoUser extends JObject
 		}
 
 		// Set the default parampath if not set already
-		if (!isset($parampath)) {
+		if (isset($parampath)) {
+        } else {
 			$parampath = MOLAJO_PATH_ADMINISTRATOR.'components/com_users/models';
 		}
 
@@ -391,7 +320,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to get the user parameters
+	 * setParameters
+     *
+     * Method to get the user parameters
 	 *
 	 * @param   object   $params	The user parameters object
 	 *
@@ -404,7 +335,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to get the user table object
+	 * getTable
+     *
+     * Method to get the user table object
 	 *
 	 * This function uses a static variable to store the table name of the user table to
 	 * it instantiates. You can call this function statically to set the table name if
@@ -421,8 +354,10 @@ class MolajoUser extends JObject
 		static $tabletype;
 
 		// Set the default tabletype;
-		if (!isset($tabletype)) {
-			$tabletype['name']		= 'user';
+		if (isset($tabletype)) {
+
+        } else {
+			$tabletype['name']		= 'User';
 			$tabletype['prefix']	= 'MolajoTable';
 		}
 
@@ -437,17 +372,20 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to bind an associative array of data to a user object
+	 * bind
+     *
+     * Method to bind an associative array of data to a user object
 	 *
 	 * @param   array  $array	The associative array to bind to the object
 	 *
 	 * @return  boolean  True on success
 	 * @since   1.0
 	 */
-	public function bind(& $array)
+	public function bind($array)
 	{
 		// Let's check to see if the user is new or not
 		if (empty($this->id)) {
+
 			// Check the password and create the crypted password
 			if (empty($array['password'])) {
 				$array['password']  = MolajoUserHelper::genRandomPassword();
@@ -468,7 +406,6 @@ class MolajoUser extends JObject
 			$array['password'] = $crypt.':'.$salt;
 
 			// Set the registration timestamp
-
 			$this->set('registerDate', MolajoFactory::getDate()->toMySQL());
 
 			// Check that username is not greater than 150 characters
@@ -484,11 +421,15 @@ class MolajoUser extends JObject
 				$password = substr($password, 0, 100);
 				$this->set('password', $password);
 			}
-		}
-		else {
+
+		} else {
 			// Updating an existing user
-			if (!empty($array['password'])) {
-				if ($array['password'] != $array['password2']) {
+			if (empty($array['password'])) {
+                $array['password'] = $this->password;
+
+            } else {
+				if ($array['password'] == $array['password2']) {
+                } else {
 					$this->setError(MolajoText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
 					return false;
 				}
@@ -498,9 +439,6 @@ class MolajoUser extends JObject
 				$salt = MolajoUserHelper::genRandomPassword(32);
 				$crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
 				$array['password'] = $crypt.':'.$salt;
-			}
-			else {
-				$array['password'] = $this->password;
 			}
 		}
 
@@ -514,8 +452,7 @@ class MolajoUser extends JObject
 
 			if (is_array($array['params'])) {
 				$params	= (string)$this->_params;
-			}
-			else {
+			} else {
 				$params = $array['params'];
 			}
 
@@ -554,7 +491,8 @@ class MolajoUser extends JObject
 		try
 		{
 			// Check and store the object.
-			if (!$table->check()) {
+			if ($table->check()) {
+            } else {
 				$this->setError($table->getError());
 				return false;
 			}
@@ -585,29 +523,27 @@ class MolajoUser extends JObject
 
 			// Check if I am a Super Admin
 			$acl = new MolajoACL ();
+
             $iAmSuperAdmin = $acl->checkPermissions ('user', $my->id, 'admin', '', '');
 
 			// We are only worried about edits to this account if I am not a Super Admin.
 			if ($iAmSuperAdmin != true) {
 				if ($isNew) {
 					// Check if the new user is being put into a Super Admin group.
-					foreach ($this->groups as $key => $groupId)
-					{
+					foreach ($this->groups as $key => $groupId) {
 						if ($acl->checkPermissions ('group', $groupId, 'admin', '', '')) {
 							throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
 						}
 					}
-				}
-				else {
+				} else {
 					// I am not a Super Admin, and this one is, so fail.
 					if ($acl->checkPermissions ('user', $this->id, 'admin', '', '')) {
 						throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
 					}
 
 					if ($this->groups != null) {
-					// I am not a Super Admin and I'm trying to make one.
-						foreach ($this->groups as $groupId)
-						{
+					    // I am not a Super Admin and I'm trying to make one.
+						foreach ($this->groups as $groupId) {
 							if ($acl->checkPermissions ('group', $groupId, 'admin', '', '')) {
 								throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
 							}
@@ -684,7 +620,9 @@ class MolajoUser extends JObject
 	}
 
 	/**
-	 * Method to load a MolajoUser object by user id number
+	 * load
+     *
+     * Method to load a MolajoUser object by user id number
 	 *
 	 * @param   mixed  $id  The user id of the user to load
 	 *
@@ -697,7 +635,8 @@ class MolajoUser extends JObject
 		$table	= $this->getTable();
 
 		// Load the MolajoUserModel object based on the user id or throw a warning.
-		if (!$table->load($id)) {
+		if ($table->load($id)) {
+        } else {
 			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
 			return false;
 		}
@@ -713,4 +652,84 @@ class MolajoUser extends JObject
 
 		return true;
 	}
+
+    /**
+     * @deprecated 1.6	Use MolajoACL::checkPermissions method instead.
+     */
+    public function authorize($action, $assetname = null)
+    {
+        $this->authorise($action, $assetname);
+    }
+
+    /**
+     * @deprecated 1.6	Use MolajoACL::checkPermissions method instead.
+     *
+     * Method to check MolajoUser object authorisation against an access control
+     * object and optionally an access extension object
+     *
+     * @param   string   $action		The name of the action to check for permission.
+     * @param   string   $assetname	The name of the asset on which to perform the action.
+     *
+     * @return  boolean  True if authorised
+     * @since   1.0
+     */
+    public function authorise($action, $assetname = null)
+    {
+        $acl = new MolajoACL ();
+        return $acl->checkPermissions('user', $userId='', $action, $assetname, '');
+    }
+
+    /**
+     * @deprecated 1.6	Use the getList method instead.
+     */
+    public function authorisedLevels()
+    {
+        $acl = new MolajoACL ();
+        return $acl->getList ('Usergroupings', $userId='', $option='', $task='', $params=array());
+    }
+
+    /**
+     * @deprecated 1.6	Use the getList method instead.
+     *
+     * Method to return a list of all categories that a user has permission for a given action
+     *
+     * @param   string   $component	The component from which to retrieve the categories
+     * @param   string   $action		The name of the section within the component from which to retrieve the actions.
+     *
+     * @return  array    List of categories that this group can do this action to (empty array if none). Categories must be published.
+     * @since   1.0
+     */
+    public function getAuthorisedCategories($component, $action)
+    {
+        $acl = new MolajoACL ();
+        return $acl->getList ('Usercategories', $userId='', $option='', $task='', $params=array());
+    }
+
+    /**
+     * @deprecated 1.6	Use the getList method instead.
+     *
+     * Gets an array of the authorised access levels for the user
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function getAuthorisedViewLevels()
+    {
+        $acl = new MolajoACL();
+        return $acl->getList ('viewaccess', $userId='', $option='', $task='', $params=array());
+    }
+
+    /**
+     * @deprecated 1.6	Use the getList method instead.
+     *
+     * Gets an array of the authorised user groups
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function getAuthorisedGroups()
+    {
+        $acl = new MolajoACL ();
+        return $acl->getList ('Usergroups’', $userId='', $option='', $task='', $params=array());
+    }
 }

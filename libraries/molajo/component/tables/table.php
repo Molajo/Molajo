@@ -14,7 +14,6 @@ defined('MOLAJO') or die;
  * @package     Molajo
  * @subpackage  Table
  * @since       1.0
- * @link
  */
 abstract class MolajoTable extends JObject
 {
@@ -51,7 +50,9 @@ abstract class MolajoTable extends JObject
 	protected $_locked = false;
 
 	/**
-	 * Object constructor to set table and key fields.  In most cases this will
+	 * __construct
+     *
+     * Object constructor to set table and key fields.  In most cases this will
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
 	 *
@@ -63,30 +64,24 @@ abstract class MolajoTable extends JObject
 	 */
 	function __construct($table, $key, &$db)
 	{
-		// Set internal variables.
 		$this->_tbl		= $table;
 		$this->_tbl_key	= $key;
 		$this->_db		= &$db;
 
-		// Initialise the table properties.
 		if ($fields = $this->getFields()) {
-			foreach ($fields as $name => $v)
-			{
-				// Add the field if it is not already present.
-				if (!property_exists($this, $name)) {
+			foreach ($fields as $name => $v) {
+				if (property_exists($this, $name)) {
+                } else {
 					$this->$name = null;
 				}
 			}
 		}
-
-        if ((int) $this->access == 0) {
-            $this->access = (int) MolajoFactory::getConfig()->get('access');
-        }
-
     }
 
 	/**
-	 * Get the columns from database table.
+	 * getFields
+     *
+     * Get the columns from database table.
 	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 */
@@ -95,11 +90,11 @@ abstract class MolajoTable extends JObject
 		static $cache = null;
 
 		if ($cache === null) {
-			// Lookup the fields for this table only once.
 			$name	= $this->_tbl;
 			$fields	= $this->_db->getTableFields($name, false);
 
-			if (!isset($fields[$name])) {
+			if (isset($fields[$name])) {
+            } else {
 				$e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
 				$this->setError($e);
 				return false;
@@ -111,7 +106,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Static method to get an instance of a MolajoTable class if it can be found in
+	 * getInstance
+     *
+     * Static method to get an instance of a MolajoTable class if it can be found in
 	 * the table include paths.  To add include paths for searching for MolajoTable
 	 * classes @see MolajoTable::addIncludePath().
 	 *
@@ -120,72 +117,59 @@ abstract class MolajoTable extends JObject
 	 * @param   array    An optional array of configuration values for the MolajoTable object.
 	 * @return  mixed    A MolajoTable object if found or boolean false if one could not be found.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/getInstance
 	*/
 	public static function getInstance($type, $prefix = 'MolajoTable', $config = array())
 	{
-		// Sanitize and prepare the table class name.
 		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
 		$tableClass = $prefix.ucfirst($type);
 
-		// Only try to load the class if it doesn't already exist.
-		if (!class_exists($tableClass)) {
-			// Search for the class file in the MolajoTable include paths.
+		if (class_exists($tableClass)) {
+
+        } else {
 			if ($path = JPath::find(MolajoTable::addIncludePath(), strtolower($type).'.php')) {
-				// Import the class file.
 				require_once $path;
 
-				// If we were unable to load the proper class, raise a warning and return false.
-				if (!class_exists($tableClass)) {
+				if (class_exists($tableClass)) {
+                } else {
 					JError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_NOT_FOUND_IN_FILE', $tableClass));
 					return false;
 				}
-			}
-			else {
-				// If we were unable to find the class file in the MolajoTable include paths, raise a warning and return false.
+			} else {
 				JError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
 				return false;
 			}
 		}
 
-		// If a database object was passed in the configuration array use it, otherwise get the global one from MolajoFactory.
 		$db = isset($config['dbo']) ? $config['dbo'] : MolajoFactory::getDbo();
 
-		// Instantiate a new table class and return it.
 		return new $tableClass($db);
 	}
 
 	/**
-	 * Add a filesystem path where MolajoTable should search for table class files.
+	 * addIncludePath
+     *
+     * Add a filesystem path where MolajoTable should search for table class files.
 	 * You may either pass a string or an array of paths.
 	 *
 	 * @param   mixed  A filesystem path or array of filesystem paths to add.
 	 * @return  array  An array of filesystem paths to find MolajoTable classes in.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/addIncludePath
 	 */
 	public static function addIncludePath($path = null)
 	{
-		// Declare the internal paths as a static variable.
 		static $_paths;
 
-		// If the internal paths have not been initialised, do so with the base table path.
-		if (!isset($_paths)) {
+		if (isset($_paths)) {
+        } else {
 			$_paths = array(dirname(__FILE__).'/table');
 		}
 
-		// Convert the passed path(s) to add to an array.
 		settype($path, 'array');
 
-		// If we have new paths to add, do so.
-		if (!empty($path) && !in_array($path, $_paths)) {
-			// Check and add each individual new path.
-			foreach ($path as $dir)
-			{
-				// Sanitize path.
+		if (empty($path) || in_array($path, $_paths)) {
+        } else {
+			foreach ($path as $dir) {
 				$dir = trim($dir);
-
-				// Add to the front of the list so that custom paths are searched first.
 				array_unshift($_paths, $dir);
 			}
 		}
@@ -194,11 +178,12 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to get the database table name for the class.
+	 * getTableName
+     *
+     * Method to get the database table name for the class.
 	 *
 	 * @return  string  The name of the database table being modeled.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/getTableName
 	 */
 	public function getTableName()
 	{
@@ -206,11 +191,12 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to get the primary key field name for the table.
+	 * getKeyName
+     *
+     * Method to get the primary key field name for the table.
 	 *
 	 * @return  string  The name of the primary key for the table.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/getKeyName
 	 */
 	public function getKeyName()
 	{
@@ -218,10 +204,11 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to get the JDatabase connector object.
+	 * getDbo
+     *
+     * Method to get the JDatabase connector object.
 	 *
 	 * @return  object  The internal database connector object.
-	 * @link	http://docs.molajo.org/MolajoTable/getDBO
 	 */
 	public function getDbo()
 	{
@@ -229,7 +216,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to set the JDatabase connector object.
+	 * setDBO
+     *
+     * Method to set the JDatabase connector object.
 	 *
 	 * @param   object   A JDatabase connector object to be used by the table object.
 	 * @return  boolean  True on success.
@@ -237,8 +226,8 @@ abstract class MolajoTable extends JObject
 	 */
 	public function setDBO(&$db)
 	{
-		// Make sure the new database object is a JDatabase.
-		if (!($db instanceof JDatabase)) {
+		if ($db instanceof JDatabase) {
+        } else {
 			return false;
 		}
 
@@ -248,20 +237,19 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to reset class properties to the defaults set in the class
+	 * reset
+     *
+     * Method to reset class properties to the defaults set in the class
 	 * definition.  It will ignore the primary key as well as any private class
 	 * properties.
 	 *
 	 * @return  void
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/reset
 	 */
 	public function reset()
 	{
-		// Get the default values for the class from the table.
 		foreach ($this->getFields() as $k => $v)
 		{
-			// If the property is not the primary key or private, reset it.
 			if ($k != $this->_tbl_key && (strpos($k, '_') !== 0)) {
 				$this->$k = $v->Default;
 			}
@@ -269,7 +257,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to bind an associative array or object to the MolajoTable instance.This
+	 * bind
+     *
+     * Method to bind an associative array or object to the MolajoTable instance. This
 	 * method only binds properties that are publicly accessible and optionally
 	 * takes an array of properties to ignore when binding.
 	 *
@@ -280,32 +270,28 @@ abstract class MolajoTable extends JObject
 	 * @return  boolean  True on success.
 	 *
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/bind
 	 */
 	public function bind($src, $ignore = array())
 	{
-		// If the source value is not an array or object return false.
-		if (!is_object($src) && !is_array($src)) {
+		if (is_object($src) || is_array($src)) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
 			$this->setError($e);
 			return false;
 		}
 
-		// If the source value is an object, get its accessible properties.
 		if (is_object($src)) {
 			$src = get_object_vars($src);
 		}
 
-		// If the ignore value is a string, explode it over spaces.
-		if (!is_array($ignore)) {
+		if (is_array($ignore)) {
+        } else {
 			$ignore = explode(' ', $ignore);
 		}
 
-		// Bind the source value, excluding the ignored fields.
-		foreach ($this->getProperties() as $k => $v)
-		{
-			// Only process fields not in the ignore array.
-			if (!in_array($k, $ignore)) {
+		foreach ($this->getProperties() as $k => $v) {
+			if (in_array($k, $ignore)) {
+            } else {
 				if (isset($src[$k])) {
 					$this->$k = $src[$k];
 				}
@@ -316,7 +302,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to load a row from the database by primary key and bind the fields
+	 * load
+     *
+     * Method to load a row from the database by primary key and bind the fields
 	 * to the MolajoTable instance properties.
 	 *
 	 * @param   mixed  An optional primary key value to load the row by, or an array of fields to match.  If not
@@ -326,24 +314,21 @@ abstract class MolajoTable extends JObject
 	 * @return  bool  True if successful. False if row not found or on error (internal error state set in that case).
 	 *
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/load
 	 */
 	public function load($keys = null, $reset = true)
 	{
 		if (empty($keys)) {
-			// If empty, use the value of the current key
 			$keyName = $this->_tbl_key;
 			$keyValue = $this->$keyName;
 
-			// If empty primary key there's is no need to load anything
 			if (empty($keyValue)) {
 				return true;
 			}
-
 			$keys = array($keyName => $keyValue);
-		}
-		else if (!is_array($keys)) {
-			// Load by primary key.
+
+		} else if (is_array($keys)) {
+
+        } else {
 			$keys = array($this->_tbl_key => $keys);
 		}
 
@@ -351,7 +336,6 @@ abstract class MolajoTable extends JObject
 			$this->reset();
 		}
 
-		// Initialise the query.
 		$query	= $this->_db->getQuery(true);
 		$query->select('*');
 		$query->from($this->_tbl);
@@ -359,46 +343,43 @@ abstract class MolajoTable extends JObject
 
 		foreach ($keys as $field => $value)
 		{
-			// Check that $field is in the table.
-			if (!in_array($field, $fields)) {
+			if (in_array($field, $fields)) {
+            } else {
 				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $field));
 				$this->setError($e);
 				return false;
 			}
-			// Add the search tuple to the query.
 			$query->where($this->_db->quoteName($field).' = '.$this->_db->quote($value));
 		}
 
 		$this->_db->setQuery($query);
 		$row = $this->_db->loadAssoc();
 
-		// Check for a database error.
 		if ($this->_db->getErrorNum()) {
 			$e = new MolajoException($this->_db->getErrorMsg());
 			$this->setError($e);
 			return false;
 		}
 
-		// Check that we have a result.
 		if (empty($row)) {
 			$e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_EMPTY_ROW_RETURNED'));
 			$this->setError($e);
 			return false;
 		}
 
-		// Bind the object with the row and return.
 		return $this->bind($row);
 	}
 
 	/**
-	 * Method to perform sanity checks on the MolajoTable instance properties to ensure
+	 * check
+     *
+     * Method to perform sanity checks on the MolajoTable instance properties to ensure
 	 * they are safe to store in the database.  Child classes should override this
 	 * method to make sure the data they are storing in the database is safe and
 	 * as expected before storage.
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/check
 	 */
 	public function check()
 	{
@@ -416,24 +397,20 @@ abstract class MolajoTable extends JObject
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @link	http://docs.molajo.org/MolajoTable/store
 	 * @since   1.0
 	 */
 	public function store($updateNulls = false)
 	{
-		// Initialise variables.
 		$k = $this->_tbl_key;
 
-		// If a primary key exists update the object, otherwise insert it.
 		if ($this->$k) {
 			$stored = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
-		}
-		else {
+		} else {
 			$stored = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
 		}
 
-		// If the store failed return false.
-		if (!$stored) {
+		if ($stored) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
@@ -477,39 +454,42 @@ abstract class MolajoTable extends JObject
 		//
 		// View Access
 		//
-		$grouping = MolajoTable::getInstance('Grouping');
+//		$grouping = MolajoTable::getInstance('Grouping');
 
-        if ((int) $this->access == 0) {
-            $asset->content_table = $this->_tbl;
-            $this->asset_id = $asset->save();
-        } else {
-            $asset->load();
-        }
+//       if ((int) $this->access == 0) {
+//            $asset->content_table = $this->_tbl;
+//            $this->asset_id = $asset->save();
+//        } else {
+//            $asset->load();
+//        }
 
-        if ($asset->getError()) {
-            $this->setError($asset->getError());
-            return false;
-        }
+//        if ($asset->getError()) {
+//            $this->setError($asset->getError());
+//            return false;
+//       }
 
-        if ((int) $this->asset_id == 0) {
-			$query = $this->_db->getQuery(true);
-			$query->update($this->_db->quoteName($this->_tbl));
-			$query->set('asset_id = '.(int) $this->asset_id);
-			$query->where($this->_db->quoteName($k).' = '.(int) $this->$k);
-			$this->_db->setQuery($query);
+//        if ((int) $this->asset_id == 0) {
+//			$query = $this->_db->getQuery(true);
+//			$query->update($this->_db->quoteName($this->_tbl));
+//			$query->set('asset_id = '.(int) $this->asset_id);
+//			$query->where($this->_db->quoteName($k).' = '.(int) $this->$k);
+//			$this->_db->setQuery($query);
 
-			if (!$this->_db->query()) {
-				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
-				$this->setError($e);
-				return false;
-			}
-        }
+//			if ($this->_db->query()) {
+//            } else {
+//				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
+//				$this->setError($e);
+//				return false;
+//			}
+//        }
 
 		return true;
 	}
 
 	/**
-	 * Method to provide a shortcut to binding, checking and storing a MolajoTable
+	 * save
+     *
+     * Method to provide a shortcut to binding, checking and storing a MolajoTable
 	 * instance to the database table.  The method will check a row in once the
 	 * data has been stored and if an ordering filter is present will attempt to
 	 * reorder the table rows based on the filter.  The ordering filter is an instance
@@ -529,22 +509,26 @@ abstract class MolajoTable extends JObject
 	public function save($src, $orderingFilter = '', $ignore = '')
 	{
 		// Attempt to bind the source to the instance.
-		if (!$this->bind($src, $ignore)) {
+		if ($this->bind($src, $ignore)) {
+        } else {
 			return false;
 		}
 
 		// Run any sanity checks on the instance and verify that it is ready for storage.
-		if (!$this->check()) {
+		if ($this->check()) {
+        } else {
 			return false;
 		}
 
 		// Attempt to store the properties to the database table.
-		if (!$this->store()) {
+		if ($this->store()) {
+        } else {
 			return false;
 		}
 
 		// Attempt to check the row in, just in case it was checked out.
-		if (!$this->checkin()) {
+		if ($this->checkin()) {
+        } else {
 			return false;
 		}
 
@@ -561,13 +545,14 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to delete a row from the database table by primary key value.
+	 * delete
+     *
+     * Method to delete a row from the database table by primary key value.
 	 *
 	 * @param   mixed    An optional primary key value to delete.  If not set the
 	 *					instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/delete
 	 */
 	public function delete($pk = null)
 	{
@@ -619,6 +604,8 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
+     * checkOut
+     *
 	 * Method to check a row out if the necessary properties/fields exist.  To
 	 * prevent race conditions while editing rows in a database, a row can be
 	 * checked out if the fields 'checked_out' and 'checked_out_time' are available.
@@ -631,12 +618,12 @@ abstract class MolajoTable extends JObject
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/checkOut
 	 */
 	public function checkOut($userId, $pk = null)
 	{
 		// If there is no checked_out or checked_out_time field, just return true.
-		if (!property_exists($this, 'checked_out') || !property_exists($this, 'checked_out_time')) {
+		if (property_exists($this, 'checked_out') && property_exists($this, 'checked_out_time')) {
+        } else {
 			return true;
 		}
 
@@ -662,7 +649,8 @@ abstract class MolajoTable extends JObject
 		$query->where($this->_tbl_key.' = '.$this->_db->quote($pk));
 		$this->_db->setQuery($query);
 
-		if (!$this->_db->query()) {
+		if ($this->_db->query()) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CHECKOUT_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
@@ -676,19 +664,21 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to check a row in if the necessary properties/fields exist.  Checking
+	 * checkIn
+     *
+     * Method to check a row in if the necessary properties/fields exist.  Checking
 	 * a row in will allow other users the ability to edit the row.
 	 *
 	 * @param   mixed    An optional primary key value to check out.  If not set
 	 *					the instance property value is used.
 	 * @return  boolean  True on success.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/checkIn
 	 */
 	public function checkIn($pk = null)
 	{
 		// If there is no checked_out or checked_out_time field, just return true.
-		if (!property_exists($this, 'checked_out') || !property_exists($this, 'checked_out_time')) {
+		if (property_exists($this, 'checked_out') && property_exists($this, 'checked_out_time')) {
+        } else {
 			return true;
 		}
 
@@ -712,7 +702,8 @@ abstract class MolajoTable extends JObject
 		$this->_db->setQuery($query);
 
 		// Check for a database error.
-		if (!$this->_db->query()) {
+		if ($this->_db->query()) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CHECKIN_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
 			return false;
@@ -726,52 +717,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to increment the hits for a row if the necessary property/field exists.
-	 *
-	 * @param   mixed    An optional primary key value to increment.  If not set
-	 *					the instance property value is used.
-	 * @return  boolean  True on success.
-	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/hit
-	 */
-	public function hit($pk = null)
-	{
-		// If there is no hits field, just return true.
-		if (!property_exists($this, 'hits')) {
-			return true;
-		}
-
-		// Initialise variables.
-		$k = $this->_tbl_key;
-		$pk = (is_null($pk)) ? $this->$k : $pk;
-
-		// If no primary key is given, return false.
-		if ($pk === null) {
-			return false;
-		}
-
-		// Check the row in by primary key.
-		$query = $this->_db->getQuery(true);
-		$query->update($this->_tbl);
-		$query->set($this->_db->quoteName('hits').' = ('.$this->_db->quoteName('hits').' + 1)');
-		$query->where($this->_tbl_key.' = '.$this->_db->quote($pk));
-		$this->_db->setQuery($query);
-
-		// Check for a database error.
-		if (!$this->_db->query()) {
-			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_HIT_FAILED', get_class($this), $this->_db->getErrorMsg()));
-			$this->setError($e);
-			return false;
-		}
-
-		// Set table values in the object.
-		$this->hits++;
-
-		return true;
-	}
-
-	/**
 	 * TODO: This either needs to be static or not.
+     *
+     * isCheckedOut
 	 *
 	 * Method to determine if a row is checked out and therefore uneditable by
 	 * a user.  If the row is checked out by the same user, then it is considered
@@ -783,7 +731,6 @@ abstract class MolajoTable extends JObject
 	 *					is used as a static function.
 	 * @return  boolean  True if checked out.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/isCheckedOut
 	 */
 	public function isCheckedOut($with = 0, $against = null)
 	{
@@ -810,18 +757,20 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to get the next ordering value for a group of rows defined by an SQL WHERE clause.
+	 * getNextOrder
+     *
+     * Method to get the next ordering value for a group of rows defined by an SQL WHERE clause.
 	 * This is useful for placing a new item last in a group of items in the table.
 	 *
 	 * @param   string   WHERE clause to use for selecting the MAX(ordering) for the table.
 	 * @return  mixed    Boolean false an failure or the next ordering value as an integer.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/getNextOrder
 	 */
 	public function getNextOrder($where = '')
 	{
 		// If there is no ordering field set an error and return false.
-		if (!property_exists($this, 'ordering')) {
+		if (property_exists($this, 'ordering')) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
 			$this->setError($e);
 			return false;
@@ -854,7 +803,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to compact the ordering values of rows in a group of rows
+	 * reorder
+     *
+     * Method to compact the ordering values of rows in a group of rows
 	 * defined by an SQL WHERE clause.
 	 *
 	 * @param   string   WHERE clause to use for limiting the selection of rows to
@@ -866,7 +817,8 @@ abstract class MolajoTable extends JObject
 	public function reorder($where = '')
 	{
 		// If there is no ordering field set an error and return false.
-		if (!property_exists($this, 'ordering')) {
+		if (property_exists($this, 'ordering')) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
 			$this->setError($e);
 			return false;
@@ -894,17 +846,16 @@ abstract class MolajoTable extends JObject
 		if ($this->_db->getErrorNum()) {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
-
 			return false;
 		}
 
 		// Compact the ordering values.
-		foreach ($rows as $i => $row)
-		{
+		foreach ($rows as $i => $row) {
 			// Make sure the ordering is a positive integer.
 			if ($row->ordering >= 0) {
 				// Only update rows that are necessary.
-				if ($row->ordering != $i+1) {
+				if ($row->ordering == $i+1) {
+                } else {
 					// Update the row ordering field.
 					$query = $this->_db->getQuery(true);
 					$query->update($this->_tbl);
@@ -913,7 +864,8 @@ abstract class MolajoTable extends JObject
 					$this->_db->setQuery($query);
 
 					// Check for a database error.
-					if (!$this->_db->query()) {
+					if ($this->_db->query()) {
+                    } else {
 						$e = new MolajoException(
 							MolajoText::sprintf(
 								'MOLAJO_DATABASE_ERROR_REORDER_UPDATE_ROW_FAILED', get_class($this), $i, $this->_db->getErrorMsg()
@@ -931,7 +883,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to move a row in the ordering sequence of a group of rows defined by an SQL WHERE clause.
+	 * move
+     *
+     * Method to move a row in the ordering sequence of a group of rows defined by an SQL WHERE clause.
 	 * Negative numbers move the row up in the sequence and positive numbers move it down.
 	 *
 	 * @param   integer  The direction and magnitude to move the row in the ordering sequence.
@@ -944,7 +898,8 @@ abstract class MolajoTable extends JObject
 	public function move($delta, $where = '')
 	{
 		// If there is no ordering field set an error and return false.
-		if (!property_exists($this, 'ordering')) {
+		if (property_exists($this, 'ordering')) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
 			$this->setError($e);
 			return false;
@@ -985,7 +940,25 @@ abstract class MolajoTable extends JObject
 		$row = $this->_db->loadObject();
 
 		// If a row is found, move the item.
-		if (!empty($row)) {
+		if (empty($row)) {
+
+			// Update the ordering field for this instance.
+			$query = $this->_db->getQuery(true);
+			$query->update($this->_tbl);
+			$query->set('ordering = '.(int) $this->ordering);
+			$query->where($this->_tbl_key.' = '.$this->_db->quote($this->$k));
+			$this->_db->setQuery($query);
+
+			// Check for a database error.
+			if ($this->_db->query()) {
+            } else {
+				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				$this->setError($e);
+
+				return false;
+			}
+
+        } else {
 			// Update the ordering field for this instance to the row's ordering value.
 			$query = $this->_db->getQuery(true);
 			$query->update($this->_tbl);
@@ -994,7 +967,8 @@ abstract class MolajoTable extends JObject
 			$this->_db->setQuery($query);
 
 			// Check for a database error.
-			if (!$this->_db->query()) {
+			if ($this->_db->query()) {
+            } else {
 				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				$this->setError($e);
 
@@ -1009,7 +983,8 @@ abstract class MolajoTable extends JObject
 			$this->_db->setQuery($query);
 
 			// Check for a database error.
-			if (!$this->_db->query()) {
+			if ($this->_db->query()) {
+            } else {
 				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				$this->setError($e);
 
@@ -1019,28 +994,14 @@ abstract class MolajoTable extends JObject
 			// Update the instance value.
 			$this->ordering = $row->ordering;
 		}
-		else {
-			// Update the ordering field for this instance.
-			$query = $this->_db->getQuery(true);
-			$query->update($this->_tbl);
-			$query->set('ordering = '.(int) $this->ordering);
-			$query->where($this->_tbl_key.' = '.$this->_db->quote($this->$k));
-			$this->_db->setQuery($query);
-
-			// Check for a database error.
-			if (!$this->_db->query()) {
-				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
-				$this->setError($e);
-
-				return false;
-			}
-		}
 
 		return true;
 	}
 
 	/**
-	 * Method to set the publishing state for a row or list of rows in the database
+	 * publish
+     *
+     * Method to set the publishing state for a row or list of rows in the database
 	 * table.  The method respects checked out rows by other users and will attempt
 	 * to checkin rows that it can after adjustments are made.
 	 *
@@ -1050,7 +1011,6 @@ abstract class MolajoTable extends JObject
 	 * @param   integer The user id of the user performing the operation.
 	 * @return  boolean  True on success.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/publish
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{
@@ -1085,8 +1045,8 @@ abstract class MolajoTable extends JObject
 		if (property_exists($this, 'checked_out') || property_exists($this, 'checked_out_time')) {
 			$query->where('(checked_out = 0 OR checked_out = '.(int) $userId.')');
 			$checkin = true;
-		}
-		else {
+
+		} else {
 			$checkin = false;
 		}
 
@@ -1096,10 +1056,10 @@ abstract class MolajoTable extends JObject
 		$this->_db->setQuery($query);
 
 		// Check for a database error.
-		if (!$this->_db->query()) {
+		if ($this->_db->query()) {
+        } else {
 			$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
 			$this->setError($e);
-
 			return false;
 		}
 
@@ -1122,7 +1082,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Generic check for whether dependancies exist for this object in the database schema
+	 * canDelete
+     *
+     * Generic check for whether dependancies exist for this object in the database schema
 	 *
 	 * Can be overloaded/supplemented by the child class
 	 *
@@ -1133,7 +1095,6 @@ abstract class MolajoTable extends JObject
 	 *					[label => 'Label', name => 'table name' , idfield => 'field', joinfield => 'field']
 	 * @return  boolean  True on success.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/canDelete
 	 */
 	public function canDelete($pk = null, $joins = null)
 	{
@@ -1157,8 +1118,7 @@ abstract class MolajoTable extends JObject
 			$query->group($this->_db->quoteName($this->_tbl_key));
 
 			// For each join add the select and join clauses to the query object.
-			foreach($joins as $table)
-			{
+			foreach($joins as $table) {
 				$query->select('COUNT(DISTINCT '.$table['idfield'].') AS '.$table['idfield']);
 				$query->join('LEFT', $table['name'].' ON '.$table['joinfield'].' = '.$k);
 			}
@@ -1179,7 +1139,7 @@ abstract class MolajoTable extends JObject
 
 			foreach ($joins as $table) {
 				$k = $table['idfield'].$i;
-
+/** no idea. https://github.com/joomla/joomla-platform/issues/284 */
 				if ($obj->$k) {
 					$msg[] = MolajoText::_($table['label']);
 				}
@@ -1201,13 +1161,14 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to export the MolajoTable instance properties to an XML string.
+	 * toXML
+     *
+     * Method to export the MolajoTable instance properties to an XML string.
 	 *
 	 * @deprecated
 	 * @param   boolean  True to map foreign keys to text values.
 	 * @return  string   XML string representation of the instance.
 	 * @since   1.0
-	 * @link	http://docs.molajo.org/MolajoTable/toXML
 	 */
 	public function toXML($mapKeysToText=false)
 	{
@@ -1261,7 +1222,9 @@ abstract class MolajoTable extends JObject
 	}
 
 	/**
-	 * Method to unlock the database table for writing.
+	 * _unlock
+     *
+     * Method to unlock the database table for writing.
 	 *
 	 * @return  boolean  True on success.
 	 * @since   1.0

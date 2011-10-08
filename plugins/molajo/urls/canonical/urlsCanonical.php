@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class URLSCanonical extends JPlugin
+class URLSCanonical extends MolajoPlugin
 {
 	
 	function onPrepareContent( &$article, &$params, $limitstart )

@@ -77,16 +77,38 @@ class MolajoView extends JView
     public $layout_path;
 
     /**
+     * @var object $layout_type
+     * @since 1.0
+     */
+    public $layout_type;
+
+    /**
      * @var object $layout
      * @since 1.0
      */
     public $layout;
-
     /**
      * @var object $wrap
      * @since 1.0
      */
     public $wrap;
+
+    /**
+     * renderModulePosition
+     *
+     * usage in layout:
+     *
+     * $this->renderModulePosition ('position-name', array('wrap' => 'none');
+     *
+     * @param $position
+     * @param array $options
+     * @return void
+     */
+    public function renderModulePosition ($position, $options=array('wrap' => 'none'))
+    {
+        $renderer	= $this->document->loadRenderer('modules');
+        echo $renderer->render($position, $options, null);
+    }
 
     /**
      * display
@@ -106,13 +128,13 @@ class MolajoView extends JView
         }
 
         /** Render Layout */
-        $this->findPath($this->layout, 'extensions');
+        $this->findPath($this->layout, $this->layout_type);
         if ($this->layout_path === false) {
             // load an error layout
             return;
         }
 
-        $renderedOutput = $this->renderLayout ($this->layout, 'extensions');
+        $renderedOutput = $this->renderLayout ($this->layout, $this->layout_type);
 
         /** Wrap Rendered Output */
         if ($this->wrap == 'horz') { $this->wrap = 'horizontal'; }
@@ -132,6 +154,8 @@ class MolajoView extends JView
         $tmpobj = new JObject();
         $tmpobj->set('title', $this->request['wrap_title']);
         $tmpobj->set('subtitle', $this->request['wrap_subtitle']);
+        $tmpobj->set('wrap_id', $this->request['wrap_id']);
+        $tmpobj->set('wrap_class', $this->request['wrap_class']);
         $tmpobj->set('published_date', $this->request['wrap_date']);
         $tmpobj->set('author', $this->request['wrap_author']);
         $tmpobj->set('position', $this->request['position']);
@@ -205,8 +229,8 @@ class MolajoView extends JView
             $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
         } else if ($layout_type == 'forms') {
             $corePath = MOLAJO_LAYOUTS_FORMS;
-        } else if ($layout_type == 'head') {
-            $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
+        } else if ($layout_type == 'document') {
+            $corePath = MOLAJO_LAYOUTS_DOCUMENT;
         } else if ($layout_type == 'wraps') {
             $corePath = MOLAJO_LAYOUTS_WRAPS;
         } else {
@@ -444,26 +468,27 @@ class MolajoView extends JView
         }
 
         /** Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js] */
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
-//            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-//        }
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
-//            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-//        }
+        if (isset($this->params->load_asset_css)
+            && $this->params->get('load_asset_css', true) === true) {
+            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
+        }
+        if (isset($this->params->load_asset_js)
+            && $this->params->get('load_asset_js', true) === true) {
+            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
+        }
 
         /** Layout specific CSS and JS in => layouts/[layout_type]/[asset_id]/css[js]/XYZ.css[js] */
 
         $filePath = $this->layout_path;
-        $urlPath = JURI::root().'layouts/'.$layout_type.'s'.'/'.$layout;
 
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
+        $urlPath = JURI::root().'layouts/'.$layout_type.'/'.$layout;
+ 
+//        if (isset($this->params->load_layout_css)
+//            && $this->params->get('load_layout_css', true) === true) {
             $this->loadMediaCSS ($filePath, $urlPath);
 //        }
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
+//        if (isset($this->params->load_layout_js)
+//            && $this->params->get('load_layout_js', true) === true) {
 //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
             $this->loadMediaJS ($filePath, $urlPath);
 //        }

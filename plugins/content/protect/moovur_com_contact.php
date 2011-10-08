@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
  * @package		Moovur Plugins 
  * @subpackage	com_user
  */
-class plgMoovurMoovur_Com_Contact extends JPlugin
+class plgMoovurMoovur_Com_Contact extends MolajoPlugin
 {
 	/*
 	 * Constructor

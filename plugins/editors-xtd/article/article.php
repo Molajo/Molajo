@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	Editors-xtd.article
  * @since 1.5
  */
-class plgButtonArticle extends JPlugin
+class plgButtonArticle extends MolajoPlugin
 {
 	/**
 	 * Constructor

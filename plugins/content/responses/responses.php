@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 
-class plgMolajoResponses extends JPlugin	{
+class plgMolajoResponses extends MolajoPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object

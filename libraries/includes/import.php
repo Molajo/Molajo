@@ -44,8 +44,6 @@ if (class_exists('JLoader')) {
 } else {
     require_once JPATH_PLATFORM.'/loader.php';
 }
-
-/** factory */
 require_once LIBRARIES.'/molajo/application/factory.php';
 require_once LIBRARIES.'/overrides/factory.php';
 
@@ -102,8 +100,9 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/methods.php', 'JText');
 JLoader::register('MolajoRegistryFormat', MOLAJO_LIBRARY.'/utilities/format.php');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/registry.php', 'MolajoRegistry');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/registry/registry.php', 'JRegistry');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/authentication.php', 'MolajoAuthenticationResponse');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/authentication.php', 'MolajoAuthentication');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/authentication.php', 'JAuthenticationResponse');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/user/authentication.php', 'JAuthentication');
 
 /**
  *  Installation Check
@@ -214,10 +213,15 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/event.php', 'JEvent');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/event/dispatcher.php', 'JDispatcher');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilterInput');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filteroutput.php', 'JFilterOutput');
+
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/utility.php', 'JUtility');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/simplecrypt.php', 'JSimplecrypt');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/string.php', 'JString');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/arrayhelper.php', 'JArrayHelper');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/xmlelement.php', 'JXMLElement');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/simplexml.php', 'JSimpleXML');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/buffer.php', 'JBuffer');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/date.php', 'JDate');
 
 /** Filesystem */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/file.php', 'JFile');
@@ -236,6 +240,16 @@ foreach ($files as $file) {
 $files = JFolder::files(JOOMLA_LIBRARY.'/base', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
+}
+
+/** client */
+$files = JFolder::files(JOOMLA_LIBRARY.'/client', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'helper.php') {
+        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'JClientHelper');
+    } else {
+        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 /** Database and Table */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database.php', 'JDatabase');
@@ -283,10 +297,11 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database/sqlsrv.php', 'J
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/response.php', 'JResponse');
 
 /** Utilities */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/mail/helper.php', 'JMailHelper');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/mail.php', 'MolajoMailHelper');
 $filehelper->requireClassFile(JPATH_PLATFORM.'/phpmailer/phpmailer.php', 'PHPMailer');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/mail.php', 'MolajoMail');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/mail/mail.php', 'JMail');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/mail/helper.php', 'JMailHelper');
 
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/utilities/date.php', 'MolajoDate');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/utilities/date.php', 'JDate');
@@ -327,22 +342,22 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/access/access.php', 'JAccess')
  *  Installer still using JFramework for MVC/JForm/JHTML
  */
 
-//if (MOLAJO_APPLICATION == 'installation') {
+if (MOLAJO_APPLICATION == 'installation') {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/html.php', 'JHtml');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/formfield.php', 'JFormField');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/formrule.php', 'JFormRule');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/helper.php', 'JFormHelper');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/form.php', 'JForm');
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/fields/list.php', 'JFormFieldList');
-//    $files = JFolder::files(MOLAJO_PATH_BASE.'/models/fields/', '\.php$', false, false);
-//    foreach ($files as $file) {
-//        $filehelper->requireClassFile(MOLAJO_PATH_BASE.'/models/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
-//    }
+    $files = JFolder::files(MOLAJO_PATH_BASE.'/models/fields/', '\.php$', false, false);
+    foreach ($files as $file) {
+        $filehelper->requireClassFile(MOLAJO_PATH_BASE.'/models/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
     $files = JFolder::files(JOOMLA_LIBRARY.'/form/fields/', '\.php$', false, false);
     foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/form/fields/'.$file, 'JFormField'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
-//} else {
+} else {
     $filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/formfield.php', 'MolajoFormField');
     $filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/formrule.php', 'MolajoFormRule');
     $filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/helper.php', 'MolajoFormHelper');
@@ -352,10 +367,11 @@ $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/access/access.php', 'JAccess')
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/formrule.php', 'MolajoFormRule');
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/helper.php', 'MolajoFormHelper');
     $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/form.php', 'MolajoForm');
-//}
+}
 
 /** Plugins */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/plugin/plugin.php', 'JPlugin');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/plugin.php', 'MolajoPlugin');
+$filehelper->requireClassFile(OVERRIDES_LIBRARY.'/plugin/plugin.php', 'JPlugin');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/plugin.php', 'MolajoPluginHelper');
 $filehelper->requireClassFile(OVERRIDES_LIBRARY.'/plugin/helper.php', 'JPluginHelper');
 
@@ -405,6 +421,7 @@ $files = JFolder::files(MOLAJO_LIBRARY_MODELS, '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_LIBRARY_MODELS.'/'.$file, 'MolajoModel'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
+
 /** Model-Elements */
 $files = JFolder::files(MOLAJO_LIBRARY_MODELS.'/elements', '\.php$', false, false);
 foreach ($files as $file) {

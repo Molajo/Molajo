@@ -310,7 +310,6 @@ abstract class MolajoFactory
 
 			case 'simple':
 				// JError::raiseWarning('SOME_ERROR_CODE', 'JSimpleXML is deprecated. Use self::getXML instead');
-				jimport('joomla.utilities.simplexml');
 				$doc = new JSimpleXML();
 				break;
 
@@ -337,8 +336,6 @@ abstract class MolajoFactory
 	 */
 	public static function getXML($data, $isFile = true)
 	{
-		jimport('joomla.utilities.xmlelement');
-
 		// Disable libxml errors and allow to fetch error information as needed
 		libxml_use_internal_errors(true);
 
@@ -506,7 +503,6 @@ abstract class MolajoFactory
 	 */
 	protected static function _createSession($options = array())
 	{
-		jimport('joomla.session.session');
 		// Get the editor configuration setting
 		$conf		= self::getConfig();
 		$handler	= $conf->get('session_handler', 'none');
@@ -666,8 +662,6 @@ abstract class MolajoFactory
 	 */
 	public static function getStream($use_prefix=true, $use_network=true,$ua=null, $uamask=false)
 	{
-		jimport('joomla.filesystem.stream');
-
 		// Setup the context; Molajo UA and overwrite
 		$context = array();
 		$version = new MolajoVersion;
@@ -676,7 +670,6 @@ abstract class MolajoFactory
 		$context['ftp']['overwrite'] = true;
 
 		if ($use_prefix) {
-			jimport('joomla.client.helper');
 			$FTPOptions = JClientHelper::getCredentials('ftp');
 			$SCPOptions = JClientHelper::getCredentials('scp');
 

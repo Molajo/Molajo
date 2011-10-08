@@ -9,14 +9,14 @@ defined('MOLAJO') or die;
 
 
 
-class plgMolajoProtect extends JPlugin	{
+class plgMolajoProtect extends MolajoPlugin	{
 
     function onAfterInitialise () {
 
         /**
          * 	Get Tamka Plugin Information
          */
-        $plugin 	=& JPluginHelper::getPlugin( 'molajo', 'backup');
+        $plugin 	=& MolajoPluginHelper::getPlugin( 'molajo', 'backup');
         $pluginParams = new JParameter($plugin->params);
 
         /**
@@ -133,7 +133,7 @@ class plgMolajoProtect extends JPlugin	{
 
         $backupFilename = JPATH_ROOT.'/plugins/system/backup/'.$backupfilenameNoSuffix . '.sql';
         if (!JFile::write($backupFilename, $databaseBackup)) {
-                $response->type = JAUTHENTICATE_STATUS_FAILURE;
+                $response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
                 $response->error_message = "Could not create the file " . $file . " Please check permissions.";
                 return false;
         }

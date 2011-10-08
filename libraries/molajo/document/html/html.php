@@ -15,7 +15,6 @@ defined('MOLAJO') or die;
  * @subpackage  Document
  * @since       11.1
  */
-
 class MolajoDocumentHTML extends MolajoDocument
 {
 	/**
@@ -259,10 +258,10 @@ class MolajoDocumentHTML extends MolajoDocument
 					$options['modulemode'] = 1;
 
 					$this->setBuffer($renderer->render($name, $attribs, $result), $type, $name);
+
 					$data = parent::$_buffer[$type][$name];
 
 					$tmpdata = JCache::setWorkarounds($data, $options);
-
 
 					$cbuffer[$hash] = $tmpdata;
 
@@ -315,12 +314,11 @@ class MolajoDocumentHTML extends MolajoDocument
 	{
 		$this->_caching = $caching;
 
-			if (!empty($this->_template)) {
-				$data = $this->_renderTemplate();
-			} else {
-				$this->parse($params);
-				$data = $this->_renderTemplate();
-			}
+        if (empty($this->_template)) {
+            $this->parse($params);
+        }
+
+        $data = $this->_renderTemplate();
 
 		parent::render();
 		return $data;
@@ -491,7 +489,9 @@ class MolajoDocumentHTML extends MolajoDocument
 	}
 
 	/**
-	 * Render pre-parsed template
+	 * _renderTemplate
+     *
+     * Render pre-parsed template
 	 *
 	 * @return string rendered template
 	 */

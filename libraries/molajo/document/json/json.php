@@ -26,7 +26,7 @@ class MolajoDocumentJSON extends MolajoDocument
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $_name = 'joomla';
+	protected $_name = 'molajo';
 
 	/**
 	 * Class constructor
@@ -88,7 +88,7 @@ class MolajoDocumentJSON extends MolajoDocument
 	 *
 	 * @since  1.0
 	 */
-	public function setName($name = 'joomla') {
+	public function setName($name = 'molajo') {
 		$this->_name = $name;
 	}
 }

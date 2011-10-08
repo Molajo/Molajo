@@ -18,4 +18,4 @@ jimport('joomla.database.tablenested');
  * @subpackage  Table
  * @since       11.1
  */
-class JTableMenu extends MolajoTableMenu {}
+class JTableMenu extends MolajoTableMenuitem {}

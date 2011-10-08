@@ -1,22 +1,27 @@
+WORKING WITH MOLAJO LAYOUTS
+
 This readme contains the following information:
 
     I. INTRODUCTION
     II. WHAT IS A MOLAJO LAYOUT?
     III. WHERE ARE LAYOUTS LOCATED?
-    IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING:
-    V. HOW DO I OVERRIDE A CORE LAYOUT?
-    VI. WORKING WITH APPLICATION, COMPONENT, ASSET, AND LAYOUT MEDIA
-    V. WORKING WITH QUERY RESULTS IN LAYOUTS
-    VI. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
-    VII. WORKING WITH DATES
-    VIII. INTEGRATING OTHER OUTPUT
-    IX. TEMPLATE SYSTEMS
+    IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING?
+    V. HOW DO I CREATE, INSTALL, AND SHARE LAYOUTS?
+    VI. HOW DO I OVERRIDE A LAYOUT?
+    VII. WORKING WITH CSS AND JS FOR THE APPLICATION, COMPONENT, ASSET, AND/OR LAYOUT
+    VIII. USING QUERY RESULTS IN LAYOUTS
+    IX. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
+    X. WORKING WITH DATES
+    XI. INTEGRATING OTHER EXTENSION OUTPUT WITHIN A LAYOUT
+    XII. WORKING WITH IMAGES
+    XIII. USING OTHER TEMPLATE SYSTEMS
 
 Please check the README file on the root for the location of other README files.
 
 
 
-I. INTRODUCTION
+
+SECTION I. INTRODUCTION
 
 1. What is a Layout?
 
@@ -53,8 +58,6 @@ The View processes each rowset, one at a time, in a loop, passing the data into 
 
 A row is set of columns with specific data about a single item contained within the $this->row array. To view all columns at one time, use this command:
 
-<? var_dump($this->row); ?>
-
 7. What is a column?
 
 A column is a single piece of information about an item. Display the data for a column, as follows:
@@ -63,7 +66,7 @@ A column is a single piece of information about an item. Display the data for a 
 
 
 
-II. WHAT IS A MOLAJO LAYOUT?
+SECTION II. WHAT IS A MOLAJO LAYOUT?
 
 1. What is a Molajo Layout?
 
@@ -98,7 +101,10 @@ layout-type
 ... ... ... bottom.php
 ... ... layout-name.xml
 
-III. WHERE ARE LAYOUTS LOCATED?
+
+
+
+SECTION III. WHERE ARE LAYOUTS LOCATED?
 
 The Core Molajo Layouts are located within the layouts/layout-type/layout-name folder
 
@@ -106,41 +112,55 @@ Valid Layout types include extensions, formfields, head, and wraps.
 
 For example, the list layout will be found in layouts/extensions/list.
 
-IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING:
 
 
-V. HOW DO I OVERRIDE A CORE LAYOUT?
 
-Molajo searches for layout in this order, using the first found:
 
-a) template/html/component-name/view-name/layout-name
+SECTION IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING?
 
-b) template/layouts/layout-type/layout-name
 
-c) component/view/tmpl/layout-name
 
-d) layouts/layout-type/layout-name
 
-To override a core Layout, place the layout in A, B, or C above.
 
-5. How can I create a Layout?
+
+SECTION V. HOW DO I CREATE, INSTALL, AND SHARE LAYOUTS?
+
+1. How can I install a Molajo Layout?
+
+To install a Molajo Layout someone shared with you, use the Molajo Administrator-Extension Manager-Install option.
+
+2. How can I share my Layout with other Molajo users?
+
+Zip up your GPL, free of charge Layout and post it XYZ
+
 
 To create a Layout, navigate to the Molajo Administrator Extension Manager.
 
 Use the 'Create' Submenu Item.
 
-6. How can I install a Molajo Layout?
-
-To install a Molajo Layout someone shared with you, use the Molajo Administrator-Extension Manager
-
-7. How can I share my Layout with other Molajo users?
-
-Zip up your GPL, free of charge Layout and post it XYZ
 
 
 
 
-VI. WORKING WITH APPLICATION, COMPONENT, ASSET, AND LAYOUT MEDIA
+SECTION VI. HOW DO I OVERRIDE A LAYOUT?
+
+1. What sequence does Molajo use to search for Layouts?
+
+Molajo searches for Layouts in this order, using the first found:
+
+a) template/html/component-name/view-name/layout-name
+b) template/layouts/layout-type/layout-name
+c) component/view/tmpl/layout-name
+d) layouts/layout-type/layout-name
+
+2. How do I override a core Layout?
+
+To override a core Layout, place the layout in a, b, or c, above.
+
+
+
+
+SECTION VII. WORKING WITH CSS AND JS FOR THE APPLICATION, COMPONENT, ASSET, AND/OR LAYOUT
 
 1. How do I add CSS for a Layout?
 
@@ -177,7 +197,8 @@ Asset ID specific CSS and JS in
 
 
 
-V. WORKING WITH QUERY RESULTS IN LAYOUTS
+
+SECTION VIII. USING QUERY RESULTS IN LAYOUTS
 
 1. How are the layout files processed by Molajo?
 
@@ -213,61 +234,64 @@ C. After all rows have been processed, and if there is a footer.php file:
     * afterDisplayContent output is rendered;
 
 
-VI. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
+
+
+SECTION IX. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
 
 1. What data is available within the Layout file?
 
 A. $this->app
 
-<?php var_dump($this->app); ?>
+<? echo '<pre>';var_dump($this->app);echo '</pre>';  ?>
 
 B. $this->document
 
-<?php var_dump($this->document); ?>
+<? echo '<pre>';var_dump($this->document);echo '</pre>';  ?>
 
 C. $this->user
 
-<?php var_dump($this->user); ?>
+<? echo '<pre>';var_dump($this->user);echo '</pre>';  ?>
 
 D. $this->request
 
-<?php var_dump($this->request); ?>
+<? echo '<pre>';var_dump($this->request);echo '</pre>';  ?>
 
 E. $this->state
 
-<?php var_dump($this->state); ?>
+<? echo '<pre>';var_dump($this->state);echo '</pre>';  ?>
 
 F. $this->params
 
-<?php var_dump($this->params); ?>
+<? echo '<pre>';var_dump($this->params);echo '</pre>';  ?>
 
 G. $this->rowset
 
-<?php var_dump($this->app); ?>
+<? echo '<pre>';var_dump($this->rowset);echo '</pre>';  ?>
 
 H. $this->row
 
-<?php var_dump($this->app); ?>
+<? echo '<pre>';var_dump($this->row);echo '</pre>';  ?>
 
 I. $this->pagination
 
-<?php var_dump($this->app); ?>
+<? echo '<pre>';var_dump($this->pagination);echo '</pre>';  ?>
 
 J. $this->layout_path
 
-<?php var_dump($this->app); ?>
+<?php echo $this->layout_path; ?>
 
 K. $this->layout
 
-<?php var_dump($this->app); ?>
+<? echo $this->layout;  ?>
 
 L. $this->$wrap;
 
-<?php var_dump($this->app); ?>
+<? echo $this-wrap;  ?>
 
 
 
-VII. WORKING WITH DATES
+
+SECTION X. WORKING WITH DATES
 
 1. What options are available for formatting dates in layouts?
 
@@ -300,16 +324,53 @@ Date formats can be changed by overriding the language file.
 
 
 
-VIII. INTEGRATING OTHER OUTPUT
+
+SECTION XI. INTEGRATING OTHER EXTENSION OUTPUT WITHIN A LAYOUT
 
 1. How can I render the output for another Component View within the Layout file?
 
+$this->renderComponent ('component-name', 'view-name', 'layout-name', array('parameter1' => 'value', 'parameter2' => 'value'));
+
 2. How can I render Module output within the Layout File?
 
+$this->renderModule ('module-name', array('parameter1' => 'value', 'parameter2' => 'value');
+
+3. How can I render a Module Position within the Layout File?
+
+$this->renderModulePosition ('position-name', array('wrap' => 'name-of-wrap');
 
 
 
-IX. TEMPLATE SYSTEMS
+
+
+SECTION XII. WORKING WITH IMAGES
+
+1. System Configuration
+
+Locations:
+
+
+Sizes:
+
+ * 0 - original size
+ * 1 - xsmall; configuration option, defaults to 50 x 50
+ * 2 - small; configuration option, defaults to 75 x 75
+ * 3 - medium; configuration option, defaults to 150 x 150
+ * 4 - large; configuration option, defaults to 300 x 300
+ * 5 - xlarge; configuration option, defaults to 500 x 500
+
+Types:
+
+2. How can I resize an image within a layout?
+
+Add this to your layout or within your content.
+
+{image name="dog.png" size=1 type=2}
+
+
+
+
+SECTION XIII. USING OTHER TEMPLATE SYSTEMS
 
 1. What does Molajo use as a default layout environment?
 
@@ -322,3 +383,4 @@ Babs?
 3. How can I add <insert name of your favorite Template System here> to render Molajo Output?
 
 Simply load the files needed within your component entry point file and then use them in your Layout.
+

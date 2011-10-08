@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 jimport( 'joomla.plugin.plugin' );
 jimport('joomla.filesystem.file');
 
-class CompressJS extends JPlugin	{
+class CompressJS extends MolajoPlugin	{
 	
 	function onAfterRender()	{		
 
@@ -28,7 +28,7 @@ class CompressJS extends JPlugin	{
 		$store_path = JPATH_ROOT . '/tmp/_js';
 		
 		if (!JFolder :: exists($store_path) && !JFolder :: create($store_path)) {
-			$response->type = JAUTHENTICATE_STATUS_FAILURE;
+			$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 			$response->error_message = "Could not create the folder " . $store_path . " Please check permissions.";
 			return false;
 		}		
@@ -36,14 +36,14 @@ class CompressJS extends JPlugin	{
 	/**
 	 * 	Delete all files older than number of minutes specified -- (3600*24) is one day
 	 */
-		$plugin =& JPluginHelper::getPlugin('system', 'tamka_compress_js');
+		$plugin =& MolajoPluginHelper::getPlugin('system', 'tamka_compress_js');
 		$pluginParams = new JParameter( $plugin->params );
 		
 		$jsFiles = JFolder::files( $store_path, '(css|js)$', false, false );
 		for($i = 0; $i < count($jsFiles); $i++) {
 			if (filemtime($store_path.DS.$jsFiles[$i]) < (time() - ($pluginParams->def('minutes', 60) * 60))) {
 				if (!JFile::delete($store_path.DS.$jsFiles[$i])) {
-					$response->type = JAUTHENTICATE_STATUS_FAILURE;
+					$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 					$response->error_message = "Could not delete the file " . $store_path.DS.$jsFiles[$i] . " Please check permissions.";
 					return;
 				}				
@@ -118,7 +118,7 @@ class CompressJS extends JPlugin	{
 		/*	Use existing file if it exists			*/
 		if (!JFile::exists($compressedJSFile))	{		
 			if (!JFile::write($compressedJSFile, $jsMergedFileContents . $lnEnd . $newInlineScript)) {
-				$response->type = JAUTHENTICATE_STATUS_FAILURE;
+				$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 				$response->error_message = "Could not create the file " . $compressedJSFile . " Please check permissions.";
 				return false;	
 			}
