@@ -10,13 +10,11 @@ defined('MOLAJO') or die;
 ?>
 <div id="step">
 	<div class="far-right">
-<?php if ($this->document->direction == 'ltr') : ?>
-		<div class="button1-left"><div class="site"><a href="<?php echo JURI::root(); ?>" title="<?php echo JText::_('JSITE'); ?>"><?php echo JText::_('JSITE'); ?></a></div></div>
-		<div class="button1-left"><div class="admin"><a href="<?php echo JURI::root(); ?>administrator/" title="<?php echo JText::_('JADMINISTRATOR'); ?>"><?php echo JText::_('JADMINISTRATOR'); ?></a></div></div>
-<?php elseif ($this->document->direction == 'rtl') : ?>
-		<div class="button1-left"><div class="admin"><a href="<?php echo JURI::root(); ?>administrator/" title="<?php echo JText::_('JADMINISTRATOR'); ?>"><?php echo JText::_('JADMINISTRATOR'); ?></a></div></div>
-		<div class="button1-left"><div class="site"><a href="<?php echo JURI::root(); ?>" title="<?php echo JText::_('JSITE'); ?>"><?php echo JText::_('JSITE'); ?></a></div></div>
-<?php endif; ?>
+
+		<a class="button white" href="<?php echo JURI::root(); ?>" title="<?php echo JText::_('JSITE'); ?>"><?php echo JText::_('JSITE'); ?></a>
+		<a class="button white" href="<?php echo JURI::root(); ?>administrator/" title="<?php echo JText::_('JADMINISTRATOR'); ?>"><?php echo JText::_('JADMINISTRATOR'); ?></a>
+
+
 	</div>
 	<span class="steptitle"><?php echo JText::_('INSTL_COMPLETE'); ?></span>
 </div>
@@ -33,74 +31,52 @@ defined('MOLAJO') or die;
 			<div class="install-body">
 				<div class="m">
 					<fieldset>
-						<table class="final-table">
-							<tr>
-								<td class="error">
+						
+								<p class="error">
 									<?php echo JText::_('INSTL_COMPLETE_REMOVE_INSTALLATION'); ?>
-								</td>
-							</tr>
-							<tr>
-								<td><input class="button" type="button" name="instDefault"
+								</p>
+							
+							<input class="button white" type="button" name="instDefault"
                                            value="<?php echo JText::_('INSTL_COMPLETE_REMOVE_FOLDER'); ?>"
                                            onclick="Install.removeFolder(this);"/>
-                                </td>
-							</tr>
-							<tr class="message inlineError" id="theDefaultError" style="display: none">
-								<td>
+                              <br />
+                              
+							<p class="message inlineError" id="theDefaultError" style="display: none">
+								
 									<dl>
 										<dt class="error"><?php echo JText::_('JERROR'); ?></dt>
 										<dd id="theDefaultErrorMessage"></dd>
 									</dl>
-								</td>
-							<tr>
-							<tr>
-								<td>
+								
+							<p>
+							
 									<h3>
 									<?php echo JText::_('INSTL_COMPLETE_ADMINISTRATION_LOGIN_DETAILS'); ?>
 									</h3>
-								</td>
-							</tr>
-							<tr>
-								<td class="notice">
-									<?php echo JText::_('JUSERNAME'); ?> :
-                                    <?php var_dump($this->config); ?>
-                                        <strong><?php echo $this->options['admin_user']; ?></strong>
-								</td>
-							</tr>
-							<tr>
-								<td>&#160;</td>
-							</tr>
-							<tr>
-								<td class="notice">
-									<div id="cpanel">
-										<div>
-											<div class="icon">
-												<p>
-													<a href="http://molajo.org/" target="_blank">
-													<b><?php echo JText::_('INSTL_COMPLETE'); ?></b>
-													</a>
-												</p>
-											</div>
-										</div>
+								
+							<dl>
+								<dt class="notice">
+									<?php echo JText::_('JUSERNAME'); ?> : </dt>
+                                   
+                                   <dd>     <strong><?php echo $this->options['admin_user']; ?></strong>
+								</dd>
+							
+							<dl>
+								
+								<p class="notice">
+									
 									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>&#160;</td>
-							</tr>
+								</p>
+							
 							<?php if ($this->config) : ?>
-							<tr>
-								<td class="small">
-									<?php echo JText::_('INSTL_CONFPROBLEM'); ?>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<textarea rows="5" cols="49" name="configcode" onclick="this.form.configcode.focus();this.form.configcode.select();" ><?php echo $this->config; ?></textarea>
-								</td>
-							</tr>
+							<p>
+								<?php echo JText::_('INSTL_CONFPROBLEM'); ?>
+							</p>
+							
+						<textarea rows="5" cols="49" name="configcode" onclick="this.form.configcode.focus();this.form.configcode.select();" ><?php echo $this->config; ?></textarea>
+								
 							<?php endif; ?>
-						</table>
+						
 					</fieldset>
 				</div>
 			</div>

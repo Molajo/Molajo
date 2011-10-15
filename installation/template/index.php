@@ -43,17 +43,16 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
  		</script>
 	</head>
 	<body>
+    <div id="wrap">
 		<div id="header">
-			<span class="logo"><a href="http://molajo.org" target="_blank"><img src="template/images/logo.png" alt="Molajo" /></a></span>
-			<span>Molajo <?php echo MOLAJOVERSION; ?> <?php echo JText::_('INSTL_INSTALLATION') ?></span>
+        	<h1>Molajo Installer</h1>
+			
+	<h2><?php echo JText::_('INSTL_INSTALLATION') ?><?php echo MOLAJOVERSION; ?> </h2>
 		</div>
 		<jdoc:include type="message" />
 		<div id="content-box">
 			<div id="content-pad">
-				<div id="stepbar">
-					<?php echo JHtml::_('installation.stepbar'); ?>
-					<div class="box"></div>
-				</div>
+				
 				<div id="warning">
 					<noscript>
 						<div id="javascript-warning">
@@ -61,17 +60,17 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 						</div>
 					</noscript>
 				</div>
-				<div id="right">
+				
 					<div id="rightpad">
 						<jdoc:include type="installation" />
 					</div>
-				</div>
+			
 				<div class="clr"></div>
 			</div>
 		</div>
-		<div id="copyright">
-			<?php $molajo= '<a href="http://molajo.org">Molajo&#174;</a>';
-			echo JText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
+		<div id="footer">
+			<?php echo JText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
 		</div>
+        </div>
 	</body>
 </html>

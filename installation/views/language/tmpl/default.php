@@ -10,11 +10,7 @@ defined('MOLAJO') or die;
 ?>
 <div id="step">
 	<div class="far-right">
-	<?php if ($this->document->direction == 'ltr') : ?>
-		<div class="button1-left"><div class="next"><a href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a></div></div>
-	<?php elseif ($this->document->direction == 'rtl') : ?>
-		<div class="button1-right"><div class="prev"><a href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a></div></div>
-	<?php endif; ?>
+		<a href="index.php?view=preinstall" class="button white" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a>
 	</div>
 	<span class="steptitle"><?php echo JText::_('INSTL_LANGUAGE_TITLE'); ?></span>
 </div>
@@ -28,6 +24,7 @@ defined('MOLAJO') or die;
 			<div class="install-body">
 				<div class="m">
 					<fieldset>
+                
 						<?php echo $this->form->getInput('language'); ?>
 					</fieldset>
 				</div>

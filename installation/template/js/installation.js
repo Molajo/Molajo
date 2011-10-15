@@ -23,7 +23,6 @@ Install.submitform = function() {
 		method: 'post',
 		url: url,
 		onRequest: function() {
-			Install.spinner.show(true);
 			Install.busy = true;
 			Joomla.removeMessages();
 		},
@@ -39,7 +38,6 @@ Install.submitform = function() {
 			}
 		},
 		onFailure: function(xhr) {
-			Install.spinner.hide(true);
 			Install.busy = false;
 			var r = JSON.decode(xhr.responseText);
 			if (r) {
@@ -60,7 +58,6 @@ Install.goToPage = function(page) {
 		url: url,
 		onSuccess: function (r) {
 			document.id('rightpad').empty().adopt(r);
-			Install.spinner.hide(true);
 			Install.busy = false;
 
 			//Re-attach the validator
@@ -96,7 +93,6 @@ Install.addToggler = function () {
 
 window.addEvent('domready', function() {
 	Install.addToggler;
-	Install.spinner = new Spinner('rightpad');
 });
 
 /**

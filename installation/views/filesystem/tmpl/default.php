@@ -10,13 +10,10 @@ defined('MOLAJO') or die;
 ?>
 <div id="step">
 	<div class="far-right">
-<?php if ($this->document->direction == 'ltr') : ?>
-		<div class="button1-right"><div class="prev"><a href="index.php?view=database" onclick="return Install.goToPage('database');" rel="prev" title="<?php echo JText::_('JPrevious'); ?>"><?php echo JText::_('JPrevious'); ?></a></div></div>
-		<div class="button1-left"><div class="next"><a href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a></div></div>
-<?php elseif ($this->document->direction == 'rtl') : ?>
-		<div class="button1-right"><div class="prev"><a href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a></div></div>
-		<div class="button1-left"><div class="next"><a href="index.php?view=database" onclick="return Install.goToPage('database');" rel="prev" title="<?php echo JText::_('JPrevious'); ?>"><?php echo JText::_('JPrevious'); ?></a></div></div>
-<?php endif; ?>
+
+		<a class="button white" href="index.php?view=database" onclick="return Install.goToPage('database');" rel="prev" title="<?php echo JText::_('JPrevious'); ?>"><?php echo JText::_('JPrevious'); ?></a>
+		<a class="button white" href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a>
+        
 	</div>
 	<span class="steptitle"><?php echo JText::_('INSTL_FTP'); ?></span>
 </div>
@@ -36,53 +33,35 @@ defined('MOLAJO') or die;
 						<?php echo JText::_('INSTL_BASIC_SETTINGS'); ?>
 					</h3>
 					<div class="section-smenu">
-						<table class="content2">
-							<tr>
-								<td>
-									<?php echo $this->form->getLabel('ftp_enable'); ?>
-								</td>
-								<td>
+						
+							<label>	<?php echo $this->form->getLabel('ftp_enable'); ?> </label>
 									<?php echo $this->form->getInput('ftp_enable'); ?>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<?php echo $this->form->getLabel('ftp_user'); ?>
-								</td>
-								<td>
+						<br />
+							<label>	<?php echo $this->form->getLabel('ftp_user'); ?> </label>
 									<?php echo $this->form->getInput('ftp_user'); ?>
-								</td>
-								<td>
-									<em>
+								
+								<span> <em>
 									<?php echo JText::_('INSTL_FTP_USER_DESC'); ?>
-									</em>
-								</td>	
-							</tr>
-							<tr>
-								<td>
-									<?php echo $this->form->getLabel('ftp_pass'); ?>
-								</td>
-								<td>
+								</em> </span>	
+						<br />
+							<label>	<?php echo $this->form->getLabel('ftp_pass'); ?> </label>
 									<?php echo $this->form->getInput('ftp_pass'); ?>
-								</td>
-								<td>
-									<em>
+								
+									<span> <em>
 									<?php echo JText::_('INSTL_FTP_PASSWORD_DESC'); ?>
-									</em>
-								</td>
-							</tr>
-							<tr id="rootPath">
-								<td>
-									<?php echo $this->form->getLabel('ftp_root'); ?>
-								</td>
-								<td>
-									<?php echo $this->form->getInput('ftp_root'); ?>
-								</td>
-							</tr>
-						</table>
+									</em> </span>
+						<br />
+							
+							<div id="rootPath">
+								<label>	<?php echo $this->form->getLabel('ftp_root'); ?> </label>
+									
+										<?php echo $this->form->getInput('ftp_root'); ?>
+						<br />
+							</div>
+						
 
-						<input type="button" id="findbutton" class="button" value="<?php echo JText::_('INSTL_AUTOFIND_FTP_PATH'); ?>" onclick="Install.detectFtpRoot(this);" />
-						<input type="button" id="verifybutton" class="button" value="<?php echo JText::_('INSTL_VERIFY_FTP_SETTINGS'); ?>" onclick="Install.verifyFtpSettings(this);" />
+						<input type="button" id="findbutton" class="button white" value="<?php echo JText::_('INSTL_AUTOFIND_FTP_PATH'); ?>" onclick="Install.detectFtpRoot(this);" />
+						<input type="button" id="verifybutton" class="button white" value="<?php echo JText::_('INSTL_VERIFY_FTP_SETTINGS'); ?>" onclick="Install.verifyFtpSettings(this);" />
 						<br /><br />
 					</div>
 
@@ -90,32 +69,25 @@ defined('MOLAJO') or die;
 						<a href="#"><?php echo JText::_('INSTL_ADVANCED_SETTINGS'); ?></a>
 					</h3>
 					<div class="section-smenu moofx-slider">
-						<table class="content2">
-							<tr id="host">
-								<td>
-									<?php echo $this->form->getLabel('ftp_host'); ?>
-								</td>
-								<td>
+						
+							<div id="host">
+								<label>	<?php echo $this->form->getLabel('ftp_host'); ?> </label>
+																	
 									<?php echo $this->form->getInput('ftp_host'); ?>
-								</td>
-							</tr>
-							<tr id="port">
-								<td>
-									<?php echo $this->form->getLabel('ftp_port'); ?>
-								</td>
-								<td>
+							<br />
+                            </div>
+							<div id="port">
+								<label>	<?php echo $this->form->getLabel('ftp_port'); ?> </label>
+								
 									<?php echo $this->form->getInput('ftp_port'); ?>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<?php echo $this->form->getLabel('ftp_save'); ?>
-								</td>
-								<td>
+							<br />
+							</div>
+							<label>	<?php echo $this->form->getLabel('ftp_save'); ?> </label>
+																	
 									<?php echo $this->form->getInput('ftp_save'); ?>
-								</td>
-							</tr>
-						</table>
+							<br />
+							
+					
 					</div>
 				</div>
 			</div>
