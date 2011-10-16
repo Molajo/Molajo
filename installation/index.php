@@ -46,7 +46,7 @@ if (MOLAJO_APPLICATION == 'site') {
 }
 
 /** Libraries */
-define('LIBRARIES', MOLAJO_PATH_ROOT.'/libraries/');
+define('LIBRARIES', MOLAJO_PATH_ROOT.'/libraries');
 
 /** index.php - shared between Applications */
 include_once LIBRARIES.'/index.php';
