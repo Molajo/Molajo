@@ -36,6 +36,7 @@ require_once LIBRARIES.'/overrides/factory.php';
  */
 JLoader::import('joomla.error.error');
 JLoader::import('joomla.error.exception');
+JLoader::import('joomla.error.profiler');
 
 if (isset($_SERVER['HTTP_HOST'])) {
 	JLoader::import('joomla.environment.request');

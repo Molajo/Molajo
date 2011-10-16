@@ -80,13 +80,13 @@ class MolajoInstallationModelSetup extends JModel
 		}
 
 		// Get the form.
-		JForm::addFormPath(MOLAJO_PATH_BASE.'/models/forms');
-		JForm::addFieldPath(MOLAJO_PATH_BASE.'/models/fields');
-		JForm::addRulePath(MOLAJO_PATH_BASE.'/models/rules');
+		MolajoForm::addFormPath(MOLAJO_PATH_BASE.'/models/forms');
+		MolajoForm::addFieldPath(MOLAJO_PATH_BASE.'/models/fields');
+		MolajoForm::addRulePath(MOLAJO_PATH_BASE.'/models/rules');
 
 		try
 		{
-			$form = JForm::getInstance('jform', $view, array('control' => 'jform'));
+			$form = MolajoForm::getInstance('jform', $view, array('control' => 'jform'));
 		}
 		catch (Exception $e)
 		{
