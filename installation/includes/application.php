@@ -79,7 +79,7 @@ class MolajoInstallation extends MolajoApplication
             if (!empty($forced['language'])) {
                 $options['language'] = $forced['language'];
             } else {
-                $options['language'] = JLanguageHelper::detectLanguage();
+                $options['language'] = MolajoLanguageHelper::detectLanguage();
                 if (empty($options['language'])) {
                     $options['language'] = 'en-GB';
                 }
