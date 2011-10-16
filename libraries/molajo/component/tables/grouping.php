@@ -57,7 +57,7 @@ class MolajoTableGrouping extends MolajoTable
 	{
 		// Validate the title.
 		if ((trim($this->title)) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_GROUPING'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_GROUPING'));
 			return false;
 		}
 

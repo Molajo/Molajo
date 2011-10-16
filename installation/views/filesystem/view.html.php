@@ -35,7 +35,7 @@ class MolajoInstallationViewFilesystem extends JView
 		$this->assignRef('state', $state);
 		$this->assignRef('form', $form);
 
-		JText::script('INSTL_FTP_SETTINGS_CORRECT');
+		MolajoText::script('INSTL_FTP_SETTINGS_CORRECT');
 		parent::display($tpl);
 	}
 }

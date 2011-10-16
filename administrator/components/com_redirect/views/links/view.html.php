@@ -56,7 +56,7 @@ class RedirectViewLinks extends JView
 		$state	= $this->get('State');
 		$canDo	= RedirectHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_REDIRECT_MANAGER_LINKS'), 'redirect');
+		MolajoToolbarHelper::title(MolajoText::_('COM_REDIRECT_MANAGER_LINKS'), 'redirect');
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('link.add');
 		}

@@ -17,11 +17,11 @@ $script .= "\t\t\t".'return;'."\n";
 $script .= "\t\t".'}'."\n";
 $script .= "\t\t".'// do field validation'."\n";
 $script .= "\t\t".'if (form.jform_subject.value == ""){'."\n";
-$script .= "\t\t\t".'alert("'.JText::_('COM_USERS_MAIL_PLEASE_FILL_IN_THE_SUBJECT', true).'");'."\n";
+$script .= "\t\t\t".'alert("'.MolajoText::_('COM_USERS_MAIL_PLEASE_FILL_IN_THE_SUBJECT', true).'");'."\n";
 $script .= "\t\t".'} else if (getSelectedValue(\'adminForm\',\'jform[group]\') < 0){'."\n";
-$script .= "\t\t\t".'alert("'.JText::_('COM_USERS_MAIL_PLEASE_SELECT_A_GROUP', true).'");'."\n";
+$script .= "\t\t\t".'alert("'.MolajoText::_('COM_USERS_MAIL_PLEASE_SELECT_A_GROUP', true).'");'."\n";
 $script .= "\t\t".'} else if (form.jform_message.value == ""){'."\n";
-$script .= "\t\t\t".'alert("'.JText::_('COM_USERS_MAIL_PLEASE_FILL_IN_THE_MESSAGE', true).'");'."\n";
+$script .= "\t\t\t".'alert("'.MolajoText::_('COM_USERS_MAIL_PLEASE_FILL_IN_THE_MESSAGE', true).'");'."\n";
 $script .= "\t\t".'} else {'."\n";
 $script .= "\t\t\t".'Joomla.submitform(pressbutton);'."\n";
 $script .= "\t\t".'}'."\n";
@@ -37,7 +37,7 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 
 	<div class="width-30 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_USERS_MAIL_DETAILS'); ?></legend>
+			<legend><?php echo MolajoText::_('COM_USERS_MAIL_DETAILS'); ?></legend>
 			<ul class="adminformlist">
 			<li><?php echo $this->form->getLabel('recurse'); ?>
 			<?php echo $this->form->getInput('recurse'); ?></li>
@@ -59,7 +59,7 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 
 	<div class="width-70 fltrt">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_USERS_MAIL_MESSAGE'); ?></legend>
+			<legend><?php echo MolajoText::_('COM_USERS_MAIL_MESSAGE'); ?></legend>
 			<ul class="adminformlist">
 			<li><?php echo $this->form->getLabel('subject'); ?>
 			<?php echo $this->form->getInput('subject'); ?></li>

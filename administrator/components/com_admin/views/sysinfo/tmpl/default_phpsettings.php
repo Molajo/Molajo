@@ -11,15 +11,15 @@
 defined('_JEXEC') or die;
 ?>
 <fieldset class="adminform">
-	<legend><?php echo JText::_('COM_ADMIN_RELEVANT_PHP_SETTINGS'); ?></legend>
+	<legend><?php echo MolajoText::_('COM_ADMIN_RELEVANT_PHP_SETTINGS'); ?></legend>
 	<table class="adminlist">
 		<thead>
 			<tr>
 				<th width="250">
-					<?php echo JText::_('COM_ADMIN_SETTING'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_SETTING'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('COM_ADMIN_VALUE'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_VALUE'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -32,7 +32,7 @@ defined('_JEXEC') or die;
 		<tbody>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_SAFE_MODE'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_SAFE_MODE'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['safe_mode']); ?>
@@ -40,7 +40,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_OPEN_BASEDIR'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_OPEN_BASEDIR'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.string',$this->php_settings['open_basedir']); ?>
@@ -48,7 +48,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_DISPLAY_ERRORS'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_DISPLAY_ERRORS'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['display_errors']); ?>
@@ -56,7 +56,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_SHORT_OPEN_TAGS'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_SHORT_OPEN_TAGS'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['short_open_tag']); ?>
@@ -64,7 +64,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_FILE_UPLOADS'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_FILE_UPLOADS'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['file_uploads']); ?>
@@ -72,7 +72,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_MAGIC_QUOTES'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_MAGIC_QUOTES'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['magic_quotes_gpc']); ?>
@@ -80,7 +80,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_REGISTER_GLOBALS'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_REGISTER_GLOBALS'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['register_globals']); ?>
@@ -88,7 +88,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_OUTPUT_BUFFERING'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_OUTPUT_BUFFERING'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.boolean',$this->php_settings['output_buffering']); ?>
@@ -96,7 +96,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_SESSION_SAVE_PATH'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_SESSION_SAVE_PATH'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.string',$this->php_settings['session.save_path']); ?>
@@ -104,7 +104,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_SESSION_AUTO_START'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_SESSION_AUTO_START'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.integer',$this->php_settings['session.auto_start']); ?>
@@ -112,7 +112,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_XML_ENABLED'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_XML_ENABLED'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.set',$this->php_settings['xml']); ?>
@@ -120,7 +120,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_ZLIB_ENABLED'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_ZLIB_ENABLED'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.set',$this->php_settings['zlib']); ?>
@@ -128,7 +128,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_DISABLED_FUNCTIONS'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_DISABLED_FUNCTIONS'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.string',$this->php_settings['disable_functions']); ?>
@@ -136,7 +136,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_MBSTRING_ENABLED'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_MBSTRING_ENABLED'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.set',$this->php_settings['mbstring']); ?>
@@ -144,7 +144,7 @@ defined('_JEXEC') or die;
 			</tr>
 			<tr>
 				<td>
-					<?php echo JText::_('COM_ADMIN_ICONV_AVAILABLE'); ?>
+					<?php echo MolajoText::_('COM_ADMIN_ICONV_AVAILABLE'); ?>
 				</td>
 				<td>
 					<?php echo JHtml::_('phpsetting.set',$this->php_settings['iconv']); ?>

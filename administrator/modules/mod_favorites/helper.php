@@ -73,73 +73,73 @@ abstract class modQuickIconHelper
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_content&task=article.add'),
 					'image' => 'header/icon-48-article-add.png',
-					'text' => JText::_('MOD_QUICKICON_ADD_NEW_ARTICLE'),
+					'text' => MolajoText::_('MOD_QUICKICON_ADD_NEW_ARTICLE'),
 					'access' => array('core.manage', 'com_content', 'core.create', 'com_content', )
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_content'),
 					'image' => 'header/icon-48-article.png',
-					'text' => JText::_('MOD_QUICKICON_ARTICLE_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_ARTICLE_MANAGER'),
 					'access' => array('core.manage', 'com_content')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_categories&extension=com_content'),
 					'image' => 'header/icon-48-category.png',
-					'text' => JText::_('MOD_QUICKICON_CATEGORY_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_CATEGORY_MANAGER'),
 					'access' => array('core.manage', 'com_content')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_media'),
 					'image' => 'header/icon-48-media.png',
-					'text' => JText::_('MOD_QUICKICON_MEDIA_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_MEDIA_MANAGER'),
 					'access' => array('core.manage', 'com_media')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_menus'),
 					'image' => 'header/icon-48-menumgr.png',
-					'text' => JText::_('MOD_QUICKICON_MENU_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_MENU_MANAGER'),
 					'access' => array('core.manage', 'com_menus')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_users'),
 					'image' => 'header/icon-48-user.png',
-					'text' => JText::_('MOD_QUICKICON_USER_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_USER_MANAGER'),
 					'access' => array('core.manage', 'com_users')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_modules'),
 					'image' => 'header/icon-48-module.png',
-					'text' => JText::_('MOD_QUICKICON_MODULE_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_MODULE_MANAGER'),
 					'access' => array('core.manage', 'com_modules')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_installer'),
 					'image' => 'header/icon-48-extension.png',
-					'text' => JText::_('MOD_QUICKICON_EXTENSION_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_EXTENSION_MANAGER'),
 					'access' => array('core.manage', 'com_installer')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_languages'),
 					'image' => 'header/icon-48-language.png',
-					'text' => JText::_('MOD_QUICKICON_LANGUAGE_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_LANGUAGE_MANAGER'),
 					'access' => array('core.manage', 'com_languages')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_config'),
 					'image' => 'header/icon-48-config.png',
-					'text' => JText::_('MOD_QUICKICON_GLOBAL_CONFIGURATION'),
+					'text' => MolajoText::_('MOD_QUICKICON_GLOBAL_CONFIGURATION'),
 					'access' => array('core.manage', 'com_config', 'core.admin', 'com_config')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_templates'),
 					'image' => 'header/icon-48-themes.png',
-					'text' => JText::_('MOD_QUICKICON_TEMPLATE_MANAGER'),
+					'text' => MolajoText::_('MOD_QUICKICON_TEMPLATE_MANAGER'),
 					'access' => array('core.manage', 'com_templates')
 				),
 				array(
 					'link' => MolajoRoute::_('index.php?option=com_admin&task=profile.edit&id='.MolajoFactory::getUser()->id),
 					'image' => 'header/icon-48-user-profile.png',
-					'text' => JText::_('MOD_QUICKICON_PROFILE'),
+					'text' => MolajoText::_('MOD_QUICKICON_PROFILE'),
 					'access' => true
 				),
 			);

@@ -9,6 +9,6 @@ defined('MOLAJO') or die;
 ?>
 <span class="<?php echo $this->rowset[0]->inboxClass; ?>">
     <?php echo $this->rowset[0]->link; ?>
-        <?php echo JText::sprintf('LAYOUT_EXTENION_INBOX_UNREAD_MESSAGES', $this->rowset[0]->unread);?>
+        <?php echo MolajoText::sprintf('LAYOUT_EXTENION_INBOX_UNREAD_MESSAGES', $this->rowset[0]->unread);?>
     <?php echo $this->rowset[0]->linkend; ?>
 </span>

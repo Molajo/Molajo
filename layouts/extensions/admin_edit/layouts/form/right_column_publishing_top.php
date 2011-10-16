@@ -8,5 +8,5 @@
  */
 defined('MOLAJO') or die;
 
-echo JHtml::_('sliders.panel',JText::_('MOLAJO_FIELDSET_PUBLISHING'), 'publishing-details'); ?>
+echo JHtml::_('sliders.panel',MolajoText::_('MOLAJO_FIELDSET_PUBLISHING'), 'publishing-details'); ?>
 <fieldset class="panelform">

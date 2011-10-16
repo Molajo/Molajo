@@ -28,7 +28,7 @@ class CpanelViewCpanel extends JView
 	public function display($tpl = null)
 	{
 		// Set toolbar items for the page
-		MolajoToolbarHelper::title(JText::_('COM_CPANEL'), 'cpanel.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_CPANEL'), 'cpanel.png');
 		MolajoToolbarHelper::help('screen.cpanel');
 
 		/*

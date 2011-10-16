@@ -36,7 +36,7 @@ class MolajoHelp
 		$app	= MolajoFactory::getApplication();
 
 		if (is_null($component)) {
-			$component = MolajoApplicationHelper::getComponentName();
+			$component = MolajoComponentHelper::getComponentName();
 		}
 
 

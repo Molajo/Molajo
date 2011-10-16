@@ -44,15 +44,15 @@ abstract class JHtmlRules
 
 		$html[] = '<div class="acl-options">';
 		$html[] = 		JHtml::_('tabs.start','acl-rules-'.$assetId, array('useCookie'=>1));
-		$html[] = 		JHtml::_('tabs.panel',JText::_('JLIB_HTML_ACCESS_SUMMARY'), 'summary');
-		$html[] = '			<p>'.JText::_('JLIB_HTML_ACCESS_SUMMARY_DESC').'</p>';
-		$html[] = '			<table class="aclsummary-table" summary="'.JText::_('JLIB_HTML_ACCESS_SUMMARY_DESC').'">';
-		$html[] = '			<caption>'.JText::_('JLIB_HTML_ACCESS_SUMMARY_DESC_CAPTION').'</caption>';
+		$html[] = 		JHtml::_('tabs.panel',MolajoText::_('JLIB_HTML_ACCESS_SUMMARY'), 'summary');
+		$html[] = '			<p>'.MolajoText::_('JLIB_HTML_ACCESS_SUMMARY_DESC').'</p>';
+		$html[] = '			<table class="aclsummary-table" summary="'.MolajoText::_('JLIB_HTML_ACCESS_SUMMARY_DESC').'">';
+		$html[] = '			<caption>'.MolajoText::_('JLIB_HTML_ACCESS_SUMMARY_DESC_CAPTION').'</caption>';
 		$html[] = '			<tr>';
-		$html[] = '				<th class="col1 hidelabeltxt">'.JText::_('JLIB_RULES_GROUPS').'</th>';
+		$html[] = '				<th class="col1 hidelabeltxt">'.MolajoText::_('JLIB_RULES_GROUPS').'</th>';
 		foreach ($actions as $i => $action)
 		{
-			$html[] = '				<th class="col'.($i+2).'">'.JText::_($action->title).'</th>';
+			$html[] = '				<th class="col'.($i+2).'">'.MolajoText::_($action->title).'</th>';
 		}
 		$html[] = '			</tr>';
 
@@ -77,17 +77,17 @@ abstract class JHtmlRules
 
 		foreach ($actions as $action)
 		{
-			$actionTitle = JText::_($action->title);
-			$actionDesc	= JText::_($action->description);
+			$actionTitle = MolajoText::_($action->title);
+			$actionDesc	= MolajoText::_($action->description);
 			$html[] = 		JHtml::_('tabs.panel',$actionTitle, $action->name);
 			$html[] = '			<p>'.$actionDesc.'</p>';
 			$html[] = '			<table class="aclmodify-table" summary="'.strip_tags($actionDesc).'">';
-			$html[] = '			<caption>'.JText::_('JLIB_HTML_ACCESS_MODIFY_DESC_CAPTION_ACL').' '.$actionTitle.' '.JText::_('JLIB_HTML_ACCESS_MODIFY_DESC_CAPTION_TABLE').'</caption>';
+			$html[] = '			<caption>'.MolajoText::_('JLIB_HTML_ACCESS_MODIFY_DESC_CAPTION_ACL').' '.$actionTitle.' '.MolajoText::_('JLIB_HTML_ACCESS_MODIFY_DESC_CAPTION_TABLE').'</caption>';
 			$html[] = '			<tr>';
-			$html[] = '				<th class="col1 hidelabeltxt">'.JText::_('JLIB_RULES_GROUP').'</th>';
-			$html[] = '				<th class="col2">'.JText::_('JLIB_RULES_INHERIT').'</th>';
-			$html[] = '				<th class="col3 hidelabeltxt">'.JText::_('JMODIFY').'</th>';
-			$html[] = '				<th class="col4">'.JText::_('JCURRENT').'</th>';
+			$html[] = '				<th class="col1 hidelabeltxt">'.MolajoText::_('JLIB_RULES_GROUP').'</th>';
+			$html[] = '				<th class="col2">'.MolajoText::_('JLIB_RULES_INHERIT').'</th>';
+			$html[] = '				<th class="col3 hidelabeltxt">'.MolajoText::_('JMODIFY').'</th>';
+			$html[] = '				<th class="col4">'.MolajoText::_('JCURRENT').'</th>';
 			$html[] = '			</tr>';
 
 			foreach ($groups as $i => $group)
@@ -98,10 +98,10 @@ abstract class JHtmlRules
 				$html[] = '				<td class="col1">'.$group->title.'</td>';
 				$html[] = '				<td class="col2">'.($inheriting->allow($action->name, $group->identities) ? $images['allow-i'] : $images['deny-i']).'</td>';
 				$html[] = '				<td class="col3">';
-				$html[] = '					<select id="'.$idPrefix.'_'.$action->name.'_'.$group->id.'" class="inputbox" size="1" name="'.$control.'['.$action->name.']['.$group->id.']" title="'.JText::sprintf('JLIB_RULES_SELECT_ALLOW_DENY_GROUP', $actionTitle, $group->title).'">';
-				$html[] = '						<option value=""'.($selected === null ? ' selected="selected"' : '').'>'.JText::_('JLIB_RULES_INHERIT').'</option>';
-				$html[] = '						<option value="1"'.($selected === true ? ' selected="selected"' : '').'>'.JText::_('JLIB_RULES_ALLOWED').'</option>';
-				$html[] = '						<option value="0"'.($selected === false ? ' selected="selected"' : '').'>'.JText::_('JLIB_RULES_DENIED').'</option>';
+				$html[] = '					<select id="'.$idPrefix.'_'.$action->name.'_'.$group->id.'" class="inputbox" size="1" name="'.$control.'['.$action->name.']['.$group->id.']" title="'.MolajoText::sprintf('JLIB_RULES_SELECT_ALLOW_DENY_GROUP', $actionTitle, $group->title).'">';
+				$html[] = '						<option value=""'.($selected === null ? ' selected="selected"' : '').'>'.MolajoText::_('JLIB_RULES_INHERIT').'</option>';
+				$html[] = '						<option value="1"'.($selected === true ? ' selected="selected"' : '').'>'.MolajoText::_('JLIB_RULES_ALLOWED').'</option>';
+				$html[] = '						<option value="0"'.($selected === false ? ' selected="selected"' : '').'>'.MolajoText::_('JLIB_RULES_DENIED').'</option>';
 				$html[] = '					</select>';
 				$html[] = '				</td>';
 				$html[] = '				<td class="col4">'.($assetId ? ($inherited->allow($action->name, $group->identities) ? $images['allow'] : $images['deny']) : ($inheriting->allow($action->name, $group->identities) ? $images['allow'] : $images['deny'])).'</td>';
@@ -116,8 +116,8 @@ abstract class JHtmlRules
 		// Build the footer with legend and special purpose buttons.
 		$html[] = '	<div class="clr"></div>';
 		$html[] = '	<ul class="acllegend fltlft">';
-		$html[] = '		<li class="acl-allowed">'.JText::_('JLIB_RULES_ALLOWED').'</li>';
-		$html[] = '		<li class="acl-denied">'.JText::_('JLIB_RULES_DENIED').'</li>';
+		$html[] = '		<li class="acl-allowed">'.MolajoText::_('JLIB_RULES_ALLOWED').'</li>';
+		$html[] = '		<li class="acl-denied">'.MolajoText::_('JLIB_RULES_DENIED').'</li>';
 		$html[] = '	</ul>';
 		$html[] = '</div>';
 
@@ -159,12 +159,12 @@ abstract class JHtmlRules
 	protected static function _getImagesArray()
 	{
 		$base = JURI::root(true);
-		$images['allow-l'] = '<label class="icon-16-allow" title="'.JText::_('JLIB_RULES_ALLOWED').'">'.JText::_('JLIB_RULES_ALLOWED').'</label>';
-		$images['deny-l'] = '<label class="icon-16-deny" title="'.JText::_('JLIB_RULES_DENIED').'">'.JText::_('JLIB_RULES_DENIED').'</label>';
-		$images['allow'] = '<a class="icon-16-allow" title="'.JText::_('JLIB_RULES_ALLOWED').'"> </a>';
-		$images['deny'] = '<a class="icon-16-deny" title="'.JText::_('JLIB_RULES_DENIED').'"> </a>';
-		$images['allow-i'] = '<a class="icon-16-allowinactive" title="'.JText::_('JRULE_ALLOWED_INHERITED').'"> </a>';
-		$images['deny-i'] = '<a class="icon-16-denyinactive" title="'.JText::_('JRULE_DENIED_INHERITED').'"> </a>';
+		$images['allow-l'] = '<label class="icon-16-allow" title="'.MolajoText::_('JLIB_RULES_ALLOWED').'">'.MolajoText::_('JLIB_RULES_ALLOWED').'</label>';
+		$images['deny-l'] = '<label class="icon-16-deny" title="'.MolajoText::_('JLIB_RULES_DENIED').'">'.MolajoText::_('JLIB_RULES_DENIED').'</label>';
+		$images['allow'] = '<a class="icon-16-allow" title="'.MolajoText::_('JLIB_RULES_ALLOWED').'"> </a>';
+		$images['deny'] = '<a class="icon-16-deny" title="'.MolajoText::_('JLIB_RULES_DENIED').'"> </a>';
+		$images['allow-i'] = '<a class="icon-16-allowinactive" title="'.MolajoText::_('JRULE_ALLOWED_INHERITED').'"> </a>';
+		$images['deny-i'] = '<a class="icon-16-denyinactive" title="'.MolajoText::_('JRULE_DENIED_INHERITED').'"> </a>';
 
 		return $images;
 	}

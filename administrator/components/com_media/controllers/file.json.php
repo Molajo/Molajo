@@ -31,7 +31,7 @@ class MediaControllerFile extends JController
 		if (!JRequest::checkToken('request')) {
 			$response = array(
 				'status' => '0',
-				'error' => JText::_('JINVALID_TOKEN')
+				'error' => MolajoText::_('JINVALID_TOKEN')
 			);
 			echo json_encode($response);
 			return;
@@ -64,7 +64,7 @@ class MediaControllerFile extends JController
 				$log->addEntry(array('comment' => 'Invalid: '.$filepath.': '.$err));
 				$response = array(
 					'status' => '0',
-					'error' => JText::_($err)
+					'error' => MolajoText::_($err)
 				);
 				echo json_encode($response);
 				return;
@@ -81,7 +81,7 @@ class MediaControllerFile extends JController
 				$log->addEntry(array('comment' => 'Errors before save: '.$filepath.' : '.implode(', ', $object_file->getErrors())));
 				$response = array(
 					'status' => '0',
-					'error' => JText::plural('COM_MEDIA_ERROR_BEFORE_SAVE', count($errors = $object_file->getErrors()), implode('<br />', $errors))
+					'error' => MolajoText::plural('COM_MEDIA_ERROR_BEFORE_SAVE', count($errors = $object_file->getErrors()), implode('<br />', $errors))
 				);
 				echo json_encode($response);
 				return;
@@ -93,7 +93,7 @@ class MediaControllerFile extends JController
 				$log->addEntry(array('comment' => 'File exists: '.$filepath.' by user_id '.$user->id));
 				$response = array(
 					'status' => '0',
-					'error' => JText::_('COM_MEDIA_ERROR_FILE_EXISTS')
+					'error' => MolajoText::_('COM_MEDIA_ERROR_FILE_EXISTS')
 				);
 				echo json_encode($response);
 				return;
@@ -104,7 +104,7 @@ class MediaControllerFile extends JController
 				$log->addEntry(array('comment' => 'Create not permitted: '.$filepath.' by user_id '.$user->id));
 				$response = array(
 					'status' => '0',
-					'error' => JText::_('COM_MEDIA_ERROR_CREATE_NOT_PERMITTED')
+					'error' => MolajoText::_('COM_MEDIA_ERROR_CREATE_NOT_PERMITTED')
 				);
 				echo json_encode($response);
 				return;
@@ -117,7 +117,7 @@ class MediaControllerFile extends JController
 				$log->addEntry(array('comment' => 'Error on upload: '.$filepath));
 				$response = array(
 					'status' => '0',
-					'error' => JText::_('COM_MEDIA_ERROR_UNABLE_TO_UPLOAD_FILE')
+					'error' => MolajoText::_('COM_MEDIA_ERROR_UNABLE_TO_UPLOAD_FILE')
 				);
 				echo json_encode($response);
 				return;
@@ -129,7 +129,7 @@ class MediaControllerFile extends JController
 				$log->addEntry(array('comment' => $folder));
 				$response = array(
 					'status' => '1',
-					'error' => JText::sprintf('COM_MEDIA_UPLOAD_COMPLETE', substr($file['filepath'], strlen(COM_MEDIA_BASE)))
+					'error' => MolajoText::sprintf('COM_MEDIA_UPLOAD_COMPLETE', substr($file['filepath'], strlen(COM_MEDIA_BASE)))
 				);
 				echo json_encode($response);
 				return;
@@ -139,7 +139,7 @@ class MediaControllerFile extends JController
 		{
 			$response = array(
 				'status' => '0',
-				'error' => JText::_('COM_MEDIA_ERROR_BAD_REQUEST')
+				'error' => MolajoText::_('COM_MEDIA_ERROR_BAD_REQUEST')
 			);
 
 			echo json_encode($response);

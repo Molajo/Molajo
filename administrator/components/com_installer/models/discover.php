@@ -116,7 +116,7 @@ class InstallerModelDiscover extends InstallerModel
 				$result = $installer->discover_install($id);
 				if (!$result) {
 					$failed = true;
-					$app->enqueueMessage(JText::_('COM_INSTALLER_MSG_DISCOVER_INSTALLFAILED').': '. $id);
+					$app->enqueueMessage(MolajoText::_('COM_INSTALLER_MSG_DISCOVER_INSTALLFAILED').': '. $id);
 				}
 			}
 			$this->setState('action', 'remove');
@@ -124,10 +124,10 @@ class InstallerModelDiscover extends InstallerModel
 			$app->setUserState('com_installer.message', $installer->message);
 			$app->setUserState('com_installer.extension_message', $installer->get('extension_message'));
 			if (!$failed) {
-				$app->enqueueMessage(JText::_('COM_INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
+				$app->enqueueMessage(MolajoText::_('COM_INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
 			}
 		} else {
-			$app->enqueueMessage(JText::_('COM_INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
+			$app->enqueueMessage(MolajoText::_('COM_INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
 		}
 	}
 
@@ -145,10 +145,10 @@ class InstallerModelDiscover extends InstallerModel
 		$query->where('state = -1');
 		$db->setQuery((string)$query);
 		if ($db->Query()) {
-			$this->_message = JText::_('COM_INSTALLER_MSG_DISCOVER_PURGEDDISCOVEREDEXTENSIONS');
+			$this->_message = MolajoText::_('COM_INSTALLER_MSG_DISCOVER_PURGEDDISCOVEREDEXTENSIONS');
 			return true;
 		} else {
-			$this->_message = JText::_('COM_INSTALLER_MSG_DISCOVER_FAILEDTOPURGEEXTENSIONS');
+			$this->_message = MolajoText::_('COM_INSTALLER_MSG_DISCOVER_FAILEDTOPURGEEXTENSIONS');
 			return false;
 		}
 	}

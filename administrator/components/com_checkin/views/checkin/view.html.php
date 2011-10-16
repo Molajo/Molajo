@@ -47,7 +47,7 @@ class CheckinViewCheckin extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::_('COM_CHECKIN_GLOBAL_CHECK_IN'), 'checkin.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_CHECKIN_GLOBAL_CHECK_IN'), 'checkin.png');
 		if (MolajoFactory::getUser()->authorise('core.admin', 'com_checkin')) {
 			MolajoToolbarHelper::custom('checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 			MolajoToolbarHelper::divider();

@@ -57,9 +57,9 @@ abstract class ModulesHelper
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option',	'1',	JText::_('JPUBLISHED'));
-		$options[]	= JHtml::_('select.option',	'0',	JText::_('JUNPUBLISHED'));
-		$options[]	= JHtml::_('select.option',	'-2',	JText::_('JTRASHED'));
+		$options[]	= JHtml::_('select.option',	'1',	MolajoText::_('JPUBLISHED'));
+		$options[]	= JHtml::_('select.option',	'0',	MolajoText::_('JUNPUBLISHED'));
+		$options[]	= JHtml::_('select.option',	'-2',	MolajoText::_('JTRASHED'));
 		return $options;
 	}
 
@@ -72,8 +72,8 @@ abstract class ModulesHelper
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', JText::_('JSITE'));
-		$options[]	= JHtml::_('select.option', '1', JText::_('JADMINISTRATOR'));
+		$options[]	= JHtml::_('select.option', '0', MolajoText::_('JSITE'));
+		$options[]	= JHtml::_('select.option', '1', MolajoText::_('JADMINISTRATOR'));
 		return $options;
 	}
 
@@ -162,7 +162,7 @@ abstract class ModulesHelper
 			||	$lang->load("$extension.sys", $source, null, false, false)
 			||	$lang->load("$extension.sys", $path, $lang->getDefault(), false, false)
 			||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
-			$modules[$i]->text = JText::_($module->text);
+			$modules[$i]->text = MolajoText::_($module->text);
 		}
 		JArrayHelper::sortObjects($modules, 'text', 1, true, $lang->getLocale());
 		return $modules;

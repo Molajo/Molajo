@@ -21,9 +21,9 @@ defined('MOLAJO') or die; ?>
 
 <ul class="subheading">
     <dd class="published">
-        <?php echo JText::_('MOLAJO_PUBLISHED_DATE').' '.$this->row->created_ccyymmdd; ?>
+        <?php echo MolajoText::_('MOLAJO_PUBLISHED_DATE').' '.$this->row->created_ccyymmdd; ?>
     </dd>
     <dd class="author">
-        <?php echo JText::_('MOLAJO_WRITTEN_BY').' '.$this->row->display_author_name; ?>
+        <?php echo MolajoText::_('MOLAJO_WRITTEN_BY').' '.$this->row->display_author_name; ?>
     </dd>
 </ul>

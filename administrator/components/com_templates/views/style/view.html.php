@@ -56,8 +56,8 @@ class TemplatesViewStyle extends JView
 		$canDo		= TemplatesHelper::getActions();
 
 		MolajoToolbarHelper::title(
-			$isNew ? JText::_('COM_TEMPLATES_MANAGER_ADD_STYLE')
-			: JText::_('COM_TEMPLATES_MANAGER_EDIT_STYLE'), 'thememanager'
+			$isNew ? MolajoText::_('COM_TEMPLATES_MANAGER_ADD_STYLE')
+			: MolajoText::_('COM_TEMPLATES_MANAGER_EDIT_STYLE'), 'thememanager'
 		);
 
 		// If not checked out, can save the item.
@@ -84,7 +84,7 @@ class TemplatesViewStyle extends JView
 		$help = $this->get('Help');
 		if ($lang->hasKey($help->url)) {
 			$debug = $lang->setDebug(false);
-			$url = JText::_($help->url);
+			$url = MolajoText::_($help->url);
 			$lang->setDebug($debug);
 		}
 		else {

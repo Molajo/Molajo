@@ -22,7 +22,7 @@ if ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu')) {
 $hideLinks	= JRequest::getBool('hidemainmenu');
 
 $output = array();
-$output[] = '<span class="logout">' .($hideLinks ? '' : '<a href="'.$logoutLink.'">').JText::_('JLOGOUT').($hideLinks ? '' : '</a>').'</span>';
+$output[] = '<span class="logout">' .($hideLinks ? '' : '<a href="'.$logoutLink.'">').MolajoText::_('JLOGOUT').($hideLinks ? '' : '</a>').'</span>';
 
 /** rtl support */
 if ($document->direction == "rtl") :

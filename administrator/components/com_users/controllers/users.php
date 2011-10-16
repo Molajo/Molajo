@@ -66,7 +66,7 @@ class UsersControllerUsers extends JControllerAdmin
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, JText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
+			JError::raiseWarning(500, MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -76,9 +76,9 @@ class UsersControllerUsers extends JControllerAdmin
 				JError::raiseWarning(500, $model->getError());
 			} else {
 				if ($value == 1){
-					$this->setMessage(JText::plural('COM_USERS_N_USERS_BLOCKED', count($ids)));
+					$this->setMessage(MolajoText::plural('COM_USERS_N_USERS_BLOCKED', count($ids)));
 				} else if ($value == 0){
-					$this->setMessage(JText::plural('COM_USERS_N_USERS_UNBLOCKED', count($ids)));
+					$this->setMessage(MolajoText::plural('COM_USERS_N_USERS_UNBLOCKED', count($ids)));
 				}
 			}
 		}
@@ -100,7 +100,7 @@ class UsersControllerUsers extends JControllerAdmin
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, JText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
+			JError::raiseWarning(500, MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -109,7 +109,7 @@ class UsersControllerUsers extends JControllerAdmin
 			if (!$model->activate($ids)) {
 				JError::raiseWarning(500, $model->getError());
 			} else {
-				$this->setMessage(JText::plural('COM_USERS_N_USERS_ACTIVATED', count($ids)));
+				$this->setMessage(MolajoText::plural('COM_USERS_N_USERS_ACTIVATED', count($ids)));
 			}
 		}
 
@@ -145,12 +145,12 @@ class UsersControllerUsers extends JControllerAdmin
 		// Attempt to run the batch operation.
 		if (!$model->batch($vars, $cid)) {
 			// Batch operation failed, go back to the users list and display a notice.
-			$message = JText::sprintf('COM_USERS_USER_BATCH_FAILED', $model->getError());
+			$message = MolajoText::sprintf('COM_USERS_USER_BATCH_FAILED', $model->getError());
 			$this->setRedirect('index.php?option=com_users&view=users', $message, 'error');
 			return false;
 		}
 
-		$message = JText::_('COM_USERS_USER_BATCH_SUCCESS');
+		$message = MolajoText::_('COM_USERS_USER_BATCH_SUCCESS');
 		$this->setRedirect('index.php?option=com_users&view=users', $message);
 		return true;
 	}

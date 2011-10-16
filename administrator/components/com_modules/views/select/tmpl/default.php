@@ -15,7 +15,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 ?>
 
-<h2 class="modal-title"><?php echo JText::_('COM_MODULES_TYPE_CHOOSE')?></h2>
+<h2 class="modal-title"><?php echo MolajoText::_('COM_MODULES_TYPE_CHOOSE')?></h2>
 
 <ul id="new-modules-list">
 <?php foreach ($this->items as &$item) : ?>

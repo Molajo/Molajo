@@ -58,7 +58,7 @@ class TemplatesViewSource extends JView
 		$user		= MolajoFactory::getUser();
 		$canDo		= TemplatesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER_EDIT_FILE'), 'thememanager');
+		MolajoToolbarHelper::title(MolajoText::_('COM_TEMPLATES_MANAGER_EDIT_FILE'), 'thememanager');
 
 		// Can save the item.
 		if ($canDo->get('core.edit')) {

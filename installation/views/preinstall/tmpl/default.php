@@ -11,21 +11,21 @@ defined('MOLAJO') or die;
 <div id="step">
 	<div class="far-right">
 
-		<a class="button white" href="index.php?view=preinstall" onclick="return Install.goToPage('preinstall');" title="<?php echo JText::_('JCheck_Again'); ?>"><?php echo JText::_('JCheck_Again'); ?></a>
-		<a class="button white" href="index.php?view=language" onclick="return Install.goToPage('language');" rel="prev" title="<?php echo JText::_('JPrevious'); ?>"><?php echo JText::_('JPrevious'); ?></a>
+		<a class="button white" href="index.php?view=preinstall" onclick="return Install.goToPage('preinstall');" title="<?php echo MolajoText::_('JCheck_Again'); ?>"><?php echo MolajoText::_('JCheck_Again'); ?></a>
+		<a class="button white" href="index.php?view=language" onclick="return Install.goToPage('language');" rel="prev" title="<?php echo MolajoText::_('JPrevious'); ?>"><?php echo MolajoText::_('JPrevious'); ?></a>
 	<?php if ($this->sufficient) : ?>
-	<a class="button white" href="index.php?view=database" onclick="return Install.goToPage('database');" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a>
+	<a class="button white" href="index.php?view=database" onclick="return Install.goToPage('database');" rel="next" title="<?php echo MolajoText::_('JNext'); ?>"><?php echo MolajoText::_('JNext'); ?></a>
 	<?php endif; ?>
 
 	</div>
-	<span class="steptitle"><?php echo JText::_('INSTL_PRECHECK_TITLE'); ?></span>
+	<span class="steptitle"><?php echo MolajoText::_('INSTL_PRECHECK_TITLE'); ?></span>
 </div>
 <form action="index.php" method="post" id="adminForm" class="form-validate">
 	<div id="installer">
 		<div class="m">
-			<h2><?php echo JText::sprintf('INSTL_PRECHECK_FOR_VERSION', $this->version->getLongVersion()); ?></h2>
+			<h2><?php echo MolajoText::sprintf('INSTL_PRECHECK_FOR_VERSION', $this->version->getLongVersion()); ?></h2>
 			<div class="install-text">
-				<?php echo JText::_('INSTL_PRECHECK_DESC'); ?>
+				<?php echo MolajoText::_('INSTL_PRECHECK_DESC'); ?>
 			</div>
 			<div class="install-body">
 				<div class="m">
@@ -39,7 +39,7 @@ defined('MOLAJO') or die;
 								</dt>
 								<dd>
 									<span class="<?php echo ($option->state) ? 'green' : 'red'; ?>">
-										<?php echo JText::_(($option->state) ? 'JYES' : 'JNO'); ?>
+										<?php echo MolajoText::_(($option->state) ? 'JYES' : 'JNO'); ?>
 									</span>
 									<span class="small">
 										<?php echo $option->notice; ?>&#160;
@@ -55,9 +55,9 @@ defined('MOLAJO') or die;
 
 			<div class="newsection"></div>
 
-			<h2><?php echo JText::_('INSTL_PRECHECK_RECOMMENDED_SETTINGS_TITLE'); ?></h2>
+			<h2><?php echo MolajoText::_('INSTL_PRECHECK_RECOMMENDED_SETTINGS_TITLE'); ?></h2>
 			<div class="install-text">
-				<?php echo JText::_('INSTL_PRECHECK_RECOMMENDED_SETTINGS_DESC'); ?>
+				<?php echo MolajoText::_('INSTL_PRECHECK_RECOMMENDED_SETTINGS_DESC'); ?>
 			</div>
 			<div class="install-body">
 				<div class="m">
@@ -66,13 +66,13 @@ defined('MOLAJO') or die;
 							<dl>
 						
 								<dt class="toggle">
-									<?php echo JText::_('INSTL_PRECHECK_DIRECTIVE'); ?>
+									<?php echo MolajoText::_('INSTL_PRECHECK_DIRECTIVE'); ?>
 								</dt>
 								<dd class="toggle">
-									<?php echo JText::_('INSTL_PRECHECK_RECOMMENDED'); ?>
+									<?php echo MolajoText::_('INSTL_PRECHECK_RECOMMENDED'); ?>
 								</dd>
 								<dd class="toggle">
-									<?php echo JText::_('INSTL_PRECHECK_ACTUAL'); ?>
+									<?php echo MolajoText::_('INSTL_PRECHECK_ACTUAL'); ?>
 								</dd>
 							
 							</dl>
@@ -84,12 +84,12 @@ defined('MOLAJO') or die;
 									</dt>
 									<dd class="toggle">
 										
-										<?php echo JText::_(($setting->recommended) ? 'JON' : 'JOFF'); ?>
+										<?php echo MolajoText::_(($setting->recommended) ? 'JON' : 'JOFF'); ?>
 									
 									</dd>
 									<dd>
 										<span class="<?php echo ($setting->state === $setting->recommended) ? 'green' : 'red'; ?>">
-										<?php echo JText::_(($setting->state) ? 'JON' : 'JOFF'); ?>
+										<?php echo MolajoText::_(($setting->state) ? 'JON' : 'JOFF'); ?>
 										</span>
 									</dd>
 								

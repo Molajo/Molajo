@@ -21,13 +21,13 @@ echo $params->get('image_path', 'images');?>/';
 	</div>
 	<fieldset>
 		<div class="fltlft">
-			<label for="folder"><?php echo JText::_('COM_MEDIA_DIRECTORY') ?></label>
+			<label for="folder"><?php echo MolajoText::_('COM_MEDIA_DIRECTORY') ?></label>
 			<?php echo $this->folderList; ?>
-			<button type="button" id="upbutton" title="<?php echo JText::_('COM_MEDIA_DIRECTORY_UP') ?>"><?php echo JText::_('COM_MEDIA_UP') ?></button>
+			<button type="button" id="upbutton" title="<?php echo MolajoText::_('COM_MEDIA_DIRECTORY_UP') ?>"><?php echo MolajoText::_('COM_MEDIA_UP') ?></button>
 		</div>
 		<div class="fltrt">
-			<button type="button" onclick="<?php if ($this->state->get('field.id')):?>window.parent.jInsertFieldValue(document.id('f_url').value,'<?php echo $this->state->get('field.id');?>');<?php else:?>ImageManager.onok();<?php endif;?>window.parent.SqueezeBox.close();"><?php echo JText::_('COM_MEDIA_INSERT') ?></button>
-			<button type="button" onclick="window.parent.SqueezeBox.close();"><?php echo JText::_('JCANCEL') ?></button>
+			<button type="button" onclick="<?php if ($this->state->get('field.id')):?>window.parent.jInsertFieldValue(document.id('f_url').value,'<?php echo $this->state->get('field.id');?>');<?php else:?>ImageManager.onok();<?php endif;?>window.parent.SqueezeBox.close();"><?php echo MolajoText::_('COM_MEDIA_INSERT') ?></button>
+			<button type="button" onclick="window.parent.SqueezeBox.close();"><?php echo MolajoText::_('JCANCEL') ?></button>
 		</div>
 	</fieldset>
 
@@ -36,36 +36,36 @@ echo $params->get('image_path', 'images');?>/';
 	<fieldset>
 		<table class="properties">
 			<tr>
-				<td><label for="f_url"><?php echo JText::_('COM_MEDIA_IMAGE_URL') ?></label></td>
+				<td><label for="f_url"><?php echo MolajoText::_('COM_MEDIA_IMAGE_URL') ?></label></td>
 				<td><input type="text" id="f_url" value="" /></td>
 				<?php if (!$this->state->get('field.id')):?>
-					<td><label for="f_align"><?php echo JText::_('COM_MEDIA_ALIGN') ?></label></td>
+					<td><label for="f_align"><?php echo MolajoText::_('COM_MEDIA_ALIGN') ?></label></td>
 					<td>
 						<select size="1" id="f_align" >
-							<option value="" selected="selected"><?php echo JText::_('COM_MEDIA_NOT_SET') ?></option>
-							<option value="left"><?php echo JText::_('JGLOBAL_LEFT') ?></option>
-							<option value="right"><?php echo JText::_('JGLOBAL_RIGHT') ?></option>
+							<option value="" selected="selected"><?php echo MolajoText::_('COM_MEDIA_NOT_SET') ?></option>
+							<option value="left"><?php echo MolajoText::_('JGLOBAL_LEFT') ?></option>
+							<option value="right"><?php echo MolajoText::_('JGLOBAL_RIGHT') ?></option>
 						</select>
 					</td>
-					<td> <?php echo JText::_('COM_MEDIA_ALIGN_DESC');?> </td>
+					<td> <?php echo MolajoText::_('COM_MEDIA_ALIGN_DESC');?> </td>
 				<?php endif;?>
 			</tr>
 			<?php if (!$this->state->get('field.id')):?>
 				<tr>
-					<td><label for="f_alt"><?php echo JText::_('COM_MEDIA_IMAGE_DESCRIPTION') ?></label></td>
+					<td><label for="f_alt"><?php echo MolajoText::_('COM_MEDIA_IMAGE_DESCRIPTION') ?></label></td>
 					<td><input type="text" id="f_alt" value="" /></td>
 				</tr>
 				<tr>
-					<td><label for="f_title"><?php echo JText::_('COM_MEDIA_TITLE') ?></label></td>
+					<td><label for="f_title"><?php echo MolajoText::_('COM_MEDIA_TITLE') ?></label></td>
 					<td><input type="text" id="f_title" value="" /></td>
-					<td><label for="f_caption"><?php echo JText::_('COM_MEDIA_CAPTION') ?></label></td>
+					<td><label for="f_caption"><?php echo MolajoText::_('COM_MEDIA_CAPTION') ?></label></td>
 					<td>
 						<select size="1" id="f_caption" >
-							<option value="" selected="selected" ><?php echo JText::_('JNO') ?></option>
-							<option value="1"><?php echo JText::_('JYES') ?></option>
+							<option value="" selected="selected" ><?php echo MolajoText::_('JNO') ?></option>
+							<option value="1"><?php echo MolajoText::_('JYES') ?></option>
 						</select>
 					</td>
-					<td> <?php echo JText::_('COM_MEDIA_CAPTION_DESC');?> </td>
+					<td> <?php echo MolajoText::_('COM_MEDIA_CAPTION_DESC');?> </td>
 				</tr>
 			<?php endif;?>
 		</table>
@@ -80,25 +80,25 @@ echo $params->get('image_path', 'images');?>/';
 <?php if ($user->authorise('core.create', 'com_media')): ?>
 	<form action="<?php echo JURI::base(); ?>index.php?option=com_media&amp;task=file.upload&amp;tmpl=component&amp;<?php echo $this->session->getName().'='.$this->session->getId(); ?>&amp;<?php echo JUtility::getToken();?>=1&amp;asset=<?php echo JRequest::getCmd('asset');?>&amp;author=<?php echo JRequest::getCmd('author');?>&amp;format=<?php echo $this->config->get('enable_flash')=='1' ? 'json' : '' ?>" id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data">
 		<fieldset id="uploadform">
-			<legend><?php echo $this->config->get('upload_maxsize')=='0' ? JText::_('COM_MEDIA_UPLOAD_FILES_NOLIMIT') : JText::sprintf('COM_MEDIA_UPLOAD_FILES', $this->config->get('upload_maxsize')); ?></legend>
+			<legend><?php echo $this->config->get('upload_maxsize')=='0' ? MolajoText::_('COM_MEDIA_UPLOAD_FILES_NOLIMIT') : MolajoText::sprintf('COM_MEDIA_UPLOAD_FILES', $this->config->get('upload_maxsize')); ?></legend>
 			<fieldset id="upload-noflash" class="actions">
-				<label for="upload-file" class="hidelabeltxt"><?php echo JText::_('COM_MEDIA_UPLOAD_FILE'); ?></label>
+				<label for="upload-file" class="hidelabeltxt"><?php echo MolajoText::_('COM_MEDIA_UPLOAD_FILE'); ?></label>
 				<input type="file" id="upload-file" name="Filedata" />
-				<label for="upload-submit" class="hidelabeltxt"><?php echo JText::_('COM_MEDIA_START_UPLOAD'); ?></label>
-				<input type="submit" id="upload-submit" value="<?php echo JText::_('COM_MEDIA_START_UPLOAD'); ?>"/>
+				<label for="upload-submit" class="hidelabeltxt"><?php echo MolajoText::_('COM_MEDIA_START_UPLOAD'); ?></label>
+				<input type="submit" id="upload-submit" value="<?php echo MolajoText::_('COM_MEDIA_START_UPLOAD'); ?>"/>
 			</fieldset>
 			<div id="upload-flash" class="hide">
 				<ul>
-					<li><a href="#" id="upload-browse"><?php echo JText::_('COM_MEDIA_BROWSE_FILES'); ?></a></li>
-					<li><a href="#" id="upload-clear"><?php echo JText::_('COM_MEDIA_CLEAR_LIST'); ?></a></li>
-					<li><a href="#" id="upload-start"><?php echo JText::_('COM_MEDIA_START_UPLOAD'); ?></a></li>
+					<li><a href="#" id="upload-browse"><?php echo MolajoText::_('COM_MEDIA_BROWSE_FILES'); ?></a></li>
+					<li><a href="#" id="upload-clear"><?php echo MolajoText::_('COM_MEDIA_CLEAR_LIST'); ?></a></li>
+					<li><a href="#" id="upload-start"><?php echo MolajoText::_('COM_MEDIA_START_UPLOAD'); ?></a></li>
 				</ul>
 				<div class="clr"> </div>
 				<p class="overall-title"></p>
-				<?php echo JHtml::_('image','media/bar.gif', JText::_('COM_MEDIA_OVERALL_PROGRESS'), array('class' => 'progress overall-progress'), true); ?>
+				<?php echo JHtml::_('image','media/bar.gif', MolajoText::_('COM_MEDIA_OVERALL_PROGRESS'), array('class' => 'progress overall-progress'), true); ?>
 				<div class="clr"> </div>
 				<p class="current-title"></p>
-				<?php echo JHtml::_('image','media/bar.gif', JText::_('COM_MEDIA_CURRENT_PROGRESS'), array('class' => 'progress current-progress'), true); ?>
+				<?php echo JHtml::_('image','media/bar.gif', MolajoText::_('COM_MEDIA_CURRENT_PROGRESS'), array('class' => 'progress current-progress'), true); ?>
 				<p class="current-text"></p>
 			</div>
 			<ul class="upload-queue" id="upload-queue">

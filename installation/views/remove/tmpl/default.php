@@ -11,12 +11,12 @@ defined('MOLAJO') or die;
 <div id="step">
 	<div class="far-right">
 
-		<a class="button white" href="<?php echo JURI::root(); ?>" title="<?php echo JText::_('JSITE'); ?>"><?php echo JText::_('JSITE'); ?></a>
-		<a class="button white" href="<?php echo JURI::root(); ?>administrator/" title="<?php echo JText::_('JADMINISTRATOR'); ?>"><?php echo JText::_('JADMINISTRATOR'); ?></a>
+		<a class="button white" href="<?php echo JURI::root(); ?>" title="<?php echo MolajoText::_('JSITE'); ?>"><?php echo MolajoText::_('JSITE'); ?></a>
+		<a class="button white" href="<?php echo JURI::root(); ?>administrator/" title="<?php echo MolajoText::_('JADMINISTRATOR'); ?>"><?php echo MolajoText::_('JADMINISTRATOR'); ?></a>
 
 	</div>
-	<span class="steptitle"><?php echo JText::_('INSTL_COMPLETE_REMOVE_FOLDER'); ?></span>
+	<span class="steptitle"><?php echo MolajoText::_('INSTL_COMPLETE_REMOVE_FOLDER'); ?></span>
 </div>
 <div id="installer">
-	<p class="error remove"><?php echo JText::_('INSTL_COMPLETE_REMOVE_INSTALLATION'); ?></p>
+	<p class="error remove"><?php echo MolajoText::_('INSTL_COMPLETE_REMOVE_INSTALLATION'); ?></p>
 </div>

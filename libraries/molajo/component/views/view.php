@@ -551,16 +551,6 @@ class MolajoView extends JView
     }
 }
 
-        /** Twig Autoload */
-// $filehelper = new MolajoFileHelper();
-//        $filehelper->requireClassFile(MOLAJO_PATH_ROOT.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
-//        Twig_Autoloader::register();
-
-        /** @var $loader  */
-//        $loader = new Twig_Loader_Filesystem(MOLAJO_LAYOUTS_EXTENSIONS);
-//        $this->twig = new Twig_Environment($loader, array(
-//          'cache' => MOLAJO_LAYOUTS_EXTENSIONS.'/cache',
-//       ));
 /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');
 //		$this->categoryAncestors    = $this->get('Ancestors');

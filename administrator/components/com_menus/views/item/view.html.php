@@ -57,7 +57,7 @@ class MenusViewItem extends JView
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo		= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_MENUS_VIEW_NEW_ITEM_TITLE' : 'COM_MENUS_VIEW_EDIT_ITEM_TITLE'), 'menu-add');
+		MolajoToolbarHelper::title(MolajoText::_($isNew ? 'COM_MENUS_VIEW_NEW_ITEM_TITLE' : 'COM_MENUS_VIEW_EDIT_ITEM_TITLE'), 'menu-add');
 
 		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
 		if ($isNew && $canDo->get('core.create')) {
@@ -97,7 +97,7 @@ class MenusViewItem extends JView
 		$help = $this->get('Help');
 		if ($lang->hasKey($help->url)) {
 			$debug = $lang->setDebug(false);
-			$url = JText::_($help->url);
+			$url = MolajoText::_($help->url);
 			$lang->setDebug($debug);
 		}
 		else {

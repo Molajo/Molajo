@@ -51,7 +51,7 @@ class UsersViewUsers extends JView
 	{
 		$canDo	= UsersHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_USERS_VIEW_USERS_TITLE'), 'user');
+		MolajoToolbarHelper::title(MolajoText::_('COM_USERS_VIEW_USERS_TITLE'), 'user');
 
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('user.add');

@@ -109,7 +109,7 @@ $response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
 
                 if (isset($options['remember']) && $options['remember']) {
 
-                    $key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
+                    $key = MolajoUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
 
                     $crypt = new JSimpleCrypt($key);
                     $rcookie = $crypt->encrypt(serialize($credentials));
@@ -117,7 +117,7 @@ $response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
 
                     $cookie_domain = $this->getCfg('cookie_domain', '');
                     $cookie_path = $this->getCfg('cookie_path', '/');
-                    setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
+                    setcookie( MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
                 }
             }
 
@@ -218,7 +218,7 @@ $response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
             // Use domain and path set in config for cookie if it exists.
             $cookie_domain = $this->getCfg('cookie_domain', '');
             $cookie_path = $this->getCfg('cookie_path', '/');
-            setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+            setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
             return true;
         }

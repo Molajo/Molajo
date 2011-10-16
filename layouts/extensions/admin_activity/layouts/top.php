@@ -21,7 +21,7 @@ if (count($this->rowset[0]->columncount) > 0) :
 	<tbody>
 		<tr>
 			<td colspan="<?php echo $this->rowset[0]->columncount; ?>">
-				<p class="noresults"><?php echo JText::_('MOD_LATEST_NO_MATCHING_RESULTS');?></p>
+				<p class="noresults"><?php echo MolajoText::_('MOD_LATEST_NO_MATCHING_RESULTS');?></p>
 			</td>
 		</tr>
 	</tbody>

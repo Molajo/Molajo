@@ -28,9 +28,9 @@ $canDo = LanguagesHelper::getActions();
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
 			<?php if ($this->item->lang_id) : ?>
-				<legend><?php echo JText::sprintf('JGLOBAL_RECORD_NUMBER', $this->item->lang_id); ?></legend>
+				<legend><?php echo MolajoText::sprintf('JGLOBAL_RECORD_NUMBER', $this->item->lang_id); ?></legend>
 			<?php else : ?>
-				<legend><?php echo JText::_('COM_LANGUAGES_VIEW_LANGUAGE_EDIT_NEW_TITLE'); ?></legend>
+				<legend><?php echo MolajoText::_('COM_LANGUAGES_VIEW_LANGUAGE_EDIT_NEW_TITLE'); ?></legend>
 			<?php endif; ?>
 
 			<?php echo $this->form->getLabel('title'); ?>
@@ -63,7 +63,7 @@ $canDo = LanguagesHelper::getActions();
 	<div class="width-40 fltrt">
 		<?php echo JHtml::_('sliders.start','language-sliders-'.$this->item->lang_code, array('useCookie'=>1)); ?>
 
-		<?php echo JHtml::_('sliders.panel',JText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'metadata'); ?>
+		<?php echo JHtml::_('sliders.panel',MolajoText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'metadata'); ?>
 			<fieldset class="adminform">
 				<?php foreach($this->form->getFieldset('metadata') as $field): ?>
 					<?php if (!$field->hidden): ?>

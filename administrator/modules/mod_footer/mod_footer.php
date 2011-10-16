@@ -15,10 +15,10 @@ $wrap = $params->def('wrap', 'footer');
 /**
  *  Line 1
  */
-if (JString::strpos(JText :: _('MOD_FOOTER_LINE1'), '%date%')) {
-	$line1 = str_replace('%date%', MolajoFactory::getDate()->format('Y'), JText :: _('MOD_FOOTER_LINE1'));
+if (JString::strpos(MolajoText :: _('MOD_FOOTER_LINE1'), '%date%')) {
+	$line1 = str_replace('%date%', MolajoFactory::getDate()->format('Y'), MolajoText :: _('MOD_FOOTER_LINE1'));
 } else {
-    $line1 = JText :: _('MOD_FOOTER_LINE1');
+    $line1 = MolajoText :: _('MOD_FOOTER_LINE1');
 }
 if (JString::strpos($line1, '%sitename%')) {
 	$line1 = str_replace('%sitename%', MolajoFactory::getApplication()->getCfg('sitename', 'Molajo'), $line1);
@@ -31,7 +31,7 @@ $tmpobj->set('line1', $line1);
 $link = $params->def('link', 'http://molajo.org');
 $linked_text = $params->def('linked_text', 'Molajo&#153;');
 $remaining_text = $params->def('remaining_text', ' is free software.');
-$version = $params->def('version', JText::_(MOLAJOVERSION));
+$version = $params->def('version', MolajoText::_(MOLAJOVERSION));
 
 $tmpobj->set('link', $link);
 $tmpobj->set('linked_text', $linked_text);

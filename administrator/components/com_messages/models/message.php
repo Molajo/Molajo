@@ -94,7 +94,7 @@ class MessagesModelMessage extends JModelAdmin
 
 
 						$this->item->set('user_id_to', $message->user_id_from);
-						$re = JText::_('COM_MESSAGES_RE');
+						$re = MolajoText::_('COM_MESSAGES_RE');
 						if (stripos($message->subject, $re) !== 0) {
 							$this->item->set('subject', $re.$message->subject);
 						}
@@ -102,7 +102,7 @@ class MessagesModelMessage extends JModelAdmin
 				}
 				elseif ($this->item->user_id_to != MolajoFactory::getUser()->id)
 				{
-					$this->setError(JText::_('JERROR_ALERTNOAUTHOR'));
+					$this->setError(MolajoText::_('JERROR_ALERTNOAUTHOR'));
 					return false;
 				}
 				else {
@@ -202,7 +202,7 @@ class MessagesModelMessage extends JModelAdmin
 		}
 
 		if ($config->get('locked', false)) {
-			$this->setError(JText::_('COM_MESSAGES_ERR_SEND_FAILED'));
+			$this->setError(MolajoText::_('COM_MESSAGES_ERR_SEND_FAILED'));
 			return false;
 		}
 

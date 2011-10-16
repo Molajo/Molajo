@@ -27,10 +27,10 @@ abstract class JHtmlDirectory
 	public static function writable($writable)
 	{
 		if ($writable) {
-			return '<span class="writable">'. JText::_('COM_ADMIN_WRITABLE') .'</span>';
+			return '<span class="writable">'. MolajoText::_('COM_ADMIN_WRITABLE') .'</span>';
 		}
 		else {
-			return '<span class="unwritable">'. JText::_('COM_ADMIN_UNWRITABLE') .'</span>';
+			return '<span class="unwritable">'. MolajoText::_('COM_ADMIN_UNWRITABLE') .'</span>';
 		}
 	}
 
@@ -55,7 +55,7 @@ abstract class JHtmlDirectory
 			return $output;
 		}
 		else {
-			return $output.' <strong>'.JText::_($message).'</strong>';
+			return $output.' <strong>'.MolajoText::_($message).'</strong>';
 		}
 	}
 }

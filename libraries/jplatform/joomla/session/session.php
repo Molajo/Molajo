@@ -97,13 +97,13 @@ class JSession extends JObject
 
 		// disable transparent sid support
 		ini_set('session.use_trans_sid', '0');
-
+ 
 		// create handler
 		$this->_store = JSessionStorage::getInstance($store, $options);
-
+ 
 		// set options
 		$this->_setOptions($options);
-
+ 
 		$this->_setCookieParams();
 
 		// load the session

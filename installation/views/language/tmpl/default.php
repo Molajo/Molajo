@@ -10,16 +10,16 @@ defined('MOLAJO') or die;
 ?>
 <div id="step">
 	<div class="far-right">
-		<a href="index.php?view=preinstall" class="button white" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a>
+		<a href="index.php?view=preinstall" class="button white" onclick="Install.submitform();" rel="next" title="<?php echo MolajoText::_('JNext'); ?>"><?php echo MolajoText::_('JNext'); ?></a>
 	</div>
-	<span class="steptitle"><?php echo JText::_('INSTL_LANGUAGE_TITLE'); ?></span>
+	<span class="steptitle"><?php echo MolajoText::_('INSTL_LANGUAGE_TITLE'); ?></span>
 </div>
 <form action="index.php" method="post" id="adminForm" class="form-validate">
 	<div id="installer">
 		<div class="m">
-			<h2><?php echo JText::_('INSTL_SELECT_LANGUAGE_TITLE'); ?></h2>
+			<h2><?php echo MolajoText::_('INSTL_SELECT_LANGUAGE_TITLE'); ?></h2>
 			<div class="install-text">
-				<?php echo JText::_('INSTL_SELECT_LANGUAGE_DESC'); ?>
+				<?php echo MolajoText::_('INSTL_SELECT_LANGUAGE_DESC'); ?>
 			</div>
 			<div class="install-body">
 				<div class="m">

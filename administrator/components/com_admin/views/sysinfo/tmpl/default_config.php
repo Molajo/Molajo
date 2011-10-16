@@ -11,15 +11,15 @@
 defined('_JEXEC') or die;
 ?>
 <fieldset class="adminform">
-	<legend><?php echo JText::_('COM_ADMIN_CONFIGURATION_FILE'); ?></legend>
+	<legend><?php echo MolajoText::_('COM_ADMIN_CONFIGURATION_FILE'); ?></legend>
 		<table class="adminlist">
 			<thead>
 				<tr>
 					<th width="300">
-						<?php echo JText::_('COM_ADMIN_SETTING'); ?>
+						<?php echo MolajoText::_('COM_ADMIN_SETTING'); ?>
 					</th>
 					<th>
-						<?php echo JText::_('COM_ADMIN_VALUE'); ?>
+						<?php echo MolajoText::_('COM_ADMIN_VALUE'); ?>
 					</th>
 				</tr>
 			</thead>

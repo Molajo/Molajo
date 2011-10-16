@@ -55,7 +55,7 @@ class UsersViewGroup extends JView
 		$isNew		= ($this->item->id == 0);
 		$canDo		= UsersHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_GROUP_TITLE' : 'COM_USERS_VIEW_EDIT_GROUP_TITLE'), 'groups-add');
+		MolajoToolbarHelper::title(MolajoText::_($isNew ? 'COM_USERS_VIEW_NEW_GROUP_TITLE' : 'COM_USERS_VIEW_EDIT_GROUP_TITLE'), 'groups-add');
 
 		if ($canDo->get('core.edit')||$canDo->get('core.create')) {
 			MolajoToolbarHelper::apply('group.apply');

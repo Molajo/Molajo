@@ -108,10 +108,10 @@ class InstallerModelUpdate extends JModelList
 		// This may or may not mean depending on your database
 		$db->setQuery('TRUNCATE TABLE #__updates');
 		if ($db->Query()) {
-			$this->_message = JText::_('COM_INSTALLER_PURGED_UPDATES');
+			$this->_message = MolajoText::_('COM_INSTALLER_PURGED_UPDATES');
 			return true;
 		} else {
-			$this->_message = JText::_('COM_INSTALLER_FAILED_TO_PURGE_UPDATES');
+			$this->_message = MolajoText::_('COM_INSTALLER_FAILED_TO_PURGE_UPDATES');
 			return false;
 		}
 	}
@@ -128,11 +128,11 @@ class InstallerModelUpdate extends JModelList
 		$db->setQuery('UPDATE #__update_sites SET enabled = 1 WHERE enabled = 0');
 		if ($db->Query()) {
 			if ($rows = $db->getAffectedRows()) {
-				$this->_message .= JText::plural('COM_INSTALLER_ENABLED_UPDATES', $rows);
+				$this->_message .= MolajoText::plural('COM_INSTALLER_ENABLED_UPDATES', $rows);
 			}
 			return true;
 		} else {
-			$this->_message .= JText::_('COM_INSTALLER_FAILED_TO_ENABLE_UPDATES');
+			$this->_message .= MolajoText::_('COM_INSTALLER_FAILED_TO_ENABLE_UPDATES');
 			return false;
 		}
 	}
@@ -180,7 +180,7 @@ class InstallerModelUpdate extends JModelList
 		if (isset($update->get('downloadurl')->_data)) {
 			$url = $update->downloadurl->_data;
 		} else {
-			JError::raiseWarning('', JText::_('COM_INSTALLER_INVALID_EXTENSION_UPDATE'));
+			JError::raiseWarning('', MolajoText::_('COM_INSTALLER_INVALID_EXTENSION_UPDATE'));
 			return false;
 		}
 
@@ -189,7 +189,7 @@ class InstallerModelUpdate extends JModelList
 
 		// Was the package downloaded?
 		if (!$p_file) {
-			JError::raiseWarning('', JText::sprintf('COM_INSTALLER_PACKAGE_DOWNLOAD_FAILED', $url));
+			JError::raiseWarning('', MolajoText::sprintf('COM_INSTALLER_PACKAGE_DOWNLOAD_FAILED', $url));
 			return false;
 		}
 
@@ -206,11 +206,11 @@ class InstallerModelUpdate extends JModelList
 		// Install the package
 		if (!$installer->update($package['dir'])) {
 			// There was an error updating the package
-			$msg = JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($package['type'])));
+			$msg = MolajoText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', MolajoText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($package['type'])));
 			$result = false;
 		} else {
 			// Package updated successfully
-			$msg = JText::sprintf('COM_INSTALLER_MSG_UPDATE_SUCCESS', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($package['type'])));
+			$msg = MolajoText::sprintf('COM_INSTALLER_MSG_UPDATE_SUCCESS', MolajoText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($package['type'])));
 			$result = true;
 		}
 

@@ -78,7 +78,7 @@ class TemplatesModelTemplate extends JModel
 					$result['css'][] = $this->getFile($path.'/css/', 'css/'.$file);
 				}
 			} else {
-				$this->setError(JText::_('COM_TEMPLATES_ERROR_TEMPLATE_FOLDER_NOT_FOUND'));
+				$this->setError(MolajoText::_('COM_TEMPLATES_ERROR_TEMPLATE_FOLDER_NOT_FOUND'));
 				return false;
 			}
 		}
@@ -133,7 +133,7 @@ class TemplatesModelTemplate extends JModel
 				if ($error = $db->getErrorMsg()) {
 					$this->setError($error);
 				} else {
-					$this->setError(JText::_('COM_TEMPLATES_ERROR_EXTENSION_RECORD_NOT_FOUND'));
+					$this->setError(MolajoText::_('COM_TEMPLATES_ERROR_EXTENSION_RECORD_NOT_FOUND'));
 				}
 				$this->template = false;
 			} else {

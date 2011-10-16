@@ -14,7 +14,7 @@ if ($this->sample_installed) : ?>
 		var select = document.getElementById('jform_sample_file');
 		var button = document.getElementById('theDefault').children[0];
 		button.setAttribute('disabled','disabled');
-		button.setAttribute('value','<?php echo JText::_('INSTL_SITE_SAMPLE_LOADED', true); ?>');
+		button.setAttribute('value','<?php echo MolajoText::_('INSTL_SITE_SAMPLE_LOADED', true); ?>');
 		select.setAttribute('disabled','disabled');
 	});
 </script>
@@ -23,24 +23,24 @@ if ($this->sample_installed) : ?>
 <div id="step">
 	<div class="far-right">
 
-		<a class="button white" href="index.php?view=filesystem" onclick="return Install.goToPage('filesystem');" rel="prev" title="<?php echo JText::_('JPrevious'); ?>"><?php echo JText::_('JPrevious'); ?></a>
-		<a class="button white" href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a>
+		<a class="button white" href="index.php?view=filesystem" onclick="return Install.goToPage('filesystem');" rel="prev" title="<?php echo MolajoText::_('JPrevious'); ?>"><?php echo MolajoText::_('JPrevious'); ?></a>
+		<a class="button white" href="#" onclick="Install.submitform();" rel="next" title="<?php echo MolajoText::_('JNext'); ?>"><?php echo MolajoText::_('JNext'); ?></a>
 
 	</div>
-	<span class="steptitle"><?php echo JText::_('INSTL_SITE'); ?></span>
+	<span class="steptitle"><?php echo MolajoText::_('INSTL_SITE'); ?></span>
 </div>
 		
 <div id="installer">
 	<div class="m">
 		<form action="index.php" method="post" id="adminForm" class="form-validate">
-			<h2><?php echo JText::_('INSTL_SITE_NAME_TITLE'); ?></h2>
+			<h2><?php echo MolajoText::_('INSTL_SITE_NAME_TITLE'); ?></h2>
 			<div class="install-text">
-				<?php echo JText::_('INSTL_SITE_NAME_DESC'); ?>
+				<?php echo MolajoText::_('INSTL_SITE_NAME_DESC'); ?>
 			</div>
 			<div class="install-body">
 				<div class="m">
-					<h3 class="title-smenu" title="<?php echo JText::_('INSTL_BASIC_SETTINGS'); ?>">
-						<?php echo JText::_('INSTL_BASIC_SETTINGS'); ?>
+					<h3 class="title-smenu" title="<?php echo MolajoText::_('INSTL_BASIC_SETTINGS'); ?>">
+						<?php echo MolajoText::_('INSTL_BASIC_SETTINGS'); ?>
 					</h3>
 					<div class="section-smenu">
 						<fieldset>	
@@ -50,8 +50,8 @@ if ($this->sample_installed) : ?>
 						</fieldset>
 					</div>
 
-					<h3 class="title-smenu moofx-toggler" title="<?php echo JText::_('INSTL_SITE_META_ADVANCED_SETTINGS'); ?>">
-						<a href="#"><?php echo JText::_('INSTL_SITE_META_ADVANCED_SETTINGS'); ?></a>
+					<h3 class="title-smenu moofx-toggler" title="<?php echo MolajoText::_('INSTL_SITE_META_ADVANCED_SETTINGS'); ?>">
+						<a href="#"><?php echo MolajoText::_('INSTL_SITE_META_ADVANCED_SETTINGS'); ?></a>
 					</h3>
 					<div class="section-smenu moofx-slider">
 							
@@ -71,9 +71,9 @@ if ($this->sample_installed) : ?>
 
 				<div class="newsection"></div>
 
-				<h2><?php echo JText::_('INSTL_SITE_CONF_TITLE'); ?></h2>
+				<h2><?php echo MolajoText::_('INSTL_SITE_CONF_TITLE'); ?></h2>
 				<div class="install-text">
-					<?php echo JText::_('INSTL_SITE_CONF_DESC'); ?>
+					<?php echo MolajoText::_('INSTL_SITE_CONF_DESC'); ?>
 				</div>
 				<div class="install-body">
 					<div class="m">
@@ -106,13 +106,13 @@ if ($this->sample_installed) : ?>
 			<div class="clr"></div>
 
 			<form enctype="multipart/form-data" action="index.php" method="post" id="filename">
-				<h2><?php echo JText::_('INSTL_SITE_LOAD_SAMPLE_TITLE'); ?></h2>
+				<h2><?php echo MolajoText::_('INSTL_SITE_LOAD_SAMPLE_TITLE'); ?></h2>
 				<div class="install-text">
-					<p><?php echo JText::_('INSTL_SITE_LOAD_SAMPLE_DESC1'); ?></p>
-					<p><?php echo JText::_('INSTL_SITE_LOAD_SAMPLE_DESC2'); ?></p>
-					<p><?php echo JText::_('INSTL_SITE_LOAD_SAMPLE_DESC3'); ?></p>
-					<p><?php echo JText::_('INSTL_SITE_LOAD_SAMPLE_DESC4'); ?></p>
-					<p><?php echo JText::_('INSTL_SITE_LOAD_SAMPLE_DESC8'); ?></p>
+					<p><?php echo MolajoText::_('INSTL_SITE_LOAD_SAMPLE_DESC1'); ?></p>
+					<p><?php echo MolajoText::_('INSTL_SITE_LOAD_SAMPLE_DESC2'); ?></p>
+					<p><?php echo MolajoText::_('INSTL_SITE_LOAD_SAMPLE_DESC3'); ?></p>
+					<p><?php echo MolajoText::_('INSTL_SITE_LOAD_SAMPLE_DESC4'); ?></p>
+					<p><?php echo MolajoText::_('INSTL_SITE_LOAD_SAMPLE_DESC8'); ?></p>
 				</div>
 				<div class="install-body">
 					<div class="m">
@@ -121,16 +121,16 @@ if ($this->sample_installed) : ?>
 								<label>	<?php echo $this->form->getLabel('sample_file'); ?> </label>
 										<?php echo $this->form->getInput('sample_file'); ?>
 								<br />
-							<span id="theDefault"><input class="button white" type="button" name="instDefault" value="<?php echo JText::_('INSTL_SITE_INSTALL_SAMPLE_LABEL'); ?>" onclick=		"Install.sampleData(this, <?php echo $this->form->getField('sample_file')->id;?>);"/></span>
+							<span id="theDefault"><input class="button white" type="button" name="instDefault" value="<?php echo MolajoText::_('INSTL_SITE_INSTALL_SAMPLE_LABEL'); ?>" onclick=		"Install.sampleData(this, <?php echo $this->form->getField('sample_file')->id;?>);"/></span>
 								<br />
 									<p>
-										<em><?php echo JText::_('INSTL_SITE_INSTALL_SAMPLE_DESC'); ?></em>
+										<em><?php echo MolajoText::_('INSTL_SITE_INSTALL_SAMPLE_DESC'); ?></em>
 									</p>
 								
 						</fieldset>
 						<div class="message inlineError" id="theDefaultError" style="display: none">
 							<dl>
-								<dt class="error"><?php echo JText::_('JERROR'); ?></dt>
+								<dt class="error"><?php echo MolajoText::_('JERROR'); ?></dt>
 								<dd id="theDefaultErrorMessage"></dd>
 							</dl>
 						</div>

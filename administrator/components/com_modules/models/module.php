@@ -87,8 +87,8 @@ class ModulesModelModule extends JModelAdmin
 				// Access checks.
 				if (!$user->authorise('core.delete', 'com_modules') ||
 							$table->published != -2) {
-					JError::raiseWarning(403, JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
-					//	throw new Exception(JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					//	throw new Exception(MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 					return;
 				}
 
@@ -137,7 +137,7 @@ class ModulesModelModule extends JModelAdmin
 
 		// Access checks.
 		if (!$user->authorise('core.create', 'com_modules')) {
-			throw new Exception(JText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
+			throw new Exception(MolajoText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
 		}
 
 		$table = $this->getTable();
@@ -481,12 +481,12 @@ class ModulesModelModule extends JModelAdmin
 		if (file_exists($formFile)) {
 			// Get the module form.
 			if (!$form->loadFile($formFile, false, '//config')) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 
 			// Attempt to load the xml file.
 			if (!$xml = simplexml_load_file($formFile)) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 
 			// Get the help data from the XML file if present.
@@ -550,7 +550,7 @@ class ModulesModelModule extends JModelAdmin
 			$orig_table->load( (int) $orig_data['id']);
 
 			if ($data['title'] == $orig_table->title) {
-				$data['title'] .= ' '.JText::_('JGLOBAL_COPY');
+				$data['title'] .= ' '.MolajoText::_('JGLOBAL_COPY');
 				$data['published'] = 0;
 			}
 		}

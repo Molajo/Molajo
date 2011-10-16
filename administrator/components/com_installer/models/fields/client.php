@@ -37,10 +37,10 @@ class JFormFieldApplication extends JFormField
 		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 		$options = array();
 		foreach ($this->element->children() as $option) {
-			$options[] = JHtml::_('select.option', $option->attributes('value'), JText::_(trim($option->data())));
+			$options[] = JHtml::_('select.option', $option->attributes('value'), MolajoText::_(trim($option->data())));
 		}
-		$options[] = JHtml::_('select.option', '0', JText::sprintf('JSITE'));
-		$options[] = JHtml::_('select.option', '1', JText::sprintf('JADMINISTRATOR'));
+		$options[] = JHtml::_('select.option', '0', MolajoText::sprintf('JSITE'));
+		$options[] = JHtml::_('select.option', '1', MolajoText::sprintf('JADMINISTRATOR'));
 		$return = JHtml::_('select.genericlist', $options, $this->name, $onchange, 'value', 'text', $this->value, $this->id);
 		return $return;
 	}

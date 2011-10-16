@@ -42,7 +42,7 @@ class PluginsController extends JController
 		// Check for edit form.
 		if ($view == 'plugin' && $layout == 'edit' && !$this->checkEditId('com_plugins.edit.plugin', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_plugins&view=plugins', false));
 

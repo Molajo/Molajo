@@ -54,7 +54,7 @@ class MenusViewMenus extends JView
 
 		$canDo	= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		MolajoToolbarHelper::title(JText::_('COM_MENUS_VIEW_MENUS_TITLE'), 'menumgr.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_MENUS_VIEW_MENUS_TITLE'), 'menumgr.png');
 
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('menu.add');

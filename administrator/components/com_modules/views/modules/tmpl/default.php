@@ -25,37 +25,37 @@ $saveOrder	= $listOrder == 'ordering';
 <form action="<?php echo MolajoRoute::_('index.php?option=com_modules'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_MODULES_MODULES_FILTER_SEARCH_DESC'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_MODULES_MODULES_FILTER_SEARCH_DESC'); ?>" />
+			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
 				<?php echo JHtml::_('select.options', ModulesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
              <select name="filter_state" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
 				<?php echo JHtml::_('select.options', ModulesHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
 			</select>
 
 			<select name="filter_position" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('COM_MODULES_OPTION_SELECT_POSITION');?></option>
+				<option value=""><?php echo MolajoText::_('COM_MODULES_OPTION_SELECT_POSITION');?></option>
 				<?php echo JHtml::_('select.options', ModulesHelper::getPositions($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.position'));?>
 			</select>
 
             <select name="filter_module" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('COM_MODULES_OPTION_SELECT_MODULE');?></option>
+				<option value=""><?php echo MolajoText::_('COM_MODULES_OPTION_SELECT_MODULE');?></option>
 				<?php echo JHtml::_('select.options', ModulesHelper::getModules($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.module'));?>
 			</select>
 
 			<select name="filter_access" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_ACCESS');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_ACCESS');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'));?>
 			</select>
 
 			<select name="filter_language" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_LANGUAGE');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_LANGUAGE');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'));?>
 			</select>
 		</div>
@@ -66,7 +66,7 @@ $saveOrder	= $listOrder == 'ordering';
 		<thead>
 			<tr>
 				<th width="1%">
-					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="title">
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'title', $listDirn, $listOrder); ?>
@@ -132,7 +132,7 @@ $saveOrder	= $listOrder == 'ordering';
 
 					<?php if (!empty($item->note)) : ?>
 					<p class="smallsub">
-						<?php echo JText::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note));?></p>
+						<?php echo MolajoText::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note));?></p>
 					<?php endif; ?>
 				</td>
                 <td class="center">
@@ -170,11 +170,11 @@ $saveOrder	= $listOrder == 'ordering';
 				</td>
 				<td class="center">
 					<?php if ($item->language==''):?>
-						<?php echo JText::_('JDEFAULT'); ?>
+						<?php echo MolajoText::_('JDEFAULT'); ?>
 					<?php elseif ($item->language=='*'):?>
-						<?php echo JText::alt('JALL','language'); ?>
+						<?php echo MolajoText::alt('JALL','language'); ?>
 					<?php else:?>
-						<?php echo $item->language_title ? $this->escape($item->language_title) : JText::_('JUNDEFINED'); ?>
+						<?php echo $item->language_title ? $this->escape($item->language_title) : MolajoText::_('JUNDEFINED'); ?>
 					<?php endif;?>
 				</td>
 				<td class="center">

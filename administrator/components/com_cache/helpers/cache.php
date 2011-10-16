@@ -27,8 +27,8 @@ class CacheHelper
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', JText::_('JSITE'));
-		$options[]	= JHtml::_('select.option', '1', JText::_('JADMINISTRATOR'));
+		$options[]	= JHtml::_('select.option', '0', MolajoText::_('JSITE'));
+		$options[]	= JHtml::_('select.option', '1', MolajoText::_('JADMINISTRATOR'));
 		return $options;
 	}
 
@@ -43,18 +43,18 @@ class CacheHelper
 	public static function addSubmenu($vName)
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('JGLOBAL_SUBMENU_CHECKIN'),
+			MolajoText::_('JGLOBAL_SUBMENU_CHECKIN'),
 			'index.php?option=com_checkin',
 			$vName == 'com_checkin'
 		);
 
 		JSubMenuHelper::addEntry(
-			JText::_('JGLOBAL_SUBMENU_CLEAR_CACHE'),
+			MolajoText::_('JGLOBAL_SUBMENU_CLEAR_CACHE'),
 			'index.php?option=com_cache',
 			$vName == 'cache'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('JGLOBAL_SUBMENU_PURGE_EXPIRED_CACHE'),
+			MolajoText::_('JGLOBAL_SUBMENU_PURGE_EXPIRED_CACHE'),
 			'index.php?option=com_cache&view=purge',
 			$vName == 'purge'
 		);

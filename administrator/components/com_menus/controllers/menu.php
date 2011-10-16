@@ -51,7 +51,7 @@ class MenusControllerMenu extends JControllerForm
 
 		if (!$this->checkEditId($context, $recordId)) {
 			// Somehow the person just went to the form and saved it - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $recordId));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $recordId));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(MolajoRoute::_('index.php?option='.$this->option.'&view='.$this->view_list.$this->getRedirectToListAppend(), false));
 
@@ -60,7 +60,7 @@ class MenusControllerMenu extends JControllerForm
 
 		// Make sure we are not trying to modify an administrator menu.
 		if (isset($data['application_id']) && $data['application_id'] == 1){
-			JError::raiseNotice(0, JText::_('COM_MENUS_MENU_TYPE_NOT_ALLOWED'));
+			JError::raiseNotice(0, MolajoText::_('COM_MENUS_MENU_TYPE_NOT_ALLOWED'));
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_menus&view=menu&layout=edit', false));
@@ -112,13 +112,13 @@ class MenusControllerMenu extends JControllerForm
 			$app->setUserState('com_menus.edit.menu.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setMessage(JText::sprintf('MOLAJO_APPLICATION_ERROR_SAVE_FAILED', $model->getError()), 'warning');
+			$this->setMessage(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_SAVE_FAILED', $model->getError()), 'warning');
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_menus&view=menu&layout=edit', false));
 
 			return false;
 		}
 
-		$this->setMessage(JText::_('COM_MENUS_MENU_SAVE_SUCCESS'));
+		$this->setMessage(MolajoText::_('COM_MENUS_MENU_SAVE_SUCCESS'));
 
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)

@@ -31,37 +31,37 @@ class MolajoInstallationModelDatabase extends JModel
 
 		// Ensure a database type was selected.
 		if (empty($options->db_type)) {
-			$this->setError(JText::_('INSTL_DATABASE_INVALID_TYPE'));
+			$this->setError(MolajoText::_('INSTL_DATABASE_INVALID_TYPE'));
 			return false;
 		}
 
 		// Ensure that a valid hostname and user name were input.
 		if (empty($options->db_host) || empty($options->db_user)) {
-			$this->setError(JText::_('INSTL_DATABASE_INVALID_DB_DETAILS'));
+			$this->setError(MolajoText::_('INSTL_DATABASE_INVALID_DB_DETAILS'));
 			return false;
 		}
 
 		// Ensure that a database name was input.
 		if (empty($options->db_name)) {
-			$this->setError(JText::_('INSTL_DATABASE_EMPTY_NAME'));
+			$this->setError(MolajoText::_('INSTL_DATABASE_EMPTY_NAME'));
 			return false;
 		}
 
 		// Validate database table prefix.
 		if (!preg_match('#^[a-zA-Z]+[a-zA-Z0-9_]*$#', $options->db_prefix)) {
-			$this->setError(JText::_('INSTL_DATABASE_PREFIX_INVALID_CHARS'));
+			$this->setError(MolajoText::_('INSTL_DATABASE_PREFIX_INVALID_CHARS'));
 			return false;
 		}
 
 		// Validate length of database table prefix.
 		if (strlen($options->db_prefix) > 15) {
-			$this->setError(JText::_('INSTL_DATABASE_FIX_TOO_LONG'));
+			$this->setError(MolajoText::_('INSTL_DATABASE_FIX_TOO_LONG'));
 			return false;
 		}
 
 		// Validate length of database name.
 		if (strlen($options->db_name) > 64) {
-			$this->setError(JText::_('INSTL_DATABASE_NAME_TOO_LONG'));
+			$this->setError(MolajoText::_('INSTL_DATABASE_NAME_TOO_LONG'));
 			return false;
 		}
 
@@ -72,13 +72,13 @@ class MolajoInstallationModelDatabase extends JModel
 
 			// Check for errors.
 			if (JError::isError($db)) {
-				$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', (string)$db));
+				$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', (string)$db));
 				return false;
 			}
 
 			// Check for database errors.
 			if ($err = $db->getErrorNum()) {
-				$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', $db->getErrorNum()));
+				$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', $db->getErrorNum()));
 				return false;
 			}
 
@@ -89,24 +89,24 @@ class MolajoInstallationModelDatabase extends JModel
 			}
 
 			if (!version_compare($db_version, '5.0.4', '>=')) {
-				$this->setError(JText::sprintf('INSTL_DATABASE_INVALID_MYSQL_VERSION', $db_version));
+				$this->setError(MolajoText::sprintf('INSTL_DATABASE_INVALID_MYSQL_VERSION', $db_version));
 				return false;
 			}
 			// @internal MySQL versions pre 5.1.6 forbid . / or \ or NULL
 			if ((preg_match('#[\\\/\.\0]#', $options->db_name)) && (!version_compare($db_version, '5.1.6', '>='))) {
-				$this->setError(JText::sprintf('INSTL_DATABASE_INVALID_NAME', $db_version));
+				$this->setError(MolajoText::sprintf('INSTL_DATABASE_INVALID_NAME', $db_version));
 				return false;
 			}
 
 			// @internal Check for spaces in beginning or end of name
 			if (strlen(trim($options->db_name)) <> strlen($options->db_name)) {
-				$this->setError(JText::_('INSTL_DATABASE_NAME_INVALID_SPACES'));
+				$this->setError(MolajoText::_('INSTL_DATABASE_NAME_INVALID_SPACES'));
 				return false;
 			}
 
 			// @internal Check for asc(00) Null in name
 			if (strpos($options->db_name, chr(00)) !== false) {
-				$this->setError(JText::_('INSTL_DATABASE_NAME_INVALID_CHAR'));
+				$this->setError(MolajoText::_('INSTL_DATABASE_NAME_INVALID_CHAR'));
 				return false;
 			}
 
@@ -119,7 +119,7 @@ class MolajoInstallationModelDatabase extends JModel
 				if ($this->createDatabase($db, $options->db_name, $utfSupport)) {
 					$db->select($options->db_name);
 				} else {
-					$this->setError(JText::sprintf('INSTL_DATABASE_ERROR_CREATE', $options->db_name));
+					$this->setError(MolajoText::sprintf('INSTL_DATABASE_ERROR_CREATE', $options->db_name));
 					return false;
 				}
 			} else {
@@ -131,13 +131,13 @@ class MolajoInstallationModelDatabase extends JModel
 			if ($options->db_old == 'remove') {
 				// Attempt to delete the old database tables.
 				if (!$this->deleteDatabase($db, $options->db_name, $options->db_prefix)) {
-					$this->setError(JText::_('INSTL_DATABASE_ERROR_DELETE'));
+					$this->setError(MolajoText::_('INSTL_DATABASE_ERROR_DELETE'));
 					return false;
 				}
 			} else {
 				// If the database isn't being deleted, back it up.
 				if (!$this->backupDatabase($db, $options->db_name, $options->db_prefix)) {
-					$this->setError(JText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
+					$this->setError(MolajoText::_('INSTL_DATABASE_ERROR_BACKINGUP'));
 					return false;
 				}
             }
@@ -148,14 +148,14 @@ class MolajoInstallationModelDatabase extends JModel
 
 			// Attempt to import the database schema.
 			if (!$this->populateDatabase($db, $schema)) {
-				$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
+				$this->setError(MolajoText::sprintf('INSTL_ERROR_DB', $this->getError()));
 				return false;
 			}
 
 			// Attempt to update the table #__schema.
 			$files = JFolder::files(MOLAJO_PATH_ROOT.'/administrator/components/com_admin/sql/updates/mysql/', '\.sql$');
 			if (empty($files)) {
-				$this->setError(JText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
+				$this->setError(MolajoText::_('INSTL_ERROR_INITIALISE_SCHEMA'));
 				return false;
 			}
 			$version = '';
@@ -190,7 +190,7 @@ class MolajoInstallationModelDatabase extends JModel
 			$installer = JInstaller::getInstance();
 //			foreach ($extensions as $extension) {
 //				if (!$installer->refreshManifestCache($extension->extension_id)) {
-//					$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_REFRESH_MANIFEST_CACHE', $extension->name));
+//					$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_REFRESH_MANIFEST_CACHE', $extension->name));
 //					return false;
 //				}
 //			}
@@ -199,7 +199,7 @@ class MolajoInstallationModelDatabase extends JModel
 			$dblocalise = 'sql/'.(($type == 'mysqli') ? 'mysql' : $type).'/localise.sql';
 			if (JFile::exists($dblocalise)) {
 				if (!$this->populateDatabase($db, $dblocalise)) {
-					$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
+					$this->setError(MolajoText::sprintf('INSTL_ERROR_DB', $this->getError()));
 					return false;
 				}
 			}
@@ -259,13 +259,13 @@ class MolajoInstallationModelDatabase extends JModel
 
 		// Check for errors.
 		if (JError::isError($db)) {
-			$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', (string)$db));
+			$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', (string)$db));
 			return false;
 		}
 
 		// Check for database errors.
 		if ($err = $db->getErrorNum()) {
-			$this->setError(JText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', $db->getErrorNum()));
+			$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', $db->getErrorNum()));
 			return false;
 		}
 
@@ -279,11 +279,11 @@ class MolajoInstallationModelDatabase extends JModel
 
 		// Attempt to import the database schema.
 		if (!file_exists($data)) {
-			$this->setError(JText::sprintf('INSTL_DATABASE_FILE_DOES_NOT_EXIST', $data));
+			$this->setError(MolajoText::sprintf('INSTL_DATABASE_FILE_DOES_NOT_EXIST', $data));
 			return false;
 		}
 		elseif (!$this->populateDatabase($db, $data)) {
-			$this->setError(JText::sprintf('INSTL_ERROR_DB', $this->getError()));
+			$this->setError(MolajoText::sprintf('INSTL_ERROR_DB', $this->getError()));
 			return false;
 		}
 

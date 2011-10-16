@@ -275,7 +275,7 @@ class MolajoController extends JController
 
         /** set redirects **/
         $this->redirectClass->initialize();
- 
+
         /** success **/
         return true;
     }

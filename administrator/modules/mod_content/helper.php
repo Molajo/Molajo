@@ -79,7 +79,7 @@ class modContentHelper
         $items = $db->loadObjectList();
 
         if($db->getErrorNum()){
-            JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+            JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
             return false;
         }
 
@@ -89,10 +89,10 @@ class modContentHelper
 
         if (count($items) == 0) {
             $items[0]->columncount = '4';
-            $items[0]->columnheading1 = JText::_('MOD_LATEST_LATEST_ITEMS');
-            $items[0]->columnheading2 = JText::_('JSTATUS');
-            $items[0]->columnheading3 = JText::_('MOD_LATEST_CREATED');
-            $items[0]->columnheading4 = JText::_('MOD_LATEST_CREATED_BY');
+            $items[0]->columnheading1 = MolajoText::_('MOD_LATEST_LATEST_ITEMS');
+            $items[0]->columnheading2 = MolajoText::_('JSTATUS');
+            $items[0]->columnheading3 = MolajoText::_('MOD_LATEST_CREATED');
+            $items[0]->columnheading4 = MolajoText::_('MOD_LATEST_CREATED_BY');
 
         } else {
 
@@ -100,10 +100,10 @@ class modContentHelper
 
                 /** Headings */
                 $item->columncount = '4';
-                $item->columnheading.$i = JText::_('MOD_LATEST_LATEST_ITEMS');
-                $item->columnheading.$i = JText::_('JSTATUS');
-                $item->columnheading.$i = JText::_('MOD_LATEST_CREATED');
-                $item->columnheading.$i = JText::_('MOD_LATEST_CREATED_BY');
+                $item->columnheading.$i = MolajoText::_('MOD_LATEST_LATEST_ITEMS');
+                $item->columnheading.$i = MolajoText::_('JSTATUS');
+                $item->columnheading.$i = MolajoText::_('MOD_LATEST_CREATED');
+                $item->columnheading.$i = MolajoText::_('MOD_LATEST_CREATED_BY');
 
                 /** ACL */
                 if ($acl->authoriseTask ('com_articles', 'display', 'view', $item->id, $item->catid, $item)) {
@@ -138,13 +138,13 @@ class modContentHelper
 				$title = $category->title;
 			}
 			else {
-				$title = JText::_('MOD_POPULAR_UNEXISTING');
+				$title = MolajoText::_('MOD_POPULAR_UNEXISTING');
 			}
 		}
 		else
 		{
 			$title = '';
 		}
-		return JText::plural('MOD_LATEST_TITLE'.$type.($catid ? "_CATEGORY" : '').($who!='0' ? "_$who" : ''), (int)$params->get('count'), $title);
+		return MolajoText::plural('MOD_LATEST_TITLE'.$type.($catid ? "_CATEGORY" : '').($who!='0' ? "_$who" : ''), (int)$params->get('count'), $title);
 	}
 }

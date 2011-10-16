@@ -35,7 +35,7 @@ class RedirectControllerLinks extends JControllerAdmin
 		$comment	= JRequest::getString('comment');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, JText::_('COM_REDIRECT_NO_ITEM_SELECTED'));
+			JError::raiseWarning(500, MolajoText::_('COM_REDIRECT_NO_ITEM_SELECTED'));
 		}
 		else {
 			// Get the model.
@@ -48,7 +48,7 @@ class RedirectControllerLinks extends JControllerAdmin
 				JError::raiseWarning(500, $model->getError());
 			}
 			else {
-				$this->setMessage(JText::plural('COM_REDIRECT_N_LINKS_UPDATED', count($ids)));
+				$this->setMessage(MolajoText::plural('COM_REDIRECT_N_LINKS_UPDATED', count($ids)));
 			}
 		}
 

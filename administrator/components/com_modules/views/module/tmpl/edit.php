@@ -27,7 +27,7 @@ $script .= "	Joomla.submitform(task, document.getElementById('module-form'));
 					window.top.setTimeout('window.parent.SqueezeBox.close()', 1000);
 				}
 			} else {
-				alert('".$this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'))."');
+				alert('".$this->escape(MolajoText::_('JGLOBAL_VALIDATION_FORM_FAILED'))."');
 			}
 	}";
 
@@ -36,7 +36,7 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 <form action="<?php echo MolajoRoute::_('index.php?option=com_modules&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="module-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('JDETAILS'); ?></legend>
+			<legend><?php echo MolajoText::_('JDETAILS'); ?></legend>
 			<ul class="adminformlist">
 
 			<li><?php echo $this->form->getLabel('title'); ?>
@@ -80,22 +80,22 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 
 			<li><?php echo $this->form->getLabel('module'); ?>
 			<?php echo $this->form->getInput('module'); ?>
-			<input type="text" size="35" value="<?php if ($this->item->xml) echo ($text = (string) $this->item->xml->name) ? JText::_($text) : $this->item->module;else echo JText::_(COM_MODULES_ERR_XML);?>" class="readonly" readonly="readonly" /></li>
+			<input type="text" size="35" value="<?php if ($this->item->xml) echo ($text = (string) $this->item->xml->name) ? MolajoText::_($text) : $this->item->module;else echo MolajoText::_(COM_MODULES_ERR_XML);?>" class="readonly" readonly="readonly" /></li>
 
 			<li><?php echo $this->form->getLabel('application_id'); ?>
-			<input type="text" size="35" value="<?php echo $this->item->application_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" />
+			<input type="text" size="35" value="<?php echo $this->item->application_id == 0 ? MolajoText::_('JSITE') : MolajoText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" />
 			<?php echo $this->form->getInput('application_id'); ?></li>
 			</ul>
 			<div class="clr"></div>
 			<?php if ($this->item->xml) : ?>
 				<?php if ($text = trim($this->item->xml->description)) : ?>
 					<label>
-						<?php echo JText::_('COM_MODULES_MODULE_DESCRIPTION'); ?>
+						<?php echo MolajoText::_('COM_MODULES_MODULE_DESCRIPTION'); ?>
 					</label>
-					<span class="readonly mod-desc"><?php echo JText::_($text); ?></span>
+					<span class="readonly mod-desc"><?php echo MolajoText::_($text); ?></span>
 				<?php endif; ?>
 			<?php else : ?>
-				<p class="error"><?php echo JText::_('COM_MODULES_ERR_XML'); ?></p>
+				<p class="error"><?php echo MolajoText::_('COM_MODULES_ERR_XML'); ?></p>
 			<?php endif; ?>
 			<div class="clr"></div>
 		</fieldset>
@@ -111,7 +111,7 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 	<?php if ($hasContent) : ?>
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_MODULES_CUSTOM_OUTPUT'); ?></legend>
+			<legend><?php echo MolajoText::_('COM_MODULES_CUSTOM_OUTPUT'); ?></legend>
 			<ul class="adminformlist">
 			<div class="clr"></div>
 			<li><?php echo $this->form->getLabel('content'); ?>

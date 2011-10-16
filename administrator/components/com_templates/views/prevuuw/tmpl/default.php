@@ -15,10 +15,10 @@ defined('_JEXEC') or die;
 <form action="<?php echo MolajoRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 <div class="width-100">
 	<h3 class="title fltlft">
-		<?php echo JText::_('COM_TEMPLATES_SITE_PREVIEW'); ?>
+		<?php echo MolajoText::_('COM_TEMPLATES_SITE_PREVIEW'); ?>
 	</h3>
 	<h3 class="fltrt">
-		<?php echo JHtml::_('link',$this->url.'index.php?tp='.$this->tp.'&amp;template='.$this->id, JText::_('JBROWSERTARGET_NEW'), array('target' => '_blank')); ?>
+		<?php echo JHtml::_('link',$this->url.'index.php?tp='.$this->tp.'&amp;template='.$this->id, MolajoText::_('JBROWSERTARGET_NEW'), array('target' => '_blank')); ?>
 	</h3>
 	<div class="clr"></div>
 	<div class="width-100 temprev">

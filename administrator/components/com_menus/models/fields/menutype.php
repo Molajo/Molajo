@@ -54,21 +54,21 @@ class JFormFieldMenuType extends JFormFieldList
 		switch ($this->value)
 		{
 			case 'url':
-				$value = JText::_('COM_MENUS_TYPE_EXTERNAL_URL');
+				$value = MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL');
 				break;
 
 			case 'alias':
-				$value = JText::_('COM_MENUS_TYPE_ALIAS');
+				$value = MolajoText::_('COM_MENUS_TYPE_ALIAS');
 				break;
 
 			case 'separator':
-				$value = JText::_('COM_MENUS_TYPE_SEPARATOR');
+				$value = MolajoText::_('COM_MENUS_TYPE_SEPARATOR');
 				break;
 
 			default:
 				$link	= $this->form->getValue('link');
 				// Clean the link back to the option, view and layout
-				$value	= JText::_(JArrayHelper::getValue($this->_rlu, MenusHelper::getLinkKey($link)));
+				$value	= MolajoText::_(JArrayHelper::getValue($this->_rlu, MenusHelper::getLinkKey($link)));
 				break;
 		}
 		// Load the javascript
@@ -83,7 +83,7 @@ class JFormFieldMenuType extends JFormFieldList
 		});");
 
 		$html[] = '<input type="text" readonly="readonly" disabled="disabled" value="'.$value.'"'.$size.$class.'>';
-		$html[] = '<input type="button" class="modal" value="'.JText::_('JSELECT').'" rel="{handler:\'clone\', target:\'menu-types\'}">';
+		$html[] = '<input type="button" class="modal" value="'.MolajoText::_('JSELECT').'" rel="{handler:\'clone\', target:\'menu-types\'}">';
 		$html[] = '<input type="hidden" name="'.$this->name.'" value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'">';
 
 		$html[] = '<div id="menu-types">';
@@ -100,14 +100,14 @@ class JFormFieldMenuType extends JFormFieldList
 		$types		= $this->_getTypeOptions();
 		$recordId	= (int) $this->form->getValue('id');
 
-		$html[] = '<h2 class="modal-title">'.JText::_('COM_MENUS_TYPE_CHOOSE').'</h2>';
+		$html[] = '<h2 class="modal-title">'.MolajoText::_('COM_MENUS_TYPE_CHOOSE').'</h2>';
 		$html[] = '<ul class="menu_types">';
 
 		foreach ($types as $name => $list)
 		{
 			$html[] = '<li>';
 			$html[] = '<dl class="menu_type">';
-			$html[] = '	<dt>'.JText::_($name).'</dt>';
+			$html[] = '	<dt>'.MolajoText::_($name).'</dt>';
 			$html[] = '	<dd>';
 			$html[] = '		<ul>';
 			foreach ($list as $item)
@@ -115,8 +115,8 @@ class JFormFieldMenuType extends JFormFieldList
 				$html[] = '			<li>';
 				$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 											base64_encode(json_encode(array('id' => $recordId, 'title' => $item->title, 'request' => $item->request))).'\')"' .
-											' title="'.JText::_($item->description).'">'.
-											JText::_($item->title).'</a>';
+											' title="'.MolajoText::_($item->description).'">'.
+											MolajoText::_($item->title).'</a>';
 				$html[] = '			</li>';
 			}
 
@@ -128,26 +128,26 @@ class JFormFieldMenuType extends JFormFieldList
 
 		$html[] = '<li>';
 		$html[] = '<dl class="menu_type">';
-		$html[] = '	<dt>'.JText::_('COM_MENUS_TYPE_SYSTEM').'</dt>';
+		$html[] = '	<dt>'.MolajoText::_('COM_MENUS_TYPE_SYSTEM').'</dt>';
 		$html[] = '	<dd>';
 		$html[] = '		<ul>';
 		$html[] = '			<li>';
 		$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 									base64_encode(json_encode(array('id' => $recordId, 'title'=>'url'))).'\')"' .
-									' title="'.JText::_('COM_MENUS_TYPE_EXTERNAL_URL_DESC').'">'.
-									JText::_('COM_MENUS_TYPE_EXTERNAL_URL').'</a>';
+									' title="'.MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL_DESC').'">'.
+									MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL').'</a>';
 		$html[] = '			</li>';
 		$html[] = '			<li>';
 		$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 									base64_encode(json_encode(array('id' => $recordId, 'title'=>'alias'))).'\')"' .
-									' title="'.JText::_('COM_MENUS_TYPE_ALIAS_DESC').'">'.
-									JText::_('COM_MENUS_TYPE_ALIAS').'</a>';
+									' title="'.MolajoText::_('COM_MENUS_TYPE_ALIAS_DESC').'">'.
+									MolajoText::_('COM_MENUS_TYPE_ALIAS').'</a>';
 		$html[] = '			</li>';
 		$html[] = '			<li>';
 		$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 									base64_encode(json_encode(array('id' => $recordId, 'title'=>'separator'))).'\')"' .
-									' title="'.JText::_('COM_MENUS_TYPE_SEPARATOR_DESC').'">'.
-									JText::_('COM_MENUS_TYPE_SEPARATOR').'</a>';
+									' title="'.MolajoText::_('COM_MENUS_TYPE_SEPARATOR_DESC').'">'.
+									MolajoText::_('COM_MENUS_TYPE_SEPARATOR').'</a>';
 		$html[] = '			</li>';
 		$html[] = '		</ul>';
 		$html[] = '	</dd>';

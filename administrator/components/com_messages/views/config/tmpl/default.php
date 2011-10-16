@@ -28,12 +28,12 @@ JHtml::_('behavior.keepalive');
 	<fieldset>
 		<div class="fltrt">
 			<button type="button" onclick="Joomla.submitform('config.save', this.form);window.top.setTimeout('window.parent.SqueezeBox.close()', 1400);">
-				<?php echo JText::_('JSAVE');?></button>
+				<?php echo MolajoText::_('JSAVE');?></button>
 			<button type="button" onclick="window.parent.SqueezeBox.close();">
-				<?php echo JText::_('JCANCEL');?></button>
+				<?php echo MolajoText::_('JCANCEL');?></button>
 		</div>
 		<div class="configuration" >
-			<?php echo JText::_('COM_MESSAGES_MY_SETTINGS') ?>
+			<?php echo MolajoText::_('COM_MESSAGES_MY_SETTINGS') ?>
 		</div>
 	</fieldset>
 

@@ -78,11 +78,11 @@ class TemplatesModelStyle extends JModelAdmin
 			if ($table->load($pk)) {
 				// Access checks.
 				if (!$user->authorise('core.delete', 'com_templates')) {
-					throw new Exception(JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					throw new Exception(MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 				}
 				// You should not delete a default style
 				if ($table->home != '0'){
-					JError::raiseWarning(SOME_ERROR_NUMBER,Jtext::_('COM_TEMPLATES_STYLE_CANNOT_DELETE_DEFAULT_STYLE'));
+					JError::raiseWarning(SOME_ERROR_NUMBER,MolajoText::_('COM_TEMPLATES_STYLE_CANNOT_DELETE_DEFAULT_STYLE'));
 					return false;
 				}
 
@@ -119,7 +119,7 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Access checks.
 		if (!$user->authorise('core.create', 'com_templates')) {
-			throw new Exception(JText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
+			throw new Exception(MolajoText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
 		}
 
 		$table = $this->getTable();
@@ -300,7 +300,7 @@ class TemplatesModelStyle extends JModelAdmin
 		$lang		= MolajoFactory::getLanguage();
 		$application		= JApplicationHelper::getApplicationInfo($applicationId);
 		if (!$form->loadFile('style_'.$application->name, true)) {
-			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+			throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 		}
 
 		jimport('joomla.filesystem.file');
@@ -317,7 +317,7 @@ class TemplatesModelStyle extends JModelAdmin
 		if (file_exists($formFile)) {
 			// Get the template form.
 			if (!$form->loadFile($formFile, false, '//config')) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 		}
 
@@ -330,7 +330,7 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Attempt to load the xml file.
 		if (!$xml = simplexml_load_file($formFile)) {
-			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+			throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 		}
 
 		// Get the help data from the XML file if present.
@@ -358,7 +358,7 @@ class TemplatesModelStyle extends JModelAdmin
 		// Detect disabled extension
 		$extension = JTable::getInstance('Extension');
 		if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $data['template'], 'application_id' => $data['application_id']))) {
-			$this->setError(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
+			$this->setError(MolajoText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
 			return false;
 		}
 
@@ -377,7 +377,7 @@ class TemplatesModelStyle extends JModelAdmin
 			$isNew = false;
 		}
 		if (JRequest::getVar('task') == 'save2copy') {
-		$data['title'] .= ' '.JText::_('JGLOBAL_COPY');
+		$data['title'] .= ' '.MolajoText::_('JGLOBAL_COPY');
 		$data['home'] = 0;
 		$data['assigned'] ='';
 		}
@@ -448,7 +448,7 @@ class TemplatesModelStyle extends JModelAdmin
 			$n += $db->getAffectedRows();
 			if ($n > 0) {
 				$app = MolajoFactory::getApplication();
-				$app->enQueueMessage(JText::plural('COM_TEMPLATES_MENU_CHANGED',$n));
+				$app->enQueueMessage(MolajoText::plural('COM_TEMPLATES_MENU_CHANGED',$n));
 			}
 		}
 
@@ -479,18 +479,18 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Access checks.
 		if (!$user->authorise('core.edit.state', 'com_templates')) {
-			throw new Exception(JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			throw new Exception(MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 
 		$style = JTable::getInstance('Style','TemplatesTable');
 		if (!$style->load((int)$id)) {
-			throw new Exception(JText::_('COM_TEMPLATES_ERROR_STYLE_NOT_FOUND'));
+			throw new Exception(MolajoText::_('COM_TEMPLATES_ERROR_STYLE_NOT_FOUND'));
 		}
 
 		// Detect disabled extension
 		$extension = JTable::getInstance('Extension');
 		if ($extension->load(array('enabled' => 0, 'type' => 'template', 'element' => $style->template, 'application_id' => $style->application_id))) {
-			throw new Exception(JText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
+			throw new Exception(MolajoText::_('COM_TEMPLATES_ERROR_SAVE_DISABLED_TEMPLATE'));
 		}
 
 
@@ -539,7 +539,7 @@ class TemplatesModelStyle extends JModelAdmin
 
 		// Access checks.
 		if (!$user->authorise('core.edit.state', 'com_templates')) {
-			throw new Exception(JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			throw new Exception(MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 
 		// Lookup the application_id.
@@ -554,10 +554,10 @@ class TemplatesModelStyle extends JModelAdmin
 			throw new Exception($error);
 		}
 		else if (!is_numeric($style->application_id)) {
-			throw new Exception(JText::_('COM_TEMPLATES_ERROR_STYLE_NOT_FOUND'));
+			throw new Exception(MolajoText::_('COM_TEMPLATES_ERROR_STYLE_NOT_FOUND'));
 		}
 		else if ($style->home=='1') {
-			throw new Exception(JText::_('COM_TEMPLATES_ERROR_CANNOT_UNSET_DEFAULT_STYLE'));
+			throw new Exception(MolajoText::_('COM_TEMPLATES_ERROR_CANNOT_UNSET_DEFAULT_STYLE'));
 		}
 
 		// Set the new home style.

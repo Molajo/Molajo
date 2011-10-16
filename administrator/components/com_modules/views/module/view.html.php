@@ -60,7 +60,7 @@ class ModulesViewModule extends JView
 		$canDo		= ModulesHelper::getActions($this->state->get('filter.category_id'), $this->item->id);
 		$item		= $this->get('Item');
 
-		MolajoToolbarHelper::title( JText::sprintf('COM_MODULES_MANAGER_MODULE', JText::_($this->item->module)), 'module.png');
+		MolajoToolbarHelper::title( MolajoText::sprintf('COM_MODULES_MANAGER_MODULE', MolajoText::_($this->item->module)), 'module.png');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit') || $canDo->get('core.create') )) {
@@ -86,7 +86,7 @@ class ModulesViewModule extends JView
 		$help = $this->get('Help');
 		if ($lang->hasKey($help->url)) {
 			$debug = $lang->setDebug(false);
-			$url = JText::_($help->url);
+			$url = MolajoText::_($help->url);
 			$lang->setDebug($debug);
 		}
 		else {

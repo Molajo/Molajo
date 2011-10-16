@@ -53,7 +53,7 @@ class SearchViewSearches extends JView
 	{
 		$canDo	= SearchHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_SEARCH_MANAGER_SEARCHES'), 'search.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_SEARCH_MANAGER_SEARCHES'), 'search.png');
 
 		if ($canDo->get('core.edit.state')) {
 			MolajoToolbarHelper::custom('searches.reset', 'refresh.png', 'refresh_f2.png', 'JSEARCH_RESET', false);

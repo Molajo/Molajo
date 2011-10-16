@@ -16,11 +16,11 @@ $menuTypes = MenusHelper::getMenuLinks();
 $user = MolajoFactory::getUser();
 ?>
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_TEMPLATES_MENUS_ASSIGNMENT'); ?></legend>
-				<label id="jform_menuselect-lbl" for="jform_menuselect"><?php echo JText::_('JGLOBAL_MENU_SELECTION'); ?></label>
+			<legend><?php echo MolajoText::_('COM_TEMPLATES_MENUS_ASSIGNMENT'); ?></legend>
+				<label id="jform_menuselect-lbl" for="jform_menuselect"><?php echo MolajoText::_('JGLOBAL_MENU_SELECTION'); ?></label>
 
 				<button type="button" class="jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = !el.checked; });">
-					<?php echo JText::_('JGLOBAL_SELECTION_INVERT'); ?>
+					<?php echo MolajoText::_('JGLOBAL_SELECTION_INVERT'); ?>
 				</button>
 				<div class="clr"></div>
 				<div id="menu-assignment">

@@ -32,7 +32,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<thead>
 			<tr>
 				<th width="20">
-					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="nowrap">
 					<?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_NAME', 'name', $listDirn, $listOrder); ?>
@@ -47,13 +47,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_TYPE', 'type', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%" class="center">
-					<?php echo JText::_('MOLAJOVERSION'); ?>
+					<?php echo MolajoText::_('MOLAJOVERSION'); ?>
 				</th>
 				<th width="10%">
-					<?php echo JText::_('JDATE'); ?>
+					<?php echo MolajoText::_('JDATE'); ?>
 				</th>
 				<th width="15%">
-					<?php echo JText::_('JAUTHOR'); ?>
+					<?php echo MolajoText::_('JAUTHOR'); ?>
 				</th>
 				<th>
 					<?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_FOLDER', 'folder', $listDirn, $listOrder); ?>
@@ -92,7 +92,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php echo JText::_('COM_INSTALLER_TYPE_' . $item->type); ?>
+					<?php echo MolajoText::_('COM_INSTALLER_TYPE_' . $item->type); ?>
 				</td>
 				<td class="center">
 					<?php echo @$item->version != '' ? $item->version : '&#160;'; ?>
@@ -101,12 +101,12 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo @$item->creationDate != '' ? $item->creationDate : '&#160;'; ?>
 				</td>
 				<td class="center">
-					<span class="editlinktip hasTip" title="<?php echo addslashes(htmlspecialchars(JText::_('COM_INSTALLER_AUTHOR_INFORMATION').'::'.$item->author_info)); ?>">
+					<span class="editlinktip hasTip" title="<?php echo addslashes(htmlspecialchars(MolajoText::_('COM_INSTALLER_AUTHOR_INFORMATION').'::'.$item->author_info)); ?>">
 						<?php echo @$item->author != '' ? $item->author : '&#160;'; ?>
 					</span>
 				</td>
 				<td class="center">
-					<?php echo @$item->folder != '' ? $item->folder : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?>
+					<?php echo @$item->folder != '' ? $item->folder : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?>
 				</td>
 				<td>
 					<?php echo $item->extension_id ?>

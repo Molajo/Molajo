@@ -38,7 +38,7 @@ class MolajoInstallationControllerSetup extends JController
 		$session = MolajoFactory::getSession();
 
 		if ($session->isNew()) {
-			$this->sendResponse(new JException(JText::_('INSTL_COOKIES_NOT_ENABLED'), 500));
+			$this->sendResponse(new JException(MolajoText::_('INSTL_COOKIES_NOT_ENABLED'), 500));
 		}
 
 		// Get the setup model.
@@ -311,7 +311,7 @@ class MolajoInstallationControllerSetup extends JController
 
 		// Create a response body.
 		$r = new JObject();
-		$r->text = JText::_('INSTL_SITE_SAMPLE_LOADED');
+		$r->text = MolajoText::_('INSTL_SITE_SAMPLE_LOADED');
 
 		// Send the response.
 		$this->sendResponse($r);
@@ -413,7 +413,7 @@ class MolajoInstallationControllerSetup extends JController
 		$path = MOLAJO_PATH_INSTALLATION;
 		//check whether the folder still exists
 		if (!file_exists($path)) {
-			$this->sendResponse(new JException(JText::sprintf('INSTL_COMPLETE_ERROR_FOLDER_ALREADY_REMOVED'), 500));
+			$this->sendResponse(new JException(MolajoText::sprintf('INSTL_COMPLETE_ERROR_FOLDER_ALREADY_REMOVED'), 500));
 		}
 
 		// check whether we need to use FTP
@@ -461,12 +461,12 @@ class MolajoInstallationControllerSetup extends JController
 
 		// If an error was encountered return an error.
 		if (!$return) {
-			$this->sendResponse(new JException(JText::_('INSTL_COMPLETE_ERROR_FOLDER_DELETE'), 500));
+			$this->sendResponse(new JException(MolajoText::_('INSTL_COMPLETE_ERROR_FOLDER_DELETE'), 500));
 		}
 
 		// Create a response body.
 		$r = new JObject();
-		$r->text = JText::_('INSTL_COMPLETE_FOLDER_REMOVED');
+		$r->text = MolajoText::_('INSTL_COMPLETE_FOLDER_REMOVED');
 
 		// Send the response.
 		$this->sendResponse($r);
@@ -544,7 +544,7 @@ class MolajoInstallationJsonResponse
 		if (JError::isError($state)) {
 			// Prepare the error response.
 			$this->error	= true;
-			$this->header	= JText::_('INSTL_HEADER_ERROR');
+			$this->header	= MolajoText::_('INSTL_HEADER_ERROR');
 			$this->message	= $state->getMessage();
 		} else {
 			// Prepare the response data.

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 $user		= MolajoFactory::getUser();
 $userId		= $user->get('id');
-$application		= $this->state->get('filter.application_id', 0) ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
+$application		= $this->state->get('filter.application_id', 0) ? MolajoText::_('JADMINISTRATOR') : MolajoText::_('JSITE');
 $applicationId	= $this->state->get('filter.application_id', 0);
 ?>
 <form action="<?php echo MolajoRoute::_('index.php?option=com_languages&view=installed&application='.$applicationId); ?>" method="post" id="adminForm" name="adminForm">
@@ -26,31 +26,31 @@ $applicationId	= $this->state->get('filter.application_id', 0);
 		<thead>
 			<tr>
 				<th width="20">
-					<?php echo JText::_('COM_LANGUAGES_HEADING_NUM'); ?>
+					<?php echo MolajoText::_('COM_LANGUAGES_HEADING_NUM'); ?>
 				</th>
 				<th width="20">
 					&#160;
 				</th>
 				<th width="25%" class="title">
-					<?php echo JText::_('COM_LANGUAGES_HEADING_LANGUAGE'); ?>
+					<?php echo MolajoText::_('COM_LANGUAGES_HEADING_LANGUAGE'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('JCLIENT'); ?>
+					<?php echo MolajoText::_('JCLIENT'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('COM_LANGUAGES_HEADING_DEFAULT'); ?>
+					<?php echo MolajoText::_('COM_LANGUAGES_HEADING_DEFAULT'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('MOLAJOVERSION'); ?>
+					<?php echo MolajoText::_('MOLAJOVERSION'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('JDATE'); ?>
+					<?php echo MolajoText::_('JDATE'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('JAUTHOR'); ?>
+					<?php echo MolajoText::_('JAUTHOR'); ?>
 				</th>
 				<th>
-					<?php echo JText::_('COM_LANGUAGES_HEADING_AUTHOR_EMAIL'); ?>
+					<?php echo MolajoText::_('COM_LANGUAGES_HEADING_AUTHOR_EMAIL'); ?>
 				</th>
 			</tr>
 		</thead>

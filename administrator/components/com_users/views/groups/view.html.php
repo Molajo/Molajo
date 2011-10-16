@@ -51,7 +51,7 @@ class UsersViewGroups extends JView
 	{
 		$canDo	= UsersHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_USERS_VIEW_GROUPS_TITLE'), 'groups');
+		MolajoToolbarHelper::title(MolajoText::_('COM_USERS_VIEW_GROUPS_TITLE'), 'groups');
 
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('group.add');

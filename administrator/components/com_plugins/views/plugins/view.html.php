@@ -52,7 +52,7 @@ class PluginsViewPlugins extends JView
 		$state	= $this->get('State');
 		$canDo	= PluginsHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_PLUGINS_MANAGER_PLUGINS'), 'plugin');
+		MolajoToolbarHelper::title(MolajoText::_('COM_PLUGINS_MANAGER_PLUGINS'), 'plugin');
 
 		if ($canDo->get('core.edit')) {
 			MolajoToolbarHelper::editList('plugin.edit');

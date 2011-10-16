@@ -27,10 +27,10 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 <form action="<?php echo MolajoRoute::_('index.php?option=com_menus&view=items');?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_MENUS_ITEMS_SEARCH_FILTER'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_MENUS_ITEMS_SEARCH_FILTER'); ?>" />
+			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 
@@ -39,23 +39,23 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 			</select>
 
 			<select name="filter_level" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('COM_MENUS_OPTION_SELECT_LEVEL');?></option>
+				<option value=""><?php echo MolajoText::_('COM_MENUS_OPTION_SELECT_LEVEL');?></option>
 				<?php echo JHtml::_('select.options', $this->f_levels, 'value', 'text', $this->state->get('filter.level'));?>
 			</select>
 
             <select name="filter_published" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array('archived' => false)), 'value', 'text', $this->state->get('filter.published'), true);?>
 			</select>
 
             <select name="filter_access" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_ACCESS');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_ACCESS');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'));?>
 			</select>
 
 
 			<select name="filter_language" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_LANGUAGE');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_LANGUAGE');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'));?>
 			</select>
 
@@ -67,7 +67,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 		<thead>
 			<tr>
 				<th width="1%">
-					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="title">
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
@@ -85,7 +85,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 					<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ACCESS', 'access_level', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JText::_('JGRID_HEADING_MENU_ITEM_TYPE'); ?>
+					<?php echo MolajoText::_('JGRID_HEADING_MENU_ITEM_TYPE'); ?>
 				</th>
 				<th width="5%">
 					<?php echo JHtml::_('grid.sort', 'COM_MENUS_HEADING_HOME', 'a.home', $listDirn, $listOrder); ?>
@@ -135,12 +135,12 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 						<?php echo str_repeat('<span class="gtr">|&mdash;</span>', $item->level-1) ?>
 						<?php if ($item->type !='url') : ?>
 							<?php if (empty($item->note)) : ?>
-								<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias));?>
+								<?php echo MolajoText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias));?>
 							<?php else : ?>
-								<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note));?>
+								<?php echo MolajoText::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note));?>
 							<?php endif; ?>
 						<?php elseif($item->type =='url' && $item->note) : ?>
-							<?php echo JText::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note));?>
+							<?php echo MolajoText::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note));?>
 						<?php endif; ?></p>
 				</td>
 				<td class="center">
@@ -172,7 +172,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 							<?php echo JHtml::_('jgrid.isdefault', $item->home, $i, 'items.', ($item->language != '*' || !$item->home) && $canChange);?>
 						<?php elseif ($canChange):?>
 							<a href="<?php echo MolajoRoute::_('index.php?option=com_menus&task=items.unsetDefault&cid[]='.$item->id.'&'.JUtility::getToken().'=1');?>">
-								<?php echo JHtml::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>JText::sprintf('COM_MENUS_GRID_UNSET_LANGUAGE', $item->language_title)), true);?>
+								<?php echo JHtml::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>MolajoText::sprintf('COM_MENUS_GRID_UNSET_LANGUAGE', $item->language_title)), true);?>
 							</a>
 						<?php else:?>
 							<?php echo JHtml::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>$item->language_title), true);?>
@@ -181,11 +181,11 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 				</td>
 				<td class="center">
 					<?php if ($item->language==''):?>
-						<?php echo JText::_('JDEFAULT'); ?>
+						<?php echo MolajoText::_('JDEFAULT'); ?>
 					<?php elseif ($item->language=='*'):?>
-						<?php echo JText::alt('JALL','language'); ?>
+						<?php echo MolajoText::alt('JALL','language'); ?>
 					<?php else:?>
-						<?php echo $item->language_title ? $this->escape($item->language_title) : JText::_('JUNDEFINED'); ?>
+						<?php echo $item->language_title ? $this->escape($item->language_title) : MolajoText::_('JUNDEFINED'); ?>
 					<?php endif;?>
 				</td>
 				<td class="center">

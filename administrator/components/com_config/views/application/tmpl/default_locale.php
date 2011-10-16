@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 <div class="width-100">
 <fieldset class="adminform">
-	<legend><?php echo JText::_('COM_CONFIG_LOCATION_SETTINGS'); ?></legend>
+	<legend><?php echo MolajoText::_('COM_CONFIG_LOCATION_SETTINGS'); ?></legend>
 	<ul class="adminformlist">
 			<?php
 			foreach ($this->form->getFieldset('locale') as $field):

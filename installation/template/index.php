@@ -47,7 +47,7 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 		<div id="header">
         	<h1>Molajo Installer</h1>
 			
-	<h2><?php echo JText::_('INSTL_INSTALLATION') ?><?php echo MOLAJOVERSION; ?> </h2>
+	<h2><?php echo MolajoText::_('INSTL_INSTALLATION') ?><?php echo MOLAJOVERSION; ?> </h2>
 		</div>
 		<jdoc:include type="message" />
 		<div id="content-box">
@@ -56,7 +56,7 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 				<div id="warning">
 					<noscript>
 						<div id="javascript-warning">
-							<?php echo JText::_('INSTL_WARNJAVASCRIPT'); ?>
+							<?php echo MolajoText::_('INSTL_WARNJAVASCRIPT'); ?>
 						</div>
 					</noscript>
 				</div>
@@ -69,7 +69,7 @@ JHtml::_('script', 'installation/template/js/installation.js', true, false, fals
 			</div>
 		</div>
 		<div id="footer">
-			<?php echo JText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
+			<?php echo MolajoText::sprintf('MOLAJO_IS_FREESOFTWARE', $molajo) ?>
 		</div>
         </div>
 	</body>

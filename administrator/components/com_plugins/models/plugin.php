@@ -234,7 +234,7 @@ class PluginsModelPlugin extends JModelAdmin
 			// Try 1.5 format: /plugins/folder/element/element.xml
 			$formFile = JPath::clean(JPATH_PLUGINS.'/'.$folder.'/'.$element.'.xml');
 			if (!file_exists($formFile)) {
-				throw new Exception(JText::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element.'.xml'));
+				throw new Exception(MolajoText::sprintf('COM_PLUGINS_ERROR_FILE_NOT_FOUND', $element.'.xml'));
 				return false;
 			}
 		}
@@ -249,13 +249,13 @@ class PluginsModelPlugin extends JModelAdmin
 		if (file_exists($formFile)) {
 			// Get the plugin form.
 			if (!$form->loadFile($formFile, false, '//config')) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 		}
 
 		// Attempt to load the xml file.
 		if (!$xml = simplexml_load_file($formFile)) {
-			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+			throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 		}
 
 		// Get the help data from the XML file if present.

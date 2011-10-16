@@ -114,7 +114,7 @@ class MolajoInstallation extends MolajoApplication
 		switch($document->getType())
 		{
 			case 'html' :
-				$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
+				$document->setTitle(MolajoText::_('INSTL_PAGE_TITLE'));
 				break;
 			default :
 				break;
@@ -146,7 +146,7 @@ class MolajoInstallation extends MolajoApplication
 		);
 
 		$document->setBuffer($contents, 'installation');
-		$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
+		$document->setTitle(MolajoText::_('INSTL_PAGE_TITLE'));
 		$data = $document->render(false, $params);
 		JResponse::setBody($data);
 		if (MolajoFactory::getConfig()->get('debug_lang')) {

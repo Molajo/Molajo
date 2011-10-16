@@ -27,10 +27,10 @@ abstract class JHtmlPhpSetting
 	public static function boolean($val)
 	{
 		if ($val) {
-			return JText::_('JON');
+			return MolajoText::_('JON');
 		}
 		else {
-			return JText::_('JOFF');
+			return MolajoText::_('JOFF');
 		}
 	}
 
@@ -44,9 +44,9 @@ abstract class JHtmlPhpSetting
 	public static function set($val)
 	{
 		if ($val) {
-			return JText::_('JYES');
+			return MolajoText::_('JYES');
 		} else {
-			return JText::_('JNO');
+			return MolajoText::_('JNO');
 		}
 	}
 
@@ -60,7 +60,7 @@ abstract class JHtmlPhpSetting
 	public static function string($val)
 	{
 		if (empty($val)) {
-			return JText::_('JNONE');
+			return MolajoText::_('JNONE');
 		} else {
 			return $val;
 		}

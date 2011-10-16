@@ -12,8 +12,8 @@ defined('MOLAJO') or die; ?>
     class="hasTip"
     <?php if ($this->row->id == "") { } else { echo ' for="'.htmlspecialchars($this->row->id, ENT_COMPAT, 'UTF-8').'"'; } ?>
     <?php if ($this->row->class == "") { } else { echo ' class="'.htmlspecialchars($this->row->class, ENT_COMPAT, 'UTF-8').'"'; } ?>
-    <?php if ($this->row->description == "") { } else { echo ' name="'.htmlspecialchars(JText::_($this->row->description)).'"'; } ?>
-    <?php echo JText::_(($this->row->label), ENT_COMPAT, 'UTF-8'); ?>
+    <?php if ($this->row->description == "") { } else { echo ' name="'.htmlspecialchars(MolajoText::_($this->row->description)).'"'; } ?>
+    <?php echo MolajoText::_(($this->row->label), ENT_COMPAT, 'UTF-8'); ?>
     >
 	<span>
 <?php } ?>

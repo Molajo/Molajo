@@ -61,7 +61,7 @@ class MediaModelManager extends JModel
 		$folders = JFolder::folders($base, '.', true, true);
 
 		$document = MolajoFactory::getDocument();
-		$document->setTitle(JText::_('COM_MEDIA_INSERT_IMAGE'));
+		$document->setTitle(MolajoText::_('COM_MEDIA_INSERT_IMAGE'));
 
 		// Build the array of select options for the folder list
 		$options[] = JHtml::_('select.option', "","/");
@@ -129,7 +129,7 @@ class MediaModelManager extends JModel
 				}
 			}
 		}
-		$tree['data'] = (object) array('name' => JText::_('COM_MEDIA_MEDIA'), 'relative' => '', 'absolute' => $base);
+		$tree['data'] = (object) array('name' => MolajoText::_('COM_MEDIA_MEDIA'), 'relative' => '', 'absolute' => $base);
 
 		return $tree;
 	}

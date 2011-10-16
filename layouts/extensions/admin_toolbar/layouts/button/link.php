@@ -26,7 +26,7 @@ class MolajoButtonLink extends MolajoButton
 
 	public function fetchButton($type='Link', $name = 'back', $text = '', $url = null)
 	{
-		$text	= JText::_($text);
+		$text	= MolajoText::_($text);
 		$class	= $this->fetchIconClass($name);
 		$doTask	= $this->_getCommand($url);
 

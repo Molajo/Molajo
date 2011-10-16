@@ -54,7 +54,7 @@ class UsersControllerConfig extends JController
 		// Handle the response.
 		if ($return === false)
 		{
-			$message = JText::sprintf('COM_USERS_CONFIG_IMPORT_FAILED', $model->getError());
+			$message = MolajoText::sprintf('COM_USERS_CONFIG_IMPORT_FAILED', $model->getError());
 			$this->setRedirect('index.php?option=com_users&view=config&layout=import&tmpl=component', $message, 'notice');
 			return false;
 		}
@@ -112,7 +112,7 @@ class UsersControllerConfig extends JController
 		$return	= $model->save();
 
 		if ($return === false) {
-			$message = JText::sprintf('COM_USERS_CONFIG_SAVE_FAILED', $model->getError());
+			$message = MolajoText::sprintf('COM_USERS_CONFIG_SAVE_FAILED', $model->getError());
 			$this->setRedirect('index.php?option=com_users&view=config&tmpl=component', $message, 'notice');
 			return false;
 		}

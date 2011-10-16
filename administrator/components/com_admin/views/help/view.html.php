@@ -64,7 +64,7 @@ class AdminViewHelp extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::_('COM_ADMIN_HELP'), 'help_header.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_ADMIN_HELP'), 'help_header.png');
 	}
 }
 

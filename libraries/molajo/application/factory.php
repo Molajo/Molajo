@@ -42,14 +42,15 @@ abstract class MolajoFactory
 	 */
 	public static function getApplication($id = null, $config = array(), $prefix='Molajo')
 	{
-		if (!self::$application) {
-
-			if (!$id) {
+		if (self::$application) {
+        } else {
+			if ($id) {
+            } else {
 				JError::raiseError(500, 'Application Instantiation Error');
 			}
 			self::$application = MolajoApplication::getInstance($id, $config, $prefix);
 		}
-        
+
 		return self::$application;
 	}
 
@@ -68,7 +69,8 @@ abstract class MolajoFactory
 	 */
 	public static function getConfig($file = null, $type = 'PHP')
 	{
-		if (!self::$config) {
+		if (self::$config) {
+        } else {
 			if ($file === null) {
 				$file = MOLAJO_PATH_SITE.'/configuration.php';
 			}
@@ -93,7 +95,8 @@ abstract class MolajoFactory
 	 */
 	public static function getSession($options = array())
 	{
-		if (!self::$session) {
+		if (self::$session) {
+        } else {
 			self::$session = self::_createSession($options);
 		}
 
@@ -112,7 +115,8 @@ abstract class MolajoFactory
 	 */
 	public static function getLanguage()
 	{
-		if (!self::$language) {
+		if (self::$language) {
+        } else {
 			self::$language = self::_createLanguage();
 		}
 
@@ -129,7 +133,8 @@ abstract class MolajoFactory
 	 */
 	public static function getDocument()
 	{
-		if (!self::$document) {
+		if (self::$document) {
+        } else {
 			self::$document = self::_createDocument();
 		}
 
@@ -151,11 +156,11 @@ abstract class MolajoFactory
 	{
 		if (is_null($id)) {
 			$instance = self::getSession()->get('user');
-			if (!($instance instanceof MolajoUser)) {
+			if ($instance instanceof MolajoUser) {
+            } else {
 				$instance = MolajoUser::getInstance();
 			}
-		}
-		else {
+		} else {
 			$instance = MolajoUser::getInstance($id);
 		}
 
@@ -218,8 +223,8 @@ abstract class MolajoFactory
 	 */
 	public static function getDbo()
 	{
-		if (!self::$database) {
-			//get the debug configuration setting
+		if (self::$database) {
+        } else {
 			$conf	= self::getConfig();
 			$debug	= $conf->get('debug');
 
@@ -242,7 +247,8 @@ abstract class MolajoFactory
 	 */
 	public static function getMailer()
 	{
-		if (!self::$mailer) {
+		if (self::$mailer) {
+        } else {
 			self::$mailer = self::_createMailer();
 		}
 		$copy	= clone self::$mailer;
@@ -342,8 +348,7 @@ abstract class MolajoFactory
 		if ($isFile) {
 			// Try to load the XML file
 			$xml = simplexml_load_file($data, 'JXMLElement');
-		}
-		else {
+		} else {
 			// Try to load the XML string
 			$xml = simplexml_load_string($data, 'JXMLElement');
 		}
@@ -429,31 +434,19 @@ abstract class MolajoFactory
 			if ($mainLocale !== false) {
 				$classname = str_replace('-', '_', $mainLocale).'Date';
 
-				if (!class_exists($classname)) {
-					//The class does not exist, default to JDate
+				if (class_exists($classname)) {
+                } else {
 					$classname = 'JDate';
 				}
-			}
-			else {
-				//No tag, so default to JDate
+			} else {
 				$classname = 'JDate';
 			}
 		}
 		$key = $time.'-'.$tzOffset;
 
-		//		if (!isset($instances[$classname][$key])) {
 		$tmp = new $classname($time, $tzOffset);
-		//We need to serialize to break the reference
-		//			$instances[$classname][$key] = serialize($tmp);
-		//			unset($tmp);
-		//		}
-
-		//		$date = unserialize($instances[$classname][$key]);
-		//		return $date;
 		return $tmp;
 	}
-
-
 
 	/**
 	 * Create a configuration object

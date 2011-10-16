@@ -52,7 +52,7 @@ class MolajoInstallationModelConfiguration extends JModel
 
 		/* Site Settings */
 		$registry->set('offline', 0);
-		$registry->set('offline_message', JText::_('INSTL_STD_OFFLINE_MSG'));
+		$registry->set('offline_message', MolajoText::_('INSTL_STD_OFFLINE_MSG'));
 		$registry->set('sitename', $options->site_name);
 		$registry->set('editor', 'none');
 		$registry->set('list_limit', 20);
@@ -201,13 +201,13 @@ class MolajoInstallationModelConfiguration extends JModel
 
 		// Check for errors.
 		if (JError::isError($db)) {
-			$this->setError(JText::sprintf('INSTL_ERROR_CONNECT_DB', (string)$db));
+			$this->setError(MolajoText::sprintf('INSTL_ERROR_CONNECT_DB', (string)$db));
 			return false;
 		}
 
 		// Check for database errors.
 		if ($err = $db->getErrorNum()) {
-			$this->setError(JText::sprintf('INSTL_ERROR_CONNECT_DB', $db->getErrorNum()));
+			$this->setError(MolajoText::sprintf('INSTL_ERROR_CONNECT_DB', $db->getErrorNum()));
 			return false;
 		}
 

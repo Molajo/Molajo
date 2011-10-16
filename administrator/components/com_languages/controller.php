@@ -50,7 +50,7 @@ class LanguagesController extends JController
 		if ($view == 'language' && $layout == 'edit' && !$this->checkEditId('com_languages.edit.language', $id)) {
 
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_languages&view=languages', false));
 

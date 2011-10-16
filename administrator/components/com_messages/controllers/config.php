@@ -61,13 +61,13 @@ class MessagesControllerConfig extends JController
 		if (!$model->save($data))
 		{
 			// Redirect back to the main list.
-			$this->setMessage(JText::sprintf('JERROR_SAVE_FAILED', $model->getError()), 'warning');
+			$this->setMessage(MolajoText::sprintf('JERROR_SAVE_FAILED', $model->getError()), 'warning');
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_messages&view=messages', false));
 			return false;
 		}
 
 		// Redirect to the list screen.
-		$this->setMessage(JText::_('COM_MESSAGES_CONFIG_SAVED'));
+		$this->setMessage(MolajoText::_('COM_MESSAGES_CONFIG_SAVED'));
 		$this->setRedirect(MolajoRoute::_('index.php?option=com_messages&view=messages', false));
 
 		return true;

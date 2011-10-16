@@ -43,7 +43,7 @@ class TemplatesTableStyle extends JTable
 
 		// Verify that the default style is not unset
 		if ($array['home']=='0' && $this->home=='1') {
-			$this->setError(JText::_('COM_TEMPLATES_ERROR_CANNOT_UNSET_DEFAULT_STYLE'));
+			$this->setError(MolajoText::_('COM_TEMPLATES_ERROR_CANNOT_UNSET_DEFAULT_STYLE'));
 			return false;
 		}
 
@@ -59,7 +59,7 @@ class TemplatesTableStyle extends JTable
 	{
 		if (empty($this->title))
 		{
-			$this->setError(JText::_('COM_TEMPLATES_ERROR_STYLE_REQUIRES_TITLE'));
+			$this->setError(MolajoText::_('COM_TEMPLATES_ERROR_STYLE_REQUIRES_TITLE'));
 			return false;
 		}
 
@@ -109,7 +109,7 @@ class TemplatesTableStyle extends JTable
 			$this->_db->setQuery($query);
 			$results = $this->_db->loadResultArray();
 			if (count($results)==1 && $results[0]==$pk) {
-				$this->setError(JText::_('COM_TEMPLATES_ERROR_CANNOT_DELETE_LAST_STYLE'));
+				$this->setError(MolajoText::_('COM_TEMPLATES_ERROR_CANNOT_DELETE_LAST_STYLE'));
 				return false;
 			}
 		}

@@ -21,11 +21,7 @@ require_once LIBRARIES.'/includes/other.php';
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /** INITIALIZE */
-if (MOLAJO_APPLICATION == 'installation') {
-    $app = JFactory::getApplication(MOLAJO_APPLICATION);
-} else {
-    $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
-}
+$app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 
 if (MOLAJO_APPLICATION == 'administrator') {
     $app->initialise(array(
@@ -57,6 +53,6 @@ if (MOLAJO_APPLICATION == 'installation') {
 /** RENDER */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
-
+;
 /** complete */
 echo $app;

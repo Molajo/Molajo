@@ -29,14 +29,14 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<table class="adminlist" cellspacing="1">
 		<thead>
 			<tr>
-				<th width="20"><input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" /></th>
+				<th width="20"><input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" /></th>
 				<th class="nowrap"><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_NAME', 'name', $listDirn, $listOrder); ?></th>
 				<th class="nowrap"><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_INSTALLTYPE', 'extension_id', $listDirn, $listOrder); ?></th>
 				<th ><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_TYPE', 'type', $listDirn, $listOrder); ?></th>
-				<th width="10%" class="center"><?php echo JText::_('MOLAJOVERSION'); ?></th>
+				<th width="10%" class="center"><?php echo MolajoText::_('MOLAJOVERSION'); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_FOLDER', 'folder', $listDirn, $listOrder); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'COM_INSTALLER_HEADING_CLIENT', 'application_id', $listDirn, $listOrder); ?></th>
-				<th width="25%"><?php echo JText::_('COM_INSTALLER_HEADING_DETAILSURL'); ?></th>
+				<th width="25%"><?php echo MolajoText::_('COM_INSTALLER_HEADING_DETAILSURL'); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -49,24 +49,24 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			<tr class="row<?php echo $i%2; ?>">
 				<td><?php echo JHtml::_('grid.id', $i, $item->update_id); ?></td>
 				<td>
-					<span class="editlinktip hasTip" title="<?php echo JText::_('JGLOBAL_DESCRIPTION');?>::<?php echo $item->description ? $item->description : JText::_('COM_INSTALLER_MSG_UPDATE_NODESC'); ?>">
+					<span class="editlinktip hasTip" title="<?php echo MolajoText::_('JGLOBAL_DESCRIPTION');?>::<?php echo $item->description ? $item->description : MolajoText::_('COM_INSTALLER_MSG_UPDATE_NODESC'); ?>">
 					<?php echo $item->name; ?>
 					</span>
 				</td>
 				<td class="center">
-					<?php echo $item->extension_id ? JText::_('COM_INSTALLER_MSG_UPDATE_UPDATE') : JText::_('COM_INSTALLER_NEW_INSTALL') ?>
+					<?php echo $item->extension_id ? MolajoText::_('COM_INSTALLER_MSG_UPDATE_UPDATE') : MolajoText::_('COM_INSTALLER_NEW_INSTALL') ?>
 				</td>
-				<td><?php echo JText::_('COM_INSTALLER_TYPE_' . $item->type) ?></td>
+				<td><?php echo MolajoText::_('COM_INSTALLER_TYPE_' . $item->type) ?></td>
 				<td class="center"><?php echo $item->version ?></td>
-				<td class="center"><?php echo @$item->folder != '' ? $item->folder : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
-				<td class="center"><?php echo @$item->application != '' ? JText::_('COM_INSTALLER_TYPE_' . $item->application) : JText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
+				<td class="center"><?php echo @$item->folder != '' ? $item->folder : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
+				<td class="center"><?php echo @$item->application != '' ? MolajoText::_('COM_INSTALLER_TYPE_' . $item->application) : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
 				<td><?php echo $item->detailsurl ?></td>
 			</tr>
 		<?php endforeach;?>
 		</tbody>
 	</table>
 	<?php else : ?>
-		<p class="nowarning"><?php echo JText::_('COM_INSTALLER_MSG_UPDATE_NOUPDATES'); ?></p>
+		<p class="nowarning"><?php echo MolajoText::_('COM_INSTALLER_MSG_UPDATE_NOUPDATES'); ?></p>
 	<?php endif; ?>
 
 	<div>

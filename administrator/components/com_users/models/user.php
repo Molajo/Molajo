@@ -143,7 +143,7 @@ class UsersModelUser extends JModelAdmin
 		$my = MolajoFactory::getUser();
 
 		if ($data['block'] && $pk == $my->id && !$my->block) {
-			$this->setError(JText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
+			$this->setError(MolajoText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
 			return false;
 		}
 
@@ -157,7 +157,7 @@ class UsersModelUser extends JModelAdmin
 				$stillSuperAdmin = ($stillSuperAdmin) ? ($stillSuperAdmin) : JAccess::checkGroup($group, 'core.admin');
 			}
 			if (!$stillSuperAdmin) {
-				$this->setError(JText::_('COM_USERS_USERS_ERROR_CANNOT_DEMOTE_SELF'));
+				$this->setError(MolajoText::_('COM_USERS_USERS_ERROR_CANNOT_DEMOTE_SELF'));
 				return false;
 			}
 		}
@@ -202,7 +202,7 @@ class UsersModelUser extends JModelAdmin
 		$dispatcher = JDispatcher::getInstance();
 
 		if (in_array($user->id, $pks)) {
-			$this->setError(JText::_('COM_USERS_USERS_ERROR_CANNOT_DELETE_SELF'));
+			$this->setError(MolajoText::_('COM_USERS_USERS_ERROR_CANNOT_DELETE_SELF'));
 			return false;
 		}
 
@@ -233,7 +233,7 @@ class UsersModelUser extends JModelAdmin
 				else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 				}
 			}
 			else {
@@ -273,7 +273,7 @@ class UsersModelUser extends JModelAdmin
 			if ($value == 1 && $pk == $user->get('id')) {
 				// Cannot block yourself.
 				unset($pks[$i]);
-				JError::raiseWarning(403, JText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
+				JError::raiseWarning(403, MolajoText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
 
 			}
 			else if ($table->load($pk)) {
@@ -335,7 +335,7 @@ class UsersModelUser extends JModelAdmin
 				else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -414,7 +414,7 @@ class UsersModelUser extends JModelAdmin
 				else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -433,7 +433,7 @@ class UsersModelUser extends JModelAdmin
 	{
 		// Ensure there are selected users to operate on.
 		if (empty($user_ids)) {
-			$this->setError(JText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
+			$this->setError(MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
 
 			return false;
 		}
@@ -444,7 +444,7 @@ class UsersModelUser extends JModelAdmin
 			JArrayHelper::toInteger($user_ids);
 
 			if ($group_id < 1) {
-				$this->setError(JText::_('COM_USERS_ERROR_INVALID_GROUP'));
+				$this->setError(MolajoText::_('COM_USERS_ERROR_INVALID_GROUP'));
 
 				return false;
 			}

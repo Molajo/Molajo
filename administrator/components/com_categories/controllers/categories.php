@@ -51,11 +51,11 @@ class CategoriesControllerCategories extends JControllerAdmin
 
 		if ($model->rebuild()) {
 			// Rebuild succeeded.
-			$this->setMessage(JText::_('COM_CATEGORIES_REBUILD_SUCCESS'));
+			$this->setMessage(MolajoText::_('COM_CATEGORIES_REBUILD_SUCCESS'));
 			return true;
 		} else {
 			// Rebuild failed.
-			$this->setMessage(JText::_('COM_CATEGORIES_REBUILD_FAILURE'));
+			$this->setMessage(MolajoText::_('COM_CATEGORIES_REBUILD_FAILURE'));
 			return false;
 		}
 	}

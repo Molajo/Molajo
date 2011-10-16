@@ -11,26 +11,26 @@ defined('MOLAJO') or die;
 <div id="step">
 	<div class="far-right">
 
-		<a class="button white" href="index.php?view=database" onclick="return Install.goToPage('database');" rel="prev" title="<?php echo JText::_('JPrevious'); ?>"><?php echo JText::_('JPrevious'); ?></a>
-		<a class="button white" href="#" onclick="Install.submitform();" rel="next" title="<?php echo JText::_('JNext'); ?>"><?php echo JText::_('JNext'); ?></a>
+		<a class="button white" href="index.php?view=database" onclick="return Install.goToPage('database');" rel="prev" title="<?php echo MolajoText::_('JPrevious'); ?>"><?php echo MolajoText::_('JPrevious'); ?></a>
+		<a class="button white" href="#" onclick="Install.submitform();" rel="next" title="<?php echo MolajoText::_('JNext'); ?>"><?php echo MolajoText::_('JNext'); ?></a>
         
 	</div>
-	<span class="steptitle"><?php echo JText::_('INSTL_FTP'); ?></span>
+	<span class="steptitle"><?php echo MolajoText::_('INSTL_FTP'); ?></span>
 </div>
 
 <form action="index.php" method="post" id="adminForm" class="form-validate">	
 	<div id="installer">
 		<div class="m">
 			<h2>
-				<?php echo JText::_('INSTL_FTP_TITLE'); ?>
+				<?php echo MolajoText::_('INSTL_FTP_TITLE'); ?>
 			</h2>
 			<div class="install-text">
-				<?php echo JText::_('INSTL_FTP_DESC'); ?>
+				<?php echo MolajoText::_('INSTL_FTP_DESC'); ?>
 			</div>
 			<div class="install-body">
 				<div class="m">
-					<h3 class="title-smenu" title="<?php echo JText::_('INSTL_BASIC_SETTINGS'); ?>">
-						<?php echo JText::_('INSTL_BASIC_SETTINGS'); ?>
+					<h3 class="title-smenu" title="<?php echo MolajoText::_('INSTL_BASIC_SETTINGS'); ?>">
+						<?php echo MolajoText::_('INSTL_BASIC_SETTINGS'); ?>
 					</h3>
 					<div class="section-smenu">
 						
@@ -41,14 +41,14 @@ defined('MOLAJO') or die;
 									<?php echo $this->form->getInput('ftp_user'); ?>
 								
 								<span> <em>
-									<?php echo JText::_('INSTL_FTP_USER_DESC'); ?>
+									<?php echo MolajoText::_('INSTL_FTP_USER_DESC'); ?>
 								</em> </span>	
 						<br />
 							<label>	<?php echo $this->form->getLabel('ftp_pass'); ?> </label>
 									<?php echo $this->form->getInput('ftp_pass'); ?>
 								
 									<span> <em>
-									<?php echo JText::_('INSTL_FTP_PASSWORD_DESC'); ?>
+									<?php echo MolajoText::_('INSTL_FTP_PASSWORD_DESC'); ?>
 									</em> </span>
 						<br />
 							
@@ -60,13 +60,13 @@ defined('MOLAJO') or die;
 							</div>
 						
 
-						<input type="button" id="findbutton" class="button white" value="<?php echo JText::_('INSTL_AUTOFIND_FTP_PATH'); ?>" onclick="Install.detectFtpRoot(this);" />
-						<input type="button" id="verifybutton" class="button white" value="<?php echo JText::_('INSTL_VERIFY_FTP_SETTINGS'); ?>" onclick="Install.verifyFtpSettings(this);" />
+						<input type="button" id="findbutton" class="button white" value="<?php echo MolajoText::_('INSTL_AUTOFIND_FTP_PATH'); ?>" onclick="Install.detectFtpRoot(this);" />
+						<input type="button" id="verifybutton" class="button white" value="<?php echo MolajoText::_('INSTL_VERIFY_FTP_SETTINGS'); ?>" onclick="Install.verifyFtpSettings(this);" />
 						<br /><br />
 					</div>
 
-					<h3 class="title-smenu moofx-toggler" title="<?php echo JText::_('INSTL_ADVANCED_SETTINGS'); ?>">
-						<a href="#"><?php echo JText::_('INSTL_ADVANCED_SETTINGS'); ?></a>
+					<h3 class="title-smenu moofx-toggler" title="<?php echo MolajoText::_('INSTL_ADVANCED_SETTINGS'); ?>">
+						<a href="#"><?php echo MolajoText::_('INSTL_ADVANCED_SETTINGS'); ?></a>
 					</h3>
 					<div class="section-smenu moofx-slider">
 						

@@ -61,7 +61,7 @@ class UsersViewUser extends JView
 
 		$isNew	= ($this->item->id == 0);
 		$isProfile = $this->item->id == $user->id;
-		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_USER_TITLE' : ($isProfile ? 'COM_USERS_VIEW_EDIT_PROFILE_TITLE' : 'COM_USERS_VIEW_EDIT_USER_TITLE')), $isNew ? 'user-add' : ($isProfile ? 'user-profile' : 'user-edit'));
+		MolajoToolbarHelper::title(MolajoText::_($isNew ? 'COM_USERS_VIEW_NEW_USER_TITLE' : ($isProfile ? 'COM_USERS_VIEW_EDIT_PROFILE_TITLE' : 'COM_USERS_VIEW_EDIT_USER_TITLE')), $isNew ? 'user-add' : ($isProfile ? 'user-profile' : 'user-edit'));
 		if ($canDo->get('core.edit')||$canDo->get('core.edit.own')||$canDo->get('core.create')) {
 			MolajoToolbarHelper::apply('user.apply');
 			MolajoToolbarHelper::save('user.save');

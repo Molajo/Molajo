@@ -106,12 +106,12 @@ class TemplatesControllerSource extends JController
 		$context	= 'com_templates.edit.source';
 
 		if (preg_match('#\.\.#', base64_decode($recordId))) {
-			return JError::raiseError(500, JText::_('COM_TEMPLATES_ERROR_SOURCE_FILE_NOT_FOUND'));
+			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_FILE_NOT_FOUND'));
 		}
 
 		// Access check.
 		if (!$this->allowEdit()) {
-			return JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+			return JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 		}
 
 		// Check-out succeeded, push the new record id into the session.
@@ -160,18 +160,18 @@ class TemplatesControllerSource extends JController
 
 		// Access check.
 		if (!$this->allowSave()) {
-			return JError::raiseWarning(403, JText::_('JERROR_SAVE_NOT_PERMITTED'));
+			return JError::raiseWarning(403, MolajoText::_('JERROR_SAVE_NOT_PERMITTED'));
 		}
 
 		// Match the stored id's with the submitted.
 		if (empty($data['extension_id']) || empty($data['filename'])) {
-			return JError::raiseError(500, JText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
+			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
 		}
 		else if ($data['extension_id'] != $model->getState('extension.id')) {
-			return JError::raiseError(500, JText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
+			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
 		}
 		else if ($data['filename'] != $model->getState('filename')) {
-			return JError::raiseError(500, JText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
+			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
 		}
 
 		// Validate the posted data.
@@ -215,12 +215,12 @@ class TemplatesControllerSource extends JController
 			$app->setUserState($context.'.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setMessage(JText::sprintf('JERROR_SAVE_FAILED', $model->getError()), 'warning');
+			$this->setMessage(MolajoText::sprintf('JERROR_SAVE_FAILED', $model->getError()), 'warning');
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=source&layout=edit', false));
 			return false;
 		}
 
-		$this->setMessage(JText::_('COM_TEMPLATES_FILE_SAVE_SUCCESS'));
+		$this->setMessage(MolajoText::_('COM_TEMPLATES_FILE_SAVE_SUCCESS'));
 
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)

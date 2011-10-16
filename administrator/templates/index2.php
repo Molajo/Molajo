@@ -44,6 +44,6 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
     </div>
 </body>
 <noscript>
-    <?php echo  JText::_('JGLOBAL_WARNJAVASCRIPT') ?>
+    <?php echo  MolajoText::_('JGLOBAL_WARNJAVASCRIPT') ?>
 </noscript>
 </html>

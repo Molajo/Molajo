@@ -140,7 +140,7 @@ class UsersModelGroup extends JModelAdmin
         if ((!$iAmSuperAdmin) && ($groupSuperAdmin)) {
         	try
         	{
-				throw new Exception(JText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+				throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
         	}
 			catch (Exception $e)
 			{
@@ -166,7 +166,7 @@ class UsersModelGroup extends JModelAdmin
 				if ((!$otherSuperAdmin) && (!$groupSuperAdmin)) {
 					try
 					{
-						throw new Exception(JText::_('MOLAJO_USER_ERROR_CANNOT_DEMOTE_SELF'));
+						throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_CANNOT_DEMOTE_SELF'));
 					}
 					catch (Exception $e)
 					{
@@ -207,7 +207,7 @@ class UsersModelGroup extends JModelAdmin
 		// do not allow to delete groups to which the current user belongs
 		foreach ($pks as $i => $pk) {
 			if (in_array($pk, $groups)) {
-				JError::raiseWarning( 403, JText::_('COM_USERS_DELETE_ERROR_INVALID_GROUP'));
+				JError::raiseWarning( 403, MolajoText::_('COM_USERS_DELETE_ERROR_INVALID_GROUP'));
 				return false;
 			}
 		}
@@ -233,7 +233,7 @@ class UsersModelGroup extends JModelAdmin
 				} else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 				}
 			} else {
 				$this->setError($table->getError());

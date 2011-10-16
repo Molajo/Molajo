@@ -73,7 +73,7 @@ class TemplatesViewTemplates extends JView
 		$state	= $this->get('State');
 		$canDo	= TemplatesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER_TEMPLATES'), 'thememanager');
+		MolajoToolbarHelper::title(MolajoText::_('COM_TEMPLATES_MANAGER_TEMPLATES'), 'thememanager');
 		if ($canDo->get('core.admin')) {
 			MolajoToolbarHelper::preferences('com_templates');
 			MolajoToolbarHelper::divider();

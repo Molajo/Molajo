@@ -10,7 +10,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Molajo Site
+ * Molajo Administrator
  *
  * Interacts with the Application Class for the Site Application
  *
@@ -156,8 +156,8 @@ class MolajoAdministrator extends MolajoApplication
 				default:
 					break;
 			}
+			$document->setTitle($this->getCfg('sitename'). ' - ' .MolajoText::_('JADMINISTRATION'));
 
-			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
 			$contents = MolajoComponentHelper::renderComponent($request);
@@ -175,6 +175,7 @@ class MolajoAdministrator extends MolajoApplication
 			$code = $e->getCode();
 			JError::raiseError($code ? $code : 500, $e->getMessage());
 		}
+
 	}
 
 	/**
@@ -201,6 +202,7 @@ class MolajoAdministrator extends MolajoApplication
 		);
 
 		$document = MolajoFactory::getDocument();
+
 		$document->parse($params);
 
 		$this->triggerEvent('onBeforeRender');

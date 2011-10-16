@@ -31,12 +31,12 @@ class MolajoConfig {
 	public $offline = '0';
 	public $offline_message = 'This site is not available.<br /> Please check back again soon.';
 	public $sitename = 'Molajo';
-	public $editor = 'tinymce';
+	public $editor = 'none';
 	public $list_limit = '20';
 	public $access = '1';
 
 	/* Database Settings */
-	public $dbtype = 'mysql';					// Normally mysql
+	public $dbtype = 'mysqli';					// Normally mysql
 	public $host = 'localhost';					// This is normally set to localhost
 	public $user = '';							// MySQL username
 	public $password = '';						// MySQL password

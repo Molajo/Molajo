@@ -69,14 +69,14 @@ class CacheController extends JController
 	public function delete()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JInvalid_Token'));
+		JRequest::checkToken() or jexit(MolajoText::_('JInvalid_Token'));
 
 		$cid = JRequest::getVar('cid', array(), 'post', 'array');
 
 		$model = $this->getModel('cache');
 
 		if(empty($cid)) {
-			JError::raiseWarning(500, JText::_('JERROR_NO_ITEMS_SELECTED'));
+			JError::raiseWarning(500, MolajoText::_('JERROR_NO_ITEMS_SELECTED'));
 		} else {
 			$model->cleanlist($cid);
 		}
@@ -87,16 +87,16 @@ class CacheController extends JController
 	public function purge()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JInvalid_Token'));
+		JRequest::checkToken() or jexit(MolajoText::_('JInvalid_Token'));
 
 		$model = $this->getModel('cache');
 		$ret = $model->purge();
 
-		$msg = JText::_('COM_CACHE_EXPIRED_ITEMS_HAVE_BEEN_PURGED');
+		$msg = MolajoText::_('COM_CACHE_EXPIRED_ITEMS_HAVE_BEEN_PURGED');
 		$msgType = 'message';
 
 		if ($ret === false) {
-			$msg = JText::_('Error purging expired items');
+			$msg = MolajoText::_('Error purging expired items');
 			$msgType = 'error';
 		}
 

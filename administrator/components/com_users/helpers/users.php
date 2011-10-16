@@ -36,7 +36,7 @@ class UsersHelper
 	public static function addSubmenu($vName)
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('COM_USERS_SUBMENU_USERS'),
+			MolajoText::_('COM_USERS_SUBMENU_USERS'),
 			'index.php?option=com_users&view=users',
 			$vName == 'users'
 		);
@@ -46,12 +46,12 @@ class UsersHelper
 
 		if ($canDo->get('core.admin')) {
 			JSubMenuHelper::addEntry(
-				JText::_('COM_USERS_SUBMENU_GROUPS'),
+				MolajoText::_('COM_USERS_SUBMENU_GROUPS'),
 				'index.php?option=com_users&view=groups',
 				$vName == 'groups'
 			);
 			JSubMenuHelper::addEntry(
-				JText::_('COM_USERS_SUBMENU_LEVELS'),
+				MolajoText::_('COM_USERS_SUBMENU_LEVELS'),
 				'index.php?option=com_users&view=levels',
 				$vName == 'levels'
 			);
@@ -92,8 +92,8 @@ class UsersHelper
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', JText::_('JENABLED'));
-		$options[]	= JHtml::_('select.option', '1', JText::_('JDISABLED'));
+		$options[]	= JHtml::_('select.option', '0', MolajoText::_('JENABLED'));
+		$options[]	= JHtml::_('select.option', '1', MolajoText::_('JDISABLED'));
 
 		return $options;
 	}
@@ -108,8 +108,8 @@ class UsersHelper
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', JText::_('COM_USERS_ACTIVATED'));
-		$options[]	= JHtml::_('select.option', '1', JText::_('COM_USERS_UNACTIVATED'));
+		$options[]	= JHtml::_('select.option', '0', MolajoText::_('COM_USERS_ACTIVATED'));
+		$options[]	= JHtml::_('select.option', '1', MolajoText::_('COM_USERS_UNACTIVATED'));
 
 		return $options;
 	}

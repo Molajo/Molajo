@@ -45,7 +45,7 @@ class UsersControllerGroups extends JControllerAdmin
 	function delete()
 	{
 		if (!MolajoFactory::getUser()->authorise('core.admin', $this->option)) {
-			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseError(500, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			jexit();
 		}
 
@@ -62,7 +62,7 @@ class UsersControllerGroups extends JControllerAdmin
 	function publish()
 	{
 		if (!MolajoFactory::getUser()->authorise('core.admin', $this->option)) {
-			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseError(500, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			jexit();
 		}
 
@@ -79,7 +79,7 @@ class UsersControllerGroups extends JControllerAdmin
 	public function reorder()
 	{
 		if (!MolajoFactory::getUser()->authorise('core.admin', $this->option)) {
-			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseError(500, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			jexit();
 		}
 
@@ -96,7 +96,7 @@ class UsersControllerGroups extends JControllerAdmin
 	public function saveorder()
 	{
 		if (!MolajoFactory::getUser()->authorise('core.admin', $this->option)) {
-			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseError(500, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			jexit();
 		}
 
@@ -113,7 +113,7 @@ class UsersControllerGroups extends JControllerAdmin
 	public function checkin()
 	{
 		if (!MolajoFactory::getUser()->authorise('core.admin', $this->option)) {
-			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseError(500, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			jexit();
 		}
 

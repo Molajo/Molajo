@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 // Access check.
 if (!MolajoFactory::getUser()->authorise('core.manage', 'com_plugins')) {
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	return JError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 }
 
 // Include dependancies

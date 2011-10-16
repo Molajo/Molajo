@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 $fieldSets = $this->form->getFieldsets();
 foreach ($fieldSets as $name => $fieldSet) { ?>
 
-        <?php echo JHtml::_('sliders.panel',JText::_($fieldSet->label), $name.'-options');?>
+        <?php echo JHtml::_('sliders.panel',MolajoText::_($fieldSet->label), $name.'-options');?>
         <?php if (isset($fieldSet->description) && trim($fieldSet->description)) :?>
-                <p class="tip"><?php echo $this->escape(JText::_($fieldSet->description));?></p>
+                <p class="tip"><?php echo $this->escape(MolajoText::_($fieldSet->description));?></p>
         <?php endif;?>
         <fieldset class="panelform">
                 <ul class="adminformlist">

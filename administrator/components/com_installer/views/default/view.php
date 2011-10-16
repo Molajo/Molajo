@@ -64,7 +64,7 @@ class InstallerViewDefault extends JView
 	protected function addToolbar()
 	{
 		$canDo	= InstallerHelper::getActions();
-		MolajoToolbarHelper::title(JText::_('COM_INSTALLER_HEADER_' . $this->getName()), 'install.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_INSTALLER_HEADER_' . $this->getName()), 'install.png');
 
 		if ($canDo->get('core.admin')) {
 			MolajoToolbarHelper::preferences('com_installer');
@@ -73,6 +73,6 @@ class InstallerViewDefault extends JView
 
 		// Document
 		$document = MolajoFactory::getDocument();
-		$document->setTitle(JText::_('COM_INSTALLER_TITLE_' . $this->getName()));
+		$document->setTitle(MolajoText::_('COM_INSTALLER_TITLE_' . $this->getName()));
 	}
 }

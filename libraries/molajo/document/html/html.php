@@ -298,7 +298,8 @@ class MolajoDocumentHTML extends MolajoDocument
 	 *
 	 * @param   array  $params  parameters for fetching the template
 	 */
-	public function parse($params = array()) {
+	public function parse($params = array())
+    {
 		$this->_fetchTemplate($params);
 		$this->_parseTemplate();
 	}
@@ -426,7 +427,6 @@ class MolajoDocumentHTML extends MolajoDocument
 	 */
 	protected function _fetchTemplate($params = array())
 	{
-		// Check
 		$directory	= isset($params['directory']) ? $params['directory'] : 'templates';
 		$filter		= JFilterInput::getInstance();
 		$template	= $filter->clean($params['template'], 'cmd');
@@ -445,6 +445,7 @@ class MolajoDocumentHTML extends MolajoDocument
 		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
 		||	$lang->load('tpl_'.$template, $directory . '/' . $template, $lang->getDefault(), false, false);
 
+
 		// Assign the variables
 		$this->template = $template;
 		$this->baseurl  = JURI::base(true);
@@ -452,6 +453,7 @@ class MolajoDocumentHTML extends MolajoDocument
 
 		// Load
 		$this->_template = $this->_loadTemplate($directory . '/' . $template, $file);
+        echo 'in here';
 	}
 
 	/**
@@ -471,7 +473,7 @@ class MolajoDocumentHTML extends MolajoDocument
 			// Step through the jdocs in reverse order.
 			for ($i = count($matches[0])-1; $i >= 0; $i--) {
 				$type  		= $matches[1][$i];
-				$attribs 	= empty($matches[2][$i]) ? array() : JUtility::parseAttributes($matches[2][$i]);
+				$attribs 	= empty($matches[2][$i]) ? array() : MolajoUtility::parseAttributes($matches[2][$i]);
 				$name 		= isset($attribs['name']) ? $attribs['name'] : null;
 
 				// Separate buffers to be executed first and last

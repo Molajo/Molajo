@@ -33,7 +33,7 @@ class MolajoInstallationControllerSetup extends JController
 
 		if ($session->isNew()) {
 			JError::setErrorHandling(E_ERROR, 'message');
-			JError::raise(E_ERROR, 500, JText::_('INSTL_COOKIES_NOT_ENABLED'));
+			JError::raise(E_ERROR, 500, MolajoText::_('INSTL_COOKIES_NOT_ENABLED'));
 
 			return false;
 		}

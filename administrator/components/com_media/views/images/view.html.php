@@ -55,7 +55,7 @@ class MediaViewImages extends JView
 				$filterTypes .= '*.'.$type;
 			}
 
-			$typeString = '{ \''.JText::_('COM_MEDIA_FILES','true').' ('.$displayTypes.')\': \''.$filterTypes.'\' }';
+			$typeString = '{ \''.MolajoText::_('COM_MEDIA_FILES','true').' ('.$displayTypes.')\': \''.$filterTypes.'\' }';
 
 			JHtml::_('behavior.uploader', 'upload-flash',
 				array(

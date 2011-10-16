@@ -56,7 +56,7 @@ class UsersViewLevel extends JView
 		$isNew	= ($this->item->id == 0);
 		$canDo		= UsersHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_($isNew ? 'COM_USERS_VIEW_NEW_LEVEL_TITLE' : 'COM_USERS_VIEW_EDIT_LEVEL_TITLE'), 'levels-add');
+		MolajoToolbarHelper::title(MolajoText::_($isNew ? 'COM_USERS_VIEW_NEW_LEVEL_TITLE' : 'COM_USERS_VIEW_EDIT_LEVEL_TITLE'), 'levels-add');
 
 		if ($canDo->get('core.edit')||$canDo->get('core.create')) {
 			MolajoToolbarHelper::apply('level.apply');

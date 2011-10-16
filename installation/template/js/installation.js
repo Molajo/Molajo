@@ -204,7 +204,7 @@ Install.verifyFtpSettings = function(el) {
 			if (r) {
 				Joomla.replaceTokens(r.token)
 				if (r.error == false) {
-					alert(Joomla.JText._('INSTL_FTP_SETTINGS_CORRECT'));
+					alert(Joomla.MolajoText._('INSTL_FTP_SETTINGS_CORRECT'));
 				} else {
 					alert(r.message);
 				}

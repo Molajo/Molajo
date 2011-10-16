@@ -30,7 +30,7 @@ $canDo = UsersHelper::getActions();
 <form action="<?php echo MolajoRoute::_('index.php?option=com_users&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="group-form" class="form-validate">
 	<div class="width-100">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_USERS_USERGROUP_DETAILS');?></legend>
+			<legend><?php echo MolajoText::_('COM_USERS_USERGROUP_DETAILS');?></legend>
 			<ul class="adminformlist">
 				<li><?php echo $this->form->getLabel('title'); ?>
 				<?php echo $this->form->getInput('title'); ?></li>

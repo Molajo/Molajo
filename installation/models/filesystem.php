@@ -38,18 +38,18 @@ class MolajoInstallationModelFilesystem extends JModel
 
 		// Check to make sure FTP is connected and authenticated.
 		if (!$ftp->isConnected()) {
-			$this->setError($options->get('ftp_host').':'.$options->get('ftp_port').' '.JText::_('INSTL_FTP_NOCONNECT'));
+			$this->setError($options->get('ftp_host').':'.$options->get('ftp_port').' '.MolajoText::_('INSTL_FTP_NOCONNECT'));
 			return false;
 		}
 		if (!$ftp->login($options->get('ftp_user'), $options->get('ftp_pass'))) {
-			$this->setError(JText::_('INSTL_FTP_NOLOGIN'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOLOGIN'));
 			return false;
 		}
 
 		// Get the current working directory from the FTP server.
 		$cwd = $ftp->pwd();
 		if ($cwd === false) {
-			$this->setError(JText::_('INSTL_FTP_NOPWD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOPWD'));
 			return false;
 		}
 		$cwd = rtrim($cwd, '/');
@@ -57,7 +57,7 @@ class MolajoInstallationModelFilesystem extends JModel
 		// Get a list of folders in the current working directory.
 		$cwdFolders = $ftp->listDetails(null, 'folders');
 		if ($cwdFolders === false || count($cwdFolders) == 0) {
-			$this->setError(JText::_('INSTL_FTP_NODIRECTORYLISTING'));
+			$this->setError(MolajoText::_('INSTL_FTP_NODIRECTORYLISTING'));
 			return false;
 		}
 
@@ -104,7 +104,7 @@ class MolajoInstallationModelFilesystem extends JModel
 
 		// Return an error if no root path was found.
 		if ($rootPath === false) {
-			$this->setError(JText::_('INSTL_FTP_UNABLE_DETECT_ROOT_FOLDER'));
+			$this->setError(MolajoText::_('INSTL_FTP_UNABLE_DETECT_ROOT_FOLDER'));
 			return false;
 		}
 
@@ -131,12 +131,12 @@ class MolajoInstallationModelFilesystem extends JModel
 
 		// Check to make sure FTP is connected and authenticated.
 		if (!$ftp->isConnected()) {
-			$this->setError(JText::_('INSTL_FTP_NOCONNECT'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOCONNECT'));
 			return false;
 		}
 		if (!$ftp->login($options->get('ftp_user'), $options->get('ftp_pass'))) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOLOGIN'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOLOGIN'));
 			return false;
 		}
 
@@ -147,35 +147,35 @@ class MolajoInstallationModelFilesystem extends JModel
 		// Verify PWD function
 		if ($ftp->pwd() === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOPWD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOPWD'));
 			return false;
 		}
 
 		// Verify root path exists
 		if (!$ftp->chdir($root)) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOROOT'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOROOT'));
 			return false;
 		}
 
 		// Verify NLST function
 		if (($rootList = $ftp->listNames()) === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NONLST'));
+			$this->setError(MolajoText::_('INSTL_FTP_NONLST'));
 			return false;
 		}
 
 		// Verify LIST function
 		if ($ftp->listDetails() === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOLIST'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOLIST'));
 			return false;
 		}
 
 		// Verify SYST function
 		if ($ftp->syst() === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOSYST'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOSYST'));
 			return false;
 		}
 
@@ -183,7 +183,7 @@ class MolajoInstallationModelFilesystem extends JModel
 		$checkList = array('robots.txt', 'index.php');
 		if (count(array_diff($checkList, $rootList))) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
+			$this->setError(MolajoText::_('INSTL_FTP_INVALIDROOT'));
 			return false;
 		}
 
@@ -191,7 +191,7 @@ class MolajoInstallationModelFilesystem extends JModel
 		$buffer = null;
 		if ($ftp->read($root.'/includes/version.php', $buffer) === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NORETR'));
+			$this->setError(MolajoText::_('INSTL_FTP_NORETR'));
 			return false;
 		}
 
@@ -199,35 +199,35 @@ class MolajoInstallationModelFilesystem extends JModel
 		$checkValue = file_get_contents(MOLAJO_PATH_ROOT.'/includes/version.php');
 		if ($buffer !== $checkValue) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
+			$this->setError(MolajoText::_('INSTL_FTP_INVALIDROOT'));
 			return false;
 		}
 
 		// Verify STOR function
 		if ($ftp->create($root.'/ftp_testfile') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOSTOR'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOSTOR'));
 			return false;
 		}
 
 		// Verify DELE function
 		if ($ftp->delete($root.'/ftp_testfile') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NODELE'));
+			$this->setError(MolajoText::_('INSTL_FTP_NODELE'));
 			return false;
 		}
 
 		// Verify MKD function
 		if ($ftp->mkdir($root.'/ftp_testdir') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOMKD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOMKD'));
 			return false;
 		}
 
 		// Verify RMD function
 		if ($ftp->delete($root.'/ftp_testdir') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NORMD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NORMD'));
 			return false;
 		}
 
@@ -291,49 +291,49 @@ class MolajoInstallationModelFilesystem extends JModel
 
 		// Verify connection
 		if (!$ftp->isConnected()) {
-			$this->setError('kiki'.JText::_('INSTL_FTP_NOCONNECT'));
+			$this->setError('kiki'.MolajoText::_('INSTL_FTP_NOCONNECT'));
 			return false;
 		}
 
 		// Verify username and password
 		if (!$ftp->login($user, $pass)) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOLOGIN'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOLOGIN'));
 			return false;
 		}
 
 		// Verify PWD function
 		if ($ftp->pwd() === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOPWD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOPWD'));
 			return false;
 		}
 
 		// Verify root path exists
 		if (!$ftp->chdir($root)) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOROOT'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOROOT'));
 			return false;
 		}
 
 		// Verify NLST function
 		if (($rootList = $ftp->listNames()) === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NONLST'));
+			$this->setError(MolajoText::_('INSTL_FTP_NONLST'));
 			return false;
 		}
 
 		// Verify LIST function
 		if ($ftp->listDetails() === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOLIST'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOLIST'));
 			return false;
 		}
 
 		// Verify SYST function
 		if ($ftp->syst() === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOSYST'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOSYST'));
 			return false;
 		}
 
@@ -341,7 +341,7 @@ class MolajoInstallationModelFilesystem extends JModel
 		$checkList = array('index.php', 'INSTALL.php', 'LICENSE.php');
 		if (count(array_diff($checkList, $rootList))) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
+			$this->setError(MolajoText::_('INSTL_FTP_INVALIDROOT'));
 			return false;
 		}
 
@@ -349,7 +349,7 @@ class MolajoInstallationModelFilesystem extends JModel
 		$buffer = null;
 		if ($ftp->read($root.'/includes/version.php', $buffer) === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NORETR'));
+			$this->setError(MolajoText::_('INSTL_FTP_NORETR'));
 			return false;
 		}
 
@@ -357,35 +357,35 @@ class MolajoInstallationModelFilesystem extends JModel
 		$checkValue = file_get_contents(LIBRARIES.'/includes/version.php');
 		if ($buffer !== $checkValue) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_INVALIDROOT'));
+			$this->setError(MolajoText::_('INSTL_FTP_INVALIDROOT'));
 			return false;
 		}
 
 		// Verify STOR function
 		if ($ftp->create($root.'/ftp_testfile') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOSTOR'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOSTOR'));
 			return false;
 		}
 
 		// Verify DELE function
 		if ($ftp->delete($root.'/ftp_testfile') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NODELE'));
+			$this->setError(MolajoText::_('INSTL_FTP_NODELE'));
 			return false;
 		}
 
 		// Verify MKD function
 		if ($ftp->mkdir($root.'/ftp_testdir') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NOMKD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NOMKD'));
 			return false;
 		}
 
 		// Verify RMD function
 		if ($ftp->delete($root.'/ftp_testdir') === false) {
 			$ftp->quit();
-			$this->setError(JText::_('INSTL_FTP_NORMD'));
+			$this->setError(MolajoText::_('INSTL_FTP_NORMD'));
 			return false;
 		}
 

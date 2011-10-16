@@ -21,7 +21,7 @@ $user		= MolajoFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 
-JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
+MolajoText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -34,7 +34,7 @@ JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 <?php if ($item->user_count > 0):?>
 			cb = f['cb'+<?php echo $i;?>];
 			if (cb && cb.checked) {
-				if (confirm(Joomla.JText._('COM_USERS_GROUPS_CONFIRM_DELETE'))) {
+				if (confirm(Joomla.MolajoText._('COM_USERS_GROUPS_CONFIRM_DELETE'))) {
 					Joomla.submitform(task);
 				}
 				return;
@@ -48,10 +48,10 @@ JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 <form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=groups');?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_USERS_SEARCH_GROUPS_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_USERS_SEARCH_IN_GROUPS'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('COM_USERS_SEARCH_GROUPS_LABEL'); ?></label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_USERS_SEARCH_IN_GROUPS'); ?>" />
+			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 	</fieldset>
 	<div class="clr"> </div>
@@ -60,16 +60,16 @@ JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 		<thead>
 			<tr>
 				<th width="1%">
-					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="left">
-					<?php echo JText::_('COM_USERS_HEADING_GROUP_TITLE'); ?>
+					<?php echo MolajoText::_('COM_USERS_HEADING_GROUP_TITLE'); ?>
 				</th>
 				<th width="10%">
-					<?php echo JText::_('COM_USERS_HEADING_USERS_IN_GROUP'); ?>
+					<?php echo MolajoText::_('COM_USERS_HEADING_USERS_IN_GROUP'); ?>
 				</th>
 				<th width="5%">
-					<?php echo JText::_('JGRID_HEADING_ID'); ?>
+					<?php echo MolajoText::_('JGRID_HEADING_ID'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -106,7 +106,7 @@ JText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 					<?php endif; ?>
 					<?php if (JDEBUG) : ?>
 						<div class="fltrt"><div class="button2-left smallsub"><div class="blank"><a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=debuggroup&group_id='.(int) $item->id);?>">
-						<?php echo JText::_('COM_USERS_DEBUG_GROUP');?></a></div></div></div>
+						<?php echo MolajoText::_('COM_USERS_DEBUG_GROUP');?></a></div></div></div>
 					<?php endif; ?>
 				</td>
 				<td class="center">

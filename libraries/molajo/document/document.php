@@ -221,6 +221,7 @@ class MolajoDocument extends JObject
 		if (array_key_exists('base', $options)) {
 			$this->setBase($options['base']);
 		}
+
 	}
 
 	/**

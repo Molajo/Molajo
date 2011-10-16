@@ -103,11 +103,11 @@ class MolajoApplication extends JObject
         } else {
 		    $this->_createConfiguration(MOLAJO_PATH_CONFIGURATION.'/'.$config['config_file']);
         }
-        
+
 		// Create the session if a session name is passed.
 		if ($config['session'] === false) {
         } else {
-			$this->_createSession(JUtility::getHash($config['session_name']));
+			$this->_createSession(MolajoUtility::getHash($config['session_name']));
 		}
 
 		$this->set('requestTime', gmdate('Y-m-d H:i'));
@@ -139,14 +139,12 @@ class MolajoApplication extends JObject
 		}
 
 		if (empty($instances[$application])) {
-
 			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 			$path = $info->path.'/includes/application.php';
 			if (file_exists($path)) {
 				require_once $path;
 				$classname = $prefix.ucfirst($application);
 				$instance = new $classname($config);
-
 			} else {
 				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
@@ -952,6 +950,7 @@ class MolajoApplication extends JObject
 	public function getCfg($varname, $default=null)
 	{
 		$config = MolajoFactory::getConfig();
+
 		return $config->get(''.$varname, $default);
 	}
 
@@ -1284,6 +1283,7 @@ class MolajoApplication extends JObject
 	 */
 	protected function _createSession($name)
 	{
+
 		$options = array();
 		$options['name'] = $name;
 

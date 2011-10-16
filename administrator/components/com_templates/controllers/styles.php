@@ -33,14 +33,14 @@ class TemplatesControllerStyles extends JControllerAdmin
 		try
 		{
 			if (empty($pks)) {
-				throw new Exception(JText::_('COM_TEMPLATES_NO_TEMPLATE_SELECTED'));
+				throw new Exception(MolajoText::_('COM_TEMPLATES_NO_TEMPLATE_SELECTED'));
 			}
 
 			JArrayHelper::toInteger($pks);
 
 			$model = $this->getModel();
 			$model->duplicate($pks);
-			$this->setMessage(JText::_('COM_TEMPLATES_SUCCESS_DUPLICATED'));
+			$this->setMessage(MolajoText::_('COM_TEMPLATES_SUCCESS_DUPLICATED'));
 		}
 		catch (Exception $e)
 		{
@@ -77,7 +77,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 		try
 		{
 			if (empty($pks)) {
-				throw new Exception(JText::_('COM_TEMPLATES_NO_TEMPLATE_SELECTED'));
+				throw new Exception(MolajoText::_('COM_TEMPLATES_NO_TEMPLATE_SELECTED'));
 			}
 
 			JArrayHelper::toInteger($pks);
@@ -86,7 +86,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 			$id = array_shift($pks);
 			$model = $this->getModel();
 			$model->setHome($id);
-			$this->setMessage(JText::_('COM_TEMPLATES_SUCCESS_HOME_SET'));
+			$this->setMessage(MolajoText::_('COM_TEMPLATES_SUCCESS_HOME_SET'));
 
 		}
 		catch (Exception $e)
@@ -113,14 +113,14 @@ class TemplatesControllerStyles extends JControllerAdmin
 		try
 		{
 			if (empty($pks)) {
-				throw new Exception(JText::_('COM_TEMPLATES_NO_TEMPLATE_SELECTED'));
+				throw new Exception(MolajoText::_('COM_TEMPLATES_NO_TEMPLATE_SELECTED'));
 			}
 
 			// Pop off the first element.
 			$id = array_shift($pks);
 			$model = $this->getModel();
 			$model->unsetHome($id);
-			$this->setMessage(JText::_('COM_TEMPLATES_SUCCESS_HOME_UNSET'));
+			$this->setMessage(MolajoText::_('COM_TEMPLATES_SUCCESS_HOME_UNSET'));
 
 		}
 		catch (Exception $e)

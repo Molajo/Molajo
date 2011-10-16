@@ -24,6 +24,33 @@ class MolajoComponentHelper
      */
 	protected static $_components = array();
 
+    /**
+     * getComponentName
+     *
+	 * Return the name of the request component [main component]
+	 *
+	 * @param   string  $default The default option
+	 * @return  string  Option
+	 * @since   1.0
+	 */
+	public static function getComponentName($default = NULL)
+	{
+		static $option;
+
+		if ($option) {
+			return $option;
+		}
+
+		$option = strtolower(JRequest::getCmd('option'));
+
+		if (empty($option)) {
+			$option = $default;
+		}
+
+		JRequest::setVar('option', $option);
+		return $option;
+	}
+
 	/**
 	 * getComponent
      * 

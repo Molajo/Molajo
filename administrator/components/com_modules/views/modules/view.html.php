@@ -52,7 +52,7 @@ class ModulesViewModules extends JView
 		$state	= $this->get('State');
 		$canDo	= ModulesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_MODULES_MANAGER_MODULES'), 'module.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_MODULES_MANAGER_MODULES'), 'module.png');
 
 		if ($canDo->get('core.create')) {
 			//MolajoToolbarHelper::addNew('module.add');
