@@ -33,22 +33,12 @@ if (MOLAJO_APPLICATION == 'administrator') {
 JDEBUG ? $_PROFILER->mark('afterInitialise') : null;
 
 /** ROUTE */
-if (MOLAJO_APPLICATION == 'installation') {
-} else {
-    $app->route();
-    JDEBUG ? $_PROFILER->mark('afterRoute') : null;
-}
+$app->route();
+JDEBUG ? $_PROFILER->mark('afterRoute') : null;
 
 /** DISPATCH */
-if (MOLAJO_APPLICATION == 'installation') {
-    if (defined('JPATH_COMPONENT')) {
-    } else {
-        define('JPATH_COMPONENT', MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH);
-    }
-} else {
-    $app->dispatch();
-    JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
-}
+$app->dispatch();
+JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 
 /** RENDER */
 $app->render();

@@ -11,7 +11,6 @@ defined('MOLAJO') or die;
 @ini_set('magic_quotes_runtime', 0);
 @ini_set('zend.ze1_compatibility_mode', '0');
 
-
 // Detect the native operating system type.
 $os = strtoupper(substr(PHP_OS, 0, 3));
 if (!defined('IS_WIN')) {
@@ -141,10 +140,7 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/utility.php', 'Molajo
 if (file_exists(MOLAJO_PATH_BASE.'/includes/helper.php')) {
     require_once MOLAJO_PATH_BASE.'/includes/helper.php';
 }
-if (MOLAJO_APPLICATION == 'installation') {
-    require_once MOLAJO_PATH_BASE.'/helpers/database.php';
-    $filehelper->requireClassFile(JOOMLA_LIBRARY.'/installer/installer.php', 'JInstaller');
-}
+
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/node.php', 'JNode');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/tree.php', 'JTree');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/application.php', 'MolajoApplicationHelper');
@@ -196,7 +192,7 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
-/** client */
+/** Client */
 $files = JFolder::files(JOOMLA_LIBRARY.'/client', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'helper.php') {
@@ -205,6 +201,7 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
+
 /** Database and Table */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/database.php', 'JDatabase');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databaseexception.php', 'DatabaseException');

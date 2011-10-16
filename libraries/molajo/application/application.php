@@ -113,7 +113,10 @@ class MolajoApplication extends JObject
 		$this->set('requestTime', gmdate('Y-m-d H:i'));
 
 		// Used by task system to ensure that the system doesn't go over time.
-		$this->set('startTime', JProfiler::getmicrotime());
+        if ($this->_name == 'installation') {
+        } else {
+		    $this->set('startTime', JProfiler::getmicrotime());
+        }
 	}
 
 	/**
@@ -209,7 +212,7 @@ class MolajoApplication extends JObject
 	public function route()
 	{
 		$uri	= clone JURI::getInstance();
-
+echo '<pre>';var_dump($uri);'</pre>';
 		$router = $this->getRouter();
 		$result = $router->parse($uri);
 
