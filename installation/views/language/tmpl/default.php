@@ -25,7 +25,7 @@ defined('MOLAJO') or die;
 				<div class="m">
 					<fieldset>
                 
-						<?php echo $this->form->getInput('language'); ?>
+						<?php //echo $this->form->getInput('language'); ?>
 					</fieldset>
 				</div>
 				<div class="clr"></div>
@@ -34,5 +34,5 @@ defined('MOLAJO') or die;
 		</div>
 	</div>
 	<input type="hidden" name="task" value="setup.setlanguage" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php //echo JHtml::_('form.token'); ?>
 </form>
