@@ -11,7 +11,7 @@ defined('JPATH_BASE') or die;
 jimport('joomla.html.html');
 jimport('joomla.language.helper');
 jimport('joomla.form.formfield');
-JLoader::register('JFormFieldList', JPATH_LIBRARIES.'/joomla/form/fields/list.php');
+JLoader::register('JFormFieldList', JPATH_LIBRARIES.'/jplatform/joomla/form/fields/list.php');
 
 /**
  * Language Form Field class.
