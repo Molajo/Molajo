@@ -29,13 +29,14 @@ class MolajoControllerLogin extends MolajoController
 	{
         /** security token **/
 //        JRequest::checkToken() or die;
-
-        /**
-         * Initialization
-         */
+        
+    /**
+     * Initialization
+     */
         $filehelper = new MolajoFileHelper();
 
         $options = array('action' => 'login');
+
 		$credentials = array(
 			'username' => JRequest::getVar('username', '', 'method', 'username'),
 			'password' => JRequest::getVar('passwd', '', 'post', 'string', JREQUEST_ALLOWRAW)
@@ -53,15 +54,12 @@ class MolajoControllerLogin extends MolajoController
 			$return = 'index.php';
 		}
 
-        /**
-         * Authenticate Credentials
-         */
-		$plugins = MolajoPluginHelper::getPlugin('authentication');
+    /**
+     * Authenticate 
+     */
 		$response = new MolajoAuthentication();
-
-        /**
-		 * Loop through the plugins and check of the credentials
-		 */
+		$plugins = MolajoPluginHelper::getPlugin('authentication');
+        
 		foreach ($plugins as $plugin) {
 
             $path = MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
@@ -69,8 +67,8 @@ class MolajoControllerLogin extends MolajoController
             $filehelper->requireClassFile($path, $className);
 
 			if (class_exists($className)) {
-				$plugin = new $className($this, (array) $plugin);
-var_dump($plugin);
+				$authenticate = new $className($response, (array) $plugin);
+echo '<pre>';var_dump($authenticate);'</pre>';
 die;
 			} else {
                 echo 'NOT exists'.$className;
