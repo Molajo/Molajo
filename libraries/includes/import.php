@@ -202,6 +202,7 @@ foreach ($files as $file) {
     if ($file == 'helper.php') {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'JClientHelper');
     } else {
+        break;
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
