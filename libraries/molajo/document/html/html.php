@@ -453,7 +453,6 @@ class MolajoDocumentHTML extends MolajoDocument
 
 		// Load
 		$this->_template = $this->_loadTemplate($directory . '/' . $template, $file);
-        echo 'in here';
 	}
 
 	/**
