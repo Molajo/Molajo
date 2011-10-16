@@ -37,6 +37,7 @@ require_once LIBRARIES.'/overrides/factory.php';
  */
 JLoader::import('joomla.error.error');
 JLoader::import('joomla.error.exception');
+JLoader::import('joomla.error.profiler');
 
 if (isset($_SERVER['HTTP_HOST'])) {
 	JLoader::import('joomla.environment.request');
@@ -202,7 +203,6 @@ foreach ($files as $file) {
     if ($file == 'helper.php') {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'JClientHelper');
     } else {
-        break;
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
