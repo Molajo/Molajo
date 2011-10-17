@@ -40,6 +40,12 @@ logs
 tmp
 cache
 temp.php
+/libraries/akismet/
+/libraries/jplatform/
+/libraries/mollom/
+/libraries/recaptcha/
+/libraries/securimage/
+/libraries/Twig/
 /configuration.php
 /xconfiguration.php
 /administrator/cache/
