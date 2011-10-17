@@ -9,10 +9,6 @@ defined('MOLAJO') or die;
 
 include_once dirname(__FILE__).'/browser.php';
 
-if ($lcbrowser == 'internetexplorer') {
-	include_once dirname(__FILE__).'/PIE.php';
-}
-
 $browser 	= new MBrowser();
 $thebrowser = preg_replace("/[^A-Za-z]/i", "", $browser->getBrowser());
 $ver 		= $browser->getVersion();
@@ -21,6 +17,10 @@ $dashes 	= "";
 $mod_chrome	= "";
 $ver 		= str_replace($dots , $dashes , $ver);
 $lcbrowser 	= strtolower($thebrowser);
+
+if ($lcbrowser == 'internetexplorer') {
+	include_once dirname(__FILE__).'/PIE.php';
+}
 
 $layout = JRequest::getCmd('layout', 'installer_step1');        
 if ($layout == 'installer_step1') {

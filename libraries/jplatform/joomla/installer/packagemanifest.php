@@ -7,13 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 jimport('joomla.filesystem.file');
 jimport('joomla.installer.extension');
 
 /**
- * Joomla Package Manifest File
+ * Joomla! Package Manifest File
  *
  * @package     Joomla.Platform
  * @subpackage  Installer
@@ -32,7 +32,7 @@ class JPackageManifest extends JObject
 	var $packagename = '';
 
 	/**
-	 * @var string url website for the package
+	 * @var string url Website for the package
 	 */
 	var $url = '';
 
@@ -65,7 +65,7 @@ class JPackageManifest extends JObject
 	 *
 	 * @var JExtension[] filelist List of files in this package
 	 */
-	var $filelist = Array();
+	var $filelist = array();
 
 	/**
 	 * @var string manifest_file Path to the manifest file
@@ -75,14 +75,16 @@ class JPackageManifest extends JObject
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $xmlpath	Path to XML manifest file.
+	 * @param   string  $xmlpath  Path to XML manifest file.
 	 *
 	 * @return  object  JPackageManifest
+	 *
 	 * @since
 	 */
-	function __construct($xmlpath='')
+	function __construct($xmlpath = '')
 	{
-		if (strlen($xmlpath)) {
+		if (strlen($xmlpath))
+		{
 			$this->loadManifestFromXML($xmlpath);
 		}
 	}
@@ -90,9 +92,10 @@ class JPackageManifest extends JObject
 	/**
 	 * Load a manifest from an XML file
 	 *
-	 * @param   string  $xmlpath	Path to XML manifest file
+	 * @param   string  $xmlfile  Path to XML manifest file
 	 *
 	 * @return  boolean	Result of load
+	 *
 	 * @since   11.1
 	 */
 	function loadManifestFromXML($xmlfile)
@@ -101,24 +104,27 @@ class JPackageManifest extends JObject
 
 		$xml = JFactory::getXML($xmlfile);
 
-		if( ! $xml) {
-			$this->_errors[] = JText::sprintf('MOLAJO_INSTALLER_ERROR_LOAD_XML', $xmlfile);
+		if (!$xml)
+		{
+			$this->_errors[] = JText::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
 
 			return false;
 		}
-		else {
-			$this->name			= (string) $xml->name;
-			$this->packagename	= (string) $xml->packagename;
-			$this->update		= (string) $xml->update;
-			$this->authorurl	= (string) $xml->authorUrl;
-			$this->author		= (string) $xml->author;
-			$this->authoremail	= (string) $xml->authorEmail;
-			$this->description	= (string) $xml->description;
-			$this->packager		= (string) $xml->packager;
-			$this->packagerurl	= (string) $xml->packagerurl;
-			$this->version		= (string) $xml->version;
+		else
+		{
+			$this->name = (string) $xml->name;
+			$this->packagename = (string) $xml->packagename;
+			$this->update = (string) $xml->update;
+			$this->authorurl = (string) $xml->authorUrl;
+			$this->author = (string) $xml->author;
+			$this->authoremail = (string) $xml->authorEmail;
+			$this->description = (string) $xml->description;
+			$this->packager = (string) $xml->packager;
+			$this->packagerurl = (string) $xml->packagerurl;
+			$this->version = (string) $xml->version;
 
-			if (isset($xml->files->file) && count($xml->files->file)) {
+			if (isset($xml->files->file) && count($xml->files->file))
+			{
 				foreach ($xml->files->file as $file)
 				{
 					// NOTE: JExtension doesn't expect a string.

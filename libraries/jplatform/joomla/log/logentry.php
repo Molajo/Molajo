@@ -7,13 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 jimport('joomla.log.log');
 jimport('joomla.utilities.date');
 
 /**
- * Joomla Log Entry class
+ * Joomla! Log Entry class
  *
  * This class is designed to hold log entries for either writing to an engine, or for
  * supported engines, retrieving lists and building in memory (PHP based) search operations.
@@ -25,35 +25,40 @@ jimport('joomla.utilities.date');
 class JLogEntry
 {
 	/**
-	 * @var    string  Application responsible for log entry.
+	 * Application responsible for log entry.
+	 * @var    string
 	 * @since  11.1
 	 */
 	public $category;
 
 	/**
-	 * @var    JDate  The date the message was logged.
+	 * The date the message was logged.
+	 * @var    JDate
 	 * @since  11.1
 	 */
 	public $date;
 
 	/**
-	 * @var    string  Message to be logged.
+	 * Message to be logged.
+	 * @var    string
 	 * @since  11.1
 	 */
 	public $message;
 
 	/**
-	 * @var    string  The priority of the message to be logged.
+	 * The priority of the message to be logged.
+	 * @var    string
 	 * @since  11.1
-	 * @see    $_priorities
+	 * @see    $priorities
 	 */
 	public $priority = JLog::INFO;
 
 	/**
-	 * @var    array  List of available log priority levels [Based on the SysLog default levels].
+	 * List of available log priority levels [Based on the SysLog default levels].
+	 * @var    array
 	 * @since  11.1
 	 */
-	protected $_priorities = array(
+	protected $priorities = array(
 		JLog::EMERGENCY,
 		JLog::ALERT,
 		JLog::CRITICAL,
@@ -68,7 +73,7 @@ class JLogEntry
 	 * Constructor
 	 *
 	 * @param   string  $message   The message to log.
-	 * @param   string  $priority  Message priority based on {$this->_priorities}.
+	 * @param   string  $priority  Message priority based on {$this->priorities}.
 	 * @param   string  $category  Type of entry
 	 * @param   string  $date      Date of entry (defaults to now if not specified or blank)
 	 *
@@ -81,13 +86,15 @@ class JLogEntry
 		$this->message = (string) $message;
 
 		// Sanitize the priority.
-		if (!in_array($priority, $this->_priorities, true)) {
+		if (!in_array($priority, $this->priorities, true))
+		{
 			$priority = JLog::INFO;
 		}
 		$this->priority = $priority;
 
 		// Sanitize category if it exists.
-		if (!empty($category)) {
+		if (!empty($category))
+		{
 			$this->category = (string) strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $category));
 		}
 

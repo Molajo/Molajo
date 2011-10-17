@@ -7,7 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
+
+jimport('joomla.document.document');
 
 /**
  * DocumentFeed class, provides an easy interface to parse and display any feed document
@@ -16,9 +18,6 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Document
  * @since       11.1
  */
-
-jimport('joomla.document.document');
-
 class JDocumentFeed extends JDocument
 {
 	/**
@@ -27,6 +26,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $syndicationURL = "";
 
@@ -36,6 +36,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    object
+	 * @since  11.1
 	 */
 	public $image = null;
 
@@ -45,15 +46,17 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $copyright = "";
 
 	/**
 	 * Published date feed element
 	 *
-	 *  optional
+	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $pubDate = "";
 
@@ -63,6 +66,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $lastBuildDate = "";
 
@@ -72,6 +76,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $editor = "";
 
@@ -79,6 +84,7 @@ class JDocumentFeed extends JDocument
 	 * Docs feed element
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $docs = "";
 
@@ -88,6 +94,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $editorEmail = "";
 
@@ -97,6 +104,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $webmaster = "";
 
@@ -106,6 +114,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $category = "";
 
@@ -115,6 +124,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $ttl = "";
 
@@ -124,6 +134,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $rating = "";
 
@@ -133,6 +144,7 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $skipHours = "";
 
@@ -142,20 +154,26 @@ class JDocumentFeed extends JDocument
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $skipDays = "";
 
 	/**
 	 * The feed items collection
 	 *
-	 * @var array
+	 * @var    array
+	 * @since  11.1
 	 */
 	public $items = array();
 
 	/**
 	 * Class constructor
 	 *
-	 * @param   array  $options Associative array of options
+	 * @param   array  $options  Associative array of options
+	 *
+	 * @return  JDocumentFeed
+	 *
+	 * @since  11.1
 	 */
 	public function __construct($options = array())
 	{
@@ -168,9 +186,12 @@ class JDocumentFeed extends JDocument
 	/**
 	 * Render the document
 	 *
-	 * @param   boolean  $cache		If true, cache the output
-	 * @param   array    $params		Associative array of attributes
+	 * @param   boolean  $cache   If true, cache the output
+	 * @param   array    $params  Associative array of attributes
+	 *
 	 * @return  The rendered data
+	 *
+	 * @since  11.1
 	 */
 	public function render($cache = false, $params = array())
 	{
@@ -182,30 +203,31 @@ class JDocumentFeed extends JDocument
 		/*
 		 * Cache TODO In later release
 		 */
-		$cache		= 0;
+		$cache = 0;
 		$cache_time = 3600;
 		$cache_path = JPATH_CACHE;
 
 		// set filename for rss feeds
 		$file = strtolower(str_replace('.', '', $type));
-		$file = $cache_path . '/' . $file.'_'.$option.'.xml';
-
+		$file = $cache_path . '/' . $file . '_' . $option . '.xml';
 
 		// Instantiate feed renderer and set the mime encoding
 		$renderer = $this->loadRenderer(($type) ? $type : 'rss');
-		if (!is_a($renderer, 'JDocumentRenderer')) {
+		if (!is_a($renderer, 'JDocumentRenderer'))
+		{
 			JError::raiseError(404, JText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
 		}
 		$this->setMimeEncoding($renderer->getContentType());
 
 		// Output
 		// Generate prolog
-		$data	= "<?xml version=\"1.0\" encoding=\"".$this->_charset."\"?>\n";
-		$data	.= "<!-- generator=\"".$this->getGenerator()."\" -->\n";
+		$data = "<?xml version=\"1.0\" encoding=\"" . $this->_charset . "\"?>\n";
+		$data .= "<!-- generator=\"" . $this->getGenerator() . "\" -->\n";
 
-		 // Generate stylesheet links
-		foreach ($this->_styleSheets as $src => $attr) {
-			$data .= "<?xml-stylesheet href=\"$src\" type=\"".$attr['mime']."\"?>\n";
+		// Generate stylesheet links
+		foreach ($this->_styleSheets as $src => $attr)
+		{
+			$data .= "<?xml-stylesheet href=\"$src\" type=\"" . $attr['mime'] . "\"?>\n";
 		}
 
 		// Render the feed
@@ -218,12 +240,18 @@ class JDocumentFeed extends JDocument
 	/**
 	 * Adds an JFeedItem to the feed.
 	 *
-	 * @param   object JFeedItem $item The feeditem to add to the feed.
+	 * @param   JFeedItem  &$item  The feeditem to add to the feed.
+	 *
+	 * @return  JDocumentFeed  instance of $this to allow chaining
+	 *
+	 * @since   11.1
 	 */
 	public function addItem(&$item)
 	{
 		$item->source = $this->link;
 		$this->items[] = $item;
+
+		return $this;
 	}
 }
 
@@ -236,12 +264,14 @@ class JDocumentFeed extends JDocument
  */
 class JFeedItem extends JObject
 {
+
 	/**
 	 * Title item element
 	 *
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $title;
 
@@ -251,6 +281,7 @@ class JFeedItem extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $link;
 
@@ -260,6 +291,7 @@ class JFeedItem extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $description;
 
@@ -269,18 +301,19 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $author;
+	public $author;
 
-	 /**
+	/**
 	 * Author email element
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $authorEmail;
-
+	public $authorEmail;
 
 	/**
 	 * Category element
@@ -288,73 +321,85 @@ class JFeedItem extends JObject
 	 * optional
 	 *
 	 * @var    array or string
+	 * @since  11.1
 	 */
-	 public $category;
+	public $category;
 
-	 /**
+	/**
 	 * Comments element
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $comments;
+	public $comments;
 
-	 /**
+	/**
 	 * Enclosure element
 	 *
 	 * @var    object
+	 * @since  11.1
 	 */
-	 public $enclosure =  null;
+	public $enclosure = null;
 
-	 /**
+	/**
 	 * Guid element
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 var $guid;
+	var $guid;
 
 	/**
 	 * Published date
 	 *
 	 * optional
 	 *
-	 *  May be in one of the following formats:
+	 * May be in one of the following formats:
 	 *
-	 *	RFC 822:
-	 *	"Mon, 20 Jan 03 18:05:41 +0400"
-	 *	"20 Jan 03 18:05:41 +0000"
+	 * RFC 822:
+	 * "Mon, 20 Jan 03 18:05:41 +0400"
+	 * "20 Jan 03 18:05:41 +0000"
 	 *
-	 *	ISO 8601:
-	 *	"2003-01-20T18:05:41+04:00"
+	 * ISO 8601:
+	 * "2003-01-20T18:05:41+04:00"
 	 *
-	 *	Unix:
-	 *	1043082341
+	 * Unix:
+	 * 1043082341
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $date;
+	public $date;
 
-	 /**
+	/**
 	 * Source element
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $source;
+	public $source;
 
-
-	 /**
+	/**
 	 * Set the JFeedEnclosure for this item
 	 *
 	 * @param   object  $enclosure  The JFeedItem to add to the feed.
+	 *
+	 * @return  JFeedItem instance of $this to allow chaining
+	 *
+	 * @since   11.1
 	 */
-	 public function setEnclosure($enclosure)	{
-		 $this->enclosure = $enclosure;
-	 }
+	public function setEnclosure($enclosure)
+	{
+		$this->enclosure = $enclosure;
+
+		return $this;
+	}
 }
 
 /**
@@ -366,14 +411,16 @@ class JFeedItem extends JObject
  */
 class JFeedEnclosure extends JObject
 {
+
 	/**
 	 * URL enclosure element
 	 *
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $url = "";
+	public $url = "";
 
 	/**
 	 * Length enclosure element
@@ -381,17 +428,19 @@ class JFeedEnclosure extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $length = "";
+	public $length = "";
 
-	 /**
+	/**
 	 * Type enclosure element
 	 *
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $type = "";
+	public $type = "";
 }
 
 /**
@@ -403,21 +452,24 @@ class JFeedEnclosure extends JObject
  */
 class JFeedImage extends JObject
 {
+
 	/**
 	 * Title image attribute
 	 *
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $title = "";
+	public $title = "";
 
-	 /**
+	/**
 	 * URL image attribute
 	 *
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	public $url = "";
 
@@ -427,33 +479,37 @@ class JFeedImage extends JObject
 	 * required
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $link = "";
+	public $link = "";
 
-	 /**
+	/**
 	 * Width image attribute
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $width;
+	public $width;
 
-	 /**
+	/**
 	 * Title feed attribute
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $height;
+	public $height;
 
-	 /**
+	/**
 	 * Title feed attribute
 	 *
 	 * optional
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
-	 public $description;
+	public $description;
 }

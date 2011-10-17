@@ -388,4 +388,3 @@ foreach ($files as $file) {
 
 /** Replace */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/html.php', 'JHtml');
-

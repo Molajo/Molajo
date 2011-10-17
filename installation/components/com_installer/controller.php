@@ -14,4 +14,19 @@ defined('MOLAJO') or die;
  * @subpackage	Controller
  * @since	    1.0
  */
-class InstallerController extends MolajoController {}
+class InstallerController extends MolajoController
+{
+
+    /**
+     * install
+     *
+     * install Molajo given the user selections
+     *
+     * @return bool
+     */
+    public function install()
+    {
+        
+
+    }
+}

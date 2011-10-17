@@ -13,25 +13,41 @@ defined('JPATH_PLATFORM') or die;
  * Renders a password element
  *
  * @package     Joomla.Platform
- * @subpackage	Parameter
- * @since		11.1
- * @deprecated	JParameter is deprecated and will be removed in a future version. Use JForm instead.
+ * @subpackage  Parameter
+ * @since       11.1
+ * @deprecated  12.1  Use JFormFieldPassword instead.
  */
-
 class JElementPassword extends JElement
 {
 	/**
-	* Element name
-	*
-	* @var    string
-	*/
+	 * Element name
+	 *
+	 * @var    string
+	 */
 	protected $_name = 'Password';
 
+	/**
+	 * Fetch a html for a password element
+	 *
+	 * @param   string  $name          Element name
+	 * @param   string  $value         Element value
+	 * @param   object  &$node         The current JSimpleXMLElement node.
+	 * @param   string  $control_name  Control name
+	 *
+	 * @return  string
+	 *
+	 * @deprecated    12.1  Use JFormFieldPasssword::getInput instead.
+	 * @since   11.1
+	 */
 	public function fetchElement($name, $value, &$node, $control_name)
 	{
-		$size = ($node->attributes('size') ? 'size="'.$node->attributes('size').'"' : '');
-		$class = ($node->attributes('class') ? 'class="'.$node->attributes('class').'"' : 'class="text_area"');
+		// Deprecation warning.
+		JLog::add('JElementPassword::fetchElement() is deprecated.', JLog::WARNING, 'deprecated');
 
-		return '<input type="password" name="'.$control_name.'['.$name.']" id="'.$control_name.$name.'" value="'.$value.'" '.$class.' '.$size.' />';
+		$size = ($node->attributes('size') ? 'size="' . $node->attributes('size') . '"' : '');
+		$class = ($node->attributes('class') ? 'class="' . $node->attributes('class') . '"' : 'class="text_area"');
+
+		return '<input type="password" name="' . $control_name . '[' . $name . ']" id="' . $control_name . $name . '" value="' . $value . '" '
+			. $class . ' ' . $size . ' />';
 	}
 }

@@ -21,18 +21,13 @@ class JXMLElement extends SimpleXMLElement
 	/**
 	 * Get the name of the element.
 	 *
-	 * Warning: don't use getName() as it's broken up to php 5.2.3
-	 *
 	 * @return  string
+	 *
+	 * @since   11.1
 	 */
 	public function name()
 	{
-		if (version_compare(phpversion(), '5.2.3', '>')) {
-			return (string) $this->getName();
-		}
-
-		// Workaround php bug number 41867, fixed in 5.2.4
-		return (string) $this->aaa->getName();
+		return (string) $this->getName();
 	}
 
 	/**
@@ -40,78 +35,99 @@ class JXMLElement extends SimpleXMLElement
 	 *
 	 * @return  string
 	 *
-	 * @deprecated
+	 * @deprecated  12.1
+	 * @since   11.1
 	 */
 	public function data()
 	{
+		// Deprecation warning.
+		JLog::add('Jxmlelement::data() is deprecated.', JLog::WARNING, 'deprecated');
+
 		return (string) $this;
 	}
 
 	/**
 	 * Legacy method gets an elements attribute by name.
 	 *
-	 * @param   string
+	 * @param   string  $name  Attribute to get
 	 *
 	 * @return  string
 	 *
-	 * @deprecated
+	 * @since   11.1
+	 *
+	 * @deprecated    12.1
+	 * @see           SimpleXMLElement::attributes
 	 */
 	public function getAttribute($name)
 	{
+		// Deprecation warning.
+		JLog::add('JXMLelement::getAttributes() is deprecated.', JLog::WARNING, 'deprecated');
+
 		return (string) $this->attributes()->$name;
 	}
 
 	/**
 	 * Return a well-formed XML string based on SimpleXML element
 	 *
-	 * @param   boolean  Should we use indentation and newlines ?
-	 * @param   integer  Indentaion level.
+	 * @param   boolean  $compressed  Should we use indentation and newlines ?
+	 * @param   integer  $indent      Indentaion level.
+	 * @param   integer  $level       The level within the document which informs the indentation.
 	 *
 	 * @return  string
+	 *
+	 * @since   11.1
 	 */
 	public function asFormattedXML($compressed = false, $indent = "\t", $level = 0)
 	{
 		$out = '';
 
 		// Start a new line, indent by the number indicated in $level
-		$out .= ($compressed) ? '' : "\n".str_repeat($indent, $level);
+		$out .= ($compressed) ? '' : "\n" . str_repeat($indent, $level);
 
 		// Add a <, and add the name of the tag
-		$out .= '<'.$this->getName();
+		$out .= '<' . $this->getName();
 
 		// For each attribute, add attr="value"
-		foreach ($this->attributes() as $attr) {
-			$out .= ' '.$attr->getName().'="'.htmlspecialchars((string)$attr, ENT_COMPAT, 'UTF-8').'"';
+		foreach ($this->attributes() as $attr)
+		{
+			$out .= ' ' . $attr->getName() . '="' . htmlspecialchars((string) $attr, ENT_COMPAT, 'UTF-8') . '"';
 		}
 
 		// If there are no children and it contains no data, end it off with a />
-		if (!count($this->children()) && !(string)$this) {
+		if (!count($this->children()) && !(string) $this)
+		{
 			$out .= " />";
-		} else {
+		}
+		else
+		{
 			// If there are children
-			if (count($this->children())) {
+			if (count($this->children()))
+			{
 				// Close off the start tag
 				$out .= '>';
 
-				$level ++;
+				$level++;
 
 				// For each child, call the asFormattedXML function (this will ensure that all children are added recursively)
-				foreach ($this->children() as $child) {
+				foreach ($this->children() as $child)
+				{
 					$out .= $child->asFormattedXML($compressed, $indent, $level);
 				}
 
-				$level --;
+				$level--;
 
 				// Add the newline and indentation to go along with the close tag
-				$out .=($compressed) ? '' : "\n".str_repeat($indent, $level);
+				$out .= ($compressed) ? '' : "\n" . str_repeat($indent, $level);
 
-			} else if ((string) $this) {
+			}
+			elseif ((string) $this)
+			{
 				// If there is data, close off the start tag and add the data
-				$out .= '>'.htmlspecialchars((string)$this, ENT_COMPAT, 'UTF-8');
+				$out .= '>' . htmlspecialchars((string) $this, ENT_COMPAT, 'UTF-8');
 			}
 
 			// Add the end tag
-			$out .= '</'.$this->getName().'>';
+			$out .= '</' . $this->getName() . '>';
 		}
 
 		return $out;

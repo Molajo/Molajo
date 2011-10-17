@@ -241,7 +241,7 @@ class MolajoAdministrator extends MolajoApplication
 
 		if (JError::isError($result)) {
         } else {
-			$lang = JRequest::getCmd('lang');
+			$lang = JRequest::getCmd('language');
 			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
 			$this->setUserState('application.lang', $lang );
 

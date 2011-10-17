@@ -8,16 +8,11 @@
 defined('MOLAJO') or die;
 
 /** LOAD */
-
-/** phpversion */
 require_once LIBRARIES.'/includes/phpversion.php';
-/** defines */
 require_once LIBRARIES.'/includes/defines.php';
-/** platform */
 require_once LIBRARIES.'/includes/import.php';
-/** other libraries */
 require_once LIBRARIES.'/includes/other.php';
-
+require_once LIBRARIES.'/includes/overrides.php';
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /** INITIALIZE */
@@ -25,7 +20,7 @@ $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 
 if (MOLAJO_APPLICATION == 'administrator') {
     $app->initialise(array(
-        'language' => $app->getUserState('application.lang', 'lang')
+        'language' => $app->getUserState('application.language', 'language')
     ));
 } else {
     $app->initialise();
@@ -43,6 +38,6 @@ JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 /** RENDER */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
-;
+
 /** complete */
 echo $app;

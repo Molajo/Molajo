@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die();
 /**
  * JResponse Class.
  *
- * This class serves to provide the Joomla Framework with a common interface to access
+ * This class serves to provide the Joomla Platform with a common interface to access
  * response variables.  This includes header and body.
  *
  * @package     Joomla.Platform
@@ -136,7 +136,7 @@ class JResponse
 				}
 				else
 				{
-					header($header['name'] . ': ' . $header['value']);
+					header($header['name'] . ': ' . $header['value'], false);
 				}
 			}
 		}

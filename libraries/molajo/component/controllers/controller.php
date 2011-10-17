@@ -240,7 +240,8 @@ class MolajoController extends JController
         /** load table */
         if ($this->request['task'] == 'display'
             || $this->request['task'] == 'add'
-            || $this->request['task'] == 'login') {
+            || $this->request['task'] == 'login'
+            || $this->request['component_table'] == '__dummy') {
 
             $this->isNew = false;
 

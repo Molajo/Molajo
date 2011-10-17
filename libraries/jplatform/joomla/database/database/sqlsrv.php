@@ -7,43 +7,62 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 jimport('joomla.database.database');
-jimport('joomla.utilities.string');
+jimport('joomla.string.string');
 
-JLoader::register('JDatabaseQuerySQLSrv', dirname(__FILE__).'/sqlsrvquery.php');
+JLoader::register('JDatabaseQuerySQLSrv', dirname(__FILE__) . '/sqlsrvquery.php');
 
 /**
  * SQL Server database driver
  *
  * @package     Joomla.Platform
  * @subpackage  Database
+ * @see         http://msdn.microsoft.com/en-us/library/cc296152(SQL.90).aspx
  * @since       11.1
  */
 class JDatabaseSQLSrv extends JDatabase
 {
 	/**
-	 * @var    string  The name of the database driver.
+	 * The name of the database driver.
+	 *
+	 * @var    string
 	 * @since  11.1
 	 */
 	public $name = 'sqlsrv';
 
 	/**
-	 * @var    string  The character(s) used to quote SQL statement names such as table names or field names,
-	 *                 etc.  The child classes should define this as necessary.  If a single character string the
-	 *                 same character is used for both sides of the quoted name, else the first character will be
-	 *                 used for the opening quote and the second for the closing quote.
+	 * The character(s) used to quote SQL statement names such as table names or field names,
+	 * etc.  The child classes should define this as necessary.  If a single character string the
+	 * same character is used for both sides of the quoted name, else the first character will be
+	 * used for the opening quote and the second for the closing quote.
+	 *
+	 * @var    string
 	 * @since  11.1
 	 */
 	protected $nameQuote;
 
 	/**
-	 * @var    string  The null or zero representation of a timestamp for the database driver.  This should be
-	 *                 defined in child classes to hold the appropriate value for the engine.
+	 * The null or zero representation of a timestamp for the database driver.  This should be
+	 * defined in child classes to hold the appropriate value for the engine.
+	 *
+	 * @var    string
 	 * @since  11.1
 	 */
 	protected $nullDate = '1900-01-01 00:00:00';
+
+	/**
+	 * Test to see if the SQLSRV connector is available.
+	 *
+	 * @return  boolean  True on success, false otherwise.
+	 *
+	 * @since   11.1
+	 */
+	public static function test()
+	{
+		return (function_exists('sqlsrv_connect'));
+	}
 
 	/**
 	 * Constructor.
@@ -57,11 +76,11 @@ class JDatabaseSQLSrv extends JDatabase
 	protected function __construct($options)
 	{
 		// Get some basic values from the options.
-		$options['host']     = (isset($options['host'])) ? $options['host'] : 'localhost';
-		$options['user']     = (isset($options['user'])) ? $options['user'] : '';
+		$options['host'] = (isset($options['host'])) ? $options['host'] : 'localhost';
+		$options['user'] = (isset($options['user'])) ? $options['user'] : '';
 		$options['password'] = (isset($options['password'])) ? $options['password'] : '';
 		$options['database'] = (isset($options['database'])) ? $options['database'] : '';
-		$options['select']   = (isset($options['select'])) ? (bool) $options['select'] : true;
+		$options['select'] = (isset($options['select'])) ? (bool) $options['select'] : true;
 
 		// Build the connection configuration array.
 		$config = array(
@@ -69,36 +88,41 @@ class JDatabaseSQLSrv extends JDatabase
 			'uid' => $options['user'],
 			'pwd' => $options['password'],
 			'CharacterSet' => 'UTF-8',
-			'ReturnDatesAsStrings' => true
-		);
+			'ReturnDatesAsStrings' => true);
 
 		// Make sure the SQLSRV extension for PHP is installed and enabled.
-		if (!function_exists('sqlsrv_connect')) {
+		if (!function_exists('sqlsrv_connect'))
+		{
 
 			// Legacy error handling switch based on the JError::$legacy switch.
-			// @deprecated  11.3
-			if (JError::$legacy) {
+			// @deprecated  12.1
+			if (JError::$legacy)
+			{
 				$this->errorNum = 1;
-				$this->errorMsg = JText::_('MOLAJO_DATABASE_ERROR_ADAPTER_SQLSRV');
+				$this->errorMsg = JText::_('JLIB_DATABASE_ERROR_ADAPTER_SQLSRV');
 				return;
 			}
-			else {
-				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_ADAPTER_SQLSRV'));
+			else
+			{
+				throw new JDatabaseException(JText::_('JLIB_DATABASE_ERROR_ADAPTER_SQLSRV'));
 			}
 		}
 
 		// Attempt to connect to the server.
-		if (!($this->connection = @ sqlsrv_connect($options['host'], $config))) {
+		if (!($this->connection = @ sqlsrv_connect($options['host'], $config)))
+		{
 
 			// Legacy error handling switch based on the JError::$legacy switch.
-			// @deprecated  11.3
-			if (JError::$legacy) {
+			// @deprecated  12.1
+			if (JError::$legacy)
+			{
 				$this->errorNum = 2;
-				$this->errorMsg = JText::_('MOLAJO_DATABASE_ERROR_CONNECT_SQLSRV');
+				$this->errorMsg = JText::_('JLIB_DATABASE_ERROR_CONNECT_SQLSRV');
 				return;
 			}
-			else {
-				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_CONNECT_SQLSRV'));
+			else
+			{
+				throw new JDatabaseException(JText::_('JLIB_DATABASE_ERROR_CONNECT_SQLSRV'));
 			}
 		}
 
@@ -109,7 +133,8 @@ class JDatabaseSQLSrv extends JDatabase
 		parent::__construct($options);
 
 		// If auto-select is enabled select the given database.
-		if ($options['select'] && !empty($options['database'])) {
+		if ($options['select'] && !empty($options['database']))
+		{
 			$this->select($options['database']);
 		}
 	}
@@ -123,43 +148,48 @@ class JDatabaseSQLSrv extends JDatabase
 	 */
 	public function __destruct()
 	{
-		if (is_resource($this->connection)) {
+		if (is_resource($this->connection))
+		{
 			sqlsrv_close($this->connection);
 		}
 	}
 
 	/**
+	 * Get table constraints
+	 *
 	 * @param   string  $tableName  The name of the database table.
 	 *
-	 * @return  Any constraints available for the table
+	 * @return  array  Any constraints available for the table.
+	 *
 	 * @since   11.1
 	 */
-	protected function _get_table_constraints($tableName)
+	protected function getTableConstraints($tableName)
 	{
 		$query = $this->getQuery(true);
 
 		$this->setQuery(
-			'SELECT CONSTRAINT_NAME FROM'.
-			' INFORMATION_SCHEMA.TABLE_CONSTRAINTS'.
-			' WHERE TABLE_NAME = '.$query->quote($tableName)
+			'SELECT CONSTRAINT_NAME FROM' . ' INFORMATION_SCHEMA.TABLE_CONSTRAINTS' . ' WHERE TABLE_NAME = ' . $query->quote($tableName)
 		);
 
 		return $this->loadColumn();
 	}
 
 	/**
-	 * @param   array   $constraints  A string
+	 * Rename constraints.
+	 *
+	 * @param   array   $constraints  Array(strings) of table constraints
 	 * @param   string  $prefix       A string
 	 * @param   string  $backup       A string
 	 *
 	 * @return  void
+	 *
 	 * @since   11.1
 	 */
-	protected function _renameConstraints($constraints = array(), $prefix = null, $backup = null)
+	protected function renameConstraints($constraints = array(), $prefix = null, $backup = null)
 	{
-		foreach($constraints as $constraint)
+		foreach ($constraints as $constraint)
 		{
-			$this->setQuery('sp_rename '.$constraint.','.str_replace($prefix, $backup, $constraint));
+			$this->setQuery('sp_rename ' . $constraint . ',' . str_replace($prefix, $backup, $constraint));
 			$this->query();
 		}
 	}
@@ -170,8 +200,8 @@ class JDatabaseSQLSrv extends JDatabase
 	 * The escaping for MSSQL isn't handled in the driver though that would be nice.  Because of this we need
 	 * to handle the escaping ourselves.
 	 *
-	 * @param   string  The string to be escaped.
-	 * @param   bool    Optional parameter to provide extra escaping.
+	 * @param   string   $text   The string to be escaped.
+	 * @param   boolean  $extra  Optional parameter to provide extra escaping.
 	 *
 	 * @return  string  The escaped string.
 	 *
@@ -185,7 +215,8 @@ class JDatabaseSQLSrv extends JDatabase
 		$result = str_replace('\"', '"', $result);
 		//$result = str_replace("\\", "''", $result);
 
-		if ($extra) {
+		if ($extra)
+		{
 			// We need the below str_replace since the search in sql server doesnt recognize _ character.
 			$result = str_replace('_', '[_]', $result);
 		}
@@ -194,21 +225,9 @@ class JDatabaseSQLSrv extends JDatabase
 	}
 
 	/**
-	 * Test to see if the SQLSRV connector is available.
-	 *
-	 * @return  bool  True on success, false otherwise.
-	 *
-	 * @since   11.1
-	 */
-	public static function test()
-	{
-		return (function_exists('sqlsrv_connect'));
-	}
-
-	/**
 	 * Determines if the connection to the server is active.
 	 *
-	 * @return  bool  True if connected to the database engine.
+	 * @return  boolean  True if connected to the database engine.
 	 *
 	 * @since   11.1
 	 */
@@ -221,10 +240,11 @@ class JDatabaseSQLSrv extends JDatabase
 	/**
 	 * Drops a table from the database.
 	 *
-	 * @param   string  $tableName  The name of the database table to drop.
-	 * @param   bool    $ifExists   Optionally specify that the table must exist before it is dropped.
+	 * @param   string   $tableName  The name of the database table to drop.
+	 * @param   boolean  $ifExists   Optionally specify that the table must exist before it is dropped.
 	 *
 	 * @return  JDatabaseSQLSrv  Returns this object to support chaining.
+	 *
 	 * @since   11.1
 	 */
 	function dropTable($tableName, $ifExists = true)
@@ -232,9 +252,7 @@ class JDatabaseSQLSrv extends JDatabase
 		$query = $this->getQuery(true);
 
 		$this->setQuery(
-			'IF EXISTS(SELECT TABLE_NAME FROM'.
-			' INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '.
-			$query->quote($tableName).') DROP TABLE'
+			'IF EXISTS(SELECT TABLE_NAME FROM' . ' INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ' . $query->quote($tableName) . ') DROP TABLE'
 		);
 
 		$this->query();
@@ -273,13 +291,14 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  JDatabaseExporterSQLAzure  An exporter object.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function getExporter()
 	{
 		// Make sure we have an exporter class for this driver.
-		if (!class_exists('JDatabaseExporterSQLAzure')) {
-			throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_MISSING_EXPORTER'));
+		if (!class_exists('JDatabaseExporterSQLAzure'))
+		{
+			throw new JDatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_EXPORTER'));
 		}
 
 		$o = new JDatabaseExporterSQLAzure;
@@ -294,13 +313,14 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  JDatabaseImporterSQLAzure  An importer object.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function getImporter()
 	{
 		// Make sure we have an importer class for this driver.
-		if (!class_exists('JDatabaseImporterSQLAzure')) {
-			throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_MISSING_IMPORTER'));
+		if (!class_exists('JDatabaseImporterSQLAzure'))
+		{
+			throw new JDatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_IMPORTER'));
 		}
 
 		$o = new JDatabaseImporterSQLAzure;
@@ -326,23 +346,26 @@ class JDatabaseSQLSrv extends JDatabase
 	/**
 	 * Get the current or query, or new JDatabaseQuery object.
 	 *
-	 * @param   bool   $new  False to return the last query set, True to return a new JDatabaseQuery object.
+	 * @param   boolean  $new  False to return the last query set, True to return a new JDatabaseQuery object.
 	 *
 	 * @return  mixed  The current value of the internal SQL variable or a new JDatabaseQuery object.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function getQuery($new = false)
 	{
-		if ($new) {
+		if ($new)
+		{
 			// Make sure we have a query class for this driver.
-			if (!class_exists('JDatabaseQuerySQLAzure')) {
-				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_MISSING_QUERY'));
+			if (!class_exists('JDatabaseQuerySQLAzure'))
+			{
+				throw new JDatabaseException(JText::_('JLIB_DATABASE_ERROR_MISSING_QUERY'));
 			}
 			return new JDatabaseQuerySQLAzure($this);
 		}
-		else {
+		else
+		{
 			return $this->sql;
 		}
 	}
@@ -350,15 +373,15 @@ class JDatabaseSQLSrv extends JDatabase
 	/**
 	 * Retrieves field information about the given tables.
 	 *
-	 * @param   mixed  $tables    A table name or a list of table names.
-	 * @param   bool   $typeOnly  True to only return field types.
+	 * @param   mixed    $tables    A table name or a list of table names.
+	 * @param   boolean  $typeOnly  True to only return field types.
 	 *
 	 * @return  array  An array of fields by table.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
-	public function getTableColumns( $tables, $typeOnly = true )
+	public function getTableColumns($tables, $typeOnly = true)
 	{
 		// Initialise variables.
 		$result = array();
@@ -370,20 +393,21 @@ class JDatabaseSQLSrv extends JDatabase
 			// Set the query to get the table fields statement.
 			$this->setQuery(
 				'SELECT column_name as Field, data_type as Type, is_nullable as \'Null\', column_default as \'Default\'' .
-				' FROM information_schema.columns' .
-				' WHERE table_name = '.$this->quote($table)
+				' FROM information_schema.columns' . ' WHERE table_name = ' . $this->quote($table)
 			);
 			$fields = $this->loadObjectList();
 
 			// If we only want the type as the value add just that to the list.
-			if ($typeOnly) {
+			if ($typeOnly)
+			{
 				foreach ($fields as $field)
 				{
-					$result[$table][$field->Field] = preg_replace("/[(0-9)]/",'', $field->Type);
+					$result[$table][$field->Field] = preg_replace("/[(0-9)]/", '', $field->Type);
 				}
 			}
 			// If we want the whole field data object add that to the list.
-			else {
+			else
+			{
 				foreach ($fields as $field)
 				{
 					$result[$table][$field->Field] = $field;
@@ -404,7 +428,7 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  array  A list of the create SQL for the tables.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function getTableCreate($tables)
 	{
@@ -419,7 +443,7 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  array  An arry of the column specification for the table.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function getTableKeys($table)
 	{
@@ -433,7 +457,7 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  array  An array of all the tables in the database.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function getTableList()
 	{
@@ -489,35 +513,41 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function query()
 	{
-		if (!is_resource($this->connection)) {
+		if (!is_resource($this->connection))
+		{
 
 			// Legacy error handling switch based on the JError::$legacy switch.
-			// @deprecated  11.3
-			if (JError::$legacy) {
+			// @deprecated  12.1
+			if (JError::$legacy)
+			{
 
-				if ($this->debug) {
-					JError::raiseError(500, 'JDatabaseDriverSQLAzure::query: '.$this->errorNum.' - '.$this->errorMsg);
+				if ($this->debug)
+				{
+					JError::raiseError(500, 'JDatabaseDriverSQLAzure::query: ' . $this->errorNum . ' - ' . $this->errorMsg);
 				}
 				return false;
 			}
-			else {
-				JLog::add(JText::sprintf('MOLAJO_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
-				throw new DatabaseException();
+			else
+			{
+				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'database');
+				throw new JDatabaseException($this->errorMsg, $this->errorNum);
 			}
 		}
 
 		// Take a local copy so that we don't modify the original query and cause issues later
 		$sql = $this->replacePrefix((string) $this->sql);
-		if ($this->limit > 0 || $this->offset > 0) {
-			$sql = $this->_limit($sql, $this->limit, $this->offset);
+		if ($this->limit > 0 || $this->offset > 0)
+		{
+			$sql = $this->limit($sql, $this->limit, $this->offset);
 		}
 
 		// If debugging is enabled then let's log the query.
-		if ($this->debug) {
+		if ($this->debug)
+		{
 
 			// Increment the query counter and add the query to the object queue.
 			$this->count++;
@@ -531,10 +561,12 @@ class JDatabaseSQLSrv extends JDatabase
 		$this->errorMsg = '';
 
 		// sqlsrv_num_rows requires a static or keyset cursor.
-		if (JString::startsWith(ltrim(strtoupper($sql)), 'SELECT')) {
+		if (JString::startsWith(ltrim(strtoupper($sql)), 'SELECT'))
+		{
 			$array = array('Scrollable' => SQLSRV_CURSOR_KEYSET);
 		}
-		else {
+		else
+		{
 			$array = array();
 		}
 
@@ -542,25 +574,29 @@ class JDatabaseSQLSrv extends JDatabase
 		$this->cursor = sqlsrv_query($this->connection, $sql, array(), $array);
 
 		// If an error occurred handle it.
-		if (!$this->cursor) {
+		if (!$this->cursor)
+		{
 
 			// Populate the errors.
 			$errors = sqlsrv_errors();
 			$this->errorNum = $errors[0]['SQLSTATE'];
-			$this->errorMsg = $errors[0]['message'].'SQL='.$sql;
+			$this->errorMsg = $errors[0]['message'] . 'SQL=' . $sql;
 
 			// Legacy error handling switch based on the JError::$legacy switch.
-			// @deprecated  11.3
-			if (JError::$legacy) {
+			// @deprecated  12.1
+			if (JError::$legacy)
+			{
 
-				if ($this->debug) {
-					JError::raiseError(500, 'JDatabaseDriverSQLAzure::query: '.$this->errorNum.' - '.$this->errorMsg);
+				if ($this->debug)
+				{
+					JError::raiseError(500, 'JDatabaseDriverSQLAzure::query: ' . $this->errorNum . ' - ' . $this->errorMsg);
 				}
 				return false;
 			}
-			else {
-				JLog::add(JText::sprintf('MOLAJO_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
-				throw new DatabaseException();
+			else
+			{
+				JLog::add(JText::sprintf('JLIB_DATABASE_QUERY_FAILED', $this->errorNum, $this->errorMsg), JLog::ERROR, 'databasequery');
+				throw new JDatabaseException($this->errorMsg, $this->errorNum);
 			}
 		}
 
@@ -572,28 +608,32 @@ class JDatabaseSQLSrv extends JDatabase
 	 *
 	 * @param   string  $database  The name of the database to select for use.
 	 *
-	 * @return  bool  True if the database was successfully selected.
+	 * @return  boolean  True if the database was successfully selected.
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function select($database)
 	{
-		if (!$database) {
+		if (!$database)
+		{
 			return false;
 		}
 
-		if (!sqlsrv_query($this->connection, 'USE '.$database, null, array('scrollable' => SQLSRV_CURSOR_STATIC))) {
+		if (!sqlsrv_query($this->connection, 'USE ' . $database, null, array('scrollable' => SQLSRV_CURSOR_STATIC)))
+		{
 
 			// Legacy error handling switch based on the JError::$legacy switch.
-			// @deprecated  11.3
-			if (JError::$legacy) {
+			// @deprecated  12.1
+			if (JError::$legacy)
+			{
 				$this->errorNum = 3;
-				$this->errorMsg = JText::_('MOLAJO_DATABASE_ERROR_DATABASE_CONNECT');
+				$this->errorMsg = JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT');
 				return false;
 			}
-			else {
-				throw new DatabaseException(JText::_('MOLAJO_DATABASE_ERROR_DATABASE_CONNECT'));
+			else
+			{
+				throw new JDatabaseException(JText::_('JLIB_DATABASE_ERROR_DATABASE_CONNECT'));
 			}
 		}
 
@@ -603,7 +643,7 @@ class JDatabaseSQLSrv extends JDatabase
 	/**
 	 * Set the connection to use UTF-8 character encoding.
 	 *
-	 * @return  bool  True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
 	 */
@@ -618,7 +658,7 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function transactionCommit()
 	{
@@ -632,7 +672,7 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function transactionRollback()
 	{
@@ -646,7 +686,7 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @return  void
 	 *
 	 * @since   11.1
-	 * @throws  DatabaseException
+	 * @throws  JDatabaseException
 	 */
 	public function transactionStart()
 	{
@@ -716,9 +756,9 @@ class JDatabaseSQLSrv extends JDatabase
 	 *
 	 * @return      string  The explain output.
 	 *
-	 * @since       11.1
-	 * @deprecated  11.2
+	 * @deprecated  12.1
 	 * @see         http://msdn.microsoft.com/en-us/library/aa259203%28SQL.80%29.aspx
+	 * @since       11.1
 	 */
 	public function explain()
 	{
@@ -734,21 +774,23 @@ class JDatabaseSQLSrv extends JDatabase
 
 		// Execute the query and get the result set cursor.
 		$this->setQuery($backup);
-		if (!($cursor = $this->query())) {
+		if (!($cursor = $this->query()))
+		{
 			return null;
 		}
 
 		// Build the HTML table.
 		$first = true;
 		$buffer = '<table id="explain-sql">';
-		$buffer .= '<thead><tr><td colspan="99">'.$this->getQuery().'</td></tr>';
+		$buffer .= '<thead><tr><td colspan="99">' . $this->getQuery() . '</td></tr>';
 		while ($row = $this->fetchAssoc($cursor))
 		{
-			if ($first) {
+			if ($first)
+			{
 				$buffer .= '<tr>';
 				foreach ($row as $k => $v)
 				{
-					$buffer .= '<th>'.$k.'</th>';
+					$buffer .= '<th>' . $k . '</th>';
 				}
 				$buffer .= '</tr></thead>';
 				$first = false;
@@ -756,7 +798,7 @@ class JDatabaseSQLSrv extends JDatabase
 			$buffer .= '<tbody><tr>';
 			foreach ($row as $k => $v)
 			{
-				$buffer .= '<td>'.$v.'</td>';
+				$buffer .= '<td>' . $v . '</td>';
 			}
 			$buffer .= '</tr>';
 		}
@@ -769,7 +811,7 @@ class JDatabaseSQLSrv extends JDatabase
 		$this->setQuery('SET SHOWPLAN_ALL OFF');
 		$this->query();
 
-		// Restore the original query to it's state before we ran the explain.
+		// Restore the original query to its state before we ran the explain.
 		$this->sql = $backup;
 
 		return $buffer;
@@ -778,12 +820,15 @@ class JDatabaseSQLSrv extends JDatabase
 	/**
 	 * Execute a query batch.
 	 *
-	 * @return      mixed  A database resource if successful, false if not.
+	 * @param   boolean  $abortOnError     Abort on error.
+	 * @param   boolean  $transactionSafe  Transaction safe queries.
 	 *
-	 * @since       11.1
-	 * @deprecated  11.2
+	 * @return  mixed  A database resource if successful, false if not.
+	 *
+	 * @since   11.1
+	 * @deprecated  12.1
 	 */
-	public function queryBatch($abortOnError=true, $transactionSafe = false)
+	public function queryBatch($abortOnError = true, $transactionSafe = false)
 	{
 		// Deprecation warning.
 		JLog::add('JDatabase::queryBatch() is deprecated.', JLog::WARNING, 'deprecated');
@@ -793,8 +838,9 @@ class JDatabaseSQLSrv extends JDatabase
 		$this->errorMsg = '';
 
 		// If the batch is meant to be transaction safe then we need to wrap it in a transaction.
-		if ($transactionSafe) {
-			$this->_sql = 'BEGIN TRANSACTION;'.$this->sql.'; COMMIT TRANSACTION;';
+		if ($transactionSafe)
+		{
+			$this->_sql = 'BEGIN TRANSACTION;' . $this->sql . '; COMMIT TRANSACTION;';
 		}
 
 		$queries = $this->splitSql($sql);
@@ -803,19 +849,23 @@ class JDatabaseSQLSrv extends JDatabase
 		{
 			$query = trim($query);
 
-			if ($query != '') {
+			if ($query != '')
+			{
 				$this->cursor = sqlsrv_query($this->connection, $query, null, array('scrollable' => SQLSRV_CURSOR_STATIC));
-				if ($this->_debug) {
+				if ($this->_debug)
+				{
 					$this->count++;
 					$this->log[] = $query;
 				}
-				if (!$this->cursor) {
+				if (!$this->cursor)
+				{
 					$error = 1;
 					$errors = sqlsrv_errors();
 					$this->errorNum = $errors[0]['sqlstate'];
 					$this->errorMsg = $errors[0]['message'];
 
-					if ($abortOnError) {
+					if ($abortOnError)
+					{
 						return $this->cursor;
 					}
 				}
@@ -830,22 +880,23 @@ class JDatabaseSQLSrv extends JDatabase
 	 * @param   string  $table  The table in which to verify the field.
 	 * @param   string  $field  The field to verify.
 	 *
-	 * @return  bool    True if the field exists in the table.
+	 * @return  boolean  True if the field exists in the table.
 	 *
 	 * @since   11.1
 	 */
-	protected function _checkFieldExists($table, $field)
+	protected function checkFieldExists($table, $field)
 	{
 		$table = $this->replacePrefix((string) $table);
-		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS".
- 				" WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$field'".
- 				" ORDER BY ORDINAL_POSITION";
+		$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS" . " WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$field'" .
+			" ORDER BY ORDINAL_POSITION";
 		$this->setQuery($sql);
 
-		if ($this->loadResult()) {
+		if ($this->loadResult())
+		{
 			return true;
 		}
-		else {
+		else
+		{
 			return false;
 		}
 	}
@@ -854,25 +905,26 @@ class JDatabaseSQLSrv extends JDatabase
 	 * Method to wrap an SQL statement to provide a LIMIT and OFFSET behavior for scrolling through a result set.
 	 *
 	 * @param   string   $sql     The SQL statement to process.
-	 * @param   integer  $offset  The affected row offset to set.
 	 * @param   integer  $limit   The maximum affected rows to set.
+	 * @param   integer  $offset  The affected row offset to set.
 	 *
 	 * @return  string   The processed SQL statement.
 	 *
 	 * @since   11.1
 	 */
-	protected function _limit($sql, $limit, $offset)
+	protected function limit($sql, $limit, $offset)
 	{
 		$orderBy = stristr($sql, 'ORDER BY');
-		if (is_null($orderBy) || empty($orderBy)) {
+		if (is_null($orderBy) || empty($orderBy))
+		{
 			$orderBy = 'ORDER BY (select 0)';
 		}
 		$sql = str_ireplace($orderBy, '', $sql);
 
-		$rowNumberText = ',ROW_NUMBER() OVER ('.$orderBy.') AS RowNumber FROM ';
+		$rowNumberText = ',ROW_NUMBER() OVER (' . $orderBy . ') AS RowNumber FROM ';
 
-		$sql = preg_replace('/\\s+FROM/','\\1 '.$rowNumberText.' ', $sql, 1);
-		$sql = 'SELECT TOP '.$this->limit.' * FROM ('.$sql.') _myResults WHERE RowNumber > '.$this->offset;
+		$sql = preg_replace('/\\s+FROM/', '\\1 ' . $rowNumberText . ' ', $sql, 1);
+		$sql = 'SELECT TOP ' . $this->limit . ' * FROM (' . $sql . ') _myResults WHERE RowNumber > ' . $this->offset;
 
 		return $sql;
 	}

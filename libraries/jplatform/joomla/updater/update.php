@@ -13,46 +13,137 @@ defined('JPATH_PLATFORM') or die;
  * Update class.
  *
  * @package     Joomla.Platform
- * @subpackage  Update
+ * @subpackage  Updater
  * @since       11.1
  */
 class JUpdate extends JObject
 {
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $name;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $description;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $element;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $type;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $version;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $infourl;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $client;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $group;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $downloads;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $tags;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $maintainer;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $maintainerurl;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $category;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $relationships;
+
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $targetplatform;
 
+	/**
+	 * @var    string
+	 * @since  11.1
+	 */
 	protected $_xml_parser;
-	protected $_stack = Array('base');
-	protected $_state_store = Array();
+
+	/**
+	 * @var    array
+	 * @since  11.1
+	 */
+	protected $_stack = array('base');
+
+	/**
+	 * @var    array
+	 * @since  11.1
+	 */
+	protected $_state_store = array();
 
 	/**
 	 * Gets the reference to the current direct parent
 	 *
 	 * @return  object
+	 *
 	 * @since   11.1
 	 */
 	protected function _getStackLocation()
 	{
-			return implode('->', $this->_stack);
+		return implode('->', $this->_stack);
 	}
 
 	/**
 	 * Get the last position in stack count
 	 *
 	 * @return  string
+	 *
+	 * @since   11.1
 	 */
 	protected function _getLastTag()
 	{
@@ -61,23 +152,28 @@ class JUpdate extends JObject
 
 	/**
 	 * XML Start Element callback
-	 * Note: This is public because it is called externally
-	 * @param object parser object
-	 * @param string name of the tag found
-	 * @param array attributes of the tag
 	 *
+	 * @param   object  $parser  Parser object
+	 * @param   string  $name    Name of the tag found
+	 * @param   array   $attrs   Attributes of the tag
+	 *
+	 * @return  void
+	 *
+	 * @note    This is public because it is called externally
+	 * @since   11.1
 	 */
-	public function _startElement($parser, $name, $attrs = Array())
+	public function _startElement($parser, $name, $attrs = array())
 	{
 		array_push($this->_stack, $name);
 		$tag = $this->_getStackLocation();
 		// Reset the data
-		eval('$this->'. $tag .'->_data = "";');
+		eval('$this->' . $tag . '->_data = "";');
 
-		switch($name) {
+		switch ($name)
+		{
 			// This is a new update; create a current update
 			case 'UPDATE':
-				$this->_current_update = new stdClass();
+				$this->_current_update = new stdClass;
 				break;
 			// Don't do anything
 			case 'UPDATES':
@@ -86,7 +182,8 @@ class JUpdate extends JObject
 			default:
 				$name = strtolower($name);
 				$this->_current_update->$name->_data = '';
-				foreach($attrs as $key=>$data) {
+				foreach ($attrs as $key => $data)
+				{
 					$key = strtolower($key);
 					$this->_current_update->$name->$key = $data;
 				}
@@ -96,44 +193,53 @@ class JUpdate extends JObject
 
 	/**
 	 * Callback for closing the element
-	 * Note: This is public because it is called externally
 	 *
-	 * @param object parser object
-	 * @param string name of element that was closed
+	 * @param   object  $parser  Parser object
+	 * @param   string  $name    Name of element that was closed
+	 *
+	 * @return  void
+	 *
+	 * @note This is public because it is called externally
+	 * @since  11.1
 	 */
 	public function _endElement($parser, $name)
 	{
 		array_pop($this->_stack);
-		switch($name)
+		switch ($name)
 		{
 			// Closing update, find the latest version and check
 			case 'UPDATE':
-				$ver = new JVersion();
+				$ver = new JVersion;
 				$product = strtolower(JFilterInput::getInstance()->clean($ver->PRODUCT, 'cmd'));
-				if($product == $this->_current_update->targetplatform->name && $ver->RELEASE == $this->_current_update->targetplatform->version)
+				if ($product == $this->_current_update->targetplatform->name
+					&& preg_match('/' . $this->_current_update->targetplatform->version . '/', $ver->RELEASE)
+				)
 				{
-					if(isset($this->_latest))
+					if (isset($this->_latest))
 					{
-						if(version_compare($this->_current_update->version->_data, $this->_latest->version->_data, '>') == 1) {
+						if (version_compare($this->_current_update->version->_data, $this->_latest->version->_data, '>') == 1)
+						{
 							$this->_latest = $this->_current_update;
 						}
 					}
-					else {
+					else
+					{
 						$this->_latest = $this->_current_update;
 					}
 				}
 				break;
 			case 'UPDATES':
-				// If the latest item is set then we transfer it to where we want to
-				if(isset($this->_latest))
+			// If the latest item is set then we transfer it to where we want to
+				if (isset($this->_latest))
 				{
-					foreach(get_object_vars($this->_latest) as $key=>$val) {
+					foreach (get_object_vars($this->_latest) as $key => $val)
+					{
 						$this->$key = $val;
 					}
 					unset($this->_latest);
 					unset($this->_current_update);
 				}
-				else if(isset($this->_current_update))
+				elseif (isset($this->_current_update))
 				{
 					// The update might be for an older version of j!
 					unset($this->_current_update);
@@ -144,13 +250,17 @@ class JUpdate extends JObject
 
 	/**
 	 * Character Parser Function
-	 * Note: This is public because its called externally
 	 *
-	 * @param		$data
-	 * @param		$parser
+	 * @param   object  $parser  Parser object.
+	 * @param   object  $data    The data.
 	 *
+	 * @return  void
+	 *
+	 * @note    This is public because its called externally.
+	 * @since   11.1
 	 */
-	public function _characterData($parser, $data) {
+	public function _characterData($parser, $data)
+	{
 		$tag = $this->_getLastTag();
 		//if(!isset($this->$tag->_data)) $this->$tag->_data = '';
 		//$this->$tag->_data .= $data;
@@ -159,12 +269,21 @@ class JUpdate extends JObject
 		$this->_current_update->$tag->_data .= $data;
 	}
 
+	/**
+	 * Loads an XML file from a URL.
+	 *
+	 * @param   string  $url  The URL.
+	 *
+	 * @return  boolean  True on success
+	 *
+	 * @since   11.1
+	 */
 	public function loadFromXML($url)
 	{
-		if (!($fp = @fopen($url, "r")))
+		if (!($fp = @fopen($url, 'r')))
 		{
 			// TODO: Add a 'mark bad' setting here somehow
-			JError::raiseWarning('101', JText::sprintf('MOLAJO_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
+			JError::raiseWarning('101', JText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
 			return false;
 		}
 
@@ -177,9 +296,12 @@ class JUpdate extends JObject
 		{
 			if (!xml_parse($this->xml_parser, $data, feof($fp)))
 			{
-				die(sprintf("XML error: %s at line %d",
-							xml_error_string(xml_get_error_code($this->xml_parser)),
-							xml_get_current_line_number($this->xml_parser)));
+				die(
+					sprintf(
+						"XML error: %s at line %d", xml_error_string(xml_get_error_code($this->xml_parser)),
+						xml_get_current_line_number($this->xml_parser)
+					)
+				);
 			}
 		}
 		xml_parser_free($this->xml_parser);

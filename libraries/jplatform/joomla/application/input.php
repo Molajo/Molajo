@@ -7,14 +7,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
-JLoader::discover('JInput', dirname(__FILE__).'/input');
+JLoader::discover('JInput', dirname(__FILE__) . '/input');
 
 jimport('joomla.filter.filterinput');
 
 /**
- * Joomla Input Base Class
+ * Joomla! Input Base Class
  *
  * This is an abstracted input class used to manage retrieving data from the application environment.
  *
@@ -25,25 +25,33 @@ jimport('joomla.filter.filterinput');
 class JInput
 {
 	/**
-	 * @var    array  Options array for the JInput instance.
+	 * Options array for the JInput instance.
+	 *
+	 * @var    array
 	 * @since  11.1
 	 */
 	protected $options = array();
 
 	/**
-	 * @var    JFilterInput  Filter object to use.
+	 * Filter object to use.
+	 *
+	 * @var    JFilterInput
 	 * @since  11.1
 	 */
 	protected $filter = null;
 
 	/**
-	 * @var    array  Input data.
+	 * Input data.
+	 *
+	 * @var    array
 	 * @since  11.1
 	 */
 	protected $data = array();
 
 	/**
-	 * @var    array  Input objects.
+	 * Input objects
+	 *
+	 * @var    array
 	 * @since  11.1
 	 */
 	protected $inputs = array();
@@ -60,15 +68,21 @@ class JInput
 	 */
 	public function __construct($source = null, $options = array())
 	{
-		if (isset ($options['filter'])) {
+		if (isset($options['filter']))
+		{
 			$this->filter = $options['filter'];
-		} else {
+		}
+		else
+		{
 			$this->filter = JFilterInput::getInstance();
 		}
 
-		if (is_null($source)) {
+		if (is_null($source))
+		{
 			$this->data = & $_REQUEST;
-		} else {
+		}
+		else
+		{
 			$this->data = & $source;
 		}
 
@@ -79,7 +93,7 @@ class JInput
 	/**
 	 * Magic method to get an input object
 	 *
-	 * @param   mixed   $name  Name of the input object to retrieve.
+	 * @param   mixed  $name  Name of the input object to retrieve.
 	 *
 	 * @return  JInput  The request input object
 	 *
@@ -87,18 +101,21 @@ class JInput
 	 */
 	public function __get($name)
 	{
-		if (isset ($this->inputs[$name])) {
+		if (isset($this->inputs[$name]))
+		{
 			return $this->inputs[$name];
 		}
 
-		$className = 'JInput'.$name;
-		if (class_exists($className)) {
-			$this->inputs[$name] = new $className (null, $this->options);
+		$className = 'JInput' . $name;
+		if (class_exists($className))
+		{
+			$this->inputs[$name] = new $className(null, $this->options);
 			return $this->inputs[$name];
 		}
 
-		$superGlobal = '_'.strtoupper($name);
-		if (isset ($GLOBALS[$superGlobal])) {
+		$superGlobal = '_' . strtoupper($name);
+		if (isset($GLOBALS[$superGlobal]))
+		{
 			$this->inputs[$name] = new JInput($GLOBALS[$superGlobal], $this->options);
 			return $this->inputs[$name];
 		}
@@ -119,7 +136,8 @@ class JInput
 	 */
 	public function get($name, $default = null, $filter = 'cmd')
 	{
-		if (isset ($this->data[$name])) {
+		if (isset($this->data[$name]))
+		{
 			return $this->filter->clean($this->data[$name], $filter);
 		}
 
@@ -140,18 +158,27 @@ class JInput
 	{
 		$results = array();
 
-		foreach ($vars AS $k => $v)
+		foreach ($vars as $k => $v)
 		{
-			if (is_array($v)) {
-				if (is_null($datasource)) {
+			if (is_array($v))
+			{
+				if (is_null($datasource))
+				{
 					$results[$k] = $this->getArray($v, $this->get($k, null, 'array'));
-				} else {
+				}
+				else
+				{
 					$results[$k] = $this->getArray($v, $datasource[$k]);
 				}
-			} else {
-				if (is_null($datasource)) {
+			}
+			else
+			{
+				if (is_null($datasource))
+				{
 					$results[$k] = $this->get($k, null, $v);
-				} else {
+				}
+				else
+				{
 					$results[$k] = $this->filter->clean($datasource[$k], $v);
 				}
 			}
@@ -177,21 +204,23 @@ class JInput
 	/**
 	 * Magic method to get filtered input data.
 	 *
-	 * @param   mixed    $name     Name of the value to get.
-	 * @param   string   $default  Default value to return if variable does not exist.
+	 * @param   mixed   $name       Name of the value to get.
+	 * @param   string  $arguments  Default value to return if variable does not exist.
 	 *
-	 * @return  bool     The filtered boolean input value.
+	 * @return  boolean  The filtered boolean input value.
 	 *
 	 * @since   11.1
 	 */
 	public function __call($name, $arguments)
 	{
-		if (substr($name, 0, 3) == 'get') {
+		if (substr($name, 0, 3) == 'get')
+		{
 
 			$filter = substr($name, 3);
 
 			$default = null;
-			if (isset ($arguments[1])) {
+			if (isset($arguments[1]))
+			{
 				$default = $arguments[1];
 			}
 
@@ -202,7 +231,10 @@ class JInput
 	/**
 	 * Gets the request method.
 	 *
-	 * @return  string     The request method.
+	 * @param   mixed   $name       Name of the value to get.
+	 * @param   string  $arguments  Default value to return if variable does not exist.
+	 *
+	 * @return  string   The request method.
 	 *
 	 * @since   11.1
 	 */

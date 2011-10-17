@@ -56,14 +56,14 @@ class plgSystemLanguageFilter extends MolajoPlugin
 				$parts = explode('/', $path);
 
 				// The language segment is always at the beginning of the route path if it exists.
-				$sef = $uri->getVar('lang');
+				$sef = $uri->getVar('language');
 				
 				if (!empty($parts) && empty($sef)) {
 					$sef = reset($parts);
 				}
 			}
 			else {
-				$sef = $uri->getVar('lang');
+				$sef = $uri->getVar('language');
 			}
 			if (isset(self::$sefs[$sef])) {
 				$lang_code = self::$sefs[$sef]->lang_code;
@@ -101,7 +101,7 @@ class plgSystemLanguageFilter extends MolajoPlugin
 
 	public function buildRule(&$router, &$uri)
 	{
-		$sef = $uri->getVar('lang');
+		$sef = $uri->getVar('language');
 		if (empty($sef)) {
 			$sef = self::$lang_codes[self::$tag]->sef;
 		}
@@ -148,11 +148,11 @@ class plgSystemLanguageFilter extends MolajoPlugin
 		}
 
 		if (self::$mode_sef) {
-			$uri->delVar('lang');
+			$uri->delVar('language');
 			$uri->setPath($uri->getPath().'/'.$sef.'/');
 		}
 		else {
-			$uri->setVar('lang', $sef);
+			$uri->setVar('language', $sef);
 		}
 	}
 
@@ -192,10 +192,10 @@ class plgSystemLanguageFilter extends MolajoPlugin
 			}
 		}
 		else {
-			$sef = $uri->getVar('lang');
+			$sef = $uri->getVar('language');
 			if (!isset(self::$sefs[$sef])) {
 				$sef = isset(self::$lang_codes[$lang_code]) ? self::$lang_codes[$lang_code]->sef : self::$default_sef;
-				$uri->setVar('lang', $sef);
+				$uri->setVar('language', $sef);
 				$post = JRequest::get('POST');
 				if (JRequest::getMethod() != "POST" || count($post) == 0)
 				{
@@ -205,7 +205,7 @@ class plgSystemLanguageFilter extends MolajoPlugin
 			}
 		}
 
-		$array = array('lang' => $sef);
+		$array = array('language' => $sef);
 		return $array;
 	}
 	/**

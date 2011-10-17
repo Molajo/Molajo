@@ -27,7 +27,7 @@ define('JREQUEST_ALLOWHTML', 4);
 /**
  * JRequest Class
  *
- * This class serves to provide the Joomla Framework with a common interface to access
+ * This class serves to provide the Joomla Platform with a common interface to access
  * request variables.  This includes $_POST, $_GET, and naturally $_REQUEST.  Variables
  * can be passed through an input filter to avoid injection or returned raw.
  *
@@ -270,7 +270,7 @@ class JRequest
 	 * @param   string  $default  Default value if the variable does not exist.
 	 * @param   string  $hash     Where the var should come from (POST, GET, FILES, COOKIE, METHOD).
 	 *
-	 * @return   bool  Requested variable.
+	 * @return  boolean  Requested variable.
 	 *
 	 * @deprecated  12.1
 	 * @since       11.1
@@ -696,10 +696,6 @@ class JRequest
 		// Deprecation warning.
 		JLog::add('JRequest::cleanVar is deprecated.', JLog::WARNING, 'deprecated');
 
-		// Static input filters for specific settings
-		static $noHtmlFilter = null;
-		static $safeHtmlFilter = null;
-
 		// If the no trim flag is not set, trim the variable
 		if (!($mask & 1) && is_string($var))
 		{
@@ -715,20 +711,14 @@ class JRequest
 		elseif ($mask & 4)
 		{
 			// If the allow HTML flag is set, apply a safe HTML filter to the variable
-			if (is_null($safeHtmlFilter))
-			{
-				$safeHtmlFilter = JFilterInput::getInstance(null, null, 1, 1);
-			}
+			$safeHtmlFilter = JFilterInput::getInstance(null, null, 1, 1);
 			$var = $safeHtmlFilter->clean($var, $type);
 		}
 		else
 		{
 			// Since no allow flags were set, we will apply the most strict filter to the variable
 			// $tags, $attr, $tag_method, $attr_method, $xss_auto use defaults.
-			if (is_null($noHtmlFilter))
-			{
-				$noHtmlFilter = JFilterInput::getInstance();
-			}
+			$noHtmlFilter = JFilterInput::getInstance();
 			$var = $noHtmlFilter->clean($var, $type);
 		}
 		return $var;

@@ -15,8 +15,8 @@ jimport('joomla.environment.uri');
  * HTTP client class.
  *
  * @package     Joomla.Platform
- * @since       11.1
  * @subpackage  Client
+ * @since       11.1
  */
 class JHttp
 {
@@ -26,7 +26,7 @@ class JHttp
 	 * @var    array
 	 * @since  11.1
 	 */
-	protected $_connections = array();
+	protected $connections = array();
 
 	/**
 	 * Timeout limit in seconds for the server connection.
@@ -34,7 +34,7 @@ class JHttp
 	 * @var    int
 	 * @since  11.1
 	 */
-	protected $_timeout = 5;
+	protected $timeout = 5;
 
 	/**
 	 * Server response string.
@@ -42,7 +42,7 @@ class JHttp
 	 * @var    string
 	 * @since  11.1
 	 */
-	protected $_response;
+	protected $response;
 
 	/**
 	 * Constructor.
@@ -56,8 +56,9 @@ class JHttp
 	public function __construct($options = array())
 	{
 		// If a connection timeout is set, use it.
-		if (isset($options['timeout'])) {
-			$this->_timeout = $options['timeout'];
+		if (isset($options['timeout']))
+		{
+			$this->timeout = $options['timeout'];
 		}
 	}
 
@@ -71,7 +72,7 @@ class JHttp
 	public function __destruct()
 	{
 		// Close all the connections.
-		foreach ($this->_connections as $connection)
+		foreach ($this->connections as $connection)
 		{
 			fclose($connection);
 		}
@@ -80,118 +81,135 @@ class JHttp
 	/**
 	 * Method to send the HEAD command to the server.
 	 *
-	 * @param   string  $url  Path to the resource.
+	 * @param   string  $url      Path to the resource.
+	 * @param   array   $headers  An array of name-value pairs to include in the header of the request.
 	 *
-	 * @return  bool    True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  JException
+	 * @throws  Exception
 	 */
-	public function head($url)
+	public function head($url, $headers = null)
 	{
 		// Parse the request url.
 		$uri = JUri::getInstance($url);
 
-		try {
-			$connection = $this->_connect($uri);
+		try
+		{
+			$connection = $this->connect($uri);
 		}
-		catch (JException $e) {
+		catch (Exception $e)
+		{
 			return false;
 		}
 
 		// Send the command to the server.
-		if (!$this->_sendRequest($connection, 'HEAD', $uri)) {
+		if (!$this->sendRequest($connection, 'HEAD', $uri, null, $headers))
+		{
 			return false;
 		}
 
-		return $this->_getResponseObject();
+		return $this->getResponseObject();
 	}
 
 	/**
 	 * Method to send the GET command to the server.
 	 *
-	 * @param   string  $url  Path to the resource.
+	 * @param   string  $url      Path to the resource.
+	 * @param   array   $headers  An array of name-value pairs to include in the header of the request.
 	 *
-	 * @return  bool    True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  JException
+	 * @throws  Exception
 	 */
-	public function get($url)
+	public function get($url, $headers = null)
 	{
 		// Parse the request url.
 		$uri = JUri::getInstance($url);
 
-		try {
-			$connection = $this->_connect($uri);
+		try
+		{
+			$connection = $this->connect($uri);
 		}
-		catch (JException $e) {
+		catch (Exception $e)
+		{
 			return false;
 		}
 
 		// Send the command to the server.
-		if (!$this->_sendRequest($connection, 'GET', $uri)) {
+		if (!$this->sendRequest($connection, 'GET', $uri, null, $headers))
+		{
 			return false;
 		}
 
-		return $this->_getResponseObject();
+		return $this->getResponseObject();
 	}
 
 	/**
 	 * Method to send the POST command to the server.
 	 *
-	 * @param   string  $url   Path to the resource.
-	 * @param   array   $data  Associative array of key/value pairs to send as post values.
+	 * @param   string  $url      Path to the resource.
+	 * @param   array   $data     Associative array of key/value pairs to send as post values.
+	 * @param   array   $headers  An array of name-value pairs to include in the header of the request.
 	 *
-	 * @return  bool    True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  JException
+	 * @throws  Exception
 	 */
-	public function post($url, $data)
+	public function post($url, $data, $headers = null)
 	{
 		// Parse the request url.
 		$uri = JUri::getInstance($url);
 
-		try {
-			$connection = $this->_connect($uri);
+		try
+		{
+			$connection = $this->connect($uri);
 		}
-		catch (JException $e) {
+		catch (Exception $e)
+		{
 			return false;
 		}
 
 		// Send the command to the server.
-		if (!$this->_sendRequest($connection, 'POST', $uri, $data)) {
+		if (!$this->sendRequest($connection, 'POST', $uri, $data, $headers))
+		{
 			return false;
 		}
 
-		return $this->_getResponseObject();
+		return $this->getResponseObject();
 	}
 
 	/**
 	 * Send a command to the server and validate an expected response.
 	 *
-	 * @param   string  Command to send to the server.
-	 * @param   mixed   Valid response code or array of response codes.
+	 * @param   resource  $connection  The HTTP connection resource.
+	 * @param   string    $method      The HTTP method for sending the request.
+	 * @param   string    $uri         The URI to the resource to request.
+	 * @param   array     $data        An array of key => value pairs to send with the request.
+	 * @param   array     $headers     An array of request headers to send with the request.
 	 *
-	 * @return  bool  True on success.
+	 * @return  boolean  True on success.
 	 *
 	 * @since   11.1
-	 * @throws  JException
+	 * @throws  Exception
 	 */
-	protected function _sendRequest($connection, $method, JUri $uri, $data = null, $headers = null)
+	protected function sendRequest($connection, $method, JUri $uri, $data = null, $headers = null)
 	{
 		// Make sure the connection is a valid resource.
 		if (is_resource($connection))
 		{
 			// Make sure the connection has not timed out.
 			$meta = stream_get_meta_data($connection);
-			if ($meta['timed_out']) {
-				throw new JException('Server connection timed out.', 0, E_WARNING);
+			if ($meta['timed_out'])
+			{
+				throw new Exception('Server connection timed out.', 0);
 			}
 		}
-		else {
-			throw new JException('Not connected to server.', 0, E_WARNING);
+		else
+		{
+			throw new Exception('Not connected to server.', 0);
 		}
 
 		// Get the request path from the URI object.
@@ -199,16 +217,21 @@ class JHttp
 
 		// Build the request payload.
 		$request = array();
-		$request[] = strtoupper($method).' '.((empty($path)) ? '/' : $path).' HTTP/1.0';
-		$request[] = 'Host: '.$uri->getHost();
-		$request[] = 'User-Agent: JHttp | Joomla/2.0';
+		$request[] = strtoupper($method) . ' ' . ((empty($path)) ? '/' : $path) . ' HTTP/1.0';
+		$request[] = 'Host: ' . $uri->getHost();
+
+		// If no user agent is set use the base one.
+		if (empty($headers) || !isset($headers['User-Agent']))
+		{
+			$request[] = 'User-Agent: JHttp | JoomlaPlatform/11.3';
+		}
 
 		// If there are custom headers to send add them to the request payload.
 		if (is_array($headers))
 		{
 			foreach ($headers as $k => $v)
 			{
-				$request[] = $k.': '.$v;
+				$request[] = $k . ': ' . $v;
 			}
 		}
 
@@ -216,24 +239,25 @@ class JHttp
 		if (!empty($data))
 		{
 			// If the data is an array, build the request query string.
-			if (is_array($data)) {
+			if (is_array($data))
+			{
 				$data = http_build_query($data);
 			}
 
 			$request[] = 'Content-Type: application/x-www-form-urlencoded; charset=utf-8';
-			$request[] = 'Content-Length: '.strlen($data);
+			$request[] = 'Content-Length: ' . strlen($data);
 			$request[] = null;
 			$request[] = $data;
 		}
 
 		// Send the request to the server.
-		fwrite($connection, implode("\r\n", $request)."\r\n\r\n");
+		fwrite($connection, implode("\r\n", $request) . "\r\n\r\n");
 
 		// Get the response data from the server.
-		$this->_response = null;
+		$this->response = null;
 		while (!feof($connection))
 		{
-		    $this->_response .= fgets($connection, 4096);
+			$this->response .= fgets($connection, 4096);
 		}
 
 		return true;
@@ -245,15 +269,15 @@ class JHttp
 	 * @return  JHttpResponse
 	 *
 	 * @since   11.1
-	 * @throws  JException
+	 * @throws  Exception
 	 */
-	protected function _getResponseObject()
+	protected function getResponseObject()
 	{
 		// Create the response object.
-		$return = new JHttpResponse();
+		$return = new JHttpResponse;
 
 		// Split the response into headers and body.
-		$response = explode("\r\n\r\n", $this->_response, 2);
+		$response = explode("\r\n\r\n", $this->response, 2);
 
 		// Get the response headers as an array.
 		$headers = explode("\r\n", $response[0]);
@@ -261,12 +285,14 @@ class JHttp
 		// Get the response code from the first offset of the response headers.
 		preg_match('/[0-9]{3}/', array_shift($headers), $matches);
 		$code = $matches[0];
-		if (is_numeric($code)) {
+		if (is_numeric($code))
+		{
 			$return->code = (int) $code;
 		}
 		// No valid response code was detected.
-		else {
-			throw new JException('Invalid server response.', 0, E_WARNING, $this->_response);
+		else
+		{
+			throw new Exception('Invalid server response.', 0);
 		}
 
 		// Add the response headers to the response object.
@@ -277,7 +303,8 @@ class JHttp
 		}
 
 		// Set the response body if it exists.
-		if (!empty($response[1])) {
+		if (!empty($response[1]))
+		{
 			$return->body = $response[1];
 		}
 
@@ -287,20 +314,20 @@ class JHttp
 	/**
 	 * Method to connect to a server and get the resource.
 	 *
-	 * @param   JUri   $uri  The URI to connect with.
+	 * @param   JUri  $uri  The URI to connect with.
 	 *
 	 * @return  mixed  Connection resource on success or boolean false on failure.
 	 *
 	 * @since   11.1
 	 */
-	protected function _connect(JUri $uri)
+	protected function connect(JUri $uri)
 	{
 		// Initialize variables.
 		$errno = null;
 		$err = null;
 
 		// Get the host from the uri.
-		$host = ($uri->isSSL()) ? 'ssl://'.$uri->getHost() : $uri->getHost();
+		$host = ($uri->isSSL()) ? 'ssl://' . $uri->getHost() : $uri->getHost();
 
 		// If the port is not explicitly set in the URI detect it.
 		if (!$uri->getPort())
@@ -308,29 +335,33 @@ class JHttp
 			$port = ($uri->getScheme() == 'https') ? 443 : 80;
 		}
 		// Use the set port.
-		else {
+		else
+		{
 			$port = $uri->getPort();
 		}
 
 		// Build the connection key for resource memory caching.
-		$key = md5($host.$port);
+		$key = md5($host . $port);
 
 		// If the connection already exists, use it.
-		if (!empty($this->_connections[$key]) && is_resource($this->_connections[$key]))
+		if (!empty($this->connections[$key]) && is_resource($this->connections[$key]))
 		{
 			// Make sure the connection has not timed out.
-			$meta = stream_get_meta_data($this->_connections[$key]);
-			if (!$meta['timed_out']) {
-				return $this->_connections[$key];
+			$meta = stream_get_meta_data($this->connections[$key]);
+			if (!$meta['timed_out'])
+			{
+				return $this->connections[$key];
 			}
 		}
 
 		// Attempt to connect to the server.
-		if ($this->_connections[$key] = fsockopen($host, $port, $errno, $err, $this->_timeout)) {
-			stream_set_timeout($this->_connections[$key], $this->_timeout);
+		$this->connections[$key] = fsockopen($host, $port, $errno, $err, $this->timeout);
+		if ($this->connections[$key])
+		{
+			stream_set_timeout($this->connections[$key], $this->timeout);
 		}
 
-		return $this->_connections[$key];
+		return $this->connections[$key];
 	}
 }
 
@@ -338,31 +369,25 @@ class JHttp
  * HTTP response data object class.
  *
  * @package     Joomla.Platform
- * @since       11.1
  * @subpackage  Client
+ * @since       11.1
  */
 class JHttpResponse
 {
 	/**
-	 * The server response code.
-	 *
-	 * @var    int
+	 * @var    int  The server response code.
 	 * @since  11.1
 	 */
 	public $code;
 
 	/**
-	 * Response headers.
-	 *
-	 * @var    array
+	 * @var    array  Response headers.
 	 * @since  11.1
 	 */
 	public $headers = array();
 
 	/**
-	 * Server response body.
-	 *
-	 * @var    string
+	 * @var    string  Server response body.
 	 * @since  11.1
 	 */
 	public $body;
