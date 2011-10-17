@@ -406,7 +406,7 @@ class MolajoInstallation extends MolajoApplication
 			$template->params = new JRegistry;
 			return $template;
 		}
-		return 'template';
+		return 'install';
 	}
 
 	/**

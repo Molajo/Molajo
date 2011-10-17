@@ -121,7 +121,6 @@ class MolajoView extends JView
      */
     public function display($tpl = null)
     {
-
         /** no results */
         if (count($this->params) > 0
             && $this->params->def('suppress_no_results', false) === true
@@ -188,8 +187,8 @@ class MolajoView extends JView
         $this->layout_path = false;
 
         /** @var $template */
-        $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication()->getTemplate().'/html';
-
+        $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'/html';
+ 
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
         $templateExtensionPath = '';
         if ($layout_type == 'extensions') {
@@ -206,10 +205,6 @@ class MolajoView extends JView
 
         /** 2. @var $templateLayoutPath [template]/[layout-folder] */
         $templateLayoutPath = $template.'/'.$layout_type;
-        if ($layout_type == 'extensions') {
-        } else {
-            $templateExtensionPath = $templateLayoutPath;
-        }
 
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
         $extensionPath = '';
@@ -243,7 +238,6 @@ class MolajoView extends JView
         /**
          * Determine path in order of priority
          */
-
         /** 1. template extension override **/
         if (is_dir($templateExtensionPath.'/'.$layout)) {
             $this->layout_path = $templateExtensionPath.'/'.$layout;
