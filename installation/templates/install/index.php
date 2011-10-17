@@ -30,10 +30,8 @@ if ($configHTML == true): ?>
 		</div>
 		<div id="main" class="step1">
             <jdoc:include type="component" />
-            <title>Molajo Installer - Step 1 of 4</title>
         </div>
 		<?php include dirname(__FILE__).'/lib/footer.php'; ?>
-        <!--                <jdoc:include type="module" name="footer" wrap="footer" /> -->
 	</div>
 </body>
 <noscript>

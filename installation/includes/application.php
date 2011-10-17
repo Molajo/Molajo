@@ -201,8 +201,21 @@ class MolajoInstallation extends MolajoApplication
         $request['filter_fieldname'] = '';
         $request['select_fieldname'] = '';
 
-        $request['title'] = 'Molajo Installation';
-        $request['subtitle'] = 'Step 1';
+        $layout = JRequest::getCmd('layout', 'installer_step1');
+        if ($layout == 'installer_step1') {
+            $request['title'] = 'Molajo Installer';
+
+        } elseif ($layout == 'installer_step2') {
+            $request['title'] = 'Molajo Installer: Database';
+
+        } elseif ($layout == 'installer_step3') {
+            $request['title'] = 'Molajo Installer: Site Information';
+
+        } elseif ($layout == 'installer_step4') {
+            $request['title'] = 'Molajo Install: Congratulations';
+        }
+
+        $request['subtitle'] = '';
         $request['metakey'] = '';
         $request['metadesc'] = '';
         $request['metadata'] = '';
