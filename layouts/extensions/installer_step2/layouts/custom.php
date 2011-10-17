@@ -7,34 +7,70 @@
  */
 defined('MOLAJO') or die;
 ?>
-<h2>Welcome to the Molajo Installer</h2>
-<p>Before we get started, please ensure you have your database connection information handy, as you'll need it to complete the installation process.
-Contact your hosting provider if you do not know your database connection information.</p>
-<ul id="system-check">
-    <li id="language" class="valid">
-        <span>We have detected that your language is set to <strong class="en-uk">UK English</strong> <a href="#" id="select-language"><span>Change Language</span></a>
-            <ul style="display:none;">
-                <li class="en-us"><a href="#">US English</a></li>
-                <li class="en-uk"><a href="#">UK English</a></li>
-                <li class="de-de"><a href="#">German</a></li>
-                <li class="it-it"><a href="#">Italian</a></li>
-                <li class="po-br"><a href="#">Brazilian Portuguese</a></li>
-            </ul>
-        </span>
-    </li>
-    <li id="version" class="valid">
-        <span>You are installing the latest version of Molajo.</span>
-    </li>
-    <!--<li id="version" class="invalid">
-        <span>It seems you are installing an outdated version of Molajo. Please update before installing. <a href="#" id="update-installer"><span>Update Installer</span></a></span>
-    </li>-->
-    <li id="requirements" class="valid">
-        <span>Your server meets all of the system requirements.</span>
-    </li>
-    <!--<li id="requirements" class="invalid">
-        <span>There seems to an issue with your server configuration. Please address the issues listed below  <a href="#" id="check-requirements"><span>Check Again</span></a></span>
-    </li>-->
-</ul>
-<div id="actions">
-    <a href="step1.html" class="btn-primary"><strong>Ready?</strong> Lets get started! &raquo;</a>
+<div class="inner">
+
+    <h2>Database Setup</h2>
+
+    <p>Enter your database connection details below. Contact your host if you are not sure what these are.<br />
+    All fields marked with a <strong>*</strong> are required.</p>
+
+    <form action="">
+        <ol class="list-reset forms">
+            <li>
+                <span class="inner-wrap">
+                    <label for="host" class="inlined">Host name</label>
+                    <input type="text" class="input-text" id="host" name="host" title="Host name" />
+                    <span class="note"><strong>*</strong> This is usually <b>localhost</b>.</span>
+                </span>
+            </li>
+            <li>
+                <span class="inner-wrap">
+                    <label for="name" class="inlined">Database name</label>
+                    <input type="text" class="input-text" id="name" name="name" title="Database name" />
+                    <span class="note"><strong>*</strong> The name of the database you are installing Molajo on.</span>
+                </span>
+            </li>
+            <li>
+                <span class="inner-wrap">
+                    <label for="username" class="inlined">Username</label>
+                    <input type="text" class="input-text" id="username" name="username" title="Username" />
+                    <span class="note"><strong>*</strong> Your MySQL database username.</span>
+                </span>
+            </li>
+            <li>
+                <span class="inner-wrap">
+                    <label for="password" class="inlined">Password</label>
+                    <input type="text" class="input-text" id="password" name="password" title="Password" />
+                    <span class="note"><strong>*</strong> Your MySQL database password.</span>
+                </span>
+            </li>
+            <li>
+                <span class="inner-wrap">
+                    <label for="prefix" class="inlined">Table prefix</label>
+                    <input type="text" class="input-text" id="prefix" name="prefix" title="Table prefix" />
+                    <span class="note"><strong>*</strong> By default this is set to jos_ but we recommended that you change this.</span>
+                </span>
+            </li>
+        </ol>
+
+        <ol class="list-rest radios">
+            <li>
+                <span class="label">Database type</span>
+                <label class="radio-left" for="mysql"><input name="dbtype" id="mysql" value="myql" type="radio">MySQL</label>
+                <label class="radio-right label-selected" for="mysqli"><input name="dbtype" id="mysqli" value="mysqli" type="radio" checked="checked">MySQLi</label>
+                <span class="note">MySQLi is recommended, but not all hosts support it. <a href="#">Learn more</a>.</span>
+            </li>
+            <li>
+                <span class="label">Existing database</span>
+                <label class="radio-left" for="remove"><input name="existingdb" id="remove" value="remove" type="radio">Remove</label>
+                <label class="radio-right label-selected" for="backup"><input name="existingdb" id="backup" value="backup" type="radio" checked="checked">Backup</label>
+                <span class="note alt">If you have an existing database with the same name, would you like it to be replaced or backed up.</span>
+            </li>
+        </ol>
+    </form>
+
+    <div id="actions">
+        <a href="<?php echo JURI::base(); ?>index.php?option=com_installer&view=display&layout=installer_step1" class="btn-secondary">&laquo; <strong>P</strong>revious</a>
+        <a href="<?php echo JURI::base(); ?>index.php?option=com_installer&view=display&layout=installer_step3" class="btn-primary"><strong>N</strong>ext &raquo;</a>
+    </div>
 </div>
