@@ -149,7 +149,6 @@ class MolajoApplicationHelper
      */
 	public static function getPath($varname, $user_option=null)
 	{
-
         /** amy remove **/
         return;
 

@@ -190,10 +190,14 @@ class MolajoComponentHelper
 
         /** extension path and entry point */
         $path = $request['component_path'].'/'.$request['no_com_option'].'.php';
-
+ 
         /** verify extension is enabled */
-		if (self::isEnabled($request['option'])
+        if ($request['application_id'] == 2
+            && file_exists($path)) {
+
+        } elseif (self::isEnabled($request['option'])
                 && file_exists($path)) {
+            
         } else {
 			JError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
@@ -206,7 +210,7 @@ class MolajoComponentHelper
 
 		/** Revert scope */
 		MolajoFactory::getApplication()->scope = $scope;
-
+        
         return $output;
 	}
 }

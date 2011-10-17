@@ -39,7 +39,7 @@ JDEBUG ? $_PROFILER->mark('afterRoute') : null;
 /** DISPATCH */
 $app->dispatch();
 JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
-
+ 
 /** RENDER */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;

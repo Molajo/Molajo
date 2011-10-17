@@ -59,6 +59,14 @@ class MolajoModelDummy extends JModel
     public $context = null;
 
     /**
+     * $task
+     *
+     * @var		string
+     * @since	1.0
+     */
+    public $task = null;
+
+    /**
      * populateState
      *
      * Method to auto-populate the model state.

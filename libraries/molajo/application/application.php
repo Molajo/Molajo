@@ -212,8 +212,9 @@ class MolajoApplication extends JObject
 	public function route()
 	{
 		$uri	= clone JURI::getInstance();
-echo '<pre>';var_dump($uri);'</pre>';
+
 		$router = $this->getRouter();
+
 		$result = $router->parse($uri);
 
 		JRequest::set($result, 'get', false);

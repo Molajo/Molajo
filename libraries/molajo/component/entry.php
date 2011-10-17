@@ -18,7 +18,7 @@ if ($request['option'] == $current_folder) {
 }
 
 /** controller **/
-$defaultController = ucfirst(substr($request['option'], (strpos($request['option'], '_') + 1), strlen($request['option']) - strpos($request['option'], '_')));
+$defaultController = ucfirst($request['no_com_option']);
 $controller = JController::getInstance($defaultController);
 $controller->initialise($request);
 $controller->$request['task']();

@@ -121,8 +121,10 @@ class MolajoView extends JView
      */
     public function display($tpl = null)
     {
+
         /** no results */
-        if ($this->params->def('suppress_no_results', false) === true
+        if (count($this->params) > 0
+            && $this->params->def('suppress_no_results', false) === true
             && count($this->rowset == 0)) {
             return;
         }
@@ -133,7 +135,7 @@ class MolajoView extends JView
             // load an error layout
             return;
         }
-
+ 
         $renderedOutput = $this->renderLayout ($this->layout, $this->layout_type);
 
         /** Wrap Rendered Output */
@@ -162,8 +164,9 @@ class MolajoView extends JView
         $tmpobj->set('content', $renderedOutput);
         $this->rowset[] = $tmpobj;
 
-        echo $this->renderLayout ($this->wrap, 'wraps');
-        
+        $wrappedOutput = $this->renderLayout ($this->wrap, 'wraps');
+
+        echo $wrappedOutput;
         return;
     }
 
@@ -283,11 +286,6 @@ class MolajoView extends JView
     */
     protected function renderLayout ($layout, $layout_type)
     {
-
-//echo 'layout path '.$this->layout_path.' <br />';
-//echo 'in view renderLayout rowset <pre>';print_r($this->rowset);echo '</pre>';
-//echo 'in view renderLayout request <pre>';print_r($this->request);echo '</pre>';
-
 
         /** @var $rowCount */
         $rowCount = 1;
