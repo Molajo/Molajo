@@ -12,7 +12,7 @@ define('MOLAJO_APPLICATION_ID', 2);
 /**
  * BEGIN: Common code for all Applications
  *
- * MOLAJO_PATH_BASE 
+ * MOLAJO_PATH_BASE
  *  Same as JPATH_ADMINISTRATOR, JPATH_INSTALLATION, JPATH_SITE
  * MOLAJO_PATH_ROOT root path for the Molajo website regardless of BASE
  */
@@ -46,7 +46,7 @@ if (MOLAJO_APPLICATION == 'site') {
 }
 
 /** Libraries */
-define('LIBRARIES', MOLAJO_PATH_ROOT.'/libraries/');
+define('LIBRARIES', MOLAJO_PATH_ROOT.'/libraries');
 
 /** index.php - shared between Applications */
 include_once LIBRARIES.'/index.php';
