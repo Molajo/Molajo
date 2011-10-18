@@ -23,8 +23,8 @@ abstract class modLanguagesHelper
 		$app		= MolajoFactory::getApplication();
 		$query		= $db->getQuery(true);
 
-		$query->select('id');
-		$query->select('language');
+        $query->select('id');
+        $query->select('language');
 		$query->from($db->nameQuote('#__menu_items'));
 		$query->where('home=1');
 		$db->setQuery($query);
