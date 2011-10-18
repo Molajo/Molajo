@@ -7,9 +7,6 @@
  */
 defined('MOLAJO') or die;
 include dirname(__FILE__).'/lib/functions.php';
-include dirname(__FILE__).'/lib/head.php';
-
-$configHTML = true;
 if ($configHTML == true): ?>
 <!DOCTYPE html>
 <?php else: ?>
@@ -18,23 +15,18 @@ if ($configHTML == true): ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <jdoc:include type="head" />
+    <?php include dirname(__FILE__).'/lib/media.php'; ?>
 </head>
 <body class="<?php echo $lcbrowser . ' ' . $lcbrowser.$ver . ' ' . strtolower($browser->getPlatform()); ?>">
 	<div id="wrap">
-		<div id="top">
-			<h1>
-				<a href="http://molajo.org" title="Click here to open the Molajo website in a new window" target="_blank">Molajo
-				<span>Click here to view the Molajo website</span></a>
-			</h1>
-			<strong>Version <?php echo $version; ?> <span>Step <?php echo $stepNumber; ?> of 4</span></strong>
-		</div>
-		<div id="main" class="step1">
+        <?php include dirname(__FILE__).'/lib/header.php'; ?>
+		<div id="main" class="step<?php echo $stepNumber; ?>">
             <jdoc:include type="component" />
         </div>
 		<?php include dirname(__FILE__).'/lib/footer.php'; ?>
 	</div>
 </body>
 <noscript>
-    <?php echo MolajoText::_('JGLOBAL_WARNJAVASCRIPT') ?>
+    <?php echo MolajoText::_('Warning! JavaScript must be enabled for proper operation of the installer.') ?>
 </noscript>
 </html>

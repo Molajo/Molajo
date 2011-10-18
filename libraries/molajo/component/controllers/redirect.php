@@ -109,7 +109,9 @@ class MolajoControllerRedirect extends MolajoController
         }
 
         /** 2. display, add, edit tasks **/
-        if ($this->request['task'] == 'display' || $this->request['task'] == 'add' || $this->request['task'] == 'edit') {
+        if ($this->request['task'] == 'display'
+            || $this->request['task'] == 'add'
+            || $this->request['task'] == 'edit') {
             $this->setRedirectAction(false);
             return;
         }
@@ -119,7 +121,8 @@ class MolajoControllerRedirect extends MolajoController
 
         /** extension: category uses this parameter **/
         $extension = $this->request['extension'];
-        if ($extension == '' || $extension == null) {
+        if ($extension == ''
+            || $extension == null) {
             $extension = '';
         } else {
             $extension = '&extension='.$extension;
@@ -127,7 +130,8 @@ class MolajoControllerRedirect extends MolajoController
 
         /** component_specific: to add parameter pairs needed in addition to standard **/
         $component_specific = $this->request['component_specific'];
-        if ($component_specific == '' || $component_specific == null) {
+        if ($component_specific == ''
+            || $component_specific == null) {
             $component_specific = '';
         } elseif (substr($component_specific, 1, 1) == '&') {
         } else {

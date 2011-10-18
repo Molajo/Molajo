@@ -113,10 +113,7 @@ class MolajoApplication extends JObject
 		$this->set('requestTime', gmdate('Y-m-d H:i'));
 
 		// Used by task system to ensure that the system doesn't go over time.
-        if ($this->_name == 'installation') {
-        } else {
-		    $this->set('startTime', JProfiler::getmicrotime());
-        }
+	    $this->set('startTime', JProfiler::getmicrotime());
 	}
 
 	/**

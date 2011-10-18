@@ -8,6 +8,10 @@
 defined('MOLAJO') or die;
 ?>
 <div id="footer">
-	<a href="http://molajo.org" title="Click here to open the Molajo website in a new window" target="_blank">Molajo</a> is free software
-	licensed under the <a href="#" title="">GNU General Public License</a>.
+	<a href="http://molajo.org" title="Click here to open the Molajo website in a new window" target="_blank">
+        Molajo
+    </a> is free software licensed under the
+    <a href="http://www.gnu.org/licenses/gpl-2.0.html" title="Click here to view the GNU General Public License in a new window" target="_blank">
+        GNU General Public License v 2, or later
+    </a>.
 </div>

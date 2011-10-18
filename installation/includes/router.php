@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Class to create and parse routes for the site application
+ * Class to create and parse routes for the Installation application
  *
  * @package		Molajo
  * @subpackage	Application
  * @since		1.5
  */
-class MolajoRouterInstaller extends MolajoRouter {}
+class MolajoRouterInstallation extends MolajoRouter {}

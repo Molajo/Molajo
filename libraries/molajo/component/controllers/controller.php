@@ -262,16 +262,20 @@ class MolajoController extends JController
         }
 
         /** dispatch events */
-        if ($this->dispatcher) {
+        if ($this->dispatcher
+            || $this->request['plugin_type'] == '') {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
             MolajoPluginHelper::importPlugin($this->request['plugin_type']);
         }
 
         /** check authorisation **/
-        $results = MolajoController::checkTaskAuthorisation($this->request['task']);
-        if ($results === false) {
-            return false;
+        if (MOLAJO_APPLICATION_ID == 2) {
+        } else {
+            $results = MolajoController::checkTaskAuthorisation($this->request['task']);
+            if ($results === false) {
+                return false;
+            }
         }
 
         /** set redirects **/

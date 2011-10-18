@@ -37,3 +37,4 @@ if ($layout == 'installer_step1') {
 }  
 
 $version = '1.0';
+$configHTML = true;

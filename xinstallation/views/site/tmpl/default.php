@@ -128,6 +128,7 @@ if ($this->sample_installed) : ?>
 									</p>
 								
 						</fieldset>
+
 						<div class="message inlineError" id="theDefaultError" style="display: none">
 							<dl>
 								<dt class="error"><?php echo MolajoText::_('JERROR'); ?></dt>
