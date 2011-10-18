@@ -67,7 +67,7 @@ class MolajoSubmenuHelper
     public function addCategorySubmenu ()
     {
         JSubMenuHelper::addEntry (
-            JText::_('MOLAJO_SUBMENU_CATEGORIES'),
+            MolajoText::_('MOLAJO_SUBMENU_CATEGORIES'),
             'index.php?option=com_categories&extension='.JRequest::getCmd('option'),
             'categories'
         );
@@ -82,7 +82,7 @@ class MolajoSubmenuHelper
     public function addDefaultSubmenu ()
     {
         JSubMenuHelper::addEntry(
-            JText::_('MOLAJO_SUBMENU_'.strtoupper(JRequest::getCmd('DefaultView'))),
+            MolajoText::_('MOLAJO_SUBMENU_'.strtoupper(JRequest::getCmd('DefaultView'))),
             'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView'),
             JRequest::getCmd('DefaultView')
         );
@@ -97,7 +97,7 @@ class MolajoSubmenuHelper
     public function addFeaturedSubmenu ()
     {
         JSubMenuHelper::addEntry(
-            JText::_('MOLAJO_SUBMENU_FEATURED'),
+            MolajoText::_('MOLAJO_SUBMENU_FEATURED'),
             'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&feature=1',
             JRequest::getCmd('DefaultView')
         );
@@ -112,7 +112,7 @@ class MolajoSubmenuHelper
     public function addStickiedSubmenu ()
     {
         JSubMenuHelper::addEntry(
-            JText::_('MOLAJO_SUBMENU_STICKIED'),
+            MolajoText::_('MOLAJO_SUBMENU_STICKIED'),
             'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&sticky=1',
             JRequest::getCmd('DefaultView')
         );
@@ -127,7 +127,7 @@ class MolajoSubmenuHelper
     public function addUnpublishedSubmenu ()
     {
         JSubMenuHelper::addEntry(
-            JText::_('MOLAJO_SUBMENU_UNPUBLISHED'),
+            MolajoText::_('MOLAJO_SUBMENU_UNPUBLISHED'),
             'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&publish=0',
             JRequest::getCmd('DefaultView')
         );

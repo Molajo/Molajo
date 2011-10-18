@@ -42,7 +42,7 @@ class MolajoTableLanguage extends MolajoTable
 	public function check()
 	{
 		if (trim($this->title) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_LANGUAGE_NO_TITLE'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_LANGUAGE_NO_TITLE'));
 			return false;
 		}
 

@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	Editors.none
  * @since		1.5
  */
-class plgEditorNone extends JPlugin
+class plgEditorNone extends MolajoPlugin
 {
 	/**
 	 * Method to handle the onInitEditor event.

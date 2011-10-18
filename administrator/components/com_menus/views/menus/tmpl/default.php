@@ -25,26 +25,26 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task) {
-		if (task != 'menus.delete' || confirm('<?php echo JText::_('COM_MENUS_MENU_CONFIRM_DELETE',true);?>')) {
+		if (task != 'menus.delete' || confirm('<?php echo MolajoText::_('COM_MENUS_MENU_CONFIRM_DELETE',true);?>')) {
 			Joomla.submitform(task);
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_menus&view=menus');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_menus&view=menus');?>" method="post" name="adminForm" id="adminForm">
 	<table class="adminlist">
 		<thead>
 			<tr>
 				<th width="1%" rowspan="2">
-					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th rowspan="2">
 					<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
 				</th>
 				<th width="30%" colspan="3">
-					<?php echo JText::_('COM_MENUS_HEADING_NUMBER_MENU_ITEMS'); ?>
+					<?php echo MolajoText::_('COM_MENUS_HEADING_NUMBER_MENU_ITEMS'); ?>
 				</th>
 				<th width="20%" rowspan="2">
-					<?php echo JText::_('COM_MENUS_HEADING_LINKED_MODULES'); ?>
+					<?php echo MolajoText::_('COM_MENUS_HEADING_LINKED_MODULES'); ?>
 				</th>
 				<th width="1%" class="nowrap" rowspan="2">
 					<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
@@ -52,13 +52,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			</tr>
 			<tr>
 				<th width="10%">
-					<?php echo JText::_('COM_MENUS_HEADING_PUBLISHED_ITEMS'); ?>
+					<?php echo MolajoText::_('COM_MENUS_HEADING_PUBLISHED_ITEMS'); ?>
 				</th>
 				<th width="10%">
-					<?php echo JText::_('COM_MENUS_HEADING_UNPUBLISHED_ITEMS'); ?>
+					<?php echo MolajoText::_('COM_MENUS_HEADING_UNPUBLISHED_ITEMS'); ?>
 				</th>
 				<th width="10%">
-					<?php echo JText::_('COM_MENUS_HEADING_TRASHED_ITEMS'); ?>
+					<?php echo MolajoText::_('COM_MENUS_HEADING_TRASHED_ITEMS'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -80,11 +80,11 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 				</td>
 				<td>
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id) ?> ">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id) ?> ">
 						<?php echo $this->escape($item->title); ?></a>
-					<p class="smallsub">(<span><?php echo JText::_('COM_MENUS_MENU_MENUTYPE_LABEL') ?></span>
+					<p class="smallsub">(<span><?php echo MolajoText::_('COM_MENUS_MENU_MENUTYPE_LABEL') ?></span>
 						<?php if ($canEdit) : ?>
-							<?php echo '<a href="'.JRoute::_('index.php?option=com_menus&task=menu.edit&id='.$item->id).' title='.$this->escape($item->description).'">'.
+							<?php echo '<a href="'.MolajoRoute::_('index.php?option=com_menus&task=menu.edit&id='.$item->id).' title='.$this->escape($item->description).'">'.
 							$this->escape($item->menu_id).'</a>'; ?>)
 						<?php else : ?>
 							<?php echo $this->escape($item->menu_id)?>)
@@ -92,15 +92,15 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					</p>
 				</td>
 				<td class="center btns">
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=1');?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=1');?>">
 						<?php echo $item->count_published; ?></a>
 				</td>
 				<td class="center btns">
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=0');?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=0');?>">
 						<?php echo $item->count_unpublished; ?></a>
 				</td>
 				<td class="center btns">
-					<a href="<?php echo JRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=-2');?>">
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_menus&view=items&menu_id='.$item->menu_id.'&filter_published=-2');?>">
 						<?php echo $item->count_trashed; ?></a>
 				</td>
 				<td class="left">
@@ -111,10 +111,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 						?>
 						<li>
 							<?php if ($canEdit) : ?>
-								<a class="modal" href="<?php echo JRoute::_('index.php?option=com_modules&task=module.edit&id='.$module->id.'&return='.$return.'&tmpl=component&layout=modal');?>" rel="{handler: 'iframe', size: {x: 1024, y: 450}}"  title="<?php echo JText::_('COM_MENUS_EDIT_MODULE_SETTINGS');?>">
-								<?php echo JText::sprintf('COM_MENUS_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?></a>
+								<a class="modal" href="<?php echo MolajoRoute::_('index.php?option=com_modules&task=module.edit&id='.$module->id.'&return='.$return.'&tmpl=component&layout=modal');?>" rel="{handler: 'iframe', size: {x: 1024, y: 450}}"  title="<?php echo MolajoText::_('COM_MENUS_EDIT_MODULE_SETTINGS');?>">
+								<?php echo MolajoText::sprintf('COM_MENUS_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?></a>
 							<?php else :?>
-								<?php echo JText::sprintf('COM_MENUS_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?>
+								<?php echo MolajoText::sprintf('COM_MENUS_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?>
 							<?php endif; ?>
 						</li>
 						<?php

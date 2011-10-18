@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  * Pagination Class.  Provides a common interface for content pagination for the
  * Molajo Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */
@@ -209,7 +209,7 @@ class MolajoPagination extends JObject
 		// Initialise variables.
 		$html = null;
 		if ($this->get('pages.total') > 1) {
-			$html .= JText::sprintf('MOLAJO_HTML_PAGE_CURRENT_OF_TOTAL', $this->get('pages.current'), $this->get('pages.total'));
+			$html .= MolajoText::sprintf('MOLAJO_HTML_PAGE_CURRENT_OF_TOTAL', $this->get('pages.current'), $this->get('pages.total'));
 		}
 		return $html;
 	}
@@ -236,11 +236,11 @@ class MolajoPagination extends JObject
 
 		// If there are results found.
 		if ($this->total > 0) {
-			$msg = JText::sprintf('MOLAJO_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
+			$msg = MolajoText::sprintf('MOLAJO_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
 			$html .= "\n".$msg;
 		}
 		else {
-			$html .= "\n".JText::_('MOLAJO_HTML_NO_RECORDS_FOUND');
+			$html .= "\n".MolajoText::_('MOLAJO_HTML_NO_RECORDS_FOUND');
 		}
 
 		return $html;
@@ -387,18 +387,18 @@ class MolajoPagination extends JObject
 		for ($i = 5; $i <= 30; $i += 5) {
 			$limits[] = JHtml::_('select.option', "$i");
 		}
-		$limits[] = JHtml::_('select.option', '50', JText::_('J50'));
-		$limits[] = JHtml::_('select.option', '100', JText::_('J100'));
-		$limits[] = JHtml::_('select.option', '0', JText::_('JALL'));
+		$limits[] = JHtml::_('select.option', '50', MolajoText::_('J50'));
+		$limits[] = JHtml::_('select.option', '100', MolajoText::_('J100'));
+		$limits[] = JHtml::_('select.option', '0', MolajoText::_('JALL'));
 
 		$selected = $this->_viewall ? 0 : $this->limit;
 
 		// Build the select list.
 		if ($app->isAdmin()) {
-			$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
+			$html = JHtml::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
 		}
 		else {
-			$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
+			$html = JHtml::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
 		}
 		return $html;
 	}
@@ -454,11 +454,11 @@ class MolajoPagination extends JObject
 	{
 		$html = "<div class=\"list-footer\">\n";
 
-		$html .= "\n<div class=\"limit\">".JText::_('JGLOBAL_DISPLAY_NUM').$list['limitfield']."</div>";
+		$html .= "\n<div class=\"limit\">".MolajoText::_('JGLOBAL_DISPLAY_NUM').$list['limitfield']."</div>";
 		$html .= $list['pageslinks'];
 		$html .= "\n<div class=\"counter\">".$list['pagescounter']."</div>";
 
-		$html .= "\n<input type=\"hidden\" name=\"" . $list['prefix'] . "limitstart\" value=\"".$list['limitstart']."\" />";
+		$html .= "\n<input type=\"hidden\" name=\"".$list['prefix']."limitstart\" value=\"".$list['limitstart']."\" />";
 		$html .= "\n</div>";
 
 		return $html;
@@ -486,10 +486,10 @@ class MolajoPagination extends JObject
 		if ($app->isAdmin())
 		{
 			if ($item->base > 0) {
-				return "<a title=\"".$item->text."\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
+				return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
 			else {
-				return "<a title=\"".$item->text."\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
+				return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
 		}
 		else {
@@ -529,15 +529,15 @@ class MolajoPagination extends JObject
 			}
 		}
 
-		$data->all = new MolajoPaginationObject(JText::_('MOLAJO_HTML_VIEW_ALL'), $this->prefix);
+		$data->all = new MolajoPaginationObject(MolajoText::_('MOLAJO_HTML_VIEW_ALL'), $this->prefix);
 		if (!$this->_viewall) {
 			$data->all->base	= '0';
-			$data->all->link	= JRoute::_($params.'&'.$this->prefix.'limitstart=');
+			$data->all->link	= MolajoRoute::_($params.'&'.$this->prefix.'limitstart=');
 		}
 
 		// Set the start and previous data objects.
-		$data->start	= new MolajoPaginationObject(JText::_('MOLAJO_HTML_START'), $this->prefix);
-		$data->previous	= new MolajoPaginationObject(JText::_('JPREV'), $this->prefix);
+		$data->start	= new MolajoPaginationObject(MolajoText::_('MOLAJO_HTML_START'), $this->prefix);
+		$data->previous	= new MolajoPaginationObject(MolajoText::_('JPREV'), $this->prefix);
 
 		if ($this->get('pages.current') > 1)
 		{
@@ -547,14 +547,14 @@ class MolajoPagination extends JObject
 			//$page = $page == 0 ? '' : $page;
 
 			$data->start->base	= '0';
-			$data->start->link	= JRoute::_($params.'&'.$this->prefix.'limitstart=0');
+			$data->start->link	= MolajoRoute::_($params.'&'.$this->prefix.'limitstart=0');
 			$data->previous->base	= $page;
-			$data->previous->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$page);
+			$data->previous->link	= MolajoRoute::_($params.'&'.$this->prefix.'limitstart='.$page);
 		}
 
 		// Set the next and end data objects.
-		$data->next	= new MolajoPaginationObject(JText::_('JNEXT'), $this->prefix);
-		$data->end	= new MolajoPaginationObject(JText::_('MOLAJO_HTML_END'), $this->prefix);
+		$data->next	= new MolajoPaginationObject(MolajoText::_('JNEXT'), $this->prefix);
+		$data->end	= new MolajoPaginationObject(MolajoText::_('MOLAJO_HTML_END'), $this->prefix);
 
 		if ($this->get('pages.current') < $this->get('pages.total'))
 		{
@@ -562,9 +562,9 @@ class MolajoPagination extends JObject
 			$end  = ($this->get('pages.total') -1) * $this->limit;
 
 			$data->next->base	= $next;
-			$data->next->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$next);
+			$data->next->link	= MolajoRoute::_($params.'&'.$this->prefix.'limitstart='.$next);
 			$data->end->base	= $end;
-			$data->end->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$end);
+			$data->end->link	= MolajoRoute::_($params.'&'.$this->prefix.'limitstart='.$end);
 		}
 
 		$data->pages = array();
@@ -579,7 +579,7 @@ class MolajoPagination extends JObject
 			if ($i != $this->get('pages.current') || $this->_viewall)
 			{
 				$data->pages[$i]->base	= $offset;
-				$data->pages[$i]->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$offset);
+				$data->pages[$i]->link	= MolajoRoute::_($params.'&'.$this->prefix.'limitstart='.$offset);
 			}
 		}
 		return $data;
@@ -589,7 +589,7 @@ class MolajoPagination extends JObject
 /**
  * Pagination object representing a particular item in the pagination lists.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */

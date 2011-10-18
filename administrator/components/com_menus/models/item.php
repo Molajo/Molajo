@@ -107,7 +107,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		if (empty($pks)) {
-			$this->setError(JText::_('COM_MENUS_NO_ITEM_SELECTED'));
+			$this->setError(MolajoText::_('COM_MENUS_NO_ITEM_SELECTED'));
 			return false;
 		}
 
@@ -134,7 +134,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		if (!$done) {
-			$this->setError(JText::_('JGLOBAL_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
+			$this->setError(MolajoText::_('JGLOBAL_ERROR_INSUFFICIENT_BATCH_INFORMATION'));
 			return false;
 		}
 
@@ -170,7 +170,7 @@ class MenusModelItem extends JModelAdmin
 				}
 				else {
 					// Non-fatal error
-					$this->setError(JText::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
+					$this->setError(MolajoText::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
 					$parentId = 0;
 				}
 			}
@@ -187,7 +187,7 @@ class MenusModelItem extends JModelAdmin
 		// Check that user has create permission for menus
 		$user	= MolajoFactory::getUser();
 		if (!$user->authorise('core.create', 'com_menus')) {
-			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
+			$this->setError(MolajoText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
 		}
 
@@ -223,7 +223,7 @@ class MenusModelItem extends JModelAdmin
 				}
 				else {
 					// Not fatal error
-					$this->setError(JText::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					$this->setError(MolajoText::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
 				}
 			}
@@ -335,7 +335,7 @@ class MenusModelItem extends JModelAdmin
 				}
 				else {
 					// Non-fatal error
-					$this->setError(JText::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
+					$this->setError(MolajoText::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
 					$parentId = 0;
 				}
 			}
@@ -344,12 +344,12 @@ class MenusModelItem extends JModelAdmin
 		// Check that user has create and edit permission for menus
 		$user	= MolajoFactory::getUser();
 		if (!$user->authorise('core.create', 'com_menus')) {
-			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
+			$this->setError(MolajoText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
 		}
 
 		if (!$user->authorise('core.edit', 'com_menus')) {
-			$this->setError(JText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_EDIT'));
+			$this->setError(MolajoText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_EDIT'));
 			return false;
 		}
 
@@ -368,7 +368,7 @@ class MenusModelItem extends JModelAdmin
 				}
 				else {
 					// Not fatal error
-					$this->setError(JText::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+					$this->setError(MolajoText::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
 					continue;
 				}
 			}
@@ -844,12 +844,12 @@ class MenusModelItem extends JModelAdmin
 			// We need to qualify the full path to avoid collisions with component file names.
 
 			if ($form->loadFile($formFile, true, '/metadata') == false) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 
 			// Attempt to load the xml file.
 			if (!$xml = simplexml_load_file($formFile)) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 
 			// Get the help data from the XML file if present.
@@ -878,14 +878,14 @@ class MenusModelItem extends JModelAdmin
 		if (JFile::exists($path)) {
 			// Add the component params last of all to the existing form.
 			if (!$form->load($path, true, '/config')) {
-				throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
 		}
 
 
 		// Load the specific type file
 		if (!$form->loadFile('item_'.$type, false, false)) {
-			throw new Exception(JText::_('JERROR_LOADFILE_FAILED'));
+			throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 		}
 
 		// Trigger the default form events.
@@ -1081,7 +1081,7 @@ class MenusModelItem extends JModelAdmin
 
 					if ($table->home == $value) {
 						unset($pks[$i]);
-						JError::raiseNotice(403, JText::_('COM_MENUS_ERROR_ALREADY_HOME'));
+						JError::raiseNotice(403, MolajoText::_('COM_MENUS_ERROR_ALREADY_HOME'));
 					}
 					else {
 						$table->home = $value;
@@ -1092,7 +1092,7 @@ class MenusModelItem extends JModelAdmin
 						if (!$this->canSave($table)) {
 							// Prune items that you can't change.
 							unset($pks[$i]);
-							JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+							JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
 						}
 						else if (!$table->check()) {
 							// Prune the items that failed pre-save checks.
@@ -1110,7 +1110,7 @@ class MenusModelItem extends JModelAdmin
 					unset($pks[$i]);
 					if (!$onehome) {
 						$onehome = true;
-						JError::raiseNotice(403, JText::sprintf('COM_MENUS_ERROR_ONE_HOME'));
+						JError::raiseNotice(403, MolajoText::sprintf('COM_MENUS_ERROR_ONE_HOME'));
 					}
 				}
 			}
@@ -1143,7 +1143,7 @@ class MenusModelItem extends JModelAdmin
 			{
 				if ($table->load($pk) && $table->home && $table->language == '*') {
 					// Prune items that you can't change.
-					JError::raiseWarning(403, JText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
+					JError::raiseWarning(403, MolajoText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
 					unset($pks[$i]);
 					break;
 				}

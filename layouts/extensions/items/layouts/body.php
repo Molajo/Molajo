@@ -15,7 +15,7 @@ defined('MOLAJO') or die; ?>
     <?php echo $this->row->snippet; ?>
 </p>
 <p class="small">
-    <?php echo JText::_('MOLAJO_WRITTEN_BY').' '.$this->row->display_author_name; ?>
+    <?php echo MolajoText::_('MOLAJO_WRITTEN_BY').' '.$this->row->display_author_name; ?>
 </p>
 <p class="small">
     <?php echo $this->row->published_pretty_date; ?>

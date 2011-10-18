@@ -13,4 +13,3 @@ $wrap = $params->def('wrap', 'none');
 
 $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'MolajoLaunchpadHelper');
-$filehelper->requireClassFile(dirname(__FILE__).'/menu.php', 'MolajoAdminCSSMenu');

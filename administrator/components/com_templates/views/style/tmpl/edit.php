@@ -26,10 +26,10 @@ $canDo = TemplatesHelper::getActions();
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_templates&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="style-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_templates&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="style-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('JDETAILS');?></legend>
+			<legend><?php echo MolajoText::_('JDETAILS');?></legend>
 			<ul class="adminformlist">
 			<li><?php echo $this->form->getLabel('title'); ?>
 			<?php echo $this->form->getInput('title'); ?></li>
@@ -38,7 +38,7 @@ $canDo = TemplatesHelper::getActions();
 			<?php echo $this->form->getInput('template'); ?>
 			<?php echo $this->form->getLabel('application_id'); ?>
 			<?php echo $this->form->getInput('application_id'); ?>
-			<input type="text" size="35" value="<?php echo $this->item->application_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" /></li>
+			<input type="text" size="35" value="<?php echo $this->item->application_id == 0 ? MolajoText::_('JSITE') : MolajoText::_('JADMINISTRATOR'); ?>	" class="readonly" readonly="readonly" /></li>
 
 			<li><?php echo $this->form->getLabel('home'); ?>
 			<?php echo $this->form->getInput('home'); ?></li>
@@ -52,12 +52,12 @@ $canDo = TemplatesHelper::getActions();
 			<?php if ($this->item->xml) : ?>
 				<?php if ($text = trim($this->item->xml->description)) : ?>
 					<label>
-						<?php echo JText::_('COM_TEMPLATES_TEMPLATE_DESCRIPTION'); ?>
+						<?php echo MolajoText::_('COM_TEMPLATES_TEMPLATE_DESCRIPTION'); ?>
 					</label>
-					<span class="readonly mod-desc"><?php echo JText::_($text); ?></span>
+					<span class="readonly mod-desc"><?php echo MolajoText::_($text); ?></span>
 				<?php endif; ?>
 			<?php else : ?>
-				<p class="error"><?php echo JText::_('COM_TEMPLATES_ERR_XML'); ?></p>
+				<p class="error"><?php echo MolajoText::_('COM_TEMPLATES_ERR_XML'); ?></p>
 			<?php endif; ?>
 			<div class="clr"></div>
 		</fieldset>

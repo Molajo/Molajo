@@ -42,8 +42,8 @@ $menuTypes = MenusHelper::getMenuLinks();
 		</script>
 
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_MODULES_MENU_ASSIGNMENT'); ?></legend>
-			<label id="jform_menus-lbl" for="jform_menus"><?php echo JText::_('COM_MODULES_MODULE_ASSIGN'); ?></label>
+			<legend><?php echo MolajoText::_('COM_MODULES_MENU_ASSIGNMENT'); ?></legend>
+			<label id="jform_menus-lbl" for="jform_menus"><?php echo MolajoText::_('COM_MODULES_MODULE_ASSIGN'); ?></label>
 
 			<fieldset id="jform_menus" class="radio">
 				<select name="jform[assignment]" id="jform_assignment">
@@ -52,18 +52,18 @@ $menuTypes = MenusHelper::getMenuLinks();
 
 			</fieldset>
 
-			<label id="jform_menuselect-lbl" for="jform_menuselect"><?php echo JText::_('JGLOBAL_MENU_SELECTION'); ?></label>
+			<label id="jform_menuselect-lbl" for="jform_menuselect"><?php echo MolajoText::_('JGLOBAL_MENU_SELECTION'); ?></label>
 
 			<button type="button" class="jform-assignments-button jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = !el.checked; });">
-				<?php echo JText::_('JGLOBAL_SELECTION_INVERT'); ?>
+				<?php echo MolajoText::_('JGLOBAL_SELECTION_INVERT'); ?>
 			</button>
 
 			<button type="button" class="jform-assignments-button jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = false; });">
-				<?php echo JText::_('JGLOBAL_SELECTION_NONE'); ?>
+				<?php echo MolajoText::_('JGLOBAL_SELECTION_NONE'); ?>
 			</button>
 
 			<button type="button" class="jform-assignments-button jform-rightbtn" onclick="$$('.chk-menulink').each(function(el) { el.checked = true; });">
-				<?php echo JText::_('JGLOBAL_SELECTION_ALL'); ?>
+				<?php echo MolajoText::_('JGLOBAL_SELECTION_ALL'); ?>
 			</button>
 
 			<div class="clr"></div>

@@ -2,11 +2,10 @@
 /**
  * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
@@ -14,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package     Molajo
  * @subpackage  Document
- * @see     	http://www.rssboard.org/rss-specification
+ * @see         http://www.rssboard.org/rss-specification
  * @since       1.0
  */
 class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
@@ -23,6 +22,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	 * Renderer mime type
 	 *
 	 * @var    string
+	 * @since  1.0
 	 */
 	protected $_mime = "application/rss+xml";
 
@@ -30,6 +30,8 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	 * Render the feed
 	 *
 	 * @return  string
+	 *
+	 * @since   11.1
 	 */
 	public function render()
 	{
@@ -44,18 +46,18 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 
 		$uri = MolajoFactory::getURI();
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-		$syndicationURL = JRoute::_('&format=feed&type=rss');
+		$syndicationURL = MolajoRoute::_('&format=feed&type=rss');
 
 		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $data->title);
+			$title = MolajoText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $data->title);
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $data->title, $app->getCfg('sitename'));
+			$title = MolajoText::sprintf('JPAGETITLE', $data->title, $app->getCfg('sitename'));
 		}
 		else {
 			$title = $data->title;
 		}
-		
+
 		$feed_title = htmlspecialchars($title, ENT_COMPAT, 'UTF-8');
 
 		$feed = "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n";
@@ -67,8 +69,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 		$feed.= "		<generator>".$data->getGenerator()."</generator>\n";
 		$feed.= '		<atom:link rel="self" type="application/rss+xml" href="'.str_replace(' ','%20',$url.$syndicationURL)."\"/>\n";
 
-		if ($data->image!=null)
-		{
+		if ($data->image!=null) {
 			$feed.= "		<image>\n";
 			$feed.= "			<url>".$data->image->url."</url>\n";
 			$feed.= "			<title>".htmlspecialchars($data->image->title, ENT_COMPAT, 'UTF-8')."</title>\n";
@@ -147,11 +148,11 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 			$feed.= "			<description><![CDATA[".$this->_relToAbs($data->items[$i]->description)."]]></description>\n";
 
 			if ($data->items[$i]->authorEmail!="") {
-				$feed.= "			<author>".htmlspecialchars($data->items[$i]->authorEmail . ' (' .
-										$data->items[$i]->author . ')', ENT_COMPAT, 'UTF-8')."</author>\n";
+				$feed.= "			<author>".htmlspecialchars($data->items[$i]->authorEmail.' (' .
+										$data->items[$i]->author.')', ENT_COMPAT, 'UTF-8')."</author>\n";
 			}
 			/*
-			// on hold
+			// On hold
 			if ($data->items[$i]->source!="") {
 					$data.= "			<source>".htmlspecialchars($data->items[$i]->source, ENT_COMPAT, 'UTF-8')."</source>\n";
 			}
@@ -195,7 +196,11 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 	/**
 	 * Convert links in a text from relative to absolute
 	 *
-	 * @return  string
+	 * @param   string  $text  The text processed
+	 *
+	 * @return  string   Text with converted links
+	 *
+	 * @since   11.1
 	 */
 	public function _relToAbs($text)
 	{

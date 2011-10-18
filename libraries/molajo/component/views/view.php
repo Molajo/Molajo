@@ -77,16 +77,38 @@ class MolajoView extends JView
     public $layout_path;
 
     /**
+     * @var object $layout_type
+     * @since 1.0
+     */
+    public $layout_type;
+
+    /**
      * @var object $layout
      * @since 1.0
      */
     public $layout;
-
     /**
      * @var object $wrap
      * @since 1.0
      */
     public $wrap;
+
+    /**
+     * renderModulePosition
+     *
+     * usage in layout:
+     *
+     * $this->renderModulePosition ('position-name', array('wrap' => 'none');
+     *
+     * @param $position
+     * @param array $options
+     * @return void
+     */
+    public function renderModulePosition ($position, $options=array('wrap' => 'none'))
+    {
+        $renderer	= $this->document->loadRenderer('modules');
+        echo $renderer->render($position, $options, null);
+    }
 
     /**
      * display
@@ -100,44 +122,51 @@ class MolajoView extends JView
     public function display($tpl = null)
     {
         /** no results */
-        if ($this->params->def('suppress_no_results', false) === true
+        if (count($this->params) > 0
+            && $this->params->def('suppress_no_results', false) === true
             && count($this->rowset == 0)) {
             return;
         }
 
         /** Render Layout */
-        $this->findPath($this->layout, 'extensions');
+        $this->findPath($this->layout, $this->layout_type);
         if ($this->layout_path === false) {
             // load an error layout
             return;
         }
-        $renderedOutput = $this->renderLayout ($this->layout, 'extensions');
+ 
+        $renderedOutput = $this->renderLayout ($this->layout, $this->layout_type);
 
-        /** Render Wrap around Rendered Layout */
+        /** Wrap Rendered Output */
         if ($this->wrap == 'horz') { $this->wrap = 'horizontal'; }
         if ($this->wrap == 'xhtml') { $this->wrap = 'div'; }
         if ($this->wrap == 'rounded') { $this->wrap = 'div'; }
         if ($this->wrap == 'raw') { $this->wrap = 'none'; }
         if ($this->wrap == '') { $this->wrap = 'none'; }
+        if ($this->wrap == null) { $this->wrap = 'none'; }
 
-        $this->findPath($this->wrap, 'wrap');
-
-        /** Wrap rowset */
-        $this->rowset = array();
-
-		$this->rowset[0]->title             = $this->request['wrap_title'];
-		$this->rowset[0]->subtitle          = $this->request['wrap_subtitle'];
-        $this->rowset[0]->published_date    = $this->request['wrap_date'];
-        $this->rowset[0]->author            = $this->request['wrap_author'];
-		$this->rowset[0]->position          = $this->request['position'];
-		$this->rowset[0]->more_array        = $this->request['wrap_more_array'];
-
-		$this->rowset[0]->content           = $renderedOutput;
-
+        $this->findPath($this->wrap, 'wraps');
         if ($this->layout_path === false) {
             echo $renderedOutput;
+            return;
         }
-        echo $this->renderLayout ($this->wrap, 'wrap');
+
+        $this->rowset = array();
+        $tmpobj = new JObject();
+        $tmpobj->set('title', $this->request['wrap_title']);
+        $tmpobj->set('subtitle', $this->request['wrap_subtitle']);
+        $tmpobj->set('wrap_id', $this->request['wrap_id']);
+        $tmpobj->set('wrap_class', $this->request['wrap_class']);
+        $tmpobj->set('published_date', $this->request['wrap_date']);
+        $tmpobj->set('author', $this->request['wrap_author']);
+        $tmpobj->set('position', $this->request['position']);
+        $tmpobj->set('content', $renderedOutput);
+        $this->rowset[] = $tmpobj;
+
+        $wrappedOutput = $this->renderLayout ($this->wrap, 'wraps');
+
+        echo $wrappedOutput;
+        return;
     }
 
     /**
@@ -146,17 +175,20 @@ class MolajoView extends JView
      * Looks for path of Request Layout as a layout folder, in this order:
      *
      *  1. [template]/html/[extension-name]/[viewname(if component)]/[layout-folder]
-     *  2. [template]/html/[layout-folder]
-     *  3. [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder]
-     *  4. layouts/[$layout_type]/[layout-folder]
+     *  2. [template]/[layout-type]/[layout-folder]
+     *  3. [extension_type]/[extension-name]/[views/viewname(if component)]/tmpl/[layout-folder]
+     *  4. layouts/[layout_type]/[layout-folder]
      *
      * @return bool|string
      */
     protected function findPath ($layout, $layout_type)
     {
-        /** @var $template */
-        $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication()->getTemplate().'/html';
+        /** initialize layout */
+        $this->layout_path = false;
 
+        /** @var $template */
+        $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'/html';
+ 
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
         $templateExtensionPath = '';
         if ($layout_type == 'extensions') {
@@ -171,7 +203,7 @@ class MolajoView extends JView
             }
         }
 
-        /** 2. @var $templateLayoutPath [template]/html/[layout-folder] */
+        /** 2. @var $templateLayoutPath [template]/[layout-folder] */
         $templateLayoutPath = $template.'/'.$layout_type;
 
         /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
@@ -186,6 +218,8 @@ class MolajoView extends JView
             } else {
                 $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
             }
+        } else {
+            $extensionPath = $templateLayoutPath;
         }
 
         /** 4. $corePath layouts/[layout_type]/[layout-folder] */
@@ -193,8 +227,8 @@ class MolajoView extends JView
             $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
         } else if ($layout_type == 'forms') {
             $corePath = MOLAJO_LAYOUTS_FORMS;
-        } else if ($layout_type == 'head') {
-            $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
+        } else if ($layout_type == 'document') {
+            $corePath = MOLAJO_LAYOUTS_DOCUMENT;
         } else if ($layout_type == 'wraps') {
             $corePath = MOLAJO_LAYOUTS_WRAPS;
         } else {
@@ -204,7 +238,6 @@ class MolajoView extends JView
         /**
          * Determine path in order of priority
          */
-
         /** 1. template extension override **/
         if (is_dir($templateExtensionPath.'/'.$layout)) {
             $this->layout_path = $templateExtensionPath.'/'.$layout;
@@ -220,7 +253,7 @@ class MolajoView extends JView
             $this->layout_path = $extensionPath.'/'.$layout;
             return;
 
-        /** 4. molajao library **/
+        /** 4. molajo library **/
         } else if (is_dir($corePath.'/'.$layout)) {
             $this->layout_path = $corePath.'/'.$layout;
             return;
@@ -247,6 +280,7 @@ class MolajoView extends JView
     */
     protected function renderLayout ($layout, $layout_type)
     {
+
         /** @var $rowCount */
         $rowCount = 1;
 
@@ -298,7 +332,7 @@ class MolajoView extends JView
             foreach ($this->rowset as $this->row) {
 
                 /** layout: top */
-                if ($rowCount == 1 && (!$layout == 'system')) {
+                if ($rowCount == 1) {
 
                     /** event: Before Content Display */
                     if (isset($this->row->event->beforeDisplayContent)) {
@@ -309,37 +343,41 @@ class MolajoView extends JView
                         include $this->layout_path.'/layouts/top.php';
                     }
                 }
+          
+                if ($this->row == null) {
+                } else {
 
-                /** item: header */
-                if (file_exists($this->layout_path.'/layouts/header.php')) {
-                    include $this->layout_path.'/layouts/header.php';
+                    /** item: header */
+                    if (file_exists($this->layout_path.'/layouts/header.php')) {
+                        include $this->layout_path.'/layouts/header.php';
 
-                    /** event: After Display of Title */
-                    if (isset($this->row->event->afterDisplayTitle)) {
-                        echo $this->row->event->afterDisplayTitle;
+                        /** event: After Display of Title */
+                        if (isset($this->row->event->afterDisplayTitle)) {
+                            echo $this->row->event->afterDisplayTitle;
+                        }
                     }
+
+                    /** item: body */
+                    if (file_exists($this->layout_path.'/layouts/body.php')) {
+                        include $this->layout_path.'/layouts/body.php';
+                    }
+
+                    /** item: footer */
+                    if (file_exists($this->layout_path.'/layouts/footer.php')) {
+                        include $this->layout_path.'/layouts/footer.php';
+                    }
+
+                    $rowCount++;
                 }
 
-                /** item: body */
-                if (file_exists($this->layout_path.'/layouts/body.php')) {
-                    include $this->layout_path.'/layouts/body.php';
-                }
+                /** layout: bottom */
+                if (file_exists($this->layout_path.'/layouts/bottom.php')) {
+                    include $this->layout_path.'/layouts/bottom.php';
 
-                /** item: footer */
-                if (file_exists($this->layout_path.'/layouts/footer.php')) {
-                    include $this->layout_path.'/layouts/footer.php';
-                }
-
-                $rowCount++;
-            }
-
-            /** layout: bottom */
-            if (file_exists($this->layout_path.'/layouts/bottom.php')) {
-                include $this->layout_path.'/layouts/bottom.php';
-
-                /** event: After Layout is finished */
-                if (isset($this->row->event->afterDisplayContent)) {
-                    echo $this->row->event->afterDisplayContent;
+                    /** event: After Layout is finished */
+                    if (isset($this->row->event->afterDisplayContent)) {
+                        echo $this->row->event->afterDisplayContent;
+                    }
                 }
             }
         }
@@ -382,6 +420,7 @@ class MolajoView extends JView
      * 1. Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js]
      * 2. Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js]
      * 3. Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js]
+     * 4. Layout specific CSS and JS in => layouts/[layout-type]/[layout-name]/css[js]/XYZ.css[js]
      *
      * Note: Right-to-left css files should begin with rtl_
      *
@@ -421,26 +460,27 @@ class MolajoView extends JView
         }
 
         /** Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js] */
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
-//            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-//        }
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
-//            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-//        }
+        if (isset($this->params->load_asset_css)
+            && $this->params->get('load_asset_css', true) === true) {
+            $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
+        }
+        if (isset($this->params->load_asset_js)
+            && $this->params->get('load_asset_js', true) === true) {
+            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
+        }
 
         /** Layout specific CSS and JS in => layouts/[layout_type]/[asset_id]/css[js]/XYZ.css[js] */
 
         $filePath = $this->layout_path;
-        $urlPath = JURI::root().'layouts/'.$layout_type.'s'.'/'.$layout;
 
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
+        $urlPath = JURI::root().'layouts/'.$layout_type.'/'.$layout;
+ 
+//        if (isset($this->params->load_layout_css)
+//            && $this->params->get('load_layout_css', true) === true) {
             $this->loadMediaCSS ($filePath, $urlPath);
 //        }
-//        if (isset($this->params->load_application_css)
-//            && $this->params->get('load_application_css', true) === true) {
+//        if (isset($this->params->load_layout_js)
+//            && $this->params->get('load_layout_js', true) === true) {
 //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
             $this->loadMediaJS ($filePath, $urlPath);
 //        }
@@ -503,16 +543,6 @@ class MolajoView extends JView
     }
 }
 
-        /** Twig Autoload */
-// $filehelper = new MolajoFileHelper();
-//        $filehelper->requireClassFile(MOLAJO_PATH_ROOT.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
-//        Twig_Autoloader::register();
-
-        /** @var $loader  */
-//        $loader = new Twig_Loader_Filesystem(MOLAJO_LAYOUTS_EXTENSIONS);
-//        $this->twig = new Twig_Environment($loader, array(
-//          'cache' => MOLAJO_LAYOUTS_EXTENSIONS.'/cache',
-//       ));
 /** 7. Optional data (put this into a model parent?) */
 //		$this->category	            = $this->get('Category');
 //		$this->categoryAncestors    = $this->get('Ancestors');

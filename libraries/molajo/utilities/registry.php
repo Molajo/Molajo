@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 /**
  * MolajoRegistry class
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Registry
- * @since       11.1
+ * @since       1.0
  */
 class MolajoRegistry
 {

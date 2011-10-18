@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -86,7 +86,7 @@ class MolajoFormFieldList extends MolajoFormField
 			}
 
 			// Create a new option object based on the <option /> element.
-			$tmp = JHtml::_('select.option', (string) $option['value'], JText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled']=='true'));
+			$tmp = JHtml::_('select.option', (string) $option['value'], MolajoText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled']=='true'));
 
 			// Set some option attributes.
 			$tmp->class = (string) $option['class'];

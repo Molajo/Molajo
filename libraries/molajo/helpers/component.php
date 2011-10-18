@@ -24,6 +24,33 @@ class MolajoComponentHelper
      */
 	protected static $_components = array();
 
+    /**
+     * getComponentName
+     *
+	 * Return the name of the request component [main component]
+	 *
+	 * @param   string  $default The default option
+	 * @return  string  Option
+	 * @since   1.0
+	 */
+	public static function getComponentName($default = NULL)
+	{
+		static $option;
+
+		if ($option) {
+			return $option;
+		}
+
+		$option = strtolower(JRequest::getCmd('option'));
+
+		if (empty($option)) {
+			$option = $default;
+		}
+
+		JRequest::setVar('option', $option);
+		return $option;
+	}
+
 	/**
 	 * getComponent
      * 
@@ -129,7 +156,7 @@ class MolajoComponentHelper
 
 		if ($error = $db->getErrorMsg()
             || empty(self::$_components[$option])) {
-			JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
+			JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
 			return false;
 		}
 
@@ -163,12 +190,16 @@ class MolajoComponentHelper
 
         /** extension path and entry point */
         $path = $request['component_path'].'/'.$request['no_com_option'].'.php';
-
+ 
         /** verify extension is enabled */
-		if (self::isEnabled($request['option'])
+        if ($request['application_id'] == 2
+            && file_exists($path)) {
+
+        } elseif (self::isEnabled($request['option'])
                 && file_exists($path)) {
+            
         } else {
-			JError::raiseError(404, JText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			JError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
         /** execute the component */
@@ -179,7 +210,7 @@ class MolajoComponentHelper
 
 		/** Revert scope */
 		MolajoFactory::getApplication()->scope = $scope;
-
+        
         return $output;
 	}
 }

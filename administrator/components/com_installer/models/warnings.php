@@ -68,34 +68,34 @@ class InstallerModelWarnings extends JModelList
 		$file_uploads = ini_get('file_uploads');
 		if(!$file_uploads)
 		{
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_FILEUPLOADSDISABLED'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_FILEUPLOADISDISABLEDDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_FILEUPLOADSDISABLED'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_FILEUPLOADISDISABLEDDESC'));
 		}
 
 
 		$upload_dir = ini_get('upload_tmp_dir');
 		if (!$upload_dir) {
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTSET'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTSETDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTSET'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTSETDESC'));
 		} else {
 			if (!is_writeable($upload_dir)) {
-				$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTWRITEABLE'), 'description'=>JText::sprintf('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTWRITEABLEDESC', $upload_dir));
+				$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTWRITEABLE'), 'description'=>MolajoText::sprintf('COM_INSTALLER_MSG_WARNINGS_PHPUPLOADNOTWRITEABLEDESC', $upload_dir));
 			}
 		}
 
 		$config = MolajoFactory::getConfig();
 		$tmp_path = $config->get('tmp_path');
 		if (!$tmp_path) {
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSET'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSETDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSET'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSETDESC'));
 		} else {
 			if (!is_writeable($tmp_path)) {
-				$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLE'), 'description'=>JText::sprintf('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLEDESC', $tmp_path));
+				$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLE'), 'description'=>MolajoText::sprintf('COM_INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLEDESC', $tmp_path));
 			}
 		}
 
 		$memory_limit = $this->return_bytes(ini_get('memory_limit'));
 		if ($memory_limit < (8 * 1024 * 1024)) { // 8MB
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_LOWMEMORYWARN'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_LOWMEMORYDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_LOWMEMORYWARN'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_LOWMEMORYDESC'));
 		} else if ($memory_limit < (16 * 1024 * 1024)) { //16MB
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_MEDMEMORYWARN'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_MEDMEMORYDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_MEDMEMORYWARN'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_MEDMEMORYDESC'));
 		}
 
 
@@ -104,17 +104,17 @@ class InstallerModelWarnings extends JModelList
 
 		if($post_max_size < $upload_max_filesize)
 		{
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_UPLOADBIGGERTHANPOST'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_UPLOADBIGGERTHANPOSTDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_UPLOADBIGGERTHANPOST'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_UPLOADBIGGERTHANPOSTDESC'));
 		}
 
 		if($post_max_size < (4 * 1024 * 1024)) // 4MB
 		{
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_SMALLPOSTSIZE'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_SMALLPOSTSIZEDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_SMALLPOSTSIZE'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_SMALLPOSTSIZEDESC'));
 		}
 
 		if($upload_max_filesize < (4 * 1024 * 1024)) // 4MB
 		{
-			$messages[] = Array('message'=>JText::_('COM_INSTALLER_MSG_WARNINGS_SMALLUPLOADSIZE'), 'description'=>JText::_('COM_INSTALLER_MSG_WARNINGS_SMALLUPLOADSIZEDESC'));
+			$messages[] = Array('message'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_SMALLUPLOADSIZE'), 'description'=>MolajoText::_('COM_INSTALLER_MSG_WARNINGS_SMALLUPLOADSIZEDESC'));
 		}
 
 

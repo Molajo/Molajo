@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Language
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Help system class
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Language
  * @since       1.0
  */
@@ -36,7 +36,7 @@ class MolajoHelp
 		$app	= MolajoFactory::getApplication();
 
 		if (is_null($component)) {
-			$component = MolajoApplicationHelper::getComponentName();
+			$component = MolajoComponentHelper::getComponentName();
 		}
 
 
@@ -91,7 +91,7 @@ class MolajoHelp
 		$jlang		= explode( '-', $lang->getTag() );
 
 		$debug		= $lang->setDebug(false);
-		$keyref     = JText::_($ref);
+		$keyref     = MolajoText::_($ref);
 		$lang->setDebug($debug);
 
 		// Replace substitution codes in help URL.
@@ -123,7 +123,6 @@ class MolajoHelp
 		// If it doesn't then fallback to English.
 		if ($local) {
 			$try = str_replace($search, $replace, $url);
-			jimport('joomla.filesystem.file');
 
 			if (!JFile::exists(MOLAJO_PATH_BASE.'/'.$try)) {
 				$replace[3] = 'en-GB';

@@ -67,7 +67,7 @@ class ConfigViewApplication extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::_('COM_CONFIG_GLOBAL_CONFIGURATION'), 'config.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_CONFIG_GLOBAL_CONFIGURATION'), 'config.png');
 		MolajoToolbarHelper::apply('application.apply');
 		MolajoToolbarHelper::save('application.save');
 		MolajoToolbarHelper::divider();

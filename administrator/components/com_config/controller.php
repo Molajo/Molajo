@@ -54,7 +54,7 @@ class ConfigController extends JController
 
 				// Access check.
 				if (!MolajoFactory::getUser()->authorise('core.admin', $model->getState('component.option'))) {
-					return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+					return JError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 				}
 
 				// Push the model into the view (as default).

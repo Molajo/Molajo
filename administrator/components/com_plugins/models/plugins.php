@@ -169,7 +169,7 @@ class PluginsModelPlugins extends JModelList
 			||	$lang->load($extension . '.sys', $source, null, false, false)
 			||	$lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 			||	$lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
-			$item->name = JText::_($item->name);
+			$item->name = MolajoText::_($item->name);
 		}
 	}
 	/**

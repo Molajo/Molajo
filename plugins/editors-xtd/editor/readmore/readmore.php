@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @package Editors-xtd
  * @since 1.5
  */
-class plgButtonReadmore extends JPlugin
+class plgButtonReadmore extends MolajoPlugin
 {
 	/**
 	 * readmore button

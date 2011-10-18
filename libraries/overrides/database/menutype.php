@@ -16,4 +16,4 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Table
  * @since       11.1
  */
-class JTableMenuType extends MolajoTableMenuType {}
+class JTableMenuType extends MolajoTableMenu {}

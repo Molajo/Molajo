@@ -13,16 +13,16 @@ defined('MOLAJO') or die;
  *
  * @package     Molajo
  * @subpackage  User
- * @since       11.1
+ * @since       1.0
  */
-class MolajoAuthenticationResponse extends JObject
+class MolajoAuthentication extends JObject
 {
 	/**
 	 * Response status (see status codes)
 	 *
 	 * @var type string
 	 */
-	public $status		= JAUTHENTICATE_STATUS_FAILURE;
+	public $status		= MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 
 	/**
 	 * The type of authentication that was successful
@@ -122,7 +122,5 @@ class MolajoAuthenticationResponse extends JObject
 	 * @param   string  $name  The type of the response
 	 * @since   11.1
 	 */
-	function __construct()
-	{
-	}
+	function __construct() {}
 }

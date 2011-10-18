@@ -54,7 +54,7 @@ class ConfigControllerComponent extends JController
 		// Check if the user is authorized to do this.
 		if (!MolajoFactory::getUser()->authorise('core.admin', $option))
 		{
-			MolajoFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoFactory::getApplication()->redirect('index.php', MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
 
@@ -79,7 +79,7 @@ class ConfigControllerComponent extends JController
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(JRoute::_('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', false));
 			return false;
 		}
 
@@ -98,7 +98,7 @@ class ConfigControllerComponent extends JController
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Save failed, go back to the screen and display a notice.
-			$message = JText::sprintf('JERROR_SAVE_FAILED', $model->getError());
+			$message = MolajoText::sprintf('JERROR_SAVE_FAILED', $model->getError());
 			$this->setRedirect('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', $message, 'error');
 			return false;
 		}
@@ -107,7 +107,7 @@ class ConfigControllerComponent extends JController
 		switch ($this->getTask())
 		{
 			case 'apply':
-				$message = JText::_('COM_CONFIG_SAVE_SUCCESS');
+				$message = MolajoText::_('COM_CONFIG_SAVE_SUCCESS');
 				$this->setRedirect('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', $message);
 				break;
 

@@ -26,7 +26,7 @@ abstract class JHtmlLanguages {
 	public static function published($published)
 	{
 		if ($published) {
-			return JHtml::_('image','menu/icon-16-default.png', JText::_('COM_LANGUAGES_HEADING_DEFAULT'), NULL, true);
+			return JHtml::_('image','menu/icon-16-default.png', MolajoText::_('COM_LANGUAGES_HEADING_DEFAULT'), NULL, true);
 		}
 		else {
 			return '&#160;';
@@ -49,8 +49,8 @@ abstract class JHtmlLanguages {
 	public static function applications()
 	{
 		return array(
-			JHtml::_('select.option', 0, JText::_('JSITE')),
-			JHtml::_('select.option', 1, JText::_('JADMINISTRATOR'))
+			JHtml::_('select.option', 0, MolajoText::_('JSITE')),
+			JHtml::_('select.option', 1, MolajoText::_('JADMINISTRATOR'))
 		);
 	}
 

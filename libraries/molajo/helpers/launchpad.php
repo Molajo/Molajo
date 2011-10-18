@@ -102,19 +102,19 @@ class MolajoLaunchpadHelper
 					if (!empty($component->element)) {
 						// Load the core file then
 						// Load extension-local file.
-						$lang->load($component->element.'.sys', JPATH_BASE, null, false, false)
-					||	$lang->load($component->element.'.sys', JPATH_ADMINISTRATOR.'/components/'.$component->element, null, false, false)
-					||	$lang->load($component->element.'.sys', JPATH_BASE, $lang->getDefault(), false, false)
-					||	$lang->load($component->element.'.sys', JPATH_ADMINISTRATOR.'/components/'.$component->element, $lang->getDefault(), false, false);
+						$lang->load($component->element.'.sys', MOLAJO_PATH_BASE, null, false, false)
+					||	$lang->load($component->element.'.sys', MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component->element, null, false, false)
+					||	$lang->load($component->element.'.sys', MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+					||	$lang->load($component->element.'.sys', MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component->element, $lang->getDefault(), false, false);
 					}
-					$component->text = $lang->hasKey($component->title) ? JText::_($component->title) : $component->alias;
+					$component->text = $lang->hasKey($component->title) ? MolajoText::_($component->title) : $component->alias;
 				}
 			} else {
 				// Sub-menu level.
 				if (isset($result[$component->parent_id])) {
 					// Add the submenu link if it is defined.
 					if (isset($result[$component->parent_id]->submenu) && !empty($component->link)) {
-						$component->text = $lang->hasKey($component->title) ? JText::_($component->title) : $component->alias;
+						$component->text = $lang->hasKey($component->title) ? MolajoText::_($component->title) : $component->alias;
 						$result[$component->parent_id]->submenu[] = &$component;
 					}
 				}

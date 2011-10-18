@@ -49,7 +49,7 @@ class MolajoContentQuotes {
     function driver ($context, &$content, &$params, $page, $location)
     {
         /** parameters **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 
         /** Block Quotes **/

@@ -53,7 +53,7 @@ class TemplatesViewTemplate extends JView
 		$user		= MolajoFactory::getUser();
 		$canDo		= TemplatesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER_VIEW_TEMPLATE'), 'thememanager');
+		MolajoToolbarHelper::title(MolajoText::_('COM_TEMPLATES_MANAGER_VIEW_TEMPLATE'), 'thememanager');
 
 		MolajoToolbarHelper::cancel('template.cancel', 'JTOOLBAR_CLOSE');
 		MolajoToolbarHelper::divider();

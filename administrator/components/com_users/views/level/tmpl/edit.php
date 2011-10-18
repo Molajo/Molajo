@@ -87,10 +87,10 @@ window.addEvent('domready', function(){
 </script>
 
 
-<form action="<?php echo JRoute::_('index.php?option=com_users&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="level-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_users&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="level-form" class="form-validate">
 	<div class="width-100">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_USERS_LEVEL_DETAILS');?></legend>
+			<legend><?php echo MolajoText::_('COM_USERS_LEVEL_DETAILS');?></legend>
 			<ul class="adminformlist">
 				<li><?php echo $this->form->getLabel('title'); ?></li>
 				<li><?php echo $this->form->getInput('title'); ?></li>
@@ -100,7 +100,7 @@ window.addEvent('domready', function(){
 
 	<div class="width-50">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_USERS_USER_GROUPS_HAVING_ACCESS');?></legend>
+			<legend><?php echo MolajoText::_('COM_USERS_USER_GROUPS_HAVING_ACCESS');?></legend>
 			<?php echo JHtml::_('access.usergroups', 'jform[rules]', $this->item->rules); ?>
 		</fieldset>
 		<input type="hidden" name="task" value="" />

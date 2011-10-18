@@ -1,14 +1,13 @@
 <?php
 /**
- * @package		Joomla.Framework
- * @subpackage	Document
+ * @package     Joomla.Platform
+ * @subpackage  Document
  *
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access
-defined('JPATH_BASE') or die;
+defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.document.document');
 jimport('joomla.methods');
@@ -17,9 +16,10 @@ jimport('joomla.environment.uri');
 /**
  * OpenSearch class, provides an easy interface to display an OpenSearch document
  *
- * @package		Joomla.Framework
- * @subpackage	Document
- * @since		11.1
+ * @package     Joomla.Platform
+ * @subpackage  Document
+ * @see         http://www.opensearch.org/
+ * @since       11.1
  */
 class JDocumentOpensearch extends JDocument
 {
@@ -28,7 +28,8 @@ class JDocumentOpensearch extends JDocument
 	 *
 	 * required
 	 *
-	 * @var		string
+	 * @var    string
+	 * @since  11.1
 	 */
 	private $_shortName = "";
 
@@ -37,34 +38,40 @@ class JDocumentOpensearch extends JDocument
 	 *
 	 * optional
 	 *
-	 * @var		object
+	 * @var    object
+	 * @since  11.1
 	 */
 	private $_images = array();
 
 	/**
 	 * The url collection
 	 *
-	 * @var array
+	 * @var    array
+	 * @since  11.1
 	 */
 	private $_urls = array();
 
 	/**
 	 * Class constructor
 	 *
-	 * @param	array	$options Associative array of options
+	 * @param   array  $options  Associative array of options
+	 *
+	 * @return  JDocumentOpensearch
+	 *
+	 * @since  11.1
 	 */
 	public function __construct($options = array())
 	{
 		parent::__construct($options);
 
-		//set document type
+		// Set document type
 		$this->_type = 'opensearch';
 
-		//set mime type
+		// Set mime type
 		$this->_mime = 'application/opensearchdescription+xml';
 
 		// Add the URL for self updating
-		$update = new JOpenSearchUrl();
+		$update = new JOpenSearchUrl;
 		$update->type = 'application/opensearchdescription+xml';
 		$update->rel = 'self';
 		$update->template = JRoute::_(JFactory::getURI());
@@ -73,17 +80,18 @@ class JDocumentOpensearch extends JDocument
 		// Add the favicon as the default image
 		// Try to find a favicon by checking the template and root folder
 		$app = JFactory::getApplication();
-		$dirs = array(JPATH_THEMES.'/'.$app->getTemplate(), JPATH_BASE);
+		$dirs = array(JPATH_THEMES . '/' . $app->getTemplate(), JPATH_BASE);
 
 		foreach ($dirs as $dir)
 		{
-			if (file_exists($dir.'/favicon.ico')) {
+			if (file_exists($dir . '/favicon.ico'))
+			{
 
-				$path = str_replace(JPATH_BASE.DS, '', $dir);
+				$path = str_replace(JPATH_BASE . DS, '', $dir);
 				$path = str_replace('\\', '/', $path);
 
 				$favicon = new JOpenSearchImage;
-				$favicon->data = JURI::base().$path.'/favicon.ico';
+				$favicon->data = JURI::base() . $path . '/favicon.ico';
 				$favicon->height = '16';
 				$favicon->width = '16';
 				$favicon->type = 'image/vnd.microsoft.icon';
@@ -98,10 +106,12 @@ class JDocumentOpensearch extends JDocument
 	/**
 	 * Render the document
 	 *
-	 * @param	boolean	$cache		If true, cache the output
-	 * @param	array	$params		Associative array of attributes
+	 * @param   boolean  $cache   If true, cache the output
+	 * @param   array    $params  Associative array of attributes
 	 *
-	 * @return	The rendered data
+	 * @return  The rendered data
+	 *
+	 * @since   11.1
 	 */
 	public function render($cache = false, $params = array())
 	{
@@ -143,7 +153,8 @@ class JDocumentOpensearch extends JDocument
 			$elUrl = $xml->createElementNS($osns, 'Url');
 			$elUrl->setAttribute('type', $url->type);
 			// Results is the defualt value so we don't need to add it
-			if ($url->rel != 'results') {
+			if ($url->rel != 'results')
+			{
 				$elUrl->setAttribute('rel', $url->rel);
 			}
 			$elUrl->setAttribute('template', $url->template);
@@ -158,55 +169,69 @@ class JDocumentOpensearch extends JDocument
 	/**
 	 * Sets the short name
 	 *
-	 * @param	string	$name	The name.
+	 * @param   string  $name  The name.
 	 *
-	 * @return	void
+	 * @return  JDocumentOpensearch instance of $this to allow chaining
+	 *
+	 * @since   11.1
 	 */
 	public function setShortName($name)
 	{
 		$this->_shortName = $name;
+
+		return $this;
 	}
 
 	/**
 	 * Adds an URL to the OpenSearch description.
 	 *
-	 * @param	JOpenSearchUrl	&$item	The url to add to the description.
+	 * @param   JOpenSearchUrl  &$url  The url to add to the description.
 	 *
-	 * @return	void
+	 * @return  JDocumentOpensearch instance of $this to allow chaining
+	 *
+	 * @since   11.1
 	 */
 	public function addUrl(&$url)
 	{
 		$this->_urls[] = $url;
+
+		return $this;
 	}
 
 	/**
 	 * Adds an image to the OpenSearch description.
 	 *
-	 * @param	JOpenSearchImage	&$image	The image to add to the description.
+	 * @param   JOpenSearchImage  &$image  The image to add to the description.
 	 *
-	 * @return	void
+	 * @return  JDocumentOpensearch instance of $this to allow chaining
+	 *
+	 * @since   11.1
 	 */
 	public function addImage(&$image)
 	{
 		$this->_images[] = $image;
+
+		return $this;
 	}
 }
 
 /**
  * JOpenSearchUrl is an internal class that stores the search URLs for the OpenSearch description
  *
- * @package		Joomla.Framework
- * @subpackage	Document
- * @since		11.1
+ * @package     Joomla.Platform
+ * @subpackage  Document
+ * @since       11.1
  */
 class JOpenSearchUrl extends JObject
 {
+
 	/**
 	 * Type item element
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $type = 'text/html';
 
@@ -215,7 +240,8 @@ class JOpenSearchUrl extends JObject
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $rel = 'results';
 
@@ -224,7 +250,8 @@ class JOpenSearchUrl extends JObject
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $template;
 }
@@ -232,18 +259,20 @@ class JOpenSearchUrl extends JObject
 /**
  * JOpenSearchImage is an internal class that stores Images for the OpenSearch Description
  *
- * @package		Joomla.Framework
- * @subpackage	Document
- * @since		11.1
+ * @package     Joomla.Platform
+ * @subpackage  Document
+ * @since       11.1
  */
 class JOpenSearchImage extends JObject
 {
+
 	/**
 	 * The images MIME type
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $type = "";
 
@@ -252,25 +281,28 @@ class JOpenSearchImage extends JObject
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $data = "";
 
 	/**
-	 * The images width
+	 * The image's width
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $width;
 
 	/**
-	 * The images height
+	 * The image's height
 	 *
 	 * required
 	 *
-	 * @var	string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $height;
 }

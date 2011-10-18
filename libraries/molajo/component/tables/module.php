@@ -39,7 +39,7 @@ class MolajoTableModule extends MolajoTable
 	{
 		// check for valid name
 		if (trim($this->title) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_MODULE'));
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_MODULE'));
 			return false;
 		}
 

@@ -40,7 +40,7 @@ class ConfigViewComponent extends JView
 		$this->assignRef('form',		$form);
 		$this->assignRef('component',	$component);
 
-		$this->document->setTitle(JText::_('JGLOBAL_EDIT_PREFERENCES'));
+		$this->document->setTitle(MolajoText::_('JGLOBAL_EDIT_PREFERENCES'));
 
 		parent::display($tpl);
 		JRequest::setVar('hidemainmenu', true);

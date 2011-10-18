@@ -47,7 +47,7 @@ class AdminViewSysinfo extends JView
 	{
 		// Access check.
 		if (!MolajoFactory::getUser()->authorise('core.admin')) {
-			return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			return JError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 		}
 
 		// Initialise variables.
@@ -81,7 +81,7 @@ class AdminViewSysinfo extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::_('COM_ADMIN_SYSTEM_INFORMATION'), 'systeminfo.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_ADMIN_SYSTEM_INFORMATION'), 'systeminfo.png');
 		MolajoToolbarHelper::help('JHELP_SITE_SYSTEM_INFORMATION');
 	}
 }

@@ -198,7 +198,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         $idArray = JRequest::getVar('cid', array(), '', 'array');
         JArrayHelper::toInteger($idArray);
         if (empty($idArray)) {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_BATCH_SELECT_ITEMS_TASK'));
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_BATCH_SELECT_ITEMS_TASK'));
             $this->redirectClass->setRedirectMessageType('message');
             $this->redirectClass->setSuccessIndicator(false);
         }
@@ -207,7 +207,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         if ($task == 'copy' || $task == 'delete') {
             $this->batch_catid = JRequest::getInt('batch_catid');
             if ((int) $this->batch_catid == 0) {
-                $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
+                $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
                 $this->redirectClass->setRedirectMessageType('message');
                 return $this->redirectClass->setSuccessIndicator(false);
             }        
@@ -290,12 +290,12 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         $results = $this->cleanCache ();
 
         if ($errorFoundForBatch === false) {
-            $this->redirectClass->setRedirectMessage(JText::plural('MOLAJO_N_ITEMS_'.strtoupper($task), count($idArray)));
-            $this->redirectClass->setRedirectMessageType(JText::_('message'));
+            $this->redirectClass->setRedirectMessage(MolajoText::plural('MOLAJO_N_ITEMS_'.strtoupper($task), count($idArray)));
+            $this->redirectClass->setRedirectMessageType(MolajoText::_('message'));
             return $this->redirectClass->setSuccessIndicator(true);
         } else {
-            $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_ERROR_PROCESSING_ITEMS'));
-            $this->redirectClass->setRedirectMessageType(JText::_('warning'));
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_PROCESSING_ITEMS'));
+            $this->redirectClass->setRedirectMessageType(MolajoText::_('warning'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
     }

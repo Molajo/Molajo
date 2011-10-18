@@ -76,7 +76,7 @@ abstract class MolajoModuleHelper
 	 *
 	 * @return  array  An array of module objects
 	 */
-	public static function &getModules($position)
+	public static function getModules($position)
 	{
 		$app		= MolajoFactory::getApplication();
 		$position	= strtolower($position);
@@ -133,6 +133,8 @@ abstract class MolajoModuleHelper
 	 */
 	public static function renderModule($module, $attribs = array())
 	{
+        $output = '';
+
 		// Record the scope.
 		$scope = MolajoFactory::getApplication()->scope;
 
@@ -161,7 +163,7 @@ abstract class MolajoModuleHelper
             $request = array();
             $state = array();
             $params = array();
-            $rowset = array();
+            $rowset = array ();
             $pagination = array();
             $layout = 'default';
             $wrap = 'none';
@@ -177,13 +179,14 @@ abstract class MolajoModuleHelper
 
             $request['wrap_title'] = $module->title;
             $request['wrap_subtitle'] = $module->subtitle;
+            $request['wrap_id'] = '';
+            $request['wrap_class'] = '';
             $request['wrap_date'] = '';
             $request['wrap_author'] = '';
             $request['position'] = $module->position;
             $request['wrap_more_array'] = array();
 
             /** execute the module */
-            ob_start();
             include $path;
 
             /** 1. Application */
@@ -210,17 +213,20 @@ abstract class MolajoModuleHelper
             /** 8. Pagination */
             $view->pagination = $pagination;
 
-            /** 9. Layout */
+            /** 9. Layout Type */
+            $view->layout_type = 'extensions';
+
+            /** 10. Layout */
             $view->layout = $layout;
 
-            /** 10. Wrap */
+            /** 11. Wrap */
             $view->wrap = $wrap;
 
-            /** render layout and wrap */
-        ob_start();
-		$view->display();
-        $output = ob_get_contents();
-        ob_end_clean();
+            /** display view */
+            ob_start();
+            $view->display();
+            $output = ob_get_contents();
+            ob_end_clean();
 		}
 
 		MolajoFactory::getApplication()->scope = $scope;
@@ -348,7 +354,7 @@ abstract class MolajoModuleHelper
             $query->select('module, position, content, showtitle ');
             $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
 			$query->from('#__modules AS m');
-			$query->from('#__modules_menu AS mm');
+			$query->join('inner', '#__modules_menu AS mm');
 			$query->where('mm.module_id = m.id');
 			$query->where('m.published = 1');
 			$query->where('m.id <> 1');
@@ -363,7 +369,7 @@ abstract class MolajoModuleHelper
 
 			if (MolajoFactory::getApplication()->isSite()
                 && MolajoFactory::getApplication()->getLanguageFilter()) {
-				$query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+				$query->where('m.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
 			}
 			$query->order('position, ordering');
  
@@ -373,7 +379,7 @@ abstract class MolajoModuleHelper
 			$clean	= array();
 
 			if($db->getErrorNum()){
-				JError::raiseWarning(500, JText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+				JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
 				return $clean;
 			}
 
@@ -475,9 +481,9 @@ abstract class MolajoModuleHelper
 
 		$wrkarounds = true;
 
-//        $acl = new MolajoACL();
-//		$view_levels = md5(serialize ($acl->getList('viewaccess')));
-$view_levels='';
+        $acl = new MolajoACL();
+		$view_levels = md5(serialize ($acl->getList('viewaccess')));
+
 		switch ($cacheparams->cachemode) {
 
 			case 'id':

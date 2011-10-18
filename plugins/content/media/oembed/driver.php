@@ -20,7 +20,7 @@ class MolajoMediaOembed {
      */
     function driver ($context, &$content, &$params, $page, $location)
     {
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 $temp = $content->$location;
 

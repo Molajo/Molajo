@@ -79,7 +79,7 @@ class JFormFieldModuleOrder extends JFormField
 			}
 			$orders2[$orders[$i]->position]++;
 			$ord = $orders2[$orders[$i]->position];
-			$title = JText::sprintf('COM_MODULES_OPTION_ORDER_POSITION', $ord, addslashes($orders[$i]->title));
+			$title = MolajoText::sprintf('COM_MODULES_OPTION_ORDER_POSITION', $ord, addslashes($orders[$i]->title));
 
 			$html[] = 'orders['.$i.'] =  new Array("'.$orders[$i]->position.'","'.$ord.'","'.$title.'");';
 		}

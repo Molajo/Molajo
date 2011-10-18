@@ -9,14 +9,13 @@
 defined('MOLAJO') or die;
 
 /**
- * Menu Table Class
+ * Menu Types table
  *
- * @package     Molajo
+ * @package     Joomla.Platform
  * @subpackage  Table
- * @since       1.0
- * @link
+ * @since       11.1
  */
-class MolajoTableMenu extends MolajoTableNested
+class MolajoTableMenu extends MolajoTable
 {
 	/**
 	 * Constructor
@@ -25,152 +24,192 @@ class MolajoTableMenu extends MolajoTableNested
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__menu_items', 'id', $db);
-
-		// Set the default access level.
-		$this->access = (int) MolajoFactory::getConfig()->get('access');
+		parent::__construct('#__menus', 'id', $db);
 	}
 
 	/**
-	 * Overloaded bind function
-	 *
-	 * @param   array  $hash  named array
-	 *
-	 * @return  mixed  null is operation was satisfactory, otherwise returns an error
-	 *
-	 * @see     MolajoTable:bind
-	 * @since   1.0
+	 * @return boolean
 	 */
-	public function bind($array, $ignore = '')
+	function check()
 	{
-		// Verify that the default home menu is not unset
-		if ($this->home == '1' && $this->language == '*' && ($array['home'] == '0')) {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_CANNOT_UNSET_DEFAULT_DEFAULT'));
-			return false;
-		}
-		//Verify that the default home menu set to "all" languages" is not unset
-		if ($this->home == '1' && $this->language == '*' && ($array['language'] != '*')) {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_CANNOT_UNSET_DEFAULT'));
+		$this->menu_id = JApplication::stringURLSafe($this->menu_id);
+		if (empty($this->menu_id)) {
+			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MENU_EMPTY'));
 			return false;
 		}
 
-		// Verify that the default home menu is not unpublished
-		if ($this->home == '1' && $this->language == '*' && $array['published'] != '1') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
-			return false;
+		if (trim($this->title) == '') {
+			$this->title = $this->menu_id;
 		}
 
-		if (isset($array['params']) && is_array($array['params']))
+		$db	= $this->getDbo();
+
+		// Check for unique menu_id.
+		$db->setQuery(
+			'SELECT COUNT(id)' .
+			' FROM #__menus' .
+			' WHERE menu_id = '.$db->quote($this->menu_id).
+			'  AND id <> '.(int) $this->id
+		);
+
+		if ($db->loadResult())
 		{
-			$registry = new MolajoRegistry();
-			$registry->loadArray($array['params']);
-			$array['params'] = (string)$registry;
-		}
-
-		return parent::bind($array, $ignore);
-	}
-
-	/**
-	 * Overloaded check function
-	 *
-	 * @return  boolean
-	 * @see     MolajoTable::check
-	 * @since   1.0
-	 */
-	public function check()
-	{
-		// If the alias field is empty, set it to the title.
-		$this->alias = trim($this->alias);
-		if ((empty($this->alias)) && ($this->type != 'alias' && $this->type !='url')) {
-			$this->alias = $this->title;
-		}
-
-		// Make the alias URL safe.
-		$this->alias = JApplication::stringURLSafe($this->alias);
-		if (trim(str_replace('-', '', $this->alias)) == '') {
-			$this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
-		}
-
-		// Cast the home property to an int for checking.
-		$this->home = (int) $this->home;
-
-		// Verify that a first level menu item alias is not 'component'.
-		if ($this->parent_id==1 && $this->alias == 'component') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_ROOT_ALIAS_COMPONENT'));
-			return false;
-		}
-
-		// Verify that a first level menu item alias is not the name of a folder.
-		jimport('joomla.filesystem.folders');
-		if ($this->parent_id==1 && in_array($this->alias, JFolder::folders(MOLAJO_PATH_ROOT))) {
-			$this->setError(JText::sprintf('MOLAJO_DATABASE_ERROR_MENU_ROOT_ALIAS_FOLDER', $this->alias, $this->alias));
-			return false;
-		}
-
-		// Verify that the home item a component.
-		if ($this->home && $this->type != 'component') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_HOME_NOT_COMPONENT'));
+			$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MENU_EXISTS', $this->menu_id));
 			return false;
 		}
 
 		return true;
 	}
-
 	/**
-	 * Overloaded store function
+	 * Method to store a row in the database from the MolajoTable instance properties.
+	 * If a primary key value is set the row with that primary key value will be
+	 * updated with the instance property values.  If no primary key value is set
+	 * a new row will be inserted into the database with the properties from the
+	 * MolajoTable instance.
 	 *
-	 * @return  boolean
-	 * @see     MolajoTable::store
-	 * @since   1.0
+	 * @param   boolean True to update fields even if they are null.
+	 * @return  boolean  True on success.
+	 * @since   11.1
+	 * @link	http://docs.joomla.org/MolajoTable/store
 	 */
 	public function store($updateNulls = false)
 	{
-		$db = MolajoFactory::getDBO();
-		// Verify that the alias is unique
-		$table = MolajoTable::getInstance('Menu','MolajoTable');
-		if ($table->load(array('alias'=>$this->alias,'parent_id'=>$this->parent_id,'application_id'=>$this->application_id)) && ($table->id != $this->id || $this->id==0)) {
-			if ($this->menu_id==$table->menu_id) {
-				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNIQUE_ALIAS'));
-			}
-			else {
-				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_UNIQUE_ALIAS_ROOT'));
-			}
-			return false;
-		}
-		// Verify that the home page for this language is unique
-		if ($this->home=='1') {
+		if ($this->id) {
+			// Get the user id
+			$userId = MolajoFactory::getUser()->id;
+
+			// Get the old value of the table
 			$table = MolajoTable::getInstance('Menu','MolajoTable');
-			if ($table->load(array('home'=>'1','language'=>$this->language))) {
-				if ($table->checked_out && $table->checked_out!=$this->checked_out) {
-					$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_DEFAULT_CHECKIN_USER_MISMATCH'));
-					return false;
-				}
-				$table->home = 0;
-				$table->checked_out = 0;
-				$table->checked_out_time = $db->getNullDate();
-				$table->store();
+			$table->load($this->id);
+
+			// Verify that no items are cheched out
+			$query = $this->_db->getQuery(true);
+			$query->select('id');
+			$query->from('#__menu_items');
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
+			$query->where('checked_out !='.(int) $userId);
+			$query->where('checked_out !=0');
+			$this->_db->setQuery($query);
+			if ($this->_db->loadRowList()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENU_CHECKOUT')));
+				return false;
 			}
-			// Verify that the home page for this menu is unique.
-			if ($table->load(array('home'=>'1', 'menu_id'=>$this->menu_id)) && ($table->id != $this->id || $this->id==0)) {
-				$this->setError(JText::_('MOLAJO_DATABASE_ERROR_MENU_HOME_NOT_UNIQUE_IN_MENU'));
+
+			// Verify that no module for this menu are cheched out
+			$query = $this->_db->getQuery(true);
+			$query->select('id');
+			$query->from('#__modules');
+			$query->where('module='.$this->_db->quote('mod_menu'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
+			$query->where('checked_out !='.(int) $userId);
+			$query->where('checked_out !=0');
+			$this->_db->setQuery($query);
+			if ($this->_db->loadRowList()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENU_CHECKOUT')));
+				return false;
+			}
+
+			// Update the menu items
+			$query = $this->_db->getQuery(true);
+			$query->update('#__menu_items');
+			$query->set('menu_id='.$this->_db->quote($this->menu_id));
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
+			$this->_db->setQuery($query);
+			if (!$this->_db->query()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				return false;
+			}
+
+			// Update the module items
+			$query = $this->_db->getQuery(true);
+			$query->update('#__modules');
+			$query->set('params=REPLACE(params,'.$this->_db->quote('"menu_id":'.json_encode($table->menu_id)).','.$this->_db->quote('"menu_id":'.json_encode($this->menu_id)).')');
+			$query->where('module='.$this->_db->quote('mod_menu'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
+			$this->_db->setQuery($query);
+			if (!$this->_db->query()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
 				return false;
 			}
 		}
-		if(!parent::store($updateNulls)) {
-			return false;
-		}
-		// Get the new path in case the node was moved
-		$pathNodes = $this->getPath();
-		$segments = array();
-		foreach ($pathNodes as $node) {
-			// Don't include root in path
-			if ($node->alias != 'root') {
-				$segments[] = $node->alias;
+		return parent::store($updateNulls);
+	}
+	/**
+	 * Method to delete a row from the database table by primary key value.
+	 *
+	 * @param   mixed    An optional primary key value to delete.  If not set the
+	 *					instance property value is used.
+	 * @return  boolean  True on success.
+	 * @since   11.1
+	 * @link	http://docs.joomla.org/MolajoTable/delete
+	 */
+	public function delete($pk = null)
+	{
+		// Initialise variables.
+		$k = $this->_tbl_key;
+		$pk = (is_null($pk)) ? $this->$k : $pk;
+
+		// If no primary key is given, return false.
+		if ($pk !== null)
+		{
+			// Get the user id
+			$userId = MolajoFactory::getUser()->id;
+
+			// Get the old value of the table
+			$table = MolajoTable::getInstance('Menu','MolajoTable');
+			$table->load($pk);
+
+			// Verify that no items are cheched out
+			$query = $this->_db->getQuery(true);
+			$query->select('id');
+			$query->from('#__menu_items');
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
+			$query->where('client_id=0');
+			$query->where('(checked_out NOT IN (0,'.(int) $userId.') OR home=1 AND language='.$this->_db->quote('*').')');
+			$this->_db->setQuery($query);
+			if ($this->_db->loadRowList()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENU')));
+				return false;
+			}
+
+			// Verify that no module for this menu are cheched out
+			$query = $this->_db->getQuery(true);
+			$query->select('id');
+			$query->from('#__modules');
+			$query->where('module='.$this->_db->quote('mod_menu'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
+			$query->where('checked_out !='.(int) $userId);
+			$query->where('checked_out !=0');
+			$this->_db->setQuery($query);
+			if ($this->_db->loadRowList()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), MolajoText::_('MOLAJO_DATABASE_ERROR_MENU')));
+				return false;
+			}
+
+			// Delete the menu items
+			$query = $this->_db->getQuery(true);
+			$query->delete();
+			$query->from('#__menu_items');
+			$query->where('menu_id='.$this->_db->quote($table->menu_id));
+			$query->where('client_id=0');
+			$this->_db->setQuery($query);
+			if (!$this->_db->query()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				return false;
+			}
+
+			// Update the module items
+			$query = $this->_db->getQuery(true);
+			$query->delete();
+			$query->from('#__modules');
+			$query->where('module='.$this->_db->quote('mod_menu'));
+			$query->where('params LIKE '.$this->_db->quote('%"menu_id":'.json_encode($table->menu_id).'%'));
+			$this->_db->setQuery($query);
+			if (!$this->_db->query()) {
+				$this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+				return false;
 			}
 		}
-		$newPath = trim(implode('/', $segments), ' /\\');
-		// Use new path for partial rebuild of table
-		// rebuild will return positive integer on success, false on failure
-		return ($this->rebuild($this->{$this->_tbl_key}, $this->lft, $this->level, $newPath) > 0);
+		return parent::delete($pk);
 	}
 }

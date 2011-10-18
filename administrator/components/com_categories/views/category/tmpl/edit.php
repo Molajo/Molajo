@@ -26,15 +26,15 @@ JHtml::_('behavior.keepalive');
 			<?php echo $this->form->getField('description')->save(); ?>
 			Joomla.submitform(task, document.getElementById('item-form'));
 		} else {
-			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(MolajoText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_categories&extension='.JRequest::getCmd('extension', 'com_articles').'&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_categories&extension='.JRequest::getCmd('extension', 'com_articles').'&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_CATEGORIES_FIELDSET_DETAILS');?></legend>
+			<legend><?php echo MolajoText::_('COM_CATEGORIES_FIELDSET_DETAILS');?></legend>
 			<ul class="adminformlist">
 				<li><?php echo $this->form->getLabel('title'); ?>
 				<?php echo $this->form->getInput('title'); ?></li>
@@ -55,10 +55,10 @@ JHtml::_('behavior.keepalive');
 				<?php echo $this->form->getInput('access'); ?></li>
 
 				<?php if ($this->canDo->get('core.admin')): ?>
-					<li><span class="faux-label"><?php echo JText::_('JGLOBAL_ACTION_PERMISSIONS_LABEL'); ?></span>
+					<li><span class="faux-label"><?php echo MolajoText::_('JGLOBAL_ACTION_PERMISSIONS_LABEL'); ?></span>
 					<div class="button2-left"><div class="blank">
 		      			<button type="button" onclick="document.location.href='#access-rules';">
-		      			<?php echo JText::_('JGLOBAL_PERMISSIONS_ANCHOR'); ?></button>
+		      			<?php echo MolajoText::_('JGLOBAL_PERMISSIONS_ANCHOR'); ?></button>
 		      		</div></div>
 		    		</li>
 				<?php endif; ?>
@@ -82,7 +82,7 @@ JHtml::_('behavior.keepalive');
 			<?php echo $this->loadTemplate('options'); ?>
 			<div class="clr"></div>
 
-			<?php echo JHtml::_('sliders.panel',JText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'meta-options'); ?>
+			<?php echo JHtml::_('sliders.panel',MolajoText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'meta-options'); ?>
 			<fieldset class="panelform">
 				<?php echo $this->loadTemplate('metadata'); ?>
 			</fieldset>
@@ -96,7 +96,7 @@ JHtml::_('behavior.keepalive');
 
 			<?php echo JHtml::_('sliders.start','permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
 
-			<?php echo JHtml::_('sliders.panel',JText::_('COM_CATEGORIES_FIELDSET_RULES'), 'access-rules'); ?>
+			<?php echo JHtml::_('sliders.panel',MolajoText::_('COM_CATEGORIES_FIELDSET_RULES'), 'access-rules'); ?>
 			<fieldset class="panelform">
 				<?php echo $this->form->getLabel('rules'); ?>
 				<?php echo $this->form->getInput('rules'); ?>

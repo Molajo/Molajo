@@ -635,7 +635,7 @@ abstract class MolajoFormField
 
 		// Get the label text from the XML element, defaulting to the element name.
 		$title = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-		$title = $this->translateLabel ? JText::_($title) : $title;
+		$title = $this->translateLabel ? MolajoText::_($title) : $title;
 
 		return $title;
 	}
@@ -657,7 +657,7 @@ abstract class MolajoFormField
 
 		// Get the label text from the XML element, defaulting to the element name.
 		$text = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-		$text = $this->translateLabel ? JText::_($text) : $text;
+		$text = $this->translateLabel ? MolajoText::_($text) : $text;
 
 		// Build the class for the label.
 		$class = !empty($this->description) ? 'hasTip' : '';
@@ -669,7 +669,7 @@ abstract class MolajoFormField
 		// If a description is specified, use it to build a tooltip.
 		if (!empty($this->description)) {
 			$label .= ' title="'.htmlspecialchars(trim($text, ':').'::' .
-						($this->translateDescription ? JText::_($this->description) : $this->description), ENT_COMPAT, 'UTF-8').'"';
+						($this->translateDescription ? MolajoText::_($this->description) : $this->description), ENT_COMPAT, 'UTF-8').'"';
 		}
 
 		// Add the label text and closing tag.
@@ -749,7 +749,7 @@ abstract class MolajoFormField
 		}
 		else {
 			self::$count = self::$count + 1;
-			return self::$generated_fieldname . self::$count;
+			return self::$generated_fieldname.self::$count;
 		}
 	}
 }

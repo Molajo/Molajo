@@ -19,25 +19,69 @@ defined('JPATH_PLATFORM') or die;
 class JArrayHelper
 {
 	/**
+	 * Option to perform case-sensitive sorts.
+	 *
+	 * @var    mixed  Boolean or array of booleans.
+	 * @since  11.3
+	 */
+	protected static $sortCase;
+
+	/**
+	 * Option to set the sort direction.
+	 *
+	 * @var    mixed  Integer or array of integers.
+	 * @since  11.3
+	 */
+	protected static $sortDirection;
+
+	/**
+	 * Option to set the object key to sort on.
+	 *
+	 * @var    string
+	 * @since  11.3
+	 */
+	protected static $sortKey;
+
+	/**
+	 * Option to perform a language aware sort.
+	 *
+	 * @var    mixed  Boolean or array of booleans.
+	 * @since  11.3
+	 */
+	protected static $sortLocale;
+
+	/**
 	 * Function to convert array to integer values
 	 *
-	 * @param   array    $array		The source array to convert
-	 * @param   mixed    $default	A default value (int|array) to assign if $array is not an array
+	 * @param   array  &$array   The source array to convert
+	 * @param   mixed  $default  A default value (int|array) to assign if $array is not an array
+	 *
+	 * @return  void
+	 *
 	 * @since   11.1
 	 */
 	public static function toInteger(&$array, $default = null)
 	{
-		if (is_array($array)) {
-			foreach ($array as $i => $v) {
+		if (is_array($array))
+		{
+			foreach ($array as $i => $v)
+			{
 				$array[$i] = (int) $v;
 			}
-		} else {
-			if ($default === null) {
+		}
+		else
+		{
+			if ($default === null)
+			{
 				$array = array();
-			} elseif (is_array($default)) {
+			}
+			elseif (is_array($default))
+			{
 				JArrayHelper::toInteger($default, null);
 				$array = $default;
-			} else {
+			}
+			else
+			{
 				$array = array((int) $default);
 			}
 		}
@@ -46,21 +90,27 @@ class JArrayHelper
 	/**
 	 * Utility function to map an array to a stdClass object.
 	 *
-	 * @param   array    $array		The array to map.
-	 * @param   string   $class		Name of the class to create
+	 * @param   array   &$array  The array to map.
+	 * @param   string  $class   Name of the class to create
 	 *
 	 * @return  object   The object mapped from the given array
+	 *
 	 * @since   11.1
 	 */
 	public static function toObject(&$array, $class = 'stdClass')
 	{
 		$obj = null;
-		if (is_array($array)) {
-			$obj = new $class();
-			foreach ($array as $k => $v) {
-				if (is_array($v)) {
+		if (is_array($array))
+		{
+			$obj = new $class;
+			foreach ($array as $k => $v)
+			{
+				if (is_array($v))
+				{
 					$obj->$k = JArrayHelper::toObject($v, $class);
-				} else {
+				}
+				else
+				{
 					$obj->$k = $v;
 				}
 			}
@@ -68,20 +118,38 @@ class JArrayHelper
 		return $obj;
 	}
 
+	/**
+	 * Utility function to map an array to a string.
+	 *
+	 * @param   array    $array         The array to map.
+	 * @param   string   $inner_glue    The glue (optional, defaults to '=') between the key and the value.
+	 * @param   string   $outer_glue    The glue (optional, defaults to ' ') between array elements.
+	 * @param   boolean  $keepOuterKey  True if final key should be kept.
+	 *
+	 * @return  string   The string mapped from the given array
+	 *
+	 * @since   11.1
+	 */
 	public static function toString($array = null, $inner_glue = '=', $outer_glue = ' ', $keepOuterKey = false)
 	{
 		$output = array();
 
-		if (is_array($array)) {
-			foreach ($array as $key => $item) {
-				if (is_array ($item)) {
-					if ($keepOuterKey) {
+		if (is_array($array))
+		{
+			foreach ($array as $key => $item)
+			{
+				if (is_array($item))
+				{
+					if ($keepOuterKey)
+					{
 						$output[] = $key;
 					}
 					// This is value is an array, go and do it again!
 					$output[] = JArrayHelper::toString($item, $inner_glue, $outer_glue, $keepOuterKey);
-				} else {
-					$output[] = $key.$inner_glue.'"'.$item.'"';
+				}
+				else
+				{
+					$output[] = $key . $inner_glue . '"' . $item . '"';
 				}
 			}
 		}
@@ -92,31 +160,35 @@ class JArrayHelper
 	/**
 	 * Utility function to map an object to an array
 	 *
-	 * @param   object   The source object
-	 * @param   boolean  True to recurve through multi-level objects
-	 * @param   string   An optional regular expression to match on field names
+	 * @param   object   $p_obj    The source object
+	 * @param   boolean  $recurse  True to recurve through multi-level objects
+	 * @param   string   $regex    An optional regular expression to match on field names
 	 *
 	 * @return  array    The array mapped from the given object
+	 *
 	 * @since   11.1
 	 */
 	public static function fromObject($p_obj, $recurse = true, $regex = null)
 	{
-		if (is_object($p_obj)) {
+		if (is_object($p_obj))
+		{
 			return self::_fromObject($p_obj, $recurse, $regex);
 		}
-		else {
+		else
+		{
 			return null;
 		}
 	}
 
 	/**
-	 * Utility function to map an object|array to an array
+	 * Utility function to map an object or array to an array
 	 *
-	 * @param   array|object	The source object|array
-	 * @param   boolean  		True to recurve through multi-level objects
-	 * @param   string   	An optional regular expression to match on field names
+	 * @param   mixed    $item     The source object or array
+	 * @param   boolean  $recurse  True to recurve through multi-level objects
+	 * @param   string   $regex    An optional regular expression to match on field names
 	 *
-	 * @return  array    		The array mapped from the given object
+	 * @return  array  The array mapped from the given object
+	 *
 	 * @since   11.1
 	 */
 	protected static function _fromObject($item, $recurse, $regex)
@@ -128,10 +200,12 @@ class JArrayHelper
 			{
 				if (!$regex || preg_match($regex, $k))
 				{
-					if ($recurse) {
+					if ($recurse)
+					{
 						$result[$k] = self::_fromObject($v, $recurse, $regex);
 					}
-					else {
+					else
+					{
 						$result[$k] = $v;
 					}
 				}
@@ -142,12 +216,7 @@ class JArrayHelper
 			$result = array();
 			foreach ($item as $k => $v)
 			{
-				if ($recurse) {
-					$result[$k] = self::_fromObject($v, $recurse, $regex);
-				}
-				else {
-					$result[$k] = $v;
-				}
+				$result[$k] = self::_fromObject($v, $recurse, $regex);
 			}
 		}
 		else
@@ -160,26 +229,32 @@ class JArrayHelper
 	/**
 	 * Extracts a column from an array of arrays or objects
 	 *
-	 * @param   array    $array	The source array
-	 * @param   string   $index	The index of the column or name of object property
+	 * @param   array   &$array  The source array
+	 * @param   string  $index   The index of the column or name of object property
 	 *
-	 * @return  array    Column of values from the source array
+	 * @return  array  Column of values from the source array
+	 *
 	 * @since   11.1
 	 */
 	public static function getColumn(&$array, $index)
 	{
-		$result = array ();
+		$result = array();
 
-		if (is_array($array)) {
+		if (is_array($array))
+		{
 			$n = count($array);
 
-			for ($i = 0; $i < $n; $i++) {
-				$item = & $array[$i];
+			for ($i = 0; $i < $n; $i++)
+			{
+				$item = &$array[$i];
 
-				if (is_array($item) && isset ($item[$index])) {
+				if (is_array($item) && isset($item[$index]))
+				{
 					$result[] = $item[$index];
-				} elseif (is_object($item) && isset ($item-> $index)) {
-					$result[] = $item-> $index;
+				}
+				elseif (is_object($item) && isset($item->$index))
+				{
+					$result[] = $item->$index;
 				}
 				// else ignore the entry
 			}
@@ -190,66 +265,71 @@ class JArrayHelper
 	/**
 	 * Utility function to return a value from a named array or a specified default
 	 *
-	 * @param   array    $array		A named array
-	 * @param   string   $name		The key to search for
-	 * @param   mixed    $default	The default value to give if no key found
-	 * @param   string   $type		Return type for the variable (INT, FLOAT, STRING, WORD, BOOLEAN, ARRAY)
+	 * @param   array   &$array   A named array
+	 * @param   string  $name     The key to search for
+	 * @param   mixed   $default  The default value to give if no key found
+	 * @param   string  $type     Return type for the variable (INT, FLOAT, STRING, WORD, BOOLEAN, ARRAY)
 	 *
-	 * @return  mixed    The value from the source array
+	 * @return  mixed  The value from the source array
+	 *
 	 * @since   11.1
 	 */
-	public static function getValue(&$array, $name, $default=null, $type='')
+	public static function getValue(&$array, $name, $default = null, $type = '')
 	{
 		// Initialise variables.
 		$result = null;
 
-		if (isset ($array[$name])) {
+		if (isset($array[$name]))
+		{
 			$result = $array[$name];
 		}
 
 		// Handle the default case
-		if (is_null($result)) {
+		if (is_null($result))
+		{
 			$result = $default;
 		}
 
 		// Handle the type constraint
-		switch (strtoupper($type)) {
-			case 'INT' :
-			case 'INTEGER' :
-				// Only use the first integer value
-				@ preg_match('/-?[0-9]+/', $result, $matches);
-				$result = @ (int) $matches[0];
+		switch (strtoupper($type))
+		{
+			case 'INT':
+			case 'INTEGER':
+			// Only use the first integer value
+				@preg_match('/-?[0-9]+/', $result, $matches);
+				$result = @(int) $matches[0];
 				break;
 
-			case 'FLOAT' :
-			case 'DOUBLE' :
-				// Only use the first floating point value
-				@ preg_match('/-?[0-9]+(\.[0-9]+)?/', $result, $matches);
-				$result = @ (float) $matches[0];
+			case 'FLOAT':
+			case 'DOUBLE':
+			// Only use the first floating point value
+				@preg_match('/-?[0-9]+(\.[0-9]+)?/', $result, $matches);
+				$result = @(float) $matches[0];
 				break;
 
-			case 'BOOL' :
-			case 'BOOLEAN' :
+			case 'BOOL':
+			case 'BOOLEAN':
 				$result = (bool) $result;
 				break;
 
-			case 'ARRAY' :
-				if (!is_array($result)) {
-					$result = array ($result);
+			case 'ARRAY':
+				if (!is_array($result))
+				{
+					$result = array($result);
 				}
 				break;
 
-			case 'STRING' :
+			case 'STRING':
 				$result = (string) $result;
 				break;
 
-			case 'WORD' :
+			case 'WORD':
 				$result = (string) preg_replace('#\W#', '', $result);
 				break;
 
-			case 'NONE' :
-			default :
-				// No casting necessary
+			case 'NONE':
+			default:
+			// No casting necessary
 				break;
 		}
 		return $result;
@@ -258,16 +338,20 @@ class JArrayHelper
 	/**
 	 * Method to determine if an array is an associative array.
 	 *
-	 * @param   array    An array to test.
+	 * @param   array  $array  An array to test.
 	 *
-	 * @return  boolean		True if the array is an associative array.
+	 * @return  boolean  True if the array is an associative array.
+	 *
 	 * @since   11.1
 	 */
 	public static function isAssociative($array)
 	{
-		if (is_array($array)) {
-			foreach (array_keys($array) as $k => $v) {
-				if ($k !== $v) {
+		if (is_array($array))
+		{
+			foreach (array_keys($array) as $k => $v)
+			{
+				if ($k !== $v)
+				{
 					return true;
 				}
 			}
@@ -277,31 +361,111 @@ class JArrayHelper
 	}
 
 	/**
+	 * Pivots an array to create a reverse lookup of an array of scalars, arrays or objects.
+	 *
+	 * @param   array   $source  The source array.
+	 * @param   string  $key     Where the elements of the source array are objects or arrays, the key to pivot on.
+	 *
+	 * @return  array  An array of arrays pivoted either on the value of the keys, or an individual key of an object or array.
+	 *
+	 * @since   11.3
+	 */
+	public function pivot($source, $key = null)
+	{
+		$result = array();
+		$counter = array();
+
+		foreach ($source as $index => $value)
+		{
+			// Determine the name of the pivot key, and its value.
+			if (is_array($value))
+			{
+				// If the key does not exist, ignore it.
+				if (!isset($value[$key]))
+				{
+					continue;
+				}
+
+				$resultKey = $value[$key];
+				$resultValue = &$source[$index];
+			}
+			elseif (is_object($value))
+			{
+				// If the key does not exist, ignore it.
+				if (!isset($value->$key))
+				{
+					continue;
+				}
+
+				$resultKey = $value->$key;
+				$resultValue = &$source[$index];
+			}
+			else
+			{
+				// Just a scalar value.
+				$resultKey = $value;
+				$resultValue = $index;
+			}
+
+			// The counter tracks how many times a key has been used.
+			if (empty($counter[$resultKey]))
+			{
+				// The first time around we just assign the value to the key.
+				$result[$resultKey] = $resultValue;
+				$counter[$resultKey] = 1;
+			}
+			elseif ($counter[$resultKey] == 1)
+			{
+				// If there is a second time, we convert the value into an array.
+				$result[$resultKey] = array(
+					$result[$resultKey],
+					$resultValue,
+				);
+				$counter[$resultKey]++;
+			}
+			else
+			{
+				// After the second time, no need to track any more. Just append to the existing array.
+				$result[$resultKey][] = $resultValue;
+			}
+		}
+
+		unset($counter);
+
+		return $result;
+	}
+
+	/**
 	 * Utility function to sort an array of objects on a given field
 	 *
-	 * @param   array    $arr			An array of objects
-	 * @param   string|array	$k				The key or a array of key to sort on
-	 * @param    integer   array		$direction		Direction or an array of direction to sort in [1 = Ascending] [-1 = Descending]
-	 * @param   bool|array		$casesensitive	Let sort occur case sensitive or insensitive
-	 * @param   bool|array		$locale			Let sort occur using the locale language or not
+	 * @param   array  &$a             An array of objects
+	 * @param   mixed  $k              The key (string) or a array of key to sort on
+	 * @param   mixed  $direction      Direction (integer) or an array of direction to sort in [1 = Ascending] [-1 = Descending]
+	 * @param   mixed  $caseSensitive  Boolean or array of booleans to let sort occur case sensitive or insensitive
+	 * @param   mixed  $locale         Boolean or array of booleans to let sort occur using the locale language or not
 	 *
-	 * @return  array    						The sorted array of objects
+	 * @return  array  The sorted array of objects
+	 *
 	 * @since   11.1
 	 */
-	public static function sortObjects(&$a, $k, $direction=1, $casesensitive = true, $locale = false)
+	public static function sortObjects(&$a, $k, $direction = 1, $caseSensitive = true, $locale = false)
 	{
-		if (!is_array($locale) or !is_array($locale[0])) {
+		if (!is_array($locale) or !is_array($locale[0]))
+		{
 			$locale = array($locale);
 		}
 
-		$GLOBALS['JAH_so'] = array(
-			'key'			=> (array)$k,
-			'direction'		=> (array)$direction,
-			'casesensitive'	=> (array)$casesensitive,
-			'locale'		=> $locale,
-		);
-		usort($a, array( __CLASS__ , '_sortObjects'));
-		unset($GLOBALS['JAH_so']);
+		self::$sortCase = (array) $caseSensitive;
+		self::$sortDirection = (array) $direction;
+		self::$sortKey = (array) $k;
+		self::$sortLocale = $locale;
+
+		usort($a, array(__CLASS__, '_sortObjects'));
+
+		self::$sortCase = null;
+		self::$sortDirection = null;
+		self::$sortKey = null;
+		self::$sortLocale = null;
 
 		return $a;
 	}
@@ -309,55 +473,95 @@ class JArrayHelper
 	/**
 	 * Callback function for sorting an array of objects on a key
 	 *
-	 * @param   array    $a	An array of objects
-	 * @param   array    $b	An array of objects
+	 * @param   array  &$a  An array of objects
+	 * @param   array  &$b  An array of objects
 	 *
-	 * @return  integer  	Comparison status
+	 * @return  integer  Comparison status
+	 *
+	 * @see     JArrayHelper::sortObjects()
 	 * @since   11.1
-	 * @see		JArrayHelper::sortObjects()
 	 */
 	protected static function _sortObjects(&$a, &$b)
 	{
-		$params = $GLOBALS['JAH_so'];
+		$key = self::$sortKey;
 
-		for ($i = 0, $count = count($params['key']); $i < $count; $i++)
+		for ($i = 0, $count = count($key); $i < $count; $i++)
 		{
-			if (isset($params['direction'][$i])) {
-				$direction = $params['direction'][$i];
+			if (isset(self::$sortDirection[$i]))
+			{
+				$direction = self::$sortDirection[$i];
 			}
 
-			if (isset($params['casesensitive'][$i])) {
-				$casesensitive = $params['casesensitive'][$i];
+			if (isset(self::$sortCase[$i]))
+			{
+				$caseSensitive = self::$sortCase[$i];
 			}
 
-			if (isset($params['locale'][$i])) {
-				$locale = $params['locale'][$i];
+			if (isset(self::$sortLocale[$i]))
+			{
+				$locale = self::$sortLocale[$i];
 			}
 
-			$va = $a->$params['key'][$i];
-			$vb = $b->$params['key'][$i];
+			$va = $a->$key[$i];
+			$vb = $b->$key[$i];
 
-			if ((is_bool($va) or is_numeric($va)) and (is_bool($vb) or is_numeric($vb))) {
+			if ((is_bool($va) or is_numeric($va)) and (is_bool($vb) or is_numeric($vb)))
+			{
 				$cmp = $va - $vb;
 			}
-			elseif ($casesensitive) {
+			elseif ($caseSensitive)
+			{
 				$cmp = JString::strcmp($va, $vb, $locale);
 			}
-			else {
+			else
+			{
 				$cmp = JString::strcasecmp($va, $vb, $locale);
 			}
 
-			if ($cmp > 0) {
+			if ($cmp > 0)
+			{
 
 				return $direction;
 			}
 
-			if ($cmp < 0) {
-
-				return - $direction;
+			if ($cmp < 0)
+			{
+				return -$direction;
 			}
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Multidimensional array safe unique test
+	 *
+	 * @param   array  $myArray  The array to make unique.
+	 *
+	 * @return  array
+	 *
+	 * @see     http://php.net/manual/en/function.array-unique.php
+	 * @since   11.2
+	 */
+	public static function arrayUnique($myArray)
+	{
+		if (!is_array($myArray))
+		{
+			return $myArray;
+		}
+
+		foreach ($myArray as &$myvalue)
+		{
+			$myvalue = serialize($myvalue);
+		}
+
+		$myArray = array_unique($myArray);
+
+		foreach ($myArray as &$myvalue)
+		{
+			$myvalue = unserialize($myvalue);
+		}
+
+		return $myArray;
 	}
 }

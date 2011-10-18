@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
  * JDate is a class that stores a date and provides logic to manipulate
  * and render that date in a variety of formats.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Utilities
  * @since       1.0
  */
@@ -231,9 +231,9 @@ class MolajoDate extends DateTime
 			default:
 				$trace = debug_backtrace();
 				trigger_error(
-					'Undefined property via __get(): ' . $name .
-					' in ' . $trace[0]['file'] .
-					' on line ' . $trace[0]['line'],
+					'Undefined property via __get(): '.$name .
+					' in '.$trace[0]['file'] .
+					' on line '.$trace[0]['line'],
 					E_USER_NOTICE
 				);
 		}
@@ -267,13 +267,13 @@ class MolajoDate extends DateTime
 	protected function dayToString($day, $abbr = false)
 	{
 		switch ($day) {
-			case 0: return $abbr ? JText::_('SUN') : JText::_('SUNDAY');
-			case 1: return $abbr ? JText::_('MON') : JText::_('MONDAY');
-			case 2: return $abbr ? JText::_('TUE') : JText::_('TUESDAY');
-			case 3: return $abbr ? JText::_('WED') : JText::_('WEDNESDAY');
-			case 4: return $abbr ? JText::_('THU') : JText::_('THURSDAY');
-			case 5: return $abbr ? JText::_('FRI') : JText::_('FRIDAY');
-			case 6: return $abbr ? JText::_('SAT') : JText::_('SATURDAY');
+			case 0: return $abbr ? MolajoText::_('SUN') : MolajoText::_('SUNDAY');
+			case 1: return $abbr ? MolajoText::_('MON') : MolajoText::_('MONDAY');
+			case 2: return $abbr ? MolajoText::_('TUE') : MolajoText::_('TUESDAY');
+			case 3: return $abbr ? MolajoText::_('WED') : MolajoText::_('WEDNESDAY');
+			case 4: return $abbr ? MolajoText::_('THU') : MolajoText::_('THURSDAY');
+			case 5: return $abbr ? MolajoText::_('FRI') : MolajoText::_('FRIDAY');
+			case 6: return $abbr ? MolajoText::_('SAT') : MolajoText::_('SATURDAY');
 		}
 	}
 
@@ -374,18 +374,18 @@ class MolajoDate extends DateTime
 	protected function monthToString($month, $abbr = false)
 	{
 		switch ($month) {
-			case 1:  return $abbr ? JText::_('JANUARY_SHORT')	: JText::_('JANUARY');
-			case 2:  return $abbr ? JText::_('FEBRUARY_SHORT')	: JText::_('FEBRUARY');
-			case 3:  return $abbr ? JText::_('MARCH_SHORT')		: JText::_('MARCH');
-			case 4:  return $abbr ? JText::_('APRIL_SHORT')		: JText::_('APRIL');
-			case 5:  return $abbr ? JText::_('MAY_SHORT')		: JText::_('MAY');
-			case 6:  return $abbr ? JText::_('JUNE_SHORT')		: JText::_('JUNE');
-			case 7:  return $abbr ? JText::_('JULY_SHORT')		: JText::_('JULY');
-			case 8:  return $abbr ? JText::_('AUGUST_SHORT')	: JText::_('AUGUST');
-			case 9:  return $abbr ? JText::_('SEPTEMBER_SHORT')	: JText::_('SEPTEMBER');
-			case 10: return $abbr ? JText::_('OCTOBER_SHORT')	: JText::_('OCTOBER');
-			case 11: return $abbr ? JText::_('NOVEMBER_SHORT')	: JText::_('NOVEMBER');
-			case 12: return $abbr ? JText::_('DECEMBER_SHORT')	: JText::_('DECEMBER');
+			case 1:  return $abbr ? MolajoText::_('JANUARY_SHORT')	: MolajoText::_('JANUARY');
+			case 2:  return $abbr ? MolajoText::_('FEBRUARY_SHORT')	: MolajoText::_('FEBRUARY');
+			case 3:  return $abbr ? MolajoText::_('MARCH_SHORT')		: MolajoText::_('MARCH');
+			case 4:  return $abbr ? MolajoText::_('APRIL_SHORT')		: MolajoText::_('APRIL');
+			case 5:  return $abbr ? MolajoText::_('MAY_SHORT')		: MolajoText::_('MAY');
+			case 6:  return $abbr ? MolajoText::_('JUNE_SHORT')		: MolajoText::_('JUNE');
+			case 7:  return $abbr ? MolajoText::_('JULY_SHORT')		: MolajoText::_('JULY');
+			case 8:  return $abbr ? MolajoText::_('AUGUST_SHORT')	: MolajoText::_('AUGUST');
+			case 9:  return $abbr ? MolajoText::_('SEPTEMBER_SHORT')	: MolajoText::_('SEPTEMBER');
+			case 10: return $abbr ? MolajoText::_('OCTOBER_SHORT')	: MolajoText::_('OCTOBER');
+			case 11: return $abbr ? MolajoText::_('NOVEMBER_SHORT')	: MolajoText::_('NOVEMBER');
+			case 12: return $abbr ? MolajoText::_('DECEMBER_SHORT')	: MolajoText::_('DECEMBER');
 		}
 	}
 

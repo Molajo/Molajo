@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-class plgMolajoBroadcast extends JPlugin	{
+class plgMolajoBroadcast extends MolajoPlugin	{
 
     /**
      * plgMolajoBroadcast::MolajoOnContentChangeState

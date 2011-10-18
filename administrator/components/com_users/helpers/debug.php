@@ -52,7 +52,7 @@ class UsersHelperDebug
 				||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 
 				// Translate component name
-				$item->text = JText::_($item->text);
+				$item->text = MolajoText::_($item->text);
 			}
 
 			// Sort by component name
@@ -138,9 +138,9 @@ class UsersHelperDebug
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', JText::sprintf('COM_USERS_OPTION_LEVEL_COMPONENT', 1));
-		$options[]	= JHtml::_('select.option', '2', JText::sprintf('COM_USERS_OPTION_LEVEL_CATEGORY', 2));
-		$options[]	= JHtml::_('select.option', '3', JText::sprintf('COM_USERS_OPTION_LEVEL_DEEPER', 3));
+		$options[]	= JHtml::_('select.option', '1', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_COMPONENT', 1));
+		$options[]	= JHtml::_('select.option', '2', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_CATEGORY', 2));
+		$options[]	= JHtml::_('select.option', '3', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_DEEPER', 3));
 		$options[]	= JHtml::_('select.option', '4', '4');
 		$options[]	= JHtml::_('select.option', '5', '5');
 		$options[]	= JHtml::_('select.option', '6', '6');

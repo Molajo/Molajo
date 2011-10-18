@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 if ($this->row->canEditstate === true) {
     echo '<div class="width-100 fltlft">';
     echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->slider_id, array('useCookie'=>1));
-    echo JHtml::_('sliders.panel', JText::_('MOLAJO_FIELDSET_RULES'), 'access-rules'); ?>
+    echo JHtml::_('sliders.panel', MolajoText::_('MOLAJO_FIELDSET_RULES'), 'access-rules'); ?>
 
     <fieldset class="panelform">
             <?php echo $this->form->getLabel('rules'); ?>

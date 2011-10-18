@@ -49,7 +49,7 @@ class InstallerControllerManage extends JController
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, JText::_('COM_INSTALLER_ERROR_NO_EXTENSIONS_SELECTED'));
+			JError::raiseWarning(500, MolajoText::_('COM_INSTALLER_ERROR_NO_EXTENSIONS_SELECTED'));
 		} else {
 			// Get the model.
 			$model	= $this->getModel('manage');
@@ -63,11 +63,11 @@ class InstallerControllerManage extends JController
 				} else if ($value == 0) {
 					$ntext = 'COM_INSTALLER_N_EXTENSIONS_UNPUBLISHED';
 				}
-				$this->setMessage(JText::plural($ntext, count($ids)));
+				$this->setMessage(MolajoText::plural($ntext, count($ids)));
 			}
 		}
 
-		$this->setRedirect(JRoute::_('index.php?option=com_installer&view=manage',false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=manage',false));
 	}
 
 	/**
@@ -86,7 +86,7 @@ class InstallerControllerManage extends JController
 
 		JArrayHelper::toInteger($eid, array());
 		$result = $model->remove($eid);
-		$this->setRedirect(JRoute::_('index.php?option=com_installer&view=manage',false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=manage',false));
 	}
 
 	/**
@@ -106,6 +106,6 @@ class InstallerControllerManage extends JController
 
 		JArrayHelper::toInteger($uid, array());
 		$result = $model->refresh($uid);
-		$this->setRedirect(JRoute::_('index.php?option=com_installer&view=manage',false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=manage',false));
 	}
 }

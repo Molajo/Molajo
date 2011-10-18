@@ -37,12 +37,12 @@ class MolajoMenuSite extends MolajoMenu
 			$query	= $db->getQuery(true);
 
 			$query->select('m.id, m.menu_id, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
-			$query->select('m.access, m.asset_id');
 			$query->select('m.browserNav, m.params, m.home, m.img, m.template_style_id');
 			$query->select('m.component_id, m.parent_id, m.language');
-			$query->select('e.element as component');
+			$query->select('m.asset_id');
 			$query->from('#__menu_items AS m');
-			$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
+            $query->select('e.element as component');
+			$query->join('left','#__extensions AS e ON e.extension_id = m.component_id');
 			$query->where('m.published = 1');
 			$query->where('m.parent_id > 0');
 			$query->where('m.application_id = 0');
@@ -53,7 +53,8 @@ class MolajoMenuSite extends MolajoMenu
 
             $db->setQuery($query->__toString());
 
-            if (!($menus = $db->loadObjectList('id'))) {
+            if ($menus = $db->loadObjectList('id')) {
+            } else {
                 JError::raiseWarning(500, JText::sprintf('JERROR_LOADING_MENUS', $db->getErrorMsg()));
                 return false;
             }

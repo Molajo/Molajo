@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.p3p
  */
-class plgSystemP3p extends JPlugin
+class plgSystemP3p extends MolajoPlugin
 {
 	function onAfterInitialise()
 	{

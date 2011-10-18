@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 <div class="width-100">
 <fieldset class="adminform long">
-	<legend><?php echo JText::_('COM_CONFIG_SEO_SETTINGS'); ?></legend>
+	<legend><?php echo MolajoText::_('COM_CONFIG_SEO_SETTINGS'); ?></legend>
 	<ul class="adminformlist">
 			<?php
 			foreach ($this->form->getFieldset('seo') as $field):

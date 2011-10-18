@@ -71,10 +71,10 @@ abstract class MolajoHtmlList
     {
         $options	= array();
         if (!array_key_exists('unfeatured', $config) || $config['unfeatured']) {
-                $options[]	= JHtml::_('select.option', '0', JText::_('MOLAJO_OPTION_UNFEATURED'));
+                $options[]	= JHtml::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNFEATURED'));
         }
         if (!array_key_exists('featured', $config) || $config['featured']) {
-                $options[]	= JHtml::_('select.option', '1', JText::_('MOLAJO_OPTION_FEATURED'));
+                $options[]	= JHtml::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_FEATURED'));
         }
 
         return $options;
@@ -154,29 +154,29 @@ abstract class MolajoHtmlList
     {
         $options= array();
         if (!array_key_exists('archived', $config) || $config['archived']) {
-                $options[]	= JHtml::_('select.option', '2', JText::_('MOLAJO_OPTION_ARCHIVED'));
+                $options[]	= JHtml::_('select.option', '2', MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
         }
         if (!array_key_exists('published', $config) || $config['published']) {
-                $options[]	= JHtml::_('select.option', '1', JText::_('MOLAJO_OPTION_PUBLISHED'));
+                $options[]	= JHtml::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
         }
         if (!array_key_exists('unpublished', $config) || $config['unpublished']) {
-                $options[]	= JHtml::_('select.option', '0', JText::_('MOLAJO_OPTION_UNPUBLISHED'));
+                $options[]	= JHtml::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
         }
         if ($params->def(config_component_state_spam, 0) == '1') {
             if (!array_key_exists('spam', $config) || $config['spam']) {
-                    $options[]	= JHtml::_('select.option', '-1', JText::_('MOLAJO_OPTION_SPAMMED'));
+                    $options[]	= JHtml::_('select.option', '-1', MolajoText::_('MOLAJO_OPTION_SPAMMED'));
             }
         }
         if (!array_key_exists('trash', $config) || $config['trash']) {
-                $options[]	= JHtml::_('select.option', '-2', JText::_('MOLAJO_OPTION_TRASHED'));
+                $options[]	= JHtml::_('select.option', '-2', MolajoText::_('MOLAJO_OPTION_TRASHED'));
         }
         if ($params->def(config_component_version_management, 1) == '1') {
             if (!array_key_exists('version', $config) || $config['version']) {
-                    $options[]	= JHtml::_('select.option', '-10', JText::_('MOLAJO_OPTION_VERSION'));
+                    $options[]	= JHtml::_('select.option', '-10', MolajoText::_('MOLAJO_OPTION_VERSION'));
             }
         }
         if (!array_key_exists('all', $config) || $config['all']) {
-                $options[]	= JHtml::_('select.option', '*', JText::_('MOLAJO_OPTION_ALL'));
+                $options[]	= JHtml::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
         }
         return $options;
     }
@@ -195,10 +195,10 @@ abstract class MolajoHtmlList
     {
         $options	= array();
         if (!array_key_exists('unstickied', $config) || $config['unstickied']) {
-                $options[]	= JHtml::_('select.option', '0', JText::_('MOLAJO_OPTION_UNSTICKIED'));
+                $options[]	= JHtml::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
         }
         if (!array_key_exists('stickied', $config) || $config['stickied']) {
-                $options[]	= JHtml::_('select.option', '1', JText::_('MOLAJO_OPTION_STICKIED'));
+                $options[]	= JHtml::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
         }
         return $options;
     }

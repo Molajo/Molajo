@@ -23,12 +23,12 @@ class LanguagesControllerInstalled extends JController
 	function setDefault()
 	{
 		// Check for request forgeries
-		JRequest::checkToken() or jexit(JText::_('JInvalid_Token'));
+		JRequest::checkToken() or jexit(MolajoText::_('JInvalid_Token'));
 		$cid = JRequest::getCmd('cid', '');
 		$model = $this->getModel('installed');
 		if ($model->publish($cid))
 		{
-			$msg = JText::_('COM_LANGUAGES_MSG_DEFAULT_LANGUAGE_SAVED');
+			$msg = MolajoText::_('COM_LANGUAGES_MSG_DEFAULT_LANGUAGE_SAVED');
 			$type = 'message';
 		}
 		else

@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 jimport( 'joomla.plugin.plugin' );
 jimport('joomla.filesystem.file');
 
-class compressCSS extends JPlugin	{
+class compressCSS extends MolajoPlugin	{
 	
 	function onAfterRender()	{		
 
@@ -29,7 +29,7 @@ class compressCSS extends JPlugin	{
 		$store_path = JPATH_ROOT . '/tmp/_css';
 		
 		if (!JFolder :: exists($store_path) && !JFolder :: create($store_path)) {
-			$response->type = JAUTHENTICATE_STATUS_FAILURE;
+			$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 			$response->error_message = "Could not create the folder " . $store_path . " Please check permissions.";
 			return;
 		}
@@ -37,7 +37,7 @@ class compressCSS extends JPlugin	{
 	/**
 	 * 	Delete all files older than number of minutes specified -- (3600*24) is one day
 	 */
-		$plugin =& JPluginHelper::getPlugin('system', 'tamka_compress_css');
+		$plugin =& MolajoPluginHelper::getPlugin('system', 'tamka_compress_css');
 		$pluginParams = new JParameter( $plugin->params );
 		$pluginParams->def('minutes', 60);
 		
@@ -45,7 +45,7 @@ class compressCSS extends JPlugin	{
 		for($i = 0; $i < count($cssFiles); $i++) {
 			if (filemtime($store_path.DS.$cssFiles[$i]) < (time() - ($pluginParams->def('minutes', 60) * 60))) {
 				if (!JFile::delete($store_path.DS.$cssFiles[$i])) {
-					$response->type = JAUTHENTICATE_STATUS_FAILURE;
+					$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 					$response->error_message = "Could not delete the file " . $store_path.DS.$cssFiles[$i] . " Please check permissions.";
 					return;
 				}				
@@ -162,7 +162,7 @@ class compressCSS extends JPlugin	{
 		/*	Use existing file if it exists			*/
 		if (!JFile::exists($compressedCSSFile))	{		
 			if (!JFile::write($compressedCSSFile, $cssMergedExtensions)) {
-				$response->type = JAUTHENTICATE_STATUS_FAILURE;
+				$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 				$response->error_message = "Could not create the file " . $compressedCSSFile . " Please check permissions.";
 				return false;	
 			}
@@ -179,7 +179,7 @@ class compressCSS extends JPlugin	{
 			/*	Use existing file if it exists			*/
 			if (!JFile::exists($compressedCSSFile))	{
 				if (!JFile::write($compressedCSSFile, $cssMergedJDOC[$i][0])) {
-					$response->type = JAUTHENTICATE_STATUS_FAILURE;
+					$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
 					$response->error_message = "Could not create the file " . $compressedCSSFile . " Please check permissions.";
 					return false;
 				}

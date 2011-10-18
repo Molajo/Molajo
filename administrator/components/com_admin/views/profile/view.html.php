@@ -50,7 +50,7 @@ class AdminViewProfile extends JView
 	{
 		JRequest::setVar('hidemainmenu', 1);
 
-		MolajoToolbarHelper::title(JText::_('COM_ADMIN_VIEW_PROFILE_TITLE'), 'user-profile');
+		MolajoToolbarHelper::title(MolajoText::_('COM_ADMIN_VIEW_PROFILE_TITLE'), 'user-profile');
 		MolajoToolbarHelper::apply('profile.apply');
 		MolajoToolbarHelper::save('profile.save');
 		MolajoToolbarHelper::cancel('profile.cancel', 'JTOOLBAR_CLOSE');

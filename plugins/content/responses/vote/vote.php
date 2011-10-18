@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	Content.vote
  */
-class plgContentVote extends JPlugin
+class plgContentVote extends MolajoPlugin
 {
 	/**
 	 * Constructor

@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoCategories Class.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Application
  * @since       1.0
  */
@@ -227,9 +227,9 @@ class MolajoCategories
 		}
 
 		$subQuery = ' (SELECT cat.id as id FROM #__categories AS cat JOIN #__categories AS parent ' .
-					'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.extension = ' . $db->quote($extension) .
+					'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.extension = '.$db->quote($extension) .
 					' AND parent.published != 1 GROUP BY cat.id) ';
-		$query->leftJoin($subQuery . 'AS badcats ON badcats.id = c.id');
+		$query->leftJoin($subQuery.'AS badcats ON badcats.id = c.id');
 		$query->where('badcats.id is null');
 
 		// i for item
@@ -249,7 +249,7 @@ class MolajoCategories
 
 		// Filter by language
 		if ($app->isSite() && $app->getLanguageFilter()) {
-			$query->where('(' . ($id!='root' ? 'c.id=s.id OR ':'') .'c.language in (' . $db->Quote(MolajoFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . '))');
+			$query->where('('.($id!='root' ? 'c.id=s.id OR ':'') .'c.language in ('.$db->Quote(MolajoFactory::getLanguage()->getTag()).','.$db->Quote('*').'))');
 		}
 
 		// Get the results
@@ -325,7 +325,7 @@ class MolajoCategories
 /**
  * Helper class to load Categorytree
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Application
  * @since       1.0
  */

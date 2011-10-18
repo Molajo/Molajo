@@ -134,13 +134,13 @@ class ModulesModelSelect extends JModelList
 			||	$lang->load($item->module.'.sys', $application->path.'/modules/'.$item->module, null, false, false)
 			||	$lang->load($item->module.'.sys', $application->path, $lang->getDefault(), false, false)
 			||	$lang->load($item->module.'.sys', $application->path.'/modules/'.$item->module, $lang->getDefault(), false, false);
-			$item->name	= JText::_($item->name);
+			$item->name	= MolajoText::_($item->name);
 
 			if (isset($item->xml) && $text = trim($item->xml->description)) {
-				$item->desc = JText::_($text);
+				$item->desc = MolajoText::_($text);
 			}
 			else {
-				$item->desc = JText::_('COM_MODULES_NODESCRIPTION');
+				$item->desc = MolajoText::_('COM_MODULES_NODESCRIPTION');
 			}
 		}
 		$items = JArrayHelper::sortObjects($items, 'name', 1, true, $lang->getLocale());

@@ -81,7 +81,7 @@ abstract class MolajoHtmlCategory
                                    /*   Process new Extension Group */
                                    $categoryExtension = $item->extension;
                                    $lang->load($item->extension, MOLAJO_PATH_ADMINISTRATOR, null, false, false);
-                                   $categoryExtensionText = JText::_($item->extension);
+                                   $categoryExtensionText = MolajoText::_($item->extension);
 
                                    self::$items[$hash][] = JHTML::_('select.option',  '<OPTGROUP>', ' - '.$categoryExtensionText.' - ' );
                                 }
@@ -143,7 +143,7 @@ abstract class MolajoHtmlCategory
 					self::$items[$hash][] = JHtml::_('select.option', $item->id, $item->title);
 				}
 				// Special "Add to root" option:
-				self::$items[$hash][] = JHtml::_('select.option', '1', JText::_('MOLAJO_HTML_ADD_TO_ROOT'));
+				self::$items[$hash][] = JHtml::_('select.option', '1', MolajoText::_('MOLAJO_HTML_ADD_TO_ROOT'));
 		}
 
 		return self::$items[$hash];

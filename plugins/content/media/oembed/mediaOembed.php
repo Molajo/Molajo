@@ -9,14 +9,14 @@ defined('MOLAJO') or die;
 
 
 
-class MediaoEmbed extends JPlugin	{
+class MediaoEmbed extends MolajoPlugin	{
 
     function onAfterInitialise () {
 
         /**
          * 	Get Tamka Plugin Information
          */
-        $plugin 	=& JPluginHelper::getPlugin( 'molajo', 'backup');
+        $plugin 	=& MolajoPluginHelper::getPlugin( 'molajo', 'backup');
         $pluginParams = new JParameter($plugin->params);
 
 /**

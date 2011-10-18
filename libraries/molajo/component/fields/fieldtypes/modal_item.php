@@ -75,7 +75,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
 		// The user select button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
-		$html[] = '	<a class="modal" title="'.JText::_('MOLAJO_CHANGE_ITEM').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('MOLAJO_SELECT_AN_ITEM').'</a>';
+		$html[] = '	<a class="modal" title="'.MolajoText::_('MOLAJO_CHANGE_ITEM').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.MolajoText::_('MOLAJO_SELECT_AN_ITEM').'</a>';
 		$html[] = '  </div>';
 		$html[] = '</div>';
 

@@ -39,7 +39,7 @@ $count = (int) $db->loadResult();
 if (JRequest::getInt('hidemainmenu')) {
 	$inboxLink = '';
 } else {
-	$inboxLink = JRoute::_('index.php?option=com_messages');
+	$inboxLink = MolajoRoute::_('index.php?option=com_messages');
 }
 
 // Set the inbox class.
@@ -64,25 +64,25 @@ $output = array();
 
 // Print the logged in users.
 if ($params->get('show_loggedin_users', 1)) :
-	$output[] = '<span class="loggedin-users">'.JText::plural('MOD_STATUS_USERS', $online_num).'</span>';
+	$output[] = '<span class="loggedin-users">'.MolajoText::plural('MOD_STATUS_USERS', $online_num).'</span>';
 endif;
 
 // Print the back-end logged in users.
 if ($params->get('show_loggedin_users_admin', 1)) :
-	$output[] = '<span class="backloggedin-users">'.JText::plural('MOD_STATUS_BACKEND_USERS', $count).'</span>';
+	$output[] = '<span class="backloggedin-users">'.MolajoText::plural('MOD_STATUS_BACKEND_USERS', $count).'</span>';
 endif;
 
 //  Print the inbox message.
 if ($params->get('show_messages', 1)) :
 	$output[] = '<span class="'.$inboxClass.'">'.
 			($hideLinks ? '' : '<a href="'.$inboxLink.'">').
-			JText::plural('MOD_STATUS_MESSAGES', $unread).
+			MolajoText::plural('MOD_STATUS_MESSAGES', $unread).
 			($hideLinks ? '' : '</a>').
 			'</span>';
 endif;
 
 // Print the Preview link to Main site.
-$output[] = '<span class="viewsite"><a href="'.JURI::root().'" target="_blank">'.JText::_('MOD_STATUS_VIEW_SITE').'</a></span>';
+$output[] = '<span class="viewsite"><a href="'.JURI::root().'" target="_blank">'.MolajoText::_('MOD_STATUS_VIEW_SITE').'</a></span>';
 
 // Reverse rendering order for rtl display.
 if ($lang->isRTL()) :

@@ -10,7 +10,6 @@ defined('MOLAJO') or die;
 
 class MolajoACL
 {
-
     /**
     *  Type 1 --> authoriseTask
     *
@@ -41,7 +40,7 @@ class MolajoACL
         if (method_exists($aclClass,$authoriseTaskMethod)) {
             return $aclClass->$authoriseTaskMethod ($option, $entity, $task, $catid, $id, $item);
         } else {
-            JError::raiseError(403, JText::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND'). ' '.$aclClass.'::'.$authoriseTaskMethod);
+            JError::raiseError(403, MolajoText::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND'). ' '.$aclClass.'::'.$authoriseTaskMethod);
             return false;
         }
     }
@@ -108,7 +107,7 @@ class MolajoACL
     */
     public function getUserItemPermissions ($option, $entity, $task, $catid, $id, $item)
     {
-        $molajoConfig = new MolajoModelConfiguration ();
+        $molajoConfig = new MolajoModelConfiguration ($option);
         $tasks = $molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_ACL_ITEM_TESTS);
 
         foreach ( $tasks as $single )   {
@@ -163,7 +162,6 @@ class MolajoACL
      * getViewaccessList - produces a View Access List parameter combinations
      * getCategoriesList - produces a list of Categories parameter combinations
      * getGroupsList - produces a list of Groups parameter combinations
-     * getRulesList - produces a list of Rules for parameter combinations
      * getUsergroupsList - produces a list of Usergroups for parameter combinations
      * getUsergroupingsList - produces a list of Usergroupings for parameter combinations
      *
@@ -238,7 +236,7 @@ class MolajoACL
         if (method_exists($aclClass, $method)) {
             $aclClass->$method ($option, $entity, $task, $id, $form, $item);
         } else {
-            JError::raiseError(403, JText::_('MOLAJO_ACL_CLASS_METHOD_FORM_AUTH_NOT_FOUND'). ' '.$aclClass.'::'.$method);
+            JError::raiseError(403, MolajoText::_('MOLAJO_ACL_CLASS_METHOD_FORM_AUTH_NOT_FOUND'). ' '.$aclClass.'::'.$method);
             return false;
         }
     }
@@ -290,11 +288,11 @@ class MolajoACL
             if (method_exists($default_class,$method)) {
                 return $default_class;
             } else {
-                JError::raiseError(403, JText::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND'). ' '.$default_class.'::'.$method);
+                JError::raiseError(403, MolajoText::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND'). ' '.$default_class.'::'.$method);
                 return false;
             }
         } else {
-            JError::raiseError(403, JText::_('MOLAJO_ACL_DEFAULT_CLASS_NOT_FOUND'). ' '.$default_class);
+            JError::raiseError(403, MolajoText::_('MOLAJO_ACL_DEFAULT_CLASS_NOT_FOUND'). ' '.$default_class);
             return false;
         }
     }

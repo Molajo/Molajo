@@ -178,15 +178,15 @@ class ModulesModelModules extends JModelList
 			||	$lang->load("$extension.sys", $source, null, false, false)
 			||	$lang->load("$extension.sys", constant('JPATH_' . strtoupper($application)), $lang->getDefault(), false, false)
 			||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
-			$item->name = JText::_($item->name);
+			$item->name = MolajoText::_($item->name);
 			if (is_null($item->pages)) {
-				$item->pages = JText::_('JNONE');
+				$item->pages = MolajoText::_('JNONE');
 			} else if ($item->pages < 0) {
-				$item->pages = JText::_('COM_MODULES_ASSIGNED_VARIES_EXCEPT');
+				$item->pages = MolajoText::_('COM_MODULES_ASSIGNED_VARIES_EXCEPT');
 			} else if ($item->pages > 0) {
-				$item->pages = JText::_('COM_MODULES_ASSIGNED_VARIES_ONLY');
+				$item->pages = MolajoText::_('COM_MODULES_ASSIGNED_VARIES_ONLY');
 			} else {
-				$item->pages = JText::_('JALL');
+				$item->pages = MolajoText::_('JALL');
 			}
 		}
 	}

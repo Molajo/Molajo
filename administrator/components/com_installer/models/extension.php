@@ -113,7 +113,7 @@ class InstallerModel extends JModelList
 				}
 			}
 			$item->author_info = @$item->authorEmail .'<br />'. @$item->authorUrl;
-			$item->application = $item->application_id ? JText::_('JADMINISTRATOR') : JText::_('JSITE');
+			$item->application = $item->application_id ? MolajoText::_('JADMINISTRATOR') : MolajoText::_('JSITE');
 			$path = $item->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			switch ($item->type) {
 				case 'component':
@@ -164,8 +164,8 @@ class InstallerModel extends JModelList
 					||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 				break;
 			}
-			$item->name = JText::_($item->name);
-			$item->description = JText::_(@$item->description);
+			$item->name = MolajoText::_($item->name);
+			$item->description = MolajoText::_(@$item->description);
 		}
 	}
 }

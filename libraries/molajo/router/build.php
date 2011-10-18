@@ -21,7 +21,7 @@ class MolajoRouterBuild extends MolajoRouter
     /**
      * buildRoute
      *
-     * called out of JRouterSite::_buildSefRoute()
+     * called out of MolajoRouterSite::_buildSefRoute()
      *
      * @param array     $query An array of URL arguments
      * @param string    $componentParam ex com_articles

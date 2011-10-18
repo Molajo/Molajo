@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 jimport('joomla.plugin.plugin');
 
-class plgMolajoLinks extends JPlugin	{
+class plgMolajoLinks extends MolajoPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object
@@ -37,7 +37,7 @@ return;
         }
 
         /** parameters **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
         $loc = $this->location;
 

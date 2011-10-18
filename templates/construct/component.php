@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 jimport('joomla.filesystem.file');
 
 // Returns a reference to the global document object
-$doc 					= JFactory::getDocument();
+$doc 					= MolajoFactory::getDocument();
 // Define relative shortcut for current template directory
 $template 				= 'templates/'.$this->template;
 

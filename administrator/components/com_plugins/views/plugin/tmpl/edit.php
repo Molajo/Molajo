@@ -23,14 +23,14 @@ JHtml::_('behavior.formvalidation');
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_plugins&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_plugins&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('JDETAILS') ?></legend>
+			<legend><?php echo MolajoText::_('JDETAILS') ?></legend>
 			<ul class="adminformlist">
 			<li><?php echo $this->form->getLabel('name'); ?>
 			<?php echo $this->form->getInput('name'); ?>
-			<span class="readonly plg-name"><?php echo JText::_($this->item->name);?></span></li>
+			<span class="readonly plg-name"><?php echo MolajoText::_($this->item->name);?></span></li>
 
 			<li><?php echo $this->form->getLabel('enabled'); ?>
 			<?php echo $this->form->getInput('enabled'); ?></li>
@@ -57,16 +57,16 @@ JHtml::_('behavior.formvalidation');
 				<?php if ($text = trim($this->item->xml->description)) : ?>
 
 					<label id="jform_extdescription-lbl">
-						<?php echo JText::_('JGLOBAL_DESCRIPTION'); ?>
+						<?php echo MolajoText::_('JGLOBAL_DESCRIPTION'); ?>
 					</label>
 					<div class="clr"></div>
 					<span class="readonly plg-desc">
-						<?php echo JText::_($text); ?>
+						<?php echo MolajoText::_($text); ?>
 					</span>
 
 				<?php endif; ?>
 			<?php else : ?>
-				<?php echo JText::_('COM_PLUGINS_XML_ERR'); ?>
+				<?php echo MolajoText::_('COM_PLUGINS_XML_ERR'); ?>
 			<?php endif; ?>
 
 		</fieldset>

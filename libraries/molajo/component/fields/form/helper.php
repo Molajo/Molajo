@@ -254,11 +254,11 @@ class MolajoFormHelper
 		if (empty($paths)) {
 			// While we support limited number of entities (form, field and rule)
 			// we can do this simple pluralisation:
-			$entity_plural = $entity . 's';
+			$entity_plural = $entity.'s';
 			// But when someday we would want to support more entities, then we should consider adding
 			// an inflector class to "libraries/joomla/utilities" and use it here (or somebody can use a real inflector in his subclass).
 			// see also: pluralization snippet by Paul Osman in JControllerForm's constructor.
-			$paths[] = dirname(__FILE__) . '/' . $entity_plural;
+			$paths[] = dirname(__FILE__).'/'.$entity_plural;
 		}
 
 		// Force the new path(s) to an array.

@@ -20,30 +20,30 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_users&view=debuggroup&user_id='.(int) $this->state->get('filter.user_id'));?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=debuggroup&user_id='.(int) $this->state->get('filter.user_id'));?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_USERS_SEARCH_ASSETS'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_USERS_SEARCH_USERS'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_RESET'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('COM_USERS_SEARCH_ASSETS'); ?></label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_USERS_SEARCH_USERS'); ?>" />
+			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_RESET'); ?></button>
 		</div>
 
 		<div class="filter-select fltrt">
 			<select name="filter_component" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('COM_USERS_OPTION_SELECT_COMPONENT');?></option>
+				<option value=""><?php echo MolajoText::_('COM_USERS_OPTION_SELECT_COMPONENT');?></option>
 				<?php if (!empty($this->components)) {
 					echo JHtml::_('select.options', $this->components, 'value', 'text', $this->state->get('filter.component'));
 				}?>
 			</select>
 
 			<select name="filter_level_start" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('COM_USERS_OPTION_SELECT_LEVEL_START');?></option>
+				<option value=""><?php echo MolajoText::_('COM_USERS_OPTION_SELECT_LEVEL_START');?></option>
 				<?php echo JHtml::_('select.options', $this->levels, 'value', 'text', $this->state->get('filter.level_start'));?>
 			</select>
 
 			<select name="filter_level_end" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('COM_USERS_OPTION_SELECT_LEVEL_END');?></option>
+				<option value=""><?php echo MolajoText::_('COM_USERS_OPTION_SELECT_LEVEL_END');?></option>
 				<?php echo JHtml::_('select.options', $this->levels, 'value', 'text', $this->state->get('filter.level_end'));?>
 			</select>
 		</div>
@@ -52,11 +52,11 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<div class="clr"> </div>
 
 	<div>
-		<?php echo JText::_('COM_USERS_DEBUG_LEGEND'); ?>
-		<span class="swatch"><?php echo JText::sprintf('COM_USERS_DEBUG_NO_CHECK', '-');?></span>
-		<span class="check-0 swatch"><?php echo JText::sprintf('COM_USERS_DEBUG_IMPLICIT_DENY', '-');?></span>
-		<span class="check-a swatch"><?php echo JText::sprintf('COM_USERS_DEBUG_EXPLICIT_ALLOW', '&#10003;');?></span>
-		<span class="check-d swatch"><?php echo JText::sprintf('COM_USERS_DEBUG_EXPLICIT_DENY', '&#10007;');?></span>
+		<?php echo MolajoText::_('COM_USERS_DEBUG_LEGEND'); ?>
+		<span class="swatch"><?php echo MolajoText::sprintf('COM_USERS_DEBUG_NO_CHECK', '-');?></span>
+		<span class="check-0 swatch"><?php echo MolajoText::sprintf('COM_USERS_DEBUG_IMPLICIT_DENY', '-');?></span>
+		<span class="check-a swatch"><?php echo MolajoText::sprintf('COM_USERS_DEBUG_EXPLICIT_ALLOW', '&#10003;');?></span>
+		<span class="check-d swatch"><?php echo MolajoText::sprintf('COM_USERS_DEBUG_EXPLICIT_DENY', '&#10007;');?></span>
 	</div>
 
 	<table class="adminlist">
@@ -70,7 +70,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				</th>
 				<?php foreach ($this->actions as $key => $action) : ?>
 				<th width="5%">
-					<span class="hasTip" title="<?php echo htmlspecialchars(JText::_($key).'::'.JText::_($action[1]), ENT_COMPAT, 'UTF-8'); ?>"><?php echo JText::_($key); ?></span>
+					<span class="hasTip" title="<?php echo htmlspecialchars(MolajoText::_($key).'::'.MolajoText::_($action[1]), ENT_COMPAT, 'UTF-8'); ?>"><?php echo MolajoText::_($key); ?></span>
 				</th>
 				<?php endforeach; ?>
 				<th class="nowrap" width="5%">

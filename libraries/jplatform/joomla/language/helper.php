@@ -7,30 +7,34 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 /**
+ * Language helper class
+ *
  * @package     Joomla.Platform
  * @subpackage  Language
- * @since   11.1
+ * @since       11.1
  */
 class JLanguageHelper
 {
 	/**
 	 * Builds a list of the system languages which can be used in a select option
 	 *
-	 * @param   string   Client key for the area
-	 * @param   string   Base path to use
-	 * @param   array    An array of arrays (text, value, selected)
+	 * @param   string   $actualLanguage  Client key for the area
+	 * @param   string   $basePath        Base path to use
+	 * @param   boolean  $caching         True if caching is used
+	 * @param   array    $installed       An array of arrays (text, value, selected)
 	 *
 	 * @return  array  List of system languages
+	 *
 	 * @since   11.1
 	 */
 	public static function createLanguageList($actualLanguage, $basePath = JPATH_BASE, $caching = false, $installed = false)
 	{
-		$list = array ();
+		$list = array();
 
-		// cache activation
+		// Cache activation
 		$langs = JLanguage::getKnownLanguages($basePath);
 		if ($installed)
 		{
@@ -38,10 +42,10 @@ class JLanguageHelper
 			$query = $db->getQuery(true);
 			$query->select('element');
 			$query->from('#__extensions');
-			$query->where('type='.$db->quote('language'));
+			$query->where('type=' . $db->quote('language'));
 			$query->where('state=0');
 			$query->where('enabled=1');
-			$query->where('application_id='.($basePath==JPATH_ADMINISTRATOR?1:0));
+			$query->where('client_id=' . ($basePath == JPATH_ADMINISTRATOR ? 1 : 0));
 			$db->setQuery($query);
 			$installed_languages = $db->loadObjectList('element');
 		}
@@ -50,11 +54,12 @@ class JLanguageHelper
 		{
 			if (!$installed || array_key_exists($lang, $installed_languages))
 			{
-				$option = array ();
+				$option = array();
 
 				$option['text'] = $metadata['name'];
 				$option['value'] = $lang;
-				if ($lang == $actualLanguage) {
+				if ($lang == $actualLanguage)
+				{
 					$option['selected'] = 'selected="selected"';
 				}
 				$list[] = $option;
@@ -68,36 +73,40 @@ class JLanguageHelper
 	 * Tries to detect the language.
 	 *
 	 * @return  string  locale or null if not found
+	 *
 	 * @since   11.1
 	 */
 	public static function detectLanguage()
 	{
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
-			$browserLangs	= explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-			$systemLangs	= self::getLanguages();
+			$browserLangs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$systemLangs = self::getLanguages();
 			foreach ($browserLangs as $browserLang)
 			{
 				// Slice out the part before ; on first step, the part before - on second, place into array
 				$browserLang = substr($browserLang, 0, strcspn($browserLang, ';'));
 				$primary_browserLang = substr($browserLang, 0, 2);
-				foreach($systemLangs as $systemLang)
+				foreach ($systemLangs as $systemLang)
 				{
 					// Take off 3 letters iso code languages as they can't match browsers' languages and default them to en
 					$Jinstall_lang = $systemLang->lang_code;
 
 					if (strlen($Jinstall_lang) < 6)
 					{
-						if (strtolower($browserLang) == strtolower(substr($systemLang->lang_code, 0, strlen($browserLang)))) {
+						if (strtolower($browserLang) == strtolower(substr($systemLang->lang_code, 0, strlen($browserLang))))
+						{
 							return $systemLang->lang_code;
 						}
-						else if ($primary_browserLang == substr($systemLang->lang_code, 0, 2)) {
+						elseif ($primary_browserLang == substr($systemLang->lang_code, 0, 2))
+						{
 							$primaryDetectedLang = $systemLang->lang_code;
 						}
 					}
 				}
 
-				if (isset($primaryDetectedLang)) {
+				if (isset($primaryDetectedLang))
+				{
 					return $primaryDetectedLang;
 				}
 			}
@@ -109,42 +118,52 @@ class JLanguageHelper
 	/**
 	 * Get available languages
 	 *
-	 * @param   string array key
+	 * @param   string  $key  Array key
 	 *
-	 * @return  array  of published languages
+	 * @return  array  An array of published languages
+	 *
 	 * @since   11.1
 	 */
-	public static function getLanguages($key='default')
+	public static function getLanguages($key = 'default')
 	{
 		static $languages;
 
-		if (empty($languages)) {
+		if (empty($languages))
+		{
 			// Installation uses available languages
-			if (JFactory::getApplication()->getClientId() == 2) {
+			if (JFactory::getApplication()->getClientId() == 2)
+			{
 				$languages[$key] = array();
 				$knownLangs = JLanguage::getKnownLanguages(JPATH_BASE);
-				foreach($knownLangs as $metadata)
+				foreach ($knownLangs as $metadata)
 				{
 					// take off 3 letters iso code languages as they can't match browsers' languages and default them to en
 					$languages[$key][] = new JObject(array('lang_code' => $metadata['tag']));
 				}
 			}
-			else {
+			else
+			{
 				$cache = JFactory::getCache('com_languages', '');
-				if (!$languages = $cache->get('languages')) {
-					$db 	= JFactory::getDBO();
-					$query	= $db->getQuery(true);
-					$query->select('*')->from('#__languages')->where('published=1')->order('ordering ASC');
+				if (!$languages = $cache->get('languages'))
+				{
+					$db = JFactory::getDBO();
+					$query = $db->getQuery(true);
+					$query->select('*')
+						->from('#__languages')
+						->where('published=1')
+						->order('ordering ASC');
 					$db->setQuery($query);
 
-					$languages['default'] 	= $db->loadObjectList();
-					$languages['sef']		= array();
-					$languages['lang_code']	= array();
+					$languages['default'] = $db->loadObjectList();
+					$languages['sef'] = array();
+					$languages['lang_code'] = array();
 
-					if (isset($languages['default'][0])) {
-						foreach($languages['default'] as $lang) {
-							$languages['sef'][$lang->sef] 				= $lang;
-							$languages['lang_code'][$lang->lang_code] 	= $lang;
+					if (isset($languages['default'][0]))
+					{
+						foreach ($languages['default'] as $lang)
+						{
+							$languages['sef'][$lang->sef] = $lang;
+							$languages['lang_code'][$lang->lang_code] = $lang;
 						}
 					}
 

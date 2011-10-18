@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	Content.joomla
  * @since		1.6
  */
-class plgContentJoomla extends JPlugin
+class plgContentJoomla extends MolajoPlugin
 {
 	/**
 	 * Example after save content method

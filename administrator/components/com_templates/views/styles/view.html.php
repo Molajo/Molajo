@@ -53,7 +53,7 @@ class TemplatesViewStyles extends JView
 		$canDo	= TemplatesHelper::getActions();
 		$isSite	= ($state->get('filter.application_id') == 0);
 
-		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER_STYLES'), 'thememanager');
+		MolajoToolbarHelper::title(MolajoText::_('COM_TEMPLATES_MANAGER_STYLES'), 'thememanager');
 
 		if ($canDo->get('core.edit.state')) {
 			MolajoToolbarHelper::makeDefault('styles.setDefault', 'COM_TEMPLATES_TOOLBAR_SET_HOME');

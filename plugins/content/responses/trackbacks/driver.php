@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class ResponsesTrackbacks extends JPlugin
+class ResponsesTrackbacks extends MolajoPlugin
 {
 
 	function OnBeforeContentSave ( &$article, $isNew )	{
@@ -69,7 +69,7 @@ class ResponsesTrackbacks extends JPlugin
 	/**
 	 * 	Initialization
 	 */
-		$plugin =& JPluginHelper::getPlugin('content', 'tamka_post_email');
+		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_email');
 		$pluginParams = new JParameter( $plugin->params );
 
 	/**

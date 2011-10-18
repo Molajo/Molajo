@@ -58,11 +58,11 @@ class UsersControllerUser extends UsersController
 		// Check if the log in succeeded.
 		if (!JError::isError($error)) {
 			$app->setUserState('users.login.form.data', array());
-			$app->redirect(JRoute::_($data['return'], false));
+			$app->redirect(MolajoRoute::_($data['return'], false));
 		} else {
 			$data['remember'] = (int)$options['remember'];
 			$app->setUserState('users.login.form.data', $data);
-			$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
+			$app->redirect(MolajoRoute::_('index.php?option=com_users&view=login', false));
 		}
 	}
 
@@ -90,9 +90,9 @@ class UsersControllerUser extends UsersController
 			}
 
 			// Redirect the user.
-			$app->redirect(JRoute::_($return, false));
+			$app->redirect(MolajoRoute::_($return, false));
 		} else {
-			$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
+			$app->redirect(MolajoRoute::_('index.php?option=com_users&view=login', false));
 		}
 	}
 
@@ -187,7 +187,7 @@ class UsersControllerUser extends UsersController
 			$route	= 'index.php?option=com_users&view=remind'.$itemid;
 
 			// Go back to the complete form.
-			$this->setRedirect(JRoute::_($route, false), $message, 'error');
+			$this->setRedirect(MolajoRoute::_($route, false), $message, 'error');
 			return false;
 		} elseif ($return === false) {
 			// Complete failed.
@@ -198,7 +198,7 @@ class UsersControllerUser extends UsersController
 
 			// Go back to the complete form.
 			$message = JText::sprintf('COM_USERS_REMIND_REQUEST_FAILED', $model->getError());
-			$this->setRedirect(JRoute::_($route, false), $message, 'notice');
+			$this->setRedirect(MolajoRoute::_($route, false), $message, 'notice');
 			return false;
 		} else {
 			// Complete succeeded.
@@ -209,7 +209,7 @@ class UsersControllerUser extends UsersController
 
 			// Proceed to the login form.
 			$message = JText::_('COM_USERS_REMIND_REQUEST_SUCCESS');
-			$this->setRedirect(JRoute::_($route, false), $message);
+			$this->setRedirect(MolajoRoute::_($route, false), $message);
 			return true;
 		}
 	}

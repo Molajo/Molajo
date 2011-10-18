@@ -15,7 +15,7 @@ jimport('joomla.plugin.plugin');
 /**
  * 	Cron Job
  */
-class plgSystemCron extends JPlugin
+class plgSystemCron extends MolajoPlugin
 {
 
 	public function onAfterRender ()

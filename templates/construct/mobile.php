@@ -7,7 +7,7 @@
 */	
 
 // To enable use of site configuration
-$app 					= JFactory::getApplication();
+$app 					= MolajoFactory::getApplication();
 // Get the base URL of the website
 $baseUrl 				= JURI::base();
 

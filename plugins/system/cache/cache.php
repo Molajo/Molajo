@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.cache
  */
-class plgSystemCache extends JPlugin
+class plgSystemCache extends MolajoPlugin
 {
 
 	var $_cache = null;

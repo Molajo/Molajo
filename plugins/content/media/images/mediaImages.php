@@ -19,12 +19,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.plugin.plugin' );
 
-class MediaAudio extends JPlugin
+class MediaAudio extends MolajoPlugin
 {
 	function onPrepareContent( &$article, &$params, $limitstart )
 	{
 		//	Get Parameters
-		$plugin =& JPluginHelper::getPlugin('content', 'tamka_media_audio');
+		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_media_audio');
 		$pluginParams = new JParameter( $plugin->params );
 
 		//	Document

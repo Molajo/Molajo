@@ -24,18 +24,18 @@ JHtml::_('behavior.formvalidation');
 		}
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_config');?>" id="component-form" method="post" name="adminForm" autocomplete="off" class="form-validate">
 	<fieldset>
 		<div class="fltrt">
 			<button type="button" onclick="Joomla.submitform('component.apply', this.form);">
-				<?php echo JText::_('JAPPLY');?></button>
+				<?php echo MolajoText::_('JAPPLY');?></button>
 			<button type="button" onclick="Joomla.submitform('component.save', this.form);">
-				<?php echo JText::_('JSAVE');?></button>
+				<?php echo MolajoText::_('JSAVE');?></button>
 			<button type="button" onclick="window.parent.SqueezeBox.close();">
-				<?php echo JText::_('JCANCEL');?></button>
+				<?php echo MolajoText::_('JCANCEL');?></button>
 		</div>
 		<div class="configuration" >
-			<?php echo JText::_($this->component->option.'_configuration') ?>
+			<?php echo MolajoText::_($this->component->option.'_configuration') ?>
 		</div>
 	</fieldset>
 
@@ -44,9 +44,9 @@ JHtml::_('behavior.formvalidation');
 		$fieldSets = $this->form->getFieldsets();
 		foreach ($fieldSets as $name => $fieldSet) :
 			$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
-			echo JHtml::_('tabs.panel',JText::_($label), 'publishing-details');
+			echo JHtml::_('tabs.panel',MolajoText::_($label), 'publishing-details');
 			if (isset($fieldSet->description) && !empty($fieldSet->description)) :
-				echo '<p class="tab-description">'.JText::_($fieldSet->description).'</p>';
+				echo '<p class="tab-description">'.MolajoText::_($fieldSet->description).'</p>';
 			endif;
 	?>
 			<ul class="config-option-list">

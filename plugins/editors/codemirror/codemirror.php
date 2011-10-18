@@ -17,7 +17,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	Editors.codemirror
  * @since		1.6
  */
-class plgEditorCodemirror extends JPlugin
+class plgEditorCodemirror extends MolajoPlugin
 {
 	/**
 	 * Base path for editor files

@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.plugin.plugin');
 
-class plgContentLoadmodule extends JPlugin
+class plgContentLoadmodule extends MolajoPlugin
 {
 	protected static $modules=array();
 	/**

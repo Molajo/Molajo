@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Renders a standard button with a confirm dialog
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  * @since       1.0
  */
@@ -27,8 +27,8 @@ class MolajoButtonConfirm extends MolajoButton
 
 	public function fetchButton($type='Confirm', $msg='', $name = '', $text = '', $task = '', $list = true, $hideMenu = false)
 	{
-		$text	= JText::_($text);
-		$msg	= JText::_($msg, true);
+		$text	= MolajoText::_($text);
+		$msg	= MolajoText::_($msg, true);
 		$class	= $this->fetchIconClass($name);
 		$doTask	= $this->_getCommand($msg, $name, $task, $list);
 
@@ -63,7 +63,7 @@ class MolajoButtonConfirm extends MolajoButton
 	protected function _getCommand($msg, $name, $task, $list)
 	{
 		JHtml::_('behavior.framework');
-		$message	= JText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
+		$message	= MolajoText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
 		$message	= addslashes($message);
 
 		if ($list) {

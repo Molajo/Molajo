@@ -17,12 +17,12 @@ $task = $request['task'];
 if ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu')) {
     $logoutLink = '';
 } else {
-    $logoutLink = JRoute::_('index.php?option=com_login&task=logout&'. JUtility::getToken() .'=1');
+    $logoutLink = MolajoRoute::_('index.php?option=com_login&task=logout&'. JUtility::getToken() .'=1');
 }
 $hideLinks	= JRequest::getBool('hidemainmenu');
 
 $output = array();
-$output[] = '<span class="logout">' .($hideLinks ? '' : '<a href="'.$logoutLink.'">').JText::_('JLOGOUT').($hideLinks ? '' : '</a>').'</span>';
+$output[] = '<span class="logout">' .($hideLinks ? '' : '<a href="'.$logoutLink.'">').MolajoText::_('JLOGOUT').($hideLinks ? '' : '</a>').'</span>';
 
 /** rtl support */
 if ($document->direction == "rtl") :

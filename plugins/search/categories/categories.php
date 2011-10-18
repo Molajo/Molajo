@@ -19,7 +19,7 @@ require_once JPATH_SITE.'/components/com_articles/helpers/route.php';
  * @subpackage	Search.categories
  * @since		1.6
  */
-class plgSearchCategories extends JPlugin
+class plgSearchCategories extends MolajoPlugin
 {
 	/**
 	 * Constructor

@@ -45,7 +45,7 @@ class TemplatesViewPrevuuw extends JView
 		$this->url		= $application->id ? JURI::base() : JURI::root();
 
 		if (!$this->template) {
-			return JError::raiseWarning(500, JText::_('COM_TEMPLATES_TEMPLATE_NOT_SPECIFIED'));
+			return JError::raiseWarning(500, MolajoText::_('COM_TEMPLATES_TEMPLATE_NOT_SPECIFIED'));
 		}
 
 		// Set FTP credentials, if given
@@ -63,7 +63,7 @@ class TemplatesViewPrevuuw extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::_('COM_TEMPLATES_MANAGER'), 'thememanager');
+		MolajoToolbarHelper::title(MolajoText::_('COM_TEMPLATES_MANAGER'), 'thememanager');
 		MolajoToolbarHelper::custom('edit', 'back.png', 'back_f2.png', 'Back', false, false);
 	}
 }

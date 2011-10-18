@@ -25,10 +25,10 @@ JHtml::_('behavior.keepalive');
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_redirect&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="link-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_redirect&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="link-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo empty($this->item->id) ? JText::_('COM_REDIRECT_NEW_LINK') : JText::sprintf('COM_REDIRECT_EDIT_LINK', $this->item->id); ?></legend>
+			<legend><?php echo empty($this->item->id) ? MolajoText::_('COM_REDIRECT_NEW_LINK') : MolajoText::sprintf('COM_REDIRECT_EDIT_LINK', $this->item->id); ?></legend>
 			<ul class="adminformlist">
 			<li><?php echo $this->form->getLabel('old_url'); ?>
 			<?php echo $this->form->getInput('old_url'); ?></li>
@@ -47,7 +47,7 @@ JHtml::_('behavior.keepalive');
 
 	<div class="width-40 fltrt">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_REDIRECT_OPTIONS'); ?></legend>
+			<legend><?php echo MolajoText::_('COM_REDIRECT_OPTIONS'); ?></legend>
 			<ul class="adminformlist">
 				<li><?php echo $this->form->getLabel('published'); ?>
 				<?php echo $this->form->getInput('published'); ?></li>
@@ -55,7 +55,7 @@ JHtml::_('behavior.keepalive');
 
 		</fieldset>
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_REDIRECT_DETAILS'); ?></legend>
+			<legend><?php echo MolajoText::_('COM_REDIRECT_DETAILS'); ?></legend>
 			<ul class="adminformlist">
 				<li><?php echo $this->form->getLabel('created_date'); ?>
 				<?php echo $this->form->getInput('created_date'); ?></li>

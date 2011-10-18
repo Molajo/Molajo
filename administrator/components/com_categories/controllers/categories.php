@@ -44,18 +44,18 @@ class CategoriesControllerCategories extends JControllerAdmin
 		JRequest::checkToken() or die;
 
 		$extension = JRequest::getCmd('extension');
-		$this->setRedirect(JRoute::_('index.php?option=com_categories&view=categories&extension='.$extension, false));
+		$this->setRedirect(MolajoRoute::_('index.php?option=com_categories&view=categories&extension='.$extension, false));
 
 		// Initialise variables.
 		$model = $this->getModel();
 
 		if ($model->rebuild()) {
 			// Rebuild succeeded.
-			$this->setMessage(JText::_('COM_CATEGORIES_REBUILD_SUCCESS'));
+			$this->setMessage(MolajoText::_('COM_CATEGORIES_REBUILD_SUCCESS'));
 			return true;
 		} else {
 			// Rebuild failed.
-			$this->setMessage(JText::_('COM_CATEGORIES_REBUILD_FAILURE'));
+			$this->setMessage(MolajoText::_('COM_CATEGORIES_REBUILD_FAILURE'));
 			return false;
 		}
 	}
@@ -79,7 +79,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 			parent::saveorder();
 		} else {
 			// Nothing to reorder
-			$this->setRedirect(JRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
+			$this->setRedirect(MolajoRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
 			return true;
 		}
 	}

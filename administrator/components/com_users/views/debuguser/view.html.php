@@ -54,7 +54,7 @@ class UsersViewDebugUser extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::sprintf('COM_USERS_VIEW_DEBUG_USER_TITLE', $this->user->id, $this->user->name), 'user');
+		MolajoToolbarHelper::title(MolajoText::sprintf('COM_USERS_VIEW_DEBUG_USER_TITLE', $this->user->id, $this->user->name), 'user');
 
 		MolajoToolbarHelper::help('JHELP_USERS_DEBUG_USERS');
 	}

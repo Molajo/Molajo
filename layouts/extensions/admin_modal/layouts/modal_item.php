@@ -15,28 +15,28 @@ $function	= JRequest::getCmd('function', 'jSelect');
 $this->escape($this->state->get('list.ordering'))	= $this->escape($this->state->get('list.ordering'));
 $this->escape($this->state->get('list.direction'))	= $this->escape($this->state->get('list.direction'));
 ?>
-<form action="<?php echo JRoute::_('index.php?option='.$this->request['option'].'&view='.$this->state->get('request.view').$function); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option='.$this->request['option'].'&view='.$this->state->get('request.view').$function); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
 			<label for="filter_search">
-				<?php echo JText::_('JSearch_Filter_Label'); ?>
+				<?php echo MolajoText::_('JSearch_Filter_Label'); ?>
 			</label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->queryState->get('filter.search')); ?>" size="30" title="<?php echo JText::_('MOLAJO_FILTER_SEARCH_DESC'); ?>" />
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->queryState->get('filter.search')); ?>" size="30" title="<?php echo MolajoText::_('MOLAJO_FILTER_SEARCH_DESC'); ?>" />
 
 			<button type="submit">
-				<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+				<?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
 			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();">
-				<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+				<?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 
 		<div class="right">
 			<select name="filter_published" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->queryState->get('filter.published'), true);?>
 			</select>
 
 			<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo JText::_('JOPTION_SELECT_CATEGORY');?></option>
+				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_CATEGORY');?></option>
 				<?php echo JHtml::_('select.options', JHtml::_('category.options', 'com_articles'), 'value', 'text', $this->queryState->get('filter.category_id'));?>
 			</select>
 
@@ -81,7 +81,7 @@ $this->escape($this->state->get('list.direction'))	= $this->escape($this->state-
 					<?php echo $this->escape($item->category_title); ?>
 				</td>
 				<td class="center nowrap">
-					<?php echo JHtml::_('date',$item->created, JText::_('DATE_FORMAT_LC4')); ?>
+					<?php echo JHtml::_('date',$item->created, MolajoText::_('DATE_FORMAT_LC4')); ?>
 				</td>
 				<td class="center">
 					<?php echo $this->escape($item->author); ?>

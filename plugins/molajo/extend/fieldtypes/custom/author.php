@@ -38,7 +38,7 @@ class JFormFieldAuthor extends JFormFieldList
     protected function getOptions()
     {
         /** retrieve extend parameters **/
-        $extendContentPlugin =& JPluginHelper::getPlugin('content', 'extend');
+        $extendContentPlugin =& MolajoPluginHelper::getPlugin('content', 'extend');
         $extendParams = new JParameter($extendContentPlugin->params);
 
         /** initialization **/

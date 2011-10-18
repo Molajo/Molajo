@@ -44,7 +44,7 @@ class ConfigControllerApplication extends JController
 		// Check if the user is authorized to do this.
 		if (!MolajoFactory::getUser()->authorise('core.admin'))
 		{
-			MolajoFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoFactory::getApplication()->redirect('index.php', MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
 
@@ -79,7 +79,7 @@ class ConfigControllerApplication extends JController
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(JRoute::_('index.php?option=com_config&view=application', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_config&view=application', false));
 			return false;
 		}
 
@@ -94,13 +94,13 @@ class ConfigControllerApplication extends JController
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Save failed, go back to the screen and display a notice.
-			$message = JText::sprintf('JERROR_SAVE_FAILED', $model->getError());
+			$message = MolajoText::sprintf('JERROR_SAVE_FAILED', $model->getError());
 			$this->setRedirect('index.php?option=com_config&view=application', $message, 'error');
 			return false;
 		}
 
 		// Set the success message.
-		$message = JText::_('COM_CONFIG_SAVE_SUCCESS');
+		$message = MolajoText::_('COM_CONFIG_SAVE_SUCCESS');
 
 		// Set the redirect based on the task.
 		switch ($this->getTask())
@@ -126,7 +126,7 @@ class ConfigControllerApplication extends JController
 		// Check if the user is authorized to do this.
 		if (!MolajoFactory::getUser()->authorise('core.admin', 'com_config'))
 		{
-			MolajoFactory::getApplication()->redirect('index.php', JText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoFactory::getApplication()->redirect('index.php', MolajoText::_('JERROR_ALERTNOAUTHOR'));
 			return;
 		}
 
@@ -146,11 +146,11 @@ class ConfigControllerApplication extends JController
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		if (($data = file_get_contents('http://help.joomla.org/helpsites.xml')) === false) {
-			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_ERROR_HELPREFRESH_FETCH'), 'error');
+			$this->setRedirect('index.php?option=com_config', MolajoText::_('COM_CONFIG_ERROR_HELPREFRESH_FETCH'), 'error');
 		} else if (!JFile::write(JPATH_BASE . '/help/helpsites.xml', $data)) {
-			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_ERROR_HELPREFRESH_ERROR_STORE'), 'error');
+			$this->setRedirect('index.php?option=com_config', MolajoText::_('COM_CONFIG_ERROR_HELPREFRESH_ERROR_STORE'), 'error');
 		} else {
-			$this->setRedirect('index.php?option=com_config', JText::_('COM_CONFIG_HELPREFRESH_SUCCESS'));
+			$this->setRedirect('index.php?option=com_config', MolajoText::_('COM_CONFIG_HELPREFRESH_SUCCESS'));
 		}
 	}
 

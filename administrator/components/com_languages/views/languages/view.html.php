@@ -52,7 +52,7 @@ class LanguagesViewLanguages extends JView
 		require_once JPATH_COMPONENT.'/helpers/languages.php';
 		$canDo	= LanguagesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_LANGUAGES_VIEW_LANGUAGES_TITLE'), 'langmanager.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_LANGUAGES_VIEW_LANGUAGES_TITLE'), 'langmanager.png');
 
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('language.add');

@@ -68,7 +68,7 @@ class UsersController extends JController
 		$id			= JRequest::getInt('id');
 
 		if (!$this->canView($view)) {
-			JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 
 			return;
 		}
@@ -76,25 +76,25 @@ class UsersController extends JController
 		// Check for edit form.
 		if ($view == 'user' && $layout == 'edit' && !$this->checkEditId('com_users.edit.user', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_users&view=users', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=users', false));
 
 			return false;
 		}
 		else if ($view == 'group' && $layout == 'edit' && !$this->checkEditId('com_users.edit.group', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_users&view=groups', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=groups', false));
 
 			return false;
 		}
 		else if ($view == 'level' && $layout == 'edit' && !$this->checkEditId('com_users.edit.level', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_users&view=levels', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=levels', false));
 
 			return false;
 		}

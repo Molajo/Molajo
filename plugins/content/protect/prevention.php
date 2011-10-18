@@ -21,7 +21,7 @@ class Protect
 	/**
 	 * 	Retrieve Library Parameters
 	 */
-		$tamkaLibraryPlugin 	=& JPluginHelper::getPlugin( 'system', 'tamka');
+		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
 		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);	
 		
 	/**
@@ -43,7 +43,7 @@ class Protect
 	/**
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
-		$tamkaLibraryPlugin 	=& JPluginHelper::getPlugin( 'system', 'tamka');
+		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
 		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);
 		$spamProtectionOption = $tamkaLibraryPluginParams->def('spamprevention', '1');		
 
@@ -161,7 +161,7 @@ class Protect
 	/**
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
-		$tamkaLibraryPlugin 	=& JPluginHelper::getPlugin( 'system', 'tamka');
+		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
 		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);	
 		
 	/**

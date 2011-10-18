@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 jimport('joomla.database.databasequery');
 
@@ -21,17 +21,23 @@ jimport('joomla.database.databasequery');
 class JDatabaseQuerySQLSrv extends JDatabaseQuery
 {
 	/**
-	 * @var    string  The character(s) used to quote SQL statement names such as table names or field names,
-	 *                 etc.  The child classes should define this as necessary.  If a single character string the
-	 *                 same character is used for both sides of the quoted name, else the first character will be
-	 *                 used for the opening quote and the second for the closing quote.
+	 * The character(s) used to quote SQL statement names such as table names or field names,
+	 * etc.  The child classes should define this as necessary.  If a single character string the
+	 * same character is used for both sides of the quoted name, else the first character will be
+	 * used for the opening quote and the second for the closing quote.
+	 *
+	 * @var    string
+	 *
 	 * @since  11.1
 	 */
 	protected $name_quotes = '`';
 
 	/**
-	 * @var    string  The null or zero representation of a timestamp for the database driver.  This should be
-	 *                 defined in child classes to hold the appropriate value for the engine.
+	 * The null or zero representation of a timestamp for the database driver.  This should be
+	 * defined in child classes to hold the appropriate value for the engine.
+	 *
+	 * @var    string
+	 *
 	 * @since  11.1
 	 */
 	protected $null_date = '1900-01-01 00:00:00';
@@ -40,6 +46,7 @@ class JDatabaseQuerySQLSrv extends JDatabaseQuery
 	 * Magic function to convert the query to a string.
 	 *
 	 * @return  string	The completed query.
+	 *
 	 * @since   11.1
 	 */
 	public function __toString()
@@ -52,12 +59,15 @@ class JDatabaseQuerySQLSrv extends JDatabaseQuery
 				$query .= (string) $this->insert;
 
 				// Set method
-				if ($this->set) {
+				if ($this->set)
+				{
 					$query .= (string) $this->set;
 				}
 				// Columns-Values method
-				else if ($this->values) {
-					if ($this->columns) {
+				elseif ($this->values)
+				{
+					if ($this->columns)
+					{
 						$query .= (string) $this->where;
 					}
 
@@ -66,9 +76,7 @@ class JDatabaseQuerySQLSrv extends JDatabaseQuery
 					$query .= 'VALUES ';
 					$query .= (string) $this->values;
 
-					$query = 'SET IDENTITY_INSERT '.$tableName.' ON;' .
-						$query .
-						'SET IDENTITY_INSERT '.$tableName.' OFF;';
+					$query = 'SET IDENTITY_INSERT ' . $tableName . ' ON;' . $query . 'SET IDENTITY_INSERT ' . $tableName . ' OFF;';
 				}
 
 				break;
@@ -89,25 +97,26 @@ class JDatabaseQuerySQLSrv extends JDatabaseQuery
 	 * @param   string  $value  The value to cast as a char.
 	 *
 	 * @return  string  Returns the cast value.
+	 *
 	 * @since   11.1
 	 */
 	function castAsChar($value)
 	{
-		return 'CAST('.$value.' as NVARCHAR(10))';
+		return 'CAST(' . $value . ' as NVARCHAR(10))';
 	}
 
 	/**
 	 * Gets the function to determine the length of a character string.
 	 *
-	 * @param   string  $value  A value.
+	 * @param   string  $field  A value.
 	 *
-	 * @return  string  The required char lenght call.
+	 * @return  string  The required char length call.
 	 *
 	 * @since 11.1
 	 */
 	function charLength($field)
 	{
-		return 'DATALENGTH('.$field.') IS NOT NULL';
+		return 'DATALENGTH(' . $field . ') IS NOT NULL';
 	}
 
 	/**
@@ -122,11 +131,13 @@ class JDatabaseQuerySQLSrv extends JDatabaseQuery
 	 */
 	function concatenate($values, $separator = null)
 	{
-		if ($separator) {
-			return '('.implode('+'.$this->quote($separator).'+', $values).')';
+		if ($separator)
+		{
+			return '(' . implode('+' . $this->quote($separator) . '+', $values) . ')';
 		}
-		else{
-			return '('.implode('+', $values).')';
+		else
+		{
+			return '(' . implode('+', $values) . ')';
 		}
 	}
 
@@ -143,16 +154,16 @@ class JDatabaseQuerySQLSrv extends JDatabaseQuery
 	}
 
 	/**
-	 * Get the length of a a string in bytes.
+	 * Get the length of a string in bytes.
 	 *
 	 * @param   string  $value  The string to measure.
 	 *
-	 * @return  int
+	 * @return  integer
 	 *
 	 * @since   11.1
 	 */
 	function length($value)
 	{
-		return 'LEN('.$value.')';
+		return 'LEN(' . $value . ')';
 	}
 }

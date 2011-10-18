@@ -47,14 +47,14 @@ class UsersController extends JController
 					$user = MolajoFactory::getUser();
 					if ($user->get('guest') != 1) {
 						// Redirect to profile page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
+						$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=profile', false));
 						return;
 					}
 
 					// Check if user registration is enabled
             		if(JComponentHelper::getParams('com_users')->get('allowUserRegistration') == 0) {
             			// Registration is disabled - Redirect to login page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));
+						$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=login', false));
 						return;
             		}
 
@@ -69,7 +69,7 @@ class UsersController extends JController
 					$user = MolajoFactory::getUser();
 					if ($user->get('guest') == 1) {
 						// Redirect to login page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));
+						$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=login', false));
 						return;
 					}
 					$model = $this->getModel($vName);
@@ -85,7 +85,7 @@ class UsersController extends JController
 					$user = MolajoFactory::getUser();
 					if ($user->get('guest') != 1) {
 						// Redirect to profile page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
+						$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=profile', false));
 						return;
 					}
 
@@ -97,7 +97,7 @@ class UsersController extends JController
 					$user = MolajoFactory::getUser();
 					if ($user->get('guest') != 1) {
 						// Redirect to profile page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
+						$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=profile', false));
 						return;
 					}
 

@@ -59,7 +59,7 @@ define('SIMPLEPIE_VERSION', '1.2');
 define('SIMPLEPIE_BUILD', '20090627192103');
 
 /**
- * SimplePie website URL
+ * SimplePie Website URL
  */
 define('SIMPLEPIE_URL', 'http://simplepie.org');
 

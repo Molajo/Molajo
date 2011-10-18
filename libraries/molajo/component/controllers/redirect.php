@@ -81,6 +81,13 @@ class MolajoControllerRedirect extends MolajoController
     protected $return_page = null;
 
     /**
+     * $request
+     *
+     * @var object
+     */
+    public $request = null;
+
+    /**
     * initialize
     *
     * Establish the Link needed for redirecting after the task is complete (or fails)
@@ -88,22 +95,23 @@ class MolajoControllerRedirect extends MolajoController
     * @return	boolean
     * @since	1.0
     */
-    public function initialize ($task=null)
+    public function initialize ()
     {
         /** no redirect: */
 
         /** 1. ajax and non-html output **/
-        $format = JRequest::getCmd('format', 'html');
-        if ($format == null) {
+        $format = $this->request['format'];
+        if ($format == 'html' || $format == null || $format == '') {
             $format = 'html';
-        }        
-        if (!$format == 'html') {
+        } else {
             $this->setRedirectAction(false);
             return;
         }
 
         /** 2. display, add, edit tasks **/
-        if ($task == 'display' || $task == 'add' || $task == 'edit') {
+        if ($this->request['task'] == 'display'
+            || $this->request['task'] == 'add'
+            || $this->request['task'] == 'edit') {
             $this->setRedirectAction(false);
             return;
         }
@@ -112,16 +120,18 @@ class MolajoControllerRedirect extends MolajoController
         $this->redirectAction = true;
 
         /** extension: category uses this parameter **/
-        $extension = JRequest::getCmd('extension', '');
-        if ($extension == '' || $extension == null) {
+        $extension = $this->request['extension'];
+        if ($extension == ''
+            || $extension == null) {
             $extension = '';
         } else {
             $extension = '&extension='.$extension;
         }
 
         /** component_specific: to add parameter pairs needed in addition to standard **/
-        $component_specific = JRequest::getCmd('component_specific', '');
-        if ($component_specific == '' || $component_specific == null) {
+        $component_specific = $this->request['component_specific'];
+        if ($component_specific == ''
+            || $component_specific == null) {
             $component_specific = '';
         } elseif (substr($component_specific, 1, 1) == '&') {
         } else {
@@ -129,30 +139,36 @@ class MolajoControllerRedirect extends MolajoController
         }
 
         /** cancel **/
-        if ($task == 'cancel') {
+        if ($this->request['task'] == 'cancel') {
             if (MolajoFactory::getApplication()->getName() == 'site') {
                 if ($this->id == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&id='.$this->id.$extension.$component_specific;
+                    $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display&id='.$this->id.$extension.$component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&id='.$this->id.$extension.$component_specific;
+                $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=edit&id='.$this->id.$extension.$component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
         }
 
-        /** multiple controller tasks **/
-        if (JRequest::getCmd('controller') == JRequest::getCmd('DefaultView')) {
-            $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').$extension.$component_specific;
-            $this->redirectReturn = $this->redirectSuccess;
-            return;
-        }            
+        if ($this->request['task'] == 'login') {
+            $this->redirectSuccess = 'index.php?option=com_dashboard&view=display';
+            $this->redirectReturn = 'index.php?option=com_user&task=login';
 
-        /** single controller tasks - item url with and without the layout=editor **/
-        $this->redirectSuccess = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').$extension.$component_specific;
-        $this->redirectReturn = 'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('EditView').$extension.$component_specific;
+        } elseif ($this->request['task'] == 'logout') {
+            $this->redirectSuccess = 'index.php';
+            $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
+
+        } elseif ($this->request['task'] == 'display') {
+            $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
+            $this->redirectReturn = $this->redirectSuccess;
+            
+        } else {
+            $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
+            $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=edit'.$extension.$component_specific;
+        }
 
         return;
     }
@@ -253,7 +269,7 @@ class MolajoControllerRedirect extends MolajoController
 		if ($this->successIndicator === false) {
 
             if ($this->redirectMessage == null || $this->redirectMessage == '') {
-                $this->redirectMessage = JText::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
+                $this->redirectMessage = MolajoText::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'error';
@@ -263,7 +279,7 @@ class MolajoControllerRedirect extends MolajoController
 
             /** defaults to success **/
             if ($this->redirectMessage == null) {
-                $this->redirectMessage = JText::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
+                $this->redirectMessage = MolajoText::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'message';
@@ -295,6 +311,6 @@ class MolajoControllerRedirect extends MolajoController
         }
         
         /** redirect **/
-        MolajoFactory::getApplication()->redirect(JRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
+        MolajoFactory::getApplication()->redirect(MolajoRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
     }
 }

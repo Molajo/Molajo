@@ -54,7 +54,7 @@ class UsersViewDebugGroup extends JView
 	 */
 	protected function addToolbar()
 	{
-		MolajoToolbarHelper::title(JText::sprintf('COM_USERS_VIEW_DEBUG_GROUP_TITLE', $this->group->id, $this->group->title), 'groups');
+		MolajoToolbarHelper::title(MolajoText::sprintf('COM_USERS_VIEW_DEBUG_GROUP_TITLE', $this->group->id, $this->group->title), 'groups');
 
 		MolajoToolbarHelper::help('JHELP_USERS_DEBUG_GROUPS');
 	}

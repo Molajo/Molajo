@@ -9,11 +9,11 @@
 defined('MOLAJO') or die; ?>
 <fieldset class="batch">
 	
-    <legend><?php echo JText::_('MOLAJO_BATCH_OPTIONS');?></legend>
+    <legend><?php echo MolajoText::_('MOLAJO_BATCH_OPTIONS');?></legend>
 
         <fieldset id="batch-choose-action" class="combo">
             <select name="batch_catid" class="inputbox" id="batch-category-id">
-                <option value=""><?php echo JText::_('MOLAJO_BATCH_CATEGORY_LABEL') ?></option>
+                <option value=""><?php echo MolajoText::_('MOLAJO_BATCH_CATEGORY_LABEL') ?></option>
                     <?php if ($this->request['option'] == 'com_categories') { ?>
                         <?php echo JHtml::_('select.options', JHtml::_('category.categories', $this->request['option'], array('published' => 1)));?>
                     <?php } else { ?>
@@ -22,11 +22,11 @@ defined('MOLAJO') or die; ?>
             </select>
 
             <button type="submit" onclick="submitbutton('<?php echo $this->state->get('request.DefaultView'); ?>.copy');">
-                    <?php echo JText::_('MOLAJO_BATCH_COPY_PROCESS'); ?>
+                    <?php echo MolajoText::_('MOLAJO_BATCH_COPY_PROCESS'); ?>
             </button>
 
             <button type="submit" onclick="submitbutton('<?php echo $this->state->get('request.DefaultView'); ?>.move');">
-                    <?php echo JText::_('MOLAJO_BATCH_MOVE_PROCESS'); ?>
+                    <?php echo MolajoText::_('MOLAJO_BATCH_MOVE_PROCESS'); ?>
             </button>
         </fieldset>
 </fieldset>

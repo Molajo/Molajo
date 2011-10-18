@@ -45,7 +45,7 @@ class MolajoFormFieldSample extends MolajoFormFieldList
 		if (is_array($files)) {
 			foreach ($files as $file)
 			{
-				$options[] = JHtml::_('select.option', $file, $lang->hasKey($key = 'INSTL_'.($file=JFile::stripExt($file)).'_SET')?JText::_($key):$file);
+				$options[] = JHtml::_('select.option', $file, $lang->hasKey($key = 'INSTL_'.($file=JFile::stripExt($file)).'_SET')?MolajoText::_($key):$file);
 			}
 		}
 

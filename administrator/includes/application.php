@@ -10,7 +10,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Molajo Site
+ * Molajo Administrator
  *
  * Interacts with the Application Class for the Site Application
  *
@@ -115,9 +115,9 @@ class MolajoAdministrator extends MolajoApplication
 	/**
      * getRouter
      *
-	 * Return a reference to the JRouter object.
+	 * Return a reference to the MolajoRouter object.
 	 *
-	 * @return	JRouter
+	 * @return	MolajoRouter
 	 * @since	1.0
 	 */
 	static public function getRouter($name = null, array $options = array())
@@ -156,8 +156,8 @@ class MolajoAdministrator extends MolajoApplication
 				default:
 					break;
 			}
+			$document->setTitle($this->getCfg('sitename'). ' - ' .MolajoText::_('JADMINISTRATION'));
 
-			$document->setTitle($this->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION'));
 			$document->setDescription($this->getCfg('MetaDesc'));
 
 			$contents = MolajoComponentHelper::renderComponent($request);
@@ -175,6 +175,7 @@ class MolajoAdministrator extends MolajoApplication
 			$code = $e->getCode();
 			JError::raiseError($code ? $code : 500, $e->getMessage());
 		}
+
 	}
 
 	/**
@@ -201,13 +202,14 @@ class MolajoAdministrator extends MolajoApplication
 		);
 
 		$document = MolajoFactory::getDocument();
+
 		$document->parse($params);
 
 		$this->triggerEvent('onBeforeRender');
 		$renderedOutput = $document->render(false, $params);
+
 		JResponse::setBody($renderedOutput);
 		$this->triggerEvent('onAfterRender');
-
 	}
 
 	/**
@@ -239,7 +241,7 @@ class MolajoAdministrator extends MolajoApplication
 
 		if (JError::isError($result)) {
         } else {
-			$lang = JRequest::getCmd('lang');
+			$lang = JRequest::getCmd('language');
 			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
 			$this->setUserState('application.lang', $lang );
 
@@ -290,7 +292,7 @@ class MolajoAdministrator extends MolajoApplication
 			if (file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php')) {
             } else {
 				$template->params = new JRegistry();
-				$template->template = 'mojito';
+				$template->template = MOLAJO_APPLICATION_DEFAULT_TEMPLATE;
 			}
 		}
 		if ($params) {
@@ -345,5 +347,14 @@ class MolajoAdministrator extends MolajoApplication
 			$db->setQuery($query);
 			$db->query();
 		}
+	}
+
+
+    /**
+     * Deprecated
+     */
+	public function getClientId()
+	{
+		return parent::getApplicationId();
 	}
 }

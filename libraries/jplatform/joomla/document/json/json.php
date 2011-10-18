@@ -7,24 +7,25 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
+
+jimport('joomla.document.document');
 
 /**
  * JDocumentJSON class, provides an easy interface to parse and display JSON output
  *
  * @package     Joomla.Platform
  * @subpackage  Document
+ * @see         http://www.json.org/
  * @since       11.1
  */
-
-jimport('joomla.document.document');
-
 class JDocumentJSON extends JDocument
 {
 	/**
 	 * Document name
 	 *
 	 * @var    string
+	 * @since  11.1
 	 */
 	protected $_name = 'joomla';
 
@@ -32,6 +33,10 @@ class JDocumentJSON extends JDocument
 	 * Class constructor
 	 *
 	 * @param   array  $options  Associative array of options
+	 *
+	 * @return  JDocumentJson
+	 *
+	 * @since  11.1
 	 */
 	public function __construct($options = array())
 	{
@@ -51,11 +56,13 @@ class JDocumentJSON extends JDocument
 	 * @param   array    $params  Associative array of attributes
 	 *
 	 * @return  The rendered data
+	 *
+	 * @since  11.1
 	 */
 	public function render($cache = false, $params = array())
 	{
 		JResponse::allowCache(false);
-		JResponse::setHeader('Content-disposition', 'attachment; filename="'.$this->getName().'.json"', true);
+		JResponse::setHeader('Content-disposition', 'attachment; filename="' . $this->getName() . '.json"', true);
 
 		parent::render();
 
@@ -63,29 +70,14 @@ class JDocumentJSON extends JDocument
 	}
 
 	/**
-	 * Get the document head data
-	 *
-	 * @return  array  The document head data in array form
-	 */
-	public function getHeadData()
-	{
-	}
-
-	/**
-	 * Set the document head data
-	 *
-	 * @param   array  $data  The document head data in array form
-	 */
-	public function setHeadData($data)
-	{
-	}
-
-	/**
 	 * Returns the document name
 	 *
 	 * @return  string
+	 *
+	 * @since  11.1
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->_name;
 	}
 
@@ -93,9 +85,15 @@ class JDocumentJSON extends JDocument
 	 * Sets the document name
 	 *
 	 * @param   string  $name  Document name
-	 * @return  void
+	 *
+	 * @return  JDocumentJSON instance of $this to allow chaining
+	 *
+	 * @since   11.1
 	 */
-	public function setName($name = 'joomla') {
+	public function setName($name = 'joomla')
+	{
 		$this->_name = $name;
+
+		return $this;
 	}
 }

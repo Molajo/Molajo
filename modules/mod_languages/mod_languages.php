@@ -16,7 +16,7 @@ require_once dirname(__FILE__).'/helper.php';
 $headerText	= JString::trim($params->get('header_text'));
 $footerText	= JString::trim($params->get('footer_text'));
 
-$cacheid = md5(JRequest::getVar('lang').$module->module);
+$cacheid = md5(JRequest::getCmd('language').$module->module);
 
 $cacheparams = new stdClass;
 $cacheparams->cachemode = 'id';

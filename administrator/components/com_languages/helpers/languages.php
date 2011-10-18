@@ -25,17 +25,17 @@ class LanguagesHelper
 	public static function addSubmenu($vName)
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('COM_LANGUAGES_SUBMENU_INSTALLED_SITE'),
+			MolajoText::_('COM_LANGUAGES_SUBMENU_INSTALLED_SITE'),
 			'index.php?option=com_languages&view=installed&application=0',
 			$vName == 'installed'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_LANGUAGES_SUBMENU_INSTALLED_ADMINISTRATOR'),
+			MolajoText::_('COM_LANGUAGES_SUBMENU_INSTALLED_ADMINISTRATOR'),
 			'index.php?option=com_languages&view=installed&application=1',
 			$vName == 'installed'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_LANGUAGES_SUBMENU_CONTENT'),
+			MolajoText::_('COM_LANGUAGES_SUBMENU_CONTENT'),
 			'index.php?option=com_languages&view=languages',
 			$vName == 'languages'
 		);

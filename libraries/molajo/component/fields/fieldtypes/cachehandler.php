@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -38,7 +38,7 @@ class MolajoFormFieldCacheHandler extends MolajoFormFieldList
 
 		// Convert to name => name array.
 		foreach (JCache::getStores() as $store) {
-			$options[] = JHtml::_('select.option', $store, JText::_('MOLAJO_FORM_VALUE_CACHE_'.$store), 'value', 'text');
+			$options[] = JHtml::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_CACHE_'.$store), 'value', 'text');
 		}
 
 		$options = array_merge(parent::getOptions(), $options);

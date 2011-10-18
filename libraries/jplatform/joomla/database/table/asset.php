@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 jimport('joomla.database.tablenested');
 
@@ -16,22 +16,24 @@ jimport('joomla.database.tablenested');
  *
  * @package     Joomla.Platform
  * @subpackage  Database
+ * @link        http://docs.joomla.org/JTableAsset
  * @since       11.1
- * @link		http://docs.joomla.org/JTableAsset
  */
 class JTableAsset extends JTableNested
 {
 	/**
 	 * The primary key of the asset.
 	 *
-	 * @var int
+	 * @var     integer
+	 * @since  11.1
 	 */
 	public $id = null;
 
 	/**
 	 * The unique name of the asset.
 	 *
-	 * @var string
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $name = null;
 
@@ -43,12 +45,21 @@ class JTableAsset extends JTableNested
 	public $title = null;
 
 	/**
-	 * @var	string
+	 * The rules for the asset stored in a JSON string
+	 *
+	 * @var    string
+	 * @since  11.1
 	 */
 	public $rules = null;
 
 	/**
-	 * @param database A database connector object
+	 * Constructor
+	 *
+	 * @param   database  &$db  A database connector object
+	 *
+	 * @return  JTableAsset
+	 *
+	 * @since  11.1
 	 */
 	public function __construct(&$db)
 	{
@@ -58,20 +69,23 @@ class JTableAsset extends JTableNested
 	/**
 	 * Method to load an asset by it's name.
 	 *
-	 * @param   string  The name of the asset.
+	 * @param   string  $name  The name of the asset.
 	 *
 	 * @return  integer
+	 *
+	 * @since   11.1
 	 */
 	public function loadByName($name)
 	{
 		// Get the asset id for the asset.
 		$this->_db->setQuery(
-			'SELECT '.$this->_db->quoteName('id') .
-			' FROM '.$this->_db->quoteName('#__assets') .
-			' WHERE '.$this->_db->quoteName('name').' = '.$this->_db->Quote($name)
+			'SELECT ' . $this->_db->quoteName('id') .
+			' FROM ' . $this->_db->quoteName('#__assets') .
+			' WHERE ' . $this->_db->quoteName('name') . ' = ' . $this->_db->Quote($name)
 		);
 		$assetId = (int) $this->_db->loadResult();
-		if (empty($assetId)) {
+		if (empty($assetId))
+		{
 			return false;
 		}
 		// Check for a database error.
@@ -86,7 +100,7 @@ class JTableAsset extends JTableNested
 	/**
 	 * Asset that the nested set data is valid.
 	 *
-	 * @return  bool  True if the instance is sane and able to be stored in the database.
+	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
 	 * @link	http://docs.joomla.org/JTable/check
 	 * @since   11.1
@@ -99,20 +113,22 @@ class JTableAsset extends JTableNested
 		if ($this->parent_id > 0)
 		{
 			$this->_db->setQuery(
-				'SELECT COUNT(id)' .
-				' FROM '.$this->_db->quoteName($this->_tbl).
-				' WHERE '.$this->_db->quoteName('id').' = '.$this->parent_id
+				'SELECT COUNT(id)' . ' FROM ' . $this->_db->quoteName($this->_tbl) .
+				' WHERE ' . $this->_db->quoteName('id') . ' = ' . $this->parent_id
 			);
-			if ($this->_db->loadResult()) {
+			if ($this->_db->loadResult())
+			{
 				return true;
 			}
 			else
 			{
-				if ($error = $this->_db->getErrorMsg()) {
+				if ($error = $this->_db->getErrorMsg())
+				{
 					$this->setError($error);
 				}
-				else {
-					$this->setError(JText::_('MOLAJO_DATABASE_ERROR_INVALID_PARENT_ID'));
+				else
+				{
+					$this->setError(JText::_('JLIB_DATABASE_ERROR_INVALID_PARENT_ID'));
 				}
 				return false;
 			}

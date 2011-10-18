@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 /**
  * Extension object
@@ -19,52 +19,87 @@ defined('JPATH_PLATFORM') or die;
 class JExtension extends JObject
 {
 	/**
-	 * @var string $filename Filename of the extension
+	 * Filename of the extension
+	 *
+	 * @var    string
+	 * @since  11.1
 	 */
 	var $filename = '';
+
 	/**
-	 * @var string $type Type of the extension
+	 * Type of the extension
+	 *
+	 * @var    string
+	 * @since  11.1
 	 */
 	var $type = '';
+
 	/**
-	 * @var string $id Unique Identifier for the extension
-	 * */
+	 * Unique Identifier for the extension
+	 *
+	 * @var    string
+	 * @since  11.1
+	 */
 	var $id = '';
+
 	/**
-	 *  @var boolean $published The status of the extension
-	 *  */
+	 * The status of the extension
+	 *
+	 * @var    boolean
+	 * @since  11.1
+	 */
 	var $published = false;
+
 	/**
-	 * @var string $client String representation of client. Valid for modules, templates and languages.
-	 * 					set by default to site
+	 * String representation of client. Valid for modules, templates and languages.
+	 * Set by default to site.
+	 *
+	 * @var    string
+	 * @since  11.1
 	 */
 	var $client = 'site';
+
 	/**
-	 * @var string $group The group name of the plugin. Not used for other known extension types (only plugins)
+	 * The group name of the plugin. Not used for other known extension types (only plugins)
+	 *
+	 * @var string
+	 * @since  11.1
 	 */
-	var $group =  '';
+	var $group = '';
+
 	/**
-	 *  @var Object $manifest_cache An object representation of the manifest file
-	 *  							Stored metadata
+	 * An object representation of the manifest file stored metadata
+	 *
+	 * @var object
+	 * @since  11.1
 	 */
 	var $manifest_cache = null;
+
 	/**
-	 * @var Object $params An object representation of the extension params
+	 * An object representation of the extension params
+	 *
+	 * @var    object
+	 * @since  11.1
 	 */
 	var $params = null;
 
 	/**
 	 * Constructor
-	 * @param JXMLElement $element a JXMLElement from which to load data from
+	 *
+	 * @param   JXMLElement  $element  A JXMLElement from which to load data from
+	 *
+	 * @return  JExtension
+	 *
+	 * @since  11.1
 	 */
 	function __construct(JXMLElement $element = null)
 	{
 		if ($element && is_a($element, 'JXMLElement'))
 		{
-			$this->type = (string)$element->attributes()->type;
-			$this->id = (string)$element->attributes()->id;
+			$this->type = (string) $element->attributes()->type;
+			$this->id = (string) $element->attributes()->id;
 
-			switch($this->type)
+			switch ($this->type)
 			{
 				case 'component':
 					// By default a component doesn't have anything
@@ -73,33 +108,37 @@ class JExtension extends JObject
 				case 'module':
 				case 'template':
 				case 'language':
-					$this->client = (string)$element->attributes()->client;
+					$this->client = (string) $element->attributes()->client;
 					$tmp_client_id = JApplicationHelper::getClientInfo($this->client, 1);
-					if($tmp_client_id == null) {
-						JError::raiseWarning(100, JText::_('MOLAJO_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
-					} else {
+					if ($tmp_client_id == null)
+					{
+						JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
+					}
+					else
+					{
 						$this->client_id = $tmp_client_id->id;
 					}
 					break;
 
 				case 'plugin':
-					$this->group = (string)$element->attributes()->group;
+					$this->group = (string) $element->attributes()->group;
 					break;
 
 				default:
 					// Catch all
 					// Get and set client and group if we don't recognise the extension
-					if ($client = (string)$element->attributes()->client)
+					if ($client = (string) $element->attributes()->client)
 					{
 						$this->client_id = JApplicationHelper::getClientInfo($this->client, 1);
 						$this->client_id = $this->client_id->id;
 					}
-					if ($group = (string)$element->attributes()->group) {
-						$this->group = (string)$element->attributes()->group;
+					if ($group = (string) $element->attributes()->group)
+					{
+						$this->group = (string) $element->attributes()->group;
 					}
 					break;
 			}
-			$this->filename = (string)$element;
+			$this->filename = (string) $element;
 		}
 	}
 }

@@ -35,7 +35,7 @@ class CategoriesControllerCategory extends JControllerForm
 	{
 		parent::__construct($config);
 
-		// Guess the JText message prefix. Defaults to the option.
+		// Guess the MolajoText message prefix. Defaults to the option.
 		if (empty($this->extension)) {
 			$this->extension = JRequest::getCmd('extension', 'com_articles');
 		}

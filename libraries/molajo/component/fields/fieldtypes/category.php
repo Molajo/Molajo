@@ -43,7 +43,7 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
         /** extension scope **/
         $extension	= $this->element['extension'] ? (string) $this->element['extension'] : (string) $this->element['scope'];
         if (isset($this->element['show_root'])) {
-            array_unshift($options, JHtml::_('select.option', '0', JText::_('JGLOBAL_ROOT')));
+            array_unshift($options, JHtml::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
         }
 
         /** state **/

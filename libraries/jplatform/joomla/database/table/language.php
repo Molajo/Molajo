@@ -7,15 +7,15 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 jimport('joomla.database.table');
 
 /**
  * Languages table.
  *
- * @package		Joomla.Administrator
- * @subpackage  com_languages
+ * @package     Joomla.Platform
+ * @subpackage  Database
  * @since       11.1
  */
 class JTableLanguage extends JTable
@@ -23,7 +23,7 @@ class JTableLanguage extends JTable
 	/**
 	 * Constructor
 	 *
-	 * @param   JDatabase
+	 * @param   JDatabase  &$db  A database connector object
 	 *
 	 * @return  JTableLanguage
 	 *
@@ -43,8 +43,9 @@ class JTableLanguage extends JTable
 	 */
 	public function check()
 	{
-		if (trim($this->title) == '') {
-			$this->setError(JText::_('MOLAJO_DATABASE_ERROR_LANGUAGE_NO_TITLE'));
+		if (trim($this->title) == '')
+		{
+			$this->setError(JText::_('JLIB_DATABASE_ERROR_LANGUAGE_NO_TITLE'));
 			return false;
 		}
 

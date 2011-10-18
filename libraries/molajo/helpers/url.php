@@ -35,10 +35,10 @@ class MolajoURLHelper {
         $url .= md5( strtolower( trim( $option_Email ) ) );
         $url .= "?s=$s&d=$d&r=$r";
         if ( $img ) {
-                $url = '<img src="' . $url . '"';
+                $url = '<img src="'.$url.'"';
                 if (count($atts) > 0 ) {
                     foreach ( $atts as $key => $val )   {
-                        $url .= ' ' . $key . '="' . $val . '"';
+                        $url .= ' '.$key.'="'.$val.'"';
                     }
                 }
                 $url .= ' />';
@@ -141,7 +141,7 @@ class MolajoURLHelper {
     * $url = MolajoHelperURL::encodeLinkText ($option_InputText);
     */
     function addTrailingSlash ($option_InputText) {
-            return untrailingslashit($option_InputText) . '/';
+            return untrailingslashit($option_InputText).'/';
     }
 
     /**

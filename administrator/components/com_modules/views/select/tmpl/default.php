@@ -15,7 +15,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 ?>
 
-<h2 class="modal-title"><?php echo JText::_('COM_MODULES_TYPE_CHOOSE')?></h2>
+<h2 class="modal-title"><?php echo MolajoText::_('COM_MODULES_TYPE_CHOOSE')?></h2>
 
 <ul id="new-modules-list">
 <?php foreach ($this->items as &$item) : ?>
@@ -28,7 +28,7 @@ JHtml::_('behavior.tooltip');
 		$desc	= $this->escape($item->desc);
 		?>
 		<span class="editlinktip hasTip" title="<?php echo $name.' :: '.$desc; ?>">
-			<a href="<?php echo JRoute::_($link);?>" target="_top">
+			<a href="<?php echo MolajoRoute::_($link);?>" target="_top">
 				<?php echo $name; ?></a></span>
 	</li>
 <?php endforeach; ?>

@@ -52,7 +52,7 @@ class MenusControllerMenus extends JController
 		$cid	= JRequest::getVar('cid', array(), '', 'array');
 
 		if (!is_array($cid) || count($cid) < 1) {
-			JError::raiseWarning(500, JText::_('COM_MENUS_NO_MENUS_SELECTED'));
+			JError::raiseWarning(500, MolajoText::_('COM_MENUS_NO_MENUS_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -65,7 +65,7 @@ class MenusControllerMenus extends JController
 			if (!$model->delete($cid)) {
 				$this->setMessage($model->getError());
 			} else {
-			$this->setMessage(JText::plural('COM_MENUS_N_MENUS_DELETED', count($cid)));
+			$this->setMessage(MolajoText::plural('COM_MENUS_N_MENUS_DELETED', count($cid)));
 			}
 		}
 
@@ -88,11 +88,11 @@ class MenusControllerMenus extends JController
 
 		if ($model->rebuild()) {
 			// Reorder succeeded.
-			$this->setMessage(JText::_('JTOOLBAR_REBUILD_SUCCESS'));
+			$this->setMessage(MolajoText::_('JTOOLBAR_REBUILD_SUCCESS'));
 			return true;
 		} else {
 			// Rebuild failed.
-			$this->setMessage(JText::sprintf('JTOOLBAR_REBUILD_FAILED', $model->getMessage()));
+			$this->setMessage(MolajoText::sprintf('JTOOLBAR_REBUILD_FAILED', $model->getMessage()));
 			return false;
 		}
 	}

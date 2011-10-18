@@ -29,10 +29,10 @@ $fieldsets = $this->form->getFieldsets();
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_admin&view=profile&layout=edit&id='.$this->item->id); ?>" method="post" name="adminForm" id="profile-form" class="form-validate">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_admin&view=profile&layout=edit&id='.$this->item->id); ?>" method="post" name="adminForm" id="profile-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_ADMIN_USER_ACCOUNT_DETAILS'); ?></legend>
+			<legend><?php echo MolajoText::_('COM_ADMIN_USER_ACCOUNT_DETAILS'); ?></legend>
 			<ul class="adminformlist">
 			<?php foreach($this->form->getFieldset('user_details') as $field) :?>
 				<li><?php echo $field->label; ?>
@@ -49,7 +49,7 @@ $fieldsets = $this->form->getFieldsets();
 			if ($fieldset->name == 'user_details') :
 				continue;
 			endif;
-			echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
+			echo JHtml::_('sliders.panel', MolajoText::_($fieldset->label), $fieldset->name);
 		?>
 		<fieldset class="panelform">
 		<ul class="adminformlist">

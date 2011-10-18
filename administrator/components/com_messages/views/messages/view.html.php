@@ -52,7 +52,7 @@ class MessagesViewMessages extends JView
 		$state	= $this->get('State');
 		$canDo	= MessagesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_MESSAGES_MANAGER_MESSAGES'), 'inbox.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_MESSAGES_MANAGER_MESSAGES'), 'inbox.png');
 
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('message.add');

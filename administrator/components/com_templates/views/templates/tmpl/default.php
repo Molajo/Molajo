@@ -22,17 +22,17 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_templates&view=templates'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_templates&view=templates'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_TEMPLATES_TEMPLATES_FILTER_SEARCH_DESC'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_TEMPLATES_TEMPLATES_FILTER_SEARCH_DESC'); ?>" />
+			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<option value="*"><?php echo JText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
+				<option value="*"><?php echo MolajoText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
 				<?php echo JHtml::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
 		</div>
@@ -52,13 +52,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('grid.sort', 'JCLIENT', 'a.application_id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%" class="center">
-					<?php echo JText::_('MOLAJOVERSION'); ?>
+					<?php echo MolajoText::_('MOLAJOVERSION'); ?>
 				</th>
 				<th width="15%">
-					<?php echo JText::_('JDATE'); ?>
+					<?php echo MolajoText::_('JDATE'); ?>
 				</th>
 				<th width="25%" >
-					<?php echo JText::_('JAUTHOR'); ?>
+					<?php echo MolajoText::_('JAUTHOR'); ?>
 				</th>
 			</tr>
 		</thead>
@@ -76,22 +76,22 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo JHtml::_('templates.thumb', $item->element, $item->application_id); ?>
 				</td>
 				<td class="template-name">
-					<a href="<?php echo JRoute::_('index.php?option=com_templates&view=template&id='.(int) $item->extension_id); ?>">
-						<?php echo  JText::sprintf( 'COM_TEMPLATES_TEMPLATE_DETAILS', $item->name) ;?></a>
+					<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&view=template&id='.(int) $item->extension_id); ?>">
+						<?php echo  MolajoText::sprintf( 'COM_TEMPLATES_TEMPLATE_DETAILS', $item->name) ;?></a>
 					<p>
 					<?php if($this->preview && $item->application_id == '0'): ?>
 						<a href="<?php echo JURI::root().'index.php?tp=1&template='.$item->element; ?>" target="_blank">
-							<?php echo  JText::sprintf('COM_TEMPLATES_TEMPLATE_PREVIEW'); ?></a>
+							<?php echo  MolajoText::sprintf('COM_TEMPLATES_TEMPLATE_PREVIEW'); ?></a>
 					<?php elseif ($item->application_id == '1'): ?>
-						<?php echo  JText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW_ADMIN'); ?>
+						<?php echo  MolajoText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW_ADMIN'); ?>
 					<?php else: ?>
-						<span class="hasTip" title="<?php echo JText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW'); ?>::<?php echo JText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW_DESC'); ?>">
-							<?php echo  JText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW'); ?></span>
+						<span class="hasTip" title="<?php echo MolajoText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW'); ?>::<?php echo MolajoText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW_DESC'); ?>">
+							<?php echo  MolajoText::sprintf('COM_TEMPLATES_TEMPLATE_NO_PREVIEW'); ?></span>
 					<?php endif; ?>
 					</p>
 				</td>
 				<td class="center">
-					<?php echo $item->application_id == 0 ? JText::_('JSITE') : JText::_('JADMINISTRATOR'); ?>
+					<?php echo $item->application_id == 0 ? MolajoText::_('JSITE') : MolajoText::_('JADMINISTRATOR'); ?>
 				</td>
 				<td class="center">
 					<?php echo $this->escape($item->xmldata->get('version')); ?>

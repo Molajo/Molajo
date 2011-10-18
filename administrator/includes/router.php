@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Administrator
  * @since		1.5
  */
-class MolajoRouterAdministrator extends JRouter
+class MolajoRouterAdministrator extends MolajoRouter
 {
 	/**
 	 * Function to convert a route to an internal URI

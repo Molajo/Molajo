@@ -112,7 +112,7 @@ class InstallerModelManage extends InstallerModel
 				if ($table->type == 'template') {
 					$style = JTable::getInstance('Style', 'TemplatesTable');
 					if ($style->load(array('template' => $table->element, 'application_id' => $table->application_id, 'home'=>1))) {
-						JError::raiseNotice(403, JText::_('COM_INSTALLER_ERROR_DISABLE_DEFAULT_TEMPLATE_NOT_PERMITTED'));
+						JError::raiseNotice(403, MolajoText::_('COM_INSTALLER_ERROR_DISABLE_DEFAULT_TEMPLATE_NOT_PERMITTED'));
 						unset($eid[$i]);
 						continue;
 					}
@@ -125,7 +125,7 @@ class InstallerModelManage extends InstallerModel
 			}
 		} else {
 			$result = false;
-			JError::raiseWarning(403, JText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 		return $result;
 	}
@@ -209,7 +209,7 @@ class InstallerModelManage extends InstallerModel
 			}
 
 			$langstring = 'COM_INSTALLER_TYPE_TYPE_'. strtoupper($row->type);
-			$rowtype = JText::_($langstring);
+			$rowtype = MolajoText::_($langstring);
 			if(strpos($rowtype, $langstring) !== false) {
 				$rowtype = $row->type;
 			}
@@ -217,12 +217,12 @@ class InstallerModelManage extends InstallerModel
 			if (count($failed)) {
 
 				// There was an error in uninstalling the package
-				$msg = JText::sprintf('COM_INSTALLER_UNINSTALL_ERROR', $rowtype);
+				$msg = MolajoText::sprintf('COM_INSTALLER_UNINSTALL_ERROR', $rowtype);
 				$result = false;
 			} else {
 
 				// Package uninstalled sucessfully
-				$msg = JText::sprintf('COM_INSTALLER_UNINSTALL_SUCCESS', $rowtype);
+				$msg = MolajoText::sprintf('COM_INSTALLER_UNINSTALL_SUCCESS', $rowtype);
 				$result = true;
 			}
 			$app = MolajoFactory::getApplication();
@@ -234,7 +234,7 @@ class InstallerModelManage extends InstallerModel
 			return $result;
 		} else {
 			$result = false;
-			JError::raiseWarning(403, JText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+			JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 		}
 	}
 

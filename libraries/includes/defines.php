@@ -28,12 +28,7 @@ define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY_COMPONENT.'/fields/attributes
 define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY_COMPONENT.'/fields/fields');
 define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY_COMPONENT.'/fields/fieldtypes');
 define('MOLAJO_LIBRARY_FORM',       MOLAJO_LIBRARY_COMPONENT.'/fields/form');
-
-if (MOLAJO_APPLICATION == 'installation') {
-    define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE);
-} else {
-    define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE.'/templates');
-}
+define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE.'/templates');
 
 /** Layouts, Forms, and Parameters */
 $temp = MOLAJO_PATH_ROOT.'/layouts';
@@ -44,8 +39,8 @@ $temp = MOLAJO_LAYOUTS.'/extensions';
 define('MOLAJO_LAYOUTS_EXTENSIONS', $temp);
 $temp = MOLAJO_LAYOUTS.'/forms';
 define('MOLAJO_LAYOUTS_FORMS', $temp);
-$temp = MOLAJO_LAYOUTS.'/head';
-define('MOLAJO_LAYOUTS_HEAD', $temp);
+$temp = MOLAJO_LAYOUTS.'/document';
+define('MOLAJO_LAYOUTS_DOCUMENT', $temp);
 $temp = MOLAJO_LAYOUTS.'/wraps';
 define('MOLAJO_LAYOUTS_WRAPS', $temp);
 

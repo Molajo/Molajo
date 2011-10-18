@@ -15,7 +15,7 @@ jimport('molajo.utilities.date');
  * @subpackage	User.profile
  * @version		1.6
  */
-class plgUserProfile extends JPlugin
+class plgUserProfile extends MolajoPlugin
 {
 	/**
 	 * Constructor

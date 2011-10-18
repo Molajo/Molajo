@@ -349,7 +349,7 @@ class MolajoSite extends MolajoApplication
 				$this->setUserState('users.login.form.data',array( 'return' => $return ) );
 
 				$url	= 'index.php?option=com_users&view=login';
-				$url	= JRoute::_($url, false);
+				$url	= MolajoRoute::_($url, false);
 
 				$this->redirect($url, JText::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
 			} else {
@@ -476,10 +476,11 @@ class MolajoSite extends MolajoApplication
 			$query = $db->getQuery(true);
 			$query->select('id, home, template, params');
 			$query->from('#__template_styles');
-			$query->where('application_id = 0');
-
+			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
 			$db->setQuery($query);
+
 			$templates = $db->loadObjectList('id');
+
 			foreach($templates as &$template) {
 				$registry = new MolajoRegistry;
 				$registry->loadJSON($template->params);
@@ -503,8 +504,9 @@ class MolajoSite extends MolajoApplication
 		// Fallback template
 		if (!file_exists(MOLAJO_PATH_THEMES.DS.$template->template.DS.'index.php')) {
 			JError::raiseWarning(0, JText::_('JERROR_ALERTNOTEMPLATE'));
-		    $template->template = 'construct';
-		    if (!file_exists(MOLAJO_PATH_THEMES.DS.'construct'.DS.'index.php')) {
+		    $template->template = MOLAJO_APPLICATION_DEFAULT_TEMPLATE;
+		    if (file_exists(MOLAJO_PATH_THEMES.'/'.MOLAJO_APPLICATION_DEFAULT_TEMPLATE.'/index.php')) {
+            } else {
 		    	$template->template = '';
 		    }
 		}
@@ -569,7 +571,7 @@ class MolajoSite extends MolajoApplication
 	 * @param	string	$name		The name of the application.
 	 * @param	array	$options	An optional associative array of configuration settings.
 	 *
-	 * @return	JRouter
+	 * @return	MolajoRouter
 	 * @since	1.5
 	 */
 	static public function getRouter($name = null, array $options = array())
@@ -651,5 +653,14 @@ class MolajoSite extends MolajoApplication
 			$this->_messageQueue = array();
 		}
 		parent::redirect($url, $msg, $msgType, $moved);
+	}
+
+
+    /**
+     * Deprecated
+     */
+	public function getClientId()
+	{
+		return parent::getApplicationId();
 	}
 }

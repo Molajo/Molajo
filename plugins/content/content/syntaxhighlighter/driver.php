@@ -51,7 +51,7 @@ class MolajoContentSyntaxHighlighter {
     function driver ($context, &$content, &$params, $page, $location)
     {
         /** parameters **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
         if ($systemParams->def('enable_syntax_highlighter', 0) == 0) {
             return;

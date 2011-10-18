@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -70,7 +70,7 @@ class MolajoFormFieldCheckboxes extends MolajoFormField
 					' value="'.htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8').'"'
 					.$checked.$class.$onclick.$disabled.'/>';
 
-			$html[] = '<label for="'.$this->id.$i.'"'.$class.'>'.JText::_($option->text).'</label>';
+			$html[] = '<label for="'.$this->id.$i.'"'.$class.'>'.MolajoText::_($option->text).'</label>';
 			$html[] = '</li>';
 		}
 		$html[] = '</ul>';

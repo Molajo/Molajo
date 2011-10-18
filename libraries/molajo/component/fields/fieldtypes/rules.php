@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -96,7 +96,7 @@ class MolajoFormFieldRules extends MolajoFormField
 		// Prepare output
 		$html = array();
 		$html[] = '<div id="permissions-sliders" class="pane-sliders">';
-		$html[] = '<p class="rule-desc">' . JText::_('MOLAJO_RULES_SETTINGS_DESC') . '</p>';
+		$html[] = '<p class="rule-desc">'.MolajoText::_('MOLAJO_RULES_SETTINGS_DESC').'</p>';
 		$html[] = '<ul id="rules">';
 
 		// Start a row for each user group.
@@ -115,7 +115,7 @@ class MolajoFormFieldRules extends MolajoFormField
 
 			$html[] = '<div class="panel">';
 			$html[] =	'<h3 class="pane-toggler title"><a href="javascript:void(0);"><span>';
-			$html[] =	str_repeat('<span class="level">|&ndash;</span> ', $curLevel = $group->level) . $group->text;
+			$html[] =	str_repeat('<span class="level">|&ndash;</span> ', $curLevel = $group->level).$group->text;
 			$html[] =	'</span></a></h3>';
 			$html[] =	'<div class="pane-slider content pane-hide">';
 			$html[] =		'<div class="mypanel">';
@@ -123,19 +123,19 @@ class MolajoFormFieldRules extends MolajoFormField
 			$html[] =				'<thead>';
 			$html[] =					'<tr>';
 
-			$html[] =						'<th class="actions" id="actions-th' . $group->value . '">';
-			$html[] =							'<span class="acl-action">' . JText::_('MOLAJO_RULES_ACTION') . '</span>';
+			$html[] =						'<th class="actions" id="actions-th'.$group->value.'">';
+			$html[] =							'<span class="acl-action">'.MolajoText::_('MOLAJO_RULES_ACTION').'</span>';
 			$html[] =						'</th>';
 
-			$html[] =						'<th class="settings" id="settings-th' . $group->value . '">';
-			$html[] =							'<span class="acl-action">' . JText::_('MOLAJO_RULES_SELECT_SETTING') . '</span>';
+			$html[] =						'<th class="settings" id="settings-th'.$group->value.'">';
+			$html[] =							'<span class="acl-action">'.MolajoText::_('MOLAJO_RULES_SELECT_SETTING').'</span>';
 			$html[] =						'</th>';
 
 			// The calculated setting is not shown for the root group of global configuration.
 			$canCalculateSettings = ($group->parent_id || !empty($component));
 			if ($canCalculateSettings) {
-				$html[] =					'<th id="aclactionth' . $group->value . '">';
-				$html[] =						'<span class="acl-action">' . JText::_('MOLAJO_RULES_CALCULATED_SETTING') . '</span>';
+				$html[] =					'<th id="aclactionth'.$group->value.'">';
+				$html[] =						'<span class="acl-action">'.MolajoText::_('MOLAJO_RULES_CALCULATED_SETTING').'</span>';
 				$html[] =					'</th>';
 			}
 
@@ -146,15 +146,15 @@ class MolajoFormFieldRules extends MolajoFormField
 			foreach ($actions as $action)
 			{
 				$html[] =				'<tr>';
-				$html[] =					'<td headers="actions-th' . $group->value . '">';
-				$html[] =						'<label class="hasTip" for="' . $this->id . '_' . $action->name . '_' . $group->value . '" title="'.htmlspecialchars(JText::_($action->title).'::'.JText::_($action->description), ENT_COMPAT, 'UTF-8').'">';
-				$html[] =						JText::_($action->title);
+				$html[] =					'<td headers="actions-th'.$group->value.'">';
+				$html[] =						'<label class="hasTip" for="'.$this->id.'_'.$action->name.'_'.$group->value.'" title="'.htmlspecialchars(MolajoText::_($action->title).'::'.MolajoText::_($action->description), ENT_COMPAT, 'UTF-8').'">';
+				$html[] =						MolajoText::_($action->title);
 				$html[] =						'</label>';
 				$html[] =					'</td>';
 
-				$html[] =					'<td headers="settings-th' . $group->value . '">';
+				$html[] =					'<td headers="settings-th'.$group->value.'">';
 
-				$html[] = '<select name="' . $this->name . '[' . $action->name . '][' . $group->value . ']" id="' . $this->id . '_' . $action->name . '_' . $group->value . '" title="' . JText::sprintf('MOLAJO_RULES_SELECT_ALLOW_DENY_GROUP', JText::_($action->title), trim($group->text)) . '">';
+				$html[] = '<select name="'.$this->name.'['.$action->name.']['.$group->value.']" id="'.$this->id.'_'.$action->name.'_'.$group->value.'" title="'.MolajoText::sprintf('MOLAJO_RULES_SELECT_ALLOW_DENY_GROUP', MolajoText::_($action->title), trim($group->text)).'">';
 
 				$inheritedRule	= JAccess::checkGroup($group->value, $action->name, $assetId);
 
@@ -164,18 +164,18 @@ class MolajoFormFieldRules extends MolajoFormField
 				// Build the dropdowns for the permissions sliders
 
 				// The parent group has "Not Set", all children can rightly "Inherit" from that.
-				$html[] = '<option value=""' . ($assetRule === null ? ' selected="selected"' : '') . '>' .
-							JText::_(empty($group->parent_id) && empty($component) ? 'MOLAJO_RULES_NOT_SET' : 'MOLAJO_RULES_INHERITED') . '</option>';
-				$html[] = '<option value="1"' . ($assetRule === true ? ' selected="selected"' : '') . '>' .
-							JText::_('MOLAJO_RULES_ALLOWED') . '</option>';
-				$html[] = '<option value="0"' . ($assetRule === false ? ' selected="selected"' : '') . '>' .
-							JText::_('MOLAJO_RULES_DENIED') . '</option>';
+				$html[] = '<option value=""'.($assetRule === null ? ' selected="selected"' : '').'>' .
+							MolajoText::_(empty($group->parent_id) && empty($component) ? 'MOLAJO_RULES_NOT_SET' : 'MOLAJO_RULES_INHERITED').'</option>';
+				$html[] = '<option value="1"'.($assetRule === true ? ' selected="selected"' : '').'>' .
+							MolajoText::_('MOLAJO_RULES_ALLOWED').'</option>';
+				$html[] = '<option value="0"'.($assetRule === false ? ' selected="selected"' : '').'>' .
+							MolajoText::_('MOLAJO_RULES_DENIED').'</option>';
 
 				$html[] = '</select>&#160; ';
 
 				// If this asset's rule is allowed, but the inherited rule is deny, we have a conflict.
 				if (($assetRule === true) && ($inheritedRule === false)) {
-					$html[] = JText::_('MOLAJO_RULES_CONFLICT');
+					$html[] = MolajoText::_('MOLAJO_RULES_CONFLICT');
 				}
 
 				$html[] = '</td>';
@@ -183,7 +183,7 @@ class MolajoFormFieldRules extends MolajoFormField
 				// Build the Calculated Settings column.
 				// The inherited settings column is not displayed for the root group in global configuration.
 				if ($canCalculateSettings) {
-					$html[] = '<td headers="aclactionth' . $group->value . '">';
+					$html[] = '<td headers="aclactionth'.$group->value.'">';
 
 					// This is where we show the current effective settings considering currrent group, path and cascade.
 					// Check whether this is a component or global. Change the text slightly.
@@ -192,43 +192,43 @@ class MolajoFormFieldRules extends MolajoFormField
 					{
 						if ($inheritedRule === null) {
 							$html[] = '<span class="icon-16-unset">'.
-										JText::_('MOLAJO_RULES_NOT_ALLOWED').'</span>';
+										MolajoText::_('MOLAJO_RULES_NOT_ALLOWED').'</span>';
 						}
 						else if ($inheritedRule === true)
 						{
 							$html[] = '<span class="icon-16-allowed">'.
-										JText::_('MOLAJO_RULES_ALLOWED').'</span>';
+										MolajoText::_('MOLAJO_RULES_ALLOWED').'</span>';
 						}
 						else if ($inheritedRule === false) {
 							if ($assetRule === false) {
 								$html[] = '<span class="icon-16-denied">'.
-											JText::_('MOLAJO_RULES_NOT_ALLOWED').'</span>';
+											MolajoText::_('MOLAJO_RULES_NOT_ALLOWED').'</span>';
 							}
 							else {
 								$html[] = '<span class="icon-16-denied"><span class="icon-16-locked">'.
-											JText::_('MOLAJO_RULES_NOT_ALLOWED_LOCKED').'</span></span>';
+											MolajoText::_('MOLAJO_RULES_NOT_ALLOWED_LOCKED').'</span></span>';
 							}
 						}
 					}
 					else if (!empty($component)) {
 						$html[] = '<span class="icon-16-allowed"><span class="icon-16-locked">'.
-									JText::_('MOLAJO_RULES_ALLOWED_ADMIN').'</span></span>';
+									MolajoText::_('MOLAJO_RULES_ALLOWED_ADMIN').'</span></span>';
 					}
 					else {
 						// Special handling for  groups that have global admin because they can't  be denied.
 						// The admin rights can be changed.
 						if ($action->name === 'admin') {
 							$html[] = '<span class="icon-16-allowed">'.
-										JText::_('MOLAJO_RULES_ALLOWED').'</span>';
+										MolajoText::_('MOLAJO_RULES_ALLOWED').'</span>';
 						}
 						elseif ($inheritedRule === false) {
 							// Other actions cannot be changed.
 							$html[] = '<span class="icon-16-denied"><span class="icon-16-locked">'.
-										JText::_('MOLAJO_RULES_NOT_ALLOWED_ADMIN_CONFLICT').'</span></span>';
+										MolajoText::_('MOLAJO_RULES_NOT_ALLOWED_ADMIN_CONFLICT').'</span></span>';
 						}
 						else {
 							$html[] = '<span class="icon-16-allowed"><span class="icon-16-locked">'.
-										JText::_('MOLAJO_RULES_ALLOWED_ADMIN').'</span></span>';
+										MolajoText::_('MOLAJO_RULES_ALLOWED_ADMIN').'</span></span>';
 						}
 					}
 
@@ -249,9 +249,9 @@ class MolajoFormFieldRules extends MolajoFormField
 		$html[] = str_repeat('</ul></li>', $curLevel);
 		$html[] = '</ul><div class="rule-notes">';
 		if ($section == 'component' || $section == null ) {
-			$html[] = JText::_('MOLAJO_RULES_SETTING_NOTES');
+			$html[] = MolajoText::_('MOLAJO_RULES_SETTING_NOTES');
 		} else {
-			$html[] = JText::_('MOLAJO_RULES_SETTING_NOTES_ITEM');
+			$html[] = MolajoText::_('MOLAJO_RULES_SETTING_NOTES_ITEM');
 		}
 		$html[] = '</div></div>';
 

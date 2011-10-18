@@ -43,7 +43,7 @@ class MolajoTableGroup extends MolajoTable
     {
         // Validate the title.
         if ((trim($this->title)) == '') {
-            $this->setError(JText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE'));
+            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE'));
             return false;
         }
 
@@ -59,7 +59,7 @@ class MolajoTableGroup extends MolajoTable
         $db->setQuery($query);
 
         if ($db->loadResult() > 0) {
-            $this->setError(JText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
+            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_USERGROUP_TITLE_EXISTS'));
             return false;
         }
 
@@ -157,11 +157,11 @@ class MolajoTableGroup extends MolajoTable
         //  4: Administrator
 
         if ((int) $id == 0) {
-            return new MolajoException(JText::_('MOLAJO_GROUP_NUMBER_NOT_PROVIDED_FOR_DELETE'));
+            return new MolajoException(MolajoText::_('MOLAJO_GROUP_NUMBER_NOT_PROVIDED_FOR_DELETE'));
         }
 
         if ((int) $id > 0 AND (int) $id < 5) {
-            return new MolajoException(JText::_('MOLAJO_SYSTEM_GROUP_CANNOT_BE_DELETED'));
+            return new MolajoException(MolajoText::_('MOLAJO_SYSTEM_GROUP_CANNOT_BE_DELETED'));
         }
 
         if ($id) {
@@ -181,7 +181,7 @@ class MolajoTableGroup extends MolajoTable
 
         $groupIds = $db->loadColumn();
         if (empty($groupIds)) {
-            return new MolajoException(JText::_('MOLAJO_GROUP_DOES_NOT_EXIST'));
+            return new MolajoException(MolajoText::_('MOLAJO_GROUP_DOES_NOT_EXIST'));
         }
 
         /**

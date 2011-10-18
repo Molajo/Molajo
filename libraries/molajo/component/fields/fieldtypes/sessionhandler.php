@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -37,7 +37,7 @@ class MolajoFormFieldSessionHandler extends MolajoFormFieldList
 
 		// Get the options from JSession.
 		foreach (JSession::getStores() as $store) {
-			$options[] = JHtml::_('select.option', $store, JText::_('MOLAJO_FORM_VALUE_SESSION_'.$store), 'value', 'text');
+			$options[] = JHtml::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_SESSION_'.$store), 'value', 'text');
 		}
 
 		// Merge any additional options in the XML definition.

@@ -32,11 +32,11 @@ class JHtmlTemplates
 		{
 			$applicationPath = ($applicationId == 0) ? '' : 'administrator/';
 			$thumb	= $applicationPath.'templates/'.$template.'/template_thumbnail.png';
-			$html	= JHtml::_('image',$thumb,JText::_('COM_TEMPLATES_PREVIEW'));
+			$html	= JHtml::_('image',$thumb,MolajoText::_('COM_TEMPLATES_PREVIEW'));
 			if (file_exists($preview))
 			{
 				$preview	= $baseUrl.'/templates/'.$template.'/template_preview.png';
-				$html		= '<a href="'.$preview.'" class="modal" title="'.JText::_('COM_TEMPLATES_CLICK_TO_ENLARGE').'">'.$html.'</a>';
+				$html		= '<a href="'.$preview.'" class="modal" title="'.MolajoText::_('COM_TEMPLATES_CLICK_TO_ENLARGE').'">'.$html.'</a>';
 			}
 		}
 

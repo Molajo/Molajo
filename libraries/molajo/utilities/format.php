@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 /**
  * Abstract Format for MolajoRegistry
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Registry
- * @since       11.1
+ * @since       1.0
  */
 abstract class MolajoRegistryFormat
 {
@@ -46,7 +46,7 @@ abstract class MolajoRegistryFormat
 				if (is_file($path)) {
 					require_once $path;
 				} else {
-					throw new JException(JText::_('MOLAJO_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS'), 500, E_ERROR);
+					throw new JException(MolajoText::_('MOLAJO_REGISTRY_EXCEPTION_LOAD_FORMAT_CLASS'), 500, E_ERROR);
 				}
 			}
 

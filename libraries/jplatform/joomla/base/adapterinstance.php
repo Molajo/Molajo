@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('JPATH_PLATFORM') or die();
 
 /**
  * Adapter Instance Class
@@ -16,16 +16,20 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage  Base
  * @since       11.1
  */
-class JAdapterInstance extends JObject {
-
+class JAdapterInstance extends JObject
+{
 	/**
-	 * @var   object  Parent
+	 * Parent
+	 *
+	 * @var   object
 	 * @since  11.1
 	 */
 	protected $parent = null;
 
 	/**
-	 * @var    object  Database
+	 * Database
+	 *
+	 * @var    object
 	 * @since  11.1
 	 */
 	protected $db = null;
@@ -33,15 +37,15 @@ class JAdapterInstance extends JObject {
 	/**
 	 * Constructor
 	 *
-	 * @param   object  $parent   Parent object [JAdapter instance]
-	 * @param   object  $db       Database object [JDatabase instance]
+	 * @param   object  &$parent  Parent object [JAdapter instance]
+	 * @param   object  &$db      Database object [JDatabase instance]
 	 * @param   array   $options  Configuration Options
 	 *
 	 * @return  JAdapterInstance
 	 *
 	 * @since   11.1
 	 */
-	public function __construct(&$parent, &$db, $options = Array())
+	public function __construct(&$parent, &$db, $options = array())
 	{
 		// Set the properties from the options array that is passed in
 		$this->setProperties($options);
@@ -56,6 +60,7 @@ class JAdapterInstance extends JObject {
 	 * Retrieves the parent object
 	 *
 	 * @return  object parent
+	 *
 	 * @since   11.1
 	 */
 	public function getParent()

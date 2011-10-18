@@ -78,7 +78,7 @@ class LanguagesViewInstalled extends JView
 
 		$canDo	= LanguagesHelper::getActions();
 
-		MolajoToolbarHelper::title(JText::_('COM_LANGUAGES_VIEW_INSTALLED_TITLE'), 'langmanager.png');
+		MolajoToolbarHelper::title(MolajoText::_('COM_LANGUAGES_VIEW_INSTALLED_TITLE'), 'langmanager.png');
 
 		if ($canDo->get('core.edit.state')) {
 			MolajoToolbarHelper::makeDefault('installed.setDefault');

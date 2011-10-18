@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * Form Field class for the Joomla Framework.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Form
  * @since       1.0
  */
@@ -73,7 +73,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 			||	$lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, null, false, false)
 			||	$lang->load('tpl_'.$template.'.sys', $application->path, $lang->getDefault(), false, false)
 			||	$lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, $lang->getDefault(), false,false);
-				$name = JText::_($style->name);
+				$name = MolajoText::_($style->name);
 				// Initialize the group if necessary.
 				if (!isset($groups[$name])) {
 					$groups[$name] = array();

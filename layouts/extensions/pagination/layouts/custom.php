@@ -69,7 +69,7 @@ function pagination_list_footer($list)
 	$lang = MolajoFactory::getLanguage();
 	$html = "<div class=\"container\"><div class=\"pagination\">\n";
 
-	$html .= "\n<div class=\"limit\">".JText::_('JGLOBAL_DISPLAY_NUM').$list['limitfield']."</div>";
+	$html .= "\n<div class=\"limit\">".MolajoText::_('JGLOBAL_DISPLAY_NUM').$list['limitfield']."</div>";
 	$html .= $list['pageslinks'];
 	$html .= "\n<div class=\"limit\">".$list['pagescounter']."</div>";
 

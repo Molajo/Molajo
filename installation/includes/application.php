@@ -31,7 +31,6 @@ class MolajoInstallation extends MolajoApplication
 	* Class constructor
 	*
 	* @param	array $config	An optional associative array of configuration settings.
-	* Recognized key values include 'applicationId' (this list is not meant to be comprehensive).
 	*
 	* @return	void
 	*/
@@ -39,15 +38,12 @@ class MolajoInstallation extends MolajoApplication
 	{
 		$config['applicationId'] = 2;
 		parent::__construct($config);
-		JError::setErrorHandling(E_ALL, 'Ignore');
 		$this->_createConfiguration();
-
-		// Set the root in the URI based on the application name.
 		JURI::root(null, str_replace('/'.$this->getName(), '', JURI::base(true)));
 	}
 
     /**
-     * Initialise the application.
+     * Initialise application.
      *
      * @param	array	$options
      *
@@ -60,7 +56,7 @@ class MolajoInstallation extends MolajoApplication
 
         // Check the request data for the language.
         if (empty($options['language'])) {
-            $requestLang = JRequest::getCmd('lang', null);
+            $requestLang = JRequest::getCmd('language', null);
             if (!is_null($requestLang)) {
                 $options['language'] = $requestLang;
             }
@@ -79,7 +75,7 @@ class MolajoInstallation extends MolajoApplication
             if (!empty($forced['language'])) {
                 $options['language'] = $forced['language'];
             } else {
-                $options['language'] = JLanguageHelper::detectLanguage();
+                $options['language'] = MolajoLanguageHelper::detectLanguage();
                 if (empty($options['language'])) {
                     $options['language'] = 'en-GB';
                 }
@@ -99,60 +95,182 @@ class MolajoInstallation extends MolajoApplication
     }
 
 	/**
+     * route
+     *
+	 * Route the application.
+     *
+     * @return void
+     *
+     * @since 1.0
+     */
+	public function route() {}
+
+    /**
+     * dispatch
+     *
+     * Execute the Component and render the results
+     *
+     * @param null $component
+     *
+     * @return void
+     *
+     * @since 1.0
+     */
+    public function dispatch($component = null)
+    {
+        try
+        {
+            // Get the component if not set.
+            if ($component == null) {
+                $component = JRequest::getCmd('option', 'com_installer');
+            }
+
+            JRequest::setVar('option', $component);
+            $request = $this->componentRequest();
+
+            $document	= MolajoFactory::getDocument();
+            $user		= MolajoFactory::getUser();
+
+            switch($document->getType())
+            {
+                case 'html' :
+                    $document->setTitle(MolajoText::_($request['title']));
+                    break;
+                default :
+                    break;
+            }
+
+            /** render the component */
+            $contents = MolajoComponentHelper::renderComponent($request, $params = array());
+
+            $document->setBuffer($contents, 'component');
+        }
+
+        // Mop up any uncaught exceptions.
+        catch (Exception $e)
+        {
+            $code = $e->getCode();
+            JError::raiseError($code ? $code : 500, $e->getMessage());
+        }
+    }
+
+    /**
+     * componentRequest
+     *
+     * populate the request object for the MVC
+     *
+     * @return array
+     *
+     * @since 1.0
+     */
+    private function componentRequest()
+    {
+        $request = array();
+
+        $request['application_id'] = MOLAJO_APPLICATION_ID;
+        $request['controller'] = 'display';
+        $request['extension_type'] = 'component';
+
+        $request['option'] = JRequest::getCmd('option', 'com_installer');
+        $request['no_com_option'] = substr($request['option'], 4, 9999);
+        $request['view'] = JRequest::getCmd('view', 'display');
+        $request['layout'] = JRequest::getCmd('layout', 'installer_step1');
+        $request['model'] = JRequest::getCmd('model', 'display');
+        $request['task'] = JRequest::getCmd('task', 'display');
+        $request['format'] = JRequest::getCmd('format', 'html');
+
+        $request['wrap'] = JRequest::getCmd('wrap', 'none');
+        $request['wrap_id'] = JRequest::getCmd('wrap_id', '');
+        $request['wrap_class'] = JRequest::getCmd('wrap_class', '');
+        $request['wrap_title'] = '';
+        $request['wrap_subtitle'] = '';
+        $request['wrap_date'] = '';
+        $request['wrap_author'] = '';
+        $request['wrap_more_array'] = array();
+
+        $request['plugin_type'] = JRequest::getCmd('plugin_type', '');
+
+        $request['id'] = 0;
+        $request['cid'] = 0;
+        $request['catid'] = 0;
+        $request['params'] = array();
+        $request['extension'] = 'component';
+        $request['component_specific'] = '';
+
+        $request['current_url'] = JURI::base();
+        $request['component_path'] = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$request['option'];
+        DEFINE('JPATH_COMPONENT', $request['component_path']) ;
+        $request['base_url'] = MOLAJO_PATH_BASE;
+        $request['item_id'] = null;
+
+        $request['acl_implementation'] = 'core';
+        $request['component_table'] = '__dummy';
+        $request['filter_fieldname'] = '';
+        $request['select_fieldname'] = '';
+
+        $request['title'] = 'Molajo Installer: Step '.substr($request['layout'], -1);
+        $request['subtitle'] = '';
+        $request['metakey'] = '';
+        $request['metadesc'] = '';
+        $request['metadata'] = '';
+        $request['position'] = '';
+
+        JRequest::setVar('option', $request['option']);
+        JRequest::setVar('no_com_option', $request['no_com_option']);
+        JRequest::setVar('view', $request['view']);
+        JRequest::setVar('layout', $request['layout']);
+        JRequest::setVar('model', $request['model']);
+        JRequest::setVar('task', $request['task']);
+        JRequest::setVar('format', $request['format']);
+        JRequest::setVar('wrap', $request['wrap']);
+        JRequest::setVar('wrap_id', $request['wrap_id']);
+        JRequest::setVar('wrap_class', $request['wrap_class']);
+        JRequest::setVar('plugin_type', $request['plugin_type']);
+
+        return $request;
+    }
+
+    /**
      * render
      *
-	 * Render the application
-	 *
-	 * @return	void
-	 */
-	public function render()
-	{
-		$document = MolajoFactory::getDocument();
-		$config = MolajoFactory::getConfig();
-		$user = MolajoFactory::getUser();
+     * Parse the Template and generate the JDoc statements
+     *
+     * @return void
+     *
+     * @since 1.0
+     */
+    public function render()
+    {
+        $document	= MolajoFactory::getDocument();
+        $user		= MolajoFactory::getUser();
 
-		switch($document->getType())
-		{
-			case 'html' :
-				$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
-				break;
-			default :
-				break;
-		}
+        // get the format to render
+        $format = $document->getType();
 
-		// Import the controller.
-		require_once MOLAJO_PATH_BASE.'/controller.php';
-		$controller	= JController::getInstance('MolajoInstallation');
+        switch ($format)
+        {
+            case 'html':
+            default:
+                $template	= $this->getTemplate(true);
+                $file		= JRequest::getCmd('tmpl', 'index');
+                $params = array(
+                    'template'	=> $template->template,
+                    'file'		=> $file.'.php',
+                    'directory'	=> MOLAJO_PATH_THEMES,
+                    'params'	=> $template->params
+                );
+                break;
+        }
 
-		// Start the output buffer.
-		ob_start();
- 
-		// Execute the task.
-		$controller->execute(JRequest::getVar('task'));
-		$controller->redirect();
+        // Parse the document.
+        $document = MolajoFactory::getDocument();
+        $document->parse($params);
 
-		// Get output from the buffer and clean it.
-		$contents = ob_get_contents();
+        $caching = false;
 
-		ob_end_clean();
-
-		$file = JRequest::getCmd('tmpl', 'index');
-
-		$params = array(
-			'template'	=> 'template',
-			'file'		=> $file.'.php',
-			'directory' => MOLAJO_PATH_THEMES,
-			'params'	=> '{}'
-		);
-
-		$document->setBuffer($contents, 'installation');
-		$document->setTitle(JText::_('INSTL_PAGE_TITLE'));
-		$data = $document->render(false, $params);
-		JResponse::setBody($data);
-		if (MolajoFactory::getConfig()->get('debug_lang')) {
-			$this->debugLanguage();
-		}
-	}
+        // Render the document.
+        JResponse::setBody($document->render($caching, $params));
+    }
 
 	/**
      * debugLanguage
@@ -219,6 +337,42 @@ class MolajoInstallation extends MolajoApplication
 	}
 
 	/**
+	 * getPathway
+     *
+     * Returns the application MolajoPathway object.
+	 *
+	 * @param   string  $name     The name of the application.
+	 * @param   array   $options  An optional associative array of configuration settings.
+	 *
+	 * @return  MolajoPathway  A MolajoPathway object
+	 *
+	 * @since  1.0
+	 */
+	public function getPathway($name = null, $options = array())
+	{
+		return null;
+	}
+
+	/**
+	 * getMenu
+     *
+     * Returns the Menu object.
+	 *
+	 * @param   string  $name     The name of the application/application.
+	 * @param   array   $options  An optional associative array of configuration settings.
+	 *
+	 * @return  MolajoMenu  MolajoMenu object.
+	 *
+	 * @since  1.0
+	 */
+	public function getMenu($name = null, $options = array())
+	{
+		return null;
+	}
+
+	/**
+     * setCfg
+     *
 	 * Set configuration values
 	 *
 	 * @param	array	$vars		Array of configuration values
@@ -232,7 +386,9 @@ class MolajoInstallation extends MolajoApplication
 	}
 
 	/**
-	 * Create the configuration registry
+	 * _createConfiguration
+     *
+     * Create the configuration registry
 	 *
 	 * @return	void
 	 */
@@ -241,23 +397,28 @@ class MolajoInstallation extends MolajoApplication
 		$this->_registry = new JRegistry('config');
 	}
 
-	/**
-	* Get the template
-	*
-	* @return string The template name
-	*/
+    /**
+     * getTemplate
+     *
+     * Get the Template for the Application
+     *
+     * @param bool $params
+     * @return stdClass|string
+     */
 	public function getTemplate($params = false)
 	{
 		if ((bool) $params) {
 			$template = new stdClass();
-			$template->template = 'template';
+			$template->template = 'install';
 			$template->params = new JRegistry;
 			return $template;
 		}
-		return 'template';
+		return 'install';
 	}
 
 	/**
+     * _createSession
+     *
 	 * Create the user session
 	 *
 	 * @param	string	$name	The sessions name
@@ -270,7 +431,8 @@ class MolajoInstallation extends MolajoApplication
 		$options['name'] = $name;
 
 		$session = MolajoFactory::getSession($options);
-		if (!is_a($session->get('registry'), 'JRegistry')) {
+		if (is_a($session->get('registry'), 'JRegistry')) {
+        } else {
 			$session->set('registry', new JRegistry('session'));
 		}
 
@@ -289,12 +451,8 @@ class MolajoInstallation extends MolajoApplication
 	{
 		$xml = MolajoFactory::getXML(MOLAJO_PATH_SITE . '/installation/localise.xml');
 
-		if (!$xml) {
-			return false;
-		}
-
-		// Check that it's a localise file
-		if ($xml->getName() != 'localise') {
+		if ($xml) {
+        } else {
 			return false;
 		}
 
@@ -305,6 +463,16 @@ class MolajoInstallation extends MolajoApplication
 		$ret['debug'] = (string)$xml->debug;
 		$ret['sampledata'] = (string)$xml->sampledata;
 
+        /**
+        <?xml version="1.0" encoding="utf-8"?>
+        <localise version="1.6" client="installation" >
+         <forceLang>da-DK</forceLang>
+         <helpurl></helpurl>
+         <debug>0</debug>
+         <sampledata>sample_data_da.sql</sampledata>
+         <params/>
+        </localise>
+         */
 		return $ret;
 	}
 

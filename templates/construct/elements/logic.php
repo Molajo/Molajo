@@ -12,11 +12,11 @@ if (JFile::exists(dirname(__FILE__).'/helper.php')) {
 }
 
 // To enable use of site configuration
-$app 					= JFactory::getApplication();
+$app 					= MolajoFactory::getApplication();
 // Get the base URL of the website
 $baseUrl 				= JURI::base();
 // Returns a reference to the global document object
-$doc 					= JFactory::getDocument();
+$doc 					= MolajoFactory::getDocument();
 // Define relative shortcut for current template directory
 $template 				= 'templates/'.$this->template;
 // Define absolute path to the template directory
@@ -24,7 +24,7 @@ $templateDir			= JPATH_THEMES.'/'.$this->template;
 // Get the current URL
 $url 					= clone(JURI::getInstance());
 // To access the current user object
-$user 					= JFactory::getUser();
+$user 					= MolajoFactory::getUser();
 // Get the current view
 $view     				= JRequest::getCmd('view');
 
@@ -220,7 +220,7 @@ else ($articleId = NULL);
 #------------------------------ Category ID -------------------------------#
 
 function getCategory($id) {
-	$database = JFactory::getDBO();
+	$database = MolajoFactory::getDBO();
 		if(JRequest::getCmd('view', 0) == "category") {
 			return $id;
 		}		
@@ -239,7 +239,7 @@ $catId = getCategory(JRequest::getInt('id'));
 if ($isOnward && $catId && ($inheritStyle || $inheritLayout)) {
 	
 	function getParentCategory($id) {
-		$database = JFactory::getDBO();	
+		$database = MolajoFactory::getDBO();
 		$sql = "SELECT parent_id 
 		FROM #__categories 
 		WHERE id = $id";
@@ -250,7 +250,7 @@ if ($isOnward && $catId && ($inheritStyle || $inheritLayout)) {
 	$parentCategory = getParentCategory($catId);
 
 	function getAncestorCategories($id) {
-		$database = JFactory::getDBO();	
+		$database = MolajoFactory::getDBO();
 		$sql = "SELECT b.id, b.title
 		FROM #__categories a,
 		#__categories b

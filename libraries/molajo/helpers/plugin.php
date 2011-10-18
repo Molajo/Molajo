@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * Plugin Helper
  *
  * @package     Molajo
  * @subpackage  Plugin Helper
@@ -18,7 +18,9 @@ defined('MOLAJO') or die;
 abstract class MolajoPluginHelper
 {
 	/**
-	 * Get the plugin data of a specific type if no specific plugin is specified
+	 * getPlugin
+     *
+     * Get the plugin data of a specific type if no specific plugin is specified
 	 * otherwise only the specific plugin data is returned.
 	 *
 	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
@@ -56,7 +58,9 @@ abstract class MolajoPluginHelper
 	}
 
 	/**
-	 * Checks if a plugin is enabled.
+	 * isEnabled
+     *
+     * Checks if a plugin is enabled.
 	 *
 	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
 	 * @param   string   $plugin	The plugin name.
@@ -71,7 +75,9 @@ abstract class MolajoPluginHelper
 	}
 
 	/**
-	 * Loads all the plugin files for a particular type if no specific plugin is specified
+	 * importPlugin
+     *
+     * Loads all the plugin files for a particular type if no specific plugin is specified
 	 * otherwise only the specific pugin is loaded.
 	 *
 	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
@@ -117,16 +123,18 @@ abstract class MolajoPluginHelper
 	}
 
 	/**
-	 * Loads the plugin file.
+	 * _import
+     *
+     * Loads the plugin file.
 	 *
-	 * @param   JPlugin		$plugin		The plugin.
+	 * @param   MolajoPlugin		$plugin		The plugin.
 	 * @param   boolean  	$autocreate
 	 * @param   JDispatcher	$dispatcher	Optionally allows the plugin to use a different dispatcher.
 	 *
 	 * @return  boolean		True on success.
 	 * @since   1.0
 	 */
-	protected static function _import(&$plugin, $autocreate = true, $dispatcher = null)
+	protected static function _import($plugin, $autocreate = true, $dispatcher = null)
 	{
 		static $paths = array();
 
@@ -168,7 +176,9 @@ abstract class MolajoPluginHelper
 	}
 
 	/**
-	 * Loads the published plugins.
+	 * _load
+     *
+     * Loads the published plugins.
 	 *
 	 * @return  void
 	 * @since   1.0

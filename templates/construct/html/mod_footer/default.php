@@ -5,7 +5,7 @@
 * @copyright	Copyright (C) 2010 Matt Thomas | Joomla Engineering. All rights reserved.
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */
-$app = JFactory::getApplication();
+$app = MolajoFactory::getApplication();
 $sitename = $app->getCfg('sitename');
 ?>
 <p id="siteinfo-legal">All rights reserved. &copy; <?php echo $cur_year ?> <a href="<?php echo JURI::base( true ) ?>" title="<?php echo $sitename ?>"><?php echo $sitename ?></a>.<br/>

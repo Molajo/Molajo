@@ -370,8 +370,8 @@ class UsersModelReset extends JModelForm
 		$data['fromname']	= $config->get('fromname');
 		$data['mailfrom']	= $config->get('mailfrom');
 		$data['sitename']	= $config->get('sitename');
-		$data['link_text']	= JRoute::_($link, false, $mode);
-		$data['link_html']	= JRoute::_($link, true, $mode);
+		$data['link_text']	= MolajoRoute::_($link, false, $mode);
+		$data['link_html']	= MolajoRoute::_($link, true, $mode);
 		$data['token']		= $token;
 
 		$subject = JText::sprintf(

@@ -16,7 +16,7 @@ jimport('joomla.plugin.plugin');
  * @package		Joomla.Plugin
  * @subpackage	System.debug
  */
-class plgSystemDebug extends JPlugin
+class plgSystemDebug extends MolajoPlugin
 {
 	/**
 	 * Constructor

@@ -43,18 +43,18 @@ class MenusController extends JController
 		if ($view == 'menu' && $layout == 'edit' && !$this->checkEditId('com_menus.edit.menu', $id)) {
 
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_menus&view=menus', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_menus&view=menus', false));
 
 			return false;
 		}
 		else if ($view == 'item' && $layout == 'edit' && !$this->checkEditId('com_menus.edit.item', $id)) {
 
 			// Somehow the person just went to the form - we don't allow that.
-			$this->setError(JText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_menus&view=items', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_menus&view=items', false));
 
 			return false;
 		}

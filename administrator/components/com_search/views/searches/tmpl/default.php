@@ -19,28 +19,28 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 $canDo		= SearchHelper::getActions();
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_search&view=searches'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_search&view=searches'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
-			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo JText::_('COM_SEARCH_SEARCH_IN_PHRASE'); ?>" />
-			<button type="submit"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
-			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_SEARCH_SEARCH_IN_PHRASE'); ?>" />
+			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
 		<div class="filter-select fltrt">
 			<?php if ($this->enabled) : ?>
-			<span class="enabled"><?php echo JText::_('COM_SEARCH_LOGGING_ENABLED'); ?></span>
+			<span class="enabled"><?php echo MolajoText::_('COM_SEARCH_LOGGING_ENABLED'); ?></span>
 			<?php else : ?>
-			<span class="disabled"><?php echo JText::_('COM_SEARCH_LOGGING_DISABLED'); ?></span>
+			<span class="disabled"><?php echo MolajoText::_('COM_SEARCH_LOGGING_DISABLED'); ?></span>
 			<?php endif; ?>
 
 			<span class="adminlist-searchstatus">
 			<?php if ($this->state->get('filter.results')) : ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_search&filter_results=0');?>">
-					<?php echo JText::_('COM_SEARCH_HIDE_SEARCH_RESULTS'); ?></a>
+				<a href="<?php echo MolajoRoute::_('index.php?option=com_search&filter_results=0');?>">
+					<?php echo MolajoText::_('COM_SEARCH_HIDE_SEARCH_RESULTS'); ?></a>
 			<?php else : ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_search&filter_results=1');?>">
-					<?php echo JText::_('COM_SEARCH_SHOW_SEARCH_RESULTS'); ?></a>
+				<a href="<?php echo MolajoRoute::_('index.php?option=com_search&filter_results=1');?>">
+					<?php echo MolajoText::_('COM_SEARCH_SHOW_SEARCH_RESULTS'); ?></a>
 			<?php endif; ?>
 			</span>
 		</div>
@@ -51,7 +51,7 @@ $canDo		= SearchHelper::getActions();
 		<thead>
 			<tr>
 				<th width="20">
-					<?php echo JText::_('JGRID_HEADING_ROW_NUMBER'); ?>
+					<?php echo MolajoText::_('JGRID_HEADING_ROW_NUMBER'); ?>
 				</th>
 				<th class="title">
 					<?php echo JHtml::_('grid.sort', 'COM_SEARCH_HEADING_PHRASE', 'a.search_term', $listDirn, $listOrder); ?>
@@ -60,7 +60,7 @@ $canDo		= SearchHelper::getActions();
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
 				</th>
 				<th width="15%">
-					<?php echo JText::_('COM_SEARCH_HEADING_RESULTS'); ?>
+					<?php echo MolajoText::_('COM_SEARCH_HEADING_RESULTS'); ?>
 				</th>
 				<th width="30%">
 					&#160;
@@ -90,7 +90,7 @@ $canDo		= SearchHelper::getActions();
 					<?php if ($this->state->get('filter.results')) : ?>
 						<?php echo (int) $item->returns; ?>
 					<?php else: ?>
-						<?php echo JText::_('COM_SEARCH_NO_RESULTS'); ?>
+						<?php echo MolajoText::_('COM_SEARCH_NO_RESULTS'); ?>
 					<?php endif; ?>
 					</td>
 					<td>

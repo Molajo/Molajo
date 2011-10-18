@@ -30,12 +30,12 @@ class MolajoMenuHelper
 	public static function addSubmenu($vName)
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('COM_MENUS_SUBMENU_MENUS'),
+			MolajoText::_('COM_MENUS_SUBMENU_MENUS'),
 			'index.php?option=com_menus&view=menus',
 			$vName == 'menus'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_MENUS_SUBMENU_ITEMS'),
+			MolajoText::_('COM_MENUS_SUBMENU_ITEMS'),
 			'index.php?option=com_menus&view=items',
 			$vName == 'items'
 		);
@@ -138,7 +138,8 @@ class MolajoMenuHelper
 		$db = MolajoFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('a.id AS value, a.title AS text, a.level, a.menu_id, a.type, a.template_style_id, a.checked_out');
+		$query->select('a.id AS value, a.title AS text, a.level, a.menu_id, a.type');
+		$query->select('a.template_style_id, a.checked_out');
 		$query->from('#__menu_items AS a');
 		$query->join('LEFT', '`#__menu_items` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
 
@@ -155,12 +156,14 @@ class MolajoMenuHelper
 			}
 		}
 
-		if (!empty($published)) {
-			if (is_array($published)) $published = '(' . implode(',',$published) .')';
-			$query->where('a.published IN ' . $published);
+		if (empty($published)) {
+        } else {
+			if (is_array($published)) {
+                $published = '('.implode(',',$published) .')';
+            }
+			$query->where('a.published IN '.$published);
 		}
 
-		$query->where('a.published != -2');
 		$query->group('a.id');
 		$query->order('a.lft ASC');
 

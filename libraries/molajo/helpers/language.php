@@ -44,13 +44,13 @@ class MolajoLanguageHelper
 			$query->select('element');
 			$query->from('#__extensions');
 			$query->where('type = '.$db->quote('language'));
-			$query->where('state = 1');
+			$query->where('state = 0');
 			$query->where('enabled = 1');
 			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
 			$db->setQuery($query);
             $installed_languages = $db->loadObjectList('element');
 		}
-
+        
 		foreach ($langs as $lang => $metadata)
 		{
             $option = array ();
@@ -65,7 +65,6 @@ class MolajoLanguageHelper
 
 		return $list;
 	}
-
 	/**
 	 * Tries to detect the language.
 	 *
@@ -140,7 +139,7 @@ class MolajoLanguageHelper
 				if (!$languages = $cache->get('languages')) {
 					$db 	= MolajoFactory::getDBO();
 					$query	= $db->getQuery(true);
-					$query->select('*')->from('#__languages')->where('published=1')->order('ordering ASC');
+					$query->select('*')->from('#__languages')->where('published=1');
 					$db->setQuery($query);
 
 					$languages['default'] 	= $db->loadObjectList();

@@ -2,17 +2,16 @@
 /**
  * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
  * MolajoDocument head renderer
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -21,9 +20,15 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 	/**
 	 * Renders the document head and returns the results as a string
 	 *
-	 * @param   string  $name	(unused)
-	 * @param   array   $params	Associative array of values
+	 * @param   string  $head     (unused)
+	 * @param   array   $params   Associative array of values
+	 * @param   string  $content  The script
+	 *
 	 * @return  string  The output of the script
+	 *
+	 * @since   11.1
+	 *
+	 * @note    Unused arguments are retained to preserve backward compatibility.
 	 */
 	public function render($head, $params = array(), $content = null)
 	{
@@ -38,14 +43,17 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 	/**
 	 * Generates the head HTML and return the results as a string
 	 *
-	 * @return  string
+	 * @param   $document  The document for which the head will be created
+	 *
+	 * @return  string  The head hTML
+	 *
+	 * @since   11.1
 	 */
 	public function fetchHead(&$document)
 	{
 		// Trigger the onBeforeCompileHead event (skip for installation, since it causes an error)
 		$app = MolajoFactory::getApplication();
 		$app->triggerEvent('onBeforeCompileHead');
-
 		// Get line endings
 		$lnEnd	= $document->_getLineEnd();
 		$tab	= $document->_getTab();
@@ -64,7 +72,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			foreach ($tag as $name => $content)
 			{
 				if ($type == 'http-equiv') {
-					$content.= '; charset=' . $document->getCharset();
+					$content.= '; charset='.$document->getCharset();
 					$buffer .= $tab.'<meta http-equiv="'.$name.'" content="'.htmlspecialchars($content).'"'.$tagEnd.$lnEnd;
 				}
 				else if ($type == 'standard' && !empty($content)) {
@@ -83,15 +91,19 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 		$buffer .= $tab.'<title>'.htmlspecialchars($document->getTitle(), ENT_COMPAT, 'UTF-8').'</title>'.$lnEnd;
 
 		// Generate link declarations
-		foreach ($document->_links as $link) {
-			$buffer .= $tab.$link.$tagEnd.$lnEnd;
+		foreach ($document->_links as $link => $linkAtrr)
+		{
+			$buffer .= $tab.'<link href="'.$link.'" '.$linkAtrr['relType'].'="'.$linkAtrr['relation'].'"';
+			if ($temp = JArrayHelper::toString($linkAtrr['attribs'])) {
+				$buffer .= ' '.$temp;
+			}
+			$buffer .= ' />'.$lnEnd;
 		}
 
-        
 		// Generate stylesheet links
 		foreach ($document->_styleSheets as $strSrc => $strAttr)
 		{
-			$buffer .= $tab . '<link rel="stylesheet" href="'.$strSrc.'" type="'.$strAttr['mime'].'"';
+			$buffer .= $tab.'<link rel="stylesheet" href="'.$strSrc.'" type="'.$strAttr['mime'].'"';
 			if (!is_null($strAttr['media'])) {
 				$buffer .= ' media="'.$strAttr['media'].'" ';
 			}
@@ -111,7 +123,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 				$buffer .= $tab.$tab.'<![CDATA['.$lnEnd;
 			}
 
-			$buffer .= $content . $lnEnd;
+			$buffer .= $content.$lnEnd;
 
 			// See above note
 			if ($document->_mime != 'text/html') {
@@ -155,16 +167,16 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 		}
 
 		// Generate script language declarations.
-		if (count(JText::script())) {
+		if (count(MolajoText::script())) {
 			$buffer .= $tab.'<script type="text/javascript">'.$lnEnd;
 			$buffer .= $tab.$tab.'(function() {'.$lnEnd;
-			$buffer .= $tab.$tab.$tab.'var strings = '.json_encode(JText::script()).';'.$lnEnd;
+			$buffer .= $tab.$tab.$tab.'var strings = '.json_encode(MolajoText::script()).';'.$lnEnd;
 			$buffer .= $tab.$tab.$tab.'if (typeof Joomla == \'undefined\') {'.$lnEnd;
 			$buffer .= $tab.$tab.$tab.$tab.'Joomla = {};'.$lnEnd;
-			$buffer .= $tab.$tab.$tab.$tab.'Joomla.JText = strings;'.$lnEnd;
+			$buffer .= $tab.$tab.$tab.$tab.'Joomla.MolajoText = strings;'.$lnEnd;
 			$buffer .= $tab.$tab.$tab.'}'.$lnEnd;
 			$buffer .= $tab.$tab.$tab.'else {'.$lnEnd;
-			$buffer .= $tab.$tab.$tab.$tab.'Joomla.JText.load(strings);'.$lnEnd;
+			$buffer .= $tab.$tab.$tab.$tab.'Joomla.MolajoText.load(strings);'.$lnEnd;
 			$buffer .= $tab.$tab.$tab.'}'.$lnEnd;
 			$buffer .= $tab.$tab.'})();'.$lnEnd;
 			$buffer .= $tab.'</script>'.$lnEnd;

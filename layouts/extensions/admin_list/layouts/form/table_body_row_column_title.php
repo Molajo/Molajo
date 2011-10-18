@@ -20,7 +20,7 @@ if ($this->render['column_name'] == 'title' && $this->params->def('config_manage
         <?php echo JHtml::_('jgrid.checkedout', $this->row->rowCount, $this->row->editor, $this->row->checked_out_time, $defaultView.'.', $this->row->canCheckin); ?>
 <?php endif; ?>
 <?php if ($this->row->canEdit) : ?>
-        <a href="<?php echo JRoute::_('index.php?option='.$this->request['option'].'&task=edit&id='.$this->row->id);?>">
+        <a href="<?php echo MolajoRoute::_('index.php?option='.$this->request['option'].'&task=edit&id='.$this->row->id);?>">
             <?php echo $this->row->title; ?>
         </a>
 <?php else : ?>
@@ -28,6 +28,6 @@ if ($this->render['column_name'] == 'title' && $this->params->def('config_manage
 <?php endif; ?>
 
 <?php if ($this->params->def('config_manager_grid_column_display_alias', 1))  : ?>
-        <p class="smallsub"><?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($this->row->alias));?></p>
+        <p class="smallsub"><?php echo MolajoText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($this->row->alias));?></p>
 <?php endif; ?>
 </td>

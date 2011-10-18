@@ -2,36 +2,36 @@
 /**
  * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
- * DocumentError class
+ * DocumentError class, provides an easy interface to parse and display an error page
  *
- * Displays an error page
- *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
-
 class MolajoDocumentError extends MolajoDocument
 {
 	/**
 	 * Error Object
-	 * @var	object
+	 *
+	 * @var    object
+	 * @since  1.0
 	 */
 	var $_error;
 
 	/**
 	 * Class constructor
 	 *
-	 * @param   string  $type        (either HTML or text)
+	 * @param   string  $type        Either HTML or text
 	 * @param   array   $attributes  Associative array of attributes
+	 *
+	 * @since   11.1
 	 */
 	public function __construct($options = array())
 	{
@@ -47,10 +47,11 @@ class MolajoDocumentError extends MolajoDocument
 	/**
 	 * Set error object
 	 *
-	 * @param   object  $error	Error object to set
+	 * @param   object  $error  Error object to set
 	 *
 	 * @return  boolean  True on success
-	 * @since   1.0
+	 *
+	 * @since   11.1
 	 */
 	public function setError($error)
 	{
@@ -65,8 +66,13 @@ class MolajoDocumentError extends MolajoDocument
 	/**
 	 * Render the document
 	 *
-	 * @param   boolean  $cache		If true, cache the output
-	 * @param   array    $params		Associative array of attributes
+	 * @param   boolean  $cache    If true, cache the output
+	 * @param   array    $params   Associative array of attributes
+	 *
+	 *
+	 * @return  string   The rendered data
+	 *
+	 * @since   11.1
 	 */
 	public function render($cache = false, $params = array())
 	{
@@ -83,7 +89,7 @@ class MolajoDocumentError extends MolajoDocument
 		$directory	= isset($params['directory']) ? $params['directory'] : 'templates';
 		$template	= isset($params['template']) ? JFilterInput::getInstance()->clean($params['template'], 'cmd') : 'system';
 
-		if (!file_exists($directory . '/' . $template . '/' . $file)) {
+		if (!file_exists($directory.'/'.$template.'/'.$file)) {
 			$template = 'system';
 		}
 
@@ -94,7 +100,7 @@ class MolajoDocumentError extends MolajoDocument
 		$this->error	= $this->_error;
 
 		// load
-		$data = $this->_loadTemplate($directory . '/' . $template, $file);
+		$data = $this->_loadTemplate($directory.'/'.$template, $file);
 
 		parent::render();
 		return $data;
@@ -103,24 +109,26 @@ class MolajoDocumentError extends MolajoDocument
 	/**
 	 * Load a template file
 	 *
-	 * @param   string  $template	The name of the template
-	 * @param   string  $filename	The actual filename
+	 * @param   string  $template   The name of the template
+	 * @param   string  $filename   The actual filename
 	 *
 	 * @return  string  The contents of the template
+	 *
+	 * @since   11.1
 	 */
 	function _loadTemplate($directory, $filename)
 	{
 		$contents = '';
 
 		// Check to see if we have a valid template file
-		if (file_exists($directory . '/' . $filename))
+		if (file_exists($directory.'/'.$filename))
 		{
 			// Store the file path
-			$this->_file = $directory . '/' . $filename;
+			$this->_file = $directory.'/'.$filename;
 
 			// Get the file content
 			ob_start();
-			require_once $directory . '/' . $filename;
+			require_once $directory.'/'.$filename;
 			$contents = ob_get_contents();
 			ob_end_clean();
 		}
@@ -128,6 +136,13 @@ class MolajoDocumentError extends MolajoDocument
 		return $contents;
 	}
 
+	/**
+	 * Render the backtrace
+	 *
+	 * @return  string  The contents of the backtrace
+	 *
+	 * @since   11.1
+	 */
 	function renderBacktrace()
 	{
 		$contents	= null;

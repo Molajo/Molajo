@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 /**
  * JSON format handler for MolajoRegistry.
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Registry
- * @since       11.1
+ * @since       1.0
  */
 class MolajoRegistryFormatJSON extends MolajoRegistryFormat
 {

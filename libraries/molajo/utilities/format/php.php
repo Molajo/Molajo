@@ -11,9 +11,9 @@ defined('MOLAJO') or die;
 /**
  * PHP class format handler for MolajoRegistry
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  Registry
- * @since       11.1
+ * @since       1.0
  */
 class MolajoRegistryFormatPHP extends MolajoRegistryFormat {
 
@@ -31,9 +31,9 @@ class MolajoRegistryFormatPHP extends MolajoRegistryFormat {
 		$vars = '';
 		foreach (get_object_vars($object) as $k => $v) {
 			if (is_scalar($v)) {
-				$vars .= "\tpublic $". $k . " = '" . addcslashes($v, '\\\'') . "';\n";
+				$vars .= "\tpublic $". $k." = '".addslashes($v, '\\\'')."';\n";
 			} else if (is_array($v)) {
-				$vars .= "\tpublic $". $k . " = " . $this->_getArrayString($v) . ";\n";
+				$vars .= "\tpublic $". $k." = ".$this->_getArrayString($v).";\n";
 			}
 		}
 

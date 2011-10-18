@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class MolajoControllerLogin extends MolajoController
 {
-
 	/**
 	 * login
      * 
@@ -30,8 +29,12 @@ class MolajoControllerLogin extends MolajoController
 	{
         /** security token **/
 //        JRequest::checkToken() or die;
+        
+    /**
+     * Initialization
+     */
+        $filehelper = new MolajoFileHelper();
 
-        $options = array();
         $options = array('action' => 'login');
 
 		$credentials = array(
@@ -51,150 +54,33 @@ class MolajoControllerLogin extends MolajoController
 			$return = 'index.php';
 		}
 
-		$authenticate = JAuthentication::getInstance();
-		$response	= $authenticate->authenticate($credentials, $options);
- 
-		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
-			// Import the user plugin group.
-			MolajoPluginHelper::importPlugin('user');
-
-			// OK, the credentials are authenticated.  Lets fire the onLogin event.
-			$results = $this->dispatcher->trigger('onUserLogin', array((array)$response, $options));
-
-			/*
-			 * If any of the user plugins did not successfully complete the login routine
-			 * then the whole method fails.
-			 *
-			 * Any errors raised should be done in the plugin as this provides the ability
-			 * to provide much more information about why the routine may have failed.
-			 */
-
-			if (!in_array(false, $results, true)) {
-				// Set the remember me cookie if enabled.
-				if (isset($options['remember']) && $options['remember']) {
-					jimport('joomla.utilities.simplecrypt');
-					jimport('joomla.utilities.utility');
-
-					// Create the encryption key, apply extra hardening using the user agent string.
-					$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
-
-					$crypt = new JSimpleCrypt($key);
-					$rcookie = $crypt->encrypt(serialize($credentials));
-					$lifetime = time() + 365*24*60*60;
-
-					// Use domain and path set in config for cookie if it exists.
-					$cookie_domain = $this->getCfg('cookie_domain', '');
-					$cookie_path = $this->getCfg('cookie_path', '/');
-					setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
-				}
-
-				return true;
-			}
-		}
-
-		// Trigger onUserLoginFailure Event.
-        $results = $this->dispatcher->trigger('onUserLoginFailure', array((array)$response));
-       echo 'hello'.var_dump($results);
-        die();
-		// If silent is set, just return false.
-		if (isset($options['silent']) && $options['silent']) {
-			return false;
-		}
-
-		// If status is success, any error will ahve been raised by the user plugin
-		if ($response->status !== JAUTHENTICATE_STATUS_SUCCESS) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_LOGIN_AUTHENTICATE'));
-		}
-
-		return false;
-
-        /** success message **/
-        $this->redirectClass->setRedirectMessage(JText::_('MOLAJO_LOGIN_SUCCESSFUL'));
-        $this->redirectClass->setSuccessIndicator(true);
-
-		if (!JError::isError($result)) {
-			$app->redirect($return);
-		}
-
-        /** what to display? */
-		parent::display();
-
-///
-//The minimum group
-		$options['group'] = 'Public Backend';
-
-		//Make sure users are not autoregistered
-		$options['autoregister'] = false;
-
-		//Set the application login entry point
-		if (!array_key_exists('entry_url', $options)) {
-			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=login';
-		}
-
-		// Set the access control action to check.
-		$options['action'] = 'core.login.admin';
-
-		$result = parent::login($credentials, $options);
-
-		if (!JError::isError($result))
-		{
-			$lang = JRequest::getCmd('lang');
-			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
-			$this->setUserState('application.lang', $lang );
-
-			JAdministrator::purgeMessages();
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Finds out if a set of login credentials are valid by asking all obvserving
-	 * objects to run their respective authentication routines.
-	 *
-	 * @param   array  Array holding the user credentials
-	 * @return  mixed  Integer userid for valid user if credentials are valid or
-	 *					boolean false if they are not
-	 * @since   11.1
-	 */
-	public function authenticate($credentials, $options)
-	{
-		// Initialise variables.
-		$auth = false;
-
-		// Get plugins
+    /**
+     * Authenticate 
+     */
+		$response = new MolajoAuthentication();
 		$plugins = MolajoPluginHelper::getPlugin('authentication');
+        
+		foreach ($plugins as $plugin) {
 
-		// Create authencication response
-		$response = new MolajoAuthenticationResponse();
+            $path = MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
+            $className = 'plg'.ucfirst($plugin->type).ucfirst($plugin->name);
+            $filehelper->requireClassFile($path, $className);
 
-		/*
-		 * Loop through the plugins and check of the creditials can be used to authenticate
-		 * the user
-		 *
-		 * Any errors raised in the plugin should be returned via the JAuthenticationResponse
-		 * and handled appropriately.
-		 */
-		foreach ($plugins as $plugin)
-		{
-			$className = 'plg'.$plugin->type.$plugin->name;
-            echo $className;
-            die;
 			if (class_exists($className)) {
-				$plugin = new $className($this, (array)$plugin);
-			}
-			else {
-				// Bail here if the plugin can't be created
-				JError::raiseWarning(50, JText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+				$authenticate = new $className($response, (array) $plugin);
+echo '<pre>';var_dump($authenticate);'</pre>';
+die;
+			} else {
+                echo 'NOT exists'.$className;
+                die;
+				JError::raiseWarning(50, MolajoText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
 
-			// Try to authenticate
-			$plugin->onUserAuthenticate($credentials, $options, $response);
+//			$plugin->onUserAuthenticate($credentials, $options, $response);
+$response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
 
-			// If authentication is successful break out of the loop
-			if ($response->status === JAUTHENTICATE_STATUS_SUCCESS)
-			{
+			if ($response->status == MOLAJO_AUTHENTICATE_STATUS_SUCCESS) {
 				if (empty($response->type)) {
 					$response->type = isset($plugin->_name) ? $plugin->_name : $plugin->name;
 				}
@@ -202,21 +88,59 @@ class MolajoControllerLogin extends MolajoController
 			}
 		}
 
-		if (empty($response->username)) {
-			$response->username = $credentials['username'];
-		}
+		if (empty($response->username)) { $response->username = $credentials['username']; }
+		if (empty($response->fullname)) { $response->fullname = $credentials['username']; }
+		if (empty($response->password)) { $response->password = $credentials['password']; }
 
-		if (empty($response->fullname)) {
-			$response->fullname = $credentials['username'];
-		}
+        /**
+         *  If Login succeeded so far, fire onUserLogin Plugins
+         */
+        if ($response->status === MOLAJO_AUTHENTICATE_STATUS_SUCCESS) {
 
-		if (empty($response->password)) {
-			$response->password = $credentials['password'];
-		}
+            MolajoPluginHelper::importPlugin('user');
+            $results = $this->dispatcher->trigger('onUserLogin', array((array)$response, $options));
 
-		return $response;
+            if (in_array(false, $results, true)) {
+                $response->status = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
+
+            } else {
+
+                if (isset($options['remember']) && $options['remember']) {
+
+                    $key = MolajoUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
+
+                    $crypt = new JSimpleCrypt($key);
+                    $rcookie = $crypt->encrypt(serialize($credentials));
+                    $lifetime = time() + 365*24*60*60;
+
+                    $cookie_domain = $this->getCfg('cookie_domain', '');
+                    $cookie_path = $this->getCfg('cookie_path', '/');
+                    setcookie( MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
+                }
+            }
+
+            /** success message **/
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_LOGIN_SUCCESSFUL'));
+            $this->redirectClass->setSuccessIndicator(true);
+
+
+        } else {
+
+        /**
+         *  Login Failed
+         */
+            $results = $this->dispatcher->trigger('onUserLoginFailure', array((array)$response));
+
+            // If silent is set, just return false.
+            if (isset($options['silent']) && $options['silent']) {
+                $this->redirectClass->setRedirectMessage('');
+            } else {
+                $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_LOGIN_FAILED'));
+            }
+            $this->redirectClass->setSuccessIndicator(false);
+            return false;
+        }
 	}
-
 
     /**
      * logout
@@ -230,15 +154,12 @@ class MolajoControllerLogin extends MolajoController
         JRequest::checkToken('default') or die;
 
         $app = MolajoFactory::getApplication();
-
         $userid = JRequest::getInt('uid', null);
-
         $options = array(
             'applicationid' => ($userid) ? 0 : 1
         );
 
         $result = $app->logout($userid, $options);
-
         if (!JError::isError($result)) {
             $this->model 	= $this->getModel('login');
             $return = $this->model->getState('return');
@@ -259,7 +180,7 @@ class MolajoControllerLogin extends MolajoController
      * much more information about why the routine may have failed.
      *
      * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
-     * @param   array    $options  Array('clientid' => array of client id's)
+     * @param   array    $options  Array('applicationid' => array of client id's)
      *
      * @return  boolean  True on success
      *
@@ -271,15 +192,15 @@ class MolajoControllerLogin extends MolajoController
         $retval = false;
 
         // Get a user object from the JApplication.
-        $user = JFactory::getUser($userid);
+        $user = MolajoFactory::getUser($userid);
 
         // Build the credentials array.
         $parameters['username']	= $user->get('username');
         $parameters['id']		= $user->get('id');
 
         // Set clientid in the options array if it hasn't been set already.
-        if (!isset($options['clientid'])) {
-            $options['clientid']= $this->getClientId();
+        if (!isset($options['applicationid'])) {
+            $options['applicationid']= $this->getApplicationId();
         }
 
         // Import the user plugin group.
@@ -290,11 +211,12 @@ class MolajoControllerLogin extends MolajoController
 
         // Check if any of the plugins failed. If none did, success.
 
-        if (!in_array(false, $results, true)) {
+        if (in_array(false, $results, true)) {
+        } else {
             // Use domain and path set in config for cookie if it exists.
             $cookie_domain = $this->getCfg('cookie_domain', '');
             $cookie_path = $this->getCfg('cookie_path', '/');
-            setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
+            setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
             return true;
         }

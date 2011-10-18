@@ -25,7 +25,7 @@ defined('JPATH_PLATFORM') or die;
  * @subpackage	Content.pagebreak
  * @since		1.6
  */
-class plgContentPagebreak extends JPlugin
+class plgContentPagebreak extends MolajoPlugin
 {
 	/**
 	 * Constructor

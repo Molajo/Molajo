@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 jimport('joomla.plugin.plugin');
 
-class plgMolajoWebServices extends JPlugin	{
+class plgMolajoWebServices extends MolajoPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for WebServices object
@@ -37,7 +37,7 @@ class plgMolajoWebServices extends JPlugin	{
         }
 
         /** parameters **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
         $loc = $this->location;
 
@@ -66,7 +66,7 @@ class plgMolajoWebServices extends JPlugin	{
         if ($app->getName() == 'administrator') { return; }
 
         /** retrieve parameters for system plugin molajo library **/
-        $molajoSystemPlugin =& JPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParams = new JParameter($molajoSystemPlugin->params);
 
         /** test for google analytics **/

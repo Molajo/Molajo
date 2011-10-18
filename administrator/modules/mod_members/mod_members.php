@@ -15,4 +15,4 @@ require_once dirname(__FILE__).'/helper.php';
 
 $count = modOnlineHelper::getOnlineCount();
 
-$rowset[0]->text = $count.'<img src="images/users.png" alt="'.JText::_('MOD_ONLINE_USERS_ONLINE').'/>';
+$rowset[0]->text = $count.'<img src="images/users.png" alt="'.MolajoText::_('MOD_ONLINE_USERS_ONLINE').'/>';

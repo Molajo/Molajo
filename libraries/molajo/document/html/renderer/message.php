@@ -2,17 +2,16 @@
 /**
  * @package     Molajo
  * @subpackage  Document
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
 /**
  * MolajoDocument system message renderer
  *
- * @package     Molajo
+ * @package    Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -21,10 +20,13 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 	/**
 	 * Renders the error stack and returns the results as a string
 	 *
-	 * @param   string  $name	(unused)
-	 * @param   array  $params	Associative array of values
+	 * @param   string  $name    (unused)
+	 * @param   array   $params  Associative array of values
+	 * @param   string  $content
 	 *
 	 * @return  string  The output of the script
+	 *
+	 * @since   11.1
 	 */
 	public function render($name, $params = array (), $content = null)
 	{
@@ -35,40 +37,87 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 		// Get the message queue
 		$messages = MolajoFactory::getApplication()->getMessageQueue();
 
+	    // Record the scope.
+		$scope = MolajoFactory::getApplication()->scope;
+
+		// Set scope to module name
+		MolajoFactory::getApplication()->scope = 'message';
+
 		// Build the sorted message list
-		if (is_array($messages) && !empty($messages)) {
-			foreach ($messages as $msg)
-			{
-				if (isset($msg['type']) && isset($msg['message'])) {
-					$lists[$msg['type']][] = $msg['message'];
-				}
-			}
+		if ($messages == null) {
+
+        } else {
+
+            /** view */
+            $view = new MolajoView ();
+
+            /** defaults */
+            $request = array();
+            $state = array();
+            $params = array();
+            $rowset = array ();
+            $pagination = array();
+            $layout_type = 'document';
+            $layout = 'messages';
+            $wrap = 'div';
+
+            $application = MolajoFactory::getApplication();
+            $document = MolajoFactory::getDocument();
+            $user = MolajoFactory::getUser();
+
+            $params = new MolajoRegistry;
+
+            $request['wrap_title'] = '';
+            $request['wrap_id'] = 'system-message-container';
+            $request['wrap_class'] = '';
+            $request['wrap_subtitle'] = '';
+            $request['wrap_date'] = '';
+            $request['wrap_author'] = '';
+            $request['position'] = '';
+            $request['wrap_more_array'] = array();
+
+            /** 1. Application */
+            $view->app = $application;
+
+            /** 2. Document */
+            $view->document = $document;
+
+            /** 3. User */
+            $view->user = $user;
+
+            /** 4. Request */
+            $view->request = $request;
+
+            /** 5. State */
+            $view->state = array();
+
+            /** 6. Parameters */
+            $view->params = $params;
+
+            /** 7. Query */
+            $view->rowset = $messages;
+
+            /** 8. Pagination */
+            $view->pagination = $pagination;
+
+            /** 9. Layout Type */
+            $view->layout_type = $layout_type;
+
+            /** 10. Layout */
+            $view->layout = $layout;
+
+            /** 11. Wrap */
+            $view->wrap = $wrap;
+
+            /** display view */
+            ob_start();
+            $view->display();
+            $buffer = ob_get_contents();
+            ob_end_clean();
 		}
 
-		// Build the return string
-		$buffer .= "\n<div id=\"system-message-container\">";
+		MolajoFactory::getApplication()->scope = $scope;
 
-		// If messages exist render them
-		if (is_array($lists)) {
-			$buffer .= "\n<dl id=\"system-message\">";
-			foreach ($lists as $type => $msgs)
-			{
-				if (count($msgs)) {
-					$buffer .= "\n<dt class=\"".strtolower($type)."\">".JText::_($type)."</dt>";
-					$buffer .= "\n<dd class=\"".strtolower($type)." message\">";
-					$buffer .= "\n\t<ul>";
-					foreach ($msgs as $msg)
-					{
-						$buffer .="\n\t\t<li>".$msg."</li>";
-					}
-					$buffer .= "\n\t</ul>";
-					$buffer .= "\n</dd>";
-				}
-			}
-			$buffer .= "\n</dl>";
-		}
-
-		$buffer .= "\n</div>";
-		return $buffer;
+    	return $buffer;
 	}
 }

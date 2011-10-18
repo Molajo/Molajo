@@ -44,19 +44,19 @@ class RedirectTableLink extends JTable
 
 		// Check for valid name.
 		if (empty($this->old_url)) {
-			$this->setError(JText::_('COM_REDIRECT_ERROR_SOURCE_URL_REQUIRED'));
+			$this->setError(MolajoText::_('COM_REDIRECT_ERROR_SOURCE_URL_REQUIRED'));
 			return false;
 		}
 
 		// Check for valid name.
 		if (empty($this->new_url)) {
-			$this->setError(JText::_('COM_REDIRECT_ERROR_DESTINATION_URL_REQUIRED'));
+			$this->setError(MolajoText::_('COM_REDIRECT_ERROR_DESTINATION_URL_REQUIRED'));
 			return false;
 		}
 
 		// Check for duplicates
 		if ($this->old_url == $this->new_url) {
-			$this->setError(JText::_('COM_REDIRECT_ERROR_DUPLICATE_URLS'));
+			$this->setError(MolajoText::_('COM_REDIRECT_ERROR_DUPLICATE_URLS'));
 			return false;
 		}
 
@@ -69,7 +69,7 @@ class RedirectTableLink extends JTable
 		$xid = intval($db->loadResult());
 
 		if ($xid && $xid != intval($this->id)) {
-			$this->setError(JText::_('COM_REDIRECT_ERROR_DUPLICATE_OLD_URL'));
+			$this->setError(MolajoText::_('COM_REDIRECT_ERROR_DUPLICATE_OLD_URL'));
 			return false;
 		}
 

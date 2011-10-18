@@ -10,11 +10,11 @@
 jimport('joomla.filesystem.file');
 
 // To enable use of site configuration
-$app 					= JFactory::getApplication();
+$app 					= MolajoFactory::getApplication();
 // Get the base URL of the website
 $baseUrl 				= JURI::base();
 // Returns a reference to the global document object
-$doc 					= JFactory::getDocument();
+$doc 					= MolajoFactory::getDocument();
 // Get the offline status of the webiste
 $offLine 				= $app->getCfg('offline');
 // Send the user to the home page if the website is offline
@@ -185,10 +185,10 @@ echo "\n"; ?>
 
 				
 				<div class="date-container">
-					<span class="date-weekday"><?php	$now = &JFactory::getDate(); echo $now->toFormat('%A').','; ?></span>
-					<span class="date-month"><?php 		$now = &JFactory::getDate(); echo $now->toFormat('%B'); ?></span>
-					<span class="date-day"><?php 		$now = &JFactory::getDate(); echo $now->toFormat('%d').','; ?></span>
-					<span class="date-year"><?php 		$now = &JFactory::getDate(); echo $now->toFormat('%Y'); ?></span>
+					<span class="date-weekday"><?php	$now = &MolajoFactory::getDate(); echo $now->toFormat('%A').','; ?></span>
+					<span class="date-month"><?php 		$now = &MolajoFactory::getDate(); echo $now->toFormat('%B'); ?></span>
+					<span class="date-day"><?php 		$now = &MolajoFactory::getDate(); echo $now->toFormat('%d').','; ?></span>
+					<span class="date-year"><?php 		$now = &MolajoFactory::getDate(); echo $now->toFormat('%Y'); ?></span>
 				</div>
 				
 			

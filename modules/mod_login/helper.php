@@ -42,7 +42,7 @@ class modLoginHelper
 			// stay on the same page
 			$uri = MolajoFactory::getURI();
 			$vars = $router->parse($uri);
-			unset($vars['lang']);
+			unset($vars['language']);
 			if ($router->getMode() == JROUTER_MODE_SEF)
 			{
 				if (isset($vars['Itemid']))

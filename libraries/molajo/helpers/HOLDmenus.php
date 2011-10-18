@@ -30,12 +30,12 @@ class MenusHelper
 	public static function addSubmenu($vName)
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('COM_MENUS_SUBMENU_MENUS'),
+			MolajoText::_('COM_MENUS_SUBMENU_MENUS'),
 			'index.php?option=com_menus&view=menus',
 			$vName == 'menus'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_MENUS_SUBMENU_ITEMS'),
+			MolajoText::_('COM_MENUS_SUBMENU_ITEMS'),
 			'index.php?option=com_menus&view=items',
 			$vName == 'items'
 		);
@@ -156,8 +156,8 @@ class MenusHelper
 		}
 
 		if (!empty($published)) {
-			if (is_array($published)) $published = '(' . implode(',',$published) .')';
-			$query->where('a.published IN ' . $published);
+			if (is_array($published)) $published = '('.implode(',',$published) .')';
+			$query->where('a.published IN '.$published);
 		}
 
 		$query->where('a.published != -2');
