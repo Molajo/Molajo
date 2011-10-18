@@ -76,7 +76,7 @@ class MolajoTableMenu extends MolajoTable
 	{
 		if ($this->id) {
 			// Get the user id
-			$userId = JFactory::getUser()->id;
+			$userId = MolajoFactory::getUser()->id;
 
 			// Get the old value of the table
 			$table = MolajoTable::getInstance('Menu','MolajoTable');
@@ -153,7 +153,7 @@ class MolajoTableMenu extends MolajoTable
 		if ($pk !== null)
 		{
 			// Get the user id
-			$userId = JFactory::getUser()->id;
+			$userId = MolajoFactory::getUser()->id;
 
 			// Get the old value of the table
 			$table = MolajoTable::getInstance('Menu','MolajoTable');

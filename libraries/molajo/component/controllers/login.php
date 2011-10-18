@@ -180,7 +180,7 @@ $response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
      * much more information about why the routine may have failed.
      *
      * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
-     * @param   array    $options  Array('clientid' => array of client id's)
+     * @param   array    $options  Array('applicationid' => array of client id's)
      *
      * @return  boolean  True on success
      *
@@ -192,15 +192,15 @@ $response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
         $retval = false;
 
         // Get a user object from the JApplication.
-        $user = JFactory::getUser($userid);
+        $user = MolajoFactory::getUser($userid);
 
         // Build the credentials array.
         $parameters['username']	= $user->get('username');
         $parameters['id']		= $user->get('id');
 
         // Set clientid in the options array if it hasn't been set already.
-        if (!isset($options['clientid'])) {
-            $options['clientid']= $this->getClientId();
+        if (!isset($options['applicationid'])) {
+            $options['applicationid']= $this->getApplicationId();
         }
 
         // Import the user plugin group.

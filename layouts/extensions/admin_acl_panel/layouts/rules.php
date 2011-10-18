@@ -127,7 +127,7 @@ abstract class JHtmlRules
 	protected static function _getParentAssetId($assetId)
 	{
 		// Get a database object.
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 
 		// Get the user groups from the database.
 		$db->setQuery(

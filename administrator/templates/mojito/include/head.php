@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 $document = MolajoFactory::getDocument();
 $browser = JBrowser::getInstance();
-$lang = JFactory::getLanguage();
+$lang = MolajoFactory::getLanguage();
 
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.core.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
 $document->addStyleSheet($url=JURI::base().'templates/'.$this->template.'/css/jquery.ui.accordion.css', $type='text/css', $media=null, $attribs=array(), $priority=999);

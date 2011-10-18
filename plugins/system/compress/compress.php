@@ -59,12 +59,12 @@ class plgSystemCompress extends MolajoPlugin
 	public function onBeforeCompileHead()
 	{
 		// Do nothing in administration console.
-		if (JFactory::getApplication()->isAdmin()) {
+		if (MolajoFactory::getApplication()->isAdmin()) {
 			return;
 		}
 
 		// Get the system document object.
-		$document = & JFactory::getDocument();
+		$document = & MolajoFactory::getDocument();
 
 		// Get the document head data.
 		$head = $document->getHeadData();

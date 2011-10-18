@@ -654,4 +654,13 @@ class MolajoSite extends MolajoApplication
 		}
 		parent::redirect($url, $msg, $msgType, $moved);
 	}
+
+
+    /**
+     * Deprecated
+     */
+	public function getClientId()
+	{
+		return parent::getApplicationId();
+	}
 }

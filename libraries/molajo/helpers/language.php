@@ -139,7 +139,7 @@ class MolajoLanguageHelper
 				if (!$languages = $cache->get('languages')) {
 					$db 	= MolajoFactory::getDBO();
 					$query	= $db->getQuery(true);
-					$query->select('*')->from('#__languages')->where('published=1')->order('ordering ASC');
+					$query->select('*')->from('#__languages')->where('published=1');
 					$db->setQuery($query);
 
 					$languages['default'] 	= $db->loadObjectList();

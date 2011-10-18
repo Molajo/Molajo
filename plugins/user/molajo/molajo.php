@@ -184,7 +184,7 @@ class plgUserMolajo extends MolajoPlugin
 		}
 
 		// Check to see if we're deleting the current session
-		if ($my->get('id') == $user['id'] && $options['clientid'] == $app->getClientId()) {
+		if ($my->get('id') == $user['id'] && $options['applicationid'] == $app->getApplicationId()) {
 			// Hit the user last visit field
 			$my->setLastVisit();
 
@@ -197,7 +197,7 @@ class plgUserMolajo extends MolajoPlugin
 		$db->setQuery(
 			'DELETE FROM `#__session`' .
 			' WHERE `userid` = '.(int) $user['id'] .
-			' AND `application_id` = '.(int) $options['clientid']
+			' AND `application_id` = '.(int) $options['application_id']
 		);
 		$db->query();
 

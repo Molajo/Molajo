@@ -41,7 +41,7 @@ class MolajoText
 	 */
 	public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		if (is_array($jsSafe)) {
 			if (array_key_exists('interpretBackSlashes', $jsSafe)) {
 				$interpretBackSlashes = (boolean) $jsSafe['interpretBackSlashes'];
@@ -85,7 +85,7 @@ class MolajoText
 	 */
 	public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		if ($lang->hasKey($string.'_'.$alt)) {
 			return self::_($string.'_'.$alt, $jsSafe, $interpretBackSlashes);
 		}
@@ -115,7 +115,7 @@ class MolajoText
 
 	public static function plural($string, $n)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$args = func_get_args();
 		$count = count($args);
 
@@ -172,7 +172,7 @@ class MolajoText
 	 */
 	public static function sprintf($string)
 	{
-		$lang = JFactory::getLanguage();
+		$lang = MolajoFactory::getLanguage();
 		$args = func_get_args();
 		$count = count($args);
 		if ($count > 0) {
@@ -203,7 +203,7 @@ class MolajoText
 	 */
 	public static function printf($string)
 	{
-		$lang	= JFactory::getLanguage();
+		$lang	= MolajoFactory::getLanguage();
 		$args	= func_get_args();
 		$count	= count($args);
 		if ($count > 0) {
@@ -242,7 +242,7 @@ class MolajoText
 		// Add the string to the array if not null.
 		if ($string !== null) {
 			// Normalize the key and translate the string.
-			self::$strings[strtoupper($string)] = JFactory::getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
+			self::$strings[strtoupper($string)] = MolajoFactory::getLanguage()->_($string, $jsSafe, $interpretBackSlashes);
 		}
 
 		return self::$strings;

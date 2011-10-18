@@ -65,5 +65,6 @@ class InstallerController extends MolajoController
         /** save configuration file (display FTP page with config file if necessary) */
 
         /** success - redirect to administrator */
+
     }
 }

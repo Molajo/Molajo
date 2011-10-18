@@ -1389,6 +1389,13 @@ class MolajoApplication extends JObject
 		}
 	}
 
+    /**
+     * Deprecated
+     */
+	public function getClientId()
+	{
+		return $this->getApplicationId();
+	}
 	/**
 	 * Gets the application id of the current running application.
 	 *

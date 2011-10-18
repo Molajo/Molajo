@@ -27,7 +27,7 @@ class MolajoTableMenuitem extends MolajoTableNested
 		parent::__construct('#__menu_items', 'id', $db);
 
 		// Set the default access level.
-		$this->access = (int) JFactory::getConfig()->get('access');
+		$this->access = (int) MolajoFactory::getConfig()->get('access');
 	}
 
 	/**
@@ -87,7 +87,7 @@ class MolajoTableMenuitem extends MolajoTableNested
 		// Make the alias URL safe.
 		$this->alias = JApplication::stringURLSafe($this->alias);
 		if (trim(str_replace('-', '', $this->alias)) == '') {
-			$this->alias = JFactory::getDate()->format('Y-m-d-H-i-s');
+			$this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
 		}
 
 		// Cast the home property to an int for checking.
@@ -122,7 +122,7 @@ class MolajoTableMenuitem extends MolajoTableNested
 	 */
 	public function store($updateNulls = false)
 	{
-		$db = JFactory::getDBO();
+		$db = MolajoFactory::getDBO();
 		// Verify that the alias is unique
 		$table = MolajoTable::getInstance('Menuitem','MolajoTable');
 		if ($table->load(array('alias'=>$this->alias,'parent_id'=>$this->parent_id,'client_id'=>$this->client_id)) && ($table->id != $this->id || $this->id==0)) {

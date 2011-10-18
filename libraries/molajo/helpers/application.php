@@ -23,6 +23,17 @@ class MolajoApplicationHelper
      */
 	protected static $_applications = null;
 
+    /**
+     * getComponentName
+     * @static
+     * @param null $default
+     * @return string
+     */
+	public static function getComponentName($default = NULL)
+    {
+        return MolajoComponentHelper::getComponentName($default);
+    }
+
 	/**
 	 * getApplicationInfo
      *

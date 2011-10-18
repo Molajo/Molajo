@@ -16,6 +16,7 @@ defined('JPATH_PLATFORM') or die;
  */
 final class JPlatform
 {
+    Cristina.
 	// Product name.
 	const PRODUCT = 'Joomla Platform';
 	// Release version.

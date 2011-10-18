@@ -37,7 +37,7 @@ class MolajoMenuSite extends MolajoMenu
 			$query	= $db->getQuery(true);
 
 			$query->select('m.id, m.menu_id, m.title, m.alias, m.path AS route, m.link, m.type, m.level');
-			$query->select('m.access, m.asset_id');
+			$query->select('m.asset_id');
 			$query->select('m.browserNav, m.params, m.home, m.img, m.template_style_id');
 			$query->select('m.component_id, m.parent_id, m.language');
 			$query->select('e.element as component');
@@ -50,7 +50,8 @@ class MolajoMenuSite extends MolajoMenu
 
             $acl = new MolajoACL ();
             $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
-
+echo $query->__toString();
+die;
             $db->setQuery($query->__toString());
 
             if (!($menus = $db->loadObjectList('id'))) {

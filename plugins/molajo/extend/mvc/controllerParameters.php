@@ -35,7 +35,7 @@ class extendControllerParameters {
 
         /** client **/
         if ($fieldParams->def('global_restriction_client', '') == '') {
-        } else if ($fieldParams->def('global_restriction_client', '') == $app->getClientId()) {
+        } else if ($fieldParams->def('global_restriction_client', '') == $app->getApplicationId()) {
         } else {
             return false;
         }
@@ -101,7 +101,7 @@ class extendControllerParameters {
 
         /** client **/
         if ($fieldParams->def($contentType.'_client_criteria', '') == '') {
-        } else if ($fieldParams->def($contentType.'_client_criteria', '') == $app->getClientId()) {
+        } else if ($fieldParams->def($contentType.'_client_criteria', '') == $app->getApplicationId()) {
         } else {
             return false;
         }

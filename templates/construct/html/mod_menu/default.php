@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 //enable accessing template parameters
-$templateParams = JFactory::getApplication()->getTemplate(true)->params; 
+$templateParams = MolajoFactory::getApplication()->getTemplate(true)->params;
 
 // Note. It is important to remove spaces between elements.
 ?>

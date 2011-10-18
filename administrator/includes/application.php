@@ -348,4 +348,13 @@ class MolajoAdministrator extends MolajoApplication
 			$db->query();
 		}
 	}
+
+
+    /**
+     * Deprecated
+     */
+	public function getClientId()
+	{
+		return parent::getApplicationId();
+	}
 }
