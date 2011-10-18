@@ -354,7 +354,7 @@ abstract class MolajoModuleHelper
             $query->select('module, position, content, showtitle ');
             $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
 			$query->from('#__modules AS m');
-			$query->from('#__modules_menu AS mm');
+			$query->join('inner', '#__modules_menu AS mm');
 			$query->where('mm.module_id = m.id');
 			$query->where('m.published = 1');
 			$query->where('m.id <> 1');
