@@ -42,7 +42,7 @@ class MolajoMenuSite extends MolajoMenu
 			$query->select('m.component_id, m.parent_id, m.language');
 			$query->select('e.element as component');
 			$query->from('#__menu_items AS m');
-			$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
+			$query->leftJoin('#__extensions AS e ON #__menu_items.component_id = #__extensions.extension_id');
 			$query->where('m.published = 1');
 			$query->where('m.parent_id > 0');
 			$query->where('m.application_id = 0');
