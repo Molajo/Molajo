@@ -42,6 +42,7 @@ if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
         ?>
         <jdoc:include type="modules" name="footer" wrap="footer" />
     </div>
+<jdoc:include type="modules" name="debug" />
 </body>
 <noscript>
     <?php echo MolajoText::_('JGLOBAL_WARNJAVASCRIPT') ?>
