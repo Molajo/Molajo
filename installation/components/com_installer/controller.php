@@ -26,13 +26,9 @@ class InstallerController extends MolajoController
     {
 
         /** form token check */
-        $this->getModel('display')->getFormFields();
 
         /** check for configuration.php file - if exists redirect to error */
         if(JFile::exists(JPATH_SITE . '/configuration.php')) {
-
-//            $this->getView('display')->assign('error_message', 'Some meaningfull error message');
-//
 //            $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=display&layout=error', false));
 //            $this->redirect();
         }
