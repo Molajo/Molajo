@@ -26,8 +26,8 @@ var_dump($this->setup);
         <input type="hidden" name="install_sample" value="<?php echo $this->setup['install_sample'] ?>">
 
         <h2><?php echo MolajoText::_('Welcome to the Molajo Installer'); ?></h2>
-        <p>Before we get started, please ensure you have your database connection information handy, as you'll need it to complete the installation process.
-        Contact your hosting provider if you do not know your database connection information.</p>
+        <p><?php echo MolajoText::_('Before we get started, please ensure you have your database connection information handy, as you\'ll need it to complete the installation process.
+        Contact your hosting provider if you do not know your database connection information.') ?></p>
         <ul id="system-check">
             <li id="language" class="valid">
                 <span><?php echo MolajoText::sprintf('We have detected that your language is set to <strong class="%s">%s</strong>', $this->setup['language'], $this->languages[$this->setup['language']]) ?> <a href="#" id="select-language"><span>Change Language</span></a>
@@ -48,7 +48,7 @@ var_dump($this->setup);
         </ul>
         <div id="actions">
             <!--a href="<?php echo JURI::base(); ?>index.php?option=com_installer&view=display&layout=step2" class="btn-primary"><strong>Ready?</strong> Lets get started! &raquo;</a-->
-            <button type="submit" class="btn-primary" name="layout" value="step2">Ready? Lets get started! &raquo;</button>
+            <button type="submit" class="btn-primary" name="layout" value="step2"><?php echo MolajoText::_('Ready? Lets get started! &raquo;') ?></button>
         </div>
     </form>
 </div>

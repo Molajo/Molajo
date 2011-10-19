@@ -6,6 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+var_dump($this->setup);
 ?>
 <div class="inner">
     <h2>Review</h2>
