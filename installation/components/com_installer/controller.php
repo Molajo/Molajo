@@ -24,9 +24,28 @@ class InstallerController extends MolajoController
      */
     public function display($cachable = false, $urlparams = false)
     {
+
         /** form token check */
+        $this->getModel('display')->getFormFields();
 
         /** check for configuration.php file - if exists redirect to error */
+        if(JFile::exists(JPATH_SITE . '/configuration.php')) {
+
+//            $this->getView('display')->assign('error_message', 'Some meaningfull error message');
+//
+//            $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=display&layout=error', false));
+//            $this->redirect();
+        }
+        else if(!$this->getModel('display')->can_install) {
+            $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=display&layout=error', false));
+            $this->redirect();
+        }
+
+        if(JRequest::getCmd('next_step', '', 'post')) {
+            $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=display&layout=' . JRequest::getCmd('next_step', 'post'), false));
+            $this->redirect();
+//            $this->getView('display')->setLayout('step2');
+        }
 
         parent::display($cachable, $urlparams);
     }

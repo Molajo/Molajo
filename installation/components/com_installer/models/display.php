@@ -19,6 +19,17 @@ defined('MOLAJO') or die;
 class InstallerModelDisplay extends MolajoModelDummy
 {
 
+    var $system = null;
+    var $setup = null;
+    var $can_install = false;
+
+    public function __construct($properties = null)
+	{
+		parent::__construct($properties);
+
+        $this->_init();
+	}
+
     /**
      * display
      *
@@ -27,6 +38,11 @@ class InstallerModelDisplay extends MolajoModelDummy
     public function SystemChecks()
     {
         $system_checks = array();
+
+        if(1==1) {
+            $this->can_install = true;
+        }
+        
         return $system_checks;
     }
 
@@ -40,21 +56,12 @@ class InstallerModelDisplay extends MolajoModelDummy
     public function getLanguageList()
     {
         //MolajoLanguageHelper::createLanguageList
-        $language_list = array();
+        $language_list = array(
+            'en-UK' => 'UK English',
+            'en-US' => 'US English',
+            'nl-NL' => 'Dutch'
+        );
         return $language_list;
-    }
-
-    /**
-     * getUserLanguage
-     *
-     * Retrieves the User's autodetected Language from their Browser
-     *
-     * @return void
-     */
-    public function getUserLanguage()
-    {
-        $user_language = 'en-GB';
-        return $user_language;
     }
 
     /**
@@ -64,14 +71,22 @@ class InstallerModelDisplay extends MolajoModelDummy
      */
     public function getFormFields()
     {
-
-        //retrieve ALL of the form fields off of the post
-        //doesn't matter which page you are on -- get them all with the defaults
-        //some will be hidden
-        $form_fields = array();
-        return $form_fields;
+        if(JRequest::get('post')) {
+            foreach(JRequest::get('post') AS $name => $value) {
+                if(key_exists($name, $this->setup)) {
+                    $this->setup[$name] = $value;
+                }
+            }
+        }
     }
 
+    public function getSetup()
+    {
+        if(is_null($this->setup)) {
+            $this->_init();
+        }
+        return $this->setup;
+    }
 
     /**
      * getFormEdits
@@ -86,6 +101,32 @@ class InstallerModelDisplay extends MolajoModelDummy
         //some will be hidden
         $form_edits = array();
         return $form_edits;
+    }
+
+    protected function _init()
+    {
+        require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
+        
+        if(is_null($this->setup)) {
+            $this->setup = array(
+                'language' => InstallerHelper::detectLanguage(),
+                'sitename' => '',
+                'name' => '',
+                'admin_email' => '',
+                'admin_password' => '',
+                'hostname' => 'localhost',
+                'db_scheme' => 'MySQL',
+                'db_username' => '',
+                'db_password' => '',
+                'db_prefix' => InstallerHelper::getPrefix(),
+                'db_prefix' => 'jos_',
+                'db_type' => '',
+                'remove_tables' => false,
+                'sample_data' => 'none'
+            );
+        }
+
+        $this->getFormFields();
     }
 
 

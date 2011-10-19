@@ -62,13 +62,14 @@ li { list-style: none }
 #actions { overflow: hidden; margin-top: 2em; padding-bottom: 1em; clear: both; }
 .remove-install a,
 #sample-data,
-#actions a { display: block; background: #3C2415; color: #fff; padding: 12px 20px; text-decoration: none; -moz-border-radius: 25px; -webkit-border-radius: 25px; border-radius: 25px; font-size: 17px; float: left; }
+#actions a, #actions button { display: block; background: #3C2415; color: #fff; padding: 12px 20px; text-decoration: none; -moz-border-radius: 25px; -webkit-border-radius: 25px; border-radius: 25px; font-size: 17px; float: left; }
+#actions button {border: none;}
 .remove-install a:hover,
 #sample-data:hover,
-#actions a:hover { opacity: 0.7; cursor: pointer; }
+#actions a:hover, #actions button:hover { opacity: 0.7; cursor: pointer; }
 .remove-install a:focus,
 #sample-data:focus,
-#actions a:focus { position: relative; bottom: -1px; }
+#actions a:focus, #actions button:focus { position: relative; bottom: -1px; }
 #actions a strong { text-decoration: underline }
 #actions .btn-primary.alt { margin-left: 20px }
 #actions .btn-primary { float: right }
@@ -93,6 +94,7 @@ li { list-style: none }
 .forms li.focus { border: 1px solid #DCD9D6; background-color: #EDE9E6; background-image: -moz-linear-gradient(top, #F7F4F1, #EDE9E6); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #F7F4F1),color-stop(1, #EDE9E6)); background-image: -webkit-linear-gradient(#F7F4F1, #EDE9E6); background-image: linear-gradient(top, #F7F4F1, #EDE9E6); /*filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#F7F4F1', EndColorStr='#EDE9E6');*/ }
 .forms .inner-wrap { padding: 5px; display: block; border-top: 1px solid #fff; border-left: 1px solid #fff; overflow: hidden; }
 .forms li strong { color: red; position: relative; bottom: -5px; line-height: 1; margin-right: 1px; font-size: 17px; }
+select,
 input.input-text,
 input.password,
 textarea { display: block; padding: 6px 5px; margin: 0; border: 1px solid; border-color: #CDCDCD #EDE9E6 #EDE9E6 #CDCDCD; color: #999; float: left; width: 240px; }
@@ -104,9 +106,11 @@ span.note { display: block; float: left; margin-left: 10px; font-size: 12px; col
 .radios .alt { margin-top: -2px }
 a { color: #D2A576 }
 .radio-left,
+.radio-middle,
 .radio-right { border: 1px solid #E7E4E1; margin: 0; padding: 0; line-height: 1; float: left; padding: 8px 15px; color: #666; cursor: pointer; background-color: #F5F2EF; background-image: -moz-linear-gradient(top, #fff, #F5F2EF); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #fff),color-stop(1, #F5F2EF)); background-image: -webkit-linear-gradient(#fff, #F5F2EF); background-image: linear-gradient(top, #fff, #F5F2EF); /*filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fff', EndColorStr='#F5F2EF');*/ }
 .label-selected { background-color: #fff; background-image: -moz-linear-gradient(top, #F5F2EF, #fff); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #F5F2EF),color-stop(1, #fff)); background-image: -webkit-linear-gradient(#F5F2EF, #fff); background-image: linear-gradient(top, #F5F2EF, #fff); /*filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#F5F2EF', EndColorStr='#fff');*/ }
 .radio-left { border-radius: 30px 0 0 30px }
+.radio-middle { border-left: 0; border-radius: 0; }
 .radio-right { border-left: 0; border-radius: 0 30px 30px 0; }
 span.label { display: block; float: left; width: 110px; color: #666; padding-top: 5px; }
 .summary { }
@@ -118,3 +122,4 @@ span.label { display: block; float: left; width: 110px; color: #666; padding-top
 .summary strong { width: 150px }
 .summary span { width: 200px }
 .summary { }
+form li.confirm {background-color: #DCEBB8; background-image: -moz-linear-gradient(top, #fff, #DCEBB8); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #fff),color-stop(1, #DCEBB8)); background-image: -webkit-linear-gradient(#fff, #DCEBB8); background-image: linear-gradient(top, #fff, #DCEBB8); /*filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fff', EndColorStr='#DCEBB8');*/ background-repeat: repeat-x; border-left: 1px solid #99CC00; }

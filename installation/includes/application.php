@@ -174,7 +174,7 @@ class MolajoInstallation extends MolajoApplication
         $request['option'] = JRequest::getCmd('option', 'com_installer');
         $request['no_com_option'] = substr($request['option'], 4, 9999);
         $request['view'] = JRequest::getCmd('view', 'display');
-        $request['layout'] = JRequest::getCmd('layout', 'installer_step1');
+        $request['layout'] = JRequest::getCmd('layout', 'step1');
         $request['model'] = JRequest::getCmd('model', 'display');
         $request['task'] = JRequest::getCmd('task', 'display');
         $request['format'] = JRequest::getCmd('format', 'html');

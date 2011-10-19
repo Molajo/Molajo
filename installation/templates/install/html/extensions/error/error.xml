@@ -14,7 +14,7 @@
 		<folder>layouts</folder>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_installer_step1.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_installer_step1.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layout_extension_step1.ini</language>
+		<language tag="language/en-GB">en-GB.layout_extension_step1.sys.ini</language>
 	</languages>
 </extension>
