@@ -1,12 +1,3 @@
-#tabs div {
-	position: relative;
-	border: 1px solid #e4e4e4;
-	border-top-width: 4px;
-	border-right-width: 4px;
-	border-radius: 0 16px 0 0;
-	background: #f4f4f4;
-	}	
-
 /* 
  * jQuery UI Tabs 1.8.15
  *
@@ -33,7 +24,7 @@
 	padding: 0;
 	border: 1px solid #7ec1e0;
 	border-bottom: 0;
-	border-radius: 2px 8px 0 0; 
+	border-radius: 2px 2px 0 0; 
 	background: #7ec1e0 url() 50% 50% repeat-x;
 	background: -moz-linear-gradient(100% 100% 90deg, #9ed7f2, #7ec1e0); 
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9ed7f2), to(#7ec1e0));
