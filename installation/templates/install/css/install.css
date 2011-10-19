@@ -62,13 +62,14 @@ li { list-style: none }
 #actions { overflow: hidden; margin-top: 2em; padding-bottom: 1em; clear: both; }
 .remove-install a,
 #sample-data,
-#actions a { display: block; background: #3C2415; color: #fff; padding: 12px 20px; text-decoration: none; -moz-border-radius: 25px; -webkit-border-radius: 25px; border-radius: 25px; font-size: 17px; float: left; }
+#actions a, #actions button { display: block; background: #3C2415; color: #fff; padding: 12px 20px; text-decoration: none; -moz-border-radius: 25px; -webkit-border-radius: 25px; border-radius: 25px; font-size: 17px; float: left; }
+#actions button {border: none;}
 .remove-install a:hover,
 #sample-data:hover,
-#actions a:hover { opacity: 0.7; cursor: pointer; }
+#actions a:hover, #actions button:hover { opacity: 0.7; cursor: pointer; }
 .remove-install a:focus,
 #sample-data:focus,
-#actions a:focus { position: relative; bottom: -1px; }
+#actions a:focus, #actions button:focus { position: relative; bottom: -1px; }
 #actions a strong { text-decoration: underline }
 #actions .btn-primary.alt { margin-left: 20px }
 #actions .btn-primary { float: right }

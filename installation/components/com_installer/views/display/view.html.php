@@ -24,8 +24,8 @@ class InstallerViewDisplay extends MolajoView
      * @since  1.0
      */
     protected $system_checks = null;
-    protected $form_fields = null;
-    protected $form_edits = null;
+    protected $form_fields   = null;
+    protected $form_edits    = null;
 
     /**
      * display
@@ -34,22 +34,33 @@ class InstallerViewDisplay extends MolajoView
      */
 	public function display($tpl = null)
 	{
-        /** check layout */
+        $helper = $this->loadHelper('installer');
 
-        if (JRequest::getCmd('layout', 'installer_step1') == 'installer_step1') {
-            $this->system_checks = $this->get('SystemChecks');
-            //LanguageList
-            //UserLanguage
+        /** check layout */
+        $layout = JRequest::getCmd('next_step', 'step1');
+        
+        if ($layout == 'step1') {
+        }
+        else if($layout == 'step2') {
+
+        }
+        else if($layout == 'step3') {
+
+        }
+        else if($layout == 'step4') {
         }
 
         $this->form_fields = $this->get('FormFields');
 
-        $this->$form_edits = $this->get('FormEdits');
+        $this->form_edits = $this->get('FormEdits');
 
+        // We want to enable single page (or however many steps) so we need to assign these to any layout
+        $this->assign('setup',     $this->getModel()->getSetup());
+        $this->assign('languages', $this->getModel()->getLanguageList());
 
         /** load unused fields into hidden form fields for display */
 
-        parent::display($tpl);
+        parent::display($layout);
     }
 
 }
