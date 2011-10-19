@@ -27,13 +27,10 @@ class MolajoControllerLogin extends MolajoController
 	 */
 	public function login()
 	{
-        /** security token **/
-//        JRequest::checkToken() or die;
-
     /**
-     * Initialization
+     *  Retrieve Form Fields
      */
-        $filehelper = new MolajoFileHelper();
+//        JRequest::checkToken() or die;
 
 		$credentials = array(
 			'username' => JRequest::getVar('username', '', 'method', 'username'),
@@ -42,10 +39,6 @@ class MolajoControllerLogin extends MolajoController
 
         $options = array('action' => 'login');
 
-		$authenticate = MolajoAuthentication::getInstance();
-		$response	= $authenticate->authenticate($credentials, $options);
-echo '<pre>';var_dump($response);'</pre>';
-        die;
 		/** security check: internal URL only */
 		if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
 			$return = base64_decode($return);
@@ -59,92 +52,80 @@ echo '<pre>';var_dump($response);'</pre>';
 		}
 
     /**
-     * Authenticate 
+     *  Authenticate and Authorize
      */
-		$response = new MolajoAuthentication();
-		$plugins = MolajoPluginHelper::getPlugin('authentication');
+		$authenticate = MolajoAuthentication::getInstance();
 
-		foreach ($plugins as $plugin) {
-
-            $path = MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
-            $className = 'plg'.ucfirst($plugin->type).ucfirst($plugin->name);
-            $filehelper->requireClassFile($path, $className);
-
-			if (class_exists($className)) {
-				$authenticate = new $className($response, (array) $plugin);
-
-			} else {
-                echo 'NOT exists'.$className;
-                die;
-				JError::raiseWarning(50, MolajoText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
-				continue;
-			}
-echo 'going in';
-			$plugin->onUserAuthenticate($credentials, $options, $response);
-echo 'dfasdfasfsaf';
-//echo '<pre>';var_dump($response);'</pre>';
-die;
-
-			if ($response->status == MOLAJO_AUTHENTICATE_STATUS_SUCCESS) {
-				if (empty($response->type)) {
-					$response->type = isset($plugin->_name) ? $plugin->_name : $plugin->name;
-				}
-				break;
-			}
-		}
-
-		if (empty($response->username)) { $response->username = $credentials['username']; }
-		if (empty($response->fullname)) { $response->fullname = $credentials['username']; }
-		if (empty($response->password)) { $response->password = $credentials['password']; }
-
-        /**
-         *  If Login succeeded so far, fire onUserLogin Plugins
-         */
-        if ($response->status === MOLAJO_AUTHENTICATE_STATUS_SUCCESS) {
-
-            MolajoPluginHelper::importPlugin('user');
-            $results = $this->dispatcher->trigger('onUserLogin', array((array)$response, $options));
-
-            if (in_array(false, $results, true)) {
-                $response->status = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
-
-            } else {
-
-                if (isset($options['remember']) && $options['remember']) {
-
-                    $key = MolajoUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
-
-                    $crypt = new JSimpleCrypt($key);
-                    $rcookie = $crypt->encrypt(serialize($credentials));
-                    $lifetime = time() + 365*24*60*60;
-
-                    $cookie_domain = $this->getCfg('cookie_domain', '');
-                    $cookie_path = $this->getCfg('cookie_path', '/');
-                    setcookie( MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, $cookie_path, $cookie_domain );
-                }
-            }
-
-            /** success message **/
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_LOGIN_SUCCESSFUL'));
-            $this->redirectClass->setSuccessIndicator(true);
-
-
+		$response = $authenticate->authenticate($credentials, $options);
+        if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
-
-        /**
-         *  Login Failed
-         */
-            $results = $this->dispatcher->trigger('onUserLoginFailure', array((array)$response));
-
-            // If silent is set, just return false.
-            if (isset($options['silent']) && $options['silent']) {
-                $this->redirectClass->setRedirectMessage('');
-            } else {
-                $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_LOGIN_FAILED'));
-            }
-            $this->redirectClass->setSuccessIndicator(false);
-            return false;
+            return $this->_loginFailed ('authenticate', $response, $options);
         }
+
+        $response = $authenticate->authorise($response, $options);
+        if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
+        } else {
+            return $this->_loginFailed ('authorise', $response, $options);
+        }
+
+    /**
+     * Authenticated and Authorized
+     */
+		$results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
+
+        /** remember me cookie */
+        if (isset($options['remember']) && $options['remember']) {
+
+            // Create the encryption key, apply extra hardening using the user agent string.
+            $agent = @$_SERVER['HTTP_USER_AGENT'];
+
+            // Ignore empty and crackish user agents
+            if ($agent != '' && $agent != 'JLOGIN_REMEMBER') {
+                $key = MolajoUtility::getHash($agent);
+                $crypt = new JSimpleCrypt($key);
+                $rcookie = $crypt->encrypt(serialize($credentials));
+                $lifetime = time() + 365*24*60*60;
+
+                // Use domain and path set in config for cookie if it exists.
+                $cookie_domain = $this->getCfg('cookie_domain', '');
+                $cookie_path = $this->getCfg('cookie_path', '/');
+                setcookie(
+                    MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime,
+                    $cookie_path, $cookie_domain
+                );
+            }
+        }
+
+        /** success message */
+        $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_SUCCESSFUL_LOGON'));
+        $this->redirectClass->setSuccessIndicator(true);
+        return true;
+	}
+
+	/**
+	 * _loginFailed
+     *
+     * Handles failed login attempts
+	 *
+     * @param $response
+     * @param array $options
+     * @return
+     */
+	protected function _loginFailed ($type, $response, $options=Array())
+	{
+		MolajoPluginHelper::getPlugin('user');
+        if ($type == 'authenticate') {
+            JDispatcher::getInstance()->trigger('onUserAuthorisationFailure', array($response, $options));
+        } else {
+            JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
+        }
+
+        if (isset($options['silent']) && $options['silent']) {
+        } else {
+            $this->redirectClass->setRedirectMessage(MolajoText::_('JLIB_LOGIN_AUTHORIZED'));
+            $this->redirectClass->setRedirectMessageType(MolajoText::_('warning'));
+        }
+        return $this->redirectClass->setSuccessIndicator(false);
 	}
 
     /**

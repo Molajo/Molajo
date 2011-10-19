@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_dashboard">
+	<section name="component">
+		<action name="admin" title="MOLAJO_ADMIN" description="MOLAJO_ADMIN_DESC" />
+	    <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESC" />
+ 	</section>
+</access>

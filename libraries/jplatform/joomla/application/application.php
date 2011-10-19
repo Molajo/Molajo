@@ -688,8 +688,7 @@ class JApplication extends JObject
 					$this->triggerEvent('onUserAuthorisationFailure', array((array) $authorisation));
 
 					// If silent is set, just return false.
-					if (isset($options['silent']) && $options['silent'])
-					{
+					if (isset($options['silent']) && $options['silent']) {
 						return false;
 					}
 

@@ -17,7 +17,9 @@ defined('MOLAJO') or die;
 class plgAuthenticationMolajo extends MolajoPlugin
 {
 	/**
-	 * This method should handle any authentication and report back to the subject
+	 * onUserAuthenticate
+     *
+     * Authenticates the credentials of the user
 	 *
 	 * @access	public
 	 * @param	array	Array holding the user credentials
@@ -28,17 +30,15 @@ class plgAuthenticationMolajo extends MolajoPlugin
 	 */
 	function onUserAuthenticate($credentials, $options, $response)
 	{
-		// Joomla does not like blank passwords
+        /** disallow empty password */
 		if (empty($credentials['password'])) {
 			$response->status = JAUTHENTICATE_STATUS_FAILURE;
 			$response->error_message = JText::_('JGLOBAL_AUTH_EMPTY_PASS_NOT_ALLOWED');
 			return false;
 		}
 
-		// Initialise variables.
-		$conditions = '';
-
-		// Get a database object
+		/** retrieve user from database */
+	    $conditions = '';
 		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
@@ -49,30 +49,56 @@ class plgAuthenticationMolajo extends MolajoPlugin
 		$db->setQuery($query);
 		$result = $db->loadObject();
 
+        /** does the user exist? */
 		if ($result) {
-			$parts	= explode(':', $result->password);
-			$crypt	= $parts[0];
-			$salt	= @$parts[1];
-			$testcrypt = MolajoUserHelper::getCryptedPassword($credentials['password'], $salt);
-
-			if ($crypt == $testcrypt) {
-				$user = MolajoUser::getInstance($result->id); // Bring this in line with the rest of the system
-				$response->email = $user->email;
-				$response->fullname = $user->name;
-				if (MolajoFactory::getApplication()->isAdmin()) {
-					$response->language = $user->getParam('admin_language');
-				} else {
-					$response->language = $user->getParam('language');
-				}
-				$response->status = JAUTHENTICATE_STATUS_SUCCESS;
-				$response->error_message = '';
-			} else {
-				$response->status = JAUTHENTICATE_STATUS_FAILURE;
-				$response->error_message = JText::_('JGLOBAL_AUTH_INVALID_PASS');
-			}
-		} else {
+        } else {
 			$response->status = JAUTHENTICATE_STATUS_FAILURE;
 			$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
+            return false;
 		}
+
+        /** is the password correct? */
+        $parts	= explode(':', $result->password);
+        $crypt	= $parts[0];
+        $salt	= @$parts[1];
+
+        $testcrypt = MolajoUserHelper::getCryptedPassword($credentials['password'], $salt);
+
+        if ($crypt == $testcrypt) {
+        } else {
+            $response->status = JAUTHENTICATE_STATUS_FAILURE;
+            $response->error_message = JText::_('JGLOBAL_AUTH_INVALID_PASS');
+        }
+
+        /** retrieve user information */
+        $user = MolajoUser::getInstance($result->id);
+        $response->email = $user->email;
+        $response->fullname = $user->name;
+
+        /** load user language */
+        if (MolajoFactory::getApplication()->isAdmin()) {
+            $response->language = $user->getParam('admin_language');
+        } else {
+            $response->language = $user->getParam('language');
+        }
+
+        /** success */
+        $response->status = JAUTHENTICATE_STATUS_SUCCESS;
+        $response->error_message = '';
 	}
+
+    /**
+     * onUserAuthorisation
+     *
+     * Determines whether or not a User can logon
+     *
+     * @param $response
+     * @param $options
+     * @return void
+     */
+    function onUserAuthorisation ($response, $options)
+    {
+        /** check the ACL to see if this user can logon to this application */
+
+    }
 }

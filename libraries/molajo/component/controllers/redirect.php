@@ -155,7 +155,7 @@ class MolajoControllerRedirect extends MolajoController
 
         if ($this->request['task'] == 'login') {
             $this->redirectSuccess = 'index.php?option=com_dashboard&view=display';
-            $this->redirectReturn = 'index.php?option=com_user&task=login';
+            $this->redirectReturn = 'index.php?option=com_user';
 
         } elseif ($this->request['task'] == 'logout') {
             $this->redirectSuccess = 'index.php';

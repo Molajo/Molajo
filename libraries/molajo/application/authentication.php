@@ -13,19 +13,19 @@ defined('JPATH_PLATFORM') or die;
  * This is the status code returned when the authentication is success (permit login)
  * @deprecated Use MolajoAuthentication::STATUS_SUCCESS
  */
-define('MOLAJOAUTHENTICATE_STATUS_SUCCESS', 1);
+define('JAUTHENTICATE_STATUS_SUCCESS', 1);
 
 /**
  * Status to indicate cancellation of authentication (unused)
- * @deprecated 
+ * @deprecated
  */
-define('MOLAJOAUTHENTICATE_STATUS_CANCEL', 2);
+define('JAUTHENTICATE_STATUS_CANCEL', 2);
 
 /**
  * This is the status code returned when the authentication failed (prevent login if no success)
  * @deprecated Use MolajoAuthentication::STATUS_FAILURE
  */
-define('MOLAJOAUTHENTICATE_STATUS_FAILURE', 4);
+define('JAUTHENTICATE_STATUS_FAILURE', 4);
 
 /**
  * Authenthication class, provides an interface for the Joomla authentication system
@@ -121,13 +121,13 @@ class MolajoAuthentication extends JObservable
 	}
 
 	/**
-	 * Finds out if a set of login credentials are valid by asking all obvserving
+	 * Finds out if a set of login credentials are valid by asking all observing
 	 * objects to run their respective authentication routines.
 	 *
 	 * @param   array  $credentials  Array holding the user credentials
 	 * @param   array  $options      Array holding user options
 	 *
-	 * @return  MolajoAuthenticationResponse Response object with status variable filled 
+	 * @return  MolajoAuthenticationResponse Response object with status variable filled
 	 *                                 in for last plugin or first successful plugin
 	 * @see     MolajoAuthenticationResponse
 	 * @since   11.1
@@ -189,25 +189,53 @@ class MolajoAuthentication extends JObservable
 
 		return $response;
 	}
-	
+
 	/**
 	 * Authorises that a particular user should be able to login
-	 * 
+	 *
 	 * @access public
 	 * @param MolajoAuthenticationResponse username of the user to authorise
-	 * @param Array list of options 
+	 * @param Array list of options
 	 * @return Array[MolajoAuthenticationResponse] results of authorisation
 	 * @since  11.1
 	 */
 	public static function authorise($response, $options=Array())
 	{
-		// Get plugins in case they haven't been loaded already
 		MolajoPluginHelper::getPlugin('user');
 		MolajoPluginHelper::getPlugin('authentication');
 		$dispatcher = JDispatcher::getInstance();
-		$results = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
-		return $results;
-	}
+		$authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
+
+        $clearance = true;
+        foreach ($authorisations as $authorisation) {
+
+            if ($authorisation->status == MolajoAuthentication::STATUS_SUCCESS) {
+            } else {
+
+                $clearance = false;
+
+                if (isset($options['silent']) && $options['silent']) {
+
+                } else {
+
+                    switch($authorisation->status)
+                    {
+                        case MolajoAuthentication::STATUS_EXPIRED:
+                            return JError::raiseWarning('102002', JText::_('JLIB_LOGIN_EXPIRED'));
+                            break;
+                        case MolajoAuthentication::STATUS_DENIED:
+                            return JError::raiseWarning('102003', JText::_('JLIB_LOGIN_DENIED'));
+                            break;
+                        default:
+                            return JError::raiseWarning('102004', JText::_('JLIB_LOGIN_AUTHORISATION'));
+                            break;
+                     }
+                }
+            }
+        }
+
+        return $clearance;
+    }
 }
 
 /**
