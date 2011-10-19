@@ -157,7 +157,6 @@ class MolajoAdministrator extends MolajoApplication
 					break;
 			}
 			$document->setTitle($this->getCfg('sitename'). ' - ' .MolajoText::_('JADMINISTRATION'));
-
 			$document->setDescription($this->getCfg('MetaDesc'));
 
 			$contents = MolajoComponentHelper::renderComponent($request);
@@ -167,6 +166,7 @@ class MolajoAdministrator extends MolajoApplication
 			// Trigger the onAfterDispatch event.
 			MolajoPluginHelper::importPlugin('system');
 			$this->triggerEvent('onAfterDispatch');
+
 		}
 
 		// Uncaught exceptions.

@@ -2,14 +2,14 @@
 /**
  * @version     $id: dashboard.php
  * @package     Molajo
- * @subpackage  Articles Component
+ * @subpackage  Dashboard Component
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * ArticlesHelper
+ * DashboardHelper
  *
  * Category Submenu Helper
  *
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage	com_dashboard
  * @since	1.6
  */
-class ArticlesHelper
+class DashboardHelper
 {
     public static $extension = 'com_dashboard';
 
