@@ -32,42 +32,42 @@ var_dump($this->setup);
             <li>
                 <span class="inner-wrap">
                     <label for="sitename" class="inlined"><?php echo MolajoText::_('Site name') ?></label>
-                    <input type="text" class="input-text" id="sitename" name="sitename" placeholder="<?php echo MolajoText::_('Site name') ?>" value="<?php echo $this->setup['sitename'] ?>" />
+                    <input type="text" class="input-text" required="required" id="sitename" name="sitename" placeholder="<?php echo MolajoText::_('Site name') ?>" value="<?php echo $this->setup['sitename'] ?>" />
                     <span class="note"><?php echo MolajoText::_('Your site name.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="name" class="inlined"><?php echo MolajoText::_('Your name') ?></label>
-                    <input type="text" class="input-text" id="name" name="name" placeholder="<?php echo MolajoText::_('Your name') ?>" value="<?php echo $this->setup['name'] ?>" />
+                    <input type="text" class="input-text" required="required" id="name" name="name" placeholder="<?php echo MolajoText::_('Your name') ?>" value="<?php echo $this->setup['name'] ?>" />
                     <span class="note"><?php echo MolajoText::_('Your real name.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="admin_email" class="inlined"><?php echo MolajoText::_('Your email address') ?></label>
-                    <input type="text" class="input-text" id="admin_email" name="admin_email" placeholder="<?php echo MolajoText::_('Your email address') ?>" value="<?php echo $this->setup['admin_email'] ?>" onblur="getElementById('confirm_email').style.display='block';" />
+                    <input type="text" class="input-text" required="required" id="admin_email" name="admin_email" placeholder="<?php echo MolajoText::_('Your email address') ?>" value="<?php echo $this->setup['admin_email'] ?>" onblur="getElementById('confirm_email').style.display='block';" />
                     <span class="note"><?php echo MolajoText::_('Enter a valid email address. This is where your login info will be sent.') ?></span>
                 </span>
             </li>
             <li id="confirm_email" style="display: none;" class="confirm">
                 <span class="inner-wrap">
                     <label for="email_confirm" class="inlined"><?php echo MolajoText::_('Confirm your email address') ?></label>
-                    <input type="text" class="input-text" id="email_confirm" name="email_confirm" />
+                    <input type="text" class="input-text" required="required" id="email_confirm" name="email_confirm" />
                     <span class="note"><?php echo MolajoText::_('Confirm your email address') ?>.</span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="admin_password" class="inlined"><?php echo MolajoText::_('Password') ?></label>
-                    <input type="password" class="password" id="admin_password" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>" onblur="getElementById('confirm_password').style.display='block';" />
+                    <input type="password" class="password" required="required" id="admin_password" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>" onblur="getElementById('confirm_password').style.display='block';" />
                     <span class="note"><?php echo MolajoText::_('Enter your admin password.') ?></span>
                 </span>
             </li>
             <li id="confirm_password" style="display: none;" class="confirm">
                 <span class="inner-wrap">
                     <label for="password_confirm" class="inlined"><?php echo MolajoText::_('Confirm password') ?></label>
-                    <input type="password" class="password" id="password_confirm" name="password_confirm" />
+                    <input type="password" class="password" required="required" id="password_confirm" name="password_confirm" />
                     <span class="note"><?php echo MolajoText::_('Confirm your admin password.') ?></span>
                 </span>
             </li>

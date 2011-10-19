@@ -34,28 +34,28 @@ var_dump($this->setup);
             <li>
                 <span class="inner-wrap">
                     <label for="hostname" class="inlined"><?php echo MolajoText::_('Host name') ?></label>
-                    <input type="text" class="input-text" id="hostname" name="hostname" placeholder="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
+                    <input type="text" class="input-text" required="required" id="hostname" name="hostname" placeholder="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
                     <span class="note"><?php echo MolajoText::_('This is usually <b>localhost</b>.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="db_scheme" class="inlined"><?php echo MolajoText::_('Database name') ?></label>
-                    <input type="text" class="input-text" id="db_scheme" name="db_scheme" placeholder="<?php echo MolajoText::_('Database name') ?>" value="<?php echo $this->setup['db_scheme'] ?>" />
+                    <input type="text" class="input-text" required="required" id="db_scheme" name="db_scheme" placeholder="<?php echo MolajoText::_('Database name') ?>" value="<?php echo $this->setup['db_scheme'] ?>" />
                     <span class="note"><?php echo MolajoText::_('The name of the database you are installing Molajo on.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="db_username" class="inlined"><?php echo MolajoText::_('Username') ?></label>
-                    <input type="text" class="input-text" id="db_username" name="db_username" placeholder="Username" value="<?php echo $this->setup['db_username'] ?>" />
+                    <input type="text" class="input-text" required="required" id="db_username" name="db_username" placeholder="Username" value="<?php echo $this->setup['db_username'] ?>" />
                     <span class="note"><?php echo MolajoText::_('Your MySQL database username.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="db_password" class="inlined"><?php echo MolajoText::_('Password') ?></label>
-                    <input type="text" class="input-text" id="db_password" name="db_password" placeholder="<?php echo MolajoText::_('Password') ?>" value="<?php echo $this->setup['db_password'] ?>" />
+                    <input type="text" class="input-text" required="required" id="db_password" name="db_password" placeholder="<?php echo MolajoText::_('Password') ?>" value="<?php echo $this->setup['db_password'] ?>" />
                     <span class="note"><?php echo MolajoText::_('Your MySQL database password.') ?></span>
                 </span>
             </li>
