@@ -104,7 +104,7 @@ var_dump($this->setup);
         </ol>
 
         <p>
-            Babs: maybe have tooltips that explain the various options?
+            Babs: maybe have tooltips that explain the various options? agree
         </p>
     <div id="actions">
         <!--a href="<?php echo JURI::base(); ?>index.php?option=com_installer&view=display&layout=step2" class="btn-secondary">&laquo; <strong>P</strong>revious</a-->
