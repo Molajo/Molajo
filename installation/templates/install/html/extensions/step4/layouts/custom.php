@@ -41,7 +41,7 @@ var_dump($this->setup);
         <!--a href="<?php echo JURI::base(); ?>index.php?option=com_installer&view=display&layout=step3" class="btn-secondary">&laquo; <strong>P</strong>revious</a-->
         <!--a href="<?php echo JURI::base(); ?>index.php?option=com_installer&task=install" class="btn-primary alt">Install &raquo;</a-->
         <button type="submit" class="btn-secondary" name="layout" value="step3"><?php echo MolajoText::_('Previous') ?></button>
-        <button type="submit" class="btn-primary" name="task" value="install"><?php echo MolajoText::_('Next') ?></button>
+        <button type="submit" class="btn-primary" name="task" value="install"><?php echo MolajoText::_('Install') ?></button>
     </div>
 
     <form>
