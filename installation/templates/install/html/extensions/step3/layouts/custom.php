@@ -63,7 +63,7 @@ var_dump($this->setup);
                 <span class="inner-wrap">
                     <label for="db_prefix" class="inlined">Table prefix</label>
                     <input type="text" class="input-text" id="db_prefix" name="db_prefix" title="Table prefix" value="<?php echo $this->setup['db_prefix'] ?>" />
-                    <span class="note">By default this is set to jos_ but we recommended that you change this.<br />// Babs: let's pregenerate a prefix instead of jos</span>
+                    <span class="note">By default this is set to jos_ but we recommended that you change this.</span>
                 </span>
             </li>
         </ol>

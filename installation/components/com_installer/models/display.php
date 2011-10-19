@@ -118,7 +118,7 @@ class InstallerModelDisplay extends MolajoModelDummy
                 'db_scheme' => 'MySQL',
                 'db_username' => '',
                 'db_password' => '',
-                'db_prefix' => 'lala_',
+                'db_prefix' => InstallerHelper::getPrefix(),
                 'db_type' => '',
                 'remove_tables' => false,
                 'install_sample' => false
