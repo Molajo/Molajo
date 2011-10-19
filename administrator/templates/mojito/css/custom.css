@@ -33,10 +33,10 @@ h1, h2, h3, h4, h5, h6, b, strong {
 	}
 	
 h1, h2, h3, h4, h5, h6, p, code, pre, kbd, blockquote, q, cite {
-	margin:0 0 1.5em 0;
+	margin:0 0 1em 0;
 }
 ul, ol {
-	margin: 0 0 1.5em 0;
+	margin: 0 0 1em 0;
     list-style: none;
 }
 	ul li {
@@ -59,7 +59,11 @@ a {
     padding:0;
     font-size:100%;
     vertical-align:baseline;
+	color: #7EC1E0;
 }
+	a:hover {
+		color: #7ED7F2;
+	}
 code, kbd, pre, samp, tt {
 	font: 1em/1.5em 'Andale Mono', 'Lucida Console', monospace;
 }
@@ -107,23 +111,24 @@ input, select {
 	padding: 6px;
 	border: 1px solid #bbb;
 	outline: 0; /* change */
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-o-border-radius: 2px;
+	-ms-border-radius: 2px;
+	border-radius: 2px;
 	color: #444;
-	vertical-align:middle;
+	vertical-align: middle;
 	}
 	input:hover, select:hover, input:focus, select:focus {
 		border: 1px solid #e4e4e4;
 		}
 a.button, button, input[type="submit"], ol li.buttons button {
-	margin: 0;
-	padding: 8px 16px;
+	margin: 1em 0;
+	padding: 12px 24px;
 	border: 1px solid #7ed7f2;
 	background: #7ec1e0;
 	background: -moz-linear-gradient(100% 100% 90deg, #7ec1e0, #9ed7f2); 
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9ed7f2), to(#7ec1e0));
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ec1e0', endColorstr='#9ed7f2');
 	-moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,.3), 2px 2px 3px rgba(0,0,0,.1);
 	-webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,.3), 2px 2px 3px rgba(0,0,0,.1);
 	border-box-shadow: inset 1px 1px 1px rgba(255,255,255,.3), 2px 2px 3px rgba(0,0,0,.1);
@@ -135,13 +140,12 @@ a.button, button, input[type="submit"], ol li.buttons button {
 	white-space: nowrap;
 	cursor: pointer;
 }
-a:hover.button, button:hover, input[type="submit"]:hover {
-	background: #9ed7f2;
-	background: #58a1c2 url() 50% 50% repeat-x;
-	background: -moz-linear-gradient(100% 100% 90deg, #58a1c2, #7ec1e0); 
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7ec1e0), to(#58a1c2));
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#58a1c2', endColorstr='#7ec1e0');
-}
+	a:hover.button, button:hover, input[type="submit"]:hover {
+		background: #9ed7f2;
+		background: #58a1c2 url() 50% 50% repeat-x;
+		background: -moz-linear-gradient(100% 100% 90deg, #58a1c2, #7ec1e0); 
+		background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7ec1e0), to(#58a1c2));
+	}
 
 /* Header
 ----------------------------------*/
@@ -153,13 +157,13 @@ header {
 	background: -moz-linear-gradient(100% 100% 90deg, #111, #000); 
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#111), to(#000));
 	}
-header h1 {
-	margin: 0;
-	height: 40px;
-	background: url(images/logo_molajo.png) no-repeat 0 50%;
-	color: #f9f9f9;
-	text-indent: -99999px;
-	}
+	header h1 {
+		margin: 0;
+		height: 40px;
+		background: url(images/logo_molajo.png) no-repeat 0 50%;
+		color: #f9f9f9;
+		text-indent: -99999px;
+		}
 	
 /* Launchpad
 ----------------------------------*/
@@ -242,6 +246,8 @@ section {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4f4f4), to(#e4e4e4));
 	-moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
 	-webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
+	-o-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
+	-ms-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
 	box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
 	list-style-type: none;
 	}
@@ -340,6 +346,16 @@ section {
 .com_dashboard li a.video {
 	background-position: 0 -720px;
 	}
+
+/* Footer
+ * TODO: Sticky Footer
+----------------------------------*/
+
+footer {
+	padding: 2em;
+	text-align: center;
+	color: #ccc;
+}
 	
 /* Dashboard: Edit | Content
 ----------------------------------*/
@@ -359,28 +375,23 @@ section {
 	width: 220px; 
 	margin: 40px auto 0;
 	padding: 40px;
-	border: 1px solid #e4e4e4;
-	border-bottom-width: 4px;
-	border-right-width: 4px;
-	-moz-border-radius: 0 0 16px 0;
-	-webkit-border-radius: 0 0 16px 0;
-	border-radius: 0 0 16px 0;
+	border: 1px solid #d4d4d4;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-o-border-radius: 2px;
+	-ms-border-radius: 2px;
+	border-radius: 2px;
 	-moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
 	-webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
-	box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
+	-o-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
+	-ms-box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
+	box-shadow: inset 1px 1px 1px rgba(255,255,255,1), 0px 0px 10px rgba(0,0,0,.1);
 	}
 #form-login:hover {
-	width: 220px; 
-	margin: 40px auto 0;
-	padding: 40px;
-	border: 1px solid #e4e4e4;
-	border-bottom-width: 4px;
-	border-right-width: 4px;
-	-moz-border-radius: 0 0 16px 0;
-	-webkit-border-radius: 0 0 16px 0;
-	border-radius: 0 0 16px 0;
 	-moz-box-shadow: inset 1px 1px 1px rgba(255,255,255,1), 3px 3px 10px rgba(150,150,150,.1);
 	-webkit-box-shadow: inset 1px 1px 1px rgba(255,255,255,1), 3px 3px 10px rgba(150,150,150,.1);
+	-o-box-shadow: inset 1px 1px 1px rgba(255,255,255,1), 3px 3px 10px rgba(150,150,150,.1);
+	-ms-box-shadow: inset 1px 1px 1px rgba(255,255,255,1), 3px 3px 10px rgba(150,150,150,.1);
 	box-shadow: inset 1px 1px 1px rgba(255,255,255,1), 0px 0px 20px rgba(150,150,150,.2);
 	}
 .loginform input, .loginform select {

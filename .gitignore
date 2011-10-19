@@ -2,3 +2,6 @@
 .DS_Store
 /configuration.php
 .htaccess
+/cache
+/logs
+/tmp

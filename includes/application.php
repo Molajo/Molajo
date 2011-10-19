@@ -299,32 +299,6 @@ class MolajoSite extends MolajoApplication
 		$this->triggerEvent('onAfterRender');
 	}
 
-	/**
-     * login
-     * 
-	 * Login authentication function
-     * 
-     * @param array $credentials Array('username' => string, 'password' => string)
-     * @param array $options    Array('remember' => boolean)
-     * 
-     * @return bool
-     * 
-     * @since 1.0
-     */
-	public function login($credentials, $options = array())
-	{
-		 // Set the application login entry point
-		if (array_key_exists('entry_url', $options)) {
-        } else {
-			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=user.login';
-		}
-
-		// Set the access control action to check.
-		$options['action'] = 'login.site';
-
-		return parent::login($credentials, $options);
-	}
-
     /**
      * authorise
      * 

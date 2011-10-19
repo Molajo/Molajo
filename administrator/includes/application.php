@@ -175,7 +175,6 @@ class MolajoAdministrator extends MolajoApplication
 			$code = $e->getCode();
 			JError::raiseError($code ? $code : 500, $e->getMessage());
 		}
-
 	}
 
 	/**
@@ -210,45 +209,6 @@ class MolajoAdministrator extends MolajoApplication
 
 		JResponse::setBody($renderedOutput);
 		$this->triggerEvent('onAfterRender');
-	}
-
-	/**
-     * login
-     *
-	 * Login authentication function
-	 *
-	 * @param	array	Array('username' => string, 'password' => string)
-	 * @param	array	Array('remember' => boolean)
-	 *
-	 * @return	boolean True on success.
-	 * @see		JApplication::login
-	 * @since	1.0
-	 */
-	public function login($credentials, $options = array())
-	{
-		//  Make sure users are not autoregistered
-		$options['autoregister'] = false;
-
-		//  Set the application login entry point
-		if (!array_key_exists('entry_url', $options)) {
-			$options['entry_url'] = JURI::base().'index.php?option=com_users&task=login';
-		}
-
-		// Set the access control action to check.
-		$options['action'] = 'login';
-
-		$result = parent::login($credentials, $options);
-
-		if (JError::isError($result)) {
-        } else {
-			$lang = JRequest::getCmd('language');
-			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
-			$this->setUserState('application.lang', $lang );
-
-			MolajoAdministrator::purgeMessages();
-		}
-
-		return $result;
 	}
 
 	/**
