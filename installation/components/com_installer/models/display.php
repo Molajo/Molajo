@@ -119,6 +119,7 @@ class InstallerModelDisplay extends MolajoModelDummy
                 'db_username' => '',
                 'db_password' => '',
                 'db_prefix' => InstallerHelper::getPrefix(),
+                'db_prefix' => 'jos_',
                 'db_type' => '',
                 'remove_tables' => false,
                 'install_sample' => false

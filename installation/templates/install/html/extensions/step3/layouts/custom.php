@@ -33,59 +33,52 @@ var_dump($this->setup);
         <ol class="list-reset forms">
             <li>
                 <span class="inner-wrap">
-                    <label for="hostname" class="inlined">Host name</label>
-                    <input type="text" class="input-text" id="hostname" name="hostname" title="Host name" value="<?php echo $this->setup['hostname'] ?>" />
-                    <span class="note">This is usually <b>localhost</b>.</span>
+                    <label for="hostname" class="inlined"><?php echo MolajoText::_('Host name') ?></label>
+                    <input type="text" class="input-text" id="hostname" name="hostname" title="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
+                    <span class="note"><?php echo MolajoText::_('This is usually <b>localhost</b>.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
-                    <label for="db_scheme" class="inlined">Database name</label>
-                    <input type="text" class="input-text" id="db_scheme" name="db_scheme" title="Database name" value="<?php echo $this->setup['db_scheme'] ?>" />
-                    <span class="note">The name of the database you are installing Molajo on.</span>
+                    <label for="db_scheme" class="inlined"><?php echo MolajoText::_('Database name') ?></label>
+                    <input type="text" class="input-text" id="db_scheme" name="db_scheme" title="<?php echo MolajoText::_('Database name') ?>" value="<?php echo $this->setup['db_scheme'] ?>" />
+                    <span class="note"><?php echo MolajoText::_('The name of the database you are installing Molajo on.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
-                    <label for="db_username" class="inlined">Username</label>
+                    <label for="db_username" class="inlined"><?php echo MolajoText::_('Username') ?></label>
                     <input type="text" class="input-text" id="db_username" name="db_username" title="Username" value="<?php echo $this->setup['db_username'] ?>" />
-                    <span class="note">Your MySQL database username.</span>
+                    <span class="note"><?php echo MolajoText::_('Your MySQL database username.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
-                    <label for="db_password" class="inlined">Password</label>
-                    <input type="text" class="input-text" id="db_password" name="db_password" title="Password" value="<?php echo $this->setup['db_password'] ?>" />
-                    <span class="note">Your MySQL database password.</span>
-                </span>
-            </li>
-            <li>
-                <span class="inner-wrap">
-                    <label for="db_prefix" class="inlined">Table prefix</label>
-                    <input type="text" class="input-text" id="db_prefix" name="db_prefix" title="Table prefix" value="<?php echo $this->setup['db_prefix'] ?>" />
-                    <span class="note">By default this is set to jos_ but we recommended that you change this.</span>
+                    <label for="db_password" class="inlined"><?php echo MolajoText::_('Password') ?></label>
+                    <input type="text" class="input-text" id="db_password" name="db_password" title="<?php echo MolajoText::_('Password') ?>" value="<?php echo $this->setup['db_password'] ?>" />
+                    <span class="note"><?php echo MolajoText::_('Your MySQL database password.') ?></span>
                 </span>
             </li>
         </ol>
 
         <ol class="list-rest radios">
             <li>
-                <span class="label">Database type</span>
-                <label class="radio-left" for="mysql"><input name="dbtype" id="mysql" value="myql" type="radio">MySQL</label>
-                <label class="radio-right label-selected" for="mysqli"><input name="dbtype" id="mysqli" value="mysqli" type="radio" checked="checked">MySQLi</label>
-                <span class="note">MySQLi is recommended, but not all hosts support it. <a href="#">Learn more</a>.</span>
+                <span class="label"><?php echo MolajoText::_('Database type') ?></span>
+                <label class="radio-left" for="mysql"><input name="dbtype" id="mysql" value="myql" type="radio"><?php echo MolajoText::_('MySQL') ?></label>
+                <label class="radio-right label-selected" for="mysqli"><input name="dbtype" id="mysqli" value="mysqli" type="radio" checked="checked"><?php echo MolajoText::_('MySQLi') ?></label>
+                <span class="note"><?php echo MolajoText::_('MySQLi is recommended, but not all hosts support it. <a href="#">Learn more</a>.') ?></span>
             </li>
             <li>
-                <span class="label">Existing database</span>
-                <label class="radio-left" for="remove"><input name="existingdb" id="remove" value="remove" type="radio">Remove</label>
-                <label class="radio-right label-selected" for="backup"><input name="existingdb" id="backup" value="backup" type="radio" checked="checked">Backup</label>
-                <span class="note alt">If you have an existing database with the same name, would you like it to be replaced or backed up.</span>
+                <span class="label"><?php echo MolajoText::_('Existing database') ?></span>
+                <label class="radio-left" for="remove"><input name="existingdb" id="remove" value="remove" type="radio"><?php echo MolajoText::_('Remove') ?></label>
+                <label class="radio-right label-selected" for="backup"><input name="existingdb" id="backup" value="backup" type="radio" checked="checked"><?php echo MolajoText::_('Backup') ?></label>
+                <span class="note alt"><?php echo MolajoText::_('If you have an existing database with the same name, would you like it to be replaced or backed up.') ?></span>
             </li>
             <li>
-                <span class="label">Sample Data</span>
-                <label class="radio-left" for="sample-data"><input name="sample-data" id="install" value="1" type="radio" checked="checked">Yes</label>
-                <label class="radio-right label-selected" for="backup"><input name="sample-data" id="install" value="0" type="radio">No</label>
-                <span class="note alt">Installing sample data is strongly recommended for beginners.</span>
+                <span class="label"><?php echo MolajoText::_('Sample Data') ?></span>
+                <label class="radio-left" for="sample-data"><input name="sample-data" id="install" value="1" type="radio" checked="checked"><?php echo MolajoText::_('Yes') ?></label>
+                <label class="radio-right label-selected" for="backup"><input name="sample-data" id="install" value="0" type="radio"><?php echo MolajoText::_('No') ?></label>
+                <span class="note alt"><?php echo MolajoText::_('Installing sample data is strongly recommended for beginners.') ?></span>
             </li>
         </ol>
 
