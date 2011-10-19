@@ -32,21 +32,21 @@ var_dump($this->setup);
             <li>
                 <span class="inner-wrap">
                     <label for="sitename" class="inlined"><?php echo MolajoText::_('Site name') ?></label>
-                    <input type="text" class="input-text" id="sitename" name="sitename" title="<?php echo MolajoText::_('Site name') ?>" value="<?php echo $this->setup['sitename'] ?>" />
+                    <input type="text" class="input-text" id="sitename" name="sitename" placeholder="<?php echo MolajoText::_('Site name') ?>" value="<?php echo $this->setup['sitename'] ?>" />
                     <span class="note"><?php echo MolajoText::_('Your site name.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
-                    <label for="name" class="inlined"><?php echo MolajoText::_('Your real name') ?></label>
-                    <input type="text" class="input-text" id="name" name="name" title="<?php echo MolajoText::_('Your real name') ?>" value="<?php echo $this->setup['name'] ?>" />
-                    <span class="note"></span>
+                    <label for="name" class="inlined"><?php echo MolajoText::_('Your name') ?></label>
+                    <input type="text" class="input-text" id="name" name="name" placeholder="<?php echo MolajoText::_('Your name') ?>" value="<?php echo $this->setup['name'] ?>" />
+                    <span class="note"><?php echo MolajoText::_('Your real name.') ?></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="admin_email" class="inlined"><?php echo MolajoText::_('Your email address') ?></label>
-                    <input type="text" class="input-text" id="admin_email" name="admin_email" title="<?php echo MolajoText::_('Your email address') ?>" value="<?php echo $this->setup['admin_email'] ?>" onblur="getElementById('confirm_email').style.display='block';" />
+                    <input type="text" class="input-text" id="admin_email" name="admin_email" placeholder="<?php echo MolajoText::_('Your email address') ?>" value="<?php echo $this->setup['admin_email'] ?>" onblur="getElementById('confirm_email').style.display='block';" />
                     <span class="note"><?php echo MolajoText::_('Enter a valid email address. This is where your login info will be sent.') ?></span>
                 </span>
             </li>
