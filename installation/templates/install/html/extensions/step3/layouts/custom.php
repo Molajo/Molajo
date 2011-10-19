@@ -59,16 +59,6 @@ var_dump($this->setup);
                     <span class="note"><?php echo MolajoText::_('Your MySQL database password.') ?></span>
                 </span>
             </li>
-            <li>
-                <span class="inner-wrap">
-                    <label for="db_type"><?php echo MolajoText::_('Database type') ?></label>
-                    <select name="db_type" class="input-text" id="db_type">
-                        <option value="MySQL"<?php echo $this->setup['db_type']=='MySQL'?' selected':''; ?>><?php echo MolajoText::_('MySQL') ?></option>
-                        <option value="MySQLi"<?php echo $this->setup['db_type']=='MySQLi'?' selected':''; ?>><?php echo MolajoText::_('MySQLi') ?></option>
-                    </select>
-                    <span class="note"><?php echo MolajoText::_('MySQLi is recommended, but not all hosts support it. <a href="#">Learn more</a>.') ?></span>
-                </span>
-            </li>
         </ol>
 
         <ol class="list-rest radios">
@@ -77,9 +67,9 @@ var_dump($this->setup);
                 <label class="radio-left<?php echo $this->setup['db_type']=='MySQL'?' label-selected':''; ?>" for="MySQL">
                     <input name="db_type" id="MySQL" value="MySQL" type="radio"<?php echo $this->setup['db_type']=='MySQL'?' checked="checked"':''; ?> /><?php echo MolajoText::_('MySQL') ?></label>
                 <label class="radio-middle<?php echo $this->setup['db_type']=='MySQLi'?' label-selected':''; ?>" for="MySQLi">
-                    <input name="db_type" id="MySQLi" value="MySQLi" type="radio"<?php echo $this->setup['db_type']=='MySQLi'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Doctrine') ?></label>
+                    <input name="db_type" id="MySQLi" value="MySQLi" type="radio"<?php echo $this->setup['db_type']=='MySQLi'?' checked="checked"':''; ?> /><?php echo MolajoText::_('MySQLi') ?></label>
                 <label class="radio-right<?php echo $this->setup['db_type']=='Doctrine'?' label-selected':''; ?>" for="Doctrine">
-                    <input name="db_type" id="Doctrine" value="Doctrine" type="radio"<?php echo $this->setup['db_type']=='Doctrine'?' checked="checked"':''; ?> /><?php echo MolajoText::_('MySQLi') ?></label>
+                    <input name="db_type" id="Doctrine" value="Doctrine" type="radio"<?php echo $this->setup['db_type']=='Doctrine'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Doctrine') ?></label>
             </li>
             <li>
                 <span class="label"><?php echo MolajoText::_('Sample Data') ?></span>
