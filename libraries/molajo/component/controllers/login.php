@@ -29,19 +29,23 @@ class MolajoControllerLogin extends MolajoController
 	{
         /** security token **/
 //        JRequest::checkToken() or die;
-        
+
     /**
      * Initialization
      */
         $filehelper = new MolajoFileHelper();
 
-        $options = array('action' => 'login');
-
 		$credentials = array(
 			'username' => JRequest::getVar('username', '', 'method', 'username'),
-			'password' => JRequest::getVar('passwd', '', 'post', 'string', JREQUEST_ALLOWRAW)
+			'password' => JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW)
 		);
 
+        $options = array('action' => 'login');
+
+		$authenticate = MolajoAuthentication::getInstance();
+		$response	= $authenticate->authenticate($credentials, $options);
+echo '<pre>';var_dump($response);'</pre>';
+        die;
 		/** security check: internal URL only */
 		if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
 			$return = base64_decode($return);
@@ -59,7 +63,7 @@ class MolajoControllerLogin extends MolajoController
      */
 		$response = new MolajoAuthentication();
 		$plugins = MolajoPluginHelper::getPlugin('authentication');
-        
+
 		foreach ($plugins as $plugin) {
 
             $path = MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
@@ -68,17 +72,18 @@ class MolajoControllerLogin extends MolajoController
 
 			if (class_exists($className)) {
 				$authenticate = new $className($response, (array) $plugin);
-echo '<pre>';var_dump($authenticate);'</pre>';
-die;
+
 			} else {
                 echo 'NOT exists'.$className;
                 die;
 				JError::raiseWarning(50, MolajoText::sprintf('MOLAJO_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
 				continue;
 			}
-
-//			$plugin->onUserAuthenticate($credentials, $options, $response);
-$response->status = MOLAJO_AUTHENTICATE_STATUS_SUCCESS;
+echo 'going in';
+			$plugin->onUserAuthenticate($credentials, $options, $response);
+echo 'dfasdfasfsaf';
+//echo '<pre>';var_dump($response);'</pre>';
+die;
 
 			if ($response->status == MOLAJO_AUTHENTICATE_STATUS_SUCCESS) {
 				if (empty($response->type)) {

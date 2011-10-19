@@ -390,6 +390,7 @@ class MolajoApplication extends JObject
             } else if ($id == 0 && count($cids) == 1) {
                 $id = $cids[0];
                 $cids = array();
+
             } else if ($id == 0 && count($cids) == 0) {
                 JError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
                 return false;

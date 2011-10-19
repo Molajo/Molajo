@@ -28,6 +28,7 @@ class MolajoComponentHelper
      * getComponentName
      *
 	 * Return the name of the request component [main component]
+     * Moved in from the Application Helper
 	 *
 	 * @param   string  $default The default option
 	 * @return  string  Option
@@ -66,9 +67,11 @@ class MolajoComponentHelper
 	{
 		if (isset(self::$_components[$option])) {
             $result = self::$_components[$option];
+
         } else {
 			if (self::_load($option)){
 				$result = self::$_components[$option];
+
 			} else {
 				$result				= new stdClass;
 				$result->enabled	= $strict ? false : true;

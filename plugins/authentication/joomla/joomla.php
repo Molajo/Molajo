@@ -1,20 +1,23 @@
 <?php
 /**
- * @package     Molajo
- * @subpackage  Authentication
- * @copyright   Copyright (C) 2011 Molajo. All rights reserved.
- * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+ * @version		$Id: joomla.php 21097 2011-04-07 15:38:03Z dextercowley $
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-defined('MOLAJO') or die;
+
+// No direct access
+defined('_JEXEC') or die;
+
+jimport('joomla.plugin.plugin');
 
 /**
- * Authentication
+ * Joomla Authentication plugin
  *
- * @package		Molajo
- * @subpackage	Authentication
- * @since       1.0
+ * @package		Joomla.Plugin
+ * @subpackage	Authentication.joomla
+ * @since 1.5
  */
-class plgAuthenticationMolajo extends MolajoPlugin
+class plgAuthenticationJoomla extends JPlugin
 {
 	/**
 	 * This method should handle any authentication and report back to the subject
@@ -24,10 +27,13 @@ class plgAuthenticationMolajo extends MolajoPlugin
 	 * @param	array	Array of extra options
 	 * @param	object	Authentication response object
 	 * @return	boolean
-	 * @since   1.0
+	 * @since 1.5
 	 */
-	function onUserAuthenticate($credentials, $options, $response)
+	function onUserAuthenticate($credentials, $options, &$response)
 	{
+		jimport('joomla.user.helper');
+
+		$response->type = 'Joomla';
 		// Joomla does not like blank passwords
 		if (empty($credentials['password'])) {
 			$response->status = JAUTHENTICATE_STATUS_FAILURE;
@@ -39,7 +45,7 @@ class plgAuthenticationMolajo extends MolajoPlugin
 		$conditions = '';
 
 		// Get a database object
-		$db		= MolajoFactory::getDbo();
+		$db		= JFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('id, password');
@@ -53,15 +59,16 @@ class plgAuthenticationMolajo extends MolajoPlugin
 			$parts	= explode(':', $result->password);
 			$crypt	= $parts[0];
 			$salt	= @$parts[1];
-			$testcrypt = MolajoUserHelper::getCryptedPassword($credentials['password'], $salt);
+			$testcrypt = JUserHelper::getCryptedPassword($credentials['password'], $salt);
 
 			if ($crypt == $testcrypt) {
-				$user = MolajoUser::getInstance($result->id); // Bring this in line with the rest of the system
+				$user = JUser::getInstance($result->id); // Bring this in line with the rest of the system
 				$response->email = $user->email;
 				$response->fullname = $user->name;
-				if (MolajoFactory::getApplication()->isAdmin()) {
+				if (JFactory::getApplication()->isAdmin()) {
 					$response->language = $user->getParam('admin_language');
-				} else {
+				}
+				else {
 					$response->language = $user->getParam('language');
 				}
 				$response->status = JAUTHENTICATE_STATUS_SUCCESS;

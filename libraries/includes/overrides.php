@@ -7,6 +7,7 @@
  */
 defined('MOLAJO') or die;
 
+// in import abstract class JFactory extends MolajoFactory {}
 class JAccess extends MolajoACL {}
 
 class JApplication extends MolajoApplication {}
@@ -65,15 +66,8 @@ abstract class JPluginHelper extends MolajoPluginHelper {}
 abstract class JPlugin extends MolajoPlugin {}
 
 class JRegistry extends MolajoRegistry {}
-class JAuthentication {
-	public function __construct()
-	{
-		JError::raiseError('500', JText::_('MOLAJO_AUTHENTICIAN_IN_MOLAJOCONTROLLERLOGIN'));
-	}
-	public static function getInstance() {}
-	public function authenticate($credentials, $options) {}
-}
-class JAuthenticationResponse extends MolajoAuthentication {}
+class JAuthentication extends MolajoAuthentication {}
+class JAuthenticationResponse extends MolajoAuthenticationResponse {}
 abstract class JUserHelper extends MolajoUserHelper {}
 class JUser extends MolajoUser {}
 

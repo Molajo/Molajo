@@ -132,13 +132,15 @@ class MolajoApplicationHelper
 			$application = (object) $application;
 		}
 
-		if (!is_object($application)) {
+		if (is_object($application)) {
+        } else {
 			return false;
 		}
 
 		$info = self::getApplicationInfo();
 
-		if (!isset($application->id)) {
+		if (isset($application->id)) {
+        } else {
 			$application->id = count($info);
 		}
 
@@ -160,9 +162,7 @@ class MolajoApplicationHelper
      */
 	public static function getPath($varname, $user_option=null)
 	{
-        /** amy remove **/
         return;
-
 	}
 
 	/**
@@ -190,9 +190,10 @@ class MolajoApplicationHelper
 		// Should be 'install', but for backward compatability we will accept 'extension'.
 		// Languages use 'metafile' instead
 
-		if($xml->getName() != 'install'
-            && $xml->getName() != 'extension'
-            && $xml->getName() != 'metafile') {
+		if($xml->getName() == 'install'
+            || $xml->getName() == 'extension'
+            || $xml->getName() == 'metafile') {
+        } else {
 			unset($xml);
 			return false;
 		}
@@ -234,12 +235,11 @@ class MolajoApplicationHelper
      */
 	public static function parseXMLLangMetaFile($path)
 	{
-		// Read the file to see if it's a valid component XML file
 		$xml = MolajoFactory::getXML($path);
 
 		if($xml) {
         } else {
-			return false;
+            return false;
 		}
 
 		/*
@@ -297,7 +297,9 @@ class MolajoApplicationHelper
 		if ($checkAdmin > -1 && file_exists($file)) {
 			return $file;
 
-		} else if ($checkAdmin != 0) {
+		} else if ($checkAdmin == 0) {
+
+        } else {
 			$file = MOLAJO_PATH_ADMINISTRATOR.$path;
 			if (file_exists($file)) {
 				return $file;

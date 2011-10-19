@@ -29,14 +29,16 @@ if (class_exists('JPlatform')) { } else { require_once JPATH_PLATFORM.'/platform
 if (class_exists('JLoader')) { } else { require_once JPATH_PLATFORM.'/loader.php'; }
 
 require_once LIBRARIES.'/molajo/application/factory.php';
-require_once LIBRARIES.'/overrides/factory.php';
-
+abstract class JFactory extends MolajoFactory {}
 /**
  *  Joomla has deprecated JError - good candidate for contributor to replace within Molajo
  */
 JLoader::import('joomla.error.error');
 JLoader::import('joomla.error.exception');
 JLoader::import('joomla.error.profiler');
+
+jimport('joomla.base.observable');
+jimport('joomla.event.dispatcher');
 
 if (isset($_SERVER['HTTP_HOST'])) {
 	JLoader::import('joomla.environment.request');
