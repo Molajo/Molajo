@@ -115,12 +115,11 @@ class InstallerModelDisplay extends MolajoModelDummy
                 'admin_email' => '',
                 'admin_password' => '',
                 'hostname' => 'localhost',
-                'db_scheme' => 'MySQL',
+                'db_scheme' => '',
                 'db_username' => '',
                 'db_password' => '',
-                'db_prefix' => InstallerHelper::getPrefix(),
                 'db_prefix' => 'jos_',
-                'db_type' => '',
+                'db_type' => 'MySQL',
                 'remove_tables' => false,
                 'sample_data' => 'none'
             );
