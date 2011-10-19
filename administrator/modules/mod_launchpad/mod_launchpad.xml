@@ -2,7 +2,7 @@
 <extension type="module" version="1.0" application="administrator" method="upgrade">
 	<name>MOD_MENU</name>
 	<author>Molajo Project</author>
-	<creationDate>September 2011</creationDate>
+	<creationDate>October 2011</creationDate>
 	<copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>

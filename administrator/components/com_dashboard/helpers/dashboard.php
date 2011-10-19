@@ -32,12 +32,12 @@ class ArticlesHelper
     public static function addSubmenu($vName)
     {
         MolajoSubMenuHelper::addEntry(
-                MolajoText::_('COM_DASHBOARDS_DASHBOARDS'),
+                MolajoText::_('COM_DASHBOARD_DASHBOARD'),
                 'index.php?option=com_dashboard&view=dashboard',
                 $vName == 'dashboard'
         );
         MolajoSubMenuHelper::addEntry(
-                MolajoText::_('COM_DASHBOARDS_SUBMENU_CATEGORIES'),
+                MolajoText::_('COM_DASHBOARD_SUBMENU_CATEGORIES'),
                 'index.php?option=com_categories&extension=com_dashboard',
                 $vName == 'categories'
         );

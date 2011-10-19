@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.0.0" method="upgrade">
-	<name>COM_DASHBOARDS</name>
+	<name>COM_DASHBOARD</name>
 	<author>Amy Stephen</author>
-	<creationDate>September 2011</creationDate>
+	<creationDate>October 2011</creationDate>
 	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>COM_DASHBOARDS_DESCRIPTION</description>
+	<description>COM_DASHBOARD_DESCRIPTION</description>
 
 	<media destination="com_dashboard" folder="media">
 		<folder>css</folder>

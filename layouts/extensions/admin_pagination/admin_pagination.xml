@@ -2,7 +2,7 @@
 <extension version="1.0" type="layout" group="extension" method="upgrade">
     <name>LAYOUT_EXTENSION_ADMIN_PAGINATION_NAME</name>
     <author>Amy Stephen</author>
-    <creationDate>September 2011</creationDate>
+    <creationDate>October 2011</creationDate>
     <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
     <authorEmail>collaborate@molajo.org</authorEmail>

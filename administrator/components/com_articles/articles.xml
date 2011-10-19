@@ -2,7 +2,7 @@
 <extension type="component" version="1.0.0" method="upgrade">
 	<name>COM_ARTICLES</name>
 	<author>Amy Stephen</author>
-	<creationDate>September 2011</creationDate>
+	<creationDate>October 2011</creationDate>
 	<copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
 	<authorEmail>collaborate@molajo.org</authorEmail>
