@@ -62,16 +62,4 @@ class InstallerHelper
     public function detectLanguage() {
         return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
     }
-
-    public function getPrefix( $length=3 ) {
-
-        $characters = 'abcdefghijklmnopqrstuvwxyz';
-
-        $string = '';
-        for ($i=0; $i<$length; $i++) {
-            $string .= $characters[mt_rand(0, strlen($characters))];
-        }
-
-        return $string . '_';
-    }
 }
