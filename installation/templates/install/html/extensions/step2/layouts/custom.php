@@ -26,7 +26,7 @@ var_dump($this->setup);
         <input type="hidden" name="db_prefix"      value="<?php echo $this->setup['db_prefix'] ?>">
         <input type="hidden" name="db_type"        value="<?php echo $this->setup['db_type'] ?>">
         <input type="hidden" name="remove_tables"  value="<?php echo $this->setup['remove_tables'] ?>">
-        <input type="hidden" name="install_sample" value="<?php echo $this->setup['install_sample'] ?>">
+        <input type="hidden" name="sample_data"    value="<?php echo $this->setup['sample_data'] ?>">
 
         <ol class="list-reset forms">
             <li>
@@ -40,17 +40,17 @@ var_dump($this->setup);
                 <span class="inner-wrap">
                     <label for="name" class="inlined"><?php echo MolajoText::_('Your real name') ?></label>
                     <input type="text" class="input-text" id="name" name="name" title="<?php echo MolajoText::_('Your real name') ?>" value="<?php echo $this->setup['name'] ?>" />
-                    <span class="note"><?php echo MolajoText::_('Enter a valid email address. This is where your login info will be sent.') ?></span>
+                    <span class="note"></span>
                 </span>
             </li>
             <li>
                 <span class="inner-wrap">
                     <label for="admin_email" class="inlined"><?php echo MolajoText::_('Your email address') ?></label>
-                    <input type="text" class="input-text" id="admin_email" name="admin_email" title="<?php echo MolajoText::_('Your email address') ?>" value="<?php echo $this->setup['admin_email'] ?>" />
+                    <input type="text" class="input-text" id="admin_email" name="admin_email" title="<?php echo MolajoText::_('Your email address') ?>" value="<?php echo $this->setup['admin_email'] ?>" onblur="getElementById('confirm_email').style.display='block';" />
                     <span class="note"><?php echo MolajoText::_('Enter a valid email address. This is where your login info will be sent.') ?></span>
                 </span>
             </li>
-            <li>
+            <li id="confirm_email" style="display: none;" class="confirm">
                 <span class="inner-wrap">
                     <label for="email_confirm" class="inlined"><?php echo MolajoText::_('Confirm your email address') ?></label>
                     <input type="text" class="input-text" id="email_confirm" name="email_confirm" />
@@ -60,11 +60,11 @@ var_dump($this->setup);
             <li>
                 <span class="inner-wrap">
                     <label for="admin_password" class="inlined"><?php echo MolajoText::_('Password') ?></label>
-                    <input type="password" class="password" id="admin_password" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>" />
+                    <input type="password" class="password" id="admin_password" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>" onblur="getElementById('confirm_password').style.display='block';" />
                     <span class="note"><?php echo MolajoText::_('Enter your admin password.') ?></span>
                 </span>
             </li>
-            <li>
+            <li id="confirm_password" style="display: none;" class="confirm">
                 <span class="inner-wrap">
                     <label for="password_confirm" class="inlined"><?php echo MolajoText::_('Confirm password') ?></label>
                     <input type="password" class="password" id="password_confirm" name="password_confirm" />

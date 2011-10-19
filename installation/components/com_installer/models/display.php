@@ -122,7 +122,7 @@ class InstallerModelDisplay extends MolajoModelDummy
                 'db_prefix' => 'jos_',
                 'db_type' => '',
                 'remove_tables' => false,
-                'install_sample' => false
+                'sample_data' => 'none'
             );
         }
 

@@ -23,7 +23,7 @@ var_dump($this->setup);
         <input type="hidden" name="db_prefix"      value="<?php echo $this->setup['db_prefix'] ?>">
         <input type="hidden" name="db_type"        value="<?php echo $this->setup['db_type'] ?>">
         <input type="hidden" name="remove_tables"  value="<?php echo $this->setup['remove_tables'] ?>">
-        <input type="hidden" name="install_sample" value="<?php echo $this->setup['install_sample'] ?>">
+        <input type="hidden" name="sample_data"    value="<?php echo $this->setup['sample_data'] ?>">
 
         <h2><?php echo MolajoText::_('Welcome to the Molajo Installer'); ?></h2>
         <p><?php echo MolajoText::_('Before we get started, please ensure you have your database connection information handy, as you\'ll need it to complete the installation process.

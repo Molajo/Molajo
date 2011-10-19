@@ -35,7 +35,7 @@ var_dump($this->setup);
         <input type="hidden" name="db_prefix"      value="<?php echo $this->setup['db_prefix'] ?>">
         <input type="hidden" name="db_type"        value="<?php echo $this->setup['db_type'] ?>">
         <input type="hidden" name="remove_tables"  value="<?php echo $this->setup['remove_tables'] ?>">
-        <input type="hidden" name="install_sample" value="<?php echo $this->setup['install_sample'] ?>">
+        <input type="hidden" name="sample_data"    value="<?php echo $this->setup['sample_data'] ?>">
 
     <div id="actions">
         <!--a href="<?php echo JURI::base(); ?>index.php?option=com_installer&view=display&layout=step3" class="btn-secondary">&laquo; <strong>P</strong>revious</a-->
