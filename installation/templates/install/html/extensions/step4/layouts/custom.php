@@ -9,15 +9,15 @@ defined('MOLAJO') or die;
 var_dump($this->setup);
 ?>
 <div class="inner">
-    <h2>Review</h2>
-    <p>You have provided all of the information needed to install Molajo. Press Install when ready to proceed.</p>
+    <h2><?php echo MolajoText::_('Review') ?></h2>
+    <p><?php echo MolajoText::_('You have provided all of the information needed to install Molajo. Press Install when ready to proceed.') ?></p>
     <div class="summary">
-        <h3>Site information</h3>
+        <h3><?php echo MolajoText::_('Site information') ?></h3>
         <ul class="list-reset">
-            <li><strong>Site name:</strong> <span><?php echo $this->setup['sitename'] ?></span></li>
-            <li><strong>Your name:</strong> <span><?php echo $this->setup['name'] ?></span></li>
-            <li><strong>Your email:</strong> <span><?php echo $this->setup['admin_email'] ?></span></li>
-            <li><strong>Your password:</strong> <span><?php echo $this->setup['admin_password'] ?></span></li>
+            <li><strong><?php echo MolajoText::_('Site name:') ?></strong> <span><?php echo $this->setup['sitename'] ?></span></li>
+            <li><strong><?php echo MolajoText::_('Your name:') ?></strong> <span><?php echo $this->setup['name'] ?></span></li>
+            <li><strong><?php echo MolajoText::_('Your email:') ?></strong> <span><?php echo $this->setup['admin_email'] ?></span></li>
+            <li><strong><?php echo MolajoText::_('Your password:') ?></strong> <span><?php echo $this->setup['admin_password'] ?></span></li>
         </ul>
     </div>
 
