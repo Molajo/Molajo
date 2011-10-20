@@ -31,6 +31,6 @@ defined('_JEXEC') or die;
 	<td class="center"><?php echo @$this->item->folder != '' ? $this->item->folder : 'N/A'; ?></td>
 	<td class="center"><?php echo @$this->item->application != '' ? MolajoText::_($this->item->application) : 'N/A'; ?></td>
 	<td>
-		<?php echo $this->item->detailsurl ?>
+		<?php echo $this->item->details_url ?>
 	</td>
 </tr>
