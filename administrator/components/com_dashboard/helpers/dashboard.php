@@ -2,14 +2,14 @@
 /**
  * @version     $id: dashboard.php
  * @package     Molajo
- * @subpackage  Articles Component
+ * @subpackage  Dashboard Component
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * ArticlesHelper
+ * DashboardHelper
  *
  * Category Submenu Helper
  *
@@ -17,7 +17,7 @@ defined('MOLAJO') or die;
  * @subpackage	com_dashboard
  * @since	1.6
  */
-class ArticlesHelper
+class DashboardHelper
 {
     public static $extension = 'com_dashboard';
 
@@ -32,12 +32,12 @@ class ArticlesHelper
     public static function addSubmenu($vName)
     {
         MolajoSubMenuHelper::addEntry(
-                MolajoText::_('COM_DASHBOARDS_DASHBOARDS'),
+                MolajoText::_('COM_DASHBOARD_DASHBOARD'),
                 'index.php?option=com_dashboard&view=dashboard',
                 $vName == 'dashboard'
         );
         MolajoSubMenuHelper::addEntry(
-                MolajoText::_('COM_DASHBOARDS_SUBMENU_CATEGORIES'),
+                MolajoText::_('COM_DASHBOARD_SUBMENU_CATEGORIES'),
                 'index.php?option=com_categories&extension=com_dashboard',
                 $vName == 'categories'
         );

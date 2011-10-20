@@ -25,17 +25,17 @@ class MolajoAdministratorHelper
 	 */
 	public static function findOption()
 	{
-		$option = strtolower(JRequest::getCmd('option'));
+		$option = strtolower(JRequest::getCmd('option'), '');
 
 		$user = MolajoFactory::getUser();
 		if ($user->get('guest')) {
 			$option = 'com_login';
 		}
 
-		if (empty($option)) {
+		if ($option == '') {
 			$option = 'com_dashboard';
 		}
-
+$option = 'com_dashboard';
 		JRequest::setVar('option', $option);
 		return $option;
 	}

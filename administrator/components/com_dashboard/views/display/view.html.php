@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage	View
  * @since	    1.0
  */
-class ArticlesViewDisplay extends MolajoView {}
+class DashboardViewDisplay extends MolajoView {}

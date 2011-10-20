@@ -417,9 +417,9 @@ class MolajoView extends JView
      *
      * Automatically includes the following files (if existing)
      *
-     * 1. Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js]
-     * 2. Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js]
-     * 3. Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js]
+     * 1. Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js]
+     * 2. Component specific CSS and JS in => media/system/[application]/[com_component]/css[js]/XYZ.css[js]
+     * 3. Asset ID specific CSS and JS in => media/system/[application]/[asset_id]/css[js]/XYZ.css[js]
      * 4. Layout specific CSS and JS in => layouts/[layout-type]/[layout-name]/css[js]/XYZ.css[js]
      *
      * Note: Right-to-left css files should begin with rtl_
@@ -436,9 +436,9 @@ class MolajoView extends JView
             $applicationName = MOLAJO_APPLICATION_PATH;
         }
 
-        /** Application-specific CSS and JS in => media/site/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_PATH_ROOT.'/media/site/'.$applicationName;
-        $urlPath = JURI::root().'media/site/'.$applicationName;
+        /** Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_PATH_ROOT.'/media/system/'.$applicationName;
+        $urlPath = JURI::root().'media/system/'.$applicationName;
 
         if (isset($this->params->load_application_css)
             && $this->params->get('load_application_css', true) === true) {
@@ -449,7 +449,7 @@ class MolajoView extends JView
             $this->loadMediaJS ($filePath, $urlPath);
         }
 
-        /** Component specific CSS and JS in => media/site/[application]/[com_component]/css[js]/XYZ.css[js] */
+        /** Component specific CSS and JS in => media/system/[application]/[com_component]/css[js]/XYZ.css[js] */
         if (isset($this->params->load_component_css)
             && $this->params->get('load_component_css', true) === true) {
             $this->loadMediaCSS ($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
@@ -459,7 +459,7 @@ class MolajoView extends JView
             $this->loadMediaJS ($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
         }
 
-        /** Asset ID specific CSS and JS in => media/site/[application]/[asset_id]/css[js]/XYZ.css[js] */
+        /** Asset ID specific CSS and JS in => media/system/[application]/[asset_id]/css[js]/XYZ.css[js] */
         if (isset($this->params->load_asset_css)
             && $this->params->get('load_asset_css', true) === true) {
             $this->loadMediaCSS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
