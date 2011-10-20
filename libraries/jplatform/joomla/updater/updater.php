@@ -209,7 +209,7 @@ class JUpdater extends JAdapter
 		$updaterow = JTable::getInstance('update');
 		$updaterow->load($id);
 		$update = new JUpdate;
-		if ($update->loadFromXML($updaterow->detailsurl))
+		if ($update->loadFromXML($updaterow->details_url))
 		{
 			return $update->install();
 		}

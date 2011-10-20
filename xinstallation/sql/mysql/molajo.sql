@@ -707,7 +707,6 @@ CREATE TABLE  `#__updates` (
   `id` INT (11) NOT NULL auto_increment,
   `update_site_id` INT (11) DEFAULT 0,
   `extension_id` INT (11) DEFAULT 0,
-  `categoryid` INT (11) DEFAULT 0,
   `name` VARCHAR(100) DEFAULT ' ',
   `description` text NOT NULL,
   `element` VARCHAR(100) DEFAULT ' ',
@@ -716,7 +715,7 @@ CREATE TABLE  `#__updates` (
   `application_id` INT (11) DEFAULT 0,
   `version` VARCHAR(10) DEFAULT ' ',
   `data` text NOT NULL,
-  `detailsurl` text NOT NULL,
+  `details_url` text NOT NULL,
   PRIMARY KEY  (`id`)
 )  DEFAULT CHARSET=utf8;
 
