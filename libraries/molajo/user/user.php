@@ -271,7 +271,6 @@ class MolajoUser extends JObject
 		// Create the user table object
 		$table	= $this->getTable();
 		$table->load($this->id);
-
 		return $table->setLastVisit($timestamp);
 	}
 

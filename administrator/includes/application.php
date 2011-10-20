@@ -166,7 +166,6 @@ class MolajoAdministrator extends MolajoApplication
 			// Trigger the onAfterDispatch event.
 			MolajoPluginHelper::importPlugin('system');
 			$this->triggerEvent('onAfterDispatch');
-
 		}
 
 		// Uncaught exceptions.
