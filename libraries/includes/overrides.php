@@ -79,3 +79,26 @@ JFTP -
 https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f44217a8934644c5a0
 
 */
+ 
+class JExtension extends MolajoExtension {}
+abstract class JInstallerHelper extends MolajoInstallerHelper {}
+class JInstaller extends MolajoInstaller {}
+class JAdapterInstance extends MolajoAdapterInstance {}
+
+//class JInstallerComponent extends MolajoInstallerComponent {}
+//class JInstallerFile extends MolajoInstallerFile {}
+//class JInstallerLanguage extends MolajoInstallerLanguage {}
+//class JInstallerLibrary extends MolajoInstallerLibrary {}
+//class JInstallerModule extends MolajoInstallerModule {}
+//class JInstallerPackage extends MolajoInstallerPackage {}
+//class JInstallerPlugin extends MolajoInstallerPlugin {}
+//class JInstallerTemplate extends MolajoInstallerTemplate {}
+
+class JLibraryManifest extends MolajoLibraryManifest {}
+class JPackageManifest extends MolajoPackageManifest {}
+
+class JUpdate extends MolajoUpdate {}
+class JUpdateAdapter extends MolajoUpdateAdapter {}
+class JUpdater extends MolajoUpdater {}
+//class JUpdaterCollection extends MolajoUpdaterCollection {}
+//class JUpdaterExtension extends MolajoUpdaterExtension {}

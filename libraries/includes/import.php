@@ -139,6 +139,7 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/application.php', 'Mo
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/exception.php', 'MolajoException');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/pathway.php', 'MolajoPathway');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/utility.php', 'MolajoUtility');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/user.php', 'MolajoUser');
 
 if (file_exists(MOLAJO_PATH_BASE.'/includes/helper.php')) {
     require_once MOLAJO_PATH_BASE.'/includes/helper.php';
@@ -158,7 +159,6 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/menu.php', 'MolajoMen
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/router.php', 'MolajoRouter');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/toolbar.php', 'MolajoToolbarHelper');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/helpers/user.php', 'MolajoUserHelper');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/user/user.php', 'MolajoUser');
 
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/uri.php', 'JURI');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/environment/browser.php', 'JBrowser');
@@ -179,7 +179,6 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/date.php', 'JDate');
 /** Filesystem */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/file.php', 'JFile');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/folder.php', 'JFolder');
-
 $files = JFolder::files(JOOMLA_LIBRARY.'/filesystem', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'helper.php') {
@@ -390,3 +389,33 @@ foreach ($files as $file) {
 
 /** Replace */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/html/html.php', 'JHtml');
+
+/** Installer */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/adapter.php', 'MolajoAdapter');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/adapterinstance.php', 'MolajoAdapterInstance');
+
+/** Installer */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/extension.php', 'MolajoExtension');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/helper.php', 'MolajoInstallerHelper');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/installer.php', 'MolajoInstaller');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/librarymanifest.php', 'MolajoLibraryManifest');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/packagemanifest.php', 'MolajoPackageManifest');
+
+$files = JFolder::files(MOLAJO_LIBRARY.'/installer/installer/adapters', '\.php$', false, false);
+foreach ($files as $file) {
+    if (strpos($file, $includeFormat)) {
+        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/adapters'.'/'.$file, 'MolajoInstaller'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+}
+
+/** Updater */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/updater/update.php', 'MolajoUpdate');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/updater/updateadapter.php', 'MolajoUpdateadapter');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/updater/updater.php', 'MolajoUpdater');
+
+$files = JFolder::files(MOLAJO_LIBRARY.'/installer/updater/adapters', '\.php$', false, false);
+foreach ($files as $file) {
+    if (strpos($file, $includeFormat)) {
+        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/updater/adapters'.'/'.$file, 'MolajoUpdater'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+} 
