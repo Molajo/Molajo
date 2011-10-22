@@ -84,13 +84,15 @@ section {
 	margin: 0 0 28px;
 	padding: 0;
 	}
-.com_dashboard li {
+.com_dashboard li, .editor li {
 	float: left;
 	margin-right: 16px;
 	padding: 4px 6px; /* really should be on a, but I can't be bothered with details right now. :P */
 	border: 1px solid #ddd;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	-o-border-radius: 2px;
+	-ms-border-radius: 2px;
 	border-radius: 2px;
 	background: #ddd;
 	background: -moz-linear-gradient(100% 100% 90deg, #f4f4f4, #e4e4e4); 
@@ -102,11 +104,16 @@ section {
 	box-shadow: inset 1px 1px 1px rgba(255,255,255,1);
 	list-style-type: none;
 	}
+.editor li {
+	border: 0;
+	background: none;
+	box-shadow: none;
+}
 .com_dashboard li:hover {
 	background: -moz-linear-gradient(100% 100% 90deg, #f9f9f9, #e9e9e9); 
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f9f9f9), to(#e9e9e9));
 	}
-.com_dashboard li a {
+.com_dashboard li a, .editor li a {
 	float: left;
 	display: block;
 	text-decoration: none;
@@ -114,11 +121,11 @@ section {
 	border: 0;
 	background: url(images/iconic_16.png) no-repeat top left transparent;
 }
-.com_dashboard li a:hover {
+.com_dashboard li a:hover, .editor li a:hover {
 	background: url(images/iconic_16_7ec1e0.png) no-repeat top left transparent;
 	color: #222;
 }
-.com_dashboard li a span {
+.com_dashboard li a span, .editor li a span {
 	margin: 0 0 0 22px;
 	padding: 8px 0;
 	}
@@ -149,10 +156,10 @@ section {
 .com_dashboard li a.edit {
 	background-position: 0 -816px;
 	}
-.com_dashboard li a.feature {
+.editor li a.feature {
 	background-position: 0 -432px;
 	}
-.com_dashboard li a.sticky {
+.editor li a.sticky {
 	background-position: 0 -864px;
 	}
 .com_dashboard li a.archive {
@@ -167,10 +174,10 @@ section {
 .com_dashboard li a.trash {
 	background-position: 0 -1056px;
 	}
-.com_dashboard li a.publish {
+.editor li a.publish {
 	background-position: 0 -1008px;
 	}
-.com_dashboard li a.unpublish {
+.editor li a.unpublish {
 	background-position: 0 -672px;
 	}
 	
