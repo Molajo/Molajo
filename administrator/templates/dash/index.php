@@ -10,7 +10,6 @@
 		<script type="text/javascript" src="js/scripts.js"></script>
 	</head>
 	<body>
-		
 		<!-- Accordion -->
 	<div class="container">
 		<header>
@@ -18,44 +17,42 @@
 		</header>
 		<nav id="launchpad">
 			<ul class="menu_main">
-				<li><a href="#" class="icon_configure"></a></li>
-				<li><a href="#" class="icon_access"></a></li>
-				<li><a href="#" class="icon_create"></a></li>
-				<li><a href="#" class="icon_build"></a></li>
+				<li><a href="?config" class="icon_configure"></a></li>
+				<li><a href="?access" class="icon_access"></a></li>
+				<li><a href="?create" class="icon_create"></a></li>
+				<li><a href="?build" class="icon_build"></a></li>
 				<li><a href="#" class="icon_search"></a></li>
 			</ul>
-			<!-- TODO: Get rid of the jUI icons, possibly add east facing arrowhead on hover/active -->
-			<div id="accordion" class="menu_sub">
-				<div>
-					<h2><a href="?dash">Articles</a></h2>
-					<ul>
-						<li><a href="?edit">Add</a></li>
-						<li><a href="?edit">Edit</a></li>
-						<li><a href="?list">Whatever</a></li>
-					</ul>
-				</div>
-				<div>
-					<h2><a href="?dash">Media</a></h2>
-					<ul>
-						<li><a href="?edit">Add</a></li>
-						<li><a href="?edit">Edit</a></li>
-						<li><a href="?list">Etcetera</a></li>
-					</ul>
-				</div>
-				<div>
-					<h2><a href="?dash">Other Com</a></h2>
-					<ul>
-						<li><a href="?edit">Add</a></li>
-						<li><a href="?edit">Edit</a></li>
-						<li><a href="?list">Etc</a></li>
-					</ul>
-				</div>
-			</div>
+			<?php
+				if(isset($_GET['config'])){
+					include('includes/lp_item.html');
+				}else if(isset($_GET['access'])){
+					include('includes/lp_item.html');
+				}else if(isset($_GET['create'])){
+					include('includes/lp_item.html');
+				}else if(isset($_GET['build'])){
+					include('includes/lp_item.html');
+				}else if(isset($_GET['edit'])){
+					include('includes/lp_item.html');
+				}else if(isset($_GET['list'])){
+					include('includes/lp_item.html');
+				} else {
+					include('includes/lp_item.html');
+				}
+			?>
 		</nav>
 		<section>
 			<div id="">
 				<?php
-					if(isset($_GET['edit'])){
+					if(isset($_GET['config'])){
+						include('includes/config.html');
+					}else if(isset($_GET['access'])){
+						include('includes/access.html');
+					}else if(isset($_GET['create'])){
+						include('includes/create.html');
+					}else if(isset($_GET['build'])){
+						include('includes/build.html');
+					}else if(isset($_GET['edit'])){
 						include('includes/edit.html');
 					}else if(isset($_GET['list'])){
 						include('includes/list.html');
