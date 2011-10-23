@@ -37,6 +37,11 @@ require_once LIBRARIES.'/includes/molajo.php';
 require_once LIBRARIES.'/includes/other.php';
 require_once LIBRARIES.'/includes/overrides.php';
 
+require LIBRARIES.'/Doctrine/Common/ClassLoader.php';
+$classLoader = new \Doctrine\Common\ClassLoader('Doctrine');
+var_dump($classLoader);
+$classLoader->register();
+
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
