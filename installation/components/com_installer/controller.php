@@ -59,11 +59,15 @@ class InstallerController extends MolajoController
 
         /** check for configuration.php file - if exists redirect to error */
 
+        $model = $this->getModel('display');
+
         /** filter all form fields - place into session objects */
 
         /** edit for data completeness -- redirect to appropriate page for errors */
 
         /** create database (base install + admin user) */
+        $config = array();
+        $model->install($config);
 
         /** populate sample data, if selected */
 
