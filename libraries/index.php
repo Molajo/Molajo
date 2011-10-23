@@ -67,7 +67,7 @@ JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
  */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
-die;
+//die;
 /**
  *  Display
  */
