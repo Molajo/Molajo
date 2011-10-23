@@ -59,23 +59,32 @@ class InstallerController extends MolajoController
 
         /** check for configuration.php file - if exists redirect to error */
 
-        $model = $this->getModel('display');
+        $model = $this->getModel('database');
+        $config = $this->getModel('database')->getSetup();
 
         /** filter all form fields - place into session objects */
 
         /** edit for data completeness -- redirect to appropriate page for errors */
 
-        /** create database (base install + admin user) */
-        $config = array();
-        $model->install($config);
+        /** save configuration file (display FTP page with config file if necessary) */
+        if(!$this->getModel('configuration')->setup($config)) {
+            // Trow error
+        }
 
+
+        /** create database (base install + admin user) */
         /** populate sample data, if selected */
+        if(!$model->install($config)) {
+            // Trow error
+        }
+
 
         /** install site and admin language files (must be connected to the Internet - what to do if not?) */
+        // This needs to be decided in step 1, just resort to default (en-UK?) that must be shipped with installer
 
         /** save configuration file (display FTP page with config file if necessary) */
 
         /** success - redirect to administrator */
-
+        break;
     }
 }

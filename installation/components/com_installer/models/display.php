@@ -142,18 +142,41 @@ class InstallerModelDisplay extends MolajoModelDummy
                 'name' => '',
                 'admin_email' => '',
                 'admin_password' => '',
-                'hostname' => 'localhost',
+                'db_host' => 'localhost',
                 'db_scheme' => '',
                 'db_username' => '',
                 'db_password' => '',
                 'db_prefix' => 'jos_',
                 'db_type' => 'pdo_mysql',
                 'remove_tables' => false,
-                'sample_data' => 'none'
+                'sample_data' => 0,
+                'ftp_host' => '127.0.0.1'
             );
         }
 
         $this->getFormFields();
+    }
+
+    public function install($config=array())
+    {
+		// Get the $config array as a JObject for easier handling.
+		$config = JArrayHelper::toObject($config, 'JObject');
+
+        var_dump(get_class_methods($this));
+
+        // Remove or backup existing tables based on config
+        if($config->remove_tables) {
+
+        }
+        else {
+            $this->backupDatabase();
+        }
+
+        // Install sample data if required
+        if($config->sample_data) {
+
+        }
+
     }
 
 

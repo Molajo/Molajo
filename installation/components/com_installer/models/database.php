@@ -15,8 +15,17 @@ defined('MOLAJO') or die;
  * @subpackage  Installation
  * @since		1.0
  */
-class MolajoInstallationModelDatabase extends JModel
+class InstallerModelDatabase extends InstallerModelDisplay
 {
+    protected $_db = null;
+
+    public function __construct($properties = null)
+    {
+        parent::__construct($properties);
+
+        $this->_db = MolajoFactory::getDDbo();
+    }
+    
 	function initialise($options)
 	{
 		// Get the options as a JObject for easier handling.
@@ -290,44 +299,44 @@ class MolajoInstallationModelDatabase extends JModel
 		return true;
 	}
 
-	/**
-     * getDbo
-     *
-	 * Method to get a JDatabase object.
-	 *
-	 * @param	string	$driver		The database driver to use.
-	 * @param	string	$host		The hostname to connect on.
-	 * @param	string	$user		The user name to connect with.
-	 * @param	string	$password	The password to use for connection authentication.
-	 * @param	string	$database	The database to use.
-	 * @param	string	$prefix		The table prefix to use.
-	 * @param	boolean $select		True if the database should be selected.
-	 *
-	 * @return	mixed	JDatabase object on success, JException on error.
-	 * @since	1.0
-	 */
-	public function & getDbo($driver, $host, $user, $password, $database, $prefix, $select = true)
-	{
-		static $db;
-
-		if (!$db) {
-			// Build the connection options array.
-			$options = array (
-				'driver' => $driver,
-				'host' => $host,
-				'user' => $user,
-				'password' => $password,
-				'database' => $database,
-				'prefix' => $prefix,
-				'select' => $select
-			);
-
-			// Get a database object.
-			$db = JDatabase::getInstance($options);
-		}
-
-		return $db;
-	}
+//	/**
+//     * getDbo
+//     *
+//	 * Method to get a JDatabase object.
+//	 *
+//	 * @param	string	$driver		The database driver to use.
+//	 * @param	string	$host		The hostname to connect on.
+//	 * @param	string	$user		The user name to connect with.
+//	 * @param	string	$password	The password to use for connection authentication.
+//	 * @param	string	$database	The database to use.
+//	 * @param	string	$prefix		The table prefix to use.
+//	 * @param	boolean $select		True if the database should be selected.
+//	 *
+//	 * @return	mixed	JDatabase object on success, JException on error.
+//	 * @since	1.0
+//	 */
+//	public function & getDbo($driver, $host, $user, $password, $database, $prefix, $select = true)
+//	{
+//		static $db;
+//
+//		if (!$db) {
+//			// Build the connection options array.
+//			$options = array (
+//				'driver' => $driver,
+//				'host' => $host,
+//				'user' => $user,
+//				'password' => $password,
+//				'database' => $database,
+//				'prefix' => $prefix,
+//				'select' => $select
+//			);
+//
+//			// Get a database object.
+//			$db = JDatabase::getInstance($options);
+//		}
+//
+//		return $db;
+//	}
 
 	/**
 	 * Method to backup all tables in a database with a given prefix.
@@ -339,8 +348,14 @@ class MolajoInstallationModelDatabase extends JModel
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	public function backupDatabase(& $db, $name, $prefix)
+	public function backupDatabase()
 	{
+        $db   = MolajoFactory::getDbo();
+        $conf = MolajoFactory::getConfig();
+
+        $prefix	  = $conf->get('dbprefix');
+        $database = $conf->get('db');
+
 		// Initialise variables.
 		$return = true;
 		$backup = 'bak_' . $prefix;
@@ -348,14 +363,16 @@ class MolajoInstallationModelDatabase extends JModel
 		// Get the tables in the database.
 		$db->setQuery(
 			'SHOW TABLES' .
-			' FROM '.$db->nameQuote($name)
+			' FROM '.$db->nameQuote($database)
 		);
+
 		if ($tables = $db->loadResultArray()) {
 			foreach ($tables as $table)
 			{
 				// If the table uses the given prefix, back it up.
 				if (strpos($table, $prefix) === 0) {
 					// Backup table name.
+//                    $backupTable = str_replace($prefix, $backup, $table);
 					$backupTable = str_replace($prefix, $backup, $table);
 
 					// Drop the backup table.

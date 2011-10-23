@@ -21,7 +21,7 @@ var_dump($this->setup);
         <input type="hidden" name="name"           value="<?php echo $this->setup['name'] ?>">
         <input type="hidden" name="admin_email"    value="<?php echo $this->setup['admin_email'] ?>">
         <input type="hidden" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>">
-        <input type="hidden" name="hostname"       value="<?php echo $this->setup['hostname'] ?>">
+        <input type="hidden" name="db_host"       value="<?php echo $this->setup['hostname'] ?>">
         <input type="hidden" name="db_scheme"      value="<?php echo $this->setup['db_scheme'] ?>">
         <input type="hidden" name="db_username"    value="<?php echo $this->setup['db_username'] ?>">
         <input type="hidden" name="db_password"    value="<?php echo $this->setup['db_password'] ?>">
@@ -34,7 +34,7 @@ var_dump($this->setup);
             <li>
                 <span class="inner-wrap">
                     <label for="hostname" class="inlined"><?php echo MolajoText::_('Host name') ?></label>
-                    <input type="text" class="input-text" required="required" id="hostname" name="hostname" placeholder="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
+                    <input type="text" class="input-text" required="required" id="hostname" name="db_host" placeholder="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
                     <span class="note"><?php echo MolajoText::_('This is usually <b>localhost</b>.') ?></span>
                 </span>
             </li>
@@ -79,7 +79,7 @@ var_dump($this->setup);
             <li>
                 <span class="label"><?php echo MolajoText::_('Sample Data') ?></span>
                 <label class="radio left<?php echo $this->setup['sample_data']=='none'?' label-selected':''; ?>" for="none">
-                    <input name="sample_data" id="none" value="none" type="radio"<?php echo $this->setup['sample_data']=='none'?' checked="checked"':''; ?> /><?php echo MolajoText::_('None') ?></label>
+                    <input name="sample_data" id="none" value="0" type="radio"<?php echo $this->setup['sample_data']=='none'?' checked="checked"':''; ?> /><?php echo MolajoText::_('None') ?></label>
                 <?php $i=1; foreach($this->mock_data AS $mock_data): ?>
                 <?php
                     $class = 'radio';

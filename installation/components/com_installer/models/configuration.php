@@ -14,27 +14,29 @@ defined('MOLAJO') or die;
  * @package		Joomla.Installation
  * @since		1.6
  */
-class MolajoInstallationModelConfiguration extends JModel
+class InstallerModelConfiguration extends MolajoModelDummy
 {
 	/**
      * setup
      *
 	 * @return boolean
 	 */
-	public function setup($options)
+	public function setup($config)
 	{
-		// Get the options as a JObject for easier handling.
-		$options = JArrayHelper::toObject($options, 'JObject');
+		// Get the $config array as a JObject for easier handling.
+		$config = JArrayHelper::toObject($config, 'JObject');
 
 		// Attempt to create the root user.
-		if (!$this->_createConfiguration($options)) {
+		if (!$this->_createConfiguration($config)) {
 			return false;
 		}
 
 		// Attempt to create the root user.
-		if (!$this->_createRootUser($options)) {
+        /*
+		if (!$this->_createRootUser($config)) {
 			return false;
 		}
+        */
 
 		return true;
 	}
@@ -42,10 +44,10 @@ class MolajoInstallationModelConfiguration extends JModel
     /**
      * _createConfiguration
      *
-     * @param $options
+     * @param $config
      * @return bool
      */
-	function _createConfiguration($options)
+	function _createConfiguration($config)
 	{
 		// Create a new registry to build the configuration options.
 		$registry = new JRegistry();
@@ -53,7 +55,7 @@ class MolajoInstallationModelConfiguration extends JModel
 		/* Site Settings */
 		$registry->set('offline', 0);
 		$registry->set('offline_message', MolajoText::_('INSTL_STD_OFFLINE_MSG'));
-		$registry->set('sitename', $options->site_name);
+		$registry->set('sitename', $config->sitename);
 		$registry->set('editor', 'none');
 		$registry->set('list_limit', 20);
 		$registry->set('access', 1);
@@ -63,12 +65,12 @@ class MolajoInstallationModelConfiguration extends JModel
 		$registry->set('debug_lang', 0);
 
 		/* Database Settings */
-		$registry->set('dbtype', $options->db_type);
-		$registry->set('host', $options->db_host);
-		$registry->set('user', $options->db_user);
-		$registry->set('password', $options->db_pass);
-		$registry->set('db', $options->db_name);
-		$registry->set('dbprefix', $options->db_prefix);
+		$registry->set('dbtype', $config->db_type);
+		$registry->set('host', $config->db_host);
+		$registry->set('user', $config->db_username);
+		$registry->set('password', $config->db_password);
+		$registry->set('db', $config->db_scheme);
+		$registry->set('dbprefix', $config->db_prefix);
 
 		/* Server Settings */
 		$registry->set('live_site', '');
@@ -76,12 +78,12 @@ class MolajoInstallationModelConfiguration extends JModel
 		$registry->set('gzip', 0);
 		$registry->set('error_reporting', -1);
 		$registry->set('helpurl', 'http://help.molajo.org/');
-		$registry->set('ftp_host', $options->ftp_host);
-		$registry->set('ftp_port', $options->ftp_port);
-		$registry->set('ftp_user', $options->ftp_save ? $options->ftp_user : '');
-		$registry->set('ftp_pass', $options->ftp_save ? $options->ftp_pass : '');
-		$registry->set('ftp_root', $options->ftp_save ? $options->ftp_root : '');
-		$registry->set('ftp_enable', $options->ftp_enable);
+		$registry->set('ftp_host', $config->ftp_host);
+		$registry->set('ftp_port', $config->ftp_port);
+		$registry->set('ftp_user', $config->ftp_save ? $config->ftp_user : '');
+		$registry->set('ftp_pass', $config->ftp_save ? $config->ftp_pass : '');
+		$registry->set('ftp_root', $config->ftp_save ? $config->ftp_root : '');
+		$registry->set('ftp_enable', $config->ftp_enable);
 
 		/* Locale Settings */
 		$registry->set('offset', 'UTC');
@@ -89,8 +91,8 @@ class MolajoInstallationModelConfiguration extends JModel
 
 		/* Mail Settings */
 		$registry->set('mailer', 'mail');
-		$registry->set('mailfrom', $options->admin_email);
-		$registry->set('fromname', $options->site_name);
+		$registry->set('mailfrom', $config->admin_email);
+		$registry->set('fromname', $config->sitename);
 		$registry->set('sendmail', '/usr/sbin/sendmail');
 		$registry->set('smtpauth', 0);
 		$registry->set('smtpuser', '');
@@ -105,8 +107,8 @@ class MolajoInstallationModelConfiguration extends JModel
 		$registry->set('cachetime', 15);
 
 		/* Meta Settings */
-		$registry->set('MetaDesc', $options->site_metadesc);
-		$registry->set('MetaKeys', $options->site_metakeys);
+		$registry->set('MetaDesc', $config->site_metadesc);
+		$registry->set('MetaKeys', $config->site_metakeys);
 		$registry->set('MetaAuthor', 1);
 
 		/* SEO Settings */
@@ -142,6 +144,7 @@ class MolajoInstallationModelConfiguration extends JModel
 		 * If the file exists but isn't writable OR if the file doesn't exist and the parent directory
 		 * is not writable we need to use FTP
 		 */
+        /*
 		$useFTP = false;
 		if ((file_exists($path) && !is_writable($path))
                 || (!file_exists($path) && !is_writable(dirname($path).'/'))) {
@@ -154,16 +157,16 @@ class MolajoInstallationModelConfiguration extends JModel
 		}
 
 		// Enable/Disable override
-		if (!isset($options->ftpEnable) || ($options->ftpEnable != 1)) {
+		if (!isset($config->ftpEnable) || ($config->ftpEnable != 1)) {
 			$useFTP = false;
 		}
 
 		if ($useFTP == true) {
-			$ftp = JFTP::getInstance($options->ftp_host, $options->ftp_port);
-			$ftp->login($options->ftp_user, $options->ftp_pass);
+			$ftp = JFTP::getInstance($config->ftp_host, $config->ftp_port);
+			$ftp->login($config->ftp_user, $config->ftp_pass);
 
 			// Translate path for the FTP account
-			$file = JPath::clean(str_replace(MOLAJO_PATH_CONFIGURATION, $options->ftp_root, $path), '/');
+			$file = JPath::clean(str_replace(MOLAJO_PATH_CONFIGURATION, $config->ftp_root, $path), '/');
 
 			// Use FTP write buffer to file
 			if (!$ftp->write($file, $buffer)) {
@@ -184,6 +187,7 @@ class MolajoInstallationModelConfiguration extends JModel
 				$session->set('setup.config', $buffer);
 			}
 		}
+        */
 
 		return true;
 	}
@@ -191,13 +195,13 @@ class MolajoInstallationModelConfiguration extends JModel
     /**
      * _createRootUser
      *
-     * @param $options
+     * @param $config
      * @return bool
      */
-	function _createRootUser($options)
+	function _createRootUser($config)
 	{
 		// Get a database object.
-		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+		$db = MolajoInstallationHelperDatabase::getDBO($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
 
 		// Check for errors.
 		if (JError::isError($db)) {
@@ -213,7 +217,7 @@ class MolajoInstallationModelConfiguration extends JModel
 
 		// Create random salt/password for the admin user
 		$salt = MolajoUserHelper::genRandomPassword(32);
-		$crypt = MolajoUserHelper::getCryptedPassword($options->admin_password, $salt);
+		$crypt = MolajoUserHelper::getCryptedPassword($config->admin_password, $salt);
 		$cryptpass = $crypt.':'.$salt;
 
 		// create the admin user
@@ -225,8 +229,8 @@ class MolajoInstallationModelConfiguration extends JModel
 		$query	= 'REPLACE INTO #__users SET'
 				. ' id = '.$randomID
 				. ', name = '.$db->quote('Administrator')
-				. ', username = '.$db->quote($options->admin_user)
-				. ', email = '.$db->quote($options->admin_email)
+				. ', username = '.$db->quote($config->admin_user)
+				. ', email = '.$db->quote($config->admin_email)
 				. ', password = '.$db->quote($cryptpass)
 				. ', block = 0'
 				. ', sendEmail = 1'
@@ -296,7 +300,7 @@ class MolajoInstallationModelConfiguration extends JModel
 			return false;
 		}
 
-        MolajoInstallationModelConfiguration::createPermissions($options);
+        MolajoInstallationModelConfiguration::createPermissions($config);
 		return true;
 	}
 
@@ -305,12 +309,12 @@ class MolajoInstallationModelConfiguration extends JModel
      *
      * Populates the Permissions Tables
      * 
-     * @param $options
+     * @param $config
      * @return bool
      */
-    function createPermissions ($options)
+    function createPermissions ($config)
     {
-		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+		$db = MolajoInstallationHelperDatabase::getDBO($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
 
 		$query = 'INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
                   SELECT DISTINCT c.group_id as group_id, b.id as asset_id, 3 as `action_id`
