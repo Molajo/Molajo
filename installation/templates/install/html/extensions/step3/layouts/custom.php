@@ -64,9 +64,9 @@ var_dump($this->setup);
         <ol class="list-rest radios">
             <li>
                 <span class="label"><?php echo MolajoText::_('Database type') ?></span>
-                <?php $class = 'radio' ?>
                 <?php $i=0; foreach($this->db_types AS $db_type): ?>
                 <?php
+                    $class = 'radio';
                     if($i==0) $class = 'radio left';
                     if($i==count($this->db_types)-1) $class = 'radio right';
                     if($this->setup['db_type']==$db_type) $class .= ' label-selected';
@@ -78,11 +78,11 @@ var_dump($this->setup);
             </li>
             <li>
                 <span class="label"><?php echo MolajoText::_('Sample Data') ?></span>
-                <?php $class = 'radio' ?>
                 <label class="radio left<?php echo $this->setup['sample_data']=='none'?' label-selected':''; ?>" for="none">
                     <input name="sample_data" id="none" value="none" type="radio"<?php echo $this->setup['sample_data']=='none'?' checked="checked"':''; ?> /><?php echo MolajoText::_('None') ?></label>
                 <?php $i=1; foreach($this->mock_data AS $mock_data): ?>
                 <?php
+                    $class = 'radio';
                     if($i==count($this->mock_data)) $class = 'radio right';
                     if($this->setup['sample_data']==$mock_data) $class .= ' label-selected';
                     $checked = $this->setup['sample_data']==$mock_data?$checked = ' checked="checked"':'';
