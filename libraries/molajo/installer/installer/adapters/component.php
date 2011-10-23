@@ -100,7 +100,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) .
+					($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) .
 						'/components/' . $this->parent->extension->element
 				);
 		}
@@ -118,7 +118,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		}
 
 		$lang = MolajoFactory::getLanguage();
-		$source = $path ? $path : ($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/components/' . $extension;
+		$source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/components/' . $extension;
 
 		if ($this->manifest->administration->files)
 		{
@@ -142,9 +142,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 				$source = "$path/$folder";
 			}
 		}
-		$lang->load($extension . '.sys', $source, null, false, false) || $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, null, false, false)
+		$lang->load($extension . '.sys', $source, null, false, false) || $lang->load($extension . '.sys', MOLAJO_PATH_ADMINISTRATOR, null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-			|| $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false);
+			|| $lang->load($extension . '.sys', MOLAJO_PATH_ADMINISTRATOR, $lang->getDefault(), false, false);
 	}
 
 	/**
@@ -182,8 +182,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		$this->parent->set('message', JText::_((string) $this->manifest->description));
 
 		// Set the installation target paths
-		$this->parent->setPath('extension_site', JPath::clean(JPATH_SITE . '/components/' . $this->get('element')));
-		$this->parent->setPath('extension_administrator', JPath::clean(JPATH_ADMINISTRATOR . '/components/' . $this->get('element')));
+		$this->parent->setPath('extension_site', JPath::clean(MOLAJO_PATH_SITE . '/components/' . $this->get('element')));
+		$this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_PATH_ADMINISTRATOR . '/components/' . $this->get('element')));
 
 		// copy this as its used as a common base
 		$this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator'));
@@ -659,8 +659,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		}
 
 		// Set the installation target paths
-		$this->parent->setPath('extension_site', JPath::clean(JPATH_SITE . '/components/' . $this->get('element')));
-		$this->parent->setPath('extension_administrator', JPath::clean(JPATH_ADMINISTRATOR . '/components/' . $this->get('element')));
+		$this->parent->setPath('extension_site', JPath::clean(MOLAJO_PATH_SITE . '/components/' . $this->get('element')));
+		$this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_PATH_ADMINISTRATOR . '/components/' . $this->get('element')));
 		$this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
 		/**
@@ -1119,8 +1119,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		}
 
 		// Get the admin and site paths for the component
-		$this->parent->setPath('extension_administrator', JPath::clean(JPATH_ADMINISTRATOR . '/components/' . $row->element));
-		$this->parent->setPath('extension_site', JPath::clean(JPATH_SITE . '/components/' . $row->element));
+		$this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_PATH_ADMINISTRATOR . '/components/' . $row->element));
+		$this->parent->setPath('extension_site', JPath::clean(MOLAJO_PATH_SITE . '/components/' . $row->element));
 		$this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
 		/**
@@ -1168,7 +1168,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		$this->set('element', $element);
 
 		// Attempt to load the admin language file; might have uninstall strings
-		$this->loadLanguage(JPATH_ADMINISTRATOR . '/components/' . $element);
+		$this->loadLanguage(MOLAJO_PATH_ADMINISTRATOR . '/components/' . $element);
 
 		/**
 		 * ---------------------------------------------------------------------------------------------
@@ -1654,15 +1654,15 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 	public function discover()
 	{
 		$results = array();
-		$site_components = JFolder::folders(JPATH_SITE . '/components');
-		$admin_components = JFolder::folders(JPATH_ADMINISTRATOR . '/components');
+		$site_components = JFolder::folders(MOLAJO_PATH_SITE . '/components');
+		$admin_components = JFolder::folders(MOLAJO_PATH_ADMINISTRATOR . '/components');
 
 		foreach ($site_components as $component)
 		{
-			if (file_exists(JPATH_SITE . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'))
+			if (file_exists(MOLAJO_PATH_SITE . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'))
 			{
 				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-					JPATH_SITE . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'
+					MOLAJO_PATH_SITE . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'
 				);
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'component');
@@ -1677,10 +1677,10 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
 		foreach ($admin_components as $component)
 		{
-			if (file_exists(JPATH_ADMINISTRATOR . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'))
+			if (file_exists(MOLAJO_PATH_ADMINISTRATOR . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'))
 			{
 				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-					JPATH_ADMINISTRATOR . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'
+					MOLAJO_PATH_ADMINISTRATOR . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'
 				);
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'component');
@@ -1771,8 +1771,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		}
 
 		// Set the installation target paths
-		$this->parent->setPath('extension_site', JPath::clean(JPATH_SITE . '/components/' . $this->get('element')));
-		$this->parent->setPath('extension_administrator', JPath::clean(JPATH_ADMINISTRATOR . '/components/' . $this->get('element')));
+		$this->parent->setPath('extension_site', JPath::clean(MOLAJO_PATH_SITE . '/components/' . $this->get('element')));
+		$this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_PATH_ADMINISTRATOR . '/components/' . $this->get('element')));
 		$this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
 		/**

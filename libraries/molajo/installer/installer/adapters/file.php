@@ -35,9 +35,9 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 		$lang = MolajoFactory::getLanguage();
 		$source = $path;
 		$lang->load($extension . '.sys', $source, null, false, false)
-			|| $lang->load($extension . '.sys', JPATH_SITE, null, false, false)
+			|| $lang->load($extension . '.sys', MOLAJO_PATH_SITE, null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-			|| $lang->load($extension . '.sys', JPATH_SITE, $lang->getDefault(), false, false);
+			|| $lang->load($extension . '.sys', MOLAJO_PATH_SITE, $lang->getDefault(), false, false);
 	}
 
 	/**
@@ -91,7 +91,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 			}
 		}
 		// Set the file root path
-		$this->parent->setPath('extension_root', JPATH_ROOT);
+		$this->parent->setPath('extension_root', MOLAJO_PATH_ROOT);
 
 		/**
 		 * ---------------------------------------------------------------------------------------------
@@ -317,7 +317,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 		// Lastly, we will copy the manifest file to its appropriate place.
 		$manifest = array();
 		$manifest['src'] = $this->parent->getPath('manifest');
-		$manifest['dest'] = JPATH_MANIFESTS . '/files/' . basename($this->parent->getPath('manifest'));
+		$manifest['dest'] = MOLAJO_PATH_MANIFESTS . '/files/' . basename($this->parent->getPath('manifest'));
 		if (!$this->parent->copyFiles(array($manifest), true))
 		{
 			// Install failed, rollback changes
@@ -400,13 +400,13 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 		}
 
 		$retval = true;
-		$manifestFile = JPATH_MANIFESTS . '/files/' . $row->element . '.xml';
+		$manifestFile = MOLAJO_PATH_MANIFESTS . '/files/' . $row->element . '.xml';
 
 		// Because files may not have their own folders we cannot use the standard method of finding an installation manifest
 		if (file_exists($manifestFile))
 		{
 			// Set the plugin root path
-			$this->parent->setPath('extension_root', JPATH_ROOT); // . '/files/' . $manifest->filename);
+			$this->parent->setPath('extension_root', MOLAJO_PATH_ROOT); // . '/files/' . $manifest->filename);
 
 			$xml = MolajoFactory::getXML($manifestFile);
 
@@ -495,7 +495,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 
 			// Set root folder names
 			$packagePath = $this->parent->getPath('source');
-			$jRootPath = JPath::clean(JPATH_ROOT);
+			$jRootPath = JPath::clean(MOLAJO_PATH_ROOT);
 
 			// Loop through all elements and get list of files and folders
 			foreach ($xml->fileset->files as $eFiles)
@@ -505,11 +505,11 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 				// Create folder path
 				if (empty($target))
 				{
-					$targetFolder = JPATH_ROOT;
+					$targetFolder = MOLAJO_PATH_ROOT;
 				}
 				else
 				{
-					$targetFolder = JPATH_ROOT . '/' . $target;
+					$targetFolder = MOLAJO_PATH_ROOT . '/' . $target;
 				}
 
 				$folderList = array();
@@ -622,7 +622,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 
 		// Set root folder names
 		$packagePath = $this->parent->getPath('source');
-		$jRootPath = JPath::clean(JPATH_ROOT);
+		$jRootPath = JPath::clean(MOLAJO_PATH_ROOT);
 
 		// Loop through all elements and get list of files and folders
 		foreach ($this->manifest->fileset->files as $eFiles)
@@ -708,7 +708,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 	public function refreshManifestCache()
 	{
 		// Need to find to find where the XML file is since we don't store this normally
-		$manifestPath = JPATH_MANIFESTS . '/files/' . $this->parent->extension->element . '.xml';
+		$manifestPath = MOLAJO_PATH_MANIFESTS . '/files/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
 

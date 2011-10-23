@@ -44,7 +44,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/language/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/language/' . $this->parent->extension->element
 				);
 		}
 		$this->manifest = $this->parent->getManifest();
@@ -55,13 +55,13 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 		{
 			JError::raiseWarning(42, JText::_('JLIB_INSTALLER_ERROR_DEPRECATED_FORMAT'));
 			$element = $this->manifest->site->files;
-			if (!$this->_install('site', JPATH_SITE, 0, $element))
+			if (!$this->_install('site', MOLAJO_PATH_SITE, 0, $element))
 			{
 				return false;
 			}
 
 			$element = $this->manifest->administration->files;
-			if (!$this->_install('administrator', JPATH_ADMINISTRATOR, 1, $element))
+			if (!$this->_install('administrator', MOLAJO_PATH_ADMINISTRATOR, 1, $element))
 			{
 				return false;
 			}
@@ -88,7 +88,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 		{
 			// No client attribute was found so we assume the site as the client
 			$cname = 'site';
-			$basePath = JPATH_SITE;
+			$basePath = MOLAJO_PATH_SITE;
 			$clientId = 0;
 			$element = $this->manifest->files;
 
@@ -567,13 +567,13 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 	public function discover()
 	{
 		$results = array();
-		$site_languages = JFolder::folders(JPATH_SITE . '/language');
-		$admin_languages = JFolder::folders(JPATH_ADMINISTRATOR . '/language');
+		$site_languages = JFolder::folders(MOLAJO_PATH_SITE . '/language');
+		$admin_languages = JFolder::folders(MOLAJO_PATH_ADMINISTRATOR . '/language');
 		foreach ($site_languages as $language)
 		{
-			if (file_exists(JPATH_SITE . '/language/' . $language . '/' . $language . '.xml'))
+			if (file_exists(MOLAJO_PATH_SITE . '/language/' . $language . '/' . $language . '.xml'))
 			{
-				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/language/' . $language . '/' . $language . '.xml');
+				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_SITE . '/language/' . $language . '/' . $language . '.xml');
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'language');
 				$extension->set('application_id', 0);
@@ -586,9 +586,9 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 		}
 		foreach ($admin_languages as $language)
 		{
-			if (file_exists(JPATH_ADMINISTRATOR . '/language/' . $language . '/' . $language . '.xml'))
+			if (file_exists(MOLAJO_PATH_ADMINISTRATOR . '/language/' . $language . '/' . $language . '.xml'))
 			{
-				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_ADMINISTRATOR . '/language/' . $language . '/' . $language . '.xml');
+				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_ADMINISTRATOR . '/language/' . $language . '/' . $language . '.xml');
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'language');
 				$extension->set('application_id', 1);

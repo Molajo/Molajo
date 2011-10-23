@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Load Framework
+ * @subpackage  Load Joomla Framework
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -15,16 +15,6 @@ $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/path.php', 'JPath');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/file.php', 'JFile');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/folder.php', 'JFolder');
-$files = JFolder::files(JOOMLA_LIBRARY.'/filesystem', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'helper.php') {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/'.$file, 'JFilesystemHelper');
-    } elseif ($file == 'path.php' || $file == 'file.php' || $file == 'folder.php') {
-    } elseif ($file == 'stream.php') { // todo: amy figure out why stream won't load
-    } else {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
 
 /**
  *  Access - not used
@@ -138,6 +128,16 @@ foreach ($files as $file) {
 /**
  *  Filesystem (continued)
  */
+$files = JFolder::files(JOOMLA_LIBRARY.'/filesystem', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'helper.php') {
+        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/'.$file, 'JFilesystemHelper');
+    } elseif ($file == 'path.php' || $file == 'file.php' || $file == 'folder.php') {
+    } elseif ($file == 'stream.php') {
+    } else {
+        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+} 
 $files = JFolder::files(JOOMLA_LIBRARY.'/filesystem/archive', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/archive/'.$file, 'JArchive'.ucfirst(substr($file, 0, strpos($file, '.'))));

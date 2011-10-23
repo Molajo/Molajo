@@ -39,9 +39,9 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		$lang = MolajoFactory::getLanguage();
 		$source = $path ? $path : JPATH_PLATFORM . "/$name";
 		$lang->load($extension . '.sys', $source, null, false, false)
-			|| $lang->load($extension . '.sys', JPATH_SITE, null, false, false)
+			|| $lang->load($extension . '.sys', MOLAJO_PATH_SITE, null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-			|| $lang->load($extension . '.sys', JPATH_SITE, $lang->getDefault(), false, false);
+			|| $lang->load($extension . '.sys', MOLAJO_PATH_SITE, $lang->getDefault(), false, false);
 	}
 
 	/**
@@ -168,7 +168,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		// Lastly, we will copy the manifest file to its appropriate place.
 		$manifest = array();
 		$manifest['src'] = $this->parent->getPath('manifest');
-		$manifest['dest'] = JPATH_MANIFESTS . '/libraries/' . basename($this->parent->getPath('manifest'));
+		$manifest['dest'] = MOLAJO_PATH_MANIFESTS . '/libraries/' . basename($this->parent->getPath('manifest'));
 		if (!$this->parent->copyFiles(array($manifest), true))
 		{
 			// Install failed, rollback changes
@@ -243,7 +243,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 			return false;
 		}
 
-		$manifestFile = JPATH_MANIFESTS . '/libraries/' . $row->element . '.xml';
+		$manifestFile = MOLAJO_PATH_MANIFESTS . '/libraries/' . $row->element . '.xml';
 
 		// Because libraries may not have their own folders we cannot use the standard method of finding an installation manifest
 		if (file_exists($manifestFile))
@@ -316,10 +316,10 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 	public function discover()
 	{
 		$results = array();
-		$file_list = JFolder::files(JPATH_MANIFESTS . '/libraries', '\.xml$');
+		$file_list = JFolder::files(MOLAJO_PATH_MANIFESTS . '/libraries', '\.xml$');
 		foreach ($file_list as $file)
 		{
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_MANIFESTS . '/libraries/' . $file);
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_MANIFESTS . '/libraries/' . $file);
 			$file = JFile::stripExt($file);
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'library');
@@ -344,7 +344,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 	{
 		/* Libraries are a strange beast; they are actually references to files
 		 * There are two parts to a library which are disjunct in their locations
-		 * 1) The manifest file (stored in /JPATH_MANIFESTS/libraries)
+		 * 1) The manifest file (stored in /MOLAJO_PATH_MANIFESTS/libraries)
 		 * 2) The actual files (stored in /JPATH_PLATFORM/libraryname)
 		 * Thus installation of a library is the process of dumping files
 		 * in two different places. As such it is impossible to perform
@@ -353,7 +353,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		 * time they can be adequately removed.
 		 */
 
-		$manifestPath = JPATH_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
+		$manifestPath = MOLAJO_PATH_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
 		$manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -383,7 +383,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 	public function refreshManifestCache()
 	{
 		// Need to find to find where the XML file is since we don't store this normally
-		$manifestPath = JPATH_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
+		$manifestPath = MOLAJO_PATH_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
 

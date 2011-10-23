@@ -76,7 +76,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/modules/' . $this->parent->extension->element
 				);
 		}
 
@@ -102,7 +102,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			if ($extension)
 			{
 				$lang = MolajoFactory::getLanguage();
-				$source = $path ? $path : ($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $extension;
+				$source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/modules/' . $extension;
 				$folder = (string) $element->attributes()->folder;
 
 				if ($folder && file_exists("$path/$folder"))
@@ -112,9 +112,9 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
 				$client = (string) $this->manifest->attributes()->client;
 				$lang->load($extension . '.sys', $source, null, false, false)
-					|| $lang->load($extension . '.sys', constant('JPATH_' . strtoupper($client)), null, false, false)
+					|| $lang->load($extension . '.sys', constant('MOLAJO_PATH_' . strtoupper($client)), null, false, false)
 					|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-					|| $lang->load($extension . '.sys', constant('JPATH_' . strtoupper($client)), $lang->getDefault(), false, false);
+					|| $lang->load($extension . '.sys', constant('MOLAJO_PATH_' . strtoupper($client)), $lang->getDefault(), false, false);
 			}
 		}
 	}
@@ -174,7 +174,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 		{
 			// No client attribute was found so we assume the site as the client
 			$cname = 'site';
-			$basePath = JPATH_SITE;
+			$basePath = MOLAJO_PATH_SITE;
 			$clientId = 0;
 		}
 
@@ -570,14 +570,14 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 	public function discover()
 	{
 		$results = array();
-		$site_list = JFolder::folders(JPATH_SITE . '/modules');
-		$admin_list = JFolder::folders(JPATH_ADMINISTRATOR . '/modules');
+		$site_list = JFolder::folders(MOLAJO_PATH_SITE . '/modules');
+		$admin_list = JFolder::folders(MOLAJO_PATH_ADMINISTRATOR . '/modules');
 		$site_info = MolajoApplicationHelper::getApplicationInfo('site', true);
 		$admin_info = MolajoApplicationHelper::getApplicationInfo('administrator', true);
 
 		foreach ($site_list as $module)
 		{
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . "/modules/$module/$module.xml");
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_SITE . "/modules/$module/$module.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'module');
 			$extension->set('application_id', $site_info->id);
@@ -590,7 +590,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
 		foreach ($admin_list as $module)
 		{
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_ADMINISTRATOR . "/modules/$module/$module.xml");
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_ADMINISTRATOR . "/modules/$module/$module.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'module');
 			$extension->set('application_id', $admin_info->id);
@@ -732,7 +732,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 		$this->manifest = $this->parent->getManifest();
 
 		// Attempt to load the language file; might have uninstall strings
-		$this->loadLanguage(($row->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $element);
+		$this->loadLanguage(($row->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/modules/' . $element);
 
 		// If there is an manifest class file, let's load it
 		$this->scriptElement = $this->manifest->scriptfile;
