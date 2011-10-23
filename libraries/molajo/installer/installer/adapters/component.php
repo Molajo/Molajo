@@ -100,7 +100,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) .
+					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) .
 						'/components/' . $this->parent->extension->element
 				);
 		}
@@ -118,7 +118,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		}
 
 		$lang = MolajoFactory::getLanguage();
-		$source = $path ? $path : ($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/components/' . $extension;
+		$source = $path ? $path : ($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/components/' . $extension;
 
 		if ($this->manifest->administration->files)
 		{
@@ -528,7 +528,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		$row->set('enabled', 1);
 		$row->set('protected', 0);
 		$row->set('access', 0);
-		$row->set('client_id', 1);
+		$row->set('application_id', 1);
 		$row->set('params', $this->parent->getParams());
 		$row->set('manifest_cache', $this->parent->generateManifestCache());
 
@@ -543,7 +543,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
-		$uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'client_id' => '', 'folder' => ''));
+		$uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
 		if ($uid)
 		{
@@ -1019,7 +1019,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
-		$uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'client_id' => '', 'folder' => ''));
+		$uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
 		if ($uid)
 		{
@@ -1039,7 +1039,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 			$row->enabled = 1;
 			$row->protected = 0;
 			$row->access = 1;
-			$row->client_id = 1;
+			$row->application_id = 1;
 			$row->params = $this->parent->getParams();
 		}
 
@@ -1321,7 +1321,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
-		$uid = $update->find(array('element' => $row->element, 'type' => 'component', 'client_id' => '', 'folder' => ''));
+		$uid = $update->find(array('element' => $row->element, 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
 		if ($uid)
 		{
@@ -1385,7 +1385,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		$query->from('#__menu AS m');
 		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
 		$query->where('m.parent_id = 1');
-		$query->where("m.client_id = 1");
+		$query->where("m.application_id = 1");
 		$query->where('e.element = ' . $db->quote($option));
 
 		$db->setQuery($query);
@@ -1430,7 +1430,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		{
 			$data = array();
 			$data['menutype'] = 'main';
-			$data['client_id'] = 1;
+			$data['application_id'] = 1;
 			$data['title'] = (string) $menuElement;
 			$data['alias'] = (string) $menuElement;
 			$data['link'] = 'index.php?option=' . $option;
@@ -1459,7 +1459,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		{
 			$data = array();
 			$data['menutype'] = 'main';
-			$data['client_id'] = 1;
+			$data['application_id'] = 1;
 			$data['title'] = $option;
 			$data['alias'] = $option;
 			$data['link'] = 'index.php?option=' . $option;
@@ -1501,7 +1501,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		{
 			$data = array();
 			$data['menutype'] = 'main';
-			$data['client_id'] = 1;
+			$data['application_id'] = 1;
 			$data['title'] = (string) $child;
 			$data['alias'] = (string) $child;
 			$data['type'] = 'component';
@@ -1592,7 +1592,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 		$query = $db->getQuery(true);
 		$query->select('id');
 		$query->from('#__menu');
-		$query->where($query->qn('client_id') . ' = 1');
+		$query->where($query->qn('application_id') . ' = 1');
 		$query->where($query->qn('component_id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
@@ -1666,7 +1666,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 				);
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'component');
-				$extension->set('client_id', 0);
+				$extension->set('application_id', 0);
 				$extension->set('element', $component);
 				$extension->set('name', $component);
 				$extension->set('state', -1);
@@ -1684,7 +1684,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 				);
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'component');
-				$extension->set('client_id', 1);
+				$extension->set('application_id', 1);
 				$extension->set('element', $component);
 				$extension->set('name', $component);
 				$extension->set('state', -1);
@@ -1705,7 +1705,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 	public function discover_install()
 	{
 		// Need to find to find where the XML file is since we don't store this normally
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$short_element = str_replace('com_', '', $this->parent->extension->element);
 		$manifestPath = $client->path . '/components/' . $this->parent->extension->element . '/' . $short_element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
@@ -1948,7 +1948,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
-		$uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'client_id' => '', 'folder' => ''));
+		$uid = $update->find(array('element' => $this->get('element'), 'type' => 'component', 'application_id' => '', 'folder' => ''));
 
 		if ($uid)
 		{
@@ -1985,7 +1985,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 	public function refreshManifestCache()
 	{
 		// Need to find to find where the XML file is since we don't store this normally
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$short_element = str_replace('com_', '', $this->parent->extension->element);
 		$manifestPath = $client->path . '/components/' . $this->parent->extension->element . '/' . $short_element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);

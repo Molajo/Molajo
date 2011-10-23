@@ -152,7 +152,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		$row->enabled = 1;
 		$row->protected = 0;
 		$row->access = 1;
-		$row->client_id = 0;
+		$row->application_id = 0;
 		$row->params = $this->parent->getParams();
 		$row->custom_data = ''; // custom data
 		$row->manifest_cache = $this->parent->generateManifestCache();
@@ -323,7 +323,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 			$file = JFile::stripExt($file);
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'library');
-			$extension->set('client_id', 0);
+			$extension->set('application_id', 0);
 			$extension->set('element', $file);
 			$extension->set('name', $file);
 			$extension->set('state', -1);

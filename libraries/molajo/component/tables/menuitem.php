@@ -85,7 +85,7 @@ class MolajoTableMenuitem extends MolajoTableNested
 		}
 
 		// Make the alias URL safe.
-		$this->alias = JApplication::stringURLSafe($this->alias);
+		$this->alias = MolajoApplication::stringURLSafe($this->alias);
 		if (trim(str_replace('-', '', $this->alias)) == '') {
 			$this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
 		}

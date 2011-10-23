@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Updater
  * @since       11.1
  */
-class MolajoUpdateadapter extends JAdapterInstance
+class MolajoUpdateadapter extends MolajoAdapterInstance
 {
 	/**
 	 * @var    string

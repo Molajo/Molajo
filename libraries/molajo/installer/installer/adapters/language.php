@@ -44,7 +44,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/language/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/language/' . $this->parent->extension->element
 				);
 		}
 		$this->manifest = $this->parent->getManifest();
@@ -269,7 +269,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 		$row->set('enabled', 1);
 		$row->set('protected', 0);
 		$row->set('access', 0);
-		$row->set('client_id', $clientId);
+		$row->set('application_id', $clientId);
 		$row->set('params', $this->parent->getParams());
 		$row->set('manifest_cache', $this->parent->generateManifestCache());
 
@@ -282,7 +282,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
-		$uid = $update->find(array('element' => $this->get('tag'), 'type' => 'language', 'client_id' => '', 'folder' => ''));
+		$uid = $update->find(array('element' => $this->get('tag'), 'type' => 'language', 'application_id' => '', 'folder' => ''));
 		if ($uid)
 		{
 			$update->delete($uid);
@@ -392,7 +392,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
-		$uid = $update->find(array('element' => $this->get('tag'), 'type' => 'language', 'client_id' => $clientId));
+		$uid = $update->find(array('element' => $this->get('tag'), 'type' => 'language', 'application_id' => $clientId));
 		if ($uid)
 		{
 			$update->delete($uid);
@@ -400,7 +400,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 
 		// Update an entry to the extension table
 		$row = MolajoTable::getInstance('extension');
-		$eid = $row->find(array('element' => strtolower($this->get('tag')), 'type' => 'language', 'client_id' => $clientId));
+		$eid = $row->find(array('element' => strtolower($this->get('tag')), 'type' => 'language', 'application_id' => $clientId));
 		if ($eid)
 		{
 			$row->load($eid);
@@ -412,7 +412,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 			$row->set('enabled', 1);
 			$row->set('protected', 0);
 			$row->set('access', 0);
-			$row->set('client_id', $clientId);
+			$row->set('application_id', $clientId);
 			$row->set('params', $this->parent->getParams());
 		}
 		$row->set('name', $this->get('name'));
@@ -459,7 +459,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 		$extension = MolajoTable::getInstance('extension');
 		$extension->load($eid);
 		// Grab a copy of the client details
-		$client = MolajoApplicationHelper::getApplicationInfo($extension->get('client_id'));
+		$client = MolajoApplicationHelper::getApplicationInfo($extension->get('application_id'));
 
 		// Check the element isn't blank to prevent nuking the languages directory...just in case
 		$element = $extension->get('element');
@@ -576,7 +576,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/language/' . $language . '/' . $language . '.xml');
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'language');
-				$extension->set('client_id', 0);
+				$extension->set('application_id', 0);
 				$extension->set('element', $language);
 				$extension->set('name', $language);
 				$extension->set('state', -1);
@@ -591,7 +591,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_ADMINISTRATOR . '/language/' . $language . '/' . $language . '.xml');
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'language');
-				$extension->set('client_id', 1);
+				$extension->set('application_id', 1);
 				$extension->set('element', $language);
 				$extension->set('name', $language);
 				$extension->set('state', -1);
@@ -613,7 +613,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 	public function discover_install()
 	{
 		// Need to find to find where the XML file is since we don't store this normally
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$short_element = $this->parent->extension->element;
 		$manifestPath = $client->path . '/language/' . $short_element . '/' . $short_element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
@@ -647,7 +647,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 	 */
 	public function refreshManifestCache()
 	{
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$manifestPath = $client->path . '/language/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);

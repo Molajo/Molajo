@@ -8,7 +8,6 @@
  */
 defined('MOLAJO') or die;
 
-
 /**
  * Class to manage the site application pathway.
  *

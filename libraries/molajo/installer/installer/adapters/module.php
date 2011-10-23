@@ -76,7 +76,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $this->parent->extension->element
 				);
 		}
 
@@ -102,7 +102,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			if ($extension)
 			{
 				$lang = MolajoFactory::getLanguage();
-				$source = $path ? $path : ($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $extension;
+				$source = $path ? $path : ($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $extension;
 				$folder = (string) $element->attributes()->folder;
 
 				if ($folder && file_exists("$path/$folder"))
@@ -210,7 +210,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 		// If it isn't, add an entry to extensions
 		$query = $db->getQuery(true);
 		$query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
-		$query->where($query->qn('element') . ' = ' . $query->q($element))->where($query->qn('client_id') . ' = ' . (int) $clientId);
+		$query->where($query->qn('element') . ' = ' . $query->q($element))->where($query->qn('application_id') . ' = ' . (int) $clientId);
 		$db->setQuery($query);
 
 		try
@@ -414,7 +414,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			$row->set('enabled', 1);
 			$row->set('protected', 0);
 			$row->set('access', $clientId == 1 ? 2 : 0);
-			$row->set('client_id', $clientId);
+			$row->set('application_id', $clientId);
 			$row->set('params', $this->parent->getParams());
 			$row->set('custom_data', ''); // custom data
 			$row->set('manifest_cache', $this->parent->generateManifestCache());
@@ -441,7 +441,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			$module->set('module', $this->get('element'));
 			$module->set('access', '1');
 			$module->set('showtitle', '1');
-			$module->set('client_id', $clientId);
+			$module->set('application_id', $clientId);
 			$module->set('language', '*');
 
 			$module->store();
@@ -580,7 +580,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . "/modules/$module/$module.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'module');
-			$extension->set('client_id', $site_info->id);
+			$extension->set('application_id', $site_info->id);
 			$extension->set('element', $module);
 			$extension->set('name', $module);
 			$extension->set('state', -1);
@@ -593,7 +593,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_ADMINISTRATOR . "/modules/$module/$module.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'module');
-			$extension->set('client_id', $admin_info->id);
+			$extension->set('application_id', $admin_info->id);
 			$extension->set('element', $module);
 			$extension->set('name', $module);
 			$extension->set('state', -1);
@@ -615,7 +615,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 	{
 		// Modules are like templates, and are one of the easiest
 		// If its not in the extensions table we just add it
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$description = (string) $this->parent->manifest->description;
@@ -658,7 +658,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 	 */
 	public function refreshManifestCache()
 	{
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
@@ -715,11 +715,11 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 		// Get the extension root path
 		jimport('joomla.application.helper');
 		$element = $row->element;
-		$client = MolajoApplicationHelper::getApplicationInfo($row->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($row->application_id);
 
 		if ($client === false)
 		{
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ERROR_MOD_UNINSTALL_UNKNOWN_CLIENT', $row->client_id));
+			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ERROR_MOD_UNINSTALL_UNKNOWN_CLIENT', $row->application_id));
 			return false;
 		}
 		$this->parent->setPath('extension_root', $client->path . '/modules/' . $element);
@@ -732,7 +732,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 		$this->manifest = $this->parent->getManifest();
 
 		// Attempt to load the language file; might have uninstall strings
-		$this->loadLanguage(($row->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $element);
+		$this->loadLanguage(($row->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/modules/' . $element);
 
 		// If there is an manifest class file, let's load it
 		$this->scriptElement = $this->manifest->scriptfile;
@@ -807,13 +807,13 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
 		// Remove other files
 		$this->parent->removeFiles($this->manifest->media);
-		$this->parent->removeFiles($this->manifest->languages, $row->client_id);
+		$this->parent->removeFiles($this->manifest->languages, $row->application_id);
 
 		// Let's delete all the module copies for the type we are uninstalling
 		$query = $db->getQuery(true);
 		$query->select($query->qn('id'))->from($query->qn('#__modules'));
 		$query->where($query->qn('module') . ' = ' . $query->q($row->element));
-		$query->where($query->qn('client_id') . ' = ' . (int) $row->client_id);
+		$query->where($query->qn('application_id') . ' = ' . (int) $row->application_id);
 		$db->setQuery($query);
 
 		try
@@ -862,7 +862,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
 		// Now we will no longer need the module object, so let's delete it and free up memory
 		$row->delete($row->extension_id);
-		$query = 'DELETE FROM `#__modules` WHERE module = ' . $db->Quote($row->element) . ' AND client_id = ' . $row->client_id;
+		$query = 'DELETE FROM `#__modules` WHERE module = ' . $db->Quote($row->element) . ' AND application_id = ' . $row->application_id;
 		$db->setQuery($query);
 
 		try

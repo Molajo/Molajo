@@ -96,7 +96,7 @@ class MolajoTableContent extends MolajoTable
 
         foreach ($results as $count => $result) {
             if (isset($array[$result->value]) && is_array($array[$result->value])) {
-                $registry = new MolajoRegistry();
+                $registry = new JRegistry();
                 $registry->loadArray($array[$result->value]);
                 $array[$result->value] = (string)$registry;
             }
@@ -228,7 +228,7 @@ class MolajoTableContent extends MolajoTable
         if (trim($this->alias) == '') {
             $this->alias = $this->title;
         }
-        $this->alias = JApplication::stringURLSafe($this->alias);
+        $this->alias = MolajoApplication::stringURLSafe($this->alias);
 
         /** do not check alias for version saves  **/
         if ($this->state == MOLAJO_STATE_VERSION) {

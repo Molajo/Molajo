@@ -267,11 +267,11 @@ class JLanguage extends JObject
 	 */
 	public static function getInstance($lang, $debug = false)
 	{
+
 		if (!isset(self::$languages[$lang . $debug]))
 		{
 			self::$languages[$lang . $debug] = new JLanguage($lang, $debug);
 		}
-
 		return self::$languages[$lang . $debug];
 	}
 

@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Updater
  * @since       11.1
  */
-class MolajoUpdater extends JAdapter
+class MolajoUpdater extends MolajoAdapter
 {
 	/**
 	 * Constructor
@@ -112,7 +112,7 @@ class MolajoUpdater extends JAdapter
 							->find(
 								array(
 									'element' => strtolower($current_update->get('element')), 'type' => strtolower($current_update->get('type')),
-									'client_id' => strtolower($current_update->get('client_id')),
+									'application_id' => strtolower($current_update->get('application_id')),
 									'folder' => strtolower($current_update->get('folder'))
 								)
 							);
@@ -121,7 +121,7 @@ class MolajoUpdater extends JAdapter
 							->find(
 								array(
 									'element' => strtolower($current_update->get('element')), 'type' => strtolower($current_update->get('type')),
-									'client_id' => strtolower($current_update->get('client_id')),
+									'application_id' => strtolower($current_update->get('application_id')),
 									'folder' => strtolower($current_update->get('folder'))
 								)
 							);

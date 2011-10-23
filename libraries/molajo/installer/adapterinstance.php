@@ -36,11 +36,11 @@ class MolajoAdapterInstance extends JObject
 	/**
 	 * Constructor
 	 *
-	 * @param   object  &$parent  Parent object [JAdapter instance]
+	 * @param   object  &$parent  Parent object [MolajoAdapter instance]
 	 * @param   object  &$db      Database object [JDatabase instance]
 	 * @param   array   $options  Configuration Options
 	 *
-	 * @return  JAdapterInstance
+	 * @return  MolajoAdapterInstance
 	 *
 	 * @since   11.1
 	 */

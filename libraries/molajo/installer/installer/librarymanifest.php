@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoLibraryManifest extends JObject
+class MolajoLibrarymanifest extends JObject
 {
 	/**
 	 * @var string name Name of Library

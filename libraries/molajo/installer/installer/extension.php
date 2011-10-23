@@ -50,13 +50,13 @@ class MolajoExtension extends JObject
 	var $published = false;
 
 	/**
-	 * String representation of client. Valid for modules, templates and languages.
+	 * String representation of application. Valid for modules, templates and languages.
 	 * Set by default to site.
 	 *
 	 * @var    string
 	 * @since  11.1
 	 */
-	var $client = 'site';
+	var $application = 'site';
 
 	/**
 	 * The group name of the plugin. Not used for other known extension types (only plugins)
@@ -107,15 +107,15 @@ class MolajoExtension extends JObject
 				case 'module':
 				case 'template':
 				case 'language':
-					$this->client = (string) $element->attributes()->client;
-					$tmp_client_id = MolajoApplicationHelper::getApplicationInfo($this->client, 1);
-					if ($tmp_client_id == null)
+					$this->application = (string) $element->attributes()->application;
+					$tmp_application_id = MolajoApplicationHelper::getApplicationInfo($this->application, 1);
+					if ($tmp_application_id == null)
 					{
 						JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
 					}
 					else
 					{
-						$this->client_id = $tmp_client_id->id;
+						$this->application_id = $tmp_application_id->id;
 					}
 					break;
 
@@ -125,11 +125,11 @@ class MolajoExtension extends JObject
 
 				default:
 					// Catch all
-					// Get and set client and group if we don't recognise the extension
-					if ($client = (string) $element->attributes()->client)
+					// Get and set application and group if we don't recognise the extension
+					if ($application = (string) $element->attributes()->application)
 					{
-						$this->client_id = MolajoApplicationHelper::getApplicationInfo($this->client, 1);
-						$this->client_id = $this->client_id->id;
+						$this->application_id = MolajoApplicationHelper::getApplicationInfo($this->application, 1);
+						$this->application_id = $this->application_id->id;
 					}
 					if ($group = (string) $element->attributes()->group)
 					{

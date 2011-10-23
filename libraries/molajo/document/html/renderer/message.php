@@ -65,7 +65,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new MolajoRegistry;
+            $params = new JRegistry;
 
             $request['wrap_title'] = '';
             $request['wrap_id'] = 'system-message-container';

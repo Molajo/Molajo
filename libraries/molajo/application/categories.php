@@ -665,13 +665,13 @@ class MolajoCategoryNode extends JObject
 	/**
 	 * Returns the category parameters
 	 *
-	 * @return  MolajoRegistry
+	 * @return  JRegistry
 	 * @since   1.0
 	 */
 	function getParams()
 	{
-		if (!($this->params instanceof MolajoRegistry)) {
-			$temp = new MolajoRegistry();
+		if (!($this->params instanceof JRegistry)) {
+			$temp = new JRegistry();
 			$temp->loadJSON($this->params);
 			$this->params = $temp;
 		}
@@ -682,13 +682,13 @@ class MolajoCategoryNode extends JObject
 	/**
 	 * Returns the category metadata
 	 *
-	 * @return  MolajoRegistry  A MolajoRegistry object containing the metadata
+	 * @return  JRegistry  A JRegistry object containing the metadata
 	 * @since   1.0
 	 */
 	function getMetadata()
 	{
-		if (!($this->metadata instanceof MolajoRegistry)) {
-			$temp = new MolajoRegistry();
+		if (!($this->metadata instanceof JRegistry)) {
+			$temp = new JRegistry();
 			$temp->loadJSON($this->metadata);
 			$this->metadata = $temp;
 		}

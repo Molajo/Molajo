@@ -164,7 +164,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
 			$row->enabled = 1;
 			$row->protected = 0;
 			$row->access = 1;
-			$row->client_id = 0;
+			$row->application_id = 0;
 			// custom data
 			$row->custom_data = '';
 			$row->params = $this->parent->getParams();
@@ -352,7 +352,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
 			case 'template':
 				// Languages, modules and templates have a client but not a folder
 				$client = MolajoApplicationHelper::getApplicationInfo($client, true);
-				$query->where('client_id = ' . (int) $client->id);
+				$query->where('application_id = ' . (int) $client->id);
 				break;
 		}
 

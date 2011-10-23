@@ -20,7 +20,6 @@ class plgSystemMolajo extends MolajoPlugin
     public function __construct(& $subject, $config = array())
     {
         parent::__construct($subject, $config);
-	    $this->loadLanguage();
     }
 
     /**

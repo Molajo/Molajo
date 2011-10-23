@@ -57,15 +57,15 @@ abstract class MolajoFactory
 	/**
 	 * Get a configuration object
 	 *
-	 * Returns the global {@link MolajoRegistry} object, only creating it
+	 * Returns the global {@link JRegistry} object, only creating it
 	 * if it doesn't already exist.
 	 *
 	 * @param string $file The path to the configuration file
 	 * @param string $type The type of the configuration file
 	 *
-	 * @see MolajoRegistry
+	 * @see JRegistry
 	 *
-	 * @return MolajoRegistry object
+	 * @return JRegistry object
 	 */
 	public static function getConfig($file = null, $type = 'PHP')
 	{
@@ -84,14 +84,14 @@ abstract class MolajoFactory
 	/**
 	 * Get a session object
 	 *
-	 * Returns the global {@link JSession} object, only creating it
+	 * Returns the global {@link MolajoSession} object, only creating it
 	 * if it doesn't already exist.
 	 *
 	 * @param   array  $options  An array containing session options
 	 *
-	 * @see JSession
+	 * @see MolajoSession
 	 *
-	 * @return JSession object
+	 * @return MolajoSession object
 	 */
 	public static function getSession($options = array())
 	{
@@ -455,7 +455,7 @@ abstract class MolajoFactory
 	 * @param   string  $type       The type of the configuration file.
 	 * @param   string  $namespace  The namespace of the configuration file.
 	 *
-	 * @return  MolajoRegistry
+	 * @return  JRegistry
 	 *
 	 * @since   1.0
 	 */
@@ -466,7 +466,7 @@ abstract class MolajoFactory
 		}
 
 		// Create the registry with a default namespace of config
-		$registry = new MolajoRegistry();
+		$registry = new JRegistry();
 
 		// Sanitize the namespace.
 		$namespace = ucfirst((string) preg_replace('/[^A-Z_]/i', '', $namespace));
@@ -491,7 +491,7 @@ abstract class MolajoFactory
 	 *
 	 * @param   array  $options An array containing session options
 	 *
-	 * @return JSession object
+	 * @return MolajoSession object
 	 * @since   1.0
 	 */
 	protected static function _createSession($options = array())
@@ -503,7 +503,7 @@ abstract class MolajoFactory
 		// Config time is in minutes
 		$options['expire'] = ($conf->get('lifetime')) ? $conf->get('lifetime') * 60 : 900;
 
-		$session = JSession::getInstance($handler, $options);
+		$session = MolajoSession::getInstance($handler, $options);
 		if ($session->getState() == 'expired') {
 			$session->restart();
 		}

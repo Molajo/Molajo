@@ -10,7 +10,6 @@ defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
-jimport('joomla.plugin.plugin');
 
 /**
  * 	Cron Job

@@ -238,7 +238,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 			$row->set('enabled', 1);
 			$row->set('protected', 0);
 			$row->set('access', 0);
-			$row->set('client_id', 0);
+			$row->set('application_id', 0);
 			$row->set('params', '');
 			$row->set('system_data', '');
 			$row->set('manifest_cache', '');
@@ -328,7 +328,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
 		// Clobber any possible pending updates
 		$update = MolajoTable::getInstance('update');
 		$uid = $update->find(
-			array('element' => $this->get('element'), 'type' => 'file', 'client_id' => '', 'folder' => '')
+			array('element' => $this->get('element'), 'type' => 'file', 'application_id' => '', 'folder' => '')
 		);
 
 		if ($uid)

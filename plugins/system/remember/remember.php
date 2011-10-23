@@ -6,9 +6,8 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
-jimport('joomla.plugin.plugin');
 
 /**
  * Molajo System Remember Me Plugin

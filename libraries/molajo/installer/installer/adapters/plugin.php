@@ -385,7 +385,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 			$row->enabled = 0;
 			$row->protected = 0;
 			$row->access = 1;
-			$row->client_id = 0;
+			$row->application_id = 0;
 			$row->params = $this->parent->getParams();
 			// Custom data
 			$row->custom_data = '';
@@ -732,7 +732,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 
 				$extension = MolajoTable::getInstance('extension');
 				$extension->set('type', 'plugin');
-				$extension->set('client_id', 0);
+				$extension->set('application_id', 0);
 				$extension->set('element', $file);
 				$extension->set('folder', $folder);
 				$extension->set('name', $file);
@@ -759,7 +759,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 					// ignore example plugins
 					$extension = MolajoTable::getInstance('extension');
 					$extension->set('type', 'plugin');
-					$extension->set('client_id', 0);
+					$extension->set('application_id', 0);
 					$extension->set('element', $file);
 					$extension->set('folder', $folder);
 					$extension->set('name', $file);
@@ -784,7 +784,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 		// Plugins use the extensions table as their primary store
 		// Similar to modules and templates, rather easy
 		// If it's not in the extensions table we just add it
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		if (is_dir($client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element))
 		{
 			$manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'
@@ -834,7 +834,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 		// Plugins use the extensions table as their primary store
 		// Similar to modules and templates, rather easy
 		// If it's not in the extensions table we just add it
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$manifestPath = $client->path . '/plugins/' . $this->parent->extension->folder . '/' . $this->parent->extension->element . '/'
 			. $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);

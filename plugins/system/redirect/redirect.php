@@ -7,7 +7,6 @@
 
 defined('JPATH_BASE') or die;
 
-jimport('joomla.plugin.plugin');
 
 /**
  * Plugin class for redirect handling.

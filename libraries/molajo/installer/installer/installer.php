@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstaller extends JAdapter
+class MolajoInstaller extends MolajoAdapter
 {
 	/**
 	 * Array of paths needed by the installer
@@ -424,7 +424,7 @@ class MolajoInstaller extends JAdapter
 			}
 
 			// Fire the onExtensionBeforeInstall event.
-			JPluginHelper::importPlugin('extension');
+			MolajoPluginHelper::importPlugin('extension');
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger(
 				'onExtensionBeforeInstall',
@@ -502,7 +502,7 @@ class MolajoInstaller extends JAdapter
 					}
 
 					// Fire the onExtensionBeforeInstall event.
-					JPluginHelper::importPlugin('extension');
+					MolajoPluginHelper::importPlugin('extension');
 					$dispatcher = JDispatcher::getInstance();
 					$dispatcher->trigger(
 						'onExtensionBeforeInstall',
@@ -616,7 +616,7 @@ class MolajoInstaller extends JAdapter
 			}
 
 			// Fire the onExtensionBeforeUpdate event.
-			JPluginHelper::importPlugin('extension');
+			MolajoPluginHelper::importPlugin('extension');
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('onExtensionBeforeUpdate', array('type' => $type, 'manifest' => $this->manifest));
 
@@ -668,7 +668,7 @@ class MolajoInstaller extends JAdapter
 		{
 			// We don't load languages here, we get the extension adapter to work it out
 			// Fire the onExtensionBeforeUninstall event.
-			JPluginHelper::importPlugin('extension');
+			MolajoPluginHelper::importPlugin('extension');
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('onExtensionBeforeUninstall', array('eid' => $identifier));
 			// Run the uninstall
@@ -1929,7 +1929,7 @@ class MolajoInstaller extends JAdapter
 		$query->where('type = ' . $dbo->Quote($type));
 		$query->where('element = ' . $dbo->Quote($element));
 		$query->where('folder = ' . $dbo->Quote($folder));
-		$query->where('client_id = ' . intval($client));
+		$query->where('application_id = ' . intval($client));
 		$query->where('state = -1');
 
 		return $dbo->Query();

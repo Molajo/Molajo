@@ -43,8 +43,8 @@ class JFormFieldSessionHandler extends JFormFieldList
 		// Initialize variables.
 		$options = array();
 
-		// Get the options from JSession.
-		foreach (JSession::getStores() as $store) {
+		// Get the options from MolajoSession.
+		foreach (MolajoSession::getStores() as $store) {
 			$options[] = JHtml::_('select.option', $store, JText::_('MOLAJO_FORM_VALUE_SESSION_'.$store), 'value', 'text');
 		}
 

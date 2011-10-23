@@ -6,7 +6,7 @@
  */
 
 // No direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 /**
  * Joomla User plugin

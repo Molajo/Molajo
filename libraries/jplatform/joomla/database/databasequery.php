@@ -108,7 +108,6 @@ class JDatabaseQueryElement
 		return $this->elements;
 	}
 }
-
 /**
  * Query Building Class.
  *

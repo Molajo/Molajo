@@ -19,14 +19,14 @@ endif;
 if ($this->params->get('showtitle', false) === true) :  ?>
     <h<?php echo $headinglevel; ?>>
         <?php echo $this->escape($this->row->title); ?>
-    </h<?php echo $headinglevel; ?>>
+    </h<?php echo $headinglevel++; ?>>
 <?php
 endif;
 
 if ($this->params->get('showsubtitle', false) === true) :  ?>
     <h<?php echo $headinglevel; ?>>
         <?php echo $this->escape($this->row->subtitle); ?>
-    </h<?php echo $headinglevel; ?>>
+    </h<?php echo $headinglevel++; ?>>
 <?php
 endif;
 

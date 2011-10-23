@@ -75,7 +75,7 @@ class MolajoComponentHelper
 			} else {
 				$result				= new stdClass;
 				$result->enabled	= $strict ? false : true;
-				$result->params		= new MolajoRegistry;
+				$result->params		= new JRegistry;
 			}
 		}
 
@@ -107,9 +107,9 @@ class MolajoComponentHelper
 	 * @param   string   $option  The option for the component.
 	 * @param   boolean  $strict  If set and the component does not exist, false will be returned
 	 *
-	 * @return  MolajoRegistry  A MolajoRegistry object.
+	 * @return  JRegistry  A JRegistry object.
 	 *
-	 * @see     MolajoRegistry
+	 * @see     JRegistry
 	 * @since  1.0
 	 */
 	public static function getParams($option, $strict = false)
@@ -164,7 +164,7 @@ class MolajoComponentHelper
 		}
 
 		if (is_string(self::$_components[$option]->params)) {
-			$temp = new MolajoRegistry;
+			$temp = new JRegistry;
 			$temp->loadString(self::$_components[$option]->params);
 			self::$_components[$option]->params = $temp;
 		}

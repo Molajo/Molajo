@@ -7,11 +7,10 @@
  */
 defined('MOLAJO') or die;
 
-// in import abstract class JFactory extends MolajoFactory {}
+abstract class JFactory extends MolajoFactory {}
+
 class JAccess extends MolajoACL {}
 
-class JApplication extends MolajoApplication {}
-class ApplicationException extends MolajoException {}
 class JCategories extends MolajoCategories {}
 class JApplicationHelper extends MolajoApplicationHelper {}
 class JMenu extends MolajoMenu {}
@@ -38,9 +37,8 @@ class JDocument extends MolajoDocument {}
 //class JDocumentError extends MolajoDocumentError {}
 //class JDocumentFeed extends MolajoDocumentFeed {}
 class JDocumentRenderer extends MolajoDocumentRenderer {}
-//class JDocumentRendererAtom extends MolajoDocumentRendererAtom {}
-//class JDocumentRendererRSS extends MolajoDocumentRendererRSS {}
 class JDocumentHTML extends MolajoDocumentHTML {}
+
 //class JDocumentRendererComponent extends MolajoDocumentRendererComponent {}
 //class JDocumentRendererHead extends MolajoDocumentRendererHead {}
 //class JDocumentRendererMessage extends MolajoDocumentRendererMessage {}
@@ -56,6 +54,7 @@ abstract class JFormField extends MolajoFormField {}
 class JFormRule extends MolajoFormRule {}
 class JFormHelper extends MolajoFormHelper {}
 
+
 //abstract class MolajoToolbarHelper extends MolajoRenderToolbarHelper {}
 
 //class JHelp extends MolajoHelp {}
@@ -65,7 +64,6 @@ abstract class JMailHelper extends MolajoMailHelper {}
 abstract class JPluginHelper extends MolajoPluginHelper {}
 abstract class JPlugin extends MolajoPlugin {}
 
-class JRegistry extends MolajoRegistry {}
 class JAuthentication extends MolajoAuthentication {}
 class JAuthenticationResponse extends MolajoAuthenticationResponse {}
 abstract class JUserHelper extends MolajoUserHelper {}
@@ -77,13 +75,13 @@ class JText extends MolajoText {}
 /**
 JFTP -
 https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f44217a8934644c5a0
-
 */
- 
+
+
 class JExtension extends MolajoExtension {}
 abstract class JInstallerHelper extends MolajoInstallerHelper {}
 class JInstaller extends MolajoInstaller {}
-class JAdapterInstance extends MolajoAdapterInstance {}
+//class JAdapterInstance extends MolajoAdapterInstance {}
 
 //class JInstallerComponent extends MolajoInstallerComponent {}
 //class JInstallerFile extends MolajoInstallerFile {}
@@ -102,3 +100,14 @@ class JUpdateAdapter extends MolajoUpdateAdapter {}
 class JUpdater extends MolajoUpdater {}
 //class JUpdaterCollection extends MolajoUpdaterCollection {}
 //class JUpdaterExtension extends MolajoUpdaterExtension {}
+
+
+
+/** legacy support */
+jimport('joomla.application.component.controlleradmin');
+jimport('joomla.application.component.controllerform');
+jimport('joomla.application.component.modeladmin');
+jimport('joomla.application.component.modelform');
+jimport('joomla.application.component.modelitem');
+jimport('joomla.application.component.modellist');
+ 

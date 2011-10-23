@@ -41,11 +41,11 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/templates/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/templates/' . $this->parent->extension->element
 				);
 		}
 
-		$clientId = isset($this->parent->extension) ? $this->parent->extension->client_id : 0;
+		$clientId = isset($this->parent->extension) ? $this->parent->extension->application_id : 0;
 		$this->manifest = $this->parent->getManifest();
 		$name = strtolower(JFilterInput::getInstance()->clean((string) $this->manifest->name, 'cmd'));
 		$client = (string) $this->manifest->attributes()->client;
@@ -58,7 +58,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		$extension = "tpl_$name";
 		$lang = MolajoFactory::getLanguage();
-		$source = $path ? $path : ($this->parent->extension->client_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/templates/' . $name;
+		$source = $path ? $path : ($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/templates/' . $name;
 		$lang->load($extension . '.sys', $source, null, false, false)
 			|| $lang->load($extension . '.sys', constant('JPATH_' . strtoupper($client)), null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
@@ -238,7 +238,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$row->enabled = 1;
 			$row->protected = 0;
 			$row->access = 1;
-			$row->client_id = $clientId;
+			$row->application_id = $clientId;
 			$row->params = $this->parent->getParams();
 			$row->custom_data = ''; // custom data
 		}
@@ -259,7 +259,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$query = $db->getQuery(true);
 			$query->insert('#__template_styles');
 			$query->set('template=' . $db->Quote($row->element));
-			$query->set('client_id=' . $db->Quote($clientId));
+			$query->set('application_id=' . $db->Quote($clientId));
 			$query->set('home=0');
 			$debug = $lang->setDebug(false);
 			$query->set('title=' . $db->Quote(JText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', JText::_($this->get('name')))));
@@ -318,7 +318,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		}
 
 		$name = $row->element;
-		$clientId = $row->client_id;
+		$clientId = $row->application_id;
 
 		// For a template the id will be the template name which represents the subfolder of the templates folder that the template resides in.
 		if (!$name)
@@ -385,11 +385,11 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		// Set menu that assigned to the template back to default template
 		$query = 'UPDATE #__menu INNER JOIN #__template_styles' . ' ON #__template_styles.id = #__menu.template_style_id'
 			. ' SET #__menu.template_style_id = 0' . ' WHERE #__template_styles.template = ' . $db->Quote(strtolower($name))
-			. ' AND #__template_styles.client_id = ' . $db->Quote($clientId);
+			. ' AND #__template_styles.application_id = ' . $db->Quote($clientId);
 		$db->setQuery($query);
 		$db->Query();
 
-		$query = 'DELETE FROM #__template_styles' . ' WHERE template = ' . $db->Quote($name) . ' AND client_id = ' . $db->Quote($clientId);
+		$query = 'DELETE FROM #__template_styles' . ' WHERE template = ' . $db->Quote($name) . ' AND application_id = ' . $db->Quote($clientId);
 		$db->setQuery($query);
 		$db->Query();
 
@@ -423,7 +423,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . "/templates/$template/templateDetails.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'template');
-			$extension->set('client_id', $site_info->id);
+			$extension->set('application_id', $site_info->id);
 			$extension->set('element', $template);
 			$extension->set('name', $template);
 			$extension->set('state', -1);
@@ -443,7 +443,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_ADMINISTRATOR . "/templates/$template/templateDetails.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'template');
-			$extension->set('client_id', $admin_info->id);
+			$extension->set('application_id', $admin_info->id);
 			$extension->set('element', $template);
 			$extension->set('name', $template);
 			$extension->set('state', -1);
@@ -466,7 +466,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 	{
 		// Templates are one of the easiest
 		// If its not in the extensions table we just add it
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$manifestPath = $client->path . '/templates/' . $this->parent->extension->element . '/templateDetails.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$description = (string) $this->parent->manifest->description;
@@ -503,7 +503,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$query = $db->getQuery(true);
 			$query->insert('#__template_styles');
 			$query->set('template=' . $db->Quote($this->parent->extension->name));
-			$query->set('client_id=' . $db->Quote($this->parent->extension->client_id));
+			$query->set('application_id=' . $db->Quote($this->parent->extension->application_id));
 			$query->set('home=0');
 			$query->set('title=' . $db->Quote(JText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
 			$query->set('params=' . $db->Quote($this->parent->extension->params));
@@ -530,7 +530,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 	public function refreshManifestCache()
 	{
 		// Need to find to find where the XML file is since we don't store this normally.
-		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->client_id);
+		$client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
 		$manifestPath = $client->path . '/templates/' . $this->parent->extension->element . '/templateDetails.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);

@@ -494,13 +494,13 @@ class JStream extends JObject
 		switch ($this->processingmethod)
 		{
 			case 'gz':
-				$res = $length ? gzgets($this->_fh, $length) : gzgets($this->_fh);
+				$res = $length ? gzgets($this->_fh, $length) : gzgets($this->_fh, 0);
 				break;
 
 			case 'bz':
 			case 'f':
 			default:
-				$res = $length ? fgets($this->_fh, $length) : fgets($this->_fh);
+				$res = $length ? fgets($this->_fh, $length) : fgets($this->_fh, 0);
 				break;
 		}
 
@@ -1007,7 +1007,7 @@ class JStream extends JObject
 			$php_errormsg = 'Unknown error setting context option';
 			$track_errors = ini_get('track_errors');
 			ini_set('track_errors', true);
-			$retval = @stream_context_set_option($this->_fh, $this->_contextOptions);
+			$retval = @stream_context_set_option($this->_fh, $this->_contextOptions, null, null);
 
 			if (!$retval)
 			{
@@ -1456,3 +1456,4 @@ class JStream extends JObject
 		return $this->_fh;
 	}
 }
+

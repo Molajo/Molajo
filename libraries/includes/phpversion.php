@@ -8,6 +8,6 @@
 defined('MOLAJO') or die;
 
 /** php version check */
-if (version_compare(PHP_VERSION, '5.2.4', '<')) {
-    die('Your host needs to use PHP 5.2.4 or higher to run Molajo.');
+if (version_compare(PHP_VERSION, '5.3', '<')) {
+    die('Your host needs to use PHP 5.3 or higher to run Molajo.');
 }

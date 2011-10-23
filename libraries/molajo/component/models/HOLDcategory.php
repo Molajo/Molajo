@@ -82,7 +82,7 @@ class MolajoModelCategory extends JModel
 
             /** Merge Component and Menu Item Parameters */
             $params = MolajoFactory::getApplication()->getParams();
-            $menuParams = new MolajoRegistry;
+            $menuParams = new JRegistry;
             if ($menu = MolajoFactory::getApplication()->getMenu()->getActive()) {
                 $menuParams->loadJSON($menu->params);
             }

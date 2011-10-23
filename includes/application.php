@@ -378,7 +378,7 @@ class MolajoSite extends MolajoApplication
 
 			/** cascade menu item parameters */
 			if (is_object($menu)) {
-				$temp = new MolajoRegistry;
+				$temp = new JRegistry;
 				$temp->loadJSON($menu->params);
 				$params[$hash]->merge($temp);
 				$title = $menu->title;
@@ -456,7 +456,7 @@ class MolajoSite extends MolajoApplication
 			$templates = $db->loadObjectList('id');
 
 			foreach($templates as &$template) {
-				$registry = new MolajoRegistry;
+				$registry = new JRegistry;
 				$registry->loadJSON($template->params);
 				$template->params = $registry;
 
@@ -502,7 +502,7 @@ class MolajoSite extends MolajoApplication
 	{
 		if (is_dir(MOLAJO_PATH_THEMES.DS.$template)) {
 			$this->template = new stdClass();
-			$this->template->params = new MolajoRegistry;
+			$this->template->params = new JRegistry;
 			$this->template->template = $template;
 		}
 	}

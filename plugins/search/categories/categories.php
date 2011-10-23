@@ -6,9 +6,8 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
-jimport('joomla.plugin.plugin');
 
 require_once JPATH_SITE.'/components/com_articles/helpers/route.php';
 

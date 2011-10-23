@@ -177,7 +177,7 @@ class MolajoControllerLogin extends MolajoController
         // Initialise variables.
         $retval = false;
 
-        // Get a user object from the JApplication.
+        // Get a user object from the MolajoApplication.
         $user = MolajoFactory::getUser($userid);
 
         // Build the credentials array.

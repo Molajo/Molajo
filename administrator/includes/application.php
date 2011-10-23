@@ -85,8 +85,8 @@ class MolajoAdministrator extends MolajoApplication
 		parent::initialise($options);
 
 		// Load Library language
-		$lang = MolajoFactory::getLanguage();
-		$lang->load('lib_joomla', MOLAJO_PATH_ADMINISTRATOR);
+//		$lang = MolajoFactory::getLanguage();
+//		$lang->load('lib_joomla', MOLAJO_PATH_ADMINISTRATOR);
 	}
 
 	/**
