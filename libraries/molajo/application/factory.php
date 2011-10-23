@@ -347,10 +347,10 @@ abstract class MolajoFactory
 
 		if ($isFile) {
 			// Try to load the XML file
-			$xml = simplexml_load_file($data, 'JXMLElement');
+			$xml = simplexml_load_file($data, 'SimpleXMLElement');
 		} else {
 			// Try to load the XML string
-			$xml = simplexml_load_string($data, 'JXMLElement');
+			$xml = simplexml_load_string($data, 'SimpleXMLElement');
 		}
 
 		if (empty($xml)) {
