@@ -64,6 +64,13 @@ class InstallerModelDisplay extends MolajoModelDummy
         return $language_list;
     }
 
+    public function getDBTypes()
+    {
+        require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
+
+        return InstallerHelper::detectDBTypes();
+    }
+
     /**
      * getFormFields
      *

@@ -53,6 +53,7 @@ class InstallerViewDisplay extends MolajoView
         // We want to enable single page (or however many steps) so we need to assign these to any layout
         $this->assign('setup',     $this->getModel()->getSetup());
         $this->assign('languages', $this->getModel()->getLanguageList());
+        $this->assign('db_types',  $this->getModel()->getDBTypes());
 
         /** load unused fields into hidden form fields for display */
 

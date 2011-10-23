@@ -62,4 +62,10 @@ class InstallerHelper
     public function detectLanguage() {
         return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
     }
+
+    public function detectDBTypes()
+    {
+        $path = JPATH_INSTALLATION . '/components/com_installer/sql/';
+        return JFolder::folders($path);
+    }
 }
