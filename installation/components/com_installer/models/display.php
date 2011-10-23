@@ -147,7 +147,7 @@ class InstallerModelDisplay extends MolajoModelDummy
                 'db_username' => '',
                 'db_password' => '',
                 'db_prefix' => 'jos_',
-                'db_type' => 'MySQL',
+                'db_type' => 'pdo_mysql',
                 'remove_tables' => false,
                 'sample_data' => 'none'
             );

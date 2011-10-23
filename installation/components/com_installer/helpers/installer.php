@@ -67,7 +67,7 @@ class InstallerHelper
     {
 //        $path = JPATH_INSTALLATION . '/components/com_installer/sql/';
 //        return JFolder::folders($path);
-          return array('mysql','mysqli');
+          return array('pdo_mysql','mysql','mysqli');
     }
 
     public function detectMockDataTypes()
