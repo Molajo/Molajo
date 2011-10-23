@@ -54,6 +54,7 @@ class InstallerViewDisplay extends MolajoView
         $this->assign('setup',     $this->getModel()->getSetup());
         $this->assign('languages', $this->getModel()->getLanguageList());
         $this->assign('db_types',  $this->getModel()->getDBTypes());
+        $this->assign('mock_data',  $this->getModel()->getMockDataTypes());
 
         /** load unused fields into hidden form fields for display */
 

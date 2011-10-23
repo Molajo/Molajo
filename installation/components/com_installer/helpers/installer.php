@@ -65,7 +65,21 @@ class InstallerHelper
 
     public function detectDBTypes()
     {
-        $path = JPATH_INSTALLATION . '/components/com_installer/sql/';
-        return JFolder::folders($path);
+//        $path = JPATH_INSTALLATION . '/components/com_installer/sql/';
+//        return JFolder::folders($path);
+          return array('mysql','mysqli');
     }
+
+    public function detectMockDataTypes()
+    {
+        $path = JPATH_INSTALLATION . '/components/com_installer/sql/mock_data';
+        $mock_data = JFolder::files($path);
+
+        for($i=0;$i<count($mock_data);$i++){
+            $mock_data[$i] = JFile::stripExt($mock_data[$i]);
+        }
+
+        return $mock_data;
+    }
+
 }

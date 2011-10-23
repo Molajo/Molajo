@@ -64,11 +64,32 @@ class InstallerModelDisplay extends MolajoModelDummy
         return $language_list;
     }
 
+    /**
+     * getDBTypes
+     *
+     * Retrieves the list of available database types
+     *
+     * @return void
+     */
     public function getDBTypes()
     {
         require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
 
         return InstallerHelper::detectDBTypes();
+    }
+
+    /**
+     * getMockDataTypes
+     *
+     * Retrieves the list of available mock data
+     *
+     * @return void
+     */
+    public function getMockDataTypes()
+    {
+        require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
+
+        return InstallerHelper::detectMockDataTypes();
     }
 
     /**

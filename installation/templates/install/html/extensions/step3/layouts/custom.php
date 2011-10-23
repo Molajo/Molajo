@@ -64,15 +64,13 @@ var_dump($this->setup);
         <ol class="list-rest radios">
             <li>
                 <span class="label"><?php echo MolajoText::_('Database type') ?></span>
-                <?php
-                $class = 'radio';
-                ?>
+                <?php $class = 'radio' ?>
                 <?php $i=0; foreach($this->db_types AS $db_type): ?>
                 <?php
-                if($i==0) $class = 'radio left';
-                if($i==count($this->db_types)-1) $class = 'radio right';
-                if($this->setup['db_type']==$db_type) $class .= ' label-selected';
-                $checked = $this->setup['db_type']==$db_type?$checked = ' checked="checked"':'';
+                    if($i==0) $class = 'radio left';
+                    if($i==count($this->db_types)-1) $class = 'radio right';
+                    if($this->setup['db_type']==$db_type) $class .= ' label-selected';
+                    $checked = $this->setup['db_type']==$db_type?$checked = ' checked="checked"':'';
                 ?>
                 <label class="<?php echo $class ?>" for="<?php echo $db_type ?>">
                     <input name="db_type" id="<?php echo $db_type ?>" value="<?php echo $db_type ?>" type="radio"<?php echo $checked; ?> /><?php echo MolajoText::_($db_type) ?></label>
@@ -80,14 +78,18 @@ var_dump($this->setup);
             </li>
             <li>
                 <span class="label"><?php echo MolajoText::_('Sample Data') ?></span>
+                <?php $class = 'radio' ?>
                 <label class="radio left<?php echo $this->setup['sample_data']=='none'?' label-selected':''; ?>" for="none">
                     <input name="sample_data" id="none" value="none" type="radio"<?php echo $this->setup['sample_data']=='none'?' checked="checked"':''; ?> /><?php echo MolajoText::_('None') ?></label>
-                <label class="radio middle<?php echo $this->setup['sample_data']=='blog'?' label-selected':''; ?>" for="blog">
-                    <input name="sample_data" id="blog" value="blog" type="radio"<?php echo $this->setup['sample_data']=='blog'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Blog') ?></label>
-                <label class="radio middle<?php echo $this->setup['sample_data']=='news'?' label-selected':''; ?>" for="news">
-                    <input name="sample_data" id="news" value="news" type="radio"<?php echo $this->setup['sample_data']=='news'?' checked="checked"':''; ?> /><?php echo MolajoText::_('News') ?></label>
-                <label class="radio right<?php echo $this->setup['sample_data']=='etc'?' label-selected':''; ?>" for="etc">
-                    <input name="sample_data" id="etc" value="etc" type="radio"<?php echo $this->setup['sample_data']=='etc'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Etc.') ?></label>
+                <?php $i=1; foreach($this->mock_data AS $mock_data): ?>
+                <?php
+                    if($i==count($this->mock_data)) $class = 'radio right';
+                    if($this->setup['mock_data']==$mock_data) $class .= ' label-selected';
+                    $checked = $this->setup['mock_data']==$mock_data?$checked = ' checked="checked"':'';
+                ?>
+                <label class="<?php echo $class ?>" for="<?php echo $mock_data ?>">
+                    <input name="sample_data" id="<?php echo $mock_data ?>" value="<?php echo $mock_data ?>" type="radio"<?php echo $checked; ?> /><?php echo MolajoText::_($mock_data) ?></label>
+                <?php $i++;endforeach; ?>
             </li>
             <li>
                 <span class="label"><?php echo MolajoText::_('Existing tables') ?></span>
