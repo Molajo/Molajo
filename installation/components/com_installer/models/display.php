@@ -134,10 +134,10 @@ class InstallerModelDisplay extends MolajoModelDummy
     protected function _init()
     {
         require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
-        
+        var_dump(MolajoLanguageHelper::detectLanguage());
         if(is_null($this->setup)) {
             $this->setup = array(
-                'language' => InstallerHelper::detectLanguage(),
+                'language' => MolajoLanguageHelper::detectLanguage(), // This actually doesn't work right now but that may well be caused by the splitting up of classes
                 'sitename' => '',
                 'name' => '',
                 'admin_email' => '',
