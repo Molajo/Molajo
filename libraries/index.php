@@ -68,8 +68,7 @@ JDEBUG ? $_PROFILER->mark('afterRoute') : null;
  */
 $app->dispatch();
 JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
-echo 'here';
-die;
+
 /**
  *  Render
  */
