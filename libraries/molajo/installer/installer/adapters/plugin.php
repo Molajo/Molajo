@@ -78,7 +78,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 		$source = $this->parent->getPath('source');
 		if (!$source)
 		{
-			$this->parent->setPath('source', JPATH_PLUGINS . '/' . $this->parent->extension->folder . '/' . $this->parent->extension->element);
+			$this->parent->setPath('source', MOLAJO_PATH_PLUGINS . '/' . $this->parent->extension->folder . '/' . $this->parent->extension->element);
 		}
 		$this->manifest = $this->parent->getManifest();
 		$element = $this->manifest->files;
@@ -101,16 +101,16 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 			{
 				$extension = "plg_${group}_${name}";
 				$lang = MolajoFactory::getLanguage();
-				$source = $path ? $path : JPATH_PLUGINS . "/$group/$name";
+				$source = $path ? $path : MOLAJO_PATH_PLUGINS . "/$group/$name";
 				$folder = (string) $element->attributes()->folder;
 				if ($folder && file_exists("$path/$folder"))
 				{
 					$source = "$path/$folder";
 				}
 				$lang->load($extension . '.sys', $source, null, false, false)
-					|| $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, null, false, false)
+					|| $lang->load($extension . '.sys', MOLAJO_PATH_ADMINISTRATOR, null, false, false)
 					|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-					|| $lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false);
+					|| $lang->load($extension . '.sys', MOLAJO_PATH_ADMINISTRATOR, $lang->getDefault(), false, false);
 			}
 		}
 	}
@@ -171,7 +171,7 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 		$group = (string) $xml->attributes()->group;
 		if (!empty($element) && !empty($group))
 		{
-			$this->parent->setPath('extension_root', JPATH_PLUGINS . '/' . $group . '/' . $element);
+			$this->parent->setPath('extension_root', MOLAJO_PATH_PLUGINS . '/' . $group . '/' . $element);
 		}
 		else
 		{
@@ -557,15 +557,15 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 		}
 
 		// Set the plugin root path
-		if (is_dir(JPATH_PLUGINS . '/' . $row->folder . '/' . $row->element))
+		if (is_dir(MOLAJO_PATH_PLUGINS . '/' . $row->folder . '/' . $row->element))
 		{
 			// Use 1.6 plugins
-			$this->parent->setPath('extension_root', JPATH_PLUGINS . '/' . $row->folder . '/' . $row->element);
+			$this->parent->setPath('extension_root', MOLAJO_PATH_PLUGINS . '/' . $row->folder . '/' . $row->element);
 		}
 		else
 		{
 			// Use Legacy 1.5 plugins
-			$this->parent->setPath('extension_root', JPATH_PLUGINS . '/' . $row->folder);
+			$this->parent->setPath('extension_root', MOLAJO_PATH_PLUGINS . '/' . $row->folder);
 		}
 
 		// Because 1.5 plugins don't have their own folders we cannot use the standard method of finding an installation manifest
@@ -602,8 +602,8 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 		}
 
 		// Attempt to load the language file; might have uninstall strings
-		$this->parent->setPath('source', JPATH_PLUGINS . '/' . $row->folder . '/' . $row->element);
-		$this->loadLanguage(JPATH_PLUGINS . '/' . $row->folder . '/' . $row->element);
+		$this->parent->setPath('source', MOLAJO_PATH_PLUGINS . '/' . $row->folder . '/' . $row->element);
+		$this->loadLanguage(MOLAJO_PATH_PLUGINS . '/' . $row->folder . '/' . $row->element);
 
 		// Installer Trigger Loading
 
@@ -715,14 +715,14 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 	function discover()
 	{
 		$results = array();
-		$folder_list = JFolder::folders(JPATH_SITE . '/plugins');
+		$folder_list = JFolder::folders(MOLAJO_PATH_SITE . '/plugins');
 
 		foreach ($folder_list as $folder)
 		{
-			$file_list = JFolder::files(JPATH_SITE . '/plugins/' . $folder, '\.xml$');
+			$file_list = JFolder::files(MOLAJO_PATH_SITE . '/plugins/' . $folder, '\.xml$');
 			foreach ($file_list as $file)
 			{
-				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/plugins/' . $folder . '/' . $file);
+				$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_SITE . '/plugins/' . $folder . '/' . $file);
 				$file = JFile::stripExt($file);
 				// Ignore example plugins
 				if ($file == 'example')
@@ -740,14 +740,14 @@ class MolajoInstallerPlugin extends MolajoAdapterInstance
 				$extension->set('manifest_cache', json_encode($manifest_details));
 				$results[] = $extension;
 			}
-			$folder_list = JFolder::folders(JPATH_SITE . '/plugins/' . $folder);
+			$folder_list = JFolder::folders(MOLAJO_PATH_SITE . '/plugins/' . $folder);
 			foreach ($folder_list as $plugin_folder)
 			{
-				$file_list = JFolder::files(JPATH_SITE . '/plugins/' . $folder . '/' . $plugin_folder, '\.xml$');
+				$file_list = JFolder::files(MOLAJO_PATH_SITE . '/plugins/' . $folder . '/' . $plugin_folder, '\.xml$');
 				foreach ($file_list as $file)
 				{
 					$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-						JPATH_SITE . '/plugins/' . $folder . '/' . $plugin_folder . '/' . $file
+						MOLAJO_PATH_SITE . '/plugins/' . $folder . '/' . $plugin_folder . '/' . $file
 					);
 					$file = JFile::stripExt($file);
 

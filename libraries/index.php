@@ -7,6 +7,8 @@
  */
 defined('MOLAJO') or die;
 
+//echo '<pre>';var_dump();'</pre>';
+
 /** php overrides */
 @ini_set('magic_quotes_runtime', 0);
 @ini_set('zend.ze1_compatibility_mode', '0');
@@ -38,9 +40,14 @@ require_once LIBRARIES.'/includes/overrides.php';
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
- *  Initialize
+ *  Application
  */
 $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
+JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
+
+/**
+ *  Initialize
+ */
 if (MOLAJO_APPLICATION == 'administrator') {
     $app->initialise(array(
         'language' => $app->getUserState('application.language', 'language')
@@ -61,13 +68,14 @@ JDEBUG ? $_PROFILER->mark('afterRoute') : null;
  */
 $app->dispatch();
 JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
- 
+echo 'here';
+die;
 /**
  *  Render
  */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
-die;
+
 /**
  *  Display
  */

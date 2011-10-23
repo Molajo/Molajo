@@ -1278,7 +1278,7 @@ class MolajoInstaller extends MolajoAdapter
 		$client = MolajoApplicationHelper::getApplicationInfo($cid);
 
 		// Here we set the folder we are going to copy the files to.
-		// 'languages' Files are copied to JPATH_BASE/language/ folder
+		// 'languages' Files are copied to MOLAJO_PATH_BASE/language/ folder
 
 		$destination = $client->path . '/language';
 
@@ -1390,10 +1390,10 @@ class MolajoInstaller extends MolajoAdapter
 		$client = MolajoApplicationHelper::getApplicationInfo($cid);
 
 		// Here we set the folder we are going to copy the files to.
-		//	Default 'media' Files are copied to the JPATH_BASE/media folder
+		//	Default 'media' Files are copied to the MOLAJO_PATH_BASE/media folder
 
 		$folder = ((string) $element->attributes()->destination) ? '/' . $element->attributes()->destination : null;
-		$destination = JPath::clean(JPATH_ROOT . '/media' . $folder);
+		$destination = JPath::clean(MOLAJO_PATH_ROOT . '/media' . $folder);
 
 		// Here we set the folder we are going to copy the files from.
 

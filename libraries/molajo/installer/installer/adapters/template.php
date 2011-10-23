@@ -41,7 +41,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/templates/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/templates/' . $this->parent->extension->element
 				);
 		}
 
@@ -58,11 +58,11 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		$extension = "tpl_$name";
 		$lang = MolajoFactory::getLanguage();
-		$source = $path ? $path : ($this->parent->extension->application_id ? JPATH_ADMINISTRATOR : JPATH_SITE) . '/templates/' . $name;
+		$source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/templates/' . $name;
 		$lang->load($extension . '.sys', $source, null, false, false)
-			|| $lang->load($extension . '.sys', constant('JPATH_' . strtoupper($client)), null, false, false)
+			|| $lang->load($extension . '.sys', constant('MOLAJO_PATH_' . strtoupper($client)), null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-			|| $lang->load($extension . '.sys', constant('JPATH_' . strtoupper($client)), $lang->getDefault(), false, false);
+			|| $lang->load($extension . '.sys', constant('MOLAJO_PATH_' . strtoupper($client)), $lang->getDefault(), false, false);
 	}
 
 	/**
@@ -95,7 +95,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		{
 			// No client attribute was found so we assume the site as the client
 			$cname = 'site';
-			$basePath = JPATH_SITE;
+			$basePath = MOLAJO_PATH_SITE;
 			$clientId = 0;
 		}
 
@@ -407,8 +407,8 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 	function discover()
 	{
 		$results = array();
-		$site_list = JFolder::folders(JPATH_SITE . '/templates');
-		$admin_list = JFolder::folders(JPATH_ADMINISTRATOR . '/templates');
+		$site_list = JFolder::folders(MOLAJO_PATH_SITE . '/templates');
+		$admin_list = JFolder::folders(MOLAJO_PATH_ADMINISTRATOR . '/templates');
 		$site_info = MolajoApplicationHelper::getApplicationInfo('site', true);
 		$admin_info = MolajoApplicationHelper::getApplicationInfo('administrator', true);
 
@@ -420,7 +420,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 				// Ignore special system template
 			}
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_SITE . "/templates/$template/templateDetails.xml");
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_SITE . "/templates/$template/templateDetails.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'template');
 			$extension->set('application_id', $site_info->id);
@@ -440,7 +440,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 				// Ignore special system template
 			}
 
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(JPATH_ADMINISTRATOR . "/templates/$template/templateDetails.xml");
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_ADMINISTRATOR . "/templates/$template/templateDetails.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'template');
 			$extension->set('application_id', $admin_info->id);
