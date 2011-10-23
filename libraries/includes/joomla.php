@@ -239,4 +239,3 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/date.php', 'JDate');
  *  PHPMailer
  */
 $filehelper->requireClassFile(LIBRARIES.'/jplatform/phpmailer/phpmailer.php', 'PHPMailer');
-var_dump(LIBRARIES.'/jplatform/phpmailer/phpmailer.php');
