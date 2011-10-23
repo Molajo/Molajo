@@ -84,8 +84,8 @@ var_dump($this->setup);
                 <?php $i=1; foreach($this->mock_data AS $mock_data): ?>
                 <?php
                     if($i==count($this->mock_data)) $class = 'radio right';
-                    if($this->setup['mock_data']==$mock_data) $class .= ' label-selected';
-                    $checked = $this->setup['mock_data']==$mock_data?$checked = ' checked="checked"':'';
+                    if($this->setup['sample_data']==$mock_data) $class .= ' label-selected';
+                    $checked = $this->setup['sample_data']==$mock_data?$checked = ' checked="checked"':'';
                 ?>
                 <label class="<?php echo $class ?>" for="<?php echo $mock_data ?>">
                     <input name="sample_data" id="<?php echo $mock_data ?>" value="<?php echo $mock_data ?>" type="radio"<?php echo $checked; ?> /><?php echo MolajoText::_($mock_data) ?></label>
