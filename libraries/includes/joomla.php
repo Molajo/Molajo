@@ -68,14 +68,14 @@ foreach ($files as $file) {
 /**
  *  Client
  */
-$files = JFolder::files(JOOMLA_LIBRARY.'/client', '\.php$', false, false);
-foreach ($files as $file) {
-    if ($file == 'helper.php') {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'JClientHelper');
-    } else {
-        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
-}
+//$files = JFolder::files(JOOMLA_LIBRARY.'/client', '\.php$', false, false);
+//foreach ($files as $file) {
+//    if ($file == 'helper.php') {
+//        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'JClientHelper');
+//    } else {
+//        $filehelper->requireClassFile(JOOMLA_LIBRARY.'/client/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
+//    }
+//}
 
 /**
  *  Database
