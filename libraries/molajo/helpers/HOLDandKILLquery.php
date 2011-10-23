@@ -145,7 +145,7 @@ class MolajoQueryHelper
 	/**
 	 * Get join information for the voting query.
 	 *
-	 * @param	MolajoRegistry	$param	An options object for the dog.
+	 * @param	JRegistry	$param	An options object for the dog.
 	 *
 	 * @return	array		A named array with "select" and "join" keys.
 	 * @since	1.5

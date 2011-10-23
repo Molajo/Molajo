@@ -36,7 +36,7 @@ final class MolajoVersion
 	public $CODE_NAME = 'Phoenix';
 
 	/** @var  string  Release date. */
-	public $RELEASE_DATE = '01-Sept-2011';
+	public $RELEASE_DATE = '01-Nov-2011';
 
 	/** @var  string  Release time. */
 	public $RELEASE_TIME = '06:00';
@@ -141,6 +141,6 @@ final class MolajoVersion
 
 // Define the Joomla version if not already defined.
 if (!defined('MOLAJOVERSION')) {
-	$jversion = new MolajoVersion;
-	define('MOLAJOVERSION', $jversion->getShortVersion());
+	$molajoversion = new MolajoVersion;
+	define('MOLAJOVERSION', $molajoversion->getShortVersion());
 }

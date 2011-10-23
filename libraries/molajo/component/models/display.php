@@ -484,7 +484,7 @@ $items[$i]->checked_out = false;
                 foreach ($jsonFields as $field) {
                     $attribute = $field->value;
                     if (property_exists($items[$i], $attribute)) {
-                        $registry = new MolajoRegistry;
+                        $registry = new JRegistry;
                         $registry->loadJSON($items[$i]->$attribute);
                         $items[$i]->$attribute = $registry->toArray();
                     }

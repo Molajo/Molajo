@@ -54,15 +54,15 @@ class MolajoControllerLogin extends MolajoController
     /**
      *  Authenticate and Authorize
      */
-		$authenticate = MolajoAuthentication::getInstance();
+		$molajoAuth = MolajoAuthentication::getInstance();
 
-		$response = $authenticate->authenticate($credentials, $options);
+		$response = $molajoAuth->authenticate($credentials, $options);
         if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
             return $this->_loginFailed ('authenticate', $response, $options);
         }
 
-        $response = $authenticate->authorise($response, $options);
+        $molajoAuth->authorise($response, (array) $options);
         if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
             return $this->_loginFailed ('authorise', $response, $options);
@@ -71,7 +71,7 @@ class MolajoControllerLogin extends MolajoController
     /**
      * Authenticated and Authorized
      */
-		$results = $this->triggerEvent('onUserLogin', array((array)$response, $options));
+        JDispatcher::getInstance()->trigger('onUserLogin', array((array)$response, $options));
 
         /** remember me cookie */
         if (isset($options['remember']) && $options['remember']) {
@@ -115,9 +115,9 @@ class MolajoControllerLogin extends MolajoController
 	{
 		MolajoPluginHelper::getPlugin('user');
         if ($type == 'authenticate') {
-            JDispatcher::getInstance()->trigger('onUserAuthorisationFailure', array($response, $options));
-        } else {
             JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
+        } else {
+            JDispatcher::getInstance()->trigger('onUserAuthorisationFailure', array($response, $options));
         }
 
         if (isset($options['silent']) && $options['silent']) {
@@ -177,7 +177,7 @@ class MolajoControllerLogin extends MolajoController
         // Initialise variables.
         $retval = false;
 
-        // Get a user object from the JApplication.
+        // Get a user object from the MolajoApplication.
         $user = MolajoFactory::getUser($userid);
 
         // Build the credentials array.

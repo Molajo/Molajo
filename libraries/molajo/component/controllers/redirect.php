@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Redurect Controller
+ * Redirect Controller
  *
  * @package	Molajo
  * @subpackage	Controller
@@ -164,7 +164,7 @@ class MolajoControllerRedirect extends MolajoController
         } elseif ($this->request['task'] == 'display') {
             $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
             $this->redirectReturn = $this->redirectSuccess;
-            
+
         } else {
             $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
             $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=edit'.$extension.$component_specific;

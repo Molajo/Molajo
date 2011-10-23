@@ -6,10 +6,9 @@
  */
 
 // no direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 jimport('joomla.language.helper');
-jimport('joomla.plugin.plugin');
 
 /**
  * Molajo Language Filter Plugin

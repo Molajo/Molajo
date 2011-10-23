@@ -449,7 +449,7 @@ class MolajoDocumentHTML extends MolajoDocument
 		// Assign the variables
 		$this->template = $template;
 		$this->baseurl  = JURI::base(true);
-		$this->params	= isset($params['params']) ? $params['params'] : new MolajoRegistry;
+		$this->params	= isset($params['params']) ? $params['params'] : new JRegistry;
 
 		// Load
 		$this->_template = $this->_loadTemplate($directory . '/' . $template, $file);

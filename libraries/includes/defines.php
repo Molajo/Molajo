@@ -20,7 +20,9 @@ define('MOLAJO_PATH_MANIFESTS',		MOLAJO_PATH_ADMINISTRATOR.'/manifests');
 
 define('MOLAJO_LIBRARY_COMPONENT',  MOLAJO_LIBRARY.'/component');
 define('MOLAJO_LIBRARY_CONTROLLERS', MOLAJO_LIBRARY_COMPONENT.'/controllers');
+define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY_COMPONENT.'/fields');
 define('MOLAJO_LIBRARY_MODELS',     MOLAJO_LIBRARY_COMPONENT.'/models');
+define('MOLAJO_LIBRARY_ROUTER',     MOLAJO_LIBRARY_COMPONENT.'/router');
 define('MOLAJO_LIBRARY_TABLES',     MOLAJO_LIBRARY_COMPONENT.'/tables');
 define('MOLAJO_LIBRARY_VIEWS',      MOLAJO_LIBRARY_COMPONENT.'/views');
 
@@ -28,7 +30,7 @@ define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY_COMPONENT.'/fields/attributes
 define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY_COMPONENT.'/fields/fields');
 define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY_COMPONENT.'/fields/fieldtypes');
 define('MOLAJO_LIBRARY_FORM',       MOLAJO_LIBRARY_COMPONENT.'/fields/form');
-define('MOLAJO_PATH_THEMES', MOLAJO_PATH_BASE.'/templates');
+define('MOLAJO_PATH_THEMES',        MOLAJO_PATH_BASE.'/templates');
 
 /** Layouts, Forms, and Parameters */
 $temp = MOLAJO_PATH_ROOT.'/layouts';
@@ -75,7 +77,7 @@ define('MOLAJO_CONFIG_OPTION_ID_EDITOR_BUTTONS', 340);
 define('MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES', 400);
 define('MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES', 410);
 define('MOLAJO_CONFIG_OPTION_ID_TEXT_MIMES', 420);
-define('MOLAJO_CONFIG_OPTION_ID_VIDEO_MIMES ', 430);
+define('MOLAJO_CONFIG_OPTION_ID_VIDEO_MIMES', 430);
 
 /** MVC */
 
@@ -158,6 +160,21 @@ if (strpos(MOLAJO_CURRENT_URL, MOLAJO_APPLICATION)) {
     define('MOLAJO_BASE_URL', MOLAJO_CURRENT_URL);
 }
 
+/** Detect the native operating system type */
+$os = strtoupper(substr(PHP_OS, 0, 3));
+if (defined('IS_WIN')) {
+} else {
+	define('IS_WIN', ($os === 'WIN') ? true : false);
+}
+if (defined('IS_MAC')) {
+} else {
+	define('IS_MAC', ($os === 'MAC') ? true : false);
+}
+if (defined('IS_UNIX')) {
+} else {
+	define('IS_UNIX', (($os !== 'MAC') && ($os !== 'WIN')) ? true : false);
+}
+
 /** joomla */
 define('_JEXEC', 1);
 define('JPATH_BASE',		    MOLAJO_PATH_BASE);
@@ -174,6 +191,4 @@ define('JPATH_CACHE',			MOLAJO_PATH_CACHE);
 define('JPATH_MANIFESTS',		MOLAJO_PATH_MANIFESTS);
 define('JPATH_THEMES',          MOLAJO_PATH_THEMES);
 
-/** overrides */
-define('OVERRIDE', 1);
-define('OVERRIDES_LIBRARY',		MOLAJO_PATH_ROOT.'/libraries/overrides');
+define('JPATH_PLATFORM',        LIBRARIES.'/jplatform');

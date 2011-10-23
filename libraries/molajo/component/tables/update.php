@@ -58,14 +58,14 @@ class MolajoTableUpdate extends MolajoTable
 	{
 		if (isset( $array['params'] ) && is_array($array['params']))
 		{
-			$registry = new MolajoRegistry();
+			$registry = new JRegistry();
 			$registry->loadArray($array['params']);
 			$array['params'] = (string)$registry;
 		}
 
 		if (isset( $array['control'] ) && is_array( $array['control'] ))
 		{
-			$registry = new MolajoRegistry();
+			$registry = new JRegistry();
 			$registry->loadArray($array['control']);
 			$array['control'] = (string)$registry;
 		}

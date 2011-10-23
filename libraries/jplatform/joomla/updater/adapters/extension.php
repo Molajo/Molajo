@@ -42,7 +42,7 @@ class JUpdaterExtension extends JUpdateAdapter
 			case 'UPDATE':
 				$this->current_update = JTable::getInstance('update');
 				$this->current_update->update_site_id = $this->_update_site_id;
-				$this->current_update->detailsurl = $this->_url;
+				$this->current_update->details_url = $this->_url;
 				break;
 			// Don't do anything
 			case 'UPDATES':

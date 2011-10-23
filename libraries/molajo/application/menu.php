@@ -64,7 +64,7 @@ class MolajoMenu extends JObject
 			}
 
 			// Decode the item params
-			$result = new MolajoRegistry;
+			$result = new JRegistry;
 			$result->loadJSON($item->params);
 			$item->params = $result;
 		}
@@ -269,7 +269,7 @@ class MolajoMenu extends JObject
 	 *
 	 * @param   integer  $id  The item id
 	 *
-	 * @return  MolajoRegistry  A MolajoRegistry object
+	 * @return  JRegistry  A JRegistry object
 	 */
 	public function getParams($id)
 	{
@@ -277,7 +277,7 @@ class MolajoMenu extends JObject
 			return $menu->params;
 		}
 		else {
-			return new MolajoRegistry;
+			return new JRegistry;
 		}
 	}
 

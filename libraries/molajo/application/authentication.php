@@ -206,13 +206,11 @@ class MolajoAuthentication extends JObservable
 		$dispatcher = JDispatcher::getInstance();
 		$authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
 
-        $clearance = true;
+        $response->status = MolajoAuthentication::STATUS_SUCCESS;
         foreach ($authorisations as $authorisation) {
 
-            if ($authorisation->status == MolajoAuthentication::STATUS_SUCCESS) {
+            if ($authorisation->status === MolajoAuthentication::STATUS_SUCCESS) {
             } else {
-
-                $clearance = false;
 
                 if (isset($options['silent']) && $options['silent']) {
 
@@ -221,12 +219,15 @@ class MolajoAuthentication extends JObservable
                     switch($authorisation->status)
                     {
                         case MolajoAuthentication::STATUS_EXPIRED:
+                            $response->status = STATUS_EXPIRED;
                             return JError::raiseWarning('102002', JText::_('JLIB_LOGIN_EXPIRED'));
                             break;
                         case MolajoAuthentication::STATUS_DENIED:
+                            $response->status = STATUS_DENIED;
                             return JError::raiseWarning('102003', JText::_('JLIB_LOGIN_DENIED'));
                             break;
                         default:
+                            $response->status = STATUS_FAILURE;
                             return JError::raiseWarning('102004', JText::_('JLIB_LOGIN_AUTHORISATION'));
                             break;
                      }
@@ -234,7 +235,7 @@ class MolajoAuthentication extends JObservable
             }
         }
 
-        return $clearance;
+        return;
     }
 }
 

@@ -321,7 +321,7 @@ class MolajoEditor extends JObservable
 
 		// Get the plugin
 		$plugin		= MolajoPluginHelper::getPlugin('editors', $this->_name);
-		$params = new MolajoRegistry;
+		$params = new JRegistry;
 		$params->loadJSON($plugin->params);
 		$params->loadArray($config);
 		$plugin->params = $params;

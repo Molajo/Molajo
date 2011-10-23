@@ -423,7 +423,7 @@ class MolajoInstallation extends MolajoApplication
 	 *
 	 * @param	string	$name	The sessions name
 	 *
-	 * @return	object	JSession
+	 * @return	object	MolajoSession
 	 */
 	public function & _createSession($name)
 	{

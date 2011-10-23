@@ -83,7 +83,7 @@ class MolajoUtility
 	 * @return  string
 	 *
 	 * @deprecated  1.6
-	 * @see			JApplication:getHash()
+	 * @see			MolajoApplication:getHash()
 	 */
 	public static function getHash($seed)
 	{
@@ -99,7 +99,7 @@ class MolajoUtility
 	 *
 	 * @since       11.1
 	 * @deprecated  1.6
-	 * @see			JApplication:getHash()
+	 * @see			MolajoApplication:getHash()
 	 */
 	public static function getToken($forceNew = false)
 	{
@@ -144,7 +144,7 @@ class MolajoUtility
 	 *
 	 * @since       11.1
 	 * @deprecated  1.6
-	 * @see			JApplication::isWinOS()
+	 * @see			MolajoApplication::isWinOS()
 	 */
 	public static function isWinOS()
 	{

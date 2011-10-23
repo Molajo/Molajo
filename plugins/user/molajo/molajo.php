@@ -6,7 +6,7 @@
  */
 
 // No direct access
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 /**
  * Joomla User plugin
@@ -17,35 +17,6 @@ defined('JPATH_PLATFORM') or die;
  */
 class plgUserMolajo extends MolajoPlugin
 {
-	/**
-	 * Remove all sessions for the user name
-	 *
-	 * Method is called after user data is deleted from the database
-	 *
-	 * @param	array		$user	Holds the user data
-	 * @param	boolean		$succes	True if user was succesfully stored in the database
-	 * @param	string		$msg	Message
-	 *
-	 * @return	boolean
-	 * @since	1.6
-	 */
-	public function onUserAfterDelete($user, $success, $msg)
-	{
-		if ($success) {
-        } else {
-			return false;
-		}
-
-		$db = MolajoFactory::getDbo();
-		$db->setQuery(
-			'DELETE FROM `#__session`' .
-			' WHERE `userid` = '.(int) $user['id']
-		);
-		$db->Query();
-
-		return true;
-	}
-
 	/**
 	 * Utility method to act on a user after it has been saved.
 	 *
@@ -125,7 +96,6 @@ class plgUserMolajo extends MolajoPlugin
 	 */
 	public function onUserLogin($user, $options = array())
 	{
-
 		$instance = $this->_getUser($user, $options);
 
 		if (JError::isError($instance)) {
@@ -225,7 +195,7 @@ class plgUserMolajo extends MolajoPlugin
 		}
 
 		//TODO : move this out of the plugin
-		$config	= JComponentHelper::getParams('com_users');
+		$config	= MolajoComponentHelper::getParams('com_users');
 		// Default to Registered.
 		$defaultUserGroup = $config->get('new_usertype', 2);
 
@@ -246,12 +216,40 @@ class plgUserMolajo extends MolajoPlugin
 			if (!$instance->save()) {
 				return JError::raiseWarning('SOME_ERROR_CODE', $instance->getError());
 			}
-		}
-		else {
+		} else {
 			// No existing user and autoregister off, this is a temporary user.
 			$instance->set('tmp_user', true);
 		}
 
 		return $instance;
 	}
+    
+    /**
+     * Remove all sessions for the user name
+     *
+     * Method is called after user data is deleted from the database
+     *
+     * @param	array		$user	Holds the user data
+     * @param	boolean		$succes	True if user was succesfully stored in the database
+     * @param	string		$msg	Message
+     *
+     * @return	boolean
+     * @since	1.6
+     */
+    public function onUserAfterDelete($user, $success, $msg)
+    {
+        if ($success) {
+        } else {
+            return false;
+        }
+
+        $db = MolajoFactory::getDbo();
+        $db->setQuery(
+            'DELETE FROM `#__session`' .
+            ' WHERE `userid` = '.(int) $user['id']
+        );
+        $db->Query();
+
+        return true;
+    }    
 }

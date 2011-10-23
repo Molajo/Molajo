@@ -94,7 +94,9 @@ abstract class MolajoPluginHelper
 
 		// check for the default args, if so we can optimise cheaply
 		$defaults = false;
-		if (is_null($plugin) && $autocreate == true && is_null($dispatcher)) {
+		if (is_null($plugin)
+            && $autocreate == true
+            && is_null($dispatcher)) {
 			$defaults = true;
 		}
 
@@ -106,16 +108,20 @@ abstract class MolajoPluginHelper
 
 			// Get the specified plugin(s).
 			for ($i = 0, $t = count($plugins); $i < $t; $i++) {
-				if ($plugins[$i]->type == $type && ($plugins[$i]->name == $plugin ||  $plugin === null)) {
+
+				if ($plugins[$i]->type == $type
+                    && ($plugins[$i]->name == $plugin ||  $plugin === null)) {
 					self::_import($plugins[$i], $autocreate, $dispatcher);
 					$results = true;
 				}
  			}
 
 			// Bail out early if we're not using default args
-			if(!$defaults) {
+			if($defaults) {
+            } else {
 				return $results;
 			}
+
 			$loaded[$type] = $results;
 		}
  
@@ -141,38 +147,24 @@ abstract class MolajoPluginHelper
 		$plugin->type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
 		$plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
 
-		$legacypath	= MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'.php';
 		$path = MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
+		require_once $path;
 
-		if (!isset( $paths[$path] ) || !isset($paths[$legacypath])) {
-			$pathExists = file_exists($path);
-			if ($pathExists || file_exists($legacypath)) {
-				$path = $pathExists ? $path : $legacypath;
+        if ($autocreate) {
 
-				if (!isset($paths[$path])) {
-					require_once $path;
-				}
-				$paths[$path] = true;
+            if (is_object($dispatcher)) {
+            } else {
+                $dispatcher = JDispatcher::getInstance();
+            }
 
-				if ($autocreate) {
-					// Makes sure we have an event dispatcher
-					if (!is_object($dispatcher)) {
-						$dispatcher = JDispatcher::getInstance();
-					}
+            $className = 'plg'.$plugin->type.$plugin->name;
+            if (class_exists($className)) {
 
-					$className = 'plg'.$plugin->type.$plugin->name;
-					if (class_exists($className)) {
-						// Load the plugin from the database.
-						$plugin = self::getPlugin($plugin->type, $plugin->name);
-
-						// Instantiate and register the plugin.
-						new $className($dispatcher, (array)($plugin));
-					}
-				}
-			} else {
-				$paths[$path] = false;
-			}
-		}
+            } else {
+                $plugin = self::getPlugin($plugin->type, $plugin->name);
+                new $className($dispatcher, (array)($plugin));
+            }
+        }
 	}
 
 	/**
@@ -199,6 +191,7 @@ abstract class MolajoPluginHelper
         $query->select('folder AS type, element AS name, params')
             ->from('#__extensions')
             ->where('enabled >= 1')
+            ->where('element != "sef"')
             ->where('type ='.$db->Quote('plugin'))
             ->where('state >= 0')
             ->order('ordering');

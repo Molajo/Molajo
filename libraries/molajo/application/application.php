@@ -181,7 +181,8 @@ class MolajoApplication extends JObject
 		if (MolajoPluginHelper::isEnabled('editors', $editor)) {
         } else {
 			$editor	= $this->getCfg('editor');
-			if (!MolajoPluginHelper::isEnabled('editors', $editor)) {
+			if (MolajoPluginHelper::isEnabled('editors', $editor)) {
+            } else {
 				$editor	= 'none';
 			}
 		}
@@ -674,7 +675,7 @@ class MolajoApplication extends JObject
 
              // Load the parameters. Merge Global and Menu Item params into new object
      //		$params = $app->getParams();
-     //		$menuParams = new MolajoRegistry;
+     //		$menuParams = new JRegistry;
 
      //		if ($menu = $app->getMenu()->getActive()) {
      //			$menuParams->loadString($menu->params);
@@ -1279,7 +1280,7 @@ class MolajoApplication extends JObject
 	 *
 	 * @param   string  $name  The sessions name.
 	 *
-	 * @return  JSession  JSession on success. May call exit() on database error.
+	 * @return  MolajoSession  MolajoSession on success. May call exit() on database error.
 	 *
 	 * @since  1.0
 	 */
@@ -1384,7 +1385,7 @@ class MolajoApplication extends JObject
 
 			// Session doesn't exist yet, so create session variables
 			if ($session->isNew()) {
-				$session->set('registry',	new MolajoRegistry('session'));
+				$session->set('registry',	new JRegistry('session'));
 				$session->set('user',		new MolajoUser());
 			}
 		}

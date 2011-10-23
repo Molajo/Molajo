@@ -18,9 +18,9 @@ defined('MOLAJO') or die;
 abstract class MolajoPlugin extends JEvent
 {
 	/**
-	 * A MolajoRegistry object holding the parameters for the plugin
+	 * A JRegistry object holding the parameters for the plugin
 	 *
-	 * @var    A MolajoRegistry object
+	 * @var    A JRegistry object
 	 * @since  11.1
 	 */
 	public $params = null;
@@ -53,10 +53,10 @@ abstract class MolajoPlugin extends JEvent
 	{
 		if (isset($config['params']))
 		{
-			if ($config['params'] instanceof MolajoRegistry) {
+			if ($config['params'] instanceof JRegistry) {
 				$this->params = $config['params'];
 			} else {
-				$this->params = new MolajoRegistry;
+				$this->params = new JRegistry;
 				$this->params->loadString($config['params']);
 			}
 		}

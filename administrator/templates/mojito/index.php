@@ -7,7 +7,6 @@
  */
 defined('MOLAJO') or die;
 include dirname(__FILE__).'/include/head.php';
-
 if (MolajoFactory::getApplication()->getCfg('html5', true)): ?>
 <!DOCTYPE html>
 <?php else: ?>

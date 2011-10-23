@@ -9,7 +9,6 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.plugin.plugin');
 
 /**
  * Editor Pagebreak buton

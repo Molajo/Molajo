@@ -172,7 +172,7 @@ abstract class MolajoModuleHelper
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new MolajoRegistry;
+            $params = new JRegistry;
             $params->loadJSON($module->params);
 
             $request = self::getRequest($module, $params);

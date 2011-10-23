@@ -22,7 +22,7 @@ defined('MOLAJO') or die;
 class MolajoForm
 {
 	/**
-	 * The MolajoRegistry data store for form fields during display.
+	 * The JRegistry data store for form fields during display.
 	 * @var    object
 	 * @since  1.0
 	 */
@@ -78,8 +78,8 @@ class MolajoForm
 		// Set the name for the form.
 		$this->name = $name;
 
-		// Initialise the MolajoRegistry data.
-		$this->data = new MolajoRegistry;
+		// Initialise the JRegistry data.
+		$this->data = new JRegistry;
 
 		// Set the options if specified.
 		$this->options['control']  = isset($options['control']) ? $options['control'] : false;
@@ -108,8 +108,8 @@ class MolajoForm
 
 		// Convert the calendar to an array.
 		if (is_object($data)) {
-			if ($data instanceof MolajoRegistry) {
-				// Handle a MolajoRegistry.
+			if ($data instanceof JRegistry) {
+				// Handle a JRegistry.
 				$data = $data->toArray();
 			}
 			else if ($data instanceof JObject) {
@@ -185,8 +185,8 @@ class MolajoForm
 		}
 
 		// Initialise variables.
-		$calendar	= new MolajoRegistry($data);
-		$output	= new MolajoRegistry;
+		$calendar	= new JRegistry($data);
+		$output	= new JRegistry;
 
 		// Get the fields for which to filter the data.
 		$fields = $this->findFieldsByGroup($group);
@@ -779,7 +779,7 @@ class MolajoForm
 	public function reset($xml = false)
 	{
 		unset($this->data);
-		$this->data = new MolajoRegistry;
+		$this->data = new JRegistry;
 
 		if ($xml) {
 			unset($this->xml);
@@ -998,7 +998,7 @@ class MolajoForm
 		$return	= true;
 
 		// Create an calendar registry object from the data to validate.
-		$calendar = new MolajoRegistry($data);
+		$calendar = new JRegistry($data);
 
 		// Get the fields for which to validate the data.
 		$fields = $this->findFieldsByGroup($group);
@@ -1633,7 +1633,7 @@ class MolajoForm
 	 * @param   string  $element  The XML element object representation of the form field.
 	 * @param   string  $group    The optional dot-separated form group path on which to find the field.
 	 * @param   mixed   $value    The optional value to use as the default for the field.
-	 * @param   object  $calendar    An optional MolajoRegistry object with the entire data set to validate
+	 * @param   object  $calendar    An optional JRegistry object with the entire data set to validate
 	 *                            against the entire form.
 	 *
 	 * @return  mixed  Boolean true if field value is valid, MolajoException on failure.
