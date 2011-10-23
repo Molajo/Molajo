@@ -348,9 +348,8 @@ class InstallerModelDatabase extends InstallerModelDisplay
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	public function backupDatabase()
+	public function backupTables()
 	{
-        $db   = MolajoFactory::getDbo();
         $conf = MolajoFactory::getConfig();
 
         $prefix	  = $conf->get('dbprefix');
@@ -361,12 +360,12 @@ class InstallerModelDatabase extends InstallerModelDisplay
 		$backup = 'bak_' . $prefix;
 
 		// Get the tables in the database.
-		$db->setQuery(
+		$this->_db->setQuery(
 			'SHOW TABLES' .
-			' FROM '.$db->nameQuote($database)
+			' FROM '.$this->_db->nameQuote($database)
 		);
 
-		if ($tables = $db->loadResultArray()) {
+		if ($tables = $this->_db->loadResultArray()) {
 			foreach ($tables as $table)
 			{
 				// If the table uses the given prefix, back it up.
@@ -376,26 +375,26 @@ class InstallerModelDatabase extends InstallerModelDisplay
 					$backupTable = str_replace($prefix, $backup, $table);
 
 					// Drop the backup table.
-					$db->setQuery(
-						'DROP TABLE IF EXISTS '.$db->nameQuote($backupTable)
+					$this->_db->setQuery(
+						'DROP TABLE IF EXISTS '.$this->_db->nameQuote($backupTable)
 					);
-					$db->query();
+					$this->_db->query();
 
 					// Check for errors.
-					if ($db->getErrorNum()) {
-						$this->setError($db->getErrorMsg());
+					if ($this->_db->getErrorNum()) {
+						$this->setError($this->_db->getErrorMsg());
 						$return = false;
 					}
 
 					// Rename the current table to the backup table.
-					$db->setQuery(
-						'RENAME TABLE '.$db->nameQuote($table).' TO '.$db->nameQuote($backupTable)
+					$this->_db->setQuery(
+						'RENAME TABLE '.$this->_db->nameQuote($table).' TO '.$this->_db->nameQuote($backupTable)
 					);
-					$db->query();
+					$this->_db->query();
 
 					// Check for errors.
-					if ($db->getErrorNum()) {
-						$this->setError($db->getErrorMsg());
+					if ($this->_db->getErrorNum()) {
+						$this->setError($this->_db->getErrorMsg());
 						$return = false;
 					}
 				}
@@ -447,29 +446,35 @@ class InstallerModelDatabase extends InstallerModelDisplay
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	public function deleteDatabase(& $db, $name, $prefix)
+	public function deleteTables()
 	{
 		// Initialise variables.
 		$return = true;
+        
+        $conf = MolajoFactory::getConfig();
+
+        $prefix	  = $conf->get('dbprefix');
+        $database = $conf->get('db');
+        
 
 		// Get the tables in the database.
-		$db->setQuery(
-			'SHOW TABLES FROM '.$db->nameQuote($name)
+		$this->_db->setQuery(
+			'SHOW TABLES FROM '.$this->_db->nameQuote($name)
 		);
-		if ($tables = $db->loadResultArray()) {
+		if ($tables = $this->_db->loadResultArray()) {
 			foreach ($tables as $table)
 			{
 				// If the table uses the given prefix, drop it.
 				if (strpos($table, $prefix) === 0) {
 					// Drop the table.
-					$db->setQuery(
-						'DROP TABLE IF EXISTS '.$db->nameQuote($table)
+					$this->_db->setQuery(
+						'DROP TABLE IF EXISTS '.$this->_db->nameQuote($table)
 					);
-					$db->query();
+					$this->_db->query();
 
 					// Check for errors.
-					if ($db->getErrorNum()) {
-						$this->setError($db->getErrorMsg());
+					if ($this->_db->getErrorNum()) {
+						$this->setError($this->_db->getErrorMsg());
 						$return = false;
 					}
 				}

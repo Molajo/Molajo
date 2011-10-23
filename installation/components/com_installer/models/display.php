@@ -166,10 +166,10 @@ class InstallerModelDisplay extends MolajoModelDummy
 
         // Remove or backup existing tables based on config
         if($config->remove_tables) {
-
+            $this->deleteTables();
         }
         else {
-            $this->backupDatabase();
+            $this->backupTables();
         }
 
         // Install sample data if required
