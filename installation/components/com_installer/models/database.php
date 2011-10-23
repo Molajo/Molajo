@@ -493,14 +493,14 @@ class InstallerModelDatabase extends InstallerModelDisplay
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	public function populateDatabase(& $db, $schema)
+	public function createTables($schema)
 	{
 		// Initialise variables.
 		$return = true;
 
 		// Get the contents of the schema file.
 		if (!($buffer = file_get_contents($schema))) {
-			$this->setError($db->getErrorMsg());
+			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
 
@@ -514,12 +514,12 @@ class InstallerModelDatabase extends InstallerModelDisplay
 			// If the query isn't empty and is not a comment, execute it.
 			if (!empty($query) && ($query{0} != '#')) {
 				// Execute the query.
-				$db->setQuery($query);
-				$db->query();
+				$this->_db->setQuery($query);
+				$this->_db->query();
 
 				// Check for errors.
-				if ($db->getErrorNum()) {
-					$this->setError($db->getErrorMsg());
+				if ($this->_db->getErrorNum()) {
+					$this->setError($this->_db->getErrorMsg());
 					$return = false;
 				}
 			}
@@ -537,19 +537,23 @@ class InstallerModelDatabase extends InstallerModelDisplay
 	 * @return	boolean	True on success.
 	 * @since	1.0
 	 */
-	public function setDatabaseCharset(& $db, $name)
+	public function setDatabaseCharset()
 	{
+        $conf = MolajoFactory::getConfig();
+
+        $database = $conf->get('db');
+
 		// Only alter the database if it supports the character set.
-		if ($db->hasUTF()) {
+		if ($this->_db->hasUTF()) {
 			// Run the create database query.
-			$db->setQuery(
-				'ALTER DATABASE '.$db->nameQuote($name).' CHARACTER' .
+			$this->_db->setQuery(
+				'ALTER DATABASE '.$this->_db->nameQuote($database).' CHARACTER' .
 				' SET `utf8`'
 			);
-			$db->query();
+			$this->_db->query();
 
 			// If an error occurred return false.
-			if ($db->getErrorNum()) {
+			if ($this->_db->getErrorNum()) {
 				return false;
 			}
 		}
