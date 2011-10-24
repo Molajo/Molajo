@@ -1,14 +1,10 @@
 $(function(){
 
 				// Accordion
-				var stop = false;
-				$( "#accordion h2" ).click(function( event ) {
-					if ( stop ) {
-						event.stopImmediatePropagation();
-						event.preventDefault();
-						stop = false;
-					}
-				});
+				$('.accordion .head').click(function() {
+					$(this).next().toggle('slow');
+					return false;
+				}).next().hide();
 				
 				$( "#accordion" )
 					.accordion({
@@ -25,10 +21,17 @@ $(function(){
 				$( "#accordion" ).accordion({
 					fillSpace: true,
 					autoHeight: false,
-					navigation: true
+					navigation: true,
+					collapsible: true
 				});
 				
 				// Tabs
 				$('#tabs').tabs();
 				
-			});
+				// Toggle editor action buttons
+				// will need to add check for actual state
+				$('.editor .actions li a').click(function () {
+				      $(this).toggleClass("enabled");
+				});
+			
+});

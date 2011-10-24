@@ -6,7 +6,7 @@
 		<link type="text/css" href="css/jquery.ui.all.css" rel="stylesheet" />
 		<link type="text/css" href="css/custom.css" rel="stylesheet" />
 		<script type="text/javascript" src="js/jquery-1.6.2.js"></script>
-		<script type="text/javascript" src="js/jquery-ui-1.8.15.custom.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.js"></script>
 		<script type="text/javascript" src="js/scripts.js"></script>
 	</head>
 	<body>
@@ -41,7 +41,7 @@
 				}
 			?>
 		</nav>
-		<section>
+		<section class="dash">
 			<div id="">
 				<?php
 					if(isset($_GET['config'])){
