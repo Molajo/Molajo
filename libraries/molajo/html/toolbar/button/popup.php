@@ -1,22 +1,22 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 /**
  * Renders a popup window button
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
-class MolajoButtonPopup extends JButton
+class MolajoButtonPopup extends MolajoButton
 {
 	/**
 	 * Button type
@@ -25,37 +25,19 @@ class MolajoButtonPopup extends JButton
 	 */
 	protected $_name = 'Popup';
 
-	/**
-	 * Fetch the HTML for the button
-	 *
-	 * @param   string   $type     Unused string, formerly button type.
-	 * @param   string   $name     Button name
-	 * @param   string   $text     The link text
-	 * @param   string   $url      URL for popup
-	 * @param   integer  $width    Width of popup
-	 * @param   integer  $height   Height of popup
-	 * @param   integer  $top      Top attribute.
-	 * @param   integer  $left     Left attribute
-	 * @param   string   $onClose  JavaScript for the onClose event.
-	 *
-	 * @return  string  HTML string for the button
-	 *
-	 * @since   11.1
-	 */
-	public function fetchButton($type = 'Popup', $name = '', $text = '', $url = '', $width = 640, $height = 480, $top = 0, $left = 0, $onClose = '')
+	public function fetchButton($type='Popup', $name = '', $text = '', $url = '', $width=640, $height=480, $top=0, $left=0, $onClose = '')
 	{
 		MolajoHTML::_('behavior.modal');
 
-		$text = JText::_($text);
-		$class = $this->fetchIconClass($name);
-		$doTask = $this->_getCommand($name, $url, $width, $height, $top, $left);
+		$text	= MolajoText::_($text);
+		$class	= $this->fetchIconClass($name);
+		$doTask	= $this->_getCommand($name, $url, $width, $height, $top, $left);
 
-		$html = "<a class=\"modal\" href=\"$doTask\" rel=\"{handler: 'iframe', size: {x: $width, y: $height}, onClose: function() {" . $onClose
-			. "}}\">\n";
+		$html	= "<a class=\"modal\" href=\"$doTask\" rel=\"{handler: 'iframe', size: {x: $width, y: $height}, onClose: function() {".$onClose."}}\">\n";
 		$html .= "<span class=\"$class\">\n";
 		$html .= "</span>\n";
-		$html .= "$text\n";
-		$html .= "</a>\n";
+		$html	.= "$text\n";
+		$html	.= "</a>\n";
 
 		return $html;
 	}
@@ -63,39 +45,28 @@ class MolajoButtonPopup extends JButton
 	/**
 	 * Get the button id
 	 *
-	 * Redefined from JButton class
+	 * Redefined from MolajoButton class
 	 *
-	 * @param   string  $type  Button type
-	 * @param   string  $name  Button name
-	 *
+	 * @param   string	$name	Button name
 	 * @return  string	Button CSS Id
-	 *
-	 * @since   11.1
+	 * @since       1.0
 	 */
 	public function fetchId($type, $name)
 	{
-		return $this->_parent->getName() . '-' . "popup-$name";
+		return $this->_parent->getName().'-'."popup-$name";
 	}
 
 	/**
 	 * Get the JavaScript command for the button
 	 *
-	 * @param   string   $name    Button name
-	 * @param   string   $url     URL for popup
-	 * @param   integer  $width   Unused formerly width.
-	 * @param   integer  $height  Unused formerly height.
-	 * @param   integer  $top     Unused formerly top attribute.
-	 * @param   integer  $left    Unused formerly left attribure.
-	 *
+	 * @param   object   $definition	Button definition
 	 * @return  string   JavaScript command string
-	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	protected function _getCommand($name, $url, $width, $height, $top, $left)
 	{
-		if (substr($url, 0, 4) !== 'http')
-		{
-			$url = JURI::base() . $url;
+		if (substr($url, 0, 4) !== 'http') {
+			$url = JURI::base().$url;
 		}
 
 		return $url;

@@ -1,104 +1,95 @@
 <?php
 /**
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
-
-//Register the session storage class with the loader
-JLoader::register('JButton', dirname(__FILE__) . '/toolbar/button.php');
+defined('MOLAJO') or die;
 
 /**
  * ToolBar handler
  *
- * @package     Joomla.Platform
+ * @package    Molajo
  * @subpackage  HTML
- * @since       11.1
+ * @since       1.0
  */
-class MolajoToolBar extends JObject
+class MolajoToolbar extends JObject
 {
 	/**
 	 * Toolbar name
 	 *
 	 * @var    string
 	 */
-	protected $_name = array();
+	protected $_name = array ();
 
 	/**
 	 * Toolbar array
 	 *
 	 * @var    array
 	 */
-	protected $_bar = array();
+	protected $_bar = array ();
 
 	/**
 	 * Loaded buttons
 	 *
 	 * @var    array
 	 */
-	protected $_buttons = array();
+	protected $_buttons = array ();
 
 	/**
 	 * Directories, where button types can be stored.
 	 *
 	 * @var    array
 	 */
-	protected $_buttonPath = array();
+	protected $_buttonPath = array ();
 
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $name  The toolbar name.
-	 *
-	 * @since   11.1
+	 * @param   string  The toolbar name.
 	 */
 	public function __construct($name = 'toolbar')
 	{
 		$this->_name = $name;
 
 		// Set base path to find buttons.
-		$this->_buttonPath[] = dirname(__FILE__) . '/toolbar/button';
+		$this->_buttonPath[] = dirname(__FILE__).'/'.'toolbar'.'/'.'button';
 
 	}
 
 	/**
-	* Stores the singleton instances of various toolbar.
-	*
-	* @var JToolbar
-	* @since 11.3
-	*/
-	protected static $instances = array();
-
-	/**
-	 * Returns the global JToolBar object, only creating it if it
+	 * Returns the global MolajoToolbar object, only creating it if it
 	 * doesn't already exist.
 	 *
 	 * @param   string  $name  The name of the toolbar.
 	 *
-	 * @return  JToolBar  The JToolBar object.
-	 *
-	 * @since   11.1
+	 * @return  MolajoToolbar	The MolajoToolbar object.
 	 */
 	public static function getInstance($name = 'toolbar')
 	{
-		if (empty(self::$instances[$name]))
-		{
-			self::$instances[$name] = new JToolBar($name);
+		static $instances;
+
+		if (!isset($instances)) {
+			$instances = array ();
 		}
 
-		return self::$instances[$name];
+		if (empty($instances[$name])) {
+			$instances[$name] = new MolajoToolbar($name);
+		}
+
+		return $instances[$name];
 	}
 
 	/**
 	 * Set a value
 	 *
-	 * @return  string  The set value.
+	 * @param   string  The name of the parameter.
+	 * @param   string  The value of the parameter.
 	 *
-	 * @since   11.1
+	 * @return  string  The set value.
 	 */
 	public function appendButton()
 	{
@@ -112,8 +103,7 @@ class MolajoToolBar extends JObject
 	 * Get the list of toolbar links.
 	 *
 	 * @return  array
-	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getItems()
 	{
@@ -124,8 +114,7 @@ class MolajoToolBar extends JObject
 	 * Get the name of the toolbar.
 	 *
 	 * @return  string
-	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function getName()
 	{
@@ -135,9 +124,10 @@ class MolajoToolBar extends JObject
 	/**
 	 * Get a value.
 	 *
-	 * @return  string
+	 * @param   string  The name of the parameter.
+	 * @param   mixed   The default value if not found.
 	 *
-	 * @since   11.1
+	 * @return  string
 	 */
 	public function prependButton()
 	{
@@ -148,23 +138,22 @@ class MolajoToolBar extends JObject
 	}
 
 	/**
-	 * Render a tool bar.
+	 * Render.
 	 *
-	 * @return  string  HTML for the toolbar.
+	 * @param   string  The name of the control, or the default text area if a setup file is not found.
 	 *
-	 * @since   11.1
+	 * @return  string  HTML
 	 */
 	public function render()
 	{
-		$html = array();
+		$html = array ();
 
 		// Start toolbar div.
-		$html[] = '<div class="toolbar-list" id="' . $this->_name . '">';
+		$html[] = '<div class="toolbar-list" id="'.$this->_name.'">';
 		$html[] = '<ul>';
 
 		// Render each button in the toolbar.
-		foreach ($this->_bar as $button)
-		{
+		foreach ($this->_bar as $button) {
 			$html[] = $this->renderButton($button);
 		}
 
@@ -177,13 +166,12 @@ class MolajoToolBar extends JObject
 	}
 
 	/**
-	 * Render a button.
+	 * Render a parameter type.
 	 *
-	 * @param   object  &$node  A toolbar node.
+	 * @param   object  A param tag node.
+	 * @param   string  The control name.
 	 *
-	 * @return  string
-	 *
-	 * @since   11.1
+	 * @return  array  Any array of the label, the form element and the tooltip.
 	 */
 	public function renderButton(&$node)
 	{
@@ -193,9 +181,8 @@ class MolajoToolBar extends JObject
 		$button = $this->loadButtonType($type);
 
 		// Check for error.
-		if ($button === false)
-		{
-			return JText::sprintf('JLIB_HTML_BUTTON_NOT_DEFINED', $type);
+		if ($button === false) {
+			return MolajoText::sprintf('MOLAJO_HTML_BUTTON_NOT_DEFINED', $type);
 		}
 		return $button->render($node);
 	}
@@ -203,49 +190,39 @@ class MolajoToolBar extends JObject
 	/**
 	 * Loads a button type.
 	 *
-	 * @param   string   $type  Button Type
-	 * @param   boolean  $new   False by default
+	 * @param   string  buttonType
 	 *
 	 * @return  object
-	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function loadButtonType($type, $new = false)
 	{
 		$signature = md5($type);
-		if (isset($this->_buttons[$signature]) && $new === false)
-		{
+		if (isset ($this->_buttons[$signature]) && $new === false) {
 			return $this->_buttons[$signature];
 		}
 
 		if (!class_exists('JButton'))
 		{
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_HTML_BUTTON_BASE_CLASS'));
+			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
 			return false;
 		}
 
-		$buttonClass = 'JButton' . $type;
+		$buttonClass = 'JButton'.$type;
 		if (!class_exists($buttonClass))
 		{
-			if (isset($this->_buttonPath))
-			{
+			if (isset ($this->_buttonPath)) {
 				$dirs = $this->_buttonPath;
-			}
-			else
-			{
-				$dirs = array();
+			} else {
+				$dirs = array ();
 			}
 
-			$file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)) . '.php', 'path');
+			$file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)).'.php', 'path');
 
-			jimport('joomla.filesystem.path');
-			if ($buttonFile = JPath::find($dirs, $file))
-			{
+			if ($buttonFile = JPath::find($dirs, $file)) {
 				include_once $buttonFile;
-			}
-			else
-			{
-				JError::raiseWarning('SOME_ERROR_CODE', JText::sprintf('JLIB_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
+			} else {
+				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
 				return false;
 			}
 		}
@@ -261,20 +238,16 @@ class MolajoToolBar extends JObject
 	}
 
 	/**
-	 * Add a directory where JToolBar should search for button types in LIFO order.
+	 * Add a directory where MolajoToolbar should search for button types in LIFO order.
 	 *
 	 * You may either pass a string or an array of directories.
 	 *
-	 * JToolbar will be searching for an element type in the same order you
+	 * {@link JToolbar} will be searching for an element type in the same order you
 	 * added them. If the parameter type cannot be found in the custom folders,
 	 * it will look in libraries/joomla/html/toolbar/button.
 	 *
-	 * @param   mixed  $path  Directory or directories to search.
-	 *
-	 * @return  void
-	 *
-	 * @since   11.1
-	 * @see JToolbar
+	 * @param   string|array	directory or directories to search.
+	 * @since   1.0
 	 */
 	public function addButtonPath($path)
 	{
@@ -282,14 +255,12 @@ class MolajoToolBar extends JObject
 		settype($path, 'array');
 
 		// Loop through the path directories.
-		foreach ($path as $dir)
-		{
+		foreach ($path as $dir) {
 			// No surrounding spaces allowed!
 			$dir = trim($dir);
 
 			// Add trailing separators as needed.
-			if (substr($dir, -1) != DIRECTORY_SEPARATOR)
-			{
+			if (substr($dir, -1) != DIRECTORY_SEPARATOR) {
 				// Directory
 				$dir .= DIRECTORY_SEPARATOR;
 			}
