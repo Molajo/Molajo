@@ -32,12 +32,12 @@ $this->escape($this->state->get('list.direction'))	= $this->escape($this->state-
 		<div class="right">
 			<select name="filter_published" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->queryState->get('filter.published'), true);?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('jgrid.publishedOptions'), 'value', 'text', $this->queryState->get('filter.published'), true);?>
 			</select>
 
 			<select name="filter_category_id" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_CATEGORY');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('category.options', 'com_articles'), 'value', 'text', $this->queryState->get('filter.category_id'));?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('category.options', 'com_articles'), 'value', 'text', $this->queryState->get('filter.category_id'));?>
 			</select>
 
 		</div>
@@ -47,19 +47,19 @@ $this->escape($this->state->get('list.direction'))	= $this->escape($this->state-
 		<thead>
 			<tr>
 				<th class="title">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
 				</th>
 				<th width="20%">
-					<?php echo JHtml::_('grid.sort', 'JCATEGORY', 'a.catid', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JCATEGORY', 'a.catid', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHtml::_('grid.sort',  'JDATE', 'a.created', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
+					<?php echo MolajoHTML::_('grid.sort',  'JDATE', 'a.created', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHtml::_('grid.sort',  'JAUTHOR', 'a.author', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
+					<?php echo MolajoHTML::_('grid.sort',  'JAUTHOR', 'a.author', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
 				</th>
 				<th width="1%" class="nowrap">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
 				</th>
 			</tr>
 		</thead>
@@ -81,7 +81,7 @@ $this->escape($this->state->get('list.direction'))	= $this->escape($this->state-
 					<?php echo $this->escape($item->category_title); ?>
 				</td>
 				<td class="center nowrap">
-					<?php echo JHtml::_('date',$item->created, MolajoText::_('DATE_FORMAT_LC4')); ?>
+					<?php echo MolajoHTML::_('date',$item->created, MolajoText::_('DATE_FORMAT_LC4')); ?>
 				</td>
 				<td class="center">
 					<?php echo $this->escape($item->author); ?>
@@ -99,6 +99,6 @@ $this->escape($this->state->get('list.direction'))	= $this->escape($this->state-
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

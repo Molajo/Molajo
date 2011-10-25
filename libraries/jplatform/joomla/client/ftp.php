@@ -1739,4 +1739,3 @@ class JFTP
 		return true;
 	}
 }
-

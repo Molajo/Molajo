@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.multiselect');
 
 $user		= MolajoFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
@@ -31,7 +31,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<div class="filter-select fltrt">
 			<select name="filter_state" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
-				<?php echo JHtml::_('select.options', MessagesHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
+				<?php echo MolajoHTML::_('select.options', MessagesHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -44,16 +44,16 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="title">
-					<?php echo JHtml::_('grid.sort',  'COM_MESSAGES_HEADING_SUBJECT', 'a.subject', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort',  'COM_MESSAGES_HEADING_SUBJECT', 'a.subject', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHtml::_('grid.sort', 'COM_MESSAGES_HEADING_READ', 'a.state', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_MESSAGES_HEADING_READ', 'a.state', $listDirn, $listOrder); ?>
 				</th>
 				<th width="15%">
-					<?php echo JHtml::_('grid.sort', 'COM_MESSAGES_HEADING_FROM', 'a.user_id_from', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_MESSAGES_HEADING_FROM', 'a.user_id_from', $listDirn, $listOrder); ?>
 				</th>
 				<th width="20%" class="nowrap">
-					<?php echo JHtml::_('grid.sort', 'JDATE', 'a.date_time', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JDATE', 'a.date_time', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -70,20 +70,20 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td>
-					<?php echo JHtml::_('grid.id', $i, $item->message_id); ?>
+					<?php echo MolajoHTML::_('grid.id', $i, $item->message_id); ?>
 				</td>
 				<td>
 					<a href="<?php echo MolajoRoute::_('index.php?option=com_messages&view=message&message_id='.(int) $item->message_id); ?>">
 						<?php echo $this->escape($item->subject); ?></a>
 				</td>
 				<td class="center">
-					<?php echo JHtml::_('messages.state', $item->state, $i, $canChange); ?>
+					<?php echo MolajoHTML::_('messages.state', $item->state, $i, $canChange); ?>
 				</td>
 				<td>
 					<?php echo $item->user_from; ?>
 				</td>
 				<td>
-					<?php echo JHtml::_('date',$item->date_time, MolajoText::_('DATE_FORMAT_LC2')); ?>
+					<?php echo MolajoHTML::_('date',$item->date_time, MolajoText::_('DATE_FORMAT_LC2')); ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>
@@ -95,6 +95,6 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

@@ -6,7 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-JHtml::_('behavior.keepalive');
+//MolajoHTML::_('behavior.keepalive');
 
 $langs	= MolajoLoginHelper::getLanguageList();
 $return	= MolajoLoginHelper::getReturnURI();
@@ -30,6 +30,6 @@ $return	= MolajoLoginHelper::getReturnURI();
 		<input type="hidden" name="option" value="com_login" />
 		<input type="hidden" name="task" value="login" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />
-		<?php // echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</fieldset>
 </form>

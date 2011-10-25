@@ -50,7 +50,7 @@ class MolajoElementContent extends JElement
 
 		$link = 'index.php?option=com_content&amp;task=element&amp;tmpl=component&amp;function=jSelectArticle_'.$name;
 
-		JHtml::_('behavior.modal', 'a.modal');
+		MolajoHTML::_('behavior.modal', 'a.modal');
 		$html = "\n".'<div class="fltlft"><input type="text" id="'.$name.'_name" value="'.htmlspecialchars($article->title, ENT_QUOTES, 'UTF-8').'" disabled="disabled" /></div>';
 //		$html .= "\n &#160; <input class=\"inputbox modal-button\" type=\"button\" value=\"".MolajoText::_('JSELECT')."\" />";
 		$html .= '<div class="button2-left"><div class="blank"><a class="modal" title="'.MolajoText::_('COM_CONTENT_SELECT_AN_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 650, y: 375}}">'.MolajoText::_('JSELECT').'</a></div></div>'."\n";

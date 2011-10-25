@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -149,6 +149,19 @@ class MolajoApplication extends JObject
 				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $application));
 				return $error;
 			}
+
+            if (file_exists($info->path.'/includes/helper.php')) {
+                require_once $info->path.'/includes/helper.php';
+            }
+            if (file_exists($info->path.'/includes/menu.php')) {
+                require_once $info->path.'/includes/menu.php';
+            }
+            if (file_exists($info->path.'/includes/pathway.php')) {
+                require_once $info->path.'/includes/pathway.php';
+            }
+            if (file_exists($info->path.'/includes/router.php')) {
+                require_once $info->path.'/includes/router.php';
+            }            
 
 			$instances[$application] = &$instance;
 		}

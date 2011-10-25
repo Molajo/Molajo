@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 $template = MolajoFactory::getApplication()->getTemplate();
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -40,11 +40,11 @@ JHtml::_('behavior.formvalidation');
 	</fieldset>
 
 	<?php
-	echo JHtml::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
+	echo MolajoHTML::_('tabs.start','config-tabs-'.$this->component->option.'_configuration', array('useCookie'=>1));
 		$fieldSets = $this->form->getFieldsets();
 		foreach ($fieldSets as $name => $fieldSet) :
 			$label = empty($fieldSet->label) ? 'COM_CONFIG_'.$name.'_FIELDSET_LABEL' : $fieldSet->label;
-			echo JHtml::_('tabs.panel',MolajoText::_($label), 'publishing-details');
+			echo MolajoHTML::_('tabs.panel',MolajoText::_($label), 'publishing-details');
 			if (isset($fieldSet->description) && !empty($fieldSet->description)) :
 				echo '<p class="tab-description">'.MolajoText::_($fieldSet->description).'</p>';
 			endif;
@@ -68,12 +68,12 @@ JHtml::_('behavior.formvalidation');
 	<div class="clr"></div>
 	<?php
 		endforeach;
-	echo JHtml::_('tabs.end');
+	echo MolajoHTML::_('tabs.end');
 	?>
 	<div>
 		<input type="hidden" name="id" value="<?php echo $this->component->id;?>" />
 		<input type="hidden" name="component" value="<?php echo $this->component->option;?>" />
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

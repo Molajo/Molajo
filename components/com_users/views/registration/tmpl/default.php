@@ -10,9 +10,9 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.keepalive');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+MolajoHTML::_('behavior.keepalive');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
 ?>
 <div class="registration<?php echo $this->pageclass_sfx?>">
 <?php if ($this->params->get('show_page_heading')) : ?>
@@ -51,7 +51,7 @@ JHtml::_('behavior.formvalidation');
 			<a href="<?php echo MolajoRoute::_('');?>" title="<?php echo JText::_('JCANCEL');?>"><?php echo JText::_('JCANCEL');?></a>
 			<input type="hidden" name="option" value="com_users" />
 			<input type="hidden" name="task" value="registration.register" />
-			<?php echo JHtml::_('form.token');?>
+			<?php echo MolajoHTML::_('form.token');?>
 		</div>
 	</form>
 </div>

@@ -9,4 +9,4 @@
 defined('MOLAJO') or die;
  ?>
 <div class="width-40 fltrt">
-<?php echo JHtml::_('sliders.start','content-sliders-'.$this->slider_id, array('useCookie'=>1)); ?>
+<?php echo MolajoHTML::_('sliders.start','content-sliders-'.$this->slider_id, array('useCookie'=>1)); ?>

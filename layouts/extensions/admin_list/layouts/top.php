@@ -9,9 +9,9 @@
 defined('MOLAJO') or die;
 
 /** JS **/
-JHtml::_('behavior.framework', true);
-JHtml::_('behavior.tooltip');
-JHtml::_('script','system/multiselect.js', false, true);
+MolajoHTML::_('behavior.framework', true);
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('script','system/multiselect.js', false, true);
 
 /** list variables **/
 $this->saveOrder = $this->state->get('list.ordering');

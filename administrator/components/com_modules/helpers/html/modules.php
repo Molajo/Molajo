@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
  * @subpackage	com_modules
  * * * @since		1.0
  */
-abstract class JHtmlModules
+abstract class MolajoHTMLModules
 {
 	/**
 	 * @param	int $applicationId	The application id
@@ -23,7 +23,7 @@ abstract class JHtmlModules
 	{
 		$templates = ModulesHelper::getTemplates($applicationId, $state);
 		foreach ($templates as $template) {
-			$options[]	= JHtml::_('select.option', $template->element, $template->name);
+			$options[]	= MolajoHTML::_('select.option', $template->element, $template->name);
 		}
 		return $options;
 	}
@@ -32,8 +32,8 @@ abstract class JHtmlModules
 	static public function types()
 	{
 		$options = array();
-		$options[] = JHtml::_('select.option', 'user', 'COM_MODULES_OPTION_POSITION_USER_DEFINED');
-		$options[] = JHtml::_('select.option', 'template', 'COM_MODULES_OPTION_POSITION_TEMPLATE_DEFINED');
+		$options[] = MolajoHTML::_('select.option', 'user', 'COM_MODULES_OPTION_POSITION_USER_DEFINED');
+		$options[] = MolajoHTML::_('select.option', 'template', 'COM_MODULES_OPTION_POSITION_TEMPLATE_DEFINED');
 		return $options;
 	}
 
@@ -42,8 +42,8 @@ abstract class JHtmlModules
 	static public function templateStates()
 	{
 		$options = array();
-		$options[] = JHtml::_('select.option', '1', 'JENABLED');
-		$options[] = JHtml::_('select.option', '0', 'JDISABLED');
+		$options[] = MolajoHTML::_('select.option', '1', 'JENABLED');
+		$options[] = MolajoHTML::_('select.option', '0', 'JDISABLED');
 		return $options;
 	}
 }

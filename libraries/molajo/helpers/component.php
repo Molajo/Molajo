@@ -185,10 +185,8 @@ class MolajoComponentHelper
 	 */
 	public static function renderComponent($request, $params = array())
 	{
-		// Record the scope (what is this scope?)
+		/** record scope */
 		$scope = MolajoFactory::getApplication()->scope;
-
-		// Set scope to extension name
 		MolajoFactory::getApplication()->scope = $request['option'];
 
         /** extension path and entry point */
@@ -207,7 +205,7 @@ class MolajoComponentHelper
 
         /** execute the component */
         ob_start();
-		include $path;
+        require_once $path;
         $output = ob_get_contents();
         ob_end_clean();
 
@@ -215,5 +213,5 @@ class MolajoComponentHelper
 		MolajoFactory::getApplication()->scope = $scope;
         
         return $output;
-	}
+   }
 }

@@ -2,12 +2,11 @@
 /**
  * @package     Joomla.Platform
  * @subpackage  User
- *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
-
-defined('JPATH_PLATFORM') or die;
+defined('MOLAJO') or die;
 
 /**
  * This is the status code returned when the authentication is success (permit login)

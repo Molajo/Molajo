@@ -41,17 +41,17 @@ class MolajoFieldState extends MolajoField
         $this->config_component_state_spam = JRequest::getCmd('config_component_state_spam', '0');
 
         $options	= array();
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_ARCHIVED, MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_PUBLISHED, MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
-        $options[]	= JHtml::_('select.option', MOLAJO_STATE_TRASHED, MolajoText::_('MOLAJO_OPTION_TRASHED'));
+        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_ARCHIVED, MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
+        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_PUBLISHED, MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
+        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
+        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_TRASHED, MolajoText::_('MOLAJO_OPTION_TRASHED'));
         if ($this->params->def('config_component_state_spam', '0') == 1) {
-            $options[]	= JHtml::_('select.option', MOLAJO_STATE_SPAMMED, MolajoText::_('MOLAJO_OPTION_SPAMMED'));
+            $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_SPAMMED, MolajoText::_('MOLAJO_OPTION_SPAMMED'));
         }
         if ($this->params->def('config_component_version_management', '1') == 1) {
-            $options[]	= JHtml::_('select.option', MOLAJO_STATE_VERSION, MolajoText::_('MOLAJO_OPTION_VERSION'));
+            $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_VERSION, MolajoText::_('MOLAJO_OPTION_VERSION'));
         }
-        $options[]	= JHtml::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
+        $options[]	= MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
 
         return $options;
     }
@@ -134,7 +134,7 @@ class MolajoFieldState extends MolajoField
             $render['checkbox'] = false;
             $render['data_type'] = 'string';
             $render['column_name'] = 'state';
-            $render['print_value'] = $item->state; //JHtml::_('Mgrid.state', $item->state, $itemCount, $item->canEditstate);
+            $render['print_value'] = $item->state; //MolajoHTML::_('Mgrid.state', $item->state, $itemCount, $item->canEditstate);
 
             return $render;
         }

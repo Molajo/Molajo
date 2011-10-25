@@ -13,4 +13,4 @@ defined('MOLAJO') or die; ?>
 <input type="hidden" name="format" value="<?php echo $this->request['format']; ?>" />
 <input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.order'); ?>" />
 <input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>" />
-<?php echo JHtml::_('form.token'); ?>
+<?php echo MolajoHTML::_('form.token'); ?>

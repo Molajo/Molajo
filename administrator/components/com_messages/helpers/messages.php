@@ -65,15 +65,15 @@ class MessagesHelper extends JController
 	/**
 	 * Get a list of filter options for the state of a module.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
 	static function getStateOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option',	'1',	MolajoText::_('COM_MESSAGES_OPTION_READ'));
-		$options[]	= JHtml::_('select.option',	'0',	MolajoText::_('COM_MESSAGES_OPTION_UNREAD'));
-		$options[]	= JHtml::_('select.option',	'-2',	MolajoText::_('JTRASHED'));
+		$options[]	= MolajoHTML::_('select.option',	'1',	MolajoText::_('COM_MESSAGES_OPTION_READ'));
+		$options[]	= MolajoHTML::_('select.option',	'0',	MolajoText::_('COM_MESSAGES_OPTION_UNREAD'));
+		$options[]	= MolajoHTML::_('select.option',	'-2',	MolajoText::_('JTRASHED'));
 		return $options;
 	}
 

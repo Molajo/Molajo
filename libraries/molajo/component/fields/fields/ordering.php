@@ -118,7 +118,7 @@ class MolajoFieldOrdering extends MolajoField
             $render['checkbox'] = false;
             $render['data_type'] = 'string';
             $render['column_name'] = 'ordering';
-            $render['print_value'] = $item->ordering; //JHtml::_('Mgrid.ordering', $item->ordering, $itemCount, $item->canEditordering);
+            $render['print_value'] = $item->ordering; //MolajoHTML::_('Mgrid.ordering', $item->ordering, $itemCount, $item->canEditordering);
 
             return $render;
         }

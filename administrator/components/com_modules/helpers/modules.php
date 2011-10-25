@@ -51,29 +51,29 @@ abstract class ModulesHelper
 	/**
 	 * Get a list of filter options for the state of a module.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
 	public static function getStateOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option',	'1',	MolajoText::_('JPUBLISHED'));
-		$options[]	= JHtml::_('select.option',	'0',	MolajoText::_('JUNPUBLISHED'));
-		$options[]	= JHtml::_('select.option',	'-2',	MolajoText::_('JTRASHED'));
+		$options[]	= MolajoHTML::_('select.option',	'1',	MolajoText::_('JPUBLISHED'));
+		$options[]	= MolajoHTML::_('select.option',	'0',	MolajoText::_('JUNPUBLISHED'));
+		$options[]	= MolajoHTML::_('select.option',	'-2',	MolajoText::_('JTRASHED'));
 		return $options;
 	}
 
 	/**
 	 * Get a list of filter options for the application applications.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
 	public static function getApplicationOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', MolajoText::_('JSITE'));
-		$options[]	= JHtml::_('select.option', '1', MolajoText::_('JADMINISTRATOR'));
+		$options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('JSITE'));
+		$options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('JADMINISTRATOR'));
 		return $options;
 	}
 
@@ -101,7 +101,7 @@ abstract class ModulesHelper
 		// Build the list
 		$options = array();
 		foreach ($positions as $position) {
-			$options[]	= JHtml::_('select.option', $position, $position);
+			$options[]	= MolajoHTML::_('select.option', $position, $position);
 		}
 		return $options;
 	}
@@ -178,12 +178,12 @@ abstract class ModulesHelper
 	public static function getAssignmentOptions($applicationId)
 	{
 		$options = array();
-		$options[] = JHtml::_('select.option', '0', 'COM_MODULES_OPTION_MENU_ALL');
-		$options[] = JHtml::_('select.option', '-', 'COM_MODULES_OPTION_MENU_NONE');
+		$options[] = MolajoHTML::_('select.option', '0', 'COM_MODULES_OPTION_MENU_ALL');
+		$options[] = MolajoHTML::_('select.option', '-', 'COM_MODULES_OPTION_MENU_NONE');
 
 		if ($applicationId == 0) {
-			$options[] = JHtml::_('select.option', '1', 'COM_MODULES_OPTION_MENU_INCLUDE');
-			$options[] = JHtml::_('select.option', '-1', 'COM_MODULES_OPTION_MENU_EXCLUDE');
+			$options[] = MolajoHTML::_('select.option', '1', 'COM_MODULES_OPTION_MENU_INCLUDE');
+			$options[] = MolajoHTML::_('select.option', '-1', 'COM_MODULES_OPTION_MENU_EXCLUDE');
 		}
 
 		return $options;

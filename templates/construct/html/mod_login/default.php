@@ -6,7 +6,7 @@
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-JHtml::_('behavior.keepalive');
+MolajoHTML::_('behavior.keepalive');
 ?>
 <?php if ($type == 'logout') : ?>
 <form action="index.php" method="post" name="form-login" id="form-login">
@@ -45,7 +45,7 @@ JHtml::_('behavior.keepalive');
 	<input type="hidden" name="option" value="com_users" />
 	<input type="hidden" name="task" value="user.login" />
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 	</fieldset>
 	<ul>
 		<li>

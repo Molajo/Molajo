@@ -201,7 +201,7 @@ class MolajoUtility
 	 *
 	 * @since       11.1
 	 * @deprecated  1.6
-	 * @see			JHtmlNumber::bytes
+	 * @see			MolajoHTMLNumber::bytes
 	 */
 	function return_bytes($val)
 	{

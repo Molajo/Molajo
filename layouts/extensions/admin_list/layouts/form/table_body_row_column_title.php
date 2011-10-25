@@ -17,7 +17,7 @@ if ($this->render['column_name'] == 'title' && $this->params->def('config_manage
 
 <td>
 <?php if ($this->row->checked_out) : ?>
-        <?php echo JHtml::_('jgrid.checkedout', $this->row->rowCount, $this->row->editor, $this->row->checked_out_time, $defaultView.'.', $this->row->canCheckin); ?>
+        <?php echo MolajoHTML::_('jgrid.checkedout', $this->row->rowCount, $this->row->editor, $this->row->checked_out_time, $defaultView.'.', $this->row->canCheckin); ?>
 <?php endif; ?>
 <?php if ($this->row->canEdit) : ?>
         <a href="<?php echo MolajoRoute::_('index.php?option='.$this->request['option'].'&task=edit&id='.$this->row->id);?>">

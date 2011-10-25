@@ -55,7 +55,7 @@ class MolajoFormFieldInteger extends MolajoFormFieldList
 
 		// Build the options array.
 		for ($i = $first; $i <= $last; $i += $step) {
-			$options[] = JHtml::_('select.option', $i);
+			$options[] = MolajoHTML::_('select.option', $i);
 		}
 
 		// Merge any additional options in the XML definition.

@@ -48,6 +48,6 @@ class MolajoFormFieldAccesslevel extends MolajoFormFieldList
 		// Get the field options.
 		$options = $this->getOptions();
 
-		return JHtml::_('access.level', $this->name, $this->value, $attr, $options, $this->id);
+		return MolajoHTML::_('access.level', $this->name, $this->value, $attr, $options, $this->id);
 	}
 }

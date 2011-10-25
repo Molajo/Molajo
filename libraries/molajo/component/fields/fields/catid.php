@@ -37,7 +37,7 @@ class MolajoFieldCatid extends MolajoField
      */
     public function getOptions ()
     {
-        return JHtml::_('category.options', JRequest::getCmd('option'));
+        return MolajoHTML::_('category.options', JRequest::getCmd('option'));
     }
 
     /**

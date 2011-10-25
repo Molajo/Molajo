@@ -35,7 +35,7 @@ class MolajoAdministratorHelper
 		if ($option == '') {
 			$option = 'com_dashboard';
 		}
-//$option = 'com_dashboard';
+
 		JRequest::setVar('option', $option);
 		return $option;
 	}

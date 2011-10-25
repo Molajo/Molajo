@@ -36,7 +36,7 @@ class MolajoFormFieldRules extends MolajoFormField
 	 */
 	protected function getInput()
 	{
-		JHtml::_('behavior.tooltip');
+		MolajoHTML::_('behavior.tooltip');
 
 		// Initialise some field attributes.
 		$section	= $this->element['section'] ? (string) $this->element['section'] : '';
@@ -61,7 +61,7 @@ class MolajoFormFieldRules extends MolajoFormField
 
 		// Use the compact form for the content rules (deprecated).
 		//if (!empty($component) && $section != 'component') {
-		//	return JHtml::_('rules.assetFormWidget', $actions, $assetId, $assetId ? null : $component, $this->name, $this->id);
+		//	return MolajoHTML::_('rules.assetFormWidget', $actions, $assetId, $assetId ? null : $component, $this->name, $this->id);
 		//}
 
 

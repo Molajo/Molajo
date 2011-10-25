@@ -9,11 +9,11 @@
 defined('MOLAJO') or die; 
 
 /** mt **/
-JHtml::_('behavior.framework', true);
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
-JHtml::_('script','system/multiselect.js', false, true);
+MolajoHTML::_('behavior.framework', true);
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
+MolajoHTML::_('behavior.keepalive');
+MolajoHTML::_('script','system/multiselect.js', false, true);
 
 /** form begin **/
 include dirname(__FILE__) . '/form/' . 'form_begin.php';

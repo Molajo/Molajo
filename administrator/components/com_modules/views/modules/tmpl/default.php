@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.multiselect');
 
 $application		= $this->state->get('filter.application_id') ? 'administrator' : 'site';
 $user		= MolajoFactory::getUser();
@@ -32,31 +32,31 @@ $saveOrder	= $listOrder == 'ordering';
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<?php echo JHtml::_('select.options', ModulesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo MolajoHTML::_('select.options', ModulesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
              <select name="filter_state" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
-				<?php echo JHtml::_('select.options', ModulesHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
+				<?php echo MolajoHTML::_('select.options', ModulesHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
 			</select>
 
 			<select name="filter_position" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_MODULES_OPTION_SELECT_POSITION');?></option>
-				<?php echo JHtml::_('select.options', ModulesHelper::getPositions($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.position'));?>
+				<?php echo MolajoHTML::_('select.options', ModulesHelper::getPositions($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.position'));?>
 			</select>
 
             <select name="filter_module" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_MODULES_OPTION_SELECT_MODULE');?></option>
-				<?php echo JHtml::_('select.options', ModulesHelper::getModules($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.module'));?>
+				<?php echo MolajoHTML::_('select.options', ModulesHelper::getModules($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.module'));?>
 			</select>
 
 			<select name="filter_access" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_ACCESS');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'));?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'));?>
 			</select>
 
 			<select name="filter_language" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_LANGUAGE');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'));?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -69,34 +69,34 @@ $saveOrder	= $listOrder == 'ordering';
 					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="title">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'title', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_TITLE', 'title', $listDirn, $listOrder); ?>
 				</th>
                 <th width="5%">
-					<?php echo JHtml::_('grid.sort', 'JSTATUS', 'published', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JSTATUS', 'published', $listDirn, $listOrder); ?>
 				</th>
 				<th width="15%" class="left">
-					<?php echo JHtml::_('grid.sort',  'COM_MODULES_HEADING_POSITION', 'position', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort',  'COM_MODULES_HEADING_POSITION', 'position', $listDirn, $listOrder); ?>
 				</th>
                 <th width="10%">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ORDERING', 'ordering', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ORDERING', 'ordering', $listDirn, $listOrder); ?>
 					<?php if ($canOrder && $saveOrder) :?>
-						<?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'modules.saveorder'); ?>
+						<?php echo MolajoHTML::_('grid.order',  $this->items, 'filesave.png', 'modules.saveorder'); ?>
 					<?php endif; ?>
 				</th>
                 <th width="10%" class="left" >
-					<?php echo JHtml::_('grid.sort', 'COM_MODULES_HEADING_MODULE', 'name', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_MODULES_HEADING_MODULE', 'name', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHtml::_('grid.sort',  'COM_MODULES_HEADING_PAGES', 'pages', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort',  'COM_MODULES_HEADING_PAGES', 'pages', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ACCESS', 'access', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_LANGUAGE', 'language_title', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_LANGUAGE', 'language_title', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1%" class="nowrap">
-					<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort',  'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -117,11 +117,11 @@ $saveOrder	= $listOrder == 'ordering';
 		?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
-					<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+					<?php echo MolajoHTML::_('grid.id', $i, $item->id); ?>
 				</td>
 				<td>
 					<?php if ($item->checked_out) : ?>
-						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'modules.', $canCheckin); ?>
+						<?php echo MolajoHTML::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'modules.', $canCheckin); ?>
 					<?php endif; ?>
 					<?php if ($canEdit) : ?>
 						<a href="<?php echo MolajoRoute::_('index.php?option=com_modules&task=module.edit&id='.(int) $item->id); ?>">
@@ -136,7 +136,7 @@ $saveOrder	= $listOrder == 'ordering';
 					<?php endif; ?>
 				</td>
                 <td class="center">
-					<?php echo JHtml::_('jgrid.published', $item->published, $i, 'modules.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
+					<?php echo MolajoHTML::_('jgrid.published', $item->published, $i, 'modules.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
 				</td>
 				<td class="left">
 					<?php echo $item->position; ?>
@@ -190,6 +190,6 @@ $saveOrder	= $listOrder == 'ordering';
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

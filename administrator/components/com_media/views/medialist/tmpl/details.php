@@ -48,6 +48,6 @@ $user = MolajoFactory::getUser();
 	<input type="hidden" name="task" value="list" />
 	<input type="hidden" name="username" value="" />
 	<input type="hidden" name="password" value="" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

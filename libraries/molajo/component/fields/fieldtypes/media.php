@@ -52,7 +52,7 @@ class MolajoFormFieldMedia extends MolajoFormField
 		if (!self::$initialised) {
 
 			// Load the modal behavior script.
-			JHtml::_('behavior.modal');
+			MolajoHTML::_('behavior.modal');
 
 			// Build the script.
 			$script = array();

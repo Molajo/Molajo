@@ -16,7 +16,7 @@ defined('JPATH_BASE') or die;
  * @subpackage	HTML
  * @since		1.6
  */
-abstract class JHtmlRules
+abstract class MolajoHTMLRules
 {
 	/**
 	 * Displays a list of the available access sections
@@ -43,8 +43,8 @@ abstract class JHtmlRules
 		$html = array();
 
 		$html[] = '<div class="acl-options">';
-		$html[] = 		JHtml::_('tabs.start','acl-rules-'.$assetId, array('useCookie'=>1));
-		$html[] = 		JHtml::_('tabs.panel',MolajoText::_('JLIB_HTML_ACCESS_SUMMARY'), 'summary');
+		$html[] = 		MolajoHTML::_('tabs.start','acl-rules-'.$assetId, array('useCookie'=>1));
+		$html[] = 		MolajoHTML::_('tabs.panel',MolajoText::_('JLIB_HTML_ACCESS_SUMMARY'), 'summary');
 		$html[] = '			<p>'.MolajoText::_('JLIB_HTML_ACCESS_SUMMARY_DESC').'</p>';
 		$html[] = '			<table class="aclsummary-table" summary="'.MolajoText::_('JLIB_HTML_ACCESS_SUMMARY_DESC').'">';
 		$html[] = '			<caption>'.MolajoText::_('JLIB_HTML_ACCESS_SUMMARY_DESC_CAPTION').'</caption>';
@@ -79,7 +79,7 @@ abstract class JHtmlRules
 		{
 			$actionTitle = MolajoText::_($action->title);
 			$actionDesc	= MolajoText::_($action->description);
-			$html[] = 		JHtml::_('tabs.panel',$actionTitle, $action->name);
+			$html[] = 		MolajoHTML::_('tabs.panel',$actionTitle, $action->name);
 			$html[] = '			<p>'.$actionDesc.'</p>';
 			$html[] = '			<table class="aclmodify-table" summary="'.strip_tags($actionDesc).'">';
 			$html[] = '			<caption>'.MolajoText::_('JLIB_HTML_ACCESS_MODIFY_DESC_CAPTION_ACL').' '.$actionTitle.' '.MolajoText::_('JLIB_HTML_ACCESS_MODIFY_DESC_CAPTION_TABLE').'</caption>';
@@ -111,7 +111,7 @@ abstract class JHtmlRules
 			$html[] = '			</table>';
 		}
 
-		$html[] = JHtml::_('tabs.end');
+		$html[] = MolajoHTML::_('tabs.end');
 
 		// Build the footer with legend and special purpose buttons.
 		$html[] = '	<div class="clr"></div>';

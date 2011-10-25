@@ -9,7 +9,7 @@
  */
 
 defined('_JEXEC') or die;
-JHtml::_('behavior.keepalive');
+MolajoHTML::_('behavior.keepalive');
 ?>
 <div class="login<?php echo $this->pageclass_sfx?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
@@ -45,7 +45,7 @@ JHtml::_('behavior.keepalive');
 			<?php endforeach; ?>
 			<button type="submit" class="button"><?php echo JText::_('JLOGIN'); ?></button>
 			<input type="hidden" name="return" value="<?php echo base64_encode($this->params->get('login_redirect_url',$this->form->getValue('return'))); ?>" />
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo MolajoHTML::_('form.token'); ?>
 		</fieldset>
 	</form>
 </div>

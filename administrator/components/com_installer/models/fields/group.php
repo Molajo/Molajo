@@ -40,7 +40,7 @@ class JFormFieldGroup extends JFormField
 		$options = array();
 
 		foreach ($this->element->children() as $option) {
-			$options[] = JHtml::_('select.option', (string)$option->attributes()->value, MolajoText::_(trim($option->data())));
+			$options[] = MolajoHTML::_('select.option', (string)$option->attributes()->value, MolajoText::_(trim($option->data())));
 		}
 
 		$dbo = MolajoFactory::getDbo();
@@ -53,10 +53,10 @@ class JFormFieldGroup extends JFormField
 		$folders = $dbo->loadResultArray();
 
 		foreach($folders as $folder) {
-			$options[] = JHtml::_('select.option', $folder, $folder);
+			$options[] = MolajoHTML::_('select.option', $folder, $folder);
 		}
 
-		$return = JHtml::_('select.genericlist', $options, $this->name, $onchange, 'value', 'text', $this->value, $this->id);
+		$return = MolajoHTML::_('select.genericlist', $options, $this->name, $onchange, 'value', 'text', $this->value, $this->id);
 
 		return $return;
 	}

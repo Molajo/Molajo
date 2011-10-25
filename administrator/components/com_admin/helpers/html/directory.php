@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @subpackage	com_admin
  * * * @since		1.0
  */
-abstract class JHtmlDirectory
+abstract class MolajoHTMLDirectory
 {
 	/**
 	 * Method to generate a (un)writable message for directory

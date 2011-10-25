@@ -42,8 +42,8 @@ class MolajoFieldFeatured extends MolajoField
     public function getOptions ()
     {
         $options	= array();
-        $options[]	= JHtml::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNFEATURED'));
-        $options[]	= JHtml::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_FEATURED'));
+        $options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNFEATURED'));
+        $options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_FEATURED'));
         return $options;
     }
 
@@ -117,7 +117,7 @@ class MolajoFieldFeatured extends MolajoField
             $render['checkbox'] = false;
             $render['data_type'] = 'string';
             $render['column_name'] = 'author_name';
-            $render['print_value'] = $item->featured; //JHtml::_('Mgrid.featured', $item->featured, $itemCount, $item->canEditstate);
+            $render['print_value'] = $item->featured; //MolajoHTML::_('Mgrid.featured', $item->featured, $itemCount, $item->canEditstate);
 
             return $render;
         }

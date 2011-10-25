@@ -9,7 +9,7 @@ defined('MOLAJO') or die; ?>
 <tr>
     <th scope="row">
         <?php if ($this->row->checked_out) : ?>
-            <?php echo JHtml::_('jgrid.checkedout', $this->row->rowcount, $this->row->editor, $this->row->checked_out_time); ?>
+            <?php echo MolajoHTML::_('jgrid.checkedout', $this->row->rowcount, $this->row->editor, $this->row->checked_out_time); ?>
         <?php endif; ?>
 
         <?php if ($this->row->link) :?>
@@ -20,10 +20,10 @@ defined('MOLAJO') or die; ?>
         endif; ?>
     </th>
     <td class="center">
-        <?php echo JHtml::_('jgrid.published', $this->row->state, $this->row->rowcount, '', false); ?>
+        <?php echo MolajoHTML::_('jgrid.published', $this->row->state, $this->row->rowcount, '', false); ?>
     </td>
     <td class="center">
-        <?php echo JHtml::_('date',$this->row->created, 'Y-m-d H:i:s'); ?>
+        <?php echo MolajoHTML::_('date',$this->row->created, 'Y-m-d H:i:s'); ?>
     </td>
     <td class="center">
         <?php echo $this->row->author_name;?>

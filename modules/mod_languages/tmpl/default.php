@@ -9,7 +9,7 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-JHtml::_('stylesheet', 'mod_languages/template.css', array(), true);
+MolajoHTML::_('stylesheet', 'mod_languages/template.css', array(), true);
 ?>
 <div class="mod-languages<?php echo $layout_class_suffix ?>">
 <?php if ($headerText) : ?>
@@ -31,7 +31,7 @@ JHtml::_('stylesheet', 'mod_languages/template.css', array(), true);
 			<li class="<?php echo $language->active ? 'lang-active' : '';?>">
 			<a href="<?php echo $language->link;?>">
 			<?php if ($params->get('image', 1)):?>
-				<?php echo JHtml::_('image', 'mod_languages/'.$language->image.'.gif', $language->title_native, array('title'=>$language->title_native), true);?>
+				<?php echo MolajoHTML::_('image', 'mod_languages/'.$language->image.'.gif', $language->title_native, array('title'=>$language->title_native), true);?>
 			<?php else : ?>
 				<?php echo $params->get('full_name', 1) ? $language->title_native : strtoupper($language->sef);?>
 			<?php endif; ?>

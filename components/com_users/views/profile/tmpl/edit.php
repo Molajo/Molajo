@@ -10,9 +10,9 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.keepalive');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+MolajoHTML::_('behavior.keepalive');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
 //load user_profile plugin language
 $lang = MolajoFactory::getLanguage();
 $lang->load( 'plg_user_profile', JPATH_ADMINISTRATOR );
@@ -56,7 +56,7 @@ $lang->load( 'plg_user_profile', JPATH_ADMINISTRATOR );
 
 			<input type="hidden" name="option" value="com_users" />
 			<input type="hidden" name="task" value="profile.save" />
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo MolajoHTML::_('form.token'); ?>
 		</div>
 	</form>
 </div>

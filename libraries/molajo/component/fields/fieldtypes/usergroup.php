@@ -55,7 +55,7 @@ class MolajoFormFieldUsergroup extends MolajoFormField
 			}
 
 			// Create a new option object based on the <option /> element.
-			$tmp = JHtml::_('select.option', (string) $option['value'], trim((string) $option), 'value', 'text', ((string) $option['disabled']=='true'));
+			$tmp = MolajoHTML::_('select.option', (string) $option['value'], trim((string) $option), 'value', 'text', ((string) $option['disabled']=='true'));
 
 			// Set some option attributes.
 			$tmp->class = (string) $option['class'];
@@ -67,6 +67,6 @@ class MolajoFormFieldUsergroup extends MolajoFormField
 			$options[] = $tmp;
 		}
 
-		return JHtml::_('access.usergroup', $this->name, $this->value, $attr, $options, $this->id);
+		return MolajoHTML::_('access.usergroup', $this->name, $this->value, $attr, $options, $this->id);
 	}
 }

@@ -11,11 +11,11 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.multiselect');
 
 $canDo 		= UsersHelper::getActions();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
@@ -38,17 +38,17 @@ $loggeduser = MolajoFactory::getUser();
 
 			<select name="filter_state" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo MolajoText::_('COM_USERS_FILTER_STATE');?></option>
-				<?php echo JHtml::_('select.options', UsersHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
+				<?php echo MolajoHTML::_('select.options', UsersHelper::getStateOptions(), 'value', 'text', $this->state->get('filter.state'));?>
 			</select>
 
 			<select name="filter_active" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo MolajoText::_('COM_USERS_FILTER_ACTIVE');?></option>
-				<?php echo JHtml::_('select.options', UsersHelper::getActiveOptions(), 'value', 'text', $this->state->get('filter.active'));?>
+				<?php echo MolajoHTML::_('select.options', UsersHelper::getActiveOptions(), 'value', 'text', $this->state->get('filter.active'));?>
 			</select>
 
 			<select name="filter_group_id" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_USERS_FILTER_USERGROUP');?></option>
-				<?php echo JHtml::_('select.options', UsersHelper::getGroups(), 'value', 'text', $this->state->get('filter.group_id'));?>
+				<?php echo MolajoHTML::_('select.options', UsersHelper::getGroups(), 'value', 'text', $this->state->get('filter.group_id'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -61,31 +61,31 @@ $loggeduser = MolajoFactory::getUser();
 					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
 				<th class="left">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_USERNAME', 'a.username', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_USERNAME', 'a.username', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="5%">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_ENABLED', 'a.block', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ENABLED', 'a.block', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="5%">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_ACTIVATED', 'a.activation', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ACTIVATED', 'a.activation', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
 					<?php echo MolajoText::_('COM_USERS_HEADING_GROUPS'); ?>
 				</th>
 				<th class="nowrap" width="15%">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_EMAIL', 'a.email', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_EMAIL', 'a.email', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_LAST_VISIT_DATE', 'a.lastvisitDate', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_LAST_VISIT_DATE', 'a.lastvisitDate', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_REGISTRATION_DATE', 'a.registerDate', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_REGISTRATION_DATE', 'a.registerDate', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="3%">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -109,7 +109,7 @@ $loggeduser = MolajoFactory::getUser();
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
 					<?php if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+						<?php echo MolajoHTML::_('grid.id', $i, $item->id); ?>
 					<?php endif; ?>
 				</td>
 				<td>
@@ -130,16 +130,16 @@ $loggeduser = MolajoFactory::getUser();
 				<td class="center">
 					<?php if ($canChange) : ?>
 						<?php if ($loggeduser->id != $item->id) : ?>
-							<?php echo JHtml::_('grid.boolean', $i, !$item->block, 'users.unblock', 'users.block'); ?>
+							<?php echo MolajoHTML::_('grid.boolean', $i, !$item->block, 'users.unblock', 'users.block'); ?>
 						<?php else : ?>
-							<?php echo JHtml::_('grid.boolean', $i, !$item->block, 'users.block', null); ?>
+							<?php echo MolajoHTML::_('grid.boolean', $i, !$item->block, 'users.block', null); ?>
 						<?php endif; ?>
 					<?php else : ?>
 						<?php echo MolajoText::_($item->block ? 'JNO' : 'JYES'); ?>
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php echo JHtml::_('grid.boolean', $i, !$item->activation, 'users.activate', null); ?>
+					<?php echo MolajoHTML::_('grid.boolean', $i, !$item->activation, 'users.activate', null); ?>
 				</td>
 				<td class="center">
 					<?php if (substr_count($item->group_names,"\n") > 1) : ?>
@@ -153,13 +153,13 @@ $loggeduser = MolajoFactory::getUser();
 				</td>
 				<td class="center">
 					<?php if ($item->lastvisitDate!='0000-00-00 00:00:00'):?>
-						<?php echo JHtml::_('date',$item->lastvisitDate, 'Y-m-d H:i:s'); ?>
+						<?php echo MolajoHTML::_('date',$item->lastvisitDate, 'Y-m-d H:i:s'); ?>
 					<?php else:?>
 						<?php echo MolajoText::_('JNEVER'); ?>
 					<?php endif;?>
 				</td>
 				<td class="center">
-					<?php echo JHtml::_('date',$item->registerDate, 'Y-m-d H:i:s'); ?>
+					<?php echo MolajoHTML::_('date',$item->registerDate, 'Y-m-d H:i:s'); ?>
 				</td>
 				<td class="center">
 					<?php echo (int) $item->id; ?>
@@ -174,6 +174,6 @@ $loggeduser = MolajoFactory::getUser();
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

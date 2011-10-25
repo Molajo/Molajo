@@ -10,8 +10,8 @@ defined('MOLAJO') or die;
 
 if ($this->row->canEditstate === true) {
     echo '<div class="width-100 fltlft">';
-    echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->slider_id, array('useCookie'=>1));
-    echo JHtml::_('sliders.panel', MolajoText::_('MOLAJO_FIELDSET_RULES'), 'access-rules'); ?>
+    echo MolajoHTML::_('sliders.start', 'permissions-sliders-'.$this->slider_id, array('useCookie'=>1));
+    echo MolajoHTML::_('sliders.panel', MolajoText::_('MOLAJO_FIELDSET_RULES'), 'access-rules'); ?>
 
     <fieldset class="panelform">
             <?php echo $this->form->getLabel('rules'); ?>
@@ -19,6 +19,6 @@ if ($this->row->canEditstate === true) {
     </fieldset>
 
 <?php
-    echo JHtml::_('sliders.end');
+    echo MolajoHTML::_('sliders.end');
     echo '</div>';
 }

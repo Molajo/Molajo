@@ -67,7 +67,7 @@ defined('_JEXEC') or die;
 					<strong><?php echo MolajoText::_('COM_ADMIN_WEB_SERVER'); ?></strong>
 				</td>
 				<td>
-					<?php echo JHtml::_('system.server',$this->info['server']); ?>
+					<?php echo MolajoHTML::_('system.server',$this->info['server']); ?>
 				</td>
 			</tr>
 			<tr>

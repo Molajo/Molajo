@@ -60,11 +60,11 @@ class RedirectHelper
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '*', 'JALL');
-		$options[]	= JHtml::_('select.option', '1', 'JENABLED');
-		$options[]	= JHtml::_('select.option', '0', 'JDISABLED');
-		$options[]	= JHtml::_('select.option', '2', 'JARCHIVED');
-		$options[]	= JHtml::_('select.option', '-2', 'JTRASHED');
+		$options[]	= MolajoHTML::_('select.option', '*', 'JALL');
+		$options[]	= MolajoHTML::_('select.option', '1', 'JENABLED');
+		$options[]	= MolajoHTML::_('select.option', '0', 'JDISABLED');
+		$options[]	= MolajoHTML::_('select.option', '2', 'JARCHIVED');
+		$options[]	= MolajoHTML::_('select.option', '-2', 'JTRASHED');
 
 		return $options;
 	}

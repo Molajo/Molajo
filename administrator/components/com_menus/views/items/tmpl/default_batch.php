@@ -11,14 +11,14 @@
 defined('_JEXEC') or die;
 
 $options = array(
-	JHtml::_('select.option', 'c', MolajoText::_('MOLAJO_HTML_BATCH_COPY')),
-	JHtml::_('select.option', 'm', MolajoText::_('MOLAJO_HTML_BATCH_MOVE'))
+	MolajoHTML::_('select.option', 'c', MolajoText::_('MOLAJO_HTML_BATCH_COPY')),
+	MolajoHTML::_('select.option', 'm', MolajoText::_('MOLAJO_HTML_BATCH_MOVE'))
 );
 $published = $this->state->get('filter.published');
 ?>
 <fieldset class="batch">
 	<legend><?php echo MolajoText::_('COM_MENUS_BATCH_OPTIONS');?></legend>
-	<?php echo JHtml::_('batch.access');?>
+	<?php echo MolajoHTML::_('batch.access');?>
 
 	<?php if ($published >= 0) : ?>
 		<label id="batch-choose-action-lbl" for="batch-choose-action">
@@ -27,9 +27,9 @@ $published = $this->state->get('filter.published');
 		<fieldset id="batch-choose-action" class="combo">
 			<select name="batch[menu_id]" class="inputbox" id="batch-menu-id">
 				<option value=""><?php echo MolajoText::_('JSELECT') ?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('menu.menuitems', array('published' => $published)));?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('menu.menuitems', array('published' => $published)));?>
 			</select>
-			<?php echo JHtml::_( 'select.radiolist', $options, 'batch[move_copy]', '', 'value', 'text', 'm'); ?>
+			<?php echo MolajoHTML::_( 'select.radiolist', $options, 'batch[move_copy]', '', 'value', 'text', 'm'); ?>
 		</fieldset>
 	<?php endif; ?>
 	<button type="submit" onclick="Joomla.submitbutton('item.batch');">

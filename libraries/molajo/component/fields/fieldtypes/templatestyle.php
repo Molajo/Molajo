@@ -79,7 +79,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
 					$groups[$name] = array();
 				}
 
-				$groups[$name][] = JHtml::_('select.option', $style->id, $style->title);
+				$groups[$name][] = MolajoHTML::_('select.option', $style->id, $style->title);
 			}
 		}
 

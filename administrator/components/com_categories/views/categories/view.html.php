@@ -45,16 +45,16 @@ class CategoriesViewCategories extends JView
 
 		// Levels filter.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', MolajoText::_('J1'));
-		$options[]	= JHtml::_('select.option', '2', MolajoText::_('J2'));
-		$options[]	= JHtml::_('select.option', '3', MolajoText::_('J3'));
-		$options[]	= JHtml::_('select.option', '4', MolajoText::_('J4'));
-		$options[]	= JHtml::_('select.option', '5', MolajoText::_('J5'));
-		$options[]	= JHtml::_('select.option', '6', MolajoText::_('J6'));
-		$options[]	= JHtml::_('select.option', '7', MolajoText::_('J7'));
-		$options[]	= JHtml::_('select.option', '8', MolajoText::_('J8'));
-		$options[]	= JHtml::_('select.option', '9', MolajoText::_('J9'));
-		$options[]	= JHtml::_('select.option', '10', MolajoText::_('J10'));
+		$options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('J1'));
+		$options[]	= MolajoHTML::_('select.option', '2', MolajoText::_('J2'));
+		$options[]	= MolajoHTML::_('select.option', '3', MolajoText::_('J3'));
+		$options[]	= MolajoHTML::_('select.option', '4', MolajoText::_('J4'));
+		$options[]	= MolajoHTML::_('select.option', '5', MolajoText::_('J5'));
+		$options[]	= MolajoHTML::_('select.option', '6', MolajoText::_('J6'));
+		$options[]	= MolajoHTML::_('select.option', '7', MolajoText::_('J7'));
+		$options[]	= MolajoHTML::_('select.option', '8', MolajoText::_('J8'));
+		$options[]	= MolajoHTML::_('select.option', '9', MolajoText::_('J9'));
+		$options[]	= MolajoHTML::_('select.option', '10', MolajoText::_('J10'));
 
 		$this->assign('f_levels', $options);
 
@@ -107,7 +107,7 @@ class CategoriesViewCategories extends JView
 		}
 
 		// Load specific css component
-		JHtml::_('stylesheet',$component.'/administrator/categories.css', array(), true);
+		MolajoHTML::_('stylesheet',$component.'/administrator/categories.css', array(), true);
 
 		// Prepare the toolbar.
 		MolajoToolbarHelper::title($title, 'categories '.substr($component,4).($section?"-$section":'').'-categories');

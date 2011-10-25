@@ -14,7 +14,7 @@ defined('MOLAJO') or die; ?>
 <?php if ($this->row->canEdit) : ?>
     <ul class="actions">
         <li class="edit-icon">
-            <?php echo JHtml::_('icon.edit', $this->row, $this->state); ?>
+            <?php echo MolajoHTML::_('icon.edit', $this->row, $this->state); ?>
         </li>
     </ul>
 <?php endif; ?>

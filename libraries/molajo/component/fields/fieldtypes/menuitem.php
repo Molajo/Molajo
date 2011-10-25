@@ -52,7 +52,7 @@ class MolajoFormFieldMenuItem extends MolajoFormFieldGroupedList
 
 			// Build the options array.
 			foreach($items as $link) {
-				$groups[$menuType][] = JHtml::_('select.option', $link->value, $link->text, 'value', 'text', in_array($link->type, $disable));
+				$groups[$menuType][] = MolajoHTML::_('select.option', $link->value, $link->text, 'value', 'text', in_array($link->type, $disable));
 			}
 		}
 
@@ -66,7 +66,7 @@ class MolajoFormFieldMenuItem extends MolajoFormFieldGroupedList
 
 				// Build the options array.
 				foreach($menu->links as $link) {
-					$groups[$menu->menu_id][] = JHtml::_('select.option', $link->value, $link->text, 'value', 'text', in_array($link->type, $disable));
+					$groups[$menu->menu_id][] = MolajoHTML::_('select.option', $link->value, $link->text, 'value', 'text', in_array($link->type, $disable));
 				}
 			}
 		}

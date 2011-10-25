@@ -11,11 +11,11 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.multiselect');
 
 $user		= MolajoFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
@@ -93,7 +93,7 @@ MolajoText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
 					<?php if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+						<?php echo MolajoHTML::_('grid.id', $i, $item->id); ?>
 					<?php endif; ?>
 				</td>
 				<td>
@@ -125,6 +125,6 @@ MolajoText::script('COM_USERS_GROUPS_CONFIRM_DELETE');
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

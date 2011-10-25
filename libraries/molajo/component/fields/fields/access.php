@@ -38,7 +38,7 @@ class MolajoFieldAccess extends MolajoField
      */
     public function getOptions ()
     {
-        return JHtml::_('access.assetgroups');
+        return MolajoHTML::_('access.assetgroups');
     }
 
     /**

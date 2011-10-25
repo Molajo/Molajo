@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.multiselect');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.multiselect');
 
 $user		= MolajoFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
@@ -30,13 +30,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<div class="filter-select fltrt">
 			<select name="filter_template" class="inputbox" onchange="this.form.submit()">
 				<option value="0"><?php echo MolajoText::_('COM_TEMPLATES_FILTER_TEMPLATE'); ?></option>
-				<?php echo JHtml::_('select.options', TemplatesHelper::getTemplateOptions($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.template'));?>
+				<?php echo MolajoHTML::_('select.options', TemplatesHelper::getTemplateOptions($this->state->get('filter.application_id')), 'value', 'text', $this->state->get('filter.template'));?>
 			</select>
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo MolajoText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
-				<?php echo JHtml::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo MolajoHTML::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -49,22 +49,22 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					&#160;
 				</th>
 				<th>
-					<?php echo JHtml::_('grid.sort', 'COM_TEMPLATES_HEADING_STYLE', 'a.title', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_TEMPLATES_HEADING_STYLE', 'a.title', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHtml::_('grid.sort', 'JCLIENT', 'a.application_id', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JCLIENT', 'a.application_id', $listDirn, $listOrder); ?>
 				</th>
 				<th>
-					<?php echo JHtml::_('grid.sort', 'COM_TEMPLATES_HEADING_TEMPLATE', 'a.template', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_TEMPLATES_HEADING_TEMPLATE', 'a.template', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHtml::_('grid.sort', 'COM_TEMPLATES_HEADING_DEFAULT', 'a.home', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_TEMPLATES_HEADING_DEFAULT', 'a.home', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
 					<?php echo MolajoText::_('COM_TEMPLATES_HEADING_ASSIGNED'); ?>
 				</th>
 				<th width="1%" class="nowrap">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -83,7 +83,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td width="1%" class="center">
-					<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+					<?php echo MolajoHTML::_('grid.id', $i, $item->id); ?>
 				</td>
 
 				<td>
@@ -104,18 +104,18 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				</td>
 				<td class="center">
 					<?php if ($item->home=='0' || $item->home=='1'):?>
-						<?php echo JHtml::_('jgrid.isdefault', $item->home!='0', $i, 'styles.', $canChange && $item->home!='1');?>
+						<?php echo MolajoHTML::_('jgrid.isdefault', $item->home!='0', $i, 'styles.', $canChange && $item->home!='1');?>
 					<?php elseif ($canChange):?>
 						<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&task=styles.unsetDefault&cid[]='.$item->id.'&'.JUtility::getToken().'=1');?>">
-							<?php echo JHtml::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>MolajoText::sprintf('COM_TEMPLATES_GRID_UNSET_LANGUAGE', $item->language_title)), true);?>
+							<?php echo MolajoHTML::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>MolajoText::sprintf('COM_TEMPLATES_GRID_UNSET_LANGUAGE', $item->language_title)), true);?>
 						</a>
 					<?php else:?>
-						<?php echo JHtml::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>$item->language_title), true);?>
+						<?php echo MolajoHTML::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>$item->language_title), true);?>
 					<?php endif;?>
 				</td>
 				<td class="center">
 					<?php if ($item->assigned > 0) : ?>
-							<?php echo JHtml::_('image','admin/tick.png', MolajoText::plural('COM_TEMPLATES_ASSIGNED',$item->assigned), array('title'=>MolajoText::plural('COM_TEMPLATES_ASSIGNED',$item->assigned)), true); ?>
+							<?php echo MolajoHTML::_('image','admin/tick.png', MolajoText::plural('COM_TEMPLATES_ASSIGNED',$item->assigned), array('title'=>MolajoText::plural('COM_TEMPLATES_ASSIGNED',$item->assigned)), true); ?>
 					<?php else : ?>
 							&#160;
 					<?php endif; ?>
@@ -133,6 +133,6 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

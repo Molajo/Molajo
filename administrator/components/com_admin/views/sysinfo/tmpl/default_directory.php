@@ -32,10 +32,10 @@ defined('_JEXEC') or die;
 				<?php foreach($this->directory as $dir=>$info):?>
 					<tr>
 						<td>
-							<?php echo JHtml::_('directory.message',$dir,$info['message']);?>
+							<?php echo MolajoHTML::_('directory.message',$dir,$info['message']);?>
 						</td>
 						<td>
-							<?php echo JHtml::_('directory.writable',$info['writable']);?>
+							<?php echo MolajoHTML::_('directory.writable',$info['writable']);?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

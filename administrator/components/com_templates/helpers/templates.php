@@ -60,14 +60,14 @@ class TemplatesHelper
 	/**
 	 * Get a list of filter options for the application applications.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
 	public static function getApplicationOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', MolajoText::_('JSITE'));
-		$options[]	= JHtml::_('select.option', '1', MolajoText::_('JADMINISTRATOR'));
+		$options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('JSITE'));
+		$options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('JADMINISTRATOR'));
 
 		return $options;
 	}
@@ -75,7 +75,7 @@ class TemplatesHelper
 	/**
 	 * Get a list of filter options for the templates with styles.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
 	public static function getTemplateOptions($applicationId = '*')
 	{

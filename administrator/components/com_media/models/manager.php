@@ -64,14 +64,14 @@ class MediaModelManager extends JModel
 		$document->setTitle(MolajoText::_('COM_MEDIA_INSERT_IMAGE'));
 
 		// Build the array of select options for the folder list
-		$options[] = JHtml::_('select.option', "","/");
+		$options[] = MolajoHTML::_('select.option', "","/");
 
 		foreach ($folders as $folder)
 		{
 			$folder		= str_replace($com_media_base_uni, "", str_replace(DS, '/', $folder));
 			$value		= substr($folder, 1);
 			$text		= str_replace(DS, "/", $folder);
-			$options[]	= JHtml::_('select.option', $value, $text);
+			$options[]	= MolajoHTML::_('select.option', $value, $text);
 		}
 
 		// Sort the folder list array
@@ -82,7 +82,7 @@ class MediaModelManager extends JModel
 		// Create the drop-down folder select list
 		$asset = JRequest::getVar('asset');
 		$author = JRequest::getVar('author');
-		$list = JHtml::_('select.genericlist',  $options, 'folderlist', "class=\"inputbox\" size=\"1\" onchange=\"ImageManager.setFolder(this.options[this.selectedIndex].value,'".$asset."','$author'".")\" ", 'value', 'text', $base);
+		$list = MolajoHTML::_('select.genericlist',  $options, 'folderlist', "class=\"inputbox\" size=\"1\" onchange=\"ImageManager.setFolder(this.options[this.selectedIndex].value,'".$asset."','$author'".")\" ", 'value', 'text', $base);
 
 		return $list;
 	}

@@ -10,9 +10,9 @@
 // no direct access
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
 $canDo = LanguagesHelper::getActions();
 ?>
 <script type="text/javascript">
@@ -61,9 +61,9 @@ $canDo = LanguagesHelper::getActions();
 		</fieldset>
 	</div>
 	<div class="width-40 fltrt">
-		<?php echo JHtml::_('sliders.start','language-sliders-'.$this->item->lang_code, array('useCookie'=>1)); ?>
+		<?php echo MolajoHTML::_('sliders.start','language-sliders-'.$this->item->lang_code, array('useCookie'=>1)); ?>
 
-		<?php echo JHtml::_('sliders.panel',MolajoText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'metadata'); ?>
+		<?php echo MolajoHTML::_('sliders.panel',MolajoText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'metadata'); ?>
 			<fieldset class="adminform">
 				<?php foreach($this->form->getFieldset('metadata') as $field): ?>
 					<?php if (!$field->hidden): ?>
@@ -73,9 +73,9 @@ $canDo = LanguagesHelper::getActions();
 				<?php endforeach; ?>
 			</fieldset>
 
-		<?php echo JHtml::_('sliders.end'); ?>
+		<?php echo MolajoHTML::_('sliders.end'); ?>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 	<div class="clr"> </div>
 </form>

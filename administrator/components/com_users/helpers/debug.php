@@ -132,18 +132,18 @@ class UsersHelperDebug
  	/**
 	 * Get a list of filter options for the levels.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
 	static function getLevelsOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_COMPONENT', 1));
-		$options[]	= JHtml::_('select.option', '2', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_CATEGORY', 2));
-		$options[]	= JHtml::_('select.option', '3', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_DEEPER', 3));
-		$options[]	= JHtml::_('select.option', '4', '4');
-		$options[]	= JHtml::_('select.option', '5', '5');
-		$options[]	= JHtml::_('select.option', '6', '6');
+		$options[]	= MolajoHTML::_('select.option', '1', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_COMPONENT', 1));
+		$options[]	= MolajoHTML::_('select.option', '2', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_CATEGORY', 2));
+		$options[]	= MolajoHTML::_('select.option', '3', MolajoText::sprintf('COM_USERS_OPTION_LEVEL_DEEPER', 3));
+		$options[]	= MolajoHTML::_('select.option', '4', '4');
+		$options[]	= MolajoHTML::_('select.option', '5', '5');
+		$options[]	= MolajoHTML::_('select.option', '6', '6');
 
 		return $options;
 	}

@@ -11,10 +11,10 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+MolajoHTML::_('behavior.tooltip');
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
@@ -33,18 +33,18 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			<select name="filter_component" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_USERS_OPTION_SELECT_COMPONENT');?></option>
 				<?php if (!empty($this->components)) {
-					echo JHtml::_('select.options', $this->components, 'value', 'text', $this->state->get('filter.component'));
+					echo MolajoHTML::_('select.options', $this->components, 'value', 'text', $this->state->get('filter.component'));
 				}?>
 			</select>
 
 			<select name="filter_level_start" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_USERS_OPTION_SELECT_LEVEL_START');?></option>
-				<?php echo JHtml::_('select.options', $this->levels, 'value', 'text', $this->state->get('filter.level_start'));?>
+				<?php echo MolajoHTML::_('select.options', $this->levels, 'value', 'text', $this->state->get('filter.level_start'));?>
 			</select>
 
 			<select name="filter_level_end" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_USERS_OPTION_SELECT_LEVEL_END');?></option>
-				<?php echo JHtml::_('select.options', $this->levels, 'value', 'text', $this->state->get('filter.level_end'));?>
+				<?php echo MolajoHTML::_('select.options', $this->levels, 'value', 'text', $this->state->get('filter.level_end'));?>
 			</select>
 		</div>
 
@@ -63,10 +63,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<thead>
 			<tr>
 				<th class="left">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_ASSET_TITLE', 'a.title', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ASSET_TITLE', 'a.title', $listDirn, $listOrder); ?>
 				</th>
 				<th class="left">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_ASSET_NAME', 'a.name', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ASSET_NAME', 'a.name', $listDirn, $listOrder); ?>
 				</th>
 				<?php foreach ($this->actions as $key => $action) : ?>
 				<th width="5%">
@@ -74,10 +74,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				</th>
 				<?php endforeach; ?>
 				<th class="nowrap" width="5%">
-					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_LFT', 'a.lft', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_LFT', 'a.lft', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="3%">
-					<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -137,6 +137,6 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

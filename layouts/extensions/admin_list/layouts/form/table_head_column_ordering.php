@@ -9,8 +9,8 @@
 defined('MOLAJO') or die;
 ?>
 <th width="10%">
-        <?php echo JHtml::_('grid.sort',  'MOLAJO_FIELD_ORDERING_LABEL', 'a.ordering', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+        <?php echo MolajoHTML::_('grid.sort',  'MOLAJO_FIELD_ORDERING_LABEL', 'a.ordering', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
         <?php if ($this->saveOrder) :?>
-                <?php echo JHtml::_('grid.order',  $this->row, 'filesave.png', $this->state->get('request.DefaultView').'.saveorder'); ?>
+                <?php echo MolajoHTML::_('grid.order',  $this->row, 'filesave.png', $this->state->get('request.DefaultView').'.saveorder'); ?>
         <?php endif; ?>
 </th>

@@ -8,5 +8,5 @@
  */
 defined('MOLAJO') or die; ?>
 <th>
-        <?php echo JHtml::_('grid.sort', 'MOLAJO_FIELD_'.strtoupper($this->tempColumnName).'_LABEL', 'a.'.$this->tempColumnName, $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+        <?php echo MolajoHTML::_('grid.sort', 'MOLAJO_FIELD_'.strtoupper($this->tempColumnName).'_LABEL', 'a.'.$this->tempColumnName, $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 </th>

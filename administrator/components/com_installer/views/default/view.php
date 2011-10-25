@@ -51,7 +51,7 @@ class InstallerViewDefault extends JView
 		$this->assign('showMessage',	$showMessage);
 		$this->assignRef('state',		$state);
 
-		JHtml::_('behavior.tooltip');
+		MolajoHTML::_('behavior.tooltip');
 		$this->addToolbar();
 		parent::display($tpl);
 	}

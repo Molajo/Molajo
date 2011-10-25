@@ -63,6 +63,6 @@ class MolajoElementAuthor extends JElement
 			return false;
 		}
 
-		return JHtml::_('select.genericlist', $users, $name, 'class="inputbox" size="1"', 'value', 'text', $value);
+		return MolajoHTML::_('select.genericlist', $users, $name, 'class="inputbox" size="1"', 'value', 'text', $value);
 	}
 }

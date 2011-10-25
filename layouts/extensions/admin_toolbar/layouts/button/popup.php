@@ -27,7 +27,7 @@ class MolajoButtonPopup extends MolajoButton
 
 	public function fetchButton($type='Popup', $name = '', $text = '', $url = '', $width=640, $height=480, $top=0, $left=0, $onClose = '')
 	{
-		JHtml::_('behavior.modal');
+		MolajoHTML::_('behavior.modal');
 
 		$text	= MolajoText::_($text);
 		$class	= $this->fetchIconClass($name);

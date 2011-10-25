@@ -18,11 +18,11 @@ defined('_JEXEC') or die;
 		<?php echo MolajoText::_('COM_TEMPLATES_SITE_PREVIEW'); ?>
 	</h3>
 	<h3 class="fltrt">
-		<?php echo JHtml::_('link',$this->url.'index.php?tp='.$this->tp.'&amp;template='.$this->id, MolajoText::_('JBROWSERTARGET_NEW'), array('target' => '_blank')); ?>
+		<?php echo MolajoHTML::_('link',$this->url.'index.php?tp='.$this->tp.'&amp;template='.$this->id, MolajoText::_('JBROWSERTARGET_NEW'), array('target' => '_blank')); ?>
 	</h3>
 	<div class="clr"></div>
 	<div class="width-100 temprev">
-		<?php echo JHtml::_('iframe',$this->url.'index.php?tp='.$this->tp.'&amp;template='.$this->id,'previewframe',  array('class' => 'previewframe')) ?>
+		<?php echo MolajoHTML::_('iframe',$this->url.'index.php?tp='.$this->tp.'&amp;template='.$this->id,'previewframe',  array('class' => 'previewframe')) ?>
 	</div>
 </div>
 
@@ -32,6 +32,6 @@ defined('_JEXEC') or die;
 	<input type="hidden" name="option" value="<?php echo $this->option;?>" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="application" value="<?php echo $this->application->id;?>" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 </div>
 </form>

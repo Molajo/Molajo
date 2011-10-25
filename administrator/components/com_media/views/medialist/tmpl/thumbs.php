@@ -32,6 +32,6 @@ defined('_JEXEC') or die;
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="username" value="" />
 		<input type="hidden" name="password" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

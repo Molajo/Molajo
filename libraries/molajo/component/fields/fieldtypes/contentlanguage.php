@@ -34,6 +34,6 @@ class MolajoFormFieldContentLanguage extends MolajoFormFieldList
 	protected function getOptions()
 	{
 		// Merge any additional options in the XML definition.
-		return array_merge(parent::getOptions(), JHtml::_('contentlanguage.existing'));
+		return array_merge(parent::getOptions(), MolajoHTML::_('contentlanguage.existing'));
 	}
 }

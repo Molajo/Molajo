@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
+MolajoHTML::_('behavior.keepalive');
 ?>
 
 <script type="text/javascript">
@@ -78,35 +78,35 @@ JHtml::_('behavior.keepalive');
 
 	<div class="width-40 fltrt">
 
-		<?php echo JHtml::_('sliders.start','categories-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
+		<?php echo MolajoHTML::_('sliders.start','categories-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
 			<?php echo $this->loadTemplate('options'); ?>
 			<div class="clr"></div>
 
-			<?php echo JHtml::_('sliders.panel',MolajoText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'meta-options'); ?>
+			<?php echo MolajoHTML::_('sliders.panel',MolajoText::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'), 'meta-options'); ?>
 			<fieldset class="panelform">
 				<?php echo $this->loadTemplate('metadata'); ?>
 			</fieldset>
 
-		<?php echo JHtml::_('sliders.end'); ?>
+		<?php echo MolajoHTML::_('sliders.end'); ?>
 	</div>
 	<div class="clr"></div>
 
 	<?php if ($this->canDo->get('core.admin')): ?>
 		<div  class="width-100 fltlft">
 
-			<?php echo JHtml::_('sliders.start','permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
+			<?php echo MolajoHTML::_('sliders.start','permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
 
-			<?php echo JHtml::_('sliders.panel',MolajoText::_('COM_CATEGORIES_FIELDSET_RULES'), 'access-rules'); ?>
+			<?php echo MolajoHTML::_('sliders.panel',MolajoText::_('COM_CATEGORIES_FIELDSET_RULES'), 'access-rules'); ?>
 			<fieldset class="panelform">
 				<?php echo $this->form->getLabel('rules'); ?>
 				<?php echo $this->form->getInput('rules'); ?>
 			</fieldset>
 
-			<?php echo JHtml::_('sliders.end'); ?>
+			<?php echo MolajoHTML::_('sliders.end'); ?>
 		</div>
 	<?php endif; ?>
 	<div>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

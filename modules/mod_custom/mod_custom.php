@@ -13,7 +13,7 @@ defined('JPATH_PLATFORM') or die;
 if ($params->def('prepare_content', 1))
 {
 	JPluginHelper::importPlugin('content');
-	$module->content = JHtml::_('content.prepare', $module->content);
+	$module->content = MolajoHTML::_('content.prepare', $module->content);
 }
 
 $layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));

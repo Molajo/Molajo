@@ -76,7 +76,7 @@ class MolajoFormFieldTimezone extends MolajoFormFieldGroupedList
 
 				// Only add options where a locale exists.
 				if (!empty($locale)) {
-					$groups[$group][$zone] = JHtml::_('select.option',
+					$groups[$group][$zone] = MolajoHTML::_('select.option',
 						$zone,
 						str_replace('_', ' ', $locale), 'value', 'text', false);
 				}

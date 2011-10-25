@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
  * @package		Joomla.Administrator
  * @subpackage	com_templates
  */
-class JHtmlTemplates
+class MolajoHTMLTemplates
 {
 	/**
 	 * Display the thumb for the template.
@@ -32,7 +32,7 @@ class JHtmlTemplates
 		{
 			$applicationPath = ($applicationId == 0) ? '' : 'administrator/';
 			$thumb	= $applicationPath.'templates/'.$template.'/template_thumbnail.png';
-			$html	= JHtml::_('image',$thumb,MolajoText::_('COM_TEMPLATES_PREVIEW'));
+			$html	= MolajoHTML::_('image',$thumb,MolajoText::_('COM_TEMPLATES_PREVIEW'));
 			if (file_exists($preview))
 			{
 				$preview	= $baseUrl.'/templates/'.$template.'/template_preview.png';

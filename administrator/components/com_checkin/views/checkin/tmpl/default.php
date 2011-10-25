@@ -30,14 +30,14 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<th width="1%">
 					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 				</th>
-				<th class="left"><?php echo JHtml::_('grid.sort', 'COM_CHECKIN_DATABASE_TABLE', 'table', $listDirn, $listOrder); ?></th>
-				<th><?php echo JHtml::_('grid.sort', 'COM_CHECKIN_ITEMS_TO_CHECK_IN', 'count', $listDirn, $listOrder); ?></th>
+				<th class="left"><?php echo MolajoHTML::_('grid.sort', 'COM_CHECKIN_DATABASE_TABLE', 'table', $listDirn, $listOrder); ?></th>
+				<th><?php echo MolajoHTML::_('grid.sort', 'COM_CHECKIN_ITEMS_TO_CHECK_IN', 'count', $listDirn, $listOrder); ?></th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($this->items as $table => $count): $i=0;?>
 			<tr class="row<?php echo $i%2; ?>">
-				<td class="center"><?php echo JHtml::_('grid.id', $i, $table); ?></td>
+				<td class="center"><?php echo MolajoHTML::_('grid.id', $i, $table); ?></td>
 				<td><?php echo MolajoText::sprintf('COM_CHECKIN_TABLE',$table); ?></td>
 				<td width="200" class="center"><?php echo $count; ?></td>
 			</tr>
@@ -55,5 +55,5 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 </form>

@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 
 	foreach ($fieldSets as $name => $fieldSet) :
 		$label = !empty($fieldSet->label) ? $fieldSet->label : 'COM_TEMPLATES_'.$name.'_FIELDSET_LABEL';
-		echo JHtml::_('sliders.panel',MolajoText::_($label), $name.'-options');
+		echo MolajoHTML::_('sliders.panel',MolajoText::_($label), $name.'-options');
 			if (isset($fieldSet->description) && trim($fieldSet->description)) :
 				echo '<p class="tip">'.$this->escape(MolajoText::_($fieldSet->description)).'</p>';
 			endif;

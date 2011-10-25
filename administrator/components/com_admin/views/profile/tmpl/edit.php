@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
 
 // Get the form fieldsets.
 $fieldsets = $this->form->getFieldsets();
@@ -44,12 +44,12 @@ $fieldsets = $this->form->getFieldsets();
 
 	<div class="width-40 fltrt">
 		<?php
-		echo JHtml::_('sliders.start');
+		echo MolajoHTML::_('sliders.start');
 		foreach ($fieldsets as $fieldset) :
 			if ($fieldset->name == 'user_details') :
 				continue;
 			endif;
-			echo JHtml::_('sliders.panel', MolajoText::_($fieldset->label), $fieldset->name);
+			echo MolajoHTML::_('sliders.panel', MolajoText::_($fieldset->label), $fieldset->name);
 		?>
 		<fieldset class="panelform">
 		<ul class="adminformlist">
@@ -64,9 +64,9 @@ $fieldsets = $this->form->getFieldsets();
 		</ul>
 		</fieldset>
 		<?php endforeach; ?>
-		<?php echo JHtml::_('sliders.end'); ?>
+		<?php echo MolajoHTML::_('sliders.end'); ?>
 
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

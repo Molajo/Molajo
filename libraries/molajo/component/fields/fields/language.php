@@ -41,7 +41,7 @@ class MolajoFieldLanguage extends MolajoField
      */
     public function getOptions ()
     {
-        return JHtml::_('contentlanguage.existing', true, true);
+        return MolajoHTML::_('contentlanguage.existing', true, true);
     }
 
     /**

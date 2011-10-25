@@ -50,7 +50,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 					}
 
 					// Create a new option object based on the <option /> element.
-					$tmp = JHtml::_('select.option',
+					$tmp = MolajoHTML::_('select.option',
 						($element['value']) ? (string) $element['value'] : trim((string) $element),
 						MolajoText::alt(trim((string) $element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
 						((string) $element['disabled']=='true'));
@@ -87,7 +87,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 						}
 
 						// Create a new option object based on the <option /> element.
-						$tmp = JHtml::_('select.option',
+						$tmp = MolajoHTML::_('select.option',
 							($option['value']) ? (string) $option['value'] : MolajoText::_(trim((string) $option)),
 							MolajoText::_(trim((string) $option)), 'value', 'text',
 							((string) $option['disabled']=='true'));
@@ -145,12 +145,12 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 
 		// Create a read-only list (no name) with a hidden calendar to store the value.
 		if ((string) $this->element['readonly'] == 'true') {
-			$html[] = JHtml::_('select.groupedlist', $groups, null, array('list.attr' => $attr, 'id' => $this->id, 'list.select' => $this->value, 'group.items' => null, 'option.key.toHtml' => false, 'option.text.toHtml' => false));
+			$html[] = MolajoHTML::_('select.groupedlist', $groups, null, array('list.attr' => $attr, 'id' => $this->id, 'list.select' => $this->value, 'group.items' => null, 'option.key.toHtml' => false, 'option.text.toHtml' => false));
 			$html[] = '<calendar type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
 		}
 		// Create a regular list.
 		else {
-			$html[] = JHtml::_('select.groupedlist', $groups, $this->name, array('list.attr' => $attr, 'id' => $this->id, 'list.select' => $this->value, 'group.items' => null, 'option.key.toHtml' => false, 'option.text.toHtml' => false));
+			$html[] = MolajoHTML::_('select.groupedlist', $groups, $this->name, array('list.attr' => $attr, 'id' => $this->id, 'list.select' => $this->value, 'group.items' => null, 'option.key.toHtml' => false, 'option.text.toHtml' => false));
 		}
 
 		return implode($html);

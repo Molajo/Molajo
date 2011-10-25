@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @subpackage	com_admin
  * * * @since		1.0
  */
-abstract class JHtmlPhpSetting
+abstract class MolajoHTMLPhpSetting
 {
 	/**
 	 * method to generate a boolean message for a value

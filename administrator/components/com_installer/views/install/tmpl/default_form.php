@@ -77,6 +77,6 @@ defined('_JEXEC') or die;
 		<input type="hidden" name="type" value="" />
 		<input type="hidden" name="installtype" value="upload" />
 		<input type="hidden" name="task" value="install.install" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

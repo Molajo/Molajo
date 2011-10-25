@@ -8,5 +8,5 @@
  */
 defined('MOLAJO') or die;
  ?>
-        <?php echo JHtml::_('sliders.end'); ?>
+        <?php echo MolajoHTML::_('sliders.end'); ?>
 </div>

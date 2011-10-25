@@ -119,7 +119,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 
 			// Add a Use Global option if useglobal="true" in XML file
 			if ($this->element['useglobal'] == 'true') {
-				$groups[MolajoText::_('JOPTION_FROM_STANDARD')]['items'][]	= JHtml::_('select.option', '', MolajoText::_('JGLOBAL_USE_GLOBAL'));
+				$groups[MolajoText::_('JOPTION_FROM_STANDARD')]['items'][]	= MolajoHTML::_('select.option', '', MolajoText::_('JGLOBAL_USE_GLOBAL'));
 			}
 
 			// Add the layout options from the component path.
@@ -152,7 +152,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 					$value = JFile::stripext(JFile::getName($file));
 					$component_layouts[$i] = $value;
 					$text = isset($menu['option']) ? MolajoText::_($menu['option']) : (isset($menu['title']) ? MolajoText::_($menu['title']) : $value);
-					$groups['_']['items'][]	= JHtml::_('select.option', '_:'.$value, $text);
+					$groups['_']['items'][]	= MolajoHTML::_('select.option', '_:'.$value, $text);
 				}
 			}
 
@@ -201,7 +201,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 								// Add an option to the template group
 								$value = JFile::stripext(JFile::getName($file));
 								$text = $lang->hasKey($key = strtoupper('TPL_'.$template->name.'_'.$extn.'_'.$view.'_LAYOUT_'.$value)) ? MolajoText::_($key) : $value;
-								$groups[$template->name]['items'][]	= JHtml::_('select.option', $template->element.':'.$value, $text);
+								$groups[$template->name]['items'][]	= MolajoHTML::_('select.option', $template->element.':'.$value, $text);
 							}
 						}
 					}
@@ -218,7 +218,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 			$selected = array($this->value);
 
 			// Add a grouped list
-			$html[] = JHtml::_('select.groupedlist', $groups, $this->name, array('id'=>$this->id, 'group.id'=>'id', 'list.attr'=>$attr, 'list.select'=>$selected));
+			$html[] = MolajoHTML::_('select.groupedlist', $groups, $this->name, array('id'=>$this->id, 'group.id'=>'id', 'list.attr'=>$attr, 'list.select'=>$selected));
 
 
 			return implode($html);

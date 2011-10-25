@@ -94,6 +94,6 @@ class MolajoFormFieldCalendar extends MolajoFormField
 				break;
 		}
 
-		return JHtml::_('calendar', $this->value, $this->name, $this->id, $format, $attributes);
+		return MolajoHTML::_('calendar', $this->value, $this->name, $this->id, $format, $attributes);
 	}
 }

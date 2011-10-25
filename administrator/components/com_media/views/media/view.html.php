@@ -31,24 +31,24 @@ class MediaViewMedia extends JView
 		$document = MolajoFactory::getDocument();
 		$document->setBuffer($this->loadTemplate('navigation'), 'modules', 'submenu');
 
-		JHtml::_('behavior.framework', true);
+		MolajoHTML::_('behavior.framework', true);
 
-		JHtml::_('script','media/mediamanager.js', true, true);
-		JHtml::_('stylesheet','media/mediamanager.css', array(), true);
+		MolajoHTML::_('script','media/mediamanager.js', true, true);
+		MolajoHTML::_('stylesheet','media/mediamanager.css', array(), true);
 		if ($lang->isRTL()) :
-			JHtml::_('stylesheet','media/mediamanager_rtl.css', array(), true);
+			MolajoHTML::_('stylesheet','media/mediamanager_rtl.css', array(), true);
 		endif;
 
-		JHtml::_('behavior.modal');
+		MolajoHTML::_('behavior.modal');
 		$document->addScriptDeclaration("
 		window.addEvent('domready', function() {
 			document.preview = SqueezeBox;
 		});");
 
-		JHtml::_('script','system/mootree.js', true, true, false, false);
-		JHtml::_('stylesheet','system/mootree.css', array(), true);
+		MolajoHTML::_('script','system/mootree.js', true, true, false, false);
+		MolajoHTML::_('stylesheet','system/mootree.css', array(), true);
 		if ($lang->isRTL()) :
-			JHtml::_('stylesheet','media/mootree_rtl.css', array(), true);
+			MolajoHTML::_('stylesheet','media/mootree_rtl.css', array(), true);
 		endif;
 
 		if ($config->get('enable_flash', 1)) {
@@ -69,7 +69,7 @@ class MediaViewMedia extends JView
 			}
 			$typeString = '{ \''.MolajoText::_('COM_MEDIA_FILES','true').' ('.$displayTypes.')\': \''.$filterTypes.'\' }';
 
-			JHtml::_('behavior.uploader', 'upload-flash',
+			MolajoHTML::_('behavior.uploader', 'upload-flash',
 				array(
 					'onBeforeStart' => 'function(){ Uploader.setOptions({url: document.id(\'uploadForm\').action + \'&folder=\' + document.id(\'mediamanager-form\').folder.value}); }',
 					'onComplete' 	=> 'function(){ MediaManager.refreshFrame(); }',
@@ -112,7 +112,7 @@ class MediaViewMedia extends JView
 		$this->addToolbar();
 
 		parent::display($tpl);
-		echo JHtml::_('behavior.keepalive');
+		echo MolajoHTML::_('behavior.keepalive');
 	}
 
 	/**

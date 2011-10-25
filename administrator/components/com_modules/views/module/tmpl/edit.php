@@ -10,10 +10,10 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.combobox');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
+MolajoHTML::_('behavior.combobox');
 $hasContent = empty($this->item->module) || $this->item->module == 'custom' || $this->item->module == 'mod_custom';
 
 $script = "Joomla.submitbutton = function(task)
@@ -102,10 +102,10 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 	</div>
 
 	<div class="width-40 fltrt">
-	<?php echo JHtml::_('sliders.start', 'module-sliders'); ?>
+	<?php echo MolajoHTML::_('sliders.start', 'module-sliders'); ?>
 		<?php echo $this->loadTemplate('options'); ?>
 		<div class="clr"></div>
-	<?php echo JHtml::_('sliders.end'); ?>
+	<?php echo MolajoHTML::_('sliders.end'); ?>
 	</div>
 
 	<?php if ($hasContent) : ?>
@@ -132,6 +132,6 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 
 	<div>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

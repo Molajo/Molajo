@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @subpackage	com_languages
  * * * @since		1.0
  */
-abstract class JHtmlLanguages {
+abstract class MolajoHTMLLanguages {
 	/**
 	 * method to generate an information about the default language
 	 *
@@ -26,7 +26,7 @@ abstract class JHtmlLanguages {
 	public static function published($published)
 	{
 		if ($published) {
-			return JHtml::_('image','menu/icon-16-default.png', MolajoText::_('COM_LANGUAGES_HEADING_DEFAULT'), NULL, true);
+			return MolajoHTML::_('image','menu/icon-16-default.png', MolajoText::_('COM_LANGUAGES_HEADING_DEFAULT'), NULL, true);
 		}
 		else {
 			return '&#160;';
@@ -49,8 +49,8 @@ abstract class JHtmlLanguages {
 	public static function applications()
 	{
 		return array(
-			JHtml::_('select.option', 0, MolajoText::_('JSITE')),
-			JHtml::_('select.option', 1, MolajoText::_('JADMINISTRATOR'))
+			MolajoHTML::_('select.option', 0, MolajoText::_('JSITE')),
+			MolajoHTML::_('select.option', 1, MolajoText::_('JADMINISTRATOR'))
 		);
 	}
 
@@ -64,10 +64,10 @@ abstract class JHtmlLanguages {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'JPUBLISHED');
-		$options[]	= JHtml::_('select.option', '0', 'JUNPUBLISHED');
-		$options[]	= JHtml::_('select.option', '-2', 'JTRASHED');
-		$options[]	= JHtml::_('select.option', '*', 'JALL');
+		$options[]	= MolajoHTML::_('select.option', '1', 'JPUBLISHED');
+		$options[]	= MolajoHTML::_('select.option', '0', 'JUNPUBLISHED');
+		$options[]	= MolajoHTML::_('select.option', '-2', 'JTRASHED');
+		$options[]	= MolajoHTML::_('select.option', '*', 'JALL');
 
 		return $options;
 	}

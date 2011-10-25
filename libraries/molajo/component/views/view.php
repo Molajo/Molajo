@@ -280,7 +280,6 @@ class MolajoView extends JView
     */
     protected function renderLayout ($layout, $layout_type)
     {
-
         /** @var $rowCount */
         $rowCount = 1;
 
@@ -385,7 +384,6 @@ class MolajoView extends JView
         /** collect output */
         $output = ob_get_contents();
         ob_end_clean();
-
         return $output;
     }
 

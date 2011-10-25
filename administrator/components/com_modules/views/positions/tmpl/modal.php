@@ -10,8 +10,8 @@
 // no direct access
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
 
 $function	= JRequest::getCmd('function', 'jSelectPosition');
 $lang		= MolajoFactory::getLanguage();
@@ -39,17 +39,17 @@ $type		= $this->state->get('filter.type');
 		<div class="right">
 			<select name="filter_state" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('modules.templateStates'), 'value', 'text', $state, true);?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('modules.templateStates'), 'value', 'text', $state, true);?>
 			</select>
 
 			<select name="filter_type" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('COM_MODULES_OPTION_SELECT_TYPE');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('modules.types'), 'value', 'text', $type, true);?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('modules.types'), 'value', 'text', $type, true);?>
 			</select>
 
 			<select name="filter_template" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_TEMPLATE');?></option>
-				<?php echo JHtml::_('select.options', JHtml::_('modules.templates', $applicationId), 'value', 'text', $template, true);?>
+				<?php echo MolajoHTML::_('select.options', MolajoHTML::_('modules.templates', $applicationId), 'value', 'text', $template, true);?>
 			</select>
 		</div>
 	</fieldset>
@@ -58,10 +58,10 @@ $type		= $this->state->get('filter.type');
 		<thead>
 			<tr>
 				<th class="title" width="20%">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'value', $direction, $ordering); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_TITLE', 'value', $direction, $ordering); ?>
 				</th>
 				<th>
-					<?php echo JHtml::_('grid.sort', 'COM_MODULES_HEADING_TEMPLATES', 'templates', $direction, $ordering); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_MODULES_HEADING_TEMPLATES', 'templates', $direction, $ordering); ?>
 				</th>
 			</tr>
 		</thead>
@@ -99,6 +99,6 @@ $type		= $this->state->get('filter.type');
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $ordering; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $direction; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

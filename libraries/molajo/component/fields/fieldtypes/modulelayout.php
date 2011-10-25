@@ -128,7 +128,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 					// Add an option to the module group
 					$value = JFile::stripExt($file);
 					$text = $lang->hasKey($key = strtoupper($module.'_LAYOUT_'.$value)) ? MolajoText::_($key) : $value;
-					$groups['_']['items'][]	= JHtml::_('select.option', '_:'.$value, $text);
+					$groups['_']['items'][]	= MolajoHTML::_('select.option', '_:'.$value, $text);
 				}
 			}
 
@@ -166,7 +166,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 								// Add an option to the template group
 								$value = JFile::stripExt($file);
 								$text = $lang->hasKey($key = strtoupper('TPL_'.$template->element.'_'.$module.'_LAYOUT_'.$value)) ? MolajoText::_($key) : $value;
-								$groups[$template->element]['items'][]	= JHtml::_('select.option', $template->element.':'.$value, $text);
+								$groups[$template->element]['items'][]	= MolajoHTML::_('select.option', $template->element.':'.$value, $text);
 							}
 						}
 					}
@@ -182,7 +182,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 			$selected = array($this->value);
 
 			// Add a grouped list
-			$html[] = JHtml::_('select.groupedlist', $groups, $this->name, array('id'=>$this->id, 'group.id'=>'id', 'list.attr'=>$attr, 'list.select'=>$selected));
+			$html[] = MolajoHTML::_('select.groupedlist', $groups, $this->name, array('id'=>$this->id, 'group.id'=>'id', 'list.attr'=>$attr, 'list.select'=>$selected));
 
 			return implode($html);
 		}

@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Load tooltips behavior
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.switcher');
-JHtml::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
+MolajoHTML::_('behavior.switcher');
+MolajoHTML::_('behavior.tooltip');
 
 // Load submenu template, using element id 'submenu' as needed by behavior.switcher
 $this->document->setBuffer($this->loadTemplate('navigation'), 'modules', 'submenu');
@@ -76,7 +76,7 @@ $this->document->setBuffer($this->loadTemplate('navigation'), 'modules', 'submen
 			</div>
 		</div>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 	<div class="clr"></div>
 </form>

@@ -85,15 +85,15 @@ class UsersHelper
 	/**
 	 * Get a list of filter options for the blocked state of a user.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 * @since	1.0
 	 */
 	static function getStateOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', MolajoText::_('JENABLED'));
-		$options[]	= JHtml::_('select.option', '1', MolajoText::_('JDISABLED'));
+		$options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('JENABLED'));
+		$options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('JDISABLED'));
 
 		return $options;
 	}
@@ -101,15 +101,15 @@ class UsersHelper
 	/**
 	 * Get a list of filter options for the activated state of a user.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 * @since	1.0
 	 */
 	static function getActiveOptions()
 	{
 		// Build the filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', MolajoText::_('COM_USERS_ACTIVATED'));
-		$options[]	= JHtml::_('select.option', '1', MolajoText::_('COM_USERS_UNACTIVATED'));
+		$options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('COM_USERS_ACTIVATED'));
+		$options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('COM_USERS_UNACTIVATED'));
 
 		return $options;
 	}
@@ -117,7 +117,7 @@ class UsersHelper
 	/**
 	 * Get a list of the user groups for filtering.
 	 *
-	 * @return	array	An array of JHtmlOption elements.
+	 * @return	array	An array of MolajoHTMLOption elements.
 	 * @since	1.0
 	 */
 	static function getGroups()

@@ -11,8 +11,8 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
 ?>
 
 <h2 class="modal-title"><?php echo MolajoText::_('COM_MODULES_TYPE_CHOOSE')?></h2>

@@ -150,8 +150,17 @@ foreach ($files as $file) {
 }
 
 /**
- *  HTML - not used
+ *  HTML
  */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/editor.php', 'MolajoEditor');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/grid.php', 'MolajoGrid');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/html.php', 'MolajoHtml');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/pagination.php', 'MolajoPagination');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/pane.php', 'MolajoPane');
+$files = JFolder::files(MOLAJO_LIBRARY.'/html/html', '\.php$', false, false);
+foreach ($files as $file) {
+    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/html/html/'.$file, 'MolajoHtml'.ucfirst(substr($file, 0, strpos($file, '.'))));
+}
 
 /**
  *  Installer

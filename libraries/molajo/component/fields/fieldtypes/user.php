@@ -48,7 +48,7 @@ class MolajoFormFieldUser extends MolajoFormField
 		$onchange = (string) $this->element['onchange'];
 
 		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modal_'.$this->id);
+		MolajoHTML::_('behavior.modal', 'a.modal_'.$this->id);
 
 		// Build the script.
 		$script = array();

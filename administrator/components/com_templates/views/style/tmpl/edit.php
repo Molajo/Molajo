@@ -10,10 +10,10 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.keepalive');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
+MolajoHTML::_('behavior.keepalive');
 $user = MolajoFactory::getUser();
 $canDo = TemplatesHelper::getActions();
 ?>
@@ -62,18 +62,18 @@ $canDo = TemplatesHelper::getActions();
 			<div class="clr"></div>
 		</fieldset>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 
 	<div class="width-40 fltrt">
-	<?php echo JHtml::_('sliders.start','template-sliders-'.$this->item->id); ?>
+	<?php echo MolajoHTML::_('sliders.start','template-sliders-'.$this->item->id); ?>
 
 		<?php //get the menu parameters that are automatically set but may be modified.
 			echo $this->loadTemplate('options'); ?>
 
 		<div class="clr"></div>
 
-	<?php echo JHtml::_('sliders.end'); ?>
+	<?php echo MolajoHTML::_('sliders.end'); ?>
 	</div>
 	<?php if ($user->authorise('core.edit','com_menu') && $this->item->application_id==0):?>
 		<?php if ($canDo->get('core.edit.state')) : ?>

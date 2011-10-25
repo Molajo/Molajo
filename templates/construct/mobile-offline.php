@@ -65,7 +65,7 @@ $baseUrl 				= JURI::base();
 				<input type="hidden" name="option" value="com_users" />
 				<input type="hidden" name="task" value="user.login" />
 				<input type="hidden" name="return" value="<?php echo base64_encode(JURI::base()) ?>" />
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo MolajoHTML::_('form.token'); ?>
 			</fieldset>
 			</form>						
 			

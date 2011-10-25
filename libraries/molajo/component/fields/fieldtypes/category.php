@@ -43,15 +43,15 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
         /** extension scope **/
         $extension	= $this->element['extension'] ? (string) $this->element['extension'] : (string) $this->element['scope'];
         if (isset($this->element['show_root'])) {
-            array_unshift($options, JHtml::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
+            array_unshift($options, MolajoHTML::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
         }
 
         /** state **/
         $published	= (string) $this->element['published'];
         if ($published) {
-            $options = JHtml::_('category.options', $extension, array('filter.published' => explode(',', $published)));
+            $options = MolajoHTML::_('category.options', $extension, array('filter.published' => explode(',', $published)));
         } else {
-            $options = JHtml::_('category.options', $extension);
+            $options = MolajoHTML::_('category.options', $extension);
         }
 
         /** acl **/

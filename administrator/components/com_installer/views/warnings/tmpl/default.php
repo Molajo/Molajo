@@ -17,19 +17,19 @@ defined('_JEXEC') or die;
 if (!count($this->messages)) {
 	echo '<p class="nowarning">'. MolajoText::_('COM_INSTALLER_MSG_WARNINGS_NONE').'</p>';
 } else {
-	echo JHtml::_('sliders.start', 'warning-sliders', array('useCookie'=>1));
+	echo MolajoHTML::_('sliders.start', 'warning-sliders', array('useCookie'=>1));
 	foreach($this->messages as $message) {
-		echo JHtml::_('sliders.panel', $message['message'], str_replace(' ','', $message['message']));
+		echo MolajoHTML::_('sliders.panel', $message['message'], str_replace(' ','', $message['message']));
 		echo '<div style="padding: 5px;" >'.$message['description'].'</div>';
 	}
-	echo JHtml::_('sliders.panel', MolajoText::_('COM_INSTALLER_MSG_WARNINGFURTHERINFO'),'furtherinfo-pane');
+	echo MolajoHTML::_('sliders.panel', MolajoText::_('COM_INSTALLER_MSG_WARNINGFURTHERINFO'),'furtherinfo-pane');
 	echo '<div style="padding: 5px;" >'. MolajoText::_('COM_INSTALLER_MSG_WARNINGFURTHERINFODESC') .'</div>';
-	echo JHtml::_('sliders.end');
+	echo MolajoHTML::_('sliders.end');
 }
 ?>
 <div class="clr"> </div>
 <div>
 	<input type="hidden" name="boxchecked" value="0" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 </div>
 </form>

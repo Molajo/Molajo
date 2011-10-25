@@ -39,7 +39,7 @@ class JFormFieldType extends JFormField
 		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 		$options = array();
 		foreach ($this->element->children() as $option) {
-			$options[] = JHtml::_('select.option', $option->attributes('value'), MolajoText::_(trim($option->data())));
+			$options[] = MolajoHTML::_('select.option', $option->attributes('value'), MolajoText::_(trim($option->data())));
 		}
 
 		$db = MolajoFactory::getDBO();
@@ -49,10 +49,10 @@ class JFormFieldType extends JFormField
 		$types = array_unique($db->loadResultArray());
 		foreach($types as $type)
 		{
-			$options[] = JHtml::_('select.option', $type, MolajoText::_('COM_INSTALLER_TYPE_'. strtoupper($type)));
+			$options[] = MolajoHTML::_('select.option', $type, MolajoText::_('COM_INSTALLER_TYPE_'. strtoupper($type)));
 		}
 
-		$return = JHtml::_('select.genericlist', $options, $this->name, $onchange, 'value', 'text', $this->value, $this->id);
+		$return = MolajoHTML::_('select.genericlist', $options, $this->name, $onchange, 'value', 'text', $this->value, $this->id);
 
 		return $return;
 	}

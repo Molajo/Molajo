@@ -55,7 +55,7 @@ $user = MolajoFactory::getUser();
 						<button type="submit"><?php echo MolajoText::_('COM_MEDIA_CREATE_FOLDER'); ?></button>
 					<?php endif; ?>
 					</div>
-					<?php echo JHtml::_('form.token'); ?>
+					<?php echo MolajoHTML::_('form.token'); ?>
 				</fieldset>
 			</form>
 
@@ -78,10 +78,10 @@ $user = MolajoFactory::getUser();
 						</ul>
 						<div class="clr"> </div>
 						<p class="overall-title"></p>
-						<?php echo JHtml::_('image','media/bar.gif', MolajoText::_('COM_MEDIA_OVERALL_PROGRESS'), array('class' => 'progress overall-progress'), true); ?>
+						<?php echo MolajoHTML::_('image','media/bar.gif', MolajoText::_('COM_MEDIA_OVERALL_PROGRESS'), array('class' => 'progress overall-progress'), true); ?>
 						<div class="clr"> </div>
 						<p class="current-title"></p>
-						<?php echo JHtml::_('image','media/bar.gif', MolajoText::_('COM_MEDIA_CURRENT_PROGRESS'), array('class' => 'progress current-progress'), true); ?>
+						<?php echo MolajoHTML::_('image','media/bar.gif', MolajoText::_('COM_MEDIA_CURRENT_PROGRESS'), array('class' => 'progress current-progress'), true); ?>
 						<p class="current-text"></p>
 					</div>
 					<ul class="upload-queue" id="upload-queue">

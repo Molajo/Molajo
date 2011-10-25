@@ -28,7 +28,7 @@ $script .= "\t\t".'}'."\n";
 $script .= "\t\t".'}'."\n";
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
+MolajoHTML::_('behavior.tooltip');
 
 MolajoFactory::getDocument()->addScriptDeclaration($script);
 ?>
@@ -69,7 +69,7 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 			</ul>
 		</fieldset>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 
 	<div class="clr"></div>

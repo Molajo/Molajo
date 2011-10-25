@@ -50,7 +50,7 @@ class MolajoFormFieldCombo extends MolajoFormFieldList
 		$options = $this->getOptions();
 
 		// Load the combobox behavior.
-		JHtml::_('behavior.combobox');
+		MolajoHTML::_('behavior.combobox');
 
 		// Build the calendar for the combo box.
 		$html[] = '<calendar type="text" name="'.$this->name.'" id="'.$this->id.'"' .

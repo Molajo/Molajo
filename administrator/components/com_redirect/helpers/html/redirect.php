@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @subpackage	com_redirect
  * * * @since		1.0
  */
-class JHtmlRedirect
+class MolajoHTMLRedirect
 {
 	/**
 	 * @param	int $value	The state value.
@@ -34,7 +34,7 @@ class JHtmlRedirect
 			-2	=> array('trash.png',		'links.publish',		'JTRASHED',	'COM_REDIRECT_ENABLE_LINK'),
 		);
 		$state	= JArrayHelper::getValue($states, (int) $value, $states[0]);
-		$html	= JHtml::_('image','admin/'.$state[0], MolajoText::_($state[2]), NULL, true);
+		$html	= MolajoHTML::_('image','admin/'.$state[0], MolajoText::_($state[2]), NULL, true);
 		if ($canChange) {
 			$html	= '<a href="#" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.MolajoText::_($state[3]).'">'
 					. $html.'</a>';

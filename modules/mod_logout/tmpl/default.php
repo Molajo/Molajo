@@ -9,7 +9,7 @@
 
 // no direct access
 defined('JPATH_PLATFORM') or die;
-JHtml::_('behavior.keepalive');
+MolajoHTML::_('behavior.keepalive');
 ?>
 <?php if ($type == 'logout') : ?>
 <form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="login-form">
@@ -27,7 +27,7 @@ JHtml::_('behavior.keepalive');
 		<input type="hidden" name="option" value="com_users" />
 		<input type="hidden" name="task" value="user.logout" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />
-		<?php echo JHtml::_('form.token'); ?>		
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>
 <?php else : ?>
@@ -56,7 +56,7 @@ JHtml::_('behavior.keepalive');
 	<input type="hidden" name="option" value="com_users" />
 	<input type="hidden" name="task" value="user.login" />
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 	</fieldset>
 	<ul>
 		<li>

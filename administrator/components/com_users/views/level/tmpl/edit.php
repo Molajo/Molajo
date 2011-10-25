@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
 $canDo = UsersHelper::getActions();
 ?>
 
@@ -101,10 +101,10 @@ window.addEvent('domready', function(){
 	<div class="width-50">
 		<fieldset class="adminform">
 			<legend><?php echo MolajoText::_('COM_USERS_USER_GROUPS_HAVING_ACCESS');?></legend>
-			<?php echo JHtml::_('access.usergroups', 'jform[rules]', $this->item->rules); ?>
+			<?php echo MolajoHTML::_('access.usergroups', 'jform[rules]', $this->item->rules); ?>
 		</fieldset>
 		<input type="hidden" name="task" value="" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>
 <div class="clr"></div>

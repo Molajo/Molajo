@@ -72,8 +72,8 @@ class JFormFieldMenuType extends JFormFieldList
 				break;
 		}
 		// Load the javascript
-		JHtml::_('behavior.framework');
-		JHtml::_('behavior.modal', 'input.modal');
+		MolajoHTML::_('behavior.framework');
+		MolajoHTML::_('behavior.modal', 'input.modal');
 
 		$document = MolajoFactory::getDocument();
 		$document->addScriptDeclaration("

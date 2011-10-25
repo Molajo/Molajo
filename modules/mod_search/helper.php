@@ -27,7 +27,7 @@ class modSearchHelper
 	 */
 	public static function getSearchImage($button_text)
 	{
-		$img = JHtml::_('image','searchButton.gif', $button_text, NULL, true, true);
+		$img = MolajoHTML::_('image','searchButton.gif', $button_text, NULL, true, true);
 		return $img;
 	}
 }

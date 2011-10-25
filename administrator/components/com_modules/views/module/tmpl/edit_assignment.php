@@ -47,7 +47,7 @@ $menuTypes = MenusHelper::getMenuLinks();
 
 			<fieldset id="jform_menus" class="radio">
 				<select name="jform[assignment]" id="jform_assignment">
-					<?php echo JHtml::_('select.options', ModulesHelper::getAssignmentOptions($this->item->application_id), 'value', 'text', $this->item->assignment, true);?>
+					<?php echo MolajoHTML::_('select.options', ModulesHelper::getAssignmentOptions($this->item->application_id), 'value', 'text', $this->item->assignment, true);?>
 				</select>
 
 			</fieldset>
@@ -70,10 +70,10 @@ $menuTypes = MenusHelper::getMenuLinks();
 
 			<div id="menu-assignment">
 
-			<?php echo JHtml::_('tabs.start','module-menu-assignment-tabs', array('useCookie'=>1));?>
+			<?php echo MolajoHTML::_('tabs.start','module-menu-assignment-tabs', array('useCookie'=>1));?>
 
 			<?php foreach ($menuTypes as &$type) :
-				echo JHtml::_('tabs.panel', $type->title ? $type->title : $type->menu_id, $type->menu_id.'-details');
+				echo MolajoHTML::_('tabs.panel', $type->title ? $type->title : $type->menu_id, $type->menu_id.'-details');
 
 				$count 	= count($type->links);
 				$i		= 0;
@@ -107,7 +107,7 @@ $menuTypes = MenusHelper::getMenuLinks();
 				<?php endif; ?>
 			<?php endforeach; ?>
 
-			<?php echo JHtml::_('tabs.end');?>
+			<?php echo MolajoHTML::_('tabs.end');?>
 
 			</div>
 		</fieldset>

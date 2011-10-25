@@ -38,7 +38,7 @@ class MolajoFormFieldCacheHandler extends MolajoFormFieldList
 
 		// Convert to name => name array.
 		foreach (JCache::getStores() as $store) {
-			$options[] = JHtml::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_CACHE_'.$store), 'value', 'text');
+			$options[] = MolajoHTML::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_CACHE_'.$store), 'value', 'text');
 		}
 
 		$options = array_merge(parent::getOptions(), $options);

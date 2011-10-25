@@ -12,10 +12,10 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.modal');
-JHtml::_('behavior.multiselect');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.modal');
+MolajoHTML::_('behavior.multiselect');
 
 $user		= MolajoFactory::getUser();
 $listOrder	= $this->escape($this->state->get('list.ordering'));
@@ -33,7 +33,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo MolajoText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
-				<?php echo JHtml::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo MolajoHTML::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -46,10 +46,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					&#160;
 				</th>
 				<th>
-					<?php echo JHtml::_('grid.sort', 'COM_TEMPLATES_HEADING_TEMPLATE', 'a.element', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_TEMPLATES_HEADING_TEMPLATE', 'a.element', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHtml::_('grid.sort', 'JCLIENT', 'a.application_id', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'JCLIENT', 'a.application_id', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10%" class="center">
 					<?php echo MolajoText::_('MOLAJOVERSION'); ?>
@@ -73,7 +73,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<?php foreach ($this->items as $i => $item) : ?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
-					<?php echo JHtml::_('templates.thumb', $item->element, $item->application_id); ?>
+					<?php echo MolajoHTML::_('templates.thumb', $item->element, $item->application_id); ?>
 				</td>
 				<td class="template-name">
 					<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&view=template&id='.(int) $item->extension_id); ?>">
@@ -123,6 +123,6 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

@@ -42,8 +42,8 @@ class MolajoFieldStickied extends MolajoField
     public function getOptions ()
     {
         $options	= array();
-        $options[]	= JHtml::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
-        $options[]	= JHtml::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
+        $options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
+        $options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
 
         return $options;
     }

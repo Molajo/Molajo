@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.modal');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.modal');
 $canDo	= TemplatesHelper::getActions();
 ?>
 <form action="<?php echo MolajoRoute::_('index.php?option=com_templates&view=template'); ?>" method="post" name="adminForm" id="adminForm">
@@ -21,7 +21,7 @@ $canDo	= TemplatesHelper::getActions();
 		<fieldset class="adminform" id="template-manager">
 			<legend><?php echo MolajoText::_('COM_TEMPLATES_TEMPLATE_MASTER_FILES');?></legend>
 
-			<?php echo JHtml::_('templates.thumb', $this->template->element, $this->template->application_id); ?>
+			<?php echo MolajoHTML::_('templates.thumb', $this->template->element, $this->template->application_id); ?>
 
 			<h2><?php echo $this->template->element; ?></h2>
 			<ul>

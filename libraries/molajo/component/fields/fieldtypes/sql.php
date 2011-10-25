@@ -72,7 +72,7 @@ class MolajoFormFieldSql extends MolajoFormFieldList
 
                         /** load results into list **/
                         foreach($items as $item) {
-                            $options[] = JHtml::_('select.option', $item->$key, $item->$value);
+                            $options[] = MolajoHTML::_('select.option', $item->$key, $item->$value);
                         }
 		}
 

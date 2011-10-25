@@ -29,7 +29,7 @@ class MediaViewMediaList extends JView
 
 		$lang	= MolajoFactory::getLanguage();
 
-		JHtml::_('behavior.framework', true);
+		MolajoHTML::_('behavior.framework', true);
 
 		$document = MolajoFactory::getDocument();
 		$document->addStyleSheet('../media/media/css/medialist-'.$style.'.css');

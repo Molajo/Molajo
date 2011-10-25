@@ -10,12 +10,12 @@
 defined('_JEXEC') or die;
 
 // Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('behavior.modal');
+MolajoHTML::_('behavior.tooltip');
+MolajoHTML::_('behavior.formvalidation');
+MolajoHTML::_('behavior.modal');
 ?>
 
 <script type="text/javascript">
@@ -113,24 +113,24 @@ JHtml::_('behavior.modal');
 </div>
 
 <div class="width-40 fltrt">
-	<?php echo JHtml::_('sliders.start','menu-sliders-'.$this->item->id); ?>
+	<?php echo MolajoHTML::_('sliders.start','menu-sliders-'.$this->item->id); ?>
 	<?php //Load  parameters.
 		echo $this->loadTemplate('options'); ?>
 
 		<div class="clr"></div>
 
 		<?php if (!empty($this->modules)) : ?>
-			<?php echo JHtml::_('sliders.panel',MolajoText::_('COM_MENUS_ITEM_MODULE_ASSIGNMENT'), 'module-options'); ?>
+			<?php echo MolajoHTML::_('sliders.panel',MolajoText::_('COM_MENUS_ITEM_MODULE_ASSIGNMENT'), 'module-options'); ?>
 			<fieldset>
 				<?php echo $this->loadTemplate('modules'); ?>
 			</fieldset>
 		<?php endif; ?>
 
-	<?php echo JHtml::_('sliders.end'); ?>
+	<?php echo MolajoHTML::_('sliders.end'); ?>
 
 	<input type="hidden" name="task" value="" />
 	<?php echo $this->form->getInput('component_id'); ?>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 	<input type="hidden" id="fieldtype" name="fieldtype" value="" />
 </div>
 </form>

@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 // Add specific helper files for html generation
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 $user		= MolajoFactory::getUser();
 $userId		= $user->get('id');
 $application		= $this->state->get('filter.application_id', 0) ? MolajoText::_('JADMINISTRATOR') : MolajoText::_('JSITE');
@@ -72,7 +72,7 @@ $applicationId	= $this->state->get('filter.application_id', 0);
 					<?php echo $this->pagination->getRowOffset($i); ?>
 				</td>
 				<td width="20">
-					<?php echo JHtml::_('languages.id',$i,$row->language);?>
+					<?php echo MolajoHTML::_('languages.id',$i,$row->language);?>
 				</td>
 				<td width="25%">
 					<?php echo $this->escape($row->name); ?>
@@ -81,7 +81,7 @@ $applicationId	= $this->state->get('filter.application_id', 0);
 					<?php echo $application;?>
 				</td>
 				<td align="center">
-					<?php echo JHtml::_('jgrid.isdefault', $row->published, $i, 'installed.',  !$row->published && $canChange);?>
+					<?php echo MolajoHTML::_('jgrid.isdefault', $row->published, $i, 'installed.',  !$row->published && $canChange);?>
 				</td>
 				<td align="center">
 					<?php echo $this->escape($row->version); ?>
@@ -103,6 +103,6 @@ $applicationId	= $this->state->get('filter.application_id', 0);
 	<div>
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

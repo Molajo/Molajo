@@ -18,7 +18,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<fieldset id="filter-bar">
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<?php echo JHtml::_('select.options', CacheHelper::getApplicationOptions(), 'value', 'text', $this->state->get('applicationId'));?>
+				<?php echo MolajoHTML::_('select.options', CacheHelper::getApplicationOptions(), 'value', 'text', $this->state->get('applicationId'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -33,13 +33,13 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<input type="checkbox" name="checkall-toggle" value="" title="<?php echo MolajoText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 			</th>
 			<th class="title nowrap">
-				<?php echo JHtml::_('grid.sort',  'COM_CACHE_GROUP', 'group', $listDirn, $listOrder); ?>
+				<?php echo MolajoHTML::_('grid.sort',  'COM_CACHE_GROUP', 'group', $listDirn, $listOrder); ?>
 			</th>
 			<th width="5%" class="center nowrap">
-				<?php echo JHtml::_('grid.sort',  'COM_CACHE_NUMBER_OF_FILES', 'count', $listDirn, $listOrder); ?>
+				<?php echo MolajoHTML::_('grid.sort',  'COM_CACHE_NUMBER_OF_FILES', 'count', $listDirn, $listOrder); ?>
 			</th>
 			<th width="10%" class="center">
-				<?php echo JHtml::_('grid.sort',  'COM_CACHE_SIZE', 'size', $listDirn, $listOrder); ?>
+				<?php echo MolajoHTML::_('grid.sort',  'COM_CACHE_SIZE', 'size', $listDirn, $listOrder); ?>
 			</th>
 		</tr>
 	</thead>
@@ -68,7 +68,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<?php echo $item->count; ?>
 			</td>
 			<td class="center">
-				<?php echo JHtml::_('number.bytes', $item->size*1024); ?>
+				<?php echo MolajoHTML::_('number.bytes', $item->size*1024); ?>
 			</td>
 		</tr>
 		<?php $i++; endforeach; ?>
@@ -80,6 +80,6 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<input type="hidden" name="application" value="<?php echo $this->application->id;?>" />
 	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo MolajoHTML::_('form.token'); ?>
 </div>
 </form>

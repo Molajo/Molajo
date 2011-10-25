@@ -9,7 +9,7 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-JHtml::_('behavior.framework');
+MolajoHTML::_('behavior.framework');
 ?>
 <form action="<?php echo MolajoRoute::_('index.php?option=com_messages'); ?>" method="post" name="adminForm" id="adminForm">
 	<div class="width-60 fltlft">
@@ -18,7 +18,7 @@ JHtml::_('behavior.framework');
 		<?php echo $this->item->get('from_user_name');?></li>
 
 		<li><?php echo MolajoText::_('COM_MESSAGES_FIELD_DATE_TIME_LABEL'); ?>
-		<?php echo JHtml::_('date',$this->item->date_time);?></li>
+		<?php echo MolajoHTML::_('date',$this->item->date_time);?></li>
 
 		<li><?php echo MolajoText::_('COM_MESSAGES_FIELD_SUBJECT_LABEL'); ?>
 		<?php echo $this->item->subject;?></li>
@@ -28,6 +28,6 @@ JHtml::_('behavior.framework');
 		</ul>
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="reply_id" value="<?php echo $this->item->message_id; ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo MolajoHTML::_('form.token'); ?>
 	</div>
 </form>

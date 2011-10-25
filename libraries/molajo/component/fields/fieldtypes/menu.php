@@ -34,7 +34,7 @@ class MolajoFormFieldMenu extends MolajoFormFieldList
 	protected function getOptions()
 	{
 		// Merge any additional options in the XML definition.
-		$options = array_merge(parent::getOptions(), JHtml::_('menu.menus'));
+		$options = array_merge(parent::getOptions(), MolajoHTML::_('menu.menus'));
 
 		return $options;
 	}
