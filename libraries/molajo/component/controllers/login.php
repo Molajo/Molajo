@@ -30,7 +30,7 @@ class MolajoControllerLogin extends MolajoController
     /**
      *  Retrieve Form Fields
      */
-//        JRequest::checkToken() or die;
+//JRequest::checkToken() or die();
 
 		$credentials = array(
 			'username' => JRequest::getVar('username', '', 'method', 'username'),
@@ -52,27 +52,31 @@ class MolajoControllerLogin extends MolajoController
 		}
 
     /**
-     *  Authenticate and Authorize
+     *  Authenticate, Authorize and Execute After Login Plugins
      */
 		$molajoAuth = MolajoAuthentication::getInstance();
 
-		$response = $molajoAuth->authenticate($credentials, $options);
-        if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
+		$userObject = $molajoAuth->authenticate($credentials, $options);
+        if ($userObject->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
-            return $this->_loginFailed ('authenticate', $response, $options);
+            $this->_loginFailed ('authenticate', $userObject, $options);
+            return;
         }
 
-        $molajoAuth->authorise($response, (array) $options);
-        if ($response->status === MolajoAuthentication::STATUS_SUCCESS) {
+        $molajoAuth->authorise($userObject, (array) $options);
+        if ($userObject->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
-            return $this->_loginFailed ('authorise', $response, $options);
+            $this->_loginFailed ('authorise', $userObject, $options);
+            return;
         }
 
-    /**
-     * Authenticated and Authorized
-     */
-        JDispatcher::getInstance()->trigger('onUserLogin', array((array)$response, $options));
-
+        $results = $molajoAuth->onUserLogin($userObject, (array) $options);
+        if ($results === true) {
+        } else {
+            $this->_loginFailed ('onUserLogin', $userObject, $options);
+            return;
+        }
+        
         /** remember me cookie */
         if (isset($options['remember']) && $options['remember']) {
 
@@ -99,7 +103,6 @@ class MolajoControllerLogin extends MolajoController
         /** success message */
         $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_SUCCESSFUL_LOGON'));
         $this->redirectClass->setSuccessIndicator(true);
-        return true;
 	}
 
 	/**
@@ -153,6 +156,23 @@ class MolajoControllerLogin extends MolajoController
         }
 
         parent::display();
+    }
+
+    /**
+     * Calls all handlers associated with an event group.
+     *
+     * @param   string  $event  The event name.
+     * @param   array   $args   An array of arguments.
+     *
+     * @return  array  An array of results from each function call.
+     *
+     * @since   11.1
+     */
+    function triggerEvent($event, $args=null)
+    {
+        $dispatcher = JDispatcher::getInstance();
+
+        return $dispatcher->trigger($event, $args);
     }
 
     /**

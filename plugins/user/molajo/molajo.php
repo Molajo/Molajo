@@ -161,7 +161,7 @@ class plgUserMolajo extends MolajoPlugin
 			// Destroy the php session for this user
 			$session->destroy();
 		}
-		
+
 		// Force logout all users with that userid
 		$db = MolajoFactory::getDBO();
 		$db->setQuery(
@@ -187,9 +187,9 @@ class plgUserMolajo extends MolajoPlugin
 	 */
 	protected function _getUser($user, $options = array())
 	{
-		$instance = MolajoUser::getInstance();
+		$instance = MolajoUser::getInstance($user->username);
 
-		if ($id = intval(MolajoUserHelper::getUserId($user['username'])))  {
+		if ($id = intval(MolajoUserHelper::getUserId($user->username)))  {
 			$instance->load($id);
 			return $instance;
 		}
@@ -223,7 +223,7 @@ class plgUserMolajo extends MolajoPlugin
 
 		return $instance;
 	}
-    
+
     /**
      * Remove all sessions for the user name
      *
@@ -251,5 +251,5 @@ class plgUserMolajo extends MolajoPlugin
         $db->Query();
 
         return true;
-    }    
+    }
 }

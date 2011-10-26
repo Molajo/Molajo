@@ -201,7 +201,7 @@ class MolajoUser extends JObject
 				return false;
 			}
 		}
-
+ 
 		if (empty($instances[$id])) {
 			$user = new MolajoUser($id);
 			$instances[$id] = $user;

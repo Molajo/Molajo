@@ -155,7 +155,7 @@ class MolajoControllerRedirect extends MolajoController
 
         if ($this->request['task'] == 'login') {
             $this->redirectSuccess = 'index.php?option=com_dashboard&view=display';
-            $this->redirectReturn = 'index.php?option=com_user';
+            $this->redirectReturn = 'index.php?option=com_login';
 
         } elseif ($this->request['task'] == 'logout') {
             $this->redirectSuccess = 'index.php';
@@ -184,8 +184,7 @@ class MolajoControllerRedirect extends MolajoController
      */
     protected function setDatakey()
     {
-        $this->datakey = mt_rand ();
-        JRequest::setVar('datakey', $this->datakey);
+        $this->request['datakey'] = mt_rand();
         return;
     }
 
@@ -255,7 +254,7 @@ class MolajoControllerRedirect extends MolajoController
 	 */
 	public function redirect ($task=null)
 	{
-        /** Display tasks and non-HTML format tasks do not redirect **/
+        /** Display Tasks, non-Component Output, and non-HTML format tasks do not redirect **/
         if ($this->redirectAction === false) {
             return false;
         }
@@ -287,22 +286,32 @@ class MolajoControllerRedirect extends MolajoController
         }
 
         /** list **/
-        if (JRequest::getCmd('controller') == JRequest::getCmd('DefaultView')) {
+        if ($this->request['controller'] == $this->request['DefaultView']) {
             $link = $this->redirectSuccess;
 
-        /** redirect url **/
+        /** failure **/
         } else if ($this->successIndicator === false || $task == 'apply' || $task == 'save2new') {
             $link = $this->redirectReturn;
-            $id = $this->data['id'];
-            if ((int) $id == 0 || $task == 'save2new') {
-                $link .= '&task='.JRequest::getCmd('EditView').'.add'.'&datakey='.$this->datakey;
-
+            if ($this->request['EditView'] == '') {
             } else {
-                $link .= '&task='.JRequest::getCmd('EditView').'.edit&id='.$this->id.'&datakey='.$this->datakey;
+                $id = $this->data['id'];
+                if ((int) $id == 0 || $task == 'save2new') {
+                    $link .= '&task='.$this->request['EditView'].'.add'.'&datakey='.$this->datakey;
+
+                } else {
+                    $link .= '&task='.$this->request['EditView'].'.edit&id='.(int) $id.'&datakey='.$this->datakey;
+                }
             }
 
+        /** success */
         } else {
-            $link = $this->redirectSuccess.'&id='.$this->id;
+            $id = $this->data['id'];
+            if ((int) $id == 0) {
+                $idLink = '';
+            } else {
+                $idLink = '&id='.(int) $id;
+            }
+            $link = $this->redirectSuccess.$idLink;
         }
 
         /** should not be needed */

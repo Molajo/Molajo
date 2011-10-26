@@ -91,7 +91,8 @@ class MolajoAuthentication extends JObservable
 	{
 		$isLoaded = MolajoPluginHelper::importPlugin('authentication');
 
-		if (!$isLoaded) {
+		if ($isLoaded) {
+        } else {
 			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JLIB_USER_ERROR_AUTHENTICATION_LIBRARIES'));
 		}
 	}
@@ -189,6 +190,48 @@ class MolajoAuthentication extends JObservable
 		return $response;
 	}
 
+    /**
+     * onUserLogin
+     *
+     * @param $user
+     * @param array $options
+     * @return JAuthenticationResponse
+     */
+	public function onUserLogin($user, $options = array())
+	{
+		/** user plugins */
+		$plugins = MolajoPluginHelper::getPlugin('user');
+
+		/*
+		 * Loop through the plugins and check of the creditials can be used to authenticate
+		 * the user
+		 *
+		 * Any errors raised in the plugin should be returned via the JAuthenticationResponse
+		 * and handled appropriately.
+		 */
+		foreach ($plugins as $plugin)
+		{
+			$className = 'plg' . ucfirst($plugin->type).ucfirst($plugin->name);
+			if (class_exists($className)) {
+				$plugin = new $className($this, (array)$plugin);
+			}
+			else {
+				// Bail here if the plugin can't be created
+				JError::raiseWarning(50, JText::sprintf('JLIB_USER_ERROR_AUTHENTICATION_FAILED_LOAD_PLUGIN', $className));
+				continue;
+			}
+
+            $response = $plugin->onUserLogin($user, $options);
+
+			if ($response === true) {
+            } else {
+				break;
+			}
+		}
+
+		return $response;
+	}
+
 	/**
 	 * Authorises that a particular user should be able to login
 	 *
@@ -200,7 +243,6 @@ class MolajoAuthentication extends JObservable
 	 */
 	public static function authorise($response, $options=Array())
 	{
-		MolajoPluginHelper::getPlugin('user');
 		MolajoPluginHelper::getPlugin('authentication');
 		$dispatcher = JDispatcher::getInstance();
 		$authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));

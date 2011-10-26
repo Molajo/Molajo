@@ -34,7 +34,6 @@ abstract class MolajoPluginHelper
 		$result		= array();
 		$plugins	= self::_load();
 
-		// Find the correct plugin(s) to return.
 		if ($plugin) {
 
             foreach($plugins as $p) {
@@ -46,8 +45,9 @@ abstract class MolajoPluginHelper
             }
 
 		} else {
+
             foreach($plugins as $p) {
-                // Is this the right plugin?
+
                 if ($p->type == $type) {
                     $result[] = $p;
                 }
@@ -78,7 +78,7 @@ abstract class MolajoPluginHelper
 	 * importPlugin
      *
      * Loads all the plugin files for a particular type if no specific plugin is specified
-	 * otherwise only the specific pugin is loaded.
+	 * otherwise only the specific plugin is loaded.
 	 *
 	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
 	 * @param   string   $plugin	The plugin name.
@@ -104,7 +104,7 @@ abstract class MolajoPluginHelper
 			$results = null;
 
 			// Load the plugins from the database.
-			$plugins = self::_load();
+			$plugins = self::_load($type);
 
 			// Get the specified plugin(s).
 			for ($i = 0, $t = count($plugins); $i < $t; $i++) {
@@ -114,6 +114,7 @@ abstract class MolajoPluginHelper
 					self::_import($plugins[$i], $autocreate, $dispatcher);
 					$results = true;
 				}
+
  			}
 
 			// Bail out early if we're not using default args
@@ -124,7 +125,7 @@ abstract class MolajoPluginHelper
 
 			$loaded[$type] = $results;
 		}
- 
+
 		return $loaded[$type];
 	}
 
@@ -192,7 +193,8 @@ abstract class MolajoPluginHelper
             ->from('#__extensions')
             ->where('enabled >= 1')
             ->where('element != "sef"')
-            ->where('type ='.$db->Quote('plugin'))
+            ->where('element != "joomla"')
+            ->where('type ='.$db->Quote('plugin').$folderClause)
             ->where('state >= 0')
             ->order('ordering');
 
