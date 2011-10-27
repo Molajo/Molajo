@@ -84,3 +84,4 @@ JDEBUG ? $_PROFILER->mark('afterRender') : null;
  *  Display
  */
 echo $app;
+

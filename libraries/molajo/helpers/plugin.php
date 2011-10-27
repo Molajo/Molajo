@@ -92,40 +92,43 @@ abstract class MolajoPluginHelper
 	{
 		static $loaded = Array();
 
-		// check for the default args, if so we can optimise cheaply
 		$defaults = false;
+        
 		if (is_null($plugin)
-            && $autocreate == true
+            && $autocreate === true
             && is_null($dispatcher)) {
 			$defaults = true;
 		}
 
-		if (!isset($loaded[$type]) || !$defaults) {
+		if (isset($loaded[$type]) && $defaults === true) {
+        } else {
 			$results = null;
 
-			// Load the plugins from the database.
-			$plugins = self::_load($type);
+            $plugins = self::_load($type);
 
-			// Get the specified plugin(s).
 			for ($i = 0, $t = count($plugins); $i < $t; $i++) {
 
-				if ($plugins[$i]->type == $type
+				if (($plugins[$i]->type == $type)
                     && ($plugins[$i]->name == $plugin ||  $plugin === null)) {
-					self::_import($plugins[$i], $autocreate, $dispatcher);
+
+//  if ($plugins[$i]->type == 'content') {
+//    echo '<pre>';var_dump($plugins[$i]);'</pre>';
+// }
+                    self::_import($plugins[$i], $autocreate, $dispatcher);
+
 					$results = true;
 				}
 
  			}
 
-			// Bail out early if we're not using default args
-			if($defaults) {
+			if ($defaults === true) {
             } else {
 				return $results;
 			}
 
 			$loaded[$type] = $results;
 		}
-
+ 
 		return $loaded[$type];
 	}
 
@@ -149,7 +152,11 @@ abstract class MolajoPluginHelper
 		$plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
 
 		$path = MOLAJO_PATH_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
-		require_once $path;
+        if (JFile::exists($path)) {
+            require_once $path;
+        } else {
+            return false;
+        }
 
         if ($autocreate) {
 
@@ -194,7 +201,8 @@ abstract class MolajoPluginHelper
             ->where('enabled >= 1')
             ->where('element != "sef"')
             ->where('element != "joomla"')
-            ->where('type ='.$db->Quote('plugin').$folderClause)
+            ->where('element != "example"')
+            ->where('type ='.$db->Quote('plugin'))
             ->where('state >= 0')
             ->order('ordering');
 
@@ -206,6 +214,7 @@ abstract class MolajoPluginHelper
         $plugins = $cache->get($hash);
 
         if ($plugins === false) {
+
 			$plugins = $db->setQuery($query)
 				->loadObjectList();
 

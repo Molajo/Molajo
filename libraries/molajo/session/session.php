@@ -9,6 +9,10 @@
  */
 defined('MOLAJO') or die;
 
+
+// Register the session storage class with the loader
+JLoader::register('MolajoSessionStorage', dirname(__FILE__).'/storage.php');
+
 /**
  * Class for managing HTTP sessions
  *
@@ -85,8 +89,7 @@ class MolajoSession extends JObject
 	public function __construct($store = 'none', $options = array())
 	{
 		// Need to destroy any existing sessions started with session.auto_start
-		if (session_id())
-		{
+		if (session_id()) {
 			session_unset();
 			session_destroy();
 		}
@@ -143,8 +146,8 @@ class MolajoSession extends JObject
 	{
 		static $instance;
 
-		if (!is_object($instance))
-		{
+		if (is_object($instance)) {
+        } else {
 			$instance = new MolajoSession($handler, $options);
 		}
 
@@ -244,7 +247,7 @@ class MolajoSession extends JObject
 	{
 		$user = MolajoFactory::getUser();
 		$session = MolajoFactory::getSession();
-		$hash = MolajoApplication::getHash($user->get('id', 0) . $session->getToken($forceNew));
+		$hash = MolajoApplication::getHash($user->get('id', 0).$session->getToken($forceNew));
 
 		return $hash;
 	}
@@ -292,19 +295,18 @@ class MolajoSession extends JObject
 	 */
 	public static function getStores()
 	{
-		jimport('joomla.filesystem.folder');
-		$handlers = JFolder::files(dirname(__FILE__) . '/storage', '.php$');
+		$handlers = JFolder::files(dirname(__FILE__).'/storage', '.php$');
 
 		$names = array();
 		foreach ($handlers as $handler)
 		{
 			$name = substr($handler, 0, strrpos($handler, '.'));
-			$class = 'MolajoSessionStorage' . ucfirst($name);
+			$class = 'MolajoSessionStorage'.ucfirst($name);
 
 			//Load the class only if needed
 			if (!class_exists($class))
 			{
-				require_once dirname(__FILE__) . '/storage/' . $name . '.php';
+				require_once dirname(__FILE__).'/storage/'.$name.'.php';
 			}
 
 			if (call_user_func_array(array(trim($class), 'test'), array()))
@@ -346,7 +348,7 @@ class MolajoSession extends JObject
 	 */
 	public function get($name, $default = null, $namespace = 'default')
 	{
-		$namespace = '__' . $namespace; //add prefix to namespace to avoid collisions
+		$namespace = '__'.$namespace; //add prefix to namespace to avoid collisions
 
 		if ($this->_state !== 'active' && $this->_state !== 'expired')
 		{
@@ -375,7 +377,7 @@ class MolajoSession extends JObject
 	 */
 	public function set($name, $value = null, $namespace = 'default')
 	{
-		$namespace = '__' . $namespace; //add prefix to namespace to avoid collisions
+		$namespace = '__'.$namespace; //add prefix to namespace to avoid collisions
 
 		if ($this->_state !== 'active')
 		{
@@ -410,7 +412,7 @@ class MolajoSession extends JObject
 	public function has($name, $namespace = 'default')
 	{
 		// Add prefix to namespace to avoid collisions.
-		$namespace = '__' . $namespace;
+		$namespace = '__'.$namespace;
 
 		if ($this->_state !== 'active')
 		{
@@ -434,7 +436,7 @@ class MolajoSession extends JObject
 	public function clear($name, $namespace = 'default')
 	{
 		// Add prefix to namespace to avoid collisions
-		$namespace = '__' . $namespace;
+		$namespace = '__'.$namespace;
 
 		if ($this->_state !== 'active')
 		{
@@ -694,7 +696,7 @@ class MolajoSession extends JObject
 			$token .= $chars[(rand(0, $max))];
 		}
 
-		return md5($token . $name);
+		return md5($token.$name);
 	}
 
 	/**

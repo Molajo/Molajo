@@ -19,11 +19,6 @@ defined('MOLAJO') or die;
  */
 class MolajoSessionStorageDatabase extends MolajoSessionStorage
 {
-	/**
-	 * @var    unknown  No idea what this does.
-	 * @since  11.1
-	 */
-	protected $_data = null;
 
 	/**
 	 * Open the SessionHandler backend.
@@ -63,20 +58,18 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 	 */
 	public function read($id)
 	{
-		// Get the database connection object and verify its connected.
-		$db = MolajoFactory::getDbo();
-		if (!$db->connected())
-		{
+       	$db = MolajoFactory::getDBO();
+		if ($db->connected()) {
+        } else {
 			return false;
 		}
 
-		// Get the session data from the database table.
 		$query = $db->getQuery(true);
-		$query->select($db->quoteName('data'))
-			->from($db->quoteName('#__session'))
-			->where($db->quoteName('session_id') . ' = ' . $db->quote($id));
+		$query->select($db->quoteName('data'));
+		$query->from($db->quoteName('#__session'));
+		$query->where($db->quoteName('session_id').' = '.$db->quote($id));
 
-		$db->setQuery($query);
+		$db->setQuery($query->__toString());
 
 		return (string) $db->loadResult();
 	}
@@ -93,35 +86,30 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 	 */
 	public function write($id, $data)
 	{
-		// Get the database connection object and verify its connected.
-		$db = MolajoFactory::getDbo();
-		if (!$db->connected())
-		{
-			return false;
-		}
+        $db = MolajoFactory::getDBO();
+        if ($db->connected()) {
+        } else {
+            return false;
+        }
 
-		// Try to update the session data in the database table.
-		$db->setQuery(
-			'UPDATE ' . $db->quoteName('#__session') .
-			' SET ' . $db->quoteName('data') . ' = ' . $db->quote($data) . ',' . '	  ' . $db->quoteName('time') . ' = ' . (int) time() .
-			' WHERE ' . $db->quoteName('session_id') . ' = ' . $db->quote($id)
-		);
-		if (!$db->query())
-		{
-			return false;
-		}
+        $query = $db->getQuery(true);
 
-		if ($db->getAffectedRows())
-		{
+        $query->update($db->quoteName('#__session'));
+        $query->set($db->quoteName('data').' = '.$db->quote($data));
+        $query->set($db->quoteName('time').' = '.(int) time());
+        $query->where($db->quoteName('session_id').' = '.$db->quote($id));
+
+        $db->setQuery($query->__toString());
+		$db->query();
+        
+		if ($db->getAffectedRows()) {
 			return true;
-		}
-		else
-		{
-			// If the session does not exist, we need to insert the session.
+
+		} else {
 			$db->setQuery(
-				'INSERT INTO ' . $db->quoteName('#__session') .
-				' (' . $db->quoteName('session_id') . ', ' . $db->quoteName('data') . ', ' . $db->quoteName('time') . ')' .
-				' VALUES (' . $db->quote($id) . ', ' . $db->quote($data) . ', ' . (int) time() . ')'
+				'INSERT INTO '.$db->quoteName('#__session') .
+				' ('.$db->quoteName('session_id').', '.$db->quoteName('data').', '.$db->quoteName('time').')' .
+				' VALUES ('.$db->quote($id).', '.$db->quote($data).', '.(int) time().')'
 			);
 			return (boolean) $db->query();
 		}
@@ -138,17 +126,16 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 	 */
 	public function destroy($id)
 	{
-		// Get the database connection object and verify its connected.
-		$db = MolajoFactory::getDbo();
-		if (!$db->connected())
-		{
-			return false;
-		}
+        $db = MolajoFactory::getDBO();
+        if ($db->connected()) {
+        } else {
+            return false;
+        }
 
 		// Remove a session from the database.
 		$db->setQuery(
-			'DELETE FROM ' . $db->quoteName('#__session') .
-			' WHERE ' . $db->quoteName('session_id') . ' = ' . $db->quote($id)
+			'DELETE FROM '.$db->quoteName('#__session') .
+			' WHERE '.$db->quoteName('session_id').' = '.$db->quote($id)
 		);
 
 		return (boolean) $db->query();
@@ -165,20 +152,19 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 	 */
 	function gc($lifetime = 1440)
 	{
-		// Get the database connection object and verify its connected.
-		$db = MolajoFactory::getDbo();
-		if (!$db->connected())
-		{
-			return false;
-		}
+        $db = MolajoFactory::getDBO();
+        if ($db->connected()) {
+        } else {
+            return false;
+        }
 
 		// Determine the timestamp threshold with which to purge old sessions.
 		$past = time() - $lifetime;
 
 		// Remove expired sessions from the database.
 		$db->setQuery(
-			'DELETE FROM ' . $db->quoteName('#__session') .
-			' WHERE ' . $db->quoteName('time') . ' < ' . (int) $past
+			'DELETE FROM '.$db->quoteName('#__session') .
+			' WHERE '.$db->quoteName('time').' < '.(int) $past
 		);
 
 		return (boolean) $db->query();

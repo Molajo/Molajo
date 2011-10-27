@@ -114,6 +114,7 @@ class MolajoApplication extends JObject
 
 		// Used by task system to ensure that the system doesn't go over time.
 	    $this->set('startTime', JProfiler::getmicrotime());
+
 	}
 
 	/**
@@ -190,8 +191,11 @@ class MolajoApplication extends JObject
 
 		// Set user specific editor.
 		$user	= MolajoFactory::getUser();
+ 
 		$editor	= $user->getParam('editor', $this->getCfg('editor'));
+
 		if (MolajoPluginHelper::isEnabled('editors', $editor)) {
+
         } else {
 			$editor	= $this->getCfg('editor');
 			if (MolajoPluginHelper::isEnabled('editors', $editor)) {
@@ -734,49 +738,18 @@ class MolajoApplication extends JObject
 		// Trigger the onAfterRender event.
 		$this->triggerEvent('onAfterRender');
 	}
-
+    
 	/**
 	 * Exit the application.
 	 *
 	 * @param    integer  $code  Exit code
 	 *
-	 * @return   void  Exits the application.
+	 * @return   void     Exits the application.
+	 *
 	 * @since    11.1
 	 */
 	public function close($code = 0)
 	{
-        $session = MolajoFactory::getSession();
-//todo: amy finalize this list
-        $session->clear('page.application_id');
-        $session->clear('page.current_url');
-        $session->clear('page.base_url');
-
-        $session->clear('page.extension_id');
-        $session->clear('page.extension_access');
-        $session->clear('page.extension_asset_id');
-        $session->clear('page.extension_enabled');
-        $session->clear('page.extension_params');
-
-        $session->clear('page.item_id');
-
-        $session->clear('page.controller');
-        $session->clear('page.option');
-        $session->clear('page.no_com_option');
-        $session->clear('page.view');
-        $session->clear('page.model');
-        $session->clear('page.layout');
-        $session->clear('page.task');
-        $session->clear('page.format');
-
-        $session->clear('page.id');
-        $session->clear('page.cid');
-        $session->clear('page.catid');
-
-        $session->clear('page.acl_implementation');
-        $session->clear('page.component_table');
-        $session->clear('page.filter_fieldname');
-        $session->clear('page.select_fieldname');
-
 		exit($code);
 	}
 
@@ -864,6 +837,7 @@ class MolajoApplication extends JObject
 				header('Content-Type: text/html; charset='.$document->getCharset());
 			}
 		}
+
 		$this->close();
 	}
 
@@ -904,7 +878,7 @@ class MolajoApplication extends JObject
 	 */
 	public function getMessageQueue()
 	{
-        /** initialize */
+         /** initialize */
         $tmpmsg = array();
         $tmpobj = new JObject();
         $count = 0;
@@ -923,6 +897,12 @@ class MolajoApplication extends JObject
 				$this->_messageQueue = MolajoFactory::getSession()->get('application.queue');
 				MolajoFactory::getSession()->set('application.queue', null);
 			}
+            foreach ($this->_messageQueue as $msg) {
+                if ($msg['message'] == '') {
+                } else {
+                    $count++;
+                }
+            }
         }
 
         /** exit if no messages */
@@ -937,7 +917,12 @@ class MolajoApplication extends JObject
             if ($msg['message'] == '') {
             } else {
                 $tmpobj->set('message', $msg['message']);
-                if ($msg['type'] == 'message' || $msg['type'] == 'notice' || $msg['type'] == 'warning' || $msg['type'] == 'error') {
+
+                if ($msg['type'] == 'message'
+                    || $msg['type'] == 'notice'
+                    || $msg['type'] == 'warning'
+                    || $msg['type'] == 'error') {
+
                 } else {
                     $msg['type'] == 'message';
                 }
@@ -1411,6 +1396,7 @@ class MolajoApplication extends JObject
 	{
 		return $this->getApplicationId();
 	}
+
 	/**
 	 * Gets the application id of the current running application.
 	 *

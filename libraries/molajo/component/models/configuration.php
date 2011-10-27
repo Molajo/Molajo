@@ -173,15 +173,17 @@ class MolajoModelConfiguration
      * @return string option value
      * @since 1.0
      */
-    private function getComponentOptionKey ()
+    private function getComponentOptionKey ($option_id)
     {
+        //echo '<pre>';var_dump($this->overrides);'</pre>';
         foreach ($this->overrides as $configurationOverrides => $override) {
-            if ($override == $this->option) {
-                return $override;
-                break;
-            } else {
-                continue;
+            if ($configurationOverrides == $option_id) {
+                if ($override == $this->option) {
+                    return $override;
+                    break;
+                }
             }
+            continue;
         }
         return 'core';
     }

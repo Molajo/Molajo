@@ -16,6 +16,9 @@ class JApplicationHelper extends MolajoApplicationHelper {}
 class JMenu extends MolajoMenu {}
 class JPathway extends MolajoPathway {}
 class JRouter extends MolajoRouter {}
+class JSession extends MolajoSession {}
+abstract class JSessionStorage extends MolajoSessionStorage {}
+
 abstract class JModuleHelper extends MolajoModuleHelper {}
 class JComponentHelper extends MolajoComponentHelper {}
 
@@ -53,7 +56,6 @@ class JForm extends MolajoForm {}
 abstract class JFormField extends MolajoFormField {}
 class JFormRule extends MolajoFormRule {}
 class JFormHelper extends MolajoFormHelper {}
-
 
 //abstract class MolajoToolbarHelper extends MolajoRenderToolbarHelper {}
 

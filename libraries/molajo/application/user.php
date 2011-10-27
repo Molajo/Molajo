@@ -185,23 +185,23 @@ class MolajoUser extends JObject
 	{
 		static $instances;
 
-		if (isset ($instances)) {
-        } else {
+		if (!isset ($instances)) {
 			$instances = array ();
 		}
 
-		// Find the user id
 		if (is_numeric($identifier)) {
-			$id = $identifier;
+            $id = $identifier;
 
         } else {
 			if ($id = MolajoUserHelper::getUserId($identifier)) {
+
             } else {
-				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_ID_NOT_EXISTS', $identifier));
-				return false;
+				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
+				$retval = false;
+				return $retval;
 			}
 		}
- 
+
 		if (empty($instances[$id])) {
 			$user = new MolajoUser($id);
 			$instances[$id] = $user;
@@ -270,6 +270,7 @@ class MolajoUser extends JObject
 	{
 		// Create the user table object
 		$table	= $this->getTable();
+        
 		$table->load($this->id);
 		return $table->setLastVisit($timestamp);
 	}

@@ -80,8 +80,8 @@ class MolajoAdministrator extends MolajoApplication
 				$options['language'] = 'en-GB'; // as a last ditch fail to english
 			}
 		}
-
-		// Execute the parent initialise method.
+        
+ 		// Execute the parent initialise method.
 		parent::initialise($options);
 
 		// Load Library language

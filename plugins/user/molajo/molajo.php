@@ -97,7 +97,6 @@ class plgUserMolajo extends MolajoPlugin
 	public function onUserLogin($user, $options = array())
 	{
 		$instance = $this->_getUser($user, $options);
-
 		if (JError::isError($instance)) {
 			return $instance;
 		}
@@ -128,7 +127,7 @@ class plgUserMolajo extends MolajoPlugin
 		$db->query();
 
 		// Hit the user last visit field
-		$instance->setLastVisit();
+        $instance->setLastVisit();
 
 		return true;
 	}

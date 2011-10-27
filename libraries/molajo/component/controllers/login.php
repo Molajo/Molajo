@@ -70,14 +70,7 @@ class MolajoControllerLogin extends MolajoController
             return;
         }
 
-        $results = $molajoAuth->onUserLogin($userObject, (array) $options);
-        if ($results === true) {
-        } else {
-            $this->_loginFailed ('onUserLogin', $userObject, $options);
-            return;
-        }
-        
-        /** remember me cookie */
+        $molajoAuth->onUserLogin($userObject, (array) $options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.

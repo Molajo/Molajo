@@ -386,6 +386,7 @@ class MolajoTableUser extends MolajoTable
 	 */
 	function setLastVisit($timeStamp = null, $userId = null)
 	{
+
 		// Check for User ID
 		if (is_null($userId))
 		{
@@ -401,9 +402,10 @@ class MolajoTableUser extends MolajoTable
 		$date = MolajoFactory::getDate($timeStamp);
 
 		// Update the database row for the user.
+        // 			' SET '.$this->_db->quoteName('lastvisitDate').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
 		$this->_db->setQuery(
 			'UPDATE '.$this->_db->quoteName($this->_tbl).
-			' SET '.$this->_db->quoteName('lastvisitDate').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
+			' SET '.$this->_db->quoteName('lastvisitDate').' = '.$this->_db->Quote($date) .
 			' WHERE '.$this->_db->quoteName('id').' = '.(int) $userId
 		);
 		$this->_db->query();

@@ -154,9 +154,11 @@ abstract class MolajoFactory
 	 */
 	public static function getUser($id = null)
 	{
+        $id = 'admin';
 		if (is_null($id)) {
 			$instance = self::getSession()->get('user');
-			if ($instance instanceof MolajoUser) {
+
+			if (($instance instanceof MolajoUser)) {
             } else {
 				$instance = MolajoUser::getInstance();
 			}
@@ -504,6 +506,7 @@ abstract class MolajoFactory
 		$options['expire'] = ($conf->get('lifetime')) ? $conf->get('lifetime') * 60 : 900;
 
 		$session = MolajoSession::getInstance($handler, $options);
+
 		if ($session->getState() == 'expired') {
 			$session->restart();
 		}

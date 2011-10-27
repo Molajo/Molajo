@@ -411,7 +411,7 @@ class MolajoACLCore extends MolajoACL
             $query->where('(a.publish_down = '.$nullDate.' OR a.publish_down >= '.$nowDate.')');
         }
         */
-        return;
+        return $query;
     }
 
     /**
@@ -452,6 +452,7 @@ class MolajoACLCore extends MolajoACL
 
         $acl	= new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
+
         $query->join('INNER', '#__assets AS assets ON assets.id = '.$prefix.'asset_id');
         $query->where('assets.access IN ('.$list.')');
 
@@ -548,7 +549,7 @@ class MolajoACLCore extends MolajoACL
         $query->where('a.asset_id = b.id');
         $query->where('b.access = c.id');
         $query->where('d.grouping_id = c.id');
-                $query->from('#__groupings c');
+        
         $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
         $query->join('LEFT', '#__groupings AS d ON d.access = a.id');
 
@@ -602,7 +603,7 @@ class MolajoACLCore extends MolajoACL
 		$db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
-        $query->select('c.id');
+        $query->select('DISTINCT c.id');
 
         if ($action == MOLAJO_ACL_ACTION_VIEW) {
             $query->from('#__groupings a');
@@ -616,7 +617,7 @@ class MolajoACLCore extends MolajoACL
         if ((int) $userid == 0) {
             $query->where('c.id IN ('.MOLAJO_ACL_GROUP_PUBLIC.','.MOLAJO_ACL_GROUP_GUEST.')');
         } else {
-            $query->join('LEFT', '#__user_groups AS d ON d.id = b.group_id');
+            $query->join('LEFT', '#__user_groups AS d ON d.group_id = b.group_id');
             $query->where('d.user_id = '.(int) $userid);
         }
 
@@ -630,7 +631,7 @@ class MolajoACLCore extends MolajoACL
         }
 
         /** run query **/
-        $hash = hash('md5',$query->__toString(), false);
+        $hash = hash('md5', $query->__toString(), false);
         $authorised = $cache->get($hash);
 
         if ($authorised) {
@@ -653,6 +654,14 @@ class MolajoACLCore extends MolajoACL
             foreach ($options as $option) {
                 $authorised[] = $option->id;
             }
+
+            $authorised[] = MOLAJO_ACL_GROUP_PUBLIC;
+            if ((int) $userid == 0) {
+                $authorised[] = MOLAJO_ACL_GROUP_GUEST;
+            } else {
+                $authorised[] = MOLAJO_ACL_GROUP_REGISTERED;
+            }
+
             $cache->store($authorised, $hash);
         }
 

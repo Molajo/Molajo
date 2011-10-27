@@ -6,6 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+//echo '<pre>';var_dump($request);'</pre>';
 
 /** component includes **/
 require_once dirname(__FILE__).'/import.php';

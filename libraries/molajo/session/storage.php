@@ -47,29 +47,27 @@ abstract class MolajoSessionStorage extends JObject
 	{
 		static $instances;
 
-		if (!isset($instances))
-		{
+		if (isset($instances))	{
+        } else {
 			$instances = array();
 		}
 
 		$name = strtolower(JFilterInput::getInstance()->clean($name, 'word'));
 
-		if (empty($instances[$name]))
-		{
-			$class = 'MolajoSessionStorage' . ucfirst($name);
+		if (empty($instances[$name])) {
 
-			if (!class_exists($class))
-			{
-				$path = dirname(__FILE__) . '/storage/' . $name . '.php';
+			$class = 'MolajoSessionStorage'.ucfirst($name);
+			if (class_exists($class)) {
 
-				if (file_exists($path))
-				{
+            } else {
+				$path = dirname(__FILE__).'/storage/'.$name.'.php';
+
+ 			    if (file_exists($path)) {
 					require_once $path;
-				}
-				else
-				{
+
+				} else {
 					// No call to JError::raiseError here, as it tries to close the non-existing session
-					jexit('Unable to load session storage class: ' . $name);
+					jexit('Unable to load session storage class: '.$name);
 				}
 			}
 
@@ -90,10 +88,13 @@ abstract class MolajoSessionStorage extends JObject
 	 */
 	public function register($options = array())
 	{
-		// use this object as the session handler
 		session_set_save_handler(
-			array($this, 'open'), array($this, 'close'), array($this, 'read'), array($this, 'write'),
-			array($this, 'destroy'), array($this, 'gc')
+			array($this, 'open'),
+            array($this, 'close'),
+            array($this, 'read'),
+            array($this, 'write'),
+			array($this, 'destroy'),
+            array($this, 'gc')
 		);
 	}
 
