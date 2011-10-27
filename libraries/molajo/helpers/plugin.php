@@ -180,9 +180,9 @@ abstract class MolajoPluginHelper
      *
      * Loads the published plugins.
 	 *
-	 * @return  void
-	 * @since   1.0
-	 */
+     * @static
+     * @return bool|mixed
+     */
 	protected static function _load()
 	{
 		static $plugins;

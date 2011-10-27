@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.0" application="administrator" method="upgrade">
-	<name>MOD_MENU</name>
+	<name>MOD_LAUNCHPAD</name>
 	<author>Molajo Project</author>
 	<creationDate>October 2011</creationDate>
 	<copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,7 +8,7 @@
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>http://molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>MOD_MENU_DESCRIPTION</description>
+	<description>MOD_LAUNCHPAD_DESCRIPTION</description>
 
 	<files>
 		<filename module="mod_menu">mod_menu.php</filename>
@@ -43,8 +43,8 @@
 					name="shownew"
 					type="list"
 					default="1"
-					label="MOD_MENU_FIELD_SHOWNEW"
-					description="MOD_MENU_FIELD_SHOWNEW_DESC">
+					label="MOD_LAUNCHPAD_FIELD_SHOWNEW"
+					description="MOD_LAUNCHPAD_FIELD_SHOWNEW_DESC">
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 				</field>
@@ -53,8 +53,8 @@
 					name="showhelp"
 					type="list"
 					default="1"
-					label="MOD_MENU_FIELD_SHOWHELP"
-					description="MOD_MENU_FIELD_SHOWHELP_DESC">
+					label="MOD_LAUNCHPAD_FIELD_SHOWHELP"
+					description="MOD_LAUNCHPAD_FIELD_SHOWHELP_DESC">
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 				</field>

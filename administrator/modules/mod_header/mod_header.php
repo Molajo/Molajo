@@ -10,6 +10,5 @@ defined('MOLAJO') or die;
 $layout = $params->def('layout', 'admin_header');
 $wrap = $params->def('wrap', 'header');
 
-$tmpobj = new JObject();
-$tmpobj->set('site_title', MolajoFactory::getApplication()->getCfg('site_title', 'Molajo'));
-$rowset[]=$tmpobj;
+require_once dirname(__FILE__).'/helper.php';
+$rowset = MolajoHeaderHelper::getList($params);

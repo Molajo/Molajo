@@ -15,6 +15,9 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
+footer {
+    clear: both;
+}
 body {
 	background: #f4f4f4 url(images/bg_body.jpg) repeat-y 0 0;
 	font: normal 13px/1.5em Helvetica, Arial, sans-serif;
