@@ -26,15 +26,7 @@ class InstallerController extends MolajoController
     {
         /** form token check */
 
-        /** first page - run system checks - auto detect language */
-
         /** check for configuration.php file - if exists redirect to error */
-
-        /** filter all form fields - place into session objects */
-
-        /** edit for data completeness for previous page -- redirect to appropriate page for errors */
-
-        /** load unused fields into hidden form fields for display */
 
         parent::display($cachable, $urlparams);
     }
