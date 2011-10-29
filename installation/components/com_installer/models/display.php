@@ -65,6 +65,34 @@ class InstallerModelDisplay extends MolajoModelDummy
     }
 
     /**
+     * getDBTypes
+     *
+     * Retrieves the list of available database types
+     *
+     * @return void
+     */
+    public function getDBTypes()
+    {
+        require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
+
+        return InstallerHelper::detectDBTypes();
+    }
+
+    /**
+     * getMockDataTypes
+     *
+     * Retrieves the list of available mock data
+     *
+     * @return void
+     */
+    public function getMockDataTypes()
+    {
+        require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
+
+        return InstallerHelper::detectMockDataTypes();
+    }
+
+    /**
      * getFormFields
      *
      * @return void
@@ -106,27 +134,49 @@ class InstallerModelDisplay extends MolajoModelDummy
     protected function _init()
     {
         require_once(JPATH_INSTALLATION . '/components/com_installer/helpers/installer.php');
-        
+        var_dump(MolajoLanguageHelper::detectLanguage());
         if(is_null($this->setup)) {
             $this->setup = array(
-                'language' => InstallerHelper::detectLanguage(),
+                'language' => MolajoLanguageHelper::detectLanguage(), // This actually doesn't work right now but that may well be caused by the splitting up of classes
                 'sitename' => '',
                 'name' => '',
                 'admin_email' => '',
                 'admin_password' => '',
-                'hostname' => 'localhost',
-                'db_scheme' => 'MySQL',
+                'db_host' => 'localhost',
+                'db_scheme' => '',
                 'db_username' => '',
                 'db_password' => '',
-                'db_prefix' => InstallerHelper::getPrefix(),
                 'db_prefix' => 'jos_',
-                'db_type' => '',
+                'db_type' => 'pdo_mysql',
                 'remove_tables' => false,
-                'sample_data' => 'none'
+                'sample_data' => 0,
+                'ftp_host' => '127.0.0.1'
             );
         }
 
         $this->getFormFields();
+    }
+
+    public function install($config=array())
+    {
+		// Get the $config array as a JObject for easier handling.
+		$config = JArrayHelper::toObject($config, 'JObject');
+
+        var_dump(get_class_methods($this));
+
+        // Remove or backup existing tables based on config
+        if($config->remove_tables) {
+            $this->deleteTables();
+        }
+        else {
+            $this->backupTables();
+        }
+
+        // Install sample data if required
+        if($config->sample_data) {
+
+        }
+
     }
 
 

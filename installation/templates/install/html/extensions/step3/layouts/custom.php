@@ -21,7 +21,7 @@ var_dump($this->setup);
         <input type="hidden" name="name"           value="<?php echo $this->setup['name'] ?>">
         <input type="hidden" name="admin_email"    value="<?php echo $this->setup['admin_email'] ?>">
         <input type="hidden" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>">
-        <input type="hidden" name="hostname"       value="<?php echo $this->setup['hostname'] ?>">
+        <input type="hidden" name="db_host"       value="<?php echo $this->setup['hostname'] ?>">
         <input type="hidden" name="db_scheme"      value="<?php echo $this->setup['db_scheme'] ?>">
         <input type="hidden" name="db_username"    value="<?php echo $this->setup['db_username'] ?>">
         <input type="hidden" name="db_password"    value="<?php echo $this->setup['db_password'] ?>">
@@ -34,7 +34,7 @@ var_dump($this->setup);
             <li>
                 <span class="inner-wrap">
                     <label for="hostname" class="inlined"><?php echo MolajoText::_('Host name') ?></label>
-                    <input type="text" class="input-text" required="required" id="hostname" name="hostname" placeholder="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
+                    <input type="text" class="input-text" required="required" id="hostname" name="db_host" placeholder="<?php echo MolajoText::_('Host name') ?>" value="<?php echo $this->setup['hostname'] ?>" />
                     <span class="note"><?php echo MolajoText::_('This is usually <b>localhost</b>.') ?></span>
                 </span>
             </li>
@@ -59,45 +59,44 @@ var_dump($this->setup);
                     <span class="note"><?php echo MolajoText::_('Your MySQL database password.') ?></span>
                 </span>
             </li>
-            <li>
-                <span class="inner-wrap">
-                    <label for="db_type"><?php echo MolajoText::_('Database type') ?></label>
-                    <select name="db_type" class="input-text" id="db_type">
-                        <option value="MySQL"<?php echo $this->setup['db_type']=='MySQL'?' selected':''; ?>><?php echo MolajoText::_('MySQL') ?></option>
-                        <option value="MySQLi"<?php echo $this->setup['db_type']=='MySQLi'?' selected':''; ?>><?php echo MolajoText::_('MySQLi') ?></option>
-                    </select>
-                    <span class="note"><?php echo MolajoText::_('MySQLi is recommended, but not all hosts support it. <a href="#">Learn more</a>.') ?></span>
-                </span>
-            </li>
         </ol>
 
         <ol class="list-rest radios">
             <li>
                 <span class="label"><?php echo MolajoText::_('Database type') ?></span>
-                <label class="radio-left<?php echo $this->setup['db_type']=='MySQL'?' label-selected':''; ?>" for="MySQL">
-                    <input name="db_type" id="MySQL" value="MySQL" type="radio"<?php echo $this->setup['db_type']=='MySQL'?' checked="checked"':''; ?> /><?php echo MolajoText::_('MySQL') ?></label>
-                <label class="radio-middle<?php echo $this->setup['db_type']=='MySQLi'?' label-selected':''; ?>" for="MySQLi">
-                    <input name="db_type" id="MySQLi" value="MySQLi" type="radio"<?php echo $this->setup['db_type']=='MySQLi'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Doctrine') ?></label>
-                <label class="radio-right<?php echo $this->setup['db_type']=='Doctrine'?' label-selected':''; ?>" for="Doctrine">
-                    <input name="db_type" id="Doctrine" value="Doctrine" type="radio"<?php echo $this->setup['db_type']=='Doctrine'?' checked="checked"':''; ?> /><?php echo MolajoText::_('MySQLi') ?></label>
+                <?php $i=0; foreach($this->db_types AS $db_type): ?>
+                <?php
+                    $class = 'radio';
+                    if($i==0) $class = 'radio left';
+                    if($i==count($this->db_types)-1) $class = 'radio right';
+                    if($this->setup['db_type']==$db_type) $class .= ' label-selected';
+                    $checked = $this->setup['db_type']==$db_type?$checked = ' checked="checked"':'';
+                ?>
+                <label class="<?php echo $class ?>" for="<?php echo $db_type ?>">
+                    <input name="db_type" id="<?php echo $db_type ?>" value="<?php echo $db_type ?>" type="radio"<?php echo $checked; ?> /><?php echo MolajoText::_($db_type) ?></label>
+                <?php $i++;endforeach; ?>
             </li>
             <li>
                 <span class="label"><?php echo MolajoText::_('Sample Data') ?></span>
-                <label class="radio-left<?php echo $this->setup['sample_data']=='none'?' label-selected':''; ?>" for="none">
-                    <input name="sample_data" id="none" value="none" type="radio"<?php echo $this->setup['sample_data']=='none'?' checked="checked"':''; ?> /><?php echo MolajoText::_('None') ?></label>
-                <label class="radio-middle<?php echo $this->setup['sample_data']=='blog'?' label-selected':''; ?>" for="blog">
-                    <input name="sample_data" id="blog" value="blog" type="radio"<?php echo $this->setup['sample_data']=='blog'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Blog') ?></label>
-                <label class="radio-middle<?php echo $this->setup['sample_data']=='news'?' label-selected':''; ?>" for="news">
-                    <input name="sample_data" id="news" value="news" type="radio"<?php echo $this->setup['sample_data']=='news'?' checked="checked"':''; ?> /><?php echo MolajoText::_('News') ?></label>
-                <label class="radio-right<?php echo $this->setup['sample_data']=='etc'?' label-selected':''; ?>" for="etc">
-                    <input name="sample_data" id="etc" value="etc" type="radio"<?php echo $this->setup['sample_data']=='etc'?' checked="checked"':''; ?> /><?php echo MolajoText::_('Etc.') ?></label>
+                <label class="radio left<?php echo $this->setup['sample_data']=='none'?' label-selected':''; ?>" for="none">
+                    <input name="sample_data" id="none" value="0" type="radio"<?php echo $this->setup['sample_data']=='none'?' checked="checked"':''; ?> /><?php echo MolajoText::_('None') ?></label>
+                <?php $i=1; foreach($this->mock_data AS $mock_data): ?>
+                <?php
+                    $class = 'radio';
+                    if($i==count($this->mock_data)) $class = 'radio right';
+                    if($this->setup['sample_data']==$mock_data) $class .= ' label-selected';
+                    $checked = $this->setup['sample_data']==$mock_data?$checked = ' checked="checked"':'';
+                ?>
+                <label class="<?php echo $class ?>" for="<?php echo $mock_data ?>">
+                    <input name="sample_data" id="<?php echo $mock_data ?>" value="<?php echo $mock_data ?>" type="radio"<?php echo $checked; ?> /><?php echo MolajoText::_($mock_data) ?></label>
+                <?php $i++;endforeach; ?>
             </li>
             <li>
                 <span class="label"><?php echo MolajoText::_('Existing tables') ?></span>
-                <label class="radio-left<?php echo $this->setup['remove_tables']==1?' label-selected':''; ?>" for="remove">
+                <label class="radio left<?php echo $this->setup['remove_tables']==1?' label-selected':''; ?>" for="remove">
                     <input name="remove_tables" id="remove" value="1" type="radio"<?php echo $this->setup['remove_tables']==1?' checked="checked"':''; ?> /><?php echo MolajoText::_('Remove') ?>
                 </label>
-                <label class="radio-right<?php echo $this->setup['remove_tables']==0?' label-selected':''; ?>" for="backup">
+                <label class="radio right<?php echo $this->setup['remove_tables']==0?' label-selected':''; ?>" for="backup">
                     <input name="remove_tables" id="backup" value="0" type="radio"<?php echo $this->setup['remove_tables']==0?' checked="checked"':''; ?> /><?php echo MolajoText::_('Backup') ?>
                 </label>
             </li>

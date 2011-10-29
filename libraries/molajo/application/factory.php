@@ -237,6 +237,11 @@ abstract class MolajoFactory
 		return self::$database;
 	}
 
+    public function getDDbo()
+    {
+        return self::getDbo();
+    }
+
 	/**
 	 * Get a mailer object
 	 *

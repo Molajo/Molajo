@@ -19,7 +19,7 @@ var_dump($this->setup);
         <input type="hidden" name="name"           value="<?php echo $this->setup['name'] ?>">
         <input type="hidden" name="admin_email"    value="<?php echo $this->setup['admin_email'] ?>">
         <input type="hidden" name="admin_password" value="<?php echo $this->setup['admin_password'] ?>">
-        <input type="hidden" name="hostname"       value="<?php echo $this->setup['hostname'] ?>">
+        <input type="hidden" name="db_host"       value="<?php echo $this->setup['hostname'] ?>">
         <input type="hidden" name="db_scheme"      value="<?php echo $this->setup['db_scheme'] ?>">
         <input type="hidden" name="db_username"    value="<?php echo $this->setup['db_username'] ?>">
         <input type="hidden" name="db_password"    value="<?php echo $this->setup['db_password'] ?>">

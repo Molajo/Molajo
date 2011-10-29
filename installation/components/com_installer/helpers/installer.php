@@ -59,19 +59,23 @@ class InstallerHelper
 		return $db;
 	}
 
-    public function detectLanguage() {
-        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
+    public function detectDBTypes()
+    {
+//        $path = JPATH_INSTALLATION . '/components/com_installer/sql/';
+//        return JFolder::folders($path);
+          return array('pdo_mysql','mysql','mysqli');
     }
 
-    public function getPrefix( $length=3 ) {
+    public function detectMockDataTypes()
+    {
+        $path = JPATH_INSTALLATION . '/components/com_installer/sql/mock_data';
+        $mock_data = JFolder::files($path);
 
-        $characters = 'abcdefghijklmnopqrstuvwxyz';
-
-        $string = '';
-        for ($i=0; $i<$length; $i++) {
-            $string .= $characters[mt_rand(0, strlen($characters))];
+        for($i=0;$i<count($mock_data);$i++){
+            $mock_data[$i] = JFile::stripExt($mock_data[$i]);
         }
 
-        return $string . '_';
+        return $mock_data;
     }
+
 }

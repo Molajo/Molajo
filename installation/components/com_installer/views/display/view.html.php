@@ -38,7 +38,7 @@ class InstallerViewDisplay extends MolajoView
 
         /** check layout */
         $layout = JRequest::getCmd('next_step', 'step1');
-        
+
         if ($layout == 'step1') {
         }
         else if($layout == 'step2') {
@@ -50,13 +50,11 @@ class InstallerViewDisplay extends MolajoView
         else if($layout == 'step4') {
         }
 
-        $this->form_fields = $this->get('FormFields');
-
-        $this->form_edits = $this->get('FormEdits');
-
         // We want to enable single page (or however many steps) so we need to assign these to any layout
         $this->assign('setup',     $this->getModel()->getSetup());
         $this->assign('languages', $this->getModel()->getLanguageList());
+        $this->assign('db_types',  $this->getModel()->getDBTypes());
+        $this->assign('mock_data',  $this->getModel()->getMockDataTypes());
 
         /** load unused fields into hidden form fields for display */
 
