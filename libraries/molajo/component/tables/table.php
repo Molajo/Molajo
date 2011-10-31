@@ -1139,8 +1139,7 @@ abstract class MolajoTable extends JObject
 
 			foreach ($joins as $table) {
 				$k = $table['idfield'].$i;
-/** no idea. https://github.com/joomla/joomla-platform/issues/284 */
-				if ($obj->$k) {
+				if ($row->$k) {
 					$msg[] = MolajoText::_($table['label']);
 				}
 
