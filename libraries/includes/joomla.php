@@ -8,17 +8,35 @@
 defined('MOLAJO') or die;
 
 /**
+ * Joomla Defines
+ */
+define('_JEXEC', 1);
+define('JPATH_BASE',		    MOLAJO_BASE_FOLDER);
+define('JPATH_ROOT',		    MOLAJO_BASE_FOLDER);
+define('JPATH_CONFIGURATION',	MOLAJO_SITE);
+define('JPATH_LIBRARIES',		LIBRARIES);
+define('JOOMLA_LIBRARY',		MOLAJO_BASE_FOLDER.'/libraries/jplatform/joomla');
+define('JPATH_SITE',			MOLAJO_BASE_FOLDER);
+define('JPATH_ADMINISTRATOR',	MOLAJO_BASE_FOLDER);
+define('JPATH_PLUGINS',			MOLAJO_EXTENSION_PLUGINS);
+define('JPATH_CACHE',			MOLAJO_SITE_CACHE);
+define('JPATH_MANIFESTS',		MOLAJO_EXTENSION_MANIFESTS);
+define('JPATH_THEMES',          MOLAJO_EXTENSION_TEMPLATES);
+
+/**
  * File Subsystem
  */
+require_once MOLAJO_LIBRARY.'/application/factory.php';
+require_once MOLAJO_LIBRARY.'/application/error.php';
+require_once MOLAJO_LIBRARY.'/application/exception.php';
+require_once MOLAJO_LIBRARY.'/application/text.php';
+require_once JOOMLA_LIBRARY.'/registry/registry.php';
+
 $filehelper = new MolajoFileHelper();
 
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/path.php', 'JPath');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/file.php', 'JFile');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/folder.php', 'JFolder');
-
-/**
- *  Access - not used
- */
 
 /**
  *  Base
@@ -38,6 +56,7 @@ foreach ($files as $file) {
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/controller.php', 'JController');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/model.php', 'JModel');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/component/view.php', 'JView');
+$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/input.php', 'JInput');
 
 /**
  *  Cache
@@ -80,20 +99,10 @@ JLoader::register('JDatabaseExporterMySQLi', JOOMLA_LIBRARY.'/database/database/
 JLoader::register('JDatabaseImporterMySQLi', JOOMLA_LIBRARY.'/database/database/mysqliimporter.php');
 JLoader::register('JDatabaseMySQLi', JOOMLA_LIBRARY.'/database/database/mysqli.php');
 
-JLoader::register('JDatabaseQuerySQLAzure', JOOMLA_LIBRARY.'/database/database/sqlazurequery.php');
-JLoader::register('JDatabaseSQLAzure', JOOMLA_LIBRARY.'/database/database/sqlazure.php');
-
-JLoader::register('JDatabaseQuerySQLSrv', JOOMLA_LIBRARY.'/database/database/sqlsrvquery.php');
-JLoader::register('JDatabaseSQLSrv', JOOMLA_LIBRARY.'/database/database/sqlsrv.php');
-
 JLoader::register('JDatabaseInterface', JOOMLA_LIBRARY.'/database/database.php');
 JLoader::register('JDatabase', JOOMLA_LIBRARY.'/database/database.php');
 JLoader::register('JDatabaseQueryElement', JOOMLA_LIBRARY.'/database/databasequery.php');
 JLoader::register('JDatabaseQuery', JOOMLA_LIBRARY.'/database/databasequery.php');
-
-/**
- *  Document - not used
- */
 
 /**
  *  Environment
@@ -106,16 +115,7 @@ foreach ($files as $file) {
 /**
  *  Error - JError deprecated; Exception classes loaded in Molajo; Log moved
  */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/error.php', 'JError');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/profiler.php', 'JProfiler');
-
-/**
- *  Exceptions
- */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/exception.php', 'JException');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databaseexception.php', 'JDatabaseException');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/log/logexception.php', 'Logexception');
 
 /**
  *  Event
@@ -158,22 +158,8 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilter
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filteroutput.php', 'JFilterOutput');
 
 /**
- *  Form - not used
+ *  Language - not used
  */
-
-/**
- *  HTML - not used
- */
-
-/**
- *  Installer - not used
- */
-
-/**
- *  Language (JHelp and JLanguageHelper not used)
- */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/language.php', 'JLanguage');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/language/latin_transliterate.php', 'JLanguageTransliterate');
 
 /**
  *  Log
@@ -191,26 +177,13 @@ foreach ($files as $file) {
 }
 
 /**
- *  Mail - not used
- */
-
-/**
- *  Plugin - not used
- */
-
-/**
  *  Registry
  */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/registry/registry.php', 'JRegistry');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/registry/format.php', 'JRegistryFormat');
 $files = JFolder::files(JOOMLA_LIBRARY.'/registry/format', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(JOOMLA_LIBRARY.'/registry/format/'.$file, 'JRegistryFormat'.strtoupper(substr($file, 0, strpos($file, '.'))));
 }
-
-/**
- *  Session - not used
- */
 
 /**
  *  String
@@ -219,17 +192,7 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/string/string.php', 'JString');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/string/stringnormalize.php', 'JStringNormalize');
 
 /**
- *  Updater - not used
- */
-
-/**
- *  User - not used
- */
-
-/**
  *  Utilities
- *      JSimpleCrypt, JSimpleXML, JSimpleXMLElement, JUtility and JXMLElement deprecated
- *      String moved
  */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/arrayhelper.php', 'JArrayHelper');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/buffer.php', 'JBuffer');

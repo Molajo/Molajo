@@ -282,7 +282,7 @@ class MolajoUpdate extends JObject
 		if (!($fp = @fopen($url, 'r')))
 		{
 			// TODO: Add a 'mark bad' setting here somehow
-			JError::raiseWarning('101', JText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
+			MolajoError::raiseWarning('101', MolajoText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url));
 			return false;
 		}
 

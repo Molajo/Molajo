@@ -242,7 +242,7 @@ class JLog
 		// Set default path if not set and sanitize it.
 		if (!$path)
 		{
-			$path = $config->get('log_path');
+			$path = MOLAJO_SITE_CACHE;
 		}
 
 		// If no options were explicitly set use the default from configuration.

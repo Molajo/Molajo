@@ -250,28 +250,32 @@ class MolajoDocument extends JObject
 			$ntype	= null;
 
 			// Check if the document type exists
-			if (!file_exists($path)) {
+			if (file_exists($path)) {
+            } else {
 				// Default to the raw format
 				$ntype	= $type;
 				$type	= 'raw';
 			}
 
 			// Determine the path and class
-			$class = 'MolajoDocument'.$type;
-			if (!class_exists($class)) {
-				$path	= dirname(__FILE__).'/'.$type.'/'.$type.'.php';
+			$class = 'MolajoDocument'.ucfirst($type);
+			if (class_exists($class)) {
+
+            } else {
+				$path = dirname(__FILE__).'/'.$type.'/'.$type.'.php';
 				if (file_exists($path)) {
 					require_once $path;
-				}
-				else {
-					JError::raiseError(500,MolajoText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+
+				} else {
+					MolajoError::raiseError(500, MolajoText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
 				}
 			}
 
 			$instance	= new $class($attributes);
 			$instances[$signature] = &$instance;
 
-			if (!is_null($ntype)) {
+			if (is_null($ntype)) {
+            } else {
 				// Set the type to the Document type originally requested
 				$instance->setType($ntype);
 			}
@@ -347,12 +351,12 @@ class MolajoDocument extends JObject
 		}
 		else if ($name == 'description') {
 			$result = $this->getDescription();
-		}
-		else {
+
+		} else {
 			if ($http_equiv == true) {
 				$result = @$this->_metaTags['http-equiv'][$name];
-			}
-			else {
+			} else {
+
 				$result = @$this->_metaTags['standard'][$name];
 			}
 		}
@@ -772,17 +776,19 @@ class MolajoDocument extends JObject
 	{
 		$class	= 'MolajoDocumentRenderer'.$type;
 
-		if (!class_exists($class)) {
+		if (class_exists($class)) {
+        } else {
 			$path = dirname(__FILE__).'/'.$this->_type.'/renderer/'.$type.'.php';
 
 			if (file_exists($path)) {
 				require_once $path;
 			} else {
-				JError::raiseError(500,MolajoText::_('Unable to load renderer class'));
+				MolajoError::raiseError(500,MolajoText::_('Unable to load renderer class'));
 			}
 		}
 
-		if (!class_exists($class)) {
+		if (class_exists($class)) {
+        } else {
 			return null;
 		}
 

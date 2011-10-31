@@ -51,22 +51,21 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 	 */
 	public function fetchHead(&$document)
 	{
-		// Trigger the onBeforeCompileHead event (skip for installation, since it causes an error)
 		$app = MolajoFactory::getApplication();
 		$app->triggerEvent('onBeforeCompileHead');
-		// Get line endings
+
 		$lnEnd	= $document->_getLineEnd();
 		$tab	= $document->_getTab();
 		$tagEnd	= ' />';
 		$buffer	= '';
 
-		// Generate base tag (need to happen first)
+		/** base tag */
 		$base = $document->getBase();
 		if (!empty($base)) {
 			$buffer .= $tab.'<base href="'.$document->getBase().'" />'.$lnEnd;
 		}
 
-		// Generate META tags (needs to happen as early as possible in the head)
+		/** meta */
 		foreach ($document->_metaTags as $type => $tag)
 		{
 			foreach ($tag as $name => $content)
@@ -81,7 +80,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			}
 		}
 
-		// Don't add empty descriptions
+		/** description */
 		$documentDescription = $document->getDescription();
 		if ($documentDescription) {
 			$buffer .= $tab.'<meta name="description" content="'.htmlspecialchars($documentDescription).'" />'.$lnEnd;
@@ -90,7 +89,9 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 		$buffer .= $tab.'<meta name="generator" content="'.htmlspecialchars($document->getGenerator()).'" />'.$lnEnd;
 		$buffer .= $tab.'<title>'.htmlspecialchars($document->getTitle(), ENT_COMPAT, 'UTF-8').'</title>'.$lnEnd;
 
-		// Generate link declarations
+//todo: amy fix link declarations
+
+		/** Generate link declarations */
 		foreach ($document->_links as $link => $linkAtrr)
 		{
 			$buffer .= $tab.'<link href="'.$link.'" '.$linkAtrr['relType'].'="'.$linkAtrr['relation'].'"';
@@ -100,7 +101,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			$buffer .= ' />'.$lnEnd;
 		}
 
-		// Generate stylesheet links
+		/** Generate stylesheet links */
 		foreach ($document->_styleSheets as $strSrc => $strAttr)
 		{
 			$buffer .= $tab.'<link rel="stylesheet" href="'.$strSrc.'" type="'.$strAttr['mime'].'"';
@@ -113,7 +114,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			$buffer .= $tagEnd.$lnEnd;
 		}
 
-		// Generate stylesheet declarations
+		/** Generate stylesheet declarations */
 		foreach ($document->_style as $type => $content)
 		{
 			$buffer .= $tab.'<style type="'.$type.'">'.$lnEnd;
@@ -132,7 +133,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			$buffer .= $tab.'</style>'.$lnEnd;
 		}
 
-		// Generate script file links
+		/** script file links */
 		foreach ($document->_scripts as $strSrc => $strAttr) {
 			$buffer .= $tab.'<script src="'.$strSrc.'"';
 			if (!is_null($strAttr['mime'])) {
@@ -147,7 +148,8 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			$buffer .= '></script>'.$lnEnd;
 		}
 
-		// Generate script declarations
+// todo: amy Get rid of mootools
+		/** script declarations */
 		foreach ($document->_script as $type => $content)
 		{
 			$buffer .= $tab.'<script type="'.$type.'">'.$lnEnd;
@@ -166,7 +168,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
 			$buffer .= $tab.'</script>'.$lnEnd;
 		}
 
-		// Generate script language declarations.
+		/**  script language declarations */
 		if (count(MolajoText::script())) {
 			$buffer .= $tab.'<script type="text/javascript">'.$lnEnd;
 			$buffer .= $tab.$tab.'(function() {'.$lnEnd;

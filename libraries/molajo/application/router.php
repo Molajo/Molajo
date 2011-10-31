@@ -61,39 +61,36 @@ class MolajoRouter extends JObject
 	}
 
 	/**
-	 * Returns the global MolajoRouter object, only creating it if it
+	 * Returns the global router object, only creating it if it
 	 * doesn't already exist.
 	 *
 	 * @param   string  $application  The name of the application
 	 * @param   array   $options An associative array of options
 	 *
-	 * @return  MolajoRouter  A MolajoRouter object.
+	 * @return  router object.
 	 * @since   1.0
 	 */
 	public static function getInstance($application, $options = array())
 	{
 		static $instances;
 
-		if (!isset($instances)) {
+		if (isset($instances)) {
+        } else {
 			$instances = array();
 		}
 
 		if (empty($instances[$application])) {
-			// Load the router object
-			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
-			$path = $info->path.'/'.'includes'.'/'.'router.php';
-			if (file_exists($path)) {
-				require_once $path;
-
-				$classname = 'MolajoRouter'.ucfirst($application);
+            $classname = 'Molajo'.ucfirst($application).'Router';
+			if (class_exists($classname)) {
 				$instance = new $classname($options);
+
 			} else {
-				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
+				$error = MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
 				return $error;
 			}
 
-			$instances[$application] = & $instance;
+			$instances[$application] = &$instance;
 		}
 
 		return $instances[$application];
@@ -169,6 +166,7 @@ class MolajoRouter extends JObject
 
 	/**
 	 * Get the router mode
+     *
 	 * @return
 	 * @since   1.0
 	 */

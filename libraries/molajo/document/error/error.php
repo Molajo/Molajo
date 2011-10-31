@@ -55,7 +55,7 @@ class MolajoDocumentError extends MolajoDocument
 	 */
 	public function setError($error)
 	{
-		if (JError::isError($error)) {
+		if (MolajoError::isError($error)) {
 			$this->_error = & $error;
 			return true;
 		} else {

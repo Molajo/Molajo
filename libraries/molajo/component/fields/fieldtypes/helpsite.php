@@ -40,7 +40,7 @@ class MolajoFormFieldHelpsite extends MolajoFormFieldList
 		// Merge any additional options in the XML definition.
 		$options = array_merge(
 			parent::getOptions(),
-			MolajoHelp::createSiteList(MOLAJO_PATH_ADMINISTRATOR.'/help/helpsites.xml', $this->value)
+			MolajoHelp::createSiteList(MOLAJO_BASE_FOLDER.'/help/helpsites.xml', $this->value)
 		);
 
 		return $options;

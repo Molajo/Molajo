@@ -244,3 +244,6 @@ class JInput
 		return $method;
 	}
 }
+$input = new JInput();
+$input->get('task', null, 'cmd');
+$token = $input->get('token', null, 'cmd');

@@ -45,7 +45,7 @@ abstract class MolajoHtmlMolajoComponent
             $db->setQuery($query);
             $results = $db->loadObjectList();
             if ($db->getErrorNum()) {
-                JError::raiseWarning(500, $db->getErrorMsg());
+                MolajoError::raiseWarning(500, $db->getErrorMsg());
                 return;
             }
 

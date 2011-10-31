@@ -192,7 +192,7 @@ class MolajoModelDisplay extends JModel
 
         /** list limit **/
         $limit = (int) MolajoFactory::getApplication()->getUserStateFromRequest('global.list.limit', 'limit',
-                                                                           MolajoFactory::getApplication()->getCfg('list_limit'));
+                                                                           MolajoFactory::getApplication()->getConfiguration('list_limit'));
         $this->setState('list.limit', (int) $limit);
 
         /** list start **/

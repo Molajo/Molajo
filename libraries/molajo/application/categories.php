@@ -248,7 +248,7 @@ class MolajoCategories
 		$query->group('c.id');
 
 		// Filter by language
-		if ($app->isSite() && $app->getLanguageFilter()) {
+		if ($app->getLanguageFilter()) {
 			$query->where('('.($id!='root' ? 'c.id=s.id OR ':'') .'c.language in ('.$db->Quote(MolajoFactory::getLanguage()->getTag()).','.$db->Quote('*').'))');
 		}
 

@@ -187,8 +187,8 @@ class MolajoView extends JView
         $this->layout_path = false;
 
         /** @var $template */
-        $template = MOLAJO_PATH_THEMES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'/html';
- 
+        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'/html';
+
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
         $templateExtensionPath = '';
         if ($layout_type == 'extensions') {
@@ -210,13 +210,13 @@ class MolajoView extends JView
         $extensionPath = '';
         if ($layout_type == 'extensions') {
             if ($this->request['extension_type'] == 'plugins') {
-                $extensionPath = MOLAJO_PATH_ROOT.'/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl';
+                $extensionPath = MOLAJO_BASE_FOLDER.'/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl';
 
             } else if ($this->request['extension_type'] == 'modules') {
-                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$this->request['option'].'/tmpl';
+                $extensionPath = MOLAJO_BASE_FOLDER.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$this->request['option'].'/tmpl';
 
             } else {
-                $extensionPath = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
+                $extensionPath = MOLAJO_BASE_FOLDER.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
             }
         } else {
             $extensionPath = $templateLayoutPath;
@@ -224,13 +224,13 @@ class MolajoView extends JView
 
         /** 4. $corePath layouts/[layout_type]/[layout-folder] */
         if ($layout_type == 'extensions') {
-            $corePath = MOLAJO_LAYOUTS_EXTENSIONS;
+            $corePath = MOLAJO_EXTENSION_LAYOUT_EXTENSIONS;
         } else if ($layout_type == 'forms') {
-            $corePath = MOLAJO_LAYOUTS_FORMS;
+            $corePath = MOLAJO_EXTENSION_LAYOUT_FORMFIELDS;
         } else if ($layout_type == 'document') {
-            $corePath = MOLAJO_LAYOUTS_DOCUMENT;
+            $corePath = MOLAJO_EXTENSION_LAYOUT_DOCUMENT;
         } else if ($layout_type == 'wraps') {
-            $corePath = MOLAJO_LAYOUTS_WRAPS;
+            $corePath = MOLAJO_EXTENSION_LAYOUT_WRAPS;
         } else {
             return false;
         }
@@ -403,7 +403,7 @@ class MolajoView extends JView
     protected function loadLanguage ($layout, $layout_type)
     {
         $defaultLanguage = MolajoFactory::getLanguage()->getDefault();
-        MolajoFactory::getLanguage()->load('layout', MOLAJO_LAYOUTS, $defaultLanguage, false, false);
+        MolajoFactory::getLanguage()->load('layout', MOLAJO_EXTENSION_LAYOUTS, $defaultLanguage, false, false);
         /** not plural */
         MolajoFactory::getLanguage()->load('layout_'.substr($layout_type, 0, strlen($layout_type) -1).'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
         /** head does not have an s at the end */
@@ -435,7 +435,7 @@ class MolajoView extends JView
         }
 
         /** Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_PATH_ROOT.'/media/system/'.$applicationName;
+        $filePath = MOLAJO_SITE_MEDIA.'/system/'.$applicationName;
         $urlPath = JURI::root().'media/system/'.$applicationName;
 
         if (isset($this->params->load_application_css)
@@ -471,7 +471,7 @@ class MolajoView extends JView
 
         $filePath = $this->layout_path;
 
-        $urlPath = JURI::root().'layouts/'.$layout_type.'/'.$layout;
+        $urlPath = JURI::root().'extensions/layouts/'.$layout_type.'/'.$layout;
  
 //        if (isset($this->params->load_layout_css)
 //            && $this->params->get('load_layout_css', true) === true) {

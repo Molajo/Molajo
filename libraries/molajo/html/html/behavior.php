@@ -468,27 +468,27 @@ abstract class MolajoHtmlBehavior
 		{
 			$uploaders = array();
 
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_FILENAME');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_UPLOAD_COMPLETED');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_OCCURRED');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_PROGRESS_OVERALL');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_CURRENT_TITLE');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_REMOVE');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_REMOVE_TITLE');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_CURRENT_FILE');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_CURRENT_PROGRESS');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_FILE_ERROR');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_FILE_SUCCESSFULLY_UPLOADED');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_DUPLICATE');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_SIZELIMITMIN');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_SIZELIMITMAX');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_FILELISTMAX');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_FILELISTSIZEMAX');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_HTTPSTATUS');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_SECURITYERROR');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_IOERROR');
-			JText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_FILENAME');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_UPLOAD_COMPLETED');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_OCCURRED');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_PROGRESS_OVERALL');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_CURRENT_TITLE');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_REMOVE');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_REMOVE_TITLE');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_CURRENT_FILE');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_CURRENT_PROGRESS');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_FILE_ERROR');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_FILE_SUCCESSFULLY_UPLOADED');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_DUPLICATE');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_SIZELIMITMIN');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_SIZELIMITMAX');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_FILELISTMAX');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_VALIDATION_ERROR_FILELISTSIZEMAX');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_HTTPSTATUS');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_SECURITYERROR');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_IOERROR');
+			MolajoText::script('JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES');
 		}
 
 		if (isset($uploaders[$id]) && ($uploaders[$id]))
@@ -501,11 +501,11 @@ abstract class MolajoHtmlBehavior
 
 			if (json.get(\'status\') == \'1\') {
 				file.element.addClass(\'file-success\');
-				file.info.set(\'html\', \'<strong>\' + Joomla.JText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_FILE_SUCCESSFULLY_UPLOADED\') + \'</strong>\');
+				file.info.set(\'html\', \'<strong>\' + Joomla.MolajoText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_FILE_SUCCESSFULLY_UPLOADED\') + \'</strong>\');
 			} else {
 				file.element.addClass(\'file-failed\');
 				file.info.set(\'html\', \'<strong>\' +
-					Joomla.JText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_OCCURRED\',
+					Joomla.MolajoText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_ERROR_OCCURRED\',
 						\'An Error Occurred\').substitute({ error: json.get(\'error\') }) + \'</strong>\');
 			}
 		}';
@@ -533,7 +533,7 @@ abstract class MolajoHtmlBehavior
 		$opt['fileListSizeMax'] = (isset($params['fileListSizeMax']) && ($params['fileListSizeMax'])) ? (int) $params['fileListSizeMax'] : null;
 		// types is the old parameter name.  Remove in 1.7
 		$opt['typeFilter']		= (isset($params['types'])) ? '\\' . $params['types']
-			: '\\{Joomla.JText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES\'): \'*.*\'}';
+			: '\\{Joomla.MolajoText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES\'): \'*.*\'}';
 		$opt['typeFilter']		= (isset($params['typeFilter'])) ? '\\' . $params['typeFilter'] : $opt['typeFilter'];
 
 		// Optional functions
@@ -699,7 +699,7 @@ abstract class MolajoHtmlBehavior
 
 		//Add uncompressed versions when debug is enabled
 		$uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
-		MolajoHTML::_('stylesheet', 'system/calendar-jos.css', array(' title' => JText::_('JLIB_HTML_BEHAVIOR_GREEN'), ' media' => 'all'), true);
+		MolajoHTML::_('stylesheet', 'system/calendar-jos.css', array(' title' => MolajoText::_('JLIB_HTML_BEHAVIOR_GREEN'), ' media' => 'all'), true);
 		MolajoHTML::_('script', $tag . '/calendar' . $uncompressed . '.js', false, true);
 		MolajoHTML::_('script', $tag . '/calendar-setup' . $uncompressed . '.js', false, true);
 
@@ -922,31 +922,31 @@ abstract class MolajoHtmlBehavior
 
 		if ($jsscript == 0)
 		{
-			$return = 'Calendar._DN = new Array ("' . JText::_('SUNDAY', true) . '", "' . JText::_('MONDAY', true) . '", "'
-				. JText::_('TUESDAY', true) . '", "' . JText::_('WEDNESDAY', true) . '", "' . JText::_('THURSDAY', true) . '", "'
-				. JText::_('FRIDAY', true) . '", "' . JText::_('SATURDAY', true) . '", "' . JText::_('SUNDAY', true) . '");'
-				. ' Calendar._SDN = new Array ("' . JText::_('SUN', true) . '", "' . JText::_('MON', true) . '", "' . JText::_('TUE', true) . '", "'
-				. JText::_('WED', true) . '", "' . JText::_('THU', true) . '", "' . JText::_('FRI', true) . '", "' . JText::_('SAT', true) . '", "'
-				. JText::_('SUN', true) . '");' . ' Calendar._FD = 0;' . ' Calendar._MN = new Array ("' . JText::_('JANUARY', true) . '", "'
-				. JText::_('FEBRUARY', true) . '", "' . JText::_('MARCH', true) . '", "' . JText::_('APRIL', true) . '", "' . JText::_('MAY', true)
-				. '", "' . JText::_('JUNE', true) . '", "' . JText::_('JULY', true) . '", "' . JText::_('AUGUST', true) . '", "'
-				. JText::_('SEPTEMBER', true) . '", "' . JText::_('OCTOBER', true) . '", "' . JText::_('NOVEMBER', true) . '", "'
-				. JText::_('DECEMBER', true) . '");' . ' Calendar._SMN = new Array ("' . JText::_('JANUARY_SHORT', true) . '", "'
-				. JText::_('FEBRUARY_SHORT', true) . '", "' . JText::_('MARCH_SHORT', true) . '", "' . JText::_('APRIL_SHORT', true) . '", "'
-				. JText::_('MAY_SHORT', true) . '", "' . JText::_('JUNE_SHORT', true) . '", "' . JText::_('JULY_SHORT', true) . '", "'
-				. JText::_('AUGUST_SHORT', true) . '", "' . JText::_('SEPTEMBER_SHORT', true) . '", "' . JText::_('OCTOBER_SHORT', true) . '", "'
-				. JText::_('NOVEMBER_SHORT', true) . '", "' . JText::_('DECEMBER_SHORT', true) . '");'
-				. ' Calendar._TT = {};Calendar._TT["INFO"] = "' . JText::_('JLIB_HTML_BEHAVIOR_ABOUT_THE_CALENDAR', true) . '";'
+			$return = 'Calendar._DN = new Array ("' . MolajoText::_('SUNDAY', true) . '", "' . MolajoText::_('MONDAY', true) . '", "'
+				. MolajoText::_('TUESDAY', true) . '", "' . MolajoText::_('WEDNESDAY', true) . '", "' . MolajoText::_('THURSDAY', true) . '", "'
+				. MolajoText::_('FRIDAY', true) . '", "' . MolajoText::_('SATURDAY', true) . '", "' . MolajoText::_('SUNDAY', true) . '");'
+				. ' Calendar._SDN = new Array ("' . MolajoText::_('SUN', true) . '", "' . MolajoText::_('MON', true) . '", "' . MolajoText::_('TUE', true) . '", "'
+				. MolajoText::_('WED', true) . '", "' . MolajoText::_('THU', true) . '", "' . MolajoText::_('FRI', true) . '", "' . MolajoText::_('SAT', true) . '", "'
+				. MolajoText::_('SUN', true) . '");' . ' Calendar._FD = 0;' . ' Calendar._MN = new Array ("' . MolajoText::_('JANUARY', true) . '", "'
+				. MolajoText::_('FEBRUARY', true) . '", "' . MolajoText::_('MARCH', true) . '", "' . MolajoText::_('APRIL', true) . '", "' . MolajoText::_('MAY', true)
+				. '", "' . MolajoText::_('JUNE', true) . '", "' . MolajoText::_('JULY', true) . '", "' . MolajoText::_('AUGUST', true) . '", "'
+				. MolajoText::_('SEPTEMBER', true) . '", "' . MolajoText::_('OCTOBER', true) . '", "' . MolajoText::_('NOVEMBER', true) . '", "'
+				. MolajoText::_('DECEMBER', true) . '");' . ' Calendar._SMN = new Array ("' . MolajoText::_('JANUARY_SHORT', true) . '", "'
+				. MolajoText::_('FEBRUARY_SHORT', true) . '", "' . MolajoText::_('MARCH_SHORT', true) . '", "' . MolajoText::_('APRIL_SHORT', true) . '", "'
+				. MolajoText::_('MAY_SHORT', true) . '", "' . MolajoText::_('JUNE_SHORT', true) . '", "' . MolajoText::_('JULY_SHORT', true) . '", "'
+				. MolajoText::_('AUGUST_SHORT', true) . '", "' . MolajoText::_('SEPTEMBER_SHORT', true) . '", "' . MolajoText::_('OCTOBER_SHORT', true) . '", "'
+				. MolajoText::_('NOVEMBER_SHORT', true) . '", "' . MolajoText::_('DECEMBER_SHORT', true) . '");'
+				. ' Calendar._TT = {};Calendar._TT["INFO"] = "' . MolajoText::_('JLIB_HTML_BEHAVIOR_ABOUT_THE_CALENDAR', true) . '";'
 				. ' Calendar._TT["ABOUT"] =
  "DHTML Date/Time Selector\n" +
  "(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" +
 "For latest version visit: http://www.dynarch.com/projects/calendar/\n" +
 "Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
 "\n\n" +
-"' . JText::_('JLIB_HTML_BEHAVIOR_DATE_SELECTION', true) . '" +
-"' . JText::_('JLIB_HTML_BEHAVIOR_YEAR_SELECT', true) . '" +
-"' . JText::_('JLIB_HTML_BEHAVIOR_MONTH_SELECT', true) . '" +
-"' . JText::_('JLIB_HTML_BEHAVIOR_HOLD_MOUSE', true)
+"' . MolajoText::_('JLIB_HTML_BEHAVIOR_DATE_SELECTION', true) . '" +
+"' . MolajoText::_('JLIB_HTML_BEHAVIOR_YEAR_SELECT', true) . '" +
+"' . MolajoText::_('JLIB_HTML_BEHAVIOR_MONTH_SELECT', true) . '" +
+"' . MolajoText::_('JLIB_HTML_BEHAVIOR_HOLD_MOUSE', true)
 				. '";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "Time selection:\n" +
@@ -954,20 +954,20 @@ Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "- or Shift-click to decrease it\n" +
 "- or click and drag for faster selection.";
 
-		Calendar._TT["PREV_YEAR"] = "' . JText::_('JLIB_HTML_BEHAVIOR_PREV_YEAR_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["PREV_MONTH"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_PREV_MONTH_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["GO_TODAY"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_GO_TODAY', true) . '";' . ' Calendar._TT["NEXT_MONTH"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_NEXT_MONTH_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["NEXT_YEAR"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_NEXT_YEAR_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["SEL_DATE"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_SELECT_DATE', true) . '";' . ' Calendar._TT["DRAG_TO_MOVE"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_DRAG_TO_MOVE', true) . '";' . ' Calendar._TT["PART_TODAY"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_TODAY', true) . '";' . ' Calendar._TT["DAY_FIRST"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_DISPLAY_S_FIRST', true) . '";' . ' Calendar._TT["WEEKEND"] = "0,6";' . ' Calendar._TT["CLOSE"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_CLOSE', true) . '";' . ' Calendar._TT["TODAY"] = "' . JText::_('JLIB_HTML_BEHAVIOR_TODAY', true)
-				. '";' . ' Calendar._TT["TIME_PART"] = "' . JText::_('JLIB_HTML_BEHAVIOR_SHIFT_CLICK_OR_DRAG_TO_CHANGE_VALUE', true) . '";'
+		Calendar._TT["PREV_YEAR"] = "' . MolajoText::_('JLIB_HTML_BEHAVIOR_PREV_YEAR_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["PREV_MONTH"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_PREV_MONTH_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["GO_TODAY"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_GO_TODAY', true) . '";' . ' Calendar._TT["NEXT_MONTH"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_NEXT_MONTH_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["NEXT_YEAR"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_NEXT_YEAR_HOLD_FOR_MENU', true) . '";' . ' Calendar._TT["SEL_DATE"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_SELECT_DATE', true) . '";' . ' Calendar._TT["DRAG_TO_MOVE"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_DRAG_TO_MOVE', true) . '";' . ' Calendar._TT["PART_TODAY"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_TODAY', true) . '";' . ' Calendar._TT["DAY_FIRST"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_DISPLAY_S_FIRST', true) . '";' . ' Calendar._TT["WEEKEND"] = "0,6";' . ' Calendar._TT["CLOSE"] = "'
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_CLOSE', true) . '";' . ' Calendar._TT["TODAY"] = "' . MolajoText::_('JLIB_HTML_BEHAVIOR_TODAY', true)
+				. '";' . ' Calendar._TT["TIME_PART"] = "' . MolajoText::_('JLIB_HTML_BEHAVIOR_SHIFT_CLICK_OR_DRAG_TO_CHANGE_VALUE', true) . '";'
 				. ' Calendar._TT["DEF_DATE_FORMAT"] = "%Y-%m-%d";' . ' Calendar._TT["TT_DATE_FORMAT"] = "'
-				. JText::_('JLIB_HTML_BEHAVIOR_TT_DATE_FORMAT', true) . '";' . ' Calendar._TT["WK"] = "' . JText::_('JLIB_HTML_BEHAVIOR_WK', true) . '";'
-				. ' Calendar._TT["TIME"] = "' . JText::_('JLIB_HTML_BEHAVIOR_TIME', true) . '";';
+				. MolajoText::_('JLIB_HTML_BEHAVIOR_TT_DATE_FORMAT', true) . '";' . ' Calendar._TT["WK"] = "' . MolajoText::_('JLIB_HTML_BEHAVIOR_WK', true) . '";'
+				. ' Calendar._TT["TIME"] = "' . MolajoText::_('JLIB_HTML_BEHAVIOR_TIME', true) . '";';
 			$jsscript = 1;
 			return $return;
 		}

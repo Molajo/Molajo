@@ -74,10 +74,10 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 
 			// Load language file
 			$lang = MolajoFactory::getLanguage();
-			$lang->load($extn.'.sys', MOLAJO_PATH_ADMINISTRATOR, null, false, false)
-			||	$lang->load($extn.'.sys', MOLAJO_PATH_ADMINISTRATOR.'/components/'.$extn, null, false, false)
-			||	$lang->load($extn.'.sys', MOLAJO_PATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-			||	$lang->load($extn.'.sys', MOLAJO_PATH_ADMINISTRATOR.'/components/'.$extn, $lang->getDefault(), false, false);
+			$lang->load($extn.'.sys', MOLAJO_BASE_FOLDER, null, false, false)
+			||	$lang->load($extn.'.sys', MOLAJO_BASE_FOLDER.'/components/'.$extn, null, false, false)
+			||	$lang->load($extn.'.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+			||	$lang->load($extn.'.sys', MOLAJO_BASE_FOLDER.'/components/'.$extn, $lang->getDefault(), false, false);
 
 			// Get the database object and a new query object.
 			$db		= MolajoFactory::getDBO();
@@ -105,7 +105,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
 
 			// Check for a database error.
 			if ($db->getErrorNum()) {
-				JError::raiseWarning(500, $db->getErrorMsg());
+				MolajoError::raiseWarning(500, $db->getErrorMsg());
 			}
 
 			// Build the search paths for component layouts.

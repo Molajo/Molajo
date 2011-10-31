@@ -83,7 +83,8 @@ class MolajoFilesystemHelper
 					break;
 			}
 
-			if (!$ftpid) {
+			if (isset($ftpid)) {
+            } else {
 				return false;
 			}
 

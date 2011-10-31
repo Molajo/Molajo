@@ -155,16 +155,16 @@ class MolajoImageHelper
         }
 
         /** retrieve image folder for original images */
-        $images = MolajoFactory::getApplication()->getCfg('image_folder', '/images');
+        $images = MolajoFactory::getApplication()->getConfiguration('image_folder', '/images');
         
         /** folders */
-        if (JFolder::exists(MOLAJO_PATH_SITE.'/'.$images)) {
+        if (JFolder::exists(MOLAJO_BASE_FOLDER.'/'.$images)) {
         } else {
-            JFolder::create(MOLAJO_PATH_SITE.'/'.$images);
+            JFolder::create(MOLAJO_BASE_FOLDER.'/'.$images);
         }
 
         /** make certain original image exists */
-        $this->fileNameOriginal = MOLAJO_PATH_SITE.'/'.$images.'/'.$this->filename;            
+        $this->fileNameOriginal = MOLAJO_BASE_FOLDER.'/'.$images.'/'.$this->filename;
         if (JFile::exists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
@@ -180,16 +180,16 @@ class MolajoImageHelper
     private function getResizedImage ()
     {
         /** retrieve image folder for resized images */
-        $images = MolajoFactory::getApplication()->getCfg('thumb_folder', '/images/thumbs');
+        $images = MolajoFactory::getApplication()->getConfiguration('thumb_folder', '/images/thumbs');
         
         /** folders */
-        if (JFolder::exists(MOLAJO_PATH_SITE.'/'.$images)) {
+        if (JFolder::exists(MOLAJO_BASE_FOLDER.'/'.$images)) {
         } else {
-            JFolder::create(MOLAJO_PATH_SITE.'/'.$images);
+            JFolder::create(MOLAJO_BASE_FOLDER.'/'.$images);
         }
 
         /** if resized image already exists, return it */           
-        $this->fileNameNew = MOLAJO_PATH_SITE.'/'.$images.'/'.'s'.$this->size.'_'.'t'.'_'.$this->type.$this->filename;            
+        $this->fileNameNew = MOLAJO_BASE_FOLDER.'/'.$images.'/'.'s'.$this->size.'_'.'t'.'_'.$this->type.$this->filename;
         if (JFile::exists($this->fileNameNew)) {
             return true;
         } 
@@ -206,15 +206,15 @@ class MolajoImageHelper
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 1) {
-            $dimensions = MolajoFactory::getApplication()->getCfg('image_xsmall', 50);
+            $dimensions = MolajoFactory::getApplication()->getConfiguration('image_xsmall', 50);
         } else if ($this->size == 2) {
-            $dimensions = MolajoFactory::getApplication()->getCfg('image_small', 75);
+            $dimensions = MolajoFactory::getApplication()->getConfiguration('image_small', 75);
         } else if ($this->size == 3) {
-            $dimensions = MolajoFactory::getApplication()->getCfg('image_medium', 150);
+            $dimensions = MolajoFactory::getApplication()->getConfiguration('image_medium', 150);
         } else if ($this->size == 4) {
-            $dimensions = MolajoFactory::getApplication()->getCfg('image_large', 300);
+            $dimensions = MolajoFactory::getApplication()->getConfiguration('image_large', 300);
         } else if ($this->size == 5) {
-            $dimensions = MolajoFactory::getApplication()->getCfg('image_xlarge', 500);
+            $dimensions = MolajoFactory::getApplication()->getConfiguration('image_xlarge', 500);
         } else {
             $dimensions = 100;
         }

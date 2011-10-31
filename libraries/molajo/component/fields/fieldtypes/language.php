@@ -56,7 +56,7 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
 
 		// Get the list of available languages.
 		$options = MolajoLanguageHelper::createLanguageList($native);
-		if (!$options || JError::isError($options)) {
+		if (!$options || MolajoError::isError($options)) {
 			$options = array();
 		}
 

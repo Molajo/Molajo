@@ -143,7 +143,7 @@ abstract class MolajoModuleHelper
 
 		// Get module path
 		$module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
-		$path = MOLAJO_PATH_BASE.'/modules/'.$module->module.'/'.$module->module.'.php';
+		$path = MOLAJO_EXTENSION_MODULES.'/modules/'.$module->module.'/'.$module->module.'.php';
 
 		// Load the module
 		if ($module->user) {
@@ -151,9 +151,9 @@ abstract class MolajoModuleHelper
 
             $lang = MolajoFactory::getLanguage();
 
-            $lang->load($module->module, MOLAJO_PATH_BASE, null, false, false)
+            $lang->load($module->module, MOLAJO_BASE_FOLDER, null, false, false)
             ||	$lang->load($module->module, dirname($path), null, false, false)
-            ||	$lang->load($module->module, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+            ||	$lang->load($module->module, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
             ||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
 
             /** view */
@@ -306,8 +306,8 @@ abstract class MolajoModuleHelper
 		}
 
 		// Build the template and base path for the layout
-		$tPath = MOLAJO_PATH_THEMES.'/'.$template.'/html/'.$module.'/'.$layout.'.php';
-		$bPath = MOLAJO_PATH_BASE.'/modules/'.$module.'/tmpl/'.$defaultLayout.'.php';
+		$tPath = MOLAJO_EXTENSION_TEMPLATES.'/'.$template.'/html/'.$module.'/'.$layout.'.php';
+		$bPath = MOLAJO_EXTENSION_MODULES.'/modules/'.$module.'/tmpl/'.$defaultLayout.'.php';
 
 		// If the template has a layout override use it
 		if (file_exists($tPath)) {
@@ -336,7 +336,7 @@ abstract class MolajoModuleHelper
 		$Itemid 	= JRequest::getInt('Itemid');
 		$user		= MolajoFactory::getUser();
 		$lang 		= MolajoFactory::getLanguage()->getTag();
-		$applicationId 	= (int) MolajoFactory::getApplication()->getApplicationId();
+		$applicationId 	= MOLAJO_APPLICATION_ID;
 
 		$cache 		= MolajoFactory::getCache ('com_modules', '');
 		$cacheid 	= md5(serialize(array($Itemid, $applicationId, $lang)));
@@ -367,19 +367,18 @@ abstract class MolajoModuleHelper
 			$query->where('m.application_id = '. $applicationId);
 			$query->where('(mm.menu_item_id = '. (int) $Itemid .' OR mm.menu_item_id <= 0)');
 
-			if (MolajoFactory::getApplication()->isSite()
-                && MolajoFactory::getApplication()->getLanguageFilter()) {
+			if (MolajoFactory::getApplication()->getLanguageFilter()) {
 				$query->where('m.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
 			}
 			$query->order('position, ordering');
- 
+
             $db->setQuery($query->__toString());
 
 			$modules = $db->loadObjectList();
 			$clean	= array();
 
 			if($db->getErrorNum()){
-				JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+				MolajoError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
 				return $clean;
 			}
 
@@ -409,7 +408,6 @@ abstract class MolajoModuleHelper
 				// Only accept modules without explicit exclusions.
 				if (!$negHit)
 				{
-					//determine if this is a custom module
 					$file				= $module->module;
 					$custom				= substr($file, 0, 4) == 'mod_' ?  0 : 1;
 					$module->user		= $custom;

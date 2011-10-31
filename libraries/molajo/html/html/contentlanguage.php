@@ -57,13 +57,13 @@ abstract class MolajoHtmlContentLanguage
 			self::$items = $db->loadObjectList();
 			if ($all)
 			{
-				array_unshift(self::$items, new JObject(array('value' => '*', 'text' => $translate ? JText::alt('JALL', 'language') : 'JALL_LANGUAGE')));
+				array_unshift(self::$items, new JObject(array('value' => '*', 'text' => $translate ? MolajoText::alt('JALL', 'language') : 'JALL_LANGUAGE')));
 			}
 
 			// Detect errors
 			if ($db->getErrorNum())
 			{
-				JError::raiseWarning(500, $db->getErrorMsg());
+				MolajoError::raiseWarning(500, $db->getErrorMsg());
 			}
 		}
 		return self::$items;

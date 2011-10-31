@@ -42,7 +42,7 @@ defined('MOLAJO') or die;
 		$app	= MolajoFactory::getApplication();
 
 		// Gets and sets timezone offset from site configuration
-		$tz	= new DateTimeZone($app->getCfg('offset'));
+		$tz	= new DateTimeZone($app->getConfiguration('offset'));
 		$now	= MolajoFactory::getDate();
 		$now->setTimeZone($tz);
 
@@ -52,11 +52,11 @@ defined('MOLAJO') or die;
 		$url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 		$syndicationURL = MolajoRoute::_('&format=feed&type=atom');
 
-		if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = MolajoText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $data->title);
+		if ($app->getConfiguration('sitename_pagetitles', 0) == 1) {
+			$title = MolajoText::sprintf('JPAGETITLE', $app->getConfiguration('sitename'), $data->title);
 		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = MolajoText::sprintf('JPAGETITLE', $data->title, $app->getCfg('sitename'));
+		elseif ($app->getConfiguration('sitename_pagetitles', 0) == 2) {
+			$title = MolajoText::sprintf('JPAGETITLE', $data->title, $app->getConfiguration('sitename'));
 		}
 		else {
 			$title = $data->title;

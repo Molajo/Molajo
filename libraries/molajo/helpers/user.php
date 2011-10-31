@@ -245,13 +245,13 @@ abstract class MolajoUserHelper
 			// Time to take care of business.... store the user.
 			if (!$user->save())
 			{
-				JError::raiseWarning("SOME_ERROR_CODE", $user->getError());
+				MolajoError::raiseWarning("SOME_ERROR_CODE", $user->getError());
 				return false;
 			}
 		}
 		else
 		{
-			JError::raiseWarning("SOME_ERROR_CODE", MolajoText::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
+			MolajoError::raiseWarning("SOME_ERROR_CODE", MolajoText::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
 			return false;
 		}
 

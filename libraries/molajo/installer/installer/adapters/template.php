@@ -41,7 +41,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$this->parent
 				->setPath(
 					'source',
-					($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/templates/' . $this->parent->extension->element
+					($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER) . '/templates/' . $this->parent->extension->element
 				);
 		}
 
@@ -58,11 +58,11 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		$extension = "tpl_$name";
 		$lang = MolajoFactory::getLanguage();
-		$source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_PATH_ADMINISTRATOR : MOLAJO_PATH_SITE) . '/templates/' . $name;
+		$source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER) . '/templates/' . $name;
 		$lang->load($extension . '.sys', $source, null, false, false)
-			|| $lang->load($extension . '.sys', constant('MOLAJO_PATH_' . strtoupper($client)), null, false, false)
+			|| $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-			|| $lang->load($extension . '.sys', constant('MOLAJO_PATH_' . strtoupper($client)), $lang->getDefault(), false, false);
+			|| $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), $lang->getDefault(), false, false);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$client = MolajoApplicationHelper::getApplicationInfo($cname, true);
 			if ($client === false)
 			{
-				$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
+				$this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_UNKNOWN_CLIENT', $cname));
 				return false;
 			}
 			$basePath = $client->path;
@@ -95,7 +95,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		{
 			// No client attribute was found so we assume the site as the client
 			$cname = 'site';
-			$basePath = MOLAJO_PATH_SITE;
+			$basePath = MOLAJO_BASE_FOLDER;
 			$clientId = 0;
 		}
 
@@ -138,8 +138,8 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 				// If we didn't have overwrite set, find an udpate function or find an update tag so let's call it safe
 				$this->parent
 					->abort(
-						JText::sprintf(
-							'JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', JText::_('JLIB_INSTALLER_' . $this->route),
+						MolajoText::sprintf(
+							'JLIB_INSTALLER_ABORT_PLG_INSTALL_DIRECTORY', MolajoText::_('JLIB_INSTALLER_' . $this->route),
 							$this->parent->getPath('extension_root')
 						)
 				);
@@ -153,9 +153,9 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		 */
 		if (file_exists($this->parent->getPath('extension_root')) && !$this->parent->getOverwrite())
 		{
-			JError::raiseWarning(
+			MolajoError::raiseWarning(
 				100,
-				JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ANOTHER_TEMPLATE_USING_DIRECTORY', $this->parent->getPath('extension_root'))
+				MolajoText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ANOTHER_TEMPLATE_USING_DIRECTORY', $this->parent->getPath('extension_root'))
 			);
 			return false;
 		}
@@ -167,7 +167,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			if (!$created = JFolder::create($this->parent->getPath('extension_root')))
 			{
 				$this->parent
-					->abort(JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
+					->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_FAILED_CREATE_DIRECTORY', $this->parent->getPath('extension_root')));
 
 				return false;
 			}
@@ -210,13 +210,13 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		$this->parent->parseLanguages($xml->languages, $clientId);
 
 		// Get the template description
-		$this->parent->set('message', JText::_((string) $xml->description));
+		$this->parent->set('message', MolajoText::_((string) $xml->description));
 
 		// Lastly, we will copy the manifest file to its appropriate place.
 		if (!$this->parent->copyManifest(-1))
 		{
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_TPL_INSTALL_COPY_SETUP'));
+			$this->parent->abort(MolajoText::_('JLIB_INSTALLER_ABORT_TPL_INSTALL_COPY_SETUP'));
 
 			return false;
 		}
@@ -248,7 +248,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		if (!$row->store())
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_TPL_INSTALL_ROLLBACK', $db->stderr(true)));
 
 			return false;
 		}
@@ -262,7 +262,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$query->set('application_id=' . $db->Quote($clientId));
 			$query->set('home=0');
 			$debug = $lang->setDebug(false);
-			$query->set('title=' . $db->Quote(JText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', JText::_($this->get('name')))));
+			$query->set('title=' . $db->Quote(MolajoText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', MolajoText::_($this->get('name')))));
 			$lang->setDebug($debug);
 			$query->set('params=' . $db->Quote($row->params));
 			$db->setQuery($query);
@@ -305,7 +305,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		if (!$row->load((int) $id) || !strlen($row->element))
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_ERRORUNKOWNEXTENSION'));
 			return false;
 		}
 
@@ -313,7 +313,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		// Because that is not a good idea...
 		if ($row->protected)
 		{
-			JError::raiseWarning(100, JText::sprintf('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_WARNCORETEMPLATE', $row->name));
+			MolajoError::raiseWarning(100, MolajoText::sprintf('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_WARNCORETEMPLATE', $row->name));
 			return false;
 		}
 
@@ -323,7 +323,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		// For a template the id will be the template name which represents the subfolder of the templates folder that the template resides in.
 		if (!$name)
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_ID_EMPTY'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_ID_EMPTY'));
 
 			return false;
 		}
@@ -335,7 +335,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		if ($db->loadResult() != 0)
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DEFAULT'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DEFAULT'));
 
 			return false;
 		}
@@ -345,7 +345,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		if (!$client)
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_CLIENT'));
 			return false;
 		}
 
@@ -362,7 +362,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			unset($row);
 			// Make sure we delete the folders
 			JFolder::delete($this->parent->getPath('extension_root'));
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 
 			return false;
 		}
@@ -378,7 +378,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		}
 		else
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DIRECTORY'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_UNINSTALL_TEMPLATE_DIRECTORY'));
 			$retval = false;
 		}
 
@@ -407,8 +407,8 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 	function discover()
 	{
 		$results = array();
-		$site_list = JFolder::folders(MOLAJO_PATH_SITE . '/templates');
-		$admin_list = JFolder::folders(MOLAJO_PATH_ADMINISTRATOR . '/templates');
+		$site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/templates');
+		$admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/templates');
 		$site_info = MolajoApplicationHelper::getApplicationInfo('site', true);
 		$admin_info = MolajoApplicationHelper::getApplicationInfo('administrator', true);
 
@@ -420,7 +420,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 				// Ignore special system template
 			}
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_SITE . "/templates/$template/templateDetails.xml");
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . "/templates/$template/templateDetails.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'template');
 			$extension->set('application_id', $site_info->id);
@@ -440,7 +440,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 				// Ignore special system template
 			}
 
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_ADMINISTRATOR . "/templates/$template/templateDetails.xml");
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . "/templates/$template/templateDetails.xml");
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'template');
 			$extension->set('application_id', $admin_info->id);
@@ -473,7 +473,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 
 		if ($description)
 		{
-			$this->parent->set('message', JText::_($description));
+			$this->parent->set('message', MolajoText::_($description));
 		}
 		else
 		{
@@ -505,7 +505,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 			$query->set('template=' . $db->Quote($this->parent->extension->name));
 			$query->set('application_id=' . $db->Quote($this->parent->extension->application_id));
 			$query->set('home=0');
-			$query->set('title=' . $db->Quote(JText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
+			$query->set('title=' . $db->Quote(MolajoText::sprintf('JLIB_INSTALLER_DEFAULT_STYLE', $this->parent->extension->name)));
 			$query->set('params=' . $db->Quote($this->parent->extension->params));
 			$db->setQuery($query);
 			$db->query();
@@ -514,7 +514,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		}
 		else
 		{
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_TPL_DISCOVER_STORE_DETAILS'));
+			MolajoError::raiseWarning(101, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_DISCOVER_STORE_DETAILS'));
 
 			return false;
 		}
@@ -543,9 +543,9 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
 		{
 			return $this->parent->extension->store();
 		}
-		catch (JException $e)
+		catch (MolajoException $e)
 		{
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_TPL_REFRESH_MANIFEST_CACHE'));
+			MolajoError::raiseWarning(101, MolajoText::_('JLIB_INSTALLER_ERROR_TPL_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

@@ -80,7 +80,7 @@ abstract class MolajoHtmlCategory
                                    }
                                    /*   Process new Extension Group */
                                    $categoryExtension = $item->extension;
-                                   $lang->load($item->extension, MOLAJO_PATH_ADMINISTRATOR, null, false, false);
+                                   $lang->load($item->extension, MOLAJO_BASE_FOLDER, null, false, false);
                                    $categoryExtensionText = MolajoText::_($item->extension);
 
                                    self::$items[$hash][] = JHTML::_('select.option',  '<OPTGROUP>', ' - '.$categoryExtensionText.' - ' );

@@ -29,10 +29,10 @@ class MolajoLanguageHelper
 	 *
 	 * @since   1.0
 	 */
-	public static function createLanguageList($actualLanguage, $basePath = MOLAJO_PATH_BASE, $caching = false, $installed = false)
+	public static function createLanguageList($actualLanguage, $basePath = MOLAJO_BASE_FOLDER, $caching = false, $installed = false)
 	{
 		$list = array ();
-		$langs = JLanguage::getKnownLanguages($basePath);
+		$langs = MolajoLanguage::getKnownLanguages($basePath);
 
         if (MOLAJO_APPLICATION_ID == 2) {
             $installed == false;
@@ -47,7 +47,9 @@ class MolajoLanguageHelper
 			$query->where('state = 0');
 			$query->where('enabled = 1');
 			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
-			$db->setQuery($query);
+
+            $db->setQuery($query);
+
             $installed_languages = $db->loadObjectList('element');
 		}
         
@@ -65,6 +67,7 @@ class MolajoLanguageHelper
 
 		return $list;
 	}
+
 	/**
 	 * Tries to detect the language.
 	 *
@@ -124,9 +127,9 @@ class MolajoLanguageHelper
 		if (empty($languages)) {
 
 			// Installation uses available languages
-			if (MolajoFactory::getApplication()->getApplicationId() == 2) {
+			if (MOLAJO_APPLICATION_ID == 0) {
 				$languages[$key] = array();
-				$knownLangs = JLanguage::getKnownLanguages(MOLAJO_PATH_BASE);
+				$knownLangs = MolajoLanguage::getKnownLanguages(MOLAJO_BASE_FOLDER);
 				foreach($knownLangs as $metadata)
 				{
 					// take off 3 letters iso code languages as they can't match browsers' languages and default them to en

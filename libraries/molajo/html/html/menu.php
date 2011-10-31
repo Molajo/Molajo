@@ -121,7 +121,7 @@ abstract class MolajoHtmlMenu
 				self::$items[] = MolajoHTML::_('select.optgroup', $menu->text);
 
 				// Special "Add to this Menu" option:
-				self::$items[] = MolajoHTML::_('select.option', $menu->value . '.1', JText::_('JLIB_HTML_ADD_TO_THIS_MENU'));
+				self::$items[] = MolajoHTML::_('select.option', $menu->value . '.1', MolajoText::_('JLIB_HTML_ADD_TO_THIS_MENU'));
 
 				// Menu items:
 				if (isset($lookup[$menu->value]))
@@ -198,7 +198,7 @@ abstract class MolajoHtmlMenu
 		}
 		else
 		{
-			$ordering = '<input type="hidden" name="ordering" value="' . $row->ordering . '" />' . JText::_('JGLOBAL_NEWITEMSLAST_DESC');
+			$ordering = '<input type="hidden" name="ordering" value="' . $row->ordering . '" />' . MolajoText::_('JGLOBAL_NEWITEMSLAST_DESC');
 		}
 
 		return $ordering;
@@ -231,7 +231,7 @@ abstract class MolajoHtmlMenu
 		// Check for a database error.
 		if ($db->getErrorNum())
 		{
-			JError::raiseNotice(500, $db->getErrorMsg());
+			MolajoError::raiseNotice(500, $db->getErrorMsg());
 		}
 
 		if (!$mitems)
@@ -261,15 +261,15 @@ abstract class MolajoHtmlMenu
 		$mitems = array();
 		if ($all | $unassigned)
 		{
-			$mitems[] = MolajoHTML::_('select.option', '<OPTGROUP>', JText::_('JOPTION_MENUS'));
+			$mitems[] = MolajoHTML::_('select.option', '<OPTGROUP>', MolajoText::_('JOPTION_MENUS'));
 
 			if ($all)
 			{
-				$mitems[] = MolajoHTML::_('select.option', 0, JText::_('JALL'));
+				$mitems[] = MolajoHTML::_('select.option', 0, MolajoText::_('JALL'));
 			}
 			if ($unassigned)
 			{
-				$mitems[] = MolajoHTML::_('select.option', -1, JText::_('JOPTION_UNASSIGNED'));
+				$mitems[] = MolajoHTML::_('select.option', -1, MolajoText::_('JOPTION_UNASSIGNED'));
 			}
 
 			$mitems[] = MolajoHTML::_('select.option', '</OPTGROUP>');

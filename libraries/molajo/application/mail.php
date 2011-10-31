@@ -38,9 +38,9 @@ class MolajoMail extends PHPMailer
 	 * NOTE: If you need an instance to use that does not have the global configuration
 	 * values, use an id string that is not 'Joomla'.
 	 *
-	 * @param   string  $id  The id string for the JMail instance [optional]
+	 * @param   string  $id  The id string for the MolajoMail instance [optional]
 	 *
-	 * @return  object  The global JMail object
+	 * @return  object  The global MolajoMail object
 	 * @since   1.0
 	 */
 	public static function getInstance($id = 'Molajo')
@@ -52,7 +52,7 @@ class MolajoMail extends PHPMailer
 		}
 
 		if (empty($instances[$id])) {
-			$instances[$id] = new JMail();
+			$instances[$id] = new MolajoMail();
 		}
 
 		return $instances[$id];
@@ -61,20 +61,20 @@ class MolajoMail extends PHPMailer
 	/**
 	 * Send the mail
 	 *
-	 * @return  mixed  True if successful, a JError object otherwise
+	 * @return  mixed  True if successful, a MolajoError object otherwise
 	 * @since   1.0
 	 */
 	public function Send()
 	{
 		if (($this->Mailer == 'mail') && ! function_exists('mail')) {
-			return JError::raiseNotice(500, MolajoText::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
+			return MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
 		}
 
 		@$result = parent::Send();
 
 		if ($result == false) {
 			// TODO: Set an appropriate error number
-			$result = JError::raiseNotice(500, MolajoText::_($this->ErrorInfo));
+			$result = MolajoError::raiseNotice(500, MolajoText::_($this->ErrorInfo));
 		}
 
 		return $result;
@@ -88,7 +88,7 @@ class MolajoMail extends PHPMailer
 	 *			array([0] => email Address [1] => Name)
 	 *		</pre>
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function setSender($from)
@@ -103,7 +103,7 @@ class MolajoMail extends PHPMailer
 		}
 		else {
 			// If it is neither, we throw a warning
-			JError::raiseWarning(0, MolajoText::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
+			MolajoError::raiseWarning(0, MolajoText::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
 		}
 
 		return $this;
@@ -114,7 +114,7 @@ class MolajoMail extends PHPMailer
 	 *
 	 * @param   string   $subject	Subject of the email
 	 *
-	 * @return  object   JMail	Returns this object for chaining.
+	 * @return  object   MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function setSubject($subject)
@@ -129,7 +129,7 @@ class MolajoMail extends PHPMailer
 	 *
 	 * @param   string  $content	Body of the email
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function setBody($content)
@@ -148,7 +148,7 @@ class MolajoMail extends PHPMailer
 	 *
 	 * @param   mixed  $recipient	Either a string or array of strings [email address(es)]
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function addRecipient($recipient, $name = '')
@@ -174,7 +174,7 @@ class MolajoMail extends PHPMailer
 	 *
 	 * @param   mixed  $cc  Either a string or array of strings [email address(es)]
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function addCC($cc, $name = '')
@@ -202,7 +202,7 @@ class MolajoMail extends PHPMailer
 	 *
 	 * @param   mixed  $bcc	Either a string or array of strings [email address(es)]
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function addBCC($bcc, $name = '')
@@ -230,7 +230,7 @@ class MolajoMail extends PHPMailer
 	 *
 	 * @param   mixed  $attachment	Either a string or array of strings [filenames]
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function addAttachment($path, $name = '', $encoding = 'base64', $type = 'application/octet-stream')
@@ -259,7 +259,7 @@ class MolajoMail extends PHPMailer
 	 *			array([0] => email Address [1] => Name)
 	 *		</pre>
 	 *
-	 * @return  object  JMail	Returns this object for chaining.
+	 * @return  object  MolajoMail	Returns this object for chaining.
 	 * @since   1.0
 	 */
 	public function addReplyTo($replyto, $name = '')

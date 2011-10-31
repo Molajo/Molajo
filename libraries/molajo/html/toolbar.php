@@ -204,7 +204,7 @@ class MolajoToolbar extends JObject
 
 		if (!class_exists('JButton'))
 		{
-			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
+			MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
 			return false;
 		}
 
@@ -222,14 +222,14 @@ class MolajoToolbar extends JObject
 			if ($buttonFile = JPath::find($dirs, $file)) {
 				include_once $buttonFile;
 			} else {
-				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
+				MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
 				return false;
 			}
 		}
 
 		if (!class_exists($buttonClass))
 		{
-			//return	JError::raiseError('SOME_ERROR_CODE', "Module file $buttonFile does not contain class $buttonClass.");
+			//return	MolajoError::raiseError('SOME_ERROR_CODE', "Module file $buttonFile does not contain class $buttonClass.");
 			return false;
 		}
 		$this->_buttons[$signature] = new $buttonClass($this);

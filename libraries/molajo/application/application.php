@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -11,9 +11,7 @@ defined('MOLAJO') or die;
 /**
  * MolajoApplication
  *
- * Acts as a Factory class for application specific objects and provides many
- * supporting API functions. Derived clases should supply the route(), dispatch()
- * and render() functions.
+ * Acts as a Factory class for application specific objects and supporting API functions
  */
 class MolajoApplication extends JObject
 {
@@ -58,7 +56,7 @@ class MolajoApplication extends JObject
 	public $requestTime = null;
 
 	/**
-	 * The time the request was made as Unix timestamp.
+	 * The time the request was made, expressed as a Unix timestamp.
 	 *
 	 * @var    integer
 	 * @since  1.0
@@ -66,68 +64,104 @@ class MolajoApplication extends JObject
 	public $startTime = null;
 
 	/**
+	 * The application input object.
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	public $input = null;
+
+	/**
+	 * @var object $template
+     *
+     * @since 1.0
+	 */
+	private $template = null;
+
+    /**
+     * @var bool $_language_filter
+     *
+     * @since 1.0
+     */
+	private $_language_filter = false;
+
+    /**
+     * @var bool $_detect_browser
+     *
+     * @since 1.0
+     */
+	private $_detect_browser = false;
+
+	/**
      * __construct
      * 
 	 * Class constructor.
 	 *
-	 * @param   array  $config  A configuration array including optional elements such as session
-	 *                   session_name, applicationId and others. This is not exhaustive.
+	 * @param   array  $config  A configuration array
 	 *
 	 * @since  1.0
 	 */
 	public function __construct($config = array())
 	{
-		$this->_name		    = $this->getName();
-		$this->_applicationId	= $config['applicationId'];
+        /** Application ID and Name */
+        $config['applicationId']    = MOLAJO_APPLICATION_ID;
+		$this->_applicationId	    = MOLAJO_APPLICATION_ID;
+		$this->_name		        = MOLAJO_APPLICATION;
 
-		// Enable sessions by default.
+        /** Input Object */
+        if (class_exists('JInput')) {
+            $this->input = new JInput;
+        }
+
+		/** Session */
 		if (isset($config['session'])) {
         } else {
 			$config['session'] = true;
 		}
-
-		// Set the session default name.
 		if (isset($config['session_name'])) {
         } else {
 			$config['session_name'] = $this->_name;
 		}
+		if ($config['session'] === false) {
+        } else {
+            $sessionHelper = new MolajoSessionHelper ();
+			$sessionHelper->createSession(MolajoUtility::getHash($config['session_name']));
+		}
 
-		// Set the default configuration file.
+		/** Configuration File */
 		if (isset($config['config_file'])) {
         } else {
 			$config['config_file'] = 'configuration.php';
 		}
-
-		// Create the configuration object.
         if ($this->_name == 'installation') {
+            $this->_createConfiguration();
         } else {
-		    $this->_createConfiguration(MOLAJO_PATH_CONFIGURATION.'/'.$config['config_file']);
+		    $this->_createConfiguration(MOLAJO_SITE.'/'.$config['config_file']);
         }
 
-		// Create the session if a session name is passed.
-		if ($config['session'] === false) {
+        /** Application URI Base */
+        //todo: amy configuration option for applications
+        if (MOLAJO_APPLICATION == 'site') {
         } else {
-			$this->_createSession(MolajoUtility::getHash($config['session_name']));
-		}
+		    JURI::root(null, str_ireplace('/'.MOLAJO_APPLICATION, '', JURI::base(true)));
+        }
 
+        /** stats */
 		$this->set('requestTime', gmdate('Y-m-d H:i'));
-
-		// Used by task system to ensure that the system doesn't go over time.
 	    $this->set('startTime', JProfiler::getmicrotime());
-
 	}
 
 	/**
      * getInstance
      *
-	 * Returns the global MolajoApplication object, only creating it if it
-	 * doesn't already exist.
+	 * Returns the global application object, creating if not existing
 	 *
 	 * @param   mixed   $application  A application identifier or name.
-	 * @param   array   $config  An optional associative array of configuration settings.
-	 * @param   strong  $prefx   A prefix for class names
+	 * @param   array   $config       An optional associative array of configuration settings.
+	 * @param   strong  $prefix       A prefix for class names
 	 *
-	 * @return  MolajoApplication A MolajoApplication object.
+	 * @return  application object
+     *
 	 * @since  1.0
 	 */
 	public static function getInstance($application, $config = array(), $prefix = 'Molajo')
@@ -140,28 +174,32 @@ class MolajoApplication extends JObject
 		}
 
 		if (empty($instances[$application])) {
-			$info = MolajoApplicationHelper::getApplicationInfo($application, true);
-			$path = $info->path.'/includes/application.php';
-			if (file_exists($path)) {
-				require_once $path;
-				$classname = $prefix.ucfirst($application);
-				$instance = new $classname($config);
-			} else {
-				$error = JError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_APPLICATION_LOAD', $application));
-				return $error;
-			}
 
-            if (file_exists($info->path.'/includes/helper.php')) {
-                require_once $info->path.'/includes/helper.php';
+            $info = MolajoApplicationHelper::getApplicationInfo($application, true);
+            if ($info === false) {
+                return false;
             }
-            if (file_exists($info->path.'/includes/menu.php')) {
-                require_once $info->path.'/includes/menu.php';
+            
+            if (defined('MOLAJO_APPLICATION_PATH')) {
+            } else {
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_PATH.'/'.$info->path);
             }
-            if (file_exists($info->path.'/includes/pathway.php')) {
-                require_once $info->path.'/includes/pathway.php';
+
+            if (defined('MOLAJO_APPLICATION_ID')) {
+            } else {
+                define('MOLAJO_APPLICATION_ID', $info->id);
             }
-            if (file_exists($info->path.'/includes/router.php')) {
-                require_once $info->path.'/includes/router.php';
+
+            $results = MolajoApplicationHelper::loadApplicationClasses();
+            if ($results === false) {
+                return false;
+            }
+            
+            $classname = $prefix.ucfirst($application).'Application';
+            if (class_exists($classname)) {
+                $instance = new $classname($config);
+            } else {
+                return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_INSTANTIATION_ERROR', $classname));
             }            
 
 			$instances[$application] = &$instance;
@@ -173,43 +211,88 @@ class MolajoApplication extends JObject
 	/**
      * initialise
      *
-	 * Initialise the application.
+	 * Retrieves the configuration information, loads language files, editor, triggers onAfterInitialise
 	 *
-	 * @param   array  $options  An optional associative array of configuration settings.
-	 *
-	 * @since  1.0
-	 */
+	 * @param	array
+     *
+     * @since 1.0
+     */
 	public function initialise($options = array())
 	{
-		// Set the language in the class.
-		$config = MolajoFactory::getConfig();
+        /** Language Determination */
+        $config = MolajoFactory::getConfig();
+		MolajoPluginHelper::importPlugin('system', 'languagefilter');
 
-		// Check that we were given a language in the array (since by default may be blank).
-		if (isset($options['language'])) {
-			$config->set('language', $options['language']);
+        /** 1. request */
+		if (empty($options['language'])) {
+			$language = JRequest::getString('language', null);
+			if ($language && MolajoLanguage::exists($language)) {
+				$options['language'] = $language;
+			}
 		}
 
-		// Set user specific editor.
-		$user	= MolajoFactory::getUser();
- 
-		$editor	= $user->getParam('editor', $this->getCfg('editor'));
+        /** 2. cookie */
+		if ($this->_language_filter && empty($options['language'])) {
+			$language = JRequest::getString(MolajoUtility::getHash('language'), null ,'cookie');
+			if ($language && MolajoLanguage::exists($language)) {
+				$options['language'] = $language;
+			}
+		}
+
+        /** 3. user option for application */
+		if (empty($options['language'])) {
+			$language = MolajoFactory::getUser()->getParam('language');
+			if ($language && MolajoLanguage::exists($language)) {
+				$options['language'] = $language;
+			}
+		}
+
+        /** 4. browser detection */
+		if ($this->_detect_browser && empty($options['language'])) {
+			$language = MolajoLanguageHelper::detectLanguage();
+			if ($language && MolajoLanguage::exists($language)) {
+				$options['language'] = $language;
+			}
+		}
+
+        /** 5. site default for application */
+		if (empty($options['language'])) {
+			$params = MolajoComponentHelper::getParams('com_languages');
+			$application = MolajoApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION_ID);
+			$options['language'] = $params->get($application->name, $config->get('language', 'en-GB'));
+		}
+
+		/** 6. default */
+		if (MolajoLanguage::exists($options['language'])) {
+        } else {
+    		$options['language'] = 'en-GB';
+		}
+
+		/** Load Library Language Files */
+		$language = MolajoFactory::getLanguage();
+		$language->load('lib_joomla', MOLAJO_BASE_FOLDER);
+
+        /** Set Language in Configuration */
+        $config->set('language', $options['language']);
+
+        /** Set User Editor in Configuration */
+		$editor	= MolajoFactory::getUser()->getParam('editor', $this->getConfiguration('editor'));
 
 		if (MolajoPluginHelper::isEnabled('editors', $editor)) {
 
         } else {
-			$editor	= $this->getCfg('editor');
+			$editor	= $this->getConfiguration('editor');
 			if (MolajoPluginHelper::isEnabled('editors', $editor)) {
             } else {
 				$editor	= 'none';
 			}
 		}
-
 		$config->set('editor', $editor);
 
-		// Trigger the onAfterInitialise event.
+        /** Trigger onAfterInitialise Event */
 		MolajoPluginHelper::importPlugin('system');
 		$this->triggerEvent('onAfterInitialise');
-	}
+    }
 
 	/**
      * route
@@ -226,24 +309,121 @@ class MolajoApplication extends JObject
 	 */
 	public function route()
 	{
-		$uri	= clone JURI::getInstance();
+//        if ($itemid = JRequest::getInt('Itemid')) {
+//            $this->authorise($itemid);
+//        }
+        $uri	= JURI::getInstance();
+//        $router = $this->getRouter();
+//var_dump($router);
+//die;
+//        $result = $router->parse($uri);
 
-		$router = $this->getRouter();
+//		JRequest::set($result, 'get', false);
+///** todo: amy configuration for ssl by application */
+//		if ($this->getConfiguration('force_ssl') >= 1
+  ///          && strtolower($uri->getScheme()) != 'https') {
+	//		$uri->setScheme('https');
+	//		$this->redirect((string)$uri);
+	//	}
 
-		$result = $router->parse($uri);
-
-		JRequest::set($result, 'get', false);
-
+		/** trigger onAfterRoute Event */
 		MolajoPluginHelper::importPlugin('system');
 		$this->triggerEvent('onAfterRoute');
+	}
+
+    /**
+     * authorise
+     *
+     * Check if the user can access the application
+     *
+     * @param $itemid
+     * @return booleon
+     */
+	public function authorise($itemid)
+	{
+		$menus = $this->getMenu();
+        if ($menus == null) {
+            return;
+        }
+
+		if ($menus->authorise($itemid)) {
+            return true;
+        }
+/** todo: amy add configuration option per application for logon for 403 */
+        /** Not authorized */
+        if (MolajoFactory::getUser()->get('guest')) {
+            $uri	= MolajoFactory::getURI();
+            $return	= (string)$uri;
+            $url	= 'index.php?option=com_users&view=login&return='.$return;
+            $url	= MolajoRoute::_($url, false);
+            $this->redirect($url, MolajoText::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
+
+            return false;
+        }
+
+        MolajoError::raiseError(403, MolajoText::_('ERROR_NOT_AUTHORIZED'));
+        return false;
+	}
+
+    /**
+     * getMenu
+     *
+     * Returns the Menu object.
+     *
+     * @param   string  $name     The name of the application
+     * @param   array   $options  An optional associative array of configuration settings.
+     *
+     * @return  menu object.
+     *
+     * @since  1.0
+     */
+    public function getMenu($name = null, $options = array())
+    {
+        if (isset($name)) {
+        } else {
+            $name = $this->_name;
+        }
+
+        $menu = MolajoMenu::getInstance($name, $options);
+
+        if (MolajoError::isError($menu)) {
+            return null;
+        }
+
+        return $menu;
+    }
+
+	/**
+     * getRouter
+     *
+	 * Returns the application router object.
+	 *
+	 * @param   string  $name     The name of the application.
+	 * @param   array   $options  An optional associative array of configuration settings.
+	 *
+	 * @return  router object
+	 *
+	 * @since  1.0
+	 */
+	static public function getRouter($name = null, array $options = array())
+	{
+        if (isset($name)) {
+        } else {
+            $name = MOLAJO_APPLICATION;
+        }
+
+		$router = MolajoRouter::getInstance($name, $options);
+		if (MolajoError::isError($router)) {
+			return null;
+		}
+
+		return $router;
 	}
 
 	/**
 	 * Dispatch
 	 *
-	 * Dispatching is the process of pulling the option from the request object and
-	 * mapping them to a component. If the component does not exist, it handles
-	 * determining a default component to dispatch.
+	 * Dispatching is rendering a component, buffering output in the document, and triggering onAfterDispatch
 	 *
 	 * @param   string  $component	The component to dispatch.
 	 *
@@ -252,17 +432,683 @@ class MolajoApplication extends JObject
 	 */
 	public function dispatch($component = null)
 	{
+        try
+		{
+			if ($component === null) {
+                $class = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Helper';
+				$helper = new $class ();
+                $component = $helper->findOption();
+			}
+
+			$request    = $this->getRequest();
+
+			$document	= MolajoFactory::getDocument();
+			$user		= MolajoFactory::getUser();
+
+			switch ($document->getType()) {
+				case 'html':
+					$document->setMetaData('keywords', $this->getConfiguration('MetaKeys'));
+					break;
+
+				default:
+					break;
+			}
+			$document->setTitle($this->getConfiguration('sitename'));
+			$document->setDescription($this->getConfiguration('MetaDesc'));
+
+			$contents = MolajoComponentHelper::renderComponent($request);
+
+			$document->setBuffer($contents, 'component');
+
+			MolajoPluginHelper::importPlugin('system');
+			$this->triggerEvent('onAfterDispatch');
+		}
+
+		// Uncaught exceptions.
+		catch (Exception $e)
+		{
+			$code = $e->getCode();
+			MolajoError::raiseError($code ? $code : 500, $e->getMessage());
+		}
+	}
+
+	/**
+	 * Render the application.
+	 *
+	 * Rendering is the process of pushing the document buffers into the template
+	 * placeholders, retrieving data from the document and pushing it into
+	 * the JResponse buffer.
+	 *
+	 * @return  void;
+	 * @since  1.0
+	 */
+	public function render()
+	{
+        $session = MolajoFactory::getSession();
+		$component	= $session->get('page.option');
+		$template	= $this->getTemplate(true);
+		$file		= JRequest::getCmd('tmpl', 'index');
+
+		$params = array(
+			'template'	=> $template->template,
+			'file'		=> $file.'.php',
+			'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
+			'params'	=> $template->params
+		);
+
 		$document = MolajoFactory::getDocument();
+		$document->parse($params);
 
-		$document->setTitle($this->getCfg('sitename'). ' - ' .MolajoText::_('JADMINISTRATION'));
-		$document->setDescription($this->getCfg('MetaDesc'));
+		$this->triggerEvent('onBeforeRender');
 
-		$contents = MolajoComponentHelper::renderComponent($component);
-		$document->setBuffer($contents, 'component');
+		JResponse::setBody($document->render(false, $params));
 
-		// Trigger the onAfterDispatch event.
-		MolajoPluginHelper::importPlugin('system');
-		$this->triggerEvent('onAfterDispatch');
+		$this->triggerEvent('onAfterRender');
+	}
+
+    /**
+     *  APPLICATION
+     */
+
+    /**
+     * getName
+     *
+     * Method to get the application name.
+     *
+     * @return  string  The name of the application.
+     *
+     * @since  1.0
+     */
+    public function getName()
+    {
+        return MOLAJO_APPLICATION;
+    }
+
+	/**
+     * getConfiguration
+     *
+	 * Gets a configuration value.
+	 *
+	 * @param   string   The name of the value to get.
+	 * @param   string   Default value to return
+	 *
+	 * @return  mixed    The user state.
+	 *
+	 * @since  1.0
+	 */
+	public function getConfiguration($varname, $default=null)
+	{
+		return MolajoFactory::getConfig()->get(''.$varname, $default);
+	}
+
+    /**
+     * Enqueue a system message.
+     *
+     * @param   string   $msg   The message to enqueue.
+     * @param   string   $type  The message type. Default is message.
+     *
+     * @return  void
+     *
+     * @since  1.0
+     */
+    public function enqueueMessage($msg, $type = 'message')
+    {
+        // For empty queue, if messages exists in the session, enqueue them first.
+        if (count($this->_messageQueue)) {
+        } else {
+            $session = MolajoFactory::getSession();
+            $sessionQueue = $session->get('application.queue');
+
+            if (count($sessionQueue)) {
+                $this->_messageQueue = $sessionQueue;
+                $session->set('application.queue', null);
+            }
+        }
+
+        // Enqueue the message.
+        $this->_messageQueue[] = array('message' => $msg, 'type' => strtolower($type));
+    }
+
+    /**
+     * Get the system message queue.
+     *
+     * @return  array  The system message queue.
+     *
+     * @since  1.0
+     */
+    public function getMessageQueue()
+    {
+         /** initialize */
+        $tmpmsg = array();
+        $tmpobj = new JObject();
+        $count = 0;
+
+        /** are there messages? */
+        foreach ($this->_messageQueue as $msg) {
+            if ($msg['message'] == '') {
+            } else {
+                $count++;
+            }
+        }
+
+        /** pull in application session messages */
+        if ($count == 0) {
+            if (count(MolajoFactory::getSession()->get('application.queue'))) {
+                $this->_messageQueue = MolajoFactory::getSession()->get('application.queue');
+                MolajoFactory::getSession()->set('application.queue', null);
+            }
+            foreach ($this->_messageQueue as $msg) {
+                if ($msg['message'] == '') {
+                } else {
+                    $count++;
+                }
+            }
+        }
+
+        /** exit if no messages */
+        if ($count == 0) {
+            $_messageQueue = array();
+            return $_messageQueue;
+        }
+
+        /** edit message queue */
+        foreach ($this->_messageQueue as $msg) {
+
+            if ($msg['message'] == '') {
+            } else {
+                $tmpobj->set('message', $msg['message']);
+
+                if ($msg['type'] == 'message'
+                    || $msg['type'] == 'notice'
+                    || $msg['type'] == 'warning'
+                    || $msg['type'] == 'error') {
+
+                } else {
+                    $msg['type'] == 'message';
+                }
+                $tmpobj->set('type', $msg['type']);
+                $tmpmsg[] = $tmpobj;
+                $count++;
+            }
+        }
+        $_messageQueue = $tmpmsg;
+
+        return $_messageQueue;
+    }
+
+    /**
+     * getUserState
+     *
+     * Gets a user state.
+     *
+     * @param   string  The path of the state.
+     * @param   mixed   Optional default value, returned if the internal value is null.
+     *
+     * @return  mixed  The user state or null.
+     *
+     * @since  1.0
+     */
+    public function getUserState($key, $default = null)
+    {
+        $session	= MolajoFactory::getSession();
+        $registry	= $session->get('registry');
+
+        if (is_null($registry)) {
+        } else {
+            return $registry->get($key, $default);
+        }
+
+        return $default;
+    }
+
+    /**
+     * setUserState
+     *
+     * Sets the value of a user state variable.
+     *
+     * @param   string  The path of the state.
+     * @param   string  The value of the variable.
+     *
+     * @return  mixed   The previous state, if one existed.
+     *
+     * @since  1.0
+     */
+    public function setUserState($key, $value)
+    {
+        $session	= MolajoFactory::getSession();
+        $registry	= $session->get('registry');
+
+        if (is_null($registry)) {
+        } else {
+            return $registry->set($key, $value);
+        }
+
+        return null;
+    }
+
+    /**
+     * getUserStateFromRequest
+     *
+     * Gets the value of a user state variable.
+     *
+     * @param   string   $key      The key of the user state variable.
+     * @param   string   $request  The name of the variable passed in a request.
+     * @param   string   $default  The default value for the variable if not found. Optional.
+     * @param   string   $type     Filter for the variable, for valid values see {@link JFilterInput::clean()}. Optional.
+     *
+     * @return  The request user state.
+     *
+     * @since  1.0
+     */
+    public function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
+    {
+        $cur_state = $this->getUserState($key, $default);
+        $new_state = JRequest::getVar($request, null, 'default', $type);
+
+        // Save the new value only if it was set in this request.
+        if ($new_state == null) {
+            $new_state = $cur_state;
+        } else {
+            $this->setUserState($key, $new_state);
+        }
+
+        return $new_state;
+    }
+
+    /**
+     *  TEMPLATE
+     */
+
+    /**
+     * Get the template
+     *
+     * @return string The template name
+     * @since 1.0
+     */
+    public function getTemplate($params = false)
+    {
+        if(is_object($this->template)) {
+            if ($params) {
+                return $this->template;
+            }
+            return $this->template->template;
+        }
+
+        // Get the id of the active menu item
+        $menu = $this->getMenu();
+        $item = $menu->getActive();
+        if (!$item) {
+            $item = $menu->getItem(JRequest::getInt('Itemid'));
+        }
+
+        $id = 0;
+        if (is_object($item)) { // valid item retrieved
+            $id = $item->template_style_id;
+        }
+        $condition = '';
+
+        $tid = JRequest::getVar('template', 0);
+        if (is_int($tid) && $tid > 0) {
+            $id = (int) $tid;
+        }
+
+        $cache = MolajoFactory::getCache('com_templates', '');
+        if ($this->_language_filter) {
+            $tag = MolajoFactory::getLanguage()->getTag();
+        } else {
+            $tag ='';
+        }
+        if ($templates = $cache->get('templates0'.$tag)) {
+        } else {
+            $db = MolajoFactory::getDbo();
+            $query = $db->getQuery(true);
+            $query->select('id, home, template, params');
+            $query->from('#__template_styles');
+            $query->where('application_id = '.MOLAJO_APPLICATION_ID);
+            $db->setQuery($query);
+
+            $templates = $db->loadObjectList('id');
+
+            foreach($templates as &$template) {
+                $registry = new JRegistry;
+                $registry->loadJSON($template->params);
+                $template->params = $registry;
+
+                // Create home element
+                if ($template->home == '1' && !isset($templates[0])
+                    || $this->_language_filter && $template->home == $tag) {
+                    $templates[0] = clone $template;
+                }
+            }
+            $cache->store($templates, 'templates0'.$tag);
+        }
+
+        $template = $templates[$id];
+
+        // Allows for overriding the active template from the request
+        $template->template = JRequest::getCmd('template', $template->template);
+        $template->template = JFilterInput::getInstance()->clean($template->template, 'cmd'); // need to filter the default value as well
+
+        // Fallback template
+        if (!file_exists(MOLAJO_EXTENSION_TEMPLATES.DS.$template->template.DS.'index.php')) {
+            MolajoError::raiseWarning(0, MolajoText::_('MolajoError_ALERTNOTEMPLATE'));
+            $template->template = MOLAJO_APPLICATION_DEFAULT_TEMPLATE;
+            if (file_exists(MOLAJO_EXTENSION_TEMPLATES.'/'.MOLAJO_APPLICATION_DEFAULT_TEMPLATE.'/index.php')) {
+            } else {
+                $template->template = '';
+            }
+        }
+
+        // Cache the result
+        $this->template = $template;
+        if ($params) {
+            return $template;
+        }
+        return $template->template;
+    }
+
+    /**
+     * Overrides the default template that would be used
+     *
+     * @param string The template name
+     */
+    public function setTemplate($template)
+    {
+        if (is_dir(MOLAJO_EXTENSION_TEMPLATES.DS.$template)) {
+            $this->template = new stdClass();
+            $this->template->params = new JRegistry;
+            $this->template->template = $template;
+        }
+    }
+
+	/**
+	 * Returns the application JPathway object.
+	 *
+	 * @param   string    $name     The name of the application.
+	 * @param   array     $options  An optional associative array of configuration settings.
+	 *
+	 * @return  JPathway  A JPathway object
+	 *
+	 * @since   11.1
+	 */
+	public function getPathway($name = null, $options = array())
+	{
+		if (isset($name)) {
+        } else {
+			$name = $this->_name;
+		}
+
+		$pathway = MolajoPathway::getInstance($name, $options);
+
+		if (MolajoError::isError($pathway)) {
+			return null;
+		}
+
+		return $pathway;
+	}
+
+	/**
+	 * Redirect to another URL.
+	 *
+	 * Optionally enqueues a message in the system message queue (which will be displayed
+	 * the next time a page is loaded) using the enqueueMessage method. If the headers have
+	 * not been sent the redirect will be accomplished using a "301 Moved Permanently"
+	 * code in the header pointing to the new location. If the headers have already been
+	 * sent this will be accomplished using a JavaScript statement.
+	 *
+	 * @param   string   $url      The URL to redirect to. Can only be http/https URL
+	 * @param   string   $msg      An optional message to display on redirect.
+	 * @param   string   $msgType  An optional message type. Defaults to message.
+	 * @param   boolean  $moved    True if the page is 301 Permanently Moved, otherwise 303 See Other is assumed.
+	 *
+	 * @return  void  Calls exit().
+	 *
+	 * @see     MolajoApplication::enqueueMessage()
+	 * @since  1.0
+	 */
+	public function redirect($url, $msg='', $msgType='message', $moved = false)
+	{
+		// Check for relative internal links.
+		if (preg_match('#^index2?\.php#', $url)) {
+			$url = JURI::base().$url;
+		}
+
+		// Strip out any line breaks.
+		$url = preg_split("/[\r\n]/", $url);
+		$url = $url[0];
+
+		// If we don't start with a http we need to fix this before we proceed.
+		// We could validly start with something else (e.g. ftp), though this would
+		// be unlikely and isn't supported by this API.
+		if (preg_match('#^http#i', $url)) {
+        } else {
+			$uri = JURI::getInstance();
+			$prefix = $uri->toString(Array('scheme', 'user', 'pass', 'host', 'port'));
+
+			if ($url[0] == '/') {
+				// We just need the prefix since we have a path relative to the root.
+				$url = $prefix.$url;
+			}
+			else {
+				// It's relative to where we are now, so lets add that.
+				$parts = explode('/', $uri->toString(Array('path')));
+				array_pop($parts);
+				$path = implode('/',$parts).'/';
+				$url = $prefix.$path.$url;
+			}
+		}
+
+		// If the message exists, enqueue it.
+		if (trim($msg)) {
+			$this->enqueueMessage($msg, $msgType);
+		}
+
+		// Persist messages if they exist.
+		if (count($this->_messageQueue)) {
+			$session = MolajoFactory::getSession();
+			$session->set('application.queue', $this->_messageQueue);
+		}
+
+		// If the headers have been sent, then we cannot send an additional location header
+		// so we will output a javascript redirect statement.
+		if (headers_sent()) {
+			echo "<script>document.location.href='$url';</script>\n";
+
+		} else {
+			$document = MolajoFactory::getDocument();
+			$navigator = JBrowser::getInstance();
+			if ($navigator->isBrowser('msie')) {
+				// MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
+ 				echo '<html><head><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /><script>document.location.href=\''.$url.'\';</script></head><body></body></html>';
+
+			} elseif (!$moved and $navigator->isBrowser('konqueror')) {
+				// WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
+				echo '<html><head><meta http-equiv="refresh" content="0; url='. $url .'" /><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /></head><body></body></html>';
+			} else {
+				// All other browsers, use the more efficient HTTP header method
+				header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
+				header('Location: '.$url);
+				header('Content-Type: text/html; charset='.$document->getCharset());
+			}
+		}
+
+		$this->close();
+	}
+
+    /**
+     * Exit the application.
+     *
+     * @param    integer  $code  Exit code
+     *
+     * @return   void     Exits the application.
+     *
+     * @since    11.1
+     */
+    public function close($code = 0)
+    {
+        exit($code);
+    }
+
+    /**
+     *  Events
+     */
+
+	/**
+     * registerEvent
+     *
+	 * Registers a handler to a particular event group.
+	 *
+	 * @param   string  $event    The event name.
+	 * @param   mixed   $handler  The handler, a function or an instance of a event object.
+	 *
+	 * @return  void
+	 *
+	 * @since  1.0
+	 */
+	public static function registerEvent($event, $handler)
+	{
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->register($event, $handler);
+	}
+
+	/**
+     * triggerEvent
+     *
+	 * Calls all handlers associated with an event group.
+	 *
+	 * @param   string  $event  The event name.
+	 * @param   array   $args   An array of arguments.
+	 *
+	 * @return  array  An array of results from each function call.
+	 *
+	 * @since  1.0
+	 */
+	function triggerEvent($event, $args=null)
+	{
+		return JDispatcher::getInstance()->trigger($event, $args);
+	}
+
+	/**
+	 * stringURLSafe
+     *
+     * This method transliterates a string into an URL
+	 * safe string or returns a URL safe UTF-8 string
+	 * based on the global configuration
+	 *
+	 * @param   string  $string  String to process
+	 *
+	 * @return  string  Processed string
+	 *
+	 * @since  1.0
+	 */
+	static public function stringURLSafe($string)
+	{
+		if (self::getConfiguration('unicodeslugs') == 1) {
+			$output = JFilterOutput::stringURLUnicodeSlug($string);
+
+		} else {
+			$output = JFilterOutput::stringURLSafe($string);
+		}
+
+		return $output;
+	}
+
+	/**
+	 * getHash
+     *
+     * Provides a secure hash based on a seed
+	 *
+	 * @param   string   $seed  Seed string.
+	 *
+	 * @return  string   A secure hash
+	 *
+	 * @since  1.0
+	 */
+	public static function getHash($seed)
+	{
+		return md5(MolajoFactory::getConfig()->get('secret').$seed);
+	}
+
+	/**
+	 * _createConfiguration
+     *
+     * Create the configuration registry.
+	 *
+	 * @param   string  $file  The path to the configuration file
+	 *
+	 * return   object  A config object
+	 *
+	 * @since  1.0
+	 */
+	protected function _createConfiguration($file = null)
+	{
+        if ($file == null) {
+        } else {
+            require_once $file;
+        }
+
+		// Create the MolajoConfig object.
+		$config = new MolajoConfig();
+
+		// Get the global configuration object.
+		$registry = MolajoFactory::getConfig();
+
+		// Load the configuration values into the registry.
+		$registry->loadObject($config);
+
+		return $config;
+	}
+
+	/**
+	 * Set the current state of the language filter.
+	 *
+	 * @return	boolean	The old state
+	 * @since	1.6
+	 */
+	public function setLanguageFilter($state=false)
+	{
+		$old = $this->_language_filter;
+		$this->_language_filter=$state;
+		return $old;
+	}
+
+    /**
+     * Return the current state of the language filter.
+     *
+     * @return	boolean
+     * @since	1.6
+     */
+    public function getLanguageFilter()
+    {
+        return $this->_language_filter;
+    }
+
+	/**
+	 * isWinOS
+     *
+     * Method to determine if the host OS is Windows
+	 *
+	 * @return  boolean  True if Windows OS
+	 *
+	 * @since  1.0
+	 */
+	static function isWinOS()
+	{
+		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+	}
+
+	/**
+	 * __toString
+     *
+     * Returns the response as a string.
+	 *
+	 * @return  string  The response
+	 *
+	 * @since  1.0
+	 */
+	public function __toString()
+	{
+		return JResponse::toString($this->getConfiguration('gzip', false));
 	}
 
     /**
@@ -296,11 +1142,7 @@ class MolajoApplication extends JObject
         }
 
         /** 2. Component Path */
-        $component_path = MOLAJO_PATH_ROOT.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$option;
-        if (defined('MOLAJO_PATH_COMPONENT')) {
-        } else {
-            define('MOLAJO_PATH_COMPONENT', $component_path);
-        }
+        $component_path = MOLAJO_EXTENSION_COMPONENTS.'/'.$option;
         define('JPATH_COMPONENT', $component_path);
 
         /** 3. Task */
@@ -312,7 +1154,7 @@ class MolajoApplication extends JObject
         /** 4. Controller */
         $controller = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER, $task);
         if ($controller === false) {
-            JError::raiseError(500, MolajoText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
+            MolajoError::raiseError(500, MolajoText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
             return false;
         }
 
@@ -410,10 +1252,10 @@ class MolajoApplication extends JObject
                 $cids = array();
 
             } else if ($id == 0 && count($cids) == 0) {
-                JError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
+                MolajoError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
                 return false;
             } else if (count($cids) > 1) {
-                JError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
+                MolajoError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
                 return false;
             }
         }
@@ -471,7 +1313,7 @@ class MolajoApplication extends JObject
         $session = MolajoFactory::getSession();
 
         $session->set('page.application_id', MOLAJO_APPLICATION_ID);
-        $session->set('page.current_url', MOLAJO_CURRENT_URL);
+        $session->set('page.current_url', MOLAJO_BASE_URL);
         $session->set('page.base_url', JURI::base());
         $session->set('page.item_id', JRequest::getInt('Itemid', 0));
 
@@ -526,7 +1368,7 @@ class MolajoApplication extends JObject
         $request['layout'] = $session->get('page.layout');
         $request['wrap'] = $session->get('page.wrap');
         $request['wrap_id'] = $session->get('page.wrap_id');
-        $request['wrap_class'] = $session->get('page.wrap_class');         
+        $request['wrap_class'] = $session->get('page.wrap_class');
 
         $request['model'] = $session->get('page.model');
         $request['task'] = $session->get('page.task');
@@ -632,7 +1474,7 @@ class MolajoApplication extends JObject
                 $session->set('page.params', $item->params);
             }
         } else {
-            $session->set('page.title', $this->getCfg('sitename'));
+            $session->set('page.title', $this->getConfiguration('sitename'));
             $session->set('page.subtitle', '');
             $session->set('page.metakey', '');
             $session->set('page.metadesc', '');
@@ -643,12 +1485,17 @@ class MolajoApplication extends JObject
         /** Set Document Information */
         $document       = MolajoFactory::getDocument();
         $menus		    = $this->getMenu();
-        $menu           = $menus->getActive();
+        if ($menus == null) {
+            $menu       = false;
+            $id         = 0;
+        } else {
+            $menu       = $menus->getActive();
+            $id = (int) @$menu->query['id'];
+        }
+
         $pathway	    = $this->getPathway();
         $title		    = null;
         $this->params   = MolajoComponentHelper::getParams($session->get('page.option'));
-
-        $id = (int) @$menu->query['id'];
 
         $title = $this->params->get('page_title', '');
 
@@ -656,14 +1503,14 @@ class MolajoApplication extends JObject
             $title = $session->get('page.title');
         }
         if (empty($title)) {
-            $title = $this->getCfg('sitename');
+            $title = $this->getConfiguration('sitename');
         }
 
-        if ($this->getCfg('sitename_pagetitles', 0) == 1) {
-            $title = MolajoText::sprintf('JPAGETITLE', $this->getCfg('sitename'), $title);
+        if ($this->getConfiguration('sitename_pagetitles', 0) == 1) {
+            $title = MolajoText::sprintf('JPAGETITLE', $this->getConfiguration('sitename'), $title);
 
-        } elseif ($this->getCfg('sitename_pagetitles', 0) == 2) {
-            $title = MolajoText::sprintf('JPAGETITLE', $title, $this->getCfg('sitename'));
+        } elseif ($this->getConfiguration('sitename_pagetitles', 0) == 2) {
+            $title = MolajoText::sprintf('JPAGETITLE', $title, $this->getConfiguration('sitename'));
         }
 
         $document->setTitle($title);
@@ -703,767 +1550,4 @@ class MolajoApplication extends JObject
 
         return;
     }
-
-	/**
-	 * Render the application.
-	 *
-	 * Rendering is the process of pushing the document buffers into the template
-	 * placeholders, retrieving data from the document and pushing it into
-	 * the JResponse buffer.
-	 *
-	 * @return  void;
-	 * @since  1.0
-	 */
-	public function render()
-	{
-		$params = array(
-			'template'	=> $this->getTemplate(),
-			'file'		=> 'index.php',
-			'directory'	=> MOLAJO_PATH_THEMES,
-			'params'	=> '$template->params'
-		);
-
-		// Parse the document.
-		$document = MolajoFactory::getDocument();
-		$document->parse($params);
-
-		// Trigger the onBeforeRender event.
-		MolajoPluginHelper::importPlugin('system');
-		$this->triggerEvent('onBeforeRender');
-
-		// Render the document.
-		$caching = ($this->getCfg('caching') >= 2) ? true : false;
-		JResponse::setBody($document->render($caching, $params));
-
-		// Trigger the onAfterRender event.
-		$this->triggerEvent('onAfterRender');
-	}
-    
-	/**
-	 * Exit the application.
-	 *
-	 * @param    integer  $code  Exit code
-	 *
-	 * @return   void     Exits the application.
-	 *
-	 * @since    11.1
-	 */
-	public function close($code = 0)
-	{
-		exit($code);
-	}
-
-	/**
-	 * Redirect to another URL.
-	 *
-	 * Optionally enqueues a message in the system message queue (which will be displayed
-	 * the next time a page is loaded) using the enqueueMessage method. If the headers have
-	 * not been sent the redirect will be accomplished using a "301 Moved Permanently"
-	 * code in the header pointing to the new location. If the headers have already been
-	 * sent this will be accomplished using a JavaScript statement.
-	 *
-	 * @param   string   $url      The URL to redirect to. Can only be http/https URL
-	 * @param   string   $msg      An optional message to display on redirect.
-	 * @param   string   $msgType  An optional message type. Defaults to message.
-	 * @param   boolean  $moved    True if the page is 301 Permanently Moved, otherwise 303 See Other is assumed.
-	 *
-	 * @return  void  Calls exit().
-	 *
-	 * @see     MolajoApplication::enqueueMessage()
-	 * @since  1.0
-	 */
-	public function redirect($url, $msg='', $msgType='message', $moved = false)
-	{
-		// Check for relative internal links.
-		if (preg_match('#^index2?\.php#', $url)) {
-			$url = JURI::base().$url;
-		}
-
-		// Strip out any line breaks.
-		$url = preg_split("/[\r\n]/", $url);
-		$url = $url[0];
-
-		// If we don't start with a http we need to fix this before we proceed.
-		// We could validly start with something else (e.g. ftp), though this would
-		// be unlikely and isn't supported by this API.
-		if (preg_match('#^http#i', $url)) {
-        } else {
-			$uri = JURI::getInstance();
-			$prefix = $uri->toString(Array('scheme', 'user', 'pass', 'host', 'port'));
-
-			if ($url[0] == '/') {
-				// We just need the prefix since we have a path relative to the root.
-				$url = $prefix.$url;
-			}
-			else {
-				// It's relative to where we are now, so lets add that.
-				$parts = explode('/', $uri->toString(Array('path')));
-				array_pop($parts);
-				$path = implode('/',$parts).'/';
-				$url = $prefix.$path.$url;
-			}
-		}
-
-		// If the message exists, enqueue it.
-		if (trim($msg)) {
-			$this->enqueueMessage($msg, $msgType);
-		}
-
-		// Persist messages if they exist.
-		if (count($this->_messageQueue)) {
-			$session = MolajoFactory::getSession();
-			$session->set('application.queue', $this->_messageQueue);
-		}
-
-		// If the headers have been sent, then we cannot send an additional location header
-		// so we will output a javascript redirect statement.
-		if (headers_sent()) {
-			echo "<script>document.location.href='$url';</script>\n";
-
-		} else {
-			$document = MolajoFactory::getDocument();
-			$navigator = JBrowser::getInstance();
-			if ($navigator->isBrowser('msie')) {
-				// MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
- 				echo '<html><head><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /><script>document.location.href=\''.$url.'\';</script></head><body></body></html>';
-
-			} elseif (!$moved and $navigator->isBrowser('konqueror')) {
-				// WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
-				echo '<html><head><meta http-equiv="refresh" content="0; url='. $url .'" /><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /></head><body></body></html>';
-			} else {
-				// All other browsers, use the more efficient HTTP header method
-				header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
-				header('Location: '.$url);
-				header('Content-Type: text/html; charset='.$document->getCharset());
-			}
-		}
-
-		$this->close();
-	}
-
-	/**
-	 * Enqueue a system message.
-	 *
-	 * @param   string   $msg   The message to enqueue.
-	 * @param   string   $type  The message type. Default is message.
-	 *
-	 * @return  void
-	 *
-	 * @since  1.0
-	 */
-	public function enqueueMessage($msg, $type = 'message')
-	{
-		// For empty queue, if messages exists in the session, enqueue them first.
-		if (count($this->_messageQueue)) {
-        } else {
-			$session = MolajoFactory::getSession();
-			$sessionQueue = $session->get('application.queue');
-
-			if (count($sessionQueue)) {
-				$this->_messageQueue = $sessionQueue;
-				$session->set('application.queue', null);
-			}
-		}
-
-		// Enqueue the message.
-		$this->_messageQueue[] = array('message' => $msg, 'type' => strtolower($type));
-	}
-
-	/**
-	 * Get the system message queue.
-	 *
-	 * @return  array  The system message queue.
-	 *
-	 * @since  1.0
-	 */
-	public function getMessageQueue()
-	{
-         /** initialize */
-        $tmpmsg = array();
-        $tmpobj = new JObject();
-        $count = 0;
-
-        /** are there messages? */
-        foreach ($this->_messageQueue as $msg) {
-            if ($msg['message'] == '') {
-            } else {
-                $count++;
-            }
-        }
-
-        /** pull in application session messages */
-        if ($count == 0) {
-			if (count(MolajoFactory::getSession()->get('application.queue'))) {
-				$this->_messageQueue = MolajoFactory::getSession()->get('application.queue');
-				MolajoFactory::getSession()->set('application.queue', null);
-			}
-            foreach ($this->_messageQueue as $msg) {
-                if ($msg['message'] == '') {
-                } else {
-                    $count++;
-                }
-            }
-        }
-
-        /** exit if no messages */
-        if ($count == 0) {
-            $_messageQueue = array();
-            return $_messageQueue;
-        }
-
-        /** edit message queue */
-        foreach ($this->_messageQueue as $msg) {
-
-            if ($msg['message'] == '') {
-            } else {
-                $tmpobj->set('message', $msg['message']);
-
-                if ($msg['type'] == 'message'
-                    || $msg['type'] == 'notice'
-                    || $msg['type'] == 'warning'
-                    || $msg['type'] == 'error') {
-
-                } else {
-                    $msg['type'] == 'message';
-                }
-                $tmpobj->set('type', $msg['type']);
-                $tmpmsg[] = $tmpobj;
-                $count++;
-            }
-        }
-        $_messageQueue = $tmpmsg;
-
-		return $_messageQueue;
-	}
-
-	/**
-     * getCfg
-     *
-	 * Gets a configuration value.
-	 *
-	 * @param   string   The name of the value to get.
-	 * @param   string   Default value to return
-	 *
-	 * @return  mixed    The user state.
-	 *
-	 * @since  1.0
-	 */
-	public function getCfg($varname, $default=null)
-	{
-		$config = MolajoFactory::getConfig();
-
-		return $config->get(''.$varname, $default);
-	}
-
-	/**
-     * getName
-     *
-	 * Method to get the application name.
-	 *
-	 * The dispatcher name is by default parsed using the classname, or it can be set
-	 * by passing a $config['name'] in the class constructor.
-	 *
-	 * @return  string  The name of the dispatcher.
-	 *
-	 * @since  1.0
-	 */
-	public function getName()
-	{
-		$name = $this->_name;
-
-		if (empty($name)) {
-			$r = null;
-			if (preg_match('/Molajo(.*)/i', get_class($this), $r)) {
-            } else {
-				JError::raiseError(500, MolajoText::_('MOLAJO_APPLICATION_ERROR_APPLICATION_GET_NAME'));
-			}
-			$name = strtolower($r[1]);
-		}
-
-		return $name;
-	}
-
-	/**
-     * getUserState
-     *
-	 * Gets a user state.
-	 *
-	 * @param   string  The path of the state.
-	 * @param   mixed   Optional default value, returned if the internal value is null.
-	 *
-	 * @return  mixed  The user state or null.
-	 *
-	 * @since  1.0
-	 */
-	public function getUserState($key, $default = null)
-	{
-		$session	= MolajoFactory::getSession();
-		$registry	= $session->get('registry');
-
-		if (is_null($registry)) {
-        } else {
-			return $registry->get($key, $default);
-		}
-
-		return $default;
-	}
-
-	/**
-     * setUserState
-     *
-	 * Sets the value of a user state variable.
-	 *
-	 * @param   string  The path of the state.
-	 * @param   string  The value of the variable.
-	 *
-	 * @return  mixed   The previous state, if one existed.
-	 *
-	 * @since  1.0
-	 */
-	public function setUserState($key, $value)
-	{
-		$session	= MolajoFactory::getSession();
-		$registry	= $session->get('registry');
-
-		if (is_null($registry)) {
-        } else {
-			return $registry->set($key, $value);
-		}
-
-		return null;
-	}
-
-	/**
-     * getUserStateFromRequest
-     *
-	 * Gets the value of a user state variable.
-	 *
-	 * @param   string   $key      The key of the user state variable.
-	 * @param   string   $request  The name of the variable passed in a request.
-	 * @param   string   $default  The default value for the variable if not found. Optional.
-	 * @param   string   $type     Filter for the variable, for valid values see {@link JFilterInput::clean()}. Optional.
-	 *
-	 * @return  The request user state.
-	 *
-	 * @since  1.0
-	 */
-	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
-	{
-		$cur_state = $this->getUserState($key, $default);
-		$new_state = JRequest::getVar($request, null, 'default', $type);
-
-		// Save the new value only if it was set in this request.
-		if ($new_state == null) {
-            $new_state = $cur_state;
-		} else {
-			$this->setUserState($key, $new_state);
-		}
-
-		return $new_state;
-	}
-
-	/**
-     * registerEvent
-     *
-	 * Registers a handler to a particular event group.
-	 *
-	 * @param   string  $event    The event name.
-	 * @param   mixed   $handler  The handler, a function or an instance of a event object.
-	 *
-	 * @return  void
-	 *
-	 * @since  1.0
-	 */
-	public static function registerEvent($event, $handler)
-	{
-		$dispatcher = JDispatcher::getInstance();
-		$dispatcher->register($event, $handler);
-	}
-
-	/**
-     * triggerEvent
-     *
-	 * Calls all handlers associated with an event group.
-	 *
-	 * @param   string  $event  The event name.
-	 * @param   array   $args   An array of arguments.
-	 *
-	 * @return  array  An array of results from each function call.
-	 *
-	 * @since  1.0
-	 */
-	function triggerEvent($event, $args=null)
-	{
-		return JDispatcher::getInstance()->trigger($event, $args);
-	}
-
-	/**
-     * getTemplate
-     *
-	 * Gets the name of the current template.
-	 *
-	 * @param   array    $params  An optional associative array of configuration settings
-	 *
-	 * @return  string   System is the fallback.
-	 *
-	 * @since  1.0
-	 */
-	public function getTemplate($params = false)
-	{
-		return 'system';
-	}
-
-	/**
-     * getRouter
-     *
-	 * Returns the application MolajoRouter object.
-	 *
-	 * @param   string  $name     The name of the application.
-	 * @param   array   $options  An optional associative array of configuration settings.
-	 *
-	 * @return  MolajoRouter  A MolajoRouter object
-	 *
-	 * @since  1.0
-	 */
-	static public function getRouter($name = null, array $options = array())
-	{
-		if (isset($name)) {
-        } else {
-			$name = MolajoFactory::getApplication()->getName();
-		}
-
-		$router = MolajoRouter::getInstance($name, $options);
-
-		if (JError::isError($router)) {
-			return null;
-		}
-
-		return $router;
-	}
-
-	/**
-	 * stringURLSafe
-     *
-     * This method transliterates a string into an URL
-	 * safe string or returns a URL safe UTF-8 string
-	 * based on the global configuration
-	 *
-	 * @param   string  $string  String to process
-	 *
-	 * @return  string  Processed string
-	 *
-	 * @since  1.0
-	 */
-	static public function stringURLSafe($string)
-	{
-		if (self::getCfg('unicodeslugs') == 1) {
-			$output = JFilterOutput::stringURLUnicodeSlug($string);
-
-		} else {
-			$output = JFilterOutput::stringURLSafe($string);
-		}
-
-		return $output;
-	}
-
-	/**
-	 * getPathway
-     *
-     * Returns the application MolajoPathway object.
-	 *
-	 * @param   string  $name     The name of the application.
-	 * @param   array   $options  An optional associative array of configuration settings.
-	 *
-	 * @return  MolajoPathway  A MolajoPathway object
-	 *
-	 * @since  1.0
-	 */
-	public function getPathway($name = null, $options = array())
-	{
-		if (isset($name)) {
-        } else {
-			$name = $this->_name;
-		}
-
-		$pathway = MolajoPathway::getInstance($name, $options);
-
-		if (JError::isError($pathway)) {
-			return null;
-		}
-
-		return $pathway;
-	}
-
-	/**
-	 * getMenu
-     *
-     * Returns the Menu object.
-	 *
-	 * @param   string  $name     The name of the application/application.
-	 * @param   array   $options  An optional associative array of configuration settings.
-	 *
-	 * @return  MolajoMenu  MolajoMenu object.
-	 *
-	 * @since  1.0
-	 */
-	public function getMenu($name = null, $options = array())
-	{
-		if (isset($name)) {
-        } else {
-			$name = $this->_name;
-		}
-
-		$menu = MolajoMenu::getInstance($name, $options);
-
-		if (JError::isError($menu)) {
-			return null;
-		}
-
-		return $menu;
-	}
-
-	/**
-	 * getHash
-     *
-     * Provides a secure hash based on a seed
-	 *
-	 * @param   string   $seed  Seed string.
-	 *
-	 * @return  string   A secure hash
-	 *
-	 * @since  1.0
-	 */
-	public static function getHash($seed)
-	{
-		$conf = MolajoFactory::getConfig();
-		return md5($conf->get('secret').$seed);
-	}
-
-	/**
-	 * _createConfiguration
-     *
-     * Create the configuration registry.
-	 *
-	 * @param   string  $file  The path to the configuration file
-	 *
-	 * return   object  A MolajoConfig object
-	 *
-	 * @since  1.0
-	 */
-	protected function _createConfiguration($file = null)
-	{
-		require_once $file;
-
-		// Create the MolajoConfig object.
-		$config = new MolajoConfig();
-
-		// Get the global configuration object.
-		$registry = MolajoFactory::getConfig();
-
-		// Load the configuration values into the registry.
-		$registry->loadObject($config);
-
-		return $config;
-	}
-
-	/**
-	 * _createSession
-     *
-     * Create the user session.
-	 *
-	 * Old sessions are flushed based on the configuration value for the cookie
-	 * lifetime. If an existing session, then the last access time is updated.
-	 * If a new session, a session id is generated and a record is created in
-	 * the #__sessions table.
-	 *
-	 * @param   string  $name  The sessions name.
-	 *
-	 * @return  MolajoSession  MolajoSession on success. May call exit() on database error.
-	 *
-	 * @since  1.0
-	 */
-	protected function _createSession($name)
-	{
-
-		$options = array();
-		$options['name'] = $name;
-
-		switch($this->_applicationId)
-		{
-			case 0:
-				if ($this->getCfg('force_ssl') == 2) {
-					$options['force_ssl'] = true;
-				}
-				break;
-
-			case 1:
-				if ($this->getCfg('force_ssl') >= 1) {
-					$options['force_ssl'] = true;
-				}
-				break;
-		}
-
-		$session = MolajoFactory::getSession($options);
-
-		//TODO: At some point we need to get away from having session data always in the db.
-
-		$db = MolajoFactory::getDBO();
-
-		// Remove expired sessions from the database.
-		$time = time();
-		if ($time % 2) {
-			// The modulus introduces a little entropy, making the flushing less accurate
-			// but fires the query less than half the time.
-			$db->setQuery(
-				'DELETE FROM `#__session`' .
-				' WHERE `time` < '.(int) ($time - $session->getExpire())
-			);
-			$db->query();
-		}
-
-		// Check to see the the session already exists.
-		if (($this->getCfg('session_handler') != 'database' && ($time % 2 || $session->isNew()))
-			||
-			($this->getCfg('session_handler') == 'database' && $session->isNew())
-		)
-		{
-			$this->checkSession();
-		}
-
-		return $session;
-	}
-
-	/**
-	 * checkSession
-     *
-     * Checks the user session.
-	 *
-	 * If the session record doesn't exist, initialise it.
-	 * If session is new, create session variables
-	 *
-	 * @return  void
-	 *
-	 * @since  1.0
-	 */
-	public function checkSession()
-	{
-		$db 		= MolajoFactory::getDBO();
-		$session 	= MolajoFactory::getSession();
-		$user		= MolajoFactory::getUser();
-
-		$db->setQuery(
-			'SELECT `session_id`' .
-			' FROM `#__session`' .
-			' WHERE `session_id` = '.$db->quote($session->getId()), 0, 1
-		);
-		$exists = $db->loadResult();
-
-		// If the session record doesn't exist initialise it.
-		if ($exists) {
-        } else {
-
-			if ($session->isNew()) {
-				$db->setQuery(
-					'INSERT INTO `#__session` (`session_id`, `application_id`, `time`)' .
-					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getApplicationId().', '.(int) time().')'
-				);
-
-			} else {
-				$db->setQuery(
-					'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `time`, `userid`, `username`)' .
-					' VALUES ('.$db->quote($session->getId()).', '.(int) $this->getApplicationId().', '.(int) $user->get('guest').', '.(int) $session->get('session.timer.start').', '.(int) $user->get('id').', '.$db->quote($user->get('username')).')'
-				);
-			}
-
-			// If the insert failed, exit the application.
-			if ($db->query()) {
-            } else {
-				jexit($db->getErrorMSG());
-			}
-
-			// Session doesn't exist yet, so create session variables
-			if ($session->isNew()) {
-				$session->set('registry',	new JRegistry('session'));
-				$session->set('user',		new MolajoUser());
-			}
-		}
-	}
-
-    /**
-     * Deprecated
-     */
-	public function getClientId()
-	{
-		return $this->getApplicationId();
-	}
-
-	/**
-	 * Gets the application id of the current running application.
-	 *
-	 * @return  integer  A application identifier.
-	 *
-	 * @since  1.0
-	 */
-	public function getApplicationId()
-	{
-		return $this->_applicationId;
-	}
-
-	/**
-	 * isAdmin
-     *
-     * Is admin interface?
-	 *
-	 * @return  boolean  True if this application is administrator.
-	 *
-	 * @since  1.0
-	 */
-	public function isAdmin()
-	{
-		return ($this->_applicationId == 1);
-	}
-
-	/**
-	 * isSite
-     *
-     * Is site interface?
-	 *
-	 * @return  boolean  True if this application is site.
-	 *
-	 * @since  1.0
-	 */
-	public function isSite()
-	{
-		return ($this->_applicationId == 0);
-	}
-
-	/**
-	 * isWinOS
-     *
-     * Method to determine if the host OS is Windows
-	 *
-	 * @return  boolean  True if Windows OS
-	 *
-	 * @since  1.0
-	 */
-	static function isWinOS()
-	{
-		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-	}
-
-	/**
-	 * __toString
-     *
-     * Returns the response as a string.
-	 *
-	 * @return  string  The response
-	 *
-	 * @since  1.0
-	 */
-	public function __toString()
-	{
-		$compress = $this->getCfg('gzip', false);
-
-		return JResponse::toString($compress);
-	}
 }

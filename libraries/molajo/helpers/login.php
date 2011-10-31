@@ -27,7 +27,7 @@ class MolajoLoginHelper
 	public static function getLanguageList()
 	{
 		$languages = array();
-		$languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_PATH_ADMINISTRATOR, false, true);
+		$languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
 		array_unshift($languages, MolajoHTML::_('select.option', '', MolajoText::_('JDEFAULT')));
 		return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
 	}

@@ -35,7 +35,7 @@ class MolajoFormFieldParameters extends MolajoFormField
 	protected function getInput()
 	{
         /** language **/
-        MolajoFactory::getLanguage()->load('plg_system_create_molajosamples', MOLAJO_PATH_SITE.'/media/plg_system_create/components/', MolajoFactory::getLanguage()->getDefault(), true, true);
+        MolajoFactory::getLanguage()->load('plg_system_create_molajosamples', MOLAJO_BASE_FOLDER.'/media/plg_system_create/components/', MolajoFactory::getLanguage()->getDefault(), true, true);
 
         /** $parameter_type **/
         $parameter_type	= (string) $this->element['parameter_type'];
@@ -53,7 +53,7 @@ class MolajoFormFieldParameters extends MolajoFormField
 	protected function getParameterSet($parameter_type, $path)
 	{
         if ($path == '' || $path == null) {
-            $path = MOLAJO_LAYOUTS_PARAMETERS;
+            $path = MOLAJO_EXTENSION_PARAMETERS;
         }
 
         JFile::makeSafe($parameter_type);

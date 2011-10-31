@@ -134,14 +134,14 @@ class MolajoController extends JController
  
 		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
 
-		$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_THEMES."/$template", $lang->getDefault(), false, false);
+		$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", $lang->getDefault(), false, false);
 
-		$lang->load($this->request['option'], MOLAJO_PATH_BASE, null, false, false)
+		$lang->load($this->request['option'], MOLAJO_BASE_FOLDER, null, false, false)
 		||	$lang->load($this->request['option'], $this->request['component_path'], null, false, false)
-		||	$lang->load($this->request['option'], MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
+		||	$lang->load($this->request['option'], MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
 		||	$lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
         
         if ($this->request['task'] == 'edit') {

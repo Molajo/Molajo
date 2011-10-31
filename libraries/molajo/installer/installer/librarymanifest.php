@@ -125,7 +125,7 @@ class MolajoLibrarymanifest extends JObject
 		$xml = MolajoFactory::getXML($xmlfile);
 		if (!$xml)
 		{
-			$this->_errors[] = JText::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
+			$this->_errors[] = MolajoText::sprintf('JLIB_INSTALLER_ERROR_LOAD_XML', $xmlfile);
 			return false;
 		}
 		else

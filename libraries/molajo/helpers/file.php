@@ -27,22 +27,22 @@ class MolajoFileHelper
     function requireClassFile ($file, $class)
     {
         if (substr(basename($file), 0, 4) == 'HOLD') {
-            return;
+            return true;
         }
         if (class_exists($class)) {
-            return;
+            return true;
         }
         if (file_exists($file)) {
             JLoader::register($class, $file);
         } else {
-            JError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS'.' '.$file.' '.$class), 'error');
+            MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS'.' '.$file.' '.$class), 'error');
             return false;
         }
 
         if (class_exists($class)) {
-            return;
+            return true;
         } else {
-            JError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');
+            MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');
             return false;
         }
     }

@@ -131,11 +131,11 @@ abstract class MolajoTable extends JObject
 
 				if (class_exists($tableClass)) {
                 } else {
-					JError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_NOT_FOUND_IN_FILE', $tableClass));
+					MolajoError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_NOT_FOUND_IN_FILE', $tableClass));
 					return false;
 				}
 			} else {
-				JError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
+				MolajoError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
 				return false;
 			}
 		}

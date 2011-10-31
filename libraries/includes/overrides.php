@@ -51,7 +51,7 @@ class JDocumentHTML extends MolajoDocumentHTML {}
 //class JDocumentOpensearch extends MolajoDocumentOpensearch {}
 //class JDocumentRAW extends MolajoDocumentRAW {}
 //class JDocumentXML extends MolajoDocumentXML {}
-
+abstract class JError extends MolajoError {}
 class JForm extends MolajoForm {}
 abstract class JFormField extends MolajoFormField {}
 class JFormRule extends MolajoFormRule {}
@@ -78,7 +78,6 @@ class JUtility extends MolajoUtility {}
 JFTP -
 https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f44217a8934644c5a0
 */
-
 
 class JExtension extends MolajoExtension {}
 abstract class JInstallerHelper extends MolajoInstallerHelper {}

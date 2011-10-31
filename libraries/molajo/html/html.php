@@ -108,13 +108,13 @@ abstract class MolajoHtml
 
 				if (!class_exists($className))
 				{
-					JError::raiseError(500, JText::sprintf('JLIB_HTML_ERROR_NOTFOUNDINFILE', $className, $func));
+					MolajoError::raiseError(500, MolajoText::sprintf('JLIB_HTML_ERROR_NOTFOUNDINFILE', $className, $func));
 					return false;
 				}
 			}
 			else
 			{
-				JError::raiseError(500, JText::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED_NOFILE', $prefix, $file));
+				MolajoError::raiseError(500, MolajoText::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED_NOFILE', $prefix, $file));
 				return false;
 			}
 		}
@@ -130,7 +130,7 @@ abstract class MolajoHtml
 		}
 		else
 		{
-			JError::raiseError(500, JText::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED', $className, $func));
+			MolajoError::raiseError(500, MolajoText::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED', $className, $func));
 			return false;
 		}
 	}
@@ -217,7 +217,7 @@ abstract class MolajoHtml
 		}
 		else
 		{
-			JError::raiseError(500, JText::_('JLIB_HTML_ERROR_FUNCTION_NOT_SUPPORTED'));
+			MolajoError::raiseError(500, MolajoText::_('JLIB_HTML_ERROR_FUNCTION_NOT_SUPPORTED'));
 			return false;
 		}
 	}
@@ -689,12 +689,12 @@ abstract class MolajoHtml
 		// If no format is given use the default locale based format.
 		if (!$format)
 		{
-			$format = JText::_('DATE_FORMAT_LC1');
+			$format = MolajoText::_('DATE_FORMAT_LC1');
 		}
 		// format is an existing language key
 		elseif (JFactory::getLanguage()->hasKey($format))
 		{
-			$format = JText::_($format);
+			$format = MolajoText::_($format);
 		}
 
 		if ($gregorian)
@@ -844,7 +844,7 @@ abstract class MolajoHtml
 		return '<input type="text" title="' . (0 !== (int) $value ? MolajoHTML::_('date', $value) : '') . '" name="' . $name . '" id="' . $id
 			. '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '" ' . $attribs . ' />'
 			. ($readonly ? ''
-				: MolajoHTML::_('image', 'system/calendar.png', JText::_('JLIB_HTML_CALENDAR'), array('class' => 'calendar', 'id' => $id . '_img'), true));
+				: MolajoHTML::_('image', 'system/calendar.png', MolajoText::_('JLIB_HTML_CALENDAR'), array('class' => 'calendar', 'id' => $id . '_img'), true));
 	}
 
 	/**

@@ -7,47 +7,38 @@
  */
 defined('MOLAJO') or die;
 
-/** MOLAJO_PATH_CONFIGURATION can be moved to hide the configuration.php file */
-define('MOLAJO_PATH_CONFIGURATION', MOLAJO_PATH_ROOT);
+if (defined('MOLAJO_APPLICATIONS_PATH')) { } else { define('MOLAJO_APPLICATIONS_PATH', MOLAJO_BASE_FOLDER.'/applications'); }
 
-define('MOLAJO_PATH_SITE',			MOLAJO_PATH_ROOT);
-define('MOLAJO_PATH_ADMINISTRATOR',	MOLAJO_PATH_ROOT.'/administrator');
-define('MOLAJO_PATH_PLUGINS',		MOLAJO_PATH_ROOT.'/plugins');
-define('MOLAJO_PATH_INSTALLATION',	MOLAJO_PATH_ROOT.'/installation');
-define('MOLAJO_PATH_CACHE',			MOLAJO_PATH_BASE.'/cache');
-define('MOLAJO_LIBRARY',		    MOLAJO_PATH_ROOT.'/libraries/molajo');
-define('MOLAJO_PATH_MANIFESTS',		MOLAJO_PATH_ADMINISTRATOR.'/manifests');
+if (defined('MOLAJO_SITE_CACHE')) { } else { define('MOLAJO_SITE_CACHE', MOLAJO_SITE.'/cache'); }
+if (defined('MOLAJO_SITE_IMAGES')) { } else { define('MOLAJO_SITE_IMAGES', MOLAJO_SITE.'/images'); }
+if (defined('MOLAJO_SITE_LOGS')) { } else { define('MOLAJO_SITE_LOGS', MOLAJO_SITE.'/logs'); }
+if (defined('MOLAJO_SITE_MEDIA')) { } else { define('MOLAJO_SITE_MEDIA', MOLAJO_SITE.'/media'); }
+if (defined('MOLAJO_SITE_TMP')) { } else { define('MOLAJO_SITE_TMP', MOLAJO_SITE.'/tmp'); }
 
-define('MOLAJO_LIBRARY_COMPONENT',  MOLAJO_LIBRARY.'/component');
-define('MOLAJO_LIBRARY_CONTROLLERS', MOLAJO_LIBRARY_COMPONENT.'/controllers');
-define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY_COMPONENT.'/fields');
-define('MOLAJO_LIBRARY_MODELS',     MOLAJO_LIBRARY_COMPONENT.'/models');
-define('MOLAJO_LIBRARY_ROUTER',     MOLAJO_LIBRARY_COMPONENT.'/router');
-define('MOLAJO_LIBRARY_TABLES',     MOLAJO_LIBRARY_COMPONENT.'/tables');
-define('MOLAJO_LIBRARY_VIEWS',      MOLAJO_LIBRARY_COMPONENT.'/views');
+if (defined('MOLAJO_EXTENSIONS')) { } else { define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER.'/extensions'); }
+if (defined('MOLAJO_EXTENSION_COMPONENTS')) { } else { define('MOLAJO_EXTENSION_COMPONENTS', MOLAJO_EXTENSIONS.'/components'); }
+if (defined('MOLAJO_EXTENSION_LANGUAGES')) { } else { define('MOLAJO_EXTENSION_LANGUAGES', MOLAJO_EXTENSIONS.'/languages'); }
+if (defined('MOLAJO_EXTENSION_LAYOUTS')) { } else { define('MOLAJO_EXTENSION_LAYOUTS', MOLAJO_EXTENSIONS.'/layouts'); }
+if (defined('MOLAJO_EXTENSION_LAYOUT_COMMON')) { } else { define('MOLAJO_EXTENSION_LAYOUT_COMMON', MOLAJO_EXTENSION_LAYOUTS.'/common'); }
+if (defined('MOLAJO_EXTENSION_LAYOUT_DOCUMENT')) { } else { define('MOLAJO_EXTENSION_LAYOUT_DOCUMENT', MOLAJO_EXTENSION_LAYOUTS.'/document'); }
+if (defined('MOLAJO_EXTENSION_LAYOUT_EXTENSIONS')) { } else { define('MOLAJO_EXTENSION_LAYOUT_EXTENSIONS', MOLAJO_EXTENSION_LAYOUTS.'/extensions'); }
+if (defined('MOLAJO_EXTENSION_LAYOUT_FORMFIELDS')) { } else { define('MOLAJO_EXTENSION_LAYOUT_FORMFIELDS', MOLAJO_EXTENSION_LAYOUTS.'/formfields'); }
+if (defined('MOLAJO_EXTENSION_LAYOUT_WRAPS')) { } else { define('MOLAJO_EXTENSION_LAYOUT_WRAPS', MOLAJO_EXTENSION_LAYOUTS.'/wraps'); }
+if (defined('MOLAJO_EXTENSION_MANIFESTS')) { } else { define('MOLAJO_EXTENSION_MANIFESTS', MOLAJO_EXTENSIONS.'/manifests'); }
+if (defined('MOLAJO_EXTENSION_MODULES')) { } else { define('MOLAJO_EXTENSION_MODULES', MOLAJO_EXTENSIONS.'/modules'); }
+if (defined('MOLAJO_EXTENSION_PARAMETERS')) { } else { define('MOLAJO_EXTENSION_PARAMETERS', MOLAJO_EXTENSIONS.'/parameters'); }
+if (defined('MOLAJO_EXTENSION_PLUGINS')) { } else { define('MOLAJO_EXTENSION_PLUGINS', MOLAJO_EXTENSIONS.'/plugins'); }
+if (defined('MOLAJO_EXTENSION_TEMPLATES')) { } else { define('MOLAJO_EXTENSION_TEMPLATES', MOLAJO_EXTENSIONS.'/templates'); }
 
-define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY_COMPONENT.'/fields/attributes');
-define('MOLAJO_LIBRARY_FIELDS',     MOLAJO_LIBRARY_COMPONENT.'/fields/fields');
-define('MOLAJO_LIBRARY_FIELDTYPES', MOLAJO_LIBRARY_COMPONENT.'/fields/fieldtypes');
-define('MOLAJO_LIBRARY_FORM',       MOLAJO_LIBRARY_COMPONENT.'/fields/form');
-define('MOLAJO_PATH_THEMES',        MOLAJO_PATH_BASE.'/templates');
-
-/** Layouts, Forms, and Parameters */
-$temp = MOLAJO_PATH_ROOT.'/layouts';
-define('MOLAJO_LAYOUTS', $temp);
-$temp = MOLAJO_LAYOUTS.'/common';
-define('MOLAJO_LAYOUTS_COMMON', $temp);
-$temp = MOLAJO_LAYOUTS.'/extensions';
-define('MOLAJO_LAYOUTS_EXTENSIONS', $temp);
-$temp = MOLAJO_LAYOUTS.'/forms';
-define('MOLAJO_LAYOUTS_FORMS', $temp);
-$temp = MOLAJO_LAYOUTS.'/document';
-define('MOLAJO_LAYOUTS_DOCUMENT', $temp);
-$temp = MOLAJO_LAYOUTS.'/wraps';
-define('MOLAJO_LAYOUTS_WRAPS', $temp);
-
-$temp = MOLAJO_PATH_ROOT.'/layouts/parameters';
-define('MOLAJO_LAYOUTS_PARAMETERS', $temp);
+if (defined('MOLAJO_LIBRARY')) { } else { define('MOLAJO_LIBRARY', LIBRARIES.'/molajo'); }
+if (defined('MOLAJO_LIBRARY_COMPONENT')) { } else { define('MOLAJO_LIBRARY_COMPONENT', MOLAJO_LIBRARY.'/component'); }
+if (defined('MOLAJO_LIBRARY_CONTROLLERS')) { } else { define('MOLAJO_LIBRARY_CONTROLLERS', MOLAJO_LIBRARY_COMPONENT.'/controllers'); }
+if (defined('MOLAJO_LIBRARY_FIELDS')) { } else { define('MOLAJO_LIBRARY_FIELDS', MOLAJO_LIBRARY_COMPONENT.'/fields'); }
+if (defined('MOLAJO_LIBRARY_MODELS')) { } else { define('MOLAJO_LIBRARY_MODELS', MOLAJO_LIBRARY_COMPONENT.'/models'); }
+if (defined('MOLAJO_LIBRARY_ROUTER')) { } else { define('MOLAJO_LIBRARY_ROUTER', MOLAJO_LIBRARY_COMPONENT.'/router'); }
+if (defined('MOLAJO_LIBRARY_TABLES')) { } else { define('MOLAJO_LIBRARY_TABLES', MOLAJO_LIBRARY_COMPONENT.'/tables'); }
+if (defined('MOLAJO_LIBRARY_VIEWS')) { } else { define('MOLAJO_LIBRARY_VIEWS', MOLAJO_LIBRARY_COMPONENT.'/views'); }
+if (defined('MOLAJO_LIBRARY_ATTRIBUTES')) { } else { define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY_COMPONENT.'/attributes'); }
 
 /** Table */
 define('MOLAJO_CONFIG_OPTION_ID_TABLE', 100);
@@ -112,7 +103,7 @@ define('MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE', 6000);
 /** ACL Component Information */
 define('MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION', 10000);
 define('MOLAJO_CONFIG_OPTION_ID_ACL_ITEM_TESTS', 10100);
-define('MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS', 10200);
+define('MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS', 10200);
 
 /** ACL Groups */
 define('MOLAJO_ACL_GROUP_PUBLIC', 1);
@@ -134,32 +125,6 @@ define('MOLAJO_AUTHENTICATE_STATUS_SUCCESS', 1);
 define('MOLAJO_AUTHENTICATE_STATUS_CANCEL', 2);
 define('MOLAJO_AUTHENTICATE_STATUS_FAILURE', 4);
 
-/** current url */
-$currentURL = 'http';
-if (isset($_SERVER['HTTPS'])) {
-	$currentURL .= 's';
-}
-$currentURL .= '://';
-if (isset($_SERVER['SERVER_NAME'])) {
-	$currentURL .= $_SERVER['SERVER_NAME'];
-}
-if (isset($_SERVER['SERVER_PORT'])) {
-    if ($_SERVER['SERVER_PORT'] == '80') {
-    } else {
- 	    $currentURL .= ":".$_SERVER['SERVER_PORT'];
-    }
-}
-if (isset($_SERVER["REQUEST_URI"])) {
-	$currentURL .= $_SERVER['REQUEST_URI'];
-}
-define('MOLAJO_CURRENT_URL', strtolower($currentURL));
-
-if (strpos(MOLAJO_CURRENT_URL, MOLAJO_APPLICATION)) {
-    define('MOLAJO_BASE_URL', substr(MOLAJO_CURRENT_URL, 0, strpos(MOLAJO_CURRENT_URL, MOLAJO_APPLICATION) - 1));
-} else {
-    define('MOLAJO_BASE_URL', MOLAJO_CURRENT_URL);
-}
-
 /** Detect the native operating system type */
 $os = strtoupper(substr(PHP_OS, 0, 3));
 if (defined('IS_WIN')) {
@@ -175,18 +140,3 @@ if (defined('IS_UNIX')) {
 	define('IS_UNIX', (($os !== 'MAC') && ($os !== 'WIN')) ? true : false);
 }
 
-/** joomla */
-define('_JEXEC', 1);
-define('JPATH_BASE',		    MOLAJO_PATH_BASE);
-define('JPATH_ROOT',		    MOLAJO_PATH_ROOT);
-define('JPATH_CONFIGURATION',	MOLAJO_PATH_CONFIGURATION);
-define('JPATH_LIBRARIES',		LIBRARIES);
-define('JOOMLA_LIBRARY',		MOLAJO_PATH_ROOT.'/libraries/jplatform/joomla');
-define('JPATH_SITE',			MOLAJO_PATH_SITE);
-define('JPATH_ADMINISTRATOR',	MOLAJO_PATH_ADMINISTRATOR);
-define('JPATH_PLUGINS',			MOLAJO_PATH_PLUGINS);
-define('JPATH_INSTALLATION',	MOLAJO_PATH_INSTALLATION);
-define('JPATH_CACHE',			MOLAJO_PATH_CACHE);
-define('JPATH_MANIFESTS',		MOLAJO_PATH_MANIFESTS);
-define('JPATH_THEMES',          MOLAJO_PATH_THEMES);
-define('JPATH_PLATFORM',        LIBRARIES.'/jplatform');

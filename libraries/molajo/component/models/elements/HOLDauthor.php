@@ -59,7 +59,7 @@ class MolajoElementAuthor extends JElement
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseNotice(500, $db->getErrorMsg());
+			MolajoError::raiseNotice(500, $db->getErrorMsg());
 			return false;
 		}
 

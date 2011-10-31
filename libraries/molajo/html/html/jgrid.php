@@ -63,14 +63,14 @@ abstract class MolajoHtmlJGrid
 		{
 			return '<a class="jgrid' . ($tip ? ' hasTip' : '') . '" href="javascript:void(0);" onclick="return listItemTask(\'' . $checkbox . $i
 				. '\',\'' . $prefix . $task . '\')" title="'
-				. addslashes(htmlspecialchars($translate ? JText::_($active_title) : $active_title, ENT_COMPAT, 'UTF-8')) . '"><span class="state '
-				. $active_class . '"><span class="text">' . ($translate ? JText::_($text) : $text) . '</span></span></a>';
+				. addslashes(htmlspecialchars($translate ? MolajoText::_($active_title) : $active_title, ENT_COMPAT, 'UTF-8')) . '"><span class="state '
+				. $active_class . '"><span class="text">' . ($translate ? MolajoText::_($text) : $text) . '</span></span></a>';
 		}
 		else
 		{
 			return '<span class="jgrid' . ($tip ? ' hasTip' : '') . '" title="'
-				. addslashes(htmlspecialchars($translate ? JText::_($inactive_title) : $inactive_title, ENT_COMPAT, 'UTF-8'))
-				. '"><span class="state ' . $inactive_class . '"><span class="text">' . ($translate ? JText::_($text) : $text)
+				. addslashes(htmlspecialchars($translate ? MolajoText::_($inactive_title) : $inactive_title, ENT_COMPAT, 'UTF-8'))
+				. '"><span class="state ' . $inactive_class . '"><span class="text">' . ($translate ? MolajoText::_($text) : $text)
 				. '</span></span></span>';
 		}
 	}
@@ -164,11 +164,11 @@ abstract class MolajoHtmlJGrid
 			$tips = array();
 			if ($publish_up)
 			{
-				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_START', $publish_up->format(JDate::$format, true));
+				$tips[] = MolajoText::sprintf('JLIB_HTML_PUBLISHED_START', $publish_up->format(JDate::$format, true));
 			}
 			if ($publish_down)
 			{
-				$tips[] = JText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $publish_down->format(JDate::$format, true));
+				$tips[] = MolajoText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $publish_down->format(JDate::$format, true));
 			}
 			$tip = empty($tips) ? false : implode('<br/>', $tips);
 
@@ -194,9 +194,9 @@ abstract class MolajoHtmlJGrid
 				// Add tips to titles
 				if ($tip)
 				{
-					$states[$key][1] = JText::_($states[$key][1]);
-					$states[$key][2] = JText::_($states[$key][2]) . '::' . $tip;
-					$states[$key][3] = JText::_($states[$key][3]) . '::' . $tip;
+					$states[$key][1] = MolajoText::_($states[$key][1]);
+					$states[$key][2] = MolajoText::_($states[$key][2]) . '::' . $tip;
+					$states[$key][3] = MolajoText::_($states[$key][3]) . '::' . $tip;
 					$states[$key][4] = true;
 				}
 			}
@@ -302,13 +302,13 @@ abstract class MolajoHtmlJGrid
 		}
 
 		$text = addslashes(htmlspecialchars($editorName, ENT_COMPAT, 'UTF-8'));
-		$date = addslashes(htmlspecialchars(MolajoHTML::_('date', $time, JText::_('DATE_FORMAT_LC')), ENT_COMPAT, 'UTF-8'));
+		$date = addslashes(htmlspecialchars(MolajoHTML::_('date', $time, MolajoText::_('DATE_FORMAT_LC')), ENT_COMPAT, 'UTF-8'));
 		$time = addslashes(htmlspecialchars(MolajoHTML::_('date', $time, 'H:i'), ENT_COMPAT, 'UTF-8'));
-		$active_title = JText::_('JLIB_HTML_CHECKIN') . '::' . $text . '<br />' . $date . '<br />' . $time;
-		$inactive_title = JText::_('JLIB_HTML_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time;
+		$active_title = MolajoText::_('JLIB_HTML_CHECKIN') . '::' . $text . '<br />' . $date . '<br />' . $time;
+		$inactive_title = MolajoText::_('JLIB_HTML_CHECKED_OUT') . '::' . $text . '<br />' . $date . '<br />' . $time;
 
 		return self::action(
-			$i, 'checkin', $prefix, JText::_('JLIB_HTML_CHECKED_OUT'), $active_title, $inactive_title, true, 'checkedout',
+			$i, 'checkin', $prefix, MolajoText::_('JLIB_HTML_CHECKED_OUT'), $active_title, $inactive_title, true, 'checkedout',
 			'checkedout', $enabled, false, $checkbox
 		);
 	}

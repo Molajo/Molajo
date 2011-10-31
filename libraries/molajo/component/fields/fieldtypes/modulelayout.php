@@ -103,7 +103,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
 
 			// Check for a database error.
 			if ($db->getErrorNum()) {
-				JError::raiseWarning(500, $db->getErrorMsg());
+				MolajoError::raiseWarning(500, $db->getErrorMsg());
 			}
 
 			// Build the search paths for module layouts.

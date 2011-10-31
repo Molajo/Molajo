@@ -144,7 +144,7 @@ class MolajoDateHelper {
      * @param  $numeric_value
      * @param  $singular_literal
      * @param  $plural_literal
-     * @return void
+     * @return void, mixed
      */
     function prettyDateFormat ($numeric_value, $singular_literal, $plural_literal)
     {

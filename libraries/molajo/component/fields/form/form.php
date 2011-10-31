@@ -1031,11 +1031,11 @@ class MolajoForm
 			$valid = $this->validateField($field, $group, $value, $calendar);
 
 			// Check for an error.
-			if (JError::isError($valid)) {
+			if (MolajoError::isError($valid)) {
 				switch ($valid->get('level'))
 				{
 					case E_ERROR:
-						JError::raiseWarning(0, $valid->getMessage());
+						MolajoError::raiseWarning(0, $valid->getMessage());
 						return false;
 						break;
 
@@ -1598,7 +1598,7 @@ class MolajoForm
 		// Add the field paths.
 		foreach ($paths as $path)
 		{
-			$path = MOLAJO_PATH_ROOT.'/'.ltrim($path, '/\\');
+			$path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
 			self::addFieldPath($path);
 		}
 
@@ -1609,7 +1609,7 @@ class MolajoForm
 		// Add the form paths.
 		foreach ($paths as $path)
 		{
-			$path = MOLAJO_PATH_ROOT.'/'.ltrim($path, '/\\');
+			$path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
 			self::addFormPath($path);
 		}
 
@@ -1620,7 +1620,7 @@ class MolajoForm
 		// Add the rule paths.
 		foreach ($paths as $path)
 		{
-			$path = MOLAJO_PATH_ROOT.'/'.ltrim($path, '/\\');
+			$path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
 			self::addRulePath($path);
 		}
 
@@ -1688,7 +1688,7 @@ class MolajoForm
 			$valid = $rule->test($element, $value, $group, $calendar, $this);
 
 			// Check for an error in the validation test.
-			if (JError::isError($valid)) {
+			if (MolajoError::isError($valid)) {
 				return $valid;
 			}
 		}

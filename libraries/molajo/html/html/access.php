@@ -51,7 +51,7 @@ abstract class MolajoHtmlAccess
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseWarning(500, $db->getErrorMsg());
+			MolajoError::raiseWarning(500, $db->getErrorMsg());
 			return null;
 		}
 
@@ -96,7 +96,7 @@ abstract class MolajoHtmlAccess
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseNotice(500, $db->getErrorMsg());
+			MolajoError::raiseNotice(500, $db->getErrorMsg());
 			return null;
 		}
 
@@ -146,7 +146,7 @@ abstract class MolajoHtmlAccess
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseNotice(500, $db->getErrorMsg());
+			MolajoError::raiseNotice(500, $db->getErrorMsg());
 			return null;
 		}
 
@@ -246,7 +246,7 @@ abstract class MolajoHtmlAccess
 
 			// Check for a database error.
 			if ($db->getErrorNum()) {
-				JError::raiseNotice(500, $db->getErrorMsg());
+				MolajoError::raiseNotice(500, $db->getErrorMsg());
 				return false;
 			}
 		}

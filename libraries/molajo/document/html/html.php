@@ -360,13 +360,15 @@ class MolajoDocumentHTML extends MolajoDocument
 		static $children;
 
 		if (!isset($children)) {
+        } else {
 			$dbo	= MolajoFactory::getDbo();
 			$app	= MolajoFactory::getApplication();
 			$menu	= $app->getMenu();
 			$where	= Array();
 			$active	= $menu->getActive();
+            /** todo: amy acl */
 			if ($active) {
-				$where[] = 'parent = ' . $active->id;
+				$where[] = 'parent = '.$active->id;
 				$where[] = 'published = 1';
 				$dbo->setQuery('SELECT COUNT(*) FROM #__menu_items WHERE '. implode(' AND ', $where));
 				$children = $dbo->loadResult();
@@ -390,27 +392,27 @@ class MolajoDocumentHTML extends MolajoDocument
 		$contents = '';
 
 		// Check to see if we have a valid template file
-		if (file_exists($directory . '/' . $filename))
+		if (file_exists($directory.'/'.$filename))
 		{
 			// Store the file path
-			$this->_file = $directory . '/' . $filename;
+			$this->_file = $directory.'/'.$filename;
 
 			//get the file content
 			ob_start();
-			require $directory . '/' . $filename;
+			require $directory.'/'.$filename;
 			$contents = ob_get_contents();
 			ob_end_clean();
 		}
 
 		// Try to find a favicon by checking the template and root folder
-		$path = $directory . '/';
-		$dirs = array($path, MOLAJO_PATH_BASE . '/');
+		$path = $directory.'/';
+		$dirs = array($path, MOLAJO_BASE_FOLDER.'/');
 		foreach ($dirs as $dir)
 		{
 			$icon = $dir.'favicon.ico';
 			if (file_exists($icon))
 			{
-				$path = str_replace(MOLAJO_PATH_BASE . '/', '', $dir);
+				$path = str_replace(MOLAJO_BASE_FOLDER.'/', '', $dir);
 				$path = str_replace('\\', '/', $path);
 				$this->addFavicon(JURI::base(true).'/'.$path.'favicon.ico');
 				break;
@@ -432,18 +434,19 @@ class MolajoDocumentHTML extends MolajoDocument
 		$template	= $filter->clean($params['template'], 'cmd');
 		$file		= $filter->clean($params['file'], 'cmd');
 
-		if (!file_exists($directory . '/' . $template . '/' . $file)) {
+		if (file_exists($directory.'/'.$template.'/'.$file)) {
+        } else {
 			$template = 'system';
 		}
 
 		// Load the language file for the template
 		$lang = MolajoFactory::getLanguage();
 		// 1.5 or core then 1.6
-
-			$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, null, false, false)
-		||	$lang->load('tpl_'.$template, $directory . '/' . $template, null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_PATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, $directory . '/' . $template, $lang->getDefault(), false, false);
+// todo: amy go thru all the language loads and make certain paths are simplified and correct
+			$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
+		||	$lang->load('tpl_'.$template, $directory.'/'.$template, null, false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, $directory.'/'.$template, $lang->getDefault(), false, false);
 
 
 		// Assign the variables
@@ -452,7 +455,7 @@ class MolajoDocumentHTML extends MolajoDocument
 		$this->params	= isset($params['params']) ? $params['params'] : new JRegistry;
 
 		// Load
-		$this->_template = $this->_loadTemplate($directory . '/' . $template, $file);
+		$this->_template = $this->_loadTemplate($directory.'/'.$template, $file);
 	}
 
 	/**

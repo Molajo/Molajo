@@ -23,7 +23,7 @@ class MolajoDocumentRenderer extends JObject
 	* @var    object
 	* @since  11.1
 	*/
-	protected	$_doc = null;
+	protected $_doc = null;
 
 	/**
 	 * Renderer mime type
@@ -55,9 +55,7 @@ class MolajoDocumentRenderer extends JObject
 	 * @return  string   The output of the script
 	 * @since   11.1
 	 */
-	public function render($name, $params = null, $content = null)
-	{
-	}
+	public function render($name, $params = null, $content = null) {}
 
 	/**
 	 * Return the content type of the renderer

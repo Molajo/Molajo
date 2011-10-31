@@ -39,9 +39,9 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		$lang = MolajoFactory::getLanguage();
 		$source = $path ? $path : JPATH_PLATFORM . "/$name";
 		$lang->load($extension . '.sys', $source, null, false, false)
-			|| $lang->load($extension . '.sys', MOLAJO_PATH_SITE, null, false, false)
+			|| $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
 			|| $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-			|| $lang->load($extension . '.sys', MOLAJO_PATH_SITE, $lang->getDefault(), false, false);
+			|| $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false);
 	}
 
 	/**
@@ -79,7 +79,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 			else
 			{
 				// Abort the install, no upgrade possible
-				$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_ALREADY_INSTALLED'));
+				$this->parent->abort(MolajoText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_ALREADY_INSTALLED'));
 				return false;
 			}
 		}
@@ -88,7 +88,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		$description = (string) $this->manifest->description;
 		if ($description)
 		{
-			$this->parent->set('message', JText::_($description));
+			$this->parent->set('message', MolajoText::_($description));
 		}
 		else
 		{
@@ -99,7 +99,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		$group = (string) $this->manifest->libraryname;
 		if (!$group)
 		{
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_NOFILE'));
+			$this->parent->abort(MolajoText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_NOFILE'));
 			return false;
 		}
 		else
@@ -116,7 +116,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 			if (!$created = JFolder::create($this->parent->getPath('extension_root')))
 			{
 				$this->parent->abort(
-					JText::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root'))
+					MolajoText::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_FAILED_TO_CREATE_DIRECTORY', $this->parent->getPath('extension_root'))
 				);
 				return false;
 			}
@@ -159,7 +159,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		if (!$row->store())
 		{
 			// Install failed, roll back changes
-			$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_ROLLBACK', $db->stderr(true)));
+			$this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_LIB_INSTALL_ROLLBACK', $db->stderr(true)));
 			return false;
 		}
 
@@ -168,11 +168,11 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		// Lastly, we will copy the manifest file to its appropriate place.
 		$manifest = array();
 		$manifest['src'] = $this->parent->getPath('manifest');
-		$manifest['dest'] = MOLAJO_PATH_MANIFESTS . '/libraries/' . basename($this->parent->getPath('manifest'));
+		$manifest['dest'] = MOLAJO_SITE_MANIFESTS . '/libraries/' . basename($this->parent->getPath('manifest'));
 		if (!$this->parent->copyFiles(array($manifest), true))
 		{
 			// Install failed, rollback changes
-			$this->parent->abort(JText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
+			$this->parent->abort(MolajoText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
 			return false;
 		}
 		return $row->get('extension_id');
@@ -231,7 +231,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		$row = MolajoTable::getInstance('extension');
 		if (!$row->load((int) $id) || !strlen($row->element))
 		{
-			JError::raiseWarning(100, JText::_('ERRORUNKOWNEXTENSION'));
+			MolajoError::raiseWarning(100, MolajoText::_('ERRORUNKOWNEXTENSION'));
 			return false;
 		}
 
@@ -239,11 +239,11 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		// Because that is not a good idea...
 		if ($row->protected)
 		{
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_WARNCORELIBRARY'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_WARNCORELIBRARY'));
 			return false;
 		}
 
-		$manifestFile = MOLAJO_PATH_MANIFESTS . '/libraries/' . $row->element . '.xml';
+		$manifestFile = MOLAJO_SITE_MANIFESTS . '/libraries/' . $row->element . '.xml';
 
 		// Because libraries may not have their own folders we cannot use the standard method of finding an installation manifest
 		if (file_exists($manifestFile))
@@ -257,7 +257,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 			// If we cannot load the XML file return null
 			if (!$xml)
 			{
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_LOAD_MANIFEST'));
+				MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_LOAD_MANIFEST'));
 				return false;
 			}
 
@@ -267,7 +267,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 
 			if ($xml->getName() != 'install' && $xml->getName() != 'extension')
 			{
-				JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_MANIFEST'));
+				MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_MANIFEST'));
 				return false;
 			}
 
@@ -280,7 +280,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 			// Remove this row entry since its invalid
 			$row->delete($row->extension_id);
 			unset($row);
-			JError::raiseWarning(100, JText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
+			MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_LIB_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
 			return false;
 		}
 
@@ -316,10 +316,10 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 	public function discover()
 	{
 		$results = array();
-		$file_list = JFolder::files(MOLAJO_PATH_MANIFESTS . '/libraries', '\.xml$');
+		$file_list = JFolder::files(MOLAJO_SITE_MANIFESTS . '/libraries', '\.xml$');
 		foreach ($file_list as $file)
 		{
-			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_PATH_MANIFESTS . '/libraries/' . $file);
+			$manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_SITE_MANIFESTS . '/libraries/' . $file);
 			$file = JFile::stripExt($file);
 			$extension = MolajoTable::getInstance('extension');
 			$extension->set('type', 'library');
@@ -344,7 +344,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 	{
 		/* Libraries are a strange beast; they are actually references to files
 		 * There are two parts to a library which are disjunct in their locations
-		 * 1) The manifest file (stored in /MOLAJO_PATH_MANIFESTS/libraries)
+		 * 1) The manifest file (stored in /MOLAJO_SITE_MANIFESTS/libraries)
 		 * 2) The actual files (stored in /JPATH_PLATFORM/libraryname)
 		 * Thus installation of a library is the process of dumping files
 		 * in two different places. As such it is impossible to perform
@@ -353,7 +353,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		 * time they can be adequately removed.
 		 */
 
-		$manifestPath = MOLAJO_PATH_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
+		$manifestPath = MOLAJO_SITE_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
 		$manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -368,7 +368,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		}
 		else
 		{
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_LIB_DISCOVER_STORE_DETAILS'));
+			MolajoError::raiseWarning(101, MolajoText::_('JLIB_INSTALLER_ERROR_LIB_DISCOVER_STORE_DETAILS'));
 			return false;
 		}
 	}
@@ -383,7 +383,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 	public function refreshManifestCache()
 	{
 		// Need to find to find where the XML file is since we don't store this normally
-		$manifestPath = MOLAJO_PATH_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
+		$manifestPath = MOLAJO_SITE_MANIFESTS . '/libraries/' . $this->parent->extension->element . '.xml';
 		$this->parent->manifest = $this->parent->isManifest($manifestPath);
 		$this->parent->setPath('manifest', $manifestPath);
 
@@ -395,9 +395,9 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 		{
 			return $this->parent->extension->store();
 		}
-		catch (JException $e)
+		catch (MolajoException $e)
 		{
-			JError::raiseWarning(101, JText::_('JLIB_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
+			MolajoError::raiseWarning(101, MolajoText::_('JLIB_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
 			return false;
 		}
 	}

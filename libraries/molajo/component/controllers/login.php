@@ -79,13 +79,13 @@ class MolajoControllerLogin extends MolajoController
             // Ignore empty and crackish user agents
             if ($agent != '' && $agent != 'JLOGIN_REMEMBER') {
                 $key = MolajoUtility::getHash($agent);
-                $crypt = new JSimpleCrypt($key);
+                $crypt = new MolajoSimpleCrypt($key);
                 $rcookie = $crypt->encrypt(serialize($credentials));
                 $lifetime = time() + 365*24*60*60;
 
                 // Use domain and path set in config for cookie if it exists.
-                $cookie_domain = $this->getCfg('cookie_domain', '');
-                $cookie_path = $this->getCfg('cookie_path', '/');
+                $cookie_domain = $this->getConfiguration('cookie_domain', '');
+                $cookie_path = $this->getConfiguration('cookie_path', '/');
                 setcookie(
                     MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime,
                     $cookie_path, $cookie_domain
@@ -142,7 +142,7 @@ class MolajoControllerLogin extends MolajoController
         );
 
         $result = $app->logout($userid, $options);
-        if (!JError::isError($result)) {
+        if (!MolajoError::isError($result)) {
             $this->model 	= $this->getModel('login');
             $return = $this->model->getState('return');
             $app->redirect($return);
@@ -199,7 +199,7 @@ class MolajoControllerLogin extends MolajoController
 
         // Set clientid in the options array if it hasn't been set already.
         if (!isset($options['applicationid'])) {
-            $options['applicationid']= $this->getApplicationId();
+            $options['applicationid']= MOLAJO_APPLICATION_ID;
         }
 
         // Import the user plugin group.
@@ -213,8 +213,8 @@ class MolajoControllerLogin extends MolajoController
         if (in_array(false, $results, true)) {
         } else {
             // Use domain and path set in config for cookie if it exists.
-            $cookie_domain = $this->getCfg('cookie_domain', '');
-            $cookie_path = $this->getCfg('cookie_path', '/');
+            $cookie_domain = $this->getConfiguration('cookie_domain', '');
+            $cookie_path = $this->getConfiguration('cookie_path', '/');
             setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
             return true;

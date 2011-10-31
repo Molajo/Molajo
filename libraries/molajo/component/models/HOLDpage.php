@@ -89,10 +89,10 @@ class MolajoModelPage extends JModel
         }
 
         if (empty($title)) {
-            $title = MolajoFactory::getApplication()->getCfg('sitename');
+            $title = MolajoFactory::getApplication()->getConfiguration('sitename');
 
-        } elseif (MolajoFactory::getApplication()->getCfg('sitename_pagetitles', 0)) {
-            $title = MolajoText::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getCfg('sitename'), $title);
+        } elseif (MolajoFactory::getApplication()->getConfiguration('sitename_pagetitles', 0)) {
+            $title = MolajoText::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getConfiguration('sitename'), $title);
         }
 
         if (empty($title)) {
@@ -118,7 +118,7 @@ class MolajoModelPage extends JModel
             $document->setMetadata('robots', $params->get('robots'));
         }
 
-        if (MolajoFactory::getApplication()->getCfg('MetaTitle') == '1') {
+        if (MolajoFactory::getApplication()->getConfiguration('MetaTitle') == '1') {
             $document->setMetaData('title', $content_item->title);
         }
 

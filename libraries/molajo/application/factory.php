@@ -32,9 +32,9 @@ abstract class MolajoFactory
 	 * Returns the global {@link MolajoApplication} object, only creating it
 	 * if it doesn't already exist.
 	 *
-	 * @param   mixed   $id     A client identifier or name.
+	 * @param   mixed   $id     A Application identifier or name.
 	 * @param   array   $config An optional associative array of configuration settings.
-	 * @param   string  $prefix application prefix
+	 * @param   string  $prefix An Application prefix
 	 *
 	 * @return MolajoApplication	object
 	 *
@@ -46,7 +46,7 @@ abstract class MolajoFactory
         } else {
 			if ($id) {
             } else {
-				JError::raiseError(500, 'Application Instantiation Error');
+				MolajoError::raiseError(500, 'Application Instantiation Error');
 			}
 			self::$application = MolajoApplication::getInstance($id, $config, $prefix);
 		}
@@ -72,7 +72,7 @@ abstract class MolajoFactory
 		if (self::$config) {
         } else {
 			if ($file === null) {
-				$file = MOLAJO_PATH_SITE.'/configuration.php';
+				$file = MOLAJO_SITE.'/configuration.php';
 			}
 
 			self::$config = self::_createConfig($file, $type);
@@ -106,12 +106,12 @@ abstract class MolajoFactory
 	/**
 	 * Get a language object
 	 *
-	 * Returns the global {@link JLanguage} object, only creating it
+	 * Returns the global {@link MolajoLanguage} object, only creating it
 	 * if it doesn't already exist.
 	 *
-	 * @see JLanguage
+	 * @see MolajoLanguage
 	 *
-	 * @return JLanguage object
+	 * @return MolajoLanguage object
 	 */
 	public static function getLanguage()
 	{
@@ -237,20 +237,15 @@ abstract class MolajoFactory
 		return self::$database;
 	}
 
-    public function getDDbo()
-    {
-        return self::getDbo();
-    }
-
 	/**
 	 * Get a mailer object
 	 *
-	 * Returns the global {@link JMail} object, only creating it
+	 * Returns the global {@link MolajoMail} object, only creating it
 	 * if it doesn't already exist
 	 *
-	 * @see JMail
+	 * @see MolajoMail
 	 *
-	 * @return JMail object
+	 * @return MolajoMail object
 	 */
 	public static function getMailer()
 	{
@@ -274,8 +269,6 @@ abstract class MolajoFactory
 	 */
 	public static function getFeedParser($url, $cache_time = 0)
 	{
-		jimport('simplepie.simplepie');
-
 		$cache = self::getCache('feed_parser', 'callback');
 
 		if ($cache_time > 0) {
@@ -294,7 +287,7 @@ abstract class MolajoFactory
 			return $simplepie;
 		}
 		else {
-			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
+			MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
 		}
 
 		return false;
@@ -321,13 +314,8 @@ abstract class MolajoFactory
 				$doc = self::getFeedParser($options['rssUrl'], $cache_time);
 				break;
 
-			case 'simple':
-				// JError::raiseWarning('SOME_ERROR_CODE', 'JSimpleXML is deprecated. Use self::getXML instead');
-				$doc = new JSimpleXML();
-				break;
-
 			case 'dom':
-				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_UTIL_ERROR_DOMIT'));
+				MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_UTIL_ERROR_DOMIT'));
 				$doc = null;
 				break;
 
@@ -362,15 +350,15 @@ abstract class MolajoFactory
 
 		if (empty($xml)) {
 			// There was an error
-			JError::raiseWarning(100, MolajoText::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
+			MolajoError::raiseWarning(100, MolajoText::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
 
 			if ($isFile) {
-				JError::raiseWarning(100, $data);
+				MolajoError::raiseWarning(100, $data);
 			}
 
 			foreach (libxml_get_errors() as $error)
 			{
-				JError::raiseWarning(100, 'XML: '.$error->message);
+				MolajoError::raiseWarning(100, 'XML: '.$error->message);
 			}
 		}
 
@@ -382,7 +370,7 @@ abstract class MolajoFactory
 	 *
 	 * @param   string  $editor The editor to load, depends on the editor plugins that are installed
 	 *
-	 * @return JEditor object
+	 * @return MolajoEditor object
 	 */
 	public static function getEditor($editor = null)
 	{
@@ -392,7 +380,7 @@ abstract class MolajoFactory
 			$editor	= $conf->get('editor');
 		}
 
-		return JEditor::getInstance($editor);
+		return MolajoEditor::getInstance($editor);
 	}
 
 	/**
@@ -544,13 +532,13 @@ abstract class MolajoFactory
 
 		$db = JDatabase::getInstance($options);
 
-		if (JError::isError($db)) {
+		if (MolajoError::isError($db)) {
 			header('HTTP/1.1 500 Internal Server Error');
 			jexit('Database Error: '.(string) $db);
 		}
 
 		if ($db->getErrorNum() > 0) {
-			JError::raiseError(500, MolajoText::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
+			MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
 		}
 
 		$db->debug($debug);
@@ -560,7 +548,7 @@ abstract class MolajoFactory
 	/**
 	 * Create a mailer object
 	 *
-	 * @return  JMail object
+	 * @return  MolajoMail object
 	 * @since   1.0
 	 */
 	protected static function _createMailer()
@@ -578,8 +566,8 @@ abstract class MolajoFactory
 		$fromname	= $conf->get('fromname');
 		$mailer		= $conf->get('mailer');
 
-		// Create a JMail object
-		$mail		= JMail::getInstance();
+		// Create a MolajoMail object
+		$mail		= MolajoMail::getInstance();
 
 		// Set default sender
 		$mail->setSender(array ($mailfrom, $fromname));
@@ -606,9 +594,9 @@ abstract class MolajoFactory
 	/**
 	 * Create a language object
 	 *
-	 * @see JLanguage
+	 * @see MolajoLanguage
 	 *
-	 * @return JLanguage object
+	 * @return MolajoLanguage object
 	 * @since   1.0
 	 */
 	protected static function _createLanguage()
@@ -616,7 +604,7 @@ abstract class MolajoFactory
 		$conf	= self::getConfig();
 		$locale	= $conf->get('language');
 		$debug	= $conf->get('debug_lang');
-		$lang	= JLanguage::getInstance($locale, $debug);
+		$lang	= MolajoLanguage::getInstance($locale, $debug);
 
 		return $lang;
 	}
@@ -685,10 +673,10 @@ abstract class MolajoFactory
 				$prefix .= $SCPOptions['root'];
 			}
 			else {
-				$prefix = MOLAJO_PATH_ROOT.'/';
+				$prefix = MOLAJO_BASE_FOLDER.'/';
 			}
 
-			$retval = new JStream($prefix, MOLAJO_PATH_ROOT, $context);
+			$retval = new JStream($prefix, MOLAJO_BASE_FOLDER, $context);
 		}
 		else {
 			$retval = new JStream('', '', $context);

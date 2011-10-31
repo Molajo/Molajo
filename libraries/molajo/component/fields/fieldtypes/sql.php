@@ -47,7 +47,7 @@ class MolajoFormFieldSql extends MolajoFormFieldList
 		$db->setQuery($query);
 		$items = $db->loadObjectlist();
 		if ($db->getErrorNum()) {
-                    JError::raiseWarning(500, $db->getErrorMsg());
+                    MolajoError::raiseWarning(500, $db->getErrorMsg());
                     return $options;
 		}
 

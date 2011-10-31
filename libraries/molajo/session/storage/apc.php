@@ -32,7 +32,7 @@ class MolajoSessionStorageApc extends MolajoSessionStorage
 	{
 		if (!$this->test())
 		{
-			return JError::raiseError(404, JText::_('JLIB_SESSION_APC_EXTENSION_NOT_AVAILABLE'));
+			return MolajoError::raiseError(404, MolajoText::_('JLIB_SESSION_APC_EXTENSION_NOT_AVAILABLE'));
 		}
 
 		parent::__construct($options);

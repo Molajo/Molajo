@@ -1,0 +1,12 @@
+/* footnotes as they original appear inline, before reformatting */
+#content span.footnote { color: #f30; }
+
+/* footnote links in text */
+#content a.ftnlink { vertical-align: super; font-size: 0.8em; }
+
+/* div to hold all reformatted footnotes */
+.footnoteholder { border-left: 1px solid #ccc; font-size: 0.8em; margin: 20px 0 50px 0; padding: 20px 10px; line-height: 1.2em; }
+
+/* div to hold single reformatted footnote */
+.footnoteholder div.footnote { margin: 0 0 10px 0; }
+

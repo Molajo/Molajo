@@ -26,7 +26,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 	public $type = 'Editor';
 
 	/**
-	 * The JEditor object.
+	 * The MolajoEditor object.
 	 *
 	 * @var    object
 	 * @since  1.0
@@ -72,9 +72,9 @@ class MolajoFormFieldEditor extends MolajoFormField
 	}
 
 	/**
-	 * Method to get a JEditor object based on the form field.
+	 * Method to get a MolajoEditor object based on the form field.
 	 *
-	 * @return  object  The JEditor object.
+	 * @return  object  The MolajoEditor object.
 	 * @since   1.0
 	 */
 	protected function &getEditor()
@@ -116,7 +116,7 @@ class MolajoFormFieldEditor extends MolajoFormField
 				}
 			}
 
-			// Create the JEditor intance based on the given editor.
+			// Create the MolajoEditor intance based on the given editor.
 			$this->editor = MolajoFactory::getEditor($editor ? $editor : null);
 		}
 
@@ -124,9 +124,9 @@ class MolajoFormFieldEditor extends MolajoFormField
 	}
 
 	/**
-	 * Method to get the JEditor output for an onSave event.
+	 * Method to get the MolajoEditor output for an onSave event.
 	 *
-	 * @return  string  The JEditor object output.
+	 * @return  string  The MolajoEditor object output.
 	 * @since   1.0
 	 */
 	public function save()

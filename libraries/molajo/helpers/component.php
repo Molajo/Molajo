@@ -147,6 +147,7 @@ class MolajoComponentHelper
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
+//echo '<pre>';var_dump($request);'</pre>';
 
 		$db->setQuery($query->__toString());
 
@@ -159,7 +160,7 @@ class MolajoComponentHelper
 
 		if ($error = $db->getErrorMsg()
             || empty(self::$_components[$option])) {
-			JError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
+			MolajoError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
 			return false;
 		}
 
@@ -191,16 +192,16 @@ class MolajoComponentHelper
 
         /** extension path and entry point */
         $path = $request['component_path'].'/'.$request['no_com_option'].'.php';
- 
-        /** verify extension is enabled */
-        if ($request['application_id'] == 2
+
+        /** installation does not have enabled extensions */
+        if ($request['application_id'] == 0
             && file_exists($path)) {
 
         } elseif (self::isEnabled($request['option'])
                 && file_exists($path)) {
             
         } else {
-			JError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+			MolajoError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
 		}
 
         /** execute the component */

@@ -60,13 +60,13 @@ class MolajoFormFieldTag extends MolajoFormFieldList
 		// Set the query and load the options.
 		$lang = MolajoFactory::getLanguage();
 		foreach ($options as $i=>$option) {
-                    $lang->load($option->value, MOLAJO_PATH_ADMINISTRATOR, null, false, false);
+                    $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
                     $options[$i]->text = MolajoText::_($option->text);
 		}
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseWarning(500, $db->getErrorMsg());
+			MolajoError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		// Merge any additional options in the XML definition.

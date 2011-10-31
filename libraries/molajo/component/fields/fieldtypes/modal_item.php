@@ -62,7 +62,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
 		$title = $db->loadResult();
 
 		if ($error = $db->getErrorMsg()) {
-			JError::raiseWarning(500, $error);
+			MolajoError::raiseWarning(500, $error);
 		}
 
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');

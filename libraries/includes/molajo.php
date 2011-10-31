@@ -53,10 +53,10 @@ foreach ($files as $file) {
 }
 
 /** Fields: Form */
-$filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/formfield.php', 'MolajoFormField');
-$filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/formrule.php', 'MolajoFormRule');
-$filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/helper.php', 'MolajoFormHelper');
-$filehelper->requireClassFile(MOLAJO_LIBRARY_FORM.'/form.php', 'MolajoForm');
+$filehelper->requireClassFile(MOLAJO_LIBRARY_FIELDS.'/form/formfield.php', 'MolajoFormField');
+$filehelper->requireClassFile(MOLAJO_LIBRARY_FIELDS.'/form/formrule.php', 'MolajoFormRule');
+$filehelper->requireClassFile(MOLAJO_LIBRARY_FIELDS.'/form/helper.php', 'MolajoFormHelper');
+$filehelper->requireClassFile(MOLAJO_LIBRARY_FIELDS.'/form/form.php', 'MolajoForm');
 
 /** Fields: FieldTypes */
 $filehelper->requireClassFile(MOLAJO_LIBRARY_FIELDS.'/fieldtypes/list.php', 'MolajoFormFieldList');
@@ -190,9 +190,14 @@ $files = JFolder::files(MOLAJO_LIBRARY.'/installer/updater/adapters', '\.php$', 
 foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/updater/adapters/'.$file, 'MolajoUpdater'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
+/**
+ *  Language (JHelp and JLanguageHelper not used)
+ */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/language.php', 'MolajoLanguage');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/latin_transliterate.php', 'MolajoLanguageTransliterate');
 
 /**
- *  Session - not used
+ *  Session
  */
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/session/session.php', 'MolajoSession');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/session/storage.php', 'MolajoSessionStorage');
@@ -204,7 +209,6 @@ foreach ($files as $file) {
 /**
  *  Exceptions
  */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/error/exception.php', 'JException');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databaseexception.php', 'JDatabaseException');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/log/logexception.php', 'Logexception');

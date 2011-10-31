@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Utility
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
@@ -37,14 +37,11 @@ class MolajoUtility
 	 *
 	 * @since       11.1
 	 * @deprecated  1.6
-	 * @see			JMail::sendMail()
+	 * @see			MolajoMail::sendMail()
 	 */
 	public static function sendMail($from, $fromname, $recipient, $subject, $body, $mode=0, $cc=null, $bcc=null, $attachment=null, $replyto=null, $replytoname=null)
 	{
-		// Get a JMail instance
-		$mail = MolajoFactory::getMailer();
-
-		return $mail->sendMail(
+		MolajoFactory::getMailer()->sendMail(
 			$from, $fromname, $recipient, $subject, $body, $mode, $cc,
 			$bcc, $attachment, $replyto, $replytoname
 		);
@@ -63,14 +60,11 @@ class MolajoUtility
 	 * @return  boolean  True on success
 	 *
 	 * @deprecated  1.6
-	 * @see			JMail::sendAdminMail()
+	 * @see			MolajoMail::sendAdminMail()
 	 */
 	public static function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
 	{
-		// Get a JMail instance
-		$mail = MolajoFactory::getMailer();
-
-		return $mail->sendAdminMail(
+		return MolajoFactory::getMailer()->sendAdminMail(
 			$adminName, $adminEmail, $email, $type, $title, $author, $url
 		);
 	}
@@ -87,9 +81,7 @@ class MolajoUtility
 	 */
 	public static function getHash($seed)
 	{
-		$conf = MolajoFactory::getConfig();
-
-		return md5($conf->get('secret').$seed);
+		return md5(MolajoFactory::getConfig()->get('secret').$seed);
 	}
 
 	/**
@@ -103,9 +95,7 @@ class MolajoUtility
 	 */
 	public static function getToken($forceNew = false)
 	{
-		$session = MolajoFactory::getSession();
-
-		return $session->getFormToken($forceNew);
+		return MolajoFactory::getSession()->getFormToken($forceNew);
 	}
 
 	/**
@@ -128,8 +118,7 @@ class MolajoUtility
 
 		if (is_array($attr)) {
 			$numPairs = count($attr[1]);
-			for ($i = 0; $i < $numPairs; $i++)
-			{
+			for ($i = 0; $i < $numPairs; $i++) {
 				$retarray[$attr[1][$i]] = $attr[2][$i];
 			}
 		}
@@ -138,7 +127,7 @@ class MolajoUtility
 	}
 
 	/**
-	 * Method to determine if the host OS is  Windows
+	 * Method to determine if the host OS is Windows
 	 *
 	 * @return  boolean  True if Windows OS.
 	 *
@@ -148,9 +137,7 @@ class MolajoUtility
 	 */
 	public static function isWinOS()
 	{
-		$application = MolajoFactory::getApplication();
-
-		return $application->isWinOS();
+		return MolajoFactory::getApplication()->isWinOS();
 	}
 
 	/**

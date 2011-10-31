@@ -401,7 +401,7 @@ class MolajoToolbarHelper
      */
     public function addHelpButton ($state, $userToolbarButtonPermissions, $id, $item=null)
     {
-        self::help('JHELP_CONTENT_ARTICLE_MANAGER');
+        self::help('MolajoHelp_CONTENT_ARTICLE_MANAGER');
     }
 
     /**

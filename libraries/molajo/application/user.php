@@ -196,7 +196,7 @@ class MolajoUser extends JObject
 			if ($id = MolajoUserHelper::getUserId($identifier)) {
 
             } else {
-				JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
+				MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
 				$retval = false;
 				return $retval;
 			}
@@ -302,7 +302,7 @@ class MolajoUser extends JObject
 		// Set the default parampath if not set already
 		if (isset($parampath)) {
         } else {
-			$parampath = MOLAJO_PATH_ADMINISTRATOR.'components/com_users/models';
+			$parampath = MOLAJO_BASE_FOLDER.'components/com_users/models';
 		}
 
 		if ($loadsetupfile) {
@@ -637,7 +637,7 @@ class MolajoUser extends JObject
 		// Load the MolajoUserModel object based on the user id or throw a warning.
 		if ($table->load($id)) {
         } else {
-			JError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+			MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
 			return false;
 		}
 

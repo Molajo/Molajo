@@ -164,7 +164,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
 
 			JLog::add("Error opening url: ".$url, JLog::WARNING, 'updater');
 			$app = MolajoFactory::getApplication();
-			$app->enqueueMessage(JText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url), 'warning');
+			$app->enqueueMessage(MolajoText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url), 'warning');
 			return false;
 		}
 
@@ -179,7 +179,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
 			{
 				JLog::add("Error parsing url: ".$url, JLog::WARNING, 'updater');
 				$app = MolajoFactory::getApplication();
-				$app->enqueueMessage(JText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_PARSE_URL', $url), 'warning');
+				$app->enqueueMessage(MolajoText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_PARSE_URL', $url), 'warning');
 				return false;
 			}
 		}

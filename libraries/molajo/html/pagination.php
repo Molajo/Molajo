@@ -265,7 +265,7 @@ class MolajoPagination extends JObject
 		$itemOverride = false;
 		$listOverride = false;
 
-		$chromePath = MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/'.'html'.'/'.'pagination.php';
+		$chromePath = MOLAJO_EXTENSION_TEMPLATES.'/'.$app->getTemplate().'/'.'html'.'/'.'pagination.php';
 		if (file_exists($chromePath))
 		{
 			require_once $chromePath;
@@ -359,7 +359,7 @@ class MolajoPagination extends JObject
 		$list['pagescounter']	= $this->getPagesCounter();
 		$list['pageslinks']		= $this->getPagesLinks();
 
-		$chromePath	= MOLAJO_PATH_THEMES.'/'.$app->getTemplate().'/'.'html'.'/'.'pagination.php';
+		$chromePath	= MOLAJO_EXTENSION_TEMPLATES.'/'.$app->getTemplate().'/'.'html'.'/'.'pagination.php';
 		if (file_exists($chromePath))
 		{
 			require_once $chromePath;
@@ -393,13 +393,8 @@ class MolajoPagination extends JObject
 
 		$selected = $this->_viewall ? 0 : $this->limit;
 
-		// Build the select list.
-		if ($app->isAdmin()) {
-			$html = MolajoHTML::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
-		}
-		else {
-			$html = MolajoHTML::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
-		}
+		$html = MolajoHTML::_('select.genericlist',  $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
+
 		return $html;
 	}
 
@@ -483,29 +478,20 @@ class MolajoPagination extends JObject
 	protected function _item_active(&$item)
 	{
 		$app = MolajoFactory::getApplication();
-		if ($app->isAdmin())
-		{
 			if ($item->base > 0) {
 				return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
 			else {
 				return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
-		}
-		else {
-			return "<a title=\"".$item->text."\" href=\"".$item->link."\" class=\"pagenav\">".$item->text."</a>";
-		}
+//admin			return "<a title=\"".$item->text."\" href=\"".$item->link."\" class=\"pagenav\">".$item->text."</a>";
+
 	}
 
 	protected function _item_inactive(&$item)
 	{
-		$app = MolajoFactory::getApplication();
-		if ($app->isAdmin()) {
-			return "<span>".$item->text."</span>";
-		}
-		else {
+//admin			return "<span>".$item->text."</span>";
 			return "<span class=\"pagenav\">".$item->text."</span>";
-		}
 	}
 
 	/**

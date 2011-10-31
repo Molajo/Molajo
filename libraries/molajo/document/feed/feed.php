@@ -201,7 +201,7 @@ class MolajoDocumentFeed extends MolajoDocument
 		 */
 		$cache		= 0;
 		$cache_time = 3600;
-		$cache_path = MOLAJO_PATH_CACHE;
+		$cache_path = MOLAJO_SITE_CACHE;
 
 		// set filename for rss feeds
 		$file = strtolower(str_replace('.', '', $type));
@@ -211,7 +211,7 @@ class MolajoDocumentFeed extends MolajoDocument
 		// Instantiate feed renderer and set the mime encoding
 		$renderer = $this->loadRenderer(($type) ? $type : 'rss');
 		if (!is_a($renderer, 'MolajoDocumentRenderer')) {
-			JError::raiseError(404, MolajoText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
+			MolajoError::raiseError(404, MolajoText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
 		}
 		$this->setMimeEncoding($renderer->getContentType());
 

@@ -66,7 +66,7 @@ abstract class MolajoSessionStorage extends JObject
 					require_once $path;
 
 				} else {
-					// No call to JError::raiseError here, as it tries to close the non-existing session
+					// No call to MolajoError::raiseError here, as it tries to close the non-existing session
 					jexit('Unable to load session storage class: '.$name);
 				}
 			}

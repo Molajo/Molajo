@@ -80,7 +80,7 @@ class MolajoACLCore extends MolajoACL
     public function checkTaskManage ($option, $entity, $task, $catid, $id, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS, $task);
+        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS, $task);
 
         if (is_array($taskTests)) {
         } else {
@@ -183,13 +183,13 @@ class MolajoACLCore extends MolajoACL
     public function checkTaskUpdate ($option, $entity, $task, $catid, $id, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_TASKS_TO_ACL_METHODS, $task);
+        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS, $task);
         if (is_array($taskTests)) {
         } else {
             $taskTests = array($taskTests);
         }
         if (count($taskTests) == 0) {
-            JError::raiseError(500, MolajoText::_('MOLAJO_ACL_NOT_IDENTIFIED_TASK_ACL_METHOD'). ' '.$task);
+            MolajoError::raiseError(500, MolajoText::_('MOLAJO_ACL_NOT_IDENTIFIED_TASK_ACL_METHOD'). ' '.$task);
             return false;
         }
         
@@ -493,9 +493,9 @@ class MolajoACLCore extends MolajoACL
         $component = $params[0];
         $section = $params[1];
 
-		if (defined('MOLAJO_PATH_ADMINISTRATOR')
-            && is_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml')) {
-			$xml = simplexml_load_file(MOLAJO_PATH_ADMINISTRATOR.'/components/'.$component.'/access.xml');
+		if (defined('MOLAJO_BASE_FOLDER')
+            && is_file(MOLAJO_BASE_FOLDER.'/components/'.$component.'/access.xml')) {
+			$xml = simplexml_load_file(MOLAJO_BASE_FOLDER.'/components/'.$component.'/access.xml');
 
 			foreach ($xml->children() as $child)
 			{

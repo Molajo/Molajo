@@ -46,7 +46,7 @@ abstract class MolajoHtmlSelect
 	 */
 	public static function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
 	{
-		$arr = array(MolajoHTML::_('select.option', '0', JText::_($no)), MolajoHTML::_('select.option', '1', JText::_($yes)));
+		$arr = array(MolajoHTML::_('select.option', '0', MolajoText::_($no)), MolajoHTML::_('select.option', '1', MolajoText::_($yes)));
 		return MolajoHTML::_('select.radiolist', $arr, $name, $attribs, 'value', 'text', (int) $selected, $id);
 	}
 
@@ -147,13 +147,13 @@ abstract class MolajoHtmlSelect
 	 *                            list.select: either the value of one selected option or an array
 	 *                            of selected options. Default: none.
 	 *                            list.translate: Boolean. If set, text and labels are translated via
-	 *                            JText::_().
+	 *                            MolajoText::_().
 	 *
 	 * @return  string  HTML for the select list
 	 *
 	 * @since   11.1
 	 *
-	 * @throws  JException If a group has unprocessable contents.
+	 * @throws  MolajoException If a group has unprocessable contents.
 	 */
 	public static function groupedlist($data, $name, $options = array())
 	{
@@ -241,7 +241,7 @@ abstract class MolajoHtmlSelect
 			}
 			else
 			{
-				throw new JException('Invalid group contents.', 1, E_WARNING);
+				throw new MolajoException('Invalid group contents.', 1, E_WARNING);
 			}
 
 			if ($noGroup)
@@ -448,7 +448,7 @@ abstract class MolajoHtmlSelect
 	 *                               -list.select: either the value of one selected option or an array
 	 *                                of selected options. Default: none.
 	 *                               -list.translate: Boolean. If set, text and labels are translated via
-	 *                                JText::_(). Default is false.
+	 *                                MolajoText::_(). Default is false.
 	 *                               -option.id: The property in each option array to use as the
 	 *                                selection id attribute. Defaults to none.
 	 *                               -option.key: The property in each option array to use as the
@@ -565,7 +565,7 @@ abstract class MolajoHtmlSelect
 			$key = (string) $key;
 			if ($options['groups'] && $key == '<OPTGROUP>')
 			{
-				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? JText::_($text) : $text) . '">' . $options['format.eol'];
+				$html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? MolajoText::_($text) : $text) . '">' . $options['format.eol'];
 				$baseIndent = str_repeat($options['format.indent'], ++$options['format.depth']);
 			}
 			elseif ($options['groups'] && $key == '</OPTGROUP>')
@@ -585,7 +585,7 @@ abstract class MolajoHtmlSelect
 
 				if ($options['list.translate'] && !empty($label))
 				{
-					$label = JText::_($label);
+					$label = MolajoText::_($label);
 				}
 				if ($options['option.label.toHtml'])
 				{
@@ -619,7 +619,7 @@ abstract class MolajoHtmlSelect
 
 				if ($options['list.translate'])
 				{
-					$text = JText::_($text);
+					$text = MolajoText::_($text);
 				}
 
 				// Generate the option, encoding as required
@@ -664,7 +664,7 @@ abstract class MolajoHtmlSelect
 		foreach ($data as $ind => $obj)
 		{
 			$k = $obj->$optKey;
-			$t = $translate ? JText::_($obj->$optText) : $obj->$optText;
+			$t = $translate ? MolajoText::_($obj->$optText) : $obj->$optText;
 			$id = (isset($obj->id) ? $obj->id : null);
 
 			$extra = '';

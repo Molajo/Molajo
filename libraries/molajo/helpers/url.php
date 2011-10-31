@@ -67,9 +67,9 @@ class MolajoURLHelper {
      */
     function checkURLExternal ($option_URL)
     {
-        if (substr($option_URL, 0, strlen(MOLAJO_PATH_ROOT)) == MOLAJO_PATH_ROOT) {
+        if (substr($option_URL, 0, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER) {
             return false;
-        } elseif ( (strtolower(substr($option_URL, 0, 3)) == 'www') && (substr($option_URL, 3, strlen(MOLAJO_PATH_ROOT)) == MOLAJO_PATH_ROOT)) {
+        } elseif ( (strtolower(substr($option_URL, 0, 3)) == 'www') && (substr($option_URL, 3, strlen(MOLAJO_BASE_FOLDER)) == MOLAJO_BASE_FOLDER)) {
             return false;
         } else {
             return true;
