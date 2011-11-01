@@ -268,9 +268,7 @@ class MolajoUser extends JObject
 	 */
 	public function setLastVisit($timestamp = null)
 	{
-		// Create the user table object
 		$table	= $this->getTable();
-        
 		$table->load($this->id);
 		return $table->setLastVisit($timestamp);
 	}
@@ -302,7 +300,7 @@ class MolajoUser extends JObject
 		// Set the default parampath if not set already
 		if (isset($parampath)) {
         } else {
-			$parampath = MOLAJO_BASE_FOLDER.'components/com_users/models';
+			$parampath = MOLAJO_EXTENSION_COMPONENTS.'com_users/models';
 		}
 
 		if ($loadsetupfile) {

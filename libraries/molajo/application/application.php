@@ -440,7 +440,7 @@ class MolajoApplication extends JObject
                 $component = $helper->findOption();
 			}
 
-			$request    = $this->getRequest();
+			$request    = $this->getRequest($component);
 
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
@@ -1118,7 +1118,7 @@ class MolajoApplication extends JObject
      *
      * @return bool
      */
-    protected function getRequest ()
+    protected function getRequest ($option)
     {
         /** initialization */
         $option = '';
@@ -1130,8 +1130,6 @@ class MolajoApplication extends JObject
         $component_table = '';
 
         /** 1. Option */
-        $option = JRequest::getCmd('option', null);
-
         $molajoConfig = new MolajoModelConfiguration ($option);
         if ($option == null) {
             $option = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION + (int) MOLAJO_APPLICATION_ID);
@@ -1142,7 +1140,10 @@ class MolajoApplication extends JObject
         }
 
         /** 2. Component Path */
+        echo MOLAJO_EXTENSION_COMPONENTS;
         $component_path = MOLAJO_EXTENSION_COMPONENTS.'/'.$option;
+        echo $component_path;
+        die;
         define('JPATH_COMPONENT', $component_path);
 
         /** 3. Task */

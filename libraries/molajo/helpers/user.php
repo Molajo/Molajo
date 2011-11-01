@@ -36,8 +36,8 @@ abstract class MolajoUserHelper
 		$user = new MolajoUser((int) $userId);
 
 		// Add the user to the group if necessary.
-		if (!in_array($groupId, $user->groups))
-		{
+		if (in_array($groupId, $user->groups)) {
+        } else {
 			// Get the title of the group.
 			$db	= MolajoFactory::getDbo();
 			$db->setQuery(
@@ -88,7 +88,6 @@ abstract class MolajoUserHelper
 	 */
 	public static function getUserGroups($userId)
 	{
-		// Get the user object.
 		$user = MolajoUser::getInstance((int) $userId);
 
 		return isset($user->groups) ? $user->groups : array();
@@ -267,9 +266,7 @@ abstract class MolajoUserHelper
 	 */
 	public static function getUserId($username)
 	{
-		// Initialise some variables
 		$db = MolajoFactory::getDbo();
-
 		$query = 'SELECT id FROM #__users WHERE username = '.$db->Quote($username);
 		$db->setQuery($query, 0, 1);
 		return $db->loadResult();
