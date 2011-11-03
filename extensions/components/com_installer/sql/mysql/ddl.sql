@@ -2,7 +2,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-
 -- -----------------------------------------------------
 -- Table `#__actions`
 -- -----------------------------------------------------
@@ -525,6 +524,20 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `#__application_extensions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `#__application_extensions` ;
+
+CREATE  TABLE IF NOT EXISTS `#__application_extensions` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `application_id` INT(11) NOT NULL ,
+  `extension_id` INT(11) NOT NULL ,
+  `extension_instance_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `#__sites`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `#__sites` ;
@@ -544,21 +557,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `#__site_application_extensions`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `#__site_application_extensions` ;
-
-CREATE  TABLE IF NOT EXISTS `#__site_application_extensions` (
-  `id` INT(11) NOT NULL ,
-  `site_id` INT(11) NOT NULL ,
-  `application_id` INT(11) NOT NULL ,
-  `extension_id` INT(11) NOT NULL ,
-  `extension_instance_id` INT(11) NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `#__content_categories`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `#__content_categories` ;
@@ -573,6 +571,19 @@ CREATE  TABLE IF NOT EXISTS `#__content_categories` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `#__site_applications`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `#__site_applications` ;
+
+CREATE  TABLE IF NOT EXISTS `#__site_applications` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `site_id` INT(11) NOT NULL ,
+  `application_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
 
 
 
