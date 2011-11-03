@@ -39,8 +39,8 @@ class ModulesModelModules extends JModelList
 				'ordering', 'a.ordering',
 				'module', 'a.module',
 				'language', 'a.language', 'language_title',
-				'publish_up', 'a.publish_up',
-				'publish_down', 'a.publish_down',
+				'start_publishing_datetime', 'a.start_publishing_datetime',
+				'stop_publishing_datetime', 'a.stop_publishing_datetime',
 				'application_id', 'a.application_id',
 				'position', 'a.position',
 				'pages',
@@ -207,7 +207,7 @@ class ModulesModelModules extends JModelList
 			$this->getState(
 				'list.select',
 				'a.id, a.title, a.note, a.position, a.module, a.language,' .
-				'a.checked_out, a.checked_out_time, a.published, a.access, a.ordering, a.publish_up, a.publish_down'
+				'a.checked_out, a.checked_out_time, a.published, a.access, a.ordering, a.start_publishing_datetime, a.stop_publishing_datetime'
 			)
 		);
 		$query->from('`#__modules` AS a');

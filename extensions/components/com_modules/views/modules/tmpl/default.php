@@ -136,7 +136,7 @@ $saveOrder	= $listOrder == 'ordering';
 					<?php endif; ?>
 				</td>
                 <td class="center">
-					<?php echo MolajoHTML::_('jgrid.published', $item->published, $i, 'modules.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
+					<?php echo MolajoHTML::_('jgrid.published', $item->published, $i, 'modules.', $canChange, 'cb', $item->start_publishing_datetime, $item->stop_publishing_datetime); ?>
 				</td>
 				<td class="left">
 					<?php echo $item->position; ?>

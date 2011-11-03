@@ -6,7 +6,6 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 define('MOLAJO_APPLICATION', basename(dirname(__FILE__)));
-define('MOLAJO_APPLICATION_DEFAULT_TEMPLATE', 'molajito');
 define('DS', DIRECTORY_SEPARATOR);
 
 $root = '';

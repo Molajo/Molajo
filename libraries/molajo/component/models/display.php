@@ -469,11 +469,11 @@ $items[$i]->checked_out = false;
                     $items[$i]->modified_pretty_date = '';
                 }
 
-                if (isset($items[$i]->publish_up)) {
-                    $items[$i]->published_ccyymmdd = $dateHelper->convertCCYYMMDD ($items[$i]->publish_up);
+                if (isset($items[$i]->start_publishing_datetime)) {
+                    $items[$i]->published_ccyymmdd = $dateHelper->convertCCYYMMDD ($items[$i]->start_publishing_datetime);
                     $items[$i]->published_n_days_ago = $dateHelper->differenceDays (date('Y-m-d'), $items[$i]->published_ccyymmdd);
                     $items[$i]->published_ccyymmdd = str_replace('-', '', $items[$i]->published_ccyymmdd);
-                    $items[$i]->published_pretty_date = $dateHelper->prettydate ($items[$i]->publish_up);
+                    $items[$i]->published_pretty_date = $dateHelper->prettydate ($items[$i]->start_publishing_datetime);
                 }  else {
                     $items[$i]->published_n_days_ago = '';
                     $items[$i]->published_ccyymmdd = '';
@@ -616,8 +616,8 @@ $items[$i]->checked_out = false;
 			$date = MolajoFactory::getDate();
 			$now = $date->toMySQL();
 			$nullDate = $db->getNullDate();
-			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
-			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
+			$query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
+			$query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
 */
         /** set view access criteria for site visitor **/
         $acl = new MolajoACL ();
@@ -843,7 +843,7 @@ $items[$i]->checked_out = false;
      */
     public function getMonthsPublish($table = null)
     {
-        return $this->getMonths('publish_up', $table);
+        return $this->getMonths('start_publishing_datetime', $table);
     }
 
    /**

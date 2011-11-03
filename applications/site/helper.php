@@ -1,8 +1,9 @@
 <?php
 /**
- * @version		$Id: helper.php 20196 2011-01-09 02:40:25Z ian $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Application
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
@@ -10,7 +11,7 @@ defined('MOLAJO') or die;
  * Molajo Site Helper
  *
  * @package		Molajo
- * @subpackage	Helper
+ * @subpackage	Application
  * @since       1.0
  */
 class MolajoSiteHelper extends MolajoHelper {}

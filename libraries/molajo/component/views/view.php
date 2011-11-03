@@ -435,7 +435,7 @@ class MolajoView extends JView
         }
 
         /** Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_MEDIA.'/system/'.$applicationName;
+        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$applicationName;
         $urlPath = JURI::root().'media/system/'.$applicationName;
 
         if (isset($this->params->load_application_css)

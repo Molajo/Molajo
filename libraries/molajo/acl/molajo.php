@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     $id: molajo.php
  * @package     Molajo
  * @subpackage  ACL
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.

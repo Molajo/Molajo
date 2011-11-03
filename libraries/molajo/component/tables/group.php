@@ -188,8 +188,8 @@ class MolajoTableGroup extends MolajoTable
          * Retrieve Groupings Impacted for Later Rebuild
          */
         $db->setQuery(
-            'SELECT DISTINCT grouping_id ' .
-            ' FROM #__group_to_groupings ' .
+            'SELECT DISTINCT view_group_id ' .
+            ' FROM #__group_view_groups ' .
             ' WHERE group_id IN ('.implode(',', $groupIds).')'
         );
 
@@ -203,11 +203,11 @@ class MolajoTableGroup extends MolajoTable
          * 1. #__groups
          * 2. #__user_groups
          * 3. #__permissions_groups
-         * 4. #__group_to_groupings
+         * 4. #__group_view_groups
          */
         // Delete Group to Groupings
         $db->setQuery(
-            'DELETE FROM #__group_to_groupings '.
+            'DELETE FROM #__group_view_groups '.
             ' WHERE group_id IN ('.implode(',', $groupIds).')'
         );
         if ($db->query()) {
@@ -218,9 +218,9 @@ class MolajoTableGroup extends MolajoTable
 
         // Retrieve Groupings that still remain
         $db->setQuery(
-            'SELECT DISTINCT grouping_id ' .
-            ' FROM #__group_to_groupings ' .
-            ' WHERE grouping_id IN ('.implode(',', $groupingIds).')'
+            'SELECT DISTINCT view_group_id ' .
+            ' FROM #__group_view_groups ' .
+            ' WHERE view_group_id IN ('.implode(',', $groupingIds).')'
         );
 
         $groupingIdsRemaining = $db->loadColumn();

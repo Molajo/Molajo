@@ -108,6 +108,7 @@ class MolajoApplication extends JObject
 		$this->_applicationId	    = MOLAJO_APPLICATION_ID;
 		$this->_name		        = MOLAJO_APPLICATION;
 
+/** todo: amy make certain the site has access to the application */
         /** Input Object */
         if (class_exists('JInput')) {
             $this->input = new JInput;
@@ -136,7 +137,7 @@ class MolajoApplication extends JObject
         if ($this->_name == 'installation') {
             $this->_createConfiguration();
         } else {
-		    $this->_createConfiguration(MOLAJO_SITE.'/'.$config['config_file']);
+		    $this->_createConfiguration(MOLAJO_SITE_PATH.'/'.$config['config_file']);
         }
 
         /** Application URI Base */
@@ -188,6 +189,13 @@ class MolajoApplication extends JObject
             if (defined('MOLAJO_APPLICATION_ID')) {
             } else {
                 define('MOLAJO_APPLICATION_ID', $info->id);
+            }
+
+            /** verify site is authorised to access this application */
+            $site = new MolajoSite ();
+            $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
+            if ($authorise === false) {
+                return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
             }
 
             $results = MolajoApplicationHelper::loadApplicationClasses();

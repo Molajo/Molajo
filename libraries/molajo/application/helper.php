@@ -1,32 +1,39 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @subpackage  Application Helper
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-//todo: amy set defaults per application
-
 /**
  * Molajo helper class.
  *
- * @package		Joomla.Administrator
+ * @package		Helper
  * @subpackage	Application
  */
 class MolajoHelper
 {
 	/**
-	 * Return the application option string
+	 * Verifies login requirement for application and default options
 	 *
-	 * @return	string		Option.
+	 * @return	string		option
 	 * @since	1.0
 	 */
 	public static function findOption()
 	{
-		$option = strtolower(JRequest::getCmd('option', ''));
+        $option = strtolower(JRequest::getCmd('option', ''));
+
+        if (MolajoFactory::getUser()->get('guest') === true
+            && MolajoFactory::getConfig()->get('application_logon_requirement', true) === true) {
+
+            $option = MolajoFactory::getConfig()->get('application_guest_option', 'com_login');
+
+        } elseif ($option == '') {
+            $option = MolajoFactory::getConfig()->get('application_default_option', 'com_dashboard');
+        }
+
 		JRequest::setVar('option', $option);
 		return $option;
 	}

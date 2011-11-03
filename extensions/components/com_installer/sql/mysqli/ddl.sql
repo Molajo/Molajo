@@ -44,7 +44,7 @@ CREATE  TABLE IF NOT EXISTS `#__assets` (
   `source_id` INT(11) UNSIGNED NOT NULL COMMENT 'Content Primary Key' ,
   `path` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL' ,
   `link` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.' ,
-  `view_group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__groupings table' ,
+  `view_group_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'FK to the #__view_groups table' ,
   `language` CHAR(7) NOT NULL DEFAULT 'en-GB' ,
   `translation_of_id` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
@@ -362,7 +362,7 @@ DROP TABLE IF EXISTS `#__group_view_groups` ;
 CREATE  TABLE IF NOT EXISTS `#__group_view_groups` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Group to Group Primary Key' ,
   `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'FK to the #__group table.' ,
-  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'FK to the #__groupings table.' ,
+  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'FK to the #__view_groups table.' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `idx_group_to_groupings_id` (`group_id` ASC, `view_group_id` ASC) ,
   INDEX `fk_molajo_group_to_groupings_molajo_groups1` (`group_id` ASC) ,
@@ -499,7 +499,7 @@ DROP TABLE IF EXISTS `#__user_view_groups` ;
 CREATE  TABLE IF NOT EXISTS `#__user_view_groups` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__users.id' ,
-  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__groupings.id' ,
+  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__view_groups.id' ,
   PRIMARY KEY (`id`, `user_id`, `view_group_id`) ,
   INDEX `fk_molajo_user_groupings_molajo_users1` (`user_id` ASC) ,
   INDEX `fk_molajo_user_groupings_molajo_groupings1` (`view_group_id` ASC) )

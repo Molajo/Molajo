@@ -26,7 +26,7 @@ class MolajoFieldPublish_up extends MolajoField
      */
     public function __construct() {
         parent::__construct();
-        parent::setFieldname ('publish_up');
+        parent::setFieldname ('start_publishing_datetime');
         parent::setRequestFilter ('integer');
 
         parent::setTableColumnSortable (true);
@@ -91,14 +91,14 @@ class MolajoFieldPublish_up extends MolajoField
     {
         if ($onlyWhereClause) {
         } else {
-            $query->select('a.publish_up');
+            $query->select('a.start_publishing_datetime');
         }
 
         if (trim($value) == '') {
             return;
         }
         $db = $this->getDbo();
-        $query->where('SUBSTRING(a.publish_up, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.start_publishing_datetime, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
     }
 
     /**
@@ -117,11 +117,11 @@ class MolajoFieldPublish_up extends MolajoField
             $render['sortable'] = true;
             $render['checkbox'] = false;
             $render['data_type'] = 'date';
-            $render['column_name'] = 'publish_up';
-            if ($item->publish_up == 0) {
+            $render['column_name'] = 'start_publishing_datetime';
+            if ($item->start_publishing_datetime == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->publish_up, MolajoText::_('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->start_publishing_datetime, MolajoText::_('DATE_FORMAT_LC4'));
             }
 
             return $render;

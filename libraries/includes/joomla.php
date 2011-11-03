@@ -13,13 +13,13 @@ defined('MOLAJO') or die;
 define('_JEXEC', 1);
 define('JPATH_BASE',		    MOLAJO_BASE_FOLDER);
 define('JPATH_ROOT',		    MOLAJO_BASE_FOLDER);
-define('JPATH_CONFIGURATION',	MOLAJO_SITE);
+define('JPATH_CONFIGURATION',	MOLAJO_SITE_PATH);
 define('JPATH_LIBRARIES',		LIBRARIES);
 define('JOOMLA_LIBRARY',		MOLAJO_BASE_FOLDER.'/libraries/jplatform/joomla');
 define('JPATH_SITE',			MOLAJO_BASE_FOLDER);
 define('JPATH_ADMINISTRATOR',	MOLAJO_BASE_FOLDER);
 define('JPATH_PLUGINS',			MOLAJO_EXTENSION_PLUGINS);
-define('JPATH_CACHE',			MOLAJO_SITE_CACHE);
+define('JPATH_CACHE',			MOLAJO_SITE_PATH_CACHE);
 define('JPATH_MANIFESTS',		MOLAJO_EXTENSION_MANIFESTS);
 define('JPATH_THEMES',          MOLAJO_EXTENSION_TEMPLATES);
 
@@ -31,6 +31,7 @@ require_once MOLAJO_LIBRARY.'/application/error.php';
 require_once MOLAJO_LIBRARY.'/application/exception.php';
 require_once MOLAJO_LIBRARY.'/application/text.php';
 require_once JOOMLA_LIBRARY.'/registry/registry.php';
+
 
 $filehelper = new MolajoFileHelper();
 
@@ -49,6 +50,7 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/language.php', 'MolajoLanguage');
 
 /**
  *  Application

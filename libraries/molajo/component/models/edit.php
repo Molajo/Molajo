@@ -298,8 +298,8 @@ class MolajoModelEdit extends JModel
     protected function prepareTable($table)
     {
         /** publish up defaults to now **/
-        if($table->state == 1 && intval($table->publish_up) == 0) {
-            $table->publish_up = MolajoFactory::getDate()->toMySQL();
+        if($table->state == 1 && intval($table->start_publishing_datetime) == 0) {
+            $table->start_publishing_datetime = MolajoFactory::getDate()->toMySQL();
         }
 
         /** version **/

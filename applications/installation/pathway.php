@@ -1,17 +1,17 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Pathway
- * @copyright   Copyright (C) 2011 Babs Gösgens. All rights reserved.
+ * @subpackage  Application
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Class to manage the site application pathway.
+ * Molajo Installation Pathway
  *
  * @package		Molajo
- * @subpackage	Pathway
- * @since		1.0
+ * @subpackage	Application
+ * @since       1.0
  */
 class MolajoInstallationPathway extends MolajoPathway {}

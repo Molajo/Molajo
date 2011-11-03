@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Class to manage the session
  *
- * The user's session for the application.
+ * Users session for the application.
  *
  * @package     Molajo
  * @subpackage  Application
@@ -80,7 +80,7 @@ class MolajoSessionHelper extends JObject
         $db = MolajoFactory::getDBO();
         $db->setQuery(
             'DELETE FROM `#__session`' .
-            ' WHERE `time` < '.(int) (time() - $this->_session->getExpire())
+            ' WHERE `session_time` < '.(int) (time() - $this->_session->getExpire())
         );
         $db->query();
     }
@@ -115,13 +115,13 @@ class MolajoSessionHelper extends JObject
 
         if ($session->isNew()) {
             $db->setQuery(
-                'INSERT INTO `#__session` (`session_id`, `application_id`, `time`)' .
+                'INSERT INTO `#__session` (`session_id`, `application_id`, `session_time`)' .
                 ' VALUES ('.$db->quote($session->getId()).', '.(int) MOLAJO_APPLICATION_ID.', '.(int) time().')'
             );
 
         } else {
             $db->setQuery(
-                'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `time`, `userid`, `username`)' .
+                'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `session_time`, `userid`, `username`)' .
                 ' VALUES ('.
                 $db->quote($session->getId()).', '.
                 (int) MOLAJO_APPLICATION_ID.', '.

@@ -7,13 +7,16 @@
  */
 defined('MOLAJO') or die;
 
-if (defined('MOLAJO_APPLICATIONS_PATH')) { } else { define('MOLAJO_APPLICATIONS_PATH', MOLAJO_BASE_FOLDER.'/applications'); }
+if (defined('MOLAJO_SITES_PATH')) { } else { define('MOLAJO_SITES_PATH', MOLAJO_BASE_FOLDER.'/sites'); }
+if (defined('MOLAJO_SITE_PATH')) { } else { define('MOLAJO_SITE_PATH', MOLAJO_SITES_PATH.'/'.MOLAJO_SITE); }
 
-if (defined('MOLAJO_SITE_CACHE')) { } else { define('MOLAJO_SITE_CACHE', MOLAJO_SITE.'/cache'); }
-if (defined('MOLAJO_SITE_IMAGES')) { } else { define('MOLAJO_SITE_IMAGES', MOLAJO_SITE.'/images'); }
-if (defined('MOLAJO_SITE_LOGS')) { } else { define('MOLAJO_SITE_LOGS', MOLAJO_SITE.'/logs'); }
-if (defined('MOLAJO_SITE_MEDIA')) { } else { define('MOLAJO_SITE_MEDIA', MOLAJO_SITE.'/media'); }
-if (defined('MOLAJO_SITE_TMP')) { } else { define('MOLAJO_SITE_TMP', MOLAJO_SITE.'/tmp'); }
+if (defined('MOLAJO_SITE_PATH_CACHE')) { } else { define('MOLAJO_SITE_PATH_CACHE', MOLAJO_SITE_PATH.'/cache'); }
+if (defined('MOLAJO_SITE_PATH_IMAGES')) { } else { define('MOLAJO_SITE_PATH_IMAGES', MOLAJO_SITE_PATH.'/images'); }
+if (defined('MOLAJO_SITE_PATH_LOGS')) { } else { define('MOLAJO_SITE_PATH_LOGS', MOLAJO_SITE_PATH.'/logs'); }
+if (defined('MOLAJO_SITE_PATH_MEDIA')) { } else { define('MOLAJO_SITE_PATH_MEDIA', MOLAJO_SITE_PATH.'/media'); }
+if (defined('MOLAJO_SITE_PATH_TMP')) { } else { define('MOLAJO_SITE_PATH_TMP', MOLAJO_SITE_PATH.'/tmp'); }
+
+if (defined('MOLAJO_APPLICATIONS_PATH')) { } else { define('MOLAJO_APPLICATIONS_PATH', MOLAJO_BASE_FOLDER.'/applications'); }
 
 if (defined('MOLAJO_EXTENSIONS')) { } else { define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER.'/extensions'); }
 if (defined('MOLAJO_EXTENSION_COMPONENTS')) { } else { define('MOLAJO_EXTENSION_COMPONENTS', MOLAJO_EXTENSIONS.'/components'); }

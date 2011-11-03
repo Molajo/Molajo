@@ -194,7 +194,7 @@
         </field>
 
         <field
-            name="publish_up"
+            name="start_publishing_datetime"
             type="calendar"
             label="MOLAJO_FIELD_PUBLISH_UP_LABEL"
             description="MOLAJO_FIELD_PUBLISH_UP_DESC"
@@ -205,7 +205,7 @@
         />
 
         <field
-            name="publish_down"
+            name="stop_publishing_datetime"
             type="calendar"
             label="MOLAJO_FIELD_PUBLISH_DOWN_LABEL"
             description="MOLAJO_FIELD_PUBLISH_DOWN_DESC"

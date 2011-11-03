@@ -140,8 +140,8 @@ class MolajoImageHelper
         $query->select('content_file');
         $query->from('#__media a');
         $query->where('a.published = 1');
-        $query->where('(a.publish_up = '.$db->Quote($nullDate).' OR a.publish_up <= '.$db->Quote($now).')');
-        $query->where('(a.publish_down = '.$db->Quote($nullDate).' OR a.publish_down >= '.$db->Quote($now).')');
+        $query->where('(a.start_publishing_datetime = '.$db->Quote($nullDate).' OR a.start_publishing_datetime <= '.$db->Quote($now).')');
+        $query->where('(a.stop_publishing_datetime = '.$db->Quote($nullDate).' OR a.stop_publishing_datetime >= '.$db->Quote($now).')');
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'a'));

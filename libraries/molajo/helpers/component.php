@@ -130,20 +130,39 @@ class MolajoComponentHelper
 	 */
 	protected static function _load($option)
 	{
-
 		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
+        $date = MolajoFactory::getDate();
+        $now = $date->toMySQL();
+        $nullDate = $db->getNullDate();
 
-		$query->select($db->namequote('extension_id').' as "id"');
-		$query->select($db->namequote('element').' as "option"');
-		$query->select($db->namequote('params'));
-		$query->select($db->namequote('enabled'));
-		$query->select($db->namequote('asset_id'));
-		$query->from($db->namequote('#__extensions'));
-		$query->where($db->namequote('type').' = '.$db->quote('component'));
-		$query->where($db->namequote('element').' = '.$db->quote($option));
-		$query->where($db->namequote('enabled').' = 1');
-		$query->where('application_id = '.MOLAJO_APPLICATION_ID);
+		$query->select('a.'.$db->namequote('id'));
+		$query->select('a.'.$db->namequote('parameters'));
+		$query->select('a.'.$db->namequote('enabled'));
+		$query->select('a.'.$db->namequote('asset_id'));
+
+		$query->from($db->namequote('#__extension_instances as a'));
+
+        $query->where('a.'.$db->namequote('extension_type_id').' = 1');
+        $query->where('a.'.$db->namequote('status').' = '.MOLAJO_STATE_PUBLISHED);
+        $query->where('(a.start_publishing_datetime = '.$db->Quote($nullDate).' OR a.start_publishing_datetime <= '.$db->Quote($now).')');
+        $query->where('(a.stop_publishing_datetime = '.$db->Quote($nullDate).' OR a.stop_publishing_datetime >= '.$db->Quote($now).')');
+
+        /** extensions table */
+        $query->select('b.'.$db->namequote('name').' as "option"');
+		$query->from($db->namequote('#__extensions as b'));
+		$query->where('b.'.$db->namequote('id').' = a.'.$db->namequote('extension_id'));
+
+        /** application extensions */
+		$query->from($db->namequote('#__molajo_application_extensions as c'));
+		$query->where('c.'.$db->namequote('application_id').' = '.MOLAJO_APPLICATION_ID);
+		$query->where('c.'.$db->namequote('extension_id').' = b.'.$db->namequote('id'));
+		$query->where('c.'.$db->namequote('extension_instance_id').' = a.'.$db->namequote('id'));
+
+        /** site applications */
+		$query->from($db->namequote('#__molajo_site_applications as d'));
+		$query->where('c.'.$db->namequote('site_id').' = '.MOLAJO_SITE_ID);
+		$query->where('c.'.$db->namequote('application_id').' = '.MOLAJO_APPLICATION_ID);
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));

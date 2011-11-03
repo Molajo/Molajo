@@ -24,12 +24,12 @@ if (MOLAJO_APPLICATION == 'installation') {
     define('JDEBUG', false);
 } else {
 
-    if (file_exists(MOLAJO_SITE.'/configuration.php')) {
+    if (file_exists(MOLAJO_SITE_PATH.'/configuration.php')) {
     } else {
         echo 'Molajo configuration.php File Missing';
         exit;
     }
-    require_once MOLAJO_SITE.'/configuration.php';
+    require_once MOLAJO_SITE_PATH.'/configuration.php';
 
     $CONFIG = new MolajoConfig();
     if (@$CONFIG->error_reporting === 0) {

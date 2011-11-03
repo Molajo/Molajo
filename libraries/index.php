@@ -33,7 +33,7 @@ if (defined('MOLAJO_SITE')) {
     for ($i = 1; $i < $count + 1; $i++) {
         $fieldName = 'site'.$i;
         if ($siteURL == $xml->$fieldName) {
-            define('MOLAJO_SITE', MOLAJO_BASE_FOLDER.'/sites/'.$i);
+            define('MOLAJO_SITE', $i);
             break;
         }
     }
@@ -67,13 +67,25 @@ require_once LIBRARIES.'/includes/overrides.php';
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
- *  Instantiate
+ *  Get Site
  */
-$app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
-JDEBUG ? $_PROFILER->mark('afterInstantiate') : null;
+$site = MolajoFactory::getSite(MOLAJO_SITE);
+JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
 
 /**
- *  Initialize
+ *  Initialize Site
+ */
+$site->initialise();
+JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
+
+/**
+ *  Get Application
+ */
+$app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
+JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
+
+/**
+ *  Initialize Application
  */
 $app->initialise();
 JDEBUG ? $_PROFILER->mark('afterInitialise') : null;

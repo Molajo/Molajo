@@ -1243,7 +1243,7 @@
                 query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                 key_field="option_value"
                 value_field="option_value_literal"
-                default="publish_up"
+                default="start_publishing_datetime"
                 label="MOLAJO_CONFIG_MANAGER_GRID_COLUMN5_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_GRID_COLUMN5_DESC"
                 >
@@ -1256,7 +1256,7 @@
                 query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                 key_field="option_value"
                 value_field="option_value_literal"
-                default="publish_down"
+                default="stop_publishing_datetime"
                 label="MOLAJO_CONFIG_MANAGER_GRID_COLUMN6_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_GRID_COLUMN6_DESC"
                 >
@@ -2113,7 +2113,7 @@
                 query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                 key_field="option_value"
                 value_field="option_value_literal"
-                default="publish_up"
+                default="start_publishing_datetime"
                 label="MOLAJO_CONFIG_MANAGER_EDITOR_RIGHT_PUBLISHING_COLUMN4_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_EDITOR_RIGHT_PUBLISHING_COLUMN4_DESC"
                 >
@@ -2126,7 +2126,7 @@
                 query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                 key_field="option_value"
                 value_field="option_value_literal"
-                default="publish_down"
+                default="stop_publishing_datetime"
                 label="MOLAJO_CONFIG_MANAGER_EDITOR_RIGHT_PUBLISHING_COLUMN5_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_EDITOR_RIGHT_PUBLISHING_COLUMN5_DESC"
                 >

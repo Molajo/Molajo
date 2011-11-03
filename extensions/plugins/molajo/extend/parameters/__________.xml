@@ -56,7 +56,7 @@
 		</field>
 
 		<field
-                    name="xyzxyz_publish_up_criteria"
+                    name="xyzxyz_start_publishing_datetime_criteria"
                     type="calendar"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISH_UP_DESC"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISH_UP_LABEL"
@@ -64,7 +64,7 @@
                     />
 
 		<field
-                    name="xyzxyz_publish_down_criteria"
+                    name="xyzxyz_stop_publishing_datetime_criteria"
                     type="calendar"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISH_DOWN_DESC"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISH_DOWN_LABEL"

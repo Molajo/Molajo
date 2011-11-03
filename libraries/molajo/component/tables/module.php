@@ -44,11 +44,11 @@ class MolajoTableModule extends MolajoTable
 		}
 
 		// Check the publish down date is not earlier than publish up.
-		if (intval($this->publish_down) > 0 && $this->publish_down < $this->publish_up) {
+		if (intval($this->stop_publishing_datetime) > 0 && $this->stop_publishing_datetime < $this->start_publishing_datetime) {
 			// Swap the dates.
-			$temp = $this->publish_up;
-			$this->publish_up = $this->publish_down;
-			$this->publish_down = $temp;
+			$temp = $this->start_publishing_datetime;
+			$this->start_publishing_datetime = $this->stop_publishing_datetime;
+			$this->stop_publishing_datetime = $temp;
 		}
 
 		return true;

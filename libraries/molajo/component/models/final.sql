@@ -70,10 +70,10 @@ INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
   SELECT DISTINCT `group_id`,`asset_id`,`action_id`
     FROM `#__temp_permissions`;
 
-INSERT INTO `#__permissions_groupings` ( `grouping_id`, `asset_id`, `action_id`)
-  SELECT DISTINCT b.grouping_id, a.asset_id, a.action_id
+INSERT INTO `#__view_group_permissions` ( `view_group_id`, `asset_id`, `action_id`)
+  SELECT DISTINCT b.view_group_id, a.asset_id, a.action_id
   FROM `#__temp_permissions` a,
-    `#__group_to_groupings` b
+    `#__group_view_groups` b
   WHERE a.group_id = b.group_id;
 
 DROP TABLE `#__temp_permissions`;

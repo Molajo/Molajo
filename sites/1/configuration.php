@@ -14,7 +14,7 @@ class MolajoConfig {
 	public $host = 'localhost';					// This is normally set to localhost
 	public $user = 'root';						// MySQL username
 	public $password = 'root';					// MySQL password
-	public $db = 'amy';						// MySQL database name
+	public $db = 'molajo';						// MySQL database name
 	public $dbprefix = 'molajo_';					// Prefix change to something unique
 
 	/* Server Settings */

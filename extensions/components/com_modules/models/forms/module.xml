@@ -60,7 +60,7 @@
 			<option value="-2">JTRASHED</option>
 		</field>
 
-		<field name="publish_up" type="calendar"
+		<field name="start_publishing_datetime" type="calendar"
 			description="COM_MODULES_FIELD_PUBLISH_UP_DESC"
 			filter="user_utc"
 			format="%Y-%m-%d %H:%M:%S"
@@ -68,7 +68,7 @@
 			size="22"
 		/>
 
-		<field name="publish_down" type="calendar"
+		<field name="stop_publishing_datetime" type="calendar"
 			description="COM_MODULES_FIELD_PUBLISH_DOWN_DESC"
 			filter="user_utc"
 			format="%Y-%m-%d %H:%M:%S"

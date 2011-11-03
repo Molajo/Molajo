@@ -35,7 +35,7 @@ class MolajoRouter extends JObject
         $query = $db->getQuery(true);
         $query->select('MIN(id)');
         $query->from($tableParam);
-        $query->where('publish_up like "'.$ccyy.'-'.$mm.'-'.$dd.'%"');
+        $query->where('start_publishing_datetime like "'.$ccyy.'-'.$mm.'-'.$dd.'%"');
         $query->where('alias = '.$db->Quote($alias));
         $query->where('state > -10');
     
@@ -67,7 +67,7 @@ class MolajoRouter extends JObject
 		);
 
 /** amy add more documentation and options for the WP URLs here */
-        $timestamp = JHTML::_('date', $data->publish_up, 'U');
+        $timestamp = JHTML::_('date', $data->start_publishing_datetime, 'U');
 
 		$link = 'index.php?option='.$componentOptionParam.
                 '&view='.$singleItemParam.

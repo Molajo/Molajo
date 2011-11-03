@@ -252,15 +252,15 @@ class ModulesModelModule extends JModelAdmin
 			// Disable fields for display.
 			$form->setFieldAttribute('ordering', 'disabled', 'true');
 			$form->setFieldAttribute('published', 'disabled', 'true');
-			$form->setFieldAttribute('publish_up', 'disabled', 'true');
-			$form->setFieldAttribute('publish_down', 'disabled', 'true');
+			$form->setFieldAttribute('start_publishing_datetime', 'disabled', 'true');
+			$form->setFieldAttribute('stop_publishing_datetime', 'disabled', 'true');
 
 			// Disable fields while saving.
 			// The controller has already verified this is a record you can edit.
 			$form->setFieldAttribute('ordering', 'filter', 'unset');
 			$form->setFieldAttribute('published', 'filter', 'unset');
-			$form->setFieldAttribute('publish_up', 'filter', 'unset');
-			$form->setFieldAttribute('publish_down', 'filter', 'unset');
+			$form->setFieldAttribute('start_publishing_datetime', 'filter', 'unset');
+			$form->setFieldAttribute('stop_publishing_datetime', 'filter', 'unset');
 		}
 
 		return $form;

@@ -127,15 +127,15 @@ abstract class MolajoHtmlJGrid
 	 * @param   string|array  $prefix        An optional task prefix or an array of options
 	 * @param   boolean       $enabled       An optional setting for access control on the action.
 	 * @param   string        $checkbox      An optional prefix for checkboxes.
-	 * @param   string        $publish_up    An optional start publishing date.
-	 * @param   string        $publish_down  An optional finish publishing date.
+	 * @param   string        $start_publishing_datetime    An optional start publishing date.
+	 * @param   string        $stop_publishing_datetime  An optional finish publishing date.
 	 *
 	 * @return  string  The Html code
 	 *
 	 * @see     MolajoHTMLJGrid::state
 	 * @since   11.1
 	 */
-	public static function published($value, $i, $prefix = '', $enabled = true, $checkbox = 'cb', $publish_up = null, $publish_down = null)
+	public static function published($value, $i, $prefix = '', $enabled = true, $checkbox = 'cb', $start_publishing_datetime = null, $stop_publishing_datetime = null)
 	{
 		if (is_array($prefix))
 		{
@@ -150,25 +150,25 @@ abstract class MolajoHtmlJGrid
 			-2 => array('publish', 'JTRASHED', 'JLIB_HTML_PUBLISH_ITEM', 'JTRASHED', false, 'trash', 'trash'));
 
 		// Special state for dates
-		if ($publish_up || $publish_down)
+		if ($start_publishing_datetime || $stop_publishing_datetime)
 		{
 			$nullDate = JFactory::getDBO()->getNullDate();
 			$nowDate = JFactory::getDate()->toUnix();
 
 			$tz = new DateTimeZone(JFactory::getUser()->getParam('timezone', JFactory::getConfig()->get('offset')));
 
-			$publish_up = ($publish_up != $nullDate) ? JFactory::getDate($publish_up, 'UTC')->setTimeZone($tz) : false;
-			$publish_down = ($publish_down != $nullDate) ? JFactory::getDate($publish_down, 'UTC')->setTimeZone($tz) : false;
+			$start_publishing_datetime = ($start_publishing_datetime != $nullDate) ? JFactory::getDate($start_publishing_datetime, 'UTC')->setTimeZone($tz) : false;
+			$stop_publishing_datetime = ($stop_publishing_datetime != $nullDate) ? JFactory::getDate($stop_publishing_datetime, 'UTC')->setTimeZone($tz) : false;
 
 			// Create tip text, only we have publish up or down settings
 			$tips = array();
-			if ($publish_up)
+			if ($start_publishing_datetime)
 			{
-				$tips[] = MolajoText::sprintf('JLIB_HTML_PUBLISHED_START', $publish_up->format(JDate::$format, true));
+				$tips[] = MolajoText::sprintf('JLIB_HTML_PUBLISHED_START', $start_publishing_datetime->format(JDate::$format, true));
 			}
-			if ($publish_down)
+			if ($stop_publishing_datetime)
 			{
-				$tips[] = MolajoText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $publish_down->format(JDate::$format, true));
+				$tips[] = MolajoText::sprintf('JLIB_HTML_PUBLISHED_FINISHED', $stop_publishing_datetime->format(JDate::$format, true));
 			}
 			$tip = empty($tips) ? false : implode('<br/>', $tips);
 
@@ -179,12 +179,12 @@ abstract class MolajoHtmlJGrid
 				if ($key == 1)
 				{
 					$states[$key][2] = $states[$key][3] = 'JLIB_HTML_PUBLISHED_ITEM';
-					if ($publish_up && $nowDate < $publish_up->toUnix())
+					if ($start_publishing_datetime && $nowDate < $start_publishing_datetime->toUnix())
 					{
 						$states[$key][2] = $states[$key][3] = 'JLIB_HTML_PUBLISHED_PENDING_ITEM';
 						$states[$key][5] = $states[$key][6] = 'pending';
 					}
-					if ($publish_down && $nowDate > $publish_down->toUnix())
+					if ($stop_publishing_datetime && $nowDate > $stop_publishing_datetime->toUnix())
 					{
 						$states[$key][2] = $states[$key][3] = 'JLIB_HTML_PUBLISHED_EXPIRED_ITEM';
 						$states[$key][5] = $states[$key][6] = 'expired';

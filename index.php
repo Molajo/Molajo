@@ -8,12 +8,9 @@
 if (defined('MOLAJO_APPLICATION')) {
 } else {
     define('MOLAJO_APPLICATION', 'site');
-    define('MOLAJO_APPLICATION_DEFAULT_TEMPLATE', 'construct');
     define('DS', DIRECTORY_SEPARATOR);
 }
-
-/** Long live Molajo. */
-define('MOLAJO', 'molajo');
+define('MOLAJO', 'Long Live Molajo!');
 
 /** Base Folder and URL */
 define('MOLAJO_BASE_FOLDER', strtolower(dirname(__FILE__)));

@@ -13,11 +13,11 @@ defined('MOLAJO') or die;
 define('INSTALL_CHECK', false);
 if (MOLAJO_APPLICATION == 'installation'
     || (INSTALL_CHECK === false
-            && file_exists(MOLAJO_SITE.'/configuration.php')) ) {
+            && file_exists(MOLAJO_SITE_PATH.'/configuration.php')) ) {
 
 } else {
-    if (!file_exists(MOLAJO_SITE.'/configuration.php')
-        || filesize(MOLAJO_SITE.'/configuration.php' < 10)
+    if (!file_exists(MOLAJO_SITE_PATH.'/configuration.php')
+        || filesize(MOLAJO_SITE_PATH.'/configuration.php' < 10)
         || file_exists(MOLAJO_SITE_INSTALLATION.'/index.php')) {
 
         if (MOLAJO_APPLICATION == 'site') {

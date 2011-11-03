@@ -41,12 +41,12 @@ class modContentHelper
         $query->join('LEFT','#__categories AS b ON b.id = a.catid');
 
         $query->where('a.published = 1');
-        $query->where('(a.publish_up = '.$db->Quote($nullDate).' OR a.publish_up <= '.$db->Quote($now).')');
-        $query->where('(a.publish_down = '.$db->Quote($nullDate).' OR a.publish_down >= '.$db->Quote($now).')');
+        $query->where('(a.start_publishing_datetime = '.$db->Quote($nullDate).' OR a.start_publishing_datetime <= '.$db->Quote($now).')');
+        $query->where('(a.stop_publishing_datetime = '.$db->Quote($nullDate).' OR a.stop_publishing_datetime >= '.$db->Quote($now).')');
 
         $query->where('b.published = 1');
-        $query->where('(b.publish_up = '.$db->Quote($nullDate).' OR b.publish_up <= '.$db->Quote($now).')');
-        $query->where('(b.publish_down = '.$db->Quote($nullDate).' OR b.publish_down >= '.$db->Quote($now).')');
+        $query->where('(b.start_publishing_datetime = '.$db->Quote($nullDate).' OR b.start_publishing_datetime <= '.$db->Quote($now).')');
+        $query->where('(b.stop_publishing_datetime = '.$db->Quote($nullDate).' OR b.stop_publishing_datetime >= '.$db->Quote($now).')');
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));

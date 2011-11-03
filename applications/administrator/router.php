@@ -1,52 +1,17 @@
 <?php
 /**
- * @version		$Id: router.php 21097 2011-04-07 15:38:03Z dextercowley $
- * @package		Joomla.Administrator
- * @subpackage	Application
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Application
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access
 defined('MOLAJO') or die;
 
 /**
- * Class to create and parse routes
+ * Molajo Administrator Router
  *
- * @package		Joomla.Administrator
- * @since		1.5
+ * @package		Molajo
+ * @subpackage	Application
+ * @since       1.0
  */
-class MolajoAdministratorRouter extends MolajoRouter
-{
-	/**
-	 * Function to convert a route to an internal URI
-	 */
-	public function parse(&$uri)
-	{
-		return array();
-	}
-
-	/**
-	 * Function to convert an internal URI to a route
-	 *
-	 * @param	string	$uri	The internal URL
-	 *
-	 * @return	string	The absolute search engine friendly URL
-	 * @since	1.0
-	 */
-	function build($url)
-	{
-		// Create the URI object
-		$uri = parent::build($url);
-
-		// Get the path data
-		$route = $uri->getPath();
-
-		//Add basepath to the uri
-		$uri->setPath(JURI::base(true).'/'.$route);
-
-		return $uri;
-	}
-}
-
-
+class MolajoAdministratorRouter extends MolajoRouter {}

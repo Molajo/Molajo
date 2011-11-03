@@ -142,10 +142,10 @@ class MolajoTableContent extends MolajoTable
         }
 
         /** publish up and down dates **/
-        if (intval($this->publish_down) > 0 && $this->publish_down < $this->publish_up) {
-            $temp = $this->publish_up;
-            $this->publish_up = $this->publish_down;
-            $this->publish_down = $temp;
+        if (intval($this->stop_publishing_datetime) > 0 && $this->stop_publishing_datetime < $this->start_publishing_datetime) {
+            $temp = $this->start_publishing_datetime;
+            $this->start_publishing_datetime = $this->stop_publishing_datetime;
+            $this->stop_publishing_datetime = $temp;
         }
 
         /** standard cleanup: eliminate extra spaces between phrases, remove cr (\r) and lf (\n) characters from string **/
@@ -185,10 +185,10 @@ class MolajoTableContent extends MolajoTable
             $this->modified	= $date->toMySQL();
             $this->modified_by	= $user->get('id');
 
-            if (intval($this->publish_down) > 0 && $this->publish_down < $this->publish_up) {
-                $temp = $this->publish_up;
-                $this->publish_up = $this->publish_down;
-                $this->publish_down = $temp;
+            if (intval($this->stop_publishing_datetime) > 0 && $this->stop_publishing_datetime < $this->start_publishing_datetime) {
+                $temp = $this->start_publishing_datetime;
+                $this->start_publishing_datetime = $this->stop_publishing_datetime;
+                $this->stop_publishing_datetime = $temp;
             }
 
         } else {

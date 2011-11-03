@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  MolajoFactory
+ * @subpackage  Factory
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -16,6 +16,7 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoFactory
 {
+	public static $site = null;
 	public static $application = null;
 	public static $cache = null;
 	public static $config = null;
@@ -26,19 +27,42 @@ abstract class MolajoFactory
 	public static $database = null;
 	public static $mailer = null;
 
+    /**
+     * Get a site object
+     *
+     * Returns the global Site object
+     *
+     * @param   mixed   $id     Site identifier or name
+     * @param   array   $config Optional associative array of configuration settings
+     * @param   string  $prefix Site prefix
+     *
+     * @return application	object
+     */
+    public static function getSite($id = null, $config = array(), $prefix='Molajo')
+    {
+        if (self::$site) {
+        } else {
+            if ($id) {
+            } else {
+                MolajoError::raiseError(500, 'Site Instantiation Error');
+            }
+            self::$site = MolajoSite::getInstance($id, $config, $prefix);
+        }
+
+        return self::$site;
+    }
+
 	/**
 	 * Get a application object
 	 *
-	 * Returns the global {@link MolajoApplication} object, only creating it
+	 * Returns the global Application object, only creating it
 	 * if it doesn't already exist.
 	 *
-	 * @param   mixed   $id     A Application identifier or name.
-	 * @param   array   $config An optional associative array of configuration settings.
-	 * @param   string  $prefix An Application prefix
+	 * @param   mixed   $id     Application identifier or name
+	 * @param   array   $config Optional associative array of configuration settings
+	 * @param   string  $prefix Application prefix
 	 *
-	 * @return MolajoApplication	object
-	 *
-	 * @see    MolajoApplication
+	 * @return application	object
 	 */
 	public static function getApplication($id = null, $config = array(), $prefix='Molajo')
 	{
@@ -57,22 +81,20 @@ abstract class MolajoFactory
 	/**
 	 * Get a configuration object
 	 *
-	 * Returns the global {@link JRegistry} object, only creating it
+	 * Returns the global configuration object, creating it
 	 * if it doesn't already exist.
 	 *
-	 * @param string $file The path to the configuration file
-	 * @param string $type The type of the configuration file
+	 * @param string $file Path to the configuration file
+	 * @param string $type Type of the configuration file
 	 *
-	 * @see JRegistry
-	 *
-	 * @return JRegistry object
+	 * @return configuration object
 	 */
 	public static function getConfig($file = null, $type = 'PHP')
 	{
 		if (self::$config) {
         } else {
 			if ($file === null) {
-				$file = MOLAJO_SITE.'/configuration.php';
+				$file = MOLAJO_SITE_PATH.'/configuration.php';
 			}
 
 			self::$config = self::_createConfig($file, $type);
@@ -84,14 +106,12 @@ abstract class MolajoFactory
 	/**
 	 * Get a session object
 	 *
-	 * Returns the global {@link MolajoSession} object, only creating it
+	 * Returns the global session object, creating it
 	 * if it doesn't already exist.
 	 *
 	 * @param   array  $options  An array containing session options
 	 *
-	 * @see MolajoSession
-	 *
-	 * @return MolajoSession object
+	 * @return session object
 	 */
 	public static function getSession($options = array())
 	{
@@ -106,12 +126,10 @@ abstract class MolajoFactory
 	/**
 	 * Get a language object
 	 *
-	 * Returns the global {@link MolajoLanguage} object, only creating it
+	 * Returns the global language object, creating it
 	 * if it doesn't already exist.
 	 *
-	 * @see MolajoLanguage
-	 *
-	 * @return MolajoLanguage object
+	 * @return language object
 	 */
 	public static function getLanguage()
 	{
@@ -126,10 +144,9 @@ abstract class MolajoFactory
 	/**
 	 * Get a document object
 	 *
-	 * Returns the global {@link MolajoDocument} object, only creating it
-	 * if it doesn't already exist.
+	 * Returns the global document object
 	 *
-	 * @return MolajoDocument object
+	 * @return document object
 	 */
 	public static function getDocument()
 	{
@@ -144,13 +161,14 @@ abstract class MolajoFactory
 	/**
 	 * Get an user object
 	 *
-	 * Returns the global {@link MolajoUser} object, only creating it
-	 * if it doesn't already exist.
+	 * Returns the global user object
 	 *
-	 * @param   integer  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @param   integer  $id  The user to load - Can be an integer or string -
+     *          If string, it is converted to ID automatically.
 	 *
 	 * @see MolajoUser
-	 * @return MolajoUser object
+     *
+	 * @return user object
 	 */
 	public static function getUser($id = null)
 	{
@@ -172,13 +190,13 @@ abstract class MolajoFactory
 	/**
 	 * Get a cache object
 	 *
-	 * Returns the global {@link JCache} object
+	 * Returns the global cache object
 	 *
 	 * @param   string  $group    The cache group name
 	 * @param   string  $handler  The handler to use
 	 * @param   string  $storage  The storage method
 	 *
-	 * @return  JCache object
+	 * @return  cache object
 	 *
 	 * @see     JCache
 	 */
@@ -211,15 +229,14 @@ abstract class MolajoFactory
 	 * Returns the global {@link JACL} object, only creating it
 	 * if it doesn't already exist.
 	 *
-	 * @return JACL object
+	 * @deprecated
 	 */
 	public static function getACL() {}
 
 	/**
 	 * Get a database object
 	 *
-	 * Returns the global {@link JDatabase} object, only creating it
-	 * if it doesn't already exist.
+	 * Returns the global database object
 	 *
 	 * @return JDatabase object
 	 */
@@ -240,12 +257,11 @@ abstract class MolajoFactory
 	/**
 	 * Get a mailer object
 	 *
-	 * Returns the global {@link MolajoMail} object, only creating it
-	 * if it doesn't already exist
+	 * Returns the global mail object
 	 *
 	 * @see MolajoMail
 	 *
-	 * @return MolajoMail object
+	 * @return mail object
 	 */
 	public static function getMailer()
 	{
@@ -370,21 +386,19 @@ abstract class MolajoFactory
 	 *
 	 * @param   string  $editor The editor to load, depends on the editor plugins that are installed
 	 *
-	 * @return MolajoEditor object
+	 * @return editor object
 	 */
 	public static function getEditor($editor = null)
 	{
-		//get the editor configuration setting
 		if (is_null($editor)) {
 			$conf	= self::getConfig();
 			$editor	= $conf->get('editor');
 		}
-
 		return MolajoEditor::getInstance($editor);
 	}
 
 	/**
-	 * Return a reference to the {@link JURI} object
+	 * Return a reference to the URI object
 	 *
 	 * @param   string  $uri uri name
 	 *
@@ -423,7 +437,6 @@ abstract class MolajoFactory
 		$locale		= $language->getTag();
 
 		if (!isset($classname) || $locale != $mainLocale) {
-			//Store the locale for future reference
 			$mainLocale = $locale;
 
 			if ($mainLocale !== false) {
@@ -466,15 +479,9 @@ abstract class MolajoFactory
 		// Sanitize the namespace.
 		$namespace = ucfirst((string) preg_replace('/[^A-Z_]/i', '', $namespace));
 
-		// Build the config name.
 		$name = 'MolajoConfig'.$namespace;
-
-		// Handle the PHP configuration type.
 		if ($type == 'PHP' && class_exists($name)) {
-			// Create the MolajoConfig object
 			$config = new $name();
-
-			// Load the configuration values into the registry
 			$registry->loadObject($config);
 		}
 
@@ -484,18 +491,16 @@ abstract class MolajoFactory
 	/**
 	 * Create a session object
 	 *
-	 * @param   array  $options An array containing session options
+	 * @param   array  $options Session option array
 	 *
 	 * @return MolajoSession object
 	 * @since   1.0
 	 */
 	protected static function _createSession($options = array())
 	{
-		// Get the editor configuration setting
 		$conf		= self::getConfig();
 		$handler	= $conf->get('session_handler', 'none');
 
-		// Config time is in minutes
 		$options['expire'] = ($conf->get('lifetime')) ? $conf->get('lifetime') * 60 : 900;
 
 		$session = MolajoSession::getInstance($handler, $options);
@@ -556,7 +561,7 @@ abstract class MolajoFactory
 		$conf	= self::getConfig();
 
 		$sendmail	= $conf->get('sendmail');
-		$smtpauth	=  ($conf->get('smtpauth') == 0) ? null : 1;
+		$smtpauth	= ($conf->get('smtpauth') == 0) ? null : 1;
 		$smtpuser	= $conf->get('smtpuser');
 		$smtppass	= $conf->get('smtppass');
 		$smtphost	= $conf->get('smtphost');
@@ -566,13 +571,9 @@ abstract class MolajoFactory
 		$fromname	= $conf->get('fromname');
 		$mailer		= $conf->get('mailer');
 
-		// Create a MolajoMail object
 		$mail		= MolajoMail::getInstance();
-
-		// Set default sender
 		$mail->setSender(array ($mailfrom, $fromname));
 
-		// Default mailer is to use PHP's mail function
 		switch ($mailer)
 		{
 			case 'smtp' :
@@ -621,9 +622,7 @@ abstract class MolajoFactory
 	{
 		$lang	= self::getLanguage();
 
-		// Keep backwards compatibility with Molajo 1.0
-		$raw	= JRequest::getBool('no_html');
-		$type	= JRequest::getWord('format', $raw ? 'raw' : 'html');
+		$type	= JRequest::getWord('format', 'html');
 
 		$attributes = array (
 			'charset'	=> 'utf-8',
@@ -639,10 +638,10 @@ abstract class MolajoFactory
 	/**
 	 * Creates a new stream object with appropriate prefix
 	 *
-	 * @param   boolean  $use_prefix		Prefix the connections for writing
+	 * @param   boolean  $use_prefix	Prefix the connections for writing
 	 * @param   boolean  $use_network	Use network if available for writing; use false to disable (e.g. FTP, SCP)
-	 * @param   string   $ua				UA User agent to use
-	 * @param   boolean  $uamask			User agent masking (prefix Mozilla)
+	 * @param   string   $ua			UA User agent to use
+	 * @param   boolean  $uamask		User agent masking (prefix Mozilla)
 	 *
 	 * @see JStream
 	 *

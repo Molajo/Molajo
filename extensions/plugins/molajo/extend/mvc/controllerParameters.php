@@ -151,8 +151,8 @@ class extendControllerParameters {
 
         /** published state and date checks **/
         if (!(int) $fieldParams->def($contentType.'_published_criteria', 1) == 1) { return false; }
-        $publishUp = $fieldParams->def($contentType.'_publish_up_criteria', '');
-        $publishDown = $fieldParams->def($contentType.'_publish_down_criteria', '');
+        $publishUp = $fieldParams->def($contentType.'_start_publishing_datetime_criteria', '');
+        $publishDown = $fieldParams->def($contentType.'_stop_publishing_datetime_criteria', '');
         if ($publishUp == '' && $publishDown == '') {
         } else if (date('Y-m-d') > $publishUp && date('Y-m-d') < $publishDown) {
         } else {

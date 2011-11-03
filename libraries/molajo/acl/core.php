@@ -407,8 +407,8 @@ class MolajoACLCore extends MolajoACL
             $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
             $nowDate = $this->getDbo()->Quote(MolajoFactory::getDate()->toMySQL());
 
-            $query->where('(a.publish_up = '.$nullDate.' OR a.publish_up <= '.$nowDate.')');
-            $query->where('(a.publish_down = '.$nullDate.' OR a.publish_down >= '.$nowDate.')');
+            $query->where('(a.start_publishing_datetime = '.$nullDate.' OR a.start_publishing_datetime <= '.$nowDate.')');
+            $query->where('(a.stop_publishing_datetime = '.$nullDate.' OR a.stop_publishing_datetime >= '.$nowDate.')');
         }
         */
         return $query;
@@ -493,9 +493,8 @@ class MolajoACLCore extends MolajoACL
         $component = $params[0];
         $section = $params[1];
 
-		if (defined('MOLAJO_BASE_FOLDER')
-            && is_file(MOLAJO_BASE_FOLDER.'/components/'.$component.'/access.xml')) {
-			$xml = simplexml_load_file(MOLAJO_BASE_FOLDER.'/components/'.$component.'/access.xml');
+		if (is_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml')) {
+			$xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml');
 
 			foreach ($xml->children() as $child)
 			{
@@ -543,15 +542,15 @@ class MolajoACLCore extends MolajoACL
 
         $query->from('#__categories a');
         $query->from('#__assets b');
-        $query->from('#__groupings c');
-        $query->from('#__permissions_groupings d');
+        $query->from('#__view_groups c');
+        $query->from('#__view_group_permissions d');
 
         $query->where('a.asset_id = b.id');
         $query->where('b.access = c.id');
-        $query->where('d.grouping_id = c.id');
+        $query->where('d.view_group_id = c.id');
         
-        $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
-        $query->join('LEFT', '#__groupings AS d ON d.access = a.id');
+        $query->join('LEFT', '#__group_view_groups AS b ON b.view_group_id = a.id');
+        $query->join('LEFT', '#__view_groups AS d ON d.access = a.id');
 
         if ($option == '') {
         } else {
@@ -606,8 +605,8 @@ class MolajoACLCore extends MolajoACL
         $query->select('DISTINCT c.id');
 
         if ($action == MOLAJO_ACL_ACTION_VIEW) {
-            $query->from('#__groupings a');
-            $query->join('LEFT', '#__group_to_groupings AS b ON b.grouping_id = a.id');
+            $query->from('#__view_groups a');
+            $query->join('LEFT', '#__group_view_groups AS b ON b.view_group_id = a.id');
             $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
         } else {
             $query->from('#__groups c');

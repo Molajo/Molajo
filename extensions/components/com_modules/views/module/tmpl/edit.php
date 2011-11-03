@@ -60,11 +60,11 @@ MolajoFactory::getDocument()->addScriptDeclaration($script);
 			<?php echo $this->form->getInput('ordering'); ?></li>
 
 			<?php if ((string) $this->item->xml->name != 'Login Form'): ?>
-			<li><?php echo $this->form->getLabel('publish_up'); ?>
-			<?php echo $this->form->getInput('publish_up'); ?></li>
+			<li><?php echo $this->form->getLabel('start_publishing_datetime'); ?>
+			<?php echo $this->form->getInput('start_publishing_datetime'); ?></li>
 
-			<li><?php echo $this->form->getLabel('publish_down'); ?>
-			<?php echo $this->form->getInput('publish_down'); ?></li>
+			<li><?php echo $this->form->getLabel('stop_publishing_datetime'); ?>
+			<?php echo $this->form->getInput('stop_publishing_datetime'); ?></li>
 			<?php endif; ?>
 
 			<li><?php echo $this->form->getLabel('language'); ?>

@@ -551,7 +551,7 @@ CREATE TABLE `molajo_assets` (
   `source_id` int(11) unsigned NOT NULL COMMENT 'Content Primary Key',
   `path` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'URL',
   `link` varchar(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.',
-  `view_group_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__groupings table',
+  `view_group_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__view_groups table',
   `language` char(7) NOT NULL DEFAULT 'en-GB',
   `translation_of_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -925,8 +925,8 @@ INSERT INTO `molajo_configuration` VALUES('core', 200, 'meta_robots', 'MOLAJO_FI
 INSERT INTO `molajo_configuration` VALUES('core', 200, 'modified', 'MOLAJO_FIELD_MODIFIED_LABEL', 34);
 INSERT INTO `molajo_configuration` VALUES('core', 200, 'modified_by', 'MOLAJO_FIELD_MODIFIED_BY_LABEL', 35);
 INSERT INTO `molajo_configuration` VALUES('core', 200, 'ordering', 'MOLAJO_FIELD_ORDERING_LABEL', 36);
-INSERT INTO `molajo_configuration` VALUES('core', 200, 'publish_down', 'MOLAJO_FIELD_PUBLISH_DOWN_LABEL', 37);
-INSERT INTO `molajo_configuration` VALUES('core', 200, 'publish_up', 'MOLAJO_FIELD_PUBLISH_UP_LABEL', 38);
+INSERT INTO `molajo_configuration` VALUES('core', 200, 'stop_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_DOWN_LABEL', 37);
+INSERT INTO `molajo_configuration` VALUES('core', 200, 'start_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_UP_LABEL', 38);
 INSERT INTO `molajo_configuration` VALUES('core', 200, 'rgt', 'MOLAJO_FIELD_RGT_LABEL', 39);
 INSERT INTO `molajo_configuration` VALUES('core', 200, 'state', 'MOLAJO_FIELD_STATE_LABEL', 40);
 INSERT INTO `molajo_configuration` VALUES('core', 200, 'state_prior_to_version', 'MOLAJO_FIELD_STATE_PRIOR_TO_VERSION_LABEL', 41);
@@ -940,8 +940,8 @@ INSERT INTO `molajo_configuration` VALUES('core', 210, '', '', 0);
 INSERT INTO `molajo_configuration` VALUES('core', 210, 'access', 'MOLAJO_FIELD_ACCESS_LABEL', 1);
 INSERT INTO `molajo_configuration` VALUES('core', 210, 'featured', 'MOLAJO_FIELD_FEATURED_LABEL', 2);
 INSERT INTO `molajo_configuration` VALUES('core', 210, 'ordering', 'MOLAJO_FIELD_ORDERING_LABEL', 3);
-INSERT INTO `molajo_configuration` VALUES('core', 210, 'publish_down', 'MOLAJO_FIELD_PUBLISH_DOWN_LABEL', 4);
-INSERT INTO `molajo_configuration` VALUES('core', 210, 'publish_up', 'MOLAJO_FIELD_PUBLISH_UP_LABEL', 5);
+INSERT INTO `molajo_configuration` VALUES('core', 210, 'stop_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_DOWN_LABEL', 4);
+INSERT INTO `molajo_configuration` VALUES('core', 210, 'start_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_UP_LABEL', 5);
 INSERT INTO `molajo_configuration` VALUES('core', 210, 'state', 'MOLAJO_FIELD_STATE_LABEL', 6);
 INSERT INTO `molajo_configuration` VALUES('core', 210, 'stickied', 'MOLAJO_FIELD_STICKIED_LABEL', 7);
 INSERT INTO `molajo_configuration` VALUES('core', 220, '', '', 0);
@@ -999,7 +999,7 @@ INSERT INTO `molajo_configuration` VALUES('core', 330, 'created_by', 'MOLAJO_CON
 INSERT INTO `molajo_configuration` VALUES('core', 330, 'featured', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_FEATURED', 7);
 INSERT INTO `molajo_configuration` VALUES('core', 330, 'language', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_LANGUAGE', 9);
 INSERT INTO `molajo_configuration` VALUES('core', 330, 'modified', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_UPDATE_DATE', 10);
-INSERT INTO `molajo_configuration` VALUES('core', 330, 'publish_up', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_PUBLISH_DATE', 11);
+INSERT INTO `molajo_configuration` VALUES('core', 330, 'start_publishing_datetime', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_PUBLISH_DATE', 11);
 INSERT INTO `molajo_configuration` VALUES('core', 330, 'state', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_STATE', 12);
 INSERT INTO `molajo_configuration` VALUES('core', 330, 'stickied', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_STICKIED', 13);
 INSERT INTO `molajo_configuration` VALUES('core', 330, 'subtitle', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_SUBTITLE', 15);

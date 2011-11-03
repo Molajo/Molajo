@@ -193,7 +193,6 @@ foreach ($files as $file) {
 /**
  *  Language (JHelp and JLanguageHelper not used)
  */
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/language.php', 'MolajoLanguage');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/latin_transliterate.php', 'MolajoLanguageTransliterate');
 
 /**
@@ -209,6 +208,6 @@ foreach ($files as $file) {
 /**
  *  Exceptions
  */
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/database/databaseexception.php', 'JDatabaseException');
-$filehelper->requireClassFile(JOOMLA_LIBRARY.'/log/logexception.php', 'Logexception');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/applicationexception.php', 'ApplicationException');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/databaseexception.php', 'DatabaseException');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/logexception.php', 'Logexception');

@@ -215,7 +215,7 @@ class AdminModelSysInfo extends JModel
 			$this->_addDirectory('cache', JPATH_SITE.'/cache', 'COM_ADMIN_CACHE_DIRECTORY');
 			$this->_addDirectory('administrator/cache', JPATH_CACHE, 'COM_ADMIN_CACHE_DIRECTORY');
 
-			$this->_addDirectory(MOLAJO_SITE_CACHE, $registry->get('log_path', JPATH_ROOT.'/log'), 'COM_ADMIN_LOG_DIRECTORY');
+			$this->_addDirectory(MOLAJO_SITE_PATH_CACHE, $registry->get('log_path', MOLAJO_SITE_PATH.'/log'), 'COM_ADMIN_LOG_DIRECTORY');
 			$this->_addDirectory($registry->get('tmp_path', JPATH_ROOT . '/tmp'), $registry->get('tmp_path', JPATH_ROOT.'/tmp'), 'COM_ADMIN_TEMP_DIRECTORY');
 		}
 		return $this->directories;

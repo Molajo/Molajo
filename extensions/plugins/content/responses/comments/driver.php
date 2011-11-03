@@ -128,8 +128,8 @@ class MolajoResponsesComments {
             $opendays = 99999999;
         }
         $published = null;
-        if (isset($content->publish_up)) {
-            $published = MolajoDateHelper::convertCCYYMMDD ($content->publish_up);
+        if (isset($content->start_publishing_datetime)) {
+            $published = MolajoDateHelper::convertCCYYMMDD ($content->start_publishing_datetime);
         } else {
             if (isset($content->created)) {
                 $published = MolajoDateHelper::convertCCYYMMDD ($content->created);
@@ -275,7 +275,7 @@ class MolajoResponsesComments {
         $modelPath = JPATH_SITE.'/components/com_responses/models/responses.php';
         require_once $modelPath;
         $order_date = $this->responsesParams->def('order_date', 'a.created');
-        if ($order_date == 'a.publish_up') {
+        if ($order_date == 'a.start_publishing_datetime') {
         } else {
             $order_date = 'a.created';
         }

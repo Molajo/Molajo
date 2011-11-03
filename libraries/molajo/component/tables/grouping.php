@@ -28,7 +28,7 @@ class MolajoTableGrouping extends MolajoTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__groupings', 'id', $db);
+		parent::__construct('#__view_groups', 'id', $db);
 	}
 
 	/**

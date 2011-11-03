@@ -67,7 +67,7 @@ class MolajoApplicationHelper
 
                 $query = $db->getQuery(true);
 
-                $query->select('application_id as id');
+                $query->select('id');
                 $query->select('name');
                 $query->select('path');
                 $query->from($db->namequote('#__applications'));

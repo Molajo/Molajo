@@ -255,7 +255,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 			return false;
 		}
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groupings (user_id, grouping_id) ' .
+		$query = 'INSERT INTO #__user_groupings (user_id, view_group_id) ' .
 				' SELECT '.$randomID.', 4';
 		$db->setQuery($query);
 		if (!$db->query()) {
@@ -263,7 +263,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 			return false;
 		}
 		// Map the super admin to the Super Admin Group
-		$query = 'INSERT INTO #__user_groupings (user_id, grouping_id) ' .
+		$query = 'INSERT INTO #__user_groupings (user_id, view_group_id) ' .
 				' SELECT '.$randomID.', 5';
 		$db->setQuery($query);
 		if (!$db->query()) {
@@ -320,9 +320,9 @@ class InstallerModelConfiguration extends MolajoModelDummy
                   SELECT DISTINCT c.group_id as group_id, b.id as asset_id, 3 as `action_id`
                     FROM `#__groups`          a,
                       `#__assets`             b,
-                      `#__group_to_groupings` c
+                      `#__group_view_groups` c
                     WHERE a.id = c.group_id
-                      AND b.access = c.grouping_id';
+                      AND b.access = c.view_group_id';
 
 		$db->setQuery($query);
 		if ($db->query()) {
@@ -401,10 +401,10 @@ class InstallerModelConfiguration extends MolajoModelDummy
 		}
 
         /** Permission Groupings */
-		$query = 'INSERT INTO `#__permissions_groupings` ( `grouping_id`, `asset_id`, `action_id`)
-                      SELECT DISTINCT b.grouping_id, a.asset_id, a.action_id
+		$query = 'INSERT INTO `#__view_group_permissions` ( `view_group_id`, `asset_id`, `action_id`)
+                      SELECT DISTINCT b.view_group_id, a.asset_id, a.action_id
                       FROM #__permissions_groups a,
-                        #__group_to_groupings b
+                        #__group_view_groups b
                       WHERE a.group_id = b.group_id';
 
 		$db->setQuery($query);

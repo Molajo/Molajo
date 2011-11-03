@@ -96,7 +96,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query->update($db->quoteName('#__session'));
         $query->set($db->quoteName('data').' = '.$db->quote($data));
-        $query->set($db->quoteName('time').' = '.(int) time());
+        $query->set($db->quoteName('session_time').' = '.(int) time());
         $query->where($db->quoteName('session_id').' = '.$db->quote($id));
 
         $db->setQuery($query->__toString());
@@ -108,7 +108,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 		} else {
 			$db->setQuery(
 				'INSERT INTO '.$db->quoteName('#__session') .
-				' ('.$db->quoteName('session_id').', '.$db->quoteName('data').', '.$db->quoteName('time').')' .
+				' ('.$db->quoteName('session_id').', '.$db->quoteName('data').', '.$db->quoteName('session_time').')' .
 				' VALUES ('.$db->quote($id).', '.$db->quote($data).', '.(int) time().')'
 			);
 			return (boolean) $db->query();
@@ -164,7 +164,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 		// Remove expired sessions from the database.
 		$db->setQuery(
 			'DELETE FROM '.$db->quoteName('#__session') .
-			' WHERE '.$db->quoteName('time').' < '.(int) $past
+			' WHERE '.$db->quoteName('session_time').' < '.(int) $past
 		);
 
 		return (boolean) $db->query();

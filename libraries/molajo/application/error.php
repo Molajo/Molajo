@@ -171,6 +171,7 @@ abstract class MolajoError
 	 */
 	public static function throwError(&$exception)
 	{
+
 		static $thrown = false;
 
 		if ($thrown)

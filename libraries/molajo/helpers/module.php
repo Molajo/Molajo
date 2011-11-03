@@ -358,8 +358,8 @@ abstract class MolajoModuleHelper
 			$query->where('mm.module_id = m.id');
 			$query->where('m.published = 1');
 			$query->where('m.id <> 1');
-			$query->where('(m.publish_up = '.$db->Quote($nullDate).' OR m.publish_up <= '.$db->Quote($now).')');
-			$query->where('(m.publish_down = '.$db->Quote($nullDate).' OR m.publish_down >= '.$db->Quote($now).')');
+			$query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
+			$query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
 
             $acl = new MolajoACL ();
             $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
