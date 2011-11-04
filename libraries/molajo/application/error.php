@@ -832,3 +832,5 @@ abstract class MolajoError
 		return $contents;
 	}
 }
+
+class JError extends MolajoError {}

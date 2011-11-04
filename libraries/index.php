@@ -58,6 +58,7 @@ if (class_exists('MolajoFileHelper')) {
         return;
     }
 }
+
 require_once LIBRARIES.'/includes/joomla.php';
 require_once LIBRARIES.'/includes/config.php';
 require_once LIBRARIES.'/includes/molajo.php';

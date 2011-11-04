@@ -106,7 +106,7 @@ class MolajoView extends JView
      */
     public function renderModulePosition ($position, $options=array('wrap' => 'none'))
     {
-        $renderer	= $this->document->loadRenderer('modules');
+        $renderer = $this->document->loadRenderer('modules');
         echo $renderer->render($position, $options, null);
     }
 
@@ -134,7 +134,7 @@ class MolajoView extends JView
             // load an error layout
             return;
         }
- 
+
         $renderedOutput = $this->renderLayout ($this->layout, $this->layout_type);
 
         /** Wrap Rendered Output */
@@ -187,8 +187,9 @@ class MolajoView extends JView
         $this->layout_path = false;
 
         /** @var $template */
-        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'/html';
-
+        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'html';
+        $template = MOLAJO_EXTENSION_TEMPLATES.'/molajito/html';
+ 
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
         $templateExtensionPath = '';
         if ($layout_type == 'extensions') {
@@ -210,13 +211,13 @@ class MolajoView extends JView
         $extensionPath = '';
         if ($layout_type == 'extensions') {
             if ($this->request['extension_type'] == 'plugins') {
-                $extensionPath = MOLAJO_BASE_FOLDER.'/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl';
+                $extensionPath = MOLAJO_EXTENSION_PLUGINS.'/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl';
 
             } else if ($this->request['extension_type'] == 'modules') {
-                $extensionPath = MOLAJO_BASE_FOLDER.'/'.MOLAJO_APPLICATION_PATH.'/modules/'.$this->request['option'].'/tmpl';
+                $extensionPath = MOLAJO_EXTENSION_MODULES.'/'.$this->request['option'].'/tmpl';
 
             } else {
-                $extensionPath = MOLAJO_BASE_FOLDER.'/'.MOLAJO_APPLICATION_PATH.'/components/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
+                $extensionPath = MOLAJO_EXTENSION_COMPONENTS.'/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
             }
         } else {
             $extensionPath = $templateLayoutPath;
@@ -231,8 +232,6 @@ class MolajoView extends JView
             $corePath = MOLAJO_EXTENSION_LAYOUT_DOCUMENT;
         } else if ($layout_type == 'wraps') {
             $corePath = MOLAJO_EXTENSION_LAYOUT_WRAPS;
-        } else {
-            return false;
         }
 
         /**

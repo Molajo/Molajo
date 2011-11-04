@@ -112,7 +112,7 @@ class MolajoAttribute
         }
 
         /** component override */
-        $classFile = MOLAJO_COMPONENT_ATTRIBUTES.$this->_name.'.php';
+        $classFile = MOLAJO_LIBRARY_DATA_FIELDS.'/attributes/'.$this->_name.'.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }
@@ -122,7 +122,7 @@ class MolajoAttribute
         }
 
         /** library class */
-        $classFile = MOLAJO_LIBRARY_ATTRIBUTES.$this->_name.'.php';
+        $classFile = MOLAJO_LIBRARY_DATA_FIELDS.'/attributes/'.$this->_name.'.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }

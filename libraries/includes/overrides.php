@@ -11,7 +11,6 @@ abstract class JFactory extends MolajoFactory {}
 
 class JAccess extends MolajoACL {}
 
-class JCategories extends MolajoCategories {}
 class JApplicationHelper extends MolajoApplicationHelper {}
 class JMenu extends MolajoMenu {}
 class JPathway extends MolajoPathway {}
@@ -51,7 +50,6 @@ class JDocumentHTML extends MolajoDocumentHTML {}
 //class JDocumentOpensearch extends MolajoDocumentOpensearch {}
 //class JDocumentRAW extends MolajoDocumentRAW {}
 //class JDocumentXML extends MolajoDocumentXML {}
-abstract class JError extends MolajoError {}
 class JForm extends MolajoForm {}
 abstract class JFormField extends MolajoFormField {}
 class JFormRule extends MolajoFormRule {}
@@ -72,7 +70,6 @@ abstract class JUserHelper extends MolajoUserHelper {}
 class JUser extends MolajoUser {}
 
 class JRoute extends MolajoRoute {}
-class JText extends MolajoText {}
 class JUtility extends MolajoUtility {}
 /**
 JFTP -

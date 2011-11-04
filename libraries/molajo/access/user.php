@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * User class.  Handles all application interaction with a user
+ * User class
  *
  * @package    Molajo
  * @subpackage  User
@@ -19,30 +19,31 @@ class MolajoUser extends JObject
 {
 	/**
 	 * A cached switch for if this user has root access rights.
+     *
 	 * @var	boolean
 	 */
 	protected $isRoot = null;
 
 	/**
-	 * Unique id
+	 * User ID
 	 * @var int
 	 */
 	public $id = null;
 
 	/**
-	 * The users real name (or nickname)
+	 * User Name
 	 * @var string
 	 */
 	public $name = null;
 
 	/**
-	 * The login name
+	 * User Login Name
 	 * @var string
 	 */
 	public $username = null;
 
 	/**
-	 * The email
+	 * User email address
 	 * @var string
 	 */
 	public $email = null;
@@ -60,7 +61,7 @@ class MolajoUser extends JObject
 	public $password_clear = '';
 
 	/**
-	 * Description
+	 * User Type
 	 * @var string
 	 */
 	public $usertype = null;
@@ -300,14 +301,15 @@ class MolajoUser extends JObject
 		// Set the default parampath if not set already
 		if (isset($parampath)) {
         } else {
-			$parampath = MOLAJO_EXTENSION_COMPONENTS.'com_users/models';
+			$parampath = MOLAJO_EXTENSION_COMPONENTS.'/com_users/models';
 		}
 
 		if ($loadsetupfile) {
 			$type = str_replace(' ', '_', strtolower($this->usertype));
 
 			$file = $parampath.'/'.$type.'.xml';
-			if (!file_exists($file)) {
+			if (file_exists($file)) {
+            } else {
 				$file = $parampath.'/'.'user.xml';
 			}
 
@@ -390,8 +392,6 @@ class MolajoUser extends JObject
 				$array['password2'] = $array['password'];
 			}
 
-			// TODO: Backend controller checks the password, frontend doesn't but should.
-			// Hence this code is required:
 			if (isset($array['password2']) && $array['password'] != $array['password2']) {
 				$this->setError(MolajoText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
 				return false;
@@ -440,8 +440,7 @@ class MolajoUser extends JObject
 			}
 		}
 
-		// TODO: this will be deprecated as of the ACL implementation
-//		$db = MolajoFactory::getDbo();
+		$db = MolajoFactory::getDbo();
 
 		if (array_key_exists('params', $array)) {
 			$params	= '';
@@ -458,12 +457,12 @@ class MolajoUser extends JObject
 		}
 
 		// Bind the array
-		if (!$this->setProperties($array)) {
+		if ($this->setProperties($array)) {
+        } else {
 			$this->setError(MolajoText::_('MOLAJO_USER_ERROR_BIND_ARRAY'));
 			return false;
 		}
 
-		// Make sure its an integer
 		$this->id = (int) $this->id;
 
 		return true;
@@ -629,23 +628,14 @@ class MolajoUser extends JObject
 	 */
 	public function load($id)
 	{
-		// Create the user table object
 		$table	= $this->getTable();
-
-		// Load the MolajoUserModel object based on the user id or throw a warning.
 		if ($table->load($id)) {
         } else {
 			MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
 			return false;
 		}
+		$this->_params->loadJSON($table->parameters);
 
-		// Set the user parameters using the default XML file.  We might want to
-		// extend this in the future to allow for the ability to have custom
-		// user parameters, but for right now we'll leave it how it is.
-
-		$this->_params->loadJSON($table->params);
-
-		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());
 
 		return true;
@@ -661,15 +651,6 @@ class MolajoUser extends JObject
 
     /**
      * @deprecated 1.6	Use MolajoACL::checkPermissions method instead.
-     *
-     * Method to check MolajoUser object authorisation against an access control
-     * object and optionally an access extension object
-     *
-     * @param   string   $action		The name of the action to check for permission.
-     * @param   string   $assetname	The name of the asset on which to perform the action.
-     *
-     * @return  boolean  True if authorised
-     * @since   1.0
      */
     public function authorise($action, $assetname = null)
     {
@@ -688,14 +669,6 @@ class MolajoUser extends JObject
 
     /**
      * @deprecated 1.6	Use the getList method instead.
-     *
-     * Method to return a list of all categories that a user has permission for a given action
-     *
-     * @param   string   $component	The component from which to retrieve the categories
-     * @param   string   $action		The name of the section within the component from which to retrieve the actions.
-     *
-     * @return  array    List of categories that this group can do this action to (empty array if none). Categories must be published.
-     * @since   1.0
      */
     public function getAuthorisedCategories($component, $action)
     {
@@ -705,11 +678,6 @@ class MolajoUser extends JObject
 
     /**
      * @deprecated 1.6	Use the getList method instead.
-     *
-     * Gets an array of the authorised access levels for the user
-     *
-     * @return  array
-     * @since   1.0
      */
     public function getAuthorisedViewLevels()
     {
@@ -719,11 +687,6 @@ class MolajoUser extends JObject
 
     /**
      * @deprecated 1.6	Use the getList method instead.
-     *
-     * Gets an array of the authorised user groups
-     *
-     * @return  array
-     * @since   1.0
      */
     public function getAuthorisedGroups()
     {

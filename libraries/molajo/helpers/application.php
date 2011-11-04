@@ -25,6 +25,28 @@ class MolajoApplicationHelper
 	protected static $_applications = null;
 
     /**
+	 * Verifies login requirement for application and default options
+	 *
+	 * @return	string		option
+	 * @since	1.0
+	 */
+	public static function getDefaults()
+	{
+        $option = strtolower(JRequest::getCmd('option', ''));
+
+        if (MolajoFactory::getUser()->get('guest') === true
+            && MolajoFactory::getConfig()->get('application_logon_requirement', true) === true) {
+
+            $option = MolajoFactory::getConfig()->get('application_guest_option', 'com_login');
+
+        } elseif ($option == '') {
+            $option = MolajoFactory::getConfig()->get('application_default_option', 'com_dashboard');
+        }
+
+		JRequest::setVar('option', $option);
+		return $option;
+	}
+    /**
      * getComponentName
      * 
      * @deprecated
@@ -131,7 +153,11 @@ class MolajoApplicationHelper
         $filehelper = new MolajoFileHelper();
         $files = JFolder::files(MOLAJO_APPLICATION_PATH, '\.php$', false, false);
         foreach ($files as $file) {
-            $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).ucfirst(substr($file, 0, strpos($file, '.'))));
+            if ($file == 'helper.php') {
+                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Application'.ucfirst(substr($file, 0, strpos($file, '.'))));
+            } else {
+                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).ucfirst(substr($file, 0, strpos($file, '.'))));
+            }
         }
 	}
 

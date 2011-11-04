@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage	Application
  * @since       1.0
  */
-class MolajoInstallationHelper extends MolajoHelper {
+class MolajoInstallationApplicationHelper extends MolajoApplicationHelper {
 
     /**
 	 * Forces specific option for installer

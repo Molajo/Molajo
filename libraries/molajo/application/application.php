@@ -265,9 +265,10 @@ class MolajoApplication extends JObject
 
         /** 5. site default for application */
 		if (empty($options['language'])) {
-			$params = MolajoComponentHelper::getParams('com_languages');
-			$application = MolajoApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION_ID);
-			$options['language'] = $params->get($application->name, $config->get('language', 'en-GB'));
+//			$params = MolajoComponentHelper::getParams('com_languages');
+//			$application = MolajoApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION_ID);
+//			$options['language'] = $params->get($application->name, $config->get('language', 'en-GB'));
+            $options['language'] = $config->get('language', 'en-GB');
 		}
 
 		/** 6. default */
@@ -397,7 +398,6 @@ class MolajoApplication extends JObject
         if (MolajoError::isError($menu)) {
             return null;
         }
-
         return $menu;
     }
 
@@ -443,13 +443,12 @@ class MolajoApplication extends JObject
         try
 		{
 			if ($component === null) {
-                $class = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Helper';
+                $class = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'ApplicationHelper';
 				$helper = new $class ();
-                $component = $helper->findOption();
+                $component = $helper->getDefaults();
 			}
 
 			$request    = $this->getRequest($component);
-
 			$document	= MolajoFactory::getDocument();
 			$user		= MolajoFactory::getUser();
 
@@ -494,15 +493,23 @@ class MolajoApplication extends JObject
 	{
         $session = MolajoFactory::getSession();
 		$component	= $session->get('page.option');
-		$template	= $this->getTemplate(true);
-		$file		= JRequest::getCmd('tmpl', 'index');
+//		$template	= $this->getTemplate(true);
+		$file		= $session->get('page.layout');;
+$params = array();
+//		$params = array(
+//			'template'	=> $template->template,
+//			'file'		=> $file.'.php',
+//			'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
+//			'params'	=> $template->params
+//		);
 
-		$params = array(
-			'template'	=> $template->template,
-			'file'		=> $file.'.php',
-			'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
-			'params'	=> $template->params
-		);
+        $params = array(
+            'template'	=> 'molajito',
+            'file'		=> $file.'.php',
+            'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
+            'params'	=> array()
+        );
+
 
 		$document = MolajoFactory::getDocument();
 		$document->parse($params);
@@ -735,6 +742,9 @@ class MolajoApplication extends JObject
      */
     public function getTemplate($params = false)
     {
+
+        $this->template = 'molajito';
+        return;
         if(is_object($this->template)) {
             if ($params) {
                 return $this->template;
@@ -744,9 +754,13 @@ class MolajoApplication extends JObject
 
         // Get the id of the active menu item
         $menu = $this->getMenu();
-        $item = $menu->getActive();
-        if (!$item) {
-            $item = $menu->getItem(JRequest::getInt('Itemid'));
+        if ($menu == null) {
+            $item = null;
+        } else {
+            $item = $menu->getActive();
+            if (!$item) {
+                $item = $menu->getItem(JRequest::getInt('Itemid'));
+            }
         }
 
         $id = 0;
@@ -1128,8 +1142,10 @@ class MolajoApplication extends JObject
      */
     protected function getRequest ($option)
     {
+
+//todo: amy remove all the application-specific values
+
         /** initialization */
-        $option = '';
         $task = '';
         $view = '';
         $model = '';
@@ -1139,8 +1155,9 @@ class MolajoApplication extends JObject
 
         /** 1. Option */
         $molajoConfig = new MolajoModelConfiguration ($option);
+
         if ($option == null) {
-            $option = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION + (int) MOLAJO_APPLICATION_ID);
+            $option = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION);
             if ($option === false) {
                 $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_OPTION_DEFINED'), 'error');
                 return false;
@@ -1148,10 +1165,7 @@ class MolajoApplication extends JObject
         }
 
         /** 2. Component Path */
-        echo MOLAJO_EXTENSION_COMPONENTS;
         $component_path = MOLAJO_EXTENSION_COMPONENTS.'/'.$option;
-        echo $component_path;
-        die;
         define('JPATH_COMPONENT', $component_path);
 
         /** 3. Task */
@@ -1174,7 +1188,7 @@ class MolajoApplication extends JObject
             if ($view == null) {
                 $results = false;
             } else {
-                $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_VIEWS + (int) MOLAJO_APPLICATION_ID, $view);
+                $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_VIEWS, $view);
             }
 
             if ($results === false) {
@@ -1186,7 +1200,7 @@ class MolajoApplication extends JObject
             }
 
             /** 7. Model **/
-            $model = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_MODEL + (int) MOLAJO_APPLICATION_ID);
+            $model = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_MODEL);
             if ($model === false) {
                 $model = $view;
             }
@@ -1197,17 +1211,17 @@ class MolajoApplication extends JObject
                 $results = false;
             } else {
                 if ($view == 'edit') {
-                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID, $layout);
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_LAYOUTS, $layout);
                 } else {
-                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID, $layout);
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS, $layout);
                 }
             }
 
             if ($results === false) {
                 if ($view == 'edit') {
-                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID);
+                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS);
                 } else {
-                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS + (int) MOLAJO_APPLICATION_ID);
+                    $layout = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS);
                 }
                 if ($layout === false) {
                     $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
@@ -1221,17 +1235,17 @@ class MolajoApplication extends JObject
                 $results = false;
             } else {
                 if ($view == 'edit') {
-                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID, $format);
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_FORMATS, $format);
                 } else {
-                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID, $format);
+                    $results = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS, $format);
                 }
             }
 
             if ($results === false) {
                 if ($view == 'edit') {
-                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID);
+                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS);
                 } else {
-                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS + (int) MOLAJO_APPLICATION_ID);
+                    $format = $molajoConfig->getOptionValue (MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS);
                 }
                 if ($format === false) {
                     $format = 'html';
@@ -1333,9 +1347,13 @@ class MolajoApplication extends JObject
         $session->set('page.view', $view);
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
-        $session->set('page.wrap', $params->def('wrap', 'none'));
-        $session->set('page.wrap_id', $params->def('wrap_id', ''));
-        $session->set('page.wrap_class', $params->def('wrap_class', ''));
+//        $session->set('page.wrap', $params->def('wrap', 'none'));
+//        $session->set('page.wrap_id', $params->def('wrap_id', ''));
+//        $session->set('page.wrap_class', $params->def('wrap_class', ''));
+     $session->set('page.wrap', 'none');
+        $session->set('page.wrap_id', '');
+        $session->set('page.wrap_class', '');
+
         $session->set('page.layout_type', 'extension');
         $session->set('page.task', $task);
         $session->set('page.format', $format);
@@ -1506,7 +1524,7 @@ class MolajoApplication extends JObject
         $title		    = null;
         $this->params   = MolajoComponentHelper::getParams($session->get('page.option'));
 
-        $title = $this->params->get('page_title', '');
+//        $title = $this->params->get('page_title', '');
 
         if (empty($title)) {
             $title = $session->get('page.title');
@@ -1534,15 +1552,16 @@ class MolajoApplication extends JObject
             }
         }
 
-        if ($this->params->get('show_feed_link', 1)) {
-            $link = '&format=feed&limitstart=';
-            $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-            $document->addHeadLink(MolajoRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
-            $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-            $document->addHeadLink(MolajoRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
-        }
+//        if ($this->params->get('show_feed_link', 1)) {
+//            $link = '&format=feed&limitstart=';
+//            $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
+//            $document->addHeadLink(MolajoRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
+//            $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
+//            $document->addHeadLink(MolajoRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
+//        }
 
-        $session->set('page.params', $this->params);
+//        $session->set('page.params', $this->params);
+        $session->set('page.params', array());
         $session->set('page.wrap', '');
         $session->set('page.position', 'component');
 

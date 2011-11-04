@@ -35,7 +35,6 @@ class MolajoConfig {
 	public $sef_rewrite = '0';
 	public $sef_suffix = '0';
 	public $unicodeslugs = '0';
-
     public $force_ssl = '0';
 
 	/* Locale Settings */

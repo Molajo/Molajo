@@ -32,7 +32,6 @@ require_once MOLAJO_LIBRARY.'/application/exception.php';
 require_once MOLAJO_LIBRARY.'/application/text.php';
 require_once JOOMLA_LIBRARY.'/registry/registry.php';
 
-
 $filehelper = new MolajoFileHelper();
 
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filesystem/path.php', 'JPath');
@@ -158,10 +157,6 @@ foreach ($files as $file) {
  */
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filterinput.php', 'JFilterInput');
 $filehelper->requireClassFile(JOOMLA_LIBRARY.'/filter/filteroutput.php', 'JFilterOutput');
-
-/**
- *  Language - not used
- */
 
 /**
  *  Log

@@ -453,8 +453,9 @@ class MolajoACLCore extends MolajoACL
         $acl	= new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
 
-        $query->join('INNER', '#__assets AS assets ON assets.id = '.$prefix.'asset_id');
-        $query->where('assets.access IN ('.$list.')');
+        $query->from('#__assets AS assets');
+        $query->where('assets.id = '.$prefix.'asset_id');
+        $query->where('assets.view_group_id IN ('.$list.')');
 
         return;
     }
@@ -546,7 +547,7 @@ class MolajoACLCore extends MolajoACL
         $query->from('#__view_group_permissions d');
 
         $query->where('a.asset_id = b.id');
-        $query->where('b.access = c.id');
+        $query->where('b.view_group_id = c.id');
         $query->where('d.view_group_id = c.id');
         
         $query->join('LEFT', '#__group_view_groups AS b ON b.view_group_id = a.id');
@@ -602,7 +603,7 @@ class MolajoACLCore extends MolajoACL
 		$db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
-        $query->select('DISTINCT c.id');
+        $query->select('DISTINCT b.view_group_id as id');
 
         if ($action == MOLAJO_ACL_ACTION_VIEW) {
             $query->from('#__view_groups a');
@@ -636,12 +637,13 @@ class MolajoACLCore extends MolajoACL
         if ($authorised) {
         } else {
 
+        
             $db->setQuery($query->__toString());
             $options = $db->loadObjectList();
 
             /** error handling */
             if ($db->getErrorNum()) {
-               //amy $this->setError($db->getErrorMsg());
+                $this->setError($db->getErrorMsg());
                 return false;
 
             } else if (count($options) == 0) {
@@ -748,7 +750,7 @@ echo 'bang';
                 }
 
                 $query = $db->getQuery(true);
-                $query->select('access');
+                $query->select('view_group_id');
                 $query->from($db->_nameQuote($tableName));
                 $query->where('asset_id = '.(int) $asset);
                 $db->setQuery($query);

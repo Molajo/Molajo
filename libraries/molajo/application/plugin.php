@@ -9,19 +9,18 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoPlugin Class
+ * Plugin Class
  *
- * @package     Joomla.Platform
+ * @package     Molajo
  * @subpackage  Plugin
  * @since       11.1
  */
 abstract class MolajoPlugin extends JEvent
 {
 	/**
-	 * A JRegistry object holding the parameters for the plugin
-	 *
-	 * @var    A JRegistry object
-	 * @since  11.1
+     * Plugin Parameters
+     *
+	 * @var    string
 	 */
 	public $params = null;
 
@@ -91,7 +90,6 @@ abstract class MolajoPlugin extends JEvent
 
 		$lang->load(strtolower($extension), $basePath, null, false, false)
 		||	$lang->load(strtolower($extension), MOLAJO_EXTENSION_PLUGINS.'/'.$this->_type.'/'.$this->_name, null, false, false)
-		||	$lang->load(strtolower($extension), $basePath, $lang->getDefault(), false, false)
-		||	$lang->load(strtolower($extension), MOLAJO_EXTENSION_PLUGINS.'/'.$this->_type.'/'.$this->_name, $lang->getDefault(), false, false);
+		||	$lang->load(strtolower($extension), MOLAJO_APPLICATION_PATH, null, false, false);
 	}
 }

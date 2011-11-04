@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * Language Helper
  *
  * @package     Molajo
  * @subpackage  Language Helper
@@ -34,23 +34,11 @@ class MolajoLanguageHelper
 		$list = array ();
 		$langs = MolajoLanguage::getKnownLanguages($basePath);
 
-        if (MOLAJO_APPLICATION_ID == 2) {
+        if (MOLAJO_APPLICATION_ID == 0) {
             $installed == false;
 
         } elseif ($installed === true) {
-
-			$db = MolajoFactory::getDBO();
-			$query = $db->getQuery(true);
-			$query->select('element');
-			$query->from('#__extensions');
-			$query->where('type = '.$db->quote('language'));
-			$query->where('state = 0');
-			$query->where('enabled = 1');
-			$query->where('application_id = '.MOLAJO_APPLICATION_ID);
-
-            $db->setQuery($query);
-
-            $installed_languages = $db->loadObjectList('element');
+            $installed_languages = MolajoExtensionHelper::getExtensions(2);
 		}
         
 		foreach ($langs as $lang => $metadata)
@@ -136,28 +124,16 @@ class MolajoLanguageHelper
 					$languages[$key][] = new JObject(array('lang_code' => $metadata['tag']));
 				}
 			} else {
+                $languages['default'] = MolajoExtensionHelper::getExtensions(2);
+                $languages['sef']		= array();
+                $languages['lang_code']	= array();
 
-            	$cache = MolajoFactory::getCache('com_languages', '');
-
-				if (!$languages = $cache->get('languages')) {
-					$db 	= MolajoFactory::getDBO();
-					$query	= $db->getQuery(true);
-					$query->select('*')->from('#__languages')->where('published=1');
-					$db->setQuery($query);
-
-					$languages['default'] 	= $db->loadObjectList();
-					$languages['sef']		= array();
-					$languages['lang_code']	= array();
-
-					if (isset($languages['default'][0])) {
-						foreach($languages['default'] as $lang) {
-							$languages['sef'][$lang->sef] 				= $lang;
-							$languages['lang_code'][$lang->lang_code] 	= $lang;
-						}
-					}
-
-					$cache->store($languages, 'languages');
-				}
+                if (isset($languages['default'][0])) {
+                    foreach($languages['default'] as $lang) {
+                        $languages['sef'][$lang->sef] 				= $lang;
+                        $languages['lang_code'][$lang->lang_code] 	= $lang;
+                    }
+                }
 			}
 		}
 

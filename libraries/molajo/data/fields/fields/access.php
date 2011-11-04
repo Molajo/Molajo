@@ -28,7 +28,6 @@ class MolajoFieldAccess extends MolajoField
         parent::__construct();
         parent::setFieldname ('access');
         parent::setRequestFilter ('integer');
-
     }
 
     /**

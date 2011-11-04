@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @since       1.0
  *
  */
-class MolajoInstallationApplication extends MolajoApplication
+class MolajoInstallationApplication extends MolajoApplicationHelper
 {
 	/**
 	 * The url of the site

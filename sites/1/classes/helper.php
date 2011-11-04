@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Molajo 1 Helper
+ * Molajo 1 Site Helper
  *
  * @package		Molajo
  * @subpackage	Site
  * @since       1.0
  */
-class Molajo1Helper extends MolajoHelper {}
+class Molajo1SiteHelper extends MolajoSiteHelper {}

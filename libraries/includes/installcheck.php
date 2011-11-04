@@ -7,24 +7,18 @@
  */
 defined('MOLAJO') or die;
 
-/**
- *  Installation Check
- */
-define('INSTALL_CHECK', false);
+if (defined('MOLAJO_INSTALL_CHECK')) { } else { define('MOLAJO_INSTALL_CHECK', false); }
+
 if (MOLAJO_APPLICATION == 'installation'
-    || (INSTALL_CHECK === false
+    || (MOLAJO_INSTALL_CHECK === false
             && file_exists(MOLAJO_SITE_PATH.'/configuration.php')) ) {
 
 } else {
     if (!file_exists(MOLAJO_SITE_PATH.'/configuration.php')
         || filesize(MOLAJO_SITE_PATH.'/configuration.php' < 10)
-        || file_exists(MOLAJO_SITE_INSTALLATION.'/index.php')) {
+        || file_exists(MOLAJO_BASE_FOLDER.'/installation/index.php')) {
 
-        if (MOLAJO_APPLICATION == 'site') {
-            $redirect = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'],'index.php')).'installation/index.php';
-        } else {
-            $redirect = '../installation/index.php';
-        }
+        $redirect = MOLAJO_BASE_URL.'/installation/';
         header('Location: '.$redirect);
         exit();
     }

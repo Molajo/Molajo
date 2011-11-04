@@ -158,7 +158,11 @@ class MolajoSiteHelper
         $filehelper = new MolajoFileHelper();
         $files = JFolder::files(MOLAJO_SITE_PATH.'/classes', '\.php$', false, false);
         foreach ($files as $file) {
-            $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/'.$file, 'Molajo'.ucfirst(MOLAJO_SITE).ucfirst(substr($file, 0, strpos($file, '.'))));
+            if ($file == 'helper.php') {
+                $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/'.$file, 'Molajo'.ucfirst(MOLAJO_SITE).'Site'.ucfirst(substr($file, 0, strpos($file, '.'))));
+            } else {
+                $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/'.$file, 'Molajo'.ucfirst(MOLAJO_SITE).ucfirst(substr($file, 0, strpos($file, '.'))));
+            }
         }
 	}
 }

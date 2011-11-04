@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage	Application
  * @since       1.0
  */
-class MolajoContentHelper extends MolajoHelper {}
+class MolajoContentApplicationHelper extends MolajoApplicationHelper {}

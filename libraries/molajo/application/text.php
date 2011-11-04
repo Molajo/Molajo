@@ -248,3 +248,5 @@ class MolajoText
 		return self::$strings;
 	}
 }
+
+class JText extends MolajoText {}

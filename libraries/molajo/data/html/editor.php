@@ -320,7 +320,7 @@ class MolajoEditor extends JObservable
 		require_once $path;
 
 		// Get the plugin
-		$plugin		= MolajoPluginHelper::getPlugin('editors', $this->_name);
+		$plugin	= MolajoPluginHelper::getPlugin('editors', $this->_name);
 		$params = new JRegistry;
 		$params->loadJSON($plugin->params);
 		$params->loadArray($config);

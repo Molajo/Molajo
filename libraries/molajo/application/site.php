@@ -131,8 +131,7 @@ class MolajoSite extends JObject
                 $instance = new $classname($config);
             } else {
                 return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_SITE_INSTANTIATION_ERROR', $classname));
-            }            
-
+            }
 			$instances[$site] = &$instance;
 		}
 

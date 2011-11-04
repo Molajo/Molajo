@@ -2,15 +2,13 @@
 /**
  * @package     Molajo
  * @subpackage  Version
- *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Version information class for the Molajo CMS.
+ * Version information class for Molajo
  *
  * @package  Molajo
  * @since    1.0
@@ -27,7 +25,7 @@ final class MolajoVersion
 	public $MAINTENANCE = '0';
 
 	/** @var  string  Development STATUS. */
-	public $STATUS = 'Alpha';
+	public $STATUS = 'Prealpha';
 
 	/** @var  string  Build number. */
 	public $BUILD = 0;
@@ -36,10 +34,10 @@ final class MolajoVersion
 	public $CODE_NAME = 'Phoenix';
 
 	/** @var  string  Release date. */
-	public $RELEASE_DATE = '01-Nov-2011';
+	public $RELEASE_DATE = '11-Nov-2011';
 
 	/** @var  string  Release time. */
-	public $RELEASE_TIME = '06:00';
+	public $RELEASE_TIME = '11:11';
 
 	/** @var  string  Release timezone. */
 	public $RELEASE_TIME_ZONE = 'GMT';

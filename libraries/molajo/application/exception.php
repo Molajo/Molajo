@@ -356,3 +356,10 @@ class MolajoException extends Exception
 		array_push($this->_errors, $error);
 	}
 }
+
+class JException extends MolajoException {}
+class ApplicationException extends Exception {}
+class MolajoApplicationException extends ApplicationException {}
+class DatabaseException extends Exception {}
+class MolajoDatabaseException extends DatabaseException {}
+class JDatabaseException extends MolajoDatabaseException {}

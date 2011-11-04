@@ -190,42 +190,8 @@ abstract class MolajoPluginHelper
 		if (isset($plugins)) {
 			return $plugins;
 		}
-
-		$cache 	= MolajoFactory::getCache('com_plugins', '');
-
-        $db		= MolajoFactory::getDbo();
-        $query	= $db->getQuery(true);
-
-        $query->select('folder AS type, element AS name, params')
-            ->from('#__extensions')
-            ->where('enabled >= 1')
-            ->where('element != "sef"')
-            ->where('element != "joomla"')
-            ->where('element != "example"')
-            ->where('type ='.$db->Quote('plugin'))
-            ->where('state >= 0')
-            ->order('ordering');
-
-        $acl = new MolajoACL ();
-        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
-
-        /** run query **/
-        $hash = hash('md5',$query->__toString(), false);
-        $plugins = $cache->get($hash);
-
-        if ($plugins === false) {
-
-			$plugins = $db->setQuery($query)
-				->loadObjectList();
-
-			if ($error = $db->getErrorMsg()) {
-				MolajoError::raiseWarning(500, $error);
-				return false;
-			}
-
-			$cache->store($plugins, $hash);
-		}
-
-		return $plugins;
+        
+        $plugins = MolajoExtensionHelper::getExtensions(8);
+        return $plugins;
 	}
 }

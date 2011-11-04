@@ -137,9 +137,9 @@ class MolajoFilterHelper
 
         // Remove duplicates before processing (because the black list uses both sets of arrays).
         $blackListTags		= array_unique($blackListTags);
-        $blackListAttributes	= array_unique($blackListAttributes);
+        $blackListAttributes = array_unique($blackListAttributes);
         $whiteListTags		= array_unique($whiteListTags);
-        $whiteListAttributes	= array_unique($whiteListAttributes);
+        $whiteListAttributes = array_unique($whiteListAttributes);
 
         // Unfiltered assumes first priority.
         if ($unfiltered) {

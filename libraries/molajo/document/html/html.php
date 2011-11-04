@@ -391,6 +391,9 @@ class MolajoDocumentHTML extends MolajoDocument
 	{
 		$contents = '';
 
+$directory = '/users/amystephen/sites/molajo/extensions/templates/molajito/';
+$filename = 'index.php';
+ 
 		// Check to see if we have a valid template file
 		if (file_exists($directory.'/'.$filename))
 		{

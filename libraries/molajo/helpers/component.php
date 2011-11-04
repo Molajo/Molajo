@@ -75,7 +75,7 @@ class MolajoComponentHelper
 			} else {
 				$result				= new stdClass;
 				$result->enabled	= $strict ? false : true;
-				$result->params		= new JRegistry;
+				$result->parameters = new JRegistry;
 			}
 		}
 
@@ -95,8 +95,9 @@ class MolajoComponentHelper
 	 */
 	public static function isEnabled($option, $strict = false)
 	{
-		$result = self::getComponent($option, $strict);
-		return $result->enabled;
+//		$result = self::getComponent($option, $strict);
+//		return $result->enabled;
+        return true;
 	}
 
 	/**
@@ -115,7 +116,7 @@ class MolajoComponentHelper
 	public static function getParams($option, $strict = false)
 	{
 		$component = self::getComponent($option, $strict);
-		return $component->params;
+		return $component[0]->parameters;
 	}
 
 	/**
@@ -130,63 +131,12 @@ class MolajoComponentHelper
 	 */
 	protected static function _load($option)
 	{
-		$db		= MolajoFactory::getDbo();
-		$query	= $db->getQuery(true);
-        $date = MolajoFactory::getDate();
-        $now = $date->toMySQL();
-        $nullDate = $db->getNullDate();
+        self::$_components[$option] = MolajoExtensionHelper::getExtensions(1, $option);
 
-		$query->select('a.'.$db->namequote('id'));
-		$query->select('a.'.$db->namequote('parameters'));
-		$query->select('a.'.$db->namequote('enabled'));
-		$query->select('a.'.$db->namequote('asset_id'));
-
-		$query->from($db->namequote('#__extension_instances as a'));
-
-        $query->where('a.'.$db->namequote('extension_type_id').' = 1');
-        $query->where('a.'.$db->namequote('status').' = '.MOLAJO_STATE_PUBLISHED);
-        $query->where('(a.start_publishing_datetime = '.$db->Quote($nullDate).' OR a.start_publishing_datetime <= '.$db->Quote($now).')');
-        $query->where('(a.stop_publishing_datetime = '.$db->Quote($nullDate).' OR a.stop_publishing_datetime >= '.$db->Quote($now).')');
-
-        /** extensions table */
-        $query->select('b.'.$db->namequote('name').' as "option"');
-		$query->from($db->namequote('#__extensions as b'));
-		$query->where('b.'.$db->namequote('id').' = a.'.$db->namequote('extension_id'));
-
-        /** application extensions */
-		$query->from($db->namequote('#__molajo_application_extensions as c'));
-		$query->where('c.'.$db->namequote('application_id').' = '.MOLAJO_APPLICATION_ID);
-		$query->where('c.'.$db->namequote('extension_id').' = b.'.$db->namequote('id'));
-		$query->where('c.'.$db->namequote('extension_instance_id').' = a.'.$db->namequote('id'));
-
-        /** site applications */
-		$query->from($db->namequote('#__molajo_site_applications as d'));
-		$query->where('c.'.$db->namequote('site_id').' = '.MOLAJO_SITE_ID);
-		$query->where('c.'.$db->namequote('application_id').' = '.MOLAJO_APPLICATION_ID);
-
-        $acl = new MolajoACL ();
-        $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>''));
-//echo '<pre>';var_dump($request);'</pre>';
-
-		$db->setQuery($query->__toString());
-
-        if (MolajoFactory::getConfig()->get('caching') > 0) {
-            $cache = MolajoFactory::getCache('_system','callback');
-		    self::$_components[$option] = $cache->get(array($db, 'loadObject'), null, $option, false);
-        } else {
-            self::$_components[$option] = $db->loadObject();
-        }
-
-		if ($error = $db->getErrorMsg()
-            || empty(self::$_components[$option])) {
-			MolajoError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
-			return false;
-		}
-
-		if (is_string(self::$_components[$option]->params)) {
+		if (isset(self::$_components[$option]->parameters)) {
 			$temp = new JRegistry;
-			$temp->loadString(self::$_components[$option]->params);
-			self::$_components[$option]->params = $temp;
+			$temp->loadString(self::$_components[$option]->parameters);
+			self::$_components[$option]->parameters = $temp;
 		}
 
 		return true;

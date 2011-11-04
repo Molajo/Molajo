@@ -132,11 +132,11 @@ class MolajoController extends JController
         /** language files */
         $lang = MolajoFactory::getLanguage();
  
-		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
-
+//		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
+$template = 'molajito';
 		$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
 		||	$lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+		||	$lang->load('tpl_'.$template, MOLAJO_APPLICATIONS_PATH, $lang->getDefault(), false, false)
 		||	$lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", $lang->getDefault(), false, false);
 
 		$lang->load($this->request['option'], MOLAJO_BASE_FOLDER, null, false, false)

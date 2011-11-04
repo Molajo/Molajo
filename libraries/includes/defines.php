@@ -9,7 +9,6 @@ defined('MOLAJO') or die;
 
 if (defined('MOLAJO_SITES_PATH')) { } else { define('MOLAJO_SITES_PATH', MOLAJO_BASE_FOLDER.'/sites'); }
 if (defined('MOLAJO_SITE_PATH')) { } else { define('MOLAJO_SITE_PATH', MOLAJO_SITES_PATH.'/'.MOLAJO_SITE); }
-
 if (defined('MOLAJO_SITE_PATH_CACHE')) { } else { define('MOLAJO_SITE_PATH_CACHE', MOLAJO_SITE_PATH.'/cache'); }
 if (defined('MOLAJO_SITE_PATH_IMAGES')) { } else { define('MOLAJO_SITE_PATH_IMAGES', MOLAJO_SITE_PATH.'/images'); }
 if (defined('MOLAJO_SITE_PATH_LOGS')) { } else { define('MOLAJO_SITE_PATH_LOGS', MOLAJO_SITE_PATH.'/logs'); }
@@ -34,14 +33,15 @@ if (defined('MOLAJO_EXTENSION_PLUGINS')) { } else { define('MOLAJO_EXTENSION_PLU
 if (defined('MOLAJO_EXTENSION_TEMPLATES')) { } else { define('MOLAJO_EXTENSION_TEMPLATES', MOLAJO_EXTENSIONS.'/templates'); }
 
 if (defined('MOLAJO_LIBRARY')) { } else { define('MOLAJO_LIBRARY', LIBRARIES.'/molajo'); }
-if (defined('MOLAJO_LIBRARY_COMPONENT')) { } else { define('MOLAJO_LIBRARY_COMPONENT', MOLAJO_LIBRARY.'/component'); }
-if (defined('MOLAJO_LIBRARY_CONTROLLERS')) { } else { define('MOLAJO_LIBRARY_CONTROLLERS', MOLAJO_LIBRARY_COMPONENT.'/controllers'); }
-if (defined('MOLAJO_LIBRARY_FIELDS')) { } else { define('MOLAJO_LIBRARY_FIELDS', MOLAJO_LIBRARY_COMPONENT.'/fields'); }
-if (defined('MOLAJO_LIBRARY_MODELS')) { } else { define('MOLAJO_LIBRARY_MODELS', MOLAJO_LIBRARY_COMPONENT.'/models'); }
-if (defined('MOLAJO_LIBRARY_ROUTER')) { } else { define('MOLAJO_LIBRARY_ROUTER', MOLAJO_LIBRARY_COMPONENT.'/router'); }
-if (defined('MOLAJO_LIBRARY_TABLES')) { } else { define('MOLAJO_LIBRARY_TABLES', MOLAJO_LIBRARY_COMPONENT.'/tables'); }
-if (defined('MOLAJO_LIBRARY_VIEWS')) { } else { define('MOLAJO_LIBRARY_VIEWS', MOLAJO_LIBRARY_COMPONENT.'/views'); }
-if (defined('MOLAJO_LIBRARY_ATTRIBUTES')) { } else { define('MOLAJO_LIBRARY_ATTRIBUTES', MOLAJO_LIBRARY_COMPONENT.'/attributes'); }
+if (defined('MOLAJO_LIBRARY_DATA')) { } else { define('MOLAJO_LIBRARY_DATA', MOLAJO_LIBRARY.'/data'); }
+if (defined('MOLAJO_LIBRARY_DATA_FIELDS')) { } else { define('MOLAJO_LIBRARY_DATA_FIELDS', MOLAJO_LIBRARY_DATA.'/fields'); }
+if (defined('MOLAJO_LIBRARY_DATA_HTML')) { } else { define('MOLAJO_LIBRARY_DATA_HTML', MOLAJO_LIBRARY_DATA.'/html'); }
+if (defined('MOLAJO_LIBRARY_DATA_TABLES')) { } else { define('MOLAJO_LIBRARY_DATA_TABLES', MOLAJO_LIBRARY_DATA.'/tables'); }
+if (defined('MOLAJO_LIBRARY_MVC')) { } else { define('MOLAJO_LIBRARY_MVC', MOLAJO_LIBRARY.'/mvc'); }
+if (defined('MOLAJO_LIBRARY_MVC_MODELS')) { } else { define('MOLAJO_LIBRARY_MVC_MODELS', MOLAJO_LIBRARY_MVC.'/models'); }
+if (defined('MOLAJO_LIBRARY_MVC_VIEWS')) { } else { define('MOLAJO_LIBRARY_MVC_VIEWS', MOLAJO_LIBRARY_MVC.'/views'); }
+if (defined('MOLAJO_LIBRARY_MVC_CONTROLLERS')) { } else { define('MOLAJO_LIBRARY_MVC_CONTROLLERS', MOLAJO_LIBRARY_MVC.'/controllers'); }
+if (defined('MOLAJO_LIBRARY_MVC_ROUTER')) { } else { define('MOLAJO_LIBRARY_MVC_ROUTER', MOLAJO_LIBRARY_MVC.'/router'); }
 
 /** Table */
 define('MOLAJO_CONFIG_OPTION_ID_TABLE', 100);
@@ -51,7 +51,7 @@ define('MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS', 220);
 define('MOLAJO_CONFIG_OPTION_ID_CONTENT_TYPES', 230);
 
 /** State */
-define('MOLAJO_CONFIG_OPTION_ID_STATE', 250);
+define('MOLAJO_CONFIG_OPTION_ID_STATUS', 250);
 
 define('MOLAJO_STATE_ARCHIVED', 2);
 define('MOLAJO_STATE_PUBLISHED', 1);
@@ -142,4 +142,5 @@ if (defined('IS_UNIX')) {
 } else {
 	define('IS_UNIX', (($os !== 'MAC') && ($os !== 'WIN')) ? true : false);
 }
+
 
