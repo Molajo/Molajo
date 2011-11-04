@@ -33,7 +33,7 @@ class ModulesViewSelect extends JView
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
-			JError::raiseError(500, implode("\n", $errors));
+			MolajoError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
 

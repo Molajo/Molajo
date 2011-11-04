@@ -23,7 +23,7 @@ if (	!$user->authorise('core.manage', 'com_media')
 		&& 	count($user->getAuthorisedCategories($asset, 'core.create')) == 0)
 		&&	!($user->id==$author && $user->authorise('core.edit.own', $asset))))
 {
-	return JError::raiseWarning(403, MolajoText::_('JERROR_ALERTNOAUTHOR'));
+	return MolajoError::raiseWarning(403, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 }
 
 $params = JComponentHelper::getParams('com_media');

@@ -32,7 +32,7 @@ class ConfigViewApplication extends JView
 
 		// Check for model errors.
 		if ($errors = $this->get('Errors')) {
-			JError::raiseError(500, implode('<br />', $errors));
+			MolajoError::raiseError(500, implode('<br />', $errors));
 			return false;
 		}
 

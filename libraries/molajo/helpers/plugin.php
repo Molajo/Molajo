@@ -111,9 +111,6 @@ abstract class MolajoPluginHelper
 				if (($plugins[$i]->type == $type)
                     && ($plugins[$i]->name == $plugin ||  $plugin === null)) {
 
-//  if ($plugins[$i]->type == 'content') {
-//    echo '<pre>';var_dump($plugins[$i]);'</pre>';
-// }
                     self::_import($plugins[$i], $autocreate, $dispatcher);
 
 					$results = true;
@@ -137,7 +134,7 @@ abstract class MolajoPluginHelper
      *
      * Loads the plugin file.
 	 *
-	 * @param   MolajoPlugin		$plugin		The plugin.
+	 * @param   plugin      $plugin		The plugin.
 	 * @param   boolean  	$autocreate
 	 * @param   JDispatcher	$dispatcher	Optionally allows the plugin to use a different dispatcher.
 	 *
@@ -152,6 +149,7 @@ abstract class MolajoPluginHelper
 		$plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
 
 		$path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
+
         if (JFile::exists($path)) {
             require_once $path;
         } else {
@@ -190,8 +188,8 @@ abstract class MolajoPluginHelper
 		if (isset($plugins)) {
 			return $plugins;
 		}
-        
-        $plugins = MolajoExtensionHelper::getExtensions(8);
+
+        $plugins = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_PLUGINS);
         return $plugins;
 	}
 }

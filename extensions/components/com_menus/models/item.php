@@ -1081,7 +1081,7 @@ class MenusModelItem extends JModelAdmin
 
 					if ($table->home == $value) {
 						unset($pks[$i]);
-						JError::raiseNotice(403, MolajoText::_('COM_MENUS_ERROR_ALREADY_HOME'));
+						MolajoError::raiseNotice(403, MolajoText::_('COM_MENUS_ERROR_ALREADY_HOME'));
 					}
 					else {
 						$table->home = $value;
@@ -1092,17 +1092,17 @@ class MenusModelItem extends JModelAdmin
 						if (!$this->canSave($table)) {
 							// Prune items that you can't change.
 							unset($pks[$i]);
-							JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+							MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
 						}
 						else if (!$table->check()) {
 							// Prune the items that failed pre-save checks.
 							unset($pks[$i]);
-							JError::raiseWarning(403, $table->getError());
+							MolajoError::raiseWarning(403, $table->getError());
 						}
 						else if (!$table->store()) {
 							// Prune the items that could not be stored.
 							unset($pks[$i]);
-							JError::raiseWarning(403, $table->getError());
+							MolajoError::raiseWarning(403, $table->getError());
 						}
 					}
 				}
@@ -1110,7 +1110,7 @@ class MenusModelItem extends JModelAdmin
 					unset($pks[$i]);
 					if (!$onehome) {
 						$onehome = true;
-						JError::raiseNotice(403, MolajoText::sprintf('COM_MENUS_ERROR_ONE_HOME'));
+						MolajoError::raiseNotice(403, MolajoText::sprintf('COM_MENUS_ERROR_ONE_HOME'));
 					}
 				}
 			}
@@ -1143,7 +1143,7 @@ class MenusModelItem extends JModelAdmin
 			{
 				if ($table->load($pk) && $table->home && $table->language == '*') {
 					// Prune items that you can't change.
-					JError::raiseWarning(403, MolajoText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
+					MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_DATABASE_ERROR_MENU_UNPUBLISH_DEFAULT_HOME'));
 					unset($pks[$i]);
 					break;
 				}

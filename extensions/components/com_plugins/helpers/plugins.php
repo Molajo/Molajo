@@ -85,7 +85,7 @@ class PluginsHelper
 		$options = $db->loadObjectList();
 
 		if ($error = $db->getErrorMsg()) {
-			JError::raiseWarning(500, $error);
+			MolajoError::raiseWarning(500, $error);
 		}
 
 		return $options;

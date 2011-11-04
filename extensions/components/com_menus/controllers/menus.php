@@ -52,7 +52,7 @@ class MenusControllerMenus extends JController
 		$cid	= JRequest::getVar('cid', array(), '', 'array');
 
 		if (!is_array($cid) || count($cid) < 1) {
-			JError::raiseWarning(500, MolajoText::_('COM_MENUS_NO_MENUS_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_('COM_MENUS_NO_MENUS_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -114,7 +114,7 @@ class MenusControllerMenus extends JController
 		)->loadAssocList('element', 'extension_id');
 
 		if ($error = $db->getErrorMsg()) {
-			return JError::raiseWarning(500, $error);
+			return MolajoError::raiseWarning(500, $error);
 		}
 
 		// Load all the component menu links
@@ -125,7 +125,7 @@ class MenusControllerMenus extends JController
 		)->loadObjectList();
 
 		if ($error = $db->getErrorMsg()) {
-			return JError::raiseWarning(500, $error);
+			return MolajoError::raiseWarning(500, $error);
 		}
 
 		foreach ($items as $item) {
@@ -158,7 +158,7 @@ class MenusControllerMenus extends JController
 					//echo "<br>".$db->getQuery();
 
 					if ($error = $db->getErrorMsg()) {
-						return JError::raiseWarning(500, $error);
+						return MolajoError::raiseWarning(500, $error);
 					}
 				}
 			}

@@ -44,7 +44,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 		}
 		catch (Exception $e)
 		{
-			JError::raiseWarning(500, $e->getMessage());
+			MolajoError::raiseWarning(500, $e->getMessage());
 		}
 
 		$this->setRedirect('index.php?option=com_templates&view=styles');
@@ -91,7 +91,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 		}
 		catch (Exception $e)
 		{
-			JError::raiseWarning(500, $e->getMessage());
+			MolajoError::raiseWarning(500, $e->getMessage());
 		}
 
 		$this->setRedirect('index.php?option=com_templates&view=styles');
@@ -125,7 +125,7 @@ class TemplatesControllerStyles extends JControllerAdmin
 		}
 		catch (Exception $e)
 		{
-			JError::raiseWarning(500, $e->getMessage());
+			MolajoError::raiseWarning(500, $e->getMessage());
 		}
 
 		$this->setRedirect('index.php?option=com_templates&view=styles');

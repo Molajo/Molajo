@@ -68,7 +68,7 @@ class JFormFieldModuleOrder extends JFormField
 		$db->setQuery($query);
 		$orders = $db->loadObjectList();
 		if ($error = $db->getErrorMsg()) {
-			JError::raiseWarning(500, $error);
+			MolajoError::raiseWarning(500, $error);
 			return false;
 		}
 

@@ -97,7 +97,7 @@ class MenusControllerItems extends JControllerAdmin
 		$value	= JArrayHelper::getValue($data, $task, 0, 'int');
 
 		if (empty($cid)) {
-			JError::raiseWarning(500, MolajoText::_($this->text_prefix.'_NO_ITEM_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_($this->text_prefix.'_NO_ITEM_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -107,7 +107,7 @@ class MenusControllerItems extends JControllerAdmin
 
 			// Publish the items.
 			if (!$model->setHome($cid, $value)) {
-				JError::raiseWarning(500, $model->getError());
+				MolajoError::raiseWarning(500, $model->getError());
 			} else {
 				if ($value == 1) {
 					$ntext = 'COM_MENUS_ITEMS_SET_HOME';

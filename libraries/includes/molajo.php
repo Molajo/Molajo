@@ -71,7 +71,6 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_LIBRARY_DATA_FIELDS.'/fields/'.$file, 'MolajoField'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
-
 /** Data: HTML */
 $filehelper->requireClassFile(MOLAJO_LIBRARY_DATA_HTML.'/editor.php', 'MolajoEditor');
 $filehelper->requireClassFile(MOLAJO_LIBRARY_DATA_HTML.'/grid.php', 'MolajoGrid');

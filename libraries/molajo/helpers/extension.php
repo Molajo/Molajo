@@ -16,6 +16,18 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoExtensionHelper
 {
+
+//MOLAJO_EXTENSION_TYPE_COMPONENT
+//MOLAJO_EXTENSION_TYPE_LANGUAGES
+//MOLAJO_EXTENSION_TYPE_LAYOUTS
+//MOLAJO_EXTENSION_TYPE_LIBRARIES
+//MOLAJO_EXTENSION_TYPE_MANIFESTS
+//MOLAJO_EXTENSION_TYPE_MENU
+//MOLAJO_EXTENSION_TYPE_MODULES
+//MOLAJO_EXTENSION_TYPE_PARAMETERS
+//MOLAJO_EXTENSION_TYPE_PLUGINS
+//MOLAJO_EXTENSION_TYPE_TEMPLATES
+
 	/**
 	 * _load
      *
@@ -36,9 +48,9 @@ abstract class MolajoExtensionHelper
 		$query->select('a.'.$db->namequote('parameters'));
         $query->select('b.'.$db->namequote('name'));
         $query->select('b.'.$db->namequote('folder'). ' as type');
-//		$query->select('a.'.$db->namequote('enabled'));
-        $query->select(' 1 as enabled');
+		$query->select('a.'.$db->namequote('enabled'));
 		$query->select('a.'.$db->namequote('asset_id'));
+		$query->select('a.'.$db->namequote('parameters'));
 
 		$query->from($db->namequote('#__extension_instances').' as a');
 		$query->from($db->namequote('#__extensions').' as b');
@@ -76,7 +88,7 @@ abstract class MolajoExtensionHelper
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'a'));
-
+echo $query->__toString();
         $db->setQuery($query->__toString());
         $extensions = $db->loadObjectList();
 

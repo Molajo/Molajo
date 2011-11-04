@@ -180,7 +180,7 @@ class InstallerModelUpdate extends JModelList
 		if (isset($update->get('downloadurl')->_data)) {
 			$url = $update->downloadurl->_data;
 		} else {
-			JError::raiseWarning('', MolajoText::_('COM_INSTALLER_INVALID_EXTENSION_UPDATE'));
+			MolajoError::raiseWarning('', MolajoText::_('COM_INSTALLER_INVALID_EXTENSION_UPDATE'));
 			return false;
 		}
 
@@ -189,7 +189,7 @@ class InstallerModelUpdate extends JModelList
 
 		// Was the package downloaded?
 		if (!$p_file) {
-			JError::raiseWarning('', MolajoText::sprintf('COM_INSTALLER_PACKAGE_DOWNLOAD_FAILED', $url));
+			MolajoError::raiseWarning('', MolajoText::sprintf('COM_INSTALLER_PACKAGE_DOWNLOAD_FAILED', $url));
 			return false;
 		}
 

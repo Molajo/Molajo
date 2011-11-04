@@ -87,7 +87,7 @@ class ModulesModelModule extends JModelAdmin
 				// Access checks.
 				if (!$user->authorise('core.delete', 'com_modules') ||
 							$table->published != -2) {
-					JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					MolajoError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 					//	throw new Exception(MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 					return;
 				}
@@ -192,7 +192,7 @@ class ModulesModelModule extends JModelAdmin
 			$this->_db->setQuery($query);
 
 			if (!$this->_db->query()) {
-				return JError::raiseWarning(500, $row->getError());
+				return MolajoError::raiseWarning(500, $row->getError());
 			}
 		}
 
@@ -674,7 +674,7 @@ class ModulesModelModule extends JModelAdmin
 		$extensionId = $db->loadResult();
 
 		if ($error = $db->getErrorMsg()) {
-			JError::raiseWarning(500, $error);
+			MolajoError::raiseWarning(500, $error);
 			return;
 		}
 

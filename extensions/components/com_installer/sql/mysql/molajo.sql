@@ -166,9 +166,9 @@ INSERT INTO `molajo_extensions` (
     ('com_users', 1, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 1
@@ -189,13 +189,13 @@ WHERE a.id = b.source_id
 INSERT INTO `molajo_extensions` (
   `name`, `extension_type_id`, `folder`, `update_site_id`)
   VALUES
-    ('English (UK)', 2, '', 1),
-    ('English (US)', 2, '', 1);
+    ('en-GB', 2, 'English (UK)', 1),
+    ('en-US', 2, 'English (UK)', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 2
@@ -278,9 +278,9 @@ INSERT INTO `molajo_extensions` (
     ('tabs', 3, 'wrap', 1);
         
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 3
@@ -312,9 +312,9 @@ INSERT INTO `molajo_extensions` (
     ('Twig', 10, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 10
@@ -352,9 +352,9 @@ INSERT INTO `molajo_extensions` (
     ('mod_toolbar', 6, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 6
@@ -414,7 +414,6 @@ INSERT INTO `molajo_extensions` (
     ('compress', 8, 'system', 1),
     ('create', 8, 'system', 1),
     ('debug', 8, 'system', 1),
-    ('languagefilter', 8, 'system', 1),
     ('log', 8, 'system', 1),
     ('logout', 8, 'system', 1),
     ('molajo', 8, 'system', 1),
@@ -429,9 +428,9 @@ INSERT INTO `molajo_extensions` (
     ('profile', 8, 'user', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 8
@@ -457,9 +456,9 @@ INSERT INTO `molajo_extensions` (
     ('system', 9, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 9
@@ -496,52 +495,52 @@ INSERT INTO `molajo_extensions` (
     (1060, 'Main Menu', 5, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `extension_id`, `ordering`, `title`, `alias`, `menu_item_path`, `menu_item_link`,
+  `enabled`, `extension_id`, `ordering`, `title`, `alias`, `menu_item_path`, `menu_item_link`,
   `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `language`)
   VALUES
-    (1000, 1, 'Home', 'home', '', 'index.php?option=com_dashboard', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1000, 1, 'Home', 'home', '', 'index.php?option=com_dashboard', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
 
-    (1010, 1, 'Configure', 'configure', 'configure', 'index.php?option=com_dashboard&type=configure', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1010, 2, 'Access', 'access', 'access', 'index.php?option=com_dashboard&type=access', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1010, 3, 'Create', 'create', 'create', 'index.php?option=com_dashboard&type=create', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1010, 4, 'Build', 'build', 'build', 'index.php?option=com_dashboard&type=build', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1010, 5, 'Search', 'search', 'search', 'index.php?option=com_dashboard&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1010, 1, 'Configure', 'configure', 'configure', 'index.php?option=com_dashboard&type=configure', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1010, 2, 'Access', 'access', 'access', 'index.php?option=com_dashboard&type=access', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1010, 3, 'Create', 'create', 'create', 'index.php?option=com_dashboard&type=create', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1010, 4, 'Build', 'build', 'build', 'index.php?option=com_dashboard&type=build', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1010, 5, 'Search', 'search', 'search', 'index.php?option=com_dashboard&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
 
-    (1020, 1, 'Profile', 'profile', 'configure/profile', 'index.php?option=com_profile', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1020, 2, 'System', 'system', 'configure/system', 'index.php?option=com_config',1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1020, 3, 'Checkin', 'checkin', 'configure/checkin', 'index.php?option=com_checkin', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1020, 4, 'Cache', 'cache', 'configure/cache', 'index.php?option=com_cache', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1020, 5, 'Backup', 'backup', 'configure/backup', 'index.php?option=com_backup', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1020, 6, 'Redirects', 'redirects', 'configure/redirects', 'index.php?option=com_redirects', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1020, 1, 'Profile', 'profile', 'configure/profile', 'index.php?option=com_profile', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1020, 2, 'System', 'system', 'configure/system', 'index.php?option=com_config',1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1020, 3, 'Checkin', 'checkin', 'configure/checkin', 'index.php?option=com_checkin', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1020, 4, 'Cache', 'cache', 'configure/cache', 'index.php?option=com_cache', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1020, 5, 'Backup', 'backup', 'configure/backup', 'index.php?option=com_backup', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1020, 6, 'Redirects', 'redirects', 'configure/redirects', 'index.php?option=com_redirects', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
 
-    (1030, 1, 'Users', 'users', 'access/users', 'index.php?option=com_users', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1030, 2, 'Groups', 'groups', 'access/groups', 'index.php?option=com_groups', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1030, 3, 'Permissions', 'permissions', 'access/permissions', 'index.php?option=com_permissions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1030, 4, 'Messages', 'messages', 'access/messages', 'index.php?option=com_messages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1030, 5, 'Activity', 'activity', 'access/activity', 'index.php?option=com_activity', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1030, 1, 'Users', 'users', 'access/users', 'index.php?option=com_users', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1030, 2, 'Groups', 'groups', 'access/groups', 'index.php?option=com_groups', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1030, 3, 'Permissions', 'permissions', 'access/permissions', 'index.php?option=com_permissions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1030, 4, 'Messages', 'messages', 'access/messages', 'index.php?option=com_messages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1030, 5, 'Activity', 'activity', 'access/activity', 'index.php?option=com_activity', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
 
-    (1040, 1, 'Articles', 'articles', 'create/articles', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1040, 2, 'Tags', 'tags', 'create/tags', 'index.php?option=com_tags', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1040, 3, 'Comments', 'comments', 'create/comments', 'index.php?option=com_comments', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1040, 4, 'Media', 'media', 'create/media', 'index.php?option=com_media', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1040, 5, 'Categories', 'categories', 'create/categories', 'index.php?option=com_categories', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1040, 1, 'Articles', 'articles', 'create/articles', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1040, 2, 'Tags', 'tags', 'create/tags', 'index.php?option=com_tags', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1040, 3, 'Comments', 'comments', 'create/comments', 'index.php?option=com_comments', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1040, 4, 'Media', 'media', 'create/media', 'index.php?option=com_media', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1040, 5, 'Categories', 'categories', 'create/categories', 'index.php?option=com_categories', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
 
-    (1050, 1, 'Extensions', 'extensions', 'build/extensions', 'index.php?option=com_extensions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1050, 2, 'Languages', 'languages', 'build/languages', 'index.php?option=com_languages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1050, 3, 'Layouts', 'layouts', 'build/layouts', 'index.php?option=com_layouts', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1050, 4, 'Modules', 'modules', 'build/modules', 'index.php?option=com_modules', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1050, 5, 'Plugins', 'plugins', 'build/plugins', 'index.php?option=com_plugins', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1050, 6, 'Templates', 'templates', 'build/templates', 'index.php?option=com_templates', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1050, 1, 'Extensions', 'extensions', 'build/extensions', 'index.php?option=com_extensions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1050, 2, 'Languages', 'languages', 'build/languages', 'index.php?option=com_languages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1050, 3, 'Layouts', 'layouts', 'build/layouts', 'index.php?option=com_layouts', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1050, 4, 'Modules', 'modules', 'build/modules', 'index.php?option=com_modules', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1050, 5, 'Plugins', 'plugins', 'build/plugins', 'index.php?option=com_plugins', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1050, 6, 'Templates', 'templates', 'build/templates', 'index.php?option=com_templates', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
 
-    (1060, 1, 'Home', 'home', '', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 2, 'New Article', 'new-article', 'new-article', 'index.php?option=com_articles&view=article&layout=edit',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 3, 'Article', 'article', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 4, 'Blog', 'blog', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 5, 'List', 'list', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 6, 'Table', 'table', 'table', 'index.php?option=com_articles&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 7, 'Login', 'login', 'login', 'index.php?option=com_users&view=login',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1060, 8, 'Search', 'search', 'search', 'index.php?option=com_search&type=search',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB');
+    (1, 1060, 1, 'Home', 'home', '', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 2, 'New Article', 'new-article', 'new-article', 'index.php?option=com_articles&view=article&layout=edit',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 3, 'Article', 'article', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 4, 'Blog', 'blog', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 5, 'List', 'list', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 6, 'Table', 'table', 'table', 'index.php?option=com_articles&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 7, 'Login', 'login', 'login', 'index.php?option=com_users&view=login',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1, 1060, 8, 'Search', 'search', 'search', 'index.php?option=com_search&type=search',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB');
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
   SELECT `title`, 4, `id`, CONCAT('extensions/menuitem/', `id`), CONCAT('index.php?option=com_extensions&view=menuitem&id=', `id`), 5, 'en-GB', NULL
@@ -608,7 +607,7 @@ INSERT INTO `molajo_application_extensions`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE extension_type_id = 1
-      AND b.id IN (1, 2)
+      AND b.id IN (1, 3)
        AND a.title IN
         ('com_articles',
           'com_layouts',
@@ -622,7 +621,7 @@ INSERT INTO `molajo_application_extensions`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE extension_type_id = 1
-      AND b.id = 3
+      AND b.id = 2
       AND a.title IN
         ('com_admin',
           'com_articles',

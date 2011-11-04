@@ -57,7 +57,7 @@ class MediaControllerFile extends JController
 			if (!MediaHelper::canUpload($file, $err))
 			{
 				// The file can't be upload
-				JError::raiseNotice(100, MolajoText::_($err));
+				MolajoError::raiseNotice(100, MolajoText::_($err));
 				return false;
 			}
 
@@ -71,7 +71,7 @@ class MediaControllerFile extends JController
 			$result = $dispatcher->trigger('onContentBeforeSave', array('com_media.file', &$object_file));
 			if (in_array(false, $result, true)) {
 				// There are some errors in the plugins
-				JError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_SAVE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
+				MolajoError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_SAVE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
 				return false;
 			}
 			$file = (array) $object_file;
@@ -79,20 +79,20 @@ class MediaControllerFile extends JController
 			if (JFile::exists($file['filepath']))
 			{
 				// File exists
-				JError::raiseWarning(100, MolajoText::_('COM_MEDIA_ERROR_FILE_EXISTS'));
+				MolajoError::raiseWarning(100, MolajoText::_('COM_MEDIA_ERROR_FILE_EXISTS'));
 				return false;
 			}
 			elseif (!$user->authorise('core.create', 'com_media'))
 			{
 				// File does not exist and user is not authorised to create
-				JError::raiseWarning(403, MolajoText::_('COM_MEDIA_ERROR_CREATE_NOT_PERMITTED'));
+				MolajoError::raiseWarning(403, MolajoText::_('COM_MEDIA_ERROR_CREATE_NOT_PERMITTED'));
 				return false;
 			}
 
 			if (!JFile::upload($file['tmp_name'], $file['filepath']))
 			{
 				// Error in upload
-				JError::raiseWarning(100, MolajoText::_('COM_MEDIA_ERROR_UNABLE_TO_UPLOAD_FILE'));
+				MolajoError::raiseWarning(100, MolajoText::_('COM_MEDIA_ERROR_UNABLE_TO_UPLOAD_FILE'));
 				return false;
 			}
 			else
@@ -137,7 +137,7 @@ class MediaControllerFile extends JController
 		if (!$user->authorise('core.delete','com_media'))
 		{
 			// User is not authorised to delete
-			JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
+			MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
 			return false;
 		}
 		else
@@ -158,7 +158,7 @@ class MediaControllerFile extends JController
 					{
 						// filename is not safe
 						$filename = htmlspecialchars($path, ENT_COMPAT, 'UTF-8');
-						JError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FILE_WARNFILENAME', substr($filename, strlen(COM_MEDIA_BASE))));
+						MolajoError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FILE_WARNFILENAME', substr($filename, strlen(COM_MEDIA_BASE))));
 						continue;
 					}
 
@@ -170,7 +170,7 @@ class MediaControllerFile extends JController
 						$result = $dispatcher->trigger('onContentBeforeDelete', array('com_media.file', &$object_file));
 						if (in_array(false, $result, true)) {
 							// There are some errors in the plugins
-							JError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
+							MolajoError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
 							continue;
 						}
 
@@ -188,7 +188,7 @@ class MediaControllerFile extends JController
 							$result = $dispatcher->trigger('onContentBeforeDelete', array('com_media.folder', &$object_file));
 							if (in_array(false, $result, true)) {
 								// There are some errors in the plugins
-								JError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
+								MolajoError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
 								continue;
 							}
 
@@ -201,7 +201,7 @@ class MediaControllerFile extends JController
 						else
 						{
 							//This makes no sense...
-							JError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FOLDER_NOT_EMPTY',substr($fullPath, strlen(COM_MEDIA_BASE))));
+							MolajoError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FOLDER_NOT_EMPTY',substr($fullPath, strlen(COM_MEDIA_BASE))));
 						}
 					}
 				}

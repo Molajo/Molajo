@@ -80,7 +80,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 			$db = $this->getDbo($options->db_type, $options->db_host, $options->db_user, $options->db_pass, null, $options->db_prefix, false);
 
 			// Check for errors.
-			if (JError::isError($db)) {
+			if (MolajoError::isError($db)) {
 				$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', (string)$db));
 				return false;
 			}
@@ -267,7 +267,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 		$db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
 		// Check for errors.
-		if (JError::isError($db)) {
+		if (MolajoError::isError($db)) {
 			$this->setError(MolajoText::sprintf('INSTL_DATABASE_COULD_NOT_CONNECT', (string)$db));
 			return false;
 		}

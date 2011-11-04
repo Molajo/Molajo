@@ -48,7 +48,7 @@ class MediaControllerFolder extends JController
 		if (!$user->authorise('core.delete','com_media'))
 		{
 			// User is not authorised to delete
-			JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
+			MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_DELETE_NOT_PERMITTED'));
 			return false;
 		}
 		else
@@ -65,7 +65,7 @@ class MediaControllerFolder extends JController
 				foreach ($paths as $path) {
 					if ($path !== JFile::makeSafe($path)) {
 						$dirname = htmlspecialchars($path, ENT_COMPAT, 'UTF-8');
-						JError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FOLDER_WARNDIRNAME', substr($dirname, strlen(COM_MEDIA_BASE))));
+						MolajoError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FOLDER_WARNDIRNAME', substr($dirname, strlen(COM_MEDIA_BASE))));
 						continue;
 					}
 
@@ -77,7 +77,7 @@ class MediaControllerFolder extends JController
 						$result = $dispatcher->trigger('onContentBeforeDelete', array('com_media.file', &$object_file));
 						if (in_array(false, $result, true)) {
 							// There are some errors in the plugins
-							JError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
+							MolajoError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
 							continue;
 						}
 
@@ -95,7 +95,7 @@ class MediaControllerFolder extends JController
 							$result = $dispatcher->trigger('onContentBeforeDelete', array('com_media.folder', &$object_file));
 							if (in_array(false, $result, true)) {
 								// There are some errors in the plugins
-								JError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
+								MolajoError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_DELETE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
 								continue;
 							}
 
@@ -108,7 +108,7 @@ class MediaControllerFolder extends JController
 						else
 						{
 							//This makes no sense...
-							JError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FOLDER_NOT_EMPTY',substr($fullPath, strlen(COM_MEDIA_BASE))));
+							MolajoError::raiseWarning(100, MolajoText::sprintf('COM_MEDIA_ERROR_UNABLE_TO_DELETE_FOLDER_NOT_EMPTY',substr($fullPath, strlen(COM_MEDIA_BASE))));
 						}
 					}
 				}
@@ -141,7 +141,7 @@ class MediaControllerFolder extends JController
 			if (!$user->authorise('core.create','com_media'))
 			{
 				// User is not authorised to delete
-				JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_CREATE_NOT_PERMITTED'));
+				MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_CREATE_NOT_PERMITTED'));
 				return false;
 			}
 
@@ -165,7 +165,7 @@ class MediaControllerFolder extends JController
 				$result = $dispatcher->trigger('onContentBeforeSave', array('com_media.folder', &$object_file));
 				if (in_array(false, $result, true)) {
 					// There are some errors in the plugins
-					JError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_SAVE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
+					MolajoError::raiseWarning(100, MolajoText::plural('COM_MEDIA_ERROR_BEFORE_SAVE', count($errors = $object_file->getErrors()), implode('<br />', $errors)));
 					continue;
 				}
 

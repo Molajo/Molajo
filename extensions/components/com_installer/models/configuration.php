@@ -204,7 +204,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 		$db = MolajoInstallationHelperDatabase::getDBO($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
 
 		// Check for errors.
-		if (JError::isError($db)) {
+		if (MolajoError::isError($db)) {
 			$this->setError(MolajoText::sprintf('INSTL_ERROR_CONNECT_DB', (string)$db));
 			return false;
 		}

@@ -76,7 +76,7 @@ class JFormFieldCategoryParent extends JFormFieldList
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError::raiseWarning(500, $db->getErrorMsg());
+			MolajoError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		// Pad the option text with spaces using depth level as a multiplier.

@@ -95,9 +95,8 @@ class MolajoComponentHelper
 	 */
 	public static function isEnabled($option, $strict = false)
 	{
-//		$result = self::getComponent($option, $strict);
-//		return $result->enabled;
-        return true;
+		$result = self::getComponent($option, $strict);
+		return $result->enabled;
 	}
 
 	/**
@@ -131,7 +130,7 @@ class MolajoComponentHelper
 	 */
 	protected static function _load($option)
 	{
-        self::$_components[$option] = MolajoExtensionHelper::getExtensions(1, $option);
+        self::$_components[$option] = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_COMPONENT, $option);
 
 		if (isset(self::$_components[$option]->parameters)) {
 			$temp = new JRegistry;

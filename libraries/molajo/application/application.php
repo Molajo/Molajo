@@ -7,7 +7,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-
+        //todo: amy configuration option for applications
 /**
  * MolajoApplication
  *
@@ -108,7 +108,6 @@ class MolajoApplication extends JObject
 		$this->_applicationId	    = MOLAJO_APPLICATION_ID;
 		$this->_name		        = MOLAJO_APPLICATION;
 
-/** todo: amy make certain the site has access to the application */
         /** Input Object */
         if (class_exists('JInput')) {
             $this->input = new JInput;
@@ -141,7 +140,6 @@ class MolajoApplication extends JObject
         }
 
         /** Application URI Base */
-        //todo: amy configuration option for applications
         if (MOLAJO_APPLICATION == 'site') {
         } else {
 		    JURI::root(null, str_ireplace('/'.MOLAJO_APPLICATION, '', JURI::base(true)));
@@ -202,14 +200,13 @@ class MolajoApplication extends JObject
             if ($results === false) {
                 return false;
             }
-            
+
             $classname = $prefix.ucfirst($application).'Application';
             if (class_exists($classname)) {
                 $instance = new $classname($config);
             } else {
                 return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_INSTANTIATION_ERROR', $classname));
             }            
-
 			$instances[$application] = &$instance;
 		}
 
@@ -229,7 +226,6 @@ class MolajoApplication extends JObject
 	{
         /** Language Determination */
         $config = MolajoFactory::getConfig();
-		MolajoPluginHelper::importPlugin('system', 'languagefilter');
 
         /** 1. request */
 		if (empty($options['language'])) {
@@ -239,15 +235,7 @@ class MolajoApplication extends JObject
 			}
 		}
 
-        /** 2. cookie */
-		if ($this->_language_filter && empty($options['language'])) {
-			$language = JRequest::getString(MolajoUtility::getHash('language'), null ,'cookie');
-			if ($language && MolajoLanguage::exists($language)) {
-				$options['language'] = $language;
-			}
-		}
-
-        /** 3. user option for application */
+        /** 2. user option for application */
 		if (empty($options['language'])) {
 			$language = MolajoFactory::getUser()->getParam('language');
 			if ($language && MolajoLanguage::exists($language)) {
@@ -255,7 +243,7 @@ class MolajoApplication extends JObject
 			}
 		}
 
-        /** 4. browser detection */
+        /** 3. browser detection */
 		if ($this->_detect_browser && empty($options['language'])) {
 			$language = MolajoLanguageHelper::detectLanguage();
 			if ($language && MolajoLanguage::exists($language)) {
@@ -263,15 +251,12 @@ class MolajoApplication extends JObject
 			}
 		}
 
-        /** 5. site default for application */
+        /** 4. site default for application */
 		if (empty($options['language'])) {
-//			$params = MolajoComponentHelper::getParams('com_languages');
-//			$application = MolajoApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION_ID);
-//			$options['language'] = $params->get($application->name, $config->get('language', 'en-GB'));
             $options['language'] = $config->get('language', 'en-GB');
 		}
 
-		/** 6. default */
+		/** 5. default */
 		if (MolajoLanguage::exists($options['language'])) {
         } else {
     		$options['language'] = 'en-GB';
@@ -279,7 +264,7 @@ class MolajoApplication extends JObject
 
 		/** Load Library Language Files */
 		$language = MolajoFactory::getLanguage();
-		$language->load('lib_joomla', MOLAJO_BASE_FOLDER);
+		$language->load('lib_molajo', MOLAJO_BASE_FOLDER);
 
         /** Set Language in Configuration */
         $config->set('language', $options['language']);
@@ -297,6 +282,19 @@ class MolajoApplication extends JObject
 			}
 		}
 		$config->set('editor', $editor);
+
+        $defaults = MolajoApplicationHelper::getApplicationDefaults();
+        if ($defaults === false) {
+            return false;
+        }
+
+        foreach($defaults as $default) {
+            $config->set('application_logon_requirement', true);
+            $config->set('application_guest_option', 'com_login');
+            $config->set('application_default_option', 'com_dashboard');
+            $config->set('default_application_indicator', $default->default_application_indicator);
+            $config->set('default_template_extension_id', $default->default_template_extension_id);
+        }
 
         /** Trigger onAfterInitialise Event */
 		MolajoPluginHelper::importPlugin('system');
@@ -352,13 +350,13 @@ class MolajoApplication extends JObject
 	{
 		$menus = $this->getMenu();
         if ($menus == null) {
-            return;
+            return false;
         }
 
 		if ($menus->authorise($itemid)) {
             return true;
         }
-/** todo: amy add configuration option per application for logon for 403 */
+
         /** Not authorized */
         if (MolajoFactory::getUser()->get('guest')) {
             $uri	= MolajoFactory::getURI();
@@ -491,25 +489,18 @@ class MolajoApplication extends JObject
 	 */
 	public function render()
 	{
-        $session = MolajoFactory::getSession();
+        $session    = MolajoFactory::getSession();
 		$component	= $session->get('page.option');
-//		$template	= $this->getTemplate(true);
-		$file		= $session->get('page.layout');;
-$params = array();
-//		$params = array(
-//			'template'	=> $template->template,
-//			'file'		=> $file.'.php',
-//			'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
-//			'params'	=> $template->params
-//		);
+        $templateHelper = new MolajoTemplateHelper ();
+		$template	= $templateHelper->getTemplate(true);
+		$file		= $session->get('page.layout');
 
-        $params = array(
-            'template'	=> 'molajito',
-            'file'		=> $file.'.php',
-            'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
-            'params'	=> array()
-        );
-
+		$params = array(
+			'template'	=> $template->template,
+			'file'		=> $file.'.php',
+			'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
+			'params'	=> $template->parameters
+		);
 
 		$document = MolajoFactory::getDocument();
 		$document->parse($params);
@@ -520,10 +511,6 @@ $params = array();
 
 		$this->triggerEvent('onAfterRender');
 	}
-
-    /**
-     *  APPLICATION
-     */
 
     /**
      * getName
@@ -568,7 +555,6 @@ $params = array();
      */
     public function enqueueMessage($msg, $type = 'message')
     {
-        // For empty queue, if messages exists in the session, enqueue them first.
         if (count($this->_messageQueue)) {
         } else {
             $session = MolajoFactory::getSession();
@@ -580,7 +566,6 @@ $params = array();
             }
         }
 
-        // Enqueue the message.
         $this->_messageQueue[] = array('message' => $msg, 'type' => strtolower($type));
     }
 
@@ -731,114 +716,15 @@ $params = array();
     }
 
     /**
-     *  TEMPLATE
-     */
-
-    /**
-     * Get the template
-     *
-     * @return string The template name
-     * @since 1.0
-     */
-    public function getTemplate($params = false)
-    {
-
-        $this->template = 'molajito';
-        return;
-        if(is_object($this->template)) {
-            if ($params) {
-                return $this->template;
-            }
-            return $this->template->template;
-        }
-
-        // Get the id of the active menu item
-        $menu = $this->getMenu();
-        if ($menu == null) {
-            $item = null;
-        } else {
-            $item = $menu->getActive();
-            if (!$item) {
-                $item = $menu->getItem(JRequest::getInt('Itemid'));
-            }
-        }
-
-        $id = 0;
-        if (is_object($item)) { // valid item retrieved
-            $id = $item->template_style_id;
-        }
-        $condition = '';
-
-        $tid = JRequest::getVar('template', 0);
-        if (is_int($tid) && $tid > 0) {
-            $id = (int) $tid;
-        }
-
-        $cache = MolajoFactory::getCache('com_templates', '');
-        if ($this->_language_filter) {
-            $tag = MolajoFactory::getLanguage()->getTag();
-        } else {
-            $tag ='';
-        }
-        if ($templates = $cache->get('templates0'.$tag)) {
-        } else {
-            $db = MolajoFactory::getDbo();
-            $query = $db->getQuery(true);
-            $query->select('id, home, template, params');
-            $query->from('#__template_styles');
-            $query->where('application_id = '.MOLAJO_APPLICATION_ID);
-            $db->setQuery($query);
-
-            $templates = $db->loadObjectList('id');
-
-            foreach($templates as &$template) {
-                $registry = new JRegistry;
-                $registry->loadJSON($template->params);
-                $template->params = $registry;
-
-                // Create home element
-                if ($template->home == '1' && !isset($templates[0])
-                    || $this->_language_filter && $template->home == $tag) {
-                    $templates[0] = clone $template;
-                }
-            }
-            $cache->store($templates, 'templates0'.$tag);
-        }
-
-        $template = $templates[$id];
-
-        // Allows for overriding the active template from the request
-        $template->template = JRequest::getCmd('template', $template->template);
-        $template->template = JFilterInput::getInstance()->clean($template->template, 'cmd'); // need to filter the default value as well
-
-        // Fallback template
-        if (!file_exists(MOLAJO_EXTENSION_TEMPLATES.DS.$template->template.DS.'index.php')) {
-            MolajoError::raiseWarning(0, MolajoText::_('MolajoError_ALERTNOTEMPLATE'));
-            $template->template = MOLAJO_APPLICATION_DEFAULT_TEMPLATE;
-            if (file_exists(MOLAJO_EXTENSION_TEMPLATES.'/'.MOLAJO_APPLICATION_DEFAULT_TEMPLATE.'/index.php')) {
-            } else {
-                $template->template = '';
-            }
-        }
-
-        // Cache the result
-        $this->template = $template;
-        if ($params) {
-            return $template;
-        }
-        return $template->template;
-    }
-
-    /**
      * Overrides the default template that would be used
      *
      * @param string The template name
      */
     public function setTemplate($template)
     {
-        if (is_dir(MOLAJO_EXTENSION_TEMPLATES.DS.$template)) {
+        if (is_dir(MOLAJO_EXTENSION_TEMPLATES.'/'.$template)) {
             $this->template = new stdClass();
-            $this->template->params = new JRegistry;
+            $this->template->parameters = new JRegistry;
             $this->template->template = $template;
         }
     }

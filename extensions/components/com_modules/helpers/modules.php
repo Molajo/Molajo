@@ -94,7 +94,7 @@ abstract class ModulesHelper
 		$positions = (is_array($positions)) ? $positions : array();
 
 		if ($error = $db->getErrorMsg()) {
-			JError::raiseWarning(500, $error);
+			MolajoError::raiseWarning(500, $error);
 			return;
 		}
 

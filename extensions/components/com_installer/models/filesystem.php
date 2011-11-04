@@ -279,7 +279,7 @@ class MolajoInstallationModelFilesystem extends JModel
 	 * @param	string	$host
 	 * @param	string	$port
 	 *
-	 * @return	mixed	Boolean true on success or JError object on fail
+	 * @return	mixed	Boolean true on success or MolajoError object on fail
 	 * @since	1.0
 	 */
 	public function checkSettings($user, $pass, $root, $host = '127.0.0.1', $port = '21')

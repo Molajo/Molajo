@@ -233,7 +233,7 @@ class UsersModelUser extends JModelAdmin
 				else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+					MolajoError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 				}
 			}
 			else {
@@ -273,7 +273,7 @@ class UsersModelUser extends JModelAdmin
 			if ($value == 1 && $pk == $user->get('id')) {
 				// Cannot block yourself.
 				unset($pks[$i]);
-				JError::raiseWarning(403, MolajoText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
+				MolajoError::raiseWarning(403, MolajoText::_('COM_USERS_USERS_ERROR_CANNOT_BLOCK_SELF'));
 
 			}
 			else if ($table->load($pk)) {
@@ -335,7 +335,7 @@ class UsersModelUser extends JModelAdmin
 				else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -414,7 +414,7 @@ class UsersModelUser extends JModelAdmin
 				else {
 					// Prune items that you can't change.
 					unset($pks[$i]);
-					JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}

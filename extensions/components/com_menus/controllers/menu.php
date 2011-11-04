@@ -60,7 +60,7 @@ class MenusControllerMenu extends JControllerForm
 
 		// Make sure we are not trying to modify an administrator menu.
 		if (isset($data['application_id']) && $data['application_id'] == 1){
-			JError::raiseNotice(0, MolajoText::_('COM_MENUS_MENU_TYPE_NOT_ALLOWED'));
+			MolajoError::raiseNotice(0, MolajoText::_('COM_MENUS_MENU_TYPE_NOT_ALLOWED'));
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_menus&view=menu&layout=edit', false));
@@ -75,7 +75,7 @@ class MenusControllerMenu extends JControllerForm
 		$model	= $this->getModel('Menu');
 		$form	= $model->getForm();
 		if (!$form) {
-			JError::raiseError(500, $model->getError());
+			MolajoError::raiseError(500, $model->getError());
 
 			return false;
 		}
@@ -90,7 +90,7 @@ class MenusControllerMenu extends JControllerForm
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
 			{
-				if (JError::isError($errors[$i])) {
+				if (MolajoError::isError($errors[$i])) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 				}
 				else {

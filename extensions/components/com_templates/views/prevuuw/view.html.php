@@ -45,7 +45,7 @@ class TemplatesViewPrevuuw extends JView
 		$this->url		= $application->id ? JURI::base() : JURI::root();
 
 		if (!$this->template) {
-			return JError::raiseWarning(500, MolajoText::_('COM_TEMPLATES_TEMPLATE_NOT_SPECIFIED'));
+			return MolajoError::raiseWarning(500, MolajoText::_('COM_TEMPLATES_TEMPLATE_NOT_SPECIFIED'));
 		}
 
 		// Set FTP credentials, if given

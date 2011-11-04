@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 	<?php echo MolajoText::_('COM_INSTALLER_MSG_DESCFTP'); ?>
 
-	<?php if (JError::isError($this->ftp)): ?>
+	<?php if (MolajoError::isError($this->ftp)): ?>
 		<p><?php echo MolajoText::_($this->ftp->getMessage()); ?></p>
 	<?php endif; ?>
 

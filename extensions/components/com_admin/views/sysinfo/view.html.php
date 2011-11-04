@@ -47,7 +47,7 @@ class AdminViewSysinfo extends JView
 	{
 		// Access check.
 		if (!MolajoFactory::getUser()->authorise('core.admin')) {
-			return JError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
+			return MolajoError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 		}
 
 		// Initialise variables.

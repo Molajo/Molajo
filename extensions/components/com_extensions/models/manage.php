@@ -112,7 +112,7 @@ class InstallerModelManage extends InstallerModel
 				if ($table->type == 'template') {
 					$style = JTable::getInstance('Style', 'TemplatesTable');
 					if ($style->load(array('template' => $table->element, 'application_id' => $table->application_id, 'home'=>1))) {
-						JError::raiseNotice(403, MolajoText::_('COM_INSTALLER_ERROR_DISABLE_DEFAULT_TEMPLATE_NOT_PERMITTED'));
+						MolajoError::raiseNotice(403, MolajoText::_('COM_INSTALLER_ERROR_DISABLE_DEFAULT_TEMPLATE_NOT_PERMITTED'));
 						unset($eid[$i]);
 						continue;
 					}
@@ -125,7 +125,7 @@ class InstallerModelManage extends InstallerModel
 			}
 		} else {
 			$result = false;
-			JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 		}
 		return $result;
 	}
@@ -234,7 +234,7 @@ class InstallerModelManage extends InstallerModel
 			return $result;
 		} else {
 			$result = false;
-			JError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
+			MolajoError::raiseWarning(403, MolajoText::_('JERROR_CORE_DELETE_NOT_PERMITTED'));
 		}
 	}
 

@@ -150,7 +150,7 @@ class ConfigModelApplication extends JModelForm
 
 		// Attempt to make the file writeable if using FTP.
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0644')) {
-			JError::raiseNotice('SOME_ERROR_CODE', MolajoText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTWRITABLE'));
+			MolajoError::raiseNotice('SOME_ERROR_CODE', MolajoText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTWRITABLE'));
 		}
 
 		// Attempt to write the configuration file as a PHP class named MolajoConfig.
@@ -162,7 +162,7 @@ class ConfigModelApplication extends JModelForm
 
 		// Attempt to make the file unwriteable if using FTP.
 		if ($data['ftp_enable'] == 0 && !$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0444')) {
-			JError::raiseNotice('SOME_ERROR_CODE', MolajoText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTUNWRITABLE'));
+			MolajoError::raiseNotice('SOME_ERROR_CODE', MolajoText::_('COM_CONFIG_ERROR_CONFIGURATION_PHP_NOTUNWRITABLE'));
 		}
 
 		return true;

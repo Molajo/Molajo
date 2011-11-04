@@ -100,7 +100,7 @@ class MolajoUser extends JObject
 	 * Description
 	 * @var string
 	 */
-	public $params = null;
+	public $parameters = null;
 
 	/**
 	 * Associative array of user names => group ids
@@ -120,7 +120,7 @@ class MolajoUser extends JObject
 	 * User parameters
 	 * @var object
 	 */
-	protected $_params	= null;
+	protected $_parameters	= null;
 
 	/**
 	 * Authorised access groups
@@ -159,7 +159,7 @@ class MolajoUser extends JObject
 	public function __construct($identifier = 0)
 	{
 		// Create the user parameters object
-		$this->_params = new JRegistry;
+		$this->_parameters = new JRegistry;
 
 		// Load the user if it exists
 		if (empty($identifier)) {
@@ -224,7 +224,7 @@ class MolajoUser extends JObject
 	 */
 	public function getParam($key, $default = null)
 	{
-		return $this->_params->get($key, $default);
+		return $this->_parameters->get($key, $default);
 	}
 
 	/**
@@ -240,7 +240,7 @@ class MolajoUser extends JObject
 	 */
 	public function setParam($key, $value)
 	{
-		return $this->_params->set($key, $value);
+		return $this->_parameters->set($key, $value);
 	}
 
 	/**
@@ -256,7 +256,7 @@ class MolajoUser extends JObject
 	 */
 	public function defParam($key, $value)
 	{
-		return $this->_params->def($key, $value);
+		return $this->_parameters->def($key, $value);
 	}
 
 	/**
@@ -313,10 +313,10 @@ class MolajoUser extends JObject
 				$file = $parampath.'/'.'user.xml';
 			}
 
-			$this->_params->loadSetupFile($file);
+			$this->_parameters->loadSetupFile($file);
 		}
 
-		return $this->_params;
+		return $this->_parameters;
 	}
 
 	/**
@@ -324,14 +324,14 @@ class MolajoUser extends JObject
      *
      * Method to get the user parameters
 	 *
-	 * @param   object   $params	The user parameters object
+	 * @param   object   $parameters	The user parameters object
 	 *
 	 * @return  void
 	 * @since   1.0
 	 */
-	public function setParameters($params)
+	public function setParameters($parameters)
 	{
-		$this->_params = $params;
+		$this->_parameters = $parameters;
 	}
 
 	/**
@@ -442,18 +442,18 @@ class MolajoUser extends JObject
 
 		$db = MolajoFactory::getDbo();
 
-		if (array_key_exists('params', $array)) {
-			$params	= '';
+		if (array_key_exists('parameters', $array)) {
+			$parameters	= '';
 
-			$this->_params->loadArray($array['params']);
+			$this->_parameters->loadArray($array['parameters']);
 
-			if (is_array($array['params'])) {
-				$params	= (string)$this->_params;
+			if (is_array($array['parameters'])) {
+				$parameters	= (string)$this->_parameters;
 			} else {
-				$params = $array['params'];
+				$parameters = $array['parameters'];
 			}
 
-			$this->params = $params;
+			$this->parameters = $parameters;
 		}
 
 		// Bind the array
@@ -481,7 +481,7 @@ class MolajoUser extends JObject
 		// NOTE: $updateOnly is currently only used in the user reset password method.
 		// Create the user table object
 		$table			= $this->getTable();
-		$this->params	= (string) $this->_params;
+		$this->parameters	= (string) $this->_parameters;
 		$table->bind($this->getProperties());
 
 		// Allow an exception to be thrown.
@@ -571,7 +571,7 @@ class MolajoUser extends JObject
 
 			if ($my->id == $table->id) {
 				$registry = new JRegistry;
-				$registry->loadJSON($table->params);
+				$registry->loadJSON($table->parameters);
 				$my->setParameters($registry);
 			}
 
@@ -634,7 +634,7 @@ class MolajoUser extends JObject
 			MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
 			return false;
 		}
-		$this->_params->loadJSON($table->parameters);
+		$this->_parameters->loadJSON($table->parameters);
 
 		$this->setProperties($table->getProperties());
 
@@ -664,7 +664,7 @@ class MolajoUser extends JObject
     public function authorisedLevels()
     {
         $acl = new MolajoACL ();
-        return $acl->getList ('Usergroupings', $userId='', $option='', $task='', $params=array());
+        return $acl->getList ('Usergroupings', $userId='', $option='', $task='', $parameters=array());
     }
 
     /**
@@ -673,7 +673,7 @@ class MolajoUser extends JObject
     public function getAuthorisedCategories($component, $action)
     {
         $acl = new MolajoACL ();
-        return $acl->getList ('Usercategories', $userId='', $option='', $task='', $params=array());
+        return $acl->getList ('Usercategories', $userId='', $option='', $task='', $parameters=array());
     }
 
     /**
@@ -682,7 +682,7 @@ class MolajoUser extends JObject
     public function getAuthorisedViewLevels()
     {
         $acl = new MolajoACL();
-        return $acl->getList ('viewaccess', $userId='', $option='', $task='', $params=array());
+        return $acl->getList ('viewaccess', $userId='', $option='', $task='', $parameters=array());
     }
 
     /**
@@ -691,6 +691,6 @@ class MolajoUser extends JObject
     public function getAuthorisedGroups()
     {
         $acl = new MolajoACL ();
-        return $acl->getList ('Usergroups’', $userId='', $option='', $task='', $params=array());
+        return $acl->getList ('Usergroups’', $userId='', $option='', $task='', $parameters=array());
     }
 }

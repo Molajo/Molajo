@@ -171,7 +171,7 @@ class MenusHelper
 
 		// Check for a database error.
 		if ($error = $db->getErrorMsg()) {
-			JError::raiseWarning(500, $error);
+			MolajoError::raiseWarning(500, $error);
 			return false;
 		}
 
@@ -193,7 +193,7 @@ class MenusHelper
 
 			// Check for a database error.
 			if ($error = $db->getErrorMsg()) {
-				JError::raiseWarning(500, $error);
+				MolajoError::raiseWarning(500, $error);
 				return false;
 			}
 

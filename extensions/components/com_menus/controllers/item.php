@@ -156,7 +156,7 @@ class MenusControllerItem extends JControllerForm
 		// This post is made up of two forms, one for the item and one for params.
 		$form = $model->getForm($data);
 		if (!$form) {
-			JError::raiseError(500, $model->getError());
+			MolajoError::raiseError(500, $model->getError());
 
 			return false;
 		}
@@ -182,7 +182,7 @@ class MenusControllerItem extends JControllerForm
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
 			{
-				if (JError::isError($errors[$i])) {
+				if (MolajoError::isError($errors[$i])) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 				}
 				else {

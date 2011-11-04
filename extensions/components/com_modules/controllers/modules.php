@@ -40,7 +40,7 @@ class ModulesControllerModules extends JControllerAdmin
 			$model->duplicate($pks);
 			$this->setMessage(MolajoText::plural('COM_MODULES_N_MODULES_DUPLICATED', count($pks)));
 		} catch (Exception $e) {
-			JError::raiseWarning(500, $e->getMessage());
+			MolajoError::raiseWarning(500, $e->getMessage());
 		}
 
 		$this->setRedirect('index.php?option=com_modules&view=modules');

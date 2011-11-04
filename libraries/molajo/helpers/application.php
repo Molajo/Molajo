@@ -46,6 +46,7 @@ class MolajoApplicationHelper
 		JRequest::setVar('option', $option);
 		return $option;
 	}
+
     /**
      * getComponentName
      * 
@@ -159,6 +160,41 @@ class MolajoApplicationHelper
                 $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
+	}
+
+	/**
+	 * getApplicationDefaults
+     *
+     * Retrieves Applications for which the site is authorized to see
+	 *
+	 * @param   integer  $id		A site id
+	 *
+	 * @return  array
+	 * @since   1.0
+	 */
+	public static function getApplicationDefaults ()
+	{
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('default_template_extension_id');
+        $query->select('default_application_indicator');
+        $query->from($db->namequote('#__applications'));
+        $query->where($db->namequote('id').' = '.(int) MOLAJO_APPLICATION_ID);
+
+        $db->setQuery($query->__toString());
+
+        if ($defaults = $db->loadObjectList()) {
+        } else {
+            MolajoFactory::getSite()->enqueueMessage($db->getErrorMsg(), 'error');
+            return false;
+        }
+
+        if ($db->getErrorNum()) {
+            return new MolajoException($db->getErrorMsg());
+        }
+
+        return $defaults;
 	}
 
 	/**

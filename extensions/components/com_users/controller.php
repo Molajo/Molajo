@@ -68,7 +68,7 @@ class UsersController extends JController
 		$id			= JRequest::getInt('id');
 
 		if (!$this->canView($view)) {
-			JError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
+			MolajoError::raiseWarning(404, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 
 			return;
 		}

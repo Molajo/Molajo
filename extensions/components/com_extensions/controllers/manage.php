@@ -49,14 +49,14 @@ class InstallerControllerManage extends JController
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, MolajoText::_('COM_INSTALLER_ERROR_NO_EXTENSIONS_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_('COM_INSTALLER_ERROR_NO_EXTENSIONS_SELECTED'));
 		} else {
 			// Get the model.
 			$model	= $this->getModel('manage');
 
 			// Change the state of the records.
 			if (!$model->publish($ids, $value)) {
-				JError::raiseWarning(500, implode('<br />', $model->getErrors()));
+				MolajoError::raiseWarning(500, implode('<br />', $model->getErrors()));
 			} else {
 				if ($value == 1) {
 					$ntext = 'COM_INSTALLER_N_EXTENSIONS_PUBLISHED';

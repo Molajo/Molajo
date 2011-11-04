@@ -76,7 +76,7 @@ class CacheController extends JController
 		$model = $this->getModel('cache');
 
 		if(empty($cid)) {
-			JError::raiseWarning(500, MolajoText::_('JERROR_NO_ITEMS_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_('JERROR_NO_ITEMS_SELECTED'));
 		} else {
 			$model->cleanlist($cid);
 		}

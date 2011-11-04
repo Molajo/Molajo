@@ -7,4 +7,4 @@
  */
 defined('MOLAJO') or die;
 $current_folder = basename(dirname(__FILE__));
-require_once MOLAJO_LIBRARY.'/mvc/entry.php';
+require_once MOLAJO_LIBRARY_MVC.'/entry.php';

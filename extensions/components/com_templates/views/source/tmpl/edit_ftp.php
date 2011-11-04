@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 
 	<?php echo MolajoText::_('COM_TEMPLATES_FTP_DESC'); ?>
 
-	<?php if (JError::isError($this->ftp)): ?>
+	<?php if (MolajoError::isError($this->ftp)): ?>
 		<p class="error"><?php echo MolajoText::_($this->ftp->message); ?></p>
 	<?php endif; ?>
 

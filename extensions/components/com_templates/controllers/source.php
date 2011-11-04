@@ -106,12 +106,12 @@ class TemplatesControllerSource extends JController
 		$context	= 'com_templates.edit.source';
 
 		if (preg_match('#\.\.#', base64_decode($recordId))) {
-			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_FILE_NOT_FOUND'));
+			return MolajoError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_FILE_NOT_FOUND'));
 		}
 
 		// Access check.
 		if (!$this->allowEdit()) {
-			return JError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+			return MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 		}
 
 		// Check-out succeeded, push the new record id into the session.
@@ -160,25 +160,25 @@ class TemplatesControllerSource extends JController
 
 		// Access check.
 		if (!$this->allowSave()) {
-			return JError::raiseWarning(403, MolajoText::_('JERROR_SAVE_NOT_PERMITTED'));
+			return MolajoError::raiseWarning(403, MolajoText::_('JERROR_SAVE_NOT_PERMITTED'));
 		}
 
 		// Match the stored id's with the submitted.
 		if (empty($data['extension_id']) || empty($data['filename'])) {
-			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
+			return MolajoError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
 		}
 		else if ($data['extension_id'] != $model->getState('extension.id')) {
-			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
+			return MolajoError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
 		}
 		else if ($data['filename'] != $model->getState('filename')) {
-			return JError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
+			return MolajoError::raiseError(500, MolajoText::_('COM_TEMPLATES_ERROR_SOURCE_ID_FILENAME_MISMATCH'));
 		}
 
 		// Validate the posted data.
 		$form	= $model->getForm();
 		if (!$form)
 		{
-			JError::raiseError(500, $model->getError());
+			MolajoError::raiseError(500, $model->getError());
 			return false;
 		}
 		$data = $model->validate($form, $data);
@@ -192,7 +192,7 @@ class TemplatesControllerSource extends JController
 			// Push up to three validation messages out to the user.
 			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
 			{
-				if (JError::isError($errors[$i])) {
+				if (MolajoError::isError($errors[$i])) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
 				}
 				else {

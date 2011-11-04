@@ -163,7 +163,7 @@ class MolajoInstallationModelSetup extends JModel
 		$app = MolajoFactory::getApplication();
 
 		// Detect the native language.
-		$native = JLanguageHelper::detectLanguage();
+		$native = MolajoLanguageHelper::detectLanguage();
 
 		if (empty($native)) {
 			$native = 'en-GB';
@@ -177,9 +177,9 @@ class MolajoInstallationModelSetup extends JModel
 		}
 
 		// Get the list of available languages.
-		$list = JLanguageHelper::createLanguageList($native);
+		$list = MolajoLanguageHelper::createLanguageList($native);
 
-		if (!$list || JError::isError($list)) {
+		if (!$list || MolajoError::isError($list)) {
 			$list = array();
 		}
 
@@ -420,7 +420,7 @@ class MolajoInstallationModelSetup extends JModel
 		$return	= $form->validate($data);
 
 		// Check for an error.
-		if (JError::isError($return)) {
+		if (MolajoError::isError($return)) {
 			$this->setError($return->getMessage());
 			return false;
 		}

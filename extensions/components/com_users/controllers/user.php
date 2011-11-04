@@ -54,7 +54,7 @@ class UsersControllerUser extends JControllerForm
 	/**
 	 * Overrides parent save method to check the submitted passwords match.
 	 *
-	 * @return	mixed	Boolean or JError.
+	 * @return	mixed	Boolean or MolajoError.
 	 * @since	1.0
 	 */
 	public function save($key = null, $urlVar = null)

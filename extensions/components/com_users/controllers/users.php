@@ -66,14 +66,14 @@ class UsersControllerUsers extends JControllerAdmin
 		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
 
 			// Change the state of the records.
 			if (!$model->block($ids, $value)) {
-				JError::raiseWarning(500, $model->getError());
+				MolajoError::raiseWarning(500, $model->getError());
 			} else {
 				if ($value == 1){
 					$this->setMessage(MolajoText::plural('COM_USERS_N_USERS_BLOCKED', count($ids)));
@@ -100,14 +100,14 @@ class UsersControllerUsers extends JControllerAdmin
 		$ids	= JRequest::getVar('cid', array(), '', 'array');
 
 		if (empty($ids)) {
-			JError::raiseWarning(500, MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_('COM_USERS_USERS_NO_ITEM_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
 
 			// Change the state of the records.
 			if (!$model->activate($ids)) {
-				JError::raiseWarning(500, $model->getError());
+				MolajoError::raiseWarning(500, $model->getError());
 			} else {
 				$this->setMessage(MolajoText::plural('COM_USERS_N_USERS_ACTIVATED', count($ids)));
 			}
