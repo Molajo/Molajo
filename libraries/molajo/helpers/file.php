@@ -24,7 +24,7 @@ class MolajoFileHelper
      *
      * @return Boolean
      */
-    function requireClassFile ($file, $class)
+    function requireClassFile($file, $class)
     {
         if (substr(basename($file), 0, 4) == 'HOLD') {
             return true;
@@ -35,14 +35,14 @@ class MolajoFileHelper
         if (file_exists($file)) {
             JLoader::register($class, $file);
         } else {
-            MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS'.' '.$file.' '.$class), 'error');
+            MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
             return false;
         }
 
         if (class_exists($class)) {
             return true;
         } else {
-            MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');
+            MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
             return false;
         }
     }

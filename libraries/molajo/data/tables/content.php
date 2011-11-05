@@ -27,7 +27,7 @@ class MolajoTableContent extends MolajoTable
      */
     function __construct($db)
     {
-        parent::__construct('#'.JRequest::getCmd('ComponentTable'), 'id', $db);
+        parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
     }
 
     /**
@@ -35,8 +35,8 @@ class MolajoTableContent extends MolajoTable
      *
      * Method to return the title to use for the asset table.
      *
-     * @return	string
-     * @since	1.6
+     * @return    string
+     * @since    1.6
      */
     protected function _getAssetTitle()
     {
@@ -48,10 +48,10 @@ class MolajoTableContent extends MolajoTable
      *
      * Get the parent asset id for the record
      *
-     * @return	int
-     * @since	1.6
+     * @return    int
+     * @since    1.6
      */
-    protected function _getAssetParentId ($table = null, $id = null)
+    protected function _getAssetParentId($table = null, $id = null)
     {
         /** initialize **/
         $assetId = null;
@@ -59,14 +59,14 @@ class MolajoTableContent extends MolajoTable
 
         /** retrieve parent category asset **/
         if ($this->catid) {
-            $query	= $db->getQuery(true);
+            $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
-            $query->where('id = '.(int) $this->catid);
+            $query->where('id = ' . (int)$this->catid);
 
             $this->_db->setQuery($query);
             if ($result = $this->_db->loadResult()) {
-                $assetId = (int) $result;
+                $assetId = (int)$result;
             }
         }
 
@@ -83,16 +83,16 @@ class MolajoTableContent extends MolajoTable
      *
      * Overloaded bind function
      *
-     * @param	array $hash named array
+     * @param    array $hash named array
      *
-     * @return	null|string null is operation was satisfactory, otherwise returns an error
-     * @see	MolajoTable:bind
-     * @since	1.6
+     * @return    null|string null is operation was satisfactory, otherwise returns an error
+     * @see    MolajoTable:bind
+     * @since    1.6
      */
     public function bind($array, $ignore = '')
     {
         $jsonModel = JModel::getInstance('ModelConfiguration', 'Molajo', array('ignore_request' => true));
-        $results = $jsonModel->getOptionList (MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
+        $results = $jsonModel->getOptionList(MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
 
         foreach ($results as $count => $result) {
             if (isset($array[$result->value]) && is_array($array[$result->value])) {
@@ -117,9 +117,9 @@ class MolajoTableContent extends MolajoTable
      *
      * Overloaded check function
      *
-     * @return	boolean
-     * @see	MolajoTable::check
-     * @since	1.6
+     * @return    boolean
+     * @see    MolajoTable::check
+     * @since    1.6
      */
     public function check()
     {
@@ -132,7 +132,7 @@ class MolajoTableContent extends MolajoTable
         /** alias **/
         $this->_getAlias();
 
-        if (trim(str_replace('-','',$this->alias)) == '') {
+        if (trim(str_replace('-', '', $this->alias)) == '') {
             $this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
         }
 
@@ -156,7 +156,7 @@ class MolajoTableContent extends MolajoTable
             $keys = explode(',', $after_clean);
             $clean_keys = array();
 
-            foreach($keys as $key) {
+            foreach ($keys as $key) {
                 if (trim($key)) {
                     $clean_keys[] = trim($key);
                 }
@@ -171,10 +171,10 @@ class MolajoTableContent extends MolajoTable
      *
      * Overriden MolajoTable::store to set modified data and user id.
      *
-     * @param	boolean	True to update fields even if they are null.
+     * @param    boolean    True to update fields even if they are null.
      *
-     * @return	boolean	True on success.
-     * @since	1.6
+     * @return    boolean    True on success.
+     * @since    1.6
      */
     public function store($updateNulls = false)
     {
@@ -182,8 +182,8 @@ class MolajoTableContent extends MolajoTable
         $user = MolajoFactory::getUser();
 
         if ($this->id) {
-            $this->modified	= $date->toMySQL();
-            $this->modified_by	= $user->get('id');
+            $this->modified = $date->toMySQL();
+            $this->modified_by = $user->get('id');
 
             if (intval($this->stop_publishing_datetime) > 0 && $this->stop_publishing_datetime < $this->start_publishing_datetime) {
                 $temp = $this->start_publishing_datetime;
@@ -203,7 +203,7 @@ class MolajoTableContent extends MolajoTable
 
         $this->_getAlias();
 
-        if (trim(str_replace('-','',$this->alias)) == '') {
+        if (trim(str_replace('-', '', $this->alias)) == '') {
             $this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
         }
 
@@ -215,10 +215,10 @@ class MolajoTableContent extends MolajoTable
      *
      * Verify, or create and then verify, a unique value for Alias
      *
-     * @return	boolean
-     * @since	1.6
+     * @return    boolean
+     * @since    1.6
      */
-    protected function _getAlias ()
+    protected function _getAlias()
     {
         /** initialize **/
         $aliasFound = false;
@@ -240,24 +240,24 @@ class MolajoTableContent extends MolajoTable
         $tempAlias = $this->alias;
 
         do {
-                $query	= $db->getQuery(true);
+            $query = $db->getQuery(true);
 
-                $query->select($db->namequote('alias'));
-                $query->from($db->namequote('#'.JRequest::getCmd('ComponentTable')));
-                $query->where($db->namequote('alias').' = '.$db->quote($this->alias));
-                $query->where($db->namequote('id').' <> '. (int) $this->id);
-                $query->where($db->namequote('state').' <> '.(int) MOLAJO_STATE_VERSION);
+            $query->select($db->namequote('alias'));
+            $query->from($db->namequote('#' . JRequest::getCmd('ComponentTable')));
+            $query->where($db->namequote('alias') . ' = ' . $db->quote($this->alias));
+            $query->where($db->namequote('id') . ' <> ' . (int)$this->id);
+            $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATE_VERSION);
 
-                $this->_db->setQuery($query);
+            $this->_db->setQuery($query);
 
-                if ($result = $this->_db->loadResult()) {
-                    $aliasFound = false;
-                } else {
-                    $aliasFound = true;
-                }
+            if ($result = $this->_db->loadResult()) {
+                $aliasFound = false;
+            } else {
+                $aliasFound = true;
+            }
 
             if ($aliasFound === false) {
-                $tempAlias = $this->alias.'-'.$i;
+                $tempAlias = $this->alias . '-' . $i;
             }
             $i++;
 

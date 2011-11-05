@@ -14,10 +14,10 @@ abstract class MolajoPluginHelper
      * Get the path to a layout for a plugin
      *
      * @static
-     * @param	array	$widget	An array containing the type and name of the plugin
-     * @param	string	$layout	The name of the module layout. If alternative layout, in the form template:filename.
-     * @return	string	The path to the module layout
-     * @since	1.5
+     * @param    array    $widget    An array containing the type and name of the plugin
+     * @param    string    $layout    The name of the module layout. If alternative layout, in the form template:filename.
+     * @return    string    The path to the module layout
+     * @since    1.5
      */
     public static function getLayoutPath($widget = array(), $layout = 'default')
     {
@@ -26,8 +26,8 @@ abstract class MolajoPluginHelper
         $defaultLayout = $layout;
 
         /** template and base path for the layout **/
-        $tPath = MOLAJO_EXTENSION_TEMPLATES.'/'.$template.'/html/'.$widget['type'].'/'.$widget['name'].'/'.$layout.'.php';
-        $bPath = MOLAJO_WIDGETS.'/'.$widget['type'].'/'.$widget['name'].'/tmpl/'.$defaultLayout.'.php';
+        $tPath = MOLAJO_EXTENSION_TEMPLATES . '/' . $template . '/html/' . $widget['type'] . '/' . $widget['name'] . '/' . $layout . '.php';
+        $bPath = MOLAJO_WIDGETS . '/' . $widget['type'] . '/' . $widget['name'] . '/tmpl/' . $defaultLayout . '.php';
 
         /** use layout overrides, if available **/
         if (file_exists($tPath)) {
@@ -41,11 +41,11 @@ abstract class MolajoPluginHelper
      * generateLayout
      *
      * @static
-     * @param	string	$layout	The name of the plugin layout.
-     * @return	string	$renderedLayout rendered output
-     * @since	1.5
+     * @param    string    $layout    The name of the plugin layout.
+     * @return    string    $renderedLayout rendered output
+     * @since    1.5
      */
-    function generateLayout ($layoutPath)
+    function generateLayout($layoutPath)
     {
         ob_start();
         require $layoutPath;

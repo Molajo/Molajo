@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Title Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldTitle extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldTitle extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('title');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('title');
+        parent::setRequestFilter('integer');
 
     }
 
@@ -36,9 +37,9 @@ class MolajoFieldTitle extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $titleModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $titleModel->getOptionList('id', 'title', $showKey = true, $showKeyFirst = false, $table = '');
     }
 
@@ -47,9 +48,9 @@ class MolajoFieldTitle extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -59,7 +60,7 @@ class MolajoFieldTitle extends MolajoField
         $results = MolajoFieldTitle::validateRequestValue();
         if ($results === false) {
             return false;
-        }  else {
+        } else {
             return $this->requestValue;
         }
     }
@@ -69,9 +70,9 @@ class MolajoFieldTitle extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
-        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $titleModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $titleModel->validateValue('id', $this->requestValue, 'numeric', null);
     }
 
@@ -80,22 +81,22 @@ class MolajoFieldTitle extends MolajoField
      *
      *  Returns Formatted Where clause for Query
      */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
             $query->select('a.title');
         }
 
-        if ((int) $value == 0) {
+        if ((int)$value == 0) {
             return;
         }
         if ($selectedState == '*' || $selectedState == MOLAJO_STATE_VERSION) {
-            $query->where('(a.id = '. (int) $value.' OR a.version_of_id = '. (int) $value.')');
+            $query->where('(a.id = ' . (int)$value . ' OR a.version_of_id = ' . (int)$value . ')');
         } else {
-            $query->where('a.id = '. (int) $value);
+            $query->where('a.id = ' . (int)$value);
         }
-        
+
     }
 
     /**
@@ -103,7 +104,7 @@ class MolajoFieldTitle extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
 
         if ($layout == 'admin') {
@@ -117,7 +118,7 @@ class MolajoFieldTitle extends MolajoField
             $render['column_name'] = 'title';
 
             if ($item->canEdit === true) {
-                $render['link_value'] = 'index.php?option='.JRequest::getVar('option').'&task=edit&id='.$item->id;
+                $render['link_value'] = 'index.php?option=' . JRequest::getVar('option') . '&task=edit&id=' . $item->id;
                 $render['print_value'] = $item->title;
             } else {
                 $render['link_value'] = false;

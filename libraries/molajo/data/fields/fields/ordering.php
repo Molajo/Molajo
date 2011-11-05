@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Ordering Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldOrdering extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldOrdering extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('ordering');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('ordering');
+        parent::setRequestFilter('integer');
     }
 
     /**
@@ -35,7 +36,7 @@ class MolajoFieldOrdering extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
 
     }
@@ -45,10 +46,10 @@ class MolajoFieldOrdering extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -66,7 +67,7 @@ class MolajoFieldOrdering extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         $validItems = $this->getOptions();
 
@@ -88,14 +89,14 @@ class MolajoFieldOrdering extends MolajoField
      * @param sstring $value
      * @return array
      */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         $query->select('a.ordering');
         if (is_numeric($value)) {
-            $query->where('a.ordering = '.(int) $value);
+            $query->where('a.ordering = ' . (int)$value);
         } else if ($value == '*') {
-            
-        } else  {
+
+        } else {
 
             $query->where('a.ordering > -1');
         }
@@ -106,7 +107,7 @@ class MolajoFieldOrdering extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();

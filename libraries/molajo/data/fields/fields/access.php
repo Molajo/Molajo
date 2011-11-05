@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Access Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldAccess extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldAccess extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('access');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('access');
+        parent::setRequestFilter('integer');
     }
 
     /**
@@ -35,7 +36,7 @@ class MolajoFieldAccess extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
         return MolajoHTML::_('access.assetgroups');
     }
@@ -45,10 +46,10 @@ class MolajoFieldAccess extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -66,7 +67,7 @@ class MolajoFieldAccess extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         $validItems = $this->getOptions();
 
@@ -88,13 +89,13 @@ class MolajoFieldAccess extends MolajoField
      *
      *  Appends to query object
      */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
-        if ((int) $value == 0) {
+        if ((int)$value == 0) {
             return;
         }
-        $aclClass = 'MolajoACL'.ucfirst(strtolower(JRequest::getVar('DefaultView')));
-        $aclClass::getQueryInformation (JRequest::getVar('option'), $query, 'filter', $value );
+        $aclClass = 'MolajoACL' . ucfirst(strtolower(JRequest::getVar('DefaultView')));
+        $aclClass::getQueryInformation(JRequest::getVar('option'), $query, 'filter', $value);
     }
 
     /**
@@ -102,7 +103,7 @@ class MolajoFieldAccess extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();

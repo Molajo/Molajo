@@ -18,26 +18,26 @@ defined('MOLAJO') or die;
  */
 class MolajoButtonCustom extends MolajoButton
 {
-	/**
-	 * Button type
-	 *
-	 * @var    string
-	 */
-	protected $_name = 'Custom';
+    /**
+     * Button type
+     *
+     * @var    string
+     */
+    protected $_name = 'Custom';
 
-	public function fetchButton($type='Custom', $html = '', $id = 'custom')
-	{
-		return $html;
-	}
+    public function fetchButton($type = 'Custom', $html = '', $id = 'custom')
+    {
+        return $html;
+    }
 
-	/**
-	 * Get the button CSS Id
-	 *
-	 * @return  string  Button CSS Id
-	 * @since   1.0
-	 */
-	public function fetchId($type='Custom', $html = '', $id = 'custom')
-	{
-		return $this->_parent->getName().'-'.$id;
-	}
+    /**
+     * Get the button CSS Id
+     *
+     * @return  string  Button CSS Id
+     * @since   1.0
+     */
+    public function fetchId($type = 'Custom', $html = '', $id = 'custom')
+    {
+        return $this->_parent->getName() . '-' . $id;
+    }
 }

@@ -18,31 +18,31 @@ defined('MOLAJO') or die;
  */
 class MolajoButtonSeparator extends MolajoButton
 {
-	/**
-	 * Button type
-	 *
-	 * @var   string
-	 */
-	protected $_name = 'Separator';
+    /**
+     * Button type
+     *
+     * @var   string
+     */
+    protected $_name = 'Separator';
 
-	public function render(&$definition)
-	{
-		// Initialise variables.
-		$class	= null;
-		$style	= null;
+    public function render(&$definition)
+    {
+        // Initialise variables.
+        $class = null;
+        $style = null;
 
-		// Separator class name
-		$class = (empty($definition[1])) ? 'spacer' : $definition[1];
-		// Custom width
-		$style = (empty($definition[2])) ? null : ' style="width:'. intval($definition[2]).'px;"';
+        // Separator class name
+        $class = (empty($definition[1])) ? 'spacer' : $definition[1];
+        // Custom width
+        $style = (empty($definition[2])) ? null : ' style="width:' . intval($definition[2]) . 'px;"';
 
-		return '<li class="'.$class.'"'.$style.">\n</li>\n";
-	}
+        return '<li class="' . $class . '"' . $style . ">\n</li>\n";
+    }
 
-	/**
-	 * Empty implementation (not required)
-	 */
-	public function fetchButton()
-	{
-	}
+    /**
+     * Empty implementation (not required)
+     */
+    public function fetchButton()
+    {
+    }
 }

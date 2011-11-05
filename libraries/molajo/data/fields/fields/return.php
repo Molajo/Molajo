@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Return Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldReturn extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldReturn extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('return');
-        parent::setRequestFilter ('base64');
+        parent::setFieldname('return');
+        parent::setRequestFilter('base64');
     }
 
     /**
@@ -35,17 +36,19 @@ class MolajoFieldReturn extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions () {}
+    public function getOptions()
+    {
+    }
 
     /**
      *  getSelectedValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -63,31 +66,35 @@ class MolajoFieldReturn extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
-		if (empty($this->requestValue)) {
+        if (empty($this->requestValue)) {
             return JURI::base();
         }
 
         if (JUri::isInternal(base64_decode($this->requestValue))) {
-			return JURI::base();
-		}
+            return JURI::base();
+        }
 
         return base64_decode($this->requestValue);
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false) {}
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
+    {
+    }
 
     /**
      *  render
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount) {}
+    public function render($layout, $item, $itemCount)
+    {
+    }
 
 }

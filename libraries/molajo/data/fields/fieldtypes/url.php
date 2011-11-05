@@ -17,11 +17,11 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldUrl extends MolajoFormFieldText
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $type = 'Url';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $type = 'Url';
 }

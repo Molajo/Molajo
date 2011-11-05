@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Stickied Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldStickied extends MolajoField
 {
@@ -24,14 +24,15 @@ class MolajoFieldStickied extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('stickied');
-        parent::setRequestFilter ('string');
+        parent::setFieldname('stickied');
+        parent::setRequestFilter('string');
 
-        parent::setTableColumnSortable (true);
-        parent::setTableColumnCheckbox (true);
-        parent::setDisplayDataType ('integer');
+        parent::setTableColumnSortable(true);
+        parent::setTableColumnCheckbox(true);
+        parent::setDisplayDataType('integer');
     }
 
     /**
@@ -39,11 +40,11 @@ class MolajoFieldStickied extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        $options	= array();
-        $options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
-        $options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
+        $options = array();
+        $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
+        $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
 
         return $options;
     }
@@ -53,10 +54,10 @@ class MolajoFieldStickied extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -74,7 +75,7 @@ class MolajoFieldStickied extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         $validItems = $this->getOptions();
 
@@ -92,11 +93,11 @@ class MolajoFieldStickied extends MolajoField
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
@@ -105,7 +106,7 @@ class MolajoFieldStickied extends MolajoField
 
         if ($value == null) {
         } else {
-            $query->where('a.stickied = '.trim($value));
+            $query->where('a.stickied = ' . trim($value));
         }
     }
 }

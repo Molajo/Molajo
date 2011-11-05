@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Alias Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldAlias extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldAlias extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('alias');
-        parent::setRequestFilter ('string');
+        parent::setFieldname('alias');
+        parent::setRequestFilter('string');
 
     }
 
@@ -36,9 +37,9 @@ class MolajoFieldAlias extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        $aliasModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $aliasModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $aliasModel->getOptionList('alias', 'alias', $showKey = false, $showKeyFirst = false, $table = '');
     }
 
@@ -47,9 +48,9 @@ class MolajoFieldAlias extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -64,7 +65,7 @@ class MolajoFieldAlias extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         //return MolajoModelDisplay::validateValue('alias', $this->requestValue, 'string', $table = null);
     }
@@ -74,7 +75,7 @@ class MolajoFieldAlias extends MolajoField
      *
      *  Returns Formatted Where clause for Query
      */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
@@ -84,7 +85,7 @@ class MolajoFieldAlias extends MolajoField
         if (trim($value) == '') {
             return;
         } else {
-            $query->where('a.alias = "'. $value.'"');
+            $query->where('a.alias = "' . $value . '"');
         }
     }
 
@@ -93,14 +94,14 @@ class MolajoFieldAlias extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
 
         if ($layout == 'admin') {
             $render = array();
 
             if ($item->canEdit === true) {
-                $render['link_value'] = 'index.php?option='.JRequest::getVar('option').'&task=edit&id='.$item->id;
+                $render['link_value'] = 'index.php?option=' . JRequest::getVar('option') . '&task=edit&id=' . $item->id;
             } else {
                 $render['link_value'] = false;
             }

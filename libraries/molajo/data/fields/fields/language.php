@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Language Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldLanguage extends MolajoField
 {
@@ -24,14 +24,15 @@ class MolajoFieldLanguage extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('language');
-        parent::setRequestFilter ('string');
+        parent::setFieldname('language');
+        parent::setRequestFilter('string');
 
-        parent::setTableColumnSortable (true);
-        parent::setTableColumnCheckbox (false);
-        parent::setDisplayDataType ('integer');
+        parent::setTableColumnSortable(true);
+        parent::setTableColumnCheckbox(false);
+        parent::setDisplayDataType('integer');
     }
 
     /**
@@ -39,7 +40,7 @@ class MolajoFieldLanguage extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
         return MolajoHTML::_('contentlanguage.existing', true, true);
     }
@@ -49,10 +50,10 @@ class MolajoFieldLanguage extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -70,7 +71,7 @@ class MolajoFieldLanguage extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         $validItems = $this->getOptions();
 
@@ -88,25 +89,25 @@ class MolajoFieldLanguage extends MolajoField
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
-             $query->select('a.language');
-             $query->select('l.title AS language_title');
-             $query->join('LEFT', '`#__languages` AS l ON l.lang_code = a.language');
+            $query->select('a.language');
+            $query->select('l.title AS language_title');
+            $query->join('LEFT', '`#__languages` AS l ON l.lang_code = a.language');
         }
 
-        if ((int) $value == 0) {
+        if ((int)$value == 0) {
             return;
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.language = '.(int) $value);
+            $query->where('a.language = ' . (int)$value);
         }
     }
 }

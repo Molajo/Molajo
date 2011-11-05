@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Modified Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldModified extends MolajoField
 {
@@ -24,14 +24,15 @@ class MolajoFieldModified extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('modified');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('modified');
+        parent::setRequestFilter('integer');
 
-        parent::setTableColumnSortable (true);
-        parent::setTableColumnCheckbox (false);
-        parent::setDisplayDataType ('date');
+        parent::setTableColumnSortable(true);
+        parent::setTableColumnCheckbox(false);
+        parent::setDisplayDataType('date');
     }
 
     /**
@@ -39,9 +40,9 @@ class MolajoFieldModified extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        $dateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $dateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $dateModel->getMonthsModified();
     }
 
@@ -50,10 +51,10 @@ class MolajoFieldModified extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -71,11 +72,12 @@ class MolajoFieldModified extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
-        if ( substr($this->requestValue, 0, 4) > '1900'
-                && substr($this->requestValue, 0, 4) > '2100'
-                && inarray(substr($this->requestValue, 5, 2), array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12') ) ) {
+        if (substr($this->requestValue, 0, 4) > '1900'
+            && substr($this->requestValue, 0, 4) > '2100'
+            && inarray(substr($this->requestValue, 5, 2), array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'))
+        ) {
             return $this->requestValue;
         } else {
             return false;
@@ -83,11 +85,11 @@ class MolajoFieldModified extends MolajoField
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
@@ -98,6 +100,6 @@ class MolajoFieldModified extends MolajoField
             return;
         }
         $db = $this->getDbo();
-        $query->where('SUBSTRING(a.modified, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.modified, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 }

@@ -10,11 +10,11 @@ defined('MOLAJO') or die;
 /**
  * Configuration Model
  *
- * @package	    Molajo
- * @subpackage	Model
+ * @package        Molajo
+ * @subpackage    Model
  * @since       1.0
  */
-class MolajoModelConfiguration 
+class MolajoModelConfiguration
 {
     /**
      * @var string $option
@@ -24,7 +24,7 @@ class MolajoModelConfiguration
 
     /**
      * @var array $overrides
-     * @since 1.0 
+     * @since 1.0
      */
     protected $overrides = array();
 
@@ -34,7 +34,7 @@ class MolajoModelConfiguration
      * Constructor.
      *
      * @param $option
-     * @since	1.0
+     * @since    1.0
      */
     public function __construct($option)
     {
@@ -51,20 +51,20 @@ class MolajoModelConfiguration
      * @return bool
      * @since   1.0
      */
-    public function getOptionValue ($option_id)
+    public function getOptionValue($option_id)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
-        
+
         /** option or core **/
-        $component_option = $this->getComponentOptionKey ($option_id);
+        $component_option = $this->getComponentOptionKey($option_id);
 
         /** validation query **/
         $query->select($db->namequote('option_value'), $db->namequote('option_value_literal'));
         $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-        $query->where($db->namequote('ordering').' > 0 ');
+        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
+        $query->where($db->namequote('component_option') . ' = ' . $db->quote(trim($component_option)));
+        $query->where($db->namequote('ordering') . ' > 0 ');
 
         $db->setQuery($query->__toString());
 
@@ -93,23 +93,23 @@ class MolajoModelConfiguration
      * @return string or boolean option_value
      * @since 1.0
      */
-    public function getOptionLiteralValue ($option_id, $option_value)
+    public function getOptionLiteralValue($option_id, $option_value)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         /** option or core **/
-        $component_option = $this->getComponentOptionKey ($option_id);
+        $component_option = $this->getComponentOptionKey($option_id);
 
         /** retrieve value **/
         $query = $db->getQuery(true);
 
         $query->select($db->namequote('option_value_literal'));
         $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-        $query->where($db->namequote('option_value').' = '. $db->quote(trim($option_value)));
-        $query->where($db->namequote('ordering').' > 0 ');
+        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
+        $query->where($db->namequote('component_option') . ' = ' . $db->quote(trim($component_option)));
+        $query->where($db->namequote('option_value') . ' = ' . $db->quote(trim($option_value)));
+        $query->where($db->namequote('ordering') . ' > 0 ');
 
         $db->setQuery($query->__toString());
 
@@ -137,23 +137,23 @@ class MolajoModelConfiguration
      * @param int $option_id
      * @return string
      */
-    public function getOptionList ($option_id)
+    public function getOptionList($option_id)
     {
         /** check for overrides **/
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         /** option or core **/
-        $component_option = $this->getComponentOptionKey ($option_id);
+        $component_option = $this->getComponentOptionKey($option_id);
 
         /** validation query **/
         $query = $db->getQuery(true);
 
-        $query->select('DISTINCT '.$db->namequote('option_value').' AS value, '.$db->namequote('option_value_literal').' as text');
+        $query->select('DISTINCT ' . $db->namequote('option_value') . ' AS value, ' . $db->namequote('option_value_literal') . ' as text');
         $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('option_id').' = '.(int) $option_id);
-        $query->where($db->namequote('component_option').' = '. $db->quote(trim($component_option)));
-        $query->where($db->namequote('ordering').' > 0 ');
+        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
+        $query->where($db->namequote('component_option') . ' = ' . $db->quote(trim($component_option)));
+        $query->where($db->namequote('ordering') . ' > 0 ');
         $query->order($db->namequote('ordering'));
 
         $db->setQuery($query->__toString());
@@ -173,7 +173,7 @@ class MolajoModelConfiguration
      * @return string option value
      * @since 1.0
      */
-    private function getComponentOptionKey ($option_id)
+    private function getComponentOptionKey($option_id)
     {
         //echo '<pre>';var_dump($this->overrides);'</pre>';
         foreach ($this->overrides as $configurationOverrides => $override) {
@@ -200,16 +200,16 @@ class MolajoModelConfiguration
      * @param int $option_id
      * @return string
      */
-    private function setOverridesArray ()
+    private function setOverridesArray()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         /** retrieve all option_id values **/
-        $query->select('DISTINCT '.$db->namequote('option_id'));
+        $query->select('DISTINCT ' . $db->namequote('option_id'));
         $query->from($db->namequote('#__configuration'));
-        $query->where($db->namequote('ordering').' = 0');
-        $query->where($db->namequote('option_id').' > 0');
+        $query->where($db->namequote('ordering') . ' = 0');
+        $query->where($db->namequote('option_id') . ' > 0');
         $query->order($db->namequote('option_id'));
 
         $db->setQuery($query->__toString());
@@ -223,17 +223,17 @@ class MolajoModelConfiguration
         /** for each option_id, determine if there are overrides for the option */
         $optionArray = array();
         if (count($results) > 0) {
-            
+
             foreach ($results as $count => $item) {
 
                 /** retrieve override component_option, if existing **/
                 $query = $db->getQuery(true);
-                
+
                 $query->select($db->namequote('component_option'));
                 $query->from($db->namequote('#__configuration'));
-                $query->where($db->namequote('ordering').' = 0');
-                $query->where($db->namequote('option_id').' = '.(int) $item->option_id);
-                $query->where($db->namequote('component_option').' = '.$db->quote($this->option));
+                $query->where($db->namequote('ordering') . ' = 0');
+                $query->where($db->namequote('option_id') . ' = ' . (int)$item->option_id);
+                $query->where($db->namequote('component_option') . ' = ' . $db->quote($this->option));
 
                 $db->setQuery($query->__toString());
 

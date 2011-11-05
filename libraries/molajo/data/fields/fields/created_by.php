@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Created_by Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldCreated_by extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldCreated_by extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('created_by');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('created_by');
+        parent::setRequestFilter('integer');
 
     }
 
@@ -36,9 +37,9 @@ class MolajoFieldCreated_by extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        $class = ucfirst(JRequest::getCmd('DefaultView')).'Model'.ucfirst(JRequest::getCmd('DefaultView'));
+        $class = ucfirst(JRequest::getCmd('DefaultView')) . 'Model' . ucfirst(JRequest::getCmd('DefaultView'));
         $authorModel = new $class();
         return $authorModel->getAuthors();
     }
@@ -48,9 +49,9 @@ class MolajoFieldCreated_by extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -65,17 +66,17 @@ class MolajoFieldCreated_by extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
-        
+
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
@@ -86,10 +87,10 @@ class MolajoFieldCreated_by extends MolajoField
             $query->join('LEFT', '#__users AS author ON author.id = a.created_by');
         }
 
-        if ((int) $value == 0) {
+        if ((int)$value == 0) {
             return;
-        } 
-        $query->where('a.created_by = '. (int) $value);
+        }
+        $query->where('a.created_by = ' . (int)$value);
     }
 
     /**
@@ -97,7 +98,7 @@ class MolajoFieldCreated_by extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();

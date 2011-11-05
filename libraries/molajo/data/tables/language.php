@@ -18,34 +18,34 @@ defined('MOLAJO') or die;
  */
 class MolajoTableLanguage extends MolajoTable
 {
-	/**
-	 * Constructor
-	 *
-	 * @param   JDatabase
-	 *
-	 * @return  MolajoTableLanguage
-	 *
-	 * @since   1.0
-	 */
-	public function __construct(&$db)
-	{
-		parent::__construct('#__languages', 'lang_id', $db);
-	}
+    /**
+     * Constructor
+     *
+     * @param   JDatabase
+     *
+     * @return  MolajoTableLanguage
+     *
+     * @since   1.0
+     */
+    public function __construct(&$db)
+    {
+        parent::__construct('#__languages', 'lang_id', $db);
+    }
 
-	/**
-	 * Overloaded check method to ensure data integrity
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since   1.0
-	 */
-	public function check()
-	{
-		if (trim($this->title) == '') {
-			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_LANGUAGE_NO_TITLE'));
-			return false;
-		}
+    /**
+     * Overloaded check method to ensure data integrity
+     *
+     * @return  boolean  True on success
+     *
+     * @since   1.0
+     */
+    public function check()
+    {
+        if (trim($this->title) == '') {
+            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_LANGUAGE_NO_TITLE'));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

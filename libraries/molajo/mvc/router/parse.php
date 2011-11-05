@@ -12,8 +12,8 @@ defined('MOLAJO') or die;
  * Molajo Router
  *
  * @static
- * @package		Joomla
- * @subpackage	Router
+ * @package        Joomla
+ * @subpackage    Router
  * @since 1.5
  */
 class MolajoRouterParse extends MolajoRouter
@@ -37,9 +37,9 @@ class MolajoRouterParse extends MolajoRouter
         $vars = array();
 
         //Get the active menu item.
-        $app	= MolajoFactory::getApplication();
-        $menu	= $app->getMenu();
-        $item	= $menu->getActive();
+        $app = MolajoFactory::getApplication();
+        $menu = $app->getMenu();
+        $item = $menu->getActive();
         $params = MolajoComponentHelper::getParams($componentParam);
         $advanced = $params->get('sef_advanced_link', 0);
         $db = MolajoFactory::getDBO();
@@ -70,7 +70,8 @@ class MolajoRouterParse extends MolajoRouter
         $vars['id'] = $results;
         $vars['option'] = $componentParam;
         $vars['view'] = $multipleParam;
-        $vars['layout'] = 'item';       /** amy - make this a component parameter */
+        $vars['layout'] = 'item';
+        /** amy - make this a component parameter */
 
         return $vars;
     }
@@ -85,41 +86,41 @@ class MolajoRouterParse extends MolajoRouter
      * @param  $tableParam
      * @return array
      */
-    protected function parseDateURLs ($segments, $componentParam, $singleParam, $typeParam, $tableParam)
+    protected function parseDateURLs($segments, $componentParam, $singleParam, $typeParam, $tableParam)
     {
         /** provide for hackable URLs (default for component) */
 
         /** ccyy/mm/dd, ccyy/mm, ccyy */
 
         /** ccyy */
-        if((int) ($segments[0]) > 1980 && $segments[0] < 2060) {
+        if ((int)($segments[0]) > 1980 && $segments[0] < 2060) {
             $ccyy = $segments[0];
         } else {
             return false;
         }
 
         /** mm */
-        if((int) ($segments[1]) > 0 && $segments[1] < 32) {
-            $mm = (int) $segments[1];
+        if ((int)($segments[1]) > 0 && $segments[1] < 32) {
+            $mm = (int)$segments[1];
             if ($mm < 10) {
-                $mm = '0'.$mm;
+                $mm = '0' . $mm;
             }
         } else {
             return false;
         }
 
         /** dd */
-        if((int) ($segments[2]) > 0 && $segments[2] < 32) {
-            $dd = (int) $segments[2];
+        if ((int)($segments[2]) > 0 && $segments[2] < 32) {
+            $dd = (int)$segments[2];
             if ($dd < 10) {
-                $dd = '0'.$dd;
+                $dd = '0' . $dd;
             }
         } else {
             return false;
         }
 
         /** alias */
-        $alias = trim(substr($segments[3], 0, 2).'-'.substr($segments[3], 3, strlen($segments[3])-3));
+        $alias = trim(substr($segments[3], 0, 2) . '-' . substr($segments[3], 3, strlen($segments[3]) - 3));
 
         /** run query */
         if (count($segments) > 3) {

@@ -16,33 +16,33 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldSessionHandler extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $type = 'SessionHandler';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $type = 'SessionHandler';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Initialize variables.
-		$options = array();
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Initialize variables.
+        $options = array();
 
-		// Get the options from MolajoSession.
-		foreach (MolajoSession::getStores() as $store) {
-			$options[] = MolajoHTML::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_SESSION_'.$store), 'value', 'text');
-		}
+        // Get the options from MolajoSession.
+        foreach (MolajoSession::getStores() as $store) {
+            $options[] = MolajoHTML::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_SESSION_' . $store), 'value', 'text');
+        }
 
-		// Merge any additional options in the XML definition.
-		$options = array_merge(parent::getOptions(), $options);
+        // Merge any additional options in the XML definition.
+        $options = array_merge(parent::getOptions(), $options);
 
-		return $options;
-	}
+        return $options;
+    }
 }

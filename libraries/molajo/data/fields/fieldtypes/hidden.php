@@ -17,31 +17,31 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldHidden extends MolajoFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $type = 'Hidden';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $type = 'Hidden';
 
-	/**
-	 * Method to get the field calendar markup.
-	 *
-	 * @return  string  The field calendar markup.
-	 * @since   1.0
-	 */
-	protected function getInput()
-	{
-		// Initialize some field attributes.
-		$class		= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
-		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+    /**
+     * Method to get the field calendar markup.
+     *
+     * @return  string  The field calendar markup.
+     * @since   1.0
+     */
+    protected function getInput()
+    {
+        // Initialize some field attributes.
+        $class = $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $disabled = ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 
-		// Initialize JavaScript field attributes.
-		$onchange	= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
+        // Initialize JavaScript field attributes.
+        $onchange = $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
-		return '<calendar type="hidden" name="'.$this->name.'" id="'.$this->id.'"' .
-				' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' .
-				$class.$disabled.$onchange.' />';
-	}
+        return '<calendar type="hidden" name="' . $this->name . '" id="' . $this->id . '"' .
+               ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
+               $class . $disabled . $onchange . ' />';
+    }
 }

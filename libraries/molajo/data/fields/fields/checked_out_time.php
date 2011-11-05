@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Checked_out_time Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldChecked_out_time extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldChecked_out_time extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('checked_out_time');
-        parent::setRequestFilter ('date');
+        parent::setFieldname('checked_out_time');
+        parent::setRequestFilter('date');
     }
 
     /**
@@ -35,27 +36,34 @@ class MolajoFieldChecked_out_time extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions () {}
+    public function getOptions()
+    {
+    }
+
     /**
      *  getSelectedValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue () {}
+    public function getSelectedValue()
+    {
+    }
 
     /**
      *  validateRequestValue
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue () {}
+    public function validateRequestValue()
+    {
+    }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         $query->select('a.checked_out_time');
     }
@@ -65,7 +73,7 @@ class MolajoFieldChecked_out_time extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();

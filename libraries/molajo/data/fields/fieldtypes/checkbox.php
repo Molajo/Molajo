@@ -17,32 +17,32 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldCheckbox extends MolajoFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $type = 'Checkbox';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $type = 'Checkbox';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return  string   The field input markup.
-	 * @since   1.0
-	 */
-	protected function getInput()
-	{
-		// Initialize some field attributes.
-		$class		= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
-		$disabled	= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-		$checked	= ((string) $this->element['value'] == $this->value) ? ' checked="checked"' : '';
+    /**
+     * Method to get the field input markup.
+     *
+     * @return  string   The field input markup.
+     * @since   1.0
+     */
+    protected function getInput()
+    {
+        // Initialize some field attributes.
+        $class = $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $disabled = ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+        $checked = ((string)$this->element['value'] == $this->value) ? ' checked="checked"' : '';
 
-		// Initialize JavaScript field attributes.
-		$onclick	= $this->element['onclick'] ? ' onclick="'.(string) $this->element['onclick'].'"' : '';
+        // Initialize JavaScript field attributes.
+        $onclick = $this->element['onclick'] ? ' onclick="' . (string)$this->element['onclick'] . '"' : '';
 
-		return '<input type="checkbox" name="'.$this->name.'" id="'.$this->id.'"' .
-				' value="'.htmlspecialchars((string) $this->element['value'], ENT_COMPAT, 'UTF-8').'"' .
-				$class.$checked.$disabled.$onclick.'/>';
-	}
+        return '<input type="checkbox" name="' . $this->name . '" id="' . $this->id . '"' .
+               ' value="' . htmlspecialchars((string)$this->element['value'], ENT_COMPAT, 'UTF-8') . '"' .
+               $class . $checked . $disabled . $onclick . '/>';
+    }
 }

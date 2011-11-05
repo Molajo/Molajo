@@ -17,32 +17,32 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldHelpsite extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $type = 'Helpsite';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $type = 'Helpsite';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Get Joomla version.
-		$version = new MolajoVersion();
-		$jver = explode( '.', $version->getShortVersion() );
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Get Joomla version.
+        $version = new MolajoVersion();
+        $jver = explode('.', $version->getShortVersion());
 
-		// Merge any additional options in the XML definition.
-		$options = array_merge(
-			parent::getOptions(),
-			MolajoHelp::createSiteList(MOLAJO_BASE_FOLDER.'/help/helpsites.xml', $this->value)
-		);
+        // Merge any additional options in the XML definition.
+        $options = array_merge(
+            parent::getOptions(),
+            MolajoHelp::createSiteList(MOLAJO_BASE_FOLDER . '/help/helpsites.xml', $this->value)
+        );
 
-		return $options;
-	}
+        return $options;
+    }
 }

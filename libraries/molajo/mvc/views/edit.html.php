@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Edit View
  *
- * @package	Molajo
- * @subpackage	Single View
- * @since	1.0
+ * @package    Molajo
+ * @subpackage    Single View
+ * @since    1.0
  */
 class MolajoViewEdit extends MolajoView
 {
@@ -49,9 +49,9 @@ class MolajoViewEdit extends MolajoView
      */
     public function display($tpl = null)
     {
-        $this->form   = $this->get('Form');
-        $this->item   = $this->get('Item');
-        $this->state  = $this->get('State');
+        $this->form = $this->get('Form');
+        $this->item = $this->get('Item');
+        $this->state = $this->get('State');
 
         if (count($errors = $this->get('Errors'))) {
             MolajoError::raiseError(500, implode("\n", $errors));
@@ -81,23 +81,23 @@ class MolajoViewEdit extends MolajoView
         }
 
         /** ACL: form field authorisations **/
-        $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
+        $aclClass = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
         $acl = new $aclClass();
-        $acl->getFormAuthorisations (JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
+        $acl->getFormAuthorisations(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
 
         /** ACL: component level authorisations **/
-        $this->permissions = $acl->getUserPermissionSet (JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
+        $this->permissions = $acl->getUserPermissionSet(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
 
         /** page heading, toolbar buttons and submenu **/
         if (($this->getLayout() == 'modal') || (!JRequest::getCmd('format') == 'html')) {
-//        } else if (MolajoFactory::getApplication()->getName() == 'site') {
+            //        } else if (MolajoFactory::getApplication()->getName() == 'site') {
         } else {
             $molajoToolbar = new MolajoToolbarHelper ();
-            $molajoToolbar->addButtonsEditLayout ($this->item->state, $this->permissions, $this->item->id, $this->item);
+            $molajoToolbar->addButtonsEditLayout($this->item->state, $this->permissions, $this->item->id, $this->item);
         }
 
-		//Escape strings for HTML output
-		$this->state->get('page_class_suffix', htmlspecialchars($this->params->get('pageclass_sfx')));
+        //Escape strings for HTML output
+        $this->state->get('page_class_suffix', htmlspecialchars($this->params->get('pageclass_sfx')));
 
         if (MolajoFactory::getApplication()->getName() == 'site') {
             $documentHelper = new MolajoDocumentHelper ();

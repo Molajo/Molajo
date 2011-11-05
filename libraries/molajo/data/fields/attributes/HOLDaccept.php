@@ -20,35 +20,35 @@ class MolajoAttributeAccept extends MolajoAttribute
 {
     /**
      * __construct
-     * 
-	 * Method to instantiate the attribute object.
-     * 
+     *
+     * Method to instantiate the attribute object.
+     *
      * @param array $input
      * @param array $rowset
-     * 
-	 * @return  void
-	 *
-	 * @since   1.0
+     *
+     * @return  void
+     *
+     * @since   1.0
      */
-	public function __construct($input = array(), $rowset = array())
-	{
+    public function __construct($input = array(), $rowset = array())
+    {
         parent::__construct();
         parent::__set('name', 'Accept');
-        parent::__set('input', $input);        
-        parent::__set('rowset', $rowset); 
-	}
+        parent::__set('input', $input);
+        parent::__set('rowset', $rowset);
+    }
 
-	/**
+    /**
      * setValue
      *
-	 * Method to set the Attribute Value
-	 *
-	 * @return  array   $rowset
+     * Method to set the Attribute Value
      *
-	 * @since   1.1
-	 */
-	protected function setValue()
-	{
+     * @return  array   $rowset
+     *
+     * @since   1.1
+     */
+    protected function setValue()
+    {
         $MIMEtypes = array();
 
         $filetypes = explode(',', $this->element['filetype']);
@@ -78,7 +78,7 @@ class MolajoAttributeAccept extends MolajoAttribute
                 $literal = 'video';
             }
 
-            if ((int) $request > 0) {
+            if ((int)$request > 0) {
                 $temp = $this->retrieveList($request, $literal);
             }
 
@@ -89,7 +89,7 @@ class MolajoAttributeAccept extends MolajoAttribute
         if ($MIMEtypes == '') {
             $value = '';
         } else {
-            $value = 'accept="'.implode(',', $MIMEtypes.'"');
+            $value = 'accept="' . implode(',', $MIMEtypes . '"');
         }
         parent::__set('value', $value);
 
@@ -98,31 +98,31 @@ class MolajoAttributeAccept extends MolajoAttribute
 
         /** return array of attributes */
         return $this->rowset;
-     }
+    }
 
-	/**
+    /**
      * retrieveList
      *
-	 * Method to retrieve list of configuration values for MIME type
-	 *
-	 * @return  array   $rowset
+     * Method to retrieve list of configuration values for MIME type
      *
-	 * @since   1.1
-	 */
-	protected function retrieveList($MIME_type_id, $MIME_literal)
-	{
+     * @return  array   $rowset
+     *
+     * @since   1.1
+     */
+    protected function retrieveList($MIME_type_id, $MIME_literal)
+    {
         $option = 'dealwiththis';
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $MIMEtypes = $molajoConfig->getOptionList ($MIME_type_id);
+        $MIMEtypes = $molajoConfig->getOptionList($MIME_type_id);
 
         $formattedList = array();
 
         if (count($MIMEtypes)) {
-            foreach ($MIMEtypes as $type ) {
-                $formattedList[] = $MIME_literal.'/'.$type;
+            foreach ($MIMEtypes as $type) {
+                $formattedList[] = $MIME_literal . '/' . $type;
             }
         }
 
         return $formattedList;
-     }
+    }
 }

@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Utility class for managing Attributes
  *
- * @package	    Molajo
- * @subpackage	Attributes
- * @since	    1.0
+ * @package        Molajo
+ * @subpackage    Attributes
+ * @since        1.0
  */
 class MolajoAttribute
 {
@@ -44,55 +44,60 @@ class MolajoAttribute
     /**
      * __construct
      *
-	 * Method to instantiate the attribute object.
+     * Method to instantiate the attribute object.
      *
      * @param array $input
      * @param array $rowset
      *
-	 * @return  void
-	 *
-	 * @since   1.0
+     * @return  void
+     *
+     * @since   1.0
      */
-	public function __construct($input = array(), $rowset = array()) {}
+    public function __construct($input = array(), $rowset = array())
+    {
+    }
 
     /**
      * __get
-     * 
+     *
      * Retrieve Class Parameter
-     * 
+     *
      * @param $property
      * @return null
      */
-    public function __get($property) {
-        return (isset($this->{'_'. $property}) ? $this->{'_'. $property} : null);
+    public function __get($property)
+    {
+        return (isset($this->{'_' . $property}) ? $this->{'_' . $property} : null);
     }
- 
+
     /**
      * __set
-     * 
+     *
      * Set Class Parameter
-     * 
+     *
      * @param $property
      * @param $_value
      * @return void
-     */    
-    public function __set($property, $value) {
-        if (isset($this->{'_'. $property})) {
-            $this->{'_'. $property} = $value;
+     */
+    public function __set($property, $value)
+    {
+        if (isset($this->{'_' . $property})) {
+            $this->{'_' . $property} = $value;
         }
     }
- 
+
     /**
      * __isset
-     * 
+     *
      * Determine if Parameter is set
-     * 
+     *
      * @param $property
      * @return bool
      */
-    public function __isset($property) {
-        return isset($this->{'_'. $property});
-    }    
+    public function __isset($property)
+    {
+        return isset($this->{'_' . $property});
+    }
 
     /**
      * requireClassFile
@@ -103,16 +108,16 @@ class MolajoAttribute
      *
      * @return bool
      */
-    public function requireClassFile ($reportError=true)
+    public function requireClassFile($reportError = true)
     {
-        $class = 'MolajoAttribute'.ucfirst($this->_name);
+        $class = 'MolajoAttribute' . ucfirst($this->_name);
 
         if (class_exists($class)) {
             return true;
         }
 
         /** component override */
-        $classFile = MOLAJO_LIBRARY_DATA_FIELDS.'/attributes/'.$this->_name.'.php';
+        $classFile = MOLAJO_LIBRARY_DATA_FIELDS . '/attributes/' . $this->_name . '.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }
@@ -122,13 +127,13 @@ class MolajoAttribute
         }
 
         /** library class */
-        $classFile = MOLAJO_LIBRARY_DATA_FIELDS.'/attributes/'.$this->_name.'.php';
+        $classFile = MOLAJO_LIBRARY_DATA_FIELDS . '/attributes/' . $this->_name . '.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }
 
         if ($reportError === true) {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME').' '.$class.' '.$classFile, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME') . ' ' . $class . ' ' . $classFile, 'error');
             return false;
         }
 

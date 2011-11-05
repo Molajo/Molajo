@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Publish_down Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldPrefix extends MolajoField
 {
@@ -24,14 +24,15 @@ class MolajoFieldPrefix extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('stop_publishing_datetime');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('stop_publishing_datetime');
+        parent::setRequestFilter('integer');
 
-        parent::setTableColumnSortable (true);
-        parent::setTableColumnCheckbox (false);
-        parent::setDisplayDataType ('date');
+        parent::setTableColumnSortable(true);
+        parent::setTableColumnCheckbox(false);
+        parent::setDisplayDataType('date');
     }
 
     /**
@@ -39,13 +40,13 @@ class MolajoFieldPrefix extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
         $prefix = false;
 
 
-		$session = MolajoFactory::getSession()->get('setup.options', array());
-		if (empty($session->db_prefix)) {
+        $session = MolajoFactory::getSession()->get('setup.options', array());
+        if (empty($session->db_prefix)) {
         } else {
             $prefix = $session->db_prefix;
         }
@@ -57,16 +58,16 @@ class MolajoFieldPrefix extends MolajoField
 
         if ($prefix) {
         } else {
-            $prefix = $this->getPrefix ($size);
+            $prefix = $this->getPrefix($size);
         }
 
         if ($prefix) {
             $this->rowset[0]['prefix'] = htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8');
         } else {
-            $this->rowset[0]['prefix'] = strtolower(MOLAJO).'_';
+            $this->rowset[0]['prefix'] = strtolower(MOLAJO) . '_';
         }
 
-        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $publishDateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $publishDateModel->getMonthsPublish();
     }
 
@@ -75,10 +76,10 @@ class MolajoFieldPrefix extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -96,11 +97,12 @@ class MolajoFieldPrefix extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
-        if ( substr($this->requestValue, 0, 4) > '1900'
-                && substr($this->requestValue, 0, 4) > '2100'
-                && inarray(substr($this->requestValue, 5, 2), array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12') ) ) {
+        if (substr($this->requestValue, 0, 4) > '1900'
+            && substr($this->requestValue, 0, 4) > '2100'
+            && inarray(substr($this->requestValue, 5, 2), array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'))
+        ) {
             return $this->requestValue;
         } else {
             return false;
@@ -108,11 +110,11 @@ class MolajoFieldPrefix extends MolajoField
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
@@ -123,7 +125,7 @@ class MolajoFieldPrefix extends MolajoField
             return;
         }
         $db = $this->getDbo();
-        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 
     /**
@@ -136,7 +138,7 @@ class MolajoFieldPrefix extends MolajoField
      * @param  $itemCount
      * @return array
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();
@@ -156,7 +158,7 @@ class MolajoFieldPrefix extends MolajoField
 
             return $render;
         }
-	}
+    }
 
     /**
      * get_prefix
@@ -165,7 +167,7 @@ class MolajoFieldPrefix extends MolajoField
      * @param $count
      * @return void
      */
-    protected function getPrefix ($size=10, $count=100)
+    protected function getPrefix($size = 10, $count = 100)
     {
         // For an existing table, retrieve all table names
         $db = MolajoFactory::getApplication()->getConfiguration('db');
@@ -178,7 +180,7 @@ class MolajoFieldPrefix extends MolajoField
         // Loop until an non used prefix is found or until $count is reached
         $found = false;
         $k = 0;
-        for ($k=0; ($k < $count || $found === true); $k++)
+        for ($k = 0; ($k < $count || $found === true); $k++)
         {
             // Create the random prefix:
             $prefix = '';
@@ -193,7 +195,7 @@ class MolajoFieldPrefix extends MolajoField
             $symbols = array_merge($numbers, $chars);
             shuffle($symbols);
 
-            for($i = 0, $j = $size - 1; $i < $j; ++$i) {
+            for ($i = 0, $j = $size - 1; $i < $j; ++$i) {
                 $prefix .= $symbols[$i];
             }
 

@@ -17,53 +17,53 @@ defined('MOLAJO') or die;
  */
 class MolajoAdapterInstance extends JObject
 {
-	/**
-	 * Parent
-	 *
-	 * @var   object
-	 * @since  11.1
-	 */
-	protected $parent = null;
+    /**
+     * Parent
+     *
+     * @var   object
+     * @since  11.1
+     */
+    protected $parent = null;
 
-	/**
-	 * Database
-	 *
-	 * @var    object
-	 * @since  11.1
-	 */
-	protected $db = null;
+    /**
+     * Database
+     *
+     * @var    object
+     * @since  11.1
+     */
+    protected $db = null;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   object  &$parent  Parent object [MolajoAdapter instance]
-	 * @param   object  &$db      Database object [JDatabase instance]
-	 * @param   array   $options  Configuration Options
-	 *
-	 * @return  MolajoAdapterInstance
-	 *
-	 * @since   11.1
-	 */
-	public function __construct(&$parent, &$db, $options = array())
-	{
-		// Set the properties from the options array that is passed in
-		$this->setProperties($options);
+    /**
+     * Constructor
+     *
+     * @param   object  &$parent  Parent object [MolajoAdapter instance]
+     * @param   object  &$db      Database object [JDatabase instance]
+     * @param   array   $options  Configuration Options
+     *
+     * @return  MolajoAdapterInstance
+     *
+     * @since   11.1
+     */
+    public function __construct(&$parent, &$db, $options = array())
+    {
+        // Set the properties from the options array that is passed in
+        $this->setProperties($options);
 
-		// Set the parent and db in case $options for some reason overrides it.
-		$this->parent = &$parent;
-		// Pull in the global dbo in case something happened to it.
-		$this->db = $db ? $db : MolajoFactory::getDBO();
-	}
+        // Set the parent and db in case $options for some reason overrides it.
+        $this->parent = &$parent;
+        // Pull in the global dbo in case something happened to it.
+        $this->db = $db ? $db : MolajoFactory::getDBO();
+    }
 
-	/**
-	 * Retrieves the parent object
-	 *
-	 * @return  object parent
-	 *
-	 * @since   11.1
-	 */
-	public function getParent()
-	{
-		return $this->parent;
-	}
+    /**
+     * Retrieves the parent object
+     *
+     * @return  object parent
+     *
+     * @since   11.1
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
 }

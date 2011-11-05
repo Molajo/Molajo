@@ -17,23 +17,23 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldContentLanguage extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $type = 'ContentLanguage';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $type = 'ContentLanguage';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Merge any additional options in the XML definition.
-		return array_merge(parent::getOptions(), MolajoHTML::_('contentlanguage.existing'));
-	}
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Merge any additional options in the XML definition.
+        return array_merge(parent::getOptions(), MolajoHTML::_('contentlanguage.existing'));
+    }
 }

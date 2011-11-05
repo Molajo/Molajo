@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * Submenu Helper
  *
  * @package     Molajo
  * @subpackage  Submenu Helper
@@ -20,18 +20,18 @@ class MolajoSubmenuHelper
     /**
      * add
      *
-     * @since	1.0
+     * @since    1.0
      */
-    public static function add ()
+    public static function add()
     {
         /** component parameters **/
         $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
 
         /** Toolbar title and buttons **/
-        for ($i=1; $i < 1000; $i++) {
-            $value = $params->get('config_manager_sub_menu'.$i);
+        for ($i = 1; $i < 1000; $i++) {
+            $value = $params->get('config_manager_sub_menu' . $i);
             if ($value == null) {
-               break;
+                break;
             }
         }
         $max = $i;
@@ -42,48 +42,33 @@ class MolajoSubmenuHelper
         }
 
         /** loop thru config options **/
-        for ($i=1; $i < $max; $i++) {
+        for ($i = 1; $i < $max; $i++) {
 
-            $subMenuValue = $params->def('config_manager_sub_menu'.$i, 0);
+            $SubmenuValue = $params->def('config_manager_sub_menu' . $i, 0);
 
-            if (!$subMenuValue == '0') {
-                $functionName = 'add'.ucfirst($subMenuValue).'Submenu';
-                if (method_exists('MolajoSubmenuHelper',$functionName)) {
-                    $submenu = new MolajoSubmenuHelper ();
-                    $submenu->$functionName (JRequest::getCmd('option'), JRequest::getCmd('DefaultView'));
+            if (!$SubmenuValue == '0') {
+                $functionName = 'add' . ucfirst($SubmenuValue) . 'Submenu';
+                if (method_exists('MolajoSubmenuHelper', $functionName)) {
+                    $Submenu = new MolajoSubmenuHelper ();
+                    $Submenu->$functionName (JRequest::getCmd('option'), JRequest::getCmd('DefaultView'));
                 }
             }
-        }        
+        }
 
         return;
     }
 
     /**
-     * addCategorySubmenu
-     *
-     * @param	array $permissions
-     * @since	1.0
-     */
-    public function addCategorySubmenu ()
-    {
-        JSubMenuHelper::addEntry (
-            MolajoText::_('MOLAJO_SUBMENU_CATEGORIES'),
-            'index.php?option=com_categories&extension='.JRequest::getCmd('option'),
-            'categories'
-        );
-    }
-
-    /**
      * addDefaultSubmenu
      *
-     * @param	array $permissions
-     * @since	1.0
+     * @param    array $permissions
+     * @since    1.0
      */
-    public function addDefaultSubmenu ()
+    public function addDefaultSubmenu()
     {
-        JSubMenuHelper::addEntry(
-            MolajoText::_('MOLAJO_SUBMENU_'.strtoupper(JRequest::getCmd('DefaultView'))),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView'),
+        MolajoSubmenuHelper::addEntry(
+            MolajoText::_('MOLAJO_SUBMENU_' . strtoupper(JRequest::getCmd('DefaultView'))),
+            'index.php?option=' . JRequest::getCmd('option') . '&view=' . JRequest::getCmd('DefaultView'),
             JRequest::getCmd('DefaultView')
         );
     }
@@ -91,14 +76,14 @@ class MolajoSubmenuHelper
     /**
      * addFeaturedSubmenu
      *
-     * @param	array $permissions
-     * @since	1.0
+     * @param    array $permissions
+     * @since    1.0
      */
-    public function addFeaturedSubmenu ()
+    public function addFeaturedSubmenu()
     {
-        JSubMenuHelper::addEntry(
+        MolajoSubmenuHelper::addEntry(
             MolajoText::_('MOLAJO_SUBMENU_FEATURED'),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&feature=1',
+            'index.php?option=' . JRequest::getCmd('option') . '&view=' . JRequest::getCmd('DefaultView') . '&feature=1',
             JRequest::getCmd('DefaultView')
         );
     }
@@ -106,14 +91,14 @@ class MolajoSubmenuHelper
     /**
      * addStickiedSubmenu
      *
-     * @param	array $permissions
-     * @since	1.0
+     * @param    array $permissions
+     * @since    1.0
      */
-    public function addStickiedSubmenu ()
+    public function addStickiedSubmenu()
     {
-        JSubMenuHelper::addEntry(
+        MolajoSubmenuHelper::addEntry(
             MolajoText::_('MOLAJO_SUBMENU_STICKIED'),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&sticky=1',
+            'index.php?option=' . JRequest::getCmd('option') . '&view=' . JRequest::getCmd('DefaultView') . '&sticky=1',
             JRequest::getCmd('DefaultView')
         );
     }
@@ -121,14 +106,14 @@ class MolajoSubmenuHelper
     /**
      * addUnpublishedSubmenu
      *
-     * @param	array $permissions
-     * @since	1.0
+     * @param    array $permissions
+     * @since    1.0
      */
-    public function addUnpublishedSubmenu ()
+    public function addUnpublishedSubmenu()
     {
-        JSubMenuHelper::addEntry(
+        MolajoSubmenuHelper::addEntry(
             MolajoText::_('MOLAJO_SUBMENU_UNPUBLISHED'),
-            'index.php?option='.JRequest::getCmd('option').'&view='.JRequest::getCmd('DefaultView').'&publish=0',
+            'index.php?option=' . JRequest::getCmd('option') . '&view=' . JRequest::getCmd('DefaultView') . '&publish=0',
             JRequest::getCmd('DefaultView')
         );
     }

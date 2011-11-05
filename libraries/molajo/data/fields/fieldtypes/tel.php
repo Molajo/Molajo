@@ -16,11 +16,11 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldTel extends MolajoFormFieldText
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $type = 'Tel';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $type = 'Tel';
 }

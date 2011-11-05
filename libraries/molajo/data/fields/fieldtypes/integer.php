@@ -17,50 +17,50 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldInteger extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $type = 'Integer';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $type = 'Integer';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Initialize variables.
-		$options = array();
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Initialize variables.
+        $options = array();
 
-		// Initialize some field attributes.
-		$first	= (int) $this->element['first'];
-		$last	= (int) $this->element['last'];
-		$step	= (int) $this->element['step'];
+        // Initialize some field attributes.
+        $first = (int)$this->element['first'];
+        $last = (int)$this->element['last'];
+        $step = (int)$this->element['step'];
 
-		// Sanity checks.
-		if ($step == 0) {
-			// Step of 0 will create an endless loop.
-			return $options;
-		} else if ($first < $last && $step < 0) {
-			// A negative step will never reach the last number.
-			return $options;
-		} else if ($first > $last && $step > 0) {
-			// A position step will never reach the last number.
-			return $options;
-		}
+        // Sanity checks.
+        if ($step == 0) {
+            // Step of 0 will create an endless loop.
+            return $options;
+        } else if ($first < $last && $step < 0) {
+            // A negative step will never reach the last number.
+            return $options;
+        } else if ($first > $last && $step > 0) {
+            // A position step will never reach the last number.
+            return $options;
+        }
 
-		// Build the options array.
-		for ($i = $first; $i <= $last; $i += $step) {
-			$options[] = MolajoHTML::_('select.option', $i);
-		}
+        // Build the options array.
+        for ($i = $first; $i <= $last; $i += $step) {
+            $options[] = MolajoHTML::_('select.option', $i);
+        }
 
-		// Merge any additional options in the XML definition.
-		$options = array_merge(parent::getOptions(), $options);
+        // Merge any additional options in the XML definition.
+        $options = array_merge(parent::getOptions(), $options);
 
-		return $options;
-	}
+        return $options;
+    }
 }

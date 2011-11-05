@@ -16,7 +16,8 @@ defined('MOLAJO') or die;
  * @since       1.0
  * @link
  */
-class MolajoTableAsset extends MolajoTable {
+class MolajoTableAsset extends MolajoTable
+{
 
     /**
      * The primary key of the asset.
@@ -41,33 +42,33 @@ class MolajoTableAsset extends MolajoTable {
         parent::__construct('#__assets', 'id', $db);
     }
 
-	/**
-	 * Method to provide a shortcut to binding, checking and storing a MolajoTable
-	 *
-	 * @param   mixed   An associative array or object to bind to the MolajoTable instance.
-	 * @param   string  Filter for the order updating
-	 * @param   mixed   An optional array or space separated list of properties
-	 *					to ignore while binding.
-	 *
-	 * @return  boolean  True on success.
-	 * @since   1.0
-	 */
-	public function save($src, $orderingFilter = '', $ignore = '')
-	{
-		if ($this->check()) {
+    /**
+     * Method to provide a shortcut to binding, checking and storing a MolajoTable
+     *
+     * @param   mixed   An associative array or object to bind to the MolajoTable instance.
+     * @param   string  Filter for the order updating
+     * @param   mixed   An optional array or space separated list of properties
+     *                    to ignore while binding.
+     *
+     * @return  boolean  True on success.
+     * @since   1.0
+     */
+    public function save($src, $orderingFilter = '', $ignore = '')
+    {
+        if ($this->check()) {
         } else {
-			return false;
-		}
+            return false;
+        }
 
-		if ($this->store()) {
+        if ($this->store()) {
         } else {
-			return false;
-		}
+            return false;
+        }
 
-		$this->setError('');
+        $this->setError('');
 
-		return true;
-	}
+        return true;
+    }
 
     /**
      * check
@@ -76,7 +77,7 @@ class MolajoTableAsset extends MolajoTable {
      *
      * @return  bool  True if the instance is sane and able to be stored in the database.
      *
-     * @link	http://docs.molajo.org/MolajoTable/check
+     * @link    http://docs.molajo.org/MolajoTable/check
      * @since   11.1
      */
     public function check()

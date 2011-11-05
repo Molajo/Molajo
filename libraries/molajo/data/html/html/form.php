@@ -18,18 +18,18 @@ defined('JPATH_PLATFORM') or die;
  */
 abstract class MolajoHtmlForm
 {
-	/**
-	 * Displays a hidden token field to reduce the risk of CSRF exploits
-	 *
-	 * Use in conjuction with JRequest::checkToken
-	 *
-	 * @return  void
-	 *
-	 * @see     JRequest::checkToken
-	 * @since   11.1
-	 */
-	public static function token()
-	{
-		return '<input type="hidden" name="' . JUtility::getToken() . '" value="1" />';
-	}
+    /**
+     * Displays a hidden token field to reduce the risk of CSRF exploits
+     *
+     * Use in conjuction with JRequest::checkToken
+     *
+     * @return  void
+     *
+     * @see     JRequest::checkToken
+     * @since   11.1
+     */
+    public static function token()
+    {
+        return '<input type="hidden" name="' . JUtility::getToken() . '" value="1" />';
+    }
 }

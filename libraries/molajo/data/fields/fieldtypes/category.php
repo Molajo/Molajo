@@ -14,17 +14,17 @@ defined('MOLAJO') or die;
  * Utility class for Extension Categories
  *
  * @static
- * @package		Molajo
+ * @package        Molajo
  * @subpackage          HTML
- * @since		1.6
+ * @since        1.6
  */
 class MolajoFormFieldCategory extends MolajoFormFieldList
 {
     /**
      * Field Type
      *
-     * @var		string
-     * @since	1.6
+     * @var        string
+     * @since    1.6
      */
     public $type = 'Category';
 
@@ -33,21 +33,22 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
      *
      * Method to get selection criteria for list generation options.
      *
-     * @return	array	The field option objects.
-     * @since	1.6
+     * @return    array    The field option objects.
+     * @since    1.6
      */
     protected function getOptions()
     {
         $options = array();
 
         /** extension scope **/
-        $extension	= $this->element['extension'] ? (string) $this->element['extension'] : (string) $this->element['scope'];
+        $extension = $this->element['extension'] ? (string)$this->element['extension']
+                : (string)$this->element['scope'];
         if (isset($this->element['show_root'])) {
             array_unshift($options, MolajoHTML::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
         }
 
         /** state **/
-        $published	= (string) $this->element['published'];
+        $published = (string)$this->element['published'];
         if ($published) {
             $options = MolajoHTML::_('category.options', $extension, array('filter.published' => explode(',', $published)));
         } else {
@@ -55,9 +56,9 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
         }
 
         /** acl **/
-        if ($action = (string) $this->element['action']) {
-            foreach($options as $i => $option) {
-                if (!MolajoFactory::getUser()->authorise($action, $extension.'.category.'.$option->value)) {
+        if ($action = (string)$this->element['action']) {
+            foreach ($options as $i => $option) {
+                if (!MolajoFactory::getUser()->authorise($action, $extension . '.category.' . $option->value)) {
                     unset($options[$i]);
                 }
             }

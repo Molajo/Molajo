@@ -17,144 +17,142 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoModuleHelper
 {
-	/**
+    /**
      * getModule
      *
-	 * Get module by name (real, eg 'Breadcrumbs' or folder, eg 'mod_breadcrumbs')
-	 *
-	 * @param   string  The name of the module
-	 * @param   string  The title of the module, optional
-	 *
-	 * @return  object  The Module object
-	 */
-	public static function getModule($name, $title = null)
-	{
-		$result		= null;
-		$modules	= self::_load();
+     * Get module by name (real, eg 'Breadcrumbs' or folder, eg 'mod_breadcrumbs')
+     *
+     * @param   string  The name of the module
+     * @param   string  The title of the module, optional
+     *
+     * @return  object  The Module object
+     */
+    public static function getModule($name, $title = null)
+    {
+        $result = null;
+        $modules = self::_load();
 
-		$total		= count($modules);
-		for ($i = 0; $i < $total; $i++)
-		{
-			// Match the name of the module
-			if ($modules[$i]->name == $name)
-			{
-				// Match the title if we're looking for a specific instance of the module
-				if (!$title || $modules[$i]->title == $title)
-				{
-					$result = &$modules[$i];
-					break;	// Found it
-				}
-			}
-		}
+        $total = count($modules);
+        for ($i = 0; $i < $total; $i++)
+        {
+            // Match the name of the module
+            if ($modules[$i]->name == $name) {
+                // Match the title if we're looking for a specific instance of the module
+                if (!$title || $modules[$i]->title == $title) {
+                    $result = &$modules[$i];
+                    break; // Found it
+                }
+            }
+        }
 
-		// If we didn't find it, and the name is mod_something, create a dummy object
-		if (is_null($result) && substr($name, 0, 4) == 'mod_')
-		{
-			$result				    = new stdClass;
-			$result->id			    = 0;
-			$result->title		    = '';
-			$result->subtitle	    = '';
-			$result->module		    = $name;
-			$result->position	    = '';
-			$result->content	    = '';
-			$result->showtitle	    = 0;
-			$result->showsubtitle	= 0;
-			$result->control	    = '';
-			$result->params		    = '';
-			$result->user		    = 0;
-		}
+        // If we didn't find it, and the name is mod_something, create a dummy object
+        if (is_null($result) && substr($name, 0, 4) == 'mod_') {
+            $result = new stdClass;
+            $result->id = 0;
+            $result->title = '';
+            $result->subtitle = '';
+            $result->module = $name;
+            $result->position = '';
+            $result->content = '';
+            $result->showtitle = 0;
+            $result->showsubtitle = 0;
+            $result->control = '';
+            $result->params = '';
+            $result->user = 0;
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * getModules
+    /**
+     * getModules
      *
      * Get modules by position
-	 *
-	 * @param   string  $position	The position of the module
-	 *
-	 * @return  array  An array of module objects
-	 */
-	public static function getModules($position)
-	{
-		$app		= MolajoFactory::getApplication();
-		$position	= strtolower($position);
-		$result		= array();
+     *
+     * @param   string  $position    The position of the module
+     *
+     * @return  array  An array of module objects
+     */
+    public static function getModules($position)
+    {
+        $app = MolajoFactory::getApplication();
+        $position = strtolower($position);
+        $result = array();
 
-		$modules    = self::_load();
+        $modules = self::_load();
 
-		$total = count($modules);
-		for ($i = 0; $i < $total; $i++)
-		{
-			if ($modules[$i]->position == $position) {
-				$result[] = &$modules[$i];
-			}
-		}
-		if (count($result) == 0) {
+        $total = count($modules);
+        for ($i = 0; $i < $total; $i++)
+        {
+            if ($modules[$i]->position == $position) {
+                $result[] = &$modules[$i];
+            }
+        }
+        if (count($result) == 0) {
 
-			if (JRequest::getBool('tp')
-                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')) {
+            if (JRequest::getBool('tp')
+                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')
+            ) {
 
-				$result[0] = self::getModule('mod_'.$position);
-				$result[0]->title = $position;
-				$result[0]->content = $position;
-				$result[0]->position = $position;
-			}
-		}
+                $result[0] = self::getModule('mod_' . $position);
+                $result[0]->title = $position;
+                $result[0]->content = $position;
+                $result[0]->position = $position;
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * isEnabled
+    /**
+     * isEnabled
      *
      * Checks if a module is enabled
-	 *
-	 * @param   string  The module name
-	 *
-	 * @return  boolean
-	 */
-	public static function isEnabled($module)
-	{
-		$result = self::getModule($module);
-		return (!is_null($result));
-	}
+     *
+     * @param   string  The module name
+     *
+     * @return  boolean
+     */
+    public static function isEnabled($module)
+    {
+        $result = self::getModule($module);
+        return (!is_null($result));
+    }
 
-	/**
-	 * renderModule
+    /**
+     * renderModule
      *
      * Render the module.
-	 *
-	 * @param   object  A module object.
-	 * @param   array   An array of attributes for the module (probably from the XML).
-	 *
-	 * @return  string  The HTML content of the module output.
-	 */
-	public static function renderModule($module, $attribs = array())
-	{
+     *
+     * @param   object  A module object.
+     * @param   array   An array of attributes for the module (probably from the XML).
+     *
+     * @return  string  The HTML content of the module output.
+     */
+    public static function renderModule($module, $attribs = array())
+    {
         $output = '';
 
-		// Record the scope.
-		$scope = MolajoFactory::getApplication()->scope;
+        // Record the scope.
+        $scope = MolajoFactory::getApplication()->scope;
 
-		// Set scope to module name
-		MolajoFactory::getApplication()->scope = $module->module;
+        // Set scope to module name
+        MolajoFactory::getApplication()->scope = $module->module;
 
-		// Get module path
-		$module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
-		$path = MOLAJO_EXTENSION_MODULES.'/modules/'.$module->module.'/'.$module->module.'.php';
+        // Get module path
+        $module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
+        $path = MOLAJO_EXTENSION_MODULES . '/modules/' . $module->module . '/' . $module->module . '.php';
 
-		// Load the module
-		if ($module->user) {
+        // Load the module
+        if ($module->user) {
         } else if (file_exists($path)) {
 
             $lang = MolajoFactory::getLanguage();
 
             $lang->load($module->module, MOLAJO_BASE_FOLDER, null, false, false)
-            ||	$lang->load($module->module, dirname($path), null, false, false)
-            ||	$lang->load($module->module, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-            ||	$lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
+            || $lang->load($module->module, dirname($path), null, false, false)
+            || $lang->load($module->module, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+            || $lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
 
             /** view */
             $view = new MolajoView ();
@@ -163,7 +161,7 @@ abstract class MolajoModuleHelper
             $request = array();
             $state = array();
             $params = array();
-            $rowset = array ();
+            $rowset = array();
             $pagination = array();
             $layout = 'default';
             $wrap = 'none';
@@ -227,12 +225,12 @@ abstract class MolajoModuleHelper
             $view->display();
             $output = ob_get_contents();
             ob_end_clean();
-		}
+        }
 
-		MolajoFactory::getApplication()->scope = $scope;
+        MolajoFactory::getApplication()->scope = $scope;
 
-		return $output;
-	}
+        return $output;
+    }
 
     /**
      * getRequest
@@ -241,7 +239,7 @@ abstract class MolajoModuleHelper
      *
      * @return bool
      */
-    protected function getRequest ($module, $params)
+    protected function getRequest($module, $params)
     {
         $session = MolajoFactory::getSession();
 
@@ -273,7 +271,7 @@ abstract class MolajoModuleHelper
         $request['filter_fieldname'] = $session->get('page.filter_fieldname');
         $request['select_fieldname'] = $session->get('page.select_fieldname');
         $request['title'] = $module->title;
-        $request['subtitle'] =  $module->subtitle;
+        $request['subtitle'] = $module->subtitle;
         $request['metakey'] = $session->get('page.metakey');
         $request['metadesc'] = $session->get('page.metadesc');
         $request['metadata'] = $session->get('page.metadata');
@@ -283,240 +281,238 @@ abstract class MolajoModuleHelper
         return $request;
     }
 
-	/**
-	 * getLayoutPath
+    /**
+     * getLayoutPath
      *
      * Get the path to a layout for a module
-	 *
-	 * @param   string  $module	The name of the module
-	 * @param   string  $layout	The name of the module layout. If alternative layout, in the form template:filename.
-	 * @return  string  The path to the module layout
-	 * @since   1.0
-	 */
-	public static function getLayoutPath($module, $layout = 'default')
-	{
-		$template = MolajoFactory::getApplication()->getTemplate();
-		$defaultLayout = $layout;
-		if (strpos($layout, ':') !== false )
-		{
-			$temp = explode(':', $layout);
-			$template = ($temp[0] == '_') ? $template : $temp[0];
-			$layout = $temp[1];
-			$defaultLayout = ($temp[1]) ? $temp[1] : 'default';
-		}
+     *
+     * @param   string  $module    The name of the module
+     * @param   string  $layout    The name of the module layout. If alternative layout, in the form template:filename.
+     * @return  string  The path to the module layout
+     * @since   1.0
+     */
+    public static function getLayoutPath($module, $layout = 'default')
+    {
+        $template = MolajoFactory::getApplication()->getTemplate();
+        $defaultLayout = $layout;
+        if (strpos($layout, ':') !== false) {
+            $temp = explode(':', $layout);
+            $template = ($temp[0] == '_') ? $template : $temp[0];
+            $layout = $temp[1];
+            $defaultLayout = ($temp[1]) ? $temp[1] : 'default';
+        }
 
-		// Build the template and base path for the layout
-		$tPath = MOLAJO_EXTENSION_TEMPLATES.'/'.$template.'/html/'.$module.'/'.$layout.'.php';
-		$bPath = MOLAJO_EXTENSION_MODULES.'/modules/'.$module.'/tmpl/'.$defaultLayout.'.php';
+        // Build the template and base path for the layout
+        $tPath = MOLAJO_EXTENSION_TEMPLATES . '/' . $template . '/html/' . $module . '/' . $layout . '.php';
+        $bPath = MOLAJO_EXTENSION_MODULES . '/modules/' . $module . '/tmpl/' . $defaultLayout . '.php';
 
-		// If the template has a layout override use it
-		if (file_exists($tPath)) {
-			return $tPath;
-		}
-		else {
-			return $bPath;
-		}
-	}
+        // If the template has a layout override use it
+        if (file_exists($tPath)) {
+            return $tPath;
+        }
+        else {
+            return $bPath;
+        }
+    }
 
-	/**
-	 * _load
+    /**
+     * _load
      *
      * Load published modules
-	 *
-	 * @return  array
-	 */
-	protected function &_load()
-	{
-		static $clean;
+     *
+     * @return  array
+     */
+    protected function &_load()
+    {
+        static $clean;
 
-		if (isset($clean)) {
-			return $clean;
-		}
+        if (isset($clean)) {
+            return $clean;
+        }
 
-		$Itemid 	= JRequest::getInt('Itemid');
-		$user		= MolajoFactory::getUser();
-		$lang 		= MolajoFactory::getLanguage()->getTag();
-		$applicationId 	= MOLAJO_APPLICATION_ID;
+        $Itemid = JRequest::getInt('Itemid');
+        $user = MolajoFactory::getUser();
+        $lang = MolajoFactory::getLanguage()->getTag();
+        $applicationId = MOLAJO_APPLICATION_ID;
 
-		$cache 		= MolajoFactory::getCache ('com_modules', '');
-		$cacheid 	= md5(serialize(array($Itemid, $applicationId, $lang)));
+        $cache = MolajoFactory::getCache('com_modules', '');
+        $cacheid = md5(serialize(array($Itemid, $applicationId, $lang)));
 
-		if ($clean = $cache->get($cacheid)) {
+        if ($clean = $cache->get($cacheid)) {
         } else {
-			$db	= MolajoFactory::getDbo();
-			$query = $db->getQuery(true);
+            $db = MolajoFactory::getDbo();
+            $query = $db->getQuery(true);
 
-			$date = MolajoFactory::getDate();
-			$now = $date->toMySQL();
-			$nullDate = $db->getNullDate();
+            $date = MolajoFactory::getDate();
+            $now = $date->toMySQL();
+            $nullDate = $db->getNullDate();
 
             $query->select('m.id as id, title, title as subtitle ');
             $query->select('module, position, content, showtitle ');
             $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
-			$query->from('#__modules AS m');
-			$query->join('inner', '#__modules_menu AS mm');
-			$query->where('mm.module_id = m.id');
-			$query->where('m.published = 1');
-			$query->where('m.id <> 1');
-			$query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
-			$query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
+            $query->from('#__modules AS m');
+            $query->join('inner', '#__modules_menu AS mm');
+            $query->where('mm.module_id = m.id');
+            $query->where('m.published = 1');
+            $query->where('m.id <> 1');
+            $query->where('(m.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR m.start_publishing_datetime <= ' . $db->Quote($now) . ')');
+            $query->where('(m.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR m.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
             $acl = new MolajoACL ();
-            $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'m'));
+            $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'm'));
 
-			$query->where('m.application_id = '. $applicationId);
-			$query->where('(mm.menu_item_id = '. (int) $Itemid .' OR mm.menu_item_id <= 0)');
+            $query->where('m.application_id = ' . $applicationId);
+            $query->where('(mm.menu_item_id = ' . (int)$Itemid . ' OR mm.menu_item_id <= 0)');
 
-			if (MolajoFactory::getApplication()->getLanguageFilter()) {
-				$query->where('m.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
-			}
-			$query->order('position, ordering');
+            if (MolajoFactory::getApplication()->getLanguageFilter()) {
+                $query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+            }
+            $query->order('position, ordering');
 
             $db->setQuery($query->__toString());
 
-			$modules = $db->loadObjectList();
-			$clean	= array();
+            $modules = $db->loadObjectList();
+            $clean = array();
 
-			if($db->getErrorNum()){
-				MolajoError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
-				return $clean;
-			}
+            if ($db->getErrorNum()) {
+                MolajoError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
+                return $clean;
+            }
 
-			// Apply negative selections and eliminate duplicates
-			$negId	= $Itemid ? -(int)$Itemid : false;
-			$dupes	= array();
-			for ($i = 0, $n = count($modules); $i < $n; $i++)
-			{
-				$module = &$modules[$i];
+            // Apply negative selections and eliminate duplicates
+            $negId = $Itemid ? -(int)$Itemid : false;
+            $dupes = array();
+            for ($i = 0, $n = count($modules); $i < $n; $i++)
+            {
+                $module = &$modules[$i];
 
-				// The module is excluded if there is an explicit prohibition or if
-				// the Itemid is missing or zero and the module is in exclude mode.
-				$negHit	= ($negId === (int) $module->menu_item_id)
-						|| (!$negId && (int)$module->menu_item_id < 0);
+                // The module is excluded if there is an explicit prohibition or if
+                // the Itemid is missing or zero and the module is in exclude mode.
+                $negHit = ($negId === (int)$module->menu_item_id)
+                          || (!$negId && (int)$module->menu_item_id < 0);
 
-				if (isset($dupes[$module->id]))
-				{
-					// If this item has been excluded, keep the duplicate flag set,
-					// but remove any item from the cleaned array.
-					if ($negHit) {
-						unset($clean[$module->id]);
-					}
-					continue;
-				}
-				$dupes[$module->id] = true;
+                if (isset($dupes[$module->id])) {
+                    // If this item has been excluded, keep the duplicate flag set,
+                    // but remove any item from the cleaned array.
+                    if ($negHit) {
+                        unset($clean[$module->id]);
+                    }
+                    continue;
+                }
+                $dupes[$module->id] = true;
 
-				// Only accept modules without explicit exclusions.
-				if (!$negHit)
-				{
-					$file				= $module->module;
-					$custom				= substr($file, 0, 4) == 'mod_' ?  0 : 1;
-					$module->user		= $custom;
-					// Custom module name is given by the title field, otherwise strip off "mod_"
-					$module->name		= $custom ? $module->title : substr($file, 4);
-					$module->style		= null;
-					$module->position	= strtolower($module->position);
-					$clean[$module->id]	= $module;
-				}
-			}
-			unset($dupes);
-			// Return to simple indexing that matches the query order.
-			$clean = array_values($clean);
+                // Only accept modules without explicit exclusions.
+                if (!$negHit) {
+                    $file = $module->module;
+                    $custom = substr($file, 0, 4) == 'mod_' ? 0 : 1;
+                    $module->user = $custom;
+                    // Custom module name is given by the title field, otherwise strip off "mod_"
+                    $module->name = $custom ? $module->title : substr($file, 4);
+                    $module->style = null;
+                    $module->position = strtolower($module->position);
+                    $clean[$module->id] = $module;
+                }
+            }
+            unset($dupes);
+            // Return to simple indexing that matches the query order.
+            $clean = array_values($clean);
 
-			$cache->store($clean, $cacheid);
-		}
+            $cache->store($clean, $cacheid);
+        }
 
-		return $clean;
-	}
+        return $clean;
+    }
 
-	/**
-	* Module cache helper
-	*
-	* Caching modes:
-	* To be set in XML:
-	* 'static'		one cache file for all pages with the same module parameters
-	* 'oldstatic'	1.5. definition of module caching, one cache file for all pages with the same module id and user aid,
-	* 'itemid'		changes on itemid change,
-	* To be called from inside the module:
-	* 'safeuri'		id created from $cacheparams->modeparams array,
-	* 'id'			module sets own cache id's
-	*
-	* @param   object  $module	Module object
-	* @param   object  $moduleparams module parameters
-	* @param   object  $cacheparams module cache parameters - id or url parameters, depending on the module cache mode
-	* @param   array   $params - parameters for given mode - calculated id or an array of safe url parameters and their
-	* 					variable types, for valid values see {@link JFilterInput::clean()}.
-	*
-	* @since   11.1
-	*/
-	public static function moduleCache($module, $moduleparams, $cacheparams)
-	{
-		if(!isset ($cacheparams->modeparams)) {
-			$cacheparams->modeparams=null;
-		}
+    /**
+     * Module cache helper
+     *
+     * Caching modes:
+     * To be set in XML:
+     * 'static'        one cache file for all pages with the same module parameters
+     * 'oldstatic'    1.5. definition of module caching, one cache file for all pages with the same module id and user aid,
+     * 'itemid'        changes on itemid change,
+     * To be called from inside the module:
+     * 'safeuri'        id created from $cacheparams->modeparams array,
+     * 'id'            module sets own cache id's
+     *
+     * @param   object  $module    Module object
+     * @param   object  $moduleparams module parameters
+     * @param   object  $cacheparams module cache parameters - id or url parameters, depending on the module cache mode
+     * @param   array   $params - parameters for given mode - calculated id or an array of safe url parameters and their
+     *                     variable types, for valid values see {@link JFilterInput::clean()}.
+     *
+     * @since   11.1
+     */
+    public static function moduleCache($module, $moduleparams, $cacheparams)
+    {
+        if (!isset ($cacheparams->modeparams)) {
+            $cacheparams->modeparams = null;
+        }
 
-		if(!isset ($cacheparams->cachegroup)) {
-			$cacheparams->cachegroup = $module->module;
-		}
+        if (!isset ($cacheparams->cachegroup)) {
+            $cacheparams->cachegroup = $module->module;
+        }
 
-		$user = MolajoFactory::getUser();
-		$cache = MolajoFactory::getCache($cacheparams->cachegroup, 'callback');
-		$conf = MolajoFactory::getConfig();
+        $user = MolajoFactory::getUser();
+        $cache = MolajoFactory::getCache($cacheparams->cachegroup, 'callback');
+        $conf = MolajoFactory::getConfig();
 
-		// Turn cache off for internal callers if parameters are set to off and for all logged in users
-		if($moduleparams->get('owncache', null) === 0  || $conf->get('caching') == 0 || $user->get('id')) {
-			$cache->setCaching(false);
-		}
+        // Turn cache off for internal callers if parameters are set to off and for all logged in users
+        if ($moduleparams->get('owncache', null) === 0 || $conf->get('caching') == 0 || $user->get('id')) {
+            $cache->setCaching(false);
+        }
 
-		$cache->setLifeTime($moduleparams->get('cache_time', $conf->get('cachetime') * 60));
+        $cache->setLifeTime($moduleparams->get('cache_time', $conf->get('cachetime') * 60));
 
-		$wrkaroundoptions = array (
-			'nopathway' 	=> 1,
-			'nohead' 		=> 0,
-			'nomodules' 	=> 1,
-			'modulemode' 	=> 1,
-			'mergehead' 	=> 1
-		);
+        $wrkaroundoptions = array(
+            'nopathway' => 1,
+            'nohead' => 0,
+            'nomodules' => 1,
+            'modulemode' => 1,
+            'mergehead' => 1
+        );
 
-		$wrkarounds = true;
+        $wrkarounds = true;
 
         $acl = new MolajoACL();
-		$view_levels = md5(serialize ($acl->getList('viewaccess')));
+        $view_levels = md5(serialize($acl->getList('viewaccess')));
 
-		switch ($cacheparams->cachemode) {
+        switch ($cacheparams->cachemode) {
 
-			case 'id':
-				$ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $cacheparams->modeparams, $wrkarounds, $wrkaroundoptions);
-				break;
+            case 'id':
+                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $cacheparams->modeparams, $wrkarounds, $wrkaroundoptions);
+                break;
 
-			case 'safeuri':
-				$secureid=null;
-				if (is_array($cacheparams->modeparams)) {
-					$uri = JRequest::get();
-					$safeuri = new stdClass();
-					foreach ($cacheparams->modeparams AS $key => $value) {
-						// Use int filter for id/catid to clean out spamy slugs
-						if (isset($uri[$key])) {
-							$safeuri->$key = JRequest::_cleanVar($uri[$key], 0,$value);
-						}
-					} }
-				$secureid = md5(serialize(array($safeuri, $cacheparams->method, $moduleparams)));
-				$ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id. $view_levels.$secureid, $wrkarounds, $wrkaroundoptions);
-				break;
+            case 'safeuri':
+                $secureid = null;
+                if (is_array($cacheparams->modeparams)) {
+                    $uri = JRequest::get();
+                    $safeuri = new stdClass();
+                    foreach ($cacheparams->modeparams AS $key => $value) {
+                        // Use int filter for id/catid to clean out spamy slugs
+                        if (isset($uri[$key])) {
+                            $safeuri->$key = JRequest::_cleanVar($uri[$key], 0, $value);
+                        }
+                    }
+                }
+                $secureid = md5(serialize(array($safeuri, $cacheparams->method, $moduleparams)));
+                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id . $view_levels . $secureid, $wrkarounds, $wrkaroundoptions);
+                break;
 
-			case 'static':
-				$ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->module.md5(serialize($cacheparams->methodparams)), $wrkarounds, $wrkaroundoptions);
-				break;
+            case 'static':
+                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->module . md5(serialize($cacheparams->methodparams)), $wrkarounds, $wrkaroundoptions);
+                break;
 
-			case 'oldstatic':  // provided for backward compatibility, not really usefull
-				$ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id. $view_levels, $wrkarounds, $wrkaroundoptions);
-				break;
+            case 'oldstatic': // provided for backward compatibility, not really usefull
+                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id . $view_levels, $wrkarounds, $wrkaroundoptions);
+                break;
 
-			case 'itemid':
-			default:
-				$ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id. $view_levels.JRequest::getVar('Itemid',null,'default','INT'), $wrkarounds, $wrkaroundoptions);
-				break;
-		}
+            case 'itemid':
+            default:
+                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id . $view_levels . JRequest::getVar('Itemid', null, 'default', 'INT'), $wrkarounds, $wrkaroundoptions);
+                break;
+        }
 
-		return $ret;
-	}
+        return $ret;
+    }
 }

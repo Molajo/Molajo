@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
 /**
  * Utility class for creating HTML Lists
  *
- * @package		Molajo
- * @subpackage	HTML
- * @since		1.6
+ * @package        Molajo
+ * @subpackage    HTML
+ * @since        1.6
  */
 abstract class MolajoHtmlList
 {
@@ -24,7 +24,7 @@ abstract class MolajoHtmlList
      *
      * points to Core JHTML Library
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function accessOptions($config = array())
     {
@@ -36,12 +36,12 @@ abstract class MolajoHtmlList
      *
      * points to Core JHTML Library
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function authorOptions($config = array())
     {
         $defaultView = JRequest::getCmd('DefaultView');
-        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $authorModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $authorModel->getAuthors();
     }
 
@@ -50,7 +50,7 @@ abstract class MolajoHtmlList
      *
      * points to Core JHTML Library
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function categoryOptions($config = array())
     {
@@ -62,19 +62,19 @@ abstract class MolajoHtmlList
      *
      * Returns an array of standard featured state filter options.
      *
-     * @param	array			An array of configuration options.
-     * @return	string			The HTML code for the select tag
+     * @param    array            An array of configuration options.
+     * @return    string            The HTML code for the select tag
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function featureOptions($config = array())
     {
-        $options	= array();
+        $options = array();
         if (!array_key_exists('unfeatured', $config) || $config['unfeatured']) {
-                $options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNFEATURED'));
+            $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNFEATURED'));
         }
         if (!array_key_exists('featured', $config) || $config['featured']) {
-                $options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_FEATURED'));
+            $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_FEATURED'));
         }
 
         return $options;
@@ -83,7 +83,7 @@ abstract class MolajoHtmlList
     /**
      * languageOptions
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function languageOptions($config = array())
     {
@@ -93,36 +93,36 @@ abstract class MolajoHtmlList
     /**
      * publishDateOptions
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function publishDateOptions($config = array())
     {
         $defaultView = JRequest::getCmd('DefaultView');
-        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $publishDateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $publishDateModel->getMonthsPublish();
     }
 
     /**
      * createDateOptions
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function createDateOptions($config = array())
     {
         $defaultView = JRequest::getCmd('DefaultView');
-        $createDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $createDateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $createDateModel->getMonthsCreate();
     }
 
     /**
      * updateDateOptions
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function updateDateOptions($config = array())
     {
         $defaultView = JRequest::getCmd('DefaultView');
-        $updateDateModel = JModel::getInstance('Model'.ucfirst($defaultView), ucfirst($defaultView), array('ignore_request' => true));
+        $updateDateModel = JModel::getInstance('Model' . ucfirst($defaultView), ucfirst($defaultView), array('ignore_request' => true));
         return $updateDateModel->getMonthsUpdate();
     }
 
@@ -131,12 +131,12 @@ abstract class MolajoHtmlList
      *
      * points to Core JHTML Library
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function titleOptions($config = array())
     {
         $defaultView = JRequest::getCmd('DefaultView');
-        $updateDateModel = JModel::getInstance('Model'.ucfirst($defaultView), ucfirst($defaultView), array('ignore_request' => true));
+        $updateDateModel = JModel::getInstance('Model' . ucfirst($defaultView), ucfirst($defaultView), array('ignore_request' => true));
         return $updateDateModel->getTitles();
     }
 
@@ -145,38 +145,38 @@ abstract class MolajoHtmlList
      *
      * Returns an array of standard published state filter options.
      *
-     * @param	array			An array of configuration options.
-     * @return	string			The HTML code for the select tag
+     * @param    array            An array of configuration options.
+     * @return    string            The HTML code for the select tag
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function stateOptions($config = array())
     {
-        $options= array();
+        $options = array();
         if (!array_key_exists('archived', $config) || $config['archived']) {
-                $options[]	= MolajoHTML::_('select.option', '2', MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
+            $options[] = MolajoHTML::_('select.option', '2', MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
         }
         if (!array_key_exists('published', $config) || $config['published']) {
-                $options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
+            $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
         }
         if (!array_key_exists('unpublished', $config) || $config['unpublished']) {
-                $options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
+            $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
         }
         if ($params->def(config_component_state_spam, 0) == '1') {
             if (!array_key_exists('spam', $config) || $config['spam']) {
-                    $options[]	= MolajoHTML::_('select.option', '-1', MolajoText::_('MOLAJO_OPTION_SPAMMED'));
+                $options[] = MolajoHTML::_('select.option', '-1', MolajoText::_('MOLAJO_OPTION_SPAMMED'));
             }
         }
         if (!array_key_exists('trash', $config) || $config['trash']) {
-                $options[]	= MolajoHTML::_('select.option', '-2', MolajoText::_('MOLAJO_OPTION_TRASHED'));
+            $options[] = MolajoHTML::_('select.option', '-2', MolajoText::_('MOLAJO_OPTION_TRASHED'));
         }
         if ($params->def(config_component_version_management, 1) == '1') {
             if (!array_key_exists('version', $config) || $config['version']) {
-                    $options[]	= MolajoHTML::_('select.option', '-10', MolajoText::_('MOLAJO_OPTION_VERSION'));
+                $options[] = MolajoHTML::_('select.option', '-10', MolajoText::_('MOLAJO_OPTION_VERSION'));
             }
         }
         if (!array_key_exists('all', $config) || $config['all']) {
-                $options[]	= MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
+            $options[] = MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
         }
         return $options;
     }
@@ -186,19 +186,19 @@ abstract class MolajoHtmlList
      *
      * Returns an array of standard stickied state filter options.
      *
-     * @param	array			An array of configuration options.
-     * @return	string			The HTML code for the select tag
+     * @param    array            An array of configuration options.
+     * @return    string            The HTML code for the select tag
      *
-     * @since	1.6
+     * @since    1.6
      */
     public static function stickyOptions($config = array())
     {
-        $options	= array();
+        $options = array();
         if (!array_key_exists('unstickied', $config) || $config['unstickied']) {
-                $options[]	= MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
+            $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
         }
         if (!array_key_exists('stickied', $config) || $config['stickied']) {
-                $options[]	= MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
+            $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
         }
         return $options;
     }

@@ -12,8 +12,8 @@ defined('MOLAJO') or die;
  *
  * Component Model for Dummy Views
  *
- * @package	    Molajo
- * @subpackage	Model
+ * @package        Molajo
+ * @subpackage    Model
  * @since 1.0
  */
 class MolajoModelDummy extends JModel
@@ -21,48 +21,48 @@ class MolajoModelDummy extends JModel
     /**
      * $request
      *
-     * @var		array
-     * @since	1.0
+     * @var        array
+     * @since    1.0
      */
     public $request = array();
 
     /**
      * $params
      *
-     * @var		string
-     * @since	1.0
+     * @var        string
+     * @since    1.0
      */
     public $params = array();
 
     /**
      * $items
      *
-     * @var		string
-     * @since	1.0
+     * @var        string
+     * @since    1.0
      */
     public $items = array();
 
     /**
      * $pagination
      *
-     * @var		string
-     * @since	1.0
+     * @var        string
+     * @since    1.0
      */
     public $pagination = array();
 
     /**
      * $context
      *
-     * @var		string
-     * @since	1.0
+     * @var        string
+     * @since    1.0
      */
     public $context = null;
 
     /**
      * $task
      *
-     * @var		string
-     * @since	1.0
+     * @var        string
+     * @since    1.0
      */
     public $task = null;
 
@@ -71,20 +71,20 @@ class MolajoModelDummy extends JModel
      *
      * Method to auto-populate the model state.
      *
-     * @return	void
-     * @since	1.0
+     * @return    void
+     * @since    1.0
      */
-    protected function populateState ()
+    protected function populateState()
     {
-        $this->context = strtolower($this->request['option'].'.'.$this->getName()).'.'.$this->request['layout'];
+        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['layout'];
     }
 
     /**
      * getRequest
      *
-     * @return	array	An empty array
+     * @return    array    An empty array
      *
-     * @since	1.0
+     * @since    1.0
      */
     public function getRequest()
     {
@@ -94,20 +94,21 @@ class MolajoModelDummy extends JModel
     /**
      * getParams
      *
-     * @return	array	An empty array
+     * @return    array    An empty array
      *
-     * @since	1.0
+     * @since    1.0
      */
     public function getParams()
     {
         return $this->params;
     }
+
     /**
      * getItems
      *
-     * @return	array	An empty array
+     * @return    array    An empty array
      *
-     * @since	1.0
+     * @since    1.0
      */
     public function getItems()
     {
@@ -117,11 +118,11 @@ class MolajoModelDummy extends JModel
     /**
      * getPagination
      *
-     * @return	array	An empty array
+     * @return    array    An empty array
      *
-     * @since	1.0
+     * @since    1.0
      */
-    public function getPagination ()
+    public function getPagination()
     {
         return $this->pagination;
     }

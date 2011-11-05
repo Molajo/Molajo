@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Core ACL
  *
- * @package	Molajo
- * @subpackage	ACL
- * @since	1.0
+ * @package    Molajo
+ * @subpackage    ACL
+ * @since    1.0
  */
 class MolajoACLCore extends MolajoACL
 {
@@ -30,33 +30,39 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 0 No check needed
      *
-     *  @return boolean true
+     * @return boolean true
      */
-    public function checkCancelAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    public function checkCancelAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
-    public function checkCopyAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkCopyAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
-    public function checkCloseAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkCloseAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
-    public function checkMoveAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkMoveAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
-    public function checkOpenAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkOpenAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
-    public function checkHelpAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkHelpAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
-    public function checkSeparatorAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSeparatorAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
         return true;
     }
@@ -72,15 +78,15 @@ class MolajoACLCore extends MolajoACL
      *  checkCheckInAuthorisation - Can User check-in Content for the Component
      *  checkManageAuthorisation - Can User access the Component from within the Administrator
      *
-     *  @param string $option_value_literal ex. admin or manage.com_articles
-     *  @param string $option ex. com_articles
+     * @param string $option_value_literal ex. admin or manage.com_articles
+     * @param string $option ex. com_articles
      *
-     *  @return boolean
+     * @return boolean
      */
-    public function checkTaskManage ($option, $entity, $task, $catid, $id, $item)
+    public function checkTaskManage($option, $entity, $task, $catid, $id, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS, $task);
+        $taskTests = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS, $task);
 
         if (is_array($taskTests)) {
         } else {
@@ -88,8 +94,8 @@ class MolajoACLCore extends MolajoACL
         }
 
         $authorised = false;
-        foreach ( $taskTests as $item )   {
-//amy            $authorised = $this->authorise($item, $option);
+        foreach ($taskTests as $item) {
+            //amy            $authorised = $this->authorise($item, $option);
             $authorised = true;
             if ($authorised) {
                 break;
@@ -99,21 +105,24 @@ class MolajoACLCore extends MolajoACL
     }
 
     /** members **/
-    public function checkAdminAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    public function checkAdminAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskManage ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskManage($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkCheckinAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkCheckinAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskManage ($option='com_checkin', $entity, $task, $catid, $id, $item);
+        return $this->checkTaskManage($option = 'com_checkin', $entity, $task, $catid, $id, $item);
     }
-    public function checkManageAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkManageAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskManage ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskManage($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkOptionsAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkOptionsAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskManage ($option, $entity, 'admin', $catid, $id, $item);
+        return $this->checkTaskManage($option, $entity, 'admin', $catid, $id, $item);
     }
 
     /**
@@ -125,16 +134,16 @@ class MolajoACLCore extends MolajoACL
      *
      *  getDisplayAuthorisation - Can User view specific content for the Component
      *
-     *  @param string $option - ex. com_articles
-     *  @param string $entity - name of item, ex. 'article'
-     *  @param string $task - ex save
-     *  @param int $id - primary key of item
-     *  @param array $item - array of item elements
-     *  @param string $option_value_literal - ex save.article
+     * @param string $option - ex. com_articles
+     * @param string $entity - name of item, ex. 'article'
+     * @param string $task - ex save
+     * @param int $id - primary key of item
+     * @param array $item - array of item elements
+     * @param string $option_value_literal - ex save.article
      *
-     *  @return boolean
+     * @return boolean
      */
-    public function checkTaskView ($option, $entity, $task, $catid, $id, $item)
+    public function checkTaskView($option, $entity, $task, $catid, $id, $item)
     {
         $viewGroups = $this->getUsergroupsView();
         if (in_array($item->access, $viewGroups)) {
@@ -143,9 +152,9 @@ class MolajoACLCore extends MolajoACL
     }
 
     /** members **/
-    public function checkDisplayAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    public function checkDisplayAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskManage ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskManage($option, $entity, $task, $catid, $id, $item);
     }
 
     /**
@@ -171,35 +180,35 @@ class MolajoACLCore extends MolajoACL
      *  Access to Content Item and Primary Key, Category, Component and Global
      *  Matching TaskOwn methods checked before advancing to the next level
      *
-     *  @param string $option - ex. com_articles
-     *  @param string $entity - name of item, ex. 'article'
-     *  @param string $task - ex save
-     *  @param int $id - primary key of item
-     *  @param array $item - array of item elements
-     *  @param string $option_value_literal - ex save.article
+     * @param string $option - ex. com_articles
+     * @param string $entity - name of item, ex. 'article'
+     * @param string $task - ex save
+     * @param int $id - primary key of item
+     * @param array $item - array of item elements
+     * @param string $option_value_literal - ex save.article
      *
-     *  @return boolean
+     * @return boolean
      */
-    public function checkTaskUpdate ($option, $entity, $task, $catid, $id, $item)
+    public function checkTaskUpdate($option, $entity, $task, $catid, $id, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $taskTests = $molajoConfig->getOptionLiteralValue (MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS, $task);
+        $taskTests = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_ACL_TASK_TO_METHODS, $task);
         if (is_array($taskTests)) {
         } else {
             $taskTests = array($taskTests);
         }
         if (count($taskTests) == 0) {
-            MolajoError::raiseError(500, MolajoText::_('MOLAJO_ACL_NOT_IDENTIFIED_TASK_ACL_METHOD'). ' '.$task);
+            MolajoError::raiseError(500, MolajoText::_('MOLAJO_ACL_NOT_IDENTIFIED_TASK_ACL_METHOD') . ' ' . $task);
             return false;
         }
-        
+
         /** loop thru tests **/
         $authorised = false;
-        foreach ( $taskTests as $option_value_literal )   {
+        foreach ($taskTests as $option_value_literal) {
             if ($option_value_literal == '') {
                 $authorised = true;
             } else {
-                $authorised = $this->testAuthorisation ($option, $entity, $task, $catid, $id, $item, $option_value_literal);
+                $authorised = $this->testAuthorisation($option, $entity, $task, $catid, $id, $item, $option_value_literal);
             }
         }
 
@@ -210,7 +219,7 @@ class MolajoACLCore extends MolajoACL
      * testAuthorisation
      *
      * called from checkTaskUpdate to look through (possibly) multiple ACL checks for a single task
-     * 
+     *
      * @param $option
      * @param $entity
      * @param $task
@@ -220,18 +229,18 @@ class MolajoACLCore extends MolajoACL
      * @param $option_value_literal
      * @return bool
      */
-    public function testAuthorisation ($option, $entity, $task, $catid, $id, $item, $option_value_literal)
+    public function testAuthorisation($option, $entity, $task, $catid, $id, $item, $option_value_literal)
     {
-    
+
         return true;
 
         $authorised = false;
 
-        if ((int) $id > 0) {
-            $authorised = $this->authorise($option_value_literal, $option.'.'.$entity.'.'.$id);
+        if ((int)$id > 0) {
+            $authorised = $this->authorise($option_value_literal, $option . '.' . $entity . '.' . $id);
 
             if ($authorised === false) {
-                $authorised = $this->authorise($option_value_literal.'.own', $option.'.'.$entity.'.'.$id);
+                $authorised = $this->authorise($option_value_literal . '.own', $option . '.' . $entity . '.' . $id);
 
                 if ($authorised === true) {
                     if ($item->created_by == MolajoFactory::getUser()->get('id')) {
@@ -240,8 +249,8 @@ class MolajoACLCore extends MolajoACL
                 }
             }
         }
-        if ($authorised === false && (int) $catid > 0) {
-            $authorised = $this->authorise($option_value_literal, $option.'.'.'category'.'.'.$catid);
+        if ($authorised === false && (int)$catid > 0) {
+            $authorised = $this->authorise($option_value_literal, $option . '.' . 'category' . '.' . $catid);
         } else if ($authorised === false) {
             $authorised = $this->authorise($option_value_literal, $option);
         }
@@ -250,148 +259,175 @@ class MolajoACLCore extends MolajoACL
     }
 
     /** members **/
-    public function checkAddAuthorisation ($option, $entity, $task, $catid, $id, $item)
+    public function checkAddAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkApplyAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkApplyAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkArchiveAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkArchiveAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkCreateAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkCreateAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkDeleteAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkDeleteAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkEditAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkEditAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkEditownAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkEditownAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkPublishAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkPublishAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkFeatureAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkFeatureAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkNewAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkNewAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkOrderupAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkOrderupAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkOrderdownAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkOrderdownAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkEditstateAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkEditstateAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkReorderAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkReorderAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkRestoreAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkRestoreAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkSaveAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSaveAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkSave2copyAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSave2copyAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkSave2newAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSave2newAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkSaveorderAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSaveorderAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkSearchAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSearchAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkSpamAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkSpamAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkStateAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkStateAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkStickyAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkStickyAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkTrashAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkTrashAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkUnfeatureAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkUnfeatureAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkUnpublishAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkUnpublishAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkUnstickyAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkUnstickyAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
-    public function checkLoginAuthorisation ($option, $entity, $task, $catid, $id, $item)
+
+    public function checkLoginAuthorisation($option, $entity, $task, $catid, $id, $item)
     {
-        return $this->checkTaskUpdate ($option, $entity, $task, $catid, $id, $item);
+        return $this->checkTaskUpdate($option, $entity, $task, $catid, $id, $item);
     }
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getXYZQueryInformation
-     * 
+     *
      *  Called by MolajoACL::getQueryInformation - which is called from Models and Field Filters to prepare query information
      *
      *  getUserQueryInformation - returns query parts filtering access for the View Action for user
      *  getQueryInformationFilter - returns query parts filtering access for the ACL Filter Object Access
      *  getXYZQueryInformation - anything that follows that pattern
      *
-     *  @param object $query - query updated by method
-     *  @param string $type - specifies the type of method
-     *  @param array $params set of parameters needed by method to build query
-     *  @return boolean
+     * @param object $query - query updated by method
+     * @param string $type - specifies the type of method
+     * @param array $params set of parameters needed by method to build query
+     * @return boolean
      */
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getUserQueryInformation
      */
-    public function getUserQueryInformation ($query, $option, $params)
+    public function getUserQueryInformation($query, $option, $params)
     {
         $query->select('a.access');
-//        $query->select('ag.title AS access_level');
+        //        $query->select('ag.title AS access_level');
 
         $aclClass = MolajoACL;
         $acl = new $aclClass();
         $groupList = $acl->getList('viewaccess');
 
-        $query->where('a.access in ('.$groupList.')');
-//$query->join('LEFT', '#__viewlevels AS ag ON a.access = ag.id');
+        $query->where('a.access in (' . $groupList . ')');
+        //$query->join('LEFT', '#__viewlevels AS ag ON a.access = ag.id');
 
         /** Molajo_note: come back and deal with edit and edit state capabilities
          * the way this is currently coded in core, users would not be able to update their articles
@@ -400,17 +436,17 @@ class MolajoACLCore extends MolajoACL
          * Find a better way to restrict published information that only restricts what is needed
 
         if ($this->authorise('edit.state', 'com_articles')
-            || $this->authorise('edit', 'com_articles')) {
+        || $this->authorise('edit', 'com_articles')) {
         } else {
-            $query->where('a.state in ('.MOLAJO_STATE_ARCHIVED.','.MOLAJO_STATE_PUBLISHED.')');
+        $query->where('a.state in ('.MOLAJO_STATE_ARCHIVED.','.MOLAJO_STATE_PUBLISHED.')');
 
-            $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
-            $nowDate = $this->getDbo()->Quote(MolajoFactory::getDate()->toMySQL());
+        $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
+        $nowDate = $this->getDbo()->Quote(MolajoFactory::getDate()->toMySQL());
 
-            $query->where('(a.start_publishing_datetime = '.$nullDate.' OR a.start_publishing_datetime <= '.$nowDate.')');
-            $query->where('(a.stop_publishing_datetime = '.$nullDate.' OR a.stop_publishing_datetime >= '.$nowDate.')');
+        $query->where('(a.start_publishing_datetime = '.$nullDate.' OR a.start_publishing_datetime <= '.$nowDate.')');
+        $query->where('(a.stop_publishing_datetime = '.$nullDate.' OR a.stop_publishing_datetime >= '.$nowDate.')');
         }
-        */
+         */
         return $query;
     }
 
@@ -422,11 +458,11 @@ class MolajoACLCore extends MolajoACL
      * @param $filterValue
      * @return void
      */
-    public function getFilterQueryInformation ($query, $option, $filterValue)
+    public function getFilterQueryInformation($query, $option, $filterValue)
     {
-        if ((int) $filterValue == 0) {
+        if ((int)$filterValue == 0) {
         } else {
-            $query->where('a.access = '. (int) $filterValue);
+            $query->where('a.access = ' . (int)$filterValue);
         }
     }
 
@@ -442,20 +478,20 @@ class MolajoACLCore extends MolajoACL
      * @param $params
      * @return
      */
-    public function getViewaccessQueryInformation ($query, $option, $params)
+    public function getViewaccessQueryInformation($query, $option, $params)
     {
         $prefix = $params['table_prefix'];
         if (trim($prefix == '')) {
         } else {
-            $prefix = $prefix.'.';
+            $prefix = $prefix . '.';
         }
 
-        $acl	= new MolajoACL();
+        $acl = new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
 
         $query->from('#__assets AS assets');
-        $query->where('assets.id = '.$prefix.'asset_id');
-        $query->where('assets.view_group_id IN ('.$list.')');
+        $query->where('assets.id = ' . $prefix . 'asset_id');
+        $query->where('assets.view_group_id IN (' . $list . ')');
 
         return;
     }
@@ -469,53 +505,53 @@ class MolajoACLCore extends MolajoACL
      *  getAssetsList
      *  getCategoriesList
      *  getGroupsList
-     *  getGroupingsList 
+     *  getGroupingsList
      *  getUsergroupsList
      *  getUsergroupingsList
      *
      * MolajoFactory::getUser()->
      *
-     *  @param string $id
-     *  @param string $option
-     *  @param string $task
-     *  @param array  $params optional
+     * @param string $id
+     * @param string $option
+     * @param string $task
+     * @param array  $params optional
      *
-     *  @return object list requested
-     *  @return boolean
+     * @return object list requested
+     * @return boolean
      */
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getActionsList
      */
-    public function getActionsList($id, $option, $task, $params=array())
+    public function getActionsList($id, $option, $task, $params = array())
     {
-		$actions = array();
+        $actions = array();
 
         $component = $params[0];
         $section = $params[1];
 
-		if (is_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml')) {
-			$xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml');
+        if (is_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml')) {
+            $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml');
 
-			foreach ($xml->children() as $child)
-			{
-				if ($section == (string) $child['name']) {
-					foreach ($child->children() as $action) {
-						$actions[] = (object) array('name' => (string) $action['name'],
-                                                    'title' => (string) $action['title'],
-                                                    'description' => (string) $action['description']);
-					}
-					break;
-				}
-			}
-		}
-		return $actions;
+            foreach ($xml->children() as $child)
+            {
+                if ($section == (string)$child['name']) {
+                    foreach ($child->children() as $action) {
+                        $actions[] = (object)array('name' => (string)$action['name'],
+                                                   'title' => (string)$action['title'],
+                                                   'description' => (string)$action['description']);
+                    }
+                    break;
+                }
+            }
+        }
+        return $actions;
     }
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getAssetsList
      */
-    public function getAssetsList($id, $option, $task, $params=array())
+    public function getAssetsList($id, $option, $task, $params = array())
     {
 
     }
@@ -523,20 +559,20 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getViewaccessList
      */
-    public function getViewaccessList ($userid='', $option='', $action='', $params=array())
+    public function getViewaccessList($userid = '', $option = '', $action = '', $params = array())
     {
         return $this->getUsergroupsList($userid, $option, MOLAJO_ACL_ACTION_VIEW, $params);
     }
-    
+
     /**
      *  TYPE 3 --> MolajoACL::getList -> getCategoriesList
      */
-    public function getCategoriesList($id, $option, $task, $params=array())
+    public function getCategoriesList($id, $option, $task, $params = array())
     {
         echo 'Finish getCategoriesList';
         die();
 
-		$db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT a.id, a.title');
@@ -549,21 +585,21 @@ class MolajoACLCore extends MolajoACL
         $query->where('a.asset_id = b.id');
         $query->where('b.view_group_id = c.id');
         $query->where('d.view_group_id = c.id');
-        
+
         $query->join('LEFT', '#__group_view_groups AS b ON b.view_group_id = a.id');
         $query->join('LEFT', '#__view_groups AS d ON d.access = a.id');
 
         if ($option == '') {
         } else {
-            $query->where('a.extension = '.$db->escape($option));
+            $query->where('a.extension = ' . $db->escape($option));
         }
 
         $query->join('ORDER BY c.id ASC');
 
-		$results = $db->loadObjectList();
+        $results = $db->loadObjectList();
 
         $categories = array();
-        foreach ( $results as $category )   {
+        foreach ($results as $category) {
             $categories[] = $category->id;
         }
         return implode(',', array_unique($categories));
@@ -572,35 +608,35 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getGroupsList
      */
-    public function getGroupsList($id, $option, $task, $params=array())
+    public function getGroupsList($id, $option, $task, $params = array())
     {
-		$db = MolajoFactory::getDBO();
-		$db->setQuery(
-			'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
-			' FROM #__groups AS a' .
-			' LEFT JOIN `#__groups` AS b ON a.lft > b.lft AND a.rgt < b.rgt' .
-			' GROUP BY a.id' .
-			' ORDER BY a.lft ASC'
-		);
-		$options = $db->loadObjectList();
-		return $options;
+        $db = MolajoFactory::getDBO();
+        $db->setQuery(
+            'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
+            ' FROM #__groups AS a' .
+            ' LEFT JOIN `#__groups` AS b ON a.lft > b.lft AND a.rgt < b.rgt' .
+            ' GROUP BY a.id' .
+            ' ORDER BY a.lft ASC'
+        );
+        $options = $db->loadObjectList();
+        return $options;
     }
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupsList
      */
-    public function getUsergroupsList($userid, $option, $action, $params=array())
+    public function getUsergroupsList($userid, $option, $action, $params = array())
     {
         $acl = new MolajoACL();
-        $cache 	= MolajoFactory::getCache('coreacl.getUsergroupsList', '');
+        $cache = MolajoFactory::getCache('coreacl.getUsergroupsList', '');
 
         /** $key */
-        if ((int) $userid == 0) {
+        if ((int)$userid == 0) {
             $userid = MolajoFactory::getUser()->get('id');
         }
 
         /** query  */
-		$db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT b.view_group_id as id');
@@ -614,11 +650,11 @@ class MolajoACLCore extends MolajoACL
         }
 
         /** Guest: 3 - Public: 4 */
-        if ((int) $userid == 0) {
-            $query->where('c.id IN ('.MOLAJO_ACL_GROUP_PUBLIC.','.MOLAJO_ACL_GROUP_GUEST.')');
+        if ((int)$userid == 0) {
+            $query->where('c.id IN (' . MOLAJO_ACL_GROUP_PUBLIC . ',' . MOLAJO_ACL_GROUP_GUEST . ')');
         } else {
             $query->join('LEFT', '#__user_groups AS d ON d.group_id = b.group_id');
-            $query->where('d.user_id = '.(int) $userid);
+            $query->where('d.user_id = ' . (int)$userid);
         }
 
         /** $asset */
@@ -626,7 +662,7 @@ class MolajoACLCore extends MolajoACL
         } else if ($action == MOLAJO_ACL_ACTION_VIEW) {
             /* find the access level for com_content in the extensions table */
             $query->from('#__extensions AS e');
-            $query->where('e.element = '.$db->_quoted($option));
+            $query->where('e.element = ' . $db->_quoted($option));
             $query->where('e.access = a.id');
         }
 
@@ -637,7 +673,7 @@ class MolajoACLCore extends MolajoACL
         if ($authorised) {
         } else {
 
-        
+
             $db->setQuery($query->__toString());
             $options = $db->loadObjectList();
 
@@ -657,7 +693,7 @@ class MolajoACLCore extends MolajoACL
             }
 
             $authorised[] = MOLAJO_ACL_GROUP_PUBLIC;
-            if ((int) $userid == 0) {
+            if ((int)$userid == 0) {
                 $authorised[] = MOLAJO_ACL_GROUP_GUEST;
             } else {
                 $authorised[] = MOLAJO_ACL_GROUP_REGISTERED;
@@ -666,7 +702,7 @@ class MolajoACLCore extends MolajoACL
             $cache->store($authorised, $hash);
         }
 
-		return $authorised;
+        return $authorised;
     }
 
     /**
@@ -678,7 +714,7 @@ class MolajoACLCore extends MolajoACL
      * @param array $params
      * @return void
      */
-    public function getUsergroupingsList($id, $option, $task, $params=array())
+    public function getUsergroupingsList($id, $option, $task, $params = array())
     {
 
     }
@@ -693,33 +729,33 @@ class MolajoACLCore extends MolajoACL
      * @param array $params
      * @return void
      */
-    public function getAllusergroupsList ($option='', $task='', $params=array())
+    public function getAllusergroupsList($option = '', $task = '', $params = array())
     {
-echo 'bang';
+        echo 'bang';
         die();
-	}
+    }
 
-   /**
+    /**
      *  TYPE 4 --> MolajoACL::checkPermissions -> MolajoACLCore::checkUserPermissions
      *
      *  Checks specific authorisation for a user or group, returning a true or false test result.
      *
-     *  @param string $userid
-     *  @param string $action 1-login; 2-create; 3-view; 4-edit; 5-delete; 6-admin
-     *  @param integer $asset key
+     * @param string $userid
+     * @param string $action 1-login; 2-create; 3-view; 4-edit; 5-delete; 6-admin
+     * @param integer $asset key
      *  $param integer $access key
      *
-     *  @return object list requested
-     *  @return boolean
+     * @return object list requested
+     * @return boolean
      */
-    public function checkUserPermissions ($userid, $action, $asset='', $access='')
+    public function checkUserPermissions($userid, $action, $asset = '', $access = '')
     {
-        if ((int) $userid == 0) {
+        if ((int)$userid == 0) {
             $userid = MolajoFactory::getUser()->id;
         }
 
         if ($action == 'login') {
-            if ((int) $userid == 0) {
+            if ((int)$userid == 0) {
                 return false;
             }
             return $this->checkUserPermissionsLogin($userid);
@@ -730,16 +766,16 @@ echo 'bang';
         $userGroups = $acl->getList('Usergroups', $userid, '', $action);
 
         /** query  */
-		$db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
         /** view access */
         if ($action == MOLAJO_ACL_ACTION_VIEW) {
 
-            if ((int) $access == 0) {
+            if ((int)$access == 0) {
                 $query->select('content_table');
                 $query->from('#__assets a');
-                $query->where('asset_id = '.(int) $asset);
+                $query->where('asset_id = ' . (int)$asset);
 
                 $db->setQuery($query);
                 $tableName = $db->loadResult();
@@ -752,7 +788,7 @@ echo 'bang';
                 $query = $db->getQuery(true);
                 $query->select('view_group_id');
                 $query->from($db->_nameQuote($tableName));
-                $query->where('asset_id = '.(int) $asset);
+                $query->where('asset_id = ' . (int)$asset);
                 $db->setQuery($query);
                 $access = $db->loadResult();
                 if ($db->getErrorNum()) {
@@ -768,8 +804,8 @@ echo 'bang';
         $query->from('#__permissions_groups AS a');
         $query->join('LEFT', '#__assets AS b ON b.id = a.asset_id');
         $query->join('LEFT', '#__actions AS c ON c.id = a.action_id');
-        $query->where('c.title = '.$db->_quoted($action));
-        $query->where('a.group IN ('.implode(',', $userGroups).')');
+        $query->where('c.title = ' . $db->_quoted($action));
+        $query->where('a.group IN (' . implode(',', $userGroups) . ')');
 
         $db->setQuery($query);
         $accessResult = $db->loadObjectList();
@@ -792,15 +828,15 @@ echo 'bang';
      * @param null $asset
      * @return void
      */
-    public function checkUserPermissionsLogin ($userid)
+    public function checkUserPermissionsLogin($userid)
     {
-		$db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
         $query->select('count(*) as count');
         $query->from('#__user_applications a');
-        $query->where('application_id = '.(int) MOLAJO_APPLICATION_ID);
-        $query->where('user_id = '.(int) $userid);
+        $query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
+        $query->where('user_id = ' . (int)$userid);
 
         $db->setQuery($query->__toString());
         $result = $db->loadResult();
@@ -825,7 +861,7 @@ echo 'bang';
      * @param null $asset
      * @return void
      */
-    public function checkGroupPermissions ($key, $action, $asset=null)
+    public function checkGroupPermissions($key, $action, $asset = null)
     {
 
     }
@@ -835,40 +871,40 @@ echo 'bang';
      *
      *  Disables form fields that required editstate for those without such authorisation
      *
-     *  @param string $option 'com_articles', etc.
-     *  @param string $entity 'article', or 'comment', etc.
-     *  @param string $task 'add', 'delete', 'publish'
-     *  @param integer $id - primary key for content
-     *  @param object $form - form object fields
-     *  @param object $item - item data
+     * @param string $option 'com_articles', etc.
+     * @param string $entity 'article', or 'comment', etc.
+     * @param string $task 'add', 'delete', 'publish'
+     * @param integer $id - primary key for content
+     * @param object $form - form object fields
+     * @param object $item - item data
      *
-     *  @return object list requested
-     *  @return boolean
+     * @return object list requested
+     * @return boolean
      */
-    public function checkFormAuthorisations ($option, $entity, $task, $id, $form, $item)
+    public function checkFormAuthorisations($option, $entity, $task, $id, $form, $item)
     {
         if ($item->canPublish === true) {
             return;
         }
 
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $fieldsEditState = $molajoConfig->getOptionList (MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS);
-        foreach ($fieldsEditState as $count => $editstateItem ) {
+        $fieldsEditState = $molajoConfig->getOptionList(MOLAJO_CONFIG_OPTION_ID_PUBLISH_FIELDS);
+        foreach ($fieldsEditState as $count => $editstateItem) {
             $form->setFieldAttribute($editstateItem->value, 'disabled', 'true');
             $form->setFieldAttribute($editstateItem->value, 'filter', 'unset');
         }
     }
-    
+
     /**
      * checkComponentTaskAuthorisation
      *
      * Method to return a list of all categories that a user has permission for a given ACL Action
      *
-     *  @param      string      $component
-     *  @param      string      $action
-     *  @return     boolean
+     * @param      string      $component
+     * @param      string      $action
+     * @return     boolean
      */
-    public function checkComponentTaskAuthorisation ($option, $option_value_literal)
+    public function checkComponentTaskAuthorisation($option, $option_value_literal)
     {
         return MolajoFactory::getUser()->getAuthorisedCategories($option, $option_value_literal);
     }

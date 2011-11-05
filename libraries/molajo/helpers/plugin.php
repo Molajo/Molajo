@@ -17,26 +17,26 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoPluginHelper
 {
-	/**
-	 * getPlugin
+    /**
+     * getPlugin
      *
      * Get the plugin data of a specific type if no specific plugin is specified
-	 * otherwise only the specific plugin data is returned.
-	 *
-	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
-	 * @param   string   $plugin	The plugin name.
-	 *
-	 * @return  mixed    An array of plugin data objects, or a plugin data object.
-	 * @since   1.0
-	 */
-	public static function getPlugin($type, $plugin = null)
-	{
-		$result		= array();
-		$plugins	= self::_load();
+     * otherwise only the specific plugin data is returned.
+     *
+     * @param   string   $type    The plugin type, relates to the sub-directory in the plugins directory.
+     * @param   string   $plugin    The plugin name.
+     *
+     * @return  mixed    An array of plugin data objects, or a plugin data object.
+     * @since   1.0
+     */
+    public static function getPlugin($type, $plugin = null)
+    {
+        $result = array();
+        $plugins = self::_load();
 
-		if ($plugin) {
+        if ($plugin) {
 
-            foreach($plugins as $p) {
+            foreach ($plugins as $p) {
                 // Is this plugin in the right group?
                 if ($p->type == $type && $p->name == $plugin) {
                     $result = $p;
@@ -44,111 +44,113 @@ abstract class MolajoPluginHelper
                 }
             }
 
-		} else {
+        } else {
 
-            foreach($plugins as $p) {
+            foreach ($plugins as $p) {
 
                 if ($p->type == $type) {
                     $result[] = $p;
                 }
             }
-		}
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * isEnabled
+    /**
+     * isEnabled
      *
      * Checks if a plugin is enabled.
-	 *
-	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
-	 * @param   string   $plugin	The plugin name.
-	 *
-	 * @return  boolean
-	 * @since   1.0
-	 */
-	public static function isEnabled($type, $plugin = null)
-	{
-		$result = self::getPlugin($type, $plugin);
-		return (!empty($result));
-	}
+     *
+     * @param   string   $type    The plugin type, relates to the sub-directory in the plugins directory.
+     * @param   string   $plugin    The plugin name.
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public static function isEnabled($type, $plugin = null)
+    {
+        $result = self::getPlugin($type, $plugin);
+        return (!empty($result));
+    }
 
-	/**
-	 * importPlugin
+    /**
+     * importPlugin
      *
      * Loads all the plugin files for a particular type if no specific plugin is specified
-	 * otherwise only the specific plugin is loaded.
-	 *
-	 * @param   string   $type	The plugin type, relates to the sub-directory in the plugins directory.
-	 * @param   string   $plugin	The plugin name.
-	 * @param   bool     $autocreate
-	 * @param   JDispatcher	$dispatcher	Optionally allows the plugin to use a different dispatcher.
-	 *
-	 * @return  boolean		True on success.
-	 * @since   1.0
-	 */
-	public static function importPlugin($type, $plugin = null, $autocreate = true, $dispatcher = null)
-	{
-		static $loaded = Array();
+     * otherwise only the specific plugin is loaded.
+     *
+     * @param   string   $type    The plugin type, relates to the sub-directory in the plugins directory.
+     * @param   string   $plugin    The plugin name.
+     * @param   bool     $autocreate
+     * @param   JDispatcher    $dispatcher    Optionally allows the plugin to use a different dispatcher.
+     *
+     * @return  boolean        True on success.
+     * @since   1.0
+     */
+    public static function importPlugin($type, $plugin = null, $autocreate = true, $dispatcher = null)
+    {
+        static $loaded = Array();
 
-		$defaults = false;
-        
-		if (is_null($plugin)
+        $defaults = false;
+
+        if (is_null($plugin)
             && $autocreate === true
-            && is_null($dispatcher)) {
-			$defaults = true;
-		}
+            && is_null($dispatcher)
+        ) {
+            $defaults = true;
+        }
 
-		if (isset($loaded[$type]) && $defaults === true) {
+        if (isset($loaded[$type]) && $defaults === true) {
         } else {
-			$results = null;
+            $results = null;
 
             $plugins = self::_load($type);
 
-			for ($i = 0, $t = count($plugins); $i < $t; $i++) {
+            for ($i = 0, $t = count($plugins); $i < $t; $i++) {
 
-				if (($plugins[$i]->type == $type)
-                    && ($plugins[$i]->name == $plugin ||  $plugin === null)) {
+                if (($plugins[$i]->type == $type)
+                    && ($plugins[$i]->name == $plugin || $plugin === null)
+                ) {
 
                     self::_import($plugins[$i], $autocreate, $dispatcher);
 
-					$results = true;
-				}
+                    $results = true;
+                }
 
- 			}
+            }
 
-			if ($defaults === true) {
+            if ($defaults === true) {
             } else {
-				return $results;
-			}
+                return $results;
+            }
 
-			$loaded[$type] = $results;
-		}
- 
-		return $loaded[$type];
-	}
+            $loaded[$type] = $results;
+        }
 
-	/**
-	 * _import
+        return $loaded[$type];
+    }
+
+    /**
+     * _import
      *
      * Loads the plugin file.
-	 *
-	 * @param   plugin      $plugin		The plugin.
-	 * @param   boolean  	$autocreate
-	 * @param   JDispatcher	$dispatcher	Optionally allows the plugin to use a different dispatcher.
-	 *
-	 * @return  boolean		True on success.
-	 * @since   1.0
-	 */
-	protected static function _import($plugin, $autocreate = true, $dispatcher = null)
-	{
-		static $paths = array();
+     *
+     * @param   plugin      $plugin        The plugin.
+     * @param   boolean      $autocreate
+     * @param   JDispatcher    $dispatcher    Optionally allows the plugin to use a different dispatcher.
+     *
+     * @return  boolean        True on success.
+     * @since   1.0
+     */
+    protected static function _import($plugin, $autocreate = true, $dispatcher = null)
+    {
+        static $paths = array();
 
-		$plugin->type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
-		$plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
+        $plugin->type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
+        $plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
 
-		$path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
+        $path = MOLAJO_EXTENSION_PLUGINS . '/' . $plugin->type . '/' . $plugin->name . '/' . $plugin->name . '.php';
 
         if (JFile::exists($path)) {
             require_once $path;
@@ -163,7 +165,7 @@ abstract class MolajoPluginHelper
                 $dispatcher = JDispatcher::getInstance();
             }
 
-            $className = 'plg'.$plugin->type.$plugin->name;
+            $className = 'plg' . $plugin->type . $plugin->name;
             if (class_exists($className)) {
 
             } else {
@@ -171,25 +173,25 @@ abstract class MolajoPluginHelper
                 new $className($dispatcher, (array)($plugin));
             }
         }
-	}
+    }
 
-	/**
-	 * _load
+    /**
+     * _load
      *
      * Loads the published plugins.
-	 *
+     *
      * @static
      * @return bool|mixed
      */
-	protected static function _load()
-	{
-		static $plugins;
+    protected static function _load()
+    {
+        static $plugins;
 
-		if (isset($plugins)) {
-			return $plugins;
-		}
+        if (isset($plugins)) {
+            return $plugins;
+        }
 
         $plugins = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_PLUGINS);
         return $plugins;
-	}
+    }
 }

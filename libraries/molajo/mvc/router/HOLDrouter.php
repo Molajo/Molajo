@@ -12,8 +12,8 @@ defined('MOLAJO') or die;
  * Molajo Router
  *
  * @static
- * @package		Joomla
- * @subpackage	Router
+ * @package        Joomla
+ * @subpackage    Router
  * @since 1.5
  */
 class MolajoRouter extends JObject
@@ -28,22 +28,22 @@ class MolajoRouter extends JObject
      * @param  $tableParam
      * @return array
      */
-    protected function getKey ($ccyy, $mm, $dd, $alias, $tableParam)
+    protected function getKey($ccyy, $mm, $dd, $alias, $tableParam)
     {
         $db = MolajoFactory::getDBO();
-    
+
         $query = $db->getQuery(true);
         $query->select('MIN(id)');
         $query->from($tableParam);
-        $query->where('start_publishing_datetime like "'.$ccyy.'-'.$mm.'-'.$dd.'%"');
-        $query->where('alias = '.$db->Quote($alias));
+        $query->where('start_publishing_datetime like "' . $ccyy . '-' . $mm . '-' . $dd . '%"');
+        $query->where('alias = ' . $db->Quote($alias));
         $query->where('state > -10');
-    
+
         $db->setQuery($query);
-    
+
         return $db->loadResult();
-    }    
-    
+    }
+
     /**
      * getItemRoute
      *
@@ -53,48 +53,48 @@ class MolajoRouter extends JObject
      * @param  string   $singleItemParam
      * @param  string   $typeParam
      * @param  string   $componentOptionParam
-     * 
+     *
      * @return string
      */
-	public function getItemRoute ($id, $catid, $data, $singleItemParam, $typeParam, $componentOptionParam)
+    public function getItemRoute($id, $catid, $data, $singleItemParam, $typeParam, $componentOptionParam)
     {
-        $data->slug			= $data->alias ? ($data->id.':'.$data->alias) : $data->id;
-        $data->catslug		= $data->category_alias ? ($data->catid.':'.$data->category_alias) : $data->catid;
-        $data->parent_slug	= $data->category_alias ? ($data->parent_id.':'.$data->parent_alias) : $data->parent_id;
-        
-		$needles = array(
-			$singleItemParam  => array((int) $id)
-		);
+        $data->slug = $data->alias ? ($data->id . ':' . $data->alias) : $data->id;
+        $data->catslug = $data->category_alias ? ($data->catid . ':' . $data->category_alias) : $data->catid;
+        $data->parent_slug = $data->category_alias ? ($data->parent_id . ':' . $data->parent_alias) : $data->parent_id;
 
-/** amy add more documentation and options for the WP URLs here */
+        $needles = array(
+            $singleItemParam => array((int)$id)
+        );
+
+        /** amy add more documentation and options for the WP URLs here */
         $timestamp = JHTML::_('date', $data->start_publishing_datetime, 'U');
 
-		$link = 'index.php?option='.$componentOptionParam.
-                '&view='.$singleItemParam.
-                '&id='. $id.
-                '&alias='.$data->alias.
-                '&layout=item'.
-                '&ts='.$timestamp;
+        $link = 'index.php?option=' . $componentOptionParam .
+                '&view=' . $singleItemParam .
+                '&id=' . $id .
+                '&alias=' . $data->alias .
+                '&layout=item' .
+                '&ts=' . $timestamp;
 
-		if ((int)$catid > 1) {
-			$categories = JCategories::getInstance($typeParam);
-			$category = $categories->get((int)$catid);
-			if ($category) {
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
-			}
-		}
+        if ((int)$catid > 1) {
+            $categories = JCategories::getInstance($typeParam);
+            $category = $categories->get((int)$catid);
+            if ($category) {
+                $needles['category'] = array_reverse($category->getPath());
+                $needles['categories'] = $needles['category'];
+                $link .= '&catid=' . $catid;
+            }
+        }
 
-		if ($itemID = self::_findItem($needles, $componentOptionParam)) {
-			$link .= '&Itemid='.$itemID;
-		}
-		elseif ($itemID = self::_findItem(null, $componentOptionParam)) {
-			$link .= '&Itemid='.$itemID;
-		}
+        if ($itemID = self::_findItem($needles, $componentOptionParam)) {
+            $link .= '&Itemid=' . $itemID;
+        }
+        elseif ($itemID = self::_findItem(null, $componentOptionParam)) {
+            $link .= '&Itemid=' . $itemID;
+        }
 
-		return $link;
-	}
+        return $link;
+    }
 
     /**
      * getCategoryRoute
@@ -109,45 +109,45 @@ class MolajoRouter extends JObject
      * @param   string  $componentOptionParam
      * @return  string
      */
-	public static function getCategoryRoute ($data, $catid = 0, $singleItemParam, $typeParam, $componentOptionParam)
-	{
-		if ($catid instanceof JCategoryNode) {
-			$id = $catid->id;
-			$category = $catid;
-		} else {
-			$id = (int) $catid;
-			$category = JCategories::getInstance($typeParam)->get($id);
-		}
+    public static function getCategoryRoute($data, $catid = 0, $singleItemParam, $typeParam, $componentOptionParam)
+    {
+        if ($catid instanceof JCategoryNode) {
+            $id = $catid->id;
+            $category = $catid;
+        } else {
+            $id = (int)$catid;
+            $category = JCategories::getInstance($typeParam)->get($id);
+        }
 
-		if($id < 1) {
-			$link = '';
-		} else {
-			$needles = array(
-				'category' => array($id)
-			);
+        if ($id < 1) {
+            $link = '';
+        } else {
+            $needles = array(
+                'category' => array($id)
+            );
 
-			if ($data = self::_findItem($needles, $componentOptionParam)) {
-				$link = 'index.php?Itemid='.$data;
-			} else {
+            if ($data = self::_findItem($needles, $componentOptionParam)) {
+                $link = 'index.php?Itemid=' . $data;
+            } else {
 
-				$link = 'index.php?option='.$componentOptionParam.'&view=category&id='.$id;
-				if($category) {
-					$catids = array_reverse($category->getPath());
-					$needles = array(
-						'category' => $catids,
-						'categories' => $catids
-					);
-					if ($data = self::_findItem($needles, $componentOptionParam)) {
-						$link .= '&Itemid='.$data;
-					} elseif ($data = self::_findItem(null, $componentOptionParam)) {
-						$link .= '&Itemid='.$data;
-					}
-				}
-			}
-		}
+                $link = 'index.php?option=' . $componentOptionParam . '&view=category&id=' . $id;
+                if ($category) {
+                    $catids = array_reverse($category->getPath());
+                    $needles = array(
+                        'category' => $catids,
+                        'categories' => $catids
+                    );
+                    if ($data = self::_findItem($needles, $componentOptionParam)) {
+                        $link .= '&Itemid=' . $data;
+                    } elseif ($data = self::_findItem(null, $componentOptionParam)) {
+                        $link .= '&Itemid=' . $data;
+                    }
+                }
+            }
+        }
 
-		return $link;
-	}
+        return $link;
+    }
 
     /**
      * getFormRoute
@@ -159,15 +159,15 @@ class MolajoRouter extends JObject
      * @param  $componentOptionParam
      * @return string
      */
-	public function getFormRoute ($data, $id=0, $singleItemParam, $typeParam, $componentOptionParam)
-	{
-		if ($id) {
-			$link = 'index.php?option='.$componentOptionParam.'&task='.$singleItemParam.'.edit&id='. $id;
-		} else {
-			$link = 'index.php?option='.$componentOptionParam.'&task='.$singleItemParam.'.edit&id=0';
-		}
-		return $link;
-	}
+    public function getFormRoute($data, $id = 0, $singleItemParam, $typeParam, $componentOptionParam)
+    {
+        if ($id) {
+            $link = 'index.php?option=' . $componentOptionParam . '&task=' . $singleItemParam . '.edit&id=' . $id;
+        } else {
+            $link = 'index.php?option=' . $componentOptionParam . '&task=' . $singleItemParam . '.edit&id=0';
+        }
+        return $link;
+    }
 
     /**
      * _findItem
@@ -177,47 +177,47 @@ class MolajoRouter extends JObject
      * @param  $componentOptionParam
      * @return null
      */
-	protected static function _findItem ($needles = null, $componentOptionParam)
-	{
-		$menus		= MolajoFactory::getApplication()->getMenu('site');
+    protected static function _findItem($needles = null, $componentOptionParam)
+    {
+        $menus = MolajoFactory::getApplication()->getMenu('site');
 
-		// Prepare the reverse lookup array.
-		if (self::$lookup === null) {
-			self::$lookup = array();
+        // Prepare the reverse lookup array.
+        if (self::$lookup === null) {
+            self::$lookup = array();
 
-			$component	= MolajoComponentHelper::getComponent($componentOptionParam);
-			$items		= $menus->getItems('component_id', $component->id);
+            $component = MolajoComponentHelper::getComponent($componentOptionParam);
+            $items = $menus->getItems('component_id', $component->id);
 
-			foreach ($items as $data) {
-				if (isset($data->query) && isset($data->query['view'])) {
-					$view = $data->query['view'];
-					if (!isset(self::$lookup[$view])) {
-						self::$lookup[$view] = array();
-					}
-					if (isset($data->query['id'])) {
-						self::$lookup[$view][$data->query['id']] = $data->id;
-					}
-				}
-			}
-		}
+            foreach ($items as $data) {
+                if (isset($data->query) && isset($data->query['view'])) {
+                    $view = $data->query['view'];
+                    if (!isset(self::$lookup[$view])) {
+                        self::$lookup[$view] = array();
+                    }
+                    if (isset($data->query['id'])) {
+                        self::$lookup[$view][$data->query['id']] = $data->id;
+                    }
+                }
+            }
+        }
 
-		if ($needles) {
-			foreach ($needles as $view => $ids) {
-				if (isset(self::$lookup[$view])) {
-					foreach($ids as $id) {
-						if (isset(self::$lookup[$view][(int)$id])) {
-							return self::$lookup[$view][(int)$id];
-						}
-					}
-				}
-			}
-		} else {
-			$active = $menus->getActive();
-			if ($active && $active->component == $componentOptionParam) {
-				return $active->id;
-			}
-		}
+        if ($needles) {
+            foreach ($needles as $view => $ids) {
+                if (isset(self::$lookup[$view])) {
+                    foreach ($ids as $id) {
+                        if (isset(self::$lookup[$view][(int)$id])) {
+                            return self::$lookup[$view][(int)$id];
+                        }
+                    }
+                }
+            }
+        } else {
+            $active = $menus->getActive();
+            if ($active && $active->component == $componentOptionParam) {
+                return $active->id;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

@@ -12,8 +12,8 @@ defined('MOLAJO') or die;
  * Molajo Router
  *
  * @static
- * @package		Molajo
- * @subpackage	Router
+ * @package        Molajo
+ * @subpackage    Router
  * @since 1.5
  */
 class MolajoRouterBuild extends MolajoRouter
@@ -34,38 +34,38 @@ class MolajoRouterBuild extends MolajoRouter
      */
     function buildRoute(&$query, $componentParam, $singleParam, $multipleParam, $typeParam, $tableParam)
     {
-        $menu		= MolajoFactory::getApplication()->getMenu();
-        $params		= MolajoComponentHelper::getParams($componentParam);
-        $advanced	= $params->get('sef_advanced_link', 0);
-        $segments	= array();
-        $temp       = array();
+        $menu = MolajoFactory::getApplication()->getMenu();
+        $params = MolajoComponentHelper::getParams($componentParam);
+        $advanced = $params->get('sef_advanced_link', 0);
+        $segments = array();
+        $temp = array();
 
-    /** component parameters (Amy Stephen - temporary) */
+        /** component parameters (Amy Stephen - temporary) */
         $parameter_default_item_layout = 'item';
         $parameter_default_items_layout = 'list';
         $parameter_url_type = 1;
-        $parameter_url_base = $singleParam;     // add as a parm
+        $parameter_url_base = $singleParam; // add as a parm
 
         /** query parameters */
-        foreach($query as $name=>$value) {
+        foreach ($query as $name => $value) {
             $temp[$name] = $value;
             unset($query[$name]);
         }
 
         /** default layout */
         if (isset($temp['layout'])) {
-        } else if ((isset($temp['id']) && (int) $temp['id'] > 0)) {
+        } else if ((isset($temp['id']) && (int)$temp['id'] > 0)) {
             $temp['layout'] = $parameter_default_item_layout;
         } else {
             $temp['layout'] = $parameter_default_items_layout;
         }
 
-    /** retrieve menu item */
+        /** retrieve menu item */
 
         /** menu item */
         if (isset($temp['Itemid'])) {
             $menuItem = $menu->getItem($temp['Itemid']);
-            if ((isset($temp['id']) && (int) $temp['id'] > 0)) {
+            if ((isset($temp['id']) && (int)$temp['id'] > 0)) {
             } else if ($menuItem instanceof stdClass) {
                 return $segments;
             }
@@ -76,13 +76,13 @@ class MolajoRouterBuild extends MolajoRouter
 
         }
 
-    // if i don't do this then the /component/ thing goes on
-    // but this URL includes the menu item which is bad. (dups)
-    //    unset($query['option']);
-    //    unset($query['Itemid']);
+        // if i don't do this then the /component/ thing goes on
+        // but this URL includes the menu item which is bad. (dups)
+        //    unset($query['option']);
+        //    unset($query['Itemid']);
 
-    //    $path = strftime('/%Y/%m/%d/', $timestamp).$alias;
-    //    $segments = explode('/', $path);
+        //    $path = strftime('/%Y/%m/%d/', $timestamp).$alias;
+        //    $segments = explode('/', $path);
 
         return $segments;
     }

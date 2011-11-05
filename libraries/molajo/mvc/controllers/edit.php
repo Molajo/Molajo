@@ -19,9 +19,9 @@ defined('MOLAJO') or die;
  *
  * Called from the Multiple Controller for batch (copy, move) and delete
  *
- * @package	Molajo
- * @subpackage	Controller
- * @since	1.0
+ * @package    Molajo
+ * @subpackage    Controller
+ * @since    1.0
  */
 class MolajoControllerEdit extends MolajoController
 {
@@ -32,17 +32,19 @@ class MolajoControllerEdit extends MolajoController
      *
      * Tasks: cancel and close
      *
-     * @return	Boolean
-     * @since	1.0
+     * @return    Boolean
+     * @since    1.0
      */
-    public function cancel ()
+    public function cancel()
     {
-        return $this->cancelItem ();
+        return $this->cancelItem();
     }
-    public function close ()
+
+    public function close()
     {
-        return $this->cancelItem ();
+        return $this->cancelItem();
     }
+
     public function cancelItem()
     {
         /** security token **/
@@ -63,16 +65,16 @@ class MolajoControllerEdit extends MolajoController
     }
 
     /**
-    * restore
-    *
-    * Method to restore a version history record to the current version.
-    *
-    * uses saveItem to process save after preparing the data
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function restore ()
+     * restore
+     *
+     * Method to restore a version history record to the current version.
+     *
+     * uses saveItem to process save after preparing the data
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function restore()
     {
         parent::initialise('save');
 
@@ -92,19 +94,19 @@ class MolajoControllerEdit extends MolajoController
         $this->id = $data->id;
         $this->table->reset();
 
-        return $this->saveItem ($data, 'save');
+        return $this->saveItem($data, 'save');
     }
 
     /**
-    * saveItemBatch
-    *
-    * Called from MolajoControllerMultiple::processItem to obtain a current row and prepare data for a new item
-    *
-    * uses saveItem to process save after preparing the data
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
+     * saveItemBatch
+     *
+     * Called from MolajoControllerMultiple::processItem to obtain a current row and prepare data for a new item
+     *
+     * uses saveItem to process save after preparing the data
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
     public function saveItemBatch($task)
     {
         /** initialisation */
@@ -124,51 +126,55 @@ class MolajoControllerEdit extends MolajoController
             $data = $this->model->move($this->id, $this->batch_catid);
         }
 
-        return $this->saveItem ($data, 'save');
+        return $this->saveItem($data, 'save');
     }
 
     /**
-    * apply, create, save, save2copy, save2new
-    *
-    * Methods used to save a record with different redirect results.
-    *
-    * Tasks: apply, create, save, save2copy, save2new all processed by saveItemForm to prepare data
-    * and then SaveItem to actually save the data
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function apply ()
+     * apply, create, save, save2copy, save2new
+     *
+     * Methods used to save a record with different redirect results.
+     *
+     * Tasks: apply, create, save, save2copy, save2new all processed by saveItemForm to prepare data
+     * and then SaveItem to actually save the data
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function apply()
     {
-        return $this->saveItemForm ('apply');
+        return $this->saveItemForm('apply');
     }
-    public function create ()
+
+    public function create()
     {
-        return $this->saveItemForm ('create');
+        return $this->saveItemForm('create');
     }
-    public function save ()
+
+    public function save()
     {
-        return $this->saveItemForm ('save');
+        return $this->saveItemForm('save');
     }
-    public function save2copy ()
+
+    public function save2copy()
     {
-        return $this->saveItemForm ('save2copy');
+        return $this->saveItemForm('save2copy');
     }
-    public function save2new ()
+
+    public function save2new()
     {
-        return $this->saveItemForm ('save2new');
+        return $this->saveItemForm('save2new');
     }
 
     /**
-    * saveItemForm
-    *
-    * Used to obtain form data and send to saveItem for save processing
-    *
-    * Method called by apply, create, save, save2copy and save2new tasks
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
+     * saveItemForm
+     *
+     * Used to obtain form data and send to saveItem for save processing
+     *
+     * Method called by apply, create, save, save2copy and save2new tasks
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
     public function saveItemForm($task)
     {
         /** security token **/
@@ -185,22 +191,22 @@ class MolajoControllerEdit extends MolajoController
             $task = 'apply';
             JRequest::setVar('id', 0);
         }
-        return $this->saveItem ($data, $task);
+        return $this->saveItem($data, $task);
     }
 
     /**
-    * saveItem
-    *
-    * Method to save a record from a form, as a copy of another record, or using a version history restore.
-    *
-    * Calling methods include: saveItemForm, saveItemBatch,
-    *
-    * Also batch-copy uses SaveItem, as well
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function saveItem ($data, $task=null)
+     * saveItem
+     *
+     * Method to save a record from a form, as a copy of another record, or using a version history restore.
+     *
+     * Calling methods include: saveItemForm, saveItemBatch,
+     *
+     * Also batch-copy uses SaveItem, as well
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function saveItem($data, $task = null)
     {
         /** security token **/
         JRequest::checkToken() or die;
@@ -221,26 +227,26 @@ class MolajoControllerEdit extends MolajoController
         if ($this->table->state == MOLAJO_STATE_ARCHIVED) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
-            return $this->redirectClass->setSuccessIndicator(false);            
+            return $this->redirectClass->setSuccessIndicator(false);
         }
         if ($this->table->state == MOLAJO_STATE_TRASHED) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
-            return $this->redirectClass->setSuccessIndicator(false); 
+            return $this->redirectClass->setSuccessIndicator(false);
         }
         if ($this->table->state == MOLAJO_STATE_VERSION) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
-            return $this->redirectClass->setSuccessIndicator(false);             
+            return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Preparation: Save form or version data **/
         MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
-        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task.'.'.JRequest::getInt('datakey');
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
-        if ((int) $this->id) {
-            $results = $this->verifyCheckout ($this->id);
+        if ((int)$this->id) {
+            $results = $this->verifyCheckout($this->id);
             if ($results === false) {
                 return $this->redirectClass->setSuccessIndicator(false);
             }
@@ -261,7 +267,7 @@ class MolajoControllerEdit extends MolajoController
         if ($validData === false) {
 
             $errors = $this->model->getErrors();
-            for ($e=0; $e < count($errors); $e++) {
+            for ($e = 0; $e < count($errors); $e++) {
                 if (MolajoError::isError($errors[$e])) {
                     MolajoFactory::getApplication()->enqueueMessage($errors[$e]->getMessage(), 'warning');
                 } else {
@@ -282,14 +288,14 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** ACL **/
-        $results = $this->checkTaskAuthorisation($checkTask=$task);
+        $results = $this->checkTaskAuthorisation($checkTask = $task);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-    /**
-     * Pre-Save Database Processing
-     */
+        /**
+         * Pre-Save Database Processing
+         */
 
         /** Check In Item **/
         $results = parent::checkInItem();
@@ -298,7 +304,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Version_history: create **/
-        $results = $this->createVersion ($context);
+        $results = $this->createVersion($context);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -339,7 +345,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Version_History: maintain count **/
-        $results = $this->maintainVersionCount ($context);
+        $results = $this->maintainVersionCount($context);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -351,7 +357,7 @@ class MolajoControllerEdit extends MolajoController
         $this->postSaveHook($this->model, $validData);
 
         /** Cache: clear cache **/
-        $results = $this->cleanCache ();
+        $results = $this->cleanCache();
 
         /** success **/
         if ($this->getTask() == 'copy' || $this->getTask() == 'move') {
@@ -374,10 +380,10 @@ class MolajoControllerEdit extends MolajoController
      *
      * deletes individual items
      *
-     * @return	void
-     * @since	1.0
+     * @return    void
+     * @since    1.0
      */
-    public function deleteItem ()
+    public function deleteItem()
     {
         JRequest::checkToken() or die;
 
@@ -388,18 +394,18 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Preparation: Save form or version data **/
-        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.'delete';
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
-        if ($this->table->state == MOLAJO_STATE_TRASHED|| $this->table->state == MOLAJO_STATE_VERSION) {
+        if ($this->table->state == MOLAJO_STATE_TRASHED || $this->table->state == MOLAJO_STATE_VERSION) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED').' '.$this->id, 'error');
+            $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED') . ' ' . $this->id, 'error');
             $this->redirectClass->setRedirect(MolajoRoute::_($this->redirectClass->redirectFailure, false));
             return false;
         }
 
         /** Version_history: see if version needed **/
-        $results = $this->createVersion ($context);
+        $results = $this->createVersion($context);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -417,7 +423,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Version_history: maintain versions **/
-        $results = $this->maintainVersionCount ($context);
+        $results = $this->maintainVersionCount($context);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
         }
@@ -429,7 +435,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** clear cache **/
-        $results = $this->cleanCache ();
+        $results = $this->cleanCache();
 
         /** success **/
         return true;

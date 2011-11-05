@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Modified_by Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldModified_by extends MolajoField
 {
@@ -24,14 +24,15 @@ class MolajoFieldModified_by extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('modified_by');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('modified_by');
+        parent::setRequestFilter('integer');
 
-        parent::setTableColumnSortable (true);
-        parent::setTableColumnCheckbox (false);
-        parent::setDisplayDataType ('string');
+        parent::setTableColumnSortable(true);
+        parent::setTableColumnCheckbox(false);
+        parent::setDisplayDataType('string');
     }
 
     /**
@@ -39,9 +40,9 @@ class MolajoFieldModified_by extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $authorModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $authorModel->getAuthors();
     }
 
@@ -50,10 +51,10 @@ class MolajoFieldModified_by extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -71,17 +72,17 @@ class MolajoFieldModified_by extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         return MolajoModelDisplay::validateValue('modified_by', $this->requestValue, 'integer', $table = null);
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause) {
         } else {
@@ -91,10 +92,10 @@ class MolajoFieldModified_by extends MolajoField
             $query->select('a.modified_by as modified_by');
             $query->join('LEFT', '#__users AS modified_by ON modified_by.id = a.modified_by');
         }
-        
-        if ((int) $value == 0) {
+
+        if ((int)$value == 0) {
             return;
-        } 
-        $query->where('a.modified_by = '.(int) $value);
+        }
+        $query->where('a.modified_by = ' . (int)$value);
     }
 }

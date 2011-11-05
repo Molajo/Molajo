@@ -17,89 +17,89 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldList extends MolajoFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $type = 'List';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $type = 'List';
 
-	/**
-	 * Method to get the field calendar markup.
-	 *
-	 * @return  string  The field calendar markup.
-	 * @since   1.0
-	 */
-	protected function getInput()
-	{
-		// Initialize variables.
-		$html = array();
-		$attr = '';
+    /**
+     * Method to get the field calendar markup.
+     *
+     * @return  string  The field calendar markup.
+     * @since   1.0
+     */
+    protected function getInput()
+    {
+        // Initialize variables.
+        $html = array();
+        $attr = '';
 
-		// Initialize some field attributes.
-		$attr .= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
+        // Initialize some field attributes.
+        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
 
-		// To avoid user's confusion, readonly="true" should imply disabled="true".
-		if ( (string) $this->element['readonly'] == 'true' || (string) $this->element['disabled'] == 'true') {
-			$attr .= ' disabled="disabled"';
-		}
+        // To avoid user's confusion, readonly="true" should imply disabled="true".
+        if ((string)$this->element['readonly'] == 'true' || (string)$this->element['disabled'] == 'true') {
+            $attr .= ' disabled="disabled"';
+        }
 
-		$attr .= $this->element['size'] ? ' size="'.(int) $this->element['size'].'"' : '';
-		$attr .= $this->multiple ? ' multiple="multiple"' : '';
+        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
+        $attr .= $this->multiple ? ' multiple="multiple"' : '';
 
-		// Initialize JavaScript field attributes.
-		$attr .= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
+        // Initialize JavaScript field attributes.
+        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
-		// Get the field options.
-		$options = (array) $this->getOptions();
+        // Get the field options.
+        $options = (array)$this->getOptions();
 
-		// Create a read-only list (no name) with a hidden calendar to store the value.
-		if ((string) $this->element['readonly'] == 'true') {
-			$html[] = MolajoHTML::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
-			$html[] = '<calendar type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
-		}
-		// Create a regular list.
-		else {
-			$html[] = MolajoHTML::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
-		}
+        // Create a read-only list (no name) with a hidden calendar to store the value.
+        if ((string)$this->element['readonly'] == 'true') {
+            $html[] = MolajoHTML::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
+            $html[] = '<calendar type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
+        }
+            // Create a regular list.
+        else {
+            $html[] = MolajoHTML::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+        }
 
-		return implode($html);
-	}
+        return implode($html);
+    }
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Initialize variables.
-		$options = array();
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Initialize variables.
+        $options = array();
 
-		foreach ($this->element->children() as $option) {
+        foreach ($this->element->children() as $option) {
 
-			// Only add <option /> elements.
-			if ($option->getName() != 'option') {
-				continue;
-			}
+            // Only add <option /> elements.
+            if ($option->getName() != 'option') {
+                continue;
+            }
 
-			// Create a new option object based on the <option /> element.
-			$tmp = MolajoHTML::_('select.option', (string) $option['value'], MolajoText::alt(trim((string) $option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string) $option['disabled']=='true'));
+            // Create a new option object based on the <option /> element.
+            $tmp = MolajoHTML::_('select.option', (string)$option['value'], MolajoText::alt(trim((string)$option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string)$option['disabled'] == 'true'));
 
-			// Set some option attributes.
-			$tmp->class = (string) $option['class'];
+            // Set some option attributes.
+            $tmp->class = (string)$option['class'];
 
-			// Set some JavaScript option attributes.
-			$tmp->onclick = (string) $option['onclick'];
+            // Set some JavaScript option attributes.
+            $tmp->onclick = (string)$option['onclick'];
 
-			// Add the option object to the result set.
-			$options[] = $tmp;
-		}
+            // Add the option object to the result set.
+            $options[] = $tmp;
+        }
 
-		reset($options);
+        reset($options);
 
-		return $options;
-	}
+        return $options;
+    }
 }

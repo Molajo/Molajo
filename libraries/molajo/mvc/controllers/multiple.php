@@ -19,159 +19,174 @@ defined('MOLAJO') or die;
  * - Feature: feature and unfeature
  * - State: archive, publish, unpublish, spam, trash (Note: version is automatic with save and delete)
  *
- * @package	    Molajo
- * @subpackage	Controller
- * @since	    1.0
+ * @package        Molajo
+ * @subpackage    Controller
+ * @since        1.0
  */
 class MolajoControllerMultiple extends MolajoControllerEdit
 {
     /**
-    * Tasks: reorder, orderup, orderdown, saveorder
-    */
-    public function reorder ()
+     * Tasks: reorder, orderup, orderdown, saveorder
+     */
+    public function reorder()
     {
-        return $this->orderItems ();
+        return $this->orderItems();
     }
-    public function orderup ()
+
+    public function orderup()
     {
-        return $this->orderItems ();
+        return $this->orderItems();
     }
-    public function orderdown ()
+
+    public function orderdown()
     {
-        return $this->orderItems ();
+        return $this->orderItems();
     }
-    public function saveorder ()
+
+    public function saveorder()
     {
-        return $this->orderItems ();
+        return $this->orderItems();
     }
-    public function orderItems ()
+
+    public function orderItems()
     {
         return;
     }
-    
-    /**
-    * copy, move or delete -> processFeatureChange -> processIems
-    *
-    * call processItems which loops through the ids and calls saveItemBatch or deleteItemBatch
-    *
-    * saveItemBatch prepares the copy or move data and calls saveItem
-    * deleteItemBatch handles the delete processing
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function copy ()
-    {
-        return $this->processItems ();
-    }
-    public function move ()
-    {
-        return $this->processItems ();
-    }
-    public function delete ()
-    {
-        return $this->processItems ();
-    }    
 
     /**
-    * archive, publish, unpublish, spam, trash (state) -> processFeatureChange -> processIems
-    *
-    * call processStateChange which then calls processItems which loops through the ids
-    *
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function archive ()
+     * copy, move or delete -> processFeatureChange -> processIems
+     *
+     * call processItems which loops through the ids and calls saveItemBatch or deleteItemBatch
+     *
+     * saveItemBatch prepares the copy or move data and calls saveItem
+     * deleteItemBatch handles the delete processing
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function copy()
     {
-        return $this->processStateChange();
+        return $this->processItems();
     }
-    public function publish ()
+
+    public function move()
     {
-        return $this->processStateChange();
+        return $this->processItems();
     }
-    public function unpublish ()
+
+    public function delete()
     {
-        return $this->processStateChange();
-    }
-    public function spam ()
-    {
-        return $this->processStateChange();
-    }
-    public function trash ()
-    {
-        return $this->processStateChange();
-    }
-    public function processStateChange ()
-    {
-        return $this->processItems ($column='state');
+        return $this->processItems();
     }
 
     /**
-    * feature, unfeature -> processFeatureChange -> processItems
-    *
-    * call processStateChange which then calls processItems which loops through the ids
-    *
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function feature () 
+     * archive, publish, unpublish, spam, trash (state) -> processFeatureChange -> processIems
+     *
+     * call processStateChange which then calls processItems which loops through the ids
+     *
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function archive()
     {
-        return $this->processFeatureChange ();
+        return $this->processStateChange();
     }
-    public function unfeature ()
+
+    public function publish()
     {
-        return $this->processFeatureChange ();
+        return $this->processStateChange();
     }
-    public function processFeatureChange ()
+
+    public function unpublish()
     {
-        return $this->processItems ($column='featured');
+        return $this->processStateChange();
     }
-    
-    /**
-    * sticky, unsticky -> processStickyChange -> processItems
-    *
-    * call processStateChange which then calls processItems which loops through the ids
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function sticky ()
+
+    public function spam()
     {
-        return $this->processStickyChange ();
+        return $this->processStateChange();
     }
-    public function unsticky ()
+
+    public function trash()
     {
-        return $this->processStickyChange ();
+        return $this->processStateChange();
     }
-    public function processStickyChange ()
+
+    public function processStateChange()
     {
-        return $this->processItems ($column='stickied');
+        return $this->processItems($column = 'state');
     }
 
     /**
-    * checkin -> processItems
-    *
-    * call processStateChange which then calls processItems which loops through the ids
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function checkin ()
+     * feature, unfeature -> processFeatureChange -> processItems
+     *
+     * call processStateChange which then calls processItems which loops through the ids
+     *
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function feature()
     {
-        return $this->processItems ($column='checkin');
+        return $this->processFeatureChange();
+    }
+
+    public function unfeature()
+    {
+        return $this->processFeatureChange();
+    }
+
+    public function processFeatureChange()
+    {
+        return $this->processItems($column = 'featured');
     }
 
     /**
-    * processItems
-    *
-    * called by single item methods to loop through the ids and processed by processItem
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function processItems ($column=null)
+     * sticky, unsticky -> processStickyChange -> processItems
+     *
+     * call processStateChange which then calls processItems which loops through the ids
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function sticky()
+    {
+        return $this->processStickyChange();
+    }
+
+    public function unsticky()
+    {
+        return $this->processStickyChange();
+    }
+
+    public function processStickyChange()
+    {
+        return $this->processItems($column = 'stickied');
+    }
+
+    /**
+     * checkin -> processItems
+     *
+     * call processStateChange which then calls processItems which loops through the ids
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function checkin()
+    {
+        return $this->processItems($column = 'checkin');
+    }
+
+    /**
+     * processItems
+     *
+     * called by single item methods to loop through the ids and processed by processItem
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function processItems($column = null)
     {
         /** security token **/
         JRequest::checkToken() or die;
@@ -192,7 +207,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         }
 
         /** context **/
-        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task;
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task;
 
         /** ids **/
         $idArray = JRequest::getVar('cid', array(), '', 'array');
@@ -206,11 +221,11 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         /** target category **/
         if ($task == 'copy' || $task == 'delete') {
             $this->batch_catid = JRequest::getInt('batch_catid');
-            if ((int) $this->batch_catid == 0) {
+            if ((int)$this->batch_catid == 0) {
                 $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
                 $this->redirectClass->setRedirectMessageType('message');
                 return $this->redirectClass->setSuccessIndicator(false);
-            }        
+            }
         }
 
         /** loop through ids **/
@@ -228,7 +243,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
             $this->table->load($this->id);
 
             /** edit: valid id **/
-            if ((int) $this->table->id == 0) {
+            if ((int)$this->table->id == 0) {
                 $errorFoundForItem = true;
             }
 
@@ -287,10 +302,10 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         }
 
         /** Cache: clear cache **/
-        $results = $this->cleanCache ();
+        $results = $this->cleanCache();
 
         if ($errorFoundForBatch === false) {
-            $this->redirectClass->setRedirectMessage(MolajoText::plural('MOLAJO_N_ITEMS_'.strtoupper($task), count($idArray)));
+            $this->redirectClass->setRedirectMessage(MolajoText::plural('MOLAJO_N_ITEMS_' . strtoupper($task), count($idArray)));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('message'));
             return $this->redirectClass->setSuccessIndicator(true);
         } else {
@@ -301,17 +316,17 @@ class MolajoControllerMultiple extends MolajoControllerEdit
     }
 
     /**
-    * processItem
-    *
-    * called by copy, move, and delete to loop through the ids and call either saveItemBatch or deleteItemBatch
-    *
-    * saveItemBatch prepares the copy or move data and calls saveItem
-    * deleteItemBatch handles the delete processing
-    *
-    * @return	Boolean
-    * @since	1.0
-    */
-    public function processItem ($task, $column=null)
+     * processItem
+     *
+     * called by copy, move, and delete to loop through the ids and call either saveItemBatch or deleteItemBatch
+     *
+     * saveItemBatch prepares the copy or move data and calls saveItem
+     * deleteItemBatch handles the delete processing
+     *
+     * @return    Boolean
+     * @since    1.0
+     */
+    public function processItem($task, $column = null)
     {
         /** full row **/
         if ($task == 'copy' || $task == 'move' || $task == 'delete') {
@@ -320,7 +335,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
                 return false;
             }
 
-        /** checking */
+            /** checking */
         } else if ($task == 'checkin') {
             $results = parent::checkInItem();
             if ($results === false) {
@@ -345,7 +360,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
 
         if ($column == 'state') {
             if ($newValue) {
-                $event = 'onContentChange'.ucfirst(strtolower($column));
+                $event = 'onContentChange' . ucfirst(strtolower($column));
                 $this->dispatcher->trigger($event, array($context, $this->id, $newValue));
             }
         }

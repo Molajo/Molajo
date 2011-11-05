@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  State Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldState extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldState extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('state');
-        parent::setRequestFilter ('string');
+        parent::setFieldname('state');
+        parent::setRequestFilter('string');
     }
 
     /**
@@ -35,23 +36,23 @@ class MolajoFieldState extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
         $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
         $this->config_component_state_spam = JRequest::getCmd('config_component_state_spam', '0');
 
-        $options	= array();
-        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_ARCHIVED, MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
-        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_PUBLISHED, MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
-        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
-        $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_TRASHED, MolajoText::_('MOLAJO_OPTION_TRASHED'));
+        $options = array();
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATE_ARCHIVED, MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATE_PUBLISHED, MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATE_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATE_TRASHED, MolajoText::_('MOLAJO_OPTION_TRASHED'));
         if ($this->params->def('config_component_state_spam', '0') == 1) {
-            $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_SPAMMED, MolajoText::_('MOLAJO_OPTION_SPAMMED'));
+            $options[] = MolajoHTML::_('select.option', MOLAJO_STATE_SPAMMED, MolajoText::_('MOLAJO_OPTION_SPAMMED'));
         }
         if ($this->params->def('config_component_version_management', '1') == 1) {
-            $options[]	= MolajoHTML::_('select.option', MOLAJO_STATE_VERSION, MolajoText::_('MOLAJO_OPTION_VERSION'));
+            $options[] = MolajoHTML::_('select.option', MOLAJO_STATE_VERSION, MolajoText::_('MOLAJO_OPTION_VERSION'));
         }
-        $options[]	= MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
+        $options[] = MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
 
         return $options;
     }
@@ -61,10 +62,10 @@ class MolajoFieldState extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -82,7 +83,7 @@ class MolajoFieldState extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
         $validItems = $this->getOptions();
 
@@ -104,14 +105,14 @@ class MolajoFieldState extends MolajoField
      * @param sstring $value
      * @return array
      */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         $query->select('a.state');
         if (is_numeric($value)) {
-            $query->where('a.state = '.(int) $value);
+            $query->where('a.state = ' . (int)$value);
         } else if ($value == '*') {
-            
-        } else  {
+
+        } else {
 
             $query->where('a.state > -1');
         }
@@ -122,7 +123,7 @@ class MolajoFieldState extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();

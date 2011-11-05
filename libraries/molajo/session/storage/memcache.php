@@ -21,211 +21,205 @@ defined('MOLAJO') or die;
  */
 class MolajoSessionStorageMemcache extends MolajoSessionStorage
 {
-	/**
-	 * Resource for the current memcached connection.
-	 *
-	 * @var    resource
-	 * @since  11.1
-	 */
-	var $_db;
+    /**
+     * Resource for the current memcached connection.
+     *
+     * @var    resource
+     * @since  11.1
+     */
+    var $_db;
 
-	/**
-	 * Use compression?
-	 *
-	 * @var    int
-	 * @since  11.1
-	 */
-	var $_compress = null;
+    /**
+     * Use compression?
+     *
+     * @var    int
+     * @since  11.1
+     */
+    var $_compress = null;
 
-	/**
-	 * Use persistent connections
-	 *
-	 * @var    boolean
-	 * @since  11.1
-	 */
-	var $_persistent = false;
+    /**
+     * Use persistent connections
+     *
+     * @var    boolean
+     * @since  11.1
+     */
+    var $_persistent = false;
 
-	/**
-	 * Constructor
-	 *
-	 * @param   array  $options  Optional parameters.
-	 *
-	 * @return  MolajoSessionStorageMemcache
-	 *
-	 * @since   11.1
-	 */
-	public function __construct($options = array())
-	{
-		if (!$this->test())
-		{
-			return MolajoError::raiseError(404, MolajoText::_('JLIB_SESSION_MEMCACHE_EXTENSION_NOT_AVAILABLE'));
-		}
+    /**
+     * Constructor
+     *
+     * @param   array  $options  Optional parameters.
+     *
+     * @return  MolajoSessionStorageMemcache
+     *
+     * @since   11.1
+     */
+    public function __construct($options = array())
+    {
+        if (!$this->test()) {
+            return MolajoError::raiseError(404, MolajoText::_('JLIB_SESSION_MEMCACHE_EXTENSION_NOT_AVAILABLE'));
+        }
 
-		parent::__construct($options);
+        parent::__construct($options);
 
-		$config = MolajoFactory::getConfig();
-		$params = $config->get('memcache_settings');
-		if (!is_array($params))
-		{
-			$params = unserialize(stripslashes($params));
-		}
+        $config = MolajoFactory::getConfig();
+        $params = $config->get('memcache_settings');
+        if (!is_array($params)) {
+            $params = unserialize(stripslashes($params));
+        }
 
-		if (!$params)
-		{
-			$params = array();
-		}
+        if (!$params) {
+            $params = array();
+        }
 
-		$this->_compress = (isset($params['compression'])) ? $params['compression'] : 0;
-		$this->_persistent = (isset($params['persistent'])) ? $params['persistent'] : false;
+        $this->_compress = (isset($params['compression'])) ? $params['compression'] : 0;
+        $this->_persistent = (isset($params['persistent'])) ? $params['persistent'] : false;
 
-		// This will be an array of loveliness
-		$this->_servers = (isset($params['servers'])) ? $params['servers'] : array();
-	}
+        // This will be an array of loveliness
+        $this->_servers = (isset($params['servers'])) ? $params['servers'] : array();
+    }
 
-	/**
-	 * Open the SessionHandler backend.
-	 *
-	 * @param   string  $save_path     The path to the session object.
-	 * @param   string  $session_name  The name of the session.
-	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
-	 */
-	public function open($save_path, $session_name)
-	{
-		$this->_db = new Memcache;
-		for ($i = 0, $n = count($this->_servers); $i < $n; $i++)
-		{
-			$server = $this->_servers[$i];
-			$this->_db->addServer($server['host'], $server['port'], $this->_persistent);
-		}
-		return true;
-	}
+    /**
+     * Open the SessionHandler backend.
+     *
+     * @param   string  $save_path     The path to the session object.
+     * @param   string  $session_name  The name of the session.
+     *
+     * @return  boolean  True on success, false otherwise.
+     *
+     * @since   11.1
+     */
+    public function open($save_path, $session_name)
+    {
+        $this->_db = new Memcache;
+        for ($i = 0, $n = count($this->_servers); $i < $n; $i++)
+        {
+            $server = $this->_servers[$i];
+            $this->_db->addServer($server['host'], $server['port'], $this->_persistent);
+        }
+        return true;
+    }
 
-	/**
-	 * Close the SessionHandler backend.
-	 *
-	 * @return boolean  True on success, false otherwise.
-	 */
-	public function close()
-	{
-		return $this->_db->close();
-	}
+    /**
+     * Close the SessionHandler backend.
+     *
+     * @return boolean  True on success, false otherwise.
+     */
+    public function close()
+    {
+        return $this->_db->close();
+    }
 
-	/**
-	 * Read the data for a particular session identifier from the SessionHandler backend.
-	 *
-	 * @param   string  $id  The session identifier.
-	 *
-	 * @return  string  The session data.
-	 *
-	 * @since   11.1
-	 */
-	public function read($id)
-	{
-		$sess_id = 'sess_' . $id;
-		$this->_setExpire($sess_id);
-		return $this->_db->get($sess_id);
-	}
+    /**
+     * Read the data for a particular session identifier from the SessionHandler backend.
+     *
+     * @param   string  $id  The session identifier.
+     *
+     * @return  string  The session data.
+     *
+     * @since   11.1
+     */
+    public function read($id)
+    {
+        $sess_id = 'sess_' . $id;
+        $this->_setExpire($sess_id);
+        return $this->_db->get($sess_id);
+    }
 
-	/**
-	 * Write session data to the SessionHandler backend.
-	 *
-	 * @param   string  $id            The session identifier.
-	 * @param   string  $session_data  The session data.
-	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
-	 */
-	public function write($id, $session_data)
-	{
-		$sess_id = 'sess_' . $id;
-		if ($this->_db->get($sess_id . '_expire'))
-		{
-			$this->_db->replace($sess_id . '_expire', time(), 0);
-		}
-		else
-		{
-			$this->_db->set($sess_id . '_expire', time(), 0);
-		}
-		if ($this->_db->get($sess_id))
-		{
-			$this->_db->replace($sess_id, $session_data, $this->_compress);
-		}
-		else
-		{
-			$this->_db->set($sess_id, $session_data, $this->_compress);
-		}
-		return;
-	}
+    /**
+     * Write session data to the SessionHandler backend.
+     *
+     * @param   string  $id            The session identifier.
+     * @param   string  $session_data  The session data.
+     *
+     * @return  boolean  True on success, false otherwise.
+     *
+     * @since   11.1
+     */
+    public function write($id, $session_data)
+    {
+        $sess_id = 'sess_' . $id;
+        if ($this->_db->get($sess_id . '_expire')) {
+            $this->_db->replace($sess_id . '_expire', time(), 0);
+        }
+        else
+        {
+            $this->_db->set($sess_id . '_expire', time(), 0);
+        }
+        if ($this->_db->get($sess_id)) {
+            $this->_db->replace($sess_id, $session_data, $this->_compress);
+        }
+        else
+        {
+            $this->_db->set($sess_id, $session_data, $this->_compress);
+        }
+        return;
+    }
 
-	/**
-	 * Destroy the data for a particular session identifier in the SessionHandler backend.
-	 *
-	 * @param   string  $id  The session identifier.
-	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
-	 */
-	public function destroy($id)
-	{
-		$sess_id = 'sess_' . $id;
-		$this->_db->delete($sess_id . '_expire');
-		return $this->_db->delete($sess_id);
-	}
+    /**
+     * Destroy the data for a particular session identifier in the SessionHandler backend.
+     *
+     * @param   string  $id  The session identifier.
+     *
+     * @return  boolean  True on success, false otherwise.
+     *
+     * @since   11.1
+     */
+    public function destroy($id)
+    {
+        $sess_id = 'sess_' . $id;
+        $this->_db->delete($sess_id . '_expire');
+        return $this->_db->delete($sess_id);
+    }
 
-	/**
-	 * Garbage collect stale sessions from the SessionHandler backend.
-	 *
-	 * -- Not Applicable in memcache --
-	 *
-	 * @param   integer  $maxlifetime  The maximum age of a session.
-	 *
-	 * @return  boolean  True on success, false otherwise.
-	 *
-	 * @since   11.1
-	 */
-	public function gc($maxlifetime = null)
-	{
-		return true;
-	}
+    /**
+     * Garbage collect stale sessions from the SessionHandler backend.
+     *
+     * -- Not Applicable in memcache --
+     *
+     * @param   integer  $maxlifetime  The maximum age of a session.
+     *
+     * @return  boolean  True on success, false otherwise.
+     *
+     * @since   11.1
+     */
+    public function gc($maxlifetime = null)
+    {
+        return true;
+    }
 
-	/**
-	 * Test to see if the SessionHandler is available.
-	 *
-	 * @return boolean  True on success, false otherwise.
-	 */
-	static public function test()
-	{
-		return (extension_loaded('memcache') && class_exists('Memcache'));
-	}
+    /**
+     * Test to see if the SessionHandler is available.
+     *
+     * @return boolean  True on success, false otherwise.
+     */
+    static public function test()
+    {
+        return (extension_loaded('memcache') && class_exists('Memcache'));
+    }
 
-	/**
-	 * Set expire time on each call since memcache sets it on cache creation.
-	 *
-	 * @param   string  $key  Cache key to expire.
-	 *
-	 * @return  void
-	 *
-	 * @since   11.1
-	 */
-	protected function _setExpire($key)
-	{
-		$lifetime = ini_get("session.gc_maxlifetime");
-		$expire = $this->_db->get($key . '_expire');
+    /**
+     * Set expire time on each call since memcache sets it on cache creation.
+     *
+     * @param   string  $key  Cache key to expire.
+     *
+     * @return  void
+     *
+     * @since   11.1
+     */
+    protected function _setExpire($key)
+    {
+        $lifetime = ini_get("session.gc_maxlifetime");
+        $expire = $this->_db->get($key . '_expire');
 
-		// set prune period
-		if ($expire + $lifetime < time())
-		{
-			$this->_db->delete($key);
-			$this->_db->delete($key . '_expire');
-		}
-		else
-		{
-			$this->_db->replace($key . '_expire', time());
-		}
-	}
+        // set prune period
+        if ($expire + $lifetime < time()) {
+            $this->_db->delete($key);
+            $this->_db->delete($key . '_expire');
+        }
+        else
+        {
+            $this->_db->replace($key . '_expire', time());
+        }
+    }
 }

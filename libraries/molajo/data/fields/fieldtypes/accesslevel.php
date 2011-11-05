@@ -17,37 +17,37 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldAccesslevel extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $type = 'AccessLevel';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $type = 'AccessLevel';
 
-	/**
-	 * Method to get the field calendar markup.
-	 *
-	 * @return  string   The field calendar markup.
-	 * @since   1.0
-	 */
-	protected function getInput()
-	{
-		// Initialize variables.
-		$attr = '';
+    /**
+     * Method to get the field calendar markup.
+     *
+     * @return  string   The field calendar markup.
+     * @since   1.0
+     */
+    protected function getInput()
+    {
+        // Initialize variables.
+        $attr = '';
 
-		// Initialize some field attributes.
-		$attr .= $this->element['class'] ? ' class="'.(string) $this->element['class'].'"' : '';
-		$attr .= ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-		$attr .= $this->element['size'] ? ' size="'.(int) $this->element['size'].'"' : '';
-		$attr .= $this->multiple ? ' multiple="multiple"' : '';
+        // Initialize some field attributes.
+        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $attr .= ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
+        $attr .= $this->multiple ? ' multiple="multiple"' : '';
 
-		// Initialize JavaScript field attributes.
-		$attr .= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
+        // Initialize JavaScript field attributes.
+        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
-		// Get the field options.
-		$options = $this->getOptions();
+        // Get the field options.
+        $options = $this->getOptions();
 
-		return MolajoHTML::_('access.level', $this->name, $this->value, $attr, $options, $this->id);
-	}
+        return MolajoHTML::_('access.level', $this->name, $this->value, $attr, $options, $this->id);
+    }
 }

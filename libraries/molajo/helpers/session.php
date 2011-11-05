@@ -18,13 +18,13 @@ defined('MOLAJO') or die;
  */
 class MolajoSessionHelper extends JObject
 {
-	/**
+    /**
      * $_session
      *
-	 * @var    object Session
-	 * @since  1.0
-	 */
-	protected $_session = null;
+     * @var    object Session
+     * @since  1.0
+     */
+    protected $_session = null;
 
     /**
      * createSession
@@ -80,7 +80,7 @@ class MolajoSessionHelper extends JObject
         $db = MolajoFactory::getDBO();
         $db->setQuery(
             'DELETE FROM `#__session`' .
-            ' WHERE `session_time` < '.(int) (time() - $this->_session->getExpire())
+            ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
         );
         $db->query();
     }
@@ -99,14 +99,14 @@ class MolajoSessionHelper extends JObject
      */
     protected function _checkSession()
     {
-        $db 		= MolajoFactory::getDBO();
-        $session 	= MolajoFactory::getSession();
-        $user		= MolajoFactory::getUser();
+        $db = MolajoFactory::getDBO();
+        $session = MolajoFactory::getSession();
+        $user = MolajoFactory::getUser();
 
         $db->setQuery(
             'SELECT `session_id`' .
             ' FROM `#__session`' .
-            ' WHERE `session_id` = '.$db->quote($session->getId()), 0, 1
+            ' WHERE `session_id` = ' . $db->quote($session->getId()), 0, 1
         );
         $exists = $db->loadResult();
         if ($exists) {
@@ -116,19 +116,19 @@ class MolajoSessionHelper extends JObject
         if ($session->isNew()) {
             $db->setQuery(
                 'INSERT INTO `#__session` (`session_id`, `application_id`, `session_time`)' .
-                ' VALUES ('.$db->quote($session->getId()).', '.(int) MOLAJO_APPLICATION_ID.', '.(int) time().')'
+                ' VALUES (' . $db->quote($session->getId()) . ', ' . (int)MOLAJO_APPLICATION_ID . ', ' . (int)time() . ')'
             );
 
         } else {
             $db->setQuery(
                 'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `session_time`, `userid`, `username`)' .
-                ' VALUES ('.
-                $db->quote($session->getId()).', '.
-                (int) MOLAJO_APPLICATION_ID.', '.
-                (int) $user->get('guest').', '.
-                (int) $session->get('session.timer.start').', '.
-                (int) $user->get('id').', '.
-                $db->quote($user->get('username')).')'
+                ' VALUES (' .
+                $db->quote($session->getId()) . ', ' .
+                (int)MOLAJO_APPLICATION_ID . ', ' .
+                (int)$user->get('guest') . ', ' .
+                (int)$session->get('session.timer.start') . ', ' .
+                (int)$user->get('id') . ', ' .
+                $db->quote($user->get('username')) . ')'
             );
         }
 
@@ -140,8 +140,8 @@ class MolajoSessionHelper extends JObject
 
         // Session doesn't exist yet, so create session variables
         if ($session->isNew()) {
-            $session->set('registry',	new JRegistry('session'));
-            $session->set('user',		new MolajoUser());
+            $session->set('registry', new JRegistry('session'));
+            $session->set('user', new MolajoUser());
         }
     }
 
@@ -157,8 +157,8 @@ class MolajoSessionHelper extends JObject
      *
      * @since  1.0
      */
-    protected function _getConfiguration($varname, $default=null)
+    protected function _getConfiguration($varname, $default = null)
     {
-        return MolajoFactory::getConfig()->get(''.$varname, $default);
+        return MolajoFactory::getConfig()->get('' . $varname, $default);
     }
 }

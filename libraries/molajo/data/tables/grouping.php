@@ -13,54 +13,54 @@ defined('MOLAJO') or die;
  *
  * @package     Joomla.Platform
  * @subpackage  Database
- * @version		1.0
+ * @version        1.0
  */
 class MolajoTableGrouping extends MolajoTable
 {
-	/**
-	 * Constructor
-	 *
-	 * @param   object  Database object
-	 *
-	 * @return  MolajoTableGrouping
-	 *
-	 * @since   11.1
-	 */
-	public function __construct(&$db)
-	{
-		parent::__construct('#__view_groups', 'id', $db);
-	}
+    /**
+     * Constructor
+     *
+     * @param   object  Database object
+     *
+     * @return  MolajoTableGrouping
+     *
+     * @since   11.1
+     */
+    public function __construct(&$db)
+    {
+        parent::__construct('#__view_groups', 'id', $db);
+    }
 
-	/**
-	 * Method to bind the data.
-	 *
-	 * @param   array  $array   The data to bind.
-	 * @param   mixed  $ignore  An array or space separated list of fields to ignore.
-	 *
-	 * @return  bool  True on success, false on failure.
-	 *
-	 * @since   11.1
-	 */
-	public function bind($array, $ignore = '')
-	{
-		return parent::bind($array, $ignore);
-	}
+    /**
+     * Method to bind the data.
+     *
+     * @param   array  $array   The data to bind.
+     * @param   mixed  $ignore  An array or space separated list of fields to ignore.
+     *
+     * @return  bool  True on success, false on failure.
+     *
+     * @since   11.1
+     */
+    public function bind($array, $ignore = '')
+    {
+        return parent::bind($array, $ignore);
+    }
 
-	/**
-	 * Method to check the current record to save
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since   11.1
-	 */
-	public function check()
-	{
-		// Validate the title.
-		if ((trim($this->title)) == '') {
-			$this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_GROUPING'));
-			return false;
-		}
+    /**
+     * Method to check the current record to save
+     *
+     * @return  boolean  True on success
+     *
+     * @since   11.1
+     */
+    public function check()
+    {
+        // Validate the title.
+        if ((trim($this->title)) == '') {
+            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_GROUPING'));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

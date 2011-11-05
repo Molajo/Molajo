@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Id Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldId extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldId extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('Id');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('Id');
+        parent::setRequestFilter('integer');
     }
 
     /**
@@ -35,9 +36,9 @@ class MolajoFieldId extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
-        
+
     }
 
     /**
@@ -45,9 +46,9 @@ class MolajoFieldId extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -57,7 +58,7 @@ class MolajoFieldId extends MolajoField
         return $this->requestValue;
     }
 
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
 
     }
@@ -73,18 +74,18 @@ class MolajoFieldId extends MolajoField
      * @param bool $onlyWhereClause
      * @return
      */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
         if ($onlyWhereClause === true) {
         } else {
             $query->select('a.id');
         }
-        if ((int) $value == 0) {
+        if ((int)$value == 0) {
             return;
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.id = '.$value);
+            $query->where('a.id = ' . $value);
         }
     }
 
@@ -93,7 +94,7 @@ class MolajoFieldId extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();

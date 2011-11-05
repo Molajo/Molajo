@@ -17,32 +17,32 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldCacheHandler extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $type = 'CacheHandler';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $type = 'CacheHandler';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array    The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Initialize variables.
-		$options = array();
+    /**
+     * Method to get the field options.
+     *
+     * @return  array    The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Initialize variables.
+        $options = array();
 
-		// Convert to name => name array.
-		foreach (JCache::getStores() as $store) {
-			$options[] = MolajoHTML::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_CACHE_'.$store), 'value', 'text');
-		}
+        // Convert to name => name array.
+        foreach (JCache::getStores() as $store) {
+            $options[] = MolajoHTML::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_CACHE_' . $store), 'value', 'text');
+        }
 
-		$options = array_merge(parent::getOptions(), $options);
+        $options = array_merge(parent::getOptions(), $options);
 
-		return $options;
-	}
+        return $options;
+    }
 }

@@ -13,9 +13,9 @@ defined('MOLAJO') or die;
  *
  *  Catid Filter Field Handling
  *
- *  @package    Molajo
- *  @subpackage Filter
- *  @since      1.6
+ * @package    Molajo
+ * @subpackage Filter
+ * @since      1.6
  */
 class MolajoFieldCatid extends MolajoField
 {
@@ -24,10 +24,11 @@ class MolajoFieldCatid extends MolajoField
      *
      *  Set Fieldname and Filter with parent
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        parent::setFieldname ('catid');
-        parent::setRequestFilter ('integer');
+        parent::setFieldname('catid');
+        parent::setRequestFilter('integer');
     }
 
     /**
@@ -35,7 +36,7 @@ class MolajoFieldCatid extends MolajoField
      *
      *  Returns Option Values
      */
-    public function getOptions ()
+    public function getOptions()
     {
         return MolajoHTML::_('category.options', JRequest::getCmd('option'));
     }
@@ -45,9 +46,9 @@ class MolajoFieldCatid extends MolajoField
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue ()
+    public function getSelectedValue()
     {
-        parent::getSelectedValue ();
+        parent::getSelectedValue();
 
         if ($this->requestValue == null) {
             return false;
@@ -57,29 +58,29 @@ class MolajoFieldCatid extends MolajoField
         return $this->requestValue;
     }
 
-    public function validateRequestValue ()
+    public function validateRequestValue()
     {
 
     }
 
     /**
-    *  getQueryInformation
-    *
-    *  Returns Formatted Where clause for Query
-    */
-    public function getQueryInformation ($query, $value, $selectedState, $onlyWhereClause=false)
+     *  getQueryInformation
+     *
+     *  Returns Formatted Where clause for Query
+     */
+    public function getQueryInformation($query, $value, $selectedState, $onlyWhereClause = false)
     {
-        if ((int) $value == 0) {
+        if ((int)$value == 0) {
             return;
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.catid = '.$value);
+            $query->where('a.catid = ' . $value);
 
-        }  else if (is_array($value)) {
+        } else if (is_array($value)) {
             JArrayHelper::toInteger($value);
             $categoryId = implode(',', $value);
-            $query->where('a.catid IN ('.$categoryId.')');
+            $query->where('a.catid IN (' . $categoryId . ')');
         }
     }
 
@@ -88,12 +89,12 @@ class MolajoFieldCatid extends MolajoField
      *
      *  sets formatting and content parameters
      */
-    public function render ($layout, $item, $itemCount)
+    public function render($layout, $item, $itemCount)
     {
         if ($layout == 'admin') {
             $render = array();
             if ($item->canEdit === true) {
-                $render['link_value'] = 'index.php?option=com_categories&extension='.JRequest::getVar('option').'&task=category.edit&id='.$item->category_id;
+                $render['link_value'] = 'index.php?option=com_categories&extension=' . JRequest::getVar('option') . '&task=category.edit&id=' . $item->category_id;
             } else {
                 $render['link_value'] = false;
             }

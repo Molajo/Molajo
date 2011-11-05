@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Primary Controller
  *
- * @package	    Molajo
- * @subpackage	Controller
- * @since	    1.0
+ * @package        Molajo
+ * @subpackage    Controller
+ * @since        1.0
  */
 class MolajoController extends JController
 {
@@ -36,7 +36,7 @@ class MolajoController extends JController
      * @since 1.0
      */
     protected $document = null;
-    
+
     /**
      * @var object $table
      *
@@ -105,10 +105,10 @@ class MolajoController extends JController
      *
      * Constructor.
      *
-     * @param	array   $config	An optional associative array of configuration settings.
-     * @see	    JController
+     * @param    array   $config    An optional associative array of configuration settings.
+     * @see        JController
      *
-     * @since	1.0
+     * @since    1.0
      */
     public function __construct($config = array())
     {
@@ -120,30 +120,30 @@ class MolajoController extends JController
      *
      * Method to handle display, edit, and add tasks
      *
-     * @param	boolean		$cachable	If true, the view output will be cached
-     * @param	array		$urlparams	An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+     * @param    boolean        $cachable    If true, the view output will be cached
+     * @param    array        $urlparams    An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
      *
-     * @return	JController	This object to support chaining.
+     * @return    JController    This object to support chaining.
      *
-     * @since	1.0
+     * @since    1.0
      */
     public function display($cachable = false, $urlparams = false)
     {
         /** language files */
         $lang = MolajoFactory::getLanguage();
- 
-//		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
-$template = 'molajito';
-		$lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", null, false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_APPLICATIONS_PATH, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", $lang->getDefault(), false, false);
 
-		$lang->load($this->request['option'], MOLAJO_BASE_FOLDER, null, false, false)
-		||	$lang->load($this->request['option'], $this->request['component_path'], null, false, false)
-		||	$lang->load($this->request['option'], MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-		||	$lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
-        
+        //		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
+        $template = 'molajito';
+        $lang->load('tpl_' . $template, MOLAJO_BASE_FOLDER, null, false, false)
+        || $lang->load('tpl_' . $template, MOLAJO_EXTENSION_TEMPLATES . "/$template", null, false, false)
+        || $lang->load('tpl_' . $template, MOLAJO_APPLICATIONS_PATH, $lang->getDefault(), false, false)
+        || $lang->load('tpl_' . $template, MOLAJO_EXTENSION_TEMPLATES . "/$template", $lang->getDefault(), false, false);
+
+        $lang->load($this->request['option'], MOLAJO_BASE_FOLDER, null, false, false)
+        || $lang->load($this->request['option'], $this->request['component_path'], null, false, false)
+        || $lang->load($this->request['option'], MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+        || $lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
+
         if ($this->request['task'] == 'edit') {
             $results = $this->checkOutItem();
             if ($results === false) {
@@ -206,20 +206,20 @@ $template = 'molajito';
      */
     public function initialise($request)
     {
-        $this->document = MolajoFactory::getDocument();        
+        $this->document = MolajoFactory::getDocument();
         $this->request = $request;
         $this->params = $this->request['params'];
         $this->redirectClass = new MolajoControllerRedirect();
         $this->redirectClass->request = $this->request;
 
         $this->id = $this->request['id'];
-        if ((int) $this->id == 0) {
+        if ((int)$this->id == 0) {
             $this->id = 0;
             $this->catid = 0;
         }
 
         $this->catid = $this->request['catid'];
-        if ((int) $this->catid == 0) {
+        if ((int)$this->catid == 0) {
             $this->catid = 0;
         }
 
@@ -227,21 +227,22 @@ $template = 'molajito';
         if ($this->request['controller'] == 'display') {
 
             /** model */
-            $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'].'Model'), array());
+            $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'] . 'Model'), array());
             $this->model->request = $this->request;
             $this->model->params = $this->request['params'];
 
             /** view format */
             $this->view = $this->getView($this->request['view'], $this->document->getType());
             $this->view->setModel($this->model, true);
-		    $this->view->setLayout($this->request['layout']);
+            $this->view->setLayout($this->request['layout']);
         }
 
         /** load table */
         if ($this->request['task'] == 'display'
             || $this->request['task'] == 'add'
             || $this->request['task'] == 'login'
-            || $this->request['component_table'] == '__dummy') {
+            || $this->request['component_table'] == '__dummy'
+        ) {
 
             $this->isNew = false;
 
@@ -253,7 +254,7 @@ $template = 'molajito';
 
             if ($this->id == 0) {
                 $this->isNew = true;
-                $this->existingState  = 0;
+                $this->existingState = 0;
             } else {
                 $this->isNew = false;
                 $this->catid = $this->table->catid;
@@ -263,7 +264,8 @@ $template = 'molajito';
 
         /** dispatch events */
         if ($this->dispatcher
-            || $this->request['plugin_type'] == '') {
+            || $this->request['plugin_type'] == ''
+        ) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
             MolajoPluginHelper::importPlugin($this->request['plugin_type']);
@@ -296,10 +298,10 @@ $template = 'molajito';
      * @param null $checkId
      * @param null $checkCatid
      * @param null $checkTable
-     * 
+     *
      * @return bool
      */
-    public function checkTaskAuthorisation($checkTask=null, $checkId=null, $checkCatid=null, $checkTable=null)
+    public function checkTaskAuthorisation($checkTask = null, $checkId = null, $checkCatid = null, $checkTable = null)
     {
         if ($checkTask == null) {
             $checkTask = $this->getTask();
@@ -316,10 +318,10 @@ $template = 'molajito';
             }
 
             if ($checkCatid == null) {
-                if ((int) $this->catid == 0) {
-                    $checkCatid = (int) $this->table->catid;
+                if ((int)$this->catid == 0) {
+                    $checkCatid = (int)$this->table->catid;
                 } else {
-                    $checkCatid = (int) $this->catid;
+                    $checkCatid = (int)$this->catid;
                 }
             }
 
@@ -329,14 +331,14 @@ $template = 'molajito';
         }
 
         $acl = new MolajoACL ();
-        $results = $acl->authoriseTask ($this->request['option'], $this->request['view'], $checkTask, $checkId, $checkCatid, $checkTable);
+        $results = $acl->authoriseTask($this->request['option'], $this->request['view'], $checkTask, $checkId, $checkCatid, $checkTable);
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED') . ' ' . $checkTask);
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
- 
+
         return true;
     }
 
@@ -345,10 +347,10 @@ $template = 'molajito';
      *
      * Proxy for getModel.
      *
-     * @param	string	$name	The name of the model.
-     * @param	string	$prefix	The prefix for the PHP class name.
-     * @param	array	$config	Configuration data
-     * 
+     * @param    string    $name    The name of the model.
+     * @param    string    $prefix    The prefix for the PHP class name.
+     * @param    array    $config    Configuration data
+     *
      * @return object model
      */
     public function getModel($name = '', $prefix = '', $config = array())
@@ -371,14 +373,14 @@ $template = 'molajito';
         }
 
         /** see if table supports checkin **/
-        if (property_exists($this->table, 'checked_out')) {  
+        if (property_exists($this->table, 'checked_out')) {
         } else {
             return;
         }
 
-        /** model: checkin **/        
+        /** model: checkin **/
         $results = $this->model->checkin($this->id);
-        
+
         /** error processing **/
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_CHECK_IN_FAILED'));
@@ -395,7 +397,7 @@ $template = 'molajito';
      *
      * method to verify that the current user is recorded in the checked_out column of the item
      *
-     * @return	boolean
+     * @return    boolean
      */
     public function verifyCheckOut()
     {
@@ -413,7 +415,7 @@ $template = 'molajito';
         /** model: checkin **/
         if ($this->table->checked_out == MolajoFactory::getUser()->get('id')) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER').' '.$this->getTask());
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER') . ' ' . $this->getTask());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -426,8 +428,8 @@ $template = 'molajito';
      *
      * method to set the checkout_time and checked_out values of the item
      *
-     * @return	boolean
-     * @since	1.0
+     * @return    boolean
+     * @since    1.0
      */
     public function checkOutItem()
     {
@@ -444,7 +446,7 @@ $template = 'molajito';
 
         /** model: checkout **/
         $results = $this->model->checkout($this->id);
-        
+
         /** error processing **/
         if ($results === false) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_CHECKOUT_FAILED'));
@@ -455,14 +457,14 @@ $template = 'molajito';
     }
 
     /**
-    * createVersion
-    *
-    * Molajo_Note: All Components have version management save and restore processes as an automatic option
-    *
-    * @return	void
-    * @since	1.0
-    */
-    public function createVersion ($context)
+     * createVersion
+     *
+     * Molajo_Note: All Components have version management save and restore processes as an automatic option
+     *
+     * @return    void
+     * @since    1.0
+     */
+    public function createVersion($context)
     {
         /** activated? **/
         if ($this->params->def('config_component_version_management', 1) == 1) {
@@ -471,13 +473,14 @@ $template = 'molajito';
         }
 
         /** no version for create **/
-        if ((int) $this->id == 0) {
+        if ((int)$this->id == 0) {
             return true;
         }
 
         /** versions deleted with delete **/
         if ($this->task == 'delete'
-            && $this->params->def('config_component_retain_versions_after_delete', 1) == 0) {
+            && $this->params->def('config_component_retain_versions_after_delete', 1) == 0
+        ) {
             return true;
         }
 
@@ -511,7 +514,7 @@ $template = 'molajito';
      * @param  $context
      * @return bool
      */
-    public function maintainVersionCount ($context)
+    public function maintainVersionCount($context)
     {
         /** activiated? **/
         if ($this->params->def('config_component_version_management', 1) == 1) {
@@ -520,7 +523,7 @@ $template = 'molajito';
         }
 
         /** no versions to delete for create **/
-        if ((int) $this->id == 0) {
+        if ((int)$this->id == 0) {
             return;
         }
 
@@ -533,11 +536,11 @@ $template = 'molajito';
         }
 
         /** delete extra versions **/
-        $results = $this->model->maintainVersionCount ($this->id, $maintainVersions);
+        $results = $this->model->maintainVersionCount($this->id, $maintainVersions);
 
         /** version delete failed **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED').' '.$this->model->getError());
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' . $this->model->getError());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -547,13 +550,13 @@ $template = 'molajito';
     }
 
     /**
-    * cleanCache
-    *
-    * Molajo_Note: All Components have version management save and restore processes as an automatic option
-    *
-    * @return	void
-    */
-    public function cleanCache ()
+     * cleanCache
+     *
+     * Molajo_Note: All Components have version management save and restore processes as an automatic option
+     *
+     * @return    void
+     */
+    public function cleanCache()
     {
         $cache = MolajoFactory::getCache($this->request['option']);
         $cache->clean();

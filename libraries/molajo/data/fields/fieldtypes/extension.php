@@ -11,81 +11,81 @@ defined('MOLAJO') or die;
 /**
  * Supports an HTML select list of extensions
  *
- * @package		Joomla.Framework
- * @subpackage	Form
- * @since		1.6
+ * @package        Joomla.Framework
+ * @subpackage    Form
+ * @since        1.6
  */
 class MolajoFormFieldExtension extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since	1.6
-	 */
-	public $type = 'Extension';
+    /**
+     * The form field type.
+     *
+     * @var        string
+     * @since    1.6
+     */
+    public $type = 'Extension';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return	array	The field option objects.
-	 * @since	1.6
-	 */
-	protected function getOptions()
-	{
-		// Initialize variables.
-		$session = MolajoFactory::getSession();
-		$options = array();
+    /**
+     * Method to get the field options.
+     *
+     * @return    array    The field option objects.
+     * @since    1.6
+     */
+    protected function getOptions()
+    {
+        // Initialize variables.
+        $session = MolajoFactory::getSession();
+        $options = array();
 
-		// Extension Type
-                $extensiontype = '';
-                if (isset($this->element['extensiontype'])) {
-                    $type = trim((string) $this->element['extensiontype']);
-                }
-                if ($extensiontype == '') {
-                    $extensiontype = 'component';
-                }
-		// Comma-delimited list of extensions to exclude
-                if (isset($this->element['exclude'])) {
-                    $exclude = trim((string) $this->element['exclude']);
-                } else {
-                    $exclude = '';
-                }
+        // Extension Type
+        $extensiontype = '';
+        if (isset($this->element['extensiontype'])) {
+            $type = trim((string)$this->element['extensiontype']);
+        }
+        if ($extensiontype == '') {
+            $extensiontype = 'component';
+        }
+        // Comma-delimited list of extensions to exclude
+        if (isset($this->element['exclude'])) {
+            $exclude = trim((string)$this->element['exclude']);
+        } else {
+            $exclude = '';
+        }
 
-                // Get the database object and a new query object.
-		$db	= MolajoFactory::getDBO();
-		$query	= $db->getQuery(true);
+        // Get the database object and a new query object.
+        $db = MolajoFactory::getDBO();
+        $query = $db->getQuery(true);
 
-		// Build the query.
-		$query->select('element AS value, name AS text');
-		$query->from('#__extensions');
-		$query->where('enabled = 1');
-                $query->where('type = "'.$extensiontype.'"');
-                if (trim($exclude) == '') {
-                } else {
-                    $query->where('extension_id NOT IN ("'.$exclude.'")');
-                }
-		$query->order('ordering, name');
+        // Build the query.
+        $query->select('element AS value, name AS text');
+        $query->from('#__extensions');
+        $query->where('enabled = 1');
+        $query->where('type = "' . $extensiontype . '"');
+        if (trim($exclude) == '') {
+        } else {
+            $query->where('extension_id NOT IN ("' . $exclude . '")');
+        }
+        $query->order('ordering, name');
 
-		// Set the query and load the options.
-		$db->setQuery($query);
-		$options = $db->loadObjectList();
+        // Set the query and load the options.
+        $db->setQuery($query);
+        $options = $db->loadObjectList();
 
-		// Set the query and load the options.
-		$lang = MolajoFactory::getLanguage();
-		foreach ($options as $i=>$option) {
-                    $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
-                    $options[$i]->text = MolajoText::_($option->text);
-		}
+        // Set the query and load the options.
+        $lang = MolajoFactory::getLanguage();
+        foreach ($options as $i => $option) {
+            $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
+            $options[$i]->text = MolajoText::_($option->text);
+        }
 
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			MolajoError::raiseWarning(500, $db->getErrorMsg());
-		}
+        // Check for a database error.
+        if ($db->getErrorNum()) {
+            MolajoError::raiseWarning(500, $db->getErrorMsg());
+        }
 
-		// Merge any additional options in the XML definition.
-		$options = array_merge(parent::getOptions(), $options);
+        // Merge any additional options in the XML definition.
+        $options = array_merge(parent::getOptions(), $options);
 
-		return $options;
-	}
+        return $options;
+    }
 }

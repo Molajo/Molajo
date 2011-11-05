@@ -18,39 +18,39 @@ defined('MOLAJO') or die;
 class MolajoDocumentRaw extends MolajoDocument
 {
 
-	/**
-	 * Class constructor
-	 *
-	 * @param   array  $options  Associative array of options
-	 *
-	 * @return  MolajoDocumentRaw
-	 *
-	 * @since   11.1
-	 */
-	public function __construct($options = array())
-	{
-		parent::__construct($options);
+    /**
+     * Class constructor
+     *
+     * @param   array  $options  Associative array of options
+     *
+     * @return  MolajoDocumentRaw
+     *
+     * @since   11.1
+     */
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
 
-		//set mime type
-		$this->_mime = 'text/html';
+        //set mime type
+        $this->_mime = 'text/html';
 
-		//set document type
-		$this->_type = 'raw';
-	}
+        //set document type
+        $this->_type = 'raw';
+    }
 
-	/**
-	 * Render the document.
-	 *
-	 * @param   boolean  $cache   If true, cache the output
-	 * @param   array    $params  Associative array of attributes
-	 *
-	 * @return  The rendered data
-	 *
-	 * @since   11.1
-	 */
-	public function render($cache = false, $params = array())
-	{
-		parent::render();
-		return $this->getBuffer();
-	}
+    /**
+     * Render the document.
+     *
+     * @param   boolean  $cache   If true, cache the output
+     * @param   array    $params  Associative array of attributes
+     *
+     * @return  The rendered data
+     *
+     * @since   11.1
+     */
+    public function render($cache = false, $params = array())
+    {
+        parent::render();
+        return $this->getBuffer();
+    }
 }

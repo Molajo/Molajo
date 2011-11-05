@@ -17,25 +17,25 @@ defined('MOLAJO') or die;
  */
 class MolajoFormFieldMenu extends MolajoFormFieldList
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	public $type = 'Menu';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.0
+     */
+    public $type = 'Menu';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 * @since   1.0
-	 */
-	protected function getOptions()
-	{
-		// Merge any additional options in the XML definition.
-		$options = array_merge(parent::getOptions(), MolajoHTML::_('menu.menus'));
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     * @since   1.0
+     */
+    protected function getOptions()
+    {
+        // Merge any additional options in the XML definition.
+        $options = array_merge(parent::getOptions(), MolajoHTML::_('menu.menus'));
 
-		return $options;
-	}
+        return $options;
+    }
 }

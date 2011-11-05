@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 //echo '<pre>';var_dump($request);'</pre>';
 
 /** component includes **/
-require_once dirname(__FILE__).'/import.php';
+require_once dirname(__FILE__) . '/import.php';
 
 /** validate option **/
 if ($request['option'] == $current_folder) {

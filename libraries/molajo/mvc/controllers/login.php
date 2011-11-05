@@ -12,65 +12,65 @@ defined('MOLAJO') or die;
  *
  * Handles Login and Logout Methods
  *
- * @package	    Molajo
- * @subpackage	Controller
- * @since	    1.0
+ * @package        Molajo
+ * @subpackage    Controller
+ * @since        1.0
  */
 class MolajoControllerLogin extends MolajoController
 {
-	/**
-	 * login
-     * 
-     * Method to log in a user.
-	 *
-	 * @return	void
-	 */
-	public function login()
-	{
     /**
-     *  Retrieve Form Fields
+     * login
+     *
+     * Method to log in a user.
+     *
+     * @return    void
      */
-//JRequest::checkToken() or die();
+    public function login()
+    {
+        /**
+         *  Retrieve Form Fields
+         */
+        //JRequest::checkToken() or die();
 
-		$credentials = array(
-			'username' => JRequest::getVar('username', '', 'method', 'username'),
-			'password' => JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW)
-		);
+        $credentials = array(
+            'username' => JRequest::getVar('username', '', 'method', 'username'),
+            'password' => JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW)
+        );
 
         $options = array('action' => 'login');
 
-		/** security check: internal URL only */
-		if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
-			$return = base64_decode($return);
-			if (JURI::isInternal($return)) {
+        /** security check: internal URL only */
+        if ($return = JRequest::getVar('return', '', 'method', 'base64')) {
+            $return = base64_decode($return);
+            if (JURI::isInternal($return)) {
             } else {
-				$return = '';
-			}
-		}
-		if (empty($return)) {
-			$return = 'index.php';
-		}
+                $return = '';
+            }
+        }
+        if (empty($return)) {
+            $return = 'index.php';
+        }
 
-    /**
-     *  Authenticate, Authorize and Execute After Login Plugins
-     */
-		$molajoAuth = MolajoAuthentication::getInstance();
+        /**
+         *  Authenticate, Authorize and Execute After Login Plugins
+         */
+        $molajoAuth = MolajoAuthentication::getInstance();
 
-		$userObject = $molajoAuth->authenticate($credentials, $options);
+        $userObject = $molajoAuth->authenticate($credentials, $options);
         if ($userObject->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
-            $this->_loginFailed ('authenticate', $userObject, $options);
+            $this->_loginFailed('authenticate', $userObject, $options);
             return;
         }
 
-        $molajoAuth->authorise($userObject, (array) $options);
+        $molajoAuth->authorise($userObject, (array)$options);
         if ($userObject->status === MolajoAuthentication::STATUS_SUCCESS) {
         } else {
-            $this->_loginFailed ('authorise', $userObject, $options);
+            $this->_loginFailed('authorise', $userObject, $options);
             return;
         }
 
-        $molajoAuth->onUserLogin($userObject, (array) $options);
+        $molajoAuth->onUserLogin($userObject, (array)$options);
         if (isset($options['remember']) && $options['remember']) {
 
             // Create the encryption key, apply extra hardening using the user agent string.
@@ -81,7 +81,7 @@ class MolajoControllerLogin extends MolajoController
                 $key = MolajoUtility::getHash($agent);
                 $crypt = new MolajoSimpleCrypt($key);
                 $rcookie = $crypt->encrypt(serialize($credentials));
-                $lifetime = time() + 365*24*60*60;
+                $lifetime = time() + 365 * 24 * 60 * 60;
 
                 // Use domain and path set in config for cookie if it exists.
                 $cookie_domain = $this->getConfiguration('cookie_domain', '');
@@ -96,20 +96,20 @@ class MolajoControllerLogin extends MolajoController
         /** success message */
         $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_SUCCESSFUL_LOGON'));
         $this->redirectClass->setSuccessIndicator(true);
-	}
+    }
 
-	/**
-	 * _loginFailed
+    /**
+     * _loginFailed
      *
      * Handles failed login attempts
-	 *
+     *
      * @param $response
      * @param array $options
      * @return
      */
-	protected function _loginFailed ($type, $response, $options=Array())
-	{
-		MolajoPluginHelper::getPlugin('user');
+    protected function _loginFailed($type, $response, $options = Array())
+    {
+        MolajoPluginHelper::getPlugin('user');
         if ($type == 'authenticate') {
             JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
         } else {
@@ -122,14 +122,14 @@ class MolajoControllerLogin extends MolajoController
             $this->redirectClass->setRedirectMessageType(MolajoText::_('warning'));
         }
         return $this->redirectClass->setSuccessIndicator(false);
-	}
+    }
 
     /**
      * logout
      *
      * Method to log out a user.
      *
-     * @return	void
+     * @return    void
      */
     public function logout()
     {
@@ -143,7 +143,7 @@ class MolajoControllerLogin extends MolajoController
 
         $result = $app->logout($userid, $options);
         if (!MolajoError::isError($result)) {
-            $this->model 	= $this->getModel('login');
+            $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
             $app->redirect($return);
         }
@@ -161,7 +161,7 @@ class MolajoControllerLogin extends MolajoController
      *
      * @since   11.1
      */
-    function triggerEvent($event, $args=null)
+    function triggerEvent($event, $args = null)
     {
         $dispatcher = JDispatcher::getInstance();
 
@@ -194,12 +194,12 @@ class MolajoControllerLogin extends MolajoController
         $user = MolajoFactory::getUser($userid);
 
         // Build the credentials array.
-        $parameters['username']	= $user->get('username');
-        $parameters['id']		= $user->get('id');
+        $parameters['username'] = $user->get('username');
+        $parameters['id'] = $user->get('id');
 
         // Set clientid in the options array if it hasn't been set already.
         if (!isset($options['applicationid'])) {
-            $options['applicationid']= MOLAJO_APPLICATION_ID;
+            $options['applicationid'] = MOLAJO_APPLICATION_ID;
         }
 
         // Import the user plugin group.
