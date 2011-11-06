@@ -34,6 +34,12 @@ if (isset($_SERVER["REQUEST_URI"])) {
 }
 define('MOLAJO_BASE_URL', strtolower($baseURL));
 
+if (strrpos(MOLAJO_BASE_URL, MOLAJO_APPLICATION)) {
+    define('MOLAJO_BASE_URL_NOAPP', substr(MOLAJO_BASE_URL, 0, strrpos(MOLAJO_BASE_URL, MOLAJO_APPLICATION)));
+} else {
+    define('MOLAJO_BASE_URL_NOAPP', MOLAJO_BASE_URL);
+}
+
 /** Override Locations */
 if (file_exists(MOLAJO_BASE_FOLDER.'/defines.php')) {
 	include_once MOLAJO_BASE_FOLDER.'/defines.php';
