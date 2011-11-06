@@ -13,10 +13,6 @@ $filehelper = new MolajoFileHelper();
 
 $filehelper->requireClassFile(LIBRARIES.'/jplatform/simplepie/simplepie.php', 'SimplePie');
 
-/** Additional Libraries (Add as configuration options later) */
-$filehelper->requireClassFile(LIBRARIES.'/akismet/Akismet.class.php', 'Akismet');
-require_once LIBRARIES.'/recaptcha/recaptchalib.php';
-
 /** Twig Autoload */
 $filehelper->requireClassFile(MOLAJO_BASE_FOLDER.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
 Twig_Autoloader::register();
