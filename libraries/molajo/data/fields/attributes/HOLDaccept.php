@@ -119,7 +119,7 @@ class MolajoAttributeAccept extends MolajoAttribute
 
         if (count($MIMEtypes)) {
             foreach ($MIMEtypes as $type) {
-                $formattedList[] = $MIME_literal . '/' . $type;
+                $formattedList[] = $MIME_literal.'/'.$type;
             }
         }
 

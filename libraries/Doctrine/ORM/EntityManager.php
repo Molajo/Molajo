@@ -612,7 +612,7 @@ class EntityManager implements ObjectManager
      *
      * @return Doctrine\ORM\Configuration
      */
-    public function getConfiguration()
+    public function getSiteConfig()
     {
         return $this->config;
     }

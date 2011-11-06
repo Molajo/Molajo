@@ -46,14 +46,14 @@ class JFormFieldModuleLayout extends JFormField
 		$clientName = $this->element['application_id'];
 
 		// Get the client id.
-		$applicationId = $this->element['application_id'];
+		$application_id = $this->element['application_id'];
 
-		if (is_null($applicationId) && $this->form instanceof JForm) {
-			$applicationId = $this->form->getValue('application_id');
+		if (is_null($application_id) && $this->form instanceof JForm) {
+			$application_id = $this->form->getValue('application_id');
 		}
-		$applicationId = (int) $applicationId;
+		$application_id = (int) $application_id;
 
-		$client	= JApplicationHelper::getApplicationInfo($applicationId);
+		$client	= JApplicationHelper::getApplicationInfo($application_id);
 
 		// Get the module.
 		$module = (string) $this->element['module'];
@@ -92,7 +92,7 @@ class JFormFieldModuleLayout extends JFormField
 			// Build the query.
 			$query->select('element, name');
 			$query->from('#__extensions as e');
-			$query->where('e.application_id = '.(int) $applicationId);
+			$query->where('e.application_id = '.(int) $application_id);
 			$query->where('e.type = '.$db->quote('template'));
 			$query->where('e.enabled = 1');
 

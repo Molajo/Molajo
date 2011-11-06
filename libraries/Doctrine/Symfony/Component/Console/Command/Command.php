@@ -84,7 +84,7 @@ class Command
      *
      * @api
      */
-    public function getApplication()
+    public function getApp()
     {
         return $this->application;
     }

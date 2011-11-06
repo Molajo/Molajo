@@ -19,17 +19,16 @@ define('JOOMLA_LIBRARY',		MOLAJO_BASE_FOLDER.'/libraries/jplatform/joomla');
 define('JPATH_SITE',			MOLAJO_BASE_FOLDER);
 define('JPATH_ADMINISTRATOR',	MOLAJO_BASE_FOLDER);
 define('JPATH_PLUGINS',			MOLAJO_EXTENSION_PLUGINS);
-define('JPATH_CACHE',			MOLAJO_SITE_PATH_CACHE);
+define('JPATH_CACHE',			MOLAJO_SITE_PATH.'/cache');
 define('JPATH_MANIFESTS',		MOLAJO_EXTENSION_MANIFESTS);
 define('JPATH_THEMES',          MOLAJO_EXTENSION_TEMPLATES);
 
 /**
  * File Subsystem
  */
-require_once MOLAJO_LIBRARY.'/application/factory.php';
-require_once MOLAJO_LIBRARY.'/application/error.php';
-require_once MOLAJO_LIBRARY.'/application/exception.php';
-require_once MOLAJO_LIBRARY.'/application/text.php';
+require_once MOLAJO_LIBRARY.'/error/error.php';
+require_once MOLAJO_LIBRARY.'/error/exception.php';
+require_once MOLAJO_LIBRARY.'/site/text.php';
 require_once JOOMLA_LIBRARY.'/registry/registry.php';
 
 $filehelper = new MolajoFileHelper();

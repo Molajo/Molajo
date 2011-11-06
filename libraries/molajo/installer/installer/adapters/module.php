@@ -76,7 +76,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
                     ->setPath(
                 'source',
                 ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                        : MOLAJO_BASE_FOLDER) . '/modules/' . $this->parent->extension->element
+                        : MOLAJO_BASE_FOLDER).'/modules/' . $this->parent->extension->element
             );
         }
 
@@ -99,7 +99,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             if ($extension) {
                 $lang = MolajoFactory::getLanguage();
                 $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                        : MOLAJO_BASE_FOLDER) . '/modules/' . $extension;
+                        : MOLAJO_BASE_FOLDER).'/modules/' . $extension;
                 $folder = (string)$element->attributes()->folder;
 
                 if ($folder && file_exists("$path/$folder")) {
@@ -185,7 +185,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             }
         }
         if (!empty($element)) {
-            $this->parent->setPath('extension_root', $basePath . '/modules/' . $element);
+            $this->parent->setPath('extension_root', $basePath.'/modules/' . $element);
         }
         else
         {
@@ -265,7 +265,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         $manifestScript = (string)$this->manifest->scriptfile;
 
         if ($manifestScript) {
-            $manifestScriptFile = $this->parent->getPath('source') . '/' . $manifestScript;
+            $manifestScriptFile = $this->parent->getPath('source').'/'.$manifestScript;
 
             if (is_file($manifestScriptFile)) {
                 // Load the file
@@ -339,8 +339,8 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
         // If there is a manifest script, let's copy it.
         if ($this->get('manifest_script')) {
-            $path['src'] = $this->parent->getPath('source') . '/' . $this->get('manifest_script');
-            $path['dest'] = $this->parent->getPath('extension_root') . '/' . $this->get('manifest_script');
+            $path['src'] = $this->parent->getPath('source').'/'.$this->get('manifest_script');
+            $path['dest'] = $this->parent->getPath('extension_root').'/'.$this->get('manifest_script');
 
             if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
                 if (!$this->parent->copyFiles(array($path))) {
@@ -535,8 +535,8 @@ class MolajoInstallerModule extends MolajoAdapterInstance
     public function discover()
     {
         $results = array();
-        $site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/modules');
-        $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/modules');
+        $site_list = JFolder::folders(MOLAJO_BASE_FOLDER.'/modules');
+        $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER.'/modules');
         $site_info = MolajoApplicationHelper::getApplicationInfo('site', true);
         $admin_info = MolajoApplicationHelper::getApplicationInfo('administrator', true);
 
@@ -581,7 +581,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         // Modules are like templates, and are one of the easiest
         // If its not in the extensions table we just add it
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
+        $manifestPath = $client->path.'/modules/' . $this->parent->extension->element.'/'.$this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $description = (string)$this->parent->manifest->description;
 
@@ -622,7 +622,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path . '/modules/' . $this->parent->extension->element . '/' . $this->parent->extension->element . '.xml';
+        $manifestPath = $client->path.'/modules/' . $this->parent->extension->element.'/'.$this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -681,7 +681,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             $this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ERROR_MOD_UNINSTALL_UNKNOWN_CLIENT', $row->application_id));
             return false;
         }
-        $this->parent->setPath('extension_root', $client->path . '/modules/' . $element);
+        $this->parent->setPath('extension_root', $client->path.'/modules/' . $element);
 
         $this->parent->setPath('source', $this->parent->getPath('extension_root'));
 
@@ -691,14 +691,14 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         $this->manifest = $this->parent->getManifest();
 
         // Attempt to load the language file; might have uninstall strings
-        $this->loadLanguage(($row->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER) . '/modules/' . $element);
+        $this->loadLanguage(($row->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER).'/modules/' . $element);
 
         // If there is an manifest class file, let's load it
         $this->scriptElement = $this->manifest->scriptfile;
         $manifestScript = (string)$this->manifest->scriptfile;
 
         if ($manifestScript) {
-            $manifestScriptFile = $this->parent->getPath('extension_root') . '/' . $manifestScript;
+            $manifestScriptFile = $this->parent->getPath('extension_root').'/'.$manifestScript;
 
             if (is_file($manifestScriptFile)) {
                 // Load the file

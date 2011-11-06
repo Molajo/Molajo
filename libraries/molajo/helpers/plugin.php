@@ -150,7 +150,7 @@ abstract class MolajoPluginHelper
         $plugin->type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
         $plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
 
-        $path = MOLAJO_EXTENSION_PLUGINS . '/' . $plugin->type . '/' . $plugin->name . '/' . $plugin->name . '.php';
+        $path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name . '.php';
 
         if (JFile::exists($path)) {
             require_once $path;

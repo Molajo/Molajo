@@ -60,7 +60,7 @@ EOT
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $em = $this->getHelper('em')->getEntityManager();
-        $cacheDriver = $em->getConfiguration()->getMetadataCacheImpl();
+        $cacheDriver = $em->getSiteConfig()->getMetadataCacheImpl();
 
         if ( ! $cacheDriver) {
             throw new \InvalidArgumentException('No Metadata cache driver is configured on given EntityManager.');

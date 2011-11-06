@@ -145,7 +145,7 @@ class MolajoURLHelper
      */
     function addTrailingSlash($option_InputText)
     {
-        return untrailingslashit($option_InputText) . '/';
+        return untrailingslashit($option_InputText).'/';
     }
 
     /**

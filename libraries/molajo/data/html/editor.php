@@ -305,10 +305,10 @@ class MolajoEditor extends JObservable
 
         // Build the path to the needed editor plugin
         $name = JFilterInput::getInstance()->clean($this->_name, 'cmd');
-        $path = MOLAJO_EXTENSION_PLUGINS . '/editors/' . $name . '.php';
+        $path = MOLAJO_EXTENSION_PLUGINS.'/editors/' . $name . '.php';
 
         if (!JFile::exists($path)) {
-            $path = MOLAJO_EXTENSION_PLUGINS . '/editors/' . $name . '/' . $name . '.php';
+            $path = MOLAJO_EXTENSION_PLUGINS.'/editors/' . $name.'/'.$name . '.php';
             if (!JFile::exists($path)) {
                 $message = MolajoText::_('MOLAJO_HTML_EDITOR_CANNOT_LOAD');
                 MolajoError::raiseWarning(500, $message);

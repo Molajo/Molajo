@@ -211,7 +211,7 @@ class plgSystemDebug extends MolajoPlugin
 		}
 
 		// Show language debug only if enabled
-		if (MolajoFactory::getApplication()->getConfiguration('debug_lang')) {
+		if (MolajoFactory::getApplication()->getConfig('debug_lang')) {
 			$lang = MolajoFactory::getLanguage();
 
 			if ($this->params->get('language_errorfiles', 1)) {

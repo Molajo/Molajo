@@ -36,7 +36,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
 				<option value="*"><?php echo MolajoText::_('JGLOBAL_FILTER_CLIENT'); ?></option>
-				<?php echo MolajoHTML::_('select.options', TemplatesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo MolajoHTML::_('select.options', TemplatesHelper::getAppOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
 		</div>
 	</fieldset>

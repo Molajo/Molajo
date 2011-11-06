@@ -37,7 +37,6 @@ class MolajoApplicationHelper
         if (MolajoFactory::getUser()->get('guest') === true
             && MolajoFactory::getConfig()->get('application_logon_requirement', true) === true
         ) {
-
             $option = MolajoFactory::getConfig()->get('application_guest_option', 'com_login');
 
         } elseif ($option == '') {
@@ -154,48 +153,16 @@ class MolajoApplicationHelper
     {
         $filehelper = new MolajoFileHelper();
         $files = JFolder::files(MOLAJO_APPLICATION_PATH, '\.php$', false, false);
+
         foreach ($files as $file) {
-            if ($file == 'helper.php') {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application' . ucfirst(substr($file, 0, strpos($file, '.'))));
+            if ($file == 'configuration.php') {
+                
+            } else if ($file == 'helper.php') {
+                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application' . ucfirst(substr($file, 0, strpos($file, '.'))));
             } else {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
-    }
-
-    /**
-     * getApplicationDefaults
-     *
-     * Retrieves Applications for which the site is authorized to see
-     *
-     * @param   integer  $id        A site id
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public static function getApplicationDefaults()
-    {
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('default_template_extension_id');
-        $query->select('default_application_indicator');
-        $query->from($db->namequote('#__applications'));
-        $query->where($db->namequote('id') . ' = ' . (int)MOLAJO_APPLICATION_ID);
-
-        $db->setQuery($query->__toString());
-
-        if ($defaults = $db->loadObjectList()) {
-        } else {
-            MolajoFactory::getSite()->enqueueMessage($db->getErrorMsg(), 'error');
-            return false;
-        }
-
-        if ($db->getErrorNum()) {
-            return new MolajoException($db->getErrorMsg());
-        }
-
-        return $defaults;
     }
 
     /**

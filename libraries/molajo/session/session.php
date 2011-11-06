@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 
 
 // Register the session storage class with the loader
-JLoader::register('MolajoSessionStorage', dirname(__FILE__) . '/storage.php');
+JLoader::register('MolajoSessionStorage', dirname(__FILE__).'/storage.php');
 
 /**
  * Class for managing HTTP sessions
@@ -290,7 +290,7 @@ class MolajoSession extends JObject
      */
     public static function getStores()
     {
-        $handlers = JFolder::files(dirname(__FILE__) . '/storage', '.php$');
+        $handlers = JFolder::files(dirname(__FILE__).'/storage', '.php$');
 
         $names = array();
         foreach ($handlers as $handler)
@@ -300,7 +300,7 @@ class MolajoSession extends JObject
 
             //Load the class only if needed
             if (!class_exists($class)) {
-                require_once dirname(__FILE__) . '/storage/' . $name . '.php';
+                require_once dirname(__FILE__).'/storage/' . $name . '.php';
             }
 
             if (call_user_func_array(array(trim($class), 'test'), array())) {

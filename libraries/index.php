@@ -28,7 +28,7 @@ if (isset($_SERVER['SERVER_PORT'])) {
 
 if (defined('MOLAJO_SITE')) {
 } else {
-    $xml = simplexml_load_file(MOLAJO_BASE_FOLDER.'/sites.xml', 'SimpleXMLElement');
+    $xml = simplexml_load_file(MOLAJO_BASE_FOLDER.'/sites/sites.xml', 'SimpleXMLElement');
     $count = $xml->count;
     for ($i = 1; $i < $count + 1; $i++) {
         $fieldName = 'site'.$i;
@@ -37,6 +37,11 @@ if (defined('MOLAJO_SITE')) {
             break;
         }
     }
+}
+if (defined('MOLAJO_SITE')) {
+} else {
+    echo 'Site not identified. ';
+    exit;
 }
 
 /**
@@ -109,6 +114,9 @@ JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
 
+/**
+print_r(get_defined_constants(true));
+*/
 /**
  *  Display
  */

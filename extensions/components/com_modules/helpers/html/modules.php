@@ -16,12 +16,12 @@ defined('_JEXEC') or die;
 abstract class MolajoHTMLModules
 {
 	/**
-	 * @param	int $applicationId	The application id
+	 * @param	int $application_id	The application id
 	 * @param	string $state 	The state of the template
 	 */
-	static public function templates($applicationId = 0, $state = '')
+	static public function templates($application_id = 0, $state = '')
 	{
-		$templates = ModulesHelper::getTemplates($applicationId, $state);
+		$templates = ModulesHelper::getTemplates($application_id, $state);
 		foreach ($templates as $template) {
 			$options[]	= MolajoHTML::_('select.option', $template->element, $template->name);
 		}

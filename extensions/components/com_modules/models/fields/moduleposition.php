@@ -36,20 +36,20 @@ class JFormFieldModulePosition extends JFormFieldText
 	protected function getInput()
 	{
 		// Get the application id.
-		$applicationId = $this->element['application_id'];
-		if (!isset($applicationId))
+		$application_id = $this->element['application_id'];
+		if (!isset($application_id))
 		{
 			$applicationName = $this->element['application'];
 			if (isset($applicationName))
 			{
 				$application = JApplicationHelper::getApplicationInfo($applicationName, true);
-				$applicationId = $application->id;
+				$application_id = $application->id;
 			}
 		}
-		if (!isset($applicationId) && $this->form instanceof JForm) {
-			$applicationId = $this->form->getValue('application_id');
+		if (!isset($application_id) && $this->form instanceof JForm) {
+			$application_id = $this->form->getValue('application_id');
 		}
-		$applicationId = (int) $applicationId;
+		$application_id = (int) $application_id;
 
 		// Load the modal behavior script.
 		MolajoHTML::_('behavior.modal', 'a.modal');
@@ -66,7 +66,7 @@ class JFormFieldModulePosition extends JFormFieldText
 
 		// Setup variables for display.
 		$html	= array();
-		$link	= 'index.php?option=com_modules&amp;view=positions&amp;layout=modal&amp;tmpl=component&amp;function=jSelectPosition_'.$this->id.'&amp;application_id='.$applicationId;
+		$link	= 'index.php?option=com_modules&amp;view=positions&amp;layout=modal&amp;tmpl=component&amp;function=jSelectPosition_'.$this->id.'&amp;application_id='.$application_id;
 
 		// The current user display field.
 		$html[] = '<div class="fltlft">';

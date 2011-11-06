@@ -131,13 +131,13 @@ class InstallerModelConfiguration extends MolajoModelDummy
 
 
 		// Build the configuration file path.
-		$path = MOLAJO_PATH_CONFIGURATION . '/configuration.php';
+		$path = MOLAJO_SITE_CONFIGURATION . '/configuration.php';
 
 		// Determine if the configuration file path is writable.
 		if (file_exists($path)) {
 			$canWrite = is_writable($path);
 		} else {
-			$canWrite = is_writable(MOLAJO_PATH_CONFIGURATION . '/');
+			$canWrite = is_writable(MOLAJO_SITE_CONFIGURATION . '/');
 		}
 
 		/*

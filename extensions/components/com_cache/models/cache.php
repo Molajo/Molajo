@@ -53,10 +53,10 @@ class CacheModelCache extends JModelList
 	{
 		$app = MolajoFactory::getApplication();
 
-		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int');
-		$this->setState('applicationId', $applicationId == 1 ? 1 : 0);
+		$application_id = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int');
+		$this->setState('application_id', $application_id == 1 ? 1 : 0);
 
-		$application	= JApplicationHelper::getApplicationInfo($applicationId);
+		$application	= JApplicationHelper::getApplicationInfo($application_id);
 		$this->setState('application', $application);
 
 		parent::populateState('group', 'asc');
@@ -113,7 +113,7 @@ class CacheModelCache extends JModelList
 			'defaultgroup'	=> '',
 			'storage' 		=> $conf->get('cache_handler', ''),
 			'caching'		=> true,
-			'cachebase'		=> ($this->getState('applicationId') == 1) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
+			'cachebase'		=> ($this->getState('application_id') == 1) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
 		);
 
 		jimport('joomla.cache.cache');
@@ -127,7 +127,7 @@ class CacheModelCache extends JModelList
 	 *
 	 * @return array
 	 */
-	public function getApplication()
+	public function getApp()
 	{
 		return $this->getState('application');
 	}

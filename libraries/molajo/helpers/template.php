@@ -65,7 +65,7 @@ abstract class MolajoTemplateHelper
             $template->parameters = $registry;
         }
 
-        if (file_exists(MOLAJO_EXTENSION_TEMPLATES . '/' . $template->name . '/' . 'index.php')) {
+        if (file_exists(MOLAJO_EXTENSION_TEMPLATES.'/'.$template->name.'/'.'index.php')) {
         } else {
             $template->name = 'molajito';
         }

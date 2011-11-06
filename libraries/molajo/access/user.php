@@ -301,16 +301,16 @@ class MolajoUser extends JObject
         // Set the default parampath if not set already
         if (isset($parampath)) {
         } else {
-            $parampath = MOLAJO_EXTENSION_COMPONENTS . '/com_users/models';
+            $parampath = MOLAJO_EXTENSION_COMPONENTS.'/com_users/models';
         }
 
         if ($loadsetupfile) {
             $type = str_replace(' ', '_', strtolower($this->usertype));
 
-            $file = $parampath . '/' . $type . '.xml';
+            $file = $parampath.'/'.$type . '.xml';
             if (file_exists($file)) {
             } else {
-                $file = $parampath . '/' . 'user.xml';
+                $file = $parampath.'/'.'user.xml';
             }
 
             $this->_parameters->loadSetupFile($file);

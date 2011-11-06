@@ -151,10 +151,10 @@ class protectBackup extends MolajoPlugin	{
          */
         $backupCreatedDate = date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
 
-        $sitename 		= $mainframe->getConfiguration('sitename');
-        $fromname 		= $mainframe->getConfiguration('fromname');
-        $mailfrom 		= $mainframe->getConfiguration('mailfrom');
-        $databaseName 	= $mainframe->getConfiguration('db');
+        $sitename 		= $mainframe->getSiteConfig('sitename');
+        $fromname 		= $mainframe->getSiteConfig('fromname');
+        $mailfrom 		= $mainframe->getSiteConfig('mailfrom');
+        $databaseName 	= $mainframe->getSiteConfig('db');
 
         $bcc = Array();
         foreach ( $emailAddressArray as $emailAddress ) {

@@ -506,7 +506,7 @@ abstract class JModel extends JObject
 	protected function cleanCache($group = null, $client_id = 0)
 	{
 		// Initialise variables;
-		$conf = JFactory::getConfig();
+		$conf = JFactory::getSiteConfig();
 		$dispatcher = JDispatcher::getInstance();
 
 		$options = array(

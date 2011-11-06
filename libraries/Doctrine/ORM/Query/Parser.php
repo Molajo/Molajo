@@ -862,7 +862,7 @@ class Parser
 
         if (strrpos($schemaName, ':') !== false) {
             list($namespaceAlias, $simpleClassName) = explode(':', $schemaName);
-            $schemaName = $this->_em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
+            $schemaName = $this->_em->getSiteConfig()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
 
         $exists = class_exists($schemaName, true);
@@ -2769,7 +2769,7 @@ class Parser
         }
 
         // Check for custom functions afterwards
-        $config = $this->_em->getConfiguration();
+        $config = $this->_em->getSiteConfig();
 
         if ($config->getCustomStringFunction($funcName) !== null) {
             return $this->CustomFunctionsReturningStrings();
@@ -2805,7 +2805,7 @@ class Parser
     {
         $funcName = strtolower($this->_lexer->lookahead['value']);
         // getCustomNumericFunction is case-insensitive
-        $funcClass = $this->_em->getConfiguration()->getCustomNumericFunction($funcName);
+        $funcClass = $this->_em->getSiteConfig()->getCustomNumericFunction($funcName);
         $function = new $funcClass($funcName);
         $function->parse($this);
 
@@ -2829,7 +2829,7 @@ class Parser
     {
         $funcName = $this->_lexer->lookahead['value'];
         // getCustomDatetimeFunction is case-insensitive
-        $funcClass = $this->_em->getConfiguration()->getCustomDatetimeFunction($funcName);
+        $funcClass = $this->_em->getSiteConfig()->getCustomDatetimeFunction($funcName);
         $function = new $funcClass($funcName);
         $function->parse($this);
 
@@ -2858,7 +2858,7 @@ class Parser
     {
         $funcName = $this->_lexer->lookahead['value'];
         // getCustomStringFunction is case-insensitive
-        $funcClass = $this->_em->getConfiguration()->getCustomStringFunction($funcName);
+        $funcClass = $this->_em->getSiteConfig()->getCustomStringFunction($funcName);
         $function = new $funcClass($funcName);
         $function->parse($this);
 

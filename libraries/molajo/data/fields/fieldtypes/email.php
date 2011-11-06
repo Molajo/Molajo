@@ -45,6 +45,6 @@ class MolajoFormFieldEMail extends MolajoFormField
 
         return '<calendar type="text" name="' . $this->name . '" class="validate-email' . $class . '" id="' . $this->id . '"' .
                ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-               $size . $disabled . $readonly . $onchange . $maxLength . '/>';
+               $size . $disabled . $readonly . $onchange . $maxLength.'/>';
     }
 }

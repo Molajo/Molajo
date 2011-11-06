@@ -133,7 +133,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
      */
     private function initialize()
     {
-        $this->driver = $this->em->getConfiguration()->getMetadataDriverImpl();
+        $this->driver = $this->em->getSiteConfig()->getMetadataDriverImpl();
         $this->targetPlatform = $this->em->getConnection()->getDatabasePlatform();
         $this->evm = $this->em->getEventManager();
         $this->initialized = true;
@@ -153,7 +153,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
             // Check for namespace alias
             if (strpos($className, ':') !== false) {
                 list($namespaceAlias, $simpleClassName) = explode(':', $className);
-                $realClassName = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
+                $realClassName = $this->em->getSiteConfig()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
 
                 if (isset($this->loadedMetadata[$realClassName])) {
                     // We do not have the alias name in the map, include it

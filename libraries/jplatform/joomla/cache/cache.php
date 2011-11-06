@@ -47,7 +47,7 @@ class JCache extends JObject
 	 */
 	public function __construct($options)
 	{
-		$conf = JFactory::getConfig();
+		$conf = JFactory::getSiteConfig();
 
 		$this->_options = array(
 			'cachebase' => $conf->get('cache_path', JPATH_CACHE),

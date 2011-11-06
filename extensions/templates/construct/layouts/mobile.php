@@ -34,7 +34,7 @@ $baseUrl 				= JURI::base();
 <body class="noscript">	
 	<div data-role="page" data-theme="<?php echo $mPageDataTheme; ?>">
 		<div id="header" data-role="header" data-theme="<?php echo $mHeaderDataTheme; ?>">
-			<h1><a href="<?php echo $baseUrl; ?>/" title="<?php echo $app->getConfiguration('sitename'); ?>"><?php echo $app->getConfiguration('sitename'); ?></a></h1>
+			<h1><a href="<?php echo $baseUrl; ?>/" title="<?php echo $app->getSiteConfig('sitename'); ?>"><?php echo $app->getSiteConfig('sitename'); ?></a></h1>
 			<?php if ($showDiagnostics) : ?>
 				<ul id="diagnostics">
 					<li><?php echo $currentComponent; ?></li>

@@ -84,7 +84,7 @@ abstract class MolajoModuleHelper
         $total = count($modules);
         for ($i = 0; $i < $total; $i++)
         {
-            if ($modules[$i]->position == $position) {
+            if ($modules[$i]->module_position == $position) {
                 $result[] = &$modules[$i];
             }
         }
@@ -141,7 +141,7 @@ abstract class MolajoModuleHelper
 
         // Get module path
         $module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
-        $path = MOLAJO_EXTENSION_MODULES . '/modules/' . $module->module . '/' . $module->module . '.php';
+        $path = MOLAJO_EXTENSION_MODULES.'/modules/' . $module->module.'/'.$module->module . '.php';
 
         // Load the module
         if ($module->user) {
@@ -303,8 +303,8 @@ abstract class MolajoModuleHelper
         }
 
         // Build the template and base path for the layout
-        $tPath = MOLAJO_EXTENSION_TEMPLATES . '/' . $template . '/html/' . $module . '/' . $layout . '.php';
-        $bPath = MOLAJO_EXTENSION_MODULES . '/modules/' . $module . '/tmpl/' . $defaultLayout . '.php';
+        $tPath = MOLAJO_EXTENSION_TEMPLATES.'/'.$template.'/html/' . $module.'/'.$layout . '.php';
+        $bPath = MOLAJO_EXTENSION_MODULES.'/modules/' . $module.'/tmpl/' . $defaultLayout . '.php';
 
         // If the template has a layout override use it
         if (file_exists($tPath)) {
@@ -324,103 +324,19 @@ abstract class MolajoModuleHelper
      */
     protected function &_load()
     {
-        static $clean;
-
-        if (isset($clean)) {
-            return $clean;
-        }
-
         $Itemid = JRequest::getInt('Itemid');
         $user = MolajoFactory::getUser();
         $lang = MolajoFactory::getLanguage()->getTag();
-        $applicationId = MOLAJO_APPLICATION_ID;
+        $application_id = MOLAJO_APPLICATION_ID;
 
-        $cache = MolajoFactory::getCache('com_modules', '');
-        $cacheid = md5(serialize(array($Itemid, $applicationId, $lang)));
+        static $modules;
 
-        if ($clean = $cache->get($cacheid)) {
-        } else {
-            $db = MolajoFactory::getDbo();
-            $query = $db->getQuery(true);
-
-            $date = MolajoFactory::getDate();
-            $now = $date->toMySQL();
-            $nullDate = $db->getNullDate();
-
-            $query->select('m.id as id, title, title as subtitle ');
-            $query->select('module, position, content, showtitle ');
-            $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
-            $query->from('#__modules AS m');
-            $query->join('inner', '#__modules_menu AS mm');
-            $query->where('mm.module_id = m.id');
-            $query->where('m.published = 1');
-            $query->where('m.id <> 1');
-            $query->where('(m.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR m.start_publishing_datetime <= ' . $db->Quote($now) . ')');
-            $query->where('(m.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR m.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
-
-            $acl = new MolajoACL ();
-            $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'm'));
-
-            $query->where('m.application_id = ' . $applicationId);
-            $query->where('(mm.menu_item_id = ' . (int)$Itemid . ' OR mm.menu_item_id <= 0)');
-
-            if (MolajoFactory::getApplication()->getLanguageFilter()) {
-                $query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
-            }
-            $query->order('position, ordering');
-
-            $db->setQuery($query->__toString());
-
-            $modules = $db->loadObjectList();
-            $clean = array();
-
-            if ($db->getErrorNum()) {
-                MolajoError::raiseWarning(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_MODULE_LOAD', $db->getErrorMsg()));
-                return $clean;
-            }
-
-            // Apply negative selections and eliminate duplicates
-            $negId = $Itemid ? -(int)$Itemid : false;
-            $dupes = array();
-            for ($i = 0, $n = count($modules); $i < $n; $i++)
-            {
-                $module = &$modules[$i];
-
-                // The module is excluded if there is an explicit prohibition or if
-                // the Itemid is missing or zero and the module is in exclude mode.
-                $negHit = ($negId === (int)$module->menu_item_id)
-                          || (!$negId && (int)$module->menu_item_id < 0);
-
-                if (isset($dupes[$module->id])) {
-                    // If this item has been excluded, keep the duplicate flag set,
-                    // but remove any item from the cleaned array.
-                    if ($negHit) {
-                        unset($clean[$module->id]);
-                    }
-                    continue;
-                }
-                $dupes[$module->id] = true;
-
-                // Only accept modules without explicit exclusions.
-                if (!$negHit) {
-                    $file = $module->module;
-                    $custom = substr($file, 0, 4) == 'mod_' ? 0 : 1;
-                    $module->user = $custom;
-                    // Custom module name is given by the title field, otherwise strip off "mod_"
-                    $module->name = $custom ? $module->title : substr($file, 4);
-                    $module->style = null;
-                    $module->position = strtolower($module->position);
-                    $clean[$module->id] = $module;
-                }
-            }
-            unset($dupes);
-            // Return to simple indexing that matches the query order.
-            $clean = array_values($clean);
-
-            $cache->store($clean, $cacheid);
+        if (isset($modules)) {
+            return $modules;
         }
 
-        return $clean;
+        $modules = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MODULES);
+        return $modules;
     }
 
     /**

@@ -24,10 +24,10 @@ $app = MolajoFactory::getApplication();
 	<div id="frame" class="outline">
 		<img src="images/joomla_logo_black.jpg" alt="Molajo Logo" />
 		<h1>
-			<?php echo $app->getConfiguration('sitename'); ?>
+			<?php echo $app->getSiteConfig('sitename'); ?>
 		</h1>
 	<p>
-		<?php echo $app->getConfiguration('offline_message'); ?>
+		<?php echo $app->getSiteConfig('offline_message'); ?>
 	</p>
 	<form action="<?php echo JRoute::_('index.php', true); ?>" method="post" id="form-login">
 	<fieldset class="input">

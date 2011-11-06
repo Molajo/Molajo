@@ -91,7 +91,7 @@ class MolajoFieldTitle extends MolajoField
         if ((int)$value == 0) {
             return;
         }
-        if ($selectedState == '*' || $selectedState == MOLAJO_STATE_VERSION) {
+        if ($selectedState == '*' || $selectedState == MOLAJO_STATUS_VERSION) {
             $query->where('(a.id = ' . (int)$value . ' OR a.version_of_id = ' . (int)$value . ')');
         } else {
             $query->where('a.id = ' . (int)$value);

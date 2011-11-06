@@ -30,10 +30,10 @@ class MolajoTableSession extends MolajoTable
         $this->username = '';
     }
 
-    function insert($sessionId, $applicationId)
+    function insert($sessionId, $application_id)
     {
         $this->session_id = $sessionId;
-        $this->application_id = $applicationId;
+        $this->application_id = $application_id;
 
         $this->time = time();
         $ret = $this->_db->insertObject($this->_tbl, $this, 'session_id');
@@ -62,13 +62,13 @@ class MolajoTableSession extends MolajoTable
     /**
      * Destroys the pesisting session
      */
-    function destroy($userId, $applicationIds = array())
+    function destroy($userId, $application_ids = array())
     {
-        $applicationIds = implode(',', $applicationIds);
+        $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__session'
                  . ' WHERE userid = ' . $this->_db->Quote($userId)
-                 . ' AND application_id IN (' . $applicationIds . ')';
+                 . ' AND application_id IN (' . $application_ids . ')';
         $this->_db->setQuery($query);
 
         if (!$this->_db->query()) {

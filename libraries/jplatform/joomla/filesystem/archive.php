@@ -74,7 +74,7 @@ class JArchive
 
 				if ($adapter)
 				{
-					$config = JFactory::getConfig();
+					$config = JFactory::getSiteConfig();
 					$tmpfname = $config->get('tmp_path') . '/' . uniqid('gzip');
 					$gzresult = $adapter->extract($archivename, $tmpfname);
 
@@ -117,7 +117,7 @@ class JArchive
 
 				if ($adapter)
 				{
-					$config = JFactory::getConfig();
+					$config = JFactory::getSiteConfig();
 					$tmpfname = $config->get('tmp_path') . '/' . uniqid('bzip2');
 					$bzresult = $adapter->extract($archivename, $tmpfname);
 

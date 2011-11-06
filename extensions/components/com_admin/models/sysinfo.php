@@ -80,7 +80,7 @@ class AdminModelSysInfo extends JModel
 	 *
 	 * @return array config values
 	 */
-	function &getConfig()
+	function &getSiteConfig()
 	{
 		if (is_null($this->config))
 		{

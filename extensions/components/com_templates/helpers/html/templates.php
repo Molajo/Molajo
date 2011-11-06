@@ -19,18 +19,18 @@ class MolajoHTMLTemplates
 	 *
 	 * @param	string	The name of the active view.
 	 */
-	public static function thumb($template, $applicationId = 0)
+	public static function thumb($template, $application_id = 0)
 	{
-		$application		= JApplicationHelper::getApplicationInfo($applicationId);
+		$application		= JApplicationHelper::getApplicationInfo($application_id);
 		$basePath	= $application->path.'/templates/'.$template;
-		$baseUrl	= ($applicationId == 0) ? JUri::root(true) : JUri::root(true).'/administrator';
+		$baseUrl	= ($application_id == 0) ? JUri::root(true) : JUri::root(true).'/administrator';
 		$thumb		= $basePath.'/template_thumbnail.png';
 		$preview	= $basePath.'/template_preview.png';
 		$html		= '';
 
 		if (file_exists($thumb))
 		{
-			$applicationPath = ($applicationId == 0) ? '' : 'administrator/';
+			$applicationPath = ($application_id == 0) ? '' : 'administrator/';
 			$thumb	= $applicationPath.'templates/'.$template.'/template_thumbnail.png';
 			$html	= MolajoHTML::_('image',$thumb,MolajoText::_('COM_TEMPLATES_PREVIEW'));
 			if (file_exists($preview))

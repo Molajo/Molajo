@@ -159,7 +159,7 @@ class MolajoComponentHelper
         MolajoFactory::getApplication()->scope = $request['option'];
 
         /** extension path and entry point */
-        $path = $request['component_path'] . '/' . $request['no_com_option'] . '.php';
+        $path = $request['component_path'].'/'.$request['no_com_option'] . '.php';
 
         /** installation does not have enabled extensions */
         if ($request['application_id'] == 0

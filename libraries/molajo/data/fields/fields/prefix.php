@@ -53,7 +53,7 @@ class MolajoFieldPrefix extends MolajoField
 
         if ($prefix) {
         } else {
-            $prefix = MolajoFactory::getApplication()->getConfiguration('prefix');
+            $prefix = MolajoFactory::getApplication()->getConfig('prefix');
         }
 
         if ($prefix) {
@@ -170,7 +170,7 @@ class MolajoFieldPrefix extends MolajoField
     protected function getPrefix($size = 10, $count = 100)
     {
         // For an existing table, retrieve all table names
-        $db = MolajoFactory::getApplication()->getConfiguration('db');
+        $db = MolajoFactory::getApplication()->getConfig('db');
         if ($db) {
             $tables = MolajoFactory::getDbo()->getTableList();
         } else {

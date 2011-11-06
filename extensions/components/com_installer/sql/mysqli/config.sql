@@ -84,7 +84,7 @@ INSERT INTO `molajo_configuration` (`component_option`, `option_id`, `option_val
 ('core', 230, '', '', 0),
 ('core', 230, 'content_type', 'Content Type', 1);
 
-/* 250 MOLAJO_CONFIG_OPTION_ID_STATUS */;
+/* 250 MOLAJO_CONFIG_OPTION_ID_STATE */;
 INSERT INTO `molajo_configuration` (`component_option`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 ('core', 250, '', '', 0),
 ('core', 250, '2', 'MOLAJO_OPTION_ARCHIVED', 1),

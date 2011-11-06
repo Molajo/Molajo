@@ -62,7 +62,7 @@ class TemplatesHelper
 	 *
 	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
-	public static function getApplicationOptions()
+	public static function getAppOptions()
 	{
 		// Build the filter options.
 		$options	= array();
@@ -77,14 +77,14 @@ class TemplatesHelper
 	 *
 	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
-	public static function getTemplateOptions($applicationId = '*')
+	public static function getTemplateOptions($application_id = '*')
 	{
 		// Build the filter options.
 		$db = MolajoFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		if ($applicationId != '*') {
-			$query->where('application_id='.(int) $applicationId);
+		if ($application_id != '*') {
+			$query->where('application_id='.(int) $application_id);
 		}
 
 		$query->select('element as value, name as text');

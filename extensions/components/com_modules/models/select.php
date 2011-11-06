@@ -34,8 +34,8 @@ class ModulesModelSelect extends JModelList
 		$app = MolajoFactory::getApplication('administrator');
 
 		// Load the filter state.
-		$applicationId = $app->getUserState('com_modules.modules.filter.application_id', 0);
-		$this->setState('filter.application_id', (int) $applicationId);
+		$application_id = $app->getUserState('com_modules.modules.filter.application_id', 0);
+		$this->setState('filter.application_id', (int) $application_id);
 
 		// Load the parameters.
 		$params	= JComponentHelper::getParams('com_modules');
@@ -91,8 +91,8 @@ class ModulesModelSelect extends JModelList
 		$query->where('a.type = '.$db->Quote('module'));
 
 		// Filter by application.
-		$applicationId = $this->getState('filter.application_id');
-		$query->where('a.application_id = '.(int) $applicationId);
+		$application_id = $this->getState('filter.application_id');
+		$query->where('a.application_id = '.(int) $application_id);
 
 		// Filter by enabled
 		$query->where('a.enabled = 1');

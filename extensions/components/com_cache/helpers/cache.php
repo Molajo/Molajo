@@ -23,7 +23,7 @@ class CacheHelper
 	 *
 	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
-	static function getApplicationOptions()
+	static function getAppOptions()
 	{
 		// Build the filter options.
 		$options	= array();

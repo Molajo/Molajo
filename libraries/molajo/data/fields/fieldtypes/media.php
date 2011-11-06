@@ -91,13 +91,13 @@ class MolajoFormFieldMedia extends MolajoFormField
         $html[] = '</div>';
 
         $directory = (string)$this->element['directory'];
-        if ($this->value && file_exists(MOLAJO_BASE_FOLDER . '/' . $this->value)) {
+        if ($this->value && file_exists(MOLAJO_BASE_FOLDER.'/'.$this->value)) {
             $folder = explode('/', $this->value);
             array_shift($folder);
             array_pop($folder);
             $folder = implode('/', $folder);
         }
-        elseif (file_exists(MOLAJO_BASE_FOLDER . '/' . MolajoComponentHelper::getParams('com_media')->get('image_path', 'images') . '/' . $directory)) {
+        elseif (file_exists(MOLAJO_BASE_FOLDER.'/'.MolajoComponentHelper::getParams('com_media')->get('image_path', 'images').'/'.$directory)) {
             $folder = $directory;
         }
         else {

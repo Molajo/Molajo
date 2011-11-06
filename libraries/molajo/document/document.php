@@ -246,7 +246,7 @@ class MolajoDocument extends JObject
 
         if (empty($instances[$signature])) {
             $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-            $path = dirname(__FILE__) . '/' . $type . '/' . $type . '.php';
+            $path = dirname(__FILE__).'/'.$type.'/'.$type . '.php';
             $ntype = null;
 
             // Check if the document type exists
@@ -262,7 +262,7 @@ class MolajoDocument extends JObject
             if (class_exists($class)) {
 
             } else {
-                $path = dirname(__FILE__) . '/' . $type . '/' . $type . '.php';
+                $path = dirname(__FILE__).'/'.$type.'/'.$type . '.php';
                 if (file_exists($path)) {
                     require_once $path;
 
@@ -778,7 +778,7 @@ class MolajoDocument extends JObject
 
         if (class_exists($class)) {
         } else {
-            $path = dirname(__FILE__) . '/' . $this->_type . '/renderer/' . $type . '.php';
+            $path = dirname(__FILE__).'/'.$this->_type.'/renderer/' . $type . '.php';
 
             if (file_exists($path)) {
                 require_once $path;

@@ -173,7 +173,7 @@ class MolajoFormHelper
             // Add the complex type prefix to the paths.
             for ($i = 0, $n = count($paths); $i < $n; $i++) {
                 // Derive the new path.
-                $path = $paths[$i] . '/' . strtolower(substr($type, 0, $pos));
+                $path = $paths[$i].'/'.strtolower(substr($type, 0, $pos));
 
                 // If the path does not exist, add it.
                 if (!in_array($path, $paths)) {
@@ -258,7 +258,7 @@ class MolajoFormHelper
             // But when someday we would want to support more entities, then we should consider adding
             // an inflector class to "libraries/joomla/utilities" and use it here (or somebody can use a real inflector in his subclass).
             // see also: pluralization snippet by Paul Osman in JControllerForm's constructor.
-            $paths[] = dirname(__FILE__) . '/' . $entity_plural;
+            $paths[] = dirname(__FILE__).'/'.$entity_plural;
         }
 
         // Force the new path(s) to an array.

@@ -119,7 +119,7 @@ else {
 					</ul>
 				<?php endif; ?>	
 				
-				<h1 id="logo"><a href="<?php echo $this->baseurl ?>/" title="<?php echo $app->getConfiguration('sitename');?>"><?php echo $app->getConfiguration('sitename');?></a></h1>
+				<h1 id="logo"><a href="<?php echo $this->baseurl ?>/" title="<?php echo $app->getSiteConfig('sitename');?>"><?php echo $app->getSiteConfig('sitename');?></a></h1>
 				
 				<?php if ($this->countModules('header')) : ?>
 					<jdoc:include type="modules" name="header" style="jexhtml" />	
@@ -280,7 +280,7 @@ else {
 									<jdoc:include type="message" />
 								<?php endif; ?>	
 																
-								<h3><?php echo $app->getConfiguration('offline_message'); ?></h3>
+								<h3><?php echo $app->getSiteConfig('offline_message'); ?></h3>
 								<?php if(JPluginHelper::isEnabled('authentication', 'openid')) : ?>
 								<?php JHTML::_('script', 'openid.js'); ?>
 								<?php endif; ?>

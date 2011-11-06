@@ -68,7 +68,7 @@ class plgSystemCache extends MolajoPlugin
 		{
 			JResponse::setBody($data);
 
-			echo JResponse::toString($app->getConfiguration('gzip'));
+			echo JResponse::toString($app->getSiteConfig('gzip'));
 
 			if (JDEBUG)
 			{

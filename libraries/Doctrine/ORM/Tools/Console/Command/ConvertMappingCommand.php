@@ -115,7 +115,7 @@ EOT
                 $em->getConnection()->getSchemaManager()
             );
 
-            $em->getConfiguration()->setMetadataDriverImpl(
+            $em->getSiteConfig()->setMetadataDriverImpl(
                 $databaseDriver
             );
 

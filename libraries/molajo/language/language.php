@@ -324,7 +324,7 @@ class MolajoLanguage extends JObject
      */
     public function transliterate($string)
     {
-        include_once dirname(__FILE__) . '/latin_transliterate.php';
+        include_once dirname(__FILE__).'/latin_transliterate.php';
 
         if ($this->transliterator !== null) {
             return call_user_func($this->transliterator, $string);
@@ -1091,7 +1091,7 @@ class MolajoLanguage extends JObject
      */
     public static function getMetadata($lang)
     {
-        $path = self::getLanguagePath(MOLAJO_APPLICATIONS_PATH . '/' . MOLAJO_APPLICATION, $lang);
+        $path = self::getLanguagePath(MOLAJO_APPLICATIONS_PATH.'/'.MOLAJO_APPLICATION, $lang);
         $file = "$lang.xml";
 
         $result = null;

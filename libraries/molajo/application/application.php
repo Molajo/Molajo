@@ -7,7 +7,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-//todo: amy configuration option for applications
+
 /**
  * MolajoApplication
  *
@@ -21,7 +21,7 @@ class MolajoApplication extends JObject
      * @var    integer
      * @since  1.0
      */
-    protected $_applicationId = null;
+    protected $_application_id = null;
 
     /**
      * The application message queue.
@@ -93,64 +93,6 @@ class MolajoApplication extends JObject
     private $_detect_browser = false;
 
     /**
-     * __construct
-     *
-     * Class constructor.
-     *
-     * @param   array  $config  A configuration array
-     *
-     * @since  1.0
-     */
-    public function __construct($config = array())
-    {
-        /** Application ID and Name */
-        $config['applicationId'] = MOLAJO_APPLICATION_ID;
-        $this->_applicationId = MOLAJO_APPLICATION_ID;
-        $this->_name = MOLAJO_APPLICATION;
-
-        /** Input Object */
-        if (class_exists('JInput')) {
-            $this->input = new JInput;
-        }
-
-        /** Session */
-        if (isset($config['session'])) {
-        } else {
-            $config['session'] = true;
-        }
-        if (isset($config['session_name'])) {
-        } else {
-            $config['session_name'] = $this->_name;
-        }
-        if ($config['session'] === false) {
-        } else {
-            $sessionHelper = new MolajoSessionHelper ();
-            $sessionHelper->createSession(MolajoUtility::getHash($config['session_name']));
-        }
-
-        /** Configuration File */
-        if (isset($config['config_file'])) {
-        } else {
-            $config['config_file'] = 'configuration.php';
-        }
-        if ($this->_name == 'installation') {
-            $this->_createConfiguration();
-        } else {
-            $this->_createConfiguration(MOLAJO_SITE_PATH . '/' . $config['config_file']);
-        }
-
-        /** Application URI Base */
-        if (MOLAJO_APPLICATION == 'site') {
-        } else {
-            JURI::root(null, str_ireplace('/' . MOLAJO_APPLICATION, '', JURI::base(true)));
-        }
-
-        /** stats */
-        $this->set('requestTime', gmdate('Y-m-d H:i'));
-        $this->set('startTime', JProfiler::getmicrotime());
-    }
-
-    /**
      * getInstance
      *
      * Returns the global application object, creating if not existing
@@ -181,19 +123,12 @@ class MolajoApplication extends JObject
 
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
-                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_PATH . '/' . $info->path);
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_PATH.'/'.$info->path);
             }
 
             if (defined('MOLAJO_APPLICATION_ID')) {
             } else {
                 define('MOLAJO_APPLICATION_ID', $info->id);
-            }
-
-            /** verify site is authorised to access this application */
-            $site = new MolajoSite ();
-            $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
-            if ($authorise === false) {
-                return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
             }
 
             $results = MolajoApplicationHelper::loadApplicationClasses();
@@ -211,6 +146,66 @@ class MolajoApplication extends JObject
         }
 
         return $instances[$application];
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @param   array  $config  A configuration array
+     *
+     * @since  1.0
+     */
+    public function __construct($config = array())
+    {
+        /** Application ID and Name */
+        $config['application_id'] = MOLAJO_APPLICATION_ID;
+        $this->_application_id = MOLAJO_APPLICATION_ID;
+        $this->_name = MOLAJO_APPLICATION;
+
+        /** Input Object */
+        if (class_exists('JInput')) {
+            $this->input = new JInput;
+        }
+
+        /** Configuration File */
+        if (isset($config['config_file'])) {
+        } else {
+            $config['config_file'] = 'configuration.php';
+        }
+        if ($this->_name == 'installation') {
+            $this->_createAppConfiguration();
+            $this->_createConfiguration();
+        } else {
+            $this->_createAppConfiguration(MOLAJO_APPLICATION_PATH.'/'.$config['config_file']);
+            $this->_createConfiguration(MOLAJO_LIBRARY.'/'.$config['config_file']);
+        }
+
+        /** Session */
+        if (isset($config['session'])) {
+        } else {
+            $config['session'] = true;
+        }
+        if (isset($config['session_name'])) {
+        } else {
+            $config['session_name'] = $this->_name;
+        }
+        if ($config['session'] === false) {
+        } else {
+            $sessionHelper = new MolajoSessionHelper ();
+            $sessionHelper->createSession(MolajoUtility::getHash($config['session_name']));
+        }
+
+        /** Application URI Base */
+        if (MOLAJO_APPLICATION == 'site') {
+        } else {
+            JURI::root(null, str_ireplace('/' . MOLAJO_APPLICATION, '', JURI::base(true)));
+        }
+
+        /** stats */
+        $this->set('requestTime', gmdate('Y-m-d H:i'));
+        $this->set('startTime', JProfiler::getmicrotime());
     }
 
     /**
@@ -235,7 +230,7 @@ class MolajoApplication extends JObject
             }
         }
 
-        /** 2. user option for application */
+        /** 2. user option for user */
         if (empty($options['language'])) {
             $language = MolajoFactory::getUser()->getParam('language');
             if ($language && MolajoLanguage::exists($language)) {
@@ -244,10 +239,12 @@ class MolajoApplication extends JObject
         }
 
         /** 3. browser detection */
-        if ($this->_detect_browser && empty($options['language'])) {
-            $language = MolajoLanguageHelper::detectLanguage();
-            if ($language && MolajoLanguage::exists($language)) {
-                $options['language'] = $language;
+        if (empty($options['language'])) {
+            if ($this->_detect_browser && empty($options['language'])) {
+                $language = MolajoLanguageHelper::detectLanguage();
+                if ($language && MolajoLanguage::exists($language)) {
+                    $options['language'] = $language;
+                }
             }
         }
 
@@ -262,20 +259,20 @@ class MolajoApplication extends JObject
             $options['language'] = 'en-GB';
         }
 
-        /** Load Library Language Files */
-        $language = MolajoFactory::getLanguage();
-        $language->load('lib_molajo', MOLAJO_BASE_FOLDER);
-
         /** Set Language in Configuration */
         $config->set('language', $options['language']);
 
-        /** Set User Editor in Configuration */
-        $editor = MolajoFactory::getUser()->getParam('editor', $this->getConfiguration('editor'));
+        /** Load Library Language Files for the Base and Application */
+        $language = MolajoFactory::getLanguage();
+        $language->load('lib_molajo', MOLAJO_BASE_FOLDER);
+        $language->load('lib_molajo', MOLAJO_APPLICATION_PATH);
 
+        /** Set User Editor in Configuration */
+        $editor = MolajoFactory::getUser()->getParam('editor', $config->get('editor', 'none'));
         if (MolajoPluginHelper::isEnabled('editors', $editor)) {
 
         } else {
-            $editor = $this->getConfiguration('editor');
+            $editor = $config->get('editor');
             if (MolajoPluginHelper::isEnabled('editors', $editor)) {
             } else {
                 $editor = 'none';
@@ -283,17 +280,11 @@ class MolajoApplication extends JObject
         }
         $config->set('editor', $editor);
 
-        $defaults = MolajoApplicationHelper::getApplicationDefaults();
-        if ($defaults === false) {
-            return false;
-        }
-
-        foreach ($defaults as $default) {
-            $config->set('application_logon_requirement', true);
-            $config->set('application_guest_option', 'com_login');
-            $config->set('application_default_option', 'com_dashboard');
-            $config->set('default_application_indicator', $default->default_application_indicator);
-            $config->set('default_template_extension_id', $default->default_template_extension_id);
+        /** Site authorisation for Application */
+        $site = new MolajoSite ();
+        $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
+        if ($authorise === false) {
+            return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
         }
 
         /** Trigger onAfterInitialise Event */
@@ -327,7 +318,7 @@ class MolajoApplication extends JObject
 
         //		JRequest::set($result, 'get', false);
         ///** todo: amy configuration for ssl by application */
-        //		if ($this->getConfiguration('force_ssl') >= 1
+        //		if ($this->getConfig('force_ssl') >= 1
         ///          && strtolower($uri->getScheme()) != 'https') {
         //		$uri->setScheme('https');
         //		$this->redirect((string)$uri);
@@ -452,14 +443,14 @@ class MolajoApplication extends JObject
 
             switch ($document->getType()) {
                 case 'html':
-                    $document->setMetaData('keywords', $this->getConfiguration('MetaKeys'));
+                    $document->setMetaData('keywords', $this->getConfig('MetaKeys'));
                     break;
 
                 default:
                     break;
             }
-            $document->setTitle($this->getConfiguration('sitename'));
-            $document->setDescription($this->getConfiguration('MetaDesc'));
+            $document->setTitle($this->getConfig('sitename'));
+            $document->setDescription($this->getConfig('MetaDesc'));
 
             $contents = MolajoComponentHelper::renderComponent($request);
 
@@ -526,9 +517,9 @@ class MolajoApplication extends JObject
     }
 
     /**
-     * getConfiguration
+     * getConfig
      *
-     * Gets a configuration value.
+     * Gets a configuration value for the Application.
      *
      * @param   string   The name of the value to get.
      * @param   string   Default value to return
@@ -537,7 +528,7 @@ class MolajoApplication extends JObject
      *
      * @since  1.0
      */
-    public function getConfiguration($varname, $default = null)
+    public function getConfig($varname, $default = null)
     {
         return MolajoFactory::getConfig()->get('' . $varname, $default);
     }
@@ -735,7 +726,7 @@ class MolajoApplication extends JObject
      */
     public function setTemplate($template)
     {
-        if (is_dir(MOLAJO_EXTENSION_TEMPLATES . '/' . $template)) {
+        if (is_dir(MOLAJO_EXTENSION_TEMPLATES.'/'.$template)) {
             $this->template = new stdClass();
             $this->template->parameters = new JRegistry;
             $this->template->template = $template;
@@ -814,7 +805,7 @@ class MolajoApplication extends JObject
                 // It's relative to where we are now, so lets add that.
                 $parts = explode('/', $uri->toString(Array('path')));
                 array_pop($parts);
-                $path = implode('/', $parts) . '/';
+                $path = implode('/', $parts).'/';
                 $url = $prefix . $path . $url;
             }
         }
@@ -924,7 +915,7 @@ class MolajoApplication extends JObject
      */
     static public function stringURLSafe($string)
     {
-        if (self::getConfiguration('unicodeslugs') == 1) {
+        if (self::getConfig('unicodeslugs') == 1) {
             $output = JFilterOutput::stringURLUnicodeSlug($string);
 
         } else {
@@ -951,9 +942,35 @@ class MolajoApplication extends JObject
     }
 
     /**
+     * _createApplicationConfiguration
+     *
+     * Create the Application configuration registry.
+     *
+     * @param   string  $file  The path to the application configuration file
+     *
+     * return   object  A config object
+     *
+     * @since  1.0
+     */
+    protected function _createAppConfiguration($file = null)
+    {
+        if ($file == null) {
+        } else {
+            require_once $file;
+        }
+
+        /** Application Configuration */
+        $appConfig = new MolajoConfigApplication();
+        $registry = MolajoFactory::getApplicationConfiguration();
+        $registry->loadObject($appConfig);
+
+        return $appConfig;
+    }
+
+    /**
      * _createConfiguration
      *
-     * Create the configuration registry.
+     * Create the combined site and application configuration registry.
      *
      * @param   string  $file  The path to the configuration file
      *
@@ -968,18 +985,13 @@ class MolajoApplication extends JObject
             require_once $file;
         }
 
-        // Create the MolajoConfig object.
+        /** Combined Site and Application Configuration */
         $config = new MolajoConfig();
-
-        // Get the global configuration object.
         $registry = MolajoFactory::getConfig();
-
-        // Load the configuration values into the registry.
         $registry->loadObject($config);
 
         return $config;
     }
-
     /**
      * Set the current state of the language filter.
      *
@@ -1029,7 +1041,7 @@ class MolajoApplication extends JObject
      */
     public function __toString()
     {
-        return JResponse::toString($this->getConfiguration('gzip', false));
+        return JResponse::toString($this->getConfig('gzip', false));
     }
 
     /**
@@ -1064,7 +1076,7 @@ class MolajoApplication extends JObject
         }
 
         /** 2. Component Path */
-        $component_path = MOLAJO_EXTENSION_COMPONENTS . '/' . $option;
+        $component_path = MOLAJO_EXTENSION_COMPONENTS.'/'.$option;
         define('JPATH_COMPONENT', $component_path);
 
         /** 3. Task */
@@ -1400,7 +1412,7 @@ class MolajoApplication extends JObject
                 $session->set('page.params', $item->params);
             }
         } else {
-            $session->set('page.title', $this->getConfiguration('sitename'));
+            $session->set('page.title', $this->getConfig('sitename'));
             $session->set('page.subtitle', '');
             $session->set('page.metakey', '');
             $session->set('page.metadesc', '');
@@ -1429,14 +1441,14 @@ class MolajoApplication extends JObject
             $title = $session->get('page.title');
         }
         if (empty($title)) {
-            $title = $this->getConfiguration('sitename');
+            $title = $this->getConfig('sitename');
         }
 
-        if ($this->getConfiguration('sitename_pagetitles', 0) == 1) {
-            $title = MolajoText::sprintf('JPAGETITLE', $this->getConfiguration('sitename'), $title);
+        if ($this->getConfig('sitename_pagetitles', 0) == 1) {
+            $title = MolajoText::sprintf('JPAGETITLE', $this->getConfig('sitename'), $title);
 
-        } elseif ($this->getConfiguration('sitename_pagetitles', 0) == 2) {
-            $title = MolajoText::sprintf('JPAGETITLE', $title, $this->getConfiguration('sitename'));
+        } elseif ($this->getConfig('sitename_pagetitles', 0) == 2) {
+            $title = MolajoText::sprintf('JPAGETITLE', $title, $this->getConfig('sitename'));
         }
 
         $document->setTitle($title);

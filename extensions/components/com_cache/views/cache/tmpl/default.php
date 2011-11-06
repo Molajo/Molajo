@@ -18,7 +18,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<fieldset id="filter-bar">
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<?php echo MolajoHTML::_('select.options', CacheHelper::getApplicationOptions(), 'value', 'text', $this->state->get('applicationId'));?>
+				<?php echo MolajoHTML::_('select.options', CacheHelper::getAppOptions(), 'value', 'text', $this->state->get('application_id'));?>
 			</select>
 		</div>
 	</fieldset>

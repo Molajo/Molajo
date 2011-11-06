@@ -141,7 +141,7 @@ class CategoriesModelCategory extends JModelAdmin
 
 			// Convert the created and modified dates to local user time for display in the form.
 			jimport('joomla.utilities.date');
-			$tz	= new DateTimeZone(MolajoFactory::getApplication()->getConfiguration('offset'));
+			$tz	= new DateTimeZone(MolajoFactory::getApplication()->getConfig('offset'));
 
 			if (intval($result->created_time)) {
 				$date = new JDate($result->created_time);

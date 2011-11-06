@@ -15,7 +15,6 @@ $filehelper->requireClassFile(LIBRARIES.'/jplatform/simplepie/simplepie.php', 'S
 
 /** Additional Libraries (Add as configuration options later) */
 $filehelper->requireClassFile(LIBRARIES.'/akismet/Akismet.class.php', 'Akismet');
-$filehelper->requireClassFile(LIBRARIES.'/mollom/mollom.php', 'Mollom');
 require_once LIBRARIES.'/recaptcha/recaptchalib.php';
 
 /** Twig Autoload */
@@ -23,9 +22,9 @@ $filehelper->requireClassFile(MOLAJO_BASE_FOLDER.'/libraries/Twig/Autoloader.php
 Twig_Autoloader::register();
  
 /** @var $loader  */
-//        $loader = new Twig_Loader_Filesystem(MOLAJO_EXTENSION_LAYOUT_EXTENSIONS);
+//        $loader = new Twig_Loader_Filesystem(MOLAJO_EXTENSION_LAYOUTS.'/extensions');
 //        $this->twig = new Twig_Environment($loader, array(
-//          'cache' => MOLAJO_EXTENSION_LAYOUT_EXTENSIONS.'/cache',
+//          'cache' => MOLAJO_EXTENSION_LAYOUTS.'/extensions/cache',
 //       ));
 
 

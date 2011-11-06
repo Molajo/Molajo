@@ -69,7 +69,7 @@ class JCacheStorageMemcache extends JCacheStorage
 			return false;
 		}
 
-		$config = JFactory::getConfig();
+		$config = JFactory::getSiteConfig();
 		$this->_persistent = $config->get('memcache_persist', true);
 		$this->_compress = $config->get('memcache_compress', false) == false ? 0 : MEMCACHE_COMPRESSED;
 
@@ -300,7 +300,7 @@ class JCacheStorageMemcache extends JCacheStorage
 			return false;
 		}
 
-		$config = JFactory::getConfig();
+		$config = JFactory::getSiteConfig();
 		$host = $config->get('memcache_server_host', 'localhost');
 		$port = $config->get('memcache_server_port', 11211);
 

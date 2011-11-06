@@ -71,7 +71,7 @@
 					</ul>
 				<?php endif; ?>	
 
-				<h1 id="logo"><a href="<?php echo $this->baseurl ?>/" title="<?php echo $app->getConfiguration('sitename');?>"><jdoc:include type="modules" name="logo" style="raw" /></a></h1>
+				<h1 id="logo"><a href="<?php echo $this->baseurl ?>/" title="<?php echo $app->getSiteConfig('sitename');?>"><jdoc:include type="modules" name="logo" style="raw" /></a></h1>
 				
 				<?php if ($this->countModules('header')) : ?>
 					<jdoc:include type="modules" name="header" style="jexhtml" />	

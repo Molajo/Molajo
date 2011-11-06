@@ -53,7 +53,7 @@ EOT
         /* @var $entityManager Doctrine\ORM\EntityManager */
         $entityManager = $this->getHelper('em')->getEntityManager();
 
-        $entityClassNames = $entityManager->getConfiguration()
+        $entityClassNames = $entityManager->getSiteConfig()
                                           ->getMetadataDriverImpl()
                                           ->getAllClassNames();
 

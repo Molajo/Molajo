@@ -103,9 +103,9 @@ class MolajoLaunchpadHelper
                         // Load the core file then
                         // Load extension-local file.
                         $lang->load($component->element . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
-                        || $lang->load($component->element . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $component->element, null, false, false)
+                        || $lang->load($component->element . '.sys', MOLAJO_BASE_FOLDER.'/components/' . $component->element, null, false, false)
                         || $lang->load($component->element . '.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-                        || $lang->load($component->element . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $component->element, $lang->getDefault(), false, false);
+                        || $lang->load($component->element . '.sys', MOLAJO_BASE_FOLDER.'/components/' . $component->element, $lang->getDefault(), false, false);
                     }
                     $component->text = $lang->hasKey($component->title) ? MolajoText::_($component->title)
                             : $component->alias;

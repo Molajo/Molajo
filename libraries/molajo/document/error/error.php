@@ -90,7 +90,7 @@ class MolajoDocumentError extends MolajoDocument
         $template = isset($params['template']) ? JFilterInput::getInstance()->clean($params['template'], 'cmd')
                 : 'system';
 
-        if (!file_exists($directory . '/' . $template . '/' . $file)) {
+        if (!file_exists($directory.'/'.$template.'/'.$file)) {
             $template = 'system';
         }
 
@@ -101,7 +101,7 @@ class MolajoDocumentError extends MolajoDocument
         $this->error = $this->_error;
 
         // load
-        $data = $this->_loadTemplate($directory . '/' . $template, $file);
+        $data = $this->_loadTemplate($directory.'/'.$template, $file);
 
         parent::render();
         return $data;
@@ -122,13 +122,13 @@ class MolajoDocumentError extends MolajoDocument
         $contents = '';
 
         // Check to see if we have a valid template file
-        if (file_exists($directory . '/' . $filename)) {
+        if (file_exists($directory.'/'.$filename)) {
             // Store the file path
-            $this->_file = $directory . '/' . $filename;
+            $this->_file = $directory.'/'.$filename;
 
             // Get the file content
             ob_start();
-            require_once $directory . '/' . $filename;
+            require_once $directory.'/'.$filename;
             $contents = ob_get_contents();
             ob_end_clean();
         }

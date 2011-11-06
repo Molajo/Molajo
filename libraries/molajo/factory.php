@@ -20,6 +20,8 @@ abstract class MolajoFactory
     public static $application = null;
     public static $cache = null;
     public static $config = null;
+    public static $siteConfig = null;
+    public static $appConfig = null;
     public static $session = null;
     public static $language = null;
     public static $document = null;
@@ -79,7 +81,7 @@ abstract class MolajoFactory
     }
 
     /**
-     * Get a configuration object
+     * Get the combined site and application configuration object
      *
      * Returns the global configuration object, creating it
      * if it doesn't already exist.
@@ -91,16 +93,77 @@ abstract class MolajoFactory
      */
     public static function getConfig($file = null, $type = 'PHP')
     {
+        if (self::$appConfig) {
+        } else {
+            MolajoError::raiseError('500', MolajoText::_('MOLAJO_LOAD_APPLICATION_CONFIG_BEFORE_COMBINED_CONFIG'));
+            return false;
+        }
+        if (self::$siteConfig) {
+        } else {
+            MolajoError::raiseError('500', MolajoText::_('MOLAJO_LOAD_SITE_CONFIG_BEFORE_COMBINED_CONFIG'));
+            return false;
+        }
+
         if (self::$config) {
         } else {
             if ($file === null) {
-                $file = MOLAJO_SITE_PATH . '/configuration.php';
+                $file = MOLAJO_LIBRARY.'/configuration.php';
             }
+            self::$config = self::_createConfig($file, $type, '');
 
-            self::$config = self::_createConfig($file, $type);
+            MolajoConfigHelper::populateConfig(self::$config, self::$siteConfig, self::$appConfig);
         }
 
         return self::$config;
+    }
+
+    /**
+     * Get the Site configuration object
+     *
+     * Returns the global configuration object, creating it
+     * if it doesn't already exist.
+     *
+     * @param string $file Path to the configuration file
+     * @param string $type Type of the configuration file
+     *
+     * @return configuration object
+     */
+    public static function getApplicationConfiguration($file = null, $type = 'PHP')
+    {
+        if (self::$appConfig) {
+        } else {
+            if ($file === null) {
+                $file = MOLAJO_APPLICATION_PATH.'/configuration.php';
+            }
+
+            self::$appConfig = self::_createConfig($file, $type, 'Application');
+        }
+
+        return self::$appConfig;
+    }
+
+    /**
+     * Get the Site configuration object
+     *
+     * Returns the global configuration object, creating it
+     * if it doesn't already exist.
+     *
+     * @param string $file Path to the configuration file
+     * @param string $type Type of the configuration file
+     *
+     * @return configuration object
+     */
+    public static function getSiteConfig($file = null, $type = 'PHP')
+    {
+        if (self::$siteConfig) {
+        } else {
+            if ($file === null) {
+                $file = MOLAJO_SITE_PATH.'/configuration.php';
+            }
+            self::$siteConfig = self::_createConfig($file, $type, 'Site');
+        }
+
+        return self::$siteConfig;
     }
 
     /**
@@ -246,7 +309,7 @@ abstract class MolajoFactory
     {
         if (self::$database) {
         } else {
-            $conf = self::getConfig();
+            $conf = self::getSiteConfig();
             $debug = $conf->get('debug');
 
             self::$database = self::_createDbo();
@@ -482,6 +545,7 @@ abstract class MolajoFactory
         $namespace = ucfirst((string)preg_replace('/[^A-Z_]/i', '', $namespace));
 
         $name = 'MolajoConfig' . $namespace;
+
         if ($type == 'PHP' && class_exists($name)) {
             $config = new $name();
             $registry->loadObject($config);
@@ -525,7 +589,7 @@ abstract class MolajoFactory
      */
     protected static function _createDbo()
     {
-        $conf = self::getConfig();
+        $conf = self::getSiteConfig();
 
         $host = $conf->get('host');
         $user = $conf->get('user');
@@ -674,7 +738,7 @@ abstract class MolajoFactory
                 $prefix .= $SCPOptions['root'];
             }
             else {
-                $prefix = MOLAJO_BASE_FOLDER . '/';
+                $prefix = MOLAJO_BASE_FOLDER.'/';
             }
 
             $retval = new JStream($prefix, MOLAJO_BASE_FOLDER, $context);

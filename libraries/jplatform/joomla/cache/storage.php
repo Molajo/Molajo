@@ -71,7 +71,7 @@ class JCacheStorage
 	 */
 	public function __construct($options = array())
 	{
-		$config = JFactory::getConfig();
+		$config = JFactory::getSiteConfig();
 		$this->_hash = md5($config->get('secret'));
 		$this->_application = (isset($options['application'])) ? $options['application'] : null;
 		$this->_language = (isset($options['language'])) ? $options['language'] : 'en-GB';
@@ -112,7 +112,7 @@ class JCacheStorage
 
 		if (!isset($handler))
 		{
-			$conf = JFactory::getConfig();
+			$conf = JFactory::getSiteConfig();
 			$handler = $conf->get('cache_handler');
 			if (empty($handler))
 			{

@@ -100,7 +100,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
         $manifestScript = (string)$this->manifest->scriptfile;
 
         if ($manifestScript) {
-            $manifestScriptFile = $this->parent->getPath('source') . '/' . $manifestScript;
+            $manifestScriptFile = $this->parent->getPath('source').'/'.$manifestScript;
 
             if (is_file($manifestScriptFile)) {
                 // load the file
@@ -299,7 +299,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
         // Lastly, we will copy the manifest file to its appropriate place.
         $manifest = array();
         $manifest['src'] = $this->parent->getPath('manifest');
-        $manifest['dest'] = MOLAJO_SITE_MANIFESTS . '/files/' . basename($this->parent->getPath('manifest'));
+        $manifest['dest'] = MOLAJO_SITE_MANIFESTS.'/files/' . basename($this->parent->getPath('manifest'));
         if (!$this->parent->copyFiles(array($manifest), true)) {
             // Install failed, rollback changes
             $this->parent->abort(MolajoText::_('JLIB_INSTALLER_ABORT_FILE_INSTALL_COPY_SETUP'));
@@ -376,12 +376,12 @@ class MolajoInstallerFile extends MolajoAdapterInstance
         }
 
         $retval = true;
-        $manifestFile = MOLAJO_SITE_MANIFESTS . '/files/' . $row->element . '.xml';
+        $manifestFile = MOLAJO_SITE_MANIFESTS.'/files/' . $row->element . '.xml';
 
         // Because files may not have their own folders we cannot use the standard method of finding an installation manifest
         if (file_exists($manifestFile)) {
             // Set the plugin root path
-            $this->parent->setPath('extension_root', MOLAJO_BASE_FOLDER); // . '/files/' . $manifest->filename);
+            $this->parent->setPath('extension_root', MOLAJO_BASE_FOLDER); //.'/files/' . $manifest->filename);
 
             $xml = MolajoFactory::getXML($manifestFile);
 
@@ -406,7 +406,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
             $manifestScript = (string)$this->manifest->scriptfile;
 
             if ($manifestScript) {
-                $manifestScriptFile = $this->parent->getPath('extension_root') . '/' . $manifestScript;
+                $manifestScriptFile = $this->parent->getPath('extension_root').'/'.$manifestScript;
 
                 if (is_file($manifestScriptFile)) {
                     // Load the file
@@ -476,7 +476,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
                 }
                 else
                 {
-                    $targetFolder = MOLAJO_BASE_FOLDER . '/' . $target;
+                    $targetFolder = MOLAJO_BASE_FOLDER.'/'.$target;
                 }
 
                 $folderList = array();
@@ -486,12 +486,12 @@ class MolajoInstallerFile extends MolajoAdapterInstance
                     foreach ($eFiles->children() as $eFileName)
                     {
                         if ($eFileName->getName() == 'folder') {
-                            $folderList[] = $targetFolder . '/' . $eFileName;
+                            $folderList[] = $targetFolder.'/'.$eFileName;
 
                         }
                         else
                         {
-                            $fileName = $targetFolder . '/' . $eFileName;
+                            $fileName = $targetFolder.'/'.$eFileName;
                             JFile::delete($fileName);
                         }
                     }
@@ -613,8 +613,8 @@ class MolajoInstallerFile extends MolajoAdapterInstance
             }
 
             // Create folder path
-            $sourceFolder = empty($folder) ? $packagePath : $packagePath . '/' . $folder;
-            $targetFolder = empty($target) ? $jRootPath : $jRootPath . '/' . $target;
+            $sourceFolder = empty($folder) ? $packagePath : $packagePath.'/'.$folder;
+            $targetFolder = empty($target) ? $jRootPath : $jRootPath.'/'.$target;
 
             // Check if source folder exists
             if (!JFolder::exists($sourceFolder)) {
@@ -629,11 +629,11 @@ class MolajoInstallerFile extends MolajoAdapterInstance
                 // Loop through all filenames elements
                 foreach ($eFiles->children() as $eFileName)
                 {
-                    $path['src'] = $sourceFolder . '/' . $eFileName;
-                    $path['dest'] = $targetFolder . '/' . $eFileName;
+                    $path['src'] = $sourceFolder.'/'.$eFileName;
+                    $path['dest'] = $targetFolder.'/'.$eFileName;
                     $path['type'] = 'file';
                     if ($eFileName->getName() == 'folder') {
-                        $folderName = $targetFolder . '/' . $eFileName;
+                        $folderName = $targetFolder.'/'.$eFileName;
                         array_push($this->folderList, $folderName);
                         $path['type'] = 'folder';
                     }
@@ -646,8 +646,8 @@ class MolajoInstallerFile extends MolajoAdapterInstance
                 $files = JFolder::files($sourceFolder);
                 foreach ($files as $file)
                 {
-                    $path['src'] = $sourceFolder . '/' . $file;
-                    $path['dest'] = $targetFolder . '/' . $file;
+                    $path['src'] = $sourceFolder.'/'.$file;
+                    $path['dest'] = $targetFolder.'/'.$file;
 
                     array_push($this->fileList, $path);
                 }
@@ -666,7 +666,7 @@ class MolajoInstallerFile extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $manifestPath = MOLAJO_SITE_MANIFESTS . '/files/' . $this->parent->extension->element . '.xml';
+        $manifestPath = MOLAJO_SITE_MANIFESTS.'/files/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

@@ -36,7 +36,7 @@ for ($i=1; $i < 1000; $i++) {
         $this->tempColumnName = 'title';
         if (in_array($this->tempColumnName, $loadFilterArray)) {
             break;
-        } else if ($this->state->get('filter.state') == MOLAJO_STATE_VERSION) {
+        } else if ($this->state->get('filter.state') == MOLAJO_STATUS_VERSION) {
             // forces in the title list for the version restore layout
         } else {
             break;

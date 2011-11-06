@@ -84,7 +84,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
         $group = (string)$this->manifest->packagename;
         if (!empty($group)) {
             // TODO: Remark this location
-            $this->parent->setPath('extension_root', MOLAJO_BASE_FOLDER . '/packages/' . implode(DS, explode('/', $group)));
+            $this->parent->setPath('extension_root', MOLAJO_BASE_FOLDER.'/packages/' . implode(DS, explode('/', $group)));
         }
         else
         {
@@ -95,7 +95,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
         // Filesystem Processing Section
 
         if ($folder = $files->attributes()->folder) {
-            $source = $this->parent->getPath('source') . '/' . $folder;
+            $source = $this->parent->getPath('source').'/'.$folder;
         }
         else
         {
@@ -106,7 +106,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
         if (count($this->manifest->files->children())) {
             foreach ($this->manifest->files->children() as $child)
             {
-                $file = $source . '/' . $child;
+                $file = $source.'/'.$child;
                 jimport('joomla.installer.helper');
                 if (is_dir($file)) {
                     // If it's actually a directory then fill it up
@@ -176,7 +176,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
         // Lastly, we will copy the manifest file to its appropriate place.
         $manifest = array();
         $manifest['src'] = $this->parent->getPath('manifest');
-        $manifest['dest'] = MOLAJO_SITE_MANIFESTS . '/packages/' . basename($this->parent->getPath('manifest'));
+        $manifest['dest'] = MOLAJO_SITE_MANIFESTS.'/packages/' . basename($this->parent->getPath('manifest'));
 
         if (!$this->parent->copyFiles(array($manifest), true)) {
             // Install failed, rollback changes
@@ -227,11 +227,11 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
             return false;
         }
 
-        $manifestFile = MOLAJO_SITE_MANIFESTS . '/packages/' . $row->get('element') . '.xml';
+        $manifestFile = MOLAJO_SITE_MANIFESTS.'/packages/' . $row->get('element') . '.xml';
         $manifest = new JPackageManifest($manifestFile);
 
         // Set the package root path
-        $this->parent->setPath('extension_root', MOLAJO_SITE_MANIFESTS . '/packages/' . $manifest->packagename);
+        $this->parent->setPath('extension_root', MOLAJO_SITE_MANIFESTS.'/packages/' . $manifest->packagename);
 
         // Because packages may not have their own folders we cannot use the standard method of finding an installation manifest
         if (!file_exists($manifestFile)) {
@@ -358,7 +358,7 @@ class MolajoInstallerPackage extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $manifestPath = MOLAJO_SITE_MANIFESTS . '/packages/' . $this->parent->extension->element . '.xml';
+        $manifestPath = MOLAJO_SITE_MANIFESTS.'/packages/' . $this->parent->extension->element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

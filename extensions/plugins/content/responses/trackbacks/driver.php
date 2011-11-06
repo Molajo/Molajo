@@ -141,12 +141,12 @@ class ResponsesTrackbacks extends MolajoPlugin
 	 */
 
 		global $mainframe;		
-	 	$SiteName 		= $mainframe->getConfiguration('sitename');
+	 	$SiteName 		= $mainframe->getSiteConfig('sitename');
 		$articleURL = TamkaContentHelperRoute::getSiteURL () . TamkaContentHelperRoute::getArticleURL ($article->id);
 		$ArticleTitle = $article->title;
 		
-		$mailfrom 		= $mainframe->getConfiguration('mailfrom');
-		$fromname 		= $mainframe->getConfiguration('fromname');
+		$mailfrom 		= $mainframe->getSiteConfig('mailfrom');
+		$fromname 		= $mainframe->getSiteConfig('fromname');
 
 	/**
 	 * 	Format Email - Subject and Message

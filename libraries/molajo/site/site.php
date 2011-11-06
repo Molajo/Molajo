@@ -71,21 +71,12 @@ class MolajoSite extends JObject
     public $custom_fields = null;
 
     /**
-     * __construct
+     * Configuration
      *
-     * Class constructor.
-     *
-     * @param   array  $config  A configuration array
-     *
+     * @var    date
      * @since  1.0
      */
-    public function __construct($config = array())
-    {
-        /** Site ID and Name */
-        $config['siteId'] = MOLAJO_SITE_ID;
-        $this->_siteId = MOLAJO_SITE_ID;
-        $this->_name = MOLAJO_SITE;
-    }
+    public $siteConfig = null;
 
     /**
      * getInstance
@@ -139,6 +130,34 @@ class MolajoSite extends JObject
     }
 
     /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @param   array  $config  A configuration array
+     *
+     * @since  1.0
+     */
+    public function __construct($config = array())
+    {
+        /** Site ID and Name */
+        $config['siteId'] = MOLAJO_SITE_ID;
+        $this->_siteId = MOLAJO_SITE_ID;
+        $this->_name = MOLAJO_SITE;
+
+        /** Configuration File */
+        if (isset($config['config_file'])) {
+        } else {
+            $config['config_file'] = 'configuration.php';
+        }
+        if ($this->_name == 'installation') {
+            $this->_createSiteConfiguration();
+        } else {
+            $this->_createSiteConfiguration(MOLAJO_SITE_PATH.'/'.$config['config_file']);
+        }
+    }
+
+    /**
      * initialise
      *
      * Retrieves the configuration information, loads language files, editor, triggers onAfterInitialise
@@ -158,6 +177,8 @@ class MolajoSite extends JObject
         $this->parameters = $info->parameters;
         $this->custom_fields = $info->custom_fields;
         $this->base_url = $info->base_url;
+
+        $this->SetPaths();
     }
 
     /**
@@ -187,5 +208,79 @@ class MolajoSite extends JObject
 
         MolajoError::raiseError(403, MolajoText::_('SITE_NOT_AUTHORIZED_FOR_APPLICATION'));
         return false;
+    }
+
+    /**
+     * _createSiteConfiguration
+     *
+     * Create the Site configuration registry.
+     *
+     * @param   string  $file  The path to the site configuration file
+     *
+     * return   object  A config object
+     *
+     * @since  1.0
+     */
+    protected function _createSiteConfiguration($file = null)
+    {
+        if ($file == null) {
+        } else {
+            require_once $file;
+        }
+
+        /** Site Configuration */
+        $this->siteConfig = new MolajoConfigSite ();
+        $registry = MolajoFactory::getSiteConfig();
+        $registry->loadObject($this->siteConfig);
+    }
+
+    /**
+     * setPaths
+     *
+     * Retrieves the configuration information and sets paths for site file locations
+     *
+     * @param    array
+     *
+     * @since 1.0
+     */
+    public function setPaths()
+    {
+        if (defined('MOLAJO_SITE_PATH_CACHE')) {
+        } else {
+            define('MOLAJO_SITE_PATH_CACHE', $this->getSiteConfig('cache_path', MOLAJO_SITE_PATH.'/cache'));
+        }
+        if (defined('MOLAJO_SITE_PATH_IMAGES')) {
+        } else {
+            define('MOLAJO_SITE_PATH_IMAGES', $this->getSiteConfig('images_path', MOLAJO_SITE_PATH.'/images'));
+        }
+        if (defined('MOLAJO_SITE_PATH_LOGS')) {
+        } else {
+            define('MOLAJO_SITE_PATH_LOGS', $this->getSiteConfig('logs_path', MOLAJO_SITE_PATH.'/logs'));
+        }
+        if (defined('MOLAJO_SITE_PATH_MEDIA')) {
+        } else {
+            define('MOLAJO_SITE_PATH_MEDIA', $this->getSiteConfig('media_path', MOLAJO_SITE_PATH.'/media'));
+        }
+        if (defined('MOLAJO_SITE_PATH_TMP')) {
+        } else {
+            define('MOLAJO_SITE_PATH_TMP', $this->getSiteConfig('tmp_path', MOLAJO_SITE_PATH.'/tmp'));
+        }
+    }
+
+    /**
+     * getSiteConfig
+     *
+     * Gets a configuration value.
+     *
+     * @param   string   The name of the value to get.
+     * @param   string   Default value to return
+     *
+     * @return  mixed    The user state.
+     *
+     * @since  1.0
+     */
+    public function getSiteConfig($varname, $default = null)
+    {
+		return MolajoFactory::getSiteConfig()->get('' . $varname, $default);
     }
 }

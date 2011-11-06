@@ -88,7 +88,7 @@ abstract class MolajoPlugin extends JEvent
         $lang = MolajoFactory::getLanguage();
 
         $lang->load(strtolower($extension), $basePath, null, false, false)
-        || $lang->load(strtolower($extension), MOLAJO_EXTENSION_PLUGINS . '/' . $this->_type . '/' . $this->_name, null, false, false)
+        || $lang->load(strtolower($extension), MOLAJO_EXTENSION_PLUGINS.'/'.$this->_type.'/'.$this->_name, null, false, false)
         || $lang->load(strtolower($extension), MOLAJO_APPLICATION_PATH, null, false, false);
     }
 }

@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 include dirname(__FILE__).'/include/head.php';
 
-if (MolajoFactory::getApplication()->getConfiguration('html5', true)): ?>
+if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
 <!DOCTYPE html>
 <?php else: ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

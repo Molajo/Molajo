@@ -47,18 +47,18 @@ abstract class MolajoHtmlGrid
         }
 
         $arraySelected = array();
-        if ($value == MOLAJO_STATE_ARCHIVED) {
-            $arraySelected = array(MOLAJO_STATE_ARCHIVED => array('archived.png', strtolower(JRequest::getCmd('DefaultView')) . '.trash', 'Archived', 'Toggle to change state to Trashed', false, 'archive', 'archive'));
-        } else if ($value == MOLAJO_STATE_PUBLISHED) {
-            $arraySelected = array(MOLAJO_STATE_PUBLISHED => array('tick.png', strtolower(JRequest::getCmd('DefaultView')) . '.archive', 'Published', 'Toggle to change state to Archived', false, 'publish', 'publish'));
-        } else if ($value == MOLAJO_STATE_UNPUBLISHED) {
-            $arraySelected = array(MOLAJO_STATE_UNPUBLISHED => array('disabled.png', strtolower(JRequest::getCmd('DefaultView')) . '.publish', 'Unpublished', 'Toggle to change state to Published', false, 'unpublish', 'unpublish'),);
-        } else if ($value == MOLAJO_STATE_TRASHED) {
-            $arraySelected = array(MOLAJO_STATE_TRASHED => array('spam.png', strtolower(JRequest::getCmd('DefaultView')) . '.unpublish', 'Spam', 'Toggle to change state to Unpublish', false, 'spam', 'spam'));
-        } else if ($value == MOLAJO_STATE_SPAMMED) {
-            $arraySelected = array(MOLAJO_STATE_SPAMMED => array('trash.png', strtolower(JRequest::getCmd('DefaultView')) . '.spam', 'Trash', 'Toggle to change state to Spammed', false, 'trash', 'trash'));
-        } else if ($value == MOLAJO_STATE_VERSION) {
-            $arraySelected = array(MOLAJO_STATE_VERSION => array('restore.png', strtolower(JRequest::getCmd('DefaultView')) . '.restore', 'Trash', 'Toggle to change state to Restored', false, 'restore', 'restore'));
+        if ($value == MOLAJO_STATUS_ARCHIVED) {
+            $arraySelected = array(MOLAJO_STATUS_ARCHIVED => array('archived.png', strtolower(JRequest::getCmd('DefaultView')) . '.trash', 'Archived', 'Toggle to change state to Trashed', false, 'archive', 'archive'));
+        } else if ($value == MOLAJO_STATUS_PUBLISHED) {
+            $arraySelected = array(MOLAJO_STATUS_PUBLISHED => array('tick.png', strtolower(JRequest::getCmd('DefaultView')) . '.archive', 'Published', 'Toggle to change state to Archived', false, 'publish', 'publish'));
+        } else if ($value == MOLAJO_STATUS_UNPUBLISHED) {
+            $arraySelected = array(MOLAJO_STATUS_UNPUBLISHED => array('disabled.png', strtolower(JRequest::getCmd('DefaultView')) . '.publish', 'Unpublished', 'Toggle to change state to Published', false, 'unpublish', 'unpublish'),);
+        } else if ($value == MOLAJO_STATUS_TRASHED) {
+            $arraySelected = array(MOLAJO_STATUS_TRASHED => array('spam.png', strtolower(JRequest::getCmd('DefaultView')) . '.unpublish', 'Spam', 'Toggle to change state to Unpublish', false, 'spam', 'spam'));
+        } else if ($value == MOLAJO_STATUS_SPAMMED) {
+            $arraySelected = array(MOLAJO_STATUS_SPAMMED => array('trash.png', strtolower(JRequest::getCmd('DefaultView')) . '.spam', 'Trash', 'Toggle to change state to Spammed', false, 'trash', 'trash'));
+        } else if ($value == MOLAJO_STATUS_VERSION) {
+            $arraySelected = array(MOLAJO_STATUS_VERSION => array('restore.png', strtolower(JRequest::getCmd('DefaultView')) . '.restore', 'Trash', 'Toggle to change state to Restored', false, 'restore', 'restore'));
         }
 
         $state = JArrayHelper::getValue($arraySelected, (int)$value, $states[1]);

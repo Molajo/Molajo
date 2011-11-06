@@ -288,7 +288,7 @@ class Connection implements DriverConnection
      *
      * @return \Doctrine\DBAL\Configuration
      */
-    public function getConfiguration()
+    public function getSiteConfig()
     {
         return $this->_config;
     }
@@ -663,7 +663,7 @@ class Connection implements DriverConnection
 
         $args = func_get_args();
 
-        $logger = $this->getConfiguration()->getSQLLogger();
+        $logger = $this->getSiteConfig()->getSQLLogger();
         if ($logger) {
             $logger->startQuery($args[0]);
         }

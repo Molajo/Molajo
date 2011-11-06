@@ -147,7 +147,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
                 }
                 // set this to ourself as a default
                 // validate that we can install the extension
-                if ($product == $values['targetplatform'] && preg_match('/' . $values['targetplatformversion'] . '/', $ver->RELEASE)) {
+                if ($product == $values['targetplatform'] && preg_match('/' . $values['targetplatformversion'].'/', $ver->RELEASE)) {
                     $update->bind($values);
                     $this->updates[] = $update;
                 }

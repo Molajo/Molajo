@@ -161,7 +161,7 @@ class MolajoModelDisplay extends JModel
         $this->processFilter('state');
 
         /** force title filter for restore list **/
-        if ($this->state->get('filter.state') == MOLAJO_STATE_VERSION) {
+        if ($this->state->get('filter.state') == MOLAJO_STATUS_VERSION) {
             $loadFilterArray[] = 'title';
             $this->processFilter('title');
         }
@@ -194,7 +194,7 @@ class MolajoModelDisplay extends JModel
 
         /** list limit **/
         $limit = (int)MolajoFactory::getApplication()->getUserStateFromRequest('global.list.limit', 'limit',
-                                                                               MolajoFactory::getApplication()->getConfiguration('list_limit'));
+                                                                               MolajoFactory::getApplication()->getConfig('list_limit'));
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
@@ -385,7 +385,7 @@ class MolajoModelDisplay extends JModel
                 $this->dispatcher->trigger('onQueryBeforeItem', array(&$this->state, &$items[$i], &$this->params, &$keep));
 
                 /** category is archived, so item should be too **/
-                if ($items[$i]->minimum_state_category < $items[$i]->state && $items[$i]->state > MOLAJO_STATE_VERSION) {
+                if ($items[$i]->minimum_state_category < $items[$i]->state && $items[$i]->state > MOLAJO_STATUS_VERSION) {
                     $items[$i]->state = $items[$i]->minimum_state_category;
                     /** recheck the new status against query filter **/
                     if ($this->getState('filter.state') > $items[$i]->state) {
@@ -394,10 +394,10 @@ class MolajoModelDisplay extends JModel
                 }
 
                 /** category is unpublished, spammed, or trashed, so item should be too **/
-                if ($items[$i]->archived_category == 1 && $items[$i]->state < MOLAJO_STATE_ARCHIVED) {
-                    $items[$i]->state = MOLAJO_STATE_ARCHIVED;
+                if ($items[$i]->archived_category == 1 && $items[$i]->state < MOLAJO_STATUS_ARCHIVED) {
+                    $items[$i]->state = MOLAJO_STATUS_ARCHIVED;
                     /** recheck the new status against query filter **/
-                    if ($this->getState('filter.state') == MOLAJO_STATE_ARCHIVED
+                    if ($this->getState('filter.state') == MOLAJO_STATUS_ARCHIVED
                         || $this->getState('filter.state') == '*'
                     ) {
                     } else {
@@ -602,13 +602,13 @@ class MolajoModelDisplay extends JModel
         $subQuery .= ' FROM #__categories AS cat ';
         $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
         $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
-        $subQuery .= '   AND cat.published > ' . MOLAJO_STATE_VERSION;
-        $subQuery .= '   AND parent.published > ' . MOLAJO_STATE_VERSION;
+        $subQuery .= '   AND cat.published > ' . MOLAJO_STATUS_VERSION;
+        $subQuery .= '   AND parent.published > ' . MOLAJO_STATUS_VERSION;
         $subQuery .= ' GROUP BY parent.id ';
         $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS minimumState ON minimumState.id = c.id ');
 
         /** archived ancestor = archived descendents **/
-        $this->query->select(' CASE WHEN maximumState.published > ' . MOLAJO_STATE_PUBLISHED . ' THEN 1 ELSE 0 END AS archived_category');
+        $this->query->select(' CASE WHEN maximumState.published > ' . MOLAJO_STATUS_PUBLISHED . ' THEN 1 ELSE 0 END AS archived_category');
         $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
         $subQuery .= ' FROM #__categories AS cat ';
         $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';

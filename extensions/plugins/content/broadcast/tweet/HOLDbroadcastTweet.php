@@ -112,7 +112,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	 * 	Prepare content for Tweet - Site name, Article title, URL
 	 */
 		global $mainframe;		
-	 	$SiteName 		= $mainframe->getConfiguration('sitename');
+	 	$SiteName 		= $mainframe->getSiteConfig('sitename');
 		$articleURL = TamkaContentHelperRoute::getSiteURL () . TamkaContentHelperRoute::getArticleURL ($article->id);
 		$ArticleTitle = $article->title;
 

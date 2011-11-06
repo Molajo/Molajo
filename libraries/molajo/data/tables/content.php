@@ -231,7 +231,7 @@ class MolajoTableContent extends MolajoTable
         $this->alias = MolajoApplication::stringURLSafe($this->alias);
 
         /** do not check alias for version saves  **/
-        if ($this->state == MOLAJO_STATE_VERSION) {
+        if ($this->state == MOLAJO_STATUS_VERSION) {
             return true;
         }
 
@@ -246,7 +246,7 @@ class MolajoTableContent extends MolajoTable
             $query->from($db->namequote('#' . JRequest::getCmd('ComponentTable')));
             $query->where($db->namequote('alias') . ' = ' . $db->quote($this->alias));
             $query->where($db->namequote('id') . ' <> ' . (int)$this->id);
-            $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATE_VERSION);
+            $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATUS_VERSION);
 
             $this->_db->setQuery($query);
 

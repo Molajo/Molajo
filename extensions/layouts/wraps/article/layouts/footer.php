@@ -7,4 +7,4 @@
  */
 defined('MOLAJO') or die;
 
-include MOLAJO_EXTENSION_LAYOUT_COMMON.'/headertypefooter.php';
+include MOLAJO_EXTENSION_LAYOUTS.'/common/headertypefooter.php';

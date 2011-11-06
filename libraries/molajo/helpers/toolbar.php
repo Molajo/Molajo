@@ -291,7 +291,7 @@ class MolajoToolbarHelper
      */
     public function addApplyButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        if ($state == MOLAJO_STATE_ARCHIVED || $state == MOLAJO_STATE_VERSION) {
+        if ($state == MOLAJO_STATUS_ARCHIVED || $state == MOLAJO_STATUS_VERSION) {
             return;
         }
         self::apply(JRequest::getCmd('EditView') . '.apply', 'JTOOLBAR_APPLY');
@@ -338,7 +338,7 @@ class MolajoToolbarHelper
      */
     public function addSaveButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        if ($state == MOLAJO_STATE_ARCHIVED || $state == MOLAJO_STATE_VERSION) {
+        if ($state == MOLAJO_STATUS_ARCHIVED || $state == MOLAJO_STATUS_VERSION) {
             return;
         }
         self::save(JRequest::getCmd('EditView') . '.save', 'MolajoToolbar_SAVE');
@@ -355,10 +355,10 @@ class MolajoToolbarHelper
         if ((int)$id == 0) {
             return;
         }
-        if ($state == MOLAJO_STATE_ARCHIVED || $state == MOLAJO_STATE_VERSION) {
+        if ($state == MOLAJO_STATUS_ARCHIVED || $state == MOLAJO_STATUS_VERSION) {
             return;
         }
-        if ($item->state == MOLAJO_STATE_ARCHIVED || $item->state == MOLAJO_STATE_VERSION) {
+        if ($item->state == MOLAJO_STATUS_ARCHIVED || $item->state == MOLAJO_STATUS_VERSION) {
             return;
         }
         self::custom(JRequest::getCmd('EditView') . '.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
@@ -423,7 +423,7 @@ class MolajoToolbarHelper
      */
     public function addRestoreButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        if ($state == MOLAJO_STATE_VERSION || $state == '*') {
+        if ($state == MOLAJO_STATUS_VERSION || $state == '*') {
         } else {
             return;
         }

@@ -216,7 +216,7 @@ class JURI extends JObject
 		// Get the base request path.
 		if (empty(self::$base))
 		{
-			$config = JFactory::getConfig();
+			$config = JFactory::getSiteConfig();
 			$live_site = $config->get('live_site');
 			if (trim($live_site) != '')
 			{

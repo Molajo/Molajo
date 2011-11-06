@@ -68,7 +68,7 @@ abstract class ModulesHelper
 	 *
 	 * @return	array	An array of MolajoHTMLOption elements.
 	 */
-	public static function getApplicationOptions()
+	public static function getAppOptions()
 	{
 		// Build the filter options.
 		$options	= array();
@@ -77,7 +77,7 @@ abstract class ModulesHelper
 		return $options;
 	}
 
-	static function getPositions($applicationId)
+	static function getPositions($application_id)
 	{
 		jimport('joomla.filesystem.folder');
 
@@ -86,7 +86,7 @@ abstract class ModulesHelper
 
 		$query->select('DISTINCT(position)');
 		$query->from('#__modules');
-		$query->where('`application_id` = '.(int) $applicationId);
+		$query->where('`application_id` = '.(int) $application_id);
 		$query->order('position');
 
 		$db->setQuery($query);
@@ -106,7 +106,7 @@ abstract class ModulesHelper
 		return $options;
 	}
 
-	public static function getTemplates($applicationId = 0, $state = '', $template='')
+	public static function getTemplates($application_id = 0, $state = '', $template='')
 	{
 		$db = MolajoFactory::getDbo();
 		// Get the database object and a new query object.
@@ -115,7 +115,7 @@ abstract class ModulesHelper
 		// Build the query.
 		$query->select('element, name, enabled');
 		$query->from('#__extensions');
-		$query->where('application_id = '.(int) $applicationId);
+		$query->where('application_id = '.(int) $application_id);
 		$query->where('type = '.$db->quote('template'));
 		if ($state!='') {
 			$query->where('enabled = '.$db->quote($state));
@@ -137,14 +137,14 @@ abstract class ModulesHelper
 	 *
 	 * @return	array
 	 */
-	public static function getModules($applicationId)
+	public static function getModules($application_id)
 	{
 		$db		= MolajoFactory::getDbo();
 		$query	= $db->getQuery(true);
 
 		$query->select('element AS value, name AS text');
 		$query->from('#__extensions as e');
-		$query->where('e.`application_id` = '.(int)$applicationId);
+		$query->where('e.`application_id` = '.(int)$application_id);
 		$query->where('`type` = '.$db->quote('module'));
 		$query->where('`enabled` = 1');
 		$query->leftJoin('#__modules as m ON m.module=e.element AND m.application_id=e.application_id');
@@ -156,7 +156,7 @@ abstract class ModulesHelper
 		$lang = MolajoFactory::getLanguage();
 		foreach ($modules as $i=>$module) {
 			$extension = $module->value;
-			$path = $applicationId ? JPATH_ADMINISTRATOR : JPATH_SITE;
+			$path = $application_id ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			$source = $path . "/modules/$extension";
 				$lang->load("$extension.sys", $path, null, false, false)
 			||	$lang->load("$extension.sys", $source, null, false, false)
@@ -175,13 +175,13 @@ abstract class ModulesHelper
 	 *
 	 * @return	array
 	 */
-	public static function getAssignmentOptions($applicationId)
+	public static function getAssignmentOptions($application_id)
 	{
 		$options = array();
 		$options[] = MolajoHTML::_('select.option', '0', 'COM_MODULES_OPTION_MENU_ALL');
 		$options[] = MolajoHTML::_('select.option', '-', 'COM_MODULES_OPTION_MENU_NONE');
 
-		if ($applicationId == 0) {
+		if ($application_id == 0) {
 			$options[] = MolajoHTML::_('select.option', '1', 'COM_MODULES_OPTION_MENU_INCLUDE');
 			$options[] = MolajoHTML::_('select.option', '-1', 'COM_MODULES_OPTION_MENU_EXCLUDE');
 		}

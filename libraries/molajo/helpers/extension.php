@@ -10,24 +10,25 @@ defined('MOLAJO') or die;
 /**
  * Extension Helper
  *
+ * Queries the extension tables for various rendered extension types
+ *
+ * MOLAJO_EXTENSION_TYPE_COMPONENT 1
+ * MOLAJO_EXTENSION_TYPE_LANGUAGES 2
+ * MOLAJO_EXTENSION_TYPE_LAYOUTS 3
+ * MOLAJO_EXTENSION_TYPE_LIBRARIES 10
+ * MOLAJO_EXTENSION_TYPE_MANIFESTS 4
+ * MOLAJO_EXTENSION_TYPE_MENU 5
+ * MOLAJO_EXTENSION_TYPE_MODULES 6
+ * MOLAJO_EXTENSION_TYPE_PARAMETERS 7
+ * MOLAJO_EXTENSION_TYPE_PLUGINS 8
+ * MOLAJO_EXTENSION_TYPE_TEMPLATES 9
+ *
  * @package     Molajo
  * @subpackage  Extension Helper
  * @since       1.0
  */
 abstract class MolajoExtensionHelper
 {
-
-//MOLAJO_EXTENSION_TYPE_COMPONENT
-//MOLAJO_EXTENSION_TYPE_LANGUAGES
-//MOLAJO_EXTENSION_TYPE_LAYOUTS
-//MOLAJO_EXTENSION_TYPE_LIBRARIES
-//MOLAJO_EXTENSION_TYPE_MANIFESTS
-//MOLAJO_EXTENSION_TYPE_MENU
-//MOLAJO_EXTENSION_TYPE_MODULES
-//MOLAJO_EXTENSION_TYPE_PARAMETERS
-//MOLAJO_EXTENSION_TYPE_PLUGINS
-//MOLAJO_EXTENSION_TYPE_TEMPLATES
-
     /**
      * _load
      *
@@ -45,12 +46,34 @@ abstract class MolajoExtensionHelper
         $nullDate = $db->getNullDate();
 
         $query->select('a.' . $db->namequote('id'));
+        $query->select('a.' . $db->namequote('title'));
+        $query->select('a.' . $db->namequote('sub_title'));
+        $query->select('a.' . $db->namequote('custom_fields'));
         $query->select('a.' . $db->namequote('parameters'));
+        $query->select('a.' . $db->namequote('status'));
+        $query->select('a.' . $db->namequote('enabled'));
+
         $query->select('b.' . $db->namequote('name'));
         $query->select('b.' . $db->namequote('folder') . ' as type');
-        $query->select('a.' . $db->namequote('enabled'));
-        $query->select('a.' . $db->namequote('asset_id'));
-        $query->select('a.' . $db->namequote('parameters'));
+
+        if ($extension_type_id == 4) {      // MOLAJO_EXTENSION_TYPE_MENU
+            $query->select('a.' . $db->namequote('menu_item_parent_id'));
+            $query->select('a.' . $db->namequote('menu_item_level'));
+            $query->select('a.' . $db->namequote('menu_item_type'));
+            $query->select('a.' . $db->namequote('menu_item_extension_id'));
+            $query->select('a.' . $db->namequote('menu_item_template_id'));
+            $query->select('a.' . $db->namequote('menu_item_link_target'));
+            $query->select('a.' . $db->namequote('menu_item_lft'));
+            $query->select('a.' . $db->namequote('menu_item_rgt'));
+            $query->select('a.' . $db->namequote('menu_item_home'));
+            $query->select('a.' . $db->namequote('menu_item_path'));
+            $query->select('a.' . $db->namequote('menu_item_link'));
+        }
+
+        if ($extension_type_id == 6) {      // MOLAJO_EXTENSION_TYPE_MODULES
+            $query->select('a.' . $db->namequote('module_position'));
+            $query->select('a.' . $db->namequote('content_text'));
+        }
 
         $query->from($db->namequote('#__extension_instances') . ' as a');
         $query->from($db->namequote('#__extensions') . ' as b');
@@ -58,7 +81,7 @@ abstract class MolajoExtensionHelper
 
         $query->where('a.' . $db->namequote('extension_type_id') . ' = ' . (int)$extension_type_id);
 
-        $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATE_PUBLISHED);
+        $query->where('a.' . $db->namequote('status') . ' = ' . MOLAJO_STATUS_PUBLISHED);
         $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
         $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
@@ -88,7 +111,7 @@ abstract class MolajoExtensionHelper
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
-        //echo $query->__toString();
+//echo $query->__toString();
         $db->setQuery($query->__toString());
         $extensions = $db->loadObjectList();
 

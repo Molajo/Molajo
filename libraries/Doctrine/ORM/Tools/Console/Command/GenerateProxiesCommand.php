@@ -76,7 +76,7 @@ EOT
 
         // Process destination directory
         if (($destPath = $input->getArgument('dest-path')) === null) {
-            $destPath = $em->getConfiguration()->getProxyDir();
+            $destPath = $em->getSiteConfig()->getProxyDir();
         }
 
         if ( ! is_dir($destPath)) {

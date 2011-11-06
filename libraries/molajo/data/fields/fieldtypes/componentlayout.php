@@ -36,14 +36,14 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
         // Initialize variables.
 
         // Get the application id.
-        $applicationId = $this->element['application_id'];
+        $application_id = $this->element['application_id'];
 
-        if (is_null($applicationId) && $this->form instanceof MolajoForm) {
-            $applicationId = $this->form->getValue('application_id');
+        if (is_null($application_id) && $this->form instanceof MolajoForm) {
+            $application_id = $this->form->getValue('application_id');
         }
-        $applicationId = (int)$applicationId;
+        $application_id = (int)$application_id;
 
-        $application = MolajoApplicationHelper::getApplicationInfo($applicationId);
+        $application = MolajoApplicationHelper::getApplicationInfo($application_id);
 
         // Get the extension.
         $extn = (string)$this->element['extension'];
@@ -75,9 +75,9 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
             // Load language file
             $lang = MolajoFactory::getLanguage();
             $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
-            || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $extn, null, false, false)
+            || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER.'/components/' . $extn, null, false, false)
             || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-            || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $extn, $lang->getDefault(), false, false);
+            || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER.'/components/' . $extn, $lang->getDefault(), false, false);
 
             // Get the database object and a new query object.
             $db = MolajoFactory::getDBO();
@@ -86,7 +86,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
             // Build the query.
             $query->select('e.element, e.name');
             $query->from('#__extensions as e');
-            $query->where('e.application_id = ' . (int)$applicationId);
+            $query->where('e.application_id = ' . (int)$application_id);
             $query->where('e.type = ' . $db->quote('template'));
             $query->where('e.enabled = 1');
 
@@ -109,7 +109,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
             }
 
             // Build the search paths for component layouts.
-            $component_path = JPath::clean($application->path . '/components/' . $extn . '/views/' . $view . '/tmpl');
+            $component_path = JPath::clean($application->path.'/components/' . $extn.'/views/' . $view.'/tmpl');
 
             // Prepare array of component layouts
             $component_layouts = array();
@@ -163,11 +163,11 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
                 {
                     // Load language file
                     $lang->load('tpl_' . $template->element . '.sys', $application->path, null, false, false)
-                    || $lang->load('tpl_' . $template->element . '.sys', $application->path . '/templates/' . $template->element, null, false, false)
+                    || $lang->load('tpl_' . $template->element . '.sys', $application->path.'/templates/' . $template->element, null, false, false)
                     || $lang->load('tpl_' . $template->element . '.sys', $application->path, $lang->getDefault(), false, false)
-                    || $lang->load('tpl_' . $template->element . '.sys', $application->path . '/templates/' . $template->element, $lang->getDefault(), false, false);
+                    || $lang->load('tpl_' . $template->element . '.sys', $application->path.'/templates/' . $template->element, $lang->getDefault(), false, false);
 
-                    $template_path = JPath::clean($application->path . '/templates/' . $template->element . '/html/' . $extn . '/' . $view);
+                    $template_path = JPath::clean($application->path.'/templates/' . $template->element.'/html/' . $extn.'/'.$view);
 
                     // Add the layout options from the template path.
                     if (is_dir($template_path) && ($files = JFolder::files($template_path, '^[^_]*\.php$', false, true))) {

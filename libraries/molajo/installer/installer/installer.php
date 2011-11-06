@@ -826,7 +826,7 @@ class MolajoInstaller extends MolajoAdapter
             }
 
             if ($fCharset == $dbCharset && $fDriver == $dbDriver) {
-                $sqlfile = $this->getPath('extension_root') . '/' . $file;
+                $sqlfile = $this->getPath('extension_root').'/'.$file;
 
                 // Check that sql files exists before reading. Otherwise raise error for rollback
                 if (!file_exists($sqlfile)) {
@@ -912,7 +912,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
 
                 if (strlen($schemapath)) {
-                    $files = str_replace('.sql', '', JFolder::files($this->getPath('extension_root') . '/' . $schemapath, '\.sql$'));
+                    $files = str_replace('.sql', '', JFolder::files($this->getPath('extension_root').'/'.$schemapath, '\.sql$'));
                     usort($files, 'version_compare');
                     // Update the database
                     $query = $db->getQuery(true);
@@ -972,7 +972,7 @@ class MolajoInstaller extends MolajoAdapter
                 }
 
                 if (strlen($schemapath)) {
-                    $files = str_replace('.sql', '', JFolder::files($this->getPath('extension_root') . '/' . $schemapath, '\.sql$'));
+                    $files = str_replace('.sql', '', JFolder::files($this->getPath('extension_root').'/'.$schemapath, '\.sql$'));
                     usort($files, 'version_compare');
 
                     if (!count($files)) {
@@ -991,7 +991,7 @@ class MolajoInstaller extends MolajoAdapter
                         foreach ($files as $file)
                         {
                             if (version_compare($file, $version) > 0) {
-                                $buffer = file_get_contents($this->getPath('extension_root') . '/' . $schemapath . '/' . $file . '.sql');
+                                $buffer = file_get_contents($this->getPath('extension_root').'/'.$schemapath.'/'.$file . '.sql');
 
                                 // Graceful exit and rollback if read not successful
                                 if ($buffer === false) {
@@ -1102,8 +1102,8 @@ class MolajoInstaller extends MolajoAdapter
 
         $folder = (string)$element->attributes()->folder;
 
-        if ($folder && file_exists($this->getPath('source') . '/' . $folder)) {
-            $source = $this->getPath('source') . '/' . $folder;
+        if ($folder && file_exists($this->getPath('source').'/'.$folder)) {
+            $source = $this->getPath('source').'/'.$folder;
         }
         else
         {
@@ -1119,20 +1119,20 @@ class MolajoInstaller extends MolajoAdapter
 
                 foreach ($deletions['folders'] as $deleted_folder)
                 {
-                    JFolder::delete($destination . '/' . $deleted_folder);
+                    JFolder::delete($destination.'/'.$deleted_folder);
                 }
 
                 foreach ($deletions['files'] as $deleted_file)
                 {
-                    JFile::delete($destination . '/' . $deleted_file);
+                    JFile::delete($destination.'/'.$deleted_file);
                 }
             }
         }
 
         // Copy the MD5SUMS file if it exists
-        if (file_exists($source . '/MD5SUMS')) {
-            $path['src'] = $source . '/MD5SUMS';
-            $path['dest'] = $destination . '/MD5SUMS';
+        if (file_exists($source.'/MD5SUMS')) {
+            $path['src'] = $source.'/MD5SUMS';
+            $path['dest'] = $destination.'/MD5SUMS';
             $path['type'] = 'file';
             $copyfiles[] = $path;
         }
@@ -1140,8 +1140,8 @@ class MolajoInstaller extends MolajoAdapter
         // Process each file in the $files array (children of $tagName).
         foreach ($element->children() as $file)
         {
-            $path['src'] = $source . '/' . $file;
-            $path['dest'] = $destination . '/' . $file;
+            $path['src'] = $source.'/'.$file;
+            $path['dest'] = $destination.'/'.$file;
 
             // Is this path a file or folder?
             $path['type'] = ($file->getName() == 'folder') ? 'folder' : 'file';
@@ -1195,7 +1195,7 @@ class MolajoInstaller extends MolajoAdapter
         // Here we set the folder we are going to copy the files to.
         // 'languages' Files are copied to MOLAJO_BASE_FOLDER/language/ folder
 
-        $destination = $client->path . '/language';
+        $destination = $client->path.'/language';
 
         // Here we set the folder we are going to copy the files from.
 
@@ -1207,8 +1207,8 @@ class MolajoInstaller extends MolajoAdapter
 
         $folder = (string)$element->attributes()->folder;
 
-        if ($folder && file_exists($this->getPath('source') . '/' . $folder)) {
-            $source = $this->getPath('source') . '/' . $folder;
+        if ($folder && file_exists($this->getPath('source').'/'.$folder)) {
+            $source = $this->getPath('source').'/'.$folder;
         }
         else
         {
@@ -1226,17 +1226,17 @@ class MolajoInstaller extends MolajoAdapter
             // already exists.
 
             if ((string)$file->attributes()->tag != '') {
-                $path['src'] = $source . '/' . $file;
+                $path['src'] = $source.'/'.$file;
 
                 if ((string)$file->attributes()->client != '') {
                     // Override the client
                     $langclient = MolajoApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
-                    $path['dest'] = $langclient->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
+                    $path['dest'] = $langclient->path.'/language/' . $file->attributes()->tag.'/'.basename((string)$file);
                 }
                 else
                 {
                     // Use the default client
-                    $path['dest'] = $destination . '/' . $file->attributes()->tag . '/' . basename((string)$file);
+                    $path['dest'] = $destination.'/'.$file->attributes()->tag.'/'.basename((string)$file);
                 }
 
                 // If the language folder is not present, then the core pack hasn't been installed... ignore
@@ -1246,8 +1246,8 @@ class MolajoInstaller extends MolajoAdapter
             }
             else
             {
-                $path['src'] = $source . '/' . $file;
-                $path['dest'] = $destination . '/' . $file;
+                $path['src'] = $source.'/'.$file;
+                $path['dest'] = $destination.'/'.$file;
             }
 
             //
@@ -1301,7 +1301,7 @@ class MolajoInstaller extends MolajoAdapter
         //	Default 'media' Files are copied to the MOLAJO_BASE_FOLDER/media folder
 
         $folder = ((string)$element->attributes()->destination) ? '/' . $element->attributes()->destination : null;
-        $destination = JPath::clean(MOLAJO_BASE_FOLDER . '/media' . $folder);
+        $destination = JPath::clean(MOLAJO_BASE_FOLDER.'/media' . $folder);
 
         // Here we set the folder we are going to copy the files from.
 
@@ -1312,8 +1312,8 @@ class MolajoInstaller extends MolajoAdapter
 
         $folder = (string)$element->attributes()->folder;
 
-        if ($folder && file_exists($this->getPath('source') . '/' . $folder)) {
-            $source = $this->getPath('source') . '/' . $folder;
+        if ($folder && file_exists($this->getPath('source').'/'.$folder)) {
+            $source = $this->getPath('source').'/'.$folder;
         }
         else
         {
@@ -1323,8 +1323,8 @@ class MolajoInstaller extends MolajoAdapter
         // Process each file in the $files array (children of $tagName).
         foreach ($element->children() as $file)
         {
-            $path['src'] = $source . '/' . $file;
-            $path['dest'] = $destination . '/' . $file;
+            $path['src'] = $source.'/'.$file;
+            $path['dest'] = $destination.'/'.$file;
 
             // Is this path a file or folder?
             $path['type'] = ($file->getName() == 'folder') ? 'folder' : 'file';
@@ -1562,7 +1562,7 @@ class MolajoInstaller extends MolajoAdapter
                     $folder = '';
                 }
 
-                $source = $client->path . '/media/' . $folder;
+                $source = $client->path.'/media/' . $folder;
 
                 break;
 
@@ -1571,12 +1571,12 @@ class MolajoInstaller extends MolajoAdapter
 
                 if ($lang_client) {
                     $client = MolajoApplicationHelper::getApplicationInfo($lang_client, true);
-                    $source = $client->path . '/language';
+                    $source = $client->path.'/language';
                 }
                 else
                 {
                     if ($client) {
-                        $source = $client->path . '/language';
+                        $source = $client->path.'/language';
                     }
                     else
                     {
@@ -1610,12 +1610,12 @@ class MolajoInstaller extends MolajoAdapter
 
             if ($file->getName() == 'language' && (string)$file->attributes()->tag != '') {
                 if ($source) {
-                    $path = $source . '/' . $file->attributes()->tag . '/' . basename((string)$file);
+                    $path = $source.'/'.$file->attributes()->tag.'/'.basename((string)$file);
                 }
                 else
                 {
                     $target_client = MolajoApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
-                    $path = $target_client->path . '/language/' . $file->attributes()->tag . '/' . basename((string)$file);
+                    $path = $target_client->path.'/language/' . $file->attributes()->tag.'/'.basename((string)$file);
                 }
 
                 // If the language folder is not present, then the core pack hasn't been installed... ignore
@@ -1625,7 +1625,7 @@ class MolajoInstaller extends MolajoAdapter
             }
             else
             {
-                $path = $source . '/' . $file;
+                $path = $source.'/'.$file;
             }
 
             // Actually delete the files/folders
@@ -1670,12 +1670,12 @@ class MolajoInstaller extends MolajoAdapter
 
         if ($client) {
             $pathname = 'extension_' . $client->name;
-            $path['dest'] = $this->getPath($pathname) . '/' . basename($this->getPath('manifest'));
+            $path['dest'] = $this->getPath($pathname).'/'.basename($this->getPath('manifest'));
         }
         else
         {
             $pathname = 'extension_root';
-            $path['dest'] = $this->getPath($pathname) . '/' . basename($this->getPath('manifest'));
+            $path['dest'] = $this->getPath($pathname).'/'.basename($this->getPath('manifest'));
         }
 
         return $this->copyFiles(array($path), true);

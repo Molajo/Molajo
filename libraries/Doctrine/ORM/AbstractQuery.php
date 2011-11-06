@@ -285,7 +285,7 @@ abstract class AbstractQuery
         if ($this->_resultCacheDriver) {
             return $this->_resultCacheDriver;
         } else {
-            return $this->_em->getConfiguration()->getResultCacheImpl();
+            return $this->_em->getSiteConfig()->getResultCacheImpl();
         }
     }
 

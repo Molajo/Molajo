@@ -43,14 +43,14 @@ class JFormFieldComponentLayout extends JFormField
 		// Initialize variables.
 
 		// Get the application id.
-		$applicationId = $this->element['application_id'];
+		$application_id = $this->element['application_id'];
 
-		if (is_null($applicationId) && $this->form instanceof JForm) {
-			$applicationId = $this->form->getValue('application_id');
+		if (is_null($application_id) && $this->form instanceof JForm) {
+			$application_id = $this->form->getValue('application_id');
 		}
-		$applicationId = (int) $applicationId;
+		$application_id = (int) $application_id;
 
-		$application	= JApplicationHelper::getApplicationInfo($applicationId);
+		$application	= JApplicationHelper::getApplicationInfo($application_id);
 
 		// Get the extension.
 		$extn = (string) $this->element['extension'];
@@ -93,7 +93,7 @@ class JFormFieldComponentLayout extends JFormField
 			// Build the query.
 			$query->select('e.element, e.name');
 			$query->from('#__extensions as e');
-			$query->where('e.application_id = '.(int) $applicationId);
+			$query->where('e.application_id = '.(int) $application_id);
 			$query->where('e.type = '.$db->quote('template'));
 			$query->where('e.enabled = 1');
 

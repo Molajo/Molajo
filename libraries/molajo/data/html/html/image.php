@@ -69,10 +69,10 @@ abstract class MolajoHtmlImage
         }
         else
         {
-            $path = JPATH_SITE . '/templates/' . $cur_template . '/images/' . $file;
+            $path = JPATH_SITE.'/templates/' . $cur_template.'/images/' . $file;
             if (!isset($paths[$path])) {
-                if (file_exists(JPATH_SITE . '/templates/' . $cur_template . '/images/' . $file)) {
-                    $paths[$path] = 'templates/' . $cur_template . '/images/' . $file;
+                if (file_exists(JPATH_SITE.'/templates/' . $cur_template.'/images/' . $file)) {
+                    $paths[$path] = 'templates/' . $cur_template.'/images/' . $file;
                 }
                 else
                 {
@@ -88,7 +88,7 @@ abstract class MolajoHtmlImage
         }
 
         // Prepend the base path.
-        $src = JURI::base(true) . '/' . $src;
+        $src = JURI::base(true).'/'.$src;
 
         // Outputs actual HTML <img> tag.
         if ($asTag) {
@@ -144,8 +144,8 @@ abstract class MolajoHtmlImage
         }
         else
         {
-            if (file_exists(JPATH_ADMINISTRATOR . '/templates/' . $cur_template . '/images/' . $file)) {
-                $image = 'templates/' . $cur_template . '/images/' . $file;
+            if (file_exists(JPATH_ADMINISTRATOR.'/templates/' . $cur_template.'/images/' . $file)) {
+                $image = 'templates/' . $cur_template.'/images/' . $file;
             }
             else
             {
@@ -165,7 +165,7 @@ abstract class MolajoHtmlImage
         }
 
         // Prepend the base path.
-        $image = JURI::base(true) . '/' . $image;
+        $image = JURI::base(true).'/'.$image;
 
         // Outputs actual HTML <img> tag.
         if ($asTag) {

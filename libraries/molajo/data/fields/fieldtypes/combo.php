@@ -55,7 +55,7 @@ class MolajoFormFieldCombo extends MolajoFormFieldList
 
         // Build the calendar for the combo box.
         $html[] = '<calendar type="text" name="' . $this->name . '" id="' . $this->id . '"' .
-                  ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $attr . '/>';
+                  ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $attr.'/>';
 
         // Build the list for the combo box.
         $html[] = '<ul id="combobox-' . $this->id . '" style="display:none;">';

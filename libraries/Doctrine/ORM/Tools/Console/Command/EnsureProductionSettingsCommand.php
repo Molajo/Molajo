@@ -68,7 +68,7 @@ EOT
 
         $error = false;
         try {
-            $em->getConfiguration()->ensureProductionSettings();
+            $em->getSiteConfig()->ensureProductionSettings();
 
             if ($input->getOption('complete') !== null) {
                 $em->getConnection()->connect();

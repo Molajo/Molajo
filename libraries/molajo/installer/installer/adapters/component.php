@@ -117,7 +117,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         $lang = MolajoFactory::getLanguage();
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                : MOLAJO_BASE_FOLDER) . '/components/' . $extension;
+                : MOLAJO_BASE_FOLDER).'/components/' . $extension;
 
         if ($this->manifest->administration->files) {
             $element = $this->manifest->administration->files;
@@ -177,8 +177,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $this->parent->set('message', MolajoText::_((string)$this->manifest->description));
 
         // Set the installation target paths
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $this->get('element')));
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $this->get('element')));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
 
         // copy this as its used as a common base
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator'));
@@ -234,7 +234,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $manifestScript = (string)$this->manifest->scriptfile;
 
         if ($manifestScript) {
-            $manifestScriptFile = $this->parent->getPath('source') . '/' . $manifestScript;
+            $manifestScriptFile = $this->parent->getPath('source').'/'.$manifestScript;
 
             if (is_file($manifestScriptFile)) {
                 // Load the file
@@ -348,9 +348,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         if ($installFile) {
             // Make sure it hasn't already been copied (this would be an error in the XML install file)
-            if (!file_exists($this->parent->getPath('extension_administrator') . '/' . $installFile) || $this->parent->getOverwrite()) {
-                $path['src'] = $this->parent->getPath('source') . '/' . $installFile;
-                $path['dest'] = $this->parent->getPath('extension_administrator') . '/' . $installFile;
+            if (!file_exists($this->parent->getPath('extension_administrator').'/'.$installFile) || $this->parent->getOverwrite()) {
+                $path['src'] = $this->parent->getPath('source').'/'.$installFile;
+                $path['dest'] = $this->parent->getPath('extension_administrator').'/'.$installFile;
 
                 if (!$this->parent->copyFiles(array($path))) {
                     // Install failed, rollback changes
@@ -369,9 +369,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         if ($uninstallFile) {
             // Make sure it hasn't already been copied (this would be an error in the XML install file)
-            if (!file_exists($this->parent->getPath('extension_administrator') . '/' . $uninstallFile) || $this->parent->getOverwrite()) {
-                $path['src'] = $this->parent->getPath('source') . '/' . $uninstallFile;
-                $path['dest'] = $this->parent->getPath('extension_administrator') . '/' . $uninstallFile;
+            if (!file_exists($this->parent->getPath('extension_administrator').'/'.$uninstallFile) || $this->parent->getOverwrite()) {
+                $path['src'] = $this->parent->getPath('source').'/'.$uninstallFile;
+                $path['dest'] = $this->parent->getPath('extension_administrator').'/'.$uninstallFile;
 
                 if (!$this->parent->copyFiles(array($path))) {
                     // Install failed, rollback changes
@@ -383,8 +383,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         // If there is a manifest script, let's copy it.
         if ($this->get('manifest_script')) {
-            $path['src'] = $this->parent->getPath('source') . '/' . $this->get('manifest_script');
-            $path['dest'] = $this->parent->getPath('extension_administrator') . '/' . $this->get('manifest_script');
+            $path['src'] = $this->parent->getPath('source').'/'.$this->get('manifest_script');
+            $path['dest'] = $this->parent->getPath('extension_administrator').'/'.$this->get('manifest_script');
 
             if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
                 if (!$this->parent->copyFiles(array($path))) {
@@ -433,13 +433,13 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
            */
         // Start legacy support
         if ($this->get('install_script')) {
-            if (is_file($this->parent->getPath('extension_administrator') . '/' . $this->get('install_script')) || $this->parent->getOverwrite()) {
+            if (is_file($this->parent->getPath('extension_administrator').'/'.$this->get('install_script')) || $this->parent->getOverwrite()) {
                 $notdef = false;
                 $ranwell = false;
                 ob_start();
                 ob_implicit_flush(false);
 
-                require_once $this->parent->getPath('extension_administrator') . '/' . $this->get('install_script');
+                require_once $this->parent->getPath('extension_administrator').'/'.$this->get('install_script');
 
                 if (function_exists('com_install')) {
                     if (com_install() === false) {
@@ -608,8 +608,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         }
 
         // Set the installation target paths
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $this->get('element')));
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $this->get('element')));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
         /**
@@ -665,7 +665,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $manifestScript = (string)$this->manifest->scriptfile;
 
         if ($manifestScript) {
-            $manifestScriptFile = $this->parent->getPath('source') . '/' . $manifestScript;
+            $manifestScriptFile = $this->parent->getPath('source').'/'.$manifestScript;
 
             if (is_file($manifestScriptFile)) {
                 // Load the file
@@ -787,9 +787,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         if ($installFile) {
             // Make sure it hasn't already been copied (this would be an error in the XML install file)
-            if (!file_exists($this->parent->getPath('extension_administrator') . '/' . $installFile) || $this->parent->getOverwrite()) {
-                $path['src'] = $this->parent->getPath('source') . '/' . $installFile;
-                $path['dest'] = $this->parent->getPath('extension_administrator') . '/' . $installFile;
+            if (!file_exists($this->parent->getPath('extension_administrator').'/'.$installFile) || $this->parent->getOverwrite()) {
+                $path['src'] = $this->parent->getPath('source').'/'.$installFile;
+                $path['dest'] = $this->parent->getPath('extension_administrator').'/'.$installFile;
 
                 if (!$this->parent->copyFiles(array($path))) {
                     // Install failed, rollback changes
@@ -807,9 +807,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         if ($uninstallFile) {
             // Make sure it hasn't already been copied (this would be an error in the XML install file)
-            if (!file_exists($this->parent->getPath('extension_administrator') . '/' . $uninstallFile) || $this->parent->getOverwrite()) {
-                $path['src'] = $this->parent->getPath('source') . '/' . $uninstallFile;
-                $path['dest'] = $this->parent->getPath('extension_administrator') . '/' . $uninstallFile;
+            if (!file_exists($this->parent->getPath('extension_administrator').'/'.$uninstallFile) || $this->parent->getOverwrite()) {
+                $path['src'] = $this->parent->getPath('source').'/'.$uninstallFile;
+                $path['dest'] = $this->parent->getPath('extension_administrator').'/'.$uninstallFile;
 
                 if (!$this->parent->copyFiles(array($path))) {
                     // Install failed, rollback changes
@@ -822,8 +822,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         // If there is a manifest script, let's copy it.
         if ($this->get('manifest_script')) {
-            $path['src'] = $this->parent->getPath('source') . '/' . $this->get('manifest_script');
-            $path['dest'] = $this->parent->getPath('extension_administrator') . '/' . $this->get('manifest_script');
+            $path['src'] = $this->parent->getPath('source').'/'.$this->get('manifest_script');
+            $path['dest'] = $this->parent->getPath('extension_administrator').'/'.$this->get('manifest_script');
 
             if (!file_exists($path['dest']) || $this->parent->getOverwrite()) {
                 if (!$this->parent->copyFiles(array($path))) {
@@ -880,13 +880,13 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
            */
         // Start legacy support
         if ($this->get('install_script')) {
-            if (is_file($this->parent->getPath('extension_administrator') . '/' . $this->get('install_script')) || $this->parent->getOverwrite()) {
+            if (is_file($this->parent->getPath('extension_administrator').'/'.$this->get('install_script')) || $this->parent->getOverwrite()) {
                 $notdef = false;
                 $ranwell = false;
                 ob_start();
                 ob_implicit_flush(false);
 
-                require_once $this->parent->getPath('extension_administrator') . '/' . $this->get('install_script');
+                require_once $this->parent->getPath('extension_administrator').'/'.$this->get('install_script');
 
                 if (function_exists('com_install')) {
                     if (com_install() === false) {
@@ -1023,8 +1023,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         }
 
         // Get the admin and site paths for the component
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $row->element));
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $row->element));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $row->element));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $row->element));
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
         /**
@@ -1070,7 +1070,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $this->set('element', $element);
 
         // Attempt to load the admin language file; might have uninstall strings
-        $this->loadLanguage(MOLAJO_BASE_FOLDER . '/components/' . $element);
+        $this->loadLanguage(MOLAJO_BASE_FOLDER.'/components/' . $element);
 
         /**
          * ---------------------------------------------------------------------------------------------
@@ -1081,7 +1081,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $scriptFile = (string)$this->manifest->scriptfile;
 
         if ($scriptFile) {
-            $manifestScriptFile = $this->parent->getPath('source') . '/' . $scriptFile;
+            $manifestScriptFile = $this->parent->getPath('source').'/'.$scriptFile;
 
             if (is_file($manifestScriptFile)) {
                 // load the file
@@ -1123,11 +1123,11 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         if ($uninstallFile) {
             // Element exists, does the file exist?
-            if (is_file($this->parent->getPath('extension_administrator') . '/' . $uninstallFile)) {
+            if (is_file($this->parent->getPath('extension_administrator').'/'.$uninstallFile)) {
                 ob_start();
                 ob_implicit_flush(false);
 
-                require_once $this->parent->getPath('extension_administrator') . '/' . $uninstallFile;
+                require_once $this->parent->getPath('extension_administrator').'/'.$uninstallFile;
 
                 if (function_exists('com_uninstall')) {
                     if (com_uninstall() === false) {
@@ -1520,14 +1520,14 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
     public function discover()
     {
         $results = array();
-        $site_components = JFolder::folders(MOLAJO_BASE_FOLDER . '/components');
-        $admin_components = JFolder::folders(MOLAJO_BASE_FOLDER . '/components');
+        $site_components = JFolder::folders(MOLAJO_BASE_FOLDER.'/components');
+        $admin_components = JFolder::folders(MOLAJO_BASE_FOLDER.'/components');
 
         foreach ($site_components as $component)
         {
-            if (file_exists(MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml')) {
+            if (file_exists(MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml')) {
                 $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-                    MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'
+                    MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml'
                 );
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'component');
@@ -1542,9 +1542,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         foreach ($admin_components as $component)
         {
-            if (file_exists(MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml')) {
+            if (file_exists(MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml')) {
                 $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-                    MOLAJO_BASE_FOLDER . '/components/' . $component . '/' . str_replace('com_', '', $component) . '.xml'
+                    MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml'
                 );
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'component');
@@ -1571,10 +1571,10 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         // Need to find to find where the XML file is since we don't store this normally
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $short_element = str_replace('com_', '', $this->parent->extension->element);
-        $manifestPath = $client->path . '/components/' . $this->parent->extension->element . '/' . $short_element . '.xml';
+        $manifestPath = $client->path.'/components/' . $this->parent->extension->element.'/'.$short_element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $this->parent->setPath('source', $client->path . '/components/' . $this->parent->extension->element);
+        $this->parent->setPath('source', $client->path.'/components/' . $this->parent->extension->element);
         $this->parent->setPath('extension_root', $this->parent->getPath('source'));
 
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -1633,8 +1633,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         }
 
         // Set the installation target paths
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $this->get('element')));
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER . '/components/' . $this->get('element')));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
         /**
@@ -1658,7 +1658,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $manifestScript = (string)$this->manifest->scriptfile;
 
         if ($manifestScript) {
-            $manifestScriptFile = $this->parent->getPath('source') . '/' . $manifestScript;
+            $manifestScriptFile = $this->parent->getPath('source').'/'.$manifestScript;
 
             if (is_file($manifestScriptFile)) {
                 // load the file
@@ -1750,11 +1750,11 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         // start legacy support
         if ($this->get('install_script')) {
 
-            if (is_file($this->parent->getPath('extension_administrator') . '/' . $this->get('install_script'))) {
+            if (is_file($this->parent->getPath('extension_administrator').'/'.$this->get('install_script'))) {
                 ob_start();
                 ob_implicit_flush(false);
 
-                require_once $this->parent->getPath('extension_administrator') . '/' . $this->get('install_script');
+                require_once $this->parent->getPath('extension_administrator').'/'.$this->get('install_script');
 
                 if (function_exists('com_install')) {
 
@@ -1831,7 +1831,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         // Need to find to find where the XML file is since we don't store this normally
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $short_element = str_replace('com_', '', $this->parent->extension->element);
-        $manifestPath = $client->path . '/components/' . $this->parent->extension->element . '/' . $short_element . '.xml';
+        $manifestPath = $client->path.'/components/' . $this->parent->extension->element.'/'.$short_element . '.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

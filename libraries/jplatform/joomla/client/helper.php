@@ -39,7 +39,7 @@ class JClientHelper
 		if (!isset($credentials[$client]) || $force)
 		{
 			// Initialise variables.
-			$config = JFactory::getConfig();
+			$config = JFactory::getSiteConfig();
 
 			// Fetch the client layer configuration options for the specific client
 			switch ($client)
@@ -100,7 +100,7 @@ class JClientHelper
 		switch ($client)
 		{
 			case 'ftp':
-				$config = JFactory::getConfig();
+				$config = JFactory::getSiteConfig();
 				$options = array('enabled' => $config->get('ftp_enable'), 'host' => $config->get('ftp_host'), 'port' => $config->get('ftp_port'));
 
 				if ($options['enabled'])
@@ -156,7 +156,7 @@ class JClientHelper
 		switch ($client)
 		{
 			case 'ftp':
-				$config = JFactory::getConfig();
+				$config = JFactory::getSiteConfig();
 				$options = array('enabled' => $config->get('ftp_enable'), 'user' => $config->get('ftp_user'), 'pass' => $config->get('ftp_pass'));
 				break;
 

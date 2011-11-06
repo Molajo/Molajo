@@ -352,7 +352,7 @@ final class Query extends AbstractQuery
         if ($this->_queryCache) {
             return $this->_queryCache;
         } else {
-            return $this->_em->getConfiguration()->getQueryCacheImpl();
+            return $this->_em->getSiteConfig()->getQueryCacheImpl();
         }
     }
 

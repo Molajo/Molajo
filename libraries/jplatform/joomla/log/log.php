@@ -237,7 +237,7 @@ class JLog
 		JLog::add('JLog::getInstance() is deprecated.  See JLog::addLogger().', JLog::WARNING, 'deprecated');
 
 		// Get the system configuration object.
-		$config = JFactory::getConfig();
+		$config = JFactory::getSiteConfig();
 
 		// Set default path if not set and sanitize it.
 		if (!$path)

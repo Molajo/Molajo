@@ -39,7 +39,7 @@ class MolajoFormFieldSample extends MolajoFormFieldList
             $type = 'mysql';
         }
         // Get a list of files in the search path with the given filter.
-        $files = JFolder::files(MOLAJO_SITE_INSTALLATION . '/sql/' . $type, '^sample.*\.sql$');
+        $files = JFolder::files(MOLAJO_SITE_INSTALLATION.'/sql/' . $type, '^sample.*\.sql$');
 
         // Build the options list from the list of files.
         if (is_array($files)) {

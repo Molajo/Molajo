@@ -32,7 +32,7 @@ abstract class MolajoHeaderHelper
 	public static function getList($params)
 	{
         $tmpobj = new JObject();
-        $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfiguration('site_title', 'Molajo'));
+        $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));
         $data[]=$tmpobj;
         return $data;
 	}

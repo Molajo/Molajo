@@ -46,6 +46,6 @@ class MolajoFormFieldPassword extends MolajoFormField
 
         return '<calendar type="password" name="' . $this->name . '" id="' . $this->id . '"' .
                ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-               $auto . $class . $readonly . $disabled . $size . $maxLength . '/>';
+               $auto . $class . $readonly . $disabled . $size . $maxLength.'/>';
     }
 }

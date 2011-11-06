@@ -41,7 +41,7 @@ class MolajoOembedHelper
     function getProvider($option_URL, $option_MediaClass = '')
     {
         /* See if Link is for Embedded Media */
-        $read = JFile::readfile(MOLAJO_BASE_FOLDER . '/media/molajo/MediaEmbedConfiguration.json');
+        $read = JFile::readfile(MOLAJO_BASE_FOLDER.'/media/molajo/MediaEmbedConfiguration.json');
         $jsonResults = json_decode($read);
 
         /* See if Link is for Embedded Media */

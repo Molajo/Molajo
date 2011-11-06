@@ -60,7 +60,7 @@ abstract class MolajoSessionStorage extends JObject
             if (class_exists($class)) {
 
             } else {
-                $path = dirname(__FILE__) . '/storage/' . $name . '.php';
+                $path = dirname(__FILE__).'/storage/' . $name . '.php';
 
                 if (file_exists($path)) {
                     require_once $path;

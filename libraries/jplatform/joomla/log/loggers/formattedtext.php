@@ -87,7 +87,7 @@ class JLoggerFormattedText extends JLogger
 		// The name of the text file path defaults to that which is set in configuration if not explicitly given.
 		if (empty($this->options['text_file_path']))
 		{
-			$this->options['text_file_path'] = JFactory::getConfig()->get('log_path');
+			$this->options['text_file_path'] = JFactory::getSiteConfig()->get('log_path');
 		}
 
 		// False to treat the log file as a php file.

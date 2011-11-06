@@ -9,4 +9,4 @@ defined('MOLAJO') or die;
 
 $headertype = 'dl';
 
-include MOLAJO_EXTENSION_LAYOUT_COMMON.'/headertype.php';
+include MOLAJO_EXTENSION_LAYOUTS.'/common/headertype.php';

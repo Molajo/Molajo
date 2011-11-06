@@ -438,7 +438,7 @@ class MolajoACLCore extends MolajoACL
         if ($this->authorise('edit.state', 'com_articles')
         || $this->authorise('edit', 'com_articles')) {
         } else {
-        $query->where('a.state in ('.MOLAJO_STATE_ARCHIVED.','.MOLAJO_STATE_PUBLISHED.')');
+        $query->where('a.state in ('.MOLAJO_STATUS_ARCHIVED.','.MOLAJO_STATUS_PUBLISHED.')');
 
         $nullDate = $this->getDbo()->Quote($this->getDbo()->getNullDate());
         $nowDate = $this->getDbo()->Quote(MolajoFactory::getDate()->toMySQL());
@@ -530,8 +530,8 @@ class MolajoACLCore extends MolajoACL
         $component = $params[0];
         $section = $params[1];
 
-        if (is_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml')) {
-            $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml');
+        if (is_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml')) {
+            $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml');
 
             foreach ($xml->children() as $child)
             {

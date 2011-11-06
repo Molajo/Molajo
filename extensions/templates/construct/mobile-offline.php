@@ -30,7 +30,7 @@ $baseUrl 				= JURI::base();
 <body class="noscript">	
 	<div data-role="page" data-theme="<?php echo $mPageDataTheme; ?>">
 		<div id="header" data-role="header" data-theme="<?php echo $mHeaderDataTheme; ?>">
-			<h1><a href="<?php echo $baseUrl; ?>/" title="<?php echo $app->getConfiguration('sitename'); ?>"><?php echo $app->getConfiguration('sitename'); ?></a></h1>
+			<h1><a href="<?php echo $baseUrl; ?>/" title="<?php echo $app->getSiteConfig('sitename'); ?>"><?php echo $app->getSiteConfig('sitename'); ?></a></h1>
 		</div>
 	
 		<?php if ( $mNavPosition && ($this->countModules('nav'))) : ?>
@@ -45,7 +45,7 @@ $baseUrl 				= JURI::base();
 				<jdoc:include type="message" />
 			<?php endif; ?>
 			<p>
-				<?php echo $app->getConfiguration('offline_message'); ?>
+				<?php echo $app->getSiteConfig('offline_message'); ?>
 			</p>
 			<form action="index.php" method="post" name="login" id="form-login">
 			<fieldset class="input">

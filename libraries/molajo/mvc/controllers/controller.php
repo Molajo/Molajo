@@ -243,7 +243,6 @@ class MolajoController extends JController
             || $this->request['task'] == 'login'
             || $this->request['component_table'] == '__dummy'
         ) {
-
             $this->isNew = false;
 
         } else {

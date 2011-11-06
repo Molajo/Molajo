@@ -60,8 +60,8 @@ class TemplatesModelStyles extends JModelList
 		$template = $this->getUserStateFromRequest($this->context.'.filter.template', 'filter_template', '0', 'cmd');
 		$this->setState('filter.template', $template);
 
-		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', null);
-		$this->setState('filter.application_id', $applicationId);
+		$application_id = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', null);
+		$this->setState('filter.application_id', $application_id);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_templates');
@@ -130,9 +130,9 @@ class TemplatesModelStyles extends JModelList
 		}
 
 		// Filter by application.
-		$applicationId = $this->getState('filter.application_id');
-		if (is_numeric($applicationId)) {
-			$query->where('a.application_id = '.(int) $applicationId);
+		$application_id = $this->getState('filter.application_id');
+		if (is_numeric($application_id)) {
+			$query->where('a.application_id = '.(int) $application_id);
 		}
 
 		// Filter by search in title

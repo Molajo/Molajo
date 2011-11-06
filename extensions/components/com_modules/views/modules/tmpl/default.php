@@ -32,7 +32,7 @@ $saveOrder	= $listOrder == 'ordering';
 		</div>
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">
-				<?php echo MolajoHTML::_('select.options', ModulesHelper::getApplicationOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
+				<?php echo MolajoHTML::_('select.options', ModulesHelper::getAppOptions(), 'value', 'text', $this->state->get('filter.application_id'));?>
 			</select>
              <select name="filter_state" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo MolajoText::_('JOPTION_SELECT_PUBLISHED');?></option>

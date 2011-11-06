@@ -87,12 +87,12 @@ class JLoggerDatabase extends JLogger
 		if (empty($this->options['db_object']) && empty($this->options['db_driver']))
 		{
 			$this->dbo = JFactory::getDBO();
-			$this->driver = JFactory::getConfig()->get('dbtype');
-			$this->host = JFactory::getConfig()->get('host');
-			$this->user = JFactory::getConfig()->get('user');
-			$this->password = JFactory::getConfig()->get('password');
-			$this->database = JFactory::getConfig()->get('db');
-			$this->prefix = JFactory::getConfig()->get('dbprefix');
+			$this->driver = JFactory::getSiteConfig()->get('dbtype');
+			$this->host = JFactory::getSiteConfig()->get('host');
+			$this->user = JFactory::getSiteConfig()->get('user');
+			$this->password = JFactory::getSiteConfig()->get('password');
+			$this->database = JFactory::getSiteConfig()->get('db');
+			$this->prefix = JFactory::getSiteConfig()->get('dbprefix');
 		}
 		// We need to get the database connection settings from the configuration options.
 		else

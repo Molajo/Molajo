@@ -60,7 +60,7 @@ class MolajoUtility
      * @return  boolean  True on success
      *
      * @deprecated  1.6
-     * @see            MolajoMail::sendAdminMail()
+     * @see     MolajoMail::sendAdminMail()
      */
     public static function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
     {

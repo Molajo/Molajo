@@ -224,17 +224,17 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Edit: check for valid state **/
-        if ($this->table->state == MOLAJO_STATE_ARCHIVED) {
+        if ($this->table->state == MOLAJO_STATUS_ARCHIVED) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
-        if ($this->table->state == MOLAJO_STATE_TRASHED) {
+        if ($this->table->state == MOLAJO_STATUS_TRASHED) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
-        if ($this->table->state == MOLAJO_STATE_VERSION) {
+        if ($this->table->state == MOLAJO_STATUS_VERSION) {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
@@ -397,7 +397,7 @@ class MolajoControllerEdit extends MolajoController
         $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
-        if ($this->table->state == MOLAJO_STATE_TRASHED || $this->table->state == MOLAJO_STATE_VERSION) {
+        if ($this->table->state == MOLAJO_STATUS_TRASHED || $this->table->state == MOLAJO_STATUS_VERSION) {
         } else {
             $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED') . ' ' . $this->id, 'error');
             $this->redirectClass->setRedirect(MolajoRoute::_($this->redirectClass->redirectFailure, false));

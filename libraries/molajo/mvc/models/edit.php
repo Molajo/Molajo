@@ -471,7 +471,7 @@ class MolajoModelEdit extends JModel
             return false;
         }
 
-        if ($table->state == MOLAJO_STATE_VERSION) {
+        if ($table->state == MOLAJO_STATUS_VERSION) {
             $this->setError(MolajoText::_('MOLAJO_ERROR_ROW_IS_A_VERSION_COPY'));
             return false;
         }
@@ -518,7 +518,7 @@ class MolajoModelEdit extends JModel
                     $column_name = $db->namequote('state') . ' as ' . $db->namequote('state_prior_to_version');
 
                 } else if ($column_name == 'state') {
-                    $column_name = MOLAJO_STATE_VERSION . ' as ' . $db->namequote('state');
+                    $column_name = MOLAJO_STATUS_VERSION . ' as ' . $db->namequote('state');
 
                 } else if ($column_name == 'modified') {
                     $column_name = '"' . MolajoFactory::getDate()->toMySQL() . '" as ' . $db->namequote('modified');
@@ -577,7 +577,7 @@ class MolajoModelEdit extends JModel
         }
 
         /** verify version history state **/
-        if ($fromTable->state == MOLAJO_STATE_VERSION) {
+        if ($fromTable->state == MOLAJO_STATUS_VERSION) {
 
         } else {
             $this->setError(MolajoText::_('MOLAJO_ERROR_REQUESTED_VERSION_IS_NOT_A_VERSION'));
@@ -698,27 +698,27 @@ class MolajoModelEdit extends JModel
      */
     public function archive($id)
     {
-        return $this->manageState($id, MOLAJO_STATE_ARCHIVED);
+        return $this->manageState($id, MOLAJO_STATUS_ARCHIVED);
     }
 
     public function publish($id)
     {
-        return $this->manageState($id, MOLAJO_STATE_PUBLISHED);
+        return $this->manageState($id, MOLAJO_STATUS_PUBLISHED);
     }
 
     public function unpublish($id)
     {
-        return $this->manageState($id, MOLAJO_STATE_UNPUBLISHED);
+        return $this->manageState($id, MOLAJO_STATUS_UNPUBLISHED);
     }
 
     public function spam($id)
     {
-        return $this->manageState($id, MOLAJO_STATE_SPAMMED);
+        return $this->manageState($id, MOLAJO_STATUS_SPAMMED);
     }
 
     public function trash($id)
     {
-        return $this->manageState($id, MOLAJO_STATE_TRASHED);
+        return $this->manageState($id, MOLAJO_STATUS_TRASHED);
     }
 
     function manageState($id, $value)

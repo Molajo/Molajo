@@ -53,7 +53,7 @@ class MolajoHelp
 
             // If user hasn't specified a help URL, then get the global one.
             if ($url == '') {
-                $url = $app->getConfiguration('helpurl');
+                $url = $app->getSiteConfig('helpurl');
             }
 
             // Component help URL overrides user and global.
@@ -123,7 +123,7 @@ class MolajoHelp
             $try = str_replace($search, $replace, $url);
             jimport('joomla.filesystem.file');
 
-            if (!JFile::exists(JPATH_BASE . '/' . $try)) {
+            if (!JFile::exists(JPATH_BASE.'/'.$try)) {
                 $replace[3] = 'en-GB';
                 $replace[4] = 'en';
                 $replace[5] = 'GB';

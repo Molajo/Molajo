@@ -18,20 +18,34 @@ if (isset($_SERVER['HTTP_HOST'])) {
 }
 
 /**
+ *  Molajo
+ */
+if (class_exists('MolajoVersion')) {
+} else {
+    require_once LIBRARIES.'/includes/version.php';
+}
+if (class_exists('MolajoFactory')) {
+} else {
+    require_once LIBRARIES.'/molajo/factory.php';
+}
+
+/**
  *  Configuration File and Error Reporting
  */
 if (MOLAJO_APPLICATION == 'installation') {
     define('JDEBUG', false);
 } else {
 
+    /** site configuration */
     if (file_exists(MOLAJO_SITE_PATH.'/configuration.php')) {
     } else {
         echo 'Molajo configuration.php File Missing';
         exit;
     }
     require_once MOLAJO_SITE_PATH.'/configuration.php';
+    
+    $CONFIG = new MolajoConfigSite();
 
-    $CONFIG = new MolajoConfig();
     if (@$CONFIG->error_reporting === 0) {
         error_reporting(0);
 
@@ -48,14 +62,3 @@ if (MOLAJO_APPLICATION == 'installation') {
     }
 }
 
-/**
- *  Molajo
- */
-if (class_exists('MolajoVersion')) {
-} else {
-    require_once LIBRARIES.'/includes/version.php';
-}
-if (class_exists('MolajoFactory')) {
-} else {
-    require_once LIBRARIES.'/molajo/application/factory.php';
-}

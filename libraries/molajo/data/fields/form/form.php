@@ -1596,7 +1596,7 @@ class MolajoForm
         // Add the field paths.
         foreach ($paths as $path)
         {
-            $path = MOLAJO_BASE_FOLDER . '/' . ltrim($path, '/\\');
+            $path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
             self::addFieldPath($path);
         }
 
@@ -1607,7 +1607,7 @@ class MolajoForm
         // Add the form paths.
         foreach ($paths as $path)
         {
-            $path = MOLAJO_BASE_FOLDER . '/' . ltrim($path, '/\\');
+            $path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
             self::addFormPath($path);
         }
 
@@ -1618,7 +1618,7 @@ class MolajoForm
         // Add the rule paths.
         foreach ($paths as $path)
         {
-            $path = MOLAJO_BASE_FOLDER . '/' . ltrim($path, '/\\');
+            $path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
             self::addRulePath($path);
         }
 

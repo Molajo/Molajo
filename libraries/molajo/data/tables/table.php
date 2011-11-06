@@ -161,7 +161,7 @@ abstract class MolajoTable extends JObject
 
         if (isset($_paths)) {
         } else {
-            $_paths = array(dirname(__FILE__) . '/table');
+            $_paths = array(dirname(__FILE__).'/table');
         }
 
         settype($path, 'array');

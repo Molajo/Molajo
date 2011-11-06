@@ -50,9 +50,9 @@ class MolajoFormFieldEditors extends MolajoFormFieldList
         $lang = MolajoFactory::getLanguage();
         foreach ($options as $i => $option) {
             $lang->load('plg_editors_' . $option->value, MOLAJO_BASE_FOLDER, null, false, false)
-            || $lang->load('plg_editors_' . $option->value, MOLAJO_EXTENSION_PLUGINS . '/editors/' . $option->value, null, false, false)
+            || $lang->load('plg_editors_' . $option->value, MOLAJO_EXTENSION_PLUGINS.'/editors/' . $option->value, null, false, false)
             || $lang->load('plg_editors_' . $option->value, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-            || $lang->load('plg_editors_' . $option->value, MOLAJO_EXTENSION_PLUGINS . '/editors/' . $option->value, $lang->getDefault(), false, false);
+            || $lang->load('plg_editors_' . $option->value, MOLAJO_EXTENSION_PLUGINS.'/editors/' . $option->value, $lang->getDefault(), false, false);
             $options[$i]->text = MolajoText::_($option->text);
         }
 

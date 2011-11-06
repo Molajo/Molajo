@@ -123,15 +123,15 @@ class Statement implements DriverStatement
      */
     public function execute($params = null)
     {
-        $hasLogger = $this->_conn->getConfiguration()->getSQLLogger();
+        $hasLogger = $this->_conn->getSiteConfig()->getSQLLogger();
         if ($hasLogger) {
-            $this->_conn->getConfiguration()->getSQLLogger()->startQuery($this->_sql, $this->_params);
+            $this->_conn->getSiteConfig()->getSQLLogger()->startQuery($this->_sql, $this->_params);
         }
 
         $stmt = $this->_stmt->execute($params);
 
         if ($hasLogger) {
-            $this->_conn->getConfiguration()->getSQLLogger()->stopQuery();
+            $this->_conn->getSiteConfig()->getSQLLogger()->stopQuery();
         }
         $this->_params = array();
         return $stmt;

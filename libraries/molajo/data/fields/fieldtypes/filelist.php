@@ -46,7 +46,7 @@ class MolajoFormFieldFileList extends MolajoFormFieldList
         // Get the path in which to search for file options.
         $path = (string)$this->element['directory'];
         if (!is_dir($path)) {
-            $path = MOLAJO_BASE_FOLDER . '/' . $path;
+            $path = MOLAJO_BASE_FOLDER.'/'.$path;
         }
 
         // Prepend some default options based on field attributes.

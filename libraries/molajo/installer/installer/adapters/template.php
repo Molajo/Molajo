@@ -41,7 +41,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
                     ->setPath(
                 'source',
                 ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                        : MOLAJO_BASE_FOLDER) . '/templates/' . $this->parent->extension->element
+                        : MOLAJO_BASE_FOLDER).'/templates/' . $this->parent->extension->element
             );
         }
 
@@ -58,7 +58,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
         $extension = "tpl_$name";
         $lang = MolajoFactory::getLanguage();
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                : MOLAJO_BASE_FOLDER) . '/templates/' . $name;
+                : MOLAJO_BASE_FOLDER).'/templates/' . $name;
         $lang->load($extension . '.sys', $source, null, false, false)
         || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), null, false, false)
         || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
@@ -109,7 +109,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
         $id = $db->loadResult();
 
         // Set the template root path
-        $this->parent->setPath('extension_root', $basePath . '/templates/' . $element);
+        $this->parent->setPath('extension_root', $basePath.'/templates/' . $element);
 
         // if it's on the fs...
         if (file_exists($this->parent->getPath('extension_root')) && (!$this->parent->getOverwrite() || $this->parent->getUpgrade())) {
@@ -328,7 +328,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
             return false;
         }
 
-        $this->parent->setPath('extension_root', $client->path . '/templates/' . strtolower($name));
+        $this->parent->setPath('extension_root', $client->path.'/templates/' . strtolower($name));
         $this->parent->setPath('source', $this->parent->getPath('extension_root'));
 
         // We do findManifest to avoid problem when uninstalling a list of extensions: getManifest cache its manifest file
@@ -384,8 +384,8 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
     function discover()
     {
         $results = array();
-        $site_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/templates');
-        $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER . '/templates');
+        $site_list = JFolder::folders(MOLAJO_BASE_FOLDER.'/templates');
+        $admin_list = JFolder::folders(MOLAJO_BASE_FOLDER.'/templates');
         $site_info = MolajoApplicationHelper::getApplicationInfo('site', true);
         $admin_info = MolajoApplicationHelper::getApplicationInfo('administrator', true);
 
@@ -442,7 +442,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
         // Templates are one of the easiest
         // If its not in the extensions table we just add it
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path . '/templates/' . $this->parent->extension->element . '/templateDetails.xml';
+        $manifestPath = $client->path.'/templates/' . $this->parent->extension->element.'/templateDetails.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $description = (string)$this->parent->manifest->description;
 
@@ -504,7 +504,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
     {
         // Need to find to find where the XML file is since we don't store this normally.
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path . '/templates/' . $this->parent->extension->element . '/templateDetails.xml';
+        $manifestPath = $client->path.'/templates/' . $this->parent->extension->element.'/templateDetails.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

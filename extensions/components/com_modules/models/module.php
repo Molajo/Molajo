@@ -208,7 +208,7 @@ class ModulesModelModule extends JModelAdmin
 	 * @return	void
 	 * @since	1.0
 	 */
-	function &getApplication()
+	function &getApp()
 	{
 		return $this->_application;
 	}
@@ -227,16 +227,16 @@ class ModulesModelModule extends JModelAdmin
 		// The folder and element vars are passed when saving the form.
 		if (empty($data)) {
 			$item		= $this->getItem();
-			$applicationId	= $item->application_id;
+			$application_id	= $item->application_id;
 			$module		= $item->module;
 		}
 		else {
-			$applicationId	= JArrayHelper::getValue($data, 'application_id');
+			$application_id	= JArrayHelper::getValue($data, 'application_id');
 			$module		= JArrayHelper::getValue($data, 'module');
 		}
 
 		// These variables are used to add data from the plugin XML files.
-		$this->setState('item.application_id',	$applicationId);
+		$this->setState('item.application_id',	$application_id);
 		$this->setState('item.module',		$module);
 
 		// Get the form.
@@ -466,10 +466,10 @@ class ModulesModelModule extends JModelAdmin
 
 		// Initialise variables.
 		$lang		= MolajoFactory::getLanguage();
-		$applicationId	= $this->getState('item.application_id');
+		$application_id	= $this->getState('item.application_id');
 		$module		= $this->getState('item.module');
 
-		$application		= JApplicationHelper::getApplicationInfo($applicationId);
+		$application		= JApplicationHelper::getApplicationInfo($application_id);
 		$formFile	= JPath::clean($application->path.'/modules/'.$module.'/'.$module.'.xml');
 
 		// Load the core and/or local language file(s).
@@ -713,6 +713,6 @@ class ModulesModelModule extends JModelAdmin
 	 * @since	1.0
 	 */
 	function cleanCache() {
-		parent::cleanCache('com_modules', $this->getApplication());
+		parent::cleanCache('com_modules', $this->getApp());
 	}
 }

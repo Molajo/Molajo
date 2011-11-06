@@ -79,13 +79,13 @@ class ModulesModelModules extends JModelList
 		$module = $this->getUserStateFromRequest($this->context.'.filter.module', 'filter_module', '', 'string');
 		$this->setState('filter.module', $module);
 
-		$applicationId = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int', false);
+		$application_id = $this->getUserStateFromRequest($this->context.'.filter.application_id', 'filter_application_id', 0, 'int', false);
 		$previousId = $app->getUserState($this->context.'.filter.application_id_previous', null);
-		if($previousId != $applicationId || $previousId === null){
+		if($previousId != $application_id || $previousId === null){
 			$this->getUserStateFromRequest($this->context.'.filter.application_id_previous', 'filter_application_id_previous', 0, 'int', true);
-			$app->setUserState($this->context.'.filter.application_id_previous', $applicationId);
+			$app->setUserState($this->context.'.filter.application_id_previous', $application_id);
 		}
-		$this->setState('filter.application_id', $applicationId);
+		$this->setState('filter.application_id', $application_id);
 
 		$language = $this->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
@@ -261,9 +261,9 @@ class ModulesModelModules extends JModelList
 		}
 
 		// Filter by application.
-		$applicationId = $this->getState('filter.application_id');
-		if (is_numeric($applicationId)) {
-			$query->where('a.application_id = '.(int) $applicationId);
+		$application_id = $this->getState('filter.application_id');
+		if (is_numeric($application_id)) {
+			$query->where('a.application_id = '.(int) $application_id);
 		}
 
 		// Filter by search in title

@@ -571,13 +571,13 @@ abstract class MolajoHtml
     {
         // If no debugging value is set, use the configuration setting
         if ($debug === null) {
-            $debug = JFactory::getConfig()->get('debug');
+            $debug = JFactory::getSiteConfig()->get('debug');
         }
 
         $uncompressed = $debug ? '-uncompressed' : '';
 
         $document = JFactory::getDocument();
-        $document->addScript(JURI::root(true) . '/media/system/js/core' . $uncompressed . '.js');
+        $document->addScript(JURI::root(true).'/media/system/js/core' . $uncompressed . '.js');
     }
 
     /**
@@ -619,7 +619,7 @@ abstract class MolajoHtml
     public static function date($input = 'now', $format = null, $tz = true, $gregorian = false)
     {
         // Get some system objects.
-        $config = JFactory::getConfig();
+        $config = JFactory::getSiteConfig();
         $user = JFactory::getUser();
 
         // UTC date converted to user time zone.

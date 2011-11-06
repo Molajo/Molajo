@@ -173,16 +173,16 @@ class TemplatesModelStyle extends JModelAdmin
 		// The folder and element vars are passed when saving the form.
 		if (empty($data)) {
 			$item		= $this->getItem();
-			$applicationId	= $item->application_id;
+			$application_id	= $item->application_id;
 			$template	= $item->template;
 		}
 		else {
-			$applicationId	= JArrayHelper::getValue($data, 'application_id');
+			$application_id	= JArrayHelper::getValue($data, 'application_id');
 			$template	= JArrayHelper::getValue($data, 'template');
 		}
 
 		// These variables are used to add data from the plugin XML files.
-		$this->setState('item.application_id',	$applicationId);
+		$this->setState('item.application_id',	$application_id);
 		$this->setState('item.template',	$template);
 
 		// Get the form.
@@ -295,10 +295,10 @@ class TemplatesModelStyle extends JModelAdmin
 	protected function preprocessForm(JForm $form, $data, $group = '')
 	{
 		// Initialise variables.
-		$applicationId	= $this->getState('item.application_id');
+		$application_id	= $this->getState('item.application_id');
 		$template	= $this->getState('item.template');
 		$lang		= MolajoFactory::getLanguage();
-		$application		= JApplicationHelper::getApplicationInfo($applicationId);
+		$application		= JApplicationHelper::getApplicationInfo($application_id);
 		if (!$form->loadFile('style_'.$application->name, true)) {
 			throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 		}

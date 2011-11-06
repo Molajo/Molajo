@@ -49,7 +49,7 @@ class MolajoFormFieldColorpicker extends MolajoFormField
 
         return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' .
                ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
-               $class . $size . $disabled . $readonly . $onchange . $maxLength . '/>';
+               $class . $size . $disabled . $readonly . $onchange . $maxLength.'/>';
 
     }
 }
