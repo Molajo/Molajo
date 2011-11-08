@@ -111,7 +111,89 @@ abstract class MolajoFactory
             }
             self::$config = self::_createConfig($file, $type, '');
 
-            MolajoConfigHelper::populateConfig(self::$config, self::$siteConfig, self::$appConfig);
+            /** App Config */
+            self::$config->set('caching', self::$appConfig->get('caching', '0'));
+            self::$config->set('cachetime', self::$appConfig->get('cachetime', '15'));
+            self::$config->set('cache_handler', self::$appConfig->get('cache_handler', 'file'));
+
+            self::$config->set('MetaDesc', self::$appConfig->get('MetaDesc', 'Molajo'));
+            self::$config->set('MetaKeys', self::$appConfig->get('MetaKeys', 'molajo, Molajo'));
+            self::$config->set('MetaAuthor', self::$appConfig->get('MetaAuthor', '1'));
+
+            self::$config->set('sef', self::$appConfig->get('sef', '1'));
+            self::$config->set('sef_rewrite', self::$appConfig->get('sef_rewrite', '0'));
+            self::$config->set('sef_suffix', self::$appConfig->get('sef_suffix', '0'));
+            self::$config->set('unicodeslugs', self::$appConfig->get('unicodeslugs', '0'));
+
+            self::$config->set('application_logon_requirement', self::$appConfig->get('application_logon_requirement', '1'));
+            self::$config->set('application_guest_option', self::$appConfig->get('application_guest_option', 'com_login'));
+            self::$config->set('application_default_option', self::$appConfig->get('application_default_option', 'com_dashboard'));
+            self::$config->set('default_template_extension_id', self::$appConfig->get('default_template_extension_id', '209'));
+
+            /** Site Config */
+            self::$config->set('offline', self::$siteConfig->get('offline', '0'));
+            self::$config->set('offline_message', self::$siteConfig->get('offline_message', 'This site is not available.<br /> Please check back again soon.'));
+            self::$config->set('sitename', self::$siteConfig->get('sitename', 'Molajo'));
+            self::$config->set('editor', self::$siteConfig->get('editor', 'none'));
+            self::$config->set('list_limit', self::$siteConfig->get('list_limit', '20'));
+            self::$config->set('access', self::$siteConfig->get('access', '1'));
+
+            self::$config->set('dbtype', self::$siteConfig->get('dbtype', 'mysqli'));
+            self::$config->set('host', self::$siteConfig->get('host', 'localhost'));
+            self::$config->set('user', self::$siteConfig->get('user', ''));
+            self::$config->set('password', self::$siteConfig->get('password', ''));
+            self::$config->set('db', self::$siteConfig->get('db', ''));
+            self::$config->set('dbprefix', self::$siteConfig->get('dbprefix', ''));
+
+            self::$config->set('secret', self::$siteConfig->get('secret', ''));
+            self::$config->set('gzip', self::$siteConfig->get('gzip', '0'));
+            self::$config->set('error_reporting', self::$siteConfig->get('error_reporting', '-1'));
+            self::$config->set('helpurl', self::$siteConfig->get('helpurl', 'http://help.molajo.org'));
+
+            self::$config->set('ftp_host', self::$siteConfig->get('ftp_host', ''));
+            self::$config->set('ftp_port', self::$siteConfig->get('ftp_port', ''));
+            self::$config->set('ftp_user', self::$siteConfig->get('ftp_user', ''));
+            self::$config->set('ftp_pass', self::$siteConfig->get('ftp_pass', ''));
+            self::$config->set('ftp_root', self::$siteConfig->get('ftp_root', ''));
+            self::$config->set('ftp_enable', self::$siteConfig->get('ftp_enable', ''));
+
+            self::$config->set('cache_path', self::$siteConfig->get('cache_path', ''));
+            self::$config->set('images_path', self::$siteConfig->get('images_path', ''));
+            self::$config->set('logs_path', self::$siteConfig->get('logs_path', ''));
+            self::$config->set('media_path', self::$siteConfig->get('media_path', ''));
+            self::$config->set('tmp_path', self::$siteConfig->get('tmp_path', ''));
+            self::$config->set('live_site', self::$siteConfig->get('live_site', ''));
+            self::$config->set('force_ssl', self::$siteConfig->get('force_ssl', ''));
+
+            self::$config->set('offset', self::$siteConfig->get('offset', 'UTC'));
+            self::$config->set('offset_user', self::$siteConfig->get('offset_user', 'UTC'));
+
+            self::$config->set('lifetime', self::$siteConfig->get('lifetime', 'none'));
+            self::$config->set('session_handler', self::$siteConfig->get('session_handler', 'database'));
+
+            self::$config->set('mailer', self::$siteConfig->get('mailer', 'mail'));
+            self::$config->set('mail_from', self::$siteConfig->get('mailfrom', ''));
+            self::$config->set('fromname', self::$siteConfig->get('fromname', ''));
+            self::$config->set('sendmail', self::$siteConfig->get('sendmail', '/usr/sbin/sendmail'));
+            self::$config->set('smtpauth', self::$siteConfig->get('smtpauth', '0'));
+            self::$config->set('smtpuser', self::$siteConfig->get('smtpuser', ''));
+            self::$config->set('smtppass', self::$siteConfig->get('smtppass', ''));
+            self::$config->set('smtphost', self::$siteConfig->get('smtphost', ''));
+
+            self::$config->set('debug', self::$siteConfig->get('debug', '0'));
+            self::$config->set('debug_lang', self::$siteConfig->get('debug_lang', '0'));
+
+            self::$config->set('feed_limit', self::$siteConfig->get('feed_limit', '10'));
+            self::$config->set('feed_email', self::$siteConfig->get('feed_email', 'author'));
+
+            self::$config->set('html5', self::$siteConfig->get('html5', '1'));
+            self::$config->set('image_xsmall', self::$siteConfig->get('image_xsmall', '50'));
+            self::$config->set('image_small', self::$siteConfig->get('image_small', '75'));
+            self::$config->set('image_medium', self::$siteConfig->get('image_medium', '150'));
+            self::$config->set('image_large', self::$siteConfig->get('image_large', '300'));
+            self::$config->set('image_xlarge', self::$siteConfig->get('image_xlarge', '500'));
+            self::$config->set('image_folder', self::$siteConfig->get('image_folder', 'images'));
+            self::$config->set('thumb_folder', self::$siteConfig->get('thumb_folder', 'thumbs'));
         }
 
         return self::$config;
@@ -128,7 +210,7 @@ abstract class MolajoFactory
      *
      * @return configuration object
      */
-    public static function getApplicationConfiguration($file = null, $type = 'PHP')
+    public static function getApplicationConfig($file = null, $type = 'PHP')
     {
         if (self::$appConfig) {
         } else {

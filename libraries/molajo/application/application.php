@@ -175,10 +175,10 @@ class MolajoApplication extends JObject
             $config['config_file'] = 'configuration.php';
         }
         if ($this->_name == 'installation') {
-            $this->_createAppConfiguration();
+            $this->_createApplicationConfig();
             $this->_createConfiguration();
         } else {
-            $this->_createAppConfiguration(MOLAJO_APPLICATION_PATH.'/'.$config['config_file']);
+            $this->_createApplicationConfig(MOLAJO_APPLICATION_PATH.'/'.$config['config_file']);
             $this->_createConfiguration(MOLAJO_LIBRARY.'/'.$config['config_file']);
         }
 
@@ -952,7 +952,7 @@ class MolajoApplication extends JObject
      *
      * @since  1.0
      */
-    protected function _createAppConfiguration($file = null)
+    protected function _createApplicationConfig($file = null)
     {
         if ($file == null) {
         } else {
@@ -961,7 +961,7 @@ class MolajoApplication extends JObject
 
         /** Application Configuration */
         $appConfig = new MolajoConfigApplication();
-        $registry = MolajoFactory::getApplicationConfiguration();
+        $registry = MolajoFactory::getApplicationConfig();
         $registry->loadObject($appConfig);
 
         return $appConfig;

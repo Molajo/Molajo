@@ -111,5 +111,7 @@ class MolajoConfigHelper
         $config->set('image_xlarge', $siteConfig->get('image_xlarge', '500'));
         $config->set('image_folder', $siteConfig->get('image_folder', 'images'));
         $config->set('thumb_folder', $siteConfig->get('thumb_folder', 'thumbs'));
+
+        return $config;
     }
 }
