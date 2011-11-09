@@ -20,6 +20,7 @@ INSERT INTO `molajo_actions` (`id` ,`title`)
 #
 INSERT INTO `molajo_extension_types` (`id` ,`extension_type`)
   VALUES
+    (0, 'core'),
     (1, 'components'),
     (2, 'languages'),
     (3, 'layouts'),
@@ -51,35 +52,19 @@ INSERT INTO `molajo_sites` (`id`, `name`, `path`, `description`, `parameters`, `
 
 #
 # USERS AND GROUPS
-#  5,6 asset id reserved for administrator
-ALTER TABLE `molajo_groups`
-  DROP INDEX `idx_asset_table_id_join`;
+#  5,6 id reserved for administrator
   
 INSERT INTO `molajo_groups`
-  (`id`, `title`, `subtitle`, `description`, `parent_id`, `lft`, `rgt`, `type_id`, `asset_id`, `protected`)
+  (`id`, `title`, `subtitle`, `description`, `parent_id`, `lft`, `rgt`, `protected`, `ordering` )
     VALUES
-      (1, 'Public', '', 'All visitors regardless of authentication status', 0, 0, 1, 1, 0, 1),
-      (2, 'Guest', '', 'Visitors not authenticated', 0, 2, 3, 1, 0, 1),
-      (3, 'Registered', '', 'Authentication visitors', 0, 4, 5, 1, 0, 1),
-      (4, 'Administrator', '', 'System Administrator', 0, 6, 7, 1, 0, 1);
+      (1, 'Public', '', 'All visitors regardless of authentication status', 0, 0, 1, 1, 1),
+      (2, 'Guest', '', 'Visitors not authenticated', 0, 2, 3, 1, 2),
+      (3, 'Registered', '', 'Authentication visitors', 0, 4, 5, 1, 3),
+      (4, 'Administrator', '', 'System Administrator', 0, 6, 7, 1, 4);
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 6, `id`, '', '', 1, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 6, `id`, '', '', 1, 'en-GB' 
     FROM  molajo_groups
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 1 AND `source_table_id` = 6);
-UPDATE `molajo_groups` SET asset_id = @asset_id WHERE id = 1;
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 2 AND `source_table_id` = 6);
-UPDATE `molajo_groups` SET asset_id = @asset_id WHERE id = 2;
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 3 AND `source_table_id` = 6);
-UPDATE `molajo_groups` SET asset_id = @asset_id WHERE id = 3;
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 4 AND `source_table_id` = 6);
-UPDATE `molajo_groups` SET asset_id = @asset_id WHERE id = 4;
-
-ALTER TABLE `molajo_groups` ADD UNIQUE INDEX `idx_asset_table_id_join` (`asset_id` ASC);
 
 INSERT INTO `molajo_view_groups`
   (`id`, `view_group_name_list`, `view_group_id_list` )
@@ -104,27 +89,15 @@ INSERT INTO `molajo_group_view_groups`
 # APPLICATIONS
 #
 
-INSERT INTO `molajo_applications` (`id`, `name`, `path`, `description`, `asset_id`, `parameters`, `custom_fields`, `default_template_extension_id`, `default_application_indicator`)
+INSERT INTO `molajo_applications` (`id`, `name`, `path`, `description`, `parameters`, `custom_fields`)
   VALUES
-    (1, 'site', '', 'Primary application for site visitors', 0, '{}', '{}', 1, 1),
-    (2, 'administrator', 'administrator', 'Administrative site area for site construction', 0, '{}', '{}', 2, 0),
-    (3, 'content', 'content', 'Area for content development', 0, '{}', '{}', 3, 0);
+    (1, 'site', '', 'Primary application for site visitors', '{}', '{}'),
+    (2, 'administrator', 'administrator', 'Administrative site area for site construction', '{}', '{}'),
+    (3, 'content', 'content', 'Area for content development', '{}', '{}');
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `name`, 1, `id`, `path`, '', 1, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `name`, 1, `id`, `path`, '', 1, 'en-GB' 
     FROM  molajo_applications
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 1 AND `source_table_id` = 1);
-UPDATE `molajo_applications` SET asset_id = @asset_id WHERE id = 1;
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 2 AND `source_table_id` = 1);
-UPDATE `molajo_applications` SET asset_id = @asset_id WHERE id = 2;
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 3 AND `source_table_id` = 1);
-UPDATE `molajo_applications` SET asset_id = @asset_id WHERE id = 3;
-
-SET @asset_id = (SELECT id FROM `molajo_assets` WHERE `source_id` = 4 AND `source_table_id` = 1);
-UPDATE `molajo_applications` SET asset_id = @asset_id WHERE id = 4;
 
 #
 # UPDATE SITES
@@ -138,8 +111,18 @@ INSERT INTO `molajo_update_sites`
 # EXTENSIONS
 #
 
-ALTER TABLE `molajo_extension_instances`
-  DROP INDEX `asset_id_UNIQUE`
+INSERT INTO `molajo_extensions` (
+  `id`, `name`, `extension_type_id`, `folder`, `update_site_id`)
+  VALUES
+    (1, 'Core', 0, '', 1);
+
+INSERT INTO `molajo_extension_instances` (
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
+    FROM molajo_extensions
+    WHERE extension_type_id = 0
 
 # Components
 
@@ -166,50 +149,38 @@ INSERT INTO `molajo_extensions` (
     ('com_users', 1, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 1
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/components/', `id`), CONCAT('index.php?option=com_extensions&view=components&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 4, `id`, CONCAT('extensions/components/', `id`), CONCAT('index.php?option=com_extensions&view=components&id=', `id`), 5, 'en-GB' 
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 1
-
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 1
 
 # Languages
 
 INSERT INTO `molajo_extensions` (
   `name`, `extension_type_id`, `folder`, `update_site_id`)
   VALUES
-    ('en-GB', 2, 'English (UK)', 1),
-    ('en-US', 2, 'English (UK)', 1);
+    ('English (UK)', 2, '', 1),
+    ('English (US)', 2, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 2
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 2, `id`, CONCAT('extensions/languages/', `id`), CONCAT('index.php?option=com_extensions&view=languages&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 2, `id`, CONCAT('extensions/languages/', `id`), CONCAT('index.php?option=com_extensions&view=languages&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 2
-
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 2
 
 # Layouts
 
@@ -278,23 +249,18 @@ INSERT INTO `molajo_extensions` (
     ('tabs', 3, 'wrap', 1);
         
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
   `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 3
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 2, `id`, CONCAT('extensions/layouts/', `id`), CONCAT('index.php?option=com_extensions&view=layouts&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 2, `id`, CONCAT('extensions/layouts/', `id`), CONCAT('index.php?option=com_extensions&view=layouts&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 3
 
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 3
 
 # Libraries
 
@@ -312,23 +278,18 @@ INSERT INTO `molajo_extensions` (
     ('Twig', 10, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 10
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/libraries/', `id`), CONCAT('index.php?option=com_extensions&view=libraries&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 4, `id`, CONCAT('extensions/libraries/', `id`), CONCAT('index.php?option=com_extensions&view=libraries&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 10
 
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 10
 
 # Modules
 
@@ -352,23 +313,17 @@ INSERT INTO `molajo_extensions` (
     ('mod_toolbar', 6, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 6
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/modules/', `id`), CONCAT('index.php?option=com_extensions&view=modules&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 4, `id`, CONCAT('extensions/modules/', `id`), CONCAT('index.php?option=com_extensions&view=modules&id=', `id`), 5, 'en-GB' 
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 6
-
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 6
 
 # Plugins
 
@@ -414,6 +369,7 @@ INSERT INTO `molajo_extensions` (
     ('compress', 8, 'system', 1),
     ('create', 8, 'system', 1),
     ('debug', 8, 'system', 1),
+    ('languagefilter', 8, 'system', 1),
     ('log', 8, 'system', 1),
     ('logout', 8, 'system', 1),
     ('molajo', 8, 'system', 1),
@@ -428,23 +384,17 @@ INSERT INTO `molajo_extensions` (
     ('profile', 8, 'user', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 8
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/plugins/', `id`), CONCAT('index.php?option=com_extensions&view=plugins&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 4, `id`, CONCAT('extensions/plugins/', `id`), CONCAT('index.php?option=com_extensions&view=plugins&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 8
-
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 8
 
 ## Template
 INSERT INTO `molajo_extensions` (
@@ -456,26 +406,18 @@ INSERT INTO `molajo_extensions` (
     ('system', 9, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `title`,`protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
-  SELECT 1, `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
-        `extension_type_id`, '2011-11-01 00:00:00', 0, `id`, 'en-GB', 1
+  `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
+  SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
+        `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 9
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 4, `id`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 5, 'en-GB' 
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 9
 
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 9
-
-ALTER TABLE `molajo_extension_instances`
-  ADD INDEX `asset_id_UNIQUE` (asset_id)
 
 #
 # Menu - Administrator
@@ -495,71 +437,66 @@ INSERT INTO `molajo_extensions` (
     (1060, 'Main Menu', 5, '', 1);
 
 INSERT INTO `molajo_extension_instances` (
-  `enabled`, `extension_id`, `ordering`, `title`, `alias`, `menu_item_path`, `menu_item_link`,
+  `extension_id`, `ordering`, `title`, `alias`, `menu_item_sef_request`, `menu_item_request`,
   `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `language`)
+  `extension_type_id`, `created_datetime`, `language`)
   VALUES
-    (1, 1000, 1, 'Home', 'home', '', 'index.php?option=com_dashboard', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1000, 1, 'Home', 'home', '', 'index.php?option=com_dashboard', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
 
-    (1, 1010, 1, 'Configure', 'configure', 'configure', 'index.php?option=com_dashboard&type=configure', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1010, 2, 'Access', 'access', 'access', 'index.php?option=com_dashboard&type=access', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1010, 3, 'Create', 'create', 'create', 'index.php?option=com_dashboard&type=create', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1010, 4, 'Build', 'build', 'build', 'index.php?option=com_dashboard&type=build', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1010, 5, 'Search', 'search', 'search', 'index.php?option=com_dashboard&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1010, 1, 'Configure', 'configure', 'configure', 'index.php?option=com_dashboard&type=configure', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1010, 2, 'Access', 'access', 'access', 'index.php?option=com_dashboard&type=access', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1010, 3, 'Create', 'create', 'create', 'index.php?option=com_dashboard&type=create', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1010, 4, 'Build', 'build', 'build', 'index.php?option=com_dashboard&type=build', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1010, 5, 'Search', 'search', 'search', 'index.php?option=com_dashboard&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
 
-    (1, 1020, 1, 'Profile', 'profile', 'configure/profile', 'index.php?option=com_profile', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1020, 2, 'System', 'system', 'configure/system', 'index.php?option=com_config',1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1020, 3, 'Checkin', 'checkin', 'configure/checkin', 'index.php?option=com_checkin', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1020, 4, 'Cache', 'cache', 'configure/cache', 'index.php?option=com_cache', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1020, 5, 'Backup', 'backup', 'configure/backup', 'index.php?option=com_backup', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1020, 6, 'Redirects', 'redirects', 'configure/redirects', 'index.php?option=com_redirects', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1020, 1, 'Profile', 'profile', 'configure/profile', 'index.php?option=com_profile', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1020, 2, 'System', 'system', 'configure/system', 'index.php?option=com_config',1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1020, 3, 'Checkin', 'checkin', 'configure/checkin', 'index.php?option=com_checkin', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1020, 4, 'Cache', 'cache', 'configure/cache', 'index.php?option=com_cache', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1020, 5, 'Backup', 'backup', 'configure/backup', 'index.php?option=com_backup', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1020, 6, 'Redirects', 'redirects', 'configure/redirects', 'index.php?option=com_redirects', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
 
-    (1, 1030, 1, 'Users', 'users', 'access/users', 'index.php?option=com_users', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1030, 2, 'Groups', 'groups', 'access/groups', 'index.php?option=com_groups', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1030, 3, 'Permissions', 'permissions', 'access/permissions', 'index.php?option=com_permissions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1030, 4, 'Messages', 'messages', 'access/messages', 'index.php?option=com_messages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1030, 5, 'Activity', 'activity', 'access/activity', 'index.php?option=com_activity', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1030, 1, 'Users', 'users', 'access/users', 'index.php?option=com_users', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1030, 2, 'Groups', 'groups', 'access/groups', 'index.php?option=com_groups', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1030, 3, 'Permissions', 'permissions', 'access/permissions', 'index.php?option=com_permissions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1030, 4, 'Messages', 'messages', 'access/messages', 'index.php?option=com_messages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1030, 5, 'Activity', 'activity', 'access/activity', 'index.php?option=com_activity', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
 
-    (1, 1040, 1, 'Articles', 'articles', 'create/articles', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1040, 2, 'Tags', 'tags', 'create/tags', 'index.php?option=com_tags', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1040, 3, 'Comments', 'comments', 'create/comments', 'index.php?option=com_comments', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1040, 4, 'Media', 'media', 'create/media', 'index.php?option=com_media', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1040, 5, 'Categories', 'categories', 'create/categories', 'index.php?option=com_categories', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1040, 1, 'Articles', 'articles', 'create/articles', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1040, 2, 'Tags', 'tags', 'create/tags', 'index.php?option=com_tags', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1040, 3, 'Comments', 'comments', 'create/comments', 'index.php?option=com_comments', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1040, 4, 'Media', 'media', 'create/media', 'index.php?option=com_media', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1040, 5, 'Categories', 'categories', 'create/categories', 'index.php?option=com_categories', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
 
-    (1, 1050, 1, 'Extensions', 'extensions', 'build/extensions', 'index.php?option=com_extensions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1050, 2, 'Languages', 'languages', 'build/languages', 'index.php?option=com_languages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1050, 3, 'Layouts', 'layouts', 'build/layouts', 'index.php?option=com_layouts', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1050, 4, 'Modules', 'modules', 'build/modules', 'index.php?option=com_modules', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1050, 5, 'Plugins', 'plugins', 'build/plugins', 'index.php?option=com_plugins', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1050, 6, 'Templates', 'templates', 'build/templates', 'index.php?option=com_templates', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
+    (1050, 1, 'Extensions', 'extensions', 'build/extensions', 'index.php?option=com_extensions', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1050, 2, 'Languages', 'languages', 'build/languages', 'index.php?option=com_languages', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1050, 3, 'Layouts', 'layouts', 'build/layouts', 'index.php?option=com_layouts', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1050, 4, 'Modules', 'modules', 'build/modules', 'index.php?option=com_modules', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1050, 5, 'Plugins', 'plugins', 'build/plugins', 'index.php?option=com_plugins', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1050, 6, 'Templates', 'templates', 'build/templates', 'index.php?option=com_templates', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
 
-    (1, 1060, 1, 'Home', 'home', '', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 2, 'New Article', 'new-article', 'new-article', 'index.php?option=com_articles&view=article&layout=edit',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 3, 'Article', 'article', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 4, 'Blog', 'blog', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 5, 'List', 'list', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 6, 'Table', 'table', 'table', 'index.php?option=com_articles&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 7, 'Login', 'login', 'login', 'index.php?option=com_users&view=login',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB'),
-    (1, 1060, 8, 'Search', 'search', 'search', 'index.php?option=com_search&type=search',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00', 0, 'en-GB');
+    (1060, 1, 'Home', 'home', '', 'index.php?option=com_articles', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 2, 'New Article', 'new-article', 'new-article', 'index.php?option=com_articles&view=article&layout=edit',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 3, 'Article', 'article', 'article', 'index.php?option=com_articles&view=articles&layout=item&id=5',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 4, 'Blog', 'blog', 'blog', 'index.php?option=com_articles&view=articles&layout=items&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 5, 'List', 'list', 'list', 'index.php?option=com_articles&view=articles&layout=table&catid=2',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 6, 'Table', 'table', 'table', 'index.php?option=com_articles&type=search', 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 7, 'Login', 'login', 'login', 'index.php?option=com_users&view=login',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB'),
+    (1060, 8, 'Search', 'search', 'search', 'index.php?option=com_search&type=search',  1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 5, '2011-11-01 00:00:00','en-GB');
 
-INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `path`, `link`, `view_group_id`, `language`, `translation_of_id`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/menuitem/', `id`), CONCAT('index.php?option=com_extensions&view=menuitem&id=', `id`), 5, 'en-GB', NULL
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 4, `id`, CONCAT('extensions/menuitem/', `id`), CONCAT('index.php?option=com_extensions&view=menuitem&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5
 
-UPDATE `molajo_extension_instances` a,
-    `molajo_assets` b
-  SET a.asset_id = b.id
-WHERE a.id = b.source_id
-  AND a.extension_type_id = 5
 
 /** Administrator */
-INSERT INTO `molajo_users` (`id`, `username`, `full_name`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activated`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`, `asset_id`) VALUES ('42', 'admin',  'Administrator',  '',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-01 00:00:00',  '0000-00-00 00:00:00', NULL ,  '',  '2001');
-INSERT INTO `molajo_user_applications` (`userid`, `application_id`) VALUES (42, 1), (42, 2), (42, 3);
+INSERT INTO `molajo_users` (`id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activated`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-01 00:00:00',  '0000-00-00 00:00:00', NULL ,  '');
+INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (42, 1), (42, 2), (42, 3);
 INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (42, 3), (42, 4);
 
 /** Registered User */
-INSERT INTO `molajo_users` (`id`, `username`, `full_name`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activated`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`, `asset_id`) VALUES ('100', 'mark', 'Mark Robinson', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', NULL, '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}', '2000');
+INSERT INTO `molajo_users` (`id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activated`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('100', 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', NULL, '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}');
 INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (100, 1), (100, 3);
 INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (100, 3);
 
@@ -666,7 +603,7 @@ INSERT INTO `molajo_application_extensions`
      `molajo_applications` b
     WHERE extension_type_id = 5
       AND a.extension_id = 1060
-      AND b.id IN (1, 2);
+      AND b.id IN (1, 3);
 
 INSERT INTO `molajo_application_extensions`
   (`application_id`, `extension_id`, `extension_instance_id`)
@@ -675,7 +612,7 @@ INSERT INTO `molajo_application_extensions`
      `molajo_applications` b
     WHERE extension_type_id = 5
       AND NOT (a.extension_id = 1060)
-      AND b.id = 3;
+      AND b.id = 2;
 
 /** 6. modules */
 INSERT INTO `molajo_application_extensions`
@@ -684,7 +621,7 @@ INSERT INTO `molajo_application_extensions`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE extension_type_id = 6
-      AND b.id IN (1, 2)
+      AND b.id IN (1, 3)
       AND a.title IN
           ('mod_breadcrumbs',
           'mod_content',
@@ -706,7 +643,7 @@ INSERT INTO `molajo_application_extensions`
      `molajo_applications` b
     WHERE extension_type_id = 6
       AND NOT (a.extension_id = 1060)
-      AND b.id = 3
+      AND b.id = 2
       AND a.title IN
         ('mod_content',
         'mod_custom',
@@ -765,20 +702,3 @@ INSERT INTO `molajo_application_extensions`
      `molajo_applications` b
     WHERE extension_type_id = 9
       AND a.title = 'system';
-
-/** default templates */
-UPDATE `molajo_applications` a,
-    `molajo_extension_instances` b
-  SET a.default_template_extension_id = b.id
-WHERE b.extension_type_id = 9
-  AND b.title = 'construct'
-  AND a.id IN (1, 3);
-
-UPDATE `molajo_applications` a,
-    `molajo_extension_instances` b
-  SET a.default_template_extension_id = b.id
-WHERE b.extension_type_id = 9
-  AND b.title = 'molajito'
-  AND a.id = 2;
-
-/** still need to populate extension_usage */
