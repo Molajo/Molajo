@@ -20,7 +20,7 @@ INSERT INTO `molajo_actions` (`id` ,`title`)
 #
 INSERT INTO `molajo_extension_types` (`id` ,`extension_type`)
   VALUES
-    (0, 'core'),
+    (10, 'core'),
     (1, 'components'),
     (2, 'languages'),
     (3, 'layouts'),
@@ -31,6 +31,11 @@ INSERT INTO `molajo_extension_types` (`id` ,`extension_type`)
     (8, 'plugins'),
     (9, 'templates');
 
+UPDATE `molajo_extension_types`
+SET id = 0
+WHERE extension_type = 'core'
+
+
 #
 # Source Tables
 #
@@ -40,7 +45,8 @@ INSERT INTO `molajo_source_tables` (`id` ,`source_table`)
     (2, '__categories'),
     (3, '__content'),
     (4, '__extension_instances'),
-    (5, '__users');
+    (5, '__users'),
+    (6, '__groups');
 
 #
 # SITES
@@ -250,17 +256,16 @@ INSERT INTO `molajo_extensions` (
         
 INSERT INTO `molajo_extension_instances` (
   `title`, `protected`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`,
-  `extension_type_id`, `created_datetime`, `asset_id`, `extension_id`, `language`, `ordering`)
+  `extension_type_id`, `created_datetime`, `extension_id`, `language`, `ordering`)
   SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
-    WHERE extension_type_id = 3
+    WHERE extension_type_id = 3;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 2, `id`, CONCAT('extensions/layouts/', `id`), CONCAT('index.php?option=com_extensions&view=layouts&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 3
-
+    WHERE `extension_type_id` = 3;
 
 # Libraries
 
@@ -283,12 +288,12 @@ INSERT INTO `molajo_extension_instances` (
   SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
-    WHERE extension_type_id = 10
+    WHERE extension_type_id = 10;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 4, `id`, CONCAT('extensions/libraries/', `id`), CONCAT('index.php?option=com_extensions&view=libraries&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 10
+    WHERE `extension_type_id` = 10;
 
 
 # Modules
@@ -318,12 +323,12 @@ INSERT INTO `molajo_extension_instances` (
   SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
-    WHERE extension_type_id = 6
+    WHERE extension_type_id = 6;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 4, `id`, CONCAT('extensions/modules/', `id`), CONCAT('index.php?option=com_extensions&view=modules&id=', `id`), 5, 'en-GB' 
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 6
+    WHERE `extension_type_id` = 6;
 
 # Plugins
 
@@ -389,12 +394,12 @@ INSERT INTO `molajo_extension_instances` (
   SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
-    WHERE extension_type_id = 8
+    WHERE extension_type_id = 8;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 4, `id`, CONCAT('extensions/plugins/', `id`), CONCAT('index.php?option=com_extensions&view=plugins&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 8
+    WHERE `extension_type_id` = 8;
 
 ## Template
 INSERT INTO `molajo_extensions` (
@@ -411,12 +416,12 @@ INSERT INTO `molajo_extension_instances` (
   SELECT `name`, 1, 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1,
         `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
-    WHERE extension_type_id = 9
+    WHERE extension_type_id = 9;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 4, `id`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 5, 'en-GB' 
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 9
+    WHERE `extension_type_id` = 9;
 
 
 #
@@ -487,7 +492,7 @@ INSERT INTO `molajo_extension_instances` (
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 4, `id`, CONCAT('extensions/menuitem/', `id`), CONCAT('index.php?option=com_extensions&view=menuitem&id=', `id`), 5, 'en-GB'
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 5
+    WHERE `extension_type_id` = 5;
 
 
 /** Administrator */
@@ -506,7 +511,7 @@ INSERT INTO `molajo_user_view_groups`
   SELECT DISTINCT a.`user_id`, b.`group_id`
     FROM `molajo_user_groups` a,
       `molajo_group_view_groups` b
-    WHERE a.group_id = b.group_id
+    WHERE a.group_id = b.group_id;
 
 /* View Group Permissions */
 INSERT INTO `molajo_view_group_permissions`
@@ -550,7 +555,7 @@ INSERT INTO `molajo_application_extensions`
           'com_layouts',
           'com_login',
           'com_media',
-          'com_search')
+          'com_search');
 
 INSERT INTO `molajo_application_extensions`
   (`application_id`, `extension_id`, `extension_instance_id`)
@@ -577,7 +582,7 @@ INSERT INTO `molajo_application_extensions`
           'com_search',
           'com_templates',
           'com_admin',
-          'com_users')
+          'com_users');
 
 /** 2. language */
 INSERT INTO `molajo_application_extensions`

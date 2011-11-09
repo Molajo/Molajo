@@ -620,12 +620,12 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 # com_login
 #
 
-/* TABLE */
+/* com_login */
 
 /* 100 MOLAJO_CONFIG_OPTION_ID_TABLE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 100, '', '', 0),
-(2559, 100, '__dummy', '__dummy', 1);
+(10, 100, '', '', 0),
+(10, 100, '__dummy', '__dummy', 1);
 
 /** MVC */
 
@@ -633,112 +633,112 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 
 /* 1100 MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 1100, '', '', 0),
-(2559, 1100, 'display', 'display', 3);
+(10, 1100, '', '', 0),
+(10, 1100, 'display', 'display', 3);
 
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 1100, 'login', 'login', 28),
-(2559, 1100, 'logout', 'login', 29);
+(10, 1100, 'login', 'login', 28),
+(10, 1100, 'logout', 'login', 29);
 
 /* 1100 MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 1101, '', '', 0),
-(2559, 1101, 'display', 'display', 3);
+(10, 1101, '', '', 0),
+(10, 1101, 'display', 'display', 3);
 
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 1101, 'login', 'login', 28),
-(2559, 1101, 'logout', 'login', 29);
+(10, 1101, 'login', 'login', 28),
+(10, 1101, 'logout', 'login', 29);
 
 /* VIEWS */
 
 /* 2000 MOLAJO_CONFIG_OPTION_ID_VIEWS */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 2000, '', '', 0),
-(2559, 2000, 'display', 'display', 1);
+(10, 2000, '', '', 0),
+(10, 2000, 'display', 'display', 1);
 
 /* 2100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_VIEW */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 2100, '', '', 0),
-(2559, 2100, 'display', 'display', 1);
+(10, 2100, '', '', 0),
+(10, 2100, 'display', 'display', 1);
 
 /* 2000 MOLAJO_CONFIG_OPTION_ID_VIEWS +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 2001, '', '', 0),
-(2559, 2001, 'display', 'display', 1);
+(10, 2001, '', '', 0),
+(10, 2001, 'display', 'display', 1);
 
 /* 2100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_VIEW +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 2101, '', '', 0),
-(2559, 2101, 'display', 'display', 1);
+(10, 2101, '', '', 0),
+(10, 2101, 'display', 'display', 1);
 
 /* VIEW LAYOUTS */
 
 /* 3000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 3000, '', '', 0),
-(2559, 3000, 'login', 'login', 1);
+(10, 3000, '', '', 0),
+(10, 3000, 'login', 'login', 1);
 
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 3100, '', '', 0),
-(2559, 3100, 'login', 'login', 1);
+(10, 3100, '', '', 0),
+(10, 3100, 'login', 'login', 1);
 
 /* 3000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 3001, '', '', 0),
-(2559, 3001, 'admin_login', 'admin_login', 1);
+(10, 3001, '', '', 0),
+(10, 3001, 'admin_login', 'admin_login', 1);
 
 /* 3100 MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 3101, '', '', 0),
-(2559, 3101, 'admin_login', 'admin_login', 1);
+(10, 3101, '', '', 0),
+(10, 3101, 'admin_login', 'admin_login', 1);
 
 /* VIEW FORMATS */
 
 /* 4000 MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 4000, '', '', 0),
-(2559, 4000, 'html', 'html', 1),
-(2559, 4001, 'html', 'html', 1);
+(10, 4000, '', '', 0),
+(10, 4000, 'html', 'html', 1),
+(10, 4001, 'html', 'html', 1);
 
 /* MODELS */
 
 /* 5000 MOLAJO_CONFIG_OPTION_ID_MODEL +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 5000, '', '', 0),
-(2559, 5000, 'dummy', 'dummy', 1);
+(10, 5000, '', '', 0),
+(10, 5000, 'dummy', 'dummy', 1);
 
 /* 5000 MOLAJO_CONFIG_OPTION_ID_MODEL +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 5001, '', '', 0),
-(2559, 5001, 'dummy', 'dummy', 1);
+(10, 5001, '', '', 0),
+(10, 5001, 'dummy', 'dummy', 1);
 
 /* 6000 MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 6000, '', '', 0),
-(2559, 6000, 'user', 'user', 1);
+(10, 6000, '', '', 0),
+(10, 6000, 'user', 'user', 1);
 
 /** ACL Component Information */
 
 /** 10000 MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 10000, '', '', 0),
-(2559, 10000, 1, 'Core ACL Implementation', 1);
+(10, 10000, '', '', 0),
+(10, 10000, 1, 'Core ACL Implementation', 1);
 
 /** 10100 MOLAJO_CONFIG_OPTION_ID_ACL_ITEM_TESTS **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 10100, '', '', 0),
-(2559, 10100, 'view', 'view', 1);
+(10, 10100, '', '', 0),
+(10, 10100, 'view', 'view', 1);
 
 /** 10000 MOLAJO_CONFIG_OPTION_ID_TASK_ACL_METHODS **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2559, 10200, '', '', 0),
-(2559, 10200, 'login', 'login', 15),
-(2559, 10200, 'logout', 'logout', 16);
+(10, 10200, '', '', 0),
+(10, 10200, 'login', 'login', 15),
+(10, 10200, 'logout', 'logout', 16);
 
-/* ARTICLES */
+/* com_articles */
 
 /* 100 MOLAJO_CONFIG_OPTION_ID_TABLE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
-(2552, 100, '', '', 0),
-(2552, 100, '__articles', '__articles', 1);
+(3, 100, '', '', 0),
+(3, 100, '__articles', '__articles', 1);
