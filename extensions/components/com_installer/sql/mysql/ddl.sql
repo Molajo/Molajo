@@ -420,9 +420,9 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_extension_criteria_extension_types2` ON `molajo_extension_criteria` (`extension_type_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 16 `molajo_configurations`
+-- Table 16 `molajo_extension_configurations`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_configurations` (
+CREATE  TABLE IF NOT EXISTS `molajo_extension_configurations` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `extension_instances_id` INT(11) UNSIGNED NOT NULL ,
   `option_id` INT(11) UNSIGNED NOT NULL DEFAULT '0' ,
@@ -438,9 +438,9 @@ CREATE  TABLE IF NOT EXISTS `molajo_configurations` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_component_option_id_value_key` ON `molajo_configurations` (`extension_instances_id` ASC, `option_id` ASC, `option_value` ASC) ;
+CREATE UNIQUE INDEX `idx_component_option_id_value_key` ON `molajo_extension_configurations` (`extension_instances_id` ASC, `option_id` ASC, `option_value` ASC) ;
 
-CREATE INDEX `fk_configurations_extension_instances2` ON `molajo_configurations` (`extension_instances_id` ASC) ;
+CREATE INDEX `fk_configurations_extension_instances2` ON `molajo_extension_configurations` (`extension_instances_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 17 `molajo_group_view_groups`
