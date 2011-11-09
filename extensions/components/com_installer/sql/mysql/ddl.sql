@@ -1,3 +1,26 @@
+
+-- -----------------------------------------------------
+-- Generate from Data Model in MySQL Workbench
+-- http://www.box.net/shared/rjsgbzgmal6ymedheb7t
+--
+-- Build using the Database - Forward Engineer Menu Item
+--
+-- Use options:
+-- DROP object Before Each CREATE Object (during development)
+-- Skip creation of FOREIGN KEYS
+-- Generate Separate CREATE INDEX Statements
+--
+-- Manually change `molajo`.` to `#__
+--
+-- Remove these three statements:
+--
+-- SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+-- CREATE SCHEMA IF NOT EXISTS `molajo` DEFAULT CHARACTER SET utf8 ;
+-- USE `molajo` ;
+--
+-- Make certain all changes work with installation processes and sample data
+-- -----------------------------------------------------
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 
