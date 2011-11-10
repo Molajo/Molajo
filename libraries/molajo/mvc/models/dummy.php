@@ -27,12 +27,12 @@ class MolajoModelDummy extends JModel
     public $request = array();
 
     /**
-     * $params
+     * $parameters
      *
      * @var        string
      * @since    1.0
      */
-    public $params = array();
+    public $parameters = array();
 
     /**
      * $items
@@ -100,7 +100,7 @@ class MolajoModelDummy extends JModel
      */
     public function getParams()
     {
-        return $this->params;
+        return $this->parameters;
     }
 
     /**

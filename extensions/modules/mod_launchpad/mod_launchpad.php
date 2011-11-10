@@ -7,8 +7,8 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'admin_launchpad');
-$wrap = $params->def('wrap', 'none');
+$layout = $parameters->def('layout', 'admin_launchpad');
+$wrap = $parameters->def('wrap', 'none');
 
 $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'MolajoLaunchpadHelper');

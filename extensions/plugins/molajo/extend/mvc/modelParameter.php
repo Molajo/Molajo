@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * modelParameters
  *
- * Retrieves and updates the params column in the Molajo extensions table for the Extend Plugin
+ * Retrieves and updates the parameters column in the Molajo extensions table for the Extend Plugin
  *
  * @package	Content
  * @subpackage	Extend
@@ -21,11 +21,11 @@ class modelParameter
     /**
      * getData
      * 
-     * Retrieves the params value from the extensions table for the extend plugin
+     * Retrieves the parameters value from the extensions table for the extend plugin
      * saved by normal Molajo processing in order to append the dynamic Content Type
      * in order to append that value with the dynamic Content Type Parameters
      *
-     * @return string params
+     * @return string parameters
      */
     public function getData ()
     {
@@ -33,7 +33,7 @@ class modelParameter
         $app = MolajoFactory::getApplication();
 
         $query = $db->getQuery(true);
-        $query->select('params');
+        $query->select('parameters');
         $query->from('#__extensions a');
         $query->where('a.element = '.$db->quote(trim('extend')));
         $query->where('a.type = '.$db->quote(trim('plugin')));
@@ -47,29 +47,29 @@ class modelParameter
         }
         if (count($rows)) {
             foreach ( $rows as $row )	{
-                $params = $row;
+                $parameters = $row;
             }
         }
-        return $params;
+        return $parameters;
     }
 
     /**
      * updateData
      *
-     * Update Extensions Table params field for the Extend Parameter
+     * Update Extensions Table parameters field for the Extend Parameter
      *
-     * @param string $params
+     * @param string $parameters
      *
      * @return boolean
      */
-    public function updateData ($params)
+    public function updateData ($parameters)
     {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
         
         $query = 'UPDATE '
                     .$db->namequote(trim('#__extensions'))
-                    .' SET params = '.$db->quote(trim($params))
+                    .' SET parameters = '.$db->quote(trim($parameters))
                     .' WHERE element = '.$db->quote(trim('extend'))
                     .' AND type = '.$db->quote(trim('plugin'));
 

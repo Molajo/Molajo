@@ -66,7 +66,7 @@ div.width-100 fieldset	{
 div#position-icon.pane-sliders div.pane-down .icon-wrapper .icon{margin:0;padding:5px 0 5px 10px}
 div#position-icon.pane-sliders div.pane-down div.icon-wrapper{margin:5px 0}
 h3.pane-toggler-down a:hover,h3.pane-toggler a:hover{text-decoration:none}
-input#jformparams_link_titles1,input#jformparams_show_title1,input#jformparams_link_category1{margin-left:13px}
+input#jformparameters_link_titles1,input#jformparameters_show_title1,input#jformparameters_link_category1{margin-left:13px}
 
 /* -- TAB STYLES ----------------------------- */
 div.current{border:1px solid #ccc;clear:both;padding:10px}
@@ -98,7 +98,7 @@ li.acl-editgroups:hover,li.acl-resetbtn:hover{background:none repeat scroll 0 0 
 #jform-imp{min-width:70px}
 #jform_id{background-color:#FFF;border:0 none;width:50px}
 #jform_id,span.readonly{color:#666;display:block;float:left;font-family:Arial, Helvetica, sans-serif;font-size:1.091em;font-weight:700;margin:5px 5px 5px 0}
-#jform_params_width,#jform_params_height,#jform_params_increase,#jform_params_shownumber,#jform_params_count{width:50px}
+#jform_parameters_width,#jform_parameters_height,#jform_parameters_increase,#jform_parameters_shownumber,#jform_parameters_count{width:50px}
 .mod-desc{float:none !important;margin-left:135px !important}
 .star{color:#EB8207;font-size:1.2em}
 div#content-pane fieldset{border:0;padding:10px 15px 0}
@@ -109,7 +109,7 @@ fieldset ul.checklist input{clear:left;margin-right:10px}
 fieldset ul.checklist label,fieldset ul.menu-links label,fieldset#filter-bar label{clear:none}
 fieldset.adminform{margin:10px;overflow:hidden}
 fieldset.adminform legend,fieldset ul{margin:0;padding:0}
-fieldset.adminform textarea,#jform_params_alt,#jform_clickurl{width:355px}
+fieldset.adminform textarea,#jform_parameters_alt,#jform_clickurl{width:355px}
 fieldset.adminform ul.checklist li{margin:0;padding:0;width:100%}
 fieldset.adminform ul.checklist li label{width:auto}
 form label,form span.faux-label{font-size:1.091em}
@@ -134,12 +134,12 @@ fieldset.panelform{overflow:hidden}
 fieldset.panelform label,fieldset.panelform div.paramrow label,fieldset.panelform span.faux-label{max-width:250px;min-width:145px;padding:0 5px 0 0}
 
 /* Field label widths - long label */
-label#paramsusermode-lbl,
-label#paramsphishing-resistant-lbl,
-label#paramsmulti-factor-lbl,
-label#paramsmulti-factor-physical-lbl,
-paramslang_mode-lbl { min-width: 200px; }
-#jform_params_target{width:190px}
+label#parametersusermode-lbl,
+label#parametersphishing-resistant-lbl,
+label#parametersmulti-factor-lbl,
+label#parametersmulti-factor-physical-lbl,
+parameterslang_mode-lbl { min-width: 200px; }
+#jform_parameters_target{width:190px}
 #jform_plugdesc-lbl,#jform_description-lbl{clear:both;margin-top:15px}
 .helplinks{margin-top:60px}
 button.filter-go{float:left;margin-right:15px}

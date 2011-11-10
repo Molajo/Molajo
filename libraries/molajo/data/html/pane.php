@@ -25,7 +25,7 @@ abstract class MolajoPane extends JObject
      * Returns a JPanel object.
      *
      * @param   string  $behavior  The behavior to use.
-     * @param   array   $params    Associative array of values.
+     * @param   array   $parameters    Associative array of values.
      *
      * @return  object
      *
@@ -33,13 +33,13 @@ abstract class MolajoPane extends JObject
      * @since   11.1
      *
      */
-    public static function getInstance($behavior = 'Tabs', $params = array())
+    public static function getInstance($behavior = 'Tabs', $parameters = array())
     {
         // Deprecation warning.
         JLog::add('JPane::getInstance is deprecated.', JLog::WARNING, 'deprecated');
 
         $classname = 'JPane' . $behavior;
-        $instance = new $classname($params);
+        $instance = new $classname($parameters);
 
         return $instance;
     }
@@ -115,23 +115,23 @@ class MolajoPaneTabs extends MolajoPane
     /**
      * Constructor.
      *
-     * @param   array  $params  Associative array of values
+     * @param   array  $parameters  Associative array of values
      *
      * @return  void
      *
      * @since   11.1
      */
-    function __construct($params = array())
+    function __construct($parameters = array())
     {
         // Deprecation warning.
         JLog::add('JPaneTabs is deprecated.', JLog::WARNING, 'deprecated');
 
         static $loaded = false;
 
-        parent::__construct($params);
+        parent::__construct($parameters);
 
         if (!$loaded) {
-            $this->_loadBehavior($params);
+            $this->_loadBehavior($parameters);
             $loaded = true;
         }
     }
@@ -213,14 +213,14 @@ class MolajoPaneTabs extends MolajoPane
     /**
      * Load the javascript behavior and attach it to the document.
      *
-     * @param   array  $params  Associative array of values
+     * @param   array  $parameters  Associative array of values
      *
      * @return  void
      *
      * @since   11.1
      * @deprecated    12.1
      */
-    protected function _loadBehavior($params = array())
+    protected function _loadBehavior($parameters = array())
     {
         // Deprecation warning.
         JLog::add('JPaneTabs::_loadBehavior is deprecated.', JLog::WARNING, 'deprecated');
@@ -231,9 +231,9 @@ class MolajoPaneTabs extends MolajoPane
         $document = JFactory::getDocument();
 
         $options = '{';
-        $opt['onActive'] = (isset($params['onActive'])) ? $params['onActive'] : null;
-        $opt['onBackground'] = (isset($params['onBackground'])) ? $params['onBackground'] : null;
-        $opt['display'] = (isset($params['startOffset'])) ? (int)$params['startOffset'] : null;
+        $opt['onActive'] = (isset($parameters['onActive'])) ? $parameters['onActive'] : null;
+        $opt['onBackground'] = (isset($parameters['onBackground'])) ? $parameters['onBackground'] : null;
+        $opt['display'] = (isset($parameters['startOffset'])) ? (int)$parameters['startOffset'] : null;
         foreach ($opt as $k => $v)
         {
             if ($v) {
@@ -266,23 +266,23 @@ class MolajoPaneSliders extends MolajoPane
     /**
      * Constructor.
      *
-     * @param   array  $params  Associative array of values.
+     * @param   array  $parameters  Associative array of values.
      *
      * @since   11.1
      *
      * @deprecated    12.1
      */
-    function __construct($params = array())
+    function __construct($parameters = array())
     {
         // Deprecation warning.
         JLog::add('JPanelSliders::__construct is deprecated.', JLog::WARNING, 'deprecated');
 
         static $loaded = false;
 
-        parent::__construct($params);
+        parent::__construct($parameters);
 
         if (!$loaded) {
-            $this->_loadBehavior($params);
+            $this->_loadBehavior($parameters);
             $loaded = true;
         }
     }
@@ -364,7 +364,7 @@ class MolajoPaneSliders extends MolajoPane
     /**
      * Load the javascript behavior and attach it to the document.
      *
-     * @param   array  $params  Associative array of values.
+     * @param   array  $parameters  Associative array of values.
      *
      * @return  void
      *
@@ -372,7 +372,7 @@ class MolajoPaneSliders extends MolajoPane
      *
      * @deprecated    12.1
      */
-    protected function _loadBehavior($params = array())
+    protected function _loadBehavior($parameters = array())
     {
         // Deprecation warning.
         JLog::add('JPaneSliders::_loadBehavior is deprecated.', JLog::WARNING, 'deprecated');
@@ -387,13 +387,13 @@ class MolajoPaneSliders extends MolajoPane
                            ' toggler.removeClass(\'pane-toggler\');i.addClass(\'pane-down\');i.removeClass(\'pane-hide\'); }';
         $opt['onBackground'] = 'function(toggler, i) { toggler.addClass(\'pane-toggler\');' .
                                ' toggler.removeClass(\'pane-toggler-down\');i.addClass(\'pane-hide\');i.removeClass(\'pane-down\'); }';
-        $opt['duration'] = (isset($params['duration'])) ? (int)$params['duration'] : 300;
-        $opt['display'] = (isset($params['startOffset']) && ($params['startTransition'])) ? (int)$params['startOffset']
+        $opt['duration'] = (isset($parameters['duration'])) ? (int)$parameters['duration'] : 300;
+        $opt['display'] = (isset($parameters['startOffset']) && ($parameters['startTransition'])) ? (int)$parameters['startOffset']
                 : null;
-        $opt['show'] = (isset($params['startOffset']) && (!$params['startTransition'])) ? (int)$params['startOffset']
+        $opt['show'] = (isset($parameters['startOffset']) && (!$parameters['startTransition'])) ? (int)$parameters['startOffset']
                 : null;
-        $opt['opacity'] = (isset($params['opacityTransition']) && ($params['opacityTransition'])) ? 'true' : 'false';
-        $opt['alwaysHide'] = (isset($params['allowAllClose']) && (!$params['allowAllClose'])) ? 'false' : 'true';
+        $opt['opacity'] = (isset($parameters['opacityTransition']) && ($parameters['opacityTransition'])) ? 'true' : 'false';
+        $opt['alwaysHide'] = (isset($parameters['allowAllClose']) && (!$parameters['allowAllClose'])) ? 'false' : 'true';
         foreach ($opt as $k => $v)
         {
             if ($v) {

@@ -24,7 +24,7 @@
 	</languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_ADMIN_LATEST" />
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					name="count"

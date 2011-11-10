@@ -9,9 +9,9 @@
 
 // No direct access.
 defined('_JEXEC') or die;
-$params = new JRegistry;
+$parameters = new JRegistry;
 $dispatcher	= JDispatcher::getInstance();
-$dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_tmp_img, &$params));
+$dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_tmp_img, &$parameters));
 ?>
 		<div class="item">
 			<a href="javascript:ImageManager.populateFields('<?php echo $this->_tmp_img->path_relative; ?>')" title="<?php echo $this->_tmp_img->name; ?>" >
@@ -19,5 +19,5 @@ $dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_
 				<span title="<?php echo $this->_tmp_img->name; ?>"><?php echo $this->_tmp_img->title; ?></span></a>
 		</div>
 <?php
-$dispatcher->trigger('onContentAfterDisplay', array('com_media.file', &$this->_tmp_img, &$params));
+$dispatcher->trigger('onContentAfterDisplay', array('com_media.file', &$this->_tmp_img, &$parameters));
 ?>

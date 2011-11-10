@@ -44,13 +44,13 @@ class plgContentPagebreak extends MolajoPlugin
 	/**
 	 * @param	string	The context of the content being passed to the plugin.
 	 * @param	object	The article object.  Note $article->text is also available
-	 * @param	object	The article params
+	 * @param	object	The article parameters
 	 * @param	int		The 'page' number
 	 *
 	 * @return	void
 	 * @since	1.6
 	 */
-	public function onContentPrepare($context, &$row, &$params, $page = 0)
+	public function onContentPrepare($context, &$row, &$parameters, $page = 0)
 	{  
 		$canProceed = $context == 'com_articles.article';
 
@@ -60,7 +60,7 @@ class plgContentPagebreak extends MolajoPlugin
 		$print = JRequest::getBool('print');
 		$showall = JRequest::getBool('showall');
 
-		if (!$this->params->get('enabled', 1)) {
+		if (!$this->parameters->get('enabled', 1)) {
 			$print = true;
 		}
 
@@ -82,7 +82,7 @@ class plgContentPagebreak extends MolajoPlugin
 			$page = 0;
 		}
 
-		if ($params->get('intro_only') || $params->get('popup') || $full || $view != 'article') {
+		if ($parameters->get('intro_only') || $parameters->get('popup') || $full || $view != 'article') {
 			$row->text = preg_replace($regex, '', $row->text);
 			return;
 		}
@@ -91,8 +91,8 @@ class plgContentPagebreak extends MolajoPlugin
 		$matches = array();
 		preg_match_all($regex, $row->text, $matches, PREG_SET_ORDER);
 
-		if (($showall && $this->params->get('showall', 1))) {
-			$hasToc = $this->params->get('multipage_toc', 1);
+		if (($showall && $this->parameters->get('showall', 1))) {
+			$hasToc = $this->parameters->get('multipage_toc', 1);
 			if ($hasToc && $canProceed) {
 				// Display TOC.
 				$page = 1;
@@ -113,8 +113,8 @@ class plgContentPagebreak extends MolajoPlugin
 
 		// We have found at least one plugin, therefore at least 2 pages.
 		if ($n > 1) {
-			$title	= $this->params->get('title', 1);
-			$hasToc = $this->params->get('multipage_toc', 1);
+			$title	= $this->parameters->get('title', 1);
+			$hasToc = $this->parameters->get('multipage_toc', 1);
 
 			// Adds heading or title to <site> Title.
 			if ($title) {
@@ -189,13 +189,13 @@ class plgContentPagebreak extends MolajoPlugin
 		$row->toc .= '<div id="article-index">';
 		
 		
-		if($this->params->get('article_index')==1)
+		if($this->parameters->get('article_index')==1)
 		{
 			$headingtext= JText::_('PLG_CONTENT_PAGEBREAK_ARTICLE_INDEX');
 	        
-			if($this->params->get('article_index_text'))
+			if($this->parameters->get('article_index_text'))
 	        {
-	        	htmlspecialchars($headingtext=$this->params->get('article_index_text'));
+	        	htmlspecialchars($headingtext=$this->parameters->get('article_index_text'));
 	       	 }
 			$row->toc .='<h3>'.$headingtext.'</h3>';
 		
@@ -244,7 +244,7 @@ class plgContentPagebreak extends MolajoPlugin
 			$i++;
 		}
 
-		if ($this->params->get('showall')) {
+		if ($this->parameters->get('showall')) {
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=1&limitstart=');
 			$row->toc .= '
 			<li>

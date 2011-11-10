@@ -10,7 +10,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$fieldSets = $this->form->getFieldsets('params');
+$fieldSets = $this->form->getFieldsets('parameters');
 
 foreach ($fieldSets as $name => $fieldSet) :
 	$label = !empty($fieldSet->label) ? $fieldSet->label : 'COM_PLUGINS_'.$name.'_FIELDSET_LABEL';

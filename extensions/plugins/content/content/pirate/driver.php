@@ -22,7 +22,7 @@ class MolajoContentPirate {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** talk like a pirate day **/
         if (($systemParams->def('enable_pirate_day', 0) == 1) && (date("m.d") == '09/19')) {

@@ -24,7 +24,7 @@
 	</languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_ADMIN_ONLINE" />
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fields name="advanced">
 				<fieldset name="basic">
 					<field

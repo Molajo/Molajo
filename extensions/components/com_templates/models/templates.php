@@ -149,8 +149,8 @@ class TemplatesModelTemplates extends JModelList
 		$this->setState('filter.application_id', $application_id);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_templates');
-		$this->setState('params', $params);
+		$parameters = JComponentHelper::getParams('com_templates');
+		$this->setState('parameters', $parameters);
 
 		// List state information.
 		parent::populateState('a.element', 'asc');

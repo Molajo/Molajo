@@ -44,7 +44,7 @@
 		</field>
 
 		<field
-			name="frontend_userparams"
+			name="frontend_userparameters"
 			type="radio"
 			default="1"
 			label="COM_USERS_CONFIG_FIELD_FRONTEND_USERPARAMS_LABEL"

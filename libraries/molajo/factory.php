@@ -217,7 +217,6 @@ abstract class MolajoFactory
             if ($file === null) {
                 $file = MOLAJO_APPLICATION_PATH.'/configuration.php';
             }
-
             self::$appConfig = self::_createConfig($file, $type, 'Application');
         }
 
@@ -376,9 +375,7 @@ abstract class MolajoFactory
      *
      * @deprecated
      */
-    public static function getACL()
-    {
-    }
+    public static function getACL() {}
 
     /**
      * Get a database object

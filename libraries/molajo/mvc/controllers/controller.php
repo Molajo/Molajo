@@ -24,11 +24,11 @@ class MolajoController extends JController
     public $request = array();
 
     /**
-     * @var object $params
+     * @var object $parameters
      *
      * @since 1.0
      */
-    public $params = array();
+    public $parameters = array();
 
     /**
      * @var object $document
@@ -121,13 +121,13 @@ class MolajoController extends JController
      * Method to handle display, edit, and add tasks
      *
      * @param    boolean        $cachable    If true, the view output will be cached
-     * @param    array        $urlparams    An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+     * @param    array        $urlparameters    An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
      *
      * @return    JController    This object to support chaining.
      *
      * @since    1.0
      */
-    public function display($cachable = false, $urlparams = false)
+    public function display($cachable = false, $urlparameters = false)
     {
         /** language files */
         $lang = MolajoFactory::getLanguage();
@@ -169,7 +169,7 @@ class MolajoController extends JController
         $this->view->state = $this->view->get('State');
 
         /** 6. Parameters */
-        $this->view->params = $this->view->get('Params');
+        $this->view->parameters = $this->view->get('Params');
 
         /** 7. Query Results */
         $this->view->rowset = $this->view->get('Items');
@@ -187,7 +187,7 @@ class MolajoController extends JController
         $this->view->wrap = $this->request['wrap'];
 
         /** display view */
-        parent::display($cachable, $urlparams);
+        parent::display($cachable, $urlparameters);
 
         return $this;
     }
@@ -208,7 +208,7 @@ class MolajoController extends JController
     {
         $this->document = MolajoFactory::getDocument();
         $this->request = $request;
-        $this->params = $this->request['params'];
+        $this->parameters = $this->request['parameters'];
         $this->redirectClass = new MolajoControllerRedirect();
         $this->redirectClass->request = $this->request;
 
@@ -229,7 +229,7 @@ class MolajoController extends JController
             /** model */
             $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'] . 'Model'), array());
             $this->model->request = $this->request;
-            $this->model->params = $this->request['params'];
+            $this->model->parameters = $this->request['parameters'];
 
             /** view format */
             $this->view = $this->getView($this->request['view'], $this->document->getType());
@@ -466,7 +466,7 @@ class MolajoController extends JController
     public function createVersion($context)
     {
         /** activated? **/
-        if ($this->params->def('config_component_version_management', 1) == 1) {
+        if ($this->parameters->def('config_component_version_management', 1) == 1) {
         } else {
             return true;
         }
@@ -478,7 +478,7 @@ class MolajoController extends JController
 
         /** versions deleted with delete **/
         if ($this->task == 'delete'
-            && $this->params->def('config_component_retain_versions_after_delete', 1) == 0
+            && $this->parameters->def('config_component_retain_versions_after_delete', 1) == 0
         ) {
             return true;
         }
@@ -516,7 +516,7 @@ class MolajoController extends JController
     public function maintainVersionCount($context)
     {
         /** activiated? **/
-        if ($this->params->def('config_component_version_management', 1) == 1) {
+        if ($this->parameters->def('config_component_version_management', 1) == 1) {
         } else {
             return;
         }
@@ -527,11 +527,11 @@ class MolajoController extends JController
         }
 
         /** versions deleted with delete **/
-        if ($this->task == 'delete' && $this->params->def('config_component_retain_versions_after_delete', 1) == 0) {
+        if ($this->task == 'delete' && $this->parameters->def('config_component_retain_versions_after_delete', 1) == 0) {
             $maintainVersions = 0;
         } else {
             /** retrieve versions desired **/
-            $maintainVersions = $this->params->def('config_component_maintain_version_count', 5);
+            $maintainVersions = $this->parameters->def('config_component_maintain_version_count', 5);
         }
 
         /** delete extra versions **/

@@ -81,17 +81,17 @@ class MolajoModelCategory extends JModel
         $this->setState('category.id', JRequest::getInt('id'));
 
         /** Merge Component and Menu Item Parameters */
-        $params = MolajoFactory::getApplication()->getParams();
+        $parameters = MolajoFactory::getApplication()->getParams();
         $menuParams = new JRegistry;
         if ($menu = MolajoFactory::getApplication()->getMenu()->getActive()) {
-            $menuParams->loadJSON($menu->params);
+            $menuParams->loadJSON($menu->parameters);
         }
         $mergedParams = clone $menuParams;
-        $mergedParams->merge($params);
-        $this->setState('params', $mergedParams);
+        $mergedParams->merge($parameters);
+        $this->setState('parameters', $mergedParams);
 
         /** show_noauth: show titles for unauthorized content in blog and list layouts */
-        if ($params->get('show_noauth')) {
+        if ($parameters->get('show_noauth')) {
             $this->setState('filter.access', false);
         } else {
             $this->setState('filter.access', true);
@@ -119,20 +119,20 @@ class MolajoModelCategory extends JModel
 
         // set limit for query. If list, use parameter. If blog, add blog parameters for limit.
         if (JRequest::getString('layout') == 'blog') {
-            $limit = $params->get('num_leading_articles') + $params->get('num_intro_articles') + $params->get('num_links');
-            $this->setState('list.links', $params->get('num_links'));
+            $limit = $parameters->get('num_leading_articles') + $parameters->get('num_intro_articles') + $parameters->get('num_links');
+            $this->setState('list.links', $parameters->get('num_links'));
         }
         else {
-            $limit = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
+            $limit = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.limit', 'limit', $parameters->get('display_num'));
         }
 
         $this->setState('list.limit', $limit);
 
         // set the depth of the category query based on parameter
-        $showSubcategories = $params->get('show_subcategory_content', '0');
+        $showSubcategories = $parameters->get('show_subcategory_content', '0');
 
         if ($showSubcategories) {
-            $this->setState('filter.max_category_levels', $params->get('show_subcategory_content', '1'));
+            $this->setState('filter.max_category_levels', $parameters->get('show_subcategory_content', '1'));
             $this->setState('filter.subcategories', true);
         }
 
@@ -149,11 +149,11 @@ class MolajoModelCategory extends JModel
      */
     function getItems()
     {
-        $params = $this->getState()->get('params');
+        $parameters = $this->getState()->get('parameters');
 
         // set limit for query. If list, use parameter. If blog, add blog parameters for limit.
         if (JRequest::getString('layout') == 'blog') {
-            $limit = $params->get('num_leading_articles') + $params->get('num_intro_articles') + $params->get('num_links');
+            $limit = $parameters->get('num_leading_articles') + $parameters->get('num_intro_articles') + $parameters->get('num_links');
         }
         else {
             $limit = $this->getState('list.limit');
@@ -161,7 +161,7 @@ class MolajoModelCategory extends JModel
 
         if ($this->_articles === null && $category = $this->getCategory()) {
             $model = JModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
-            $model->setState('params', MolajoFactory::getApplication()->getParams());
+            $model->setState('parameters', MolajoFactory::getApplication()->getParams());
             $model->setState('filter.category_id', $category->id);
             $model->setState('filter.published', $this->getState('filter.published'));
             $model->setState('filter.access', $this->getState('filter.access'));
@@ -202,7 +202,7 @@ class MolajoModelCategory extends JModel
     protected function _buildContentOrderBy()
     {
         $db = $this->getDbo();
-        $params = $this->state->params;
+        $parameters = $this->state->parameters;
         $itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
         $orderCol = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
         $orderDirn = MolajoFactory::getApplication()->getUserStateFromRequest('com_articles.category.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
@@ -220,9 +220,9 @@ class MolajoModelCategory extends JModel
             $orderby .= $db->getEscaped($orderCol) . ' ' . $db->getEscaped($orderDirn) . ', ';
         }
 
-        $articleOrderby = $params->get('orderby_sec', 'rdate');
-        $articleOrderDate = $params->get('order_date');
-        $categoryOrderby = $params->def('orderby_pri', '');
+        $articleOrderby = $parameters->get('orderby_sec', 'rdate');
+        $articleOrderDate = $parameters->get('order_date');
+        $categoryOrderby = $parameters->def('orderby_pri', '');
         $secondary = ContentHelperQuery::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
         $primary = ContentHelperQuery::orderbyPrimary($categoryOrderby);
 
@@ -250,10 +250,10 @@ class MolajoModelCategory extends JModel
     public function getCategory()
     {
         if (!is_object($this->_item)) {
-            if (isset($this->state->params)) {
-                $params = $this->state->params;
+            if (isset($this->state->parameters)) {
+                $parameters = $this->state->parameters;
                 $options = array();
-                $options['countItems'] = $params->get('show_cat_num_articles', 1) || !$params->get('show_empty_categories_cat', 0);
+                $options['countItems'] = $parameters->get('show_cat_num_articles', 1) || !$parameters->get('show_empty_categories_cat', 0);
             }
             else {
                 $options['countItems'] = 0;

@@ -19,10 +19,10 @@ class plgContentLoadmodule extends MolajoPlugin
 	 *
 	 * @param	string	The context of the content being passed to the plugin.
 	 * @param	object	The article object.  Note $article->text is also available
-	 * @param	object	The article params
+	 * @param	object	The article parameters
 	 * @param	int		The 'page' number
 	 */
-	public function onContentPrepare($context, &$article, &$params, $page = 0)
+	public function onContentPrepare($context, &$article, &$parameters, $page = 0)
 	{
 		// simple performance check to determine whether bot should process further
 		if (strpos($article->text, 'loadposition') === false) {
@@ -32,7 +32,7 @@ class plgContentLoadmodule extends MolajoPlugin
 		// expression to search for
 		$regex		= '/{loadposition\s+(.*?)}/i';
 		$matches	= array();
-		$style		= $this->params->def('style', 'none');
+		$style		= $this->parameters->def('style', 'none');
 
 		// find all instances of plugin and put in $matches
 		preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
@@ -52,11 +52,11 @@ class plgContentLoadmodule extends MolajoPlugin
 			$document	= MolajoFactory::getDocument();
 			$renderer	= $document->loadRenderer('module');
 			$modules	= JModuleHelper::getModules($position);
-			$params		= array('style' => $style);
+			$parameters		= array('style' => $style);
 			ob_start();
 		
 			foreach ($modules as $module) {
-				echo $renderer->render($module, $params);
+				echo $renderer->render($module, $parameters);
 			}
 
 			self::$modules[$position] = ob_get_clean();

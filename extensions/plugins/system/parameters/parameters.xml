@@ -20,7 +20,7 @@
 		<language tag="language/en-GB">en-GB.plg_system_molajo.sys.ini</language>
 	</languages>
 	<config>
-            <fields name="params">
+            <fields name="parameters">
 
         <!-- MOLAJO TAB  $ -->
                 <fieldset name="fieldset_molajo">

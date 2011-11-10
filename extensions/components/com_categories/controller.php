@@ -51,7 +51,7 @@ class CategoriesController extends JController
 	 * @return	JController		This object to support chaining.
 	 * @since	1.0
 	 */
-	public function display($cachable = false, $urlparams = false)
+	public function display($cachable = false, $urlparameters = false)
 	{
 		// Get the document object.
 		$document = MolajoFactory::getDocument();

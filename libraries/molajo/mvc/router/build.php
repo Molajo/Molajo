@@ -35,8 +35,8 @@ class MolajoRouterBuild extends MolajoRouter
     function buildRoute(&$query, $componentParam, $singleParam, $multipleParam, $typeParam, $tableParam)
     {
         $menu = MolajoFactory::getApplication()->getMenu();
-        $params = MolajoComponentHelper::getParams($componentParam);
-        $advanced = $params->get('sef_advanced_link', 0);
+        $parameters = MolajoComponentHelper::getParams($componentParam);
+        $advanced = $parameters->get('sef_advanced_link', 0);
         $segments = array();
         $temp = array();
 

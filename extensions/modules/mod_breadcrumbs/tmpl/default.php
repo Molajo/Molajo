@@ -11,8 +11,8 @@
 defined('JPATH_PLATFORM') or die;
 ?>
 
-<div class="breadcrumbs<?php echo $params->get('layout_class_suffix'); ?>">
-<?php if ($params->get('showHere', 1))
+<div class="breadcrumbs<?php echo $parameters->get('layout_class_suffix'); ?>">
+<?php if ($parameters->get('showHere', 1))
 	{
 		echo JText::_('MOD_BREADCRUMBS_HERE');
 	}
@@ -31,7 +31,7 @@ defined('JPATH_PLATFORM') or die;
 		if($i < $count -2){
 			echo ' '.$separator.' ';
 		}
-	}  else if ($params->get('showLast', 1)) { // when $i == $count -1 and 'showLast' is true
+	}  else if ($parameters->get('showLast', 1)) { // when $i == $count -1 and 'showLast' is true
 		if($i > 0){
 			echo ' '.$separator.' ';
 		}

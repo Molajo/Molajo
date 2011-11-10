@@ -22,7 +22,7 @@ class ProtectRecaptcha
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);
+		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
 		$spamProtectionOption = $tamkaLibraryPluginParams->def('spamprevention', '1');		
 
 		if ($spamProtectionOption == '0') {
@@ -140,7 +140,7 @@ class ProtectRecaptcha
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);	
+		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
 		
 	/**
 	 * 	Filter content through array of Bad Words

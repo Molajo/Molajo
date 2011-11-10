@@ -16,7 +16,7 @@ class MolajoWebServicesGoogleMaps {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	string		The 'page' number
      * @param   string          Then name of the text field in the content object
      * @return	string
@@ -26,7 +26,7 @@ class MolajoWebServicesGoogleMaps {
      * http://code.google.com/apis/maps/documentation/staticmaps/
      *
      */
-    function driver ($context, &$content, &$params, $page, $location)
+    function driver ($context, &$content, &$parameters, $page, $location)
     {
         /** extract maps **/
         preg_match_all( "#{googlemaps}(.*?){/googlemaps}#s", $content->$location, $matches );
@@ -111,7 +111,7 @@ class MolajoWebServicesGoogleMaps {
 //                $document->addScript('http://maps.google.com/maps/api/js?sensor=false');
 
                 $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-                $systemParams = new JParameter($molajoSystemPlugin->params);
+                $systemParams = new JParameter($molajoSystemPlugin->parameters);
             }
 
 //            $document->addScriptDeclaration($mapScript);

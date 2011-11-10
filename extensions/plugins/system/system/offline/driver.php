@@ -30,7 +30,7 @@ class MolajoSystemOffline {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** config **/
         $config =& MolajoFactory::getConfig();

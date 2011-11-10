@@ -11,7 +11,7 @@ jimport( 'joomla.plugin.plugin' );
 
 class URLsKeywordLinks extends MolajoPlugin	{
 	
-	function onPrepareContent( &$article, &$params, $limitstart )
+	function onPrepareContent( &$article, &$parameters, $limitstart )
 	{
 			
 	/**

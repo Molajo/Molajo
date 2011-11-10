@@ -34,7 +34,7 @@ defined('_JEXEC') or die; ?>
 		</ul>
 	</fieldset>
 
-<?php $fieldSets = $this->form->getFieldsets('params');
+<?php $fieldSets = $this->form->getFieldsets('parameters');
 
 foreach ($fieldSets as $name => $fieldSet) :
 	$label = !empty($fieldSet->label) ? $fieldSet->label : 'COM_CATEGORIES_'.$name.'_FIELDSET_LABEL';

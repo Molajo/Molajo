@@ -12,7 +12,7 @@ jimport( 'joomla.plugin.plugin' );
 class URLSCanonical extends MolajoPlugin
 {
 	
-	function onPrepareContent( &$article, &$params, $limitstart )
+	function onPrepareContent( &$article, &$parameters, $limitstart )
 	{
 			
 	/**

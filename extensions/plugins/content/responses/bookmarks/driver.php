@@ -11,7 +11,7 @@ jimport( 'joomla.plugin.plugin' );
 
 class ResponsesSocialBookmarks extends MolajoPlugin
 {
-	function onAfterDisplayContent ( &$article, &$params, $limitstart )
+	function onAfterDisplayContent ( &$article, &$parameters, $limitstart )
 	{
 
 	/**
@@ -39,7 +39,7 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 
 		//	Get Parameters
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_article_social_bookmark');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 
 		$parameterblogandarticle = $pluginParams->def('blogandarticle', 0);
 		$parametersquareorcircle = $pluginParams->def('squareorcircle', 0);

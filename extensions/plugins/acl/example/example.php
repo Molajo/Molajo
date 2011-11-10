@@ -27,7 +27,7 @@ class plgACLMolajosample extends MolajoPlugin
      * passes in full filter set, can add or modify
      *
 	 * @param	object	$state               Array of request variables, filters, list objects
-	 * @param	object	$params              Array of parameters
+	 * @param	object	$parameters              Array of parameters
      *
      *  echo $state->get('request.layout');
      *
@@ -40,7 +40,7 @@ class plgACLMolajosample extends MolajoPlugin
 	 * @since	1.0
      *
 	 */
-	public function onACLPopulateState (&$state, &$params)
+	public function onACLPopulateState (&$state, &$parameters)
 	{
         return true;
     }
@@ -54,11 +54,11 @@ class plgACLMolajosample extends MolajoPlugin
      * 
 	 * @param	string	$state      Array of request variables, filters, list objects
 	 * @param	object	$resultset  Full ACL resultset
-	 * @param	object	$params     The content params
+	 * @param	object	$parameters     The content parameters
 	 * 
 	 * @since	1.6
 	 */    
-    public function onACLComplete (&$state, &$resultset, &$params)
+    public function onACLComplete (&$state, &$resultset, &$parameters)
     {
         return true;
     }      

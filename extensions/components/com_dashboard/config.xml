@@ -2204,7 +2204,7 @@
                 <option value="1">MOLAJO_CONFIG_OPTION_YES</option>
         </field>
 
-        <field name="config_manager_editor_params"
+        <field name="config_manager_editor_parameters"
                 type="radio"
                 label="MOLAJO_CONFIG_EDIT_SHOW_PARAMS_LABEL"
                 description="MOLAJO_CONFIG_EDIT_SHOW_PARAMS_DESC"

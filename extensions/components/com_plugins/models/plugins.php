@@ -76,8 +76,8 @@ class PluginsModelPlugins extends JModelList
 		$this->setState('filter.language', $language);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_plugins');
-		$this->setState('params', $params);
+		$parameters = JComponentHelper::getParams('com_plugins');
+		$this->setState('parameters', $parameters);
 
 		// List state information.
 		parent::populateState('folder', 'asc');

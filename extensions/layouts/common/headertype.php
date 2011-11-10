@@ -14,7 +14,7 @@ else :
     echo ' id="'.$this->rowset[0]->wrap_id.'"';
 endif;
 
-$tmpClass = $this->params->get('layout_class_suffix').$this->rowset[0]->wrap_class;
+$tmpClass = $this->parameters->get('layout_class_suffix').$this->rowset[0]->wrap_class;
 if ($tmpClass == '') :
 else :
     echo ' class="'.$tmpClass.'"' ;

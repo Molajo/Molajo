@@ -52,7 +52,7 @@ class plgQueryMolajosample extends MolajoPlugin
      * passes in full filter set, can add or modify
      *
 	 * @param	object	$state               Array of request variables, filters, list objects
-	 * @param	object	$params              Array of parameters
+	 * @param	object	$parameters              Array of parameters
      *
      *  echo $state->get('request.layout');
      *
@@ -65,7 +65,7 @@ class plgQueryMolajosample extends MolajoPlugin
 	 * @since	1.0
      *
 	 */
-	public function onQueryPopulateState (&$state, &$params)
+	public function onQueryPopulateState (&$state, &$parameters)
 	{
         return true;
     }
@@ -77,11 +77,11 @@ class plgQueryMolajosample extends MolajoPlugin
      * 
 	 * @param	object	$state      Array of request variables, filters, list objects
 	 * @param	object	$query      Model Query Object prior to executing the query
-	 * @param	object	$params     The content params
+	 * @param	object	$parameters     The content parameters
 	 * 
 	 * @since	1.6
 	 */    
-    public function onQueryBeforeQuery (&$state, &$query, &$params)
+    public function onQueryBeforeQuery (&$state, &$query, &$parameters)
     {
         return true;
     }
@@ -93,7 +93,7 @@ class plgQueryMolajosample extends MolajoPlugin
      * 
 	 * @param	string	$state      Array of request variables, filters, list objects
 	 * @param	object	$resultset  Full query resultset
-	 * @param	object	$params     The content params
+	 * @param	object	$parameters     The content parameters
      *
      * foreach ($resultset as $item) {
      *      echo $item->access;
@@ -102,7 +102,7 @@ class plgQueryMolajosample extends MolajoPlugin
 	 * 
 	 * @since	1.6
 	 */    
-    public function onQueryAfterQuery (&$state, &$resultset, &$params)
+    public function onQueryAfterQuery (&$state, &$resultset, &$parameters)
     {
         return true;
     }
@@ -114,12 +114,12 @@ class plgQueryMolajosample extends MolajoPlugin
 	 *
 	 * @param	string	$state      Array of request variables, filters, list objects
 	 * @param	object	$item       Single resultset item
-	 * @param	object	$params     The content params
+	 * @param	object	$parameters     The content parameters
 	 * @param	boolean	$keep       Will the row be returned to the layout?
 	 * 
 	 * @since	1.6
 	 */    
-    public function onQueryBeforeItem (&$state, &$item, &$params, &$keep)
+    public function onQueryBeforeItem (&$state, &$item, &$parameters, &$keep)
     {
         return true;
     }    
@@ -134,12 +134,12 @@ class plgQueryMolajosample extends MolajoPlugin
      * 
 	 * @param	string	$state      Array of request variables, filters, list objects
 	 * @param	object	$item       Single resultset item
-	 * @param	object	$params     The content params
+	 * @param	object	$parameters     The content parameters
 	 * @param	boolean	$keep       Will the row be returned to the layout?
 	 * 
 	 * @since	1.6
 	 */    
-    public function onQueryAfterItem (&$state, &$item, &$params, &$keep)
+    public function onQueryAfterItem (&$state, &$item, &$parameters, &$keep)
     {
         return true;
     }  
@@ -153,11 +153,11 @@ class plgQueryMolajosample extends MolajoPlugin
      * 
 	 * @param	string	$state      Array of request variables, filters, list objects
 	 * @param	object	$resultset  Full query resultset
-	 * @param	object	$params     The content params
+	 * @param	object	$parameters     The content parameters
 	 * 
 	 * @since	1.6
 	 */    
-    public function onQueryComplete (&$state, &$resultset, &$params)
+    public function onQueryComplete (&$state, &$resultset, &$parameters)
     {
         return true;
     }      

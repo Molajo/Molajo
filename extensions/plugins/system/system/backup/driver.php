@@ -30,7 +30,7 @@ class MolajoSystemBackup {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** backup **/
         if ($systemParams->def('enable_backup', 0) == '0') {

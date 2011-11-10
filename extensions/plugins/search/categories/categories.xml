@@ -18,7 +18,7 @@
 		<language tag="en-GB">en-GB.plg_search_categories.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 
 			<fieldset name="basic">
 				<field name="search_limit" type="text"

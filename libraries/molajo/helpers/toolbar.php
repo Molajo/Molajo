@@ -25,9 +25,9 @@ class MolajoToolbarHelper
     public function addButtonsDisplayLayout($state, $userToolbarButtonPermissions)
     {
         /** ToolBar title **/
-        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
-        $this->addTitle($params->def('config_manager_title_image', 1),
-                        $params->def('config_manager_title', 1),
+        $parameters = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
+        $this->addTitle($parameters->def('config_manager_title_image', 1),
+                        $parameters->def('config_manager_title', 1),
                         JRequest::getCmd('DefaultView'),
                         JRequest::getCmd('option'),
                         JRequest::getCmd('view'));
@@ -52,9 +52,9 @@ class MolajoToolbarHelper
         JRequest::setVar('hidemainmenu', true);
 
         /** ToolBar title **/
-        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
-        $this->addTitle($params->def('config_manager_title_image', 1),
-                        $params->def('config_manager_title', 1),
+        $parameters = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
+        $this->addTitle($parameters->def('config_manager_title_image', 1),
+                        $parameters->def('config_manager_title', 1),
                         JRequest::getCmd('DefaultView'),
                         JRequest::getCmd('option'),
                         JRequest::getCmd('view'));
@@ -101,7 +101,7 @@ class MolajoToolbarHelper
     public function buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item)
     {
         /** component parameters **/
-        $params = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
+        $parameters = MolajoComponentHelper::getParams(JRequest::getCmd('option'));
 
         /** loop thru config options and add ToolBar buttons **/
         $count = 0;
@@ -110,7 +110,7 @@ class MolajoToolbarHelper
         $loadedButtonArray = array();
 
         for ($i = 1; $i < 99; $i++) {
-            $buttonValue = $params->def($buttonParameterFieldName . $i, null);
+            $buttonValue = $parameters->def($buttonParameterFieldName . $i, null);
 
             if ($buttonValue == null) {
                 break;
@@ -237,8 +237,8 @@ class MolajoToolbarHelper
      */
     public function addSpamButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        $params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
-        if ($params->def('config_component_state_spam', '0') == 1) {
+        $parameters = MolajoComponentHelper::getParams(JRequest::getVar('option'));
+        if ($parameters->def('config_component_state_spam', '0') == 1) {
             self::custom(JRequest::getCmd('DefaultView') . '.spam', 'spam.png', 'spam_f2.png', 'MolajoToolbar_SPAM', true);
         }
     }
@@ -427,8 +427,8 @@ class MolajoToolbarHelper
         } else {
             return;
         }
-        $params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
-        if ($params->def('config_component_version_management', '1') == 1) {
+        $parameters = MolajoComponentHelper::getParams(JRequest::getVar('option'));
+        if ($parameters->def('config_component_version_management', '1') == 1) {
             self::custom(JRequest::getCmd('EditView') . '.restore', 'restore.png', 'restore_f2.png', 'MolajoToolbar_RESTORE', false);
         }
     }

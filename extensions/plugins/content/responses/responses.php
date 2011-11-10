@@ -29,12 +29,12 @@ class plgMolajoResponses extends MolajoPlugin	{
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	stromg		The 'page' number
      * @return	string
      * @since	1.6
      */
-    function MolajoOnContentPrepare ($context, &$content, &$params, $page = 0)
+    function MolajoOnContentPrepare ($context, &$content, &$parameters, $page = 0)
     {
         return;
         /** init **/
@@ -67,12 +67,12 @@ class plgMolajoResponses extends MolajoPlugin	{
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	int		The 'page' number
      * @return	string
      * @since	1.6
      */
-    function MolajoOnContentAfterDisplay ($context, &$content, &$params, $page = 0)
+    function MolajoOnContentAfterDisplay ($context, &$content, &$parameters, $page = 0)
     {
         /** init **/
         if (!plgMolajoResponses::initialization ($context, $content)) {
@@ -86,7 +86,7 @@ class plgMolajoResponses extends MolajoPlugin	{
         if (($responsesParams->def('enable_comments', 0) == '1') &&
             (in_array($content->catid, $responsesParams->def('enable_comments_categories', array())))) {
             require_once dirname(__FILE__) . '/comments/driver.php';
-            $commentResults = MolajoResponsesComments::driver ($context, &$content, &$params, $page = 0, $this->location, $this->closed);
+            $commentResults = MolajoResponsesComments::driver ($context, &$content, &$parameters, $page = 0, $this->location, $this->closed);
         } else {
             $commentResults = false;
         }
@@ -96,7 +96,7 @@ class plgMolajoResponses extends MolajoPlugin	{
             (in_array($content->catid, $responsesParams->def('enable_ratings_categories', array())))) {
             require_once dirname(__FILE__) . '/ratings/driver.php';
             $ratingResults = false;
-            //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$params, $page = 0);
+            //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$parameters, $page = 0);
         } else {
             $ratingResults = false;
         }
@@ -106,7 +106,7 @@ class plgMolajoResponses extends MolajoPlugin	{
             (in_array($content->catid, $responsesParams->def('enable_bookmarks_categories', array())))) {
             require_once dirname(__FILE__) . '/bookmarks/driver.php';
             $bookmarkResults = false;
-            //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$params, $page = 0);
+            //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$parameters, $page = 0);
         } else {
             $bookmarkResults = false;
         }
@@ -118,7 +118,7 @@ class plgMolajoResponses extends MolajoPlugin	{
             if ($responsesParams->def('enable_feeds', 0) == '1') {
                 require_once dirname(__FILE__) . '/subscriptions/driver.php';
                 $rssResults = false;
-                //$ratingResults = MolajoResponsesFeeds::driver ($context, &$content, &$params, $page = 0);
+                //$ratingResults = MolajoResponsesFeeds::driver ($context, &$content, &$parameters, $page = 0);
             } else {
                 $subscriptionResults = false;
                 $rssResults = false;
@@ -127,7 +127,7 @@ class plgMolajoResponses extends MolajoPlugin	{
             if ($responsesParams->def('enable_subscriptions', 0) == '1') {
                 require_once dirname(__FILE__) . '/subscriptions/driver.php';
                 $subscriptionResults = false;
-                //$ratingResults = MolajoResponsesSubscriptions::driver ($context, &$content, &$params, $page = 0);
+                //$ratingResults = MolajoResponsesSubscriptions::driver ($context, &$content, &$parameters, $page = 0);
             } else {
                 $subscriptionResults = false;
             }

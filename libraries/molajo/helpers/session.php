@@ -79,7 +79,7 @@ class MolajoSessionHelper extends JObject
     {
         $db = MolajoFactory::getDBO();
         $db->setQuery(
-            'DELETE FROM `#__session`' .
+            'DELETE FROM `#__sessions`' .
             ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
         );
         $db->query();
@@ -105,7 +105,7 @@ class MolajoSessionHelper extends JObject
 
         $db->setQuery(
             'SELECT `session_id`' .
-            ' FROM `#__session`' .
+            ' FROM `#__sessions`' .
             ' WHERE `session_id` = ' . $db->quote($session->getId()), 0, 1
         );
         $exists = $db->loadResult();
@@ -115,20 +115,19 @@ class MolajoSessionHelper extends JObject
 
         if ($session->isNew()) {
             $db->setQuery(
-                'INSERT INTO `#__session` (`session_id`, `application_id`, `session_time`)' .
+                'INSERT INTO `#__sessions` (`session_id`, `application_id`, `session_time`)' .
                 ' VALUES (' . $db->quote($session->getId()) . ', ' . (int)MOLAJO_APPLICATION_ID . ', ' . (int)time() . ')'
             );
 
         } else {
             $db->setQuery(
-                'INSERT INTO `#__session` (`session_id`, `application_id`, `guest`, `session_time`, `userid`, `username`)' .
+                'INSERT INTO `#__sessions` (`session_id`, `application_id`, `guest`, `session_time`, `userid`)' .
                 ' VALUES (' .
                 $db->quote($session->getId()) . ', ' .
-                (int)MOLAJO_APPLICATION_ID . ', ' .
-                (int)$user->get('guest') . ', ' .
-                (int)$session->get('session.timer.start') . ', ' .
-                (int)$user->get('id') . ', ' .
-                $db->quote($user->get('username')) . ')'
+                (int) MOLAJO_APPLICATION_ID . ', ' .
+                (int) $user->get('guest') . ', ' .
+                (int) $session->get('session.timer.start') . ', ' .
+                (int) $user->get('id') . ')'
             );
         }
 

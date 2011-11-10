@@ -222,7 +222,7 @@ abstract class MolajoHtmlBehavior
      * Uses the core Tips class in MooTools.
      *
      * @param   string  $selector  The class selector for the tooltip.
-     * @param   array   $params    An array of options for the tooltip.
+     * @param   array   $parameters    An array of options for the tooltip.
      *                             Options for the tooltip can be:
      *                             - maxTitleChars  integer   The maximum number of characters in the tooltip title (defaults to 50).
      *                             - offsets        object    The distance of your tooltip from the mouse (defaults to {'x': 16, 'y': 16}).
@@ -239,7 +239,7 @@ abstract class MolajoHtmlBehavior
      *
      * @since   11.1
      */
-    public static function tooltip($selector = '.hasTip', $params = array())
+    public static function tooltip($selector = '.hasTip', $parameters = array())
     {
         static $tips;
 
@@ -250,26 +250,26 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework(true);
 
-        $sig = md5(serialize(array($selector, $params)));
+        $sig = md5(serialize(array($selector, $parameters)));
         if (isset($tips[$sig]) && ($tips[$sig])) {
             return;
         }
 
         // Setup options object
-        $opt['maxTitleChars'] = (isset($params['maxTitleChars']) && ($params['maxTitleChars']))
-                ? (int)$params['maxTitleChars'] : 50;
+        $opt['maxTitleChars'] = (isset($parameters['maxTitleChars']) && ($parameters['maxTitleChars']))
+                ? (int)$parameters['maxTitleChars'] : 50;
         // offsets needs an array in the format: array('x'=>20, 'y'=>30)
-        $opt['offset'] = (isset($params['offset']) && (is_array($params['offset']))) ? $params['offset'] : null;
+        $opt['offset'] = (isset($parameters['offset']) && (is_array($parameters['offset']))) ? $parameters['offset'] : null;
         if (!isset($opt['offset'])) {
             // Suppporting offsets parameter which was working in mootools 1.2 (Joomla!1.5)
-            $opt['offset'] = (isset($params['offsets']) && (is_array($params['offsets']))) ? $params['offsets'] : null;
+            $opt['offset'] = (isset($parameters['offsets']) && (is_array($parameters['offsets']))) ? $parameters['offsets'] : null;
         }
-        $opt['showDelay'] = (isset($params['showDelay'])) ? (int)$params['showDelay'] : null;
-        $opt['hideDelay'] = (isset($params['hideDelay'])) ? (int)$params['hideDelay'] : null;
-        $opt['className'] = (isset($params['className'])) ? $params['className'] : null;
-        $opt['fixed'] = (isset($params['fixed']) && ($params['fixed'])) ? true : false;
-        $opt['onShow'] = (isset($params['onShow'])) ? '\\' . $params['onShow'] : null;
-        $opt['onHide'] = (isset($params['onHide'])) ? '\\' . $params['onHide'] : null;
+        $opt['showDelay'] = (isset($parameters['showDelay'])) ? (int)$parameters['showDelay'] : null;
+        $opt['hideDelay'] = (isset($parameters['hideDelay'])) ? (int)$parameters['hideDelay'] : null;
+        $opt['className'] = (isset($parameters['className'])) ? $parameters['className'] : null;
+        $opt['fixed'] = (isset($parameters['fixed']) && ($parameters['fixed'])) ? true : false;
+        $opt['onShow'] = (isset($parameters['onShow'])) ? '\\' . $parameters['onShow'] : null;
+        $opt['onHide'] = (isset($parameters['onHide'])) ? '\\' . $parameters['onHide'] : null;
 
         $options = MolajoHTMLBehavior::_getJSObject($opt);
 
@@ -298,7 +298,7 @@ abstract class MolajoHtmlBehavior
      * Add unobtrusive javascript support for modal links.
      *
      * @param   string  $selector  The selector for which a modal behaviour is to be applied.
-     * @param   array   $params    An array of parameters for the modal behaviour.
+     * @param   array   $parameters    An array of parameters for the modal behaviour.
      *                             Options for the modal behaviour can be:
      *                            - ajaxOptions
      *                            - size
@@ -315,7 +315,7 @@ abstract class MolajoHtmlBehavior
      *
      * @since   11.1
      */
-    public static function modal($selector = 'a.modal', $params = array())
+    public static function modal($selector = 'a.modal', $parameters = array())
     {
         static $modals;
         static $included;
@@ -339,32 +339,32 @@ abstract class MolajoHtmlBehavior
             $modals = array();
         }
 
-        $sig = md5(serialize(array($selector, $params)));
+        $sig = md5(serialize(array($selector, $parameters)));
         if (isset($modals[$sig]) && ($modals[$sig])) {
             return;
         }
 
         // Setup options object
-        $opt['ajaxOptions'] = (isset($params['ajaxOptions']) && (is_array($params['ajaxOptions'])))
-                ? $params['ajaxOptions'] : null;
-        $opt['handler'] = (isset($params['handler'])) ? $params['handler'] : null;
-        $opt['fullScreen'] = (isset($params['fullScreen'])) ? (bool)$params['fullScreen'] : null;
-        $opt['parseSecure'] = (isset($params['parseSecure'])) ? (bool)$params['parseSecure'] : null;
-        $opt['closable'] = (isset($params['closable'])) ? (bool)$params['closable'] : null;
-        $opt['closeBtn'] = (isset($params['closeBtn'])) ? (bool)$params['closeBtn'] : null;
-        $opt['iframePreload'] = (isset($params['iframePreload'])) ? (bool)$params['iframePreload'] : null;
-        $opt['iframeOptions'] = (isset($params['iframeOptions']) && (is_array($params['iframeOptions'])))
-                ? $params['iframeOptions'] : null;
-        $opt['size'] = (isset($params['size']) && (is_array($params['size']))) ? $params['size'] : null;
-        $opt['shadow'] = (isset($params['shadow'])) ? $params['shadow'] : null;
-        $opt['overlay'] = (isset($params['overlay'])) ? $params['overlay'] : null;
-        $opt['onOpen'] = (isset($params['onOpen'])) ? $params['onOpen'] : null;
-        $opt['onClose'] = (isset($params['onClose'])) ? $params['onClose'] : null;
-        $opt['onUpdate'] = (isset($params['onUpdate'])) ? $params['onUpdate'] : null;
-        $opt['onResize'] = (isset($params['onResize'])) ? $params['onResize'] : null;
-        $opt['onMove'] = (isset($params['onMove'])) ? $params['onMove'] : null;
-        $opt['onShow'] = (isset($params['onShow'])) ? $params['onShow'] : null;
-        $opt['onHide'] = (isset($params['onHide'])) ? $params['onHide'] : null;
+        $opt['ajaxOptions'] = (isset($parameters['ajaxOptions']) && (is_array($parameters['ajaxOptions'])))
+                ? $parameters['ajaxOptions'] : null;
+        $opt['handler'] = (isset($parameters['handler'])) ? $parameters['handler'] : null;
+        $opt['fullScreen'] = (isset($parameters['fullScreen'])) ? (bool)$parameters['fullScreen'] : null;
+        $opt['parseSecure'] = (isset($parameters['parseSecure'])) ? (bool)$parameters['parseSecure'] : null;
+        $opt['closable'] = (isset($parameters['closable'])) ? (bool)$parameters['closable'] : null;
+        $opt['closeBtn'] = (isset($parameters['closeBtn'])) ? (bool)$parameters['closeBtn'] : null;
+        $opt['iframePreload'] = (isset($parameters['iframePreload'])) ? (bool)$parameters['iframePreload'] : null;
+        $opt['iframeOptions'] = (isset($parameters['iframeOptions']) && (is_array($parameters['iframeOptions'])))
+                ? $parameters['iframeOptions'] : null;
+        $opt['size'] = (isset($parameters['size']) && (is_array($parameters['size']))) ? $parameters['size'] : null;
+        $opt['shadow'] = (isset($parameters['shadow'])) ? $parameters['shadow'] : null;
+        $opt['overlay'] = (isset($parameters['overlay'])) ? $parameters['overlay'] : null;
+        $opt['onOpen'] = (isset($parameters['onOpen'])) ? $parameters['onOpen'] : null;
+        $opt['onClose'] = (isset($parameters['onClose'])) ? $parameters['onClose'] : null;
+        $opt['onUpdate'] = (isset($parameters['onUpdate'])) ? $parameters['onUpdate'] : null;
+        $opt['onResize'] = (isset($parameters['onResize'])) ? $parameters['onResize'] : null;
+        $opt['onMove'] = (isset($parameters['onMove'])) ? $parameters['onMove'] : null;
+        $opt['onShow'] = (isset($parameters['onShow'])) ? $parameters['onShow'] : null;
+        $opt['onHide'] = (isset($parameters['onHide'])) ? $parameters['onHide'] : null;
 
         $options = MolajoHTMLBehavior::_getJSObject($opt);
 
@@ -430,14 +430,14 @@ abstract class MolajoHtmlBehavior
      * Add unobtrusive javascript support for the advanced uploader.
      *
      * @param   string  $id            An index.
-     * @param   array   $params        An array of options for the uploader.
+     * @param   array   $parameters        An array of options for the uploader.
      * @param   string  $upload_queue  The HTML id of the upload queue element (??).
      *
      * @return  void
      *
      * @since   11.1
      */
-    public static function uploader($id = 'file-upload', $params = array(), $upload_queue = 'upload-queue')
+    public static function uploader($id = 'file-upload', $parameters = array(), $upload_queue = 'upload-queue')
     {
         // Include MooTools framework
         self::framework();
@@ -497,50 +497,50 @@ abstract class MolajoHtmlBehavior
 
         // Setup options object
         $opt['verbose'] = true;
-        $opt['url'] = (isset($params['targetURL'])) ? $params['targetURL'] : null;
-        $opt['path'] = (isset($params['swf'])) ? $params['swf'] : JURI::root(true).'/media/system/swf/uploader.swf';
-        $opt['height'] = (isset($params['height'])) && $params['height'] ? (int)$params['height'] : null;
-        $opt['width'] = (isset($params['width'])) && $params['width'] ? (int)$params['width'] : null;
-        $opt['multiple'] = (isset($params['multiple']) && !($params['multiple'])) ? false : true;
-        $opt['queued'] = (isset($params['queued']) && !($params['queued'])) ? (int)$params['queued'] : null;
-        $opt['target'] = (isset($params['target'])) ? $params['target'] : '\\document.id(\'upload-browse\')';
-        $opt['instantStart'] = (isset($params['instantStart']) && ($params['instantStart'])) ? true : false;
-        $opt['allowDuplicates'] = (isset($params['allowDuplicates']) && !($params['allowDuplicates'])) ? false : true;
+        $opt['url'] = (isset($parameters['targetURL'])) ? $parameters['targetURL'] : null;
+        $opt['path'] = (isset($parameters['swf'])) ? $parameters['swf'] : JURI::root(true).'/media/system/swf/uploader.swf';
+        $opt['height'] = (isset($parameters['height'])) && $parameters['height'] ? (int)$parameters['height'] : null;
+        $opt['width'] = (isset($parameters['width'])) && $parameters['width'] ? (int)$parameters['width'] : null;
+        $opt['multiple'] = (isset($parameters['multiple']) && !($parameters['multiple'])) ? false : true;
+        $opt['queued'] = (isset($parameters['queued']) && !($parameters['queued'])) ? (int)$parameters['queued'] : null;
+        $opt['target'] = (isset($parameters['target'])) ? $parameters['target'] : '\\document.id(\'upload-browse\')';
+        $opt['instantStart'] = (isset($parameters['instantStart']) && ($parameters['instantStart'])) ? true : false;
+        $opt['allowDuplicates'] = (isset($parameters['allowDuplicates']) && !($parameters['allowDuplicates'])) ? false : true;
         // limitSize is the old parameter name.  Remove in 1.7
-        $opt['fileSizeMax'] = (isset($params['limitSize']) && ($params['limitSize'])) ? (int)$params['limitSize']
+        $opt['fileSizeMax'] = (isset($parameters['limitSize']) && ($parameters['limitSize'])) ? (int)$parameters['limitSize']
                 : null;
         // fileSizeMax is the new name.  If supplied, it will override the old value specified for limitSize
-        $opt['fileSizeMax'] = (isset($params['fileSizeMax']) && ($params['fileSizeMax'])) ? (int)$params['fileSizeMax']
+        $opt['fileSizeMax'] = (isset($parameters['fileSizeMax']) && ($parameters['fileSizeMax'])) ? (int)$parameters['fileSizeMax']
                 : $opt['fileSizeMax'];
-        $opt['fileSizeMin'] = (isset($params['fileSizeMin']) && ($params['fileSizeMin'])) ? (int)$params['fileSizeMin']
+        $opt['fileSizeMin'] = (isset($parameters['fileSizeMin']) && ($parameters['fileSizeMin'])) ? (int)$parameters['fileSizeMin']
                 : null;
         // limitFiles is the old parameter name.  Remove in 1.7
-        $opt['fileListMax'] = (isset($params['limitFiles']) && ($params['limitFiles'])) ? (int)$params['limitFiles']
+        $opt['fileListMax'] = (isset($parameters['limitFiles']) && ($parameters['limitFiles'])) ? (int)$parameters['limitFiles']
                 : null;
         // fileListMax is the new name.  If supplied, it will override the old value specified for limitFiles
-        $opt['fileListMax'] = (isset($params['fileListMax']) && ($params['fileListMax'])) ? (int)$params['fileListMax']
+        $opt['fileListMax'] = (isset($parameters['fileListMax']) && ($parameters['fileListMax'])) ? (int)$parameters['fileListMax']
                 : $opt['fileListMax'];
-        $opt['fileListSizeMax'] = (isset($params['fileListSizeMax']) && ($params['fileListSizeMax']))
-                ? (int)$params['fileListSizeMax'] : null;
+        $opt['fileListSizeMax'] = (isset($parameters['fileListSizeMax']) && ($parameters['fileListSizeMax']))
+                ? (int)$parameters['fileListSizeMax'] : null;
         // types is the old parameter name.  Remove in 1.7
-        $opt['typeFilter'] = (isset($params['types'])) ? '\\' . $params['types']
+        $opt['typeFilter'] = (isset($parameters['types'])) ? '\\' . $parameters['types']
                 : '\\{Joomla.MolajoText._(\'JLIB_HTML_BEHAVIOR_UPLOADER_ALL_FILES\'): \'*.*\'}';
-        $opt['typeFilter'] = (isset($params['typeFilter'])) ? '\\' . $params['typeFilter'] : $opt['typeFilter'];
+        $opt['typeFilter'] = (isset($parameters['typeFilter'])) ? '\\' . $parameters['typeFilter'] : $opt['typeFilter'];
 
         // Optional functions
-        $opt['createReplacement'] = (isset($params['createReplacement'])) ? '\\' . $params['createReplacement'] : null;
-        $opt['onFileComplete'] = (isset($params['onFileComplete'])) ? '\\' . $params['onFileComplete'] : null;
-        $opt['onBeforeStart'] = (isset($params['onBeforeStart'])) ? '\\' . $params['onBeforeStart'] : null;
-        $opt['onStart'] = (isset($params['onStart'])) ? '\\' . $params['onStart'] : null;
-        $opt['onComplete'] = (isset($params['onComplete'])) ? '\\' . $params['onComplete'] : null;
-        $opt['onFileSuccess'] = (isset($params['onFileSuccess'])) ? '\\' . $params['onFileSuccess'] : $onFileSuccess;
+        $opt['createReplacement'] = (isset($parameters['createReplacement'])) ? '\\' . $parameters['createReplacement'] : null;
+        $opt['onFileComplete'] = (isset($parameters['onFileComplete'])) ? '\\' . $parameters['onFileComplete'] : null;
+        $opt['onBeforeStart'] = (isset($parameters['onBeforeStart'])) ? '\\' . $parameters['onBeforeStart'] : null;
+        $opt['onStart'] = (isset($parameters['onStart'])) ? '\\' . $parameters['onStart'] : null;
+        $opt['onComplete'] = (isset($parameters['onComplete'])) ? '\\' . $parameters['onComplete'] : null;
+        $opt['onFileSuccess'] = (isset($parameters['onFileSuccess'])) ? '\\' . $parameters['onFileSuccess'] : $onFileSuccess;
 
-        if (!isset($params['startButton'])) {
-            $params['startButton'] = 'upload-start';
+        if (!isset($parameters['startButton'])) {
+            $parameters['startButton'] = 'upload-start';
         }
 
-        if (!isset($params['clearButton'])) {
-            $params['clearButton'] = 'upload-clear';
+        if (!isset($parameters['clearButton'])) {
+            $parameters['clearButton'] = 'upload-clear';
         }
 
         $opt['onLoad'] = '\\function() {
@@ -567,13 +567,13 @@ abstract class MolajoHtmlBehavior
 
 				// Interactions for the 2 other buttons
 
-				document.id(\'' . $params['clearButton']
+				document.id(\'' . $parameters['clearButton']
                          . '\').addEvent(\'click\', function() {
 					Uploader.remove(); // remove all files
 					return false;
 				});
 
-				document.id(\'' . $params['startButton']
+				document.id(\'' . $parameters['startButton']
                          . '\').addEvent(\'click\', function() {
 					Uploader.start(); // start upload
 					return false;
@@ -598,14 +598,14 @@ abstract class MolajoHtmlBehavior
      * Add unobtrusive javascript support for a collapsible tree.
      *
      * @param   string  $id      An index
-     * @param   array   $params  An array of options.
+     * @param   array   $parameters  An array of options.
      * @param   array   $root    The root node
      *
      * @return  void
      *
      * @since   11.1
      */
-    public static function tree($id, $params = array(), $root = array())
+    public static function tree($id, $parameters = array(), $root = array())
     {
         static $trees;
 
@@ -625,16 +625,16 @@ abstract class MolajoHtmlBehavior
         }
 
         // Setup options object
-        $opt['div'] = (array_key_exists('div', $params)) ? $params['div'] : $id . '_tree';
-        $opt['mode'] = (array_key_exists('mode', $params)) ? $params['mode'] : 'folders';
-        $opt['grid'] = (array_key_exists('grid', $params)) ? '\\' . $params['grid'] : true;
-        $opt['theme'] = (array_key_exists('theme', $params)) ? $params['theme']
+        $opt['div'] = (array_key_exists('div', $parameters)) ? $parameters['div'] : $id . '_tree';
+        $opt['mode'] = (array_key_exists('mode', $parameters)) ? $parameters['mode'] : 'folders';
+        $opt['grid'] = (array_key_exists('grid', $parameters)) ? '\\' . $parameters['grid'] : true;
+        $opt['theme'] = (array_key_exists('theme', $parameters)) ? $parameters['theme']
                 : MolajoHTML::_('image', 'system/mootree.gif', '', array(), true, true);
 
         // Event handlers
-        $opt['onExpand'] = (array_key_exists('onExpand', $params)) ? '\\' . $params['onExpand'] : null;
-        $opt['onSelect'] = (array_key_exists('onSelect', $params)) ? '\\' . $params['onSelect'] : null;
-        $opt['onClick'] = (array_key_exists('onClick', $params)) ? '\\' . $params['onClick']
+        $opt['onExpand'] = (array_key_exists('onExpand', $parameters)) ? '\\' . $parameters['onExpand'] : null;
+        $opt['onSelect'] = (array_key_exists('onSelect', $parameters)) ? '\\' . $parameters['onSelect'] : null;
+        $opt['onClick'] = (array_key_exists('onClick', $parameters)) ? '\\' . $parameters['onClick']
                 : '\\function(node){  window.open(node.data.url, $chk(node.data.target) ? node.data.target : \'_self\'); }';
 
         $options = MolajoHTMLBehavior::_getJSObject($opt);
@@ -649,7 +649,7 @@ abstract class MolajoHtmlBehavior
         $rt['data'] = (array_key_exists('data', $root)) ? $root['data'] : null;
         $rootNode = MolajoHTMLBehavior::_getJSObject($rt);
 
-        $treeName = (array_key_exists('treeName', $params)) ? $params['treeName'] : '';
+        $treeName = (array_key_exists('treeName', $parameters)) ? $parameters['treeName'] : '';
 
         $js = '		window.addEvent(\'domready\', function(){
 			tree' . $treeName . ' = new MooTreeControl(' . $options . ',' . $rootNode . ');

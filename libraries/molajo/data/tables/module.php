@@ -66,10 +66,10 @@ class MolajoTableModule extends MolajoTable
      */
     public function bind($array, $ignore = '')
     {
-        if (isset($array['params']) && is_array($array['params'])) {
+        if (isset($array['parameters']) && is_array($array['parameters'])) {
             $registry = new JRegistry();
-            $registry->loadArray($array['params']);
-            $array['params'] = (string)$registry;
+            $registry->loadArray($array['parameters']);
+            $array['parameters'] = (string)$registry;
         }
 
         return parent::bind($array, $ignore);

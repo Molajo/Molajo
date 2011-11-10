@@ -16,19 +16,19 @@ require_once dirname(__FILE__).'/helper.php';
 $lang = MolajoFactory::getLanguage();
 $upper_limit = $lang->getUpperLimitSearchWord();
 
-$button			= $params->get('button', '');
-$imagebutton	= $params->get('imagebutton', '');
-$button_pos		= $params->get('button_pos', 'left');
-$button_text	= htmlspecialchars($params->get('button_text', JText::_('MOD_SEARCH_SEARCHBUTTON_TEXT')));
-$width			= intval($params->get('width', 20));
+$button			= $parameters->get('button', '');
+$imagebutton	= $parameters->get('imagebutton', '');
+$button_pos		= $parameters->get('button_pos', 'left');
+$button_text	= htmlspecialchars($parameters->get('button_text', JText::_('MOD_SEARCH_SEARCHBUTTON_TEXT')));
+$width			= intval($parameters->get('width', 20));
 $maxlength		= $upper_limit;
-$text			= htmlspecialchars($params->get('text', JText::_('MOD_SEARCH_SEARCHBOX_TEXT')));
-$label			= htmlspecialchars($params->get('label', JText::_('MOD_SEARCH_LABEL_TEXT')));
-$set_Itemid		= intval($params->get('set_itemid', 0));
-$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
+$text			= htmlspecialchars($parameters->get('text', JText::_('MOD_SEARCH_SEARCHBOX_TEXT')));
+$label			= htmlspecialchars($parameters->get('label', JText::_('MOD_SEARCH_LABEL_TEXT')));
+$set_Itemid		= intval($parameters->get('set_itemid', 0));
+$layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
 
 if ($imagebutton) {
 	$img = modSearchHelper::getSearchImage($button_text);
 }
 $mitemid = $set_Itemid > 0 ? $set_Itemid : JRequest::getInt('Itemid');
-require MolajoModuleHelper::getLayoutPath('mod_search', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_search', $parameters->get('layout', 'default'));

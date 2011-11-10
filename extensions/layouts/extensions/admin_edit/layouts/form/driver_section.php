@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /** loop through columns **/
 $count = 0;
 for ($i=1; $i < 1000; $i++) {
-    $this->tempColumnName = $this->params->def($this->tempSection.$i);
+    $this->tempColumnName = $this->parameters->def($this->tempSection.$i);
     if ($this->tempColumnName == null) {
         break;
     } else if ($this->tempColumnName == '0') {

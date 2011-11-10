@@ -12,16 +12,16 @@ defined('JPATH_PLATFORM') or die;
 
 class modFeedHelper
 {
-	static function getFeed($params)
+	static function getFeed($parameters)
 	{
-		// module params
-		$rssurl	= $params->get('rssurl', '');
+		// module parameters
+		$rssurl	= $parameters->get('rssurl', '');
 
 		//  get RSS parsed object
 		$options = array();
 		$options['rssUrl']		= $rssurl;
-		if ($params->get('cache')) {
-			$options['cache_time']  = $params->get('cache_time', 15) ;
+		if ($parameters->get('cache')) {
+			$options['cache_time']  = $parameters->get('cache_time', 15) ;
 			$options['cache_time']	*= 60;
 		} else {
 			$options['cache_time'] = null;
@@ -46,7 +46,7 @@ class modFeedHelper
 			$items = $rssDoc->get_items();
 
 			// feed elements
-			$feed->items = array_slice($items, 0, $params->get('rssitems', 5));
+			$feed->items = array_slice($items, 0, $parameters->get('rssitems', 5));
 		} else {
 			$feed = false;
 		}

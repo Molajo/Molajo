@@ -55,7 +55,7 @@ class MolajoDocumentRenderer extends JObject
      * @return  string   The output of the script
      * @since   11.1
      */
-    public function render($name, $params = null, $content = null)
+    public function render($name, $parameters = null, $content = null)
     {
     }
 

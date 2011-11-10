@@ -162,7 +162,7 @@ class AdminModelSysInfo extends JModel
 
 			$registry = MolajoFactory::getConfig();
 			jimport('joomla.filesystem.folder');
-			$cparams = JComponentHelper::getParams('com_media');
+			$cparameters = JComponentHelper::getParams('com_media');
 
 			$this->_addDirectory('administrator/components', JPATH_ADMINISTRATOR.'/components');
 			$this->_addDirectory('administrator/language', JPATH_ADMINISTRATOR.'/language');
@@ -184,12 +184,12 @@ class AdminModelSysInfo extends JModel
 
 			$this->_addDirectory('components', JPATH_SITE.'/components');
 
-			$this->_addDirectory($cparams->get('image_path'), JPATH_SITE.'/'.$cparams->get('image_path'));
+			$this->_addDirectory($cparameters->get('image_path'), JPATH_SITE.'/'.$cparameters->get('image_path'));
 
-			$image_folders = JFolder::folders(JPATH_SITE.'/'.$cparams->get('image_path'));
+			$image_folders = JFolder::folders(JPATH_SITE.'/'.$cparameters->get('image_path'));
 			// List all images folders
 			foreach ($image_folders as $folder) {
-				$this->_addDirectory('images/' . $folder, JPATH_SITE.'/'.$cparams->get('image_path').'/'.$folder);
+				$this->_addDirectory('images/' . $folder, JPATH_SITE.'/'.$cparameters->get('image_path').'/'.$folder);
 			}
 
 			$this->_addDirectory('language', JPATH_SITE.'/language');

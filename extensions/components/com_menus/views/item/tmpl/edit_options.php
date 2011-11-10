@@ -38,7 +38,7 @@ defined('_JEXEC') or die;
 <?php
 	}
 
-	$fieldSets = $this->form->getFieldsets('params');
+	$fieldSets = $this->form->getFieldsets('parameters');
 
 	foreach ($fieldSets as $name => $fieldSet) :
 		$label = !empty($fieldSet->label) ? $fieldSet->label : 'COM_MENUS_'.$name.'_FIELDSET_LABEL';

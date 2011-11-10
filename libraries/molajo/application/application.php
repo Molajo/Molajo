@@ -485,7 +485,7 @@ class MolajoApplication extends JObject
         $template = $this->getTemplate(true);
         $file = $session->get('page.layout');
 
-        $params = array(
+        $parameters = array(
             'template' => $template[0]->name,
             'file' => $file . '.php',
             'directory' => MOLAJO_EXTENSION_TEMPLATES,
@@ -493,11 +493,11 @@ class MolajoApplication extends JObject
         );
 
         $document = MolajoFactory::getDocument();
-        $document->parse($params);
+        $document->parse($parameters);
 
         $this->triggerEvent('onBeforeRender');
 
-        JResponse::setBody($document->render(false, $params));
+        JResponse::setBody($document->render(false, $parameters));
 
         $this->triggerEvent('onAfterRender');
     }
@@ -1215,15 +1215,15 @@ class MolajoApplication extends JObject
 
         /** 14. parameters */
         if ($this->getName() == 'site') {
-            $params = MolajoComponentHelper::getParams($option);
+            $parameters = MolajoComponentHelper::getParams($option);
 
             // Setup the category parameters.
             //		$cparams = $category->getParams();
-            //		$category->params = clone($params);
+            //		$category->params = clone($parameters);
             //		$category->params->merge($cparams);
             // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
         } else {
-            $params = MolajoComponentHelper::getParams($option);
+            $parameters = MolajoComponentHelper::getParams($option);
 
             // $this->_mergeParams ();
             // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->params->get('pageclass_sfx'));
@@ -1258,9 +1258,9 @@ class MolajoApplication extends JObject
         $session->set('page.view', $view);
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
-        //        $session->set('page.wrap', $params->def('wrap', 'none'));
-        //        $session->set('page.wrap_id', $params->def('wrap_id', ''));
-        //        $session->set('page.wrap_class', $params->def('wrap_class', ''));
+        //        $session->set('page.wrap', $parameters->def('wrap', 'none'));
+        //        $session->set('page.wrap_id', $parameters->def('wrap_id', ''));
+        //        $session->set('page.wrap_class', $parameters->def('wrap_class', ''));
         $session->set('page.wrap', 'none');
         $session->set('page.wrap_id', '');
         $session->set('page.wrap_class', '');
@@ -1316,7 +1316,7 @@ class MolajoApplication extends JObject
         $request['id'] = $session->get('page.id');
         $request['cid'] = $session->get('page.cid');
         $request['catid'] = $session->get('page.catid');
-        $request['params'] = $session->get('page.params');
+        $request['parameters'] = $session->get('page.params');
         $request['extension'] = $session->get('page.extension');
         $request['component_specific'] = $session->get('page.component_specific');
 
@@ -1477,7 +1477,7 @@ class MolajoApplication extends JObject
         $session->set('page.position', 'component');
 
         // Load the parameters. Merge Global and Menu Item params into new object
-        //		$params = $app->getParams();
+        //		$parameters = $app->getParams();
         //		$menuParams = new JRegistry;
 
         //		if ($menu = $app->getMenu()->getActive()) {
@@ -1485,7 +1485,7 @@ class MolajoApplication extends JObject
         //		}
 
         //		$mergedParams = clone $menuParams;
-        //		$mergedParams->merge($params);
+        //		$mergedParams->merge($parameters);
 
         return;
     }

@@ -40,26 +40,26 @@ class MolajoContentQuotes {
 
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	string		The 'page' number
      * @param   string          Then name of the text field in the content object
      * @return	string
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page, $location)
+    function driver ($context, &$content, &$parameters, $page, $location)
     {
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** Block Quotes **/
         if ($systemParams->def('enable_blockquotes', 0) == 1) {
-            MolajoContentQuotes::blockQuotes  ($context, &$content, &$params, $page, $location);
+            MolajoContentQuotes::blockQuotes  ($context, &$content, &$parameters, $page, $location);
         }
 
         /** Pull Quotes **/
         if ($systemParams->def('enable_pullquotes', 0) == 1) {
-            MolajoContentQuotes::pullQuotes  ($context, &$content, &$params, $page, $location);
+            MolajoContentQuotes::pullQuotes  ($context, &$content, &$parameters, $page, $location);
         }
         return;
     }
@@ -68,12 +68,12 @@ class MolajoContentQuotes {
      * blockQuotes - quote stays within text
      * @param string $context
      * @param array $content
-     * @param array $params
+     * @param array $parameters
      * @param int $page
      * @param string $location
      * @return
      */
-    function blockQuotes ($context, &$content, &$params, $page, $location)
+    function blockQuotes ($context, &$content, &$parameters, $page, $location)
     {
         /** search for pullquotes **/
         preg_match_all( "#{blockquote}(.*?){/blockquote}#s", $content->$location, $matches );
@@ -113,12 +113,12 @@ class MolajoContentQuotes {
      * pullQuotes - quote pulled out and stays within text
      * @param string $context
      * @param array $content
-     * @param array $params
+     * @param array $parameters
      * @param int $page
      * @param string $location
      * @return 
      */
-    function pullQuotes ($context, &$content, &$params, $page, $location)
+    function pullQuotes ($context, &$content, &$parameters, $page, $location)
     {
         /** search for pullquotes **/
         preg_match_all( "#{pullquote}(.*?){/pullquote}#s", $content->$location, $matches );

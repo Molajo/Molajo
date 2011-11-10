@@ -31,7 +31,7 @@ class plgSystemMolajo extends MolajoPlugin
 	/**
      * onContentPrepareData
      *
-     * Not needed since all parameter data is stored in the database in the params column
+     * Not needed since all parameter data is stored in the database in the parameters column
      *
 	 * @param	string	$context    The context for the content passed to the plugin.
 	 * @param	object	$data       The data relating to the content that is being prepared for save.
@@ -109,30 +109,30 @@ class plgSystemMolajo extends MolajoPlugin
      */
     function getComponentParameterSets ()
     {
-        $params = JComponentHelper::getParams(JRequest::getVar('component'));
+        $parameters = JComponentHelper::getParams(JRequest::getVar('component'));
         $layoutParameters = $this->getSiteLayouts (JRequest::getVar('component'));
-        return $this->getLayoutParameterOptions ($layoutParameters, $params);
+        return $this->getLayoutParameterOptions ($layoutParameters, $parameters);
     }
 
     /**
      * getMenuItemParameterSets
      *
      * Retrieve the set of Layouts for which Parameter sets are needed
-     * @param $params
+     * @param $parameters
      * @param $data
      * @return object
      */
     function getDetailItemParameterSets($data)
     {
-        $params = JComponentHelper::getParams(JRequest::getVar('option'));
-        return $this->getLayoutParameterOptions (array('config_component_single_item_parameter'), $params);
+        $parameters = JComponentHelper::getParams(JRequest::getVar('option'));
+        return $this->getLayoutParameterOptions (array('config_component_single_item_parameter'), $parameters);
     }
 
     /**
      * getMenuItemParameterSets
      *
      * Retrieve the set of Layouts for which Parameter sets are needed
-     * @param $params
+     * @param $parameters
      * @param $data
      * @return object
      */
@@ -156,9 +156,9 @@ class plgSystemMolajo extends MolajoPlugin
         $this->getSiteLayouts($option);
 
         $typeArray = array('config_component_'.$view.'_'.$layout.'_parameter');
-        $params = JComponentHelper::getParams($option);
+        $parameters = JComponentHelper::getParams($option);
 
-        return $this->getLayoutParameterOptions ($typeArray, $params);
+        return $this->getLayoutParameterOptions ($typeArray, $parameters);
     }
 
     /**
@@ -168,7 +168,7 @@ class plgSystemMolajo extends MolajoPlugin
      * @param  $typeArray
      * @return
      */
-    function getLayoutParameterOptions ($typeArray, $params)
+    function getLayoutParameterOptions ($typeArray, $parameters)
     {
         $loadParameterSetsArray = array();
 
@@ -178,7 +178,7 @@ class plgSystemMolajo extends MolajoPlugin
             /** loop thru ParameterSet options **/
             for ($i=1; $i < 1000; $i++) {
 
-                $parameterSetName = $params->def($layoutParameterType.$i);
+                $parameterSetName = $parameters->def($layoutParameterType.$i);
 
                 /** encountered end of ParameterSets **/
                 if ($parameterSetName == null) {

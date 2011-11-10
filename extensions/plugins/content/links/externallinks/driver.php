@@ -22,13 +22,13 @@ class MolajoLinksExternalLinks {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	string		The 'page' number
      * @param   string          Then name of the text field in the content object
      * @return	string
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page = 0, $location)
+    function driver ($context, &$content, &$parameters, $page = 0, $location)
     {
         /** initialization **/
         $firsttime = true;
@@ -41,7 +41,7 @@ class MolajoLinksExternalLinks {
             if ($firsttime) {
                 $firsttime = false;
                 $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-                $systemParams = new JParameter($molajoSystemPlugin->params);
+                $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
                 $rel = $systemParams->def('index_external_links', 'noindex');
                 $rel .= ', '.$systemParams->def('follow_external_links', 'nofollow');

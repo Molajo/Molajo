@@ -153,7 +153,7 @@ class MenusControllerItem extends JControllerForm
 		}
 
 		// Validate the posted data.
-		// This post is made up of two forms, one for the item and one for params.
+		// This post is made up of two forms, one for the item and one for parameters.
 		$form = $model->getForm($data);
 		if (!$form) {
 			MolajoError::raiseError(500, $model->getError());

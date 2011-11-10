@@ -37,7 +37,7 @@ class CompressJS extends MolajoPlugin	{
 	 * 	Delete all files older than number of minutes specified -- (3600*24) is one day
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('system', 'tamka_compress_js');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 		
 		$jsFiles = JFolder::files( $store_path, '(css|js)$', false, false );
 		for($i = 0; $i < count($jsFiles); $i++) {

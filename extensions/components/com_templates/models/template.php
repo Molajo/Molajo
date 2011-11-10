@@ -102,8 +102,8 @@ class TemplatesModelTemplate extends JModel
 		$this->setState('extension.id', $pk);
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_templates');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_templates');
+		$this->setState('parameters', $parameters);
 	}
 
 	/**

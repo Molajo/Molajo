@@ -21,11 +21,11 @@ jimport( 'joomla.plugin.plugin' );
 
 class MediaAudio extends MolajoPlugin
 {
-	function onPrepareContent( &$article, &$params, $limitstart )
+	function onPrepareContent( &$article, &$parameters, $limitstart )
 	{
 		//	Get Parameters
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_media_audio');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 
 		//	Document
 		$document =& MolajoFactory::getDocument();

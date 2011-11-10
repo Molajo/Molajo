@@ -17,7 +17,7 @@ class WebServicesXMLRPC extends MolajoPlugin	{
          * 	Get Tamka Plugin Information
          */
         $plugin 	=& MolajoPluginHelper::getPlugin( 'molajo', 'backup');
-        $pluginParams = new JParameter($plugin->params);
+        $pluginParams = new JParameter($plugin->parameters);
 
         /**
          * 	Look for backupMarker file older than -- (3600*24) is one day * $parameterDays
@@ -25,7 +25,7 @@ class WebServicesXMLRPC extends MolajoPlugin	{
         jimport('joomla.filesystem.file');
         jimport('joomla.filesystem.folder');
 
-        $parameterDays = $this->params->get('days', 7);
+        $parameterDays = $this->parameters->get('days', 7);
         $markerFilename = JPATH_ROOT.'/plugins/molajo/backup/files/backupmarker.txt';
 
         $path = JPATH_ROOT.'/plugins/molajo/backup/files';
@@ -57,12 +57,12 @@ class WebServicesXMLRPC extends MolajoPlugin	{
          * 	Retrieve Mailing Address and Zip Option
          */
         $emailAddressess = Array();
-        $emailParm = $this->params->get('email', '');
+        $emailParm = $this->parameters->get('email', '');
         if ($emailParm == '') {
                 $emailParm = $mailfrom;
         }
         $emailAddressArray = explode(",", $emailParm);
-        $zipBackup = $this->params->get('zip', 1);
+        $zipBackup = $this->parameters->get('zip', 1);
 
         /**
          *  Retrieve Table Names from Database

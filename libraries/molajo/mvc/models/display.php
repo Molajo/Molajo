@@ -27,12 +27,12 @@ class MolajoModelDisplay extends JModel
     public $request = null;
 
     /**
-     * $params
+     * $parameters
      *
      * @var        string
      * @since    1.0
      */
-    protected $params = null;
+    protected $parameters = null;
 
     /**
      * $query
@@ -118,7 +118,7 @@ class MolajoModelDisplay extends JModel
     {
         $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['layout'];
 
-        $this->params = $this->request['params'];
+        $this->parameters = $this->request['parameters'];
 
         $this->filterFieldName = $this->request['filterFieldName'];
 
@@ -137,7 +137,7 @@ class MolajoModelDisplay extends JModel
             $this->model->populateItemState();
         }
 
-        $this->dispatcher->trigger('onQueryPopulateState', array(&$this->state, &$this->params));
+        $this->dispatcher->trigger('onQueryPopulateState', array(&$this->state, &$this->parameters));
     }
 
     /**
@@ -169,7 +169,7 @@ class MolajoModelDisplay extends JModel
         /** selected filters **/
         for ($i = 1; $i < 1000; $i++) {
 
-            $filterName = $this->params->def($this->filterFieldName . $i);
+            $filterName = $this->parameters->def($this->filterFieldName . $i);
 
             /** end of filter processing **/
             if ($filterName == null) {
@@ -361,7 +361,7 @@ class MolajoModelDisplay extends JModel
         }
 
         /** pass query results to event */
-        $this->dispatcher->trigger('onQueryAfterQuery', array(&$this->state, &$items, &$this->params));
+        $this->dispatcher->trigger('onQueryAfterQuery', array(&$this->state, &$items, &$this->parameters));
 
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publilshing) **/
         $nullDate = $this->_db->Quote($this->_db->getNullDate());
@@ -382,7 +382,7 @@ class MolajoModelDisplay extends JModel
                 $keep = true;
                 $items[$i]->canCheckin = false;
                 $items[$i]->checked_out = false;
-                $this->dispatcher->trigger('onQueryBeforeItem', array(&$this->state, &$items[$i], &$this->params, &$keep));
+                $this->dispatcher->trigger('onQueryBeforeItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
 
                 /** category is archived, so item should be too **/
                 if ($items[$i]->minimum_state_category < $items[$i]->state && $items[$i]->state > MOLAJO_STATUS_VERSION) {
@@ -420,7 +420,7 @@ class MolajoModelDisplay extends JModel
                 $items[$i]->fulltext = $fulltext;
 
                 /** some content plugins expect column named text */
-                if ($this->params->get('layout_show_intro', '1') == '1') {
+                if ($this->parameters->get('layout_show_intro', '1') == '1') {
                     $items[$i]->text = $items[$i]->introtext . ' ' . $items[$i]->fulltext;
                 } else if ($items[$i]->fulltext) {
                     $items[$i]->text = $items[$i]->fulltext;
@@ -429,7 +429,7 @@ class MolajoModelDisplay extends JModel
                 }
 
                 /** text snippet */
-                $items[$i]->snippet = substr($items[$i]->text, 0, $this->params->get('layout_text_snippet_length', 200));
+                $items[$i]->snippet = substr($items[$i]->text, 0, $this->parameters->get('layout_text_snippet_length', 200));
 
                 if ($items[$i]->created_by_alias == '') {
                     $items[$i]->display_author_name = $items[$i]->author_name;
@@ -506,19 +506,19 @@ class MolajoModelDisplay extends JModel
                     $keep = false;
                 }
 
-                $this->dispatcher->trigger('onQueryAfterItem', array(&$this->state, &$items[$i], &$this->params, &$keep));
+                $this->dispatcher->trigger('onQueryAfterItem', array(&$this->state, &$items[$i], &$this->parameters, &$keep));
 
                 /** process content plugins */
-                $this->dispatcher->trigger('onContentPrepare', array($this->context, &$items[$i], &$this->params, $this->getState('list.start')));
+                $this->dispatcher->trigger('onContentPrepare', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event = new stdClass();
 
-                $results = $this->dispatcher->trigger('onContentAfterTitle', array($this->context, &$items[$i], &$this->params, $this->getState('list.start')));
+                $results = $this->dispatcher->trigger('onContentAfterTitle', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event->afterDisplayTitle = trim(implode("\n", $results));
 
-                $results = $this->dispatcher->trigger('onContentBeforeDisplay', array($this->context, &$items[$i], &$this->params, $this->getState('list.start')));
+                $results = $this->dispatcher->trigger('onContentBeforeDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event->beforeDisplayContent = trim(implode("\n", $results));
 
-                $results = $this->dispatcher->trigger('onContentAfterDisplay', array($this->context, &$items[$i], &$this->params, $this->getState('list.start')));
+                $results = $this->dispatcher->trigger('onContentAfterDisplay', array($this->context, &$items[$i], &$this->parameters, $this->getState('list.start')));
                 $items[$i]->event->afterDisplayContent = trim(implode("\n", $results));
 
                 /** remove item overridden by category and no longer valid for criteria **/
@@ -531,7 +531,7 @@ class MolajoModelDisplay extends JModel
         }
 
         /** final event for queryset */
-        $this->dispatcher->trigger('onQueryComplete', array(&$this->state, &$items, &$this->params));
+        $this->dispatcher->trigger('onQueryComplete', array(&$this->state, &$items, &$this->parameters));
 
         /** place query results in cache **/
         $this->cache[$store] = $items;
@@ -636,7 +636,7 @@ class MolajoModelDisplay extends JModel
         $this->query->order($this->_db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
-        $this->dispatcher->trigger('onQueryBeforeQuery', array(&$this->state, &$this->query, &$this->params));
+        $this->dispatcher->trigger('onQueryBeforeQuery', array(&$this->state, &$this->query, &$this->parameters));
 
         return $this->query;
     }
@@ -755,7 +755,7 @@ class MolajoModelDisplay extends JModel
         $id = ':' . $this->getState('filter.search');
 
         for ($i = 1; $i < 1000; $i++) {
-            $temp = $this->params->def($this->filterFieldName . $i);
+            $temp = $this->parameters->def($this->filterFieldName . $i);
             $filterName = substr($temp, 0, stripos($temp, ';'));
             $filterDataType = substr($temp, stripos($temp, ';') + 1, 1);
             if ($filterName == null) {
@@ -896,7 +896,7 @@ class MolajoModelDisplay extends JModel
      */
     public function getOptionList($field1, $field2, $showKey = false, $showKeyFirst = false, $table = null)
     {
-        $this->params = MolajoComponentHelper::getParams($this->request['option']);
+        $this->parameters = MolajoComponentHelper::getParams($this->request['option']);
 
         $this->query = $this->_db->getQuery(true);
 
@@ -925,7 +925,7 @@ class MolajoModelDisplay extends JModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $filterName = $this->params->def($this->filterFieldName . $i);
+            $filterName = $this->parameters->def($this->filterFieldName . $i);
 
             /** end of filter processing **/
             if ($filterName == null) {
@@ -1117,7 +1117,7 @@ class MolajoModelDisplay extends JModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $fieldName = $this->params->get($this->filterFieldName . $i);
+            $fieldName = $this->parameters->get($this->filterFieldName . $i);
 
             /** end of filter processing **/
             if ($fieldName == null) {
@@ -1141,7 +1141,7 @@ class MolajoModelDisplay extends JModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $fieldName = $this->params->def($this->filterFieldName . $i);
+            $fieldName = $this->parameters->def($this->filterFieldName . $i);
 
             /** end of filter processing **/
             if ($fieldName == null) {

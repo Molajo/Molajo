@@ -12,10 +12,10 @@ defined('JPATH_PLATFORM') or die;
 MolajoHTML::_('behavior.keepalive');
 ?>
 <?php if ($type == 'logout') : ?>
-<form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="login-form">
-<?php if ($params->get('greeting')) : ?>
+<form action="<?php echo JRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="login-form">
+<?php if ($parameters->get('greeting')) : ?>
 	<div class="login-greeting">
-	<?php if($params->get('name') == 0) : {
+	<?php if($parameters->get('name') == 0) : {
 		echo JText::sprintf('MOD_LOGIN_HINAME', $user->get('name'));
 	} else : {
 		echo JText::sprintf('MOD_LOGIN_HINAME', $user->get('username'));
@@ -31,10 +31,10 @@ MolajoHTML::_('behavior.keepalive');
 	</div>
 </form>
 <?php else : ?>
-<form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="login-form" >
-	<?php if ($params->get('pretext')): ?>
+<form action="<?php echo JRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="login-form" >
+	<?php if ($parameters->get('pretext')): ?>
 		<div class="pretext">
-		<p><?php echo $params->get('pretext'); ?></p>
+		<p><?php echo $parameters->get('pretext'); ?></p>
 		</div>
 	<?php endif; ?>
 	<fieldset class="userdata">
@@ -76,9 +76,9 @@ MolajoHTML::_('behavior.keepalive');
 		</li>
 		<?php endif; ?>
 	</ul>
-	<?php if ($params->get('posttext')): ?>
+	<?php if ($parameters->get('posttext')): ?>
 		<div class="posttext">
-		<p><?php echo $params->get('posttext'); ?></p>
+		<p><?php echo $parameters->get('posttext'); ?></p>
 		</div>
 	<?php endif; ?>
 </form>

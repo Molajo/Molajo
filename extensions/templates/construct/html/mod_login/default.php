@@ -10,9 +10,9 @@ MolajoHTML::_('behavior.keepalive');
 ?>
 <?php if ($type == 'logout') : ?>
 <form action="index.php" method="post" name="form-login" id="form-login">
-<?php if ($params->get('greeting')) : ?>
+<?php if ($parameters->get('greeting')) : ?>
 	<div>
-	<?php if($params->get('name') == 0) : {
+	<?php if($parameters->get('name') == 0) : {
 		echo JText::sprintf('MOD_LOGIN_HINAME', $user->get('name'));
 	} else : {
 		echo JText::sprintf('MOD_LOGIN_HINAME', $user->get('username'));
@@ -27,8 +27,8 @@ MolajoHTML::_('behavior.keepalive');
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
 </form>
 <?php else : ?>
-<form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" name="form-login" id="form-login" >
-	<?php echo $params->get('pretext'); ?>
+<form action="<?php echo JRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" name="form-login" id="form-login" >
+	<?php echo $parameters->get('pretext'); ?>
 	<fieldset class="input">
 		<label id="form-login-username" for="modlgn_username"><?php echo JText::_('MOD_LOGIN_VALUE_USERNAME') ?>
 			<input id="modlgn_username" type="text" name="username" class="inputbox"  size="18" />
@@ -65,6 +65,6 @@ MolajoHTML::_('behavior.keepalive');
 		</li>
 		<?php endif; ?>
 	</ul>
-	<?php echo $params->get('posttext'); ?>
+	<?php echo $parameters->get('posttext'); ?>
 </form>
 <?php endif; ?>

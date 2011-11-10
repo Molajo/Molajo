@@ -534,7 +534,13 @@ CREATE INDEX `fk_group_permissions_actions2` ON `molajo_group_permissions` (`act
 -- -----------------------------------------------------
 -- Table 20 `molajo_sessions`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_sessions` (
+
+-- -----------------------------------------------------
+-- Table `molajo`.`sessions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `molajo`.`sessions` ;
+
+CREATE  TABLE IF NOT EXISTS `molajo`.`sessions` (
   `session_id` VARCHAR(32) NOT NULL ,
   `application_id` INT(11) UNSIGNED NOT NULL ,
   `guest` INT(1) UNSIGNED NOT NULL DEFAULT '1' ,
@@ -544,20 +550,13 @@ CREATE  TABLE IF NOT EXISTS `molajo_sessions` (
   PRIMARY KEY (`session_id`) ,
   CONSTRAINT `fk_sessions_applications1`
     FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sessions_users1`
-    FOREIGN KEY (`userid` )
-    REFERENCES `molajo_users` (`id` )
+    REFERENCES `molajo`.`applications` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_sessions_applications2` ON `molajo_sessions` (`application_id` ASC) ;
-
-CREATE INDEX `fk_sessions_users2` ON `molajo_sessions` (`userid` ASC) ;
+CREATE INDEX `fk_sessions_applications2` ON `molajo`.`sessions` (`application_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 21 `molajo_user_applications`

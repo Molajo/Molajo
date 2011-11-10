@@ -12,13 +12,13 @@ defined('JPATH_PLATFORM') or die;
 
 class modSyndicateHelper
 {
-	static function getLink(&$params)
+	static function getLink(&$parameters)
 	{
 		$document = MolajoFactory::getDocument();
 
 		foreach($document->_links as $link)
 		{
-			if (strpos($link, 'application/'.$params->get('format').'+xml')) {
+			if (strpos($link, 'application/'.$parameters->get('format').'+xml')) {
 				preg_match("#href=\"(.*?)\"#s", $link, $matches);
 				return $matches[1];
 			}

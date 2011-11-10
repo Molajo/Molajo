@@ -28,7 +28,7 @@ abstract class modOnlineHelper
 
 		$query	= $db->getQuery(true);
 		$query->select('COUNT(a.session_id)');
-		$query->from('#__session AS a');
+		$query->from('#__sessions AS a');
 		$query->where('a.session_id <> '.$db->Quote($sessionId));
 		$db->setQuery($query);
 		$result = (int) $db->loadResult();

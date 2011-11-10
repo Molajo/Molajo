@@ -17,7 +17,7 @@
 		<folder>aloha</folder>
 	</media>
 	<config>
-        <fields name="params">
+        <fields name="parameters">
             <fieldset name="basic">
                 <field type="radio" name="cleanup" label="Cleanup">
                         <option value="true">JYES</option>

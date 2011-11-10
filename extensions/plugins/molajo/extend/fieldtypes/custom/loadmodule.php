@@ -50,7 +50,7 @@ class JFormFieldLoadModule extends JFormField
 			$renderer	= $document->loadRenderer('module');
 			$modules	= JModuleHelper::getModules($position);
                         $style = 'raw';
-			$params		= array('style' => $style);
+			$parameters		= array('style' => $style);
         ob_start();
         $renderer->render('Logged in users', array('style' => $style));
         $contents = ob_get_contents();

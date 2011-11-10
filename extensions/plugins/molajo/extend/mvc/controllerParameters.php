@@ -31,7 +31,7 @@ class extendControllerParameters {
     {
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         /** client **/
         if ($fieldParams->def('global_restriction_client', '') == '') {
@@ -92,7 +92,7 @@ class extendControllerParameters {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         /** enabled **/
         if ((int) $fieldParams->def($contentType.'_enable', 0) == 0) {
@@ -223,7 +223,7 @@ class extendControllerParameters {
      *      and, using a pattern file, automatically creates the Parameter XML
      *      and loads the Custom Field Form Data back into the Form Object
      *      Uses JForm to filter and validate the content
-     *      Retrieves the params field saved by Molajo and appends in the Custom Field Params
+     *      Retrieves the parameters field saved by Molajo and appends in the Custom Field Params
      *      updating the Extensions table
      *
      * This function creates itself.
@@ -236,7 +236,7 @@ class extendControllerParameters {
     public function save ($contentTypeFilenames, $path=null)
     {
         /** temporary form for working purposes **/
-        $contentTypeForm = new JForm ('params');
+        $contentTypeForm = new JForm ('parameters');
 
         /** initialization **/
         $language = MolajoFactory::getLanguage();
@@ -265,18 +265,18 @@ class extendControllerParameters {
         /** validate **/
         if (!$contentTypeForm->validate($filteredData)) { return false; }
 
-        /** retrieve portion of params saved normally **/
+        /** retrieve portion of parameters saved normally **/
         $p = modelParameter::getData ();
         if ($p == false) {
             return false;
         }
 
-        /** merge "normal" params with custom fields params **/
+        /** merge "normal" parameters with custom fields parameters **/
 	$existingParams = new JRegistry($p);
-	$contenttypeParams = new JRegistry($filteredData['params']);
+	$contenttypeParams = new JRegistry($filteredData['parameters']);
         $newParams = substr($existingParams, 0, strlen($existingParams) - 1).','.substr($contenttypeParams, 1, strlen($contenttypeParams) - 1);
 
-        /** update extensions params field for full value **/
+        /** update extensions parameters field for full value **/
         return modelParameter::updateData ($newParams);
     }
 }

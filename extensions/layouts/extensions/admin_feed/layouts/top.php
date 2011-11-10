@@ -9,4 +9,4 @@
 defined('MOLAJO') or die;
 ?>
 <div style="direction: <?php echo $rssrtl ? 'rtl' :'ltr'; ?>; text-align: <?php echo $rssrtl ? 'right' :'left'; ?>">
-<ul class="latest-news<?php //echo $this->params->get('page_class_suffix', ''); ?>">
+<ul class="latest-news<?php //echo $this->parameters->get('page_class_suffix', ''); ?>">

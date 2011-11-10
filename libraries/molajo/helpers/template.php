@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoTemplateHelper
 {
-
     /**
      * Get the template
      *
@@ -63,11 +62,11 @@ abstract class MolajoTemplateHelper
             $registry = new JRegistry;
             $registry->loadJSON($template->parameters);
             $template->parameters = $registry;
-        }
 
-        if (file_exists(MOLAJO_EXTENSION_TEMPLATES.'/'.$template->name.'/'.'index.php')) {
-        } else {
-            $template->name = 'molajito';
+            if (file_exists(MOLAJO_EXTENSION_TEMPLATES.'/'.$template->name.'/'.'index.php')) {
+            } else {
+                $template->name = 'molajito';
+            }
         }
 
         return $templates;

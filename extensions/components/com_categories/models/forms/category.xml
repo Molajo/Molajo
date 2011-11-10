@@ -196,7 +196,7 @@
 		component="com_articles"
 		section="category"/>
 
-	<fields name="params">
+	<fields name="parameters">
 		<fieldset
 			name="basic">
 

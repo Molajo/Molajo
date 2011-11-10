@@ -15,6 +15,6 @@
 	<languages>
 		<language tag="en-GB">en-GB.plg_content_tamka_seo_canonical.ini</language>
 	</languages>
-	<params>
-	</params>
+	<parameters>
+	</parameters>
 </install>

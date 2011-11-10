@@ -21,7 +21,7 @@
 		<language tag="language/en-GB">en-GB.plg_molajo_categorization.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					default=""

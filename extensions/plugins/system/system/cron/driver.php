@@ -30,7 +30,7 @@ class MolajoSystemCron {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** cron **/
         if ($systemParams->def('enable_cron', 0) == '0') {

@@ -138,7 +138,7 @@
 </positions>
 	
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="general" addfieldpath="/templates/construct/elements" >
 				<field name="enableSwitcher" type="radio" default="0" label="TPL_MOLAJO_CONSTRUCT_ENABLE_SWITCHER_LABEL" description="TPL_MOLAJO_CONSTRUCT_ENABLE_SWITCHER_DESC">
 					<option value="1">Show</option>

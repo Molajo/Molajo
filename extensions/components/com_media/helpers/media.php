@@ -44,7 +44,7 @@ abstract class MediaHelper
 	 */
 	public static function canUpload($file, &$err)
 	{
-		$params = JComponentHelper::getParams('com_media');
+		$parameters = JComponentHelper::getParams('com_media');
 
 		if (empty($file['name'])) {
 			$err = 'COM_MEDIA_ERROR_UPLOAD_INPUT';
@@ -59,15 +59,15 @@ abstract class MediaHelper
 
 		$format = strtolower(JFile::getExt($file['name']));
 
-		$allowable = explode(',', $params->get('upload_extensions'));
-		$ignored = explode(',', $params->get('ignore_extensions'));
+		$allowable = explode(',', $parameters->get('upload_extensions'));
+		$ignored = explode(',', $parameters->get('ignore_extensions'));
 		if (!in_array($format, $allowable) && !in_array($format,$ignored))
 		{
 			$err = 'COM_MEDIA_ERROR_WARNFILETYPE';
 			return false;
 		}
 
-		$maxSize = (int) ($params->get('upload_maxsize', 0) * 1024 * 1024);
+		$maxSize = (int) ($parameters->get('upload_maxsize', 0) * 1024 * 1024);
 		if ($maxSize > 0 && (int) $file['size'] > $maxSize)
 		{
 			$err = 'COM_MEDIA_ERROR_WARNFILETOOLARGE';
@@ -76,8 +76,8 @@ abstract class MediaHelper
 
 		$user = MolajoFactory::getUser();
 		$imginfo = null;
-		if ($params->get('restrict_uploads',1)) {
-			$images = explode(',', $params->get('image_extensions'));
+		if ($parameters->get('restrict_uploads',1)) {
+			$images = explode(',', $parameters->get('image_extensions'));
 			if (in_array($format, $images)) { // if its an image run it through getimagesize
 				// if tmp_name is empty, then the file was bigger than the PHP limit
 				if (!empty($file['tmp_name'])) {
@@ -91,9 +91,9 @@ abstract class MediaHelper
 				}
 			} else if (!in_array($format, $ignored)) {
 				// if its not an image...and we're not ignoring it
-				$allowed_mime = explode(',', $params->get('upload_mime'));
-				$illegal_mime = explode(',', $params->get('upload_mime_illegal'));
-				if (function_exists('finfo_open') && $params->get('check_mime',1)) {
+				$allowed_mime = explode(',', $parameters->get('upload_mime'));
+				$illegal_mime = explode(',', $parameters->get('upload_mime_illegal'));
+				if (function_exists('finfo_open') && $parameters->get('check_mime',1)) {
 					// We have fileinfo
 					$finfo = finfo_open(FILEINFO_MIME);
 					$type = finfo_file($finfo, $file['tmp_name']);
@@ -102,7 +102,7 @@ abstract class MediaHelper
 						return false;
 					}
 					finfo_close($finfo);
-				} else if (function_exists('mime_content_type') && $params->get('check_mime',1)) {
+				} else if (function_exists('mime_content_type') && $parameters->get('check_mime',1)) {
 					// we have mime magic
 					$type = mime_content_type($file['tmp_name']);
 					if (strlen($type) && !in_array($type, $allowed_mime) && in_array($type, $illegal_mime)) {

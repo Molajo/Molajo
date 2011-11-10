@@ -17,12 +17,12 @@ class modContentHelper
 	/**
 	 * Get a list of items for a specific type(s) of content
 	 *
-	 * @param	object  $params Module Parameters
+	 * @param	object  $parameters Module Parameters
 	 * @param	object  $user   User object
 	 *
 	 * @return	mixed	An array of items for specified content or false
 	 */
-	public static function getList($params, $user)
+	public static function getList($parameters, $user)
 	{
 //todo: change to use MolajoModelDisplay
 
@@ -37,7 +37,7 @@ class modContentHelper
         $query->select('a.access, a.created, a.created_by, a.created_by_alias, a.featured, a.state');
         $query->select('a.catid, b.title as category_title');
 
-        $query->from('#'.$params->get('component_table', '_articles').' AS a');
+        $query->from('#'.$parameters->get('component_table', '_articles').' AS a');
         $query->join('LEFT','#__categories AS b ON b.id = a.catid');
 
         $query->where('a.published = 1');
@@ -55,21 +55,21 @@ class modContentHelper
         $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
 
         /** category filter */
-        $categoryId = $params->def('catid', 0);
+        $categoryId = $parameters->def('catid', 0);
         if ((int) $categoryId > 0) {
             $query->where('category_id', $categoryId);
         }
 
-//        $categoryIds = $params->get('catid', array());
+//        $categoryIds = $parameters->get('catid', array());
         /** Online User */
-        if ((int) $params->def('limit_to_online_user', 0) > 0) {
+        if ((int) $parameters->def('limit_to_online_user', 0) > 0) {
             $query->where('a.created_by = '.(int) $user->get('id'));
         }
 
        /** olimit and rdering */
 		$query->ordering('start', 0);
-		$query->ordering('limit', $params->get('count', 5));
-		$query->ordering('order', $params->get('ordering', 'desc'));
+		$query->ordering('limit', $parameters->get('count', 5));
+		$query->ordering('order', $parameters->get('ordering', 'desc'));
 
         $db->setQuery($query->__toString());
 
@@ -123,11 +123,11 @@ class modContentHelper
 	 * @param	JObject	The module parameters.
 	 * @return	string	The alternate title for the module.
 	 */
-	public static function getTitle($params)
+	public static function getTitle($parameters)
 	{
-		$who = $params->get('user_id');
-		$catid = (int)$params->get('catid');
-		$type = $params->get('ordering') == 'c_dsc' ? '_CREATED' : '_MODIFIED';
+		$who = $parameters->get('user_id');
+		$catid = (int)$parameters->get('catid');
+		$type = $parameters->get('ordering') == 'c_dsc' ? '_CREATED' : '_MODIFIED';
 		if ($catid)
 		{
 			$category = JCategories::getInstance('Content')->get($catid);
@@ -142,6 +142,6 @@ class modContentHelper
 		{
 			$title = '';
 		}
-		return MolajoText::plural('MOD_LATEST_TITLE'.$type.($catid ? "_CATEGORY" : '').($who!='0' ? "_$who" : ''), (int)$params->get('count'), $title);
+		return MolajoText::plural('MOD_LATEST_TITLE'.$type.($catid ? "_CATEGORY" : '').($who!='0' ? "_$who" : ''), (int)$parameters->get('count'), $title);
 	}
 }

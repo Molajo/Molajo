@@ -237,7 +237,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 				. ', registerDate = '.$db->quote($installdate)
 				. ', lastvisitDate = '.$db->quote($nullDate)
 				. ', activation = '.$db->quote('')
-				. ', params = '.$db->quote('')
+				. ', parameters = '.$db->quote('')
 				. ', asset_id = 5 ';
 
 		$db->setQuery($query);

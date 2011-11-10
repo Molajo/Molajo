@@ -24,7 +24,7 @@
     </languages>
 
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="advanced">
 
 				<field

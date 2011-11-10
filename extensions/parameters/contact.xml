@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<!-- $Id: contact.xml $ -->
 <form>
-	<fields name="params">
+	<fields name="parameters">
 
         <!-- Basic options. -->
-        <fieldset name="params"
+        <fieldset name="parameters"
             label="MOLAJO_CONFIG_ITEM_LAYOUT_PARAMETER_CATEGORY"
         >
             

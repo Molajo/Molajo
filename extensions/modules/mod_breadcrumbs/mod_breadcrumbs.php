@@ -14,10 +14,10 @@ defined('JPATH_PLATFORM') or die;
 require_once dirname(__FILE__).DS.'helper.php';
 
 // Get the breadcrumbs
-$list	= modBreadCrumbsHelper::getList($params);
+$list	= modBreadCrumbsHelper::getList($parameters);
 $count	= count($list);
 
 // Set the default separator
-$separator = modBreadCrumbsHelper::setSeparator($params->get('separator'));
+$separator = modBreadCrumbsHelper::setSeparator($parameters->get('separator'));
 
-require MolajoModuleHelper::getLayoutPath('mod_breadcrumbs', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_breadcrumbs', $parameters->get('layout', 'default'));

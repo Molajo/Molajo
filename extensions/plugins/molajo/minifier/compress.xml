@@ -21,7 +21,7 @@
 		<language tag="language/en-GB">en-GB.plg_molajo_compress.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					default=""
@@ -35,10 +35,10 @@
 		</fields>
 	</config>
 
-	<params>
+	<parameters>
 		<param name="minutes" type="text" default="60" label="Caching minutes" description="How many minutes should the CSS files be saved before refreshing?" />
-	</params>
-	<params>
+	</parameters>
+	<parameters>
 		<param name="minutes" type="text" default="60" label="Caching minutes" description="How many minutes should the JS files be saved before refreshing?" />
-	</params>
+	</parameters>
 </extension>

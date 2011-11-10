@@ -34,13 +34,12 @@ class MolajoApplicationHelper
     {
         $option = strtolower(JRequest::getCmd('option', ''));
 
-        if (MolajoFactory::getUser()->get('guest') === true
-            && MolajoFactory::getConfig()->get('application_logon_requirement', true) === true
-        ) {
-            $option = MolajoFactory::getConfig()->get('application_guest_option', 'com_login');
+        if (MolajoFactory::getUser()->get('guest') == 1
+            && MolajoFactory::getApplicationConfig()->get('application_logon_requirement', 1) == 1) {
+            $option = MolajoFactory::getApplicationConfig()->get('application_guest_option', 'com_login');
 
         } elseif ($option == '') {
-            $option = MolajoFactory::getConfig()->get('application_default_option', 'com_dashboard');
+            $option = MolajoFactory::getApplicationConfig()->get('application_default_option', 'com_dashboard');
         }
 
         JRequest::setVar('option', $option);

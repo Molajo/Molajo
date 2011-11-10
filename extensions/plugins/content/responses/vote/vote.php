@@ -34,11 +34,11 @@ class plgContentVote extends MolajoPlugin
 	/**
 	* @since	1.6
 	*/
-	public function onContentBeforeDisplay($context, &$row, &$params, $page=0)
+	public function onContentBeforeDisplay($context, &$row, &$parameters, $page=0)
 	{
 		$html = '';
 
-		if ($params->get('show_vote'))
+		if ($parameters->get('show_vote'))
 		{
 			$rating = intval(@$row->rating);
 			$rating_count = intval(@$row->rating_count);

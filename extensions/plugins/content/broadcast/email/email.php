@@ -35,7 +35,7 @@ class plgContentJoomla extends MolajoPlugin
 		}
 
 		// Check if this function is enabled.
-		if (!$this->params->def('email_new_fe', 1)) {
+		if (!$this->parameters->def('email_new_fe', 1)) {
 			return true;
 		}
 
@@ -93,7 +93,7 @@ class plgContentJoomla extends MolajoPlugin
 		}
 
 		// Check if this function is enabled.
-		if (!$this->params->def('check_categories', 1)) {
+		if (!$this->parameters->def('check_categories', 1)) {
 			return true;
 		}
 

@@ -78,7 +78,7 @@ class plgSystemDebug extends MolajoPlugin
 		}
 
 		// If the user is not allowed to view the output then end here
-		$filterGroups = (array) $this->params->get('filter_groups', null);
+		$filterGroups = (array) $this->parameters->get('filter_groups', null);
 		if (!empty($filterGroups)) {
 			$userGroups = MolajoFactory::getUser()->get('groups');
 			if (!array_intersect($filterGroups, array_keys($userGroups))) {
@@ -104,21 +104,21 @@ class plgSystemDebug extends MolajoPlugin
 			echo '</ol>';
 		}
 
-		if ($this->params->get('profile', 1)) {
+		if ($this->parameters->get('profile', 1)) {
 			echo '<h4>'.JText::_('PLG_DEBUG_PROFILE_INFORMATION').'</h4>';
 			foreach ($profiler->getBuffer() as $mark) {
 				echo '<div>'.$mark.'</div>';
 			}
 		}
 
-		if ($this->params->get('memory', 1)) {
+		if ($this->parameters->get('memory', 1)) {
 			echo '<h4>'.JText::_('PLG_DEBUG_MEMORY_USAGE').'</h4>';
 			$bytes = $profiler->getMemory();
 			echo JHtml::_('number.bytes', $bytes);
 			echo ' ('.number_format($bytes).' Bytes)';
 		}
 
-		if ($this->params->get('queries', 1)) {
+		if ($this->parameters->get('queries', 1)) {
 			$newlineKeywords = '#\b(FROM|LEFT|INNER|OUTER|WHERE|SET|VALUES|ORDER|GROUP|HAVING|LIMIT|ON|AND)\b#i';
 
 			$db	= MolajoFactory::getDbo();
@@ -174,7 +174,7 @@ class plgSystemDebug extends MolajoPlugin
 
 				echo '</ol>';
 
-				if ($this->params->get('query_types', 1)) {
+				if ($this->parameters->get('query_types', 1)) {
 					// Get the totals for the query types:
 					$totalSelectQueryTypes = count($selectQueryTypeTicker);
 					$totalOtherQueryTypes = count($otherQueryTypeTicker);
@@ -214,7 +214,7 @@ class plgSystemDebug extends MolajoPlugin
 		if (MolajoFactory::getApplication()->getConfig('debug_lang')) {
 			$lang = MolajoFactory::getLanguage();
 
-			if ($this->params->get('language_errorfiles', 1)) {
+			if ($this->parameters->get('language_errorfiles', 1)) {
 				echo '<h4>'.JText::_('PLG_DEBUG_LANGUAGE_FILES_IN_ERROR').'</h4>';
 				$errorfiles = $lang->getErrorFiles();
 
@@ -232,7 +232,7 @@ class plgSystemDebug extends MolajoPlugin
 				}
 			}
 
-			if ($this->params->get('language_files', 1)) {
+			if ($this->parameters->get('language_files', 1)) {
 				echo '<h4>'.JText::_('PLG_DEBUG_LANGUAGE_FILES_LOADED').'</h4>';
 				echo '<ul>';
 				$extensions	= $lang->getPaths();
@@ -247,10 +247,10 @@ class plgSystemDebug extends MolajoPlugin
 				echo '</ul>';
 			}
 
-			if ($this->params->get('language_strings')) {
-				$stripFirst	= $this->params->get('strip-first');
-				$stripPref	= $this->params->get('strip-prefix');
-				$stripSuff	= $this->params->get('strip-suffix');
+			if ($this->parameters->get('language_strings')) {
+				$stripFirst	= $this->parameters->get('strip-first');
+				$stripPref	= $this->parameters->get('strip-prefix');
+				$stripSuff	= $this->parameters->get('strip-suffix');
 
 				echo '<h4>'.JText::_('PLG_DEBUG_UNTRANSLATED_STRINGS').'</h4>';
 				echo '<pre>';

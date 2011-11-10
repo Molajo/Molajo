@@ -749,7 +749,7 @@ abstract class MolajoTable extends JObject
         $db = MolajoFactory::getDBO();
         $db->setQuery(
             'SELECT COUNT(userid)' .
-            ' FROM ' . $db->quoteName('#__session') .
+            ' FROM ' . $db->quoteName('#__sessions') .
             ' WHERE ' . $db->quoteName('userid') . ' = ' . (int)$against
         );
         $checkedOut = (boolean)$db->loadResult();

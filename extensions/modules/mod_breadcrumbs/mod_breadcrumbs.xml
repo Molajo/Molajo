@@ -27,7 +27,7 @@
 	</languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_BREADCRUMBS" />
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					name="showHere"

@@ -147,12 +147,12 @@ class MolajoComponentHelper
      * Render the component.
      *
      * @param   string  $request An array of component information
-     * @param   array   $params  The component parameters
+     * @param   array   $parameters  The component parameters
      *
      * @return  object
      * @since  1.0
      */
-    public static function renderComponent($request, $params = array())
+    public static function renderComponent($request, $parameters = array())
     {
         /** record scope */
         $scope = MolajoFactory::getApplication()->scope;

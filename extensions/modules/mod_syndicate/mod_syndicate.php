@@ -13,17 +13,17 @@ defined('JPATH_PLATFORM') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__).'/helper.php';
 
-$params->def('text', 'Feed Entries');
-$params->def('format', 'rss');
+$parameters->def('text', 'Feed Entries');
+$parameters->def('format', 'rss');
 
-$link = modSyndicateHelper::getLink($params);
+$link = modSyndicateHelper::getLink($parameters);
 
 if (is_null($link)) {
 	return;
 }
 
-$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
+$layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
 
-$text = htmlspecialchars($params->get('text'));
+$text = htmlspecialchars($parameters->get('text'));
 
-require MolajoModuleHelper::getLayoutPath('mod_syndicate', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_syndicate', $parameters->get('layout', 'default'));

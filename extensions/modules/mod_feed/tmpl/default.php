@@ -21,7 +21,7 @@ if ($feed != false)
 	<div style="direction: <?php echo $rssrtl ? 'rtl' :'ltr'; ?>; text-align: <?php echo $rssrtl ? 'right' :'left'; ?> ! important"  class="feed<?php echo $layout_class_suffix; ?>">
 	<?php
 	// feed description
-	if (!is_null($feed->title) && $params->get('rsstitle', 1)) {
+	if (!is_null($feed->title) && $parameters->get('rsstitle', 1)) {
 		?>
 
 				<h4>
@@ -33,7 +33,7 @@ if ($feed != false)
 	}
 
 	// feed description
-	if ($params->get('rssdesc', 1)) {
+	if ($parameters->get('rssdesc', 1)) {
 	?>
 		<?php echo $feed->description; ?>
 
@@ -41,7 +41,7 @@ if ($feed != false)
 	}
 
 	// feed image
-	if ($params->get('rssimage', 1) && $iUrl) {
+	if ($parameters->get('rssimage', 1) && $iUrl) {
 	?>
 		<img src="<?php echo $iUrl; ?>" alt="<?php echo @$iTitle; ?>"/>
 
@@ -49,7 +49,7 @@ if ($feed != false)
 	}
 
 	$actualItems = count($feed->items);
-	$setItems	= $params->get('rssitems', 5);
+	$setItems	= $parameters->get('rssitems', 5);
 
 	if ($setItems > $actualItems) {
 		$totalItems = $actualItems;
@@ -58,9 +58,9 @@ if ($feed != false)
 	}
 	?>
 
-			<ul class="newsfeed<?php echo $params->get('layout_class_suffix'); ?>">
+			<ul class="newsfeed<?php echo $parameters->get('layout_class_suffix'); ?>">
 			<?php
-			$words = $params->def('word_count', 0);
+			$words = $parameters->def('word_count', 0);
 			for ($j = 0; $j < $totalItems; $j ++)
 			{
 				$currItem = & $feed->items[$j];
@@ -69,7 +69,7 @@ if ($feed != false)
 				<li class="newsfeed-item">
 					<?php	if (!is_null($currItem->get_link())) {
 					?>
-				<?php if (!is_null($feed->title) && $params->get('rsstitle', 1))
+				<?php if (!is_null($feed->title) && $parameters->get('rsstitle', 1))
 
 					{ echo '<h5 class="feed-link">';}
 				else
@@ -80,7 +80,7 @@ if ($feed != false)
 
 				<a href="<?php echo $currItem->get_link(); ?>" target="_blank">
 					<?php echo $currItem->get_title(); ?></a>
-					<?php if (!is_null($feed->title) && $params->get('rsstitle', 1))
+					<?php if (!is_null($feed->title) && $parameters->get('rsstitle', 1))
 
 					{ echo '</h5>';}
 						else
@@ -90,7 +90,7 @@ if ($feed != false)
 				}
 
 				// item description
-				if ($params->get('rssitemdesc', 1))
+				if ($parameters->get('rssitemdesc', 1))
 				{
 					// item description
 					$text = $currItem->get_description();

@@ -20,7 +20,7 @@ class MolajoContentView {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	string		The 'page' number
      * @param   string          Then name of the text field in the content object
      * @return	string

@@ -194,7 +194,7 @@ abstract class MolajoXYZHelper
      * @param   object  $extension    XYZ object
      * @param   object  $extensionparams extension parameters
      * @param   object  $cacheparams extension cache parameters - id or url parameters, depending on the extension cache mode
-     * @param   array   $params - parameters for given mode - calculated id or an array of safe url parameters and their
+     * @param   array   $parameters - parameters for given mode - calculated id or an array of safe url parameters and their
      *                     variable types, for valid values see {@link JFilterInput::clean()}.
      *
      * @since   11.1
@@ -245,7 +245,7 @@ abstract class MolajoXYZHelper
             /** defaults */
             $request = array();
             $state = array();
-            $params = array();
+            $parameters = array();
             $rowset = array();
             $pagination = array();
             $layout = 'default';
@@ -255,10 +255,10 @@ abstract class MolajoXYZHelper
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new JRegistry;
-            $params->loadJSON($extension->params);
+            $parameters = new JRegistry;
+            $parameters->loadJSON($extension->params);
 
-            $request = self::getRequest($extension, $params);
+            $request = self::getRequest($extension, $parameters);
 
             $request['wrap_title'] = $extension->title;
             $request['wrap_subtitle'] = $extension->subtitle;
@@ -288,7 +288,7 @@ abstract class MolajoXYZHelper
             $view->state = $extension;
 
             /** 6. Parameters */
-            $view->params = $params;
+            $view->parameters = $parameters;
 
             /** 7. Query */
             $view->rowset = $rowset;
@@ -324,7 +324,7 @@ abstract class MolajoXYZHelper
      *
      * @return bool
      */
-    protected function getRequest($extension, $params)
+    protected function getRequest($extension, $parameters)
     {
         $session = MolajoFactory::getSession();
 
@@ -349,7 +349,7 @@ abstract class MolajoXYZHelper
         $request['id'] = $session->get('page.id');
         $request['cid'] = $session->get('page.cid');
         $request['catid'] = $session->get('page.catid');
-        $request['params'] = $params;
+        $request['parameters'] = $parameters;
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');

@@ -26,12 +26,12 @@ class plgButtonImage extends MolajoPlugin
 	function onDisplay($name)
 	{
 		$app = MolajoFactory::getApplication();
-		$params = MolajoComponentHelper::getParams('com_media');
+		$parameters = MolajoComponentHelper::getParams('com_media');
 		$ranks = array('publisher', 'editor', 'author', 'registered');
 		$acl = MolajoFactory::getACL();
 
 		// TODO: Fix this ACL call
-		//for($i = 0; $i < $params->get('allowed_media_usergroup', 3); $i++)
+		//for($i = 0; $i < $parameters->get('allowed_media_usergroup', 3); $i++)
 		//{
 		//	$acl->addACL('com_media', 'popup', 'users', $ranks[$i]);
 		//}

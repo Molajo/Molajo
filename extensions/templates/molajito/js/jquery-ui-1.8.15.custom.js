@@ -10573,7 +10573,7 @@ $.extend($.effects, {
 
 
 function _normalizeArguments(effect, options, speed, callback) {
-	// shift params for method overloading
+	// shift parameters for method overloading
 	if (typeof effect == 'object') {
 		callback = options;
 		speed = null;

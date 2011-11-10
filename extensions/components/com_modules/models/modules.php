@@ -91,8 +91,8 @@ class ModulesModelModules extends JModelList
 		$this->setState('filter.language', $language);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_modules');
-		$this->setState('params', $params);
+		$parameters = JComponentHelper::getParams('com_modules');
+		$this->setState('parameters', $parameters);
 
 		// List state information.
 		parent::populateState('position', 'asc');

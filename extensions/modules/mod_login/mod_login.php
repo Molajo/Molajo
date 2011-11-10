@@ -13,10 +13,10 @@ defined('JPATH_PLATFORM') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__).'/helper.php';
 
-$params->def('greeting', 1);
+$parameters->def('greeting', 1);
 
 $type	= modLoginHelper::getType();
-$return	= modLoginHelper::getReturnURL($params, $type);
+$return	= modLoginHelper::getReturnURL($parameters, $type);
 $user	= MolajoFactory::getUser();
 
-require MolajoModuleHelper::getLayoutPath('mod_login', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_login', $parameters->get('layout', 'default'));

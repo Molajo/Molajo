@@ -13,8 +13,8 @@ defined('JPATH_PLATFORM') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__).'/helper.php';
 
-$rssurl	= $params->get('rssurl', '');
-$rssrtl	= $params->get('rssrtl', 0);
+$rssurl	= $parameters->get('rssurl', '');
+$rssrtl	= $parameters->get('rssrtl', 0);
 
 //check if feed URL has been set
 if (empty ($rssurl))
@@ -25,7 +25,7 @@ if (empty ($rssurl))
 	return;
 }
 
-$feed = modFeedHelper::getFeed($params);
-$layout_class_suffix = htmlspecialchars($params->get('layout_class_suffix'));
+$feed = modFeedHelper::getFeed($parameters);
+$layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
 
-require MolajoModuleHelper::getLayoutPath('mod_feed', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_feed', $parameters->get('layout', 'default'));

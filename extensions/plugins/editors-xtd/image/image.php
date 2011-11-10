@@ -40,7 +40,7 @@ class plgButtonImage extends MolajoPlugin
 	function onDisplay($name, $asset, $author)
 	{
 		$app = MolajoFactory::getApplication();
-		$params = JComponentHelper::getParams('com_media');
+		$parameters = JComponentHelper::getParams('com_media');
  		$user = MolajoFactory::getUser();
 		if (	$user->authorise('edit', $asset)
 			||	$user->authorise('create', $asset)

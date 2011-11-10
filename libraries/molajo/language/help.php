@@ -59,8 +59,8 @@ class MolajoHelp
             // Component help URL overrides user and global.
             if ($useComponent) {
                 // Look for help URL in component parameters.
-                $params = MolajoComponentHelper::getParams($component);
-                $url = $params->get('helpURL');
+                $parameters = MolajoComponentHelper::getParams($component);
+                $url = $parameters->get('helpURL');
 
                 if ($url == '') {
                     $local = true;

@@ -60,7 +60,7 @@ class MolajoACL
     public function getUserPermissionSet($option, $entity, $set)
     {
         /** component parameters **/
-        $params = MolajoComponentHelper::getParams($option);
+        $parameters = MolajoComponentHelper::getParams($option);
 
         /** loop thru config options and add ToolBar buttons **/
         $count = 0;
@@ -69,7 +69,7 @@ class MolajoACL
 
         for ($i = 1; $i < 99; $i++) {
 
-            $optionValue = $params->def($set . $i, null);
+            $optionValue = $parameters->def($set . $i, null);
 
             if ($optionValue == null) {
                 break;
@@ -138,7 +138,7 @@ class MolajoACL
      * @return     boolean
      * @since      1.0
      */
-    public function getQueryInformation($option = '', $query = array(), $type = '', $params = array())
+    public function getQueryInformation($option = '', $query = array(), $type = '', $parameters = array())
     {
         $method = 'get' . ucfirst(strtolower($type)) . 'QueryInformation';
         $aclClass = $this->getMethodClass($method, $option);
@@ -146,7 +146,7 @@ class MolajoACL
             return false;
         }
         $acl = new $aclClass;
-        $acl->$method ($query, $option, $params);
+        $acl->$method ($query, $option, $parameters);
     }
 
     /**
@@ -167,11 +167,11 @@ class MolajoACL
      * @param $type
      * @param string $option
      * @param string $task
-     * @param array $params
+     * @param array $parameters
      *
      * @return bool
      */
-    public function getList($type, $id = '', $option = '', $task = '', $params = array())
+    public function getList($type, $id = '', $option = '', $task = '', $parameters = array())
     {
         $method = 'get' . ucfirst(strtolower($type)) . 'List';
         $aclClass = $this->getMethodClass($method, $option);
@@ -179,7 +179,7 @@ class MolajoACL
             return false;
         }
         $acl = new $aclClass;
-        return $acl->$method ($id, $option, $task, $params);
+        return $acl->$method ($id, $option, $task, $parameters);
     }
 
     /**

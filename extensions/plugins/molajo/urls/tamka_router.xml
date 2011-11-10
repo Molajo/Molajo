@@ -16,7 +16,7 @@
 	<languages>
 		<language tag="en-GB">en-GB.plg_system_tamka_router.ini</language>
 	</languages>
-	<params>
+	<parameters>
 		<param type="spacer" />
 		<param type="spacer" default="Tamka URL Option: Tamka creates one, and only one, URL for each detail item, such as an Article, Contact, News Feed, Poll, or Web Link. Here, you can configure the pattern used for those URLs." />
 		<param type="spacer" />
@@ -74,5 +74,5 @@
 		<param type="spacer" />
 		<param type="spacer" default="Note: Tamka URLs work in conjunction with Molajo URL options." />
 		<param type="spacer" />
-	</params>
+	</parameters>
 </install>

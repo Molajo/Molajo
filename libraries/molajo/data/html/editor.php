@@ -118,13 +118,13 @@ class MolajoEditor extends JObservable
      * @param   string   $id        An optional ID for the textarea (note: since 1.6). If not supplied the name is used.
      * @param   string   $asset
      * @param   object   $author
-     * @param   array    $params    Associative array of editor parameters.
+     * @param   array    $parameters    Associative array of editor parameters.
      */
-    public function display($name, $html, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array())
+    public function display($name, $html, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $parameters = array())
     {
         $this->asset = $asset;
         $this->author = $author;
-        $this->_loadEditor($params);
+        $this->_loadEditor($parameters);
 
         // Check whether editor is already loaded
         if (is_null(($this->_editor))) {
@@ -321,10 +321,10 @@ class MolajoEditor extends JObservable
 
         // Get the plugin
         $plugin = MolajoPluginHelper::getPlugin('editors', $this->_name);
-        $params = new JRegistry;
-        $params->loadJSON($plugin->params);
-        $params->loadArray($config);
-        $plugin->params = $params;
+        $parameters = new JRegistry;
+        $parameters->loadJSON($plugin->params);
+        $parameters->loadArray($config);
+        $plugin->params = $parameters;
 
         // Build editor plugin classname
         $name = 'plgEditor' . $this->_name;

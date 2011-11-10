@@ -60,8 +60,8 @@ class ModulesModelModule extends JModelAdmin
 		$this->setState('module.id', $pk);
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_modules');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_modules');
+		$this->setState('parameters', $parameters);
 	}
 
 	/**
@@ -349,10 +349,10 @@ class ModulesModelModule extends JModelAdmin
 			$properties = $table->getProperties(1);
 			$this->_cache[$pk] = JArrayHelper::toObject($properties, 'JObject');
 
-			// Convert the params field to an array.
+			// Convert the parameters field to an array.
 			$registry = new JRegistry;
-			$registry->loadString($table->params);
-			$this->_cache[$pk]->params = $registry->toArray();
+			$registry->loadString($table->parameters);
+			$this->_cache[$pk]->parameters = $registry->toArray();
 
 			// Determine the page assignment mode.
 			$db->setQuery(

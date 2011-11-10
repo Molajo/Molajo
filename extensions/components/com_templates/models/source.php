@@ -53,8 +53,8 @@ class TemplatesModelSource extends JModelForm
 		$app->setUserState('editor.source.syntax', JFile::getExt($fileName));
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_templates');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_templates');
+		$this->setState('parameters', $parameters);
 	}
 
 	/**

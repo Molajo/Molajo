@@ -87,7 +87,7 @@ class TemplatesControllerSource extends JController
 	 * @return	JController		This object to support chaining.
 	 * @since	1.0
 	 */
-	public function display($cachable = false, $urlparams = false)
+	public function display($cachable = false, $urlparameters = false)
 	{
 		$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=templates', false));
 	}

@@ -6,13 +6,13 @@
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */
 ?>
-<?php function modChrome_jexhtml( $module, &$params, &$attribs ) {
+<?php function modChrome_jexhtml( $module, &$parameters, &$attribs ) {
 	
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content)){ ?>
-		<div class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<div class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<?php if ($module->showtitle) : ?>
 				<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
 			<?php endif; ?>
@@ -23,13 +23,13 @@
 	}
 ?>	
 	
-<?php function modChrome_jerounded( $module, &$params, &$attribs ) {
+<?php function modChrome_jerounded( $module, &$parameters, &$attribs ) {
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<div class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<div class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>
 				<div>
 					<div>		 
@@ -46,13 +46,13 @@
 	}			
 ?>
 
-<?php function modChrome_html5Section( $module, &$params, &$attribs ) {
+<?php function modChrome_html5Section( $module, &$parameters, &$attribs ) {
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<section class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<section class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>		 
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -65,13 +65,13 @@
 	}			
 ?>
 
-<?php function modChrome_html5Article( $module, &$params, &$attribs ) {
+<?php function modChrome_html5Article( $module, &$parameters, &$attribs ) {
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<article class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<article class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -84,13 +84,13 @@
 	}			
 ?>
 
-<?php function modChrome_html5Nav( $module, &$params, &$attribs ) {
+<?php function modChrome_html5Nav( $module, &$parameters, &$attribs ) {
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<nav class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<nav class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>		
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -103,13 +103,13 @@
 	}			
 ?>
 
-<?php function modChrome_html5Aside( $module, &$params, &$attribs ) {
+<?php function modChrome_html5Aside( $module, &$parameters, &$attribs ) {
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<aside class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<aside class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>	 
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>
@@ -121,13 +121,13 @@
 <?php	}
 	}			
 ?>
-<?php function modChrome_html5Footer( $module, &$params, &$attribs ) {
+<?php function modChrome_html5Footer( $module, &$parameters, &$attribs ) {
 	$headerLevel = isset($attribs['level']) ? (int) $attribs['level'] : 3;
 	$headerClass = isset($attribs['header-class']) ? $attribs['header-class'] : 'je-header';
 	$moduleClass = isset($attribs['module-class']) ? $attribs['module-class'] : null;
 	if (!empty($module->content))
 		{ ?>
-		<footer class="moduletable<?php echo $params->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
+		<footer class="moduletable<?php echo $parameters->get('layout_class_suffix'); ?> <?php if($moduleClass) echo $moduleClass; ?>">
 			<div>	 
 					<?php if ($module->showtitle) : ?>
 						<h<?php echo $headerLevel; ?> class="<?php echo $headerClass; ?>"><?php echo $module->title; ?><?php echo '</h'.$headerLevel; ?>>

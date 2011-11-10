@@ -18,7 +18,7 @@
         <language tag="en-GB">language/en-GB/en-GB.mod_footer.sys.ini</language>
     </languages>
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
                 <field
                     name="link"

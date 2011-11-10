@@ -22,7 +22,7 @@ class Protect
 	 * 	Retrieve Library Parameters
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);	
+		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
 		
 	/**
 	 * 	Retrieve Ban Parameters 
@@ -44,7 +44,7 @@ class Protect
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);
+		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
 		$spamProtectionOption = $tamkaLibraryPluginParams->def('spamprevention', '1');		
 
 		if ($spamProtectionOption == '0') {
@@ -162,7 +162,7 @@ class Protect
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);	
+		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
 		
 	/**
 	 * 	Filter content through array of Bad Words

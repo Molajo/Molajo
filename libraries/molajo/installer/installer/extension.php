@@ -80,7 +80,7 @@ class MolajoExtension extends JObject
      * @var    object
      * @since  11.1
      */
-    var $params = null;
+    var $parameters = null;
 
     /**
      * Constructor

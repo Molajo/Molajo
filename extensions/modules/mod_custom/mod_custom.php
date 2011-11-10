@@ -7,10 +7,10 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'custom');
-$wrap = $params->def('wrap', 'div');
+$layout = $parameters->def('layout', 'custom');
+$wrap = $parameters->def('wrap', 'div');
 
-if ($params->def('prepare_content', 1)) {
+if ($parameters->def('prepare_content', 1)) {
 	MolajoPluginHelper::importPlugin('content');
 	MolajoHTML::_('content.prepare', $module->content);
 }

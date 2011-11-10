@@ -121,11 +121,11 @@ class plgEditorNone extends MolajoPlugin
 	 * @param	string	$id			An optional ID for the textarea (note: since 1.6). If not supplied the name is used.
 	 * @param	string	$asset
 	 * @param	object	$author
-	 * @param	array	$params		Associative array of editor parameters.
+	 * @param	array	$parameters		Associative array of editor parameters.
 	 *
 	 * @return	string
 	 */
-	function onDisplay($name, $content, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array())
+	function onDisplay($name, $content, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $parameters = array())
 	{
 		if (empty($id)) {
 			$id = $name;

@@ -550,7 +550,7 @@ class MenusModelItem extends JModelAdmin
 		if (empty($table->id)) {
 			$table->parent_id	= $this->getState('item.parent_id');
 			$table->menu_id	= $this->getState('item.menu_id');
-			$table->params		= '{}';
+			$table->parameters		= '{}';
 		}
 
 		// If the link has been set in the state, possibly changing link type.
@@ -610,34 +610,34 @@ class MenusModelItem extends JModelAdmin
 		// We have a valid type, inject it into the state for forms to use.
 		$this->setState('item.type', $table->type);
 
-		// Convert to the JObject before adding the params.
+		// Convert to the JObject before adding the parameters.
 		$properties = $table->getProperties(1);
 		$result = JArrayHelper::toObject($properties, 'JObject');
 
-		// Convert the params field to an array.
+		// Convert the parameters field to an array.
 		$registry = new JRegistry;
-		$registry->loadString($table->params);
-		$result->params = $registry->toArray();
+		$registry->loadString($table->parameters);
+		$result->parameters = $registry->toArray();
 
-		// Merge the request arguments in to the params for a component.
+		// Merge the request arguments in to the parameters for a component.
 		if ($table->type == 'component') {
 			// Note that all request arguments become reserved parameter names.
 			$result->request = $args;
-			$result->params = array_merge($result->params, $args);
+			$result->parameters = array_merge($result->parameters, $args);
 		}
 
 		if ($table->type == 'alias') {
 			// Note that all request arguments become reserved parameter names.
 			$args = array();
 			parse_str(parse_url($table->link, PHP_URL_QUERY), $args);
-			$result->params = array_merge($result->params, $args);
+			$result->parameters = array_merge($result->parameters, $args);
 		}
 
 		if ($table->type == 'url') {
 			// Note that all request arguments become reserved parameter names.
 			$args = array();
 			parse_str(parse_url($table->link, PHP_URL_QUERY), $args);
-			$result->params = array_merge($result->params, $args);
+			$result->parameters = array_merge($result->parameters, $args);
 		}
 
 		return $result;
@@ -750,8 +750,8 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_menus');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_menus');
+		$this->setState('parameters', $parameters);
 	}
 
 	/**
@@ -772,7 +772,7 @@ class MenusModelItem extends JModelAdmin
 		$type = $this->getState('item.type');
 		$formFile = false;
 
-		// Initialise form with component view params if available.
+		// Initialise form with component view parameters if available.
 		if ($type == 'component') {
 
 			$link = htmlspecialchars_decode($link);
@@ -866,7 +866,7 @@ class MenusModelItem extends JModelAdmin
 
 		}
 
-		// Now load the component params.
+		// Now load the component parameters.
 		// TODO: Work out why 'fixing' this breaks JForm
 		if ($isNew = false) {
 			$path = JPath::clean(JPATH_ADMINISTRATOR.'/components/'.$option.'/config.xml');
@@ -876,7 +876,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		if (JFile::exists($path)) {
-			// Add the component params last of all to the existing form.
+			// Add the component parameters last of all to the existing form.
 			if (!$form->load($path, true, '/config')) {
 				throw new Exception(MolajoText::_('JERROR_LOADFILE_FAILED'));
 			}
@@ -911,10 +911,10 @@ class MenusModelItem extends JModelAdmin
 
 		// Convert the parameters not in JSON format.
 		$db->setQuery(
-			'SELECT id, params' .
+			'SELECT id, parameters' .
 			' FROM #__menu_items' .
-			' WHERE params NOT LIKE '.$db->quote('{%') .
-			'  AND params <> '.$db->quote('')
+			' WHERE parameters NOT LIKE '.$db->quote('{%') .
+			'  AND parameters <> '.$db->quote('')
 		);
 
 		$items = $db->loadObjectList();
@@ -926,12 +926,12 @@ class MenusModelItem extends JModelAdmin
 		foreach ($items as &$item)
 		{
 			$registry = new JRegistry;
-			$registry->loadString($item->params);
-			$params = (string)$registry;
+			$registry->loadString($item->parameters);
+			$parameters = (string)$registry;
 
 			$db->setQuery(
 				'UPDATE #__menu_items' .
-				' SET params = '.$db->quote($params).
+				' SET parameters = '.$db->quote($parameters).
 				' WHERE id = '.(int) $item->id
 			);
 			if (!$db->query()) {

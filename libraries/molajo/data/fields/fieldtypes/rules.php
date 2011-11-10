@@ -88,7 +88,7 @@ class MolajoFormFieldRules extends MolajoFormField
 
          */
         // Get the available user groups.
-        $groups = $acl->getList('Usergroups', $option = '', $task = '', $params = array());
+        $groups = $acl->getList('Usergroups', $option = '', $task = '', $parameters = array());
 
         // Build the form control.
         $curLevel = 0;

@@ -47,10 +47,10 @@ class MolajoView extends JView
     public $state;
 
     /**
-     * @var object $params
+     * @var object $parameters
      * @since 1.0
      */
-    public $params;
+    public $parameters;
 
     /**
      * @var object $rowset
@@ -122,8 +122,8 @@ class MolajoView extends JView
     public function display($tpl = null)
     {
         /** no results */
-        if (count($this->params) > 0
-            && $this->params->def('suppress_no_results', false) === true
+        if (count($this->parameters) > 0
+            && $this->parameters->def('suppress_no_results', false) === true
             && count($this->rowset == 0)
         ) {
             return;
@@ -452,37 +452,37 @@ class MolajoView extends JView
         $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/' . $applicationName;
         $urlPath = JURI::root() . 'media/system/' . $applicationName;
 
-        if (isset($this->params->load_application_css)
-            && $this->params->get('load_application_css', true) === true
+        if (isset($this->parameters->load_application_css)
+            && $this->parameters->get('load_application_css', true) === true
         ) {
             $this->loadMediaCSS($filePath, $urlPath);
         }
-        if (isset($this->params->load_application_css)
-            && $this->params->get('load_application_css', true) === true
+        if (isset($this->parameters->load_application_css)
+            && $this->parameters->get('load_application_css', true) === true
         ) {
             $this->loadMediaJS($filePath, $urlPath);
         }
 
         /** Component specific CSS and JS in => media/system/[application]/[com_component]/css[js]/XYZ.css[js] */
-        if (isset($this->params->load_component_css)
-            && $this->params->get('load_component_css', true) === true
+        if (isset($this->parameters->load_component_css)
+            && $this->parameters->get('load_component_css', true) === true
         ) {
             $this->loadMediaCSS($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
         }
-        if (isset($this->params->load_component_js)
-            && $this->params->get('load_component_js', true) === true
+        if (isset($this->parameters->load_component_js)
+            && $this->parameters->get('load_component_js', true) === true
         ) {
             $this->loadMediaJS($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
         }
 
         /** Asset ID specific CSS and JS in => media/system/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        if (isset($this->params->load_asset_css)
-            && $this->params->get('load_asset_css', true) === true
+        if (isset($this->parameters->load_asset_css)
+            && $this->parameters->get('load_asset_css', true) === true
         ) {
             $this->loadMediaCSS($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         }
-        if (isset($this->params->load_asset_js)
-            && $this->params->get('load_asset_js', true) === true
+        if (isset($this->parameters->load_asset_js)
+            && $this->parameters->get('load_asset_js', true) === true
         ) {
             $this->loadMediaJS($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         }
@@ -493,12 +493,12 @@ class MolajoView extends JView
 
         $urlPath = JURI::root() . 'extensions/layouts/' . $layout_type.'/'.$layout;
 
-        //        if (isset($this->params->load_layout_css)
-        //            && $this->params->get('load_layout_css', true) === true) {
+        //        if (isset($this->parameters->load_layout_css)
+        //            && $this->parameters->get('load_layout_css', true) === true) {
         $this->loadMediaCSS($filePath, $urlPath);
         //        }
-        //        if (isset($this->params->load_layout_js)
-        //            && $this->params->get('load_layout_js', true) === true) {
+        //        if (isset($this->parameters->load_layout_js)
+        //            && $this->parameters->get('load_layout_js', true) === true) {
         //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         $this->loadMediaJS($filePath, $urlPath);
         //        }
@@ -612,5 +612,5 @@ protected $columns = 1;
 
 //$this->configuration
 //Parameters (Includes Global Options, Menu Item, Item)
-//$this->params->get('layout_show_page_heading', 1)
-//$this->params->get('layout_page_class_suffix', '')
+//$this->parameters->get('layout_show_page_heading', 1)
+//$this->parameters->get('layout_page_class_suffix', '')

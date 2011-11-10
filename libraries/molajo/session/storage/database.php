@@ -66,7 +66,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
         $query->select($db->quoteName('data'));
-        $query->from($db->quoteName('#__session'));
+        $query->from($db->quoteName('#__sessions'));
         $query->where($db->quoteName('session_id') . ' = ' . $db->quote($id));
 
         $db->setQuery($query->__toString());
@@ -94,7 +94,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         $query = $db->getQuery(true);
 
-        $query->update($db->quoteName('#__session'));
+        $query->update($db->quoteName('#__sessions'));
         $query->set($db->quoteName('data') . ' = ' . $db->quote($data));
         $query->set($db->quoteName('session_time') . ' = ' . (int)time());
         $query->where($db->quoteName('session_id') . ' = ' . $db->quote($id));
@@ -107,7 +107,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         } else {
             $db->setQuery(
-                'INSERT INTO ' . $db->quoteName('#__session') .
+                'INSERT INTO ' . $db->quoteName('#__sessions') .
                 ' (' . $db->quoteName('session_id') . ', ' . $db->quoteName('data') . ', ' . $db->quoteName('session_time') . ')' .
                 ' VALUES (' . $db->quote($id) . ', ' . $db->quote($data) . ', ' . (int)time() . ')'
             );
@@ -134,7 +134,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         // Remove a session from the database.
         $db->setQuery(
-            'DELETE FROM ' . $db->quoteName('#__session') .
+            'DELETE FROM ' . $db->quoteName('#__sessions') .
             ' WHERE ' . $db->quoteName('session_id') . ' = ' . $db->quote($id)
         );
 
@@ -163,7 +163,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
 
         // Remove expired sessions from the database.
         $db->setQuery(
-            'DELETE FROM ' . $db->quoteName('#__session') .
+            'DELETE FROM ' . $db->quoteName('#__sessions') .
             ' WHERE ' . $db->quoteName('session_time') . ' < ' . (int)$past
         );
 

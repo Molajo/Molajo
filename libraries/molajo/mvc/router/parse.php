@@ -40,8 +40,8 @@ class MolajoRouterParse extends MolajoRouter
         $app = MolajoFactory::getApplication();
         $menu = $app->getMenu();
         $item = $menu->getActive();
-        $params = MolajoComponentHelper::getParams($componentParam);
-        $advanced = $params->get('sef_advanced_link', 0);
+        $parameters = MolajoComponentHelper::getParams($componentParam);
+        $advanced = $parameters->get('sef_advanced_link', 0);
         $db = MolajoFactory::getDBO();
 
         /** Count route segments */

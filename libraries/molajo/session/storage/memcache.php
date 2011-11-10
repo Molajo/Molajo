@@ -63,20 +63,20 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
         parent::__construct($options);
 
         $config = MolajoFactory::getConfig();
-        $params = $config->get('memcache_settings');
-        if (!is_array($params)) {
-            $params = unserialize(stripslashes($params));
+        $parameters = $config->get('memcache_settings');
+        if (!is_array($parameters)) {
+            $parameters = unserialize(stripslashes($parameters));
         }
 
-        if (!$params) {
-            $params = array();
+        if (!$parameters) {
+            $parameters = array();
         }
 
-        $this->_compress = (isset($params['compression'])) ? $params['compression'] : 0;
-        $this->_persistent = (isset($params['persistent'])) ? $params['persistent'] : false;
+        $this->_compress = (isset($parameters['compression'])) ? $parameters['compression'] : 0;
+        $this->_persistent = (isset($parameters['persistent'])) ? $parameters['persistent'] : false;
 
         // This will be an array of loveliness
-        $this->_servers = (isset($params['servers'])) ? $params['servers'] : array();
+        $this->_servers = (isset($parameters['servers'])) ? $parameters['servers'] : array();
     }
 
     /**

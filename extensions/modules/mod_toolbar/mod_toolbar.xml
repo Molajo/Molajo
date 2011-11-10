@@ -23,7 +23,7 @@
 	</languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_ADMIN_TOOLBAR" />
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="advanced">
 				<field
 					name="layout"

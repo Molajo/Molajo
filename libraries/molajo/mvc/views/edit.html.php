@@ -33,7 +33,7 @@ class MolajoViewEdit extends MolajoView
 //    protected $isNew;
 
     /** common */
-//    protected $params;
+//    protected $parameters;
 //    protected $layoutHelper;
 //    protected $print;
 //    protected $user;
@@ -60,10 +60,10 @@ class MolajoViewEdit extends MolajoView
 
         /** parameters */
         if (MolajoFactory::getApplication()->getName() == 'site') {
-            $this->params = MolajoFactory::getApplication()->getParams();
-            //$this->_mergeParams ($this->item, $this->params, JRequest::getVar('option'));
+            $this->parameters = MolajoFactory::getApplication()->getParams();
+            //$this->_mergeParams ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
-            $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
+            $this->parameters = MolajoComponentHelper::getParams(JRequest::getVar('option'));
         }
 
         $this->user = MolajoFactory::getUser();
@@ -97,11 +97,11 @@ class MolajoViewEdit extends MolajoView
         }
 
         //Escape strings for HTML output
-        $this->state->get('page_class_suffix', htmlspecialchars($this->params->get('pageclass_sfx')));
+        $this->state->get('page_class_suffix', htmlspecialchars($this->parameters->get('pageclass_sfx')));
 
         if (MolajoFactory::getApplication()->getName() == 'site') {
             $documentHelper = new MolajoDocumentHelper ();
-            $documentHelper->prepareDocument($this->params, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
+            $documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
         }
 
         /** layout **/

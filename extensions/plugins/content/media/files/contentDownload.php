@@ -12,7 +12,7 @@ jimport( 'joomla.plugin.plugin' );
 class plgMolajoContentLinktype extends MolajoPlugin
 {
 
-	function onAfterDisplayContent( &$article, &$params, $limitstart )
+	function onAfterDisplayContent( &$article, &$parameters, $limitstart )
 	{
 		//	Exit if post has no tags
 		if ($article->metakey) {
@@ -62,7 +62,7 @@ class plgMolajoContentLinktype extends MolajoPlugin
 		
 		//	Retrieve Plugin Parameters for Router
 		$routerPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka_router');
-		$routerParams 	= new JParameter($routerPlugin->params);
+		$routerParams 	= new JParameter($routerPlugin->parameters);
 
 		//	Database call
 		$db		= &MolajoFactory::getDBO();

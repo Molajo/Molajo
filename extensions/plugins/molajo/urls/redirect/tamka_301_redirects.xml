@@ -12,6 +12,6 @@
     <files>
         <filename plugin="tamka_301_redirects">tamka_301_redirects.php</filename>
     </files>
-	<params>
-	</params>
+	<parameters>
+	</parameters>
 </install>

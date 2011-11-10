@@ -21,7 +21,7 @@ class plgContentPagenavigation extends JPlugin
 	/**
 	 * @since	1.6
 	 */
-	public function onContentBeforeDisplay($context, &$row, &$params, $page=0)
+	public function onContentBeforeDisplay($context, &$row, &$parameters, $page=0)
 	{
 		$view = JRequest::getCmd('view');
 		$print = JRequest::getBool('print');
@@ -30,7 +30,7 @@ class plgContentPagenavigation extends JPlugin
 			return false;
 		}
 
-		if ($params->get('show_item_navigation') && ($context == 'com_articles.article') && ($view == 'article')) {
+		if ($parameters->get('show_item_navigation') && ($context == 'com_articles.article') && ($view == 'article')) {
 			$html = '';
 			$db		= MolajoFactory::getDbo();
 			$user	= MolajoFactory::getUser();
@@ -47,11 +47,11 @@ class plgContentPagenavigation extends JPlugin
 			// The following is needed as different menu items types utilise a different param to control ordering.
 			// For Blogs the `orderby_sec` param is the order controlling param.
 			// For Table and List views it is the `orderby` param.
-			$params_list = $params->toArray();
-			if (array_key_exists('orderby_sec', $params_list)) {
-				$order_method = $params->get('orderby_sec', '');
+			$parameters_list = $parameters->toArray();
+			if (array_key_exists('orderby_sec', $parameters_list)) {
+				$order_method = $parameters->get('orderby_sec', '');
 			} else {
-				$order_method = $params->get('orderby', '');
+				$order_method = $parameters->get('orderby', '');
 			}
 			// Additional check for invalid sort ordering.
 			if ($order_method == 'front') {
@@ -183,7 +183,7 @@ class plgContentPagenavigation extends JPlugin
 				</ul>'
 				;
 
-				$position	= $this->params->get('position', 1);
+				$position	= $this->parameters->get('position', 1);
 
 				if ($position) {
 					// Display after content.

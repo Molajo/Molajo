@@ -18,10 +18,10 @@ class MolajoMediaOembed {
      * @return	boolean
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page, $location)
+    function driver ($context, &$content, &$parameters, $page, $location)
     {
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 $temp = $content->$location;
 
         $regex = '#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is';

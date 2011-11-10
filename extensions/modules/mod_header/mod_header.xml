@@ -18,7 +18,7 @@
         <language tag="en-GB">language/en-GB/en-GB.mod_header.sys.ini</language>
     </languages>
 	<config>
-		<fields name="params">
+		<fields name="parameters">
             <fieldset include="advanced" />
 		</fields>
 	</config>

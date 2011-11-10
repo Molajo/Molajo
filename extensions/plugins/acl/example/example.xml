@@ -20,7 +20,7 @@
 		<language tag="language/en-GB">en-GB.plg_ACL_molajosample.sys.ini</language>
 	</languages>
 	<config>
-            <fields name="params">
+            <fields name="parameters">
 
                 <fieldset
                     name="example_field"

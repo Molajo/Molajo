@@ -30,7 +30,7 @@
 	</languages>
         
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					default=""
@@ -44,7 +44,7 @@
 		</fields>
 	</config>
 
-	<params>
+	<parameters>
 		<param type="spacer" />
 		<param type="spacer" default="Audio Player Color Settings" />
 		<param type="spacer" />
@@ -61,9 +61,9 @@
 		<param name="borderColor" type="text" default="CCCCCC" label="Border" description="Desc_Border" />
 		<param name="loaderColor" type="text" default="009900" label="Loader" description="Desc_Loader" />
 		<param name="pagebgColor" type="text" default="FFFFFF" label="Page Background" description="Desc_Page_Background" />
-	</params>
+	</parameters>
 
-	<params>
+	<parameters>
 		<param type="spacer" />
 		<param type="spacer" default="Video Player Settings" />
 		<param type="spacer" />
@@ -104,6 +104,6 @@
 	 	   	<option value="1">Yes</option>
 	   	 	<option value="0">No</option>
 		</param>
-	</params>
+	</parameters>
         
 </extension>

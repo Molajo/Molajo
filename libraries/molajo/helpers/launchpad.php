@@ -53,7 +53,7 @@ class MolajoLaunchpadHelper
      * @return    array    A nest array of component objects and submenus
      * @since    1.0
      */
-    public static function getComponents($authCheck = true)
+    public static function getComponents ($authCheck = true)
     {
         // Initialise variables.
         $lang = MolajoFactory::getLanguage();

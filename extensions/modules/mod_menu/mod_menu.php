@@ -13,15 +13,15 @@ defined('JPATH_PLATFORM') or die;
 // Include the syndicate functions only once
 require_once dirname(__FILE__).'/helper.php';
 
-$list	= modMenuHelper::getList($params);
+$list	= modMenuHelper::getList($parameters);
 $app	= MolajoFactory::getApplication();
 $menu	= $app->getMenu();
 $active	= $menu->getActive();
 $active_id = isset($active) ? $active->id : $menu->getDefault()->id;
 $path	= isset($active) ? $active->tree : array();
-$showAll	= $params->get('showAllChildren');
-$class_sfx	= htmlspecialchars($params->get('class_sfx'));
+$showAll	= $parameters->get('showAllChildren');
+$class_sfx	= htmlspecialchars($parameters->get('class_sfx'));
 
 if(count($list)) {
-	require MolajoModuleHelper::getLayoutPath('mod_menu', $params->get('layout', 'default'));
+	require MolajoModuleHelper::getLayoutPath('mod_menu', $parameters->get('layout', 'default'));
 }

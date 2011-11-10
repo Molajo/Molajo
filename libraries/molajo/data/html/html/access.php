@@ -34,7 +34,7 @@ abstract class MolajoHtmlAccess
      *
      * @return  string   The required HTML for the SELECT tag.
      */
-    public static function level($name, $selected, $attribs = '', $params = true, $id = false)
+    public static function level($name, $selected, $attribs = '', $parameters = true, $id = false)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -56,11 +56,11 @@ abstract class MolajoHtmlAccess
         }
 
         // If params is an array, push these options to the array
-        if (is_array($params)) {
-            $options = array_merge($params, $options);
+        if (is_array($parameters)) {
+            $options = array_merge($parameters, $options);
         }
             // If all levels is allowed, push it into the array.
-        elseif ($params) {
+        elseif ($parameters) {
             array_unshift($options, MolajoHTML::_('select.option', '', MolajoText::_('JOPTION_ACCESS_SHOW_ALL_LEVELS')));
         }
 

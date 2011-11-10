@@ -25,12 +25,12 @@ class plgContentEmailcloak extends MolajoPlugin
 	 * @param	int		Optional page number. Unused. Defaults to zero.
 	 * @return	boolean	True on success.
 	 */
-	public function onContentPrepare($context, &$row, &$params, $page = 0)
+	public function onContentPrepare($context, &$row, &$parameters, $page = 0)
 	{
 		if (is_object($row)) {
-			return $this->_cloak($row->text, $params);
+			return $this->_cloak($row->text, $parameters);
 		}
-		return $this->_cloak($row, $params);
+		return $this->_cloak($row, $parameters);
 	}
 
 	/**
@@ -54,7 +54,7 @@ class plgContentEmailcloak extends MolajoPlugin
 	 * replaces addresses with "mailto:" links if nonzero.
 	 * @return	boolean	True on success.
 	 */
-	protected function _cloak(&$text, &$params)
+	protected function _cloak(&$text, &$parameters)
 	{
 		/*
 		 * Check for presence of {emailcloak=off} which is explicits disables this
@@ -70,7 +70,7 @@ class plgContentEmailcloak extends MolajoPlugin
 			return true;
 		}
 
-		$mode = $this->params->def('mode', 1);
+		$mode = $this->parameters->def('mode', 1);
 
 		// any@email.address.com
 		$searchEmail = '([\w\.\-]+\@(?:[a-z0-9\.\-]+\.)+(?:[a-z0-9\-]{2,4}))';

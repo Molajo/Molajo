@@ -21,7 +21,7 @@
 		<language tag="en-GB">en-GB.plg_user_profile.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 
 			<fieldset name="basic">
 				<field name="register-require-user" type="spacer" class="text"

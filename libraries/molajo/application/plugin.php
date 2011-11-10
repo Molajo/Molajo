@@ -22,7 +22,7 @@ abstract class MolajoPlugin extends JEvent
      *
      * @var    string
      */
-    public $params = null;
+    public $parameters = null;
 
     /**
      * The name of the plugin
@@ -50,12 +50,12 @@ abstract class MolajoPlugin extends JEvent
      */
     public function __construct(&$subject, $config = array())
     {
-        if (isset($config['params'])) {
-            if ($config['params'] instanceof JRegistry) {
-                $this->params = $config['params'];
+        if (isset($config['parameters'])) {
+            if ($config['parameters'] instanceof JRegistry) {
+                $this->params = $config['parameters'];
             } else {
                 $this->params = new JRegistry;
-                $this->params->loadString($config['params']);
+                $this->params->loadString($config['parameters']);
             }
         }
 

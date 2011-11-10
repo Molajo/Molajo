@@ -21,7 +21,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
      * Renders the document head and returns the results as a string
      *
      * @param   string  $head     (unused)
-     * @param   array   $params   Associative array of values
+     * @param   array   $parameters   Associative array of values
      * @param   string  $content  The script
      *
      * @return  string  The output of the script
@@ -30,7 +30,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
      *
      * @note    Unused arguments are retained to preserve backward compatibility.
      */
-    public function render($head, $params = array(), $content = null)
+    public function render($head, $parameters = array(), $content = null)
     {
         ob_start();
         echo $this->fetchHead($this->_doc);

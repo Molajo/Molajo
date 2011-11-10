@@ -70,7 +70,7 @@ class ResponsesTrackbacks extends MolajoPlugin
 	 * 	Initialization
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_email');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 
 	/**
 	 * 	Should Tamka email?
@@ -130,10 +130,10 @@ class ResponsesTrackbacks extends MolajoPlugin
 
 		if ($isNew) {
 			$neworupdatedArticle = 	JText::_( ' a new post' );
-			$neworupdatedQuery = ' AND params LIKE "%emailnotificationposts=1%" ';
+			$neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%" ';
 		} else {
 			$neworupdatedArticle = 	JText::_( ' an updated post' );
-			$neworupdatedQuery = ' AND params LIKE "%emailnotificationposts=1%"';
+			$neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%"';
 		}
 
 	/**

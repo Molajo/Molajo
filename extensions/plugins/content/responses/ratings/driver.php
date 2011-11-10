@@ -49,12 +49,12 @@ class MolajoResponsesRatings {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	int		The 'page' number
      * @return	string
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page = 0)
+    function driver ($context, &$content, &$parameters, $page = 0)
     {
 
         /** request values **/

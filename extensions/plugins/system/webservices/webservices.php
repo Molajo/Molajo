@@ -22,12 +22,12 @@ class plgMolajoWebServices extends MolajoPlugin	{
      *
      * @param	string		The context for the WebServices passed to the plugin.
      * @param	object		The WebServices object.
-     * @param	object		The WebServices params
+     * @param	object		The WebServices parameters
      * @param	stromg		The 'page' number
      * @return	string
      * @since	1.6
      */
-    function MolajoOnContentPrepare ($context, &$content, &$params, $page = 0)
+    function MolajoOnContentPrepare ($context, &$content, &$parameters, $page = 0)
     {
         return;
         /** init **/
@@ -37,13 +37,13 @@ class plgMolajoWebServices extends MolajoPlugin	{
 
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
         $loc = $this->location;
 
         /** syntax highlighter **/
         if (($systemParams->def('enable_google_maps', 0) == 1) && (!$systemParams->def('google_maps_api_key', '') == '')) {
             require_once dirname(__FILE__) . '/googlemaps/driver.php';
-            MolajoWebServicesGoogleMaps::driver ($context, &$content, &$params, $page = 0, $this->location);
+            MolajoWebServicesGoogleMaps::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
 
         return;
@@ -66,7 +66,7 @@ class plgMolajoWebServices extends MolajoPlugin	{
 
         /** retrieve parameters for system plugin molajo library **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** test for google analytics **/
         if (($systemParams->def('enable_google_analytics', 0) == '1') && ($systemParams->get('google_analytics_tracking_code'))) {

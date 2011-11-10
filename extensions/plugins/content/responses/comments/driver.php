@@ -81,13 +81,13 @@ class MolajoResponsesComments {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	int		The 'page' number
      * @param   string          The field containing text for the content object
      * @return	string
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page, $location, $closed_in_content)
+    function driver ($context, &$content, &$parameters, $page, $location, $closed_in_content)
     {
         return;
         

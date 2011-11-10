@@ -21,14 +21,14 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
      * Renders the error stack and returns the results as a string
      *
      * @param   string  $name    (unused)
-     * @param   array   $params  Associative array of values
+     * @param   array   $parameters  Associative array of values
      * @param   string  $content
      *
      * @return  string  The output of the script
      *
      * @since   11.1
      */
-    public function render($name, $params = array(), $content = null)
+    public function render($name, $parameters = array(), $content = null)
     {
         // Initialise variables.
         $buffer = null;
@@ -54,7 +54,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             /** defaults */
             $request = array();
             $state = array();
-            $params = array();
+            $parameters = array();
             $rowset = array();
             $pagination = array();
             $layout_type = 'document';
@@ -65,7 +65,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new JRegistry;
+            $parameters = new JRegistry;
 
             $request['wrap_title'] = '';
             $request['wrap_id'] = 'system-message-container';
@@ -92,7 +92,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             $view->state = array();
 
             /** 6. Parameters */
-            $view->params = $params;
+            $view->parameters = $parameters;
 
             /** 7. Query */
             $view->rowset = $messages;

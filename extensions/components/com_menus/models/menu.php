@@ -91,8 +91,8 @@ class MenusModelMenu extends JModelForm
 		$this->setState('menu.id', $id);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_menus');
-		$this->setState('params', $params);
+		$parameters = JComponentHelper::getParams('com_menus');
+		$this->setState('parameters', $parameters);
 	}
 
 	/**
@@ -251,7 +251,7 @@ class MenusModelMenu extends JModelForm
 
 		$query = $db->getQuery(true);
 		$query->from('#__modules as a');
-		$query->select('a.id, a.title, a.params, a.position');
+		$query->select('a.id, a.title, a.parameters, a.position');
 		$query->where('module = '.$db->quote('mod_menu'));
 		$query->select('ag.title AS access_title');
 		$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
@@ -262,10 +262,10 @@ class MenusModelMenu extends JModelForm
 		$result = array();
 
 		foreach ($modules as &$module) {
-			$params = new JRegistry;
-			$params->loadString($module->params);
+			$parameters = new JRegistry;
+			$parameters->loadString($module->parameters);
 
-			$menuType = $params->get('menu_id');
+			$menuType = $parameters->get('menu_id');
 			if (!isset($result[$menuType])) {
 				$result[$menuType] = array();
 			}

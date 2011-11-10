@@ -17,7 +17,7 @@
 		<filename>error.php</filename>
 		<filename>favicon.ico</filename>
 		<filename>index.php</filename>
-    	<filename>params.ini</filename>
+    	<filename>parameters.ini</filename>
 		<filename>template_preview.png</filename>
 		<filename>template_thumbnail.png</filename>
 		<filename>templateDetails.xml</filename>
@@ -40,7 +40,7 @@
 	</positions>
 
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					name="choice"

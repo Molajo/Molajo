@@ -205,6 +205,6 @@
 			filter="unset"/>
 	</fieldset>
 
-	<fields name="params">
+	<fields name="parameters">
 	</fields>
 </form>

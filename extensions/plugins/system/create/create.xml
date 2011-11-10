@@ -32,7 +32,7 @@
     </media>
 	 
 	<config>
-            <fields name="params">
+            <fields name="parameters">
 
                 <fieldset
                     name="fieldset_extend"

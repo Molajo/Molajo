@@ -33,7 +33,7 @@ class MolajoDocumentHTML extends MolajoDocument
 
     public $template = null;
     public $baseurl = null;
-    public $params = null;
+    public $parameters = null;
     public $_file = null;
 
     /**
@@ -293,7 +293,8 @@ class MolajoDocumentHTML extends MolajoDocument
     public function setBuffer($content, $options = array())
     {
         // The following code is just for backward compatibility.
-        if (func_num_args() > 1 && !is_array($options)) {
+        if (func_num_args() > 1
+            && !is_array($options)) {
             $args = func_get_args();
             $options = array();
             $options['type'] = $args[1];
@@ -306,11 +307,11 @@ class MolajoDocumentHTML extends MolajoDocument
     /**
      * Parses the template and populates the buffer
      *
-     * @param   array  $params  parameters for fetching the template
+     * @param   array  $parameters  parameters for fetching the template
      */
-    public function parse($params = array())
+    public function parse($parameters = array())
     {
-        $this->_fetchTemplate($params);
+        $this->_fetchTemplate($parameters);
         $this->_parseTemplate();
     }
 
@@ -318,15 +319,15 @@ class MolajoDocumentHTML extends MolajoDocument
      * Outputs the template to the browser.
      *
      * @param   boolean  $cache        If true, cache the output
-     * @param   array    $params        Associative array of attributes
+     * @param   array    $parameters        Associative array of attributes
      * @return  The rendered data
      */
-    public function render($caching = false, $params = array())
+    public function render($caching = false, $parameters = array())
     {
         $this->_caching = $caching;
 
         if (empty($this->_template)) {
-            $this->parse($params);
+            $this->parse($parameters);
         }
 
         $data = $this->_renderTemplate();
@@ -437,14 +438,14 @@ class MolajoDocumentHTML extends MolajoDocument
     /**
      * Fetch the template, and initialise the params
      *
-     * @param   array  $params  parameters to determine the template
+     * @param   array  $parameters  parameters to determine the template
      */
-    protected function _fetchTemplate($params = array())
+    protected function _fetchTemplate($parameters = array())
     {
-        $directory = isset($params['directory']) ? $params['directory'] : 'templates';
+        $directory = isset($parameters['directory']) ? $parameters['directory'] : 'templates';
         $filter = JFilterInput::getInstance();
-        $template = $filter->clean($params['template'], 'cmd');
-        $file = $filter->clean($params['file'], 'cmd');
+        $template = $filter->clean($parameters['template'], 'cmd');
+        $file = $filter->clean($parameters['file'], 'cmd');
 
         if (file_exists($directory.'/'.$template.'/'.$file)) {
         } else {
@@ -464,7 +465,7 @@ class MolajoDocumentHTML extends MolajoDocument
         // Assign the variables
         $this->template = $template;
         $this->baseurl = JURI::base(true);
-        $this->params = isset($params['params']) ? $params['params'] : new JRegistry;
+        $this->params = isset($parameters['parameters']) ? $parameters['parameters'] : new JRegistry;
 
         // Load
         $this->_template = $this->_loadTemplate($directory.'/'.$template, $file);

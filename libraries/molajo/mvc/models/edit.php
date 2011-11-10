@@ -18,10 +18,10 @@ defined('MOLAJO') or die;
 class MolajoModelEdit extends JModel
 {
     /**
-     * @var    object    params
+     * @var    object    parameters
      * @since    1.0
      */
-    protected $params;
+    protected $parameters;
 
     /**
      * Array of form objects.
@@ -40,7 +40,7 @@ class MolajoModelEdit extends JModel
     {
         parent::__construct($config);
         JRequest::setVar('view', JRequest::getCmd('EditView'));
-        $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
+        $this->parameters = MolajoComponentHelper::getParams(JRequest::getVar('option'));
     }
 
     /**

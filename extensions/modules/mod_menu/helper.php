@@ -18,12 +18,12 @@ class modMenuHelper
 	/**
 	 * Get a list of the menu items.
 	 *
-	 * @param	JRegistry	$params	The module options.
+	 * @param	JRegistry	$parameters	The module options.
 	 *
 	 * @return	array
 	 * @since	1.5
 	 */
-	static function getList(&$params)
+	static function getList(&$parameters)
 	{
 		// Initialise variables.
 		$list		= array();
@@ -36,11 +36,11 @@ class modMenuHelper
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
 		$path		= $active->tree;
-		$start		= (int) $params->get('startLevel');
-		$end		= (int) $params->get('endLevel');
-		$showAll	= $params->get('showAllChildren');
-		$maxdepth	= $params->get('maxdepth');
-		$items 		= $menu->getItems('menu_id',$params->get('menu_id'));
+		$start		= (int) $parameters->get('startLevel');
+		$end		= (int) $parameters->get('endLevel');
+		$showAll	= $parameters->get('showAllChildren');
+		$maxdepth	= $parameters->get('maxdepth');
+		$items 		= $menu->getItems('menu_id',$parameters->get('menu_id'));
 
 		$lastitem	= 0;
 
@@ -88,7 +88,7 @@ class modMenuHelper
 
 					case 'alias':
 						// If this is an alias use the item id stored in the parameters to make the link.
-						$item->flink = 'index.php?Itemid='.$item->params->get('aliasoptions');
+						$item->flink = 'index.php?Itemid='.$item->parameters->get('aliasoptions');
 						break;
 
 					default:
@@ -103,16 +103,16 @@ class modMenuHelper
 				}
 
 				if (strcasecmp(substr($item->flink, 0, 4), 'http') && (strpos($item->flink, 'index.php?') !== false)) {
-					$item->flink = JRoute::_($item->flink, true, $item->params->get('secure'));
+					$item->flink = JRoute::_($item->flink, true, $item->parameters->get('secure'));
 				}
 				else {
 					$item->flink = JRoute::_($item->flink);
 				}
 				
 				$item->title = htmlspecialchars($item->title);
-				$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''));
-				$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''));
-				$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', '')) : '';
+				$item->anchor_css = htmlspecialchars($item->parameters->get('menu-anchor_css', ''));
+				$item->anchor_title = htmlspecialchars($item->parameters->get('menu-anchor_title', ''));
+				$item->menu_image = $item->parameters->get('menu_image', '') ? htmlspecialchars($item->parameters->get('menu_image', '')) : '';
 			}
 
 			if (isset($items[$lastitem])) {

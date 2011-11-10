@@ -17,7 +17,7 @@ class MediaoEmbed extends MolajoPlugin	{
          * 	Get Tamka Plugin Information
          */
         $plugin 	=& MolajoPluginHelper::getPlugin( 'molajo', 'backup');
-        $pluginParams = new JParameter($plugin->params);
+        $pluginParams = new JParameter($plugin->parameters);
 
 /**
 http://oembed.com/

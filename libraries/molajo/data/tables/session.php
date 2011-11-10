@@ -24,7 +24,7 @@ class MolajoTableSession extends MolajoTable
      */
     function __construct(&$db)
     {
-        parent::__construct('#__session', 'session_id', $db);
+        parent::__construct('#__sessions', 'session_id', $db);
 
         $this->guest = 1;
         $this->username = '';
@@ -35,7 +35,7 @@ class MolajoTableSession extends MolajoTable
         $this->session_id = $sessionId;
         $this->application_id = $application_id;
 
-        $this->time = time();
+        $this->session_time = time();
         $ret = $this->_db->insertObject($this->_tbl, $this, 'session_id');
 
         if (!$ret) {
@@ -66,9 +66,10 @@ class MolajoTableSession extends MolajoTable
     {
         $application_ids = implode(',', $application_ids);
 
-        $query = 'DELETE FROM #__session'
+        $query = 'DELETE FROM #__sessions'
                  . ' WHERE userid = ' . $this->_db->Quote($userId)
                  . ' AND application_id IN (' . $application_ids . ')';
+
         $this->_db->setQuery($query);
 
         if (!$this->_db->query()) {
@@ -89,7 +90,7 @@ class MolajoTableSession extends MolajoTable
     function purge($maxLifetime = 1440)
     {
         $past = time() - $maxLifetime;
-        $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
+        $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (session_time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
         $this->_db->setQuery($query);
 
         return $this->_db->query();
@@ -106,8 +107,9 @@ class MolajoTableSession extends MolajoTable
      */
     function exists($userid)
     {
-        $query = 'SELECT COUNT(userid) FROM #__session'
+        $query = 'SELECT COUNT(userid) FROM #__sessions'
                  . ' WHERE userid = ' . $this->_db->Quote($userid);
+
         $this->_db->setQuery($query);
 
         if (!$result = $this->_db->loadResult()) {
@@ -127,11 +129,6 @@ class MolajoTableSession extends MolajoTable
      */
     function delete($oid = null)
     {
-        //if (!$this->canDelete($msg))
-        //{
-        //	return $msg;
-        //}
-
         $k = $this->_tbl_key;
         if ($oid) {
             $this->$k = $oid;
@@ -139,6 +136,7 @@ class MolajoTableSession extends MolajoTable
 
         $query = 'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
                  ' WHERE ' . $this->_tbl_key . ' = ' . $this->_db->Quote($this->$k);
+
         $this->_db->setQuery($query);
 
         if ($this->_db->query()) {

@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 /*
  * none (output raw module content)
  */
-function modChrome_none($module, &$params, &$attribs)
+function modChrome_none($module, &$parameters, &$attribs)
 {
 	echo $module->content;
 }
@@ -20,9 +20,9 @@ function modChrome_none($module, &$params, &$attribs)
 /*
  * Module chrome that wraps the module in a table
  */
-function modChrome_table($module, &$params, &$attribs)
+function modChrome_table($module, &$parameters, &$attribs)
 { ?>
-	<table cellpadding="0" cellspacing="0" class="moduletable<?php echo htmlspecialchars($params->get('layout_class_suffix')); ?>">
+	<table cellpadding="0" cellspacing="0" class="moduletable<?php echo htmlspecialchars($parameters->get('layout_class_suffix')); ?>">
 	<?php if ($module->showtitle != 0) : ?>
 		<tr>
 			<th>
@@ -42,12 +42,12 @@ function modChrome_table($module, &$params, &$attribs)
 /*
  * Module chrome that wraps the tabled module output in a <td> tag of another table
  */
-function modChrome_horz($module, &$params, &$attribs)
+function modChrome_horz($module, &$parameters, &$attribs)
 { ?>
 	<table cellspacing="1" cellpadding="0" width="100%">
 		<tr>
 			<td>
-				<?php modChrome_table($module, $params, $attribs); ?>
+				<?php modChrome_table($module, $parameters, $attribs); ?>
 			</td>
 		</tr>
 	</table>
@@ -57,10 +57,10 @@ function modChrome_horz($module, &$params, &$attribs)
 /*
  * xhtml (divs and font headder tags)
  */
-function modChrome_xhtml($module, &$params, &$attribs)
+function modChrome_xhtml($module, &$parameters, &$attribs)
 {
 	if (!empty ($module->content)) : ?>
-		<div class="moduletable<?php echo htmlspecialchars($params->get('layout_class_suffix')); ?>">
+		<div class="moduletable<?php echo htmlspecialchars($parameters->get('layout_class_suffix')); ?>">
 		<?php if ($module->showtitle != 0) : ?>
 			<h3><?php echo $module->title; ?></h3>
 		<?php endif; ?>
@@ -72,9 +72,9 @@ function modChrome_xhtml($module, &$params, &$attribs)
 /*
  * Module chrome that allows for rounded corners by wrapping in nested div tags
  */
-function modChrome_rounded($module, &$params, &$attribs)
+function modChrome_rounded($module, &$parameters, &$attribs)
 { ?>
-		<div class="module<?php echo htmlspecialchars($params->get('layout_class_suffix')); ?>">
+		<div class="module<?php echo htmlspecialchars($parameters->get('layout_class_suffix')); ?>">
 			<div>
 				<div>
 					<div>
@@ -92,7 +92,7 @@ function modChrome_rounded($module, &$params, &$attribs)
 /*
  * Module chrome that add preview information to the module
  */
-function modChrome_outline($module, &$params, &$attribs)
+function modChrome_outline($module, &$parameters, &$attribs)
 {
 	static $css=false;
 	if (!$css)

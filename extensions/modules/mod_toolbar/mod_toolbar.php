@@ -32,7 +32,7 @@ $toolbar->addButtonsDisplayLayout ($session->get('page.option'), $permissions);
 */
 /**
 $toolbar = MolajoToolbar::getInstance('toolbar')->render('toolbar');
-require MolajoModuleHelper::getLayoutPath('mod_toolbar', $params->get('layout', 'default'));
+require MolajoModuleHelper::getLayoutPath('mod_toolbar', $parameters->get('layout', 'default'));
 */
 // wrap div == cf
 $request['wrap'] = $module->style;

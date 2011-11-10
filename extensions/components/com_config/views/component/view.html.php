@@ -33,8 +33,8 @@ class ConfigViewComponent extends JView
 		}
 
 		// Bind the form to the data.
-		if ($form && $component->params) {
-			$form->bind($component->params);
+		if ($form && $component->parameters) {
+			$form->bind($component->parameters);
 		}
 
 		$this->assignRef('form',		$form);

@@ -115,7 +115,7 @@ class plgUserMolajo extends MolajoPlugin
 
 		// Update the user related fields for the Joomla sessions table.
 		$db->setQuery(
-			'UPDATE `#__session`' .
+			'UPDATE `#__sessions`' .
 			' SET `guest` = '.$db->quote($instance->get('guest')).',' .
 			'	`username` = '.$db->quote($instance->get('username')).',' .
 			'	`userid` = '.(int) $instance->get('id') .
@@ -161,7 +161,7 @@ class plgUserMolajo extends MolajoPlugin
 		// Force logout all users with that userid
 		$db = MolajoFactory::getDBO();
 		$db->setQuery(
-			'DELETE FROM `#__session`' .
+			'DELETE FROM `#__sessions`' .
 			' WHERE `userid` = '.(int) $user['id'] .
 			' AND `application_id` = '.(int) $options['application_id']
 		);
@@ -206,7 +206,7 @@ class plgUserMolajo extends MolajoPlugin
 		$instance->set('groups'		, array($defaultUserGroup));
 
 		//If autoregister is set let's register the user
-		$autoregister = isset($options['autoregister']) ? $options['autoregister'] :  $this->params->get('autoregister', 1);
+		$autoregister = isset($options['autoregister']) ? $options['autoregister'] :  $this->parameters->get('autoregister', 1);
 
 		if ($autoregister) {
 			if (!$instance->save()) {
@@ -241,7 +241,7 @@ class plgUserMolajo extends MolajoPlugin
 
         $db = MolajoFactory::getDbo();
         $db->setQuery(
-            'DELETE FROM `#__session`' .
+            'DELETE FROM `#__sessions`' .
             ' WHERE `userid` = '.(int) $user['id']
         );
         $db->Query();

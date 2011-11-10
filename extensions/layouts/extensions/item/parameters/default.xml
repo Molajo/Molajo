@@ -28,6 +28,6 @@
 
     <!-- Add fields to the parameters object for the layout
     in addition to those already specified in the Configuration. -->
-    <fields name="params">
+    <fields name="parameters">
     </fields>
 </metadata>

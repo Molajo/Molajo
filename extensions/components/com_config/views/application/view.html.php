@@ -41,10 +41,10 @@ class ConfigViewApplication extends JView
 			$form->bind($data);
 		}
 
-		// Get the params for com_users.
+		// Get the parameters for com_users.
 		$usersParams = JComponentHelper::getParams('com_users');
 
-		// Get the params for com_media.
+		// Get the parameters for com_media.
 		$mediaParams = JComponentHelper::getParams('com_media');
 
 		// Load settings for the FTP layer.

@@ -22,7 +22,7 @@ class MolajoWebservicesGoogleAnalytics {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** Google Analytics **/
         if ($systemParams->def('enable_google_analytics', 0) == '0') {

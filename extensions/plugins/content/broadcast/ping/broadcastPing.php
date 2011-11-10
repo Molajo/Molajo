@@ -20,7 +20,7 @@ class BroadcastPing {
 	 * 	Tamka Library Parameters
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->params);
+		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
 		global $mainframe;
 		$tamkaPingCounter = 0;	
 		tamkaimport('tamka.broadcast.ping.xmlrpc');
@@ -137,14 +137,14 @@ class BroadcastPing {
         $cat_or_rss_param 		= new xmlrpcval(' ');
         $method_name 			= "weblogUpdates.ping";
 
-        $params 				= array($name_param, $url_param, $changes_param);
+        $parameters 				= array($name_param, $url_param, $changes_param);
         
     /**
      * 	Execute Call
      */        
         $call_text 	= "$method_name(\"$sourceTitle\", \"$sourceURL\", \"$sourceSiteName\")";
 
-        $message 	= new xmlrpcmsg ($pingMethod, $params);
+        $message 	= new xmlrpcmsg ($pingMethod, $parameters);
         $client 	= new xmlrpc_client($pingPath, $pingServer, $pingPort);
         $response 	= $client->send($message);
         

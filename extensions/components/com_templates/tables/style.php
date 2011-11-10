@@ -25,7 +25,7 @@ class TemplatesTableStyle extends JTable
 	}
 
 	/**
-	 * Overloaded bind function to pre-process the params.
+	 * Overloaded bind function to pre-process the parameters.
 	 *
 	 * @param	array		Named array
 	 * @return	null|string	null is operation was satisfactory, otherwise returns an error
@@ -34,11 +34,11 @@ class TemplatesTableStyle extends JTable
 	 */
 	public function bind($array, $ignore = '')
 	{
-		if (isset($array['params']) && is_array($array['params']))
+		if (isset($array['parameters']) && is_array($array['parameters']))
 		{
 			$registry = new JRegistry();
-			$registry->loadArray($array['params']);
-			$array['params'] = (string)$registry;
+			$registry->loadArray($array['parameters']);
+			$array['parameters'] = (string)$registry;
 		}
 
 		// Verify that the default style is not unset

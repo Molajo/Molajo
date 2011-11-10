@@ -802,7 +802,7 @@ class MolajoDocument extends JObject
      *
      * @return null
      */
-    public function parse($params = array())
+    public function parse($parameters = array())
     {
         return null;
     }
@@ -812,11 +812,11 @@ class MolajoDocument extends JObject
      *
      * @param   boolean  $cache     If true, cache the output
      * @param   boolean  $compress  If true, compress the output
-     * @param   array    $params    Associative array of attributes
+     * @param   array    $parameters    Associative array of attributes
      *
      * @return  The rendered data
      */
-    public function render($cache = false, $params = array())
+    public function render($cache = false, $parameters = array())
     {
         if ($mdate = $this->getModifiedDate()) {
             JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);

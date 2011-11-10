@@ -10,11 +10,11 @@ jimport( 'joomla.plugin.plugin' );
 
 class plgContenttamka_media_video extends MolajoPlugin
 {
-	function onPrepareContent( &$article, &$params, $limitstart )
+	function onPrepareContent( &$article, &$parameters, $limitstart )
 	{
 		//	Get Parameters
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_media_video');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 
 		//	Document
 		$document =& MolajoFactory::getDocument();

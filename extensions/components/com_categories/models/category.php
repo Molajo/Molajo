@@ -113,8 +113,8 @@ class CategoriesModelCategory extends JModelAdmin
 		$this->setState('category.section', (count($parts)>1)?$parts[1]:null);
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_categories');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_categories');
+		$this->setState('parameters', $parameters);
 	}
 
 	/**

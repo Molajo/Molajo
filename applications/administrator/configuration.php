@@ -21,5 +21,5 @@ class MolajoConfigApplication {
     public $application_logon_requirement = '1';
     public $application_guest_option = 'com_login';
     public $application_default_option = 'com_dashboard';
-    public $default_template_extension_id = 209;
+    public $default_template_extension_id = 179;
 }

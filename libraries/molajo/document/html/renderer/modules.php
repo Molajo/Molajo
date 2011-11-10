@@ -21,19 +21,19 @@ class MolajoDocumentRendererModules extends MolajoDocumentRenderer
      * Renders multiple modules script and returns the results as a string
      *
      * @param   string  $name    The position of the modules to render
-     * @param   array   $params  Associative array of values
+     * @param   array   $parameters  Associative array of values
      *
      * @return  string  The output of the script
      *
      * @since   11.1
      */
-    public function render($position, $params = array(), $content = null)
+    public function render($position, $parameters = array(), $content = null)
     {
         $renderer = $this->_doc->loadRenderer('module');
         $buffer = '';
 
         foreach (MolajoModuleHelper::getModules($position) as $mod) {
-            $buffer .= $renderer->render($mod, $params, $content);
+            $buffer .= $renderer->render($mod, $parameters, $content);
         }
         return $buffer;
     }

@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /** loop through columns **/
 for ($i=1; $i < 1000; $i++) {
 
-    $this->tempColumnName = $this->params->get('config_manager_grid_column'.$i);
+    $this->tempColumnName = $this->parameters->get('config_manager_grid_column'.$i);
 
     if ($this->tempColumnName == null) {
         break;

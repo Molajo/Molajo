@@ -82,7 +82,7 @@
 
 	</fieldset>
 
-	<fields name="params">
+	<fields name="parameters">
 
 		<!--  Basic user account settings. -->
 		<fieldset name="settings" label="COM_ADMIN_USER_SETTINGS_FIELDSET_LABEL">

@@ -7,8 +7,8 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $params->def('layout', 'admin_header');
-$wrap = $params->def('wrap', 'header');
+$layout = $parameters->def('layout', 'admin_header');
+$wrap = $parameters->def('wrap', 'header');
 
 require_once dirname(__FILE__).'/helper.php';
-$rowset = MolajoHeaderHelper::getList($params);
+$rowset = MolajoHeaderHelper::getList($parameters);

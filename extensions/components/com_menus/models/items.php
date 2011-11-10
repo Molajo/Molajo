@@ -98,8 +98,8 @@ class MenusModelItems extends JModelList
 		$this->setState('filter.language', $language);
 
 		// Component parameters.
-		$params	= JComponentHelper::getParams('com_menus');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_menus');
+		$this->setState('parameters', $parameters);
 
 		// List state information.
 		parent::populateState('a.lft', 'asc');

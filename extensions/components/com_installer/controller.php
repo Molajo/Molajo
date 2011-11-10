@@ -22,7 +22,7 @@ class InstallerController extends MolajoController
      *
      * @return void
      */
-    public function display($cachable = false, $urlparams = false)
+    public function display($cachable = false, $urlparameters = false)
     {
 
         /** form token check */
@@ -43,7 +43,7 @@ class InstallerController extends MolajoController
 //            $this->getView('display')->setLayout('step2');
         }
 
-        parent::display($cachable, $urlparams);
+        parent::display($cachable, $urlparameters);
     }
 
     /**

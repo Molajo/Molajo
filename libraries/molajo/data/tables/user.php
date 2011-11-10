@@ -121,10 +121,10 @@ class MolajoTableUser extends MolajoTable
      */
     function bind($array, $ignore = '')
     {
-        if (key_exists('params', $array) && is_array($array['params'])) {
+        if (key_exists('params', $array) && is_array($array['parameters'])) {
             $registry = new JRegistry();
-            $registry->loadArray($array['params']);
-            $array['params'] = (string)$registry;
+            $registry->loadArray($array['parameters']);
+            $array['parameters'] = (string)$registry;
         }
 
         // Attempt to bind the data.

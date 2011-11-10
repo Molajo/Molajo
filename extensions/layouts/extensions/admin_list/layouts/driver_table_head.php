@@ -18,7 +18,7 @@ include dirname(__FILE__) . '/form/table_head_column_first.php';
 /** loop thru header columns **/
 $this->tempColumnCount = 1;
 for ($i=1; $i < 1000; $i++) {
-    $this->tempColumnName = $this->params->def('config_manager_grid_column'.$i, 0);
+    $this->tempColumnName = $this->parameters->def('config_manager_grid_column'.$i, 0);
     if ($this->tempColumnName == null) {
         break;
     } else if ($this->tempColumnName == '0') {

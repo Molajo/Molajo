@@ -10,9 +10,9 @@
 // No direct access.
 defined('_JEXEC') or die;
 $user = MolajoFactory::getUser();
-$params = new JRegistry;
+$parameters = new JRegistry;
 $dispatcher	= JDispatcher::getInstance();
-$dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_tmp_img, &$params));
+$dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_tmp_img, &$parameters));
 ?>
 		<tr>
 			<td>
@@ -35,5 +35,5 @@ $dispatcher->trigger('onContentBeforeDisplay', array('com_media.file', &$this->_
 		<?php endif;?>
 		</tr>
 <?php
-$dispatcher->trigger('onContentAfterDisplay', array('com_media.file', &$this->_tmp_img, &$params));
+$dispatcher->trigger('onContentAfterDisplay', array('com_media.file', &$this->_tmp_img, &$parameters));
 ?>

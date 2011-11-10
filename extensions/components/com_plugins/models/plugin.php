@@ -139,10 +139,10 @@ class PluginsModelPlugin extends JModelAdmin
 			$properties = $table->getProperties(1);
 			$this->_cache[$pk] = JArrayHelper::toObject($properties, 'JObject');
 
-			// Convert the params field to an array.
+			// Convert the parameters field to an array.
 			$registry = new JRegistry;
-			$registry->loadString($table->params);
-			$this->_cache[$pk]->params = $registry->toArray();
+			$registry->loadString($table->parameters);
+			$this->_cache[$pk]->parameters = $registry->toArray();
 
 			// Get the plugin XML.
 			$path = JPath::clean(JPATH_PLUGINS.'/'.$table->folder.'/'.$table->element.'/'.$table->element.'.xml');

@@ -58,13 +58,13 @@ class MolajoMediaAudio {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	string		The 'page' number
      * @param   string          Then name of the text field in the content object
      * @return	string
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page, $location)
+    function driver ($context, &$content, &$parameters, $page, $location)
     {
         /** search for pullquotes **/
         preg_match_all( "#{audio}(.*?){/audio}#s", $content->$location, $matches );
@@ -74,7 +74,7 @@ class MolajoMediaAudio {
         $workText = $content->$location;
 
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $this->systemParams = new JParameter($molajoSystemPlugin->params);
+        $this->systemParams = new JParameter($molajoSystemPlugin->parameters);
         $this->audio_folder = 'images/'.$this->systemParams->def('audio_folder', 'audio');
 
         /** layout: loads JS for head **/

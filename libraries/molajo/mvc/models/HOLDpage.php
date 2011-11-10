@@ -18,10 +18,10 @@ defined('MOLAJO') or die;
 class MolajoModelPage extends JModel
 {
     /**
-     * @var    object    params
+     * @var    object    parameters
      * @since    1.0
      */
-    protected $params;
+    protected $parameters;
 
     /**
      * setMeta
@@ -35,7 +35,7 @@ class MolajoModelPage extends JModel
     public function setMeta($id = null)
     {
 
-        $documentHelper->prepareDocument($this->params, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
+        $documentHelper->prepareDocument($this->parameters, $this->item, $this->document, JRequest::getCmd('option'), JRequest::getCmd('view'));
         $menus = MolajoFactory::getApplication()->getMenu();
         $pathway = MolajoFactory::getApplication()->getPathway();
         $title = null;
@@ -46,12 +46,12 @@ class MolajoModelPage extends JModel
         $menu = $menus->getActive();
 
         if ($menu) {
-            $params->def('page_heading', $params->get('page_title', $menu->title));
+            $parameters->def('page_heading', $parameters->get('page_title', $menu->title));
         } else {
-            $params->def('page_heading', MolajoText::_('COM_' . strtoupper($content_item) . '_DEFAULT_PAGE_TITLE'));
+            $parameters->def('page_heading', MolajoText::_('COM_' . strtoupper($content_item) . '_DEFAULT_PAGE_TITLE'));
         }
 
-        $title = $params->get('page_title', '');
+        $title = $parameters->get('page_title', '');
 
         $id = (int)@$menu->query['id'];
 
@@ -103,19 +103,19 @@ class MolajoModelPage extends JModel
         if ($content_item->metadesc) {
             $document->setDescription($content_item->metadesc);
 
-        } elseif (!$content_item->metadesc && $params->get('menu-meta_description')) {
-            $document->setDescription($params->get('menu-meta_description'));
+        } elseif (!$content_item->metadesc && $parameters->get('menu-meta_description')) {
+            $document->setDescription($parameters->get('menu-meta_description'));
         }
 
         if ($content_item->metakey) {
             $document->setMetadata('keywords', $content_item->metakey);
 
-        } elseif (!$content_item->metakey && $params->get('menu-meta_keywords')) {
-            $document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+        } elseif (!$content_item->metakey && $parameters->get('menu-meta_keywords')) {
+            $document->setMetadata('keywords', $parameters->get('menu-meta_keywords'));
         }
 
-        if ($params->get('robots')) {
-            $document->setMetadata('robots', $params->get('robots'));
+        if ($parameters->get('robots')) {
+            $document->setMetadata('robots', $parameters->get('robots'));
         }
 
         if (MolajoFactory::getApplication()->getConfig('MetaTitle') == '1') {

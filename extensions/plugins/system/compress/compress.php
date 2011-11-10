@@ -80,8 +80,8 @@ class plgSystemCompress extends MolajoPlugin
 		$document->setHeadData($head);
 
 		// If the manual overload for scripts is set use the ones set in the plugin options.
-		if ($this->params->get('scripts_overload')) {
-			$scripts = explode("\n", trim($this->params->get('scripts')));
+		if ($this->parameters->get('scripts_overload')) {
+			$scripts = explode("\n", trim($this->parameters->get('scripts')));
 		} else {
 			foreach ($inputScripts as $k => $v)
 			{
@@ -108,8 +108,8 @@ class plgSystemCompress extends MolajoPlugin
 		}
 
 		// If the manual overload for stylesheets is set use the ones set in the plugin options.
-		if ($this->params->get('stylesheets_overload')) {
-			$styleSheets = explode("\n", trim($this->params->get('stylesheets')));
+		if ($this->parameters->get('stylesheets_overload')) {
+			$styleSheets = explode("\n", trim($this->parameters->get('stylesheets')));
 		} else {
 			foreach ($inputStyleSheets as $k => $v)
 			{
@@ -148,11 +148,11 @@ class plgSystemCompress extends MolajoPlugin
 	function processJavaScript($files)
 	{
 		// Define the root path (filesystem) and base path (URI) for the caching folder.
-		$root = JPATH_SITE.$this->params->get('root', '/media/tmp').'/js';
-		$base = $this->params->get('root', '/media/tmp').'/js';
+		$root = JPATH_SITE.$this->parameters->get('root', '/media/tmp').'/js';
+		$base = $this->parameters->get('root', '/media/tmp').'/js';
 
 		// Get the compresion setting for the plugin.
-		$compress = ($this->params->get('minify') && (version_compare(phpversion(), '5.0') > 0));
+		$compress = ($this->parameters->get('minify') && (version_compare(phpversion(), '5.0') > 0));
 
 		// Initialize variables.
 		$buffer = '';
@@ -242,11 +242,11 @@ class plgSystemCompress extends MolajoPlugin
 	function processCSS($files)
 	{
 		// Define the root path (filesystem) and base path (URI) for the caching folder.
-		$root = JPATH_SITE.$this->params->get('root', '/media/tmp').'/css';
-		$base = $this->params->get('root', '/media/tmp').'/css';
+		$root = JPATH_SITE.$this->parameters->get('root', '/media/tmp').'/css';
+		$base = $this->parameters->get('root', '/media/tmp').'/css';
 
 		// Get the compresion setting for the plugin.
-		$compress = ($this->params->get('minify') && (version_compare(phpversion(), '5.0') > 0));
+		$compress = ($this->parameters->get('minify') && (version_compare(phpversion(), '5.0') > 0));
 
 		// Initialize variables.
 		$buffer = '';

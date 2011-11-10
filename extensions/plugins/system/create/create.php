@@ -33,7 +33,7 @@ class plgSystemCreate extends MolajoPlugin
      */
     function onAfterInitialise()
     {
-        if ($this->params->def('enable_installer_create_extensions', 1) == 1
+        if ($this->parameters->def('enable_installer_create_extensions', 1) == 1
                 && MolajoFactory::getApplication()->getName() == 'administrator'
                 && (JRequest::getCmd('option') == 'com_installer' || JRequest::getCmd('option') == 'com_plugins')) {
 

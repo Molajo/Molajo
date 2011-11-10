@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 ?>
-<table cellpadding="0" cellspacing="0" class="moduletable<?php echo htmlspecialchars($params->get('layout_class_suffix')); ?>">
+<table cellpadding="0" cellspacing="0" class="moduletable<?php echo htmlspecialchars($parameters->get('layout_class_suffix')); ?>">
 <?php
 // feed description
 if (!is_null($channel['title']) && $rsstitle) {

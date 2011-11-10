@@ -67,14 +67,14 @@ class MolajoDocumentError extends MolajoDocument
      * Render the document
      *
      * @param   boolean  $cache    If true, cache the output
-     * @param   array    $params   Associative array of attributes
+     * @param   array    $parameters   Associative array of attributes
      *
      *
      * @return  string   The rendered data
      *
      * @since   11.1
      */
-    public function render($cache = false, $params = array())
+    public function render($cache = false, $parameters = array())
     {
         // If no error object is set return null
         if (!isset($this->_error)) {
@@ -86,8 +86,8 @@ class MolajoDocumentError extends MolajoDocument
         $file = 'error.php';
 
         // check template
-        $directory = isset($params['directory']) ? $params['directory'] : 'templates';
-        $template = isset($params['template']) ? JFilterInput::getInstance()->clean($params['template'], 'cmd')
+        $directory = isset($parameters['directory']) ? $parameters['directory'] : 'templates';
+        $template = isset($parameters['template']) ? JFilterInput::getInstance()->clean($parameters['template'], 'cmd')
                 : 'system';
 
         if (!file_exists($directory.'/'.$template.'/'.$file)) {
@@ -97,7 +97,7 @@ class MolajoDocumentError extends MolajoDocument
         //set variables
         $this->baseurl = JURI::base(true);
         $this->template = $template;
-        $this->debug = isset($params['debug']) ? $params['debug'] : false;
+        $this->debug = isset($parameters['debug']) ? $parameters['debug'] : false;
         $this->error = $this->_error;
 
         // load

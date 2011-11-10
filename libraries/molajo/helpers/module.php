@@ -80,11 +80,12 @@ abstract class MolajoModuleHelper
         $result = array();
 
         $modules = self::_load();
-
+//echo '<pre>';var_dump($modules);'</pre>';
+        
         $total = count($modules);
         for ($i = 0; $i < $total; $i++)
         {
-            if ($modules[$i]->module_position == $position) {
+            if ($modules[$i]->position == $position) {
                 $result[] = &$modules[$i];
             }
         }
@@ -137,22 +138,19 @@ abstract class MolajoModuleHelper
         $scope = MolajoFactory::getApplication()->scope;
 
         // Set scope to module name
-        MolajoFactory::getApplication()->scope = $module->module;
+        MolajoFactory::getApplication()->scope = $module->title;
 
         // Get module path
-        $module->module = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->module);
-        $path = MOLAJO_EXTENSION_MODULES.'/modules/' . $module->module.'/'.$module->module . '.php';
+        $module->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->title);
+        $path = MOLAJO_EXTENSION_MODULES.'/'.$module->title.'/'.$module->title . '.php';
 
         // Load the module
-        if ($module->user) {
-        } else if (file_exists($path)) {
+        if (file_exists($path)) {
 
             $lang = MolajoFactory::getLanguage();
 
-            $lang->load($module->module, MOLAJO_BASE_FOLDER, null, false, false)
-            || $lang->load($module->module, dirname($path), null, false, false)
-            || $lang->load($module->module, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-            || $lang->load($module->module, dirname($path), $lang->getDefault(), false, false);
+            $lang->load($module->title, MOLAJO_EXTENSION_MODULES, null, false, false)
+            || $lang->load($module->title, MOLAJO_EXTENSION_MODULES, $lang->getDefault(), false, false);
 
             /** view */
             $view = new MolajoView ();
@@ -160,20 +158,24 @@ abstract class MolajoModuleHelper
             /** defaults */
             $request = array();
             $state = array();
-            $params = array();
+            $parameters = array();
             $rowset = array();
             $pagination = array();
             $layout = 'default';
-            $wrap = 'none';
+            if (isset($attribs->wrap)) {
+                $wrap = $attribs->wrap;
+            } else {
+                $wrap = 'none';
+            }
 
             $application = MolajoFactory::getApplication();
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new JRegistry;
-            $params->loadJSON($module->params);
+            $parameters = new JRegistry;
+            $parameters->loadJSON($module->parameters);
 
-            $request = self::getRequest($module, $params);
+            $request = self::getRequest($module, $parameters, $wrap);
 
             $request['wrap_title'] = $module->title;
             $request['wrap_subtitle'] = $module->subtitle;
@@ -203,7 +205,7 @@ abstract class MolajoModuleHelper
             $view->state = $module;
 
             /** 6. Parameters */
-            $view->params = $params;
+            $view->parameters = $parameters;
 
             /** 7. Query */
             $view->rowset = $rowset;
@@ -239,7 +241,7 @@ abstract class MolajoModuleHelper
      *
      * @return bool
      */
-    protected function getRequest($module, $params)
+    protected function getRequest($module, $parameters, $wrap)
     {
         $session = MolajoFactory::getSession();
 
@@ -264,7 +266,7 @@ abstract class MolajoModuleHelper
         $request['id'] = $session->get('page.id');
         $request['cid'] = $session->get('page.cid');
         $request['catid'] = $session->get('page.catid');
-        $request['params'] = $params;
+        $request['parameters'] = $parameters;
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');
@@ -275,44 +277,10 @@ abstract class MolajoModuleHelper
         $request['metakey'] = $session->get('page.metakey');
         $request['metadesc'] = $session->get('page.metadesc');
         $request['metadata'] = $session->get('page.metadata');
-        $request['wrap'] = $module->style;
+        $request['wrap'] = $wrap;
         $request['position'] = $module->position;
 
         return $request;
-    }
-
-    /**
-     * getLayoutPath
-     *
-     * Get the path to a layout for a module
-     *
-     * @param   string  $module    The name of the module
-     * @param   string  $layout    The name of the module layout. If alternative layout, in the form template:filename.
-     * @return  string  The path to the module layout
-     * @since   1.0
-     */
-    public static function getLayoutPath($module, $layout = 'default')
-    {
-        $template = MolajoFactory::getApplication()->getTemplate();
-        $defaultLayout = $layout;
-        if (strpos($layout, ':') !== false) {
-            $temp = explode(':', $layout);
-            $template = ($temp[0] == '_') ? $template : $temp[0];
-            $layout = $temp[1];
-            $defaultLayout = ($temp[1]) ? $temp[1] : 'default';
-        }
-
-        // Build the template and base path for the layout
-        $tPath = MOLAJO_EXTENSION_TEMPLATES.'/'.$template.'/html/' . $module.'/'.$layout . '.php';
-        $bPath = MOLAJO_EXTENSION_MODULES.'/modules/' . $module.'/tmpl/' . $defaultLayout . '.php';
-
-        // If the template has a layout override use it
-        if (file_exists($tPath)) {
-            return $tPath;
-        }
-        else {
-            return $bPath;
-        }
     }
 
     /**
@@ -336,6 +304,7 @@ abstract class MolajoModuleHelper
         }
 
         $modules = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MODULES);
+
         return $modules;
     }
 
@@ -354,7 +323,7 @@ abstract class MolajoModuleHelper
      * @param   object  $module    Module object
      * @param   object  $moduleparams module parameters
      * @param   object  $cacheparams module cache parameters - id or url parameters, depending on the module cache mode
-     * @param   array   $params - parameters for given mode - calculated id or an array of safe url parameters and their
+     * @param   array   $parameters - parameters for given mode - calculated id or an array of safe url parameters and their
      *                     variable types, for valid values see {@link JFilterInput::clean()}.
      *
      * @since   11.1
@@ -366,7 +335,7 @@ abstract class MolajoModuleHelper
         }
 
         if (!isset ($cacheparams->cachegroup)) {
-            $cacheparams->cachegroup = $module->module;
+            $cacheparams->cachegroup = $module->title;
         }
 
         $user = MolajoFactory::getUser();
@@ -416,7 +385,7 @@ abstract class MolajoModuleHelper
                 break;
 
             case 'static':
-                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->module . md5(serialize($cacheparams->methodparams)), $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->title . md5(serialize($cacheparams->methodparams)), $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'oldstatic': // provided for backward compatibility, not really usefull

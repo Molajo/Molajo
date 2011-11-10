@@ -38,8 +38,8 @@ class ModulesModelSelect extends JModelList
 		$this->setState('filter.application_id', (int) $application_id);
 
 		// Load the parameters.
-		$params	= JComponentHelper::getParams('com_modules');
-		$this->setState('params', $params);
+		$parameters	= JComponentHelper::getParams('com_modules');
+		$this->setState('parameters', $parameters);
 
 		// Manually set limits to get all modules.
 		$this->setState('list.limit', 0);

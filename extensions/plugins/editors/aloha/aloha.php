@@ -109,12 +109,12 @@ class plgEditorAloha extends MolajoPlugin
 			$id = $name;
 		}
 
-		$this->params->def('baseURL', JURI::root());
-		$this->params->set('actions', implode('', (array)$this->params->get('buttons', 'bold italic underline strikethrough insertunorderedlist insertorderedlist indent outdent undo redo unlink createlink urlimage')));
-		$this->params->set('buttons', '');
+		$this->parameters->def('baseURL', JURI::root());
+		$this->parameters->set('actions', implode('', (array)$this->parameters->get('buttons', 'bold italic underline strikethrough insertunorderedlist insertorderedlist indent outdent undo redo unlink createlink urlimage')));
+		$this->parameters->set('buttons', '');
 		$doc = MolajoFactory::getDocument();
 		$doc->addScriptDeclaration('window.addEvent(\'domready\', function() {
-			$(\''.$id.'\').Aloha('.$this->params->toString().');
+			$(\''.$id.'\').Aloha('.$this->parameters->toString().');
 		});');
 		// Only add "px" to width and height if they are not given as a percentage
 		if (is_numeric($width)) {

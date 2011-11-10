@@ -22,12 +22,12 @@ class plgMolajoMedia extends MolajoPlugin	{
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	stromg		The 'page' number
      * @return	string
      * @since	1.6
      */
-    function MolajoOnContentPrepare ($context, &$content, &$params, $page = 0)
+    function MolajoOnContentPrepare ($context, &$content, &$parameters, $page = 0)
     {
         return;
         /** init **/
@@ -37,12 +37,12 @@ class plgMolajoMedia extends MolajoPlugin	{
 
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
 
         /** view access **/
         if ($systemParams->def('enable_audio', 0) == 1) {
             require_once dirname(__FILE__) . '/audio/driver.php';
-            MolajoMediaAudio::driver ($context, &$content, &$params, $page = 0, $this->location);
+            MolajoMediaAudio::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
         return;
     }

@@ -26,7 +26,7 @@ class plgSystemCron extends MolajoPlugin
 		ignore_user_abort(true);
 		set_time_limit(0);
 		$count = 0;
-		$time = 60 * (int) $this->params->get('minutes', 60);
+		$time = 60 * (int) $this->parameters->get('minutes', 60);
 		
 		while(1) {
 

@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 
 class modBreadCrumbsHelper
 {
-	public static function getList(&$params)
+	public static function getList(&$parameters)
 	{
 		// Get the PathWay object from the application
 		$app		= MolajoFactory::getApplication();
@@ -26,10 +26,10 @@ class modBreadCrumbsHelper
 			$items[$i]->link = JRoute::_($items[$i]->link);
 		}
 
-		if ($params->get('showHome', 1))
+		if ($parameters->get('showHome', 1))
 		{
 			$item = new stdClass();
-			$item->name = $params->get('homeText', JText::_('MOD_BREADCRUMBS_HOME'));
+			$item->name = $parameters->get('homeText', JText::_('MOD_BREADCRUMBS_HOME'));
 			$item->link = JRoute::_('index.php?Itemid='.$app->getMenu()->getDefault()->id);
 			array_unshift($items, $item);
 		}

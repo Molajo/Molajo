@@ -29,7 +29,7 @@ abstract class MolajoHeaderHelper
 	 * @return	string	HTML for button
 	 * @since	1.0
 	 */
-	public static function getList($params)
+	public static function getList($parameters)
 	{
         $tmpobj = new JObject();
         $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));

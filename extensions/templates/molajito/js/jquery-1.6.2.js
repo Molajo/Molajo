@@ -6756,7 +6756,7 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 }
 
 jQuery.fn.extend({
-	load: function( url, params, callback ) {
+	load: function( url, parameters, callback ) {
 		if ( typeof url !== "string" && _load ) {
 			return _load.apply( this, arguments );
 
@@ -6775,16 +6775,16 @@ jQuery.fn.extend({
 		var type = "GET";
 
 		// If the second parameter was provided
-		if ( params ) {
+		if ( parameters ) {
 			// If it's a function
-			if ( jQuery.isFunction( params ) ) {
+			if ( jQuery.isFunction( parameters ) ) {
 				// We assume that it's the callback
-				callback = params;
-				params = undefined;
+				callback = parameters;
+				parameters = undefined;
 
 			// Otherwise, build a param string
-			} else if ( typeof params === "object" ) {
-				params = jQuery.param( params, jQuery.ajaxSettings.traditional );
+			} else if ( typeof parameters === "object" ) {
+				parameters = jQuery.param( parameters, jQuery.ajaxSettings.traditional );
 				type = "POST";
 			}
 		}
@@ -6796,7 +6796,7 @@ jQuery.fn.extend({
 			url: url,
 			type: type,
 			dataType: "html",
-			data: params,
+			data: parameters,
 			// Complete callback (responseText is used internally)
 			complete: function( jqXHR, status, responseText ) {
 				// Store the response as specified by the jqXHR object
@@ -7383,7 +7383,7 @@ jQuery.extend({
 
 		} else {
 			// If traditional, encode the "old" way (the way 1.3.2 or older
-			// did it), otherwise encode params recursively.
+			// did it), otherwise encode parameters recursively.
 			for ( var prefix in a ) {
 				buildParams( prefix, a[ prefix ], traditional, add );
 			}

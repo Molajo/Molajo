@@ -77,7 +77,7 @@ INSERT INTO `molajo_extension_configurations` (`extension_instances_id`, `option
 (1, 220, '', '', 0),
 (1, 220, 'attribs', 'MOLAJO_FIELD_ATTRIBS_LABEL', 1),
 (1, 220, 'metadata', 'MOLAJO_FIELD_METADATA_LABEL', 2),
-(1, 220, 'params', 'MOLAJO_FIELD_PARAMETERS_LABEL', 3);
+(1, 220, 'parameters', 'MOLAJO_FIELD_PARAMETERS_LABEL', 3);
 
 /* 230 MOLAJO_CONFIG_OPTION_ID_CONTENT_TYPES */
 INSERT INTO `molajo_extension_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES

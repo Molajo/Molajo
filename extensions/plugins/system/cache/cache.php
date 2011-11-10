@@ -36,7 +36,7 @@ class plgSystemCache extends MolajoPlugin
 		$config = MolajoFactory::getConfig();
 		$options = array(
 			'defaultgroup'	=> 'page',
-			'browsercache'	=> $this->params->get('browsercache', false),
+			'browsercache'	=> $this->parameters->get('browsercache', false),
 			'caching'		=> false,
 		);
 

@@ -148,7 +148,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		}
 
 	 	/*	Remove the file extension, if exists */
-	 	$parameterExtension 	= $this->params->def('extension', '');
+	 	$parameterExtension 	= $this->parameters->def('extension', '');
   		$uriString = str_replace ( $parameterExtension, '', $uriString );
 
 	 	/*	Remove the right forward slash '/'  */
@@ -181,7 +181,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 	 * 	2.	No WWW logic
 	 */
 		$hostname = $uri->toString(array('host'));
-		$parameterNoWWW	= $this->params->def('noWWW', 0);
+		$parameterNoWWW	= $this->parameters->def('noWWW', 0);
 
 		if (($parameterNoWWW == 1) && (strtolower(substr($hostname, 0, 4)) == 'www.')) {
 
@@ -376,7 +376,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		$type = "";
 		
 		$plugin 		=& MolajoPluginHelper::getPlugin( 'system', 'tamka_router');
-		$pluginParams 	= new JParameter($plugin->params);
+		$pluginParams 	= new JParameter($plugin->parameters);
 
 		$tagbaseValue = trim(strtolower($pluginParams->def('tagbase', 'tag')));
 		$tagmenubaseValue = trim(strtolower($pluginParams->def('tagmenubase', 'menu')));

@@ -444,8 +444,8 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         }
 
         // Verify that it's not the default language for that client
-        $params = MolajoComponentHelper::getParams('com_languages');
-        if ($params->get($client->name) == $element) {
+        $parameters = MolajoComponentHelper::getParams('com_languages');
+        if ($parameters->get($client->name) == $element) {
             MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DEFAULT'));
             return false;
         }

@@ -57,12 +57,12 @@ class plgSystemExtend extends MolajoPlugin
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	stromg		The 'page' number
      * @return	string
      * @since	1.6
      */
-    public function onContentPrepare ($context, &$content, &$params, $page = 0)
+    public function onContentPrepare ($context, &$content, &$parameters, $page = 0)
     {
         return true;
     }
@@ -89,7 +89,7 @@ class plgSystemExtend extends MolajoPlugin
         if (!is_object($content)) {
             return;
         }
-        return extendController::initiation ($task='edit', $form, $context=null, $content, $params=null, $limitstart=null, $isNew=null, $event='onContentPrepareForm');
+        return extendController::initiation ($task='edit', $form, $context=null, $content, $parameters=null, $limitstart=null, $isNew=null, $event='onContentPrepareForm');
     }
 
     /**
@@ -148,7 +148,7 @@ class plgSystemExtend extends MolajoPlugin
      */
     public function onContentAfterSave ($context, &$content, $isNew)
     {
-        return extendController::initiation ($task='save', $form=null, $context, $content, $params=null, $limitstart=null, $isNew=null, $event='onContentAfterSave');
+        return extendController::initiation ($task='save', $form=null, $context, $content, $parameters=null, $limitstart=null, $isNew=null, $event='onContentAfterSave');
     }
     /**
      * onContentBeforeDelete
@@ -179,7 +179,7 @@ class plgSystemExtend extends MolajoPlugin
      */
     public function onContentAfterDelete ($context, $content)
     {
-        return extendController::initiation ($task='delete', $form=null, $context, $content, $params=null, $limitstart=null, $isNew=null, $event='onContentAfterDelete');
+        return extendController::initiation ($task='delete', $form=null, $context, $content, $parameters=null, $limitstart=null, $isNew=null, $event='onContentAfterDelete');
     }
 
     /**
@@ -191,13 +191,13 @@ class plgSystemExtend extends MolajoPlugin
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	int		The 'page' number
      * @return	string
      * @since	1.6
      */
-    public function onContentAfterTitle ($context, &$content, &$params, $limitstart)
+    public function onContentAfterTitle ($context, &$content, &$parameters, $limitstart)
     {
-        return extendController::initiation ($task='display', $form=null, $context, $content, $params, $limitstart, $isNew=null, $event='onContentAfterTitle');
+        return extendController::initiation ($task='display', $form=null, $context, $content, $parameters, $limitstart, $isNew=null, $event='onContentAfterTitle');
     }
 }

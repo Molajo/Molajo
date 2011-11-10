@@ -25,7 +25,7 @@
 	</languages>
 	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_SYNDICATION_FEEDS" />
 	<config>
-		<fields name="params">
+		<fields name="parameters">
 			<fieldset name="basic">
 				<field
 					name="text"

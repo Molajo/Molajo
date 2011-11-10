@@ -9,8 +9,8 @@ defined('MOLAJO') or die;
 
 /** initialise  */
 $tmpobj = new JObject();
-$layout = $params->def('layout', 'admin_footer');
-$wrap = $params->def('wrap', 'footer');
+$layout = $parameters->def('layout', 'admin_footer');
+$wrap = $parameters->def('wrap', 'footer');
 
 /**
  *  Line 1
@@ -28,10 +28,10 @@ $tmpobj->set('line1', $line1);
 /**
  *  Line 2
  */
-$link = $params->def('link', 'http://molajo.org');
-$linked_text = $params->def('linked_text', 'Molajo&#153;');
-$remaining_text = $params->def('remaining_text', ' is free software.');
-$version = $params->def('version', MolajoText::_(MOLAJOVERSION));
+$link = $parameters->def('link', 'http://molajo.org');
+$linked_text = $parameters->def('linked_text', 'Molajo&#153;');
+$remaining_text = $parameters->def('remaining_text', ' is free software.');
+$version = $parameters->def('version', MolajoText::_(MOLAJOVERSION));
 
 $tmpobj->set('link', $link);
 $tmpobj->set('linked_text', $linked_text);

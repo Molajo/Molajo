@@ -32,7 +32,7 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
@@ -75,7 +75,7 @@ class modelContentItem
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
@@ -111,7 +111,7 @@ class modelContentItem
         $app = MolajoFactory::getApplication();
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
@@ -141,7 +141,7 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
@@ -195,7 +195,7 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
@@ -232,7 +232,7 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->params);
+        $fieldParams = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');

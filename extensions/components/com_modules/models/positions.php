@@ -67,8 +67,8 @@ class ModulesModelPositions extends JModelList
 		$this->setState('filter.type', $type);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_modules');
-		$this->setState('params', $params);
+		$parameters = JComponentHelper::getParams('com_modules');
+		$this->setState('parameters', $parameters);
 
 		// List state information.
 		parent::populateState('value', 'asc');

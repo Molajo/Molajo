@@ -51,8 +51,8 @@ class MolajoModelCategories extends JModel
         $parentId = JRequest::getInt('id');
         $this->setState('filter.parentId', $parentId);
 
-        $params = $app->getParams();
-        $this->setState('params', $params);
+        $parameters = $app->getParams();
+        $this->setState('parameters', $parameters);
 
         $this->setState('filter.published', 1);
         $this->setState('filter.access', true);
@@ -94,14 +94,14 @@ class MolajoModelCategories extends JModel
             $app = MolajoFactory::getApplication();
             $menu = $app->getMenu();
             $active = $menu->getActive();
-            $params = new JRegistry();
+            $parameters = new JRegistry();
 
             if ($active) {
-                $params->loadJSON($active->params);
+                $parameters->loadJSON($active->parameters);
             }
 
             $options = array();
-            $options['countItems'] = $params->get('show_cat_num_articles_cat', 1) || !$params->get('show_empty_categories_cat', 0);
+            $options['countItems'] = $parameters->get('show_cat_num_articles_cat', 1) || !$parameters->get('show_empty_categories_cat', 0);
             $categories = JCategories::getInstance('Content', $options);
             $this->_parent = $categories->get($this->getState('filter.parentId', 'root'));
 

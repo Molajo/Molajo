@@ -42,13 +42,13 @@ class MolajoDocumentRaw extends MolajoDocument
      * Render the document.
      *
      * @param   boolean  $cache   If true, cache the output
-     * @param   array    $params  Associative array of attributes
+     * @param   array    $parameters  Associative array of attributes
      *
      * @return  The rendered data
      *
      * @since   11.1
      */
-    public function render($cache = false, $params = array())
+    public function render($cache = false, $parameters = array())
     {
         parent::render();
         return $this->getBuffer();

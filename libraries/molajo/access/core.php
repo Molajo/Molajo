@@ -410,14 +410,14 @@ class MolajoACLCore extends MolajoACL
      *
      * @param object $query - query updated by method
      * @param string $type - specifies the type of method
-     * @param array $params set of parameters needed by method to build query
+     * @param array $parameters set of parameters needed by method to build query
      * @return boolean
      */
 
     /**
      *  TYPE 2 --> MolajoACL::getQueryInformation -> getUserQueryInformation
      */
-    public function getUserQueryInformation($query, $option, $params)
+    public function getUserQueryInformation($query, $option, $parameters)
     {
         $query->select('a.access');
         //        $query->select('ag.title AS access_level');
@@ -475,12 +475,12 @@ class MolajoACLCore extends MolajoACL
      *
      * @param $query
      * @param $option
-     * @param $params
+     * @param $parameters
      * @return
      */
-    public function getViewaccessQueryInformation($query, $option, $params)
+    public function getViewaccessQueryInformation($query, $option, $parameters)
     {
-        $prefix = $params['table_prefix'];
+        $prefix = $parameters['table_prefix'];
         if (trim($prefix == '')) {
         } else {
             $prefix = $prefix . '.';
@@ -488,10 +488,7 @@ class MolajoACLCore extends MolajoACL
 
         $acl = new MolajoACL();
         $list = implode(',', $acl->getList('viewaccess'));
-
-        $query->from('#__assets AS assets');
-        $query->where('assets.id = ' . $prefix . 'asset_id');
-        $query->where('assets.view_group_id IN (' . $list . ')');
+        $query->where($prefix.'view_group_id IN (' . $list . ')');
 
         return;
     }
@@ -514,7 +511,7 @@ class MolajoACLCore extends MolajoACL
      * @param string $id
      * @param string $option
      * @param string $task
-     * @param array  $params optional
+     * @param array  $parameters optional
      *
      * @return object list requested
      * @return boolean
@@ -523,12 +520,12 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getActionsList
      */
-    public function getActionsList($id, $option, $task, $params = array())
+    public function getActionsList($id, $option, $task, $parameters = array())
     {
         $actions = array();
 
-        $component = $params[0];
-        $section = $params[1];
+        $component = $parameters[0];
+        $section = $parameters[1];
 
         if (is_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml')) {
             $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS.'/'.$component.'/access.xml');
@@ -551,7 +548,7 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getAssetsList
      */
-    public function getAssetsList($id, $option, $task, $params = array())
+    public function getAssetsList($id, $option, $task, $parameters = array())
     {
 
     }
@@ -559,15 +556,15 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getViewaccessList
      */
-    public function getViewaccessList($userid = '', $option = '', $action = '', $params = array())
+    public function getViewaccessList($userid = '', $option = '', $action = '', $parameters = array())
     {
-        return $this->getUsergroupsList($userid, $option, MOLAJO_ACL_ACTION_VIEW, $params);
+        return $this->getUsergroupsList($userid, $option, MOLAJO_ACL_ACTION_VIEW, $parameters);
     }
 
     /**
      *  TYPE 3 --> MolajoACL::getList -> getCategoriesList
      */
-    public function getCategoriesList($id, $option, $task, $params = array())
+    public function getCategoriesList($id, $option, $task, $parameters = array())
     {
         echo 'Finish getCategoriesList';
         die();
@@ -608,7 +605,7 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getGroupsList
      */
-    public function getGroupsList($id, $option, $task, $params = array())
+    public function getGroupsList($id, $option, $task, $parameters = array())
     {
         $db = MolajoFactory::getDBO();
         $db->setQuery(
@@ -625,7 +622,7 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupsList
      */
-    public function getUsergroupsList($userid, $option, $action, $params = array())
+    public function getUsergroupsList($userid, $option, $action, $parameters = array())
     {
         $acl = new MolajoACL();
         $cache = MolajoFactory::getCache('coreacl.getUsergroupsList', '');
@@ -711,10 +708,10 @@ class MolajoACLCore extends MolajoACL
      * @param $id
      * @param $option
      * @param $task
-     * @param array $params
+     * @param array $parameters
      * @return void
      */
-    public function getUsergroupingsList($id, $option, $task, $params = array())
+    public function getUsergroupingsList($id, $option, $task, $parameters = array())
     {
 
     }
@@ -726,10 +723,10 @@ class MolajoACLCore extends MolajoACL
      *
      * @param string $option
      * @param string $task
-     * @param array $params
+     * @param array $parameters
      * @return void
      */
-    public function getAllusergroupsList($option = '', $task = '', $params = array())
+    public function getAllusergroupsList($option = '', $task = '', $parameters = array())
     {
         echo 'bang';
         die();

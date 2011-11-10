@@ -397,7 +397,7 @@ class MolajoCategoryNode extends JObject
      * @since  1.0
      */
 
-    public $params = null;
+    public $parameters = null;
 
     public $metadesc = null;
 

@@ -12,12 +12,12 @@ defined('JPATH_PLATFORM') or die;
 
 class modLoginHelper
 {
-	static function getReturnURL($params, $type)
+	static function getReturnURL($parameters, $type)
 	{
 		$app	= MolajoFactory::getApplication();
 		$router = $app->getRouter();
 		$url = null;
-		if ($itemid =  $params->get($type))
+		if ($itemid =  $parameters->get($type))
 		{
 			$db		= MolajoFactory::getDbo();
 			$query	= $db->getQuery(true);

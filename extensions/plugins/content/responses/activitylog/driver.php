@@ -11,7 +11,7 @@ jimport( 'joomla.plugin.plugin' );
 
 class ResponsesActivityLog extends MolajoPlugin
 {
-	function onAfterDisplayContent( &$article, &$params, $limitstart )
+	function onAfterDisplayContent( &$article, &$parameters, $limitstart )
 	{
 	/**
 	 * 		Get Print Parameter
@@ -29,12 +29,12 @@ class ResponsesActivityLog extends MolajoPlugin
 		} else {
 			return;
 		}		
-		$model = JModel::getInstance(‘menu’, ‘MyGolfModel’);
+//		$model = JModel::getInstance(‘menu’, ‘MyGolfModel’);
 	/**
 	 * 	Parameters
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_comments');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 				
 		$showCategoriesAll = false;
 		$showCategories = explode(',', $pluginParams->get('categories'));
@@ -65,7 +65,7 @@ class ResponsesActivityLog extends MolajoPlugin
 		$bloglayout = $pluginParams->def('bloglayout', '0');
 				
 		$view = JRequest::getVar('view');
-		if ((($view == "frontpage") || ($params->get('frontpage', 0) == 1)) && ($frontpage == 0) ) {
+		if ((($view == "frontpage") || ($parameters->get('frontpage', 0) == 1)) && ($frontpage == 0) ) {
 			return;
 		}
 		$view = JRequest::getVar('view');
@@ -96,7 +96,7 @@ class ResponsesActivityLog extends MolajoPlugin
 
 		//	Print the # of comments (unless print view)
 		if ($print == false) {
-			$module->params	= "layout=commentcount\narticleid=".$article->id."\nclosecomments=".$closeComments;
+			$module->parameters	= "layout=commentcount\narticleid=".$article->id."\nclosecomments=".$closeComments;
 			$output = $moduleRenderer->render($module, 'raw');
 		}
 
@@ -106,14 +106,14 @@ class ResponsesActivityLog extends MolajoPlugin
 
 			//	Print existing article comments
 			$module	= JModuleHelper::getModule('mod_tamka_comments_post');
-			$module->params	= "layout=default\narticleid=".$article->id;
+			$module->parameters	= "layout=default\narticleid=".$article->id;
 			$output .= $moduleRenderer->render($module, 'raw');
 
 			// 	Print the comment form - layout: form
 			if ($closeComments) {
 			} else if ($print == false) {
 				$module	= JModuleHelper::getModule('mod_tamka_comments_post');
-				$module->params	= "layout=form\narticleid=".$article->id;
+				$module->parameters	= "layout=form\narticleid=".$article->id;
 				$output .= $moduleRenderer->render($module, 'raw');
 			}
 		}

@@ -70,9 +70,9 @@ class plgSearchCategories extends MolajoPlugin
 			}
 		}
 
-		$sContent		= $this->params->get('search_content',		1);
-		$sArchived		= $this->params->get('search_archived',		1);
-		$limit			= $this->params->def('search_limit',		50);
+		$sContent		= $this->parameters->get('search_content',		1);
+		$sArchived		= $this->parameters->get('search_archived',		1);
+		$limit			= $this->parameters->def('search_limit',		50);
 		$state			= array();
 		if ($sContent) {
 			$state[]=1;

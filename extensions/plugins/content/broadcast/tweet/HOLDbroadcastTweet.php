@@ -67,7 +67,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	 * 	Initialization
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_ping');
-		$pluginParams = new JParameter( $plugin->params );
+		$pluginParams = new JParameter( $plugin->parameters );
 
 	/**
 	 * 	Should Tamka Ping?

@@ -22,15 +22,15 @@ abstract class MolajoHtmlSliders
      * Creates a panes and loads the javascript behavior for it.
      *
      * @param   string  $group   The pane identifier.
-     * @param   array   $params  An array of options.
+     * @param   array   $parameters  An array of options.
      *
      * @return  string
      *
      * @since   11.1
      */
-    public static function start($group = 'sliders', $params = array())
+    public static function start($group = 'sliders', $parameters = array())
     {
-        self::_loadBehavior($group, $params);
+        self::_loadBehavior($group, $parameters);
 
         return '<div id="' . $group . '" class="pane-sliders"><div style="display:none;"><div>';
     }
@@ -67,13 +67,13 @@ abstract class MolajoHtmlSliders
      * Load the JavaScript behavior.
      *
      * @param   string  $group   The pane identifier.
-     * @param   array   $params  Array of options.
+     * @param   array   $parameters  Array of options.
      *
      * @return  void
      *
      * @since   11.1
      */
-    protected static function _loadBehavior($group, $params = array())
+    protected static function _loadBehavior($group, $parameters = array())
     {
         static $loaded = array();
         if (!array_key_exists($group, $loaded)) {
@@ -83,10 +83,10 @@ abstract class MolajoHtmlSliders
 
             $document = JFactory::getDocument();
 
-            $display = (isset($params['startOffset']) && isset($params['startTransition']) && $params['startTransition'])
-                    ? (int)$params['startOffset'] : null;
-            $show = (isset($params['startOffset']) && !(isset($params['startTransition']) && $params['startTransition']))
-                    ? (int)$params['startOffset'] : null;
+            $display = (isset($parameters['startOffset']) && isset($parameters['startTransition']) && $parameters['startTransition'])
+                    ? (int)$parameters['startOffset'] : null;
+            $show = (isset($parameters['startOffset']) && !(isset($parameters['startTransition']) && $parameters['startTransition']))
+                    ? (int)$parameters['startOffset'] : null;
             $options = '{';
             $opt['onActive'] = "function(toggler, i) {toggler.addClass('pane-toggler-down');' .
 				'toggler.removeClass('pane-toggler');i.addClass('pane-down');i.removeClass('pane-hide');Cookie.write('jpanesliders_"
@@ -95,15 +95,15 @@ abstract class MolajoHtmlSliders
 				'toggler.removeClass('pane-toggler-down');i.addClass('pane-hide');i.removeClass('pane-down');if($$('div#"
                                    . $group . ".pane-sliders > .panel > h3').length==$$('div#" . $group
                                    . ".pane-sliders > .panel > h3.pane-toggler').length) Cookie.write('jpanesliders_" . $group . "',-1);}";
-            $opt['duration'] = (isset($params['duration'])) ? (int)$params['duration'] : 300;
-            $opt['display'] = (isset($params['useCookie']) && $params['useCookie'])
+            $opt['duration'] = (isset($parameters['duration'])) ? (int)$parameters['duration'] : 300;
+            $opt['display'] = (isset($parameters['useCookie']) && $parameters['useCookie'])
                     ? JRequest::getInt('jpanesliders_' . $group, $display, 'cookie')
                     : $display;
-            $opt['show'] = (isset($params['useCookie']) && $params['useCookie'])
+            $opt['show'] = (isset($parameters['useCookie']) && $parameters['useCookie'])
                     ? JRequest::getInt('jpanesliders_' . $group, $show, 'cookie') : $show;
-            $opt['opacity'] = (isset($params['opacityTransition']) && ($params['opacityTransition'])) ? 'true'
+            $opt['opacity'] = (isset($parameters['opacityTransition']) && ($parameters['opacityTransition'])) ? 'true'
                     : 'false';
-            $opt['alwaysHide'] = (isset($params['allowAllClose']) && (!$params['allowAllClose'])) ? 'false' : 'true';
+            $opt['alwaysHide'] = (isset($parameters['allowAllClose']) && (!$parameters['allowAllClose'])) ? 'false' : 'true';
             foreach ($opt as $k => $v)
             {
                 if ($v) {

@@ -44,7 +44,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
                 /** Render data */
                 $tmp = $module;
                 $module = new stdClass;
-                $module->params = null;
+                $module->parameters = null;
                 $module->module = $tmp;
                 $module->id = 0;
                 $module->user = 0;
@@ -60,24 +60,27 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
         }
 
         // Get module parameters
-        $params = new JRegistry;
-        $params->loadString($module->params);
+        $parameters = new JRegistry;
+        $parameters->loadString($module->parameters);
 
         // Use parameters from template
-        if (isset($attribs['params'])) {
+        if (isset($attribs['parameters'])) {
             $template_params = new JRegistry;
-            $template_params->loadString(html_entity_decode($attribs['params'], ENT_COMPAT, 'UTF-8'));
-            $params->merge($template_params);
+            $template_params->loadString(html_entity_decode($attribs['parameters'], ENT_COMPAT, 'UTF-8'));
+            $parameters->merge($template_params);
             $module = clone $module;
-            $module->params = (string)$params;
+            $module->parameters = (string)$parameters;
         }
 
         $contents = '';
         // Default for compatibility purposes. Set cachemode parameter or use MolajoModuleHelper::moduleCache from within the
         // module instead
-        $cachemode = $params->get('cachemode', 'oldstatic');
+        $cachemode = $parameters->get('cachemode', 'oldstatic');
 
-        if ($params->get('cache', 0) == 1 && $conf->get('caching') >= 1 && $cachemode != 'id' && $cachemode != 'safeuri') {
+        if ($parameters->get('cache', 0) == 1
+            && $conf->get('caching') >= 1
+            && $cachemode != 'id'
+            && $cachemode != 'safeuri') {
 
             // Default to itemid creating method and workarounds on
             $cacheparams = new stdClass;
@@ -86,10 +89,9 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
             $cacheparams->method = 'renderModule';
             $cacheparams->methodparams = array($module, $attribs);
 
-            $contents = MolajoModuleHelper::ModuleCache($module, $params, $cacheparams);
+            $contents = MolajoModuleHelper::ModuleCache($module, $parameters, $cacheparams);
 
-        }
-        else {
+        } else {
             $contents = MolajoModuleHelper::renderModule($module, $attribs);
         }
 

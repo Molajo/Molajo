@@ -15,8 +15,8 @@ defined('JPATH_PLATFORM') or die;
 
 <ul class="menu<?php echo $class_sfx;?>"<?php
 	$tag = '';
-	if ($params->get('tag_id')!=NULL) {
-		$tag = $params->get('tag_id').'';
+	if ($parameters->get('tag_id')!=NULL) {
+		$tag = $parameters->get('tag_id').'';
 		echo ' id="'.$tag.'"';
 	}
 ?>>
@@ -28,7 +28,7 @@ foreach ($list as $i => &$item) :
 	}
 
 	if (	$item->type == 'alias' &&
-			in_array($item->params->get('aliasoptions'),$path)
+			in_array($item->parameters->get('aliasoptions'),$path)
 		||	in_array($item->id, $path)) {
 	  $class .= 'active ';
 	}

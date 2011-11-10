@@ -163,7 +163,7 @@ INSERT INTO `molajo_extension_instances` (
     WHERE extension_type_id = 1
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/components/', `id`), CONCAT('index.php?option=com_extensions&view=components&id=', `id`), 5, 'en-GB' 
+  SELECT `title`, 4, `id`, CONCAT('extensions/components/', `id`), CONCAT('index.php?option=com_extensions&view=components&id=', `id`), 1, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 1
 
@@ -302,9 +302,11 @@ INSERT INTO `molajo_extensions` (
   `name`, `extension_type_id`, `folder`, `update_site_id`)
   VALUES
     ('mod_breadcrumbs', 6, '', 1),
+    ('mod_debug', 6, '', 1),
     ('mod_content', 6, '', 1),
     ('mod_custom', 6, '', 1),
     ('mod_feed', 6, '', 1),
+    ('mod_footer', 6, '', 1),
     ('mod_header', 6, '', 1),
     ('mod_launchpad', 6, '', 1),
     ('mod_layout', 6, '', 1),
@@ -324,6 +326,26 @@ INSERT INTO `molajo_extension_instances` (
         `extension_type_id`, '2011-11-01 00:00:00', `id`, 'en-GB', 1
     FROM molajo_extensions
     WHERE extension_type_id = 6;
+
+UPDATE `molajo_extension_instances`
+  SET `position` = 'header'
+  WHERE extension_type_id = 6
+    AND `title` = 'mod_header';
+
+UPDATE `molajo_extension_instances`
+  SET `position` = 'launchpad'
+  WHERE extension_type_id = 6
+    AND `title` = 'mod_launchpad';
+
+ UPDATE `molajo_extension_instances`
+  SET `position` = 'footer'
+  WHERE extension_type_id = 6
+    AND `title` = 'mod_footer';
+
+UPDATE `molajo_extension_instances`
+  SET `position` = 'debug'
+  WHERE extension_type_id = 6
+    AND `title` = 'mod_debug';
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 4, `id`, CONCAT('extensions/modules/', `id`), CONCAT('index.php?option=com_extensions&view=modules&id=', `id`), 5, 'en-GB' 
@@ -397,7 +419,7 @@ INSERT INTO `molajo_extension_instances` (
     WHERE extension_type_id = 8;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/plugins/', `id`), CONCAT('index.php?option=com_extensions&view=plugins&id=', `id`), 5, 'en-GB'
+  SELECT `title`, 4, `id`, CONCAT('extensions/plugins/', `id`), CONCAT('index.php?option=com_extensions&view=plugins&id=', `id`), 1, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 8;
 
@@ -419,10 +441,9 @@ INSERT INTO `molajo_extension_instances` (
     WHERE extension_type_id = 9;
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
-  SELECT `title`, 4, `id`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 5, 'en-GB' 
+  SELECT `title`, 4, `id`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 1, 'en-GB'
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 9;
-
 
 #
 # Menu - Administrator
@@ -632,6 +653,7 @@ INSERT INTO `molajo_application_extensions`
           'mod_content',
           'mod_custom',
           'mod_feed',
+          'mod_footer',
           'mod_header',
           'mod_layout',
           'mod_login',
@@ -652,7 +674,9 @@ INSERT INTO `molajo_application_extensions`
       AND a.title IN
         ('mod_content',
         'mod_custom',
+        'mod_debug',
         'mod_feed',
+        'mod_footer',
         'mod_header',
         'mod_launchpad',
         'mod_layout',

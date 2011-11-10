@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-if ($this->params->get('html5', true) === true) :
+if ($this->parameters->get('html5', true) === true) :
     $headertype = 'section';
 else :
     $headertype = 'div';

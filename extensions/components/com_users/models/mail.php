@@ -130,12 +130,12 @@ class UsersModelMail extends JModelAdmin
 
 		// Get the Mailer
 		$mailer = MolajoFactory::getMailer();
-		$params = JComponentHelper::getParams('com_users');
+		$parameters = JComponentHelper::getParams('com_users');
 
 		// Build email message format.
 		$mailer->setSender(array($app->getSiteConfig('mailfrom'), $app->getSiteConfig('fromname')));
-		$mailer->setSubject($params->get('mailSubjectPrefix') . stripslashes($subject));
-		$mailer->setBody($message_body . $params->get('mailBodySuffix'));
+		$mailer->setSubject($parameters->get('mailSubjectPrefix') . stripslashes($subject));
+		$mailer->setBody($message_body . $parameters->get('mailBodySuffix'));
 		$mailer->IsHTML($mode);
 
 		// Add recipients

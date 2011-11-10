@@ -42,17 +42,17 @@ class MolajoContentSyntaxHighlighter {
      *
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object.
-     * @param	object		The content params
+     * @param	object		The content parameters
      * @param	string		The 'page' number
      * @param   string          Then name of the text field in the content object
      * @return	string
      * @since	1.6
      */
-    function driver ($context, &$content, &$params, $page, $location)
+    function driver ($context, &$content, &$parameters, $page, $location)
     {
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParams = new JParameter($molajoSystemPlugin->parameters);
         if ($systemParams->def('enable_syntax_highlighter', 0) == 0) {
             return;
         }

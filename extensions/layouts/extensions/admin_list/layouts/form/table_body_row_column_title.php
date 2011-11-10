@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die; 
 $defaultView = $this->state->get('request.DefaultView');
-if ($this->render['column_name'] == 'title' && $this->params->def('config_manager_grid_column_display_alias', 1)) {
+if ($this->render['column_name'] == 'title' && $this->parameters->def('config_manager_grid_column_display_alias', 1)) {
     $printAlias = '<br />'.$this->escape($this->row->alias);
 } else {
     $printAlias = '';
@@ -27,7 +27,7 @@ if ($this->render['column_name'] == 'title' && $this->params->def('config_manage
         <?php echo $this->row->title; ?>
 <?php endif; ?>
 
-<?php if ($this->params->def('config_manager_grid_column_display_alias', 1))  : ?>
+<?php if ($this->parameters->def('config_manager_grid_column_display_alias', 1))  : ?>
         <p class="smallsub"><?php echo MolajoText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($this->row->alias));?></p>
 <?php endif; ?>
 </td>

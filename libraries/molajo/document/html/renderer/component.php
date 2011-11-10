@@ -21,14 +21,14 @@ class MolajoDocumentRendererComponent extends MolajoDocumentRenderer
      * Renders a component script and returns the results as a string
      *
      * @param   string  $component  The name of the component to render
-     * @param   array   $params     Associative array of values
+     * @param   array   $parameters     Associative array of values
      * @param   string  $content    Content script
      *
      * @return  string  The output of the script
      *
      * @since   11.1
      */
-    public function render($component = null, $params = array(), $content = null)
+    public function render($component = null, $parameters = array(), $content = null)
     {
         return $content;
     }

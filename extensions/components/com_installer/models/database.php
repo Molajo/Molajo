@@ -218,24 +218,24 @@ class InstallerModelDatabase extends InstallerModelDisplay
 			$languages = $app->getLocaliseAdmin($db);
 			if (in_array($options->language, $languages)) {
 				// Build the language parameters for the language manager.
-				$params = array();
+				$parameters = array();
 
 				// Set default administrator/site language to sample data values:
-				$params['administrator'] = 'en-GB';
-				$params['site'] = 'en-GB';
+				$parameters['administrator'] = 'en-GB';
+				$parameters['site'] = 'en-GB';
 
 				if (in_array($options->language, $languages['admin'])) {
-					$params['administrator'] = $options->language;
+					$parameters['administrator'] = $options->language;
 				}
 				if (in_array($options->language, $languages['site'])) {
-					$params['site'] = $options->language;
+					$parameters['site'] = $options->language;
 				}
-				$params = json_encode($params);
+				$parameters = json_encode($parameters);
 
 				// Update the language settings in the language manager.
 				$db->setQuery(
 					'UPDATE `#__extensions`' .
-					' SET `params` = '.$db->Quote($params) .
+					' SET `parameters` = '.$db->Quote($parameters) .
 					' WHERE `element`="com_languages"'
 				);
 

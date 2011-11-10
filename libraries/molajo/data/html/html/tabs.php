@@ -22,15 +22,15 @@ abstract class MolajoHtmlTabs
      * Creates a panes and creates the JavaScript object for it.
      *
      * @param   string  $group   The pane identifier.
-     * @param   array   $params  An array of option.
+     * @param   array   $parameters  An array of option.
      *
      * @return  string
      *
      * @since   11.1
      */
-    public static function start($group = 'tabs', $params = array())
+    public static function start($group = 'tabs', $parameters = array())
     {
-        MolajoHTMLTabs::_loadBehavior($group, $params);
+        MolajoHTMLTabs::_loadBehavior($group, $parameters);
 
         return '<dl class="tabs" id="' . $group . '"><dt style="display:none;"></dt><dd style="display:none;">';
     }
@@ -66,13 +66,13 @@ abstract class MolajoHtmlTabs
      * Load the JavaScript behavior.
      *
      * @param   string  $group   The pane identifier.
-     * @param   array   $params  Array of options.
+     * @param   array   $parameters  Array of options.
      *
      * @return  void
      *
      * @since   11.1
      */
-    protected static function _loadBehavior($group, $params = array())
+    protected static function _loadBehavior($group, $parameters = array())
     {
         static $loaded = array();
 
@@ -81,10 +81,10 @@ abstract class MolajoHtmlTabs
             MolajoHTML::_('behavior.framework', true);
 
             $options = '{';
-            $opt['onActive'] = (isset($params['onActive'])) ? $params['onActive'] : null;
-            $opt['onBackground'] = (isset($params['onBackground'])) ? $params['onBackground'] : null;
-            $opt['display'] = (isset($params['startOffset'])) ? (int)$params['startOffset'] : null;
-            $opt['useStorage'] = (isset($params['useCookie']) && $params['useCookie']) ? 'true' : null;
+            $opt['onActive'] = (isset($parameters['onActive'])) ? $parameters['onActive'] : null;
+            $opt['onBackground'] = (isset($parameters['onBackground'])) ? $parameters['onBackground'] : null;
+            $opt['display'] = (isset($parameters['startOffset'])) ? (int)$parameters['startOffset'] : null;
+            $opt['useStorage'] = (isset($parameters['useCookie']) && $parameters['useCookie']) ? 'true' : null;
             $opt['titleSelector'] = "'dt.tabs'";
             $opt['descriptionSelector'] = "'dd.tabs'";
 

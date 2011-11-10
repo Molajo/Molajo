@@ -177,7 +177,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         $request['id'] = 0;
         $request['cid'] = 0;
         $request['catid'] = 0;
-        $request['params'] = array();
+        $request['parameters'] = array();
         $request['extension'] = 'component';
         $request['component_specific'] = '';
 
