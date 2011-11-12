@@ -88,8 +88,8 @@ class plgMolajoBroadcast extends MolajoPlugin	{
                                 FROM #__users a
                                 WHERE a.id = '.(int) $row->created_by .'
                                   AND a.block = 0
-                                  AND a.sendEmail = 1
-                                  AND a.activation = "" ';
+                                  AND a.send_email = 1
+                                  AND a.activated = "" ';
 
                     $db->setQuery($userQuery);
                     $userResults = $db->loadObjectList();

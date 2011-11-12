@@ -46,7 +46,7 @@
 		/>
 
 		<field
-			name="registerDate"
+			name="register_datetime"
 			type="calendar"
 			class="readonly"
 			label="COM_ADMIN_USER_FIELD_REGISTERDATE_LABEL"
@@ -58,7 +58,7 @@
 		/>
 
 		<field
-			name="lastvisitDate"
+			name="last_visit_datetime"
 			type="calendar"
 			class="readonly"
 			label="COM_ADMIN_USER_FIELD_LASTVISIT_LABEL"

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Memcache cache storage handler
@@ -42,8 +42,6 @@ class JCacheStorageMemcache extends JCacheStorage
 	 *
 	 * @param   array  $options  Optional parameters.
 	 *
-	 * @return  JCacheStorageMemcache
-	 *
 	 * @since   11.1
 	 */
 	public function __construct($options = array())
@@ -69,7 +67,7 @@ class JCacheStorageMemcache extends JCacheStorage
 			return false;
 		}
 
-		$config = JFactory::getSiteConfig();
+		$config = JFactory::getConfig();
 		$this->_persistent = $config->get('memcache_persist', true);
 		$this->_compress = $config->get('memcache_compress', false) == false ? 0 : MEMCACHE_COMPRESSED;
 
@@ -89,7 +87,7 @@ class JCacheStorageMemcache extends JCacheStorage
 			return JError::raiseError(404, "Could not connect to memcache server");
 		}
 
-		// Memcahed has no list keys, we do our own accounting, initalise key index
+		// Memcahed has no list keys, we do our own accounting, initialise key index
 		if (self::$_db->get($this->_hash . '-index') === false)
 		{
 			$empty = array();
@@ -300,7 +298,7 @@ class JCacheStorageMemcache extends JCacheStorage
 			return false;
 		}
 
-		$config = JFactory::getSiteConfig();
+		$config = JFactory::getConfig();
 		$host = $config->get('memcache_server_host', 'localhost');
 		$port = $config->get('memcache_server_port', 11211);
 
@@ -397,8 +395,6 @@ class JCacheStorageMemcache extends JCacheStorage
 	 */
 	public function unlock($id, $group = null)
 	{
-		$unlock = false;
-
 		$cache_id = $this->_getCacheId($id, $group) . '_lock';
 
 		if (!$this->lockindex())

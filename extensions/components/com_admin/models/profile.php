@@ -100,7 +100,7 @@ class AdminModelProfile extends UsersModelUser
 
 		unset($data['id']);
 		unset($data['groups']);
-		unset($data['sendEmail']);
+		unset($data['send_email']);
 		unset($data['block']);
 
 		// Bind the data.

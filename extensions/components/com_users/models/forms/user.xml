@@ -50,7 +50,7 @@
 		    />
 
 		<field
-			name="registerDate"
+			name="register_datetime"
 			type="calendar"
 			class="readonly"
 			label="COM_USERS_USER_FIELD_REGISTERDATE_LABEL"
@@ -62,7 +62,7 @@
 		    />
 
 		<field
-			name="lastvisitDate"
+			name="last_visit_datetime"
 			type="calendar"
 			class="readonly"
 			label="COM_USERS_USER_FIELD_LASTVISIT_LABEL"
@@ -74,7 +74,7 @@
 		    />
 
 		<field
-            name="sendEmail"
+            name="send_email"
             type="radio"
             default="0"
             label="COM_USERS_USER_FIELD_SENDEMAIL_LABEL"

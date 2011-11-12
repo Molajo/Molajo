@@ -233,10 +233,10 @@ class InstallerModelConfiguration extends MolajoModelDummy
 				. ', email = '.$db->quote($config->admin_email)
 				. ', password = '.$db->quote($cryptpass)
 				. ', block = 0'
-				. ', sendEmail = 1'
-				. ', registerDate = '.$db->quote($installdate)
-				. ', lastvisitDate = '.$db->quote($nullDate)
-				. ', activation = '.$db->quote('')
+				. ', send_email = 1'
+				. ', register_datetime = '.$db->quote($installdate)
+				. ', last_visit_datetime = '.$db->quote($nullDate)
+				. ', activated = '.$db->quote('')
 				. ', parameters = '.$db->quote('')
 				. ', asset_id = 5 ';
 

@@ -25,7 +25,7 @@
 --
 -- SEQUENCE MATTERS: individually replace Table Creation DDL in the sequence specified
 --
--- Make certain to test any changes so that it works with installation and sample data
+-- Make certain to test changes all the way through the installation and sample data
 -- -----------------------------------------------------
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -65,6 +65,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE  TABLE IF NOT EXISTS `molajo_source_tables` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key' ,
   `source_table` VARCHAR(255) NOT NULL DEFAULT ' ' ,
+  `option` VARCHAR(45) NOT NULL DEFAULT '' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -79,7 +80,9 @@ CREATE  TABLE IF NOT EXISTS `molajo_categories` (
   `subtitle` VARCHAR(255) NOT NULL DEFAULT '' ,
   `alias` VARCHAR(255) NOT NULL DEFAULT '' ,
   `content_text` MEDIUMTEXT NULL ,
-  `status` INT(3) UNSIGNED NOT NULL DEFAULT 0 ,
+  `featured` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
+  `stickied` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
+  `status` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   `start_publishing_datetime` DATETIME NULL DEFAULT '0000-00-00 00:00:00' ,
   `stop_publishing_datetime` DATETIME NULL DEFAULT '0000-00-00 00:00:00' ,
   `version` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
@@ -123,10 +126,10 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_types` (
   `extension_type` VARCHAR(255) NOT NULL DEFAULT ' ' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_actions_table_title` ON `molajo_extension_types` (`extension_type` ASC) ;
+CREATE UNIQUE INDEX `idx_actions_table_title_index` ON `molajo_extension_types` (`extension_type` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 06 `molajo_update_sites`
@@ -135,19 +138,11 @@ CREATE  TABLE IF NOT EXISTS `molajo_update_sites` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NULL DEFAULT ' ' ,
   `enabled` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `extension_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `location` VARCHAR(255) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_update_sites_extension_types1`
-    FOREIGN KEY (`extension_type_id` )
-    REFERENCES `molajo_extension_types` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `fk_update_sites_extension_types2` ON `molajo_update_sites` (`extension_type_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 07 `molajo_groups`
@@ -157,6 +152,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_groups` (
   `title` VARCHAR(255) NOT NULL DEFAULT '  ' ,
   `subtitle` VARCHAR(255) NOT NULL DEFAULT ' ' ,
   `description` MEDIUMTEXT NOT NULL ,
+  `type` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   `protected` TINYINT(4) NOT NULL DEFAULT 0 COMMENT 'If true, protects group from system removal via the interface.' ,
   `custom_fields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL ,
@@ -201,7 +197,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_users` (
   `email` VARCHAR(255) NULL DEFAULT '  ' ,
   `password` VARCHAR(100) NOT NULL DEFAULT '  ' ,
   `block` TINYINT(4) NOT NULL DEFAULT 0 ,
-  `activated` TINYINT(4) NOT NULL DEFAULT 0 ,
+  `activation` VARCHAR(100) NOT NULL DEFAULT '' ,
   `send_email` TINYINT(4) NOT NULL DEFAULT 0 ,
   `register_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' ,
   `last_visit_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' ,
@@ -228,71 +224,7 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table 11 `molajo_content`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_content` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
-  `title` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Title' ,
-  `subtitle` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Subtitle' ,
-  `alias` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URL Alias' ,
-  `content_type` TINYINT(4) NOT NULL DEFAULT 0 COMMENT 'Content Type: Links to #__configuration.option_id = 10 and component_option values matching ' ,
-  `content_text` MEDIUMTEXT NULL COMMENT 'Content Primary Text Field, can include break to designate Introductory and Full text' ,
-  `content_link` VARCHAR(2083) NULL COMMENT 'Content Link for Weblink or Newsfeed Field' ,
-  `content_email_address` VARCHAR(255) NULL COMMENT 'Content Email Field' ,
-  `content_numeric_value` TINYINT(4) NULL COMMENT 'Content Numeric Value, ex. vote on poll' ,
-  `content_file` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Content Network Path to File' ,
-  `featured` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Featured 1-Featured 0-Not Featured' ,
-  `stickied` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Stickied 1-Stickied 0-Not Stickied' ,
-  `user_default` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'User DEFAULT 1-DEFAULT 0-Not DEFAULT' ,
-  `category_default` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Category DEFAULT 1-DEFAULT 0-Not DEFAULT' ,
-  `status` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version' ,
-  `start_publishing_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish Begin Date and Time' ,
-  `stop_publishing_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish End Date and Time' ,
-  `version` INT(11) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Version Number' ,
-  `version_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Primary ID for this Version' ,
-  `status_prior_to_version` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'State value prior to creating this version copy and changing the state to Version' ,
-  `created_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Created Date and Time' ,
-  `created_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Created by User ID' ,
-  `created_by_alias` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created by Alias' ,
-  `created_by_email` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created By Email Address' ,
-  `created_by_website` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created By Website' ,
-  `created_by_ip_address` CHAR(15) NOT NULL DEFAULT '' COMMENT 'Created By IP Address' ,
-  `created_by_referer` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created By Referer' ,
-  `modified_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Modified Date' ,
-  `modified_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Modified By User ID' ,
-  `checked_out_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Checked out Date and Time' ,
-  `checked_out_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Checked out by User Id' ,
-  `parent_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Nested set parent' ,
-  `lft` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Nested set lft' ,
-  `rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Nested set rgt' ,
-  `level` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'The cached level in the nested tree' ,
-  `metakey` TEXT NULL DEFAULT '' COMMENT 'Meta Key' ,
-  `metadesc` TEXT NULL COMMENT 'Meta Description' ,
-  `metadata` TEXT NULL COMMENT 'Meta Data' ,
-  `custom_fields` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
-  `parameters` MEDIUMTEXT NULL COMMENT 'Configurable Parameter Values' ,
-  `language` CHAR(7) NULL DEFAULT 'en-GB' ,
-  `translation_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `extension_instance_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering' ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `idx_component_component_id_id` ON `molajo_content` (`id` ASC) ;
-
-CREATE INDEX `idx_checkout` ON `molajo_content` (`checked_out_by` ASC) ;
-
-CREATE INDEX `idx_state` ON `molajo_content` (`status` ASC) ;
-
-CREATE INDEX `idx_createdby` ON `molajo_content` (`created_by` ASC) ;
-
-CREATE INDEX `idx_featured_catid` ON `molajo_content` (`featured` ASC) ;
-
-CREATE INDEX `idx_stickied_catid` ON `molajo_content` (`stickied` ASC) ;
-
--- -----------------------------------------------------
--- Table 12 `molajo_extensions`
+-- Table 11 `molajo_extensions`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_extensions` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -306,6 +238,11 @@ CREATE  TABLE IF NOT EXISTS `molajo_extensions` (
     FOREIGN KEY (`extension_type_id` )
     REFERENCES `molajo_extension_types` (`id` )
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_extensions_update_sites1`
+    FOREIGN KEY (`update_site_id` )
+    REFERENCES `molajo_update_sites` (`id` )
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -313,8 +250,10 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_extensions_extension_types2` ON `molajo_extensions` (`extension_type_id` ASC) ;
 
+CREATE INDEX `fk_extensions_update_sites2` ON `molajo_extensions` (`update_site_id` ASC) ;
+
 -- -----------------------------------------------------
--- Table 13 `molajo_assets`
+-- Table 12 `molajo_assets`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_assets` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Assets Primary Key' ,
@@ -323,6 +262,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_assets` (
   `title` VARCHAR(255) NOT NULL DEFAULT ' ' ,
   `sef_request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'URL' ,
   `request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.' ,
+  `primary_category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `language` CHAR(7) NOT NULL DEFAULT 'en-GB' ,
   `translation_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `redirect_to_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
@@ -340,7 +280,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_assets_source_tables2` ON `molajo_assets` (`source_table_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 14 `molajo_extension_instances`
+-- Table 13 `molajo_extension_instances`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
@@ -350,11 +290,12 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   `subtitle` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Subtitle' ,
   `alias` VARCHAR(255) NOT NULL DEFAULT ' ' ,
   `content_text` MEDIUMTEXT NULL COMMENT 'Content Primary Text Field, can include break to designate Introductory and Full text' ,
-  `protected` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `enabled` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version' ,
-  `start_publishing_datetime` DATETIME NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish Begin Date and Time' ,
-  `stop_publishing_datetime` DATETIME NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish End Date and Time' ,
+  `protected` TINYINT(4) NOT NULL DEFAULT 0 ,
+  `featured` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
+  `stickied` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
+  `status` TINYINT(4) NOT NULL DEFAULT 0 COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version' ,
+  `start_publishing_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish Begin Date and Time' ,
+  `stop_publishing_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish End Date and Time' ,
   `version` INT(11) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Version Number' ,
   `version_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Primary ID for this Version' ,
   `status_prior_to_version` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'State value prior to creating this version copy and changing the state to Version' ,
@@ -367,17 +308,10 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   `custom_fields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
   `position` VARCHAR(50) NOT NULL DEFAULT ' ' COMMENT 'User DEFAULT 1-DEFAULT 0-Not DEFAULT' ,
-  `menu_item_parent_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `menu_item_level` INT(11) NOT NULL DEFAULT 0 ,
-  `menu_item_type` VARCHAR(45) NOT NULL DEFAULT '' ,
-  `menu_item_extension_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `menu_item_template_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `menu_item_link_target` VARCHAR(45) NULL ,
-  `menu_item_lft` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `menu_item_rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `menu_item_home` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 ,
-  `menu_item_sef_request` VARCHAR(2048) NULL DEFAULT '' ,
-  `menu_item_request` VARCHAR(2048) NULL DEFAULT '' ,
+  `parent_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `lft` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `level` INT(11) NOT NULL DEFAULT 0 ,
   `language` CHAR(7) NULL DEFAULT 'en-GB' ,
   `translation_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering' ,
@@ -385,6 +319,11 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_instances` (
   CONSTRAINT `fk_extension_instances_extensions1`
     FOREIGN KEY (`extension_id` )
     REFERENCES `molajo_extensions` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_extension_instances_extension_types1`
+    FOREIGN KEY (`extension_type_id` )
+    REFERENCES `molajo_extension_types` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -400,16 +339,33 @@ CREATE INDEX `idx_createdby` ON `molajo_extension_instances` (`created_by` ASC) 
 
 CREATE INDEX `fk_extension_instances_extensions2` ON `molajo_extension_instances` (`extension_id` ASC) ;
 
+CREATE INDEX `fk_extension_instances_extension_types2` ON `molajo_extension_instances` (`extension_type_id` ASC) ;
+
 -- -----------------------------------------------------
--- Table 15 `molajo_extension_criteria`
+-- Table 14 `molajo_extension_instance_options`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_extension_criteria` (
+CREATE  TABLE IF NOT EXISTS `molajo_extension_instance_options` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `extension_instance_id` INT(11) UNSIGNED NOT NULL ,
-  `extension_type_id` INT(11) UNSIGNED NOT NULL ,
-  `position` VARCHAR(50) NOT NULL ,
+  `extension_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `option_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `option_value` VARCHAR(80) NOT NULL DEFAULT '' ,
+  `option_value_literal` VARCHAR(255) NOT NULL DEFAULT '' ,
+  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `position` VARCHAR(50) NOT NULL DEFAULT '' ,
+  `ordering` INT(11) NOT NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_extension_criteria_extension_types1`
+  CONSTRAINT `fk_configurations_extension_instances1`
+    FOREIGN KEY (`extension_instance_id` )
+    REFERENCES `molajo_extension_instances` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_extension_configurations_assets1`
+    FOREIGN KEY (`asset_id` )
+    REFERENCES `molajo_assets` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_extension_instance_options_extension_types1`
     FOREIGN KEY (`extension_type_id` )
     REFERENCES `molajo_extension_types` (`id` )
     ON DELETE NO ACTION
@@ -417,33 +373,16 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_criteria` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_extension_criteria_extension_types2` ON `molajo_extension_criteria` (`extension_type_id` ASC) ;
+CREATE UNIQUE INDEX `idx_component_option_id_value_key` ON `molajo_extension_instance_options` (`extension_instance_id` ASC, `option_id` ASC, `option_value` ASC) ;
+
+CREATE INDEX `fk_configurations_extension_instances2` ON `molajo_extension_instance_options` (`extension_instance_id` ASC) ;
+
+CREATE INDEX `fk_extension_configurations_assets2` ON `molajo_extension_instance_options` (`asset_id` ASC) ;
+
+CREATE INDEX `fk_extension_instance_options_extension_types2` ON `molajo_extension_instance_options` (`extension_type_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 16 `molajo_extension_configurations`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_extension_configurations` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `extension_instances_id` INT(11) UNSIGNED NOT NULL ,
-  `option_id` INT(11) UNSIGNED NOT NULL DEFAULT '0' ,
-  `option_value` VARCHAR(80) NOT NULL DEFAULT ' ' ,
-  `option_value_literal` VARCHAR(255) NOT NULL DEFAULT ' ' ,
-  `ordering` INT(11) NOT NULL DEFAULT '0' ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_configurations_extension_instances1`
-    FOREIGN KEY (`extension_instances_id` )
-    REFERENCES `molajo_extension_instances` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-CREATE UNIQUE INDEX `idx_component_option_id_value_key` ON `molajo_extension_configurations` (`extension_instances_id` ASC, `option_id` ASC, `option_value` ASC) ;
-
-CREATE INDEX `fk_configurations_extension_instances2` ON `molajo_extension_configurations` (`extension_instances_id` ASC) ;
-
--- -----------------------------------------------------
--- Table 17 `molajo_group_view_groups`
+-- Table 15 `molajo_group_view_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_group_view_groups` (
   `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'FK to the #__group table.' ,
@@ -460,7 +399,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_group_view_groups` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_group_view_groups_groups2` ON `molajo_group_view_groups` (`group_id` ASC) ;
@@ -468,7 +407,7 @@ CREATE INDEX `fk_group_view_groups_groups2` ON `molajo_group_view_groups` (`grou
 CREATE INDEX `fk_group_view_groups_view_groups2` ON `molajo_group_view_groups` (`view_group_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 18 `molajo_view_group_permissions`
+-- Table 16 `molajo_view_group_permissions`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_view_group_permissions` (
   `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__groups.id' ,
@@ -500,7 +439,7 @@ CREATE INDEX `fk_view_group_permissions_actions2` ON `molajo_view_group_permissi
 CREATE INDEX `fk_view_group_permissions_assets2` ON `molajo_view_group_permissions` (`asset_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 19 `molajo_group_permissions`
+-- Table 17 `molajo_group_permissions`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_group_permissions` (
   `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #_groups.id' ,
@@ -532,21 +471,85 @@ CREATE INDEX `fk_group_permissions_assets2` ON `molajo_group_permissions` (`asse
 CREATE INDEX `fk_group_permissions_actions2` ON `molajo_group_permissions` (`action_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 20 `molajo_sessions`
+-- Table 18 `molajo_content`
 -- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `molajo_content` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key' ,
+  `extension_instance_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `title` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Title' ,
+  `subtitle` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Subtitle' ,
+  `alias` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URL Alias' ,
+  `content_type` TINYINT(4) NOT NULL DEFAULT 0 COMMENT 'Content Type: Links to #__configuration.option_id = 10 and component_option values matching ' ,
+  `content_text` MEDIUMTEXT NULL COMMENT 'Content Primary Text Field, can include break to designate Introductory and Full text' ,
+  `content_link` VARCHAR(2083) NULL COMMENT 'Content Link for Weblink or Newsfeed Field' ,
+  `content_email_address` VARCHAR(255) NULL COMMENT 'Content Email Field' ,
+  `content_numeric_value` TINYINT(4) NULL COMMENT 'Content Numeric Value, ex. vote on poll' ,
+  `content_file` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Content Network Path to File' ,
+  `user_default` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'User DEFAULT 1-DEFAULT 0-Not DEFAULT' ,
+  `category_default` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Category DEFAULT 1-DEFAULT 0-Not DEFAULT' ,
+  `featured` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Featured 1-Featured 0-Not Featured' ,
+  `stickied` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Stickied 1-Stickied 0-Not Stickied' ,
+  `status` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Published State 2: Archived 1: Published 0: Unpublished -1: Trashed -2: Spam -10 Version' ,
+  `start_publishing_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish Begin Date and Time' ,
+  `stop_publishing_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Publish End Date and Time' ,
+  `version` INT(11) UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Version Number' ,
+  `version_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Primary ID for this Version' ,
+  `status_prior_to_version` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'State value prior to creating this version copy and changing the state to Version' ,
+  `created_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Created Date and Time' ,
+  `created_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Created by User ID' ,
+  `created_by_alias` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created by Alias' ,
+  `created_by_email` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created By Email Address' ,
+  `created_by_website` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created By Website' ,
+  `created_by_ip_address` CHAR(15) NOT NULL DEFAULT '' COMMENT 'Created By IP Address' ,
+  `created_by_referer` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Created By Referer' ,
+  `modified_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Modified Date' ,
+  `modified_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Modified By User ID' ,
+  `checked_out_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Checked out Date and Time' ,
+  `checked_out_by` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Checked out by User Id' ,
+  `parent_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Nested set parent' ,
+  `lft` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Nested set lft' ,
+  `rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Nested set rgt' ,
+  `level` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'The cached level in the nested tree' ,
+  `metakey` TEXT NULL DEFAULT '' COMMENT 'Meta Key' ,
+  `metadesc` TEXT NULL COMMENT 'Meta Description' ,
+  `metadata` TEXT NULL COMMENT 'Meta Data' ,
+  `custom_fields` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
+  `parameters` MEDIUMTEXT NULL COMMENT 'Configurable Parameter Values' ,
+  `language` CHAR(7) NULL DEFAULT 'en-GB' ,
+  `translation_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Ordering' ,
+  PRIMARY KEY (`id`) ,
+  CONSTRAINT `fk_content_extension_instances1`
+    FOREIGN KEY (`extension_instance_id` )
+    REFERENCES `molajo_extension_instances` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE INDEX `idx_component_component_id_id` ON `molajo_content` (`id` ASC) ;
+
+CREATE INDEX `idx_checkout` ON `molajo_content` (`checked_out_by` ASC) ;
+
+CREATE INDEX `idx_state` ON `molajo_content` (`status` ASC) ;
+
+CREATE INDEX `idx_createdby` ON `molajo_content` (`created_by` ASC) ;
+
+CREATE INDEX `idx_featured_catid` ON `molajo_content` (`featured` ASC) ;
+
+CREATE INDEX `idx_stickied_catid` ON `molajo_content` (`stickied` ASC) ;
+
+CREATE INDEX `fk_content_extension_instances2` ON `molajo_content` (`extension_instance_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table `molajo`.`sessions`
+-- Table 19 `molajo_sessions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `molajo`.`sessions` ;
-
 CREATE  TABLE IF NOT EXISTS `molajo`.`sessions` (
   `session_id` VARCHAR(32) NOT NULL ,
   `application_id` INT(11) UNSIGNED NOT NULL ,
-  `guest` INT(1) UNSIGNED NOT NULL DEFAULT '1' ,
   `session_time` VARCHAR(14) NULL DEFAULT ' ' ,
   `data` LONGTEXT NULL ,
-  `userid` INT(11) UNSIGNED NULL DEFAULT 0 ,
+  `user_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`session_id`) ,
   CONSTRAINT `fk_sessions_applications1`
     FOREIGN KEY (`application_id` )
@@ -559,7 +562,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_sessions_applications2` ON `molajo`.`sessions` (`application_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 21 `molajo_user_applications`
+-- Table 20 `molajo_user_applications`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_applications` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__users.id' ,
@@ -583,7 +586,7 @@ CREATE INDEX `fk_user_applications_users` ON `molajo_user_applications` (`user_i
 CREATE INDEX `fk_user_applications_applications` ON `molajo_user_applications` (`application_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 22 `molajo_user_view_groups`
+-- Table 21 `molajo_user_view_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_view_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__users.id' ,
@@ -607,7 +610,7 @@ CREATE INDEX `fk_user_view_groups_users2` ON `molajo_user_view_groups` (`user_id
 CREATE INDEX `fk_user_view_groups_view_groups2` ON `molajo_user_view_groups` (`view_group_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 23 `molajo_user_groups`
+-- Table 22 `molajo_user_groups`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__users.id' ,
@@ -631,21 +634,15 @@ CREATE INDEX `fk_molajo_user_groups_molajo_users2` ON `molajo_user_groups` (`use
 CREATE INDEX `fk_molajo_user_groups_molajo_groups2` ON `molajo_user_groups` (`group_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 24 `molajo_application_extensions`
+-- Table 23 `molajo_application_extensions`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_application_extensions` (
+CREATE  TABLE IF NOT EXISTS `molajo_application_extension_instances` (
   `application_id` INT(11) UNSIGNED NOT NULL ,
-  `extension_id` INT(11) UNSIGNED NOT NULL ,
   `extension_instance_id` INT(11) UNSIGNED NOT NULL ,
-  PRIMARY KEY (`application_id`, `extension_id`, `extension_instance_id`) ,
+  PRIMARY KEY (`application_id`, `extension_instance_id`) ,
   CONSTRAINT `fk_application_extensions_applications1`
     FOREIGN KEY (`application_id` )
     REFERENCES `molajo_applications` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_application_extensions_extensions1`
-    FOREIGN KEY (`extension_id` )
-    REFERENCES `molajo_extensions` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_application_extensions_extension_instances1`
@@ -655,36 +652,39 @@ CREATE  TABLE IF NOT EXISTS `molajo_application_extensions` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_application_extensions_applications2` ON `molajo_application_extensions` (`application_id` ASC) ;
+CREATE INDEX `fk_application_extensions_applications2` ON `molajo_application_extension_instances` (`application_id` ASC) ;
 
-CREATE INDEX `fk_application_extensions_extensions2` ON `molajo_application_extensions` (`extension_id` ASC) ;
-
-CREATE INDEX `fk_application_extensions_extension_instances2` ON `molajo_application_extensions` (`extension_instance_id` ASC) ;
+CREATE INDEX `fk_application_extensions_extension_instances2` ON `molajo_application_extension_instances` (`extension_instance_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 25 `molajo_content_categories`
+-- Table 24 `molajo_asset_categories`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_content_categories` (
+CREATE  TABLE IF NOT EXISTS `molajo_asset_categories` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Actions Primary Key' ,
+  `asset_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `content_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `content_table_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `ordering` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `primary_content_category` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_content_categories_categories1`
     FOREIGN KEY (`category_id` )
     REFERENCES `molajo_categories` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_asset_categories_assets1`
+    FOREIGN KEY (`asset_id` )
+    REFERENCES `molajo_assets` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_content_categories_categories2` ON `molajo_content_categories` (`category_id` ASC) ;
+CREATE INDEX `fk_content_categories_categories2` ON `molajo_asset_categories` (`category_id` ASC) ;
+
+CREATE INDEX `fk_asset_categories_assets2` ON `molajo_asset_categories` (`asset_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 26 `molajo_site_applications`
+-- Table 25 `molajo_site_applications`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_site_applications` (
   `site_id` INT(11) UNSIGNED NOT NULL ,
@@ -705,3 +705,26 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_site_applications_sites2` ON `molajo_site_applications` (`site_id` ASC) ;
 
 CREATE INDEX `fk_site_applications_applications2` ON `molajo_site_applications` (`application_id` ASC) ;
+
+-- -----------------------------------------------------
+-- Table 26 `molajo_site_extension_instances`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `molajo_site_extension_instances` (
+  `site_id` INT(11) UNSIGNED NOT NULL ,
+  `extension_instance_id` INT(11) UNSIGNED NOT NULL ,
+  PRIMARY KEY (`site_id`, `extension_instance_id`) ,
+  CONSTRAINT `fk_site_extension_instances_sites1`
+    FOREIGN KEY (`site_id` )
+    REFERENCES `molajo_sites` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_site_extension_instances_extension_instances1`
+    FOREIGN KEY (`extension_instance_id` )
+    REFERENCES `molajo_extension_instances` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_site_extension_instances_sites2` ON `molajo_site_extension_instances` (`site_id` ASC) ;
+
+CREATE INDEX `fk_site_extension_instances_extension_instances2` ON `molajo_site_extension_instances` (`extension_instance_id` ASC) ;

@@ -33,7 +33,7 @@ abstract class MolajoUserHelper
     public static function addUserToGroup($userId, $groupId)
     {
         // Get the user object.
-        $user = new MolajoUser((int)$userId);
+        $user = new MolajoUser((int) $userId);
 
         // Add the user to the group if necessary.
         if (in_array($groupId, $user->groups)) {
@@ -43,7 +43,7 @@ abstract class MolajoUserHelper
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__groups`' .
-                ' WHERE `id` = ' . (int)$groupId
+                ' WHERE `id` = ' . (int) $groupId
             );
             $title = $db->loadResult();
 
@@ -212,7 +212,7 @@ abstract class MolajoUserHelper
     /**
      * Method to activate a user
      *
-     * @param   string   $activation    Activation string
+     * @param   string   $activated    Activation string
      *
      * @return  boolean  True on success
      * @since   1.0
@@ -225,10 +225,10 @@ abstract class MolajoUserHelper
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'
                  . ' FROM #__users'
-                 . ' WHERE activation = ' . $db->Quote($activation)
+                 . ' WHERE activated = ' . $db->Quote($activation)
                  . ' AND block = 1'
-                 . ' AND lastvisitDate = ' . $db->Quote('0000-00-00 00:00:00');
-        ;
+                 . ' AND last_visit_datetime = ' . $db->Quote('0000-00-00 00:00:00');
+
         $db->setQuery($query);
         $id = intval($db->loadResult());
 
@@ -237,16 +237,14 @@ abstract class MolajoUserHelper
             $user = MolajoUser::getInstance((int)$id);
 
             $user->set('block', '0');
-            $user->set('activation', '');
+            $user->set('activated', '');
 
             // Time to take care of business.... store the user.
             if (!$user->save()) {
                 MolajoError::raiseWarning("SOME_ERROR_CODE", $user->getError());
                 return false;
             }
-        }
-        else
-        {
+        } else {
             MolajoError::raiseWarning("SOME_ERROR_CODE", MolajoText::_('MOLAJO_USER_ERROR_UNABLE_TO_FIND_USER'));
             return false;
         }

@@ -183,7 +183,6 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
 
         $request['current_url'] = JURI::base().'/installation';
         $request['component_path'] = MOLAJO_EXTENSION_COMPONENTS.'/'.$request['option'];
-        DEFINE('JPATH_COMPONENT', $request['component_path']) ;
         $request['base_url'] = MOLAJO_BASE_FOLDER.'/installation';
         $request['item_id'] = null;
 

@@ -372,13 +372,13 @@ class UsersModelUser extends JModelAdmin
 				// Don't allow non-super-admin to delete a super admin
 				$allow = (!$iAmSuperAdmin && JAccess::check($pk, 'core.admin')) ? false : $allow;
 
-				if (empty($table->activation)) {
+				if (empty($table->activated)) {
 					// Ignore activated accounts.
 					unset($pks[$i]);
 				}
 				else if ($allow) {
 					$table->block		= 0;
-					$table->activation	= '';
+					$table->activated	= '';
 
 					// Allow an exception to be thrown.
 					try

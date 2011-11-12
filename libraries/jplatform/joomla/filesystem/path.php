@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 // Define a boolean constant as true if a Windows based host
 define('JPATH_ISWIN', (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'));
@@ -61,7 +61,7 @@ class JPath
 	}
 
 	/**
-	 * Chmods files and directories recursivly to given permissions.
+	 * Chmods files and directories recursively to given permissions.
 	 *
 	 * @param   string  $path        Root path to begin changing mode [without trailing slash].
 	 * @param   string  $filemode    Octal representation of the value to change file mode to [null = no change].
@@ -207,7 +207,7 @@ class JPath
 		}
 		else
 		{
-			// Remove double slashes and backslahses and convert all slashes and backslashes to DS
+			// Remove double slashes and backslashes and convert all slashes and backslashes to DS
 			$path = preg_replace('#[/\\\\]+#', $ds, $path);
 		}
 
@@ -288,7 +288,7 @@ class JPath
 
 			// The substr() check added to make sure that the realpath()
 			// results in a directory registered so that
-			// non-registered directores are not accessible via directory
+			// non-registered directories are not accessible via directory
 			// traversal attempts.
 			if (file_exists($fullname) && substr($fullname, 0, strlen($path)) == $path)
 			{

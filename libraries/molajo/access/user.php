@@ -25,85 +25,114 @@ class MolajoUser extends JObject
     protected $isRoot = null;
 
     /**
-     * User ID
+     * $id
      * @var int
      */
     public $id = null;
 
     /**
-     * User Name
-     * @var string
-     */
-    public $name = null;
-
-    /**
-     * User Login Name
+     * $username
      * @var string
      */
     public $username = null;
 
     /**
-     * User email address
+     * $first_name
+     * @var string
+     */
+    public $first_name = null;
+
+    /**
+     * $last_name
+     * @var string
+     */
+    public $last_name = null;
+
+    /**
+     * $name
+     * @var string
+     */
+    public $name = null;
+
+    /**
+     * $content_text
+     * @var string
+     */
+    public $content_text = null;
+
+    /**
+     * $email
      * @var string
      */
     public $email = null;
 
     /**
+     * $password
      * MD5 encrypted password
      * @var string
      */
     public $password = null;
 
     /**
+     * $password_clear
      * Clear password, only available when a new password is set for a user
      * @var string
      */
     public $password_clear = '';
 
     /**
-     * User Type
-     * @var string
-     */
-    public $usertype = null;
-
-    /**
-     * Description
+     * $block
      * @var int
      */
     public $block = null;
 
     /**
-     * Description
+     * $send_email
+     * Send Email switch
      * @var int
      */
-    public $sendEmail = null;
+    public $send_email = null;
 
     /**
-     * Description
+     * $register_datetime
      * @var datetime
      */
-    public $registerDate = null;
+    public $register_datetime = null;
 
     /**
-     * Description
+     * $last_visit_datetime
      * @var datetime
      */
-    public $lastvisitDate = null;
+    public $last_visit_datetime = null;
 
     /**
-     * Description
-     * @var string activation hash
+     * $activated
+     * @var string activated hash
      */
-    public $activation = null;
+    public $activated = null;
 
     /**
-     * Description
+     * $parameters
      * @var string
      */
     public $parameters = null;
 
     /**
-     * Associative array of user names => group ids
+     * $custom_fields
+     * @var string
+     */
+    public $custom_fields = null;
+
+    /**
+     * Associative array of user => applications
+     *
+     * @since  1.0
+     * @var    array
+     */
+    public $applications = array();
+
+    /**
+     * Associative array of user => group ids
      *
      * @since  1.0
      * @var    array
@@ -111,7 +140,15 @@ class MolajoUser extends JObject
     public $groups = array();
 
     /**
-     * Description
+     * Associative array of user => view group ids
+     *
+     * @since  1.0
+     * @var    array
+     */
+    public $view_groups = array();
+
+    /**
+     * $guest
      * @var boolean
      */
     public $guest = null;
@@ -123,54 +160,10 @@ class MolajoUser extends JObject
     protected $_parameters = null;
 
     /**
-     * Authorised access groups
-     * @var array
-     */
-    protected $_authGroups = null;
-
-    /**
-     * Authorised access levels
-     * @var array
-     */
-    protected $_authLevels = null;
-
-    /**
-     * Authorised access actions
-     * @var array
-     */
-    protected $_authActions = null;
-
-    /**
      * Error message
      * @var string
      */
     protected $_errorMsg = null;
-
-    /**
-     * __construct
-     *
-     * Constructor activating the default information of the language
-     *
-     * @param   integer  $identifier  The primary key of the user to load (optional).
-     *
-     * @return  object  MolajoUser
-     * @since   1.0
-     */
-    public function __construct($identifier = 0)
-    {
-        // Create the user parameters object
-        $this->_parameters = new JRegistry;
-
-        // Load the user if it exists
-        if (empty($identifier)) {
-            $this->id = 0;
-            $this->sendEmail = 0;
-            $this->aid = 0;
-            $this->guest = 1;
-        } else {
-            $this->load($identifier);
-        }
-    }
 
     /**
      * getInstance
@@ -209,6 +202,31 @@ class MolajoUser extends JObject
         }
 
         return $instances[$id];
+    }
+
+    /**
+     * __construct
+     *
+     * Constructor activating the default information of the language
+     *
+     * @param   integer  $identifier  The primary key of the user to load (optional).
+     *
+     * @return  object  user
+     * @since   1.0
+     */
+    public function __construct($identifier = 0)
+    {
+        // Create the user parameters object
+        $this->_parameters = new JRegistry;
+
+        // Load the user if it exists
+        if (empty($identifier)) {
+            $this->id = 0;
+            $this->send_email = 0;
+            $this->guest = 1;
+        } else {
+            $this->load($identifier);
+        }
     }
 
     /**
@@ -404,16 +422,14 @@ class MolajoUser extends JObject
             $array['password'] = $crypt . ':' . $salt;
 
             // Set the registration timestamp
-            $this->set('registerDate', MolajoFactory::getDate()->toMySQL());
+            $this->set('register_datetime', MolajoFactory::getDate()->toMySQL());
 
-            // Check that username is not greater than 150 characters
             $username = $this->get('username');
-            if (strlen($username) > 150) {
-                $username = substr($username, 0, 150);
+            if (strlen($username) > 250) {
+                $username = substr($username, 0, 250);
                 $this->set('username', $username);
             }
 
-            // Check that password is not greater than 100 characters
             $password = $this->get('password');
             if (strlen($password) > 100) {
                 $password = substr($password, 0, 100);

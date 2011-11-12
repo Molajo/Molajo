@@ -7,8 +7,6 @@
  */
 defined('MOLAJO') or die;
 
-include dirname(__FILE__).'/include/css.php';
-
 if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
     <!DOCTYPE html>
 <?php else: ?>

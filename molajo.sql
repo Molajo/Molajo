@@ -2388,7 +2388,7 @@ CREATE TABLE `molajo_users` (
   `block` tinyint(4) NOT NULL DEFAULT '0',
   `activated` tinyint(4) NOT NULL DEFAULT '0',
   `send_email` tinyint(4) NOT NULL DEFAULT '0',
-  `register_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `register_datetimetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_visit_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `parameters` mediumtext COMMENT 'Configurable Parameter Values',
   `custom_fields` mediumtext,

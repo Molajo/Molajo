@@ -7,9 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
-jimport('joomla.log.log');
 jimport('joomla.utilities.date');
 
 /**
@@ -76,8 +75,6 @@ class JLogEntry
 	 * @param   string  $priority  Message priority based on {$this->priorities}.
 	 * @param   string  $category  Type of entry
 	 * @param   string  $date      Date of entry (defaults to now if not specified or blank)
-	 *
-	 * @return  void
 	 *
 	 * @since   11.1
 	 */

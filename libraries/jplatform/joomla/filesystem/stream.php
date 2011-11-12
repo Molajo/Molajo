@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.filesystem.helper');
 jimport('joomla.utilities.utility');
@@ -131,11 +131,9 @@ class JStream extends JObject
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $writeprefix  Prefix of the stream (optional). Unlike the JPATH_*, this has a final path seperator!
+	 * @param   string  $writeprefix  Prefix of the stream (optional). Unlike the JPATH_*, this has a final path separator!
 	 * @param   string  $readprefix   The read prefix (optional).
 	 * @param   array   $context      The context options (optional).
-	 *
-	 * @return  JStream
 	 *
 	 * @since   11.1
 	 */
@@ -149,8 +147,6 @@ class JStream extends JObject
 
 	/**
 	 * Destructor
-	 *
-	 * @return  void
 	 *
 	 * @since   11.1
 	 */
@@ -494,13 +490,13 @@ class JStream extends JObject
 		switch ($this->processingmethod)
 		{
 			case 'gz':
-				$res = $length ? gzgets($this->_fh, $length) : gzgets($this->_fh, 0);
+				$res = $length ? gzgets($this->_fh, $length) : gzgets($this->_fh);
 				break;
 
 			case 'bz':
 			case 'f':
 			default:
-				$res = $length ? fgets($this->_fh, $length) : fgets($this->_fh, 0);
+				$res = $length ? fgets($this->_fh, $length) : fgets($this->_fh);
 				break;
 		}
 
@@ -1007,7 +1003,7 @@ class JStream extends JObject
 			$php_errormsg = 'Unknown error setting context option';
 			$track_errors = ini_get('track_errors');
 			ini_set('track_errors', true);
-			$retval = @stream_context_set_option($this->_fh, $this->_contextOptions, null, null);
+			$retval = @stream_context_set_option($this->_fh, $this->_contextOptions);
 
 			if (!$retval)
 			{
@@ -1456,4 +1452,3 @@ class JStream extends JObject
 		return $this->_fh;
 	}
 }
-

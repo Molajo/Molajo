@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Abstract cache storage handler
@@ -65,13 +65,11 @@ class JCacheStorage
 	 *
 	 * @param   array  $options  Optional parameters
 	 *
-	 * @return  void
-	 *
 	 * @since   11.1
 	 */
 	public function __construct($options = array())
 	{
-		$config = JFactory::getSiteConfig();
+		$config = JFactory::getConfig();
 		$this->_hash = md5($config->get('secret'));
 		$this->_application = (isset($options['application'])) ? $options['application'] : null;
 		$this->_language = (isset($options['language'])) ? $options['language'] : 'en-GB';
@@ -112,7 +110,7 @@ class JCacheStorage
 
 		if (!isset($handler))
 		{
-			$conf = JFactory::getSiteConfig();
+			$conf = JFactory::getConfig();
 			$handler = $conf->get('cache_handler');
 			if (empty($handler))
 			{

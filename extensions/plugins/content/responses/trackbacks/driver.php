@@ -189,7 +189,7 @@ class ResponsesTrackbacks extends MolajoPlugin
 		$query = 'SELECT name, email ' .
 				' FROM #__users ' .
 				' WHERE block = 0 ' .
-				'   AND activation = "" ';
+				'   AND activated = "" ';
 		$query .= $neworupdatedQuery;
 
 		$db->setQuery( $query );

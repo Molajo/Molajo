@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Client helper class
@@ -39,7 +39,7 @@ class JClientHelper
 		if (!isset($credentials[$client]) || $force)
 		{
 			// Initialise variables.
-			$config = JFactory::getSiteConfig();
+			$config = JFactory::getConfig();
 
 			// Fetch the client layer configuration options for the specific client
 			switch ($client)
@@ -100,7 +100,7 @@ class JClientHelper
 		switch ($client)
 		{
 			case 'ftp':
-				$config = JFactory::getSiteConfig();
+				$config = JFactory::getConfig();
 				$options = array('enabled' => $config->get('ftp_enable'), 'host' => $config->get('ftp_host'), 'port' => $config->get('ftp_port'));
 
 				if ($options['enabled'])
@@ -108,7 +108,7 @@ class JClientHelper
 					jimport('joomla.client.ftp');
 					$ftp = JFTP::getInstance($options['host'], $options['port']);
 
-					// Test the conection and try to log in
+					// Test the connection and try to log in
 					if ($ftp->isConnected())
 					{
 						if ($ftp->login($user, $pass))
@@ -156,7 +156,7 @@ class JClientHelper
 		switch ($client)
 		{
 			case 'ftp':
-				$config = JFactory::getSiteConfig();
+				$config = JFactory::getConfig();
 				$options = array('enabled' => $config->get('ftp_enable'), 'user' => $config->get('ftp_user'), 'pass' => $config->get('ftp_pass'));
 				break;
 
@@ -205,7 +205,7 @@ class JClientHelper
 	 */
 	public static function setCredentialsFromRequest($client)
 	{
-		// Determine wether FTP credentials have been passed along with the current request
+		// Determine whether FTP credentials have been passed along with the current request
 		$user = JRequest::getString('username', null, 'POST', JREQUEST_ALLOWRAW);
 		$pass = JRequest::getString('password', null, 'POST', JREQUEST_ALLOWRAW);
 		if ($user != '' && $pass != '')

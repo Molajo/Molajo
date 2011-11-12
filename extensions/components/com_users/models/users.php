@@ -34,10 +34,10 @@ class UsersModelUsers extends JModelList
 				'username', 'a.username',
 				'email', 'a.email',
 				'block', 'a.block',
-				'sendEmail', 'a.sendEmail',
-				'registerDate', 'a.registerDate',
-				'lastvisitDate', 'a.lastvisitDate',
-				'activation', 'a.activation',
+				'send_email', 'a.send_email',
+				'register_datetime', 'a.register_datetime',
+				'last_visit_datetime', 'a.last_visit_datetime',
+				'activated', 'a.activated',
 			);
 		}
 
@@ -234,10 +234,10 @@ class UsersModelUsers extends JModelList
 
 		if (is_numeric($active)) {
 			if ($active == '0') {
-				$query->where('a.activation = '.$db->quote(''));
+				$query->where('a.activated = '.$db->quote(''));
 			}
 			else if ($active == '1') {
-				$query->where('LENGTH(a.activation) = 32');
+				$query->where('LENGTH(a.activated) = 32');
 			}
 		}
 

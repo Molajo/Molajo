@@ -51,7 +51,7 @@ class plgContentJoomla extends MolajoPlugin
 		JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_messages/tables');
 
 		$db = MolajoFactory::getDbo();
-		$db->setQuery('SELECT id FROM #__users WHERE sendEmail = 1');
+		$db->setQuery('SELECT id FROM #__users WHERE send_email = 1');
 		$users = (array) $db->loadResultArray();
 
 		$default_language = MolajoComponentHelper::getParams('com_languages')->get('administrator');

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * MySQL import driver.
@@ -60,8 +60,6 @@ class JDatabaseImporterMySQL
 	 * Constructor.
 	 *
 	 * Sets up the default options for the exporter.
-	 *
-	 * @return  JDatabaseImporterMySQL
 	 *
 	 * @since   11.1
 	 */

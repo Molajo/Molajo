@@ -7,11 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
-jimport('joomla.log.log');
 jimport('joomla.log.logger');
-jimport('joomla.database.database');
 
 /**
  * Joomla! MySQL Database Log class
@@ -73,8 +71,6 @@ class JLoggerDatabase extends JLogger
 	 *
 	 * @param   array  &$options  Log object options.
 	 *
-	 * @return  void
-	 *
 	 * @since   11.1
 	 * @throws  LogException
 	 */
@@ -87,12 +83,12 @@ class JLoggerDatabase extends JLogger
 		if (empty($this->options['db_object']) && empty($this->options['db_driver']))
 		{
 			$this->dbo = JFactory::getDBO();
-			$this->driver = JFactory::getSiteConfig()->get('dbtype');
-			$this->host = JFactory::getSiteConfig()->get('host');
-			$this->user = JFactory::getSiteConfig()->get('user');
-			$this->password = JFactory::getSiteConfig()->get('password');
-			$this->database = JFactory::getSiteConfig()->get('db');
-			$this->prefix = JFactory::getSiteConfig()->get('dbprefix');
+			$this->driver = JFactory::getConfig()->get('dbtype');
+			$this->host = JFactory::getConfig()->get('host');
+			$this->user = JFactory::getConfig()->get('user');
+			$this->password = JFactory::getConfig()->get('password');
+			$this->database = JFactory::getConfig()->get('db');
+			$this->prefix = JFactory::getConfig()->get('dbprefix');
 		}
 		// We need to get the database connection settings from the configuration options.
 		else

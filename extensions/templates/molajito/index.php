@@ -1,12 +1,20 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Mojito
+ * @subpackage  Molajito
  * @copyright   Copyright (C) 2011 Cristina Solana. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
-include dirname(__FILE__).'/include/head.php';
+$document = MolajoFactory::getDocument();
+$document->template = 'molajito';           //todo: amy fix
+$lang = MolajoFactory::getLanguage();
+
+$document->addStyleSheet($url=MOLAJO_BASE_URL_NOAPP.'extensions/templates/'.$document->template.'/css/jquery.ui.all.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
+$document->addStyleSheet($url=MOLAJO_BASE_URL_NOAPP.'extensions/templates/'.$document->template.'/css/custom.css', $type='text/css', $media=null, $attribs=array(), $priority=999);
+$document->addScript($url=MOLAJO_BASE_URL_NOAPP.'extensions/templates/'.$document->template.'/js/jquery-1.6.2.js');
+$document->addScript($url=MOLAJO_BASE_URL_NOAPP.'extensions/templates/'.$document->template.'/js/jquery-ui-1.8.15.custom.js');
+$document->addScript($url=MOLAJO_BASE_URL_NOAPP.'extensions/templates/'.$document->template.'/js/scripts.js');
 
 if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
 <!DOCTYPE html>
@@ -21,25 +29,13 @@ if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
 	<div class="container">
         <jdoc:include type="modules" name="header" wrap="header" />
         <jdoc:include type="message" />
-		<?php
-        if (MolajoFactory::getUser()->id == 0) : ?>
-            <jdoc:include type="component" />
-        <?php
-        else :
-        ?>
-            <section>
+        <section>
+            <?php if (MolajoFactory::getUser()->id == 0) :
+            else : ?>
                 <jdoc:include type="modules" name="launchpad" wrap="div" />
-                <?php
-                    if (MolajoFactory::getSession()->get('page.option') == 'com_dashboard') :
-                        include dirname(__FILE__).'/include/dashboard.php';
-                    else :
-                        include dirname(__FILE__).'/include/component.php';
-                    endif;
-                ?>
-            </section>
-        <?php
-        endif;
-        ?>
+            <?php endif; ?>
+            <jdoc:include type="component" />
+        </section>
         <jdoc:include type="modules" name="footer" wrap="footer" />
     </div>
 <jdoc:include type="modules" name="debug" />

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 JLoader::discover('JInput', dirname(__FILE__) . '/input');
 
@@ -61,8 +61,6 @@ class JInput
 	 *
 	 * @param   array  $source   Source data (Optional, default is $_REQUEST)
 	 * @param   array  $options  Array of configuration parameters (Optional)
-	 *
-	 * @return  JInput
 	 *
 	 * @since   11.1
 	 */
@@ -244,6 +242,3 @@ class JInput
 		return $method;
 	}
 }
-$input = new JInput();
-$input->get('task', null, 'cmd');
-$token = $input->get('token', null, 'cmd');

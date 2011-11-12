@@ -35,7 +35,7 @@ class MolajoTableUser extends MolajoTable
 
         // Initialise.
         $this->id = 0;
-        $this->sendEmail = 0;
+        $this->send_email = 0;
     }
 
     /**
@@ -182,8 +182,8 @@ class MolajoTableUser extends MolajoTable
         }
 
         // Set the registration timestamp
-        if ($this->registerDate == null || $this->registerDate == $this->_db->getNullDate()) {
-            $this->registerDate = MolajoFactory::getDate()->toMySQL();
+        if ($this->register_datetime == null || $this->register_datetime == $this->_db->getNullDate()) {
+            $this->register_datetime = MolajoFactory::getDate()->toMySQL();
         }
 
 
@@ -343,8 +343,8 @@ class MolajoTableUser extends MolajoTable
         }
 
         /*
-           * Clean Up Related Data.
-           */
+        * Clean Up Related Data.
+        */
 
         $this->_db->setQuery(
             'DELETE FROM ' . $this->_db->quoteName('#__messages_cfg') .
@@ -397,10 +397,10 @@ class MolajoTableUser extends MolajoTable
         $date = MolajoFactory::getDate($timeStamp);
 
         // Update the database row for the user.
-        // 			' SET '.$this->_db->quoteName('lastvisitDate').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
+        // 			' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
         $this->_db->setQuery(
             'UPDATE ' . $this->_db->quoteName($this->_tbl) .
-            ' SET ' . $this->_db->quoteName('lastvisitDate') . ' = ' . $this->_db->Quote($date) .
+            ' SET ' . $this->_db->quoteName('last_visit_datetime') . ' = ' . $this->_db->Quote($date) .
             ' WHERE ' . $this->_db->quoteName('id') . ' = ' . (int)$userId
         );
         $this->_db->query();

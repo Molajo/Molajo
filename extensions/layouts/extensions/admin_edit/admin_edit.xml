@@ -10,13 +10,12 @@
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_ADMIN_EDIT_DESCRIPTION</description>
 	<files>
-		<filename>index.html</filename>
 		<folder>css</folder>
 		<folder>language</folder>
 		<folder>layouts</folder>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_edit.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_edit.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layout_admin_edit.ini</language>
+		<language tag="language/en-GB">en-GB.layout_admin_edit.sys.ini</language>
 	</languages>
 </extension>

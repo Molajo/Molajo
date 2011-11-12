@@ -40,8 +40,7 @@ if (defined('MOLAJO_SITE')) {
 }
 if (defined('MOLAJO_SITE')) {
 } else {
-    echo 'Site not identified. ';
-    exit;
+    define('MOLAJO_SITE', 1);
 }
 
 /**

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.log.logentry');
 jimport('joomla.log.logger');
@@ -137,8 +137,6 @@ class JLog
 	/**
 	 * Constructor.
 	 *
-	 * @return  JLog
-	 *
 	 * @since   11.1
 	 */
 	protected function __construct()
@@ -237,12 +235,12 @@ class JLog
 		JLog::add('JLog::getInstance() is deprecated.  See JLog::addLogger().', JLog::WARNING, 'deprecated');
 
 		// Get the system configuration object.
-		$config = JFactory::getSiteConfig();
+		$config = JFactory::getConfig();
 
 		// Set default path if not set and sanitize it.
 		if (!$path)
 		{
-			$path = MOLAJO_SITE_PATH_CACHE;
+			$path = $config->get('log_path');
 		}
 
 		// If no options were explicitly set use the default from configuration.
@@ -277,7 +275,7 @@ class JLog
 
 	/**
 	 * Returns a reference to the a JLog object, only creating it if it doesn't already exist.
-	 * Note: This is principly made available for testing and internal purposes.
+	 * Note: This is principally made available for testing and internal purposes.
 	 *
 	 * @param   JLog  $instance  The logging object instance to be used by the static methods.
 	 *

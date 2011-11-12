@@ -193,7 +193,7 @@ class plgUserMolajo extends MolajoPlugin
 		//TODO : move this out of the plugin
 		$config	= MolajoComponentHelper::getParams('com_users');
 		// Default to Registered.
-		$defaultUserGroup = $config->get('new_usertype', 2);
+		$defaultUserGroup = $config->get('new_user_group', 2);
 
 		$acl = MolajoFactory::getACL();
 
@@ -202,7 +202,6 @@ class plgUserMolajo extends MolajoPlugin
 		$instance->set('username'		, $user['username']);
 		$instance->set('password_clear'	, $user['password_clear']);
 		$instance->set('email'			, $user['email']);	// Result should contain an email (check)
-		$instance->set('usertype'		, 'deprecated');
 		$instance->set('groups'		, array($defaultUserGroup));
 
 		//If autoregister is set let's register the user

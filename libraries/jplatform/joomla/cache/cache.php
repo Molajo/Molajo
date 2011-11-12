@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 //Register the storage class with the loader
 JLoader::register('JCacheStorage', dirname(__FILE__) . '/storage.php');
@@ -47,7 +47,7 @@ class JCache extends JObject
 	 */
 	public function __construct($options)
 	{
-		$conf = JFactory::getSiteConfig();
+		$conf = JFactory::getConfig();
 
 		$this->_options = array(
 			'cachebase' => $conf->get('cache_path', JPATH_CACHE),
@@ -462,7 +462,7 @@ class JCache extends JObject
 		{
 			$document->mergeHeadData($data['head']);
 		}
-		elseif (isset($data['head']))
+		elseif (isset($data['head']) && method_exists($document, 'setHeadData'))
 		{
 			$document->setHeadData($data['head']);
 		}
@@ -590,7 +590,7 @@ class JCache extends JObject
 		}
 
 		// Pathway data
-		if ($loptions['nopathway'] != 1)
+		if ($app->isSite() && $loptions['nopathway'] != 1)
 		{
 			$pathway = $app->getPathWay();
 			$cached['pathway'] = isset($data['pathway']) ? $data['pathway'] : $pathway->getPathway();

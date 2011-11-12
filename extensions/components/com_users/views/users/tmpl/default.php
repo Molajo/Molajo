@@ -70,7 +70,7 @@ $loggeduser = MolajoFactory::getUser();
 					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ENABLED', 'a.block', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="5%">
-					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ACTIVATED', 'a.activation', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_ACTIVATED', 'a.activated', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
 					<?php echo MolajoText::_('COM_USERS_HEADING_GROUPS'); ?>
@@ -79,10 +79,10 @@ $loggeduser = MolajoFactory::getUser();
 					<?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_EMAIL', 'a.email', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
-					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_LAST_VISIT_DATE', 'a.lastvisitDate', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_LAST_VISIT_DATE', 'a.last_visit_datetime', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="10%">
-					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_REGISTRATION_DATE', 'a.registerDate', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'COM_USERS_HEADING_REGISTRATION_DATE', 'a.register_datetime', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="3%">
 					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
@@ -139,7 +139,7 @@ $loggeduser = MolajoFactory::getUser();
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php echo MolajoHTML::_('grid.boolean', $i, !$item->activation, 'users.activate', null); ?>
+					<?php echo MolajoHTML::_('grid.boolean', $i, !$item->activated, 'users.activate', null); ?>
 				</td>
 				<td class="center">
 					<?php if (substr_count($item->group_names,"\n") > 1) : ?>
@@ -152,14 +152,14 @@ $loggeduser = MolajoFactory::getUser();
 					<?php echo $this->escape($item->email); ?>
 				</td>
 				<td class="center">
-					<?php if ($item->lastvisitDate!='0000-00-00 00:00:00'):?>
-						<?php echo MolajoHTML::_('date',$item->lastvisitDate, 'Y-m-d H:i:s'); ?>
+					<?php if ($item->last_visit_datetime!='0000-00-00 00:00:00'):?>
+						<?php echo MolajoHTML::_('date',$item->last_visit_datetime, 'Y-m-d H:i:s'); ?>
 					<?php else:?>
 						<?php echo MolajoText::_('JNEVER'); ?>
 					<?php endif;?>
 				</td>
 				<td class="center">
-					<?php echo MolajoHTML::_('date',$item->registerDate, 'Y-m-d H:i:s'); ?>
+					<?php echo MolajoHTML::_('date',$item->register_datetime, 'Y-m-d H:i:s'); ?>
 				</td>
 				<td class="center">
 					<?php echo (int) $item->id; ?>

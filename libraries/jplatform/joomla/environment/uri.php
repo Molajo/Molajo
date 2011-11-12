@@ -7,9 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
-
-jimport('joomla.string.string');
+defined('JPATH_PLATFORM') or die;
 
 /**
  * JURI Class
@@ -216,7 +214,7 @@ class JURI extends JObject
 		// Get the base request path.
 		if (empty(self::$base))
 		{
-			$config = JFactory::getSiteConfig();
+			$config = JFactory::getConfig();
 			$live_site = $config->get('live_site');
 			if (trim($live_site) != '')
 			{

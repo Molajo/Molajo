@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.filesystem.support.stringcontroller');
 
@@ -125,7 +125,7 @@ class JStreamString
 	}
 
 	/**
-	 * Method to retrieve informaion from a file resource
+	 * Method to retrieve information from a file resource
 	 *
 	 * @return  array
 	 *
@@ -139,7 +139,7 @@ class JStreamString
 	}
 
 	/**
-	 * Method to rerieve information about a file.
+	 * Method to retrieve information about a file.
 	 *
 	 * @param   string   $path   File path or URL to stat
 	 * @param   integer  $flags  Additional flags set by the streams API

@@ -327,7 +327,7 @@ abstract class MolajoFactory
         } else {
             $instance = MolajoUser::getInstance($id);
         }
-
+echo '<pre>';var_dump($instance);'</pre>';
         return $instance;
     }
 
@@ -747,7 +747,7 @@ abstract class MolajoFactory
      */
     protected static function _createLanguage()
     {
-        $conf = self::getConfig();
+        $conf = self::getApplicationConfig();
         $locale = $conf->get('language');
         $debug = $conf->get('debug_lang');
         $lang = MolajoLanguage::getInstance($locale, $debug);

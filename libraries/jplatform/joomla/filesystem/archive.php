@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * An Archive handling class
@@ -74,7 +74,7 @@ class JArchive
 
 				if ($adapter)
 				{
-					$config = JFactory::getSiteConfig();
+					$config = JFactory::getConfig();
 					$tmpfname = $config->get('tmp_path') . '/' . uniqid('gzip');
 					$gzresult = $adapter->extract($archivename, $tmpfname);
 
@@ -117,7 +117,7 @@ class JArchive
 
 				if ($adapter)
 				{
-					$config = JFactory::getSiteConfig();
+					$config = JFactory::getConfig();
 					$tmpfname = $config->get('tmp_path') . '/' . uniqid('bzip2');
 					$bzresult = $adapter->extract($archivename, $tmpfname);
 
