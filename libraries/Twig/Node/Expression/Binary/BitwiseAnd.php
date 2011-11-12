@@ -9,10 +9,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-class Twig_Node_Expression_Unary_Pos extends Twig_Node_Expression_Unary
+class Twig_Node_Expression_Binary_BitwiseAnd extends Twig_Node_Expression_Binary
 {
     public function operator(Twig_Compiler $compiler)
     {
-        $compiler->raw('+');
+        return $compiler->raw('&');
     }
 }
