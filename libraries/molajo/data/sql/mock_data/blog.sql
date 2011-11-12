@@ -1,0 +1,32 @@
+#
+# IMPORTANT - THIS FILE MUST BE SAVED WITH UTF-8 ENCODING ONLY. BEWARE IF EDITING!
+#
+
+#
+# CONTENT
+#
+
+# CATEGORIES
+
+INSERT INTO `molajo_categories`
+  (`title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
+  `version`, `parent_id`, `lft`, `rgt`, `level`, `language`, `ordering`)
+  VALUES
+    ('Articles', 'com_articles', 'articles', '<p>Category for Articles</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 1, 1, 1, 2, 1, 'en-GB', 1);
+
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 2, `id`, CONCAT('categories/', `id`), CONCAT('index.php?option=com_categories&id=', `id`), 1, 'en-GB'
+    FROM `molajo_categories`
+    WHERE `title` = 'Articles';
+
+
+# ARTICLES
+INSERT INTO `molajo_content` VALUES(1, 2, 'My First Article', 'Subtitle for My First Article', 'my-first-article', 0, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis gravida lectus. Nam fringilla rutrum commodo. Etiam ac elit nec neque blandit ultrices. Curabitur nibh velit, porta vel convallis ut, fringilla in turpis. Sed lectus tellus, elementum sed auctor sed, convallis et sapien. Mauris mattis mi id magna molestie sit amet congue tellus ornare. Mauris molestie erat at lacus eleifend facilisis eget eget ligula. Proin quis nunc ac quam molestie accumsan.</p> \r\n\r\n<p>Nullam mauris nulla, lobortis sit amet bibendum ac, sodales et orci. Nunc a ante sit amet lorem auctor suscipit ac tincidunt purus. Sed sodales mattis dui, id eleifend sem dignissim ut. </p>', NULL, NULL, NULL, '', 0, 0, 1, 0, 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 100, '', '', '', '', '', '2011-11-11 11:11:11', 100, '2011-11-11 11:11:11', 100, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'en-GB', 0, 1);
+INSERT INTO `molajo_content` VALUES(2, 2, 'My Second Article', 'Subtitle for My Second Article', 'my-second-article', 0, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis gravida lectus. Nam fringilla rutrum commodo. Etiam ac elit nec neque blandit ultrices. Curabitur nibh velit, porta vel convallis ut, fringilla in turpis. Sed lectus tellus, elementum sed auctor sed, convallis et sapien. Mauris mattis mi id magna molestie sit amet congue tellus ornare. Mauris molestie erat at lacus eleifend facilisis eget eget ligula. Proin quis nunc ac quam molestie accumsan.</p> \r\n\r\n<p>Nullam mauris nulla, lobortis sit amet bibendum ac, sodales et orci. Nunc a ante sit amet lorem auctor suscipit ac tincidunt purus. Sed sodales mattis dui, id eleifend sem dignissim ut. </p>', NULL, NULL, NULL, '', 0, 0, 1, 0, 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 100, '', '', '', '', '', '2011-11-11 11:11:11', 100, '2011-11-11 11:11:11', 100, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'en-GB', 0, 2);
+INSERT INTO `molajo_content` VALUES(3, 2, 'My Third Article', 'Subtitle for My Third Article', 'my-third-article', 0, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis gravida lectus. Nam fringilla rutrum commodo. Etiam ac elit nec neque blandit ultrices. Curabitur nibh velit, porta vel convallis ut, fringilla in turpis. Sed lectus tellus, elementum sed auctor sed, convallis et sapien. Mauris mattis mi id magna molestie sit amet congue tellus ornare. Mauris molestie erat at lacus eleifend facilisis eget eget ligula. Proin quis nunc ac quam molestie accumsan.</p> \r\n\r\n<p>Nullam mauris nulla, lobortis sit amet bibendum ac, sodales et orci. Nunc a ante sit amet lorem auctor suscipit ac tincidunt purus. Sed sodales mattis dui, id eleifend sem dignissim ut. </p>', NULL, NULL, NULL, '', 0, 0, 1, 0, 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 100, '', '', '', '', '', '2011-11-11 11:11:11', 100, '2011-11-11 11:11:11', 100, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'en-GB', 0, 3);
+INSERT INTO `molajo_content` VALUES(4, 2, 'My Fourth Article', 'Subtitle for My Fourth Article', 'my-fourth-article', 0, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis gravida lectus. Nam fringilla rutrum commodo. Etiam ac elit nec neque blandit ultrices. Curabitur nibh velit, porta vel convallis ut, fringilla in turpis. Sed lectus tellus, elementum sed auctor sed, convallis et sapien. Mauris mattis mi id magna molestie sit amet congue tellus ornare. Mauris molestie erat at lacus eleifend facilisis eget eget ligula. Proin quis nunc ac quam molestie accumsan.</p> \r\n\r\n<p>Nullam mauris nulla, lobortis sit amet bibendum ac, sodales et orci. Nunc a ante sit amet lorem auctor suscipit ac tincidunt purus. Sed sodales mattis dui, id eleifend sem dignissim ut. </p>', NULL, NULL, NULL, '', 0, 0, 1, 0, 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 100, '', '', '', '', '', '2011-11-11 11:11:11', 100, '2011-11-11 11:11:11', 100, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'en-GB', 0, 4);
+INSERT INTO `molajo_content` VALUES(5, 2, 'My Fifth Article', 'Subtitle for My Fifth Article', 'my-fifth-article', 0, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis gravida lectus. Nam fringilla rutrum commodo. Etiam ac elit nec neque blandit ultrices. Curabitur nibh velit, porta vel convallis ut, fringilla in turpis. Sed lectus tellus, elementum sed auctor sed, convallis et sapien. Mauris mattis mi id magna molestie sit amet congue tellus ornare. Mauris molestie erat at lacus eleifend facilisis eget eget ligula. Proin quis nunc ac quam molestie accumsan.</p> \r\n\r\n<p>Nullam mauris nulla, lobortis sit amet bibendum ac, sodales et orci. Nunc a ante sit amet lorem auctor suscipit ac tincidunt purus. Sed sodales mattis dui, id eleifend sem dignissim ut. </p>', NULL, NULL, NULL, '', 0, 0, 1, 0, 0, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 100, '', '', '', '', '', '2011-11-11 11:11:11', 100, '2011-11-11 11:11:11', 100, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'en-GB', 0, 5);
+
+INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
+  SELECT `title`, 3, `id`, CONCAT('articles/', `id`), CONCAT('index.php?option=com_articles&view=article&id=', `id`), 1, 'en-GB' 
+    FROM `molajo_content`;
