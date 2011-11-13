@@ -94,8 +94,8 @@ class MolajoMenu extends JObject
 
             // Decode the item params
             $result = new JRegistry;
-            $result->loadJSON($item->params);
-            $item->params = $result;
+            $result->loadJSON($item->parameters);
+            $item->parameters = $result;
         }
     }
 
@@ -264,7 +264,7 @@ class MolajoMenu extends JObject
     public function getParams($id)
     {
         if ($menu = $this->getItem($id)) {
-            return $menu->params;
+            return $menu->parameters;
         }
         else {
             return new JRegistry;
@@ -299,6 +299,7 @@ class MolajoMenu extends JObject
         $menu = $this->getItem($id);
 
         if ($menu) {
+//todo: amy acl
             $acl = new MolajoACL();
             return $acl->checkPermissions('user', MolajoFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset_id, $menu->access);
         } else {
@@ -316,14 +317,25 @@ class MolajoMenu extends JObject
      */
     public function load()
     {
-        static $menus;
+        $this->_items  = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MENUS);
 
-        if (isset($menus)) {
-            return $menus;
+        foreach($this->_items as &$item) {
+
+            $parent_tree = array();
+            if (isset($this->_items[$item->menu_item_parent_id]->tree)) {
+                $parent_tree = $this->_items[$item->menu_item_parent_id]->tree;
+            }
+
+            // Create tree.
+            $parent_tree[] = $item->id;
+            $item->tree = $parent_tree;
+
+            // Create the query array.
+            $url = str_replace('index.php?', '', $item->request);
+            $url = str_replace('&amp;', '&', $url);
+            parse_str($url, $item->query);
         }
 
-        $menus = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MENUS);
-
-        return $menus;
+        return $this->_items;
     }
 }

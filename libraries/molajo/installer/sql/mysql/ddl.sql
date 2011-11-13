@@ -12,7 +12,7 @@
 -- Skip creation of FOREIGN KEYS
 -- Generate Separate CREATE INDEX Statements
 --
--- Manually change `molajo`.` to `molajo_
+-- Manually change `molajo_ to `molajo_
 --
 -- Remove these three statements from top of script:
 --
@@ -376,6 +376,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_instance_options` (
   `lft` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `rgt` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `level` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
+  `home` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   `custom_fields` MEDIUMTEXT NULL ,
   `parameters` MEDIUMTEXT NULL COMMENT 'Attributes (Custom Fields)' ,
   `language` CHAR(7) NOT NULL DEFAULT 'en-GB' ,
@@ -406,6 +407,7 @@ CREATE INDEX `fk_extension_instance_options_extensions2` ON `molajo_extension_in
 
 CREATE INDEX `fk_extension_instance_options_extension_types2` ON `molajo_extension_instance_options` (`extension_type_id` ASC) ;
 
+ 
 -- -----------------------------------------------------
 -- Table 15 `molajo_group_view_groups`
 -- -----------------------------------------------------

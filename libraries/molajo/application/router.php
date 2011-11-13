@@ -106,20 +106,70 @@ class MolajoRouter extends JObject
      */
     public function parse(&$uri)
     {
-        $vars = array();
+		$vars = array();
+
+		// Get the application
+		$app = JFactory::getApplication();
+
+		if ($app->getConfig('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
+			//forward to https
+			$uri->setScheme('https');
+			$app->redirect((string)$uri);
+		}
+
+		// Get the path
+		$path = $uri->getPath();
+
+		// Remove the base URI path.
+		$path = substr_replace($path, '', 0, strlen(JURI::base(true)));
+
+		// Check to see if a request to a specific entry point has been made.
+		if (preg_match("#.*\.php#u", $path, $matches)) {
+
+			// Get the current entry point path relative to the site path.
+			$scriptPath = realpath($_SERVER['SCRIPT_FILENAME'] ? $_SERVER['SCRIPT_FILENAME'] : str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']));
+			$relativeScriptPath = str_replace('\\', '/', str_replace(JPATH_SITE, '', $scriptPath));
+
+			// If a php file has been found in the request path, check to see if it is a valid file.
+			// Also verify that it represents the same file from the server variable for entry script.
+			if (file_exists(JPATH_SITE.$matches[0]) && ($matches[0] == $relativeScriptPath)) {
+
+				// Remove the entry point segments from the request path for proper routing.
+				$path = str_replace($matches[0], '', $path);
+			}
+		}
+
+		//Remove the suffix
+		if ($this->_mode == JROUTER_MODE_SEF) {
+			if ($app->getConfig('sef_suffix') && !(substr($path, -9) == 'index.php' || substr($path, -1) == '/')) {
+				if ($suffix = pathinfo($path, PATHINFO_EXTENSION)) {
+					$path = str_replace('.'.$suffix, '', $path);
+					$vars['format'] = $suffix;
+				}
+			}
+		}
+
+		//Set the route
+		$uri->setPath(trim($path , '/'));
 
         // Process the parsed variables based on custom defined rules
         $vars = $this->_processParseRules($uri);
 
-        // Parse RAW URL
-        if ($this->_mode == JROUTER_MODE_RAW) {
-            $vars += $this->_parseRawRoute($uri);
-        }
+ 		// Parse RAW URL
+		if ($this->_mode == JROUTER_MODE_RAW) {
+			$vars2 = $this->_parseRawRoute($uri);
+            if (is_array($vars2)) {
+                array_merge($vars, $vars2);
+            }
+		}
 
-        // Parse SEF URL
-        if ($this->_mode == JROUTER_MODE_SEF) {
-            $vars += $this->_parseSefRoute($uri);
-        }
+		// Parse SEF URL
+		if ($this->_mode == JROUTER_MODE_SEF) {
+            $vars2 = $this->_parseSefRoute($uri);
+            if (is_array($vars2)) {
+                array_merge($vars, $vars2);
+            }
+		}
 
         return array_merge($this->getVars(), $vars);
     }

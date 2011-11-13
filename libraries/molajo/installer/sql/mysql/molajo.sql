@@ -583,8 +583,8 @@ INSERT INTO `molajo_extension_instances`
 
 INSERT INTO `molajo_assets`
   (`source_table_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT 4, `id`, `name`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 1, 'en-GB', 0, 0, 1
-    FROM `molajo_extensions`
+  SELECT 4, `id`, `title`, CONCAT('extensions/templates/', `id`), CONCAT('index.php?option=com_extensions&view=templates&id=', `id`), 1, 'en-GB', 0, 0, 1
+    FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 9;
 
 ## Menu
@@ -625,7 +625,6 @@ INSERT INTO `molajo_assets`
 ## ## Menu Items
 
 ## ## ## Admin: Content
-
 INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
   SELECT 1, 1, 'Root', '', 0, 0, 65, 0, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
@@ -792,7 +791,14 @@ INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `ali
     WHERE `extension_type_id` = 5 AND NOT (`title` = 'Admin');
 
 UPDATE `molajo_extension_instance_options`
-   SET `protected` = 1;
+   SET `protected` = 1,
+        `home` = 0;
+UPDATE `molajo_extension_instance_options`
+  SET `home` = 1
+  WHERE `id` = 2;
+UPDATE `molajo_extension_instance_options`
+  SET `home` = 1
+  WHERE `id` = 33;
 
 INSERT INTO `molajo_assets` (`source_table_id`, `source_id`, `title`, `request`, `sef_request`, `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
   VALUES

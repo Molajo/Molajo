@@ -160,7 +160,8 @@ class MolajoComponentHelper
 
         /** extension path and entry point */
         $path = $request['component_path'].'/'.$request['no_com_option'] . '.php';
-
+echo $path;
+die;
         /** installation does not have enabled extensions */
         if ($request['application_id'] == 0
             && file_exists($path)

@@ -307,22 +307,22 @@ class MolajoApplication extends JObject
      */
     public function route()
     {
-        //        if ($itemid = JRequest::getInt('Itemid')) {
-        //            $this->authorise($itemid);
-        //        }
+        if ($itemid = JRequest::getInt('Itemid')) {
+           $this->authorise($itemid);
+        }
         $uri = JURI::getInstance();
-        //        $router = $this->getRouter();
-        //var_dump($router);
-        //die;
-        //        $result = $router->parse($uri);
 
-        //		JRequest::set($result, 'get', false);
+        $router = $this->getRouter();
+        $result = $router->parse($uri);
+
+        JRequest::set($result, 'get', false);
+
         ///** todo: amy configuration for ssl by application */
-        //		if ($this->getConfig('force_ssl') >= 1
-        ///          && strtolower($uri->getScheme()) != 'https') {
-        //		$uri->setScheme('https');
-        //		$this->redirect((string)$uri);
-        //	}
+        if ($this->getConfig('force_ssl') >= 1
+            && strtolower($uri->getScheme()) != 'https') {
+                $uri->setScheme('https');
+                $this->redirect((string)$uri);
+        }
 
         /** trigger onAfterRoute Event */
         MolajoPluginHelper::importPlugin('system');
@@ -438,6 +438,8 @@ class MolajoApplication extends JObject
             }
 
             $request = $this->getRequest($component);
+var_dump($request);
+            die;
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
@@ -451,7 +453,8 @@ class MolajoApplication extends JObject
             }
             $document->setTitle($this->getConfig('sitename'));
             $document->setDescription($this->getConfig('MetaDesc'));
-
+echo 'going into render';
+            die;
             $contents = MolajoComponentHelper::renderComponent($request);
 
             $document->setBuffer($contents, 'component');
@@ -1063,9 +1066,11 @@ class MolajoApplication extends JObject
         $layout = '';
         $format = '';
         $component_table = '';
-
+echo 'before';
         /** 1. Option */
         $molajoConfig = new MolajoModelConfiguration ($option);
+echo 'after';
+        die;
 
         if ($option == null) {
             $option = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_DEFAULT_OPTION);

@@ -36,6 +36,7 @@ abstract class MolajoTemplateHelper
             $menuItem = null;
         } else {
             $menuItem = $menu->getActive();
+
             if ($menuItem) {
             } else {
                 $menuItem = $menu->getItem(JRequest::getInt('Itemid'));
@@ -53,7 +54,7 @@ abstract class MolajoTemplateHelper
 
         /** Configuration default */
         if ((int)$id == 0) {
-            $id = MolajoFactory::getApplicationConfig()->get('default_template_extension_id');
+            $id = strtolower(MolajoFactory::getApplicationConfig()->get('default_template_extension'));
         }
 
         /** Retrieve Template from the DB */

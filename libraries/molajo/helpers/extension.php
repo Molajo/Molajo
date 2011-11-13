@@ -117,7 +117,7 @@ abstract class MolajoExtensionHelper
 
         /** Extension Instance Options */
         if ($extension_type_id == MOLAJO_EXTENSION_TYPE_MENUS) {
-            $query->select('c.'.$db->namequote('id').' as extension_instance_option_id');
+            $query->select('c.'.$db->namequote('id').' as id');
             $query->select('c.'.$db->namequote('title').' as menu_item_title');
             $query->select('c.'.$db->namequote('subtitle').' as menu_item_subtitle');
             $query->select('c.'.$db->namequote('alias').' as menu_item_alias');
@@ -134,6 +134,8 @@ abstract class MolajoExtensionHelper
             $query->select('c.'.$db->namequote('lft').' as menu_item_lft');
             $query->select('c.'.$db->namequote('rgt').' as menu_item_rgt');
             $query->select('c.'.$db->namequote('image').' as menu_item_image');
+            $query->select('c.'.$db->namequote('home').' as home');
+            $query->select('c.'.$db->namequote('language').' as language');
 
             $query->from($db->namequote('#__extension_instance_options').' as c');
 
@@ -168,7 +170,12 @@ abstract class MolajoExtensionHelper
         $query->where('e.'.$db->namequote('site_id').' = '.MOLAJO_SITE_ID);
 
         $db->setQuery($query->__toString());
-        $extensions = $db->loadObjectList();
+
+        if ($extension_type_id == MOLAJO_EXTENSION_TYPE_MENUS) {
+            $extensions = $db->loadObjectList('id');
+        } else {
+            $extensions = $db->loadObjectList();
+        }
 
         if ($error = $db->getErrorMsg()) {
             MolajoError::raiseWarning(500, $error);
