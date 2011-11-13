@@ -39,6 +39,5 @@ $(function(){
 				$('a.icon_search').click(function () {
 					//smoothen toggle, possibly add animate function
 				      $('span.lp_search').slideToggle('fast');
-				      $('.lp_search input').attr("autofocus","autofocus");
 				});
 });
