@@ -200,7 +200,7 @@ abstract class MolajoFactory
     }
 
     /**
-     * Get the Site configuration object
+     * Get the Application configuration object
      *
      * Returns the global configuration object, creating it
      * if it doesn't already exist.
@@ -327,7 +327,7 @@ abstract class MolajoFactory
         } else {
             $instance = MolajoUser::getInstance($id);
         }
-echo '<pre>';var_dump($instance);'</pre>';
+//echo '<pre>';var_dump($instance);'</pre>';
         return $instance;
     }
 

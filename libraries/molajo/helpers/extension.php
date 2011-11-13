@@ -12,6 +12,7 @@ defined('MOLAJO') or die;
  *
  * Queries the extension tables for various rendered extension types
  *
+ * MOLAJO_EXTENSION_TYPE_CORE 0
  * MOLAJO_EXTENSION_TYPE_COMPONENT 1
  * MOLAJO_EXTENSION_TYPE_LANGUAGES 2
  * MOLAJO_EXTENSION_TYPE_LAYOUTS 3
@@ -56,18 +57,15 @@ abstract class MolajoExtensionHelper
         $query->select('b.'.$db->namequote('name'));
         $query->select('b.'.$db->namequote('folder').' as type');
 
-        if ($extension_type_id == 4) {      // MOLAJO_EXTENSION_TYPE_MENU
-            $query->select('a.'.$db->namequote('menu_item_parent_id'));
-            $query->select('a.'.$db->namequote('menu_item_level'));
-            $query->select('a.'.$db->namequote('menu_item_type'));
-            $query->select('a.'.$db->namequote('menu_item_extension_id'));
-            $query->select('a.'.$db->namequote('menu_item_template_id'));
-            $query->select('a.'.$db->namequote('menu_item_link_target'));
-            $query->select('a.'.$db->namequote('menu_item_lft'));
-            $query->select('a.'.$db->namequote('menu_item_rgt'));
-            $query->select('a.'.$db->namequote('menu_item_home'));
-            $query->select('a.'.$db->namequote('menu_item_path'));
-            $query->select('a.'.$db->namequote('menu_item_link'));
+        if ($extension_type_id == MOLAJO_EXTENSION_TYPE_MENU) {
+            $query->select('c.'.$db->namequote('menu_item_type'));
+            $query->select('c.'.$db->namequote('parent_id'));
+            $query->select('c.'.$db->namequote('level'));
+            $query->select('c.'.$db->namequote('lft'));
+            $query->select('c.'.$db->namequote('rgt'));
+            $query->select('c.'.$db->namequote('menu_item_home'));
+            $query->select('c.'.$db->namequote('menu_item_path'));
+            $query->select('c.'.$db->namequote('menu_item_link'));
         }
 
         if ($extension_type_id == 6) {      // MOLAJO_EXTENSION_TYPE_MODULES

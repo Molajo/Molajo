@@ -165,7 +165,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `molajo_groups` (`parent_id` ASC, `title` ASC) ;
+CREATE UNIQUE INDEX `idx_usergroup_parent_title_lookup` ON `molajo_groups` (`parent_id` ASC, `title` ASC, `type` ASC) ;
 
 CREATE INDEX `idx_usergroup_title_lookup` ON `molajo_groups` (`title` ASC) ;
 
@@ -180,6 +180,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_view_groups` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `view_group_name_list` TEXT NOT NULL ,
   `view_group_id_list` TEXT NOT NULL ,
+  `type` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
