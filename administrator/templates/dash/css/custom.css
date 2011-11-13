@@ -28,7 +28,7 @@ nav#launchpad {
 .menu_main {
 	margin: 0 0 0 24px;
 	padding: 0;
-	height: 32px;
+	min-height: 32px;
 	line-height: 32px;
 	background: #f4f4f4;
 	list-style: none;
@@ -52,7 +52,17 @@ nav#launchpad {
 .menu_sub li {
 	line-height: 2em; 
 	}
-	
+.lp_search {
+	display: inline-block;
+	clear: both;
+	width: 100%;
+	padding: .25em 0;
+	text-align: right;
+}
+.lp_search input {
+	width: 172px;
+	margin: 0 16px 0 0;
+}
 /* Launchpad: Icons
 ----------------------------------*/
 .menu_main li a.icon_configure {

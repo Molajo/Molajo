@@ -21,7 +21,7 @@
 				<li><a href="?access" class="icon_access"></a></li>
 				<li><a href="?create" class="icon_create"></a></li>
 				<li><a href="?build" class="icon_build"></a></li>
-				<li><a href="#" class="icon_search"></a></li>
+				<li><a href="#" class="icon_search"></a><span class="lp_search"><input type"search" name="search" autocomplete autofocus></span></li>
 			</ul>
 			<?php
 				if(isset($_GET['config'])){
