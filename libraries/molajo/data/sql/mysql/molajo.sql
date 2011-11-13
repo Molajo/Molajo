@@ -64,7 +64,7 @@ INSERT INTO `molajo_categories`
 
 INSERT INTO `molajo_assets` (`title`, `source_table_id`, `source_id`, `sef_request`, `request`, `view_group_id`, `language`)
   SELECT `title`, 2, `id`, CONCAT('categories/', `id`), CONCAT('index.php?option=com_categories&id=', `id`), 1, 'en-GB'
-    FROM `molajo_categories`
+    FROM `molajo_categories`;
 
 #
 # SITES
@@ -175,6 +175,7 @@ INSERT INTO `molajo_extensions`
   (`name`, `extension_type_id`, `element`, `folder`, `update_site_id`)
   VALUES
     ('com_articles', 1, '', '', 1),
+    ('com_assets', 1, '', '', 1),
     ('com_categories', 1, '', '', 1),
     ('com_comments', 1, '', '', 1),
     ('com_configuration', 1, '', '', 1),
@@ -657,309 +658,215 @@ INSERT INTO `molajo_assets`
 ## ## Menu Items
 
 ## ## ## Admin: Content
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
 
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Content', '', 'content', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 1, 66, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 1, 1, 'Root', '', 0, 0, 65, 0, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Articles', '', 'content/articles', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 1, 30, 39, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 2, 2, 'Content', 'content', 1, 1, 12, 1, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Contacts', '', 'content/contacts', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 1, 31, 38, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 3, 3, 'Articles', 'articles', 2, 2, 3, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Comments', '', 'content/comments', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 32, 37, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 4, 4, 'Contacts', 'contacts', 2, 4, 5, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Layouts', '', 'content/layouts', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 33, 36, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 5, 5, 'Comments', 'comments', 2, 6, 7, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Media', '', 'content/media', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 34, 35, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 6, 6, 'Layouts', 'layouts', 2, 8, 9, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-## ## ## Admin: Extensions
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Extensions', '', 'extensions', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 1, 66, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 7, 7, 'Media', 'media', 2, 10, 11, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Extensions', '', 'extensions/create', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 52, 61, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 8, 8, 'Users', 'users', 1, 13, 22, 1, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Install', '', 'extensions/install', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 53, 60, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 9, 9, 'Profile', 'profile', 8, 14, 15, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Discover', '', 'extensions/discover', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 54, 59, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 10, 10, 'Users', 'users', 8, 16, 17, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Update', '', 'extensions/update', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 55, 58, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 11, 11, 'Groups', 'groups', 8, 18, 19, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Uninstall', '', 'extensions/uninstall', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 2, 56, 57, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 12, 12, 'Assets', 'assets', 8, 20, 21, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-## ## ## Admin: Interface
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Interface', '', 'interface', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 3, 64, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 13, 13, 'Interface', 'interface', 1, 23, 34, 1, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Categories', '', 'interface/categories', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 3, 40, 49, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 14, 14, 'Categories', 'categories', 13, 24, 25, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Menus', '', 'interface/menus', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 3, 41, 48, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 15, 15, 'Menus', 'menus', 13, 26, 27, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Menu Items', '', 'interface/menu-items', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 3, 42, 47, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 16, 16, 'Menu Items', 'menuitems', 13, 28, 29, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Modules', '', 'interface/modules', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 3, 43, 46, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 17, 17, 'Modules', 'modules', 13, 30, 31, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Templates', '', 'interface/templates', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 3, 44, 45, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 18, 18, 'Templates', 'templates', 13, 32, 33, 2,  `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-## ## ## Admin: Users
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Users', '', 'users', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 4, 63, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 19, 19, 'Options', 'options', 1, 35, 48, 1, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Profile', '', 'users/profile', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 4, 20, 27, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 20, 20, 'Site', 'sites', 19, 36, 37, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Users', '', 'users/users', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 4, 21, 26, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 21, 21, 'Applications', 'applications', 19, 38, 39, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Groups', '', 'users/groups', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 4, 22, 25, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 22, 22, 'Checkin', 'checkin', 19, 40, 41, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Applications', '', 'users/applications', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 4, 23, 24, 2, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 23, 23, 'Clean Cache', 'cleancache', 19, 42, 43, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-## ## ## Admin Options
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Options', '', 'options', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 5, 62, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 24, 24, 'Redirects', 'redirects', 19, 44, 45, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Site', '', 'options/site', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 5, 8, 19, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 25, 25, 'Plugins', 'plugins', 19, 46, 47, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Applications', '', 'options/applications', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 5, 9, 18, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 26, 26, 'Install', 'install', 1, 49, 60, 1,  `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Checkin', '', 'options/checkin', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 5, 10, 17, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 27, 27, 'Create', 'create', 26, 50, 51, 2,  `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Clean Cache', '', 'options/clean-cache', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 5, 11, 16, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 28, 28, 'Install', 'install', 26, 52, 53, 2,  `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Redirects', '', 'options/redirects', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 5, 12, 15, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 29, 29, 'Discover', 'discover', 26, 54, 55, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Plugins', '', 'options/plugins', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 5, 13, 14, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 30, 30, 'Update', 'update', 26, 56, 57, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-## ## ## Admin Search
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Search', '', 'search', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 6, 7, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 31, 31, 'Uninstall', 'uninstall', 26, 58, 59, 2, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5 AND `title` = 'Admin';
 
-
-## ## ## Site: Main Menu
-INSERT INTO `molajo_extension_instance_options`
-  (`extension_instance_id`, `extension_id`, `extension_type_id`, `title`, `subtitle`, `alias`, `content_text`, `protected`, `featured`, `stickied`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`,
-  `menu_item_type`, `parent_id`, `lft`, `rgt`, `level`, `custom_fields`, `parameters`, `language`, `translation_of_id`, `ordering`)
-
-  SELECT `id`, `extension_id`, `extension_type_id`, 'Home', '', 'home', '', 1, 0, 0, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '',
-    1, 0, 99, 100, 1, '{}', '{}', 'en-GB', 0, 1
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 32, 32, 'Search', 'search', 1, 61, 62, 1,  `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
     FROM `molajo_extension_instances`
-    WHERE `extension_type_id` = 5 AND `title` = 'Main Menu';
-    
+    WHERE `extension_type_id` = 5 AND `title` = 'Admin';
+
+INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `alias`, `parent_id`, `lft`, `rgt`, `level`, `extension_instance_id`, `extension_id`, `extension_type_id`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `version`, `version_of_id`, `status_prior_to_version`, `created_datetime`, `created_by`, `modified_datetime`, `modified_by`, `checked_out_datetime`, `checked_out_by`, `image`, `option_id`, `option_value`, `option_value_literal`, `trigger_asset_id`, `position`, `menu_item_type`,  `custom_fields`, `parameters`, `language`, `translation_of_id`)
+  SELECT 33, 33, 'Home', 'home', 1, 63, 64, 1, `id`, `extension_id`, `extension_type_id`, 1, '2011-11-11 11:11:11', '0000-00-00 00:00:00', 1, 0, 0, '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0, '0000-00-00 00:00:00', 0, '', 0, '', '', 0, '', 1, '{}', '{}', 'en-GB', 0
+    FROM `molajo_extension_instances`
+    WHERE `extension_type_id` = 5 AND NOT (`title` = 'Admin');
+
+UPDATE `molajo_extension_instance_options`
+   SET `protected` = 1;
+
 ## NEEDS LOTS OF WORK
 
 INSERT INTO `molajo_assets`
-  (`source_table_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT 10, `id`, `title`, `alias`, CONCAT('index.php?option=com_extensions&view=', LOWER(`title`)), 1, 'en-GB', 0, 0, 2
-    FROM `molajo_extension_instance_options`
-    WHERE `extension_type_id` = 5;
-    
+  (`source_table_id`, `source_id`, `title`,
+  `sef_request`, `request`,
+  `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
+  VALUES
+  (10, 2, 'Content', 'index.php?option=com_dashboard&view=content', 'content', 1, 'en-GB', 0, 0, 2),
+  (10, 3, 'Articles', 'index.php?option=com_articles', 'content/articles', 1, 'en-GB', 0, 0, 2),
+  (10, 4, 'Contacts', 'index.php?option=com_contacts', 'content/contacts', 1, 'en-GB', 0, 0, 2),
+  (10, 5, 'Comments', 'index.php?option=com_comments', 'content/comments', 1, 'en-GB', 0, 0, 2),
+  (10, 6, 'Layouts', 'index.php?option=com_layouts', 'content/layouts', 1, 'en-GB', 0, 0, 2),
+  (10, 7, 'Media', 'index.php?option=com_media', 'content/media', 1, 'en-GB', 0, 0, 2),
+  (10, 8, 'Users', 'index.php?option=com_dashboard&view=users', 'users', 1, 'en-GB', 0, 0, 2),
+  (10, 9, 'Profile', 'index.php?option=com_profile', 'users/profiles', 1, 'en-GB', 0, 0, 2),
+  (10, 10, 'Users', 'index.php?option=com_users', 'users/users', 1, 'en-GB', 0, 0, 2),
+  (10, 11, 'Groups', 'index.php?option=com_groups', 'users/groups', 1, 'en-GB', 0, 0, 2),
+  (10, 12, 'Assets', 'index.php?option=com_assets&view=users', 'users/assets', 1, 'en-GB', 0, 0, 2),
+  (10, 13, 'Interface', 'index.php?option=com_dashboard&view=interface', 'interface', 1, 'en-GB', 0, 0, 2),
+  (10, 14, 'Categories', 'index.php?option=com_categories', 'interface/categories', 1, 'en-GB', 0, 0, 2),
+  (10, 15, 'Menus', 'index.php?option=com_extensions&view=menus', 'interface/menus', 1, 'en-GB', 0, 0, 2),
+  (10, 16, 'Menu Items', 'index.php?option=com_extensions&view=menuitems', 'interface/menuitems', 1, 'en-GB', 0, 0, 2),
+  (10, 17, 'Modules', 'index.php?option=com_extensions&view=modules', 'interface/modules', 1, 'en-GB', 0, 0, 2),
+  (10, 18, 'Templates', 'index.php?option=com_extensions&view=templates', 'interface/templates', 1, 'en-GB', 0, 0, 2),
+  (10, 19, 'Options', 'index.php?option=com_dashboard&view=options', 'options', 1, 'en-GB', 0, 0, 2),
+  (10, 20, 'Site', 'index.php?option=com_extensions&view=sites', 'options/sites', 1, 'en-GB', 0, 0, 2),
+  (10, 21, 'Applications', 'index.php?option=com_extensions&view=applications', 'options/applications', 1, 'en-GB', 0, 0, 2),
+  (10, 22, 'Checkin', 'index.php?option=com_maintain&view=checkin', 'options/checkin', 1, 'en-GB', 0, 0, 2),
+  (10, 23, 'Clean Cache', 'index.php?option=com_maintain&view=cleancache', 'options/cleancache', 1, 'en-GB', 0, 0, 2),
+  (10, 24, 'Redirects', 'index.php?option=com_maintain&view=redirects', 'options/redirects', 1, 'en-GB', 0, 0, 2),
+  (10, 25, 'Plugins', 'index.php?option=com_extensions&view=plugins', 'options/plugins', 1, 'en-GB', 0, 0, 2),
+  (10, 26, 'Install', 'index.php?option=com_dashboard&view=install', 'install', 1, 'en-GB', 0, 0, 2),
+  (10, 27, 'Create', 'index.php?option=com_installer&view=create', 'install/create', 1, 'en-GB', 0, 0, 2),
+  (10, 28, 'Install', 'index.php?option=com_installer&view=install', 'install/install', 1, 'en-GB', 0, 0, 2),
+  (10, 29, 'Discover', 'index.php?option=com_installer&view=discover', 'install/discover', 1, 'en-GB', 0, 0, 2),
+  (10, 30, 'Update', 'index.php?option=com_installer&view=update', 'install/update', 1, 'en-GB', 0, 0, 2),
+  (10, 31, 'Uninstall', 'index.php?option=com_installer&view=uninstall', 'install/uninstall', 1, 'en-GB', 0, 0, 2),
+  (10, 32, 'Search', 'index.php?option=com_search', 'search', 1, 'en-GB', 0, 0, 2),
+  (10, 33, 'Home', 'index.php?option=com_layouts', 'home', 1, 'en-GB', 0, 0, 1);
+
 /** Administrator */
 INSERT INTO `molajo_users` (`id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', NULL ,  '');
 INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (42, 1), (42, 2), (42, 3);
@@ -1028,6 +935,7 @@ INSERT INTO `molajo_application_extension_instances`
       AND b.id = 2
       AND a.title IN
         ('com_articles',
+          'com_assets',
           'com_categories',
           'com_comments',
           'com_configuration',
@@ -1067,7 +975,7 @@ INSERT INTO `molajo_application_extension_instances`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE extension_type_id = 5
-      AND a.title = 'Admin'
+      AND NOT(a.title = 'Admin')
       AND b.id IN (1, 3);
 
 INSERT INTO `molajo_application_extension_instances`
@@ -1076,7 +984,7 @@ INSERT INTO `molajo_application_extension_instances`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE extension_type_id = 5
-      AND NOT (a.title = 'Admin')
+      AND a.title = 'Admin'
       AND b.id = 2;
 
 /** 6. modules */
@@ -1169,3 +1077,18 @@ INSERT INTO `molajo_application_extension_instances`
      `molajo_applications` b
     WHERE extension_type_id = 9
       AND a.title = 'system';
+
+/** site extension instances */
+INSERT INTO `molajo_site_extension_instances`
+ (`site_id`, `extension_instance_id`)
+  SELECT DISTINCT b.id, a.id
+    FROM `molajo_extension_instances` a,
+     `molajo_sites` b;
+
+# Asset Categories
+
+INSERT INTO `molajo_asset_categories`
+  (`asset_id`, `category_id`, `ordering`)
+  SELECT `id`, `primary_category_id`, 1
+    FROM `molajo_assets`
+    WHERE `primary_category_id` > 0;
