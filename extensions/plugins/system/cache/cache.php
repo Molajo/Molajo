@@ -58,7 +58,7 @@ class plgSystemCache extends MolajoPlugin
 			return;
 		}
 
-		if ($user->get('guest') && $_SERVER['REQUEST_METHOD'] == 'GET') {
+		if ((int) $user->get('user_id') == 0 && $_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->_cache->setCaching(true);
 		}
 
@@ -89,7 +89,7 @@ class plgSystemCache extends MolajoPlugin
 		}
 
 		$user = MolajoFactory::getUser();
-		if ($user->get('guest')) {
+		if ((int) $user->get('user_id') == 0) {
 			//We need to check again here, because auto-login plugins have not been fired before the first aid check
 			$this->_cache->store();
 		}

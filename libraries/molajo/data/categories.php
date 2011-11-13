@@ -713,7 +713,7 @@ class MolajoCategoryNode extends JObject
      *
      * @param   boolean  $modified_user    Returns the modified_user when set to true
      *
-     * @return  MolajoUser    A MolajoUser object containing a userid
+     * @return  MolajoUser    A MolajoUser object containing a user_id
      */
     function getAuthor($modified_user = false)
     {

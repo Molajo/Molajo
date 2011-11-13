@@ -102,9 +102,6 @@ class plgUserMolajo extends MolajoPlugin
 			return JError::raiseWarning('SOME_ERROR_CODE', JText::_('JERROR_NOLOGIN_BLOCKED'));
 		}
 
-		// Mark the user as logged in
-		$instance->set('guest', 0);
-
 		// Register the needed session variables
 		$session = MolajoFactory::getSession();
 		$session->set('user', $instance);
@@ -116,9 +113,7 @@ class plgUserMolajo extends MolajoPlugin
 		// Update the user related fields for the Joomla sessions table.
 		$db->setQuery(
 			'UPDATE `#__sessions`' .
-			' SET `guest` = '.$db->quote($instance->get('guest')).',' .
-			'	`username` = '.$db->quote($instance->get('username')).',' .
-			'	`userid` = '.(int) $instance->get('id') .
+			' SET `user_id` = '.(int) $instance->get('id') .
 			' WHERE `session_id` = '.$db->quote($session->getId())
 		);
 		$db->query();
@@ -150,7 +145,8 @@ class plgUserMolajo extends MolajoPlugin
 		}
 
 		// Check to see if we're deleting the current session
-		if ($my->get('id') == $user['id'] && $options['applicationid'] == MOLAJO_APPLICATION_ID) {
+		if ($my->get('id') == $user['id']
+            && $options['application_id'] == MOLAJO_APPLICATION_ID) {
 			// Hit the user last visit field
 			$my->setLastVisit();
 
@@ -158,11 +154,11 @@ class plgUserMolajo extends MolajoPlugin
 			$session->destroy();
 		}
 
-		// Force logout all users with that userid
+		// Force logout all users with that user_id
 		$db = MolajoFactory::getDBO();
 		$db->setQuery(
 			'DELETE FROM `#__sessions`' .
-			' WHERE `userid` = '.(int) $user['id'] .
+			' WHERE `user_id` = '.(int) $user['id'] .
 			' AND `application_id` = '.(int) $options['application_id']
 		);
 		$db->query();
@@ -241,7 +237,7 @@ class plgUserMolajo extends MolajoPlugin
         $db = MolajoFactory::getDbo();
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
-            ' WHERE `userid` = '.(int) $user['id']
+            ' WHERE `user_id` = '.(int) $user['id']
         );
         $db->Query();
 

@@ -292,11 +292,6 @@ abstract class MolajoModuleHelper
      */
     protected function &_load()
     {
-        $Itemid = JRequest::getInt('Itemid');
-        $user = MolajoFactory::getUser();
-        $lang = MolajoFactory::getLanguage()->getTag();
-        $application_id = MOLAJO_APPLICATION_ID;
-
         static $modules;
 
         if (isset($modules)) {

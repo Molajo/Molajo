@@ -30,7 +30,8 @@ abstract class MolajoTemplateHelper
         $condition = '';
 
         /** Menu Item Template */
-        $menu = MolajoMenu::getInstance(null, array());
+        $menu = MolajoMenu::getInstance(MOLAJO_APPLICATION, array());
+
         if ($menu == null) {
             $menuItem = null;
         } else {

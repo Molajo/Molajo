@@ -121,11 +121,10 @@ class MolajoSessionHelper extends JObject
 
         } else {
             $db->setQuery(
-                'INSERT INTO `#__sessions` (`session_id`, `application_id`, `guest`, `session_time`, `userid`)' .
+                'INSERT INTO `#__sessions` (`session_id`, `application_id`, `session_time`, `user_id`)' .
                 ' VALUES (' .
                 $db->quote($session->getId()) . ', ' .
                 (int) MOLAJO_APPLICATION_ID . ', ' .
-                (int) $user->get('guest') . ', ' .
                 (int) $session->get('session.timer.start') . ', ' .
                 (int) $user->get('id') . ')'
             );

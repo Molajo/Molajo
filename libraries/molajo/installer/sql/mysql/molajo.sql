@@ -436,11 +436,10 @@ INSERT INTO `molajo_extensions`
     ('mod_quicklinks', 6, '', '', 1),
     ('mod_search', 6, '', '', 1),
     ('mod_submenu', 6, '', '', 1),
+    ('mod_syndicate', 6, '', '', 1),
     ('mod_textbox', 6, '', '', 1),
     ('mod_title', 6, '', '', 1),
-    ('mod_toolbar', 6, '', '', 1),
-    ('mod_search', 6, '', '', 1),
-    ('mod_syndicate', 6, '', '', 1);
+    ('mod_toolbar', 6, '', '', 1);
 
 INSERT INTO `molajo_extension_instances`
   (`extension_id`, `extension_type_id`,
@@ -458,7 +457,7 @@ INSERT INTO `molajo_extension_instances`
         1, 0, 0,
         '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0, '{}', '{}',
-        '', 'en-GB', 0, `id`
+        SUBSTRING(`name`, 5, 99), 'en-GB', 0, `id`
     FROM `molajo_extensions`
     WHERE `extension_type_id` = 6;
 
@@ -467,58 +466,6 @@ INSERT INTO `molajo_assets`
   SELECT 4, `id`, `name`, CONCAT('extensions/modules/', `id`), CONCAT('index.php?option=com_extensions&view=modules&id=', `id`), 1, 'en-GB', 0, 0, 1
     FROM `molajo_extensions`
     WHERE `extension_type_id` = 6;
-
-# Administrator Common
-UPDATE `molajo_extension_instances`
-  SET `position` = 'header'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_header';
-
-UPDATE `molajo_extension_instances`
-  SET `position` = 'launchpad'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_launchpad';
-
- UPDATE `molajo_extension_instances`
-  SET `position` = 'footer'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_footer';
-
-UPDATE `molajo_extension_instances`
-  SET `position` = 'debug'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_debug';
-
-# Administrator List Manager
-UPDATE `molajo_extension_instances`
-  SET `position` = 'title'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_title';
-
-UPDATE `molajo_extension_instances`
-  SET `position` = 'toolbar'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_toolbar';
-
- UPDATE `molajo_extension_instances`
-  SET `position` = 'submenu'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_submenu';
-
-UPDATE `molajo_extension_instances`
-  SET `position` = 'filters'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_filters';
-
-UPDATE `molajo_extension_instances`
-  SET `position` = 'grid'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_grid';
-
-UPDATE `molajo_extension_instances`
-  SET `position` = 'gridbatch'
-  WHERE extension_type_id = 6
-    AND `title` = 'mod_gridbatch';
 
 # Plugins
 
@@ -668,10 +615,11 @@ INSERT INTO `molajo_extension_instances`
     FROM `molajo_extensions`
     WHERE `extension_type_id` = 5;
 
+
 INSERT INTO `molajo_assets`
   (`source_table_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT 4, `id`, `name`, CONCAT('extensions/menus/', `id`), CONCAT('index.php?option=com_extensions&view=menus&id=', `id`), 1, 'en-GB', 0, 0, 1
-    FROM `molajo_extensions`
+  SELECT 4, `id`, `title`, CONCAT('extensions/menus/', `id`), CONCAT('index.php?option=com_extensions&view=menus&id=', `id`), 1, 'en-GB', 0, 0, 1
+    FROM `molajo_extension_instances`
     WHERE `extension_type_id` = 5;
 
 ## ## Menu Items
@@ -846,56 +794,46 @@ INSERT INTO `molajo_extension_instance_options` (`id`, `ordering`, `title`, `ali
 UPDATE `molajo_extension_instance_options`
    SET `protected` = 1;
 
-##  Asset for working with the Menu Item URL 
-INSERT INTO `molajo_assets`
-  (`source_table_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT 4, `id`, `title`, CONCAT('extensions/menuitems/', `id`), CONCAT('index.php?option=com_extensions&view=menuitems&id=', `id`), 1, 'en-GB', 0, 0, 1
-    FROM `molajo_extension_instance_options`
-    WHERE `extension_type_id` = 5;
-
-##  Actual Menu Item URL to destination 
-INSERT INTO `molajo_assets`
-  (`source_table_id`, `source_id`, `title`, `request`, `sef_request`,
-  `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
+INSERT INTO `molajo_assets` (`source_table_id`, `source_id`, `title`, `request`, `sef_request`, `primary_category_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
   VALUES
-  (11, 0, 'Content', 'index.php?option=com_dashboard&view=content', 'content', 1, 'en-GB', 0, 0, 2),
-  (3, 0, 'Articles', 'index.php?option=com_articles', 'content/articles', 1, 'en-GB', 0, 0, 2),
-  (7, 0, 'Contacts', 'index.php?option=com_contacts', 'content/contacts', 1, 'en-GB', 0, 0, 2),
-  (8, 0, 'Comments', 'index.php?option=com_comments', 'content/comments', 1, 'en-GB', 0, 0, 2),
-  (12, 0, 'Layouts', 'index.php?option=com_layouts', 'content/layouts', 1, 'en-GB', 0, 0, 2),
-  (9, 0, 'Media', 'index.php?option=com_media', 'content/media', 1, 'en-GB', 0, 0, 2),
+  (10, 2, 'Content', 'index.php?option=com_dashboard&view=content', 'content', 1, 'en-GB', 0, 0, 3),
+  (10, 3, 'Articles', 'index.php?option=com_articles', 'content/articles', 1, 'en-GB', 0, 0, 3),
+  (10, 4, 'Contacts', 'index.php?option=com_contacts', 'content/contacts', 1, 'en-GB', 0, 0, 3),
+  (10, 5, 'Comments', 'index.php?option=com_comments', 'content/comments', 1, 'en-GB', 0, 0, 3),
+  (10, 6, 'Layouts', 'index.php?option=com_layouts', 'content/layouts', 1, 'en-GB', 0, 0, 3),
+  (10, 7, 'Media', 'index.php?option=com_media', 'content/media', 1, 'en-GB', 0, 0, 3),
 
-  (11, 0, 'Users', 'index.php?option=com_dashboard&view=users', 'users', 1, 'en-GB', 0, 0, 2),
-  (13, 0, 'Profile', 'index.php?option=com_profile', 'users/profiles', 1, 'en-GB', 0, 0, 2),
-  (5, 0, 'Users', 'index.php?option=com_users', 'users/users', 1, 'en-GB', 0, 0, 2),
-  (6, 0, 'Groups', 'index.php?option=com_groups', 'users/groups', 1, 'en-GB', 0, 0, 2),
-  (14, 0, 'Assets', 'index.php?option=com_assets&view=users', 'users/assets', 1, 'en-GB', 0, 0, 2),
+  (10, 8, 'Users', 'index.php?option=com_dashboard&view=users', 'users', 1, 'en-GB', 0, 0, 3),
+  (10, 9, 'Profile', 'index.php?option=com_profile', 'users/profiles', 1, 'en-GB', 0, 0, 3),
+  (10, 10, 'Users', 'index.php?option=com_users', 'users/users', 1, 'en-GB', 0, 0, 3),
+  (10, 11, 'Groups', 'index.php?option=com_groups', 'users/groups', 1, 'en-GB', 0, 0, 3),
+  (10, 12, 'Assets', 'index.php?option=com_assets&view=users', 'users/assets', 1, 'en-GB', 0, 0, 3),
 
-  (11, 0, 'Interface', 'index.php?option=com_dashboard&view=interface', 'interface', 1, 'en-GB', 0, 0, 2),
-  (2, 0, 'Categories', 'index.php?option=com_categories', 'interface/categories', 1, 'en-GB', 0, 0, 2),
-  (4, 0, 'Menus', 'index.php?option=com_extensions&view=menus', 'interface/menus', 1, 'en-GB', 0, 0, 2),
-  (10, 0, 'Menu Items', 'index.php?option=com_extensions&view=menuitems', 'interface/menuitems', 1, 'en-GB', 0, 0, 2),
-  (4, 0, 'Modules', 'index.php?option=com_extensions&view=modules', 'interface/modules', 1, 'en-GB', 0, 0, 2),
-  (4, 0, 'Templates', 'index.php?option=com_extensions&view=templates', 'interface/templates', 1, 'en-GB', 0, 0, 2),
+  (10, 13, 'Interface', 'index.php?option=com_dashboard&view=interface', 'interface', 1, 'en-GB', 0, 0, 3),
+  (10, 14, 'Categories', 'index.php?option=com_categories', 'interface/categories', 1, 'en-GB', 0, 0, 3),
+  (10, 15, 'Menus', 'index.php?option=com_extensions&view=menus', 'interface/menus', 1, 'en-GB', 0, 0, 3),
+  (10, 16, 'Menu Items', 'index.php?option=com_extensions&view=menuitems', 'interface/menuitems', 1, 'en-GB', 0, 0, 3),
+  (10, 17, 'Modules', 'index.php?option=com_extensions&view=modules', 'interface/modules', 1, 'en-GB', 0, 0, 3),
+  (10, 18, 'Templates', 'index.php?option=com_extensions&view=templates', 'interface/templates', 1, 'en-GB', 0, 0, 3),
 
-  (11, 0, 'Options', 'index.php?option=com_dashboard&view=options', 'options', 1, 'en-GB', 0, 0, 2),
-  (4, 0, 'Site', 'index.php?option=com_extensions&view=sites', 'options/sites', 1, 'en-GB', 0, 0, 2),
-  (4, 0, 'Applications', 'index.php?option=com_extensions&view=applications', 'options/applications', 1, 'en-GB', 0, 0, 2),
-  (15, 0, 'Checkin', 'index.php?option=com_maintain&view=checkin', 'options/checkin', 1, 'en-GB', 0, 0, 2),
-  (15, 0, 'Clean Cache', 'index.php?option=com_maintain&view=cleancache', 'options/cleancache', 1, 'en-GB', 0, 0, 2),
-  (15, 0, 'Redirects', 'index.php?option=com_maintain&view=redirects', 'options/redirects', 1, 'en-GB', 0, 0, 2),
-  (4, 0, 'Plugins', 'index.php?option=com_extensions&view=plugins', 'options/plugins', 1, 'en-GB', 0, 0, 2),
+  (10, 19, 'Options', 'index.php?option=com_dashboard&view=options', 'options', 1, 'en-GB', 0, 0, 3),
+  (10, 20, 'Site', 'index.php?option=com_extensions&view=sites', 'options/sites', 1, 'en-GB', 0, 0, 3),
+  (10, 21, 'Applications', 'index.php?option=com_extensions&view=applications', 'options/applications', 1, 'en-GB', 0, 0, 3),
+  (10, 22, 'Checkin', 'index.php?option=com_maintain&view=checkin', 'options/checkin', 1, 'en-GB', 0, 0, 3),
+  (10, 23, 'Clean Cache', 'index.php?option=com_maintain&view=cleancache', 'options/cleancache', 1, 'en-GB', 0, 0, 3),
+  (10, 24, 'Redirects', 'index.php?option=com_maintain&view=redirects', 'options/redirects', 1, 'en-GB', 0, 0, 3),
+  (10, 25, 'Plugins', 'index.php?option=com_extensions&view=plugins', 'options/plugins', 1, 'en-GB', 0, 0, 3),
 
-  (11, 0, 'Install', 'index.php?option=com_dashboard&view=install', 'install', 1, 'en-GB', 0, 0, 2),
-  (16, 0, 'Create', 'index.php?option=com_installer&view=create', 'install/create', 1, 'en-GB', 0, 0, 2),
-  (16, 0, 'Install', 'index.php?option=com_installer&view=install', 'install/install', 1, 'en-GB', 0, 0, 2),
-  (16, 0, 'Discover', 'index.php?option=com_installer&view=discover', 'install/discover', 1, 'en-GB', 0, 0, 2),
-  (16, 0, 'Update', 'index.php?option=com_installer&view=update', 'install/update', 1, 'en-GB', 0, 0, 2),
-  (16, 0, 'Uninstall', 'index.php?option=com_installer&view=uninstall', 'install/uninstall', 1, 'en-GB', 0, 0, 2),
+  (10, 26, 'Install', 'index.php?option=com_dashboard&view=install', 'install', 1, 'en-GB', 0, 0, 3),
+  (10, 27, 'Create', 'index.php?option=com_installer&view=create', 'install/create', 1, 'en-GB', 0, 0, 3),
+  (10, 28, 'Install', 'index.php?option=com_installer&view=install', 'install/install', 1, 'en-GB', 0, 0, 3),
+  (10, 29, 'Discover', 'index.php?option=com_installer&view=discover', 'install/discover', 1, 'en-GB', 0, 0, 3),
+  (10, 30, 'Update', 'index.php?option=com_installer&view=update', 'install/update', 1, 'en-GB', 0, 0, 3),
+  (10, 31, 'Uninstall', 'index.php?option=com_installer&view=uninstall', 'install/uninstall', 1, 'en-GB', 0, 0, 3),
 
-  (17, 0, 'Search', 'index.php?option=com_search', 'search', 1, 'en-GB', 0, 0, 2),
+  (10, 32, 'Search', 'index.php?option=com_search', 'search', 1, 'en-GB', 0, 0, 2),
 
-  (12, 0, 'Home', 'index.php?option=com_layouts', 'home', 1, 'en-GB', 0, 0, 1);
+  (10, 33, 'Home', 'index.php?option=com_layouts', 'home', 1, 'en-GB', 0, 0, 1);
 
 ##  Administrator 
 INSERT INTO `molajo_users` (`id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', NULL ,  '');

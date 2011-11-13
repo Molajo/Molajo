@@ -556,9 +556,9 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getViewaccessList
      */
-    public function getViewaccessList($userid = '', $option = '', $action = '', $parameters = array())
+    public function getViewaccessList($user_id = '', $option = '', $action = '', $parameters = array())
     {
-        return $this->getUsergroupsList($userid, $option, MOLAJO_ACL_ACTION_VIEW, $parameters);
+        return $this->getUsergroupsList($user_id, $option, MOLAJO_ACL_ACTION_VIEW, $parameters);
     }
 
     /**
@@ -622,14 +622,14 @@ class MolajoACLCore extends MolajoACL
     /**
      *  TYPE 3 --> MolajoACL::getList -> getUsergroupsList
      */
-    public function getUsergroupsList($userid, $option, $action, $parameters = array())
+    public function getUsergroupsList($user_id, $option, $action, $parameters = array())
     {
         $acl = new MolajoACL();
         $cache = MolajoFactory::getCache('coreacl.getUsergroupsList', '');
 
         /** $key */
-        if ((int)$userid == 0) {
-            $userid = MolajoFactory::getUser()->get('id');
+        if ((int)$user_id == 0) {
+            $user_id = MolajoFactory::getUser()->get('id');
         }
 
         /** query  */
@@ -647,11 +647,11 @@ class MolajoACLCore extends MolajoACL
         }
 
         /** Guest: 3 - Public: 4 */
-        if ((int)$userid == 0) {
+        if ((int)$user_id == 0) {
             $query->where('c.id IN (' . MOLAJO_ACL_GROUP_PUBLIC . ',' . MOLAJO_ACL_GROUP_GUEST . ')');
         } else {
             $query->join('LEFT', '#__user_groups AS d ON d.group_id = b.group_id');
-            $query->where('d.user_id = ' . (int)$userid);
+            $query->where('d.user_id = ' . (int)$user_id);
         }
 
         /** $asset */
@@ -690,7 +690,7 @@ class MolajoACLCore extends MolajoACL
             }
 
             $authorised[] = MOLAJO_ACL_GROUP_PUBLIC;
-            if ((int)$userid == 0) {
+            if ((int)$user_id == 0) {
                 $authorised[] = MOLAJO_ACL_GROUP_GUEST;
             } else {
                 $authorised[] = MOLAJO_ACL_GROUP_REGISTERED;
@@ -737,7 +737,7 @@ class MolajoACLCore extends MolajoACL
      *
      *  Checks specific authorisation for a user or group, returning a true or false test result.
      *
-     * @param string $userid
+     * @param string $user_id
      * @param string $action 1-login; 2-create; 3-view; 4-edit; 5-delete; 6-admin
      * @param integer $asset key
      *  $param integer $access key
@@ -745,22 +745,22 @@ class MolajoACLCore extends MolajoACL
      * @return object list requested
      * @return boolean
      */
-    public function checkUserPermissions($userid, $action, $asset = '', $access = '')
+    public function checkUserPermissions($user_id, $action, $asset = '', $access = '')
     {
-        if ((int)$userid == 0) {
-            $userid = MolajoFactory::getUser()->id;
+        if ((int)$user_id == 0) {
+            $user_id = MolajoFactory::getUser()->id;
         }
 
         if ($action == 'login') {
-            if ((int)$userid == 0) {
+            if ((int)$user_id == 0) {
                 return false;
             }
-            return $this->checkUserPermissionsLogin($userid);
+            return $this->checkUserPermissionsLogin($user_id);
         }
 
         /** user groups */
         $acl = new MolajoACL ();
-        $userGroups = $acl->getList('Usergroups', $userid, '', $action);
+        $userGroups = $acl->getList('Usergroups', $user_id, '', $action);
 
         /** query  */
         $db = MolajoFactory::getDBO();
@@ -825,7 +825,7 @@ class MolajoACLCore extends MolajoACL
      * @param null $asset
      * @return void
      */
-    public function checkUserPermissionsLogin($userid)
+    public function checkUserPermissionsLogin($user_id)
     {
         $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
@@ -833,7 +833,7 @@ class MolajoACLCore extends MolajoACL
         $query->select('count(*) as count');
         $query->from('#__user_applications a');
         $query->where('application_id = ' . (int)MOLAJO_APPLICATION_ID);
-        $query->where('user_id = ' . (int)$userid);
+        $query->where('user_id = ' . (int)$user_id);
 
         $db->setQuery($query->__toString());
         $result = $db->loadResult();

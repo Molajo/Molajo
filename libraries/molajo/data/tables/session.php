@@ -26,7 +26,6 @@ class MolajoTableSession extends MolajoTable
     {
         parent::__construct('#__sessions', 'session_id', $db);
 
-        $this->guest = 1;
         $this->username = '';
     }
 
@@ -48,7 +47,7 @@ class MolajoTableSession extends MolajoTable
 
     function update($updateNulls = false)
     {
-        $this->time = time();
+        $this->session_time = time();
         $ret = $this->_db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
 
         if (!$ret) {
@@ -67,7 +66,7 @@ class MolajoTableSession extends MolajoTable
         $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__sessions'
-                 . ' WHERE userid = ' . $this->_db->Quote($userId)
+                 . ' WHERE user_id = ' . $this->_db->Quote($userId)
                  . ' AND application_id IN (' . $application_ids . ')';
 
         $this->_db->setQuery($query);
@@ -99,16 +98,16 @@ class MolajoTableSession extends MolajoTable
     /**
      * Find out if a user has a one or more active sessions
      *
-     * @param   integer  $userid The identifier of the user
+     * @param   integer  $user_id The identifier of the user
      *
      * @return  boolean  True if a session for this user exists
      *
      * @since   1.0
      */
-    function exists($userid)
+    function exists($user_id)
     {
-        $query = 'SELECT COUNT(userid) FROM #__sessions'
-                 . ' WHERE userid = ' . $this->_db->Quote($userid);
+        $query = 'SELECT COUNT(user_id) FROM #__sessions'
+                 . ' WHERE user_id = ' . $this->_db->Quote($user_id);
 
         $this->_db->setQuery($query);
 

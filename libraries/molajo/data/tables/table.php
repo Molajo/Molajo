@@ -727,9 +727,9 @@ abstract class MolajoTable extends JObject
      * a user.  If the row is checked out by the same user, then it is considered
      * not checked out -- as the user can still edit it.
      *
-     * @param   integer  The userid to preform the match with, if an item is checked
+     * @param   integer  The user_id to preform the match with, if an item is checked
      *                    out by this user the function will return false.
-     * @param   integer  The userid to perform the match against when the function
+     * @param   integer  The user_id to perform the match against when the function
      *                    is used as a static function.
      * @return  boolean  True if checked out.
      * @since   1.0
@@ -748,9 +748,9 @@ abstract class MolajoTable extends JObject
 
         $db = MolajoFactory::getDBO();
         $db->setQuery(
-            'SELECT COUNT(userid)' .
+            'SELECT COUNT(user_id)' .
             ' FROM ' . $db->quoteName('#__sessions') .
-            ' WHERE ' . $db->quoteName('userid') . ' = ' . (int)$against
+            ' WHERE ' . $db->quoteName('user_id') . ' = ' . (int)$against
         );
         $checkedOut = (boolean)$db->loadResult();
 

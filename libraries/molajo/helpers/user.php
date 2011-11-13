@@ -253,7 +253,7 @@ abstract class MolajoUserHelper
     }
 
     /**
-     * Returns userid if a user exists
+     * Returns user_id if a user exists
      *
      * @param   string The username to search on
      *

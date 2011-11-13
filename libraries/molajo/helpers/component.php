@@ -130,7 +130,7 @@ class MolajoComponentHelper
      */
     protected static function _load($option)
     {
-        self::$_components[$option] = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_COMPONENT, $option);
+        self::$_components[$option] = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_COMPONENTS, $option);
 
         if (isset(self::$_components[$option]->parameters)) {
             $temp = new JRegistry;

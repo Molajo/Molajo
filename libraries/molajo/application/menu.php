@@ -43,34 +43,6 @@ class MolajoMenu extends JObject
     protected $_active = 0;
 
     /**
-     * __construct
-     *
-     * Class constructor
-     *
-     * @param   array    $options  An array of configuration options.
-     *
-     * @return  MolajoMenu  A MolajoMenu object
-     * @since   1.0
-     */
-    public function __construct($options = array())
-    {
-        // Load the menu items
-        $this->load();
-
-        foreach ($this->_items as $k => $item)
-        {
-            if ($item->home) {
-                $this->_default[$item->language] = $item->id;
-            }
-
-            // Decode the item params
-            $result = new JRegistry;
-            $result->loadJSON($item->params);
-            $item->params = $result;
-        }
-    }
-
-    /**
      * getInstance
      *
      * Returns a MolajoMenu object
@@ -97,6 +69,34 @@ class MolajoMenu extends JObject
         }
 
         return $instances[$application];
+    }
+
+    /**
+     * __construct
+     *
+     * Class constructor
+     *
+     * @param   array    $options  An array of configuration options.
+     *
+     * @return  MolajoMenu  A MolajoMenu object
+     * @since   1.0
+     */
+    public function __construct($options = array())
+    {
+        // Load the menu items
+        $this->load();
+
+        foreach ($this->_items as $k => $item)
+        {
+            if ($item->home) {
+                $this->_default[$item->language] = $item->id;
+            }
+
+            // Decode the item params
+            $result = new JRegistry;
+            $result->loadJSON($item->params);
+            $item->params = $result;
+        }
     }
 
     /**
@@ -309,13 +309,21 @@ class MolajoMenu extends JObject
     /**
      * load
      *
-     * Loads the menu items
+     * Loads the menus
      *
      * @return  array
      * @since   1.0
      */
     public function load()
     {
-        return array();
+        static $menus;
+
+        if (isset($menus)) {
+            return $menus;
+        }
+
+        $menus = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MENUS);
+
+        return $menus;
     }
 }

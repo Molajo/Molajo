@@ -284,7 +284,7 @@ class UsersModelUser extends JModelAdmin
 
 				// Prepare the logout options.
 				$options = array(
-					'applicationid' => array(0, 1)
+					'application_id' => array(0, 1)
 				);
 
 				if ($allow) {

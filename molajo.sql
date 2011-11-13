@@ -2267,10 +2267,10 @@ CREATE TABLE `molajo_sessions` (
   `guest` int(1) unsigned NOT NULL DEFAULT '1',
   `session_time` varchar(14) DEFAULT ' ',
   `data` longtext,
-  `userid` int(11) unsigned DEFAULT '0',
+  `user_id` int(11) unsigned DEFAULT '0',
   PRIMARY KEY (`session_id`),
   KEY `fk_sessions_applications2` (`application_id`),
-  KEY `fk_sessions_users2` (`userid`)
+  KEY `fk_sessions_users2` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2763,7 +2763,7 @@ ALTER TABLE `molajo_group_view_groups`
 --
 ALTER TABLE `molajo_sessions`
   ADD CONSTRAINT `fk_sessions_applications1` FOREIGN KEY (`application_id`) REFERENCES `molajo_applications` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_sessions_users1` FOREIGN KEY (`userid`) REFERENCES `molajo_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_sessions_users1` FOREIGN KEY (`user_id`) REFERENCES `molajo_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `molajo_site_applications`

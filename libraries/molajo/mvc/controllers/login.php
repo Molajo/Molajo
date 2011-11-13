@@ -136,12 +136,12 @@ class MolajoControllerLogin extends MolajoController
         JRequest::checkToken('default') or die;
 
         $app = MolajoFactory::getApplication();
-        $userid = JRequest::getInt('uid', null);
+        $user_id = JRequest::getInt('uid', null);
         $options = array(
-            'applicationid' => ($userid) ? 0 : 1
+            'application_id' => ($user_id) ? 0 : 1
         );
 
-        $result = $app->logout($userid, $options);
+        $result = $app->logout($user_id, $options);
         if (!MolajoError::isError($result)) {
             $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
@@ -178,28 +178,28 @@ class MolajoControllerLogin extends MolajoController
      * should be done in the plugin as this provides the ability to give
      * much more information about why the routine may have failed.
      *
-     * @param   integer  $userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
-     * @param   array    $options  Array('applicationid' => array of client id's)
+     * @param   integer  $user_id   The user to load - Can be an integer or string - If string, it is converted to ID automatically
+     * @param   array    $options  Array('application_id' => array of client id's)
      *
      * @return  boolean  True on success
      *
      * @since   11.1
      */
-    public function logout2($userid = null, $options = array())
+    public function logout2($user_id = null, $options = array())
     {
         // Initialise variables.
         $retval = false;
 
         // Get a user object from the MolajoApplication.
-        $user = MolajoFactory::getUser($userid);
+        $user = MolajoFactory::getUser($user_id);
 
         // Build the credentials array.
         $parameters['username'] = $user->get('username');
         $parameters['id'] = $user->get('id');
 
         // Set clientid in the options array if it hasn't been set already.
-        if (!isset($options['applicationid'])) {
-            $options['applicationid'] = MOLAJO_APPLICATION_ID;
+        if (!isset($options['application_id'])) {
+            $options['application_id'] = MOLAJO_APPLICATION_ID;
         }
 
         // Import the user plugin group.
