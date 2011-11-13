@@ -8,16 +8,6 @@
 defined('MOLAJO') or die;
 
 /**
- *  JRequest Clean
- */
-if (isset($_SERVER['HTTP_HOST'])) {
-	if (defined('_JREQUEST_NO_CLEAN')) {
-    } else {
-		JRequest::clean();
-	}
-}
-
-/**
  *  Molajo
  */
 if (class_exists('MolajoVersion')) {

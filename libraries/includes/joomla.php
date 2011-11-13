@@ -198,3 +198,14 @@ $filehelper->requireClassFile(JOOMLA_LIBRARY.'/utilities/date.php', 'JDate');
  *  PHPMailer
  */
 $filehelper->requireClassFile(LIBRARIES.'/jplatform/phpmailer/phpmailer.php', 'PHPMailer');
+
+
+/**
+ *  JRequest Clean
+ */
+if (isset($_SERVER['HTTP_HOST'])) {
+	if (defined('_JREQUEST_NO_CLEAN')) {
+    } else {
+		JRequest::clean();
+	}
+}
