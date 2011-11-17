@@ -39,7 +39,7 @@ class MolajoFieldAlias extends MolajoField
      */
     public function getOptions()
     {
-        $aliasModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $aliasModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $aliasModel->getOptionList('alias', 'alias', $showKey = false, $showKeyFirst = false, $table = '');
     }
 
@@ -85,7 +85,7 @@ class MolajoFieldAlias extends MolajoField
         if (trim($value) == '') {
             return;
         } else {
-            $query->where('a.alias = "' . $value . '"');
+            $query->where('a.alias = "'.$value.'"');
         }
     }
 
@@ -101,7 +101,7 @@ class MolajoFieldAlias extends MolajoField
             $render = array();
 
             if ($item->canEdit === true) {
-                $render['link_value'] = 'index.php?option=' . JRequest::getVar('option') . '&task=edit&id=' . $item->id;
+                $render['link_value'] = 'index.php?option='.JRequest::getVar('option').'&task=edit&id='.$item->id;
             } else {
                 $render['link_value'] = false;
             }

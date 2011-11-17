@@ -66,8 +66,8 @@ class MolajoTableSession extends MolajoTable
         $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->_db->Quote($userId)
-                 . ' AND application_id IN (' . $application_ids . ')';
+                .' WHERE user_id = '.$this->_db->Quote($userId)
+                .' AND application_id IN ('.$application_ids.')';
 
         $this->_db->setQuery($query);
 
@@ -89,7 +89,7 @@ class MolajoTableSession extends MolajoTable
     function purge($maxLifetime = 1440)
     {
         $past = time() - $maxLifetime;
-        $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (session_time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
+        $query = 'DELETE FROM '.$this->_tbl.' WHERE (session_time < \''.(int)$past.'\')'; // Index on 'VARCHAR'
         $this->_db->setQuery($query);
 
         return $this->_db->query();
@@ -107,7 +107,7 @@ class MolajoTableSession extends MolajoTable
     function exists($user_id)
     {
         $query = 'SELECT COUNT(user_id) FROM #__sessions'
-                 . ' WHERE user_id = ' . $this->_db->Quote($user_id);
+                .' WHERE user_id = '.$this->_db->Quote($user_id);
 
         $this->_db->setQuery($query);
 
@@ -133,8 +133,8 @@ class MolajoTableSession extends MolajoTable
             $this->$k = $oid;
         }
 
-        $query = 'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
-                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->_db->Quote($this->$k);
+        $query = 'DELETE FROM '.$this->_db->quoteName($this->_tbl) .
+                 ' WHERE '.$this->_tbl_key.' = '.$this->_db->Quote($this->$k);
 
         $this->_db->setQuery($query);
 

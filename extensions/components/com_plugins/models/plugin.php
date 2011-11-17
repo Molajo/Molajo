@@ -212,7 +212,7 @@ class PluginsModelPlugin extends JModelAdmin
 		$db = MolajoFactory::getDbo();
 		$query = 'SELECT element' .
 				' FROM #__extensions' .
-				' WHERE (type =' .$db->Quote('plugin'). 'AND folder='. $db->Quote($folder) . ')';
+				' WHERE (type =' .$db->Quote('plugin'). 'AND folder='. $db->Quote($folder).')';
 		$db->setQuery($query);
 		$elements = $db->loadResultArray();
 

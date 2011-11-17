@@ -104,7 +104,7 @@ class Trackback {
         $target = parse_url($tb);
 
         if ((isset($target["query"])) && ($target["query"] != "")) {
-            $target["query"] = "?" . $target["query"];
+            $target["query"] = "?".$target["query"];
         } else {
             $target["query"] = "";
         } 
@@ -116,16 +116,16 @@ class Trackback {
         $tb_sock = fsockopen($target["host"], $target["port"]); 
         // Something didn't work out, return
         if (!is_resource($tb_sock)) {
-            return '$trackback->ping: can\'t connect to: ' . $tb . '.';
+            return '$trackback->ping: can\'t connect to: '.$tb.'.';
             exit;
         } 
         // Put together the things we want to send
-        $tb_send = "url=" . rawurlencode($url) . "&title=" . rawurlencode($title) . "&blog_name=" . rawurlencode($this->blog_name) . "&excerpt=" . rawurlencode($excerpt); 
+        $tb_send = "url=".rawurlencode($url)."&title=".rawurlencode($title)."&blog_name=".rawurlencode($this->blog_name)."&excerpt=".rawurlencode($excerpt);
         // Send the trackback
-        fputs($tb_sock, "POST " . $target["path"] . $target["query"] . " HTTP/1.1\r\n");
-        fputs($tb_sock, "Host: " . $target["host"] . "\r\n");
+        fputs($tb_sock, "POST ".$target["path"].$target["query"]." HTTP/1.1\r\n");
+        fputs($tb_sock, "Host: ".$target["host"]."\r\n");
         fputs($tb_sock, "Content-type: application/x-www-form-urlencoded\r\n");
-        fputs($tb_sock, "Content-length: " . strlen($tb_send) . "\r\n");
+        fputs($tb_sock, "Content-length: ".strlen($tb_send)."\r\n");
         fputs($tb_sock, "Connection: close\r\n\r\n");
         fputs($tb_sock, $tb_send); 
         // Gather result
@@ -181,7 +181,7 @@ class Trackback {
             $err_response = "An error occured while tring to log your trackback...";
         } 
         // Start response to trackbacker...
-        $return = '<?xml version="1.0" encoding="' . $this->encoding . '"?>' . "\n";
+        $return = '<?xml version="1.0" encoding="'.$this->encoding.'"?>'."\n";
         $return .= "<response> \n"; 
         // Send back response...
         if ($success) {
@@ -190,7 +190,7 @@ class Trackback {
         } else {
             // Something went wrong...
             $return .= "	<error>1</error> \n";
-            $return .= "	<message>" . $this->xml_safe($err_response) . "</message>\n";
+            $return .= "	<message>".$this->xml_safe($err_response)."</message>\n";
         } 
         // End response to trackbacker...
         $return .= "</response>";
@@ -235,7 +235,7 @@ class Trackback {
             $response = "An error occured while tring to retreive trackback information...";
         } 
         // Start response to caller
-        $return = '<?xml version="1.0" encoding="' . $this->encoding . '"?>' . "\n";
+        $return = '<?xml version="1.0" encoding="'.$this->encoding.'"?>'."\n";
         $return .= "<response> \n"; 
         // Send back response...
         if ($success) {
@@ -244,20 +244,20 @@ class Trackback {
             $return .= "	<error>0</error> \n";
             $return .= "	<rss version=\"0.91\"> \n";
             $return .= "	<channel> \n";
-            $return .= "	  <title>" . $this->xml_safe($response['title']) . "</title> \n";
-            $return .= "	  <link>" . $this->xml_safe($response['trackback']) . "</link> \n";
-            $return .= "	  <description>" . $this->xml_safe($response['expert']) . "</description> \n";
+            $return .= "	  <title>".$this->xml_safe($response['title'])."</title> \n";
+            $return .= "	  <link>".$this->xml_safe($response['trackback'])."</link> \n";
+            $return .= "	  <description>".$this->xml_safe($response['expert'])."</description> \n";
             $return .= "	  <item> \n";
-            $return .= "		<title>" . $this->xml_safe($response['title']) . "</title> \n";
-            $return .= "		<link>" . $this->xml_safe($response['permalink']) . "</link> \n";
-            $return .= "		<description>" . $this->xml_safe($response['expert']) . "</description> \n";
+            $return .= "		<title>".$this->xml_safe($response['title'])."</title> \n";
+            $return .= "		<link>".$this->xml_safe($response['permalink'])."</link> \n";
+            $return .= "		<description>".$this->xml_safe($response['expert'])."</description> \n";
             $return .= "	  </item> \n";
             $return .= "	</channel> \n";
             $return .= "	</rss> \n";
         } else {
             // Something went wrong - provide reason from $response (string)...
             $return .= "	<error>1</error> \n";
-            $return .= "	<message>" . $this->xml_safe($response) . "</message>\n";
+            $return .= "	<message>".$this->xml_safe($response)."</message>\n";
         } 
         // End response to trackbacker
         $return .= "</response>";
@@ -297,14 +297,14 @@ class Trackback {
         $return .= "	xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n";
         $return .= "	xmlns:trackback=\"http://madskills.com/public/xml/rss/module/trackback/\"> \n";
         $return .= "<rdf:Description \n";
-        $return .= "	rdf:about=\"" . $this->xml_safe($permalink) . "\" \n";
-        $return .= "	dc:identifier=\"" . $this->xml_safe($permalink) . "\" \n";
-        $return .= "	trackback:ping=\"" . $this->xml_safe($trackback) . "\" \n";
-        $return .= "	dc:title=\"" . $this->xml_safe($title) . "\" \n";
+        $return .= "	rdf:about=\"".$this->xml_safe($permalink)."\" \n";
+        $return .= "	dc:identifier=\"".$this->xml_safe($permalink)."\" \n";
+        $return .= "	trackback:ping=\"".$this->xml_safe($trackback)."\" \n";
+        $return .= "	dc:title=\"".$this->xml_safe($title)."\" \n";
         $return .= "	dc:subject=\"TrackBack\" \n";
-        $return .= "	dc:description=\"" . $this->xml_safe($this->cut_short($expert)) . "\" \n";
-        $return .= "	dc:creator=\"" . $this->xml_safe($author) . "\" \n";
-        $return .= "	dc:date=\"" . $RFC822_date . "\" /> \n";
+        $return .= "	dc:description=\"".$this->xml_safe($this->cut_short($expert))."\" \n";
+        $return .= "	dc:creator=\"".$this->xml_safe($author)."\" \n";
+        $return .= "	dc:date=\"".$RFC822_date."\" /> \n";
         $return .= "</rdf:RDF> \n";
         $return .= "-->  \n";
 
@@ -371,7 +371,7 @@ class Trackback {
             if ($link_content = implode("", @file($link))) {
                 preg_match_all('/(<rdf:RDF.*?<\/rdf:RDF>)/sm', $link_content, $link_rdf, PREG_SET_ORDER);
                 for ($i = 0; $i < count($link_rdf); $i++) {
-                    if (preg_match('|dc:identifier="' . preg_quote($link) . '"|ms', $link_rdf[$i][1])) {
+                    if (preg_match('|dc:identifier="'.preg_quote($link).'"|ms', $link_rdf[$i][1])) {
                         $rdf_array[] = trim($link_rdf[$i][1]);
                     } 
                 } 
@@ -430,7 +430,7 @@ class Trackback {
     function cut_short($string, $max_length = 255)
     {
         if (strlen($string) > $max_length) {
-            $string = substr($string, 0, $max_length) . '...';
+            $string = substr($string, 0, $max_length).'...';
         } 
 
         return $string;

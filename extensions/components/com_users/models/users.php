@@ -88,7 +88,7 @@ class UsersModelUsers extends JModelList
 		$this->setState('filter.excluded', $excluded);
 
 		// Load the parameters.
-		$parameters		= JComponentHelper::getParams('com_users');
+		$parameters		= JComponentHelper::getParameters('com_users');
 		$this->setState('parameters', $parameters);
 
 		// List state information.

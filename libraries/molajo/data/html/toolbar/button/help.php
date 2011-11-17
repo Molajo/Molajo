@@ -58,7 +58,7 @@ class MolajoButtonHelp extends MolajoButton
      */
     public function fetchId()
     {
-        return $this->_parent->getName() . '-' . "help";
+        return $this->_parent->getName().'-'."help";
     }
 
     /**
@@ -77,7 +77,7 @@ class MolajoButtonHelp extends MolajoButton
         // Get Help URL
         $url = MolajoHelp::createURL($ref, $com, $override, $component);
         $url = htmlspecialchars($url, ENT_QUOTES);
-        $cmd = "popupWindow('$url', '" . MolajoText::_('MolajoHelp', true) . "', 700, 500, 1)";
+        $cmd = "popupWindow('$url', '".MolajoText::_('MolajoHelp', true)."', 700, 500, 1)";
 
         return $cmd;
     }

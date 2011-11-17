@@ -37,13 +37,13 @@ class MolajoFormFieldAccesslevel extends MolajoFormFieldList
         $attr = '';
 
         // Initialize some field attributes.
-        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $attr .= $this->element['class'] ? ' class="'.(string)$this->element['class'].'"' : '';
         $attr .= ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
+        $attr .= $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
         $attr .= $this->multiple ? ' multiple="multiple"' : '';
 
         // Initialize JavaScript field attributes.
-        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
+        $attr .= $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
 
         // Get the field options.
         $options = $this->getOptions();

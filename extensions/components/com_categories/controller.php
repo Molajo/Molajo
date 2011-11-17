@@ -75,7 +75,7 @@ class CategoriesController extends JController
 		// Get and render the view.
 		if ($view = $this->getView($vName, $vFormat)) {
 			// Get the model for the view.
-			$model = $this->getModel($vName, 'CategoriesModel', array('name' => $vName . '.' . substr($this->extension, 4)));
+			$model = $this->getModel($vName, 'CategoriesModel', array('name' => $vName.'.'.substr($this->extension, 4)));
 
 			// Push the model into the view (as default).
 			$view->setModel($model, true);

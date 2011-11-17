@@ -18,7 +18,7 @@ for ($i=1; $i < 1000; $i++) {
     } else if ($this->tempColumnName == '0') {
     } else {
         if ($count == 0) {
-            include dirname(__FILE__) . '/form/' . 'section_begin.php';
+            include dirname(__FILE__).'/form/'.'section_begin.php';
         }
         $count++;
         /** see if column exists, if not use default handler **/
@@ -27,9 +27,9 @@ for ($i=1; $i < 1000; $i++) {
 
         if ($fileExists === false) {
             if ($this->tempSection == 'config_manager_editor_primary_column') {
-                include dirname(__FILE__) . '/form/' . 'primary.php';
+                include dirname(__FILE__).'/form/'.'primary.php';
             } else {
-                include dirname(__FILE__) . '/form/' . 'standard_list_item.php';
+                include dirname(__FILE__).'/form/'.'standard_list_item.php';
             }
         } else {
             include $filename;
@@ -37,5 +37,5 @@ for ($i=1; $i < 1000; $i++) {
     }
 }
 if ($count > 0) {
-    include dirname(__FILE__) . '/form/' . 'section_end.php';
+    include dirname(__FILE__).'/form/'.'section_end.php';
 }

@@ -38,7 +38,7 @@ class MolajoTableCategory extends MolajoTableNested
     protected function _getAssetName()
     {
         $k = $this->_tbl_key;
-        return $this->extension . '.category.' . (int)$this->$k;
+        return $this->extension.'.category.'.(int)$this->$k;
     }
 
     /**
@@ -69,7 +69,7 @@ class MolajoTableCategory extends MolajoTableNested
             $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
-            $query->where('id = ' . (int)$this->parent_id);
+            $query->where('id = '.(int)$this->parent_id);
 
             // Get the asset id from the database.
             $db->setQuery($query);
@@ -83,7 +83,7 @@ class MolajoTableCategory extends MolajoTableNested
             $query = $db->getQuery(true);
             $query->select('id');
             $query->from('#__assets');
-            $query->where('name = ' . $db->quote($this->extension));
+            $query->where('name = '.$db->quote($this->extension));
 
             // Get the asset id from the database.
             $db->setQuery($query);

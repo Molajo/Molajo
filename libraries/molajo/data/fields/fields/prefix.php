@@ -64,10 +64,10 @@ class MolajoFieldPrefix extends MolajoField
         if ($prefix) {
             $this->rowset[0]['prefix'] = htmlspecialchars($prefix, ENT_COMPAT, 'UTF-8');
         } else {
-            $this->rowset[0]['prefix'] = strtolower(MOLAJO) . '_';
+            $this->rowset[0]['prefix'] = strtolower(MOLAJO).'_';
         }
 
-        $publishDateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $publishDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $publishDateModel->getMonthsPublish();
     }
 
@@ -125,7 +125,7 @@ class MolajoFieldPrefix extends MolajoField
             return;
         }
         $db = $this->getDbo();
-        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.stop_publishing_datetime, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
     }
 
     /**

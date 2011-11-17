@@ -364,7 +364,7 @@ class extendHelper
 
         /** language does not use id **/
         $db->setQuery(
-            'SELECT ' . $field_name .
+            'SELECT '.$field_name .
                 ' FROM '.$db->namequote(trim($table)) .
                 '   WHERE '.$field_name.' = '. (int) $id
         );

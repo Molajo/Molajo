@@ -93,7 +93,7 @@ class MolajoFieldOrdering extends MolajoField
     {
         $query->select('a.ordering');
         if (is_numeric($value)) {
-            $query->where('a.ordering = ' . (int)$value);
+            $query->where('a.ordering = '.(int)$value);
         } else if ($value == '*') {
 
         } else {

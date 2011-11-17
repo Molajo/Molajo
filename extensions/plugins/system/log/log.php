@@ -28,21 +28,21 @@ class  plgSystemLog extends MolajoPlugin
 		{
 			case MOLAJO_AUTHENTICATE_STATUS_CANCEL :
 			{
-				$errorlog['status']  = $response['type'] . " CANCELED: ";
+				$errorlog['status']  = $response['type']." CANCELED: ";
 				$errorlog['comment'] = $response['error_message'];
 				$log->addEntry($errorlog);
 			} break;
 
 			case MOLAJO_AUTHENTICATE_STATUS_FAILURE :
 			{
-				$errorlog['status']  = $response['type'] . " FAILURE: ";
+				$errorlog['status']  = $response['type']." FAILURE: ";
 				$errorlog['comment'] = $response['error_message'];
 				$log->addEntry($errorlog);
 			}	break;
 
 			default :
 			{
-				$errorlog['status']  = $response['type'] . " UNKNOWN ERROR: ";
+				$errorlog['status']  = $response['type']." UNKNOWN ERROR: ";
 				$errorlog['comment'] = $response['error_message'];
 				$log->addEntry($errorlog);
 			}	break;

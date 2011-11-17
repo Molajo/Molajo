@@ -88,13 +88,13 @@ class JFormFieldMedia extends JFormField
 		$html[] = '</div>';
 
 		$directory = (string)$this->element['directory'];
-		if ($this->value && file_exists(JPATH_ROOT . '/' . $this->value)) {
+		if ($this->value && file_exists(JPATH_ROOT.'/'.$this->value)) {
 			$folder = explode ('/',$this->value);
 			array_shift($folder);
 			array_pop($folder);
 			$folder = implode('/',$folder);
 		}
-		elseif (file_exists(JPATH_ROOT . '/images/' . $directory)) {
+		elseif (file_exists(JPATH_ROOT.'/images/'.$directory)) {
 			$folder = $directory;
 		}
 		else {
@@ -104,7 +104,7 @@ class JFormFieldMedia extends JFormField
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
 		$html[] = '		<a class="modal" title="'.JText::_('JSELECT').'"' .
-					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)) . '&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
+					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
 					' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
 		$html[] = '			'.JText::_('JSELECT').'</a>';
 		$html[] = '	</div>';

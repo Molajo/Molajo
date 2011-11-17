@@ -42,7 +42,7 @@ class plgContentEmailcloak extends MolajoPlugin
 	 */
 	protected function _getPattern ($link, $text) {
 		$pattern = '~(?:<a [\w "\'=\@\.\-]*href\s*=\s*"mailto:'
-			. $link . '"[\w "\'=\@\.\-]*)>' . $text . '</a>~i';
+			. $link.'"[\w "\'=\@\.\-]*)>'.$text.'</a>~i';
 		return $pattern;
 	}
 
@@ -75,7 +75,7 @@ class plgContentEmailcloak extends MolajoPlugin
 		// any@email.address.com
 		$searchEmail = '([\w\.\-]+\@(?:[a-z0-9\.\-]+\.)+(?:[a-z0-9\-]{2,4}))';
 		// any@email.address.com?subject=anyText
-		$searchEmailLink = $searchEmail . '([?&][\x20-\x7f][^"<>]+)';
+		$searchEmailLink = $searchEmail.'([?&][\x20-\x7f][^"<>]+)';
 		// anyText
 		$searchText = '([\x20-\x7f][^<>]+)';
 		
@@ -170,7 +170,7 @@ class plgContentEmailcloak extends MolajoPlugin
 		 */
 		$pattern = $this->_getPattern($searchEmailLink, $searchEmail);
 		while (preg_match($pattern, $text, $regs, PREG_OFFSET_CAPTURE)) {
-			$mail = $regs[1][0] . $regs[2][0];
+			$mail = $regs[1][0].$regs[2][0];
 			$mailText = $regs[3][0];
 			// Needed for handling of Body parameter
 			$mail = str_replace('&amp;', '&', $mail);
@@ -188,7 +188,7 @@ class plgContentEmailcloak extends MolajoPlugin
 		 */
 		$pattern = $this->_getPattern($searchEmailLink, $searchText);
 		while (preg_match($pattern, $text, $regs, PREG_OFFSET_CAPTURE)) {
-			$mail = $regs[1][0] . $regs[2][0];
+			$mail = $regs[1][0].$regs[2][0];
 			$mailText = $regs[3][0];
 			// Needed for handling of Body parameter
 			$mail = str_replace('&amp;', '&', $mail);
@@ -200,7 +200,7 @@ class plgContentEmailcloak extends MolajoPlugin
 		}
 
 		// Search for plain text email@amail.com
-		$pattern = '~' . $searchEmail . '([^a-z0-9]|$)~i';
+		$pattern = '~'.$searchEmail.'([^a-z0-9]|$)~i';
 		while (preg_match($pattern, $text, $regs, PREG_OFFSET_CAPTURE)) {
 			$mail = $regs[1][0];
 			$replacement = JHtml::_('email.cloak', $mail, $mode);

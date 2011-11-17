@@ -20,7 +20,7 @@ class BroadcastPing {
 	 * 	Tamka Library Parameters
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 		global $mainframe;
 		$tamkaPingCounter = 0;	
 		tamkaimport('tamka.broadcast.ping.xmlrpc');
@@ -29,7 +29,7 @@ class BroadcastPing {
 	 * 	Ping each selected service
 	 */		
 
-		if ($tamkaLibraryPluginParams->def( 'ping-o-matic', 1 )) {
+		if ($tamkaLibraryPluginParameters->def( 'ping-o-matic', 1 )) {
 			$pingServer		= "rpc.pingomatic.com";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/RPC2";
@@ -41,7 +41,7 @@ class BroadcastPing {
 		    }
 		}
 		
-		if ($tamkaLibraryPluginParams->def( 'google', 1 )) {
+		if ($tamkaLibraryPluginParameters->def( 'google', 1 )) {
 			$pingServer		= "blogsearch.google.com";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/ping/RPC2";
@@ -53,7 +53,7 @@ class BroadcastPing {
 		    }		    						
 		}		
 		
-		if ($tamkaLibraryPluginParams->def( 'audioweblogs', 0 )) {
+		if ($tamkaLibraryPluginParameters->def( 'audioweblogs', 0 )) {
 			$pingServer		= "audiorpc.weblogs.com";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/RPC2";
@@ -65,7 +65,7 @@ class BroadcastPing {
 		    }		    											
 		}
 				
-		if ($tamkaLibraryPluginParams->def( 'blogs', 0 )) {
+		if ($tamkaLibraryPluginParameters->def( 'blogs', 0 )) {
 		   	$pingServer		= "ping.blo.gs";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/";
@@ -77,7 +77,7 @@ class BroadcastPing {
 		    }		    
 		}
 		
-		if ($tamkaLibraryPluginParams->def( 'feedburner', 0 )) {
+		if ($tamkaLibraryPluginParameters->def( 'feedburner', 0 )) {
 		   	$pingServer		= "ping.feedburner.com";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/RPC2";
@@ -89,7 +89,7 @@ class BroadcastPing {
 		    }		    
 		}
 		
-		if ($tamkaLibraryPluginParams->def( 'Technorati', 0 )) {
+		if ($tamkaLibraryPluginParameters->def( 'Technorati', 0 )) {
 		   	$pingServer		= "rpc.technorati.com";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/rpc/ping";
@@ -101,7 +101,7 @@ class BroadcastPing {
 		    }		    
 		}
 		
-		if ($tamkaLibraryPluginParams->def( 'weblogscom', 0 )) {
+		if ($tamkaLibraryPluginParameters->def( 'weblogscom', 0 )) {
 		   	$pingServer		= "rpc.weblogs.com";
 		    $pingPort 		= 80;
 		    $pingPath 		= "/RPC2";
@@ -118,7 +118,7 @@ class BroadcastPing {
 		 */
 		if ($tamkaPingCounter == 0) {
 			$message = JText::_('No Ping Services were activated in the Tamka Library System Plugin.');
-           	$mainframe->enqueueMessage(JText::_('Warning: ') . $message);
+           	$mainframe->enqueueMessage(JText::_('Warning: ').$message);
         	return false;
 		}
 	}
@@ -153,12 +153,12 @@ class BroadcastPing {
      */        
 		if ($response->faultCode() == 0)  {
         	/* Table */
-			$message = JText::_('Ping to: ') . $pingServer . " for " . $sourceTitle . " URL: " . $sourceURL . " Site name: " . $sourceSiteName;
-           	$mainframe->enqueueMessage(JText::_('Success: ') . $message);
+			$message = JText::_('Ping to: ').$pingServer." for ".$sourceTitle." URL: ".$sourceURL." Site name: ".$sourceSiteName;
+           	$mainframe->enqueueMessage(JText::_('Success: ').$message);
         	return true;
 		}  else {
-			$message = JText::_('Error: ') . $pingServer . ": " . $response->faultCode() . " " . $response->faultString();
-           	$mainframe->enqueueMessage(JText::_('Ping error: ') . $message);
+			$message = JText::_('Error: ').$pingServer.": ".$response->faultCode()." ".$response->faultString();
+           	$mainframe->enqueueMessage(JText::_('Ping error: ').$message);
            	return false;
         }
 

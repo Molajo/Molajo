@@ -1,0 +1,9 @@
+<fieldset
+    name="fields_custom"
+    label="CUSTOM_FIELDSET_OPTIONS">
+
+    <fields name="custom">
+
+    </fields>
+
+</fieldset>

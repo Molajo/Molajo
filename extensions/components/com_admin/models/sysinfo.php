@@ -162,7 +162,7 @@ class AdminModelSysInfo extends JModel
 
 			$registry = MolajoFactory::getConfig();
 			jimport('joomla.filesystem.folder');
-			$cparameters = JComponentHelper::getParams('com_media');
+			$cparameters = JComponentHelper::getParameters('com_media');
 
 			$this->_addDirectory('administrator/components', JPATH_ADMINISTRATOR.'/components');
 			$this->_addDirectory('administrator/language', JPATH_ADMINISTRATOR.'/language');
@@ -170,13 +170,13 @@ class AdminModelSysInfo extends JModel
 			// List all admin languages
 			$admin_langs = JFolder::folders(JPATH_ADMINISTRATOR.'/language');
 			foreach($admin_langs as $alang) {
-				$this->_addDirectory('administrator/language/' . $alang, JPATH_ADMINISTRATOR.'/language/'.$alang);
+				$this->_addDirectory('administrator/language/'.$alang, JPATH_ADMINISTRATOR.'/language/'.$alang);
 			}
 
 			// List all manifests folders
 			$manifests = JFolder::folders(JPATH_ADMINISTRATOR.'/manifests');
 			foreach($manifests as $_manifest) {
-				$this->_addDirectory('administrator/manifests/' . $_manifest, JPATH_ADMINISTRATOR.'/manifests/'.$_manifest);
+				$this->_addDirectory('administrator/manifests/'.$_manifest, JPATH_ADMINISTRATOR.'/manifests/'.$_manifest);
 			}
 
 			$this->_addDirectory('administrator/modules', JPATH_ADMINISTRATOR.'/modules');
@@ -189,14 +189,14 @@ class AdminModelSysInfo extends JModel
 			$image_folders = JFolder::folders(JPATH_SITE.'/'.$cparameters->get('image_path'));
 			// List all images folders
 			foreach ($image_folders as $folder) {
-				$this->_addDirectory('images/' . $folder, JPATH_SITE.'/'.$cparameters->get('image_path').'/'.$folder);
+				$this->_addDirectory('images/'.$folder, JPATH_SITE.'/'.$cparameters->get('image_path').'/'.$folder);
 			}
 
 			$this->_addDirectory('language', JPATH_SITE.'/language');
 			// List all site languages
-			$site_langs = JFolder::folders(JPATH_SITE . '/language');
+			$site_langs = JFolder::folders(JPATH_SITE.'/language');
 			foreach ($site_langs as $slang) {
-				$this->_addDirectory('language/' . $slang, JPATH_SITE.'/language/'.$slang);
+				$this->_addDirectory('language/'.$slang, JPATH_SITE.'/language/'.$slang);
 			}
 
 			$this->_addDirectory('libraries', JPATH_LIBRARIES);
@@ -207,7 +207,7 @@ class AdminModelSysInfo extends JModel
 
 			$plugin_groups = JFolder::folders(JPATH_PLUGINS);
 			foreach ($plugin_groups as $folder) {
-				$this->_addDirectory('plugins/' . $folder, JPATH_PLUGINS.'/'.$folder);
+				$this->_addDirectory('plugins/'.$folder, JPATH_PLUGINS.'/'.$folder);
 			}
 
 			$this->_addDirectory('templates', JPATH_SITE.'/templates');
@@ -216,7 +216,7 @@ class AdminModelSysInfo extends JModel
 			$this->_addDirectory('administrator/cache', JPATH_CACHE, 'COM_ADMIN_CACHE_DIRECTORY');
 
 			$this->_addDirectory(MOLAJO_SITE_PATH_CACHE, $registry->get('log_path', MOLAJO_SITE_PATH.'/log'), 'COM_ADMIN_LOG_DIRECTORY');
-			$this->_addDirectory($registry->get('tmp_path', JPATH_ROOT . '/tmp'), $registry->get('tmp_path', JPATH_ROOT.'/tmp'), 'COM_ADMIN_TEMP_DIRECTORY');
+			$this->_addDirectory($registry->get('tmp_path', JPATH_ROOT.'/tmp'), $registry->get('tmp_path', JPATH_ROOT.'/tmp'), 'COM_ADMIN_TEMP_DIRECTORY');
 		}
 		return $this->directories;
 	}

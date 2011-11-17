@@ -157,7 +157,7 @@ abstract class ModulesHelper
 		foreach ($modules as $i=>$module) {
 			$extension = $module->value;
 			$path = $application_id ? JPATH_ADMINISTRATOR : JPATH_SITE;
-			$source = $path . "/modules/$extension";
+			$source = $path."/modules/$extension";
 				$lang->load("$extension.sys", $path, null, false, false)
 			||	$lang->load("$extension.sys", $source, null, false, false)
 			||	$lang->load("$extension.sys", $path, $lang->getDefault(), false, false)

@@ -26,7 +26,7 @@ if (	!$user->authorise('core.manage', 'com_media')
 	return MolajoError::raiseWarning(403, MolajoText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-$parameters = JComponentHelper::getParams('com_media');
+$parameters = JComponentHelper::getParameters('com_media');
 
 // Load the admin HTML view
 require_once JPATH_COMPONENT.'/helpers/media.php';

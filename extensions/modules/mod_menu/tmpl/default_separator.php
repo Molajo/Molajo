@@ -1,23 +1,20 @@
 <?php
 /**
- * @version		$Id: default_separator.php 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla.Site
- * @subpackage	mod_menu
+ * @package     Molajo
+ * @subpackage  Menu
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// No direct access.
-defined('JPATH_PLATFORM') or die;
-
-// Note. It is important to remove spaces between elements.
-$title = $item->anchor_title ? 'title="'.$item->anchor_title.'" ' : '';
-if ($item->menu_image) {
-		$item->parameters->get('menu_text', 1 ) ?
-		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" /><span class="image-title">'.$item->title.'</span> ' :
-		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" />';
+$title = $item->link_title ? 'title="'.$item->link_title.'" ' : '';
+if ($item->anchor_image) {
+		$item->menu_item_parameters->get('anchor_include_text', 1 ) ?
+		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" /><span class="image-title">'.$item->menu_item_title.'</span> ' :
+		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" />';
 } 
-else { $linktype = $item->title;
+else { $linktype = $item->menu_item_title;
 }
 
 ?><span class="separator"><?php echo $title; ?><?php echo $linktype; ?></span>

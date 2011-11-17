@@ -60,7 +60,7 @@ class MenusControllerMenu extends JControllerForm
 
 		// Make sure we are not trying to modify an administrator menu.
 		if (isset($data['application_id']) && $data['application_id'] == 1){
-			MolajoError::raiseNotice(0, MolajoText::_('COM_MENUS_MENU_TYPE_NOT_ALLOWED'));
+			MolajoError::raiseNotice(0, MolajoText::_('MENU_MENU_TYPE_NOT_ALLOWED'));
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(MolajoRoute::_('index.php?option=com_menus&view=menu&layout=edit', false));
@@ -118,7 +118,7 @@ class MenusControllerMenu extends JControllerForm
 			return false;
 		}
 
-		$this->setMessage(MolajoText::_('COM_MENUS_MENU_SAVE_SUCCESS'));
+		$this->setMessage(MolajoText::_('MENU_MENU_SAVE_SUCCESS'));
 
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task)

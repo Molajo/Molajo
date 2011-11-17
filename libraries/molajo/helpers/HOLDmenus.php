@@ -30,12 +30,12 @@ class MenusHelper
     public static function addSubmenu($vName)
     {
         JSubMenuHelper::addEntry(
-            MolajoText::_('COM_MENUS_SUBMENU_MENUS'),
+            MolajoText::_('MENU_SUBMENU_MENUS'),
             'index.php?option=com_menus&view=menus',
             $vName == 'menus'
         );
         JSubMenuHelper::addEntry(
-            MolajoText::_('COM_MENUS_SUBMENU_ITEMS'),
+            MolajoText::_('MENU_SUBMENU_ITEMS'),
             'index.php?option=com_menus&view=items',
             $vName == 'items'
         );
@@ -57,7 +57,7 @@ class MenusHelper
         if (empty($parentId)) {
             $assetName = 'com_menus';
         } else {
-            $assetName = 'com_menus.item.' . (int)$parentId;
+            $assetName = 'com_menus.item.'.(int)$parentId;
         }
 
         $actions = array(
@@ -107,7 +107,7 @@ class MenusHelper
 
         ksort($request);
 
-        return 'index.php?' . http_build_query($request, '', '&');
+        return 'index.php?'.http_build_query($request, '', '&');
     }
 
     /**
@@ -136,26 +136,26 @@ class MenusHelper
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('a.id AS value, a.title AS text, a.level, a.menu_id, a.type, a.template_style_id, a.checked_out');
+        $query->select('a.id AS value, a.title AS text, a.level, a.menu_id, a.type, a.template_id, a.checked_out');
         $query->from('#__menu_items AS a');
         $query->join('LEFT', '`#__menu_items` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
 
         // Filter by the type
         if ($menuType) {
-            $query->where('(a.menu_id = ' . $db->quote($menuType) . ' OR a.parent_id = 0)');
+            $query->where('(a.menu_id = '.$db->quote($menuType).' OR a.parent_id = 0)');
         }
 
         if ($parentId) {
             if ($mode == 2) {
                 // Prevent the parent and children from showing.
-                $query->join('LEFT', '`#__menu_items` AS p ON p.id = ' . (int)$parentId);
+                $query->join('LEFT', '`#__menu_items` AS p ON p.id = '.(int)$parentId);
                 $query->where('(a.lft <= p.lft OR a.rgt >= p.rgt)');
             }
         }
 
         if (!empty($published)) {
-            if (is_array($published)) $published = '(' . implode(',', $published) . ')';
-            $query->where('a.published IN ' . $published);
+            if (is_array($published)) $published = '('.implode(',', $published).')';
+            $query->where('a.published IN '.$published);
         }
 
         $query->where('a.published != -2');
@@ -175,7 +175,7 @@ class MenusHelper
 
         // Pad the option text with spaces using depth level as a multiplier.
         foreach ($links as &$link) {
-            $link->text = str_repeat('- ', $link->level) . $link->text;
+            $link->text = str_repeat('- ', $link->level).$link->text;
         }
 
         if (empty($menuType)) {
@@ -183,7 +183,7 @@ class MenusHelper
             $query->clear();
             $query->select('*');
             $query->from('#__menus');
-            $query->where('menu_id <> ' . $db->quote(''));
+            $query->where('menu_id <> '.$db->quote(''));
             $query->order('title, menu_id');
             $db->setQuery($query);
 

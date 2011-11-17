@@ -1,19 +1,14 @@
 <?php
 /**
- * @version		$Id: default.php 20983 2011-03-17 16:19:45Z chdemko $
- * @package		Joomla.Site
- * @subpackage	mod_menu
+ * @package     Molajo
+ * @subpackage  Menu
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
-// No direct access.
-defined('JPATH_PLATFORM') or die;
-
-// Note. It is important to remove spaces between elements.
+defined('MOLAJO') or die;
 ?>
-
-<ul class="menu<?php echo $class_sfx;?>"<?php
+<ul class="menu<?php echo $class_suffix;?>"<?php
 	$tag = '';
 	if ($parameters->get('tag_id')!=NULL) {
 		$tag = $parameters->get('tag_id').'';
@@ -21,22 +16,22 @@ defined('JPATH_PLATFORM') or die;
 	}
 ?>>
 <?php
-foreach ($list as $i => &$item) :
+foreach ($rowset as $i => &$item) :
 	$class = '';
-	if ($item->id == $active_id) {
+	if ($item->extension_instance_id == $item->active_id) {
 		$class .= 'current ';
 	}
 
-	if (	$item->type == 'alias' &&
-			in_array($item->parameters->get('aliasoptions'),$path)
-		||	in_array($item->id, $path)) {
+	if (	$item->menu_item_type == 'alias' &&
+			in_array($item->menu_item_parameters->get('aliasoptions'), $path)
+		||	in_array($item->extension_instance_id, $item->path)) {
 	  $class .= 'active ';
 	}
-	if ($item->deeper) {
+	if ($item->menu_item_deeper) {
 		$class .= 'deeper ';
 	}
 	
-	if ($item->parent) {
+	if ($item->menu_item_parent) {
 		$class .= 'parent ';
 	}
 
@@ -44,29 +39,36 @@ foreach ($list as $i => &$item) :
 		$class = ' class="'.trim($class) .'"';
 	}
 
-	echo '<li id="item-'.$item->id.'"'.$class.'>';
+	echo '<li id="item-'.$item->extension_instance_id.'"'.$class.'>';
 
 	// Render the menu item.
-	switch ($item->type) :
-		case 'separator':
-		case 'url':
-		case 'component':
-			require MolajoModuleHelper::getLayoutPath('mod_menu', 'default_'.$item->type);
+	switch ($item->menu_item_type) :
+
+		case MOLAJO_CONTENT_TYPE_MENU_ITEM_SEPARATOR:
+			require_once dirname(__FILE__).'/default_separator.php';
+			break;
+
+		case MOLAJO_CONTENT_TYPE_MENU_ITEM_COMPONENT:
+			require_once dirname(__FILE__).'/default_component.php';
+			break;
+
+		case MOLAJO_CONTENT_TYPE_MENU_ITEM_MODULE:
+			require_once dirname(__FILE__).'/default_module.php';
 			break;
 
 		default:
-			require MolajoModuleHelper::getLayoutPath('mod_menu', 'default_url');
+			require_once dirname(__FILE__).'/default_url.php';
 			break;
 	endswitch;
 
 	// The next item is deeper.
-	if ($item->deeper) {
+	if ($item->menu_item_deeper) {
 		echo '<ul>';
 	}
 	// The next item is shallower.
-	else if ($item->shallower) {
+	else if ($item->menu_item_shallower) {
 		echo '</li>';
-		echo str_repeat('</ul></li>', $item->level_diff);
+		echo str_repeat('</ul></li>', $item->menu_item_level_diff);
 	}
 	// The next item is on the same level.
 	else {

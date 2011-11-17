@@ -69,7 +69,7 @@ class MediaControllerFolder extends JController
 						continue;
 					}
 
-					$fullPath = JPath::clean(COM_MEDIA_BASE . '/' . $folder . '/' . $path);
+					$fullPath = JPath::clean(COM_MEDIA_BASE.'/'.$folder.'/'.$path);
 					$object_file = new JObject(array('filepath' => $fullPath));
 					if (is_file($fullPath))
 					{
@@ -155,7 +155,7 @@ class MediaControllerFolder extends JController
 				return false;
 			}
 
-			$path = JPath::clean(COM_MEDIA_BASE . '/' . $parent . '/' . $folder);
+			$path = JPath::clean(COM_MEDIA_BASE.'/'.$parent.'/'.$folder);
 			if (!is_dir($path) && !is_file($path))
 			{
 				// Trigger the onContentBeforeSave event.
@@ -171,7 +171,7 @@ class MediaControllerFolder extends JController
 
 				JFolder::create($path);
 				$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-				JFile::write($path . "/index.html", $data);
+				JFile::write($path."/index.html", $data);
 
 				// Trigger the onContentAfterSave event.
 				$dispatcher->trigger('onContentAfterSave', array('com_media.folder', &$object_file, true));

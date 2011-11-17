@@ -560,7 +560,7 @@ class UsersModelUser extends JModelAdmin
 
 		if (empty($userId)) {
 			$result = array();
-			$config = JComponentHelper::getParams('com_users');
+			$config = JComponentHelper::getParameters('com_users');
 			if ($groupId = $config->get('new_usertype')) {
 				$result[] = $groupId;
 			}

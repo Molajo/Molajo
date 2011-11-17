@@ -50,10 +50,10 @@ class MolajoFormFieldSpacer extends MolajoFormField
             $results .= '<hr />';
         }
         if (isset($this->element['label'])) {
-            $results .= '<br /><strong>' . MolajoText::_($this->element['label']) . '</strong><br />';
+            $results .= '<br /><strong>'.MolajoText::_($this->element['label']).'</strong><br />';
         }
         if (isset($this->element['description'])) {
-            $results .= '<br />' . MolajoText::_($this->element['description']) . '<br /><br />';
+            $results .= '<br />'.MolajoText::_($this->element['description']).'<br /><br />';
         }
         $results .= '<div class="clr"></div>';
 

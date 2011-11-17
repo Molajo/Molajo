@@ -166,7 +166,7 @@ class MolajoUpdate extends JObject
         array_push($this->_stack, $name);
         $tag = $this->_getStackLocation();
         // Reset the data
-        eval('$this->' . $tag . '->_data = "";');
+        eval('$this->'.$tag.'->_data = "";');
 
         switch ($name)
         {
@@ -211,7 +211,7 @@ class MolajoUpdate extends JObject
                 $ver = new JVersion;
                 $product = strtolower(JFilterInput::getInstance()->clean($ver->PRODUCT, 'cmd'));
                 if ($product == $this->_current_update->targetplatform->name
-                    && preg_match('/' . $this->_current_update->targetplatform->version.'/', $ver->RELEASE)
+                    && preg_match('/'.$this->_current_update->targetplatform->version.'/', $ver->RELEASE)
                 ) {
                     if (isset($this->_latest)) {
                         if (version_compare($this->_current_update->version->_data, $this->_latest->version->_data, '>') == 1) {

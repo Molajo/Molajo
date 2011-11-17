@@ -15,7 +15,6 @@ mod_grid
 mod_gridbatch
 mod_header
 mod_iconbutton
-mod_launchpad
 mod_layout
 mod_login
 mod_logout

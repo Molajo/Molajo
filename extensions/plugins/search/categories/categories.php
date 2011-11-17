@@ -116,7 +116,7 @@ class plgSearchCategories extends MolajoPlugin
 
 			// Filter by language
             $lang = MolajoFactory::getLanguage()->getTag();
-            $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+            $query->where('a.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
 
 			$db->setQuery($query, 0, $limit);
 			$rows = $db->loadObjectList();

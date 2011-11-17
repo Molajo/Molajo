@@ -134,7 +134,7 @@ class ConfigModelApplication extends JModelForm
 		jimport('joomla.filesystem.file');
 
 		// Set the configuration file path.
-		$file = JPATH_CONFIGURATION . '/configuration.php';
+		$file = JPATH_CONFIGURATION.'/configuration.php';
 
 		// Overwrite the old FTP credentials with the new ones.
 		$temp = MolajoFactory::getConfig();

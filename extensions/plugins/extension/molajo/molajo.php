@@ -68,7 +68,7 @@ class plgExtensionMolajo extends MolajoPlugin
 		{
 			$query->clear();
 			$query->insert('#__update_sites');
-			$query->set('name = ' . $dbo->Quote($name));
+			$query->set('name = '.$dbo->Quote($name));
 			$query->set('type = '. $dbo->Quote($type));
 			$query->set('location = '. $dbo->Quote($location));
 			$query->set('enabled = '. (int)$enabled);

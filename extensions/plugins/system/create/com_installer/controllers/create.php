@@ -27,6 +27,6 @@ class InstallerControllerCreate extends JController {
         JRequest::checkToken() or die;
         $model	= $this->getModel('create');
         $model->create();
-        $this->setRedirect(JRoute::_('index.php?option=com_installer&view=create',false));
+        $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=create',false));
     }
 }

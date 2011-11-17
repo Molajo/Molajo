@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 //enable accessing template parameters
-$templateParams = MolajoFactory::getApplication()->getTemplate(true)->parameters;
+$templateParameters = MolajoFactory::getApplication()->getTemplate(true)->parameters;
 
 // Note. It is important to remove spaces between elements.
 ?>
 
-<ul data-role="listview" data-inset="true" data-theme="<?php echo $templateParams->get('mNavDataTheme'); ?>" class="menu<?php echo $class_sfx;?>"<?php
+<ul data-role="listview" data-inset="true" data-theme="<?php echo $templateParameters->get('mNavDataTheme'); ?>" class="menu<?php echo $class_suffix;?>"<?php
 	$tag = '';
 	if ($parameters->get('tag_id')!=NULL) {
 		$tag = $parameters->get('tag_id').'';

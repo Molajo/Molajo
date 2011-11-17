@@ -32,10 +32,10 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
-            $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+            $sql_table_name = $fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 	$query = $db->getQuery(true);
 
@@ -75,10 +75,10 @@ class modelContentItem
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
-            $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+            $sql_table_name = $fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 
         $query = 'INSERT INTO '.$db->namequote(trim($sql_table_name)) .
@@ -111,10 +111,10 @@ class modelContentItem
         $app = MolajoFactory::getApplication();
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
-            $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+            $sql_table_name = $fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 
         $query = 'DELETE FROM '
@@ -141,10 +141,10 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
-            $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+            $sql_table_name = $fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 
         $query = 'DELETE FROM '
@@ -195,14 +195,14 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
-            $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+            $sql_table_name = $fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 
         $query = 'SELECT * FROM '
-            . $db->namequote(trim($sql_table_name))
+           .$db->namequote(trim($sql_table_name))
             .' WHERE 1 = 2 ';
 
         $db->setQuery($query);
@@ -232,10 +232,10 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
-            $sql_table_name = $fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+            $sql_table_name = $fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 
         /** create table **/

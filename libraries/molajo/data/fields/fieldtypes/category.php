@@ -58,7 +58,7 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
         /** acl **/
         if ($action = (string)$this->element['action']) {
             foreach ($options as $i => $option) {
-                if (!MolajoFactory::getUser()->authorise($action, $extension . '.category.' . $option->value)) {
+                if (!MolajoFactory::getUser()->authorise($action, $extension.'.category.'.$option->value)) {
                     unset($options[$i]);
                 }
             }

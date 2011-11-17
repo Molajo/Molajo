@@ -101,7 +101,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 				$this->setError(MolajoText::sprintf('INSTL_DATABASE_INVALID_MYSQL_VERSION', $db_version));
 				return false;
 			}
-			// @internal MySQL versions pre 5.1.6 forbid . / or \ or NULL
+			// @internal MySQL versions pre 5.1.6 forbid./ or \ or NULL
 			if ((preg_match('#[\\\/\.\0]#', $options->db_name)) && (!version_compare($db_version, '5.1.6', '>='))) {
 				$this->setError(MolajoText::sprintf('INSTL_DATABASE_INVALID_NAME', $db_version));
 				return false;
@@ -284,7 +284,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 			$type = 'mysql';
 		}
 
-		$data = MOLAJO_PATH_INSTALLATION.'/sql/'.$type.'/' . $options->sample_file;
+		$data = MOLAJO_PATH_INSTALLATION.'/sql/'.$type.'/'.$options->sample_file;
 
 		// Attempt to import the database schema.
 		if (!file_exists($data)) {
@@ -357,7 +357,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 
 		// Initialise variables.
 		$return = true;
-		$backup = 'bak_' . $prefix;
+		$backup = 'bak_'.$prefix;
 
 		// Get the tables in the database.
 		$this->_db->setQuery(

@@ -61,7 +61,7 @@ class MolajoPagination extends JObject
      * @var    array
      * @since  1.0
      */
-    protected $_additionalUrlParams = array();
+    protected $_additionalUrlParameters = array();
 
     /**
      * Constructor.
@@ -139,14 +139,14 @@ class MolajoPagination extends JObject
     public function setAdditionalUrlParam($key, $value)
     {
         // Get the old value to return and set the new one for the URL parameter.
-        $result = isset($this->_additionalUrlParams[$key]) ? $this->_additionalUrlParams[$key] : null;
+        $result = isset($this->_additionalUrlParameters[$key]) ? $this->_additionalUrlParameters[$key] : null;
 
         // If the passed parameter value is null unset the parameter, otherwise set it to the given value.
         if ($value === null) {
-            unset($this->_additionalUrlParams[$key]);
+            unset($this->_additionalUrlParameters[$key]);
         }
         else {
-            $this->_additionalUrlParams[$key] = $value;
+            $this->_additionalUrlParameters[$key] = $value;
         }
 
         return $result;
@@ -164,7 +164,7 @@ class MolajoPagination extends JObject
      */
     public function getAdditionalUrlParam($key)
     {
-        $result = isset($this->_additionalUrlParams[$key]) ? $this->_additionalUrlParams[$key] : null;
+        $result = isset($this->_additionalUrlParameters[$key]) ? $this->_additionalUrlParameters[$key] : null;
 
         return $result;
     }
@@ -235,10 +235,10 @@ class MolajoPagination extends JObject
         // If there are results found.
         if ($this->total > 0) {
             $msg = MolajoText::sprintf('MOLAJO_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
-            $html .= "\n" . $msg;
+            $html .= "\n".$msg;
         }
         else {
-            $html .= "\n" . MolajoText::_('MOLAJO_HTML_NO_RECORDS_FOUND');
+            $html .= "\n".MolajoText::_('MOLAJO_HTML_NO_RECORDS_FOUND');
         }
 
         return $html;
@@ -401,7 +401,7 @@ class MolajoPagination extends JObject
 
         $selected = $this->_viewall ? 0 : $this->limit;
 
-        $html = MolajoHTML::_('select.genericlist', $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
+        $html = MolajoHTML::_('select.genericlist', $limits, $this->prefix.'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
 
         return $html;
     }
@@ -457,11 +457,11 @@ class MolajoPagination extends JObject
     {
         $html = "<div class=\"list-footer\">\n";
 
-        $html .= "\n<div class=\"limit\">" . MolajoText::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield'] . "</div>";
+        $html .= "\n<div class=\"limit\">".MolajoText::_('JGLOBAL_DISPLAY_NUM').$list['limitfield']."</div>";
         $html .= $list['pageslinks'];
-        $html .= "\n<div class=\"counter\">" . $list['pagescounter'] . "</div>";
+        $html .= "\n<div class=\"counter\">".$list['pagescounter']."</div>";
 
-        $html .= "\n<input type=\"hidden\" name=\"" . $list['prefix'] . "limitstart\" value=\"" . $list['limitstart'] . "\" />";
+        $html .= "\n<input type=\"hidden\" name=\"".$list['prefix']."limitstart\" value=\"".$list['limitstart']."\" />";
         $html .= "\n</div>";
 
         return $html;
@@ -471,13 +471,13 @@ class MolajoPagination extends JObject
     {
         // Reverse output rendering for right-to-left display.
         $html = '<ul>';
-        $html .= '<li class="pagination-start">' . $list['start']['data'] . '</li>';
-        $html .= '<li class="pagination-prev">' . $list['previous']['data'] . '</li>';
+        $html .= '<li class="pagination-start">'.$list['start']['data'].'</li>';
+        $html .= '<li class="pagination-prev">'.$list['previous']['data'].'</li>';
         foreach ($list['pages'] as $page) {
-            $html .= '<li>' . $page['data'] . '</li>';
+            $html .= '<li>'.$page['data'].'</li>';
         }
-        $html .= '<li class="pagination-next">' . $list['next']['data'] . '</li>';
-        $html .= '<li class="pagination-end">' . $list['end']['data'] . '</li>';
+        $html .= '<li class="pagination-next">'.$list['next']['data'].'</li>';
+        $html .= '<li class="pagination-end">'.$list['end']['data'].'</li>';
         $html .= '</ul>';
 
         return $html;
@@ -487,10 +487,10 @@ class MolajoPagination extends JObject
     {
         $app = MolajoFactory::getApplication();
         if ($item->base > 0) {
-            return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=" . $item->base . "; Joomla.submitform();return false;\">" . $item->text . "</a>";
+            return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
         }
         else {
-            return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=0; Joomla.submitform();return false;\">" . $item->text . "</a>";
+            return "<a title=\"".$item->text."\" onclick=\"document.adminForm.".$this->prefix."limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
         }
         //admin			return "<a title=\"".$item->text."\" href=\"".$item->link."\" class=\"pagenav\">".$item->text."</a>";
 
@@ -499,7 +499,7 @@ class MolajoPagination extends JObject
     protected function _item_inactive(&$item)
     {
         //admin			return "<span>".$item->text."</span>";
-        return "<span class=\"pagenav\">" . $item->text . "</span>";
+        return "<span class=\"pagenav\">".$item->text."</span>";
     }
 
     /**
@@ -515,17 +515,17 @@ class MolajoPagination extends JObject
 
         // Build the additional URL parameters string.
         $parameters = '';
-        if (!empty($this->_additionalUrlParams)) {
-            foreach ($this->_additionalUrlParams as $key => $value)
+        if (!empty($this->_additionalUrlParameters)) {
+            foreach ($this->_additionalUrlParameters as $key => $value)
             {
-                $parameters .= '&' . $key . '=' . $value;
+                $parameters .= '&'.$key.'='.$value;
             }
         }
 
         $data->all = new MolajoPaginationObject(MolajoText::_('MOLAJO_HTML_VIEW_ALL'), $this->prefix);
         if (!$this->_viewall) {
             $data->all->base = '0';
-            $data->all->link = MolajoRoute::_($parameters . '&' . $this->prefix . 'limitstart=');
+            $data->all->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart=');
         }
 
         // Set the start and previous data objects.
@@ -539,9 +539,9 @@ class MolajoPagination extends JObject
             //$page = $page == 0 ? '' : $page;
 
             $data->start->base = '0';
-            $data->start->link = MolajoRoute::_($parameters . '&' . $this->prefix . 'limitstart=0');
+            $data->start->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart=0');
             $data->previous->base = $page;
-            $data->previous->link = MolajoRoute::_($parameters . '&' . $this->prefix . 'limitstart=' . $page);
+            $data->previous->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$page);
         }
 
         // Set the next and end data objects.
@@ -553,9 +553,9 @@ class MolajoPagination extends JObject
             $end = ($this->get('pages.total') - 1) * $this->limit;
 
             $data->next->base = $next;
-            $data->next->link = MolajoRoute::_($parameters . '&' . $this->prefix . 'limitstart=' . $next);
+            $data->next->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$next);
             $data->end->base = $end;
-            $data->end->link = MolajoRoute::_($parameters . '&' . $this->prefix . 'limitstart=' . $end);
+            $data->end->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$end);
         }
 
         $data->pages = array();
@@ -569,7 +569,7 @@ class MolajoPagination extends JObject
             $data->pages[$i] = new MolajoPaginationObject($i, $this->prefix);
             if ($i != $this->get('pages.current') || $this->_viewall) {
                 $data->pages[$i]->base = $offset;
-                $data->pages[$i]->link = MolajoRoute::_($parameters . '&' . $this->prefix . 'limitstart=' . $offset);
+                $data->pages[$i]->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$offset);
             }
         }
         return $data;

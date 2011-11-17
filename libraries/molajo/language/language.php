@@ -173,7 +173,7 @@ class MolajoLanguage extends JObject
         $this->setLanguage($lang);
         $this->setDebug($debug);
 
-        $filename = MOLAJO_APPLICATIONS_PATH . "/language/overrides/$lang.override.ini";
+        $filename = MOLAJO_APPLICATIONS_PATH."/language/overrides/$lang.override.ini";
 
         if (file_exists($filename) && $contents = $this->parse($filename)) {
             if (is_array($contents)) {
@@ -183,11 +183,11 @@ class MolajoLanguage extends JObject
         }
 
         // Look for a language specific localise class
-        $class = str_replace('-', '_', $lang . 'Localise');
+        $class = str_replace('-', '_', $lang.'Localise');
         if (class_exists($class)) {
         } else {
             // Class does not exist. Try to find it in the Site Language Folder
-            $localise = MOLAJO_APPLICATIONS_PATH . "/language/$lang/$lang.localise.php";
+            $localise = MOLAJO_APPLICATIONS_PATH."/language/$lang/$lang.localise.php";
             if (file_exists($localise)) {
                 require_once $localise;
             }
@@ -242,10 +242,10 @@ class MolajoLanguage extends JObject
      */
     public static function getInstance($lang, $debug = false)
     {
-        if (!isset(self::$languages[$lang . $debug])) {
-            self::$languages[$lang . $debug] = new MolajoLanguage($lang, $debug);
+        if (!isset(self::$languages[$lang.$debug])) {
+            self::$languages[$lang.$debug] = new MolajoLanguage($lang, $debug);
         }
-        return self::$languages[$lang . $debug];
+        return self::$languages[$lang.$debug];
     }
 
     /**
@@ -266,7 +266,7 @@ class MolajoLanguage extends JObject
         $key = strtoupper($string);
 
         if (isset($this->strings[$key])) {
-            $string = $this->debug ? '**' . $this->strings[$key] . '**' : $this->strings[$key];
+            $string = $this->debug ? '**'.$this->strings[$key].'**' : $this->strings[$key];
 
             // Store debug information
             if ($this->debug) {
@@ -293,7 +293,7 @@ class MolajoLanguage extends JObject
 
                 $this->orphans[$key][] = $caller;
 
-                $string = '??' . $string . '??';
+                $string = '??'.$string.'??';
             }
         }
 
@@ -676,7 +676,7 @@ class MolajoLanguage extends JObject
         $path = self::getLanguagePath($basePath, $lang);
 
         $internal = $extension == 'molajo' || $extension == '';
-        $filename = $internal ? $lang : $lang . '.' . $extension;
+        $filename = $internal ? $lang : $lang.'.'.$extension;
         $filename = "$path/$filename.ini";
 
         $result = false;
@@ -697,7 +697,7 @@ class MolajoLanguage extends JObject
 
                 // Check the standard file name
                 $path = self::getLanguagePath($basePath, $this->default);
-                $filename = $internal ? $this->default : $this->default . '.' . $extension;
+                $filename = $internal ? $this->default : $this->default.'.'.$extension;
                 $filename = "$path/$filename.ini";
 
                 // If the one we tried is different than the new name, try again
@@ -827,18 +827,18 @@ class MolajoLanguage extends JObject
 
             // Check if we encountered any errors.
             if (count($errors)) {
-                if (basename($filename) != $this->lang . '.ini') {
-                    $this->errorfiles[$filename] = $filename . JText::sprintf('JERROR_PARSING_LANGUAGE_FILE', implode(', ', $errors));
+                if (basename($filename) != $this->lang.'.ini') {
+                    $this->errorfiles[$filename] = $filename.JText::sprintf('JERROR_PARSING_LANGUAGE_FILE', implode(', ', $errors));
                 }
                 else
                 {
-                    $this->errorfiles[$filename] = $filename . '&#160;: error(s) in line(s) ' . implode(', ', $errors);
+                    $this->errorfiles[$filename] = $filename.'&#160;: error(s) in line(s) '.implode(', ', $errors);
                 }
             }
             elseif ($php_errormsg)
             {
                 // We didn't find any errors but there's probably a parse notice.
-                $this->errorfiles['PHP' . $filename] = 'PHP parser errors :' . $php_errormsg;
+                $this->errorfiles['PHP'.$filename] = 'PHP parser errors :'.$php_errormsg;
             }
 
             $this->debug = true;

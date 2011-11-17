@@ -113,7 +113,7 @@ class CategoriesModelCategory extends JModelAdmin
 		$this->setState('category.section', (count($parts)>1)?$parts[1]:null);
 
 		// Load the parameters.
-		$parameters	= JComponentHelper::getParams('com_categories');
+		$parameters	= JComponentHelper::getParameters('com_categories');
 		$this->setState('parameters', $parameters);
 	}
 
@@ -225,7 +225,7 @@ class CategoriesModelCategory extends JModelAdmin
 	 */
 	protected function getReorderConditions($table)
 	{
-		return 'extension = ' . $this->_db->Quote($table->extension);
+		return 'extension = '.$this->_db->Quote($table->extension);
 	}
 
 	/**
@@ -293,9 +293,9 @@ class CategoriesModelCategory extends JModelAdmin
 
 			if (class_exists($cName) && is_callable(array($cName, 'onPrepareForm'))) {
 					$lang->load($component, JPATH_BASE, null, false, false)
-				||	$lang->load($component, JPATH_BASE . '/components/' . $component, null, false, false)
+				||	$lang->load($component, JPATH_BASE.'/components/'.$component, null, false, false)
 				||	$lang->load($component, JPATH_BASE, $lang->getDefault(), false, false)
-				||	$lang->load($component, JPATH_BASE . '/components/' . $component, $lang->getDefault(), false, false);
+				||	$lang->load($component, JPATH_BASE.'/components/'.$component, $lang->getDefault(), false, false);
 				call_user_func_array(array($cName, 'onPrepareForm'), array(&$form));
 
 				// Check for an error.

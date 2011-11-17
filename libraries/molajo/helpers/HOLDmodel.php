@@ -13,11 +13,11 @@ defined('MOLAJO') or die;
  * 
  * Processes requests for various Molajo extension types:
  * 
- * MOLAJO_EXTENSION_TYPE_COMPONENTS 1
- * MOLAJO_EXTENSION_TYPE_MENU 5
- * MOLAJO_EXTENSION_TYPE_MODULES 6
- * MOLAJO_EXTENSION_TYPE_PLUGINS 8
- * MOLAJO_EXTENSION_TYPE_TEMPLATES 9
+ * MOLAJO_CONTENT_TYPE_EXTENSION_COMPONENTS 1
+ * MOLAJO_CONTENT_TYPE_EXTENSION_MENU 5
+ * MOLAJO_CONTENT_TYPE_EXTENSION_MODULES 6
+ * MOLAJO_CONTENT_TYPE_EXTENSION_PLUGINS 8
+ * MOLAJO_CONTENT_TYPE_EXTENSION_TEMPLATES 9
  *
  * @package     Molajo
  * @subpackage  Helper
@@ -82,7 +82,7 @@ abstract class MolajoXYZHelper
             $result->showtitle = 0;
             $result->showsubtitle = 0;
             $result->control = '';
-            $result->params = '';
+            $result->parameters = '';
             $result->user = 0;
         }
 
@@ -113,9 +113,9 @@ abstract class MolajoXYZHelper
         if (count($result) == 0) {
 
             if (JRequest::getBool('tp')
-                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')
+                && MolajoComponentHelper::getParameters('com_templates')->get('template_positions_display')
             ) {
-                $result[0] = self::getXYZ('mod_' . $position);
+                $result[0] = self::getXYZ('mod_'.$position);
                 $result[0]->title = $position;
                 $result[0]->content = $position;
                 $result[0]->position = $position;
@@ -153,23 +153,23 @@ abstract class MolajoXYZHelper
 
         $query->select('m.id as id, title, title as subtitle ');
         $query->select('extension, position, content, showtitle ');
-        $query->select('showtitle, showtitle as showsubtitle, params, mm.menu_item_id');
+        $query->select('showtitle, showtitle as showsubtitle, parameters, mm.menu_item_id');
         $query->from('#__extensions AS m');
         $query->join('inner', '#__extensions_menu AS mm');
         $query->where('mm.extension_id = m.id');
         $query->where('m.published = 1');
         $query->where('m.id <> 1');
-        $query->where('(m.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR m.start_publishing_datetime <= ' . $db->Quote($now) . ')');
-        $query->where('(m.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR m.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
+        $query->where('(m.start_publishing_datetime = '.$db->Quote($nullDate).' OR m.start_publishing_datetime <= '.$db->Quote($now).')');
+        $query->where('(m.stop_publishing_datetime = '.$db->Quote($nullDate).' OR m.stop_publishing_datetime >= '.$db->Quote($now).')');
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'm'));
 
-        $query->where('m.application_id = ' . MOLAJO_APPLICATION_ID);
-        $query->where('(mm.menu_item_id = ' . (int) $Itemid 
-                        . 'OR mm.menu_item_id <= 0)');
+        $query->where('m.application_id = '.MOLAJO_APPLICATION_ID);
+        $query->where('(mm.menu_item_id = '.(int) $Itemid
+                       .'OR mm.menu_item_id <= 0)');
 
-        $query->where('m.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+        $query->where('m.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
 
         $query->order('position, ordering');
 
@@ -192,14 +192,14 @@ abstract class MolajoXYZHelper
      * To be set in XML:
      * 
      * @param   object  $extension    XYZ object
-     * @param   object  $extensionparams extension parameters
-     * @param   object  $cacheparams extension cache parameters - id or url parameters, depending on the extension cache mode
+     * @param   object  $extensionparameters extension parameters
+     * @param   object  $cacheparameters extension cache parameters - id or url parameters, depending on the extension cache mode
      * @param   array   $parameters - parameters for given mode - calculated id or an array of safe url parameters and their
      *                     variable types, for valid values see {@link JFilterInput::clean()}.
      *
      * @since   11.1
      */
-    public static function extensionCache($extension, $extensionparams, $cacheparams)
+    public static function extensionCache($extension, $extensionparameters, $cacheparameters)
     {
 
     }
@@ -226,7 +226,7 @@ abstract class MolajoXYZHelper
 
         // Get extension path
         $extension->extension = preg_replace('/[^A-Z0-9_\.-]/i', '', $extension->extension);
-        $path = MOLAJO_EXTENSION_MODULES.'/'.$extension->extension.'/'.$extension->extension . '.php';
+        $path = MOLAJO_EXTENSION_MODULES.'/'.$extension->extension.'/'.$extension->extension.'.php';
 
         // Load the extension
         if ($extension->user) {
@@ -256,7 +256,7 @@ abstract class MolajoXYZHelper
             $user = MolajoFactory::getUser();
 
             $parameters = new JRegistry;
-            $parameters->loadJSON($extension->params);
+            $parameters->loadJSON($extension->parameters);
 
             $request = self::getRequest($extension, $parameters);
 

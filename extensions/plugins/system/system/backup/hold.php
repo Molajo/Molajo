@@ -17,7 +17,7 @@ class protectBackup extends MolajoPlugin	{
          * 	Get Tamka Plugin Information
          */
         $plugin 	=& MolajoPluginHelper::getPlugin( 'molajo', 'backup');
-        $pluginParams = new JParameter($plugin->parameters);
+        $pluginParameters = new JParameter($plugin->parameters);
 
         /**
          * 	Look for backupMarker file older than -- (3600*24) is one day * $parameterDays
@@ -82,23 +82,23 @@ class protectBackup extends MolajoPlugin	{
         /**
          *  Process each table: Drop, Create, and Inserts
          */
-        $databaseBackup = 'USE ' . $databaseName . ';';
+        $databaseBackup = 'USE '.$databaseName.';';
         $databaseBackup .= "\n\n";
 
         foreach($tables as $table)
         {
-            $backupData = mysql_query('SELECT * FROM ' . $table);
+            $backupData = mysql_query('SELECT * FROM '.$table);
             $num_fields = mysql_num_fields($backupData);
 
             //	Retrieve
-            $query = 'SHOW COLUMNS FROM ' . $table;
+            $query = 'SHOW COLUMNS FROM '.$table;
             $db->setQuery($query);
             $rows = $db->loadObjectList();
             $num_fields = count($rows);
 
             //	Drop statement
             $databaseBackup .= "\n\n";
-            $databaseBackup .= 'DROP TABLE ' . $table . ";\n\n";
+            $databaseBackup .= 'DROP TABLE '.$table.";\n\n";
 
             //	Create Table
             $row = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
@@ -109,7 +109,7 @@ class protectBackup extends MolajoPlugin	{
                 while($row = mysql_fetch_row($backupData))  {
 
                     $databaseBackup .= "\n";
-                    $databaseBackup .= 'INSERT INTO ' . $table . ' VALUES ( ';
+                    $databaseBackup .= 'INSERT INTO '.$table.' VALUES ( ';
 
                     for ($j=0; $j < $num_fields; $j++) {
 
@@ -126,12 +126,12 @@ class protectBackup extends MolajoPlugin	{
         /**
          * 	Write Backup file
          */
-        $backupfilenameNoSuffix = $databaseName . '-' . time();
+        $backupfilenameNoSuffix = $databaseName.'-'.time();
 
-        $backupFilename = JPATH_ROOT.'/plugins/system/backup/'.$backupfilenameNoSuffix . '.sql';
+        $backupFilename = JPATH_ROOT.'/plugins/system/backup/'.$backupfilenameNoSuffix.'.sql';
         if (!JFile::write($backupFilename, $databaseBackup)) {
                 $response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
-                $response->error_message = "Could not create the file " . $file . " Please check permissions.";
+                $response->error_message = "Could not create the file ".$file." Please check permissions.";
                 return false;
         }
 
@@ -139,11 +139,11 @@ class protectBackup extends MolajoPlugin	{
          * 	Zip the Backup File and Delete Original
          */
         $executeFilename = JPATH_ROOT.'/plugins/system/backup/7z.exe';
-        $zipFilename = JPATH_ROOT.'/plugins/system/backup/'.$backupfilenameNoSuffix . '.zip';
-        $zipCommand = $executeFilename . ' a ' . $zipFilename . ' ' . $backupFilename;
+        $zipFilename = JPATH_ROOT.'/plugins/system/backup/'.$backupfilenameNoSuffix.'.zip';
+        $zipCommand = $executeFilename.' a '.$zipFilename.' '.$backupFilename;
         exec($zipCommand);
 
-        $eraseFilenames = 'erase ' . JPATH_ROOT.'/plugins/system/backup/*.sql';
+        $eraseFilenames = 'erase '.JPATH_ROOT.'/plugins/system/backup/*.sql';
         exec($eraseFilenames);
 
         /**
@@ -160,7 +160,7 @@ class protectBackup extends MolajoPlugin	{
         foreach ( $emailAddressArray as $emailAddress ) {
                 $bcc[] = $emailAddress;
         }
-        $emailSubject	= '[' . $sitename . JText::_( ' Database Backup ') . $backupCreatedDate . ']';
+        $emailSubject	= '['.$sitename.JText::_( ' Database Backup ').$backupCreatedDate.']';
         $emailMessage = JText::_( 'ATTACHED' );
         $mode = 1;
         $attachment = $zipFilename;
@@ -173,7 +173,7 @@ class protectBackup extends MolajoPlugin	{
         /**
          * 	Delete Zip after email
          */
-        $eraseFilenames = 'erase ' . $zipFilename;
+        $eraseFilenames = 'erase '.$zipFilename;
         exec($eraseFilenames);
 
         JFile::write($markerFilename, 'backup');

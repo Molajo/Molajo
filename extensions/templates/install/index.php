@@ -17,7 +17,7 @@ if ($configHTML == true): ?>
     <jdoc:include type="head" />
     <?php include dirname(__FILE__).'/lib/media.php'; ?>
 </head>
-<body class="<?php echo $lcbrowser . ' ' . $lcbrowser.$ver . ' ' . strtolower($browser->getPlatform()); ?>">
+<body class="<?php echo $lcbrowser.' '.$lcbrowser.$ver.' '.strtolower($browser->getPlatform()); ?>">
 	<div id="wrap">
         <?php include dirname(__FILE__).'/lib/header.php'; ?>
 		<div id="main" class="step<?php echo $stepNumber; ?>">

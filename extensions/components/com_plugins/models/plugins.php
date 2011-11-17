@@ -76,7 +76,7 @@ class PluginsModelPlugins extends JModelList
 		$this->setState('filter.language', $language);
 
 		// Load the parameters.
-		$parameters = JComponentHelper::getParams('com_plugins');
+		$parameters = JComponentHelper::getParameters('com_plugins');
 		$this->setState('parameters', $parameters);
 
 		// List state information.
@@ -143,7 +143,7 @@ class PluginsModelPlugins extends JModelList
 			if ($ordering == 'ordering') {
 				$query->order('folder ASC');
 			}
-			$query->order($this->_db->nameQuote($ordering) . ' ' . $this->getState('list.direction'));
+			$query->order($this->_db->nameQuote($ordering).' '.$this->getState('list.direction'));
 			if($ordering == 'folder') {
 				$query->order('ordering ASC');
 			}
@@ -163,12 +163,12 @@ class PluginsModelPlugins extends JModelList
 	{
 		$lang = MolajoFactory::getLanguage();
 		foreach($items as &$item) {
-			$source = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
-			$extension = 'plg_' . $item->folder . '_' . $item->element;
-				$lang->load($extension . '.sys', JPATH_ADMINISTRATOR, null, false, false)
-			||	$lang->load($extension . '.sys', $source, null, false, false)
-			||	$lang->load($extension . '.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-			||	$lang->load($extension . '.sys', $source, $lang->getDefault(), false, false);
+			$source = JPATH_PLUGINS.'/'.$item->folder.'/'.$item->element;
+			$extension = 'plg_'.$item->folder.'_'.$item->element;
+				$lang->load($extension.'.sys', JPATH_ADMINISTRATOR, null, false, false)
+			||	$lang->load($extension.'.sys', $source, null, false, false)
+			||	$lang->load($extension.'.sys', JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+			||	$lang->load($extension.'.sys', $source, $lang->getDefault(), false, false);
 			$item->name = MolajoText::_($item->name);
 		}
 	}

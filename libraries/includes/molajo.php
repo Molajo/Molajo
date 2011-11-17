@@ -147,7 +147,7 @@ foreach ($files as $file) {
 }
 
 /**
- *  Language (JHelp and JLanguageHelper not used)
+ *  Language  
  */
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/latin_transliterate.php', 'MolajoLanguageTransliterate');
 
@@ -171,11 +171,6 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_LIBRARY_MVC.'/models/'.$file, 'MolajoModel'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
-/** Model-Elements */
-$files = JFolder::files(MOLAJO_LIBRARY_MVC.'/models/elements', '\.php$', false, false);
-foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY_MVC.'/models/elements/'.$file, 'MolajoElement'.ucfirst(substr($file, 0, strpos($file, '.'))));
-}
 /** Views */
 $filehelper->requireClassFile(MOLAJO_LIBRARY_MVC.'/views/view.php', 'MolajoView');
 $files = JFolder::files(MOLAJO_LIBRARY_MVC.'/views', '\.php$', false, false);
@@ -211,3 +206,4 @@ $files = JFolder::files(MOLAJO_LIBRARY.'/site', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_LIBRARY.'/site/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
+

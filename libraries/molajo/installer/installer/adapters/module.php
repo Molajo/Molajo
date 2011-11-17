@@ -76,7 +76,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
                     ->setPath(
                 'source',
                 ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                        : MOLAJO_BASE_FOLDER).'/modules/' . $this->parent->extension->element
+                        : MOLAJO_BASE_FOLDER).'/modules/'.$this->parent->extension->element
             );
         }
 
@@ -99,7 +99,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             if ($extension) {
                 $lang = MolajoFactory::getLanguage();
                 $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                        : MOLAJO_BASE_FOLDER).'/modules/' . $extension;
+                        : MOLAJO_BASE_FOLDER).'/modules/'.$extension;
                 $folder = (string)$element->attributes()->folder;
 
                 if ($folder && file_exists("$path/$folder")) {
@@ -107,10 +107,10 @@ class MolajoInstallerModule extends MolajoAdapterInstance
                 }
 
                 $client = (string)$this->manifest->attributes()->client;
-                $lang->load($extension . '.sys', $source, null, false, false)
-                || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), null, false, false)
-                || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-                || $lang->load($extension . '.sys', constant('MOLAJO_SITE_' . strtoupper($client)), $lang->getDefault(), false, false);
+                $lang->load($extension.'.sys', $source, null, false, false)
+                || $lang->load($extension.'.sys', constant('MOLAJO_SITE_'.strtoupper($client)), null, false, false)
+                || $lang->load($extension.'.sys', $source, $lang->getDefault(), false, false)
+                || $lang->load($extension.'.sys', constant('MOLAJO_SITE_'.strtoupper($client)), $lang->getDefault(), false, false);
             }
         }
     }
@@ -156,7 +156,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
             if ($client === false) {
                 $this->parent
-                        ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_UNKNOWN_CLIENT', MolajoText::_('JLIB_INSTALLER_' . $this->route), $client->name));
+                        ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_UNKNOWN_CLIENT', MolajoText::_('JLIB_INSTALLER_'.$this->route), $client->name));
                 return false;
             }
 
@@ -185,11 +185,11 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             }
         }
         if (!empty($element)) {
-            $this->parent->setPath('extension_root', $basePath.'/modules/' . $element);
+            $this->parent->setPath('extension_root', $basePath.'/modules/'.$element);
         }
         else
         {
-            $this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_INSTALL_NOFILE', MolajoText::_('JLIB_INSTALLER_' . $this->route)));
+            $this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_INSTALL_NOFILE', MolajoText::_('JLIB_INSTALLER_'.$this->route)));
 
             return false;
         }
@@ -200,7 +200,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         // If it isn't, add an entry to extensions
         $query = $db->getQuery(true);
         $query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
-        $query->where($query->qn('element') . ' = ' . $query->q($element))->where($query->qn('application_id') . ' = ' . (int)$clientId);
+        $query->where($query->qn('element').' = '.$query->q($element))->where($query->qn('application_id').' = '.(int)$clientId);
         $db->setQuery($query);
 
         try
@@ -211,7 +211,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         {
             // Install failed, roll back changes
             $this->parent
-                    ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_ROLLBACK', MolajoText::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                    ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_ROLLBACK', MolajoText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true)));
 
             return false;
         }
@@ -249,7 +249,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
                 $this->parent
                         ->abort(
                     MolajoText::sprintf(
-                        'JLIB_INSTALLER_ABORT_MOD_INSTALL_DIRECTORY', MolajoText::_('JLIB_INSTALLER_' . $this->route),
+                        'JLIB_INSTALLER_ABORT_MOD_INSTALL_DIRECTORY', MolajoText::_('JLIB_INSTALLER_'.$this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -273,7 +273,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             }
 
             // Set the class name
-            $classname = $element . 'InstallerScript';
+            $classname = $element.'InstallerScript';
 
             if (class_exists($classname)) {
                 // Create a new instance.
@@ -312,7 +312,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
                 $this->parent
                         ->abort(
                     MolajoText::sprintf(
-                        'JLIB_INSTALLER_ABORT_MOD_INSTALL_CREATE_DIRECTORY', MolajoText::_('JLIB_INSTALLER_' . $this->route),
+                        'JLIB_INSTALLER_ABORT_MOD_INSTALL_CREATE_DIRECTORY', MolajoText::_('JLIB_INSTALLER_'.$this->route),
                         $this->parent->getPath('extension_root')
                     )
                 );
@@ -373,7 +373,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             if (!$row->store()) {
                 // Install failed, roll back changes
                 $this->parent
-                        ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_ROLLBACK', MolajoText::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                        ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_ROLLBACK', MolajoText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true)));
 
                 return false;
             }
@@ -388,14 +388,14 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             $row->set('protected', 0);
             $row->set('access', $clientId == 1 ? 2 : 0);
             $row->set('application_id', $clientId);
-            $row->set('params', $this->parent->getParams());
+            $row->set('parameters', $this->parent->getParameters());
             $row->set('custom_data', ''); // custom data
             $row->set('manifest_cache', $this->parent->generateManifestCache());
 
             if (!$row->store()) {
                 // Install failed, roll back changes
                 $this->parent
-                        ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_ROLLBACK', MolajoText::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true)));
+                        ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_ROLLBACK', MolajoText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true)));
                 return false;
             }
 
@@ -432,7 +432,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
                 // Install failed, rollback changes
                 $this->parent
                         ->abort(
-                    MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_INSTALL_SQL_ERROR', MolajoText::_('JLIB_INSTALLER_' . $this->route), $db->stderr(true))
+                    MolajoText::sprintf('JLIB_INSTALLER_ABORT_MOD_INSTALL_SQL_ERROR', MolajoText::_('JLIB_INSTALLER_'.$this->route), $db->stderr(true))
                 );
 
                 return false;
@@ -542,7 +542,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
         foreach ($site_list as $module)
         {
-            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . "/modules/$module/$module.xml");
+            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER."/modules/$module/$module.xml");
             $extension = MolajoTable::getInstance('extension');
             $extension->set('type', 'module');
             $extension->set('application_id', $site_info->id);
@@ -555,7 +555,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
         foreach ($admin_list as $module)
         {
-            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER . "/modules/$module/$module.xml");
+            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER."/modules/$module/$module.xml");
             $extension = MolajoTable::getInstance('extension');
             $extension->set('type', 'module');
             $extension->set('application_id', $admin_info->id);
@@ -581,7 +581,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         // Modules are like templates, and are one of the easiest
         // If its not in the extensions table we just add it
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path.'/modules/' . $this->parent->extension->element.'/'.$this->parent->extension->element . '.xml';
+        $manifestPath = $client->path.'/modules/'.$this->parent->extension->element.'/'.$this->parent->extension->element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $description = (string)$this->parent->manifest->description;
 
@@ -600,7 +600,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
         $this->parent->extension->enabled = 1;
-        $this->parent->extension->params = $this->parent->getParams();
+        $this->parent->extension->parameters = $this->parent->getParameters();
         if ($this->parent->extension->store()) {
             return $this->parent->extension->get('extension_id');
         }
@@ -622,7 +622,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path.'/modules/' . $this->parent->extension->element.'/'.$this->parent->extension->element . '.xml';
+        $manifestPath = $client->path.'/modules/'.$this->parent->extension->element.'/'.$this->parent->extension->element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -681,7 +681,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             $this->parent->abort(MolajoText::sprintf('JLIB_INSTALLER_ERROR_MOD_UNINSTALL_UNKNOWN_CLIENT', $row->application_id));
             return false;
         }
-        $this->parent->setPath('extension_root', $client->path.'/modules/' . $element);
+        $this->parent->setPath('extension_root', $client->path.'/modules/'.$element);
 
         $this->parent->setPath('source', $this->parent->getPath('extension_root'));
 
@@ -691,7 +691,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         $this->manifest = $this->parent->getManifest();
 
         // Attempt to load the language file; might have uninstall strings
-        $this->loadLanguage(($row->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER).'/modules/' . $element);
+        $this->loadLanguage(($row->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER).'/modules/'.$element);
 
         // If there is an manifest class file, let's load it
         $this->scriptElement = $this->manifest->scriptfile;
@@ -706,7 +706,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             }
 
             // Set the class name
-            $classname = $element . 'InstallerScript';
+            $classname = $element.'InstallerScript';
 
             if (class_exists($classname)) {
                 // Create a new instance
@@ -754,7 +754,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
         // Remove the schema version
         $query = $db->getQuery(true);
-        $query->delete()->from('#__schemas')->where('extension_id = ' . $row->extension_id);
+        $query->delete()->from('#__schemas')->where('extension_id = '.$row->extension_id);
         $db->setQuery($query);
         $db->Query();
 
@@ -765,8 +765,8 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         // Let's delete all the module copies for the type we are uninstalling
         $query = $db->getQuery(true);
         $query->select($query->qn('id'))->from($query->qn('#__modules'));
-        $query->where($query->qn('module') . ' = ' . $query->q($row->element));
-        $query->where($query->qn('application_id') . ' = ' . (int)$row->application_id);
+        $query->where($query->qn('module').' = '.$query->q($row->element));
+        $query->where($query->qn('application_id').' = '.(int)$row->application_id);
         $db->setQuery($query);
 
         try
@@ -785,7 +785,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             $modID = implode(',', $modules);
 
             // Wipe out any items assigned to menus
-            $query = 'DELETE' . ' FROM #__modules_menu' . ' WHERE moduleid IN (' . $modID . ')';
+            $query = 'DELETE'.' FROM #__modules_menu'.' WHERE moduleid IN ('.$modID.')';
             $db->setQuery($query);
             try
             {
@@ -798,7 +798,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
             }
 
             // Wipe out any instances in the modules table
-            $query = 'DELETE' . ' FROM #__modules' . ' WHERE id IN (' . $modID . ')';
+            $query = 'DELETE'.' FROM #__modules'.' WHERE id IN ('.$modID.')';
             $db->setQuery($query);
 
             try
@@ -814,7 +814,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
 
         // Now we will no longer need the module object, so let's delete it and free up memory
         $row->delete($row->extension_id);
-        $query = 'DELETE FROM `#__modules` WHERE module = ' . $db->Quote($row->element) . ' AND application_id = ' . $row->application_id;
+        $query = 'DELETE FROM `#__modules` WHERE module = '.$db->Quote($row->element).' AND application_id = '.$row->application_id;
         $db->setQuery($query);
 
         try
@@ -854,7 +854,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         $db = $this->parent->getDbo();
 
         // Remove the entry from the #__modules_menu table
-        $query = 'DELETE' . ' FROM `#__modules_menu`' . ' WHERE moduleid=' . (int)$arg['id'];
+        $query = 'DELETE'.' FROM `#__modules_menu`'.' WHERE moduleid='.(int)$arg['id'];
         $db->setQuery($query);
 
         try
@@ -883,7 +883,7 @@ class MolajoInstallerModule extends MolajoAdapterInstance
         $db = $this->parent->getDbo();
 
         // Remove the entry from the #__modules table
-        $query = 'DELETE' . ' FROM `#__modules`' . ' WHERE id=' . (int)$arg['id'];
+        $query = 'DELETE'.' FROM `#__modules`'.' WHERE id='.(int)$arg['id'];
         $db->setQuery($query);
         try
         {

@@ -47,7 +47,7 @@ MolajoHTML::_('behavior.modal');
 
 <div class="width-60 fltlft">
 	<fieldset class="adminform">
-		<legend><?php echo MolajoText::_('COM_MENUS_ITEM_DETAILS');?></legend>
+		<legend><?php echo MolajoText::_('MENU_ITEM_DETAILS');?></legend>
 			<ul class="adminformlist">
 
 				<li><?php echo $this->form->getLabel('type'); ?>
@@ -91,8 +91,8 @@ MolajoHTML::_('behavior.modal');
 				<li><?php echo $this->form->getLabel('parent_id'); ?>
 				<?php echo $this->form->getInput('parent_id'); ?></li>
 
-				<li><?php echo $this->form->getLabel('browserNav'); ?>
-				<?php echo $this->form->getInput('browserNav'); ?></li>
+				<li><?php echo $this->form->getLabel('link_target'); ?>
+				<?php echo $this->form->getInput('link_target'); ?></li>
 
 				<?php if ($this->item->type == 'component') : ?>
 					<li><?php echo $this->form->getLabel('home'); ?>
@@ -102,8 +102,8 @@ MolajoHTML::_('behavior.modal');
 				<li><?php echo $this->form->getLabel('language'); ?>
 				<?php echo $this->form->getInput('language'); ?></li>
 
-				<li><?php echo $this->form->getLabel('template_style_id'); ?>
-				<?php echo $this->form->getInput('template_style_id'); ?></li>
+				<li><?php echo $this->form->getLabel('template_id'); ?>
+				<?php echo $this->form->getInput('template_id'); ?></li>
 
 				<li><?php echo $this->form->getLabel('id'); ?>
 				<?php echo $this->form->getInput('id'); ?></li>
@@ -120,7 +120,7 @@ MolajoHTML::_('behavior.modal');
 		<div class="clr"></div>
 
 		<?php if (!empty($this->modules)) : ?>
-			<?php echo MolajoHTML::_('sliders.panel',MolajoText::_('COM_MENUS_ITEM_MODULE_ASSIGNMENT'), 'module-options'); ?>
+			<?php echo MolajoHTML::_('sliders.panel',MolajoText::_('MENU_ITEM_MODULE_ASSIGNMENT'), 'module-options'); ?>
 			<fieldset>
 				<?php echo $this->loadTemplate('modules'); ?>
 			</fieldset>

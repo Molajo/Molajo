@@ -52,7 +52,7 @@ class extendController extends plgSystemExtend {
      * @var object
      * @since	1.6
      */
-    protected $content_types;
+    protected $content_type_ids;
 
     /**
      * @var object
@@ -100,7 +100,7 @@ class extendController extends plgSystemExtend {
      * @var object
      * @since	1.6
      */
-    protected $fieldParams;
+    protected $fieldParameters;
 
     /**
      * initiation
@@ -111,7 +111,7 @@ class extendController extends plgSystemExtend {
      * @param object $form
      * @param string $context
      * @param object $content
-     * @param object $fieldParams
+     * @param object $fieldParameters
      * @param int $limitstart
      * @param int $isNew
      *
@@ -121,7 +121,7 @@ class extendController extends plgSystemExtend {
     {
 
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $this->fieldParams = new JParameter($systemPlugin->parameters);
+        $this->fieldParameters = new JParameter($systemPlugin->parameters);
 /**
             echo 'Task: '.$task.'<br />';
             echo 'Context: '.$context.'<br />';
@@ -138,20 +138,20 @@ class extendController extends plgSystemExtend {
             echo var_dump($form);
             echo '<br />';
 
-            echo 'Params: <br />';
-            echo var_dump($this->fieldParams);
+            echo 'Parameters: <br />';
+            echo var_dump($this->fieldParameters);
             echo '<br />';
 
 **/
         /** verify enabled **/
-        if ((int) $this->fieldParams->def('basic_enable', 0) == 0) { return; }
+        if ((int) $this->fieldParameters->def('basic_enable', 0) == 0) { return; }
 
         /** load application support **/
 	$this->loadLanguage();
         $this->app = MolajoFactory::getApplication();
         $this->db = MolajoFactory::getDbo();
         $this->user = MolajoFactory::getUser();
-        $this->sql_table_name = $this->fieldParams->def('sql_table_name', '#__molajo_custom_fields');
+        $this->sql_table_name = $this->fieldParameters->def('sql_table_name', '#__molajo_custom_fields');
 
         /** verify table exists **/
         modelContentItem::checkTable ($this->sql_table_name);
@@ -185,7 +185,7 @@ die();
         if ($this->component_option == 'com_plugins' && $this->app->getName() == 'administrator') {
             if ($content->element == 'extend' && $content->folder == 'system') {
 
-                 /** extend plugin: edit extensions fieldParams field **/
+                 /** extend plugin: edit extensions fieldParameters field **/
                 if ($this->task == 'edit' || $this->task == 'add') {   /** labeled an add because no $id **/
                     return extendControllerParameters::display ($contentTypeFilenames, $form);
                 }
@@ -193,7 +193,7 @@ echo 'task'.$task;
 echo 'event'.$event;
 die();
 
-                /** extend plugin: save extensions fieldParams field **/
+                /** extend plugin: save extensions fieldParameters field **/
                 if ($this->task == 'save') {
                     return extendControllerParameters::save ($contentTypeFilenames);
                 }
@@ -223,7 +223,7 @@ die();
         if (!extendControllerParameters::verifyGlobal($this->task, $this->component_option, $this->category, $form)) { return; }
 
         /* look thru contenttype folder filenames */
-        $this->content_types = array ();
+        $this->content_type_ids = array ();
 
         foreach ($contentTypeFilenames as $contentTypeFilename) {
 
@@ -236,16 +236,16 @@ die();
             /** add to valid content type array **/
             if ($results == true) {
                 /** TODO: Add event for OnAfterParameterValidation **/
-                $this->content_types[] = $contentType;
+                $this->content_type_ids[] = $contentType;
             }
         }
 
         /** no content types to process **/
-        if (count($this->content_types) == 0) { return; }
+        if (count($this->content_type_ids) == 0) { return; }
 
         /** task based subcontrollers process content types **/
         if ($this->task =='display' || $this->task=='add' || $this->task=='edit') {
-            return extendController::display ($form, $context, $content, $fieldParams, $limitstart);
+            return extendController::display ($form, $context, $content, $fieldParameters, $limitstart);
         }
         if ($this->task=='save') {
             return extendController::save ($context, &$content, $isNew);
@@ -278,20 +278,20 @@ die();
      * @param	object		Form object for Edit Layout Requests
      * @param	string		The context for the content passed to the plugin.
      * @param	object		The content object containing the Component Query Results.
-     * @param	object		The content fieldParams for the Component
+     * @param	object		The content fieldParameters for the Component
      * @param	int		The 'page' number
      * @return	string
      * @since	1.6
      */
-    public function display ($form=null, $context=null, $content=null, $fieldParams=null, $limitstart=null)
+    public function display ($form=null, $context=null, $content=null, $fieldParameters=null, $limitstart=null)
     {
         /** no content types to process **/
-        if (count($this->content_types) == 0) { return; }
+        if (count($this->content_type_ids) == 0) { return; }
 echo 'hello';
 die();
         /** process content types identified in controller **/
         $this->custom_fields = array();
-        foreach ($this->content_types as $contentType) {
+        foreach ($this->content_type_ids as $contentType) {
 
             /** retrieve custom fields **/
             $customFields = modelForm::getCustomFields ($contentType);
@@ -343,7 +343,7 @@ die();
     public function save ($context, &$content, $isNew)
     {
         /** no content types to process **/
-        if (count($this->content_types) == 0) { return; }
+        if (count($this->content_type_ids) == 0) { return; }
 
         /** get request form object containing component and custom field content **/
         $formdata = modelForm::getRequestForm ();
@@ -355,7 +355,7 @@ die();
 
         /** process content types identified in controller **/
         $this->custom_fields = array();
-        foreach ($this->content_types as $contentType) {
+        foreach ($this->content_type_ids as $contentType) {
 
             /** retrieve custom fields for content types **/
             $customFields = modelForm::getCustomFields ($contentType);

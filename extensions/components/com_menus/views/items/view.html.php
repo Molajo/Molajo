@@ -52,15 +52,15 @@ class MenusViewItems extends JView
 			// item type text
 			switch ($item->type) {
 				case 'url':
-					$value = MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL');
+					$value = MolajoText::_('MENU_TYPE_EXTERNAL_URL');
 					break;
 
 				case 'alias':
-					$value = MolajoText::_('COM_MENUS_TYPE_ALIAS');
+					$value = MolajoText::_('MENU_TYPE_ALIAS');
 					break;
 
 				case 'separator':
-					$value = MolajoText::_('COM_MENUS_TYPE_SEPARATOR');
+					$value = MolajoText::_('MENU_TYPE_SEPARATOR');
 					break;
 
 				case 'component':
@@ -108,7 +108,7 @@ class MenusViewItems extends JView
 											// Look for the first view node off of the root node.
 											if ($layout = $xml->xpath('layout[1]')) {
 												if (!empty($layout[0]['title'])) {
-													$value .= ' » ' . MolajoText::_(trim((string) $layout[0]['title']));
+													$value .= ' » '.MolajoText::_(trim((string) $layout[0]['title']));
 												}
 											}
 											if (!empty($layout[0]->message[0])) {
@@ -121,16 +121,16 @@ class MenusViewItems extends JView
 							}
 							else {
 								// Special case for absent views
-								$value .= ' » ' . MolajoText::_($item->componentname.'_'.$vars['view'].'_VIEW_DEFAULT_TITLE');
+								$value .= ' » '.MolajoText::_($item->componentname.'_'.$vars['view'].'_VIEW_DEFAULT_TITLE');
 							}
 						}
 					}
 					else {
 						if (preg_match("/^index.php\?option=([a-zA-Z\-0-9_]*)/", $item->link, $result)) {
-							$value = MolajoText::sprintf('COM_MENUS_TYPE_UNEXISTING',$result[1]);
+							$value = MolajoText::sprintf('MENU_TYPE_UNEXISTING',$result[1]);
 						}
 						else {
-							$value = MolajoText::_('COM_MENUS_TYPE_UNKNOWN');
+							$value = MolajoText::_('MENU_TYPE_UNKNOWN');
 						}
 					}
 					break;
@@ -168,7 +168,7 @@ class MenusViewItems extends JView
 
 		$canDo	= MenusHelper::getActions($this->state->get('filter.parent_id'));
 
-		MolajoToolbarHelper::title(MolajoText::_('COM_MENUS_VIEW_ITEMS_TITLE'), 'menumgr.png');
+		MolajoToolbarHelper::title(MolajoText::_('MENU_VIEW_ITEMS_TITLE'), 'menumgr.png');
 
 		if ($canDo->get('core.create')) {
 			MolajoToolbarHelper::addNew('item.add');
@@ -194,7 +194,7 @@ class MenusViewItems extends JView
 
 
 		if ($canDo->get('core.edit.state')) {
-			MolajoToolbarHelper::makeDefault('items.setDefault', 'COM_MENUS_TOOLBAR_SET_HOME');
+			MolajoToolbarHelper::makeDefault('items.setDefault', 'MENU_TOOLBAR_SET_HOME');
 			MolajoToolbarHelper::divider();
 		}
 		if (MolajoFactory::getUser()->authorise('core.admin')) {

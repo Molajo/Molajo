@@ -180,7 +180,7 @@ class plgSystemDebug extends MolajoPlugin
 					$totalOtherQueryTypes = count($otherQueryTypeTicker);
 					$totalQueryTypes = $totalSelectQueryTypes + $totalOtherQueryTypes;
 
-					echo '<h4>'.JText::sprintf('PLG_DEBUG_QUERY_TYPES_LOGGED', $totalQueryTypes) . '</h4>';
+					echo '<h4>'.JText::sprintf('PLG_DEBUG_QUERY_TYPES_LOGGED', $totalQueryTypes).'</h4>';
 
 					if ($totalSelectQueryTypes) {
 						echo '<h5>'.JText::sprintf('PLG_DEBUG_SELECT_QUERIES').'</h5>';

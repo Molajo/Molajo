@@ -41,10 +41,10 @@ class MolajoLinksExternalLinks {
             if ($firsttime) {
                 $firsttime = false;
                 $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-                $systemParams = new JParameter($molajoSystemPlugin->parameters);
+                $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
-                $rel = $systemParams->def('index_external_links', 'noindex');
-                $rel .= ', '.$systemParams->def('follow_external_links', 'nofollow');
+                $rel = $systemParameters->def('index_external_links', 'noindex');
+                $rel .= ', '.$systemParameters->def('follow_external_links', 'nofollow');
                 
 		$document =& MolajoFactory::getDocument();
 		$document->addScript(JURI::base().'media/molajo/js/mooexternal.js' );

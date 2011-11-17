@@ -13,7 +13,7 @@ $document =& MolajoFactory::getDocument();
 $document->addStyleSheet('../media/'.$this->request['option'].'/css/administrator.css');
 
 /** component parameters **/
-$this->state = JComponentHelper::getParams($this->request['option']);
+$this->state = JComponentHelper::getParameters($this->request['option']);
 
 /** output **/
 include $this->layoutHelper->getPath ('modal_item.php');

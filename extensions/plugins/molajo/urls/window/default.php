@@ -29,7 +29,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		$application =& MolajoFactory::getApplication('JSite');
 		$router =& $application->getRouter();
 
-		if ($router->getMode() == JROUTER_MODE_SEF) {
+		if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
 			$router->attachBuildRule(array(&$this, 'TamkaBuildRoute'));
 			$router->attachParseRule(array(&$this, 'TamkaParseURL'));
 		}
@@ -51,9 +51,9 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		if($option == 'com_articles') {
 			$option = $query['option'];
 			$component	= preg_replace('/[^A-Z0-9_\.-]/i', '', $option);
-			if (file_exists(JPATH_BASE . DS . 'plugins' . DS . 'system' . DS . 'tamka_router' . DS . $component . 'router.php')) {
-				require_once(JPATH_BASE . DS . 'plugins' . DS . 'system' . DS. 'tamka_router' . DS . $component . 'router.php');
-				$function = substr($component, 4) . 'TamkaBuildRoute'; 
+			if (file_exists(JPATH_BASE.DS.'plugins'.DS.'system'.DS.'tamka_router'.DS.$component.'router.php')) {
+				require_once(JPATH_BASE.DS.'plugins'.DS.'system'.DS. 'tamka_router'.DS.$component.'router.php');
+				$function = substr($component, 4).'TamkaBuildRoute';
 				$function ($router, $uri);
 			}
 		}
@@ -99,7 +99,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 	 /**
 	 * 	1.	Initialization
 	 */
-		require_once(JPATH_BASE . DS . 'plugins' . DS . 'system' . DS. 'tamka_router' . DS . 'tamka_router_functions.php');
+		require_once(JPATH_BASE.DS.'plugins'.DS.'system'.DS. 'tamka_router'.DS.'tamka_router_functions.php');
 
 		$route = $uri->getPath();
 		$query = $uri->getQuery(true);
@@ -121,7 +121,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		}
 
 	 	// Load Tamka Library is ready to load
-		if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+		if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
 			JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
 			return NULL;
 		}
@@ -140,7 +140,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		$uriString			= strtolower($uri->toString(array('path', 'query')));
 
 	 	/*	Remove base and left forward slash '/' */
- 		$base = JURI::base(true) . '/';
+ 		$base = JURI::base(true).'/';
 		if (trim($base) == '/') {
  			$uriString = substr($uriString, 1, (strlen($uriString) - 1));
 		} else {
@@ -188,22 +188,22 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 			$hostname = substr($hostname, 4, (strlen($hostname) - 3));
 
 			/*	Rebuild the URL with No WWW and 301 Redirect */
-			$redirectTo = $uri->toString(array('scheme')) . $hostname;
+			$redirectTo = $uri->toString(array('scheme')).$hostname;
 			
 			if (($uri->toString(array('path')) == '//') || ($uri->toString(array('path')) == '/') ) {
 			} else {
 				$redirectTo .= $uri->toString(array('path'));
 				if ($uri->toString(array('query')) == '') {
 				} else {
-					$redirectTo .= '/' . $uri->toString(array('query'));
+					$redirectTo .= '/'.$uri->toString(array('query'));
 					if ($uri->toString(array('fragment')) == '') {
 					} else {
-						$redirectTo .= '/' . $uri->toString(array('fragment'));
+						$redirectTo .= '/'.$uri->toString(array('fragment'));
 					}
 				}
 			}
 			global $mainframe;
-			header('Location: ' . htmlspecialchars( $redirectTo ), true, '301');
+			header('Location: '.htmlspecialchars( $redirectTo ), true, '301');
 			$mainframe->redirect($redirectTo);
 			$app = & MolajoFactory::getApplication();
 			$app->close();
@@ -376,16 +376,16 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		$type = "";
 		
 		$plugin 		=& MolajoPluginHelper::getPlugin( 'system', 'tamka_router');
-		$pluginParams 	= new JParameter($plugin->parameters);
+		$pluginParameters 	= new JParameter($plugin->parameters);
 
-		$tagbaseValue = trim(strtolower($pluginParams->def('tagbase', 'tag')));
-		$tagmenubaseValue = trim(strtolower($pluginParams->def('tagmenubase', 'menu')));
-		$datebaseValue = trim(strtolower($pluginParams->def('datebase', 'date')));
+		$tagbaseValue = trim(strtolower($pluginParameters->def('tagbase', 'tag')));
+		$tagmenubaseValue = trim(strtolower($pluginParameters->def('tagmenubase', 'menu')));
+		$datebaseValue = trim(strtolower($pluginParameters->def('datebase', 'date')));
 		
 		$formatbaseValue = 'format';
 		$typebaseValue = 'type';		
 		
-		$pagebaseValue = trim(strtolower($pluginParams->def('page', 'page')));		
+		$pagebaseValue = trim(strtolower($pluginParameters->def('page', 'page')));
 
 		/* 	Needed in order to check for /index.php/ */
 		$app =& MolajoFactory::getApplication();
@@ -568,13 +568,13 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		$i = 0;
 
 		/*	1. http://example.com/category/detail */
-		if ($pluginParams->def('option', 1) == 1) {
+		if ($pluginParameters->def('option', 1) == 1) {
 			$customSegments[$i] = 'category';
 			$i++;
 			$customSegments[$i] = 'detail';
 
 		/*	2. http://example.com/section/category/detail */
-		} else if ($pluginParams->def('option', 1) == 2) {
+		} else if ($pluginParameters->def('option', 1) == 2) {
 			$customSegments[$i] = 'section';
 			$i++;
 			$customSegments[$i] = 'category';
@@ -582,13 +582,13 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 			$customSegments[$i] = 'detail';
 
 		/*	3. http://example.com/section/detail (use category when no section)	*/
-		} else if ($pluginParams->def('option', 1) == 3) {
+		} else if ($pluginParameters->def('option', 1) == 3) {
 			$customSegments[$i] = 'section';
 			$i++;
 			$customSegments[$i] = 'detail';
 
 		/*	4. http://example.com/ccyy/mm/dd/detail	*/
-		} else if ($pluginParams->def('option', 1) == 4) {
+		} else if ($pluginParameters->def('option', 1) == 4) {
 			$customSegments[$i] = 'ccyy';
 			$i++;
 			$customSegments[$i] = 'mm';
@@ -598,7 +598,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 			$customSegments[$i] = 'detail';
 
 		/*	5. http://example.com/ccyy/mm/detail  */
-		} else if ($pluginParams->def('option', 1) == 5) {
+		} else if ($pluginParameters->def('option', 1) == 5) {
 			$customSegments[$i] = 'ccyy';
 			$i++;
 			$customSegments[$i] = 'mm';
@@ -606,8 +606,8 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 			$customSegments[$i] = 'detail';
 
 		/*	6. Custom URL pattern: section, category, ccyy, mm, dd, detail		*/
-		} else if ($pluginParams->def('option', 1) == 6) {
-			$customSegments = explode ('/', strtolower($pluginParams->get('customurl')));
+		} else if ($pluginParameters->def('option', 1) == 6) {
+			$customSegments = explode ('/', strtolower($pluginParameters->get('customurl')));
 		}
 
 		/*	Given parameter options selected, process URL segments, without tags and page values  */
@@ -641,7 +641,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		}
 
 		/*	Parameter 3: Use ID (2) or Alias (1) */
-		if ($pluginParams->def('idoralias', 1) == 1) {
+		if ($pluginParameters->def('idoralias', 1) == 1) {
 			$sectionAlias 	= $sectionValue;
 			$categoryAlias 	= $categoryValue;
 			$detailAlias 	= $detailValue;
@@ -687,7 +687,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 
 		$query = 'SELECT new_path ' .
 			' FROM #__tamka_301_redirects ' .
-			' WHERE old_path = "' . Trim($uriPathPreserved) . '"';
+			' WHERE old_path = "'.Trim($uriPathPreserved).'"';
 
 		$db->setQuery($query);
 		$redirectTo = $db->loadResult();
@@ -743,10 +743,10 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		if ($redirectTo == '') {
 			$redirectTo = JURI::base();
 		} else {
-			$redirectTo = JURI::base() . $redirectTo . $parameterExtension;
+			$redirectTo = JURI::base().$redirectTo.$parameterExtension;
 		}
 
-		header('Location: ' . htmlspecialchars( $redirectTo ), true, '301');
+		header('Location: '.htmlspecialchars( $redirectTo ), true, '301');
 		$mainframe->redirect($redirectTo);
 		$app = & MolajoFactory::getApplication();
 		$app->close();
@@ -796,7 +796,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		/*	the page redirected to exists and will therefore send a 200 header			*/
 		/*	this means Google Webmaster Services, etc. will show this as a valid page 	*/
 		JResponse::setHeader('HTTP/1.0', '404 Not Found');
-		$redirectTo = JURI::base() . $TamkaErrorUrl . $parameterExtension;
+		$redirectTo = JURI::base().$TamkaErrorUrl.$parameterExtension;
 		$mainframe->redirect($redirectTo);
 		$app = & MolajoFactory::getApplication();
 		$app->close();

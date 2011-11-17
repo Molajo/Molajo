@@ -111,14 +111,14 @@ class MolajoWebServicesGoogleMaps {
 //                $document->addScript('http://maps.google.com/maps/api/js?sensor=false');
 
                 $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-                $systemParams = new JParameter($molajoSystemPlugin->parameters);
+                $systemParameters = new JParameter($molajoSystemPlugin->parameters);
             }
 
 //            $document->addScriptDeclaration($mapScript);
 
 
             /** static map request **/
-//            if ($systemParams->def('enable_static_google_map', 0) == 1) {
+//            if ($systemParameters->def('enable_static_google_map', 0) == 1) {
 
                 if ($title == '') {
                     $title = $content->$title;

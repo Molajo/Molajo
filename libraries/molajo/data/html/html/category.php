@@ -33,7 +33,7 @@ abstract class MolajoHtmlCategory
      */
     public static function options($extension = null, $config = array('filter.published' => array(0, 1)))
     {
-        $hash = md5($extension . '.' . serialize($config));
+        $hash = md5($extension.'.'.serialize($config));
 
         if (!isset(self::$items[$hash])) {
             $config = (array)$config;
@@ -47,15 +47,15 @@ abstract class MolajoHtmlCategory
             // Filter on extension.
             if ($extension == null) {
             } else {
-                $query->where('extension = ' . $db->quote($extension));
+                $query->where('extension = '.$db->quote($extension));
             }
             // Filter on the published state
             if (isset($config['filter.published'])) {
                 if (is_numeric($config['filter.published'])) {
-                    $query->where('a.published = ' . (int)$config['filter.published']);
+                    $query->where('a.published = '.(int)$config['filter.published']);
                 } else if (is_array($config['filter.published'])) {
                     JArrayHelper::toInteger($config['filter.published']);
-                    $query->where('a.published IN (' . implode(',', $config['filter.published']) . ')');
+                    $query->where('a.published IN ('.implode(',', $config['filter.published']).')');
                 }
             }
 
@@ -83,12 +83,12 @@ abstract class MolajoHtmlCategory
                         $lang->load($item->extension, MOLAJO_BASE_FOLDER, null, false, false);
                         $categoryExtensionText = MolajoText::_($item->extension);
 
-                        self::$items[$hash][] = JHTML::_('select.option', '<OPTGROUP>', ' - ' . $categoryExtensionText . ' - ');
+                        self::$items[$hash][] = JHTML::_('select.option', '<OPTGROUP>', ' - '.$categoryExtensionText.' - ');
                     }
                 }
 
                 $repeat = ($item->level - 1 >= 0) ? $item->level - 1 : 0;
-                self::$items[$hash][] = MolajoHTML::_('select.option', $item->id, str_repeat('- ', $repeat) . $item->title);
+                self::$items[$hash][] = MolajoHTML::_('select.option', $item->id, str_repeat('- ', $repeat).$item->title);
             }
         }
 
@@ -105,7 +105,7 @@ abstract class MolajoHtmlCategory
      */
     public static function categories($extension, $config = array('filter.published' => array(0, 1)))
     {
-        $hash = md5($extension . '.' . serialize($config));
+        $hash = md5($extension.'.'.serialize($config));
 
         if (!isset(self::$items[$hash])) {
             $config = (array)$config;
@@ -117,15 +117,15 @@ abstract class MolajoHtmlCategory
             $query->where('a.parent_id > 0');
 
             // Filter on extension.
-            $query->where('extension = ' . $db->quote($extension));
+            $query->where('extension = '.$db->quote($extension));
 
             // Filter on the published state
             if (isset($config['filter.published'])) {
                 if (is_numeric($config['filter.published'])) {
-                    $query->where('a.published = ' . (int)$config['filter.published']);
+                    $query->where('a.published = '.(int)$config['filter.published']);
                 } else if (is_array($config['filter.published'])) {
                     JArrayHelper::toInteger($config['filter.published']);
-                    $query->where('a.published IN (' . implode(',', $config['filter.published']) . ')');
+                    $query->where('a.published IN ('.implode(',', $config['filter.published']).')');
                 }
             }
 
@@ -139,7 +139,7 @@ abstract class MolajoHtmlCategory
 
             foreach ($items as $item) {
                 $repeat = ($item->level - 1 >= 0) ? $item->level - 1 : 0;
-                $item->title = str_repeat('- ', $repeat) . $item->title;
+                $item->title = str_repeat('- ', $repeat).$item->title;
                 self::$items[$hash][] = MolajoHTML::_('select.option', $item->id, $item->title);
             }
             // Special "Add to root" option:

@@ -79,7 +79,7 @@ class plgSearchWeblinks extends MolajoPlugin
 				$wheres2[]	= 'a.url LIKE '.$text;
 				$wheres2[]	= 'a.description LIKE '.$text;
 				$wheres2[]	= 'a.title LIKE '.$text;
-				$where		= '(' . implode(') OR (', $wheres2) . ')';
+				$where		= '('.implode(') OR (', $wheres2).')';
 				break;
 
 			case 'all':
@@ -96,7 +96,7 @@ class plgSearchWeblinks extends MolajoPlugin
 					$wheres2[]	= 'a.title LIKE '.$word;
 					$wheres[]	= implode(' OR ', $wheres2);
 				}
-				$where	= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres) . ')';
+				$where	= '('.implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres).')';
 				break;
 		}
 
@@ -132,7 +132,7 @@ class plgSearchWeblinks extends MolajoPlugin
 						.'CONCAT_WS(" / ", '.$db->Quote($section).', c.title) AS section, "1" AS browsernav');
 			$query->from('#__weblinks AS a');
 			$query->innerJoin('#__categories AS c ON c.id = a.catid');
-			$query->where('('.$where.')' . ' AND a.state in ('.implode(',',$state).') AND  c.published=1 ');
+			$query->where('('.$where.')'.' AND a.state in ('.implode(',',$state).') AND  c.published=1 ');
 
             $acl = new MolajoACL ();
             $acl->getQueryInformation ('', $query, 'viewaccess', array('table_prefix'=>'a'));
@@ -141,8 +141,8 @@ class plgSearchWeblinks extends MolajoPlugin
 
 			// Filter by language
             $lang = MolajoFactory::getLanguage()->getTag();
-            $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
-			$query->where('c.language in (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+            $query->where('a.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
+			$query->where('c.language in ('.$db->Quote($lang).','.$db->Quote('*').')');
 
 			$db->setQuery($query, 0, $limit);
 			$rows = $db->loadObjectList();

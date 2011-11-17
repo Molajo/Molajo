@@ -17,12 +17,12 @@ $options = array(
 $published = $this->state->get('filter.published');
 ?>
 <fieldset class="batch">
-	<legend><?php echo MolajoText::_('COM_MENUS_BATCH_OPTIONS');?></legend>
+	<legend><?php echo MolajoText::_('MENU_BATCH_OPTIONS');?></legend>
 	<?php echo MolajoHTML::_('batch.access');?>
 
 	<?php if ($published >= 0) : ?>
 		<label id="batch-choose-action-lbl" for="batch-choose-action">
-			<?php echo MolajoText::_('COM_MENUS_BATCH_MENU_LABEL'); ?>
+			<?php echo MolajoText::_('MENU_BATCH_MENU_LABEL'); ?>
 		</label>
 		<fieldset id="batch-choose-action" class="combo">
 			<select name="batch[menu_id]" class="inputbox" id="batch-menu-id">

@@ -9,6 +9,6 @@ defined('MOLAJO') or die;
 
 $layout = $parameters->def('layout', 'admin_quick_list');
 $wrap = $parameters->def('wrap', 'div');
-
-require_once dirname(__FILE__).'/helper.php';
-$items = modContentHelper::getList($parameters, $user);
+echo $layout.' '.$wrap;
+//require_once dirname(__FILE__).'/helper.php';
+//$items = modContentHelper::getList($parameters, $user);

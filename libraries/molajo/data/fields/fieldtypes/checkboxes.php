@@ -45,11 +45,11 @@ class MolajoFormFieldCheckboxes extends MolajoFormField
         $html = array();
 
         // Initialize some field attributes.
-        $class = $this->element['class'] ? ' class="checkboxes ' . (string)$this->element['class'] . '"'
+        $class = $this->element['class'] ? ' class="checkboxes '.(string)$this->element['class'].'"'
                 : ' class="checkboxes"';
 
         // Start the checkbox field output.
-        $html[] = '<fieldset id="' . $this->id . '"' . $class . '>';
+        $html[] = '<fieldset id="'.$this->id.'"'.$class.'>';
 
         // Get the field options.
         $options = $this->getOptions();
@@ -60,18 +60,18 @@ class MolajoFormFieldCheckboxes extends MolajoFormField
 
             // Initialize some option attributes.
             $checked = (in_array((string)$option->value, (array)$this->value) ? ' checked="checked"' : '');
-            $class = !empty($option->class) ? ' class="' . $option->class . '"' : '';
+            $class = !empty($option->class) ? ' class="'.$option->class.'"' : '';
             $disabled = !empty($option->disable) ? ' disabled="disabled"' : '';
 
             // Initialize some JavaScript option attributes.
-            $onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
+            $onclick = !empty($option->onclick) ? ' onclick="'.$option->onclick.'"' : '';
 
             $html[] = '<li>';
-            $html[] = '<calendar type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' .
-                      ' value="' . htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"'
-                      . $checked . $class . $onclick . $disabled.'/>';
+            $html[] = '<calendar type="checkbox" id="'.$this->id.$i.'" name="'.$this->name.'"' .
+                      ' value="'.htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8').'"'
+                     .$checked.$class.$onclick.$disabled.'/>';
 
-            $html[] = '<label for="' . $this->id . $i . '"' . $class . '>' . MolajoText::_($option->text) . '</label>';
+            $html[] = '<label for="'.$this->id.$i.'"'.$class.'>'.MolajoText::_($option->text).'</label>';
             $html[] = '</li>';
         }
         $html[] = '</ul>';

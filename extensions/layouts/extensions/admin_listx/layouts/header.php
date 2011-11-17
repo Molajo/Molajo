@@ -9,6 +9,6 @@
 defined('MOLAJO') or die;
 
 /** begin row **/
-include dirname(__FILE__) . '/form/' . 'table_body_row_begin.php';
+include dirname(__FILE__).'/form/'.'table_body_row_begin.php';
 /** first column **/
-include dirname(__FILE__) . '/form/' . 'table_body_row_column_first.php';
+include dirname(__FILE__).'/form/'.'table_body_row_column_first.php';

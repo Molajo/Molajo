@@ -52,7 +52,7 @@ class modContentHelper
         $acl->getQueryInformation ('', &$query, 'viewaccess', array('table_prefix'=>'a'));
 
         $lang = MolajoFactory::getLanguage()->getTag();
-        $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
+        $query->where('a.language IN ('.$db->Quote($lang).','.$db->Quote('*').')');
 
         /** category filter */
         $categoryId = $parameters->def('catid', 0);

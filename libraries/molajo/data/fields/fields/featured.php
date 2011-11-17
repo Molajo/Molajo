@@ -98,7 +98,7 @@ class MolajoFieldFeatured extends MolajoField
         if (trim($value) == '') {
             return;
         }
-        $query->where('a.featured = ' . (int)$value);
+        $query->where('a.featured = '.(int)$value);
     }
 
     /**

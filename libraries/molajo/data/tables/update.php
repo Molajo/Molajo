@@ -77,9 +77,9 @@ class MolajoTableUpdate extends MolajoTable
         $dbo = MolajoFactory::getDBO();
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $dbo->Quote($val);
+            $where[] = $col.' = '.$dbo->Quote($val);
         }
-        $query = 'SELECT update_id FROM #__updates WHERE ' . implode(' AND ', $where);
+        $query = 'SELECT update_id FROM #__updates WHERE '.implode(' AND ', $where);
         $dbo->setQuery($query);
         return $dbo->loadResult();
     }

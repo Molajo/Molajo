@@ -110,7 +110,7 @@ class UsersModelMail extends JModelAdmin
 			if (empty($to)) {
 				$query->where('0');
 			} else {
-				$query->where('id IN (' . implode(',', $to) . ')');
+				$query->where('id IN ('.implode(',', $to).')');
 			}
 		}
 
@@ -130,12 +130,12 @@ class UsersModelMail extends JModelAdmin
 
 		// Get the Mailer
 		$mailer = MolajoFactory::getMailer();
-		$parameters = JComponentHelper::getParams('com_users');
+		$parameters = JComponentHelper::getParameters('com_users');
 
 		// Build email message format.
 		$mailer->setSender(array($app->getSiteConfig('mailfrom'), $app->getSiteConfig('fromname')));
-		$mailer->setSubject($parameters->get('mailSubjectPrefix') . stripslashes($subject));
-		$mailer->setBody($message_body . $parameters->get('mailBodySuffix'));
+		$mailer->setSubject($parameters->get('mailSubjectPrefix').stripslashes($subject));
+		$mailer->setBody($message_body.$parameters->get('mailBodySuffix'));
 		$mailer->IsHTML($mode);
 
 		// Add recipients

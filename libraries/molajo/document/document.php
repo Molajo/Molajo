@@ -246,7 +246,7 @@ class MolajoDocument extends JObject
 
         if (empty($instances[$signature])) {
             $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-            $path = dirname(__FILE__).'/'.$type.'/'.$type . '.php';
+            $path = dirname(__FILE__).'/'.$type.'/'.$type.'.php';
             $ntype = null;
 
             // Check if the document type exists
@@ -258,11 +258,11 @@ class MolajoDocument extends JObject
             }
 
             // Determine the path and class
-            $class = 'MolajoDocument' . ucfirst($type);
+            $class = 'MolajoDocument'.ucfirst($type);
             if (class_exists($class)) {
 
             } else {
-                $path = dirname(__FILE__).'/'.$type.'/'.$type . '.php';
+                $path = dirname(__FILE__).'/'.$type.'/'.$type.'.php';
                 if (file_exists($path)) {
                     require_once $path;
 
@@ -432,7 +432,7 @@ class MolajoDocument extends JObject
             $this->_script[strtolower($type)] = $content;
         }
         else {
-            $this->_script[strtolower($type)] .= chr(13) . $content;
+            $this->_script[strtolower($type)] .= chr(13).$content;
         }
     }
 
@@ -468,7 +468,7 @@ class MolajoDocument extends JObject
             $this->_style[strtolower($type)] = $content;
         }
         else {
-            $this->_style[strtolower($type)] .= chr(13) . $content;
+            $this->_style[strtolower($type)] .= chr(13).$content;
         }
     }
 
@@ -774,11 +774,11 @@ class MolajoDocument extends JObject
      */
     public function loadRenderer($type)
     {
-        $class = 'MolajoDocumentRenderer' . $type;
+        $class = 'MolajoDocumentRenderer'.$type;
 
         if (class_exists($class)) {
         } else {
-            $path = dirname(__FILE__).'/'.$this->_type.'/renderer/' . $type . '.php';
+            $path = dirname(__FILE__).'/'.$this->_type.'/renderer/'.$type.'.php';
 
             if (file_exists($path)) {
                 require_once $path;
@@ -822,6 +822,6 @@ class MolajoDocument extends JObject
             JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);
         }
 
-        JResponse::setHeader('Content-Type', $this->_mime . '; charset=' . $this->_charset);
+        JResponse::setHeader('Content-Type', $this->_mime.'; charset='.$this->_charset);
     }
 }

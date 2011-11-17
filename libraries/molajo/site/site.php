@@ -117,7 +117,7 @@ class MolajoSite extends JObject
                 return false;
             }
 
-            $classname = $prefix . ucfirst($site) . 'Site';
+            $classname = $prefix.ucfirst($site).'Site';
             if (class_exists($classname)) {
                 $instance = new $classname($config);
             } else {
@@ -281,6 +281,6 @@ class MolajoSite extends JObject
      */
     public function getSiteConfig($varname, $default = null)
     {
-		return MolajoFactory::getSiteConfig()->get('' . $varname, $default);
+		return MolajoFactory::getSiteConfig()->get(''.$varname, $default);
     }
 }

@@ -868,7 +868,7 @@
             description="MOLAJO_CONFIG_MANAGER_SUB_MENUS_DESC"
             />
 
-        <field name="config_manager_sub_menu_for_content_types"
+        <field name="config_manager_sub_menu_for_content_type_ids"
                 type="radio"
                 label="MOLAJO_CONFIG_MANAGER_SUB_MENU_FOR_CONTENT_TYPES_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_SUB_MENU_FOR_CONTENT_TYPES_DESC"

@@ -107,7 +107,7 @@ class plgContentPagenavigation extends JPlugin
 			$query->from('#__content AS a');
 			$query->leftJoin('#__categories AS cc ON cc.id = a.catid');
 			$query->where('a.catid = '. (int)$row->catid .' AND a.state = '. (int)$row->state
-						. ($canPublish ? '' : ' AND a.access = ' .(int)$row->access) . $xwhere);
+						. ($canPublish ? '' : ' AND a.access = ' .(int)$row->access).$xwhere);
 			$query->order($orderby);
 
 			$db->setQuery($query);
@@ -144,13 +144,13 @@ class plgContentPagenavigation extends JPlugin
 			}
 
 			if ($row->prev) {
-				$row->prev = JRoute::_(ContentHelperRoute::getArticleRoute($row->prev->slug, $row->prev->catslug));
+				$row->prev = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->prev->slug, $row->prev->catslug));
 			} else {
 				$row->prev = '';
 			}
 
 			if ($row->next) {
-				$row->next = JRoute::_(ContentHelperRoute::getArticleRoute($row->next->slug, $row->next->catslug));
+				$row->next = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->next->slug, $row->next->catslug));
 			} else {
 				$row->next = '';
 			}
@@ -164,7 +164,7 @@ class plgContentPagenavigation extends JPlugin
 					$html .= '
 					<li class="pagenav-prev">
 						<a href="'. $row->prev .'" rel="next">'
-							. JText::_('JGLOBAL_LT') . $pnSpace . JText::_('JPREV') . '</a>
+							. JText::_('JGLOBAL_LT').$pnSpace.JText::_('JPREV').'</a>
 					</li>'
 					;
 				}
@@ -175,7 +175,7 @@ class plgContentPagenavigation extends JPlugin
 					$html .= '
 					<li class="pagenav-next">
 						<a href="'. $row->next .'" rel="prev">'
-							. JText::_('JNEXT') . $pnSpace . JText::_('JGLOBAL_GT') .'</a>
+							. JText::_('JNEXT').$pnSpace.JText::_('JGLOBAL_GT') .'</a>
 					</li>'
 					;
 				}
@@ -190,7 +190,7 @@ class plgContentPagenavigation extends JPlugin
 					$row->text .= $html;
 				} else {
 					// Display before content.
-					$row->text = $html . $row->text;
+					$row->text = $html.$row->text;
 				}
 			}
 		}

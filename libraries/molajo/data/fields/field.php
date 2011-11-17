@@ -96,7 +96,7 @@ class MolajoField
 
         /** float: digits and periods **/
         if ($this->requestFilter == 'float') {
-            $this->requestValue = JRequest::getFloat('filter_' . $this->fieldName, null);
+            $this->requestValue = JRequest::getFloat('filter_'.$this->fieldName, null);
 
             /** base64: URL **/
         } else if ($this->requestFilter == 'base64') {
@@ -104,28 +104,28 @@ class MolajoField
 
             /** boolean: true or false **/
         } else if ($this->requestFilter == 'boolean') {
-            $this->requestValue = JRequest::getBool('filter_' . $this->fieldName, null);
+            $this->requestValue = JRequest::getBool('filter_'.$this->fieldName, null);
 
             /** command: [A-Za-z0-9.-_] **/
         } else if ($this->requestFilter == 'command') {
-            $this->requestValue = JRequest::getCmd('filter_' . $this->fieldName, null);
+            $this->requestValue = JRequest::getCmd('filter_'.$this->fieldName, null);
 
             /** word: [A-Za-z_] **/
         } else if ($this->requestFilter == 'word') {
-            $this->requestValue = JRequest::getWord('filter_' . $this->fieldName, null);
+            $this->requestValue = JRequest::getWord('filter_'.$this->fieldName, null);
 
             /** string: only filters 'bad' HTML code **/
         } else if ($this->requestFilter == 'string') {
-            $this->requestValue = JRequest::getString('filter_' . $this->fieldName, null);
+            $this->requestValue = JRequest::getString('filter_'.$this->fieldName, null);
 
             /** integer **/
         } else {
-            $this->requestValue = JRequest::getInt('filter_' . $this->fieldName, null);
+            $this->requestValue = JRequest::getInt('filter_'.$this->fieldName, null);
         }
 
         /** retain value from previous page load if current request is null **/
         if ($this->requestValue == null) {
-            $this->requestValue = MolajoFactory::getApplication()->getUserState('filter.' . $this->fieldName);
+            $this->requestValue = MolajoFactory::getApplication()->getUserState('filter.'.$this->fieldName);
         }
     }
 
@@ -166,14 +166,14 @@ class MolajoField
      */
     public function requireFieldClassFile($fieldName, $reportError = true)
     {
-        if (class_exists('MolajoField' . ucfirst($fieldName))) {
+        if (class_exists('MolajoField'.ucfirst($fieldName))) {
         } else {
-            $fieldClassFile = MOLAJO_LIBRARY.'/fields/fields/' . $fieldName . '.php';
+            $fieldClassFile = MOLAJO_LIBRARY.'/fields/fields/'.$fieldName.'.php';
             if (JFile::exists($fieldClassFile)) {
                 require_once $fieldClassFile;
             } else {
                 if ($reportError === true) {
-                    MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($fieldName) . ' ' . $fieldClassFile, 'error');
+                    MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_FILENAME').' '.'MolajoField'.ucfirst($fieldName).' '.$fieldClassFile, 'error');
                     return false;
                 }
             }

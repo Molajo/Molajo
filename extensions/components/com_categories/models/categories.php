@@ -173,7 +173,7 @@ class CategoriesModelCategories extends JModelList
 
 		// Filter by access level.
 		if ($access = $this->getState('filter.access')) {
-			$query->where('a.access = ' . (int) $access);
+			$query->where('a.access = '.(int) $access);
 		}
 
 		// Implement View Level Access
@@ -186,7 +186,7 @@ class CategoriesModelCategories extends JModelList
 		// Filter by published state
 		$published = $this->getState('filter.published');
 		if (is_numeric($published)) {
-			$query->where('a.published = ' . (int) $published);
+			$query->where('a.published = '.(int) $published);
 		}
 		else if ($published === '') {
 			$query->where('(a.published IN (0, 1))');

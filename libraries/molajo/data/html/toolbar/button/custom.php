@@ -38,6 +38,6 @@ class MolajoButtonCustom extends MolajoButton
      */
     public function fetchId($type = 'Custom', $html = '', $id = 'custom')
     {
-        return $this->_parent->getName() . '-' . $id;
+        return $this->_parent->getName().'-'.$id;
     }
 }

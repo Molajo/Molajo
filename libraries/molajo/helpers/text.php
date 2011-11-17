@@ -96,7 +96,7 @@ class MolajoTextHelper
 
         if (count($smile) > 0) {
             foreach ($smile as $key => $val) {
-                $text = JString::str_ireplace($key, '<span><img src="' . JURI::base() . 'media/molajo/images/smiley/' . $val . '" alt="smiley" class="smiley-class" /></span>', $text);
+                $text = JString::str_ireplace($key, '<span><img src="'.JURI::base().'media/molajo/images/smiley/'.$val.'" alt="smiley" class="smiley-class" /></span>', $text);
             }
         }
         return $text;

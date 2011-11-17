@@ -27,7 +27,7 @@ MolajoHTML::_('behavior.keepalive');
 	<input type="hidden" name="return" value="<?php echo $return; ?>" />
 </form>
 <?php else : ?>
-<form action="<?php echo JRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" name="form-login" id="form-login" >
+<form action="<?php echo MolajoRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" name="form-login" id="form-login" >
 	<?php echo $parameters->get('pretext'); ?>
 	<fieldset class="input">
 		<label id="form-login-username" for="modlgn_username"><?php echo JText::_('MOD_LOGIN_VALUE_USERNAME') ?>
@@ -49,18 +49,18 @@ MolajoHTML::_('behavior.keepalive');
 	</fieldset>
 	<ul>
 		<li>
-			<a href="<?php echo JRoute::_('index.php?option=com_users&view=reset'); ?>">
+			<a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=reset'); ?>">
 			<?php echo JText::_('MOD_LOGIN_FORGOT_YOUR_PASSWORD'); ?></a>
 		</li>
 		<li>
-			<a href="<?php echo JRoute::_('index.php?option=com_users&view=remind'); ?>">
+			<a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=remind'); ?>">
 			<?php echo JText::_('MOD_LOGIN_FORGOT_YOUR_USERNAME'); ?></a>
 		</li>
 		<?php
-		$usersConfig = JComponentHelper::getParams('com_users');
+		$usersConfig = JComponentHelper::getParameters('com_users');
 		if ($usersConfig->get('allowUserRegistration')) : ?>
 		<li>
-			<a href="<?php echo JRoute::_('index.php?option=com_users&view=registration'); ?>">
+			<a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=registration'); ?>">
 				<?php echo JText::_('MOD_LOGIN_REGISTER'); ?></a>
 		</li>
 		<?php endif; ?>

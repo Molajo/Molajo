@@ -17,8 +17,8 @@ class ProtectMollom
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
-		$spamProtectionOption = $tamkaLibraryPluginParams->def('spamprevention', '1');		
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
+		$spamProtectionOption = $tamkaLibraryPluginParameters->def('spamprevention', '1');
 
 		if ($spamProtectionOption == '0') {
 			return 0;
@@ -28,8 +28,8 @@ if ($spamProtectionOption == '3') {
 			tamkaimport('tamka.spam.mollom.mollom');
 			$session =& MolajoFactory::getSession();
 			
-			$mollompublickey = $tamkaLibraryPluginParams->get( 'mollompublickey' );
-			$mollomprivatekey = $tamkaLibraryPluginParams->get( 'mollomprivatekey' );			
+			$mollompublickey = $tamkaLibraryPluginParameters->get( 'mollompublickey' );
+			$mollomprivatekey = $tamkaLibraryPluginParameters->get( 'mollomprivatekey' );
 
 			Mollom::setPublicKey($mollompublickey);
 			Mollom::setPrivateKey($mollomprivatekey);
@@ -66,7 +66,7 @@ if ($spamProtectionOption == '3') {
 						$mainframe->enqueueMessage(JText::_('Comment identified as Spam by Mollom'));
 						$published = 3;
 					} else {
-		//				echo 'must be ham ' . $feedback['spam'];
+		//				echo 'must be ham '.$feedback['spam'];
 					}
 			}
 		}

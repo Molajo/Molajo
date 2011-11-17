@@ -54,6 +54,6 @@ abstract class MolajoHtmlNumber
 
         // TODO Allow conversion of units where $bytes = '32M'.
 
-        return round($bytes / pow(1024, $i), $precision) . ' ' . $unitTypes[$i];
+        return round($bytes / pow(1024, $i), $precision).' '.$unitTypes[$i];
     }
 }

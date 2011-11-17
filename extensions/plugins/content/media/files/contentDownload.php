@@ -37,7 +37,7 @@ class plgMolajoContentLinktype extends MolajoPlugin
 	/**
 	 * Make certain Tamka Library is ready to load
 	 */
-		if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+		if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
 			JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
 			return NULL;
 		}
@@ -53,7 +53,7 @@ class plgMolajoContentLinktype extends MolajoPlugin
 		
 		//	Add CSS
 		$document =& MolajoFactory::getDocument();
-		$document->addStyleSheet( JURI::base() . 'plugins/content/tamka_article_tags/tamkatags.css' );
+		$document->addStyleSheet( JURI::base().'plugins/content/tamka_article_tags/tamkatags.css' );
 
 		$formatOutput = "";
 
@@ -62,26 +62,26 @@ class plgMolajoContentLinktype extends MolajoPlugin
 		
 		//	Retrieve Plugin Parameters for Router
 		$routerPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka_router');
-		$routerParams 	= new JParameter($routerPlugin->parameters);
+		$routerParameters 	= new JParameter($routerPlugin->parameters);
 
 		//	Database call
 		$db		= &MolajoFactory::getDBO();
 		$config	= &MolajoFactory::getConfig();
 
-		$query	= 'SELECT tag, alias FROM ' . $db->nameQuote('#__tamka_tags') .
-			' WHERE ' . $db->nameQuote('component') . ' = "com_articles" ' .
-			'   AND ' . $db->nameQuote('component_item_id') . ' = ' . $article->id .
-			'   ORDER BY ' . $db->nameQuote('tag') ;
+		$query	= 'SELECT tag, alias FROM '.$db->nameQuote('#__tamka_tags') .
+			' WHERE '.$db->nameQuote('component').' = "com_articles" ' .
+			'   AND '.$db->nameQuote('component_item_id').' = '.$article->id .
+			'   ORDER BY '.$db->nameQuote('tag') ;
 
         $db->setQuery($query);
 		$rows = $db->loadObjectList();
 
 		if (count($rows)) {
-			$formatOutput = '<div class="tamka_article_tags"><p>' . JText::_(' Tags: ') ;
+			$formatOutput = '<div class="tamka_article_tags"><p>'.JText::_(' Tags: ') ;
 			$comma = ' ';
 
 			foreach ( $rows as $row )	{
-				$formatOutput .= $comma . '<span class="tamka-post-tag"><a href="' . $blogHomeURL . '/' . $routerParams->def('tagbase', 'tag') . '/' . $row->alias . '">' . $row->tag . '</a></span>';
+				$formatOutput .= $comma.'<span class="tamka-post-tag"><a href="'.$blogHomeURL.'/'.$routerParameters->def('tagbase', 'tag').'/'.$row->alias.'">'.$row->tag.'</a></span>';
 				$comma = ', ';
 			}
 		$formatOutput .= '</p></div>';
@@ -101,9 +101,9 @@ class plgMolajoContentLinktype extends MolajoPlugin
 	/**
 	 * 	Delete Existing Tags
 	 */
-		$query	= 'DELETE FROM ' . $db->nameQuote('#__tamka_tags') .
-			' WHERE ' . $db->nameQuote('component') . ' = "com_articles" ' .
-			'   AND ' . $db->nameQuote('component_item_id') . ' = ' . $article->id;
+		$query	= 'DELETE FROM '.$db->nameQuote('#__tamka_tags') .
+			' WHERE '.$db->nameQuote('component').' = "com_articles" ' .
+			'   AND '.$db->nameQuote('component_item_id').' = '.$article->id;
 
             $db->setQuery($query);
             if (!$db->query()) {
@@ -127,7 +127,7 @@ class plgMolajoContentLinktype extends MolajoPlugin
 
 				$query	= 'INSERT INTO #__tamka_tags										' .
 					' (component, component_item_id, tag, alias, tag_type )				' .
-					' SELECT "com_articles", ' . $article->id . ', "' . $tag . '", "' . $tagAlias . '", "post"';
+					' SELECT "com_articles", '.$article->id.', "'.$tag.'", "'.$tagAlias.'", "post"';
 
 	            $db->setQuery($query);
 	            if (!$db->query()) {

@@ -220,7 +220,7 @@ class MenusControllerItem extends JControllerForm
 			return false;
 		}
 
-		$this->setMessage(MolajoText::_('COM_MENUS_SAVE_SUCCESS'));
+		$this->setMessage(MolajoText::_('MENU_SAVE_SUCCESS'));
 
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($task) {
@@ -295,7 +295,7 @@ class MenusControllerItem extends JControllerForm
 
 				$app->setUserState(
 					'com_menus.edit.item.link',
-					'index.php?' . JURI::buildQuery((array)$type->request));
+					'index.php?'.JURI::buildQuery((array)$type->request));
 			}
 		}
 		// If the type is alias you just need the item id from the menu item referenced.

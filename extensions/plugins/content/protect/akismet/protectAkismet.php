@@ -17,8 +17,8 @@ class protectAkismet
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
-		$spamProtectionOption = $tamkaLibraryPluginParams->def('spamprevention', '1');		
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
+		$spamProtectionOption = $tamkaLibraryPluginParameters->def('spamprevention', '1');
 
 		if ($spamProtectionOption == '0') {
 			return 0;
@@ -30,7 +30,7 @@ class protectAkismet
 					
 		require_once Akismet.class.php;
 			
-    		$akismetkey = $tamkaLibraryPluginParams->get( 'akismetkey' );
+    		$akismetkey = $tamkaLibraryPluginParameters->get( 'akismetkey' );
 
                 $uri	= &MolajoFactory::getURI();
                 $url	= $uri->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));

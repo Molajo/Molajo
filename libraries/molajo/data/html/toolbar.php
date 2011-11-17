@@ -149,7 +149,7 @@ class MolajoToolbar extends JObject
         $html = array();
 
         // Start toolbar div.
-        $html[] = '<div class="toolbar-list" id="' . $this->_name . '">';
+        $html[] = '<div class="toolbar-list" id="'.$this->_name.'">';
         $html[] = '<ul>';
 
         // Render each button in the toolbar.
@@ -207,7 +207,7 @@ class MolajoToolbar extends JObject
             return false;
         }
 
-        $buttonClass = 'JButton' . $type;
+        $buttonClass = 'JButton'.$type;
         if (!class_exists($buttonClass)) {
             if (isset ($this->_buttonPath)) {
                 $dirs = $this->_buttonPath;
@@ -215,7 +215,7 @@ class MolajoToolbar extends JObject
                 $dirs = array();
             }
 
-            $file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)) . '.php', 'path');
+            $file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)).'.php', 'path');
 
             if ($buttonFile = JPath::find($dirs, $file)) {
                 include_once $buttonFile;

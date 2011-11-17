@@ -55,7 +55,7 @@ for ($i=1; $i < 1000; $i++) {
                 $this->render['link_value'] = false;
             }
             /** render **/
-            include dirname(__FILE__) . '/form/table_body_row_column_default.php';
+            include dirname(__FILE__).'/form/table_body_row_column_default.php';
         } else {
             /** custom column file **/
             include $filename;

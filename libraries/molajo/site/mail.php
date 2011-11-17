@@ -414,7 +414,7 @@ class MolajoMail extends PHPMailer
         $subject = MolajoText::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
 
         $message = sprintf(MolajoText::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-        $message .= MolajoText::_('MOLAJO_MAIL_MSG') . "\n";
+        $message .= MolajoText::_('MOLAJO_MAIL_MSG')."\n";
 
         $this->addRecipient($adminEmail);
         $this->setSubject($subject);

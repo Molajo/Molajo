@@ -208,7 +208,7 @@ class JXService
 	{
 		$result = array(
 			$this->_name => array(
-				'function' => get_class( $this ) . '::run',
+				'function' => get_class( $this ).'::run',
 				'signature' => $this->getSignature(),
 				'docstring' => $this->getDocString()
 			)

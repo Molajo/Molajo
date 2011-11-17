@@ -119,8 +119,8 @@ class InstallerModelConfiguration extends MolajoModelDummy
 
 		/* Feed Settings */
 		$registry->set('feed_limit', 10);
-		$registry->set('log_path', MOLAJO_PATH_ROOT . '/logs');
-		$registry->set('tmp_path', MOLAJO_PATH_ROOT . '/tmp');
+		$registry->set('log_path', MOLAJO_PATH_ROOT.'/logs');
+		$registry->set('tmp_path', MOLAJO_PATH_ROOT.'/tmp');
 
 		/* Session Setting */
 		$registry->set('lifetime', 15);
@@ -131,13 +131,13 @@ class InstallerModelConfiguration extends MolajoModelDummy
 
 
 		// Build the configuration file path.
-		$path = MOLAJO_SITE_CONFIGURATION . '/configuration.php';
+		$path = MOLAJO_SITE_CONFIGURATION.'/configuration.php';
 
 		// Determine if the configuration file path is writable.
 		if (file_exists($path)) {
 			$canWrite = is_writable($path);
 		} else {
-			$canWrite = is_writable(MOLAJO_SITE_CONFIGURATION . '/');
+			$canWrite = is_writable(MOLAJO_SITE_CONFIGURATION.'/');
 		}
 
 		/*

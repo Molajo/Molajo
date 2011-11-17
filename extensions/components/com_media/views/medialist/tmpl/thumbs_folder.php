@@ -25,6 +25,6 @@ $user = MolajoFactory::getUser();
 			<?php endif;?>
 			</div>
 			<div class="imginfoBorder">
-				<a href="index.php?option=com_media&amp;view=mediaList&amp;tmpl=component&amp;folder=<?php echo $this->_tmp_folder->path_relative; ?>" target="folderframe"><?php echo substr($this->_tmp_folder->name, 0, 10) . (strlen($this->_tmp_folder->name) > 10 ? '...' : ''); ?></a>
+				<a href="index.php?option=com_media&amp;view=mediaList&amp;tmpl=component&amp;folder=<?php echo $this->_tmp_folder->path_relative; ?>" target="folderframe"><?php echo substr($this->_tmp_folder->name, 0, 10).(strlen($this->_tmp_folder->name) > 10 ? '...' : ''); ?></a>
 			</div>
 		</div>

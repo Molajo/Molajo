@@ -51,11 +51,11 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
         // Build the query.
         $query->select('s.id, s.title, e.name as name, s.template');
         $query->from('#__template_styles as s');
-        $query->where('s.application_id = ' . (int)$application->id);
+        $query->where('s.application_id = '.(int)$application->id);
         $query->order('template');
         $query->order('title');
         if ($template) {
-            $query->where('s.template = ' . $db->quote($template));
+            $query->where('s.template = '.$db->quote($template));
         }
         $query->join('LEFT', '#__extensions as e on e.element=s.template');
         $query->where('e.enabled=1');
@@ -68,10 +68,10 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
         if ($styles) {
             foreach ($styles as $style) {
                 $template = $style->template;
-                $lang->load('tpl_' . $template . '.sys', $application->path, null, false, false)
-                || $lang->load('tpl_' . $template . '.sys', $application->path.'/templates/' . $template, null, false, false)
-                || $lang->load('tpl_' . $template . '.sys', $application->path, $lang->getDefault(), false, false)
-                || $lang->load('tpl_' . $template . '.sys', $application->path.'/templates/' . $template, $lang->getDefault(), false, false);
+                $lang->load('tpl_'.$template.'.sys', $application->path, null, false, false)
+                || $lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, null, false, false)
+                || $lang->load('tpl_'.$template.'.sys', $application->path, $lang->getDefault(), false, false)
+                || $lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, $lang->getDefault(), false, false);
                 $name = MolajoText::_($style->name);
                 // Initialize the group if necessary.
                 if (!isset($groups[$name])) {

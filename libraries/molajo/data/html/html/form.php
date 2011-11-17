@@ -30,6 +30,6 @@ abstract class MolajoHtmlForm
      */
     public static function token()
     {
-        return '<input type="hidden" name="' . JUtility::getToken() . '" value="1" />';
+        return '<input type="hidden" name="'.JUtility::getToken().'" value="1" />';
     }
 }

@@ -134,10 +134,10 @@ class MolajoController extends JController
 
         //		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
         $template = 'molajito';
-        $lang->load('tpl_' . $template, MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load('tpl_' . $template, MOLAJO_EXTENSION_TEMPLATES . "/$template", null, false, false)
-        || $lang->load('tpl_' . $template, MOLAJO_APPLICATIONS_PATH, $lang->getDefault(), false, false)
-        || $lang->load('tpl_' . $template, MOLAJO_EXTENSION_TEMPLATES . "/$template", $lang->getDefault(), false, false);
+        $lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
+        || $lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", null, false, false)
+        || $lang->load('tpl_'.$template, MOLAJO_APPLICATIONS_PATH, $lang->getDefault(), false, false)
+        || $lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", $lang->getDefault(), false, false);
 
         $lang->load($this->request['option'], MOLAJO_BASE_FOLDER, null, false, false)
         || $lang->load($this->request['option'], $this->request['component_path'], null, false, false)
@@ -169,7 +169,7 @@ class MolajoController extends JController
         $this->view->state = $this->view->get('State');
 
         /** 6. Parameters */
-        $this->view->parameters = $this->view->get('Params');
+        $this->view->parameters = $this->view->get('Parameters');
 
         /** 7. Query Results */
         $this->view->rowset = $this->view->get('Items');
@@ -227,7 +227,7 @@ class MolajoController extends JController
         if ($this->request['controller'] == 'display') {
 
             /** model */
-            $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'] . 'Model'), array());
+            $this->model = $this->getModel(ucfirst($this->request['model']), ucfirst($this->request['no_com_option'].'Model'), array());
             $this->model->request = $this->request;
             $this->model->parameters = $this->request['parameters'];
 
@@ -333,7 +333,7 @@ class MolajoController extends JController
         $results = $acl->authoriseTask($this->request['option'], $this->request['view'], $checkTask, $checkId, $checkCatid, $checkTable);
 
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED') . ' ' . $checkTask);
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ACL_ERROR_ACTION_NOT_PERMITTED').' '.$checkTask);
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -414,7 +414,7 @@ class MolajoController extends JController
         /** model: checkin **/
         if ($this->table->checked_out == MolajoFactory::getUser()->get('id')) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER') . ' ' . $this->getTask());
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_DATA_NOT_CHECKED_OUT_BY_USER').' '.$this->getTask());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }
@@ -539,7 +539,7 @@ class MolajoController extends JController
 
         /** version delete failed **/
         if ($results === false) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED') . ' ' . $this->model->getError());
+            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ERROR_VERSION_DELETE_VERSIONS_FAILED').' '.$this->model->getError());
             $this->redirectClass->setRedirectMessageType('warning');
             return false;
         }

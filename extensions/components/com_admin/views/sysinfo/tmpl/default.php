@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Add specific helper files for html generation
-MolajoHTML::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 // Load switcher behavior
 MolajoHTML::_('behavior.switcher');
 ?>

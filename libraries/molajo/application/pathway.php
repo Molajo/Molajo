@@ -67,7 +67,7 @@ class MolajoPathway extends JObject
             if (file_exists($path)) {
                 require_once $path;
 
-                $classname = 'MolajoPathway' . ucfirst($application);
+                $classname = 'MolajoPathway'.ucfirst($application);
                 $instance = new $classname($options);
             }
             else

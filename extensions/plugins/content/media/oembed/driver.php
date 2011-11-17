@@ -21,7 +21,7 @@ class MolajoMediaOembed {
     function driver ($context, &$content, &$parameters, $page, $location)
     {
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 $temp = $content->$location;
 
         $regex = '#(?<=[\s>])(\()?([\w]+?://(?:[\w\\x80-\\xff\#$%&~/=?@\[\](+-]|[.,;:](?![\s<]|(\))?([\s]|$))|(?(1)\)(?![\s<.,;:]|$)|\)))+)#is';

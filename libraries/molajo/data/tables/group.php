@@ -53,9 +53,9 @@ class MolajoTableGroup extends MolajoTable
         $query = $db->getQuery(true)
                 ->select('COUNT(title)')
                 ->from($this->_tbl)
-                ->where('title = ' . $db->quote(trim($this->title)))
-                ->where('parent_id = ' . (int)$this->parent_id)
-                ->where('id <> ' . (int)$this->id);
+                ->where('title = '.$db->quote(trim($this->title)))
+                ->where('parent_id = '.(int)$this->parent_id)
+                ->where('id <> '.(int)$this->id);
         $db->setQuery($query);
 
         if ($db->loadResult() > 0) {
@@ -83,8 +83,8 @@ class MolajoTableGroup extends MolajoTable
 
         // get all children of this node
         $db->setQuery(
-            'SELECT id FROM ' . $this->_tbl .
-            ' WHERE parent_id=' . (int)$parent_id .
+            'SELECT id FROM '.$this->_tbl .
+            ' WHERE parent_id='.(int)$parent_id .
             ' ORDER BY parent_id, title'
         );
         $children = $db->loadColumn();
@@ -107,9 +107,9 @@ class MolajoTableGroup extends MolajoTable
         // we've got the left value, and now that we've processed
         // the children of this node we also know the right value
         $db->setQuery(
-            'UPDATE ' . $this->_tbl .
-            ' SET lft=' . (int)$left . ', rgt=' . (int)$right .
-            ' WHERE id=' . (int)$parent_id
+            'UPDATE '.$this->_tbl .
+            ' SET lft='.(int)$left.', rgt='.(int)$right .
+            ' WHERE id='.(int)$parent_id
         );
         // if there is an update failure, return false to break out of the recursion
         if (!$db->query()) {
@@ -174,8 +174,8 @@ class MolajoTableGroup extends MolajoTable
         $db = $this->getDbo();
         $db->setQuery(
             'SELECT c.id' .
-            ' FROM ' . $db->quoteName($this->_tbl) . ' AS c' .
-            ' WHERE c.lft >= ' . (int)$this->lft . ' AND c.rgt <= ' . $this->rgt .
+            ' FROM '.$db->quoteName($this->_tbl).' AS c' .
+            ' WHERE c.lft >= '.(int)$this->lft.' AND c.rgt <= '.$this->rgt .
             '   AND c.id > 4 '
         );
 
@@ -190,7 +190,7 @@ class MolajoTableGroup extends MolajoTable
         $db->setQuery(
             'SELECT DISTINCT view_group_id ' .
             ' FROM #__group_view_groups ' .
-            ' WHERE group_id IN (' . implode(',', $groupIds) . ')'
+            ' WHERE group_id IN ('.implode(',', $groupIds).')'
         );
 
         $groupingIds = $db->loadColumn();
@@ -208,7 +208,7 @@ class MolajoTableGroup extends MolajoTable
         // Delete Group to Groupings
         $db->setQuery(
             'DELETE FROM #__group_view_groups ' .
-            ' WHERE group_id IN (' . implode(',', $groupIds) . ')'
+            ' WHERE group_id IN ('.implode(',', $groupIds).')'
         );
         if ($db->query()) {
         } else {
@@ -220,7 +220,7 @@ class MolajoTableGroup extends MolajoTable
         $db->setQuery(
             'SELECT DISTINCT view_group_id ' .
             ' FROM #__group_view_groups ' .
-            ' WHERE view_group_id IN (' . implode(',', $groupingIds) . ')'
+            ' WHERE view_group_id IN ('.implode(',', $groupingIds).')'
         );
 
         $groupingIdsRemaining = $db->loadColumn();
@@ -239,7 +239,7 @@ class MolajoTableGroup extends MolajoTable
         // Delete orphans
         $db->setQuery(
             'DELETE FROM `#__`' .
-            ' WHERE `group_id` IN (' . implode(',', $groupIds) . ')'
+            ' WHERE `group_id` IN ('.implode(',', $groupIds).')'
         );
         $db->query();
 
@@ -260,8 +260,8 @@ class MolajoTableGroup extends MolajoTable
 
         // Delete Group and Children
         $db->setQuery(
-            'DELETE FROM ' . $db->quoteName($this->_tbl) .
-            ' WHERE id IN (' . implode(',', $groupIds) . ')'
+            'DELETE FROM '.$db->quoteName($this->_tbl) .
+            ' WHERE id IN ('.implode(',', $groupIds).')'
         );
         if ($db->query()) {
         } else {

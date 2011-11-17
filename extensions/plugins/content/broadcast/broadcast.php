@@ -32,10 +32,10 @@ class plgMolajoBroadcast extends MolajoPlugin	{
         }
 
         /** com_responses parameters **/
-        $responsesParams = MolajoComponentHelper::getParams('com_responses', true);
+        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
    
         /** broadcasting enabled **/
-        if ($responsesParams->def('enable_broadcast', 0) == '1') {
+        if ($responsesParameters->def('enable_broadcast', 0) == '1') {
         } else {
             return;
         }
@@ -49,7 +49,7 @@ class plgMolajoBroadcast extends MolajoPlugin	{
         $idArray = implode(',', $pks);
 
         /** implode configured published categories into a list **/
-        $categories = $responsesParams->get('enable_broadcast_categories', array());
+        $categories = $responsesParameters->get('enable_broadcast_categories', array());
 
         if (count($categories) == 0) {
             return;
@@ -108,23 +108,23 @@ class plgMolajoBroadcast extends MolajoPlugin	{
             }
         }
 
-  // $email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParams->get('author'));
+  // $email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParameters->get('author'));
 
         /** email **/
-        if ($responsesParams->def('enable_subscriptions', 0) == '1') {
-            require_once dirname(__FILE__) . '/email/driver.php';
+        if ($responsesParameters->def('enable_subscriptions', 0) == '1') {
+            require_once dirname(__FILE__).'/email/driver.php';
             MolajoBroadcastEmail::driver ($rows);
         }
 
         /** ping **/
-        if ($responsesParams->def('enable_ping', 0) == '1') {
-            require_once dirname(__FILE__) . '/ping/driver.php';
+        if ($responsesParameters->def('enable_ping', 0) == '1') {
+            require_once dirname(__FILE__).'/ping/driver.php';
             MolajoBroadcastPing::driver ($rows);
         }
 
         /** tweet **/
-        if ($responsesParams->def('enable_tweet', 0) == '1') {
-            require_once dirname(__FILE__) . '/tweet/driver.php';
+        if ($responsesParameters->def('enable_tweet', 0) == '1') {
+            require_once dirname(__FILE__).'/tweet/driver.php';
             MolajoBroadcastTweet::driver ($rows);
         }
         

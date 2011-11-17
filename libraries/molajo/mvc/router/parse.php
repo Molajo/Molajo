@@ -40,7 +40,7 @@ class MolajoRouterParse extends MolajoRouter
         $app = MolajoFactory::getApplication();
         $menu = $app->getMenu();
         $item = $menu->getActive();
-        $parameters = MolajoComponentHelper::getParams($componentParam);
+        $parameters = MolajoComponentHelper::getParameters($componentParam);
         $advanced = $parameters->get('sef_advanced_link', 0);
         $db = MolajoFactory::getDBO();
 
@@ -103,7 +103,7 @@ class MolajoRouterParse extends MolajoRouter
         if ((int)($segments[1]) > 0 && $segments[1] < 32) {
             $mm = (int)$segments[1];
             if ($mm < 10) {
-                $mm = '0' . $mm;
+                $mm = '0'.$mm;
             }
         } else {
             return false;
@@ -113,14 +113,14 @@ class MolajoRouterParse extends MolajoRouter
         if ((int)($segments[2]) > 0 && $segments[2] < 32) {
             $dd = (int)$segments[2];
             if ($dd < 10) {
-                $dd = '0' . $dd;
+                $dd = '0'.$dd;
             }
         } else {
             return false;
         }
 
         /** alias */
-        $alias = trim(substr($segments[3], 0, 2) . '-' . substr($segments[3], 3, strlen($segments[3]) - 3));
+        $alias = trim(substr($segments[3], 0, 2).'-'.substr($segments[3], 3, strlen($segments[3]) - 3));
 
         /** run query */
         if (count($segments) > 3) {

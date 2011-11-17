@@ -50,7 +50,7 @@ class MolajoButtonLink extends MolajoButton
      */
     public function fetchId($type = 'Link', $name = '')
     {
-        return $this->_parent->getName() . '-' . $name;
+        return $this->_parent->getName().'-'.$name;
     }
 
     /**

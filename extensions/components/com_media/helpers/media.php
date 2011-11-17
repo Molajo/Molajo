@@ -44,7 +44,7 @@ abstract class MediaHelper
 	 */
 	public static function canUpload($file, &$err)
 	{
-		$parameters = JComponentHelper::getParams('com_media');
+		$parameters = JComponentHelper::getParameters('com_media');
 
 		if (empty($file['name'])) {
 			$err = 'COM_MEDIA_ERROR_UPLOAD_INPUT';
@@ -102,9 +102,9 @@ abstract class MediaHelper
 						return false;
 					}
 					finfo_close($finfo);
-				} else if (function_exists('mime_content_type') && $parameters->get('check_mime',1)) {
+				} else if (function_exists('mime_content_type_id') && $parameters->get('check_mime',1)) {
 					// we have mime magic
-					$type = mime_content_type($file['tmp_name']);
+					$type = mime_content_type_id($file['tmp_name']);
 					if (strlen($type) && !in_array($type, $allowed_mime) && in_array($type, $illegal_mime)) {
 						$err = 'COM_MEDIA_ERROR_WARNINVALID_MIME';
 						return false;
@@ -168,10 +168,10 @@ abstract class MediaHelper
 			$d = dir($dir);
 
 			while (false !== ($entry = $d->read())) {
-				if (substr($entry, 0, 1) != '.' && is_file($dir . DIRECTORY_SEPARATOR . $entry) && strpos($entry, '.html') === false && strpos($entry, '.php') === false) {
+				if (substr($entry, 0, 1) != '.' && is_file($dir.DIRECTORY_SEPARATOR.$entry) && strpos($entry, '.html') === false && strpos($entry, '.php') === false) {
 					$total_file++;
 				}
-				if (substr($entry, 0, 1) != '.' && is_dir($dir . DIRECTORY_SEPARATOR . $entry)) {
+				if (substr($entry, 0, 1) != '.' && is_dir($dir.DIRECTORY_SEPARATOR.$entry)) {
 					$total_dir++;
 				}
 			}

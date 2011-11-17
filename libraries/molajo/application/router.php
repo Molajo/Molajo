@@ -12,8 +12,8 @@ defined('MOLAJO') or die;
 /**
  * Set the available masks for the routing mode
  */
-define('JROUTER_MODE_RAW', 0);
-define('JROUTER_MODE_SEF', 1);
+define('MOLAJO_ROUTER_MODE_RAW', 0);
+define('MOLAJO_ROUTER_MODE_SEF', 1);
 
 /**
  * Class to create and parse routes
@@ -56,7 +56,7 @@ class MolajoRouter extends JObject
         if (array_key_exists('mode', $options)) {
             $this->_mode = $options['mode'];
         } else {
-            $this->_mode = JROUTER_MODE_RAW;
+            $this->_mode = MOLAJO_ROUTER_MODE_RAW;
         }
     }
 
@@ -81,7 +81,7 @@ class MolajoRouter extends JObject
 
         if (empty($instances[$application])) {
 
-            $classname = 'Molajo' . ucfirst($application) . 'Router';
+            $classname = 'Molajo'.ucfirst($application).'Router';
             if (class_exists($classname)) {
                 $instance = new $classname($options);
 
@@ -140,7 +140,7 @@ class MolajoRouter extends JObject
 		}
 
 		//Remove the suffix
-		if ($this->_mode == JROUTER_MODE_SEF) {
+		if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
 			if ($app->getConfig('sef_suffix') && !(substr($path, -9) == 'index.php' || substr($path, -1) == '/')) {
 				if ($suffix = pathinfo($path, PATHINFO_EXTENSION)) {
 					$path = str_replace('.'.$suffix, '', $path);
@@ -156,7 +156,7 @@ class MolajoRouter extends JObject
         $vars = $this->_processParseRules($uri);
 
  		// Parse RAW URL
-		if ($this->_mode == JROUTER_MODE_RAW) {
+		if ($this->_mode == MOLAJO_ROUTER_MODE_RAW) {
 			$vars2 = $this->_parseRawRoute($uri);
             if (is_array($vars2)) {
                 array_merge($vars, $vars2);
@@ -164,7 +164,7 @@ class MolajoRouter extends JObject
 		}
 
 		// Parse SEF URL
-		if ($this->_mode == JROUTER_MODE_SEF) {
+		if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
             $vars2 = $this->_parseSefRoute($uri);
             if (is_array($vars2)) {
                 array_merge($vars, $vars2);
@@ -191,12 +191,12 @@ class MolajoRouter extends JObject
         $this->_processBuildRules($uri);
 
         // Build RAW URL
-        if ($this->_mode == JROUTER_MODE_RAW) {
+        if ($this->_mode == MOLAJO_ROUTER_MODE_RAW) {
             $this->_buildRawRoute($uri);
         }
 
         // Build SEF URL : mysite/route/index.php?var=x
-        if ($this->_mode == JROUTER_MODE_SEF) {
+        if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
             $this->_buildSefRoute($uri);
         }
 
@@ -425,7 +425,7 @@ class MolajoRouter extends JObject
                 }
             }
 
-            $url = 'index.php?' . JURI::buildQuery($vars);
+            $url = 'index.php?'.JURI::buildQuery($vars);
         }
 
         // Decompose link into url component parts

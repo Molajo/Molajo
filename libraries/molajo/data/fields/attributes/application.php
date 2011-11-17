@@ -69,7 +69,7 @@ class MolajoAttributeApplication extends MolajoAttribute
         /** $this->value */
         if ($results === false) {
         } else {
-            $value = 'application="' . $results . '"';
+            $value = 'application="'.$results.'"';
         }
         parent::__set('value', $value);
 
@@ -96,7 +96,7 @@ class MolajoAttributeApplication extends MolajoAttribute
 
         $query->select('a.id AS value');
         $query->from('#__applications AS a');
-        $query->where('a.id IN (' . (int)$id . ')');
+        $query->where('a.id IN ('.(int)$id.')');
 
         $db->setQuery($query);
 

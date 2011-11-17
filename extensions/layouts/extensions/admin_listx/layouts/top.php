@@ -17,7 +17,7 @@ MolajoHTML::_('script','system/multiselect.js', false, true);
 $this->saveOrder = $this->state->get('list.ordering');
 
 /** generate output **/
-include dirname(__FILE__) . '/form/form_begin.php';
-include dirname(__FILE__) . '/driver_form_filters.php';
-include dirname(__FILE__) . '/form/table_begin.php';
-include dirname(__FILE__) . '/driver_table_head.php';
+include dirname(__FILE__).'/form/form_begin.php';
+include dirname(__FILE__).'/driver_form_filters.php';
+include dirname(__FILE__).'/form/table_begin.php';
+include dirname(__FILE__).'/driver_table_head.php';

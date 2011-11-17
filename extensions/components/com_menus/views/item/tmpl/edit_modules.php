@@ -13,10 +13,10 @@ defined('_JEXEC') or die;
 		<thead>
 		<tr>
 			<th class="left">
-				<?php echo MolajoText::_('COM_MENUS_HEADING_ASSIGN_MODULE');?>
+				<?php echo MolajoText::_('MENU_HEADING_ASSIGN_MODULE');?>
 			</th>
 			<th>
-				<?php echo MolajoText::_('COM_MENUS_HEADING_DISPLAY');?>
+				<?php echo MolajoText::_('MENU_HEADING_DISPLAY');?>
 			</th>
 		</tr>
 		</thead>
@@ -25,8 +25,8 @@ defined('_JEXEC') or die;
 			<tr class="row<?php echo $i % 2;?>">
 				<td>
 					<?php $link = 'index.php?option=com_modules&amp;application_id=0&amp;task=module.edit&amp;id='. $module->id.'&amp;tmpl=component&amp;view=module&amp;layout=modal' ; ?>
-					<a class="modal" href="<?php echo $link;?>" rel="{handler: 'iframe', size: {x: 900, y: 550}}" title="<?php echo MolajoText::_('COM_MENUS_EDIT_MODULE_SETTINGS');?>">
-						<?php echo MolajoText::sprintf('COM_MENUS_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?></a>
+					<a class="modal" href="<?php echo $link;?>" rel="{handler: 'iframe', size: {x: 900, y: 550}}" title="<?php echo MolajoText::_('MENU_EDIT_MODULE_SETTINGS');?>">
+						<?php echo MolajoText::sprintf('MENU_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?></a>
 
 				</td>
 				<td class="center">

@@ -85,7 +85,7 @@ abstract class MolajoHtmlString
                 $numOpened = count($openedTags);
                 // All tags are closed
                 if (count($closedTags) == $numOpened) {
-                    return $tmp . '...';
+                    return $tmp.'...';
                 }
 
                 $openedTags = array_reverse($openedTags);
@@ -94,7 +94,7 @@ abstract class MolajoHtmlString
                 for ($i = 0; $i < $numOpened; $i++)
                 {
                     if (!in_array($openedTags[$i], $closedTags)) {
-                        $tmp .= "</" . $openedTags[$i] . ">";
+                        $tmp .= "</".$openedTags[$i].">";
                     }
                     else
                     {
@@ -103,7 +103,7 @@ abstract class MolajoHtmlString
                 }
             }
 
-            $text = $tmp . '...';
+            $text = $tmp.'...';
         }
 
         return $text;
@@ -139,7 +139,7 @@ abstract class MolajoHtmlString
             $end = JString::substr($text, JString::strlen($text) - $remainder);
 
             // Build the resulting string.
-            $text = $beg . '...' . $end;
+            $text = $beg.'...'.$end;
         }
 
         return $text;

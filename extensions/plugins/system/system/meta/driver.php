@@ -22,10 +22,10 @@ class MolajoSystemMeta {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** Remove Generator Tag **/
-        if ($systemParams->def('remove_generator_tag', 0) == 0) {
+        if ($systemParameters->def('remove_generator_tag', 0) == 0) {
             return false;
         }
  

@@ -7,6 +7,4 @@
  */
 defined('MOLAJO') or die;
 $current_folder = basename(dirname(__FILE__));
-echo 'afasdf';
-die;
 require_once MOLAJO_LIBRARY.'/mvc/entry.php';

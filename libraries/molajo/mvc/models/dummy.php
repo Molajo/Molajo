@@ -76,7 +76,7 @@ class MolajoModelDummy extends JModel
      */
     protected function populateState()
     {
-        $this->context = strtolower($this->request['option'] . '.' . $this->getName()) . '.' . $this->request['layout'];
+        $this->context = strtolower($this->request['option'].'.'.$this->getName()).'.'.$this->request['layout'];
     }
 
     /**
@@ -92,13 +92,13 @@ class MolajoModelDummy extends JModel
     }
 
     /**
-     * getParams
+     * getParameters
      *
      * @return    array    An empty array
      *
      * @since    1.0
      */
-    public function getParams()
+    public function getParameters()
     {
         return $this->parameters;
     }

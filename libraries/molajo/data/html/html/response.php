@@ -26,10 +26,10 @@ abstract class MolajoHtmlResponse
             1 => array('spammed.png', 'responses.unspammed', 'COM_RESPONSES_SPAMMED', 'COM_CONTENT_TOGGLE_TO_UNSPAM'),
         );
         $state = JArrayHelper::getValue($states, (int)$value, $states[1]);
-        $html = JHTML::_('image', 'admin/' . $state[0], MolajoText::_($state[2]), NULL, true);
+        $html = JHTML::_('image', 'admin/'.$state[0], MolajoText::_($state[2]), NULL, true);
         if ($canChange) {
-            $html = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb' . $i . '\',\'' . $state[1] . '\')" title="' . MolajoText::_($state[3]) . '">'
-                    . $html . '</a>';
+            $html = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.MolajoText::_($state[3]).'">'
+                   .$html.'</a>';
         }
 
         return $html;

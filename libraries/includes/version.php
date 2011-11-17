@@ -73,7 +73,7 @@ final class MolajoVersion
 	public function getHelpVersion()
 	{
 		if ($this->RELEASE > '1.0') {
-			return '.' . str_replace('.', '', $this->RELEASE);
+			return '.'.str_replace('.', '', $this->RELEASE);
 		}
 		else {
 			return '';
@@ -129,10 +129,10 @@ final class MolajoVersion
 
 		// If masked pretend to look like Mozilla 5.0 but still identify ourselves.
 		if ($mask) {
-			return 'Mozilla/5.0 '. $this->PRODUCT .'/'. $this->RELEASE . '.'.$this->DEV_LEVEL . ($component ? ' '. $component : '');
+			return 'Mozilla/5.0 '. $this->PRODUCT .'/'. $this->RELEASE.'.'.$this->DEV_LEVEL.($component ? ' '. $component : '');
 		}
 		else {
-			return $this->PRODUCT .'/'. $this->RELEASE . '.'.$this->DEV_LEVEL . ($component ? ' '. $component : '');
+			return $this->PRODUCT .'/'. $this->RELEASE.'.'.$this->DEV_LEVEL.($component ? ' '. $component : '');
 		}
 	}
 }

@@ -43,7 +43,7 @@ abstract class MolajoUserHelper
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__groups`' .
-                ' WHERE `id` = ' . (int) $groupId
+                ' WHERE `id` = '.(int) $groupId
             );
             $title = $db->loadResult();
 
@@ -153,7 +153,7 @@ abstract class MolajoUserHelper
         $db->setQuery(
             'SELECT `id`, `title`' .
             ' FROM `#__groups`' .
-            ' WHERE `id` = ' . implode(' OR `id` = ', $user->groups)
+            ' WHERE `id` = '.implode(' OR `id` = ', $user->groups)
         );
         $results = $db->loadObjectList();
 
@@ -224,10 +224,10 @@ abstract class MolajoUserHelper
 
         // Let's get the id of the user we want to activate
         $query = 'SELECT id'
-                 . ' FROM #__users'
-                 . ' WHERE activated = ' . $db->Quote($activation)
-                 . ' AND block = 1'
-                 . ' AND last_visit_datetime = ' . $db->Quote('0000-00-00 00:00:00');
+                .' FROM #__users'
+                .' WHERE activated = '.$db->Quote($activation)
+                .' AND block = 1'
+                .' AND last_visit_datetime = '.$db->Quote('0000-00-00 00:00:00');
 
         $db->setQuery($query);
         $id = intval($db->loadResult());
@@ -262,7 +262,7 @@ abstract class MolajoUserHelper
     public static function getUserId($username)
     {
         $db = MolajoFactory::getDbo();
-        $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
+        $query = 'SELECT id FROM #__users WHERE username = '.$db->Quote($username);
         $db->setQuery($query, 0, 1);
         return $db->loadResult();
     }
@@ -295,30 +295,30 @@ abstract class MolajoUserHelper
 
             case 'sha' :
                 $encrypted = base64_encode(mhash(MHASH_SHA1, $plaintext));
-                return ($show_encrypt) ? '{SHA}' . $encrypted : $encrypted;
+                return ($show_encrypt) ? '{SHA}'.$encrypted : $encrypted;
 
             case 'crypt' :
             case 'crypt-des' :
             case 'crypt-md5' :
             case 'crypt-blowfish' :
-                return ($show_encrypt ? '{crypt}' : '') . crypt($plaintext, $salt);
+                return ($show_encrypt ? '{crypt}' : '').crypt($plaintext, $salt);
 
             case 'md5-base64' :
                 $encrypted = base64_encode(mhash(MHASH_MD5, $plaintext));
-                return ($show_encrypt) ? '{MD5}' . $encrypted : $encrypted;
+                return ($show_encrypt) ? '{MD5}'.$encrypted : $encrypted;
 
             case 'ssha' :
-                $encrypted = base64_encode(mhash(MHASH_SHA1, $plaintext . $salt) . $salt);
-                return ($show_encrypt) ? '{SSHA}' . $encrypted : $encrypted;
+                $encrypted = base64_encode(mhash(MHASH_SHA1, $plaintext.$salt).$salt);
+                return ($show_encrypt) ? '{SSHA}'.$encrypted : $encrypted;
 
             case 'smd5' :
-                $encrypted = base64_encode(mhash(MHASH_MD5, $plaintext . $salt) . $salt);
-                return ($show_encrypt) ? '{SMD5}' . $encrypted : $encrypted;
+                $encrypted = base64_encode(mhash(MHASH_MD5, $plaintext.$salt).$salt);
+                return ($show_encrypt) ? '{SMD5}'.$encrypted : $encrypted;
 
             case 'aprmd5' :
                 $length = strlen($plaintext);
-                $context = $plaintext . '$apr1$' . $salt;
-                $binary = MolajoUserHelper::_bin(md5($plaintext . $salt . $plaintext));
+                $context = $plaintext.'$apr1$'.$salt;
+                $binary = MolajoUserHelper::_bin(md5($plaintext.$salt.$plaintext));
 
                 for ($i = $length; $i > 0; $i -= 16) {
                     $context .= substr($binary, 0, ($i > 16 ? 16 : $i));
@@ -351,12 +351,12 @@ abstract class MolajoUserHelper
                     $p[] = MolajoUserHelper::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
                 }
 
-                return '$apr1$' . $salt . '$' . implode('', $p) . MolajoUserHelper::_toAPRMD5(ord($binary[11]), 3);
+                return '$apr1$'.$salt.'$'.implode('', $p).MolajoUserHelper::_toAPRMD5(ord($binary[11]), 3);
 
             case 'md5-hex' :
             default :
-                $encrypted = ($salt) ? md5($plaintext . $salt) : md5($plaintext);
-                return ($show_encrypt) ? '{MD5}' . $encrypted : $encrypted;
+                $encrypted = ($salt) ? md5($plaintext.$salt) : md5($plaintext);
+                return ($show_encrypt) ? '{MD5}'.$encrypted : $encrypted;
         }
     }
 
@@ -394,7 +394,7 @@ abstract class MolajoUserHelper
                 if ($seed) {
                     return substr(preg_replace('|^{crypt}|i', '', $seed), 0, 12);
                 } else {
-                    return '$1$' . substr(md5(mt_rand()), 0, 8) . '$';
+                    return '$1$'.substr(md5(mt_rand()), 0, 8).'$';
                 }
                 break;
 
@@ -402,7 +402,7 @@ abstract class MolajoUserHelper
                 if ($seed) {
                     return substr(preg_replace('|^{crypt}|i', '', $seed), 0, 16);
                 } else {
-                    return '$2$' . substr(md5(mt_rand()), 0, 12) . '$';
+                    return '$2$'.substr(md5(mt_rand()), 0, 12).'$';
                 }
                 break;
 
@@ -465,7 +465,7 @@ abstract class MolajoUserHelper
         $stat = @stat(__FILE__);
         if (empty($stat) || !is_array($stat)) $stat = array(php_uname());
 
-        mt_srand(crc32(microtime() . implode('|', $stat)));
+        mt_srand(crc32(microtime().implode('|', $stat)));
 
         for ($i = 0; $i < $length; $i++) {
             $makepass .= $salt[mt_rand(0, $len - 1)];

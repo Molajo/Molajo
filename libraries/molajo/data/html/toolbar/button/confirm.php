@@ -49,7 +49,7 @@ class MolajoButtonConfirm extends MolajoButton
      */
     public function fetchId($type = 'Confirm', $name = '', $text = '', $task = '', $list = true, $hideMenu = false)
     {
-        return $this->_parent->getName() . '-' . $name;
+        return $this->_parent->getName().'-'.$name;
     }
 
     /**

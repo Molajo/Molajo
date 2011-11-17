@@ -22,7 +22,7 @@ class protectBanned
 	 * 	Retrieve Library Parameters
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 
                 $this->checkIP ($userip);
 
@@ -37,9 +37,9 @@ class protectBanned
 	/**
 	 * 	Retrieve Ban Parameters 
 	 */
-		$banned_ips = explode(",", $tamkaLibraryPluginParams->def('banips', ''));
-		$banned_emails = explode(",", $tamkaLibraryPluginParams->def('banemails', ''));
-		$banned_uris = explode(",", $tamkaLibraryPluginParams->def('banuris', ''));
+		$banned_ips = explode(",", $tamkaLibraryPluginParameters->def('banips', ''));
+		$banned_emails = explode(",", $tamkaLibraryPluginParameters->def('banemails', ''));
+		$banned_uris = explode(",", $tamkaLibraryPluginParameters->def('banuris', ''));
 
 	/**
 	 * 	Banned IPs 
@@ -79,7 +79,7 @@ class protectBanned
 		}
 	
 		if ($banned == true) {
-			JError::raiseError( 600, JText::_("IP Address has been banned: ") . $userip );		
+			JError::raiseError( 600, JText::_("IP Address has been banned: ").$userip );
 			return true;
 		}
         }
@@ -90,7 +90,7 @@ class protectBanned
 	/**
 	 * 	Retrieve Ban Parameters
 	 */
-		$banned_emails = explode(",", $tamkaLibraryPluginParams->def('banemails', ''));
+		$banned_emails = explode(",", $tamkaLibraryPluginParameters->def('banemails', ''));
 
 	/**
 	 * 	Banned emails 
@@ -107,7 +107,7 @@ class protectBanned
 		}
 	
 		if ($banned == true) {
-			JError::raiseError( 601, JText::_("Email address has been banned: ") . $useremail );		
+			JError::raiseError( 601, JText::_("Email address has been banned: ").$useremail );
 			return true;
 		}
         }
@@ -118,7 +118,7 @@ class protectBanned
 	/**
 	 * 	Retrieve Ban Parameters
 	 */
-		$banned_uris = explode(",", $tamkaLibraryPluginParams->def('banuris', ''));
+		$banned_uris = explode(",", $tamkaLibraryPluginParameters->def('banuris', ''));
 
 	/**
 	 * 	Banned URLs 
@@ -135,7 +135,7 @@ class protectBanned
 		}
 
 		if ($banned == true) {
-			JError::raiseError( 602, JText::_("URL has been banned: ") . $useruri );		
+			JError::raiseError( 602, JText::_("URL has been banned: ").$useruri );
 			return true;
 		}
 		

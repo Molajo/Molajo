@@ -35,11 +35,11 @@ class MolajoFileHelper
         if (file_exists($file)) {
             JLoader::register($class, $file);
         } else {
-            if (class_exists('MolajoError')) {
-                MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
+            if (class_exists('MolajoError') && class_exists('MolajoText') && class_exists('MolajoFactory')) {
+                MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS'.' '.$file.' '.$class), 'error');
                 return false;
             } else {
-                echo 'MolajoFileHelper Error: file not found '.$file;
+                echo 'MolajoFileHelper Error: file not found '.$file. ' for Class: '.$class;
                 exit;
             }
         }
@@ -47,8 +47,8 @@ class MolajoFileHelper
         if (class_exists($class)) {
             return true;
         } else {
-            if (class_exists('MolajoError')) {
-                MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
+            if (class_exists('MolajoError') && class_exists('MolajoText') && class_exists('MolajoFactory')) {
+                MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');
                 return false;
             } else {
                 echo 'MolajoFileHelper Error class not found '.$class;

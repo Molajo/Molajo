@@ -7385,7 +7385,7 @@ jQuery.extend({
 			// If traditional, encode the "old" way (the way 1.3.2 or older
 			// did it), otherwise encode parameters recursively.
 			for ( var prefix in a ) {
-				buildParams( prefix, a[ prefix ], traditional, add );
+				buildParameters( prefix, a[ prefix ], traditional, add );
 			}
 		}
 
@@ -7394,7 +7394,7 @@ jQuery.extend({
 	}
 });
 
-function buildParams( prefix, obj, traditional, add ) {
+function buildParameters( prefix, obj, traditional, add ) {
 	if ( jQuery.isArray( obj ) ) {
 		// Serialize array item.
 		jQuery.each( obj, function( i, v ) {
@@ -7410,14 +7410,14 @@ function buildParams( prefix, obj, traditional, add ) {
 				// a server error. Possible fixes are to modify rack's
 				// deserialization algorithm or to provide an option or flag
 				// to force array serialization to be shallow.
-				buildParams( prefix + "[" + ( typeof v === "object" || jQuery.isArray(v) ? i : "" ) + "]", v, traditional, add );
+				buildParameters( prefix + "[" + ( typeof v === "object" || jQuery.isArray(v) ? i : "" ) + "]", v, traditional, add );
 			}
 		});
 
 	} else if ( !traditional && obj != null && typeof obj === "object" ) {
 		// Serialize object item.
 		for ( var name in obj ) {
-			buildParams( prefix + "[" + name + "]", obj[ name ], traditional, add );
+			buildParameters( prefix + "[" + name + "]", obj[ name ], traditional, add );
 		}
 
 	} else {

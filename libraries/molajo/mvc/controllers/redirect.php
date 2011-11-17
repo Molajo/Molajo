@@ -127,7 +127,7 @@ class MolajoControllerRedirect extends MolajoController
         ) {
             $extension = '';
         } else {
-            $extension = '&extension=' . $extension;
+            $extension = '&extension='.$extension;
         }
 
         /** component_specific: to add parameter pairs needed in addition to standard **/
@@ -138,7 +138,7 @@ class MolajoControllerRedirect extends MolajoController
             $component_specific = '';
         } elseif (substr($component_specific, 1, 1) == '&') {
         } else {
-            $component_specific .= '&' . $component_specific;
+            $component_specific .= '&'.$component_specific;
         }
 
         /** cancel **/
@@ -147,10 +147,10 @@ class MolajoControllerRedirect extends MolajoController
                 if ($this->id == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display&id=' . $this->id . $extension . $component_specific;
+                    $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display&id='.$this->id.$extension.$component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=edit&id=' . $this->id . $extension . $component_specific;
+                $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=edit&id='.$this->id.$extension.$component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
@@ -162,15 +162,15 @@ class MolajoControllerRedirect extends MolajoController
 
         } elseif ($this->request['task'] == 'logout') {
             $this->redirectSuccess = 'index.php';
-            $this->redirectReturn = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
 
         } elseif ($this->request['task'] == 'display') {
-            $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
+            $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
             $this->redirectReturn = $this->redirectSuccess;
 
         } else {
-            $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
-            $this->redirectReturn = 'index.php?option=' . $this->request['option'] . '&view=edit' . $extension . $component_specific;
+            $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
+            $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=edit'.$extension.$component_specific;
         }
 
         return;
@@ -299,10 +299,10 @@ class MolajoControllerRedirect extends MolajoController
             } else {
                 $id = $this->data['id'];
                 if ((int)$id == 0 || $task == 'save2new') {
-                    $link .= '&task=' . $this->request['EditView'] . '.add' . '&datakey=' . $this->datakey;
+                    $link .= '&task='.$this->request['EditView'].'.add'.'&datakey='.$this->datakey;
 
                 } else {
-                    $link .= '&task=' . $this->request['EditView'] . '.edit&id=' . (int)$id . '&datakey=' . $this->datakey;
+                    $link .= '&task='.$this->request['EditView'].'.edit&id='.(int)$id.'&datakey='.$this->datakey;
                 }
             }
 
@@ -312,9 +312,9 @@ class MolajoControllerRedirect extends MolajoController
             if ((int)$id == 0) {
                 $idLink = '';
             } else {
-                $idLink = '&id=' . (int)$id;
+                $idLink = '&id='.(int)$id;
             }
-            $link = $this->redirectSuccess . $idLink;
+            $link = $this->redirectSuccess.$idLink;
         }
 
         /** should not be needed */

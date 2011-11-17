@@ -133,13 +133,13 @@ class MolajoFormFieldGroupedList extends MolajoFormField
         $attr = '';
 
         // Initialize some field attributes.
-        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $attr .= $this->element['class'] ? ' class="'.(string)$this->element['class'].'"' : '';
         $attr .= ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
+        $attr .= $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
         $attr .= $this->multiple ? ' multiple="multiple"' : '';
 
         // Initialize JavaScript field attributes.
-        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
+        $attr .= $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
 
         // Get the field groups.
         $groups = (array)$this->getGroups();
@@ -147,7 +147,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
         // Create a read-only list (no name) with a hidden calendar to store the value.
         if ((string)$this->element['readonly'] == 'true') {
             $html[] = MolajoHTML::_('select.groupedlist', $groups, null, array('list.attr' => $attr, 'id' => $this->id, 'list.select' => $this->value, 'group.items' => null, 'option.key.toHtml' => false, 'option.text.toHtml' => false));
-            $html[] = '<calendar type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
+            $html[] = '<calendar type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
         }
             // Create a regular list.
         else {

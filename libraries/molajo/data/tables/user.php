@@ -69,7 +69,7 @@ class MolajoTableUser extends MolajoTable
         $this->_db->setQuery(
             'SELECT *' .
             ' FROM #__users' .
-            ' WHERE id = ' . (int)$userId
+            ' WHERE id = '.(int)$userId
         );
         $data = (array)$this->_db->loadAssoc();
 
@@ -94,7 +94,7 @@ class MolajoTableUser extends MolajoTable
                 'SELECT g.id, g.title' .
                 ' FROM #__groups AS g' .
                 ' JOIN #__user_groups AS m ON m.group_id = g.id' .
-                ' WHERE m.user_id = ' . (int)$userId
+                ' WHERE m.user_id = '.(int)$userId
             );
             // Add the groups to the user data.
             $this->groups = $this->_db->loadAssocList('title', 'id');
@@ -121,7 +121,7 @@ class MolajoTableUser extends MolajoTable
      */
     function bind($array, $ignore = '')
     {
-        if (key_exists('params', $array) && is_array($array['parameters'])) {
+        if (key_exists('parameters', $array) && is_array($array['parameters'])) {
             $registry = new JRegistry();
             $registry->loadArray($array['parameters']);
             $array['parameters'] = (string)$registry;
@@ -137,9 +137,9 @@ class MolajoTableUser extends MolajoTable
 
             // Get the titles for the user groups.
             $this->_db->setQuery(
-                'SELECT ' . $this->_db->quoteName('id') . ', ' . $this->_db->quoteName('title') .
-                ' FROM ' . $this->_db->quoteName('#__groups') .
-                ' WHERE ' . $this->_db->quoteName('id') . ' = ' . implode(' OR ' . $this->_db->quoteName('id') . ' = ', $this->groups)
+                'SELECT '.$this->_db->quoteName('id').', '.$this->_db->quoteName('title') .
+                ' FROM '.$this->_db->quoteName('#__groups') .
+                ' WHERE '.$this->_db->quoteName('id').' = '.implode(' OR '.$this->_db->quoteName('id').' = ', $this->groups)
             );
             // Set the titles for the user groups.
             $this->groups = $this->_db->loadAssocList('title', 'id');
@@ -189,9 +189,9 @@ class MolajoTableUser extends MolajoTable
 
         // check for existing username
         $query = 'SELECT id'
-                 . ' FROM #__users '
-                 . ' WHERE username = ' . $this->_db->Quote($this->username)
-                 . ' AND id != ' . (int)$this->id;
+                .' FROM #__users '
+                .' WHERE username = '.$this->_db->Quote($this->username)
+                .' AND id != '.(int)$this->id;
         ;
         $this->_db->setQuery($query);
         $xid = intval($this->_db->loadResult());
@@ -202,9 +202,9 @@ class MolajoTableUser extends MolajoTable
 
         // check for existing email
         $query = 'SELECT id'
-                 . ' FROM #__users '
-                 . ' WHERE email = ' . $this->_db->Quote($this->email)
-                 . ' AND id != ' . (int)$this->id;
+                .' FROM #__users '
+                .' WHERE email = '.$this->_db->Quote($this->email)
+                .' AND id != '.(int)$this->id;
         $this->_db->setQuery($query);
         $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
@@ -270,8 +270,8 @@ class MolajoTableUser extends MolajoTable
         if ($return && is_array($this->groups) && count($this->groups)) {
             // Delete the old user group maps.
             $this->_db->setQuery(
-                'DELETE FROM ' . $this->_db->quoteName('#__user_groups') .
-                ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->id
+                'DELETE FROM '.$this->_db->quoteName('#__user_groups') .
+                ' WHERE '.$this->_db->quoteName('user_id').' = '.(int)$this->id
             );
             $this->_db->query();
 
@@ -283,8 +283,8 @@ class MolajoTableUser extends MolajoTable
 
             // Set the new user group maps.
             $this->_db->setQuery(
-                'INSERT INTO ' . $this->_db->quoteName('#__user_groups') . ' (' . $this->_db->quoteName('user_id') . ', ' . $this->_db->quoteName('group_id') . ')' .
-                ' VALUES (' . $this->id . ', ' . implode('), (' . $this->id . ', ', $this->groups) . ')'
+                'INSERT INTO '.$this->_db->quoteName('#__user_groups').' ('.$this->_db->quoteName('user_id').', '.$this->_db->quoteName('group_id').')' .
+                ' VALUES ('.$this->id.', '.implode('), ('.$this->id.', ', $this->groups).')'
             );
             $this->_db->query();
 
@@ -318,8 +318,8 @@ class MolajoTableUser extends MolajoTable
 
         // Delete the user.
         $this->_db->setQuery(
-            'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
-            ' WHERE ' . $this->_db->quoteName($this->_tbl_key) . ' = ' . (int)$this->$k
+            'DELETE FROM '.$this->_db->quoteName($this->_tbl) .
+            ' WHERE '.$this->_db->quoteName($this->_tbl_key).' = '.(int)$this->$k
         );
         $this->_db->query();
 
@@ -331,8 +331,8 @@ class MolajoTableUser extends MolajoTable
 
         // Delete the user group maps.
         $this->_db->setQuery(
-            'DELETE FROM ' . $this->_db->quoteName('#__user_groups') .
-            ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->$k
+            'DELETE FROM '.$this->_db->quoteName('#__user_groups') .
+            ' WHERE '.$this->_db->quoteName('user_id').' = '.(int)$this->$k
         );
         $this->_db->query();
 
@@ -347,8 +347,8 @@ class MolajoTableUser extends MolajoTable
         */
 
         $this->_db->setQuery(
-            'DELETE FROM ' . $this->_db->quoteName('#__messages_cfg') .
-            ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->$k
+            'DELETE FROM '.$this->_db->quoteName('#__messages_cfg') .
+            ' WHERE '.$this->_db->quoteName('user_id').' = '.(int)$this->$k
         );
         $this->_db->query();
 
@@ -359,8 +359,8 @@ class MolajoTableUser extends MolajoTable
         }
 
         $this->_db->setQuery(
-            'DELETE FROM ' . $this->_db->quoteName('#__messages') .
-            ' WHERE ' . $this->_db->quoteName('user_id_to') . ' = ' . (int)$this->$k
+            'DELETE FROM '.$this->_db->quoteName('#__messages') .
+            ' WHERE '.$this->_db->quoteName('user_id_to').' = '.(int)$this->$k
         );
         $this->_db->query();
 
@@ -399,9 +399,9 @@ class MolajoTableUser extends MolajoTable
         // Update the database row for the user.
         // 			' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
         $this->_db->setQuery(
-            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
-            ' SET ' . $this->_db->quoteName('last_visit_datetime') . ' = ' . $this->_db->Quote($date) .
-            ' WHERE ' . $this->_db->quoteName('id') . ' = ' . (int)$userId
+            'UPDATE '.$this->_db->quoteName($this->_tbl) .
+            ' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($date) .
+            ' WHERE '.$this->_db->quoteName('id').' = '.(int)$userId
         );
         $this->_db->query();
 

@@ -89,7 +89,7 @@ class MolajoAttributeAccept extends MolajoAttribute
         if ($MIMEtypes == '') {
             $value = '';
         } else {
-            $value = 'accept="' . implode(',', $MIMEtypes . '"');
+            $value = 'accept="'.implode(',', $MIMEtypes.'"');
         }
         parent::__set('value', $value);
 

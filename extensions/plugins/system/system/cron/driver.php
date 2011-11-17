@@ -30,17 +30,17 @@ class MolajoSystemCron {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** cron **/
-        if ($systemParams->def('enable_cron', 0) == '0') {
+        if ($systemParameters->def('enable_cron', 0) == '0') {
             return false;
         }
-        if ($systemParams->def('cron_minutes', 60) == '0') {
+        if ($systemParameters->def('cron_minutes', 60) == '0') {
             return false;
         }
 
-        $this->minutes = $systemParams->def('cron_minutes', 60);
+        $this->minutes = $systemParameters->def('cron_minutes', 60);
 
         MolajoSystemCron::run_cron ();
     }

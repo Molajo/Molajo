@@ -95,7 +95,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
         array_push($this->_stack, $name);
         $tag = $this->_getStackLocation();
         // Reset the data
-        eval('$this->' . $tag . '->_data = "";');
+        eval('$this->'.$tag.'->_data = "";');
         switch ($name)
         {
             case 'CATEGORY':
@@ -147,7 +147,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
                 }
                 // set this to ourself as a default
                 // validate that we can install the extension
-                if ($product == $values['targetplatform'] && preg_match('/' . $values['targetplatformversion'].'/', $ver->RELEASE)) {
+                if ($product == $values['targetplatform'] && preg_match('/'.$values['targetplatformversion'].'/', $ver->RELEASE)) {
                     $update->bind($values);
                     $this->updates[] = $update;
                 }
@@ -211,11 +211,11 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
             $query = $dbo->getQuery(true);
             $query->update('#__update_sites');
             $query->set('enabled = 0');
-            $query->where('update_site_id = ' . $this->_update_site_id);
+            $query->where('update_site_id = '.$this->_update_site_id);
             $dbo->setQuery($query);
             $dbo->Query();
 
-            JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
+            JLog::add("Error parsing url: ".$url, JLog::WARNING, 'updater');
             $app = MolajoFactory::getApplication();
             $app->enqueueMessage(MolajoText::sprintf('JLIB_UPDATER_ERROR_COLLECTION_OPEN_URL', $url), 'warning');
             return false;
@@ -228,7 +228,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
         while ($data = fread($fp, 8192))
         {
             if (!xml_parse($this->xml_parser, $data, feof($fp))) {
-                JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
+                JLog::add("Error parsing url: ".$url, JLog::WARNING, 'updater');
                 $app = MolajoFactory::getApplication();
                 $app->enqueueMessage(MolajoText::sprintf('JLIB_UPDATER_ERROR_COLLECTION_PARSE_URL', $url), 'warning');
                 return false;

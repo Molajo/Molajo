@@ -60,10 +60,10 @@ class MolajoFormFieldExtension extends MolajoFormFieldList
         $query->select('element AS value, name AS text');
         $query->from('#__extensions');
         $query->where('enabled = 1');
-        $query->where('type = "' . $extensiontype . '"');
+        $query->where('type = "'.$extensiontype.'"');
         if (trim($exclude) == '') {
         } else {
-            $query->where('extension_id NOT IN ("' . $exclude . '")');
+            $query->where('extension_id NOT IN ("'.$exclude.'")');
         }
         $query->order('ordering, name');
 

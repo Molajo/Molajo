@@ -47,7 +47,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			<tr class="row<?php echo $i%2;?>">
 				<td><?php echo MolajoHTML::_('grid.id', $i, $item->extension_id); ?></td>
 				<td><span class="bold hasTip" title="<?php echo htmlspecialchars($item->name.'::'.$item->description); ?>"><?php echo $item->name; ?></span></td>
-				<td class="center"><?php echo MolajoText::_('COM_INSTALLER_TYPE_' . $item->type); ?></td>
+				<td class="center"><?php echo MolajoText::_('COM_INSTALLER_TYPE_'.$item->type); ?></td>
 				<td class="center"><?php echo @$item->version != '' ? $item->version : '&#160;'; ?></td>
 				<td class="center"><?php echo @$item->creationDate != '' ? $item->creationDate : '&#160;'; ?></td>
 				<td class="center"><?php echo @$item->folder != '' ? $item->folder : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>

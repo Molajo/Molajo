@@ -56,10 +56,10 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<td class="center">
 					<?php echo $item->extension_id ? MolajoText::_('COM_INSTALLER_MSG_UPDATE_UPDATE') : MolajoText::_('COM_INSTALLER_NEW_INSTALL') ?>
 				</td>
-				<td><?php echo MolajoText::_('COM_INSTALLER_TYPE_' . $item->type) ?></td>
+				<td><?php echo MolajoText::_('COM_INSTALLER_TYPE_'.$item->type) ?></td>
 				<td class="center"><?php echo $item->version ?></td>
 				<td class="center"><?php echo @$item->folder != '' ? $item->folder : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
-				<td class="center"><?php echo @$item->application != '' ? MolajoText::_('COM_INSTALLER_TYPE_' . $item->application) : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
+				<td class="center"><?php echo @$item->application != '' ? MolajoText::_('COM_INSTALLER_TYPE_'.$item->application) : MolajoText::_('COM_INSTALLER_TYPE_NONAPPLICABLE'); ?></td>
 				<td><?php echo $item->details_url ?></td>
 			</tr>
 		<?php endforeach;?>

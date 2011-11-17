@@ -49,7 +49,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
         }
         if ((int)$tagtype == 0) {
         } else {
-            $query->where('tag_type = ' . (int)$tagtype);
+            $query->where('tag_type = '.(int)$tagtype);
         }
         $query->order('ordering, title');
 

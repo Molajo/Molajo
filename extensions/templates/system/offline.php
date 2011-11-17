@@ -29,7 +29,7 @@ $app = MolajoFactory::getApplication();
 	<p>
 		<?php echo $app->getSiteConfig('offline_message'); ?>
 	</p>
-	<form action="<?php echo JRoute::_('index.php', true); ?>" method="post" id="form-login">
+	<form action="<?php echo MolajoRoute::_('index.php', true); ?>" method="post" id="form-login">
 	<fieldset class="input">
 		<p id="form-login-username">
 			<label for="username"><?php echo JText::_('JGLOBAL_USERNAME') ?></label>

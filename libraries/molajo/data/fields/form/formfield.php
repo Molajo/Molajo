@@ -321,7 +321,7 @@ abstract class MolajoFormField
         if ($this->required) {
             if ($class) {
                 if (strpos($class, 'required') === false) {
-                    $this->element['class'] = $class . ' required';
+                    $this->element['class'] = $class.' required';
                 }
             } else {
                 $this->element->addAttribute('class', 'required');
@@ -384,7 +384,7 @@ abstract class MolajoFormField
         if ($this->group) {
             // If we already have an id segment add the group control as another level.
             if ($id) {
-                $id .= '_' . str_replace('.', '_', $this->group);
+                $id .= '_'.str_replace('.', '_', $this->group);
             }
             else {
                 $id .= str_replace('.', '_', $this->group);
@@ -393,7 +393,7 @@ abstract class MolajoFormField
 
         // If we already have an id segment add the field id/name as another level.
         if ($id) {
-            $id .= '_' . ($fieldId ? $fieldId : $fieldName);
+            $id .= '_'.($fieldId ? $fieldId : $fieldName);
         }
         else {
             $id .= ($fieldId ? $fieldId : $fieldName);
@@ -534,14 +534,14 @@ abstract class MolajoFormField
 
         /** onchange */
         if ($this->element->onchange) {
-            $this->rowset[0]['onchange'] = ' onchange="' . (string)$this->element->onchange . '"';
+            $this->rowset[0]['onchange'] = ' onchange="'.(string)$this->element->onchange.'"';
         } else {
             $this->rowset[0]['onchange'] = '';
         }
 
         /** onclick */
         if ($this->element->onclick) {
-            $this->rowset[0]['onclick'] = ' onclick="' . (string)$this->element->onclick . '"';
+            $this->rowset[0]['onclick'] = ' onclick="'.(string)$this->element->onclick.'"';
         } else {
             $this->rowset[0]['onclick'] = '';
         }
@@ -662,23 +662,23 @@ abstract class MolajoFormField
 
         // Build the class for the label.
         $class = !empty($this->description) ? 'hasTip' : '';
-        $class = $this->required == true ? $class . ' required' : $class;
+        $class = $this->required == true ? $class.' required' : $class;
 
         // Add the opening label tag and main attributes attributes.
-        $label .= '<label id="' . $this->id . '-lbl" for="' . $this->id . '" class="' . $class . '"';
+        $label .= '<label id="'.$this->id.'-lbl" for="'.$this->id.'" class="'.$class.'"';
 
         // If a description is specified, use it to build a tooltip.
         if (!empty($this->description)) {
-            $label .= ' title="' . htmlspecialchars(trim($text, ':') . '::' .
+            $label .= ' title="'.htmlspecialchars(trim($text, ':').'::' .
                                                     ($this->translateDescription ? MolajoText::_($this->description)
-                                                            : $this->description), ENT_COMPAT, 'UTF-8') . '"';
+                                                            : $this->description), ENT_COMPAT, 'UTF-8').'"';
         }
 
         // Add the label text and closing tag.
         if ($this->required) {
-            $label .= '>' . $text . '<span class="star">&#160;*</span></label>';
+            $label .= '>'.$text.'<span class="star">&#160;*</span></label>';
         } else {
-            $label .= '>' . $text . '</label>';
+            $label .= '>'.$text.'</label>';
         }
 
         return $label;
@@ -709,20 +709,20 @@ abstract class MolajoFormField
             $groups = explode('.', $this->group);
             if ($name) {
                 foreach ($groups as $group) {
-                    $name .= '[' . $group . ']';
+                    $name .= '['.$group.']';
                 }
             }
             else {
                 $name .= array_shift($groups);
                 foreach ($groups as $group) {
-                    $name .= '[' . $group . ']';
+                    $name .= '['.$group.']';
                 }
             }
         }
 
         // If we already have a name segment add the field name as another level.
         if ($name) {
-            $name .= '[' . $fieldName . ']';
+            $name .= '['.$fieldName.']';
         }
         else {
             $name .= $fieldName;
@@ -752,7 +752,7 @@ abstract class MolajoFormField
         }
         else {
             self::$count = self::$count + 1;
-            return self::$generated_fieldname . self::$count;
+            return self::$generated_fieldname.self::$count;
         }
     }
 }

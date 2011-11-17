@@ -57,7 +57,7 @@ class UsersModelGroups extends JModelList
 		$this->setState('filter.search', $search);
 
 		// Load the parameters.
-		$parameters = JComponentHelper::getParams('com_users');
+		$parameters = JComponentHelper::getParameters('com_users');
 		$this->setState('parameters', $parameters);
 
 		// List state information.

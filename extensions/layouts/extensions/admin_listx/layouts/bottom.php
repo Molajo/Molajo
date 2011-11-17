@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 //include dirname(__FILE__).'/layouts/table_footer_pagination.php';
-include dirname(__FILE__) . '/form/form_hidden.php';
-include dirname(__FILE__) . '/form/table_end.php';
-include dirname(__FILE__) . '/form/batch.php';
-include dirname(__FILE__) . '/form/form_end.php';
+include dirname(__FILE__).'/form/form_hidden.php';
+include dirname(__FILE__).'/form/table_end.php';
+include dirname(__FILE__).'/form/batch.php';
+include dirname(__FILE__).'/form/form_end.php';

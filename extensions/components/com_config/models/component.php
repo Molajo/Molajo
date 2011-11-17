@@ -34,7 +34,7 @@ class ConfigModelComponent extends JModelForm
 
 		// Set an alternative path for the configuration file.
 		if ($path = JRequest::getString('path')) {
-			$path = JPath::clean(JPATH_SITE . '/' . $path);
+			$path = JPath::clean(JPATH_SITE.'/'.$path);
 			JPath::check($path);
 			$this->setState('component.path', $path);
 		}
@@ -92,9 +92,9 @@ class ConfigModelComponent extends JModelForm
 		// Load common and local language files.
 		$lang = MolajoFactory::getLanguage();
 			$lang->load($option, JPATH_BASE, null, false, false)
-		||	$lang->load($option, JPATH_BASE . "/components/$option", null, false, false)
+		||	$lang->load($option, JPATH_BASE."/components/$option", null, false, false)
 		||	$lang->load($option, JPATH_BASE, $lang->getDefault(), false, false)
-		||	$lang->load($option, JPATH_BASE . "/components/$option", $lang->getDefault(), false, false);
+		||	$lang->load($option, JPATH_BASE."/components/$option", $lang->getDefault(), false, false);
 
 		$result = JComponentHelper::getComponent($option);
 

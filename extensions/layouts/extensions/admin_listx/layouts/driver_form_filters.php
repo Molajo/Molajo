@@ -15,9 +15,9 @@ $anyFilters = false;
 if ($this->parameters->def('config_manager_list_search', 1) == '1') {
     if ($anyFilters == false) {
         $anyFilters = true;
-        include dirname(__FILE__) . '/form/form_filter_begin.php';
+        include dirname(__FILE__).'/form/form_filter_begin.php';
     }
-    include dirname(__FILE__) . '/form/form_filter_search.php';
+    include dirname(__FILE__).'/form/form_filter_search.php';
 }
 
 /** $fieldFilters used to prevent list filters column if no list filters are specified **/
@@ -58,9 +58,9 @@ for ($i=1; $i < 1000; $i++) {
             $fieldFilters = true;
             if ($anyFilters == false) {
                 $anyFilters = true;
-                include dirname(__FILE__) . '/form/form_filter_begin.php';
+                include dirname(__FILE__).'/form/form_filter_begin.php';
             }
-            include dirname(__FILE__) . '/form/form_filter_fields_begin.php';
+            include dirname(__FILE__).'/form/form_filter_fields_begin.php';
         }
 
         /** class name **/
@@ -85,14 +85,14 @@ for ($i=1; $i < 1000; $i++) {
         $this->tempSelected = $this->state->get('filter.'.$this->tempColumnName);
 
         /** render field filter **/
-        include dirname(__FILE__) . '/form/form_filter_field.php';
+        include dirname(__FILE__).'/form/form_filter_field.php';
     }
 }
 
 if ($fieldFilters == true) {
-    include dirname(__FILE__) . '/form/form_filter_fields_end.php';
+    include dirname(__FILE__).'/form/form_filter_fields_end.php';
 }
 
 if ($anyFilters == true) {
-    include dirname(__FILE__) . '/form/form_filter_end.php';
+    include dirname(__FILE__).'/form/form_filter_end.php';
 }

@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  *  verifyGlobal - compare properties of the current request to the global Custom Fields Parameters to see if processing is required
  *  verifyContentType - compare properties of the current request to the Content Type Custom Fields Parameters to see if processing is required
  *  display - create all form parameters needed for Content Type and load into the Request Form Object for Display
- *  save - Update the Extensions Params field for the Custom Field Plugin Parameters
+ *  save - Update the Extensions Parameters field for the Custom Field Plugin Parameters
  *
  */
 class extendControllerParameters {
@@ -31,19 +31,19 @@ class extendControllerParameters {
     {
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         /** client **/
-        if ($fieldParams->def('global_restriction_client', '') == '') {
-        } else if ($fieldParams->def('global_restriction_client', '') == MOLAJO_APPLICATION_ID) {
+        if ($fieldParameters->def('global_restriction_client', '') == '') {
+        } else if ($fieldParameters->def('global_restriction_client', '') == MOLAJO_APPLICATION_ID) {
         } else {
             return false;
         }
 
         /** component **/
-        if (is_array($fieldParams->get('global_restriction_component'))) {
-            if (implode('', $fieldParams->get('global_restriction_component')) == '') {
-            } else if (in_array($component_option, $fieldParams->get('global_restriction_component'))) {
+        if (is_array($fieldParameters->get('global_restriction_component'))) {
+            if (implode('', $fieldParameters->get('global_restriction_component')) == '') {
+            } else if (in_array($component_option, $fieldParameters->get('global_restriction_component'))) {
             } else {
                 return false;
             }
@@ -53,9 +53,9 @@ class extendControllerParameters {
         if ($category == null) {      /** new content and some components do not use category **/
         } else {
             if ($task == 'display' || $task == 'edit') {
-                if (is_array($fieldParams->get('global_restriction_category'))) {
-                    if (implode('', $fieldParams->get('global_restriction_category')) == '') {
-                    } else if (in_array($category, $fieldParams->get('global_restriction_category'))) {
+                if (is_array($fieldParameters->get('global_restriction_category'))) {
+                    if (implode('', $fieldParameters->get('global_restriction_category')) == '') {
+                    } else if (in_array($category, $fieldParameters->get('global_restriction_category'))) {
                     } else {
                         return false;
                     }
@@ -65,9 +65,9 @@ class extendControllerParameters {
 
         /** named forms **/
         if ($task == 'edit' || $task == 'save') {
-            if (is_array($fieldParams->get('global_restriction_forms'))) {
-                if (implode('', $fieldParams->get('global_restriction_forms')) == '') {
-                } else if (in_array($form->getName(), $fieldParams->get('global_restriction_forms'))) {
+            if (is_array($fieldParameters->get('global_restriction_forms'))) {
+                if (implode('', $fieldParameters->get('global_restriction_forms')) == '') {
+                } else if (in_array($form->getName(), $fieldParameters->get('global_restriction_forms'))) {
                 } else {
                     return false;
                 }
@@ -92,35 +92,35 @@ class extendControllerParameters {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
-        $fieldParams = new JParameter($systemPlugin->parameters);
+        $fieldParameters = new JParameter($systemPlugin->parameters);
 
         /** enabled **/
-        if ((int) $fieldParams->def($contentType.'_enable', 0) == 0) {
+        if ((int) $fieldParameters->def($contentType.'_enable', 0) == 0) {
             return false;
         }
 
         /** client **/
-        if ($fieldParams->def($contentType.'_client_criteria', '') == '') {
-        } else if ($fieldParams->def($contentType.'_client_criteria', '') == MOLAJO_APPLICATION_ID) {
+        if ($fieldParameters->def($contentType.'_client_criteria', '') == '') {
+        } else if ($fieldParameters->def($contentType.'_client_criteria', '') == MOLAJO_APPLICATION_ID) {
         } else {
             return false;
         }
 
         /** component **/
-        if (is_array($fieldParams->get($contentType.'_component_criteria'))) {
-            if (implode('', $fieldParams->get($contentType.'_component_criteria')) == '') {
-            } else if (in_array($component_option, $fieldParams->get($contentType.'_component_criteria'))) {
+        if (is_array($fieldParameters->get($contentType.'_component_criteria'))) {
+            if (implode('', $fieldParameters->get($contentType.'_component_criteria')) == '') {
+            } else if (in_array($component_option, $fieldParameters->get($contentType.'_component_criteria'))) {
             } else {
                 return false;
             }
         }
 
         /** category **/
-        if (is_array($fieldParams->get($contentType.'_category_criteria'))) {
-            if (implode('', $fieldParams->get($contentType.'_category_criteria')) == '') {
+        if (is_array($fieldParameters->get($contentType.'_category_criteria'))) {
+            if (implode('', $fieldParameters->get($contentType.'_category_criteria')) == '') {
             } else if ($category == null) {
                 return false;
-            } else if (in_array($category, $fieldParams->get($contentType.'_category_criteria'))) {
+            } else if (in_array($category, $fieldParameters->get($contentType.'_category_criteria'))) {
             } else {
                 return false;
             }
@@ -128,9 +128,9 @@ class extendControllerParameters {
 
         /** named forms **/
         if ($task == 'edit' || $task == 'save') {
-            if (is_array($fieldParams->get($contentType.'_forms_criteria'))) {
-                if (implode('', $fieldParams->get($contentType.'_forms_criteria')) == '') {
-                } else if (in_array($form->getName(), $fieldParams->get($contentType.'_forms_criteria'))) {
+            if (is_array($fieldParameters->get($contentType.'_forms_criteria'))) {
+                if (implode('', $fieldParameters->get($contentType.'_forms_criteria')) == '') {
+                } else if (in_array($form->getName(), $fieldParameters->get($contentType.'_forms_criteria'))) {
                 } else {
                     return false;
                 }
@@ -140,9 +140,9 @@ class extendControllerParameters {
         /** menu items **/
         if ($app->getMenu()->getActive() == null) {
         } else {
-            if (is_array($fieldParams->get($contentType.'_menu_item_criteria'))) {
-                if (implode('', $fieldParams->get($contentType.'_menu_item_criteria')) == '') {
-                } else if (in_array($app->getMenu()->getActive(), $fieldParams->get($contentType.'_menu_item_criteria'))) {
+            if (is_array($fieldParameters->get($contentType.'_menu_item_criteria'))) {
+                if (implode('', $fieldParameters->get($contentType.'_menu_item_criteria')) == '') {
+                } else if (in_array($app->getMenu()->getActive(), $fieldParameters->get($contentType.'_menu_item_criteria'))) {
                 } else {
                     return false;
                 }
@@ -150,9 +150,9 @@ class extendControllerParameters {
         }
 
         /** published state and date checks **/
-        if (!(int) $fieldParams->def($contentType.'_published_criteria', 1) == 1) { return false; }
-        $publishUp = $fieldParams->def($contentType.'_start_publishing_datetime_criteria', '');
-        $publishDown = $fieldParams->def($contentType.'_stop_publishing_datetime_criteria', '');
+        if (!(int) $fieldParameters->def($contentType.'_published_criteria', 1) == 1) { return false; }
+        $publishUp = $fieldParameters->def($contentType.'_start_publishing_datetime_criteria', '');
+        $publishDown = $fieldParameters->def($contentType.'_stop_publishing_datetime_criteria', '');
         if ($publishUp == '' && $publishDown == '') {
         } else if (date('Y-m-d') > $publishUp && date('Y-m-d') < $publishDown) {
         } else {
@@ -162,12 +162,12 @@ class extendControllerParameters {
         /** access **/
         $acl	= new MolajoACL();
         $groups = $acl->getList('Viewaccess');
-        if (!in_array($fieldParams->def($contentType.'_access_criteria', 0), $groups)) {
+        if (!in_array($fieldParameters->def($contentType.'_access_criteria', 0), $groups)) {
             return false;
         }
 
         /** language **/
-        if ($fieldParams->def($contentType.'_language_criteria', '*') == '*') {
+        if ($fieldParameters->def($contentType.'_language_criteria', '*') == '*') {
         } else {
         }
 
@@ -223,7 +223,7 @@ class extendControllerParameters {
      *      and, using a pattern file, automatically creates the Parameter XML
      *      and loads the Custom Field Form Data back into the Form Object
      *      Uses JForm to filter and validate the content
-     *      Retrieves the parameters field saved by Molajo and appends in the Custom Field Params
+     *      Retrieves the parameters field saved by Molajo and appends in the Custom Field Parameters
      *      updating the Extensions table
      *
      * This function creates itself.
@@ -272,11 +272,11 @@ class extendControllerParameters {
         }
 
         /** merge "normal" parameters with custom fields parameters **/
-	$existingParams = new JRegistry($p);
-	$contenttypeParams = new JRegistry($filteredData['parameters']);
-        $newParams = substr($existingParams, 0, strlen($existingParams) - 1).','.substr($contenttypeParams, 1, strlen($contenttypeParams) - 1);
+	$existingParameters = new JRegistry($p);
+	$contenttypeParameters = new JRegistry($filteredData['parameters']);
+        $newParameters = substr($existingParameters, 0, strlen($existingParameters) - 1).','.substr($contenttypeParameters, 1, strlen($contenttypeParameters) - 1);
 
         /** update extensions parameters field for full value **/
-        return modelParameter::updateData ($newParams);
+        return modelParameter::updateData ($newParameters);
     }
 }

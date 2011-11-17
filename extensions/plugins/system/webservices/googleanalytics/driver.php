@@ -22,14 +22,14 @@ class MolajoWebservicesGoogleAnalytics {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** Google Analytics **/
-        if ($systemParams->def('enable_google_analytics', 0) == '0') {
+        if ($systemParameters->def('enable_google_analytics', 0) == '0') {
             return false;
         }
 
-        $google_analytics_tracking_code = $systemParams->def('google_analytics_tracking_code', '');
+        $google_analytics_tracking_code = $systemParameters->def('google_analytics_tracking_code', '');
 
 $js = '
 <script type="text/javascript">

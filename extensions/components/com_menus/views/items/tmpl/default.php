@@ -28,7 +28,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
-			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('COM_MENUS_ITEMS_SEARCH_FILTER'); ?>" />
+			<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo MolajoText::_('MENU_ITEMS_SEARCH_FILTER'); ?>" />
 			<button type="submit"><?php echo MolajoText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
 			<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo MolajoText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 		</div>
@@ -39,7 +39,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 			</select>
 
 			<select name="filter_level" class="inputbox" onchange="this.form.submit()">
-				<option value=""><?php echo MolajoText::_('COM_MENUS_OPTION_SELECT_LEVEL');?></option>
+				<option value=""><?php echo MolajoText::_('MENU_OPTION_SELECT_LEVEL');?></option>
 				<?php echo MolajoHTML::_('select.options', $this->f_levels, 'value', 'text', $this->state->get('filter.level'));?>
 			</select>
 
@@ -88,7 +88,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 					<?php echo MolajoText::_('JGRID_HEADING_MENU_ITEM_TYPE'); ?>
 				</th>
 				<th width="5%">
-					<?php echo MolajoHTML::_('grid.sort', 'COM_MENUS_HEADING_HOME', 'a.home', $listDirn, $listOrder); ?>
+					<?php echo MolajoHTML::_('grid.sort', 'MENU_HEADING_HOME', 'a.home', $listDirn, $listOrder); ?>
 				</th>
 				<th width="5%">
 					<?php echo MolajoHTML::_('grid.sort', 'JGRID_HEADING_LANGUAGE', 'language', $listDirn, $listOrder); ?>
@@ -172,7 +172,7 @@ $saveOrder 	= ($listOrder == 'a.lft' && $listDirn == 'asc');
 							<?php echo MolajoHTML::_('jgrid.isdefault', $item->home, $i, 'items.', ($item->language != '*' || !$item->home) && $canChange);?>
 						<?php elseif ($canChange):?>
 							<a href="<?php echo MolajoRoute::_('index.php?option=com_menus&task=items.unsetDefault&cid[]='.$item->id.'&'.JUtility::getToken().'=1');?>">
-								<?php echo MolajoHTML::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>MolajoText::sprintf('COM_MENUS_GRID_UNSET_LANGUAGE', $item->language_title)), true);?>
+								<?php echo MolajoHTML::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>MolajoText::sprintf('MENU_GRID_UNSET_LANGUAGE', $item->language_title)), true);?>
 							</a>
 						<?php else:?>
 							<?php echo MolajoHTML::_('image', 'mod_languages/'.$item->image.'.gif', $item->language_title, array('title'=>$item->language_title), true);?>

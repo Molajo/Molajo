@@ -44,7 +44,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
                     ->setPath(
                 'source',
                 ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                        : MOLAJO_BASE_FOLDER).'/language/' . $this->parent->extension->element
+                        : MOLAJO_BASE_FOLDER).'/language/'.$this->parent->extension->element
             );
         }
         $this->manifest = $this->parent->getManifest();
@@ -125,7 +125,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         $this->set('tag', $tag);
 
         // Set the language installation path
-        $this->parent->setPath('extension_site', $basePath.'/language/' . $tag);
+        $this->parent->setPath('extension_site', $basePath.'/language/'.$tag);
 
         // Do we have a meta file in the file list?  In other words... is this a core language pack?
         if ($element && count($element->children())) {
@@ -141,7 +141,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 
         // Either we are installing a core pack or a core pack must exist for the language we are installing.
         if (!$this->_core) {
-            if (!JFile::exists($this->parent->getPath('extension_site').'/'.$this->get('tag') . '.xml')) {
+            if (!JFile::exists($this->parent->getPath('extension_site').'/'.$this->get('tag').'.xml')) {
                 $this->parent
                         ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT', MolajoText::sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
                 return false;
@@ -253,7 +253,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         $row->set('protected', 0);
         $row->set('access', 0);
         $row->set('application_id', $clientId);
-        $row->set('params', $this->parent->getParams());
+        $row->set('parameters', $this->parent->getParameters());
         $row->set('manifest_cache', $this->parent->generateManifestCache());
 
         if (!$row->store()) {
@@ -316,7 +316,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         $folder = $tag;
 
         // Set the language installation path
-        $this->parent->setPath('extension_site', $basePath.'/language/' . $this->get('tag'));
+        $this->parent->setPath('extension_site', $basePath.'/language/'.$this->get('tag'));
 
         // Do we have a meta file in the file list?  In other words... is this a core language pack?
         if (count($xml->files->children())) {
@@ -331,7 +331,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
 
         // Either we are installing a core pack or a core pack must exist for the language we are installing.
         if (!$this->_core) {
-            if (!JFile::exists($this->parent->getPath('extension_site').'/'.$this->get('tag') . '.xml')) {
+            if (!JFile::exists($this->parent->getPath('extension_site').'/'.$this->get('tag').'.xml')) {
                 $this->parent
                         ->abort(MolajoText::sprintf('JLIB_INSTALLER_ABORT', MolajoText::sprintf('JLIB_INSTALLER_ERROR_NO_CORE_LANGUAGE', $this->get('tag'))));
                 return false;
@@ -384,7 +384,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
             $row->set('protected', 0);
             $row->set('access', 0);
             $row->set('application_id', $clientId);
-            $row->set('params', $this->parent->getParams());
+            $row->set('parameters', $this->parent->getParameters());
         }
         $row->set('name', $this->get('name'));
         $row->set('type', 'language');
@@ -444,14 +444,14 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         }
 
         // Verify that it's not the default language for that client
-        $parameters = MolajoComponentHelper::getParams('com_languages');
+        $parameters = MolajoComponentHelper::getParameters('com_languages');
         if ($parameters->get($client->name) == $element) {
             MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_LANG_UNINSTALL_DEFAULT'));
             return false;
         }
 
         // Construct the path from the client, the language and the extension element name
-        $path = $client->path.'/language/' . $element;
+        $path = $client->path.'/language/'.$element;
 
         // Get the package manifest object and remove media
         $this->parent->setPath('source', $path);
@@ -496,13 +496,13 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         foreach ($users as $user)
         {
             $registry = new JRegistry;
-            $registry->loadString($user->params);
+            $registry->loadString($user->parameters);
             if ($registry->get($param_name) == $element) {
                 $registry->set($param_name, '');
                 $query = $db->getQuery(true);
                 $query->update('#__users');
-                $query->set('params=' . $db->quote($registry));
-                $query->where('id=' . (int)$user->id);
+                $query->set('parameters='.$db->quote($registry));
+                $query->where('id='.(int)$user->id);
                 $db->setQuery($query);
                 $db->query();
                 $count = $count + 1;
@@ -531,8 +531,8 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         $admin_languages = JFolder::folders(MOLAJO_BASE_FOLDER.'/language');
         foreach ($site_languages as $language)
         {
-            if (file_exists(MOLAJO_BASE_FOLDER.'/language/' . $language.'/'.$language . '.xml')) {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER.'/language/' . $language.'/'.$language . '.xml');
+            if (file_exists(MOLAJO_BASE_FOLDER.'/language/'.$language.'/'.$language.'.xml')) {
+                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER.'/language/'.$language.'/'.$language.'.xml');
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'language');
                 $extension->set('application_id', 0);
@@ -545,8 +545,8 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         }
         foreach ($admin_languages as $language)
         {
-            if (file_exists(MOLAJO_BASE_FOLDER.'/language/' . $language.'/'.$language . '.xml')) {
-                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER.'/language/' . $language.'/'.$language . '.xml');
+            if (file_exists(MOLAJO_BASE_FOLDER.'/language/'.$language.'/'.$language.'.xml')) {
+                $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_BASE_FOLDER.'/language/'.$language.'/'.$language.'.xml');
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'language');
                 $extension->set('application_id', 1);
@@ -573,17 +573,17 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
         // Need to find to find where the XML file is since we don't store this normally
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $short_element = $this->parent->extension->element;
-        $manifestPath = $client->path.'/language/' . $short_element.'/'.$short_element . '.xml';
+        $manifestPath = $client->path.'/language/'.$short_element.'/'.$short_element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $this->parent->setPath('source', $client->path.'/language/' . $short_element);
+        $this->parent->setPath('source', $client->path.'/language/'.$short_element);
         $this->parent->setPath('extension_root', $this->parent->getPath('source'));
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
         $this->parent->extension->manifest_cache = json_encode($manifest_details);
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
         $this->parent->extension->enabled = 1;
-        //$this->parent->extension->params = $this->parent->getParams();
+        //$this->parent->extension->parameters = $this->parent->getParameters();
         try
         {
             $this->parent->extension->store();
@@ -606,7 +606,7 @@ class MolajoInstallerLanguage extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
-        $manifestPath = $client->path.'/language/' . $this->parent->extension->element.'/'.$this->parent->extension->element . '.xml';
+        $manifestPath = $client->path.'/language/'.$this->parent->extension->element.'/'.$this->parent->extension->element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));

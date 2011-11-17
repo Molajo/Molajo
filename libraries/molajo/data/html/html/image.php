@@ -61,7 +61,7 @@ abstract class MolajoHtmlImage
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');
 
         if ($altFile) {
-            $src = $altFolder . $altFile;
+            $src = $altFolder.$altFile;
         }
         elseif ($altFile == -1)
         {
@@ -69,15 +69,15 @@ abstract class MolajoHtmlImage
         }
         else
         {
-            $path = JPATH_SITE.'/templates/' . $cur_template.'/images/' . $file;
+            $path = JPATH_SITE.'/templates/'.$cur_template.'/images/'.$file;
             if (!isset($paths[$path])) {
-                if (file_exists(JPATH_SITE.'/templates/' . $cur_template.'/images/' . $file)) {
-                    $paths[$path] = 'templates/' . $cur_template.'/images/' . $file;
+                if (file_exists(JPATH_SITE.'/templates/'.$cur_template.'/images/'.$file)) {
+                    $paths[$path] = 'templates/'.$cur_template.'/images/'.$file;
                 }
                 else
                 {
                     // Outputs only path to image.
-                    $paths[$path] = $folder . $file;
+                    $paths[$path] = $folder.$file;
                 }
             }
             $src = $paths[$path];
@@ -92,7 +92,7 @@ abstract class MolajoHtmlImage
 
         // Outputs actual HTML <img> tag.
         if ($asTag) {
-            return '<img src="' . $src . '" alt="' . $alt . '" ' . $attribs . ' />';
+            return '<img src="'.$src.'" alt="'.$alt.'" '.$attribs.' />';
         }
 
         return $src;
@@ -136,7 +136,7 @@ abstract class MolajoHtmlImage
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');
 
         if ($altFile) {
-            $image = $altFolder . $altFile;
+            $image = $altFolder.$altFile;
         }
         elseif ($altFile == -1)
         {
@@ -144,18 +144,18 @@ abstract class MolajoHtmlImage
         }
         else
         {
-            if (file_exists(JPATH_ADMINISTRATOR.'/templates/' . $cur_template.'/images/' . $file)) {
-                $image = 'templates/' . $cur_template.'/images/' . $file;
+            if (file_exists(JPATH_ADMINISTRATOR.'/templates/'.$cur_template.'/images/'.$file)) {
+                $image = 'templates/'.$cur_template.'/images/'.$file;
             }
             else
             {
                 // Compability with previous versions.
                 if (substr($folder, 0, 14) == "/administrator") {
-                    $image = substr($folder, 15) . $file;
+                    $image = substr($folder, 15).$file;
                 }
                 else
                 {
-                    $image = $folder . $file;
+                    $image = $folder.$file;
                 }
             }
         }
@@ -169,7 +169,7 @@ abstract class MolajoHtmlImage
 
         // Outputs actual HTML <img> tag.
         if ($asTag) {
-            $image = '<img src="' . $image . '" alt="' . $alt . '" ' . $attribs . ' />';
+            $image = '<img src="'.$image.'" alt="'.$alt.'" '.$attribs.' />';
         }
 
         return $image;

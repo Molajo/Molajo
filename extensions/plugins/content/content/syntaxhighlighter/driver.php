@@ -52,8 +52,8 @@ class MolajoContentSyntaxHighlighter {
     {
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
-        if ($systemParams->def('enable_syntax_highlighter', 0) == 0) {
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
+        if ($systemParameters->def('enable_syntax_highlighter', 0) == 0) {
             return;
         }
 
@@ -112,7 +112,7 @@ class MolajoContentSyntaxHighlighter {
                     $document->addStyleSheet($stylesfolder.'shCore.css' );
                     $document->addStyleSheet($stylesfolder.'molajo.css' );
 
-                    $selectedTemplate = $systemParams->def('syntax_highlighter_template', 'shThemeDefault.css');
+                    $selectedTemplate = $systemParameters->def('syntax_highlighter_template', 'shThemeDefault.css');
                     if ($selectedTemplate == 'shThemeDjango.css') {
                     } else if ($selectedTemplate == 'shThemeEclipse.css') {
                     } else if ($selectedTemplate == 'shThemeEmacs.css') {

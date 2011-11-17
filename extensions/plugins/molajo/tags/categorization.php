@@ -33,22 +33,22 @@ class plgMolajoTags extends MolajoPlugin	{
         }
 
         /** com_tags parameters **/
-        $responsesParams = MolajoComponentHelper::getParams('com_tags', true);
+        $responsesParameters = MolajoComponentHelper::getParameters('com_tags', true);
 
         /** broadcasting enabled **/
-        if ($responsesParams->def('enable_broadcast', 0) == '1') {
+        if ($responsesParameters->def('enable_broadcast', 0) == '1') {
         } else {
             return;
         }
 
         /** meta **/
-        if ($responsesParams->def('enable_subscriptions', 0) == '1') {
+        if ($responsesParameters->def('enable_subscriptions', 0) == '1') {
             require_once dirname(__FILE__).'/email/driver.php';
             MolajoTagsEmail::driver ($rows);
         }
 
         /** tags **/
-        if ($responsesParams->def('enable_ping', 0) == '1') {
+        if ($responsesParameters->def('enable_ping', 0) == '1') {
             require_once dirname(__FILE__).'/ping/driver.php';
             MolajoTagsPing::driver ($rows);
         }

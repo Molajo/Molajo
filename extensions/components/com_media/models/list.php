@@ -108,7 +108,7 @@ class MediaModelList extends JModel
 					$tmp = new JObject();
 					$tmp->name = $file;
 					$tmp->title = $file;
-					$tmp->path = str_replace(DS, '/', JPath::clean($basePath . '/' . $file));
+					$tmp->path = str_replace(DS, '/', JPath::clean($basePath.'/'.$file));
 					$tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
 					$tmp->size = filesize($tmp->path);
 
@@ -170,7 +170,7 @@ class MediaModelList extends JModel
 			{
 				$tmp = new JObject();
 				$tmp->name = basename($folder);
-				$tmp->path = str_replace(DS, '/', JPath::clean($basePath . '/' . $folder));
+				$tmp->path = str_replace(DS, '/', JPath::clean($basePath.'/'.$folder));
 				$tmp->path_relative = str_replace($mediaBase, '', $tmp->path);
 				$count = MediaHelper::countFiles($tmp->path);
 				$tmp->files = $count[0];

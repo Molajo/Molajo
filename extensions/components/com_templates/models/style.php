@@ -54,7 +54,7 @@ class TemplatesModelStyle extends JModelAdmin
 		$this->setState('style.id', $pk);
 
 		// Load the parameters.
-		$parameters	= JComponentHelper::getParams('com_templates');
+		$parameters	= JComponentHelper::getParameters('com_templates');
 		$this->setState('parameters', $parameters);
 	}
 
@@ -422,9 +422,9 @@ class TemplatesModelStyle extends JModelAdmin
 				// Update the mapping for menu items that this style IS assigned to.
 				$query = $db->getQuery(true);
 				$query->update('#__menu_items');
-				$query->set('template_style_id='.(int)$table->id);
+				$query->set('template_id='.(int)$table->id);
 				$query->where('id IN ('.implode(',', $data['assigned']).')');
-				$query->where('template_style_id!='.(int) $table->id);
+				$query->where('template_id!='.(int) $table->id);
 				$query->where('checked_out in (0,'.(int) $user->id.')');
 				$db->setQuery($query);
 				$db->query();
@@ -435,12 +435,12 @@ class TemplatesModelStyle extends JModelAdmin
 			// If unassigned then all existing maps will be removed.
 			$query = $db->getQuery(true);
 			$query->update('#__menu_items');
-			$query->set('template_style_id=0');
+			$query->set('template_id=0');
 			if (!empty($data['assigned'])) {
 				$query->where('id NOT IN ('.implode(',', $data['assigned']).')');
 			}
 
-			$query->where('template_style_id='.(int) $table->id);
+			$query->where('template_id='.(int) $table->id);
 			$query->where('checked_out in (0,'.(int) $user->id.')');
 			$db->setQuery($query);
 			$db->query();

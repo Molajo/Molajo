@@ -37,37 +37,37 @@ class plgMolajoContent extends MolajoPlugin	{
         $this->location = 'introtext';
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
         $loc = $this->location;
 
         /** view access **/
-        if ($systemParams->def('enable_view_access', 0) == 1) {
-            require_once dirname(__FILE__) . '/view/driver.php';
+        if ($systemParameters->def('enable_view_access', 0) == 1) {
+            require_once dirname(__FILE__).'/view/driver.php';
             $results = MolajoContentView::driver ($content->introtext);
             $content->introtext = $results;
         }
 
         /** hide author notes **/
-        if ($systemParams->def('enable_hidden_notes', 0) == 1) {
-            require_once dirname(__FILE__) . '/notes/driver.php';
+        if ($systemParameters->def('enable_hidden_notes', 0) == 1) {
+            require_once dirname(__FILE__).'/notes/driver.php';
             MolajoContentNotes::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
         /** add line breaks **/
-        if ($systemParams->def('enable_add_line_breaks', 0) == 1) {
+        if ($systemParameters->def('enable_add_line_breaks', 0) == 1) {
             $content->$loc = MolajoTextHelper::addLineBreaks ($content->$loc);
         }
         /** pullquotes and blockquotes **/
-        if (($systemParams->def('enable_blockquotes', 0) == 1) || ($systemParams->def('enable_pullquotes', 0) == 1)) {
-            require_once dirname(__FILE__) . '/quotes/driver.php';
+        if (($systemParameters->def('enable_blockquotes', 0) == 1) || ($systemParameters->def('enable_pullquotes', 0) == 1)) {
+            require_once dirname(__FILE__).'/quotes/driver.php';
             MolajoContentQuotes::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
         /** syntax highlighter **/
-        if ($systemParams->def('enable_syntax_highlighter', 0) == 1) {
-            require_once dirname(__FILE__) . '/syntaxhighlighter/driver.php';
+        if ($systemParameters->def('enable_syntax_highlighter', 0) == 1) {
+            require_once dirname(__FILE__).'/syntaxhighlighter/driver.php';
             MolajoContentSyntaxHighlighter::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
         /** smilies functions **/
-        if ($systemParams->def('enable_smilies', 0) == 1) {
+        if ($systemParameters->def('enable_smilies', 0) == 1) {
             $content->$loc = MolajoTextHelper::smilies ($content->$loc);
         }
         return;
@@ -90,11 +90,11 @@ class plgMolajoContent extends MolajoPlugin	{
 
         /** retrieve parameters for system plugin molajo library **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** talk like a pirate day **/
-        if (($systemParams->def('enable_pirate_day', 0) == 1) && (date("m.d") == '09/19')) {
-            require_once dirname(__FILE__) . '/pirate/driver.php';
+        if (($systemParameters->def('enable_pirate_day', 0) == 1) && (date("m.d") == '09/19')) {
+            require_once dirname(__FILE__).'/pirate/driver.php';
             MolajoContentPirate::driver ();
         }
     }

@@ -107,7 +107,7 @@ class MolajoFieldLanguage extends MolajoField
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.language = ' . (int)$value);
+            $query->where('a.language = '.(int)$value);
         }
     }
 }

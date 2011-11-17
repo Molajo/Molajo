@@ -71,7 +71,7 @@ class MolajoSessionStorageWincache extends MolajoSessionStorage
      */
     public function read($id)
     {
-        $sess_id = 'sess_' . $id;
+        $sess_id = 'sess_'.$id;
         return (string)wincache_ucache_get($sess_id);
     }
 
@@ -87,7 +87,7 @@ class MolajoSessionStorageWincache extends MolajoSessionStorage
      */
     public function write($id, $session_data)
     {
-        $sess_id = 'sess_' . $id;
+        $sess_id = 'sess_'.$id;
         return wincache_ucache_set($sess_id, $session_data, ini_get("session.gc_maxlifetime"));
     }
 
@@ -100,7 +100,7 @@ class MolajoSessionStorageWincache extends MolajoSessionStorage
      */
     public function destroy($id)
     {
-        $sess_id = 'sess_' . $id;
+        $sess_id = 'sess_'.$id;
         return wincache_ucache_delete($sess_id);
     }
 

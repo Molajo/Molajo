@@ -412,11 +412,11 @@ class plgSystemCompress extends MolajoPlugin
 
 		// Setup the patterns for matching.
 		$url_pattern     = '(([^\\\\\'", \(\)]*(\\\\.)?)+)';
-		$urlfunc_pattern = 'url\(\s*[\'"]?' . $url_pattern . '[\'"]?\s*\)';
+		$urlfunc_pattern = 'url\(\s*[\'"]?'.$url_pattern.'[\'"]?\s*\)';
 		$pattern         = '/(' .
-			 '(@import\s*[\'"]' . $url_pattern     . '[\'"]\s*\;?)' .
-			'|(@import\s*'      . $urlfunc_pattern . '\s*\;?)'      .
-			'|('                . $urlfunc_pattern . ')'      .  ')/iu';
+			 '(@import\s*[\'"]'.$url_pattern    .'[\'"]\s*\;?)' .
+			'|(@import\s*'     .$urlfunc_pattern.'\s*\;?)'      .
+			'|('               .$urlfunc_pattern.')'     . ')/iu';
 
 		// If there are no matches just return the empty array.
 		if (!preg_match_all($pattern, $text, $matches)) {

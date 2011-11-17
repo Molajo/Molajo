@@ -31,7 +31,7 @@ class URLSCanonical extends MolajoPlugin
 		$uri =& MolajoFactory::getURI();
 		$query = $uri->getQuery(true);
 		$urlhost = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-		$ArticleURL = $urlhost . $article->readmore_link;
+		$ArticleURL = $urlhost.$article->readmore_link;
 						
 		$document =& MolajoFactory::getDocument();
 		$document->addHeadLink($ArticleURL, 'canonical', 'rel', '');

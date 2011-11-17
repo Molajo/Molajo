@@ -60,7 +60,7 @@ class JFormFieldCategoryParent extends JFormFieldList
 			$rowQuery	= $db->getQuery(true);
 			$rowQuery->select('a.id AS value, a.title AS text, a.level, a.parent_id');
 			$rowQuery->from('#__categories AS a');
-			$rowQuery->where('a.id = ' . (int) $id);
+			$rowQuery->where('a.id = '.(int) $id);
 			$db->setQuery($rowQuery);
 			$row = $db->loadObject();
 		}

@@ -22,8 +22,8 @@ class ProtectRecaptcha
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
-		$spamProtectionOption = $tamkaLibraryPluginParams->def('spamprevention', '1');		
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
+		$spamProtectionOption = $tamkaLibraryPluginParameters->def('spamprevention', '1');
 
 		if ($spamProtectionOption == '0') {
 			return 0;
@@ -36,7 +36,7 @@ class ProtectRecaptcha
 		
 			tamkaimport('tamka.spam.recaptcha.recaptchalib');
 			
-			$recaptchaprivatekey = $tamkaLibraryPluginParams->def( 'recaptchaprivatekey', '' );	
+			$recaptchaprivatekey = $tamkaLibraryPluginParameters->def( 'recaptchaprivatekey', '' );
 		    $response = recaptcha_check_answer ($recaptchaprivatekey,
      								$referer,
                                     $recaptcha_challenge_field,
@@ -57,7 +57,7 @@ class ProtectRecaptcha
 					
 			tamkaimport('tamka.spam.akismet.Akismetclass');
 			
-    		$akismetkey = $tamkaLibraryPluginParams->get( 'akismetkey' );
+    		$akismetkey = $tamkaLibraryPluginParameters->get( 'akismetkey' );
 
 			$uri	= &MolajoFactory::getURI();
 			$url	= $uri->toString(array('scheme', 'user', 'pass', 'host', 'port', 'path'));
@@ -84,8 +84,8 @@ class ProtectRecaptcha
 			tamkaimport('tamka.spam.mollom.mollom');
 			$session =& MolajoFactory::getSession();
 			
-			$mollompublickey = $tamkaLibraryPluginParams->get( 'mollompublickey' );
-			$mollomprivatekey = $tamkaLibraryPluginParams->get( 'mollomprivatekey' );			
+			$mollompublickey = $tamkaLibraryPluginParameters->get( 'mollompublickey' );
+			$mollomprivatekey = $tamkaLibraryPluginParameters->get( 'mollomprivatekey' );
 
 			Mollom::setPublicKey($mollompublickey);
 			Mollom::setPrivateKey($mollomprivatekey);
@@ -122,7 +122,7 @@ class ProtectRecaptcha
 						$mainframe->enqueueMessage(JText::_('Comment identified as Spam by Mollom'));
 						$published = 3;
 					} else {
-		//				echo 'must be ham ' . $feedback['spam'];
+		//				echo 'must be ham '.$feedback['spam'];
 					}
 			}
 		}
@@ -140,12 +140,12 @@ class ProtectRecaptcha
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 		
 	/**
 	 * 	Filter content through array of Bad Words
 	 */
-		$badWords = explode(",", $tamkaLibraryPluginParams->def('badword', ''));
+		$badWords = explode(",", $tamkaLibraryPluginParameters->def('badword', ''));
 		return str_replace($badWords, '', $cleanString);	
 			
 	}

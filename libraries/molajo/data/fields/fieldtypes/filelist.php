@@ -66,7 +66,7 @@ class MolajoFormFieldFileList extends MolajoFormFieldList
 
                 // Check to see if the file is in the exclude mask.
                 if ($exclude) {
-                    if (preg_match(chr(1) . $exclude . chr(1), $file)) {
+                    if (preg_match(chr(1).$exclude.chr(1), $file)) {
                         continue;
                     }
                 }

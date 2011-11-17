@@ -38,18 +38,18 @@ class MolajoFormFieldList extends MolajoFormField
         $attr = '';
 
         // Initialize some field attributes.
-        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $attr .= $this->element['class'] ? ' class="'.(string)$this->element['class'].'"' : '';
 
         // To avoid user's confusion, readonly="true" should imply disabled="true".
         if ((string)$this->element['readonly'] == 'true' || (string)$this->element['disabled'] == 'true') {
             $attr .= ' disabled="disabled"';
         }
 
-        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
+        $attr .= $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
         $attr .= $this->multiple ? ' multiple="multiple"' : '';
 
         // Initialize JavaScript field attributes.
-        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
+        $attr .= $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
 
         // Get the field options.
         $options = (array)$this->getOptions();
@@ -57,7 +57,7 @@ class MolajoFormFieldList extends MolajoFormField
         // Create a read-only list (no name) with a hidden calendar to store the value.
         if ((string)$this->element['readonly'] == 'true') {
             $html[] = MolajoHTML::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
-            $html[] = '<calendar type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
+            $html[] = '<calendar type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
         }
             // Create a regular list.
         else {

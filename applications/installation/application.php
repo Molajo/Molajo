@@ -126,7 +126,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
             }
 
             /** render the component */
-            $contents = MolajoComponentHelper::renderComponent($request, $params = array());
+            $contents = MolajoComponentHelper::renderComponent($request, $parameters = array());
             $document->setBuffer($contents, 'component');
         }
 
@@ -236,23 +236,23 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
             default:
                 $template	= $this->getTemplate(true);
                 $file		= JRequest::getCmd('tmpl', 'index');
-                $params = array(
+                $parameters = array(
                     'template'	=> $template->template,
                     'file'		=> $file.'.php',
                     'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
-                    'params'	=> $template->params
+                    'parameters'	=> $template->parameters
                 );
                 break;
         }
 
         // Parse the document.
         $document = MolajoFactory::getDocument();
-        $document->parse($params);
+        $document->parse($parameters);
 
         $caching = false;
 
         // Render the document.
-        JResponse::setBody($document->render($caching, $params));
+        JResponse::setBody($document->render($caching, $parameters));
     }
 
 	/**
@@ -385,15 +385,15 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
      *
      * Get the Template for the Application
      *
-     * @param bool $params
+     * @param bool $parameters
      * @return stdClass|string
      */
-	public function getTemplate($params = false)
+	public function getTemplate($parameters = false)
 	{
-		if ((bool) $params) {
+		if ((bool) $parameters) {
 			$template = new stdClass();
 			$template->template = 'install';
-			$template->params = new JRegistry;
+			$template->parameters = new JRegistry;
 			return $template;
 		}
 		return 'install';
@@ -453,7 +453,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
          <helpurl></helpurl>
          <debug>0</debug>
          <sampledata>sample_data_da.sql</sampledata>
-         <params/>
+         <parameters/>
         </localise>
          */
 		return $ret;

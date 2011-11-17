@@ -78,7 +78,7 @@ class UsersControllerConfig extends JController
 
 		// Get the component configuration values.
 		$app	= MolajoFactory::getApplication();
-		$config = JComponentHelper::getParams('com_users');
+		$config = JComponentHelper::getParameters('com_users');
 		$string	= (string)$config;
 
 		// Send file headers.

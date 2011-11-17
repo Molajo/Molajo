@@ -43,21 +43,21 @@ class MolajoHtmlInstallation
                 $on = 1;
         }
 
-        $html = '<h1>' . MolajoText::_('INSTL_STEPS_TITLE') . '</h1>' .
-                '<div class="step' . ($on == 1 ? ' active'
-                : '') . '" id="language">' . MolajoText::_('INSTL_STEP_1_LABEL') . '</div>' .
-                '<div class="step' . ($on == 2 ? ' active'
-                : '') . '" id="preinstall">' . MolajoText::_('INSTL_STEP_2_LABEL') . '</div>' .
-                '<div class="step' . ($on == 3 ? ' active'
-                : '') . '" id="license">' . MolajoText::_('INSTL_STEP_3_LABEL') . '</div>' .
-                '<div class="step' . ($on == 4 ? ' active'
-                : '') . '" id="database">' . MolajoText::_('INSTL_STEP_4_LABEL') . '</div>' .
-                '<div class="step' . ($on == 5 ? ' active'
-                : '') . '" id="filesystem">' . MolajoText::_('INSTL_STEP_5_LABEL') . '</div>' .
-                '<div class="step' . ($on == 6 ? ' active'
-                : '') . '" id="site">' . MolajoText::_('INSTL_STEP_6_LABEL') . '</div>' .
-                '<div class="step' . ($on == 7 ? ' active'
-                : '') . '" id="complete">' . MolajoText::_('INSTL_STEP_7_LABEL') . '</div>';
+        $html = '<h1>'.MolajoText::_('INSTL_STEPS_TITLE').'</h1>' .
+                '<div class="step'.($on == 1 ? ' active'
+                : '').'" id="language">'.MolajoText::_('INSTL_STEP_1_LABEL').'</div>' .
+                '<div class="step'.($on == 2 ? ' active'
+                : '').'" id="preinstall">'.MolajoText::_('INSTL_STEP_2_LABEL').'</div>' .
+                '<div class="step'.($on == 3 ? ' active'
+                : '').'" id="license">'.MolajoText::_('INSTL_STEP_3_LABEL').'</div>' .
+                '<div class="step'.($on == 4 ? ' active'
+                : '').'" id="database">'.MolajoText::_('INSTL_STEP_4_LABEL').'</div>' .
+                '<div class="step'.($on == 5 ? ' active'
+                : '').'" id="filesystem">'.MolajoText::_('INSTL_STEP_5_LABEL').'</div>' .
+                '<div class="step'.($on == 6 ? ' active'
+                : '').'" id="site">'.MolajoText::_('INSTL_STEP_6_LABEL').'</div>' .
+                '<div class="step'.($on == 7 ? ' active'
+                : '').'" id="complete">'.MolajoText::_('INSTL_STEP_7_LABEL').'</div>';
         return $html;
     }
 }

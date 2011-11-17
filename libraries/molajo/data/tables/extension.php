@@ -78,9 +78,9 @@ class MolajoTableExtension extends MolajoTable
         $dbo = MolajoFactory::getDBO();
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $dbo->Quote($val);
+            $where[] = $col.' = '.$dbo->Quote($val);
         }
-        $query = 'SELECT extension_id FROM #__extensions WHERE ' . implode(' AND ', $where);
+        $query = 'SELECT extension_id FROM #__extensions WHERE '.implode(' AND ', $where);
         $dbo->setQuery($query);
         return $dbo->loadResult();
     }
@@ -122,21 +122,21 @@ class MolajoTableExtension extends MolajoTable
         }
 
         // Build the WHERE clause for the primary keys.
-        $where = $k . '=' . implode(' OR ' . $k . '=', $pks);
+        $where = $k.'='.implode(' OR '.$k.'=', $pks);
 
         // Determine if there is checkin support for the table.
         if (!property_exists($this, 'checked_out') || !property_exists($this, 'checked_out_time')) {
             $checkin = '';
         }
         else {
-            $checkin = ' AND (checked_out = 0 OR checked_out = ' . (int)$userId . ')';
+            $checkin = ' AND (checked_out = 0 OR checked_out = '.(int)$userId.')';
         }
 
         // Update the publishing state for rows with the given primary keys.
         $this->_db->setQuery(
-            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
-            ' SET ' . $this->_db->quoteName('enabled') . ' = ' . (int)$state .
-            ' WHERE (' . $where . ')' .
+            'UPDATE '.$this->_db->quoteName($this->_tbl) .
+            ' SET '.$this->_db->quoteName('enabled').' = '.(int)$state .
+            ' WHERE ('.$where.')' .
             $checkin
         );
         $this->_db->query();

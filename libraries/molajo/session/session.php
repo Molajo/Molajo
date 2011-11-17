@@ -106,7 +106,7 @@ class MolajoSession extends JObject
         // set options
         $this->_setOptions($options);
 
-        $this->_setCookieParams();
+        $this->_setCookieParameters();
 
         // load the session
         $this->_start();
@@ -244,7 +244,7 @@ class MolajoSession extends JObject
     {
         $user = MolajoFactory::getUser();
         $session = MolajoFactory::getSession();
-        $hash = MolajoApplication::getHash($user->get('id', 0) . $session->getToken($forceNew));
+        $hash = MolajoApplication::getHash($user->get('id', 0).$session->getToken($forceNew));
 
         return $hash;
     }
@@ -296,11 +296,11 @@ class MolajoSession extends JObject
         foreach ($handlers as $handler)
         {
             $name = substr($handler, 0, strrpos($handler, '.'));
-            $class = 'MolajoSessionStorage' . ucfirst($name);
+            $class = 'MolajoSessionStorage'.ucfirst($name);
 
             //Load the class only if needed
             if (!class_exists($class)) {
-                require_once dirname(__FILE__).'/storage/' . $name . '.php';
+                require_once dirname(__FILE__).'/storage/'.$name.'.php';
             }
 
             if (call_user_func_array(array(trim($class), 'test'), array())) {
@@ -340,7 +340,7 @@ class MolajoSession extends JObject
      */
     public function get($name, $default = null, $namespace = 'default')
     {
-        $namespace = '__' . $namespace; //add prefix to namespace to avoid collisions
+        $namespace = '__'.$namespace; //add prefix to namespace to avoid collisions
 
         if ($this->_state !== 'active' && $this->_state !== 'expired') {
             // @TODO :: generated error here
@@ -367,7 +367,7 @@ class MolajoSession extends JObject
      */
     public function set($name, $value = null, $namespace = 'default')
     {
-        $namespace = '__' . $namespace; //add prefix to namespace to avoid collisions
+        $namespace = '__'.$namespace; //add prefix to namespace to avoid collisions
 
         if ($this->_state !== 'active') {
             // @TODO :: generated error here
@@ -400,7 +400,7 @@ class MolajoSession extends JObject
     public function has($name, $namespace = 'default')
     {
         // Add prefix to namespace to avoid collisions.
-        $namespace = '__' . $namespace;
+        $namespace = '__'.$namespace;
 
         if ($this->_state !== 'active') {
             // @TODO :: generated error here
@@ -423,7 +423,7 @@ class MolajoSession extends JObject
     public function clear($name, $namespace = 'default')
     {
         // Add prefix to namespace to avoid collisions
-        $namespace = '__' . $namespace;
+        $namespace = '__'.$namespace;
 
         if ($this->_state !== 'active') {
             // @TODO :: generated error here
@@ -631,7 +631,7 @@ class MolajoSession extends JObject
      *
      * @since   11.1
      */
-    protected function _setCookieParams()
+    protected function _setCookieParameters()
     {
         $cookie = session_get_cookie_params();
         if ($this->_force_ssl) {
@@ -670,7 +670,7 @@ class MolajoSession extends JObject
             $token .= $chars[(rand(0, $max))];
         }
 
-        return md5($token . $name);
+        return md5($token.$name);
     }
 
     /**

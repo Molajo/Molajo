@@ -43,7 +43,7 @@ abstract class MolajoPlugin extends JEvent
      *
      * @param   object  $subject  The object to observe
      * @param   array  $config  An optional associative array of configuration settings.
-     * Recognized key values include 'name', 'group', 'params', 'language'
+     * Recognized key values include 'name', 'group', 'parameters', 'language'
      * (this list is not meant to be comprehensive).
      *
      * @since   11.1
@@ -52,10 +52,10 @@ abstract class MolajoPlugin extends JEvent
     {
         if (isset($config['parameters'])) {
             if ($config['parameters'] instanceof JRegistry) {
-                $this->params = $config['parameters'];
+                $this->parameters = $config['parameters'];
             } else {
-                $this->params = new JRegistry;
-                $this->params->loadString($config['parameters']);
+                $this->parameters = new JRegistry;
+                $this->parameters->loadString($config['parameters']);
             }
         }
 
@@ -82,7 +82,7 @@ abstract class MolajoPlugin extends JEvent
     public function loadLanguage($extension = '', $basePath = MOLAJO_BASE_FOLDER)
     {
         if (empty($extension)) {
-            $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
+            $extension = 'plg'.ucfirst($this->_type).ucfirst($this->_name);
         }
 
         $lang = MolajoFactory::getLanguage();

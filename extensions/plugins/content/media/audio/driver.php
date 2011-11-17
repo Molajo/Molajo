@@ -42,12 +42,12 @@ class MolajoMediaAudio {
     protected $audio_file_loader;
 
     /**
-     * $systemParams
+     * $systemParameters
      *
      * @var	string
      * @access	public
      */
-    protected $systemParams;
+    protected $systemParameters;
 
     /**
      * MolajoMediaAudio::driver
@@ -74,8 +74,8 @@ class MolajoMediaAudio {
         $workText = $content->$location;
 
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $this->systemParams = new JParameter($molajoSystemPlugin->parameters);
-        $this->audio_folder = 'images/'.$this->systemParams->def('audio_folder', 'audio');
+        $this->systemParameters = new JParameter($molajoSystemPlugin->parameters);
+        $this->audio_folder = 'images/'.$this->systemParameters->def('audio_folder', 'audio');
 
         /** layout: loads JS for head **/
         $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio_head');

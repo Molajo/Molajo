@@ -333,7 +333,7 @@ class MolajoInstaller extends MolajoAdapter
 
                     // Remove the entry from the #__extensions table
                     $query->delete($db->quoteName('#__extensions'));
-                    $query->where($db->quoteName('extension_id') . ' = ' . (int)$step['id']);
+                    $query->where($db->quoteName('extension_id').' = '.(int)$step['id']);
                     $db->setQuery($query);
                     $stepval = $db->query();
 
@@ -342,7 +342,7 @@ class MolajoInstaller extends MolajoAdapter
                 default:
                     if ($type && is_object($this->_adapters[$type])) {
                         // Build the name of the custom rollback method for the type
-                        $method = '_rollback_' . $step['type'];
+                        $method = '_rollback_'.$step['type'];
                         // Custom rollback method handler
                         if (method_exists($this->_adapters[$type], $method)) {
                             $stepval = $this->_adapters[$type]->$method($step);
@@ -368,7 +368,7 @@ class MolajoInstaller extends MolajoAdapter
         $debug = $conf->get('debug');
 
         if ($debug) {
-            MolajoError::raiseError(500, MolajoText::_('JLIB_INSTALLER_ABORT_DEBUG') . $msg);
+            MolajoError::raiseError(500, MolajoText::_('JLIB_INSTALLER_ABORT_DEBUG').$msg);
         }
 
         return $retval;
@@ -918,14 +918,14 @@ class MolajoInstaller extends MolajoAdapter
                     $query = $db->getQuery(true);
                     $query->delete()
                             ->from('#__schemas')
-                            ->where('extension_id = ' . $eid);
+                            ->where('extension_id = '.$eid);
                     $db->setQuery($query);
 
                     if ($db->query()) {
                         $query->clear();
                         $query->insert('#__schemas')
-                                ->set('extension_id = ' . $eid)
-                                ->set('version_id = ' . $db->quote(end($files)));
+                                ->set('extension_id = '.$eid)
+                                ->set('version_id = '.$db->quote(end($files)));
                         $db->setQuery($query);
                         $db->query();
                     }
@@ -982,7 +982,7 @@ class MolajoInstaller extends MolajoAdapter
                     $query = $db->getQuery(true);
                     $query->select('version_id')
                             ->from('#__schemas')
-                            ->where('extension_id = ' . $eid);
+                            ->where('extension_id = '.$eid);
                     $db->setQuery($query);
                     $version = $db->loadResult();
 
@@ -991,7 +991,7 @@ class MolajoInstaller extends MolajoAdapter
                         foreach ($files as $file)
                         {
                             if (version_compare($file, $version) > 0) {
-                                $buffer = file_get_contents($this->getPath('extension_root').'/'.$schemapath.'/'.$file . '.sql');
+                                $buffer = file_get_contents($this->getPath('extension_root').'/'.$schemapath.'/'.$file.'.sql');
 
                                 // Graceful exit and rollback if read not successful
                                 if ($buffer === false) {
@@ -1033,14 +1033,14 @@ class MolajoInstaller extends MolajoAdapter
                     $query = $db->getQuery(true);
                     $query->delete()
                             ->from('#__schemas')
-                            ->where('extension_id = ' . $eid);
+                            ->where('extension_id = '.$eid);
                     $db->setQuery($query);
 
                     if ($db->Query()) {
                         $query->clear();
                         $query->insert('#__schemas')
-                                ->set('extension_id = ' . $eid)
-                                ->set('version_id = ' . $db->quote(end($files)));
+                                ->set('extension_id = '.$eid)
+                                ->set('version_id = '.$db->quote(end($files)));
                         $db->setQuery($query);
                         $db->Query();
                     }
@@ -1083,7 +1083,7 @@ class MolajoInstaller extends MolajoAdapter
            * Here we set the folder we are going to remove the files from.
            */
         if ($client) {
-            $pathname = 'extension_' . $client->name;
+            $pathname = 'extension_'.$client->name;
             $destination = $this->getPath($pathname);
         }
         else
@@ -1231,7 +1231,7 @@ class MolajoInstaller extends MolajoAdapter
                 if ((string)$file->attributes()->client != '') {
                     // Override the client
                     $langclient = MolajoApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
-                    $path['dest'] = $langclient->path.'/language/' . $file->attributes()->tag.'/'.basename((string)$file);
+                    $path['dest'] = $langclient->path.'/language/'.$file->attributes()->tag.'/'.basename((string)$file);
                 }
                 else
                 {
@@ -1300,8 +1300,8 @@ class MolajoInstaller extends MolajoAdapter
         // Here we set the folder we are going to copy the files to.
         //	Default 'media' Files are copied to the MOLAJO_BASE_FOLDER/media folder
 
-        $folder = ((string)$element->attributes()->destination) ? '/' . $element->attributes()->destination : null;
-        $destination = JPath::clean(MOLAJO_BASE_FOLDER.'/media' . $folder);
+        $folder = ((string)$element->attributes()->destination) ? '/'.$element->attributes()->destination : null;
+        $destination = JPath::clean(MOLAJO_BASE_FOLDER.'/media'.$folder);
 
         // Here we set the folder we are going to copy the files from.
 
@@ -1358,7 +1358,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @since   11.1
      */
-    public function getParams()
+    public function getParameters()
     {
         // Validate that we have a fieldset to use
         if (!isset($this->manifest->config->fields->fieldset)) {
@@ -1562,7 +1562,7 @@ class MolajoInstaller extends MolajoAdapter
                     $folder = '';
                 }
 
-                $source = $client->path.'/media/' . $folder;
+                $source = $client->path.'/media/'.$folder;
 
                 break;
 
@@ -1588,7 +1588,7 @@ class MolajoInstaller extends MolajoAdapter
 
             default:
                 if ($client) {
-                    $pathname = 'extension_' . $client->name;
+                    $pathname = 'extension_'.$client->name;
                     $source = $this->getPath($pathname);
                 }
                 else
@@ -1615,7 +1615,7 @@ class MolajoInstaller extends MolajoAdapter
                 else
                 {
                     $target_client = MolajoApplicationHelper::getApplicationInfo((string)$file->attributes()->client, true);
-                    $path = $target_client->path.'/language/' . $file->attributes()->tag.'/'.basename((string)$file);
+                    $path = $target_client->path.'/language/'.$file->attributes()->tag.'/'.basename((string)$file);
                 }
 
                 // If the language folder is not present, then the core pack hasn't been installed... ignore
@@ -1639,7 +1639,7 @@ class MolajoInstaller extends MolajoAdapter
             }
 
             if ($val === false) {
-                MolajoError::raiseWarning(43, 'Failed to delete ' . $path);
+                MolajoError::raiseWarning(43, 'Failed to delete '.$path);
                 $retval = false;
             }
         }
@@ -1669,7 +1669,7 @@ class MolajoInstaller extends MolajoAdapter
         $path['src'] = $this->getPath('manifest');
 
         if ($client) {
-            $pathname = 'extension_' . $client->name;
+            $pathname = 'extension_'.$client->name;
             $path['dest'] = $this->getPath($pathname).'/'.basename($this->getPath('manifest'));
         }
         else
@@ -1798,10 +1798,10 @@ class MolajoInstaller extends MolajoAdapter
         $dbo = MolajoFactory::getDBO();
         $query = $dbo->getQuery(true);
         $query->delete($dbo->quoteName('#__extensions'));
-        $query->where('type = ' . $dbo->Quote($type));
-        $query->where('element = ' . $dbo->Quote($element));
-        $query->where('folder = ' . $dbo->Quote($folder));
-        $query->where('application_id = ' . intval($client));
+        $query->where('type = '.$dbo->Quote($type));
+        $query->where('element = '.$dbo->Quote($element));
+        $query->where('folder = '.$dbo->Quote($folder));
+        $query->where('application_id = '.intval($client));
         $query->where('state = -1');
 
         return $dbo->Query();

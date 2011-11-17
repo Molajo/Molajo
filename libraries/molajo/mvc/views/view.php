@@ -181,6 +181,7 @@ class MolajoView extends JView
         $wrappedOutput = $this->renderLayout($this->wrap, 'wraps');
 
         echo $wrappedOutput;
+        
         return;
     }
 
@@ -202,7 +203,7 @@ class MolajoView extends JView
         $this->layout_path = false;
 
         /** @var $template */
-        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate() . 'html';
+        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'html';
         $template = MOLAJO_EXTENSION_TEMPLATES.'/molajito/html';
 
         /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
@@ -232,7 +233,7 @@ class MolajoView extends JView
                 $extensionPath = MOLAJO_EXTENSION_MODULES.'/'.$this->request['option'].'/tmpl';
 
             } else {
-                $extensionPath = MOLAJO_EXTENSION_COMPONENTS.'/'.$this->request['option'].'/views/' . $this->request['view'].'/tmpl';
+                $extensionPath = MOLAJO_EXTENSION_COMPONENTS.'/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
             }
         } else {
             $extensionPath = $templateLayoutPath;
@@ -419,9 +420,9 @@ class MolajoView extends JView
         $defaultLanguage = MolajoFactory::getLanguage()->getDefault();
         MolajoFactory::getLanguage()->load('layout', MOLAJO_EXTENSION_LAYOUTS, $defaultLanguage, false, false);
         /** not plural */
-        MolajoFactory::getLanguage()->load('layout_' . substr($layout_type, 0, strlen($layout_type) - 1) . '_' . $layout, $this->layout_path, $defaultLanguage, false, false);
+        MolajoFactory::getLanguage()->load('layout_'.substr($layout_type, 0, strlen($layout_type) - 1).'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
         /** head does not have an s at the end */
-        MolajoFactory::getLanguage()->load('layout_' . $layout_type . '_' . $layout, $this->layout_path, $defaultLanguage, false, false);
+        MolajoFactory::getLanguage()->load('layout_'.$layout_type.'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
     }
 
     /**
@@ -449,8 +450,8 @@ class MolajoView extends JView
         }
 
         /** Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/' . $applicationName;
-        $urlPath = JURI::root() . 'media/system/' . $applicationName;
+        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$applicationName;
+        $urlPath = JURI::root().'media/system/'.$applicationName;
 
         if (isset($this->parameters->load_application_css)
             && $this->parameters->get('load_application_css', true) === true
@@ -491,7 +492,7 @@ class MolajoView extends JView
 
         $filePath = $this->layout_path;
 
-        $urlPath = JURI::root() . 'extensions/layouts/' . $layout_type.'/'.$layout;
+        $urlPath = JURI::root().'extensions/layouts/'.$layout_type.'/'.$layout;
 
         //        if (isset($this->parameters->load_layout_css)
         //            && $this->parameters->get('load_layout_css', true) === true) {
@@ -526,10 +527,10 @@ class MolajoView extends JView
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
                     if ($this->document->direction == 'rtl') {
-                        $this->document->addStyleSheet($urlPath.'/css/' . $file);
+                        $this->document->addStyleSheet($urlPath.'/css/'.$file);
                     }
                 } else {
-                    $this->document->addStyleSheet($urlPath.'/css/' . $file);
+                    $this->document->addStyleSheet($urlPath.'/css/'.$file);
                 }
             }
         }
@@ -555,7 +556,7 @@ class MolajoView extends JView
 
         if (count($files) > 0) {
             foreach ($files as $file) {
-                $this->document->addScript($urlPath.'/js/' . $file);
+                $this->document->addScript($urlPath.'/js/'.$file);
             }
         }
     }

@@ -76,7 +76,7 @@ class MolajoFieldChecked_out extends MolajoField
             return;
         }
 
-        $query->where('a.checked_out = ' . (int)$value);
+        $query->where('a.checked_out = '.(int)$value);
     }
 
     /**

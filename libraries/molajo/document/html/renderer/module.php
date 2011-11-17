@@ -65,9 +65,9 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
 
         // Use parameters from template
         if (isset($attribs['parameters'])) {
-            $template_params = new JRegistry;
-            $template_params->loadString(html_entity_decode($attribs['parameters'], ENT_COMPAT, 'UTF-8'));
-            $parameters->merge($template_params);
+            $template_parameters = new JRegistry;
+            $template_parameters->loadString(html_entity_decode($attribs['parameters'], ENT_COMPAT, 'UTF-8'));
+            $parameters->merge($template_parameters);
             $module = clone $module;
             $module->parameters = (string)$parameters;
         }
@@ -83,13 +83,13 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
             && $cachemode != 'safeuri') {
 
             // Default to itemid creating method and workarounds on
-            $cacheparams = new stdClass;
-            $cacheparams->cachemode = $cachemode;
-            $cacheparams->class = 'MolajoModuleHelper';
-            $cacheparams->method = 'renderModule';
-            $cacheparams->methodparams = array($module, $attribs);
+            $cacheparameters = new stdClass;
+            $cacheparameters->cachemode = $cachemode;
+            $cacheparameters->class = 'MolajoModuleHelper';
+            $cacheparameters->method = 'renderModule';
+            $cacheparameters->methodparameters = array($module, $attribs);
 
-            $contents = MolajoModuleHelper::ModuleCache($module, $parameters, $cacheparams);
+            $contents = MolajoModuleHelper::ModuleCache($module, $parameters, $cacheparameters);
 
         } else {
             $contents = MolajoModuleHelper::renderModule($module, $attribs);

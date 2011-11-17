@@ -27,7 +27,7 @@ class MolajoFieldContent_type extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('content_type');
+        parent::setFieldname('content_type_id');
         parent::setRequestFilter('integer');
     }
 
@@ -80,15 +80,15 @@ class MolajoFieldContent_type extends MolajoField
     {
         if ($onlyWhereClause) {
         } else {
-            //            $query->select('a.content_type, contentTypeConfig.option_value_literal AS content_type_name');
-            //            $query->join('LEFT', '#__configuration AS contentTypeConfig ON contentTypeConfig.option_value = a.content_type AND contentTypeConfig.option_id = '. (int) MOLAJO_CONFIG_OPTION_ID_CONTENT_TYPES .' AND contentTypeConfig.component_option = "'.JRequest::getCmd('option').'"');
-            $query->select('a.content_type');
+            //            $query->select('a.content_type_id, contentTypeConfig.option_value_literal AS content_type_id_name');
+            //            $query->join('LEFT', '#__configuration AS contentTypeConfig ON contentTypeConfig.option_value = a.content_type_id AND contentTypeConfig.option_id = '. (int) MOLAJO_CONFIG_OPTION_ID_CONTENT_TYPES .' AND contentTypeConfig.component_option = "'.JRequest::getCmd('option').'"');
+            $query->select('a.content_type_id');
         }
 
         if ((int)$value == 0) {
             return;
         }
-        $query->where('a.content_type = ' . (int)$value);
+        $query->where('a.content_type_id = '.(int)$value);
     }
 
     /**
@@ -107,11 +107,11 @@ class MolajoFieldContent_type extends MolajoField
             $render['sortable'] = true;
             $render['checkbox'] = false;
             $render['data_type'] = 'string';
-            $render['column_name'] = 'content_type';
+            $render['column_name'] = 'content_type_id';
             if ($item->created == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = $item->content_type_name;
+                $render['print_value'] = $item->content_type_id_name;
             }
 
             return $render;

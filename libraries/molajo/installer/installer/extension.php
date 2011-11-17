@@ -75,7 +75,7 @@ class MolajoExtension extends JObject
     var $manifest_cache = null;
 
     /**
-     * An object representation of the extension params
+     * An object representation of the extension parameters
      *
      * @var    object
      * @since  11.1

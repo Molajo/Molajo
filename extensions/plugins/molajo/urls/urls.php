@@ -24,7 +24,7 @@ class plgMolajoURLs extends MolajoPlugin	{
         $app =& MolajoFactory::getApplication('JSite');
         $router =& $app->getRouter();
 
-        if ($router->getMode() == JROUTER_MODE_SEF) {
+        if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
                 $router->attachBuildRule(array(&$this, 'MolajoBuildRoute'));
                 $router->attachParseRule(array(&$this, 'MolajoParseURL'));
         }
@@ -54,7 +54,7 @@ class plgMolajoURLs extends MolajoPlugin	{
         $file = JPATH_PLUGINS.'/molajo/urls/router/'.substr($component, 4).'build.php';
         if (file_exists($file)) {
                 require_once($file);
-                $function = substr($component, 4) . 'MolajoBuildRoute';
+                $function = substr($component, 4).'MolajoBuildRoute';
                 $function ($router, $uri);
         }
 

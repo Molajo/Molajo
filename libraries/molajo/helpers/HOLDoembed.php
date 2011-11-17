@@ -51,7 +51,7 @@ class MolajoOembedHelper
         $i = 1;
         foreach ($jsonResults as $result) {
 
-            preg_match('#' . $result->{'url_scheme'} . '#', $option_URL, $matches);
+            preg_match('#'.$result->{'url_scheme'}.'#', $option_URL, $matches);
 
             if (count($matches) == 0) {
             } else {
@@ -83,7 +83,7 @@ class MolajoOembedHelper
         $jsonResults = json_decode($curlResults);
         $embedResults = $jsonResults->{'html'};
 
-        $embedOutput = '<div class="' . $output_Class . '">';
+        $embedOutput = '<div class="'.$output_Class.'">';
         $embedOutput .= $embedResults;
         $embedOutput .= '</div >';
 
@@ -105,8 +105,8 @@ class MolajoOembedHelper
 
         $this->option_width = 200;
         $this->option_height = 151;
-        $this->output_Class = trim($primarysecondaryClass . $listitemClass . $option_MediaClass . $providerClass . $mediaClass);
-        $this->prepared_URL = trim($providerEndPoint) . '?url=' . rawurlencode($option_URL) . '&width=' . $this->option_width . '&height=' . $this->option_height;
+        $this->output_Class = trim($primarysecondaryClass.$listitemClass.$option_MediaClass.$providerClass.$mediaClass);
+        $this->prepared_URL = trim($providerEndPoint).'?url='.rawurlencode($option_URL).'&width='.$this->option_width.'&height='.$this->option_height;
 
         if ($providerHandling == 'embed') {
             return MolajoFunctionsOembed::createEmbed();
@@ -124,7 +124,7 @@ class MolajoOembedHelper
             $embedResults = html_entity_decode($xmlResults->html);
         }
 
-        $embedOutput = '<div class="' . $output_Class . '">';
+        $embedOutput = '<div class="'.$output_Class.'">';
         $embedOutput .= $embedResults;
         $embedOutput .= '</div >';
 
@@ -134,14 +134,14 @@ class MolajoOembedHelper
     function createEmbed()
     {
         return '
-		<div class="' . $this->output_Class . '">
-		<object width="' . $this->option_width . '" height="' . $this->option_height . '">
-			<param name="movie" value="' . $this->prepared_URL . '"></param>
+		<div class="'.$this->output_Class.'">
+		<object width="'.$this->option_width.'" height="'.$this->option_height.'">
+			<param name="movie" value="'.$this->prepared_URL.'"></param>
 			<param name="allowFullScreen" value="true"></param>
 			<param name="allowscriptaccess" value="always"></param>
-			<embed src="' . $this->prepared_URL . '" type="application/x-shockwave-flash"
+			<embed src="'.$this->prepared_URL.'" type="application/x-shockwave-flash"
 				allowscriptaccess="always" allowfullscreen="true"
-				width="' . $this->option_width . '" height="' . $this->option_height . '">
+				width="'.$this->option_width.'" height="'.$this->option_height.'">
 			</embed>
 		</object>
 		</div>';
@@ -150,7 +150,7 @@ class MolajoOembedHelper
     function loadProvidersfromFile()
     {
 
-        $read = MolajoFile::readfile(TAMKA_CONFIGURATION_APPLICATIONS . 'FunctionsOembedConfiguration.json');
+        $read = MolajoFile::readfile(TAMKA_CONFIGURATION_APPLICATIONS.'FunctionsOembedConfiguration.json');
         $jsonResults = json_decode($read);
         $i = 1;
         foreach ($jsonResults as $result) {

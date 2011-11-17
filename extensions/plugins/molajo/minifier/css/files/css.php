@@ -237,6 +237,6 @@ class Minify_CSS_Compressor {
                 )
                 \\s*
             /x', '$1', $m[1]);
-        return 'font-family:' . $m[1] . $m[2];
+        return 'font-family:'.$m[1].$m[2];
     }
 }

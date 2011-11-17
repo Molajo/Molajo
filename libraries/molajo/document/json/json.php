@@ -61,7 +61,7 @@ class MolajoDocumentJSON extends MolajoDocument
     public function render($cache = false, $parameters = array())
     {
         JResponse::allowCache(false);
-        JResponse::setHeader('Content-disposition', 'attachment; filename="' . $this->getName() . '.json"', true);
+        JResponse::setHeader('Content-disposition', 'attachment; filename="'.$this->getName().'.json"', true);
 
         parent::render();
 

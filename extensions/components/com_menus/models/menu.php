@@ -23,7 +23,7 @@ class MenusModelMenu extends JModelForm
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.0
 	 */
-	protected $text_prefix = 'COM_MENUS_MENU';
+	protected $text_prefix = 'MENU_MENU';
 
 	/**
 	 * Model context string.
@@ -91,7 +91,7 @@ class MenusModelMenu extends JModelForm
 		$this->setState('menu.id', $id);
 
 		// Load the parameters.
-		$parameters = JComponentHelper::getParams('com_menus');
+		$parameters = JComponentHelper::getParameters('com_menus');
 		$this->setState('parameters', $parameters);
 	}
 

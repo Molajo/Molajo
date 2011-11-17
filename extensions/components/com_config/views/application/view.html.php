@@ -42,10 +42,10 @@ class ConfigViewApplication extends JView
 		}
 
 		// Get the parameters for com_users.
-		$usersParams = JComponentHelper::getParams('com_users');
+		$usersParameters = JComponentHelper::getParameters('com_users');
 
 		// Get the parameters for com_media.
-		$mediaParams = JComponentHelper::getParams('com_media');
+		$mediaParameters = JComponentHelper::getParameters('com_media');
 
 		// Load settings for the FTP layer.
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
@@ -53,8 +53,8 @@ class ConfigViewApplication extends JView
 		$this->assignRef('form',	$form);
 		$this->assignRef('data',	$data);
 		$this->assignRef('ftp',		$ftp);
-		$this->assignRef('usersParams', $usersParams);
-		$this->assignRef('mediaParams', $mediaParams);
+		$this->assignRef('usersParameters', $usersParameters);
+		$this->assignRef('mediaParameters', $mediaParameters);
 
 		$this->addToolbar();
 		parent::display($tpl);

@@ -42,7 +42,7 @@ class MolajoFieldModified_by extends MolajoField
      */
     public function getOptions()
     {
-        $authorModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $authorModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $authorModel->getAuthors();
     }
 
@@ -96,6 +96,6 @@ class MolajoFieldModified_by extends MolajoField
         if ((int)$value == 0) {
             return;
         }
-        $query->where('a.modified_by = ' . (int)$value);
+        $query->where('a.modified_by = '.(int)$value);
     }
 }

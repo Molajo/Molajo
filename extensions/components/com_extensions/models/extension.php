@@ -83,7 +83,7 @@ class InstallerModel extends JModelList
 			}
 			return array_slice($result, $limitstart, $limit ? $limit : null);
 		} else {
-			$query->order($db->nameQuote($ordering) . ' ' . $this->getState('list.direction'));
+			$query->order($db->nameQuote($ordering).' '.$this->getState('list.direction'));
 			$result = parent::_getList($query, $limitstart, $limit);
 			$this->translate($result);
 			return $result;
@@ -118,25 +118,25 @@ class InstallerModel extends JModelList
 			switch ($item->type) {
 				case 'component':
 					$extension = $item->element;
-					$source = JPATH_ADMINISTRATOR . '/components/' . $extension;
+					$source = JPATH_ADMINISTRATOR.'/components/'.$extension;
 						$lang->load("$extension.sys", JPATH_ADMINISTRATOR, null, false, false)
 					||	$lang->load("$extension.sys", $source, null, false, false)
 					||	$lang->load("$extension.sys", JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 					||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 				break;
 				case 'file':
-					$extension = 'files_' . $item->element;
+					$extension = 'files_'.$item->element;
 						$lang->load("$extension.sys", JPATH_SITE, null, false, false)
 					||	$lang->load("$extension.sys", JPATH_SITE, $lang->getDefault(), false, false);
 				break;
 				case 'library':
-					$extension = 'lib_' . $item->element;
+					$extension = 'lib_'.$item->element;
 						$lang->load("$extension.sys", JPATH_SITE, null, false, false)
 					||	$lang->load("$extension.sys", JPATH_SITE, $lang->getDefault(), false, false);
 				break;
 				case 'module':
 					$extension = $item->element;
-					$source = $path . '/modules/' . $extension;
+					$source = $path.'/modules/'.$extension;
 						$lang->load("$extension.sys", $path, null, false, false)
 					||	$lang->load("$extension.sys", $source, null, false, false)
 					||	$lang->load("$extension.sys", $path, $lang->getDefault(), false, false)
@@ -148,16 +148,16 @@ class InstallerModel extends JModelList
 					||	$lang->load("$extension.sys", JPATH_SITE, $lang->getDefault(), false, false);
 				break;
 				case 'plugin':
-					$extension = 'plg_' . $item->folder . '_' . $item->element;
-					$source = JPATH_PLUGINS . '/' . $item->folder . '/' . $item->element;
+					$extension = 'plg_'.$item->folder.'_'.$item->element;
+					$source = JPATH_PLUGINS.'/'.$item->folder.'/'.$item->element;
 						$lang->load("$extension.sys", JPATH_ADMINISTRATOR, null, false, false)
 					||	$lang->load("$extension.sys", $source, null, false, false)
 					||	$lang->load("$extension.sys", JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 					||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 				break;
 				case 'template':
-					$extension = 'tpl_' . $item->element;
-					$source = $path . '/templates/' . $item->element;
+					$extension = 'tpl_'.$item->element;
+					$source = $path.'/templates/'.$item->element;
 						$lang->load("$extension.sys", $path, null, false, false)
 					||	$lang->load("$extension.sys", $source, null, false, false)
 					||	$lang->load("$extension.sys", $path, $lang->getDefault(), false, false)

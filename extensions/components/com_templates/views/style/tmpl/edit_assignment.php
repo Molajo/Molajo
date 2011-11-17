@@ -30,7 +30,7 @@ $user = MolajoFactory::getUser();
 						<h3><?php echo $type->title ? $type->title : $type->menu_id; ?></h3>
 						<?php foreach ($type->links as $link) :?>
 						<li class="menu-link">
-							<input type="checkbox" name="jform[assigned][]" value="<?php echo (int) $link->value;?>" id="link<?php echo (int) $link->value;?>"<?php if ($link->template_style_id == $this->item->id):?> checked="checked"<?php endif;?><?php if ($link->checked_out && $link->checked_out != $user->id):?> disabled="disabled"<?php else:?> class="chk-menulink "<?php endif;?> />
+							<input type="checkbox" name="jform[assigned][]" value="<?php echo (int) $link->value;?>" id="link<?php echo (int) $link->value;?>"<?php if ($link->template_id == $this->item->id):?> checked="checked"<?php endif;?><?php if ($link->checked_out && $link->checked_out != $user->id):?> disabled="disabled"<?php else:?> class="chk-menulink "<?php endif;?> />
 							<label for="link<?php echo (int) $link->value;?>" >
 								<?php echo $link->text; ?>
 							</label>

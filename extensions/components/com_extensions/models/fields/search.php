@@ -37,9 +37,9 @@ class JFormFieldSearch extends JFormField
 	protected function getInput()
 	{
 		$html = '';
-		$html.= '<input type="text" name="' . $this->name . '" id="' . $this->id . '" value="' . htmlspecialchars($this->value) . '" title="' . MolajoText::_('JSEARCH_FILTER') . '" onchange="this.form.submit();" />';
-		$html.= '<button type="submit" class="btn">' . MolajoText::_('JSEARCH_FILTER_SUBMIT') . '</button>';
-		$html.= '<button type="button" class="btn" onclick="document.id(\'' . $this->id . '\').value=\'\';this.form.submit();">' . MolajoText::_('JSEARCH_FILTER_CLEAR') . '</button>';
+		$html.= '<input type="text" name="'.$this->name.'" id="'.$this->id.'" value="'.htmlspecialchars($this->value).'" title="'.MolajoText::_('JSEARCH_FILTER').'" onchange="this.form.submit();" />';
+		$html.= '<button type="submit" class="btn">'.MolajoText::_('JSEARCH_FILTER_SUBMIT').'</button>';
+		$html.= '<button type="button" class="btn" onclick="document.id(\''.$this->id.'\').value=\'\';this.form.submit();">'.MolajoText::_('JSEARCH_FILTER_CLEAR').'</button>';
 		return $html;
 	}
 }

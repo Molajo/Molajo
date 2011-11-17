@@ -141,7 +141,7 @@ class plgEditorNone extends MolajoPlugin
 		}
 
 		$buttons = $this->_displayButtons($id, $buttons, $asset, $author);
-		$editor  = "<textarea name=\"$name\" id=\"$id\" cols=\"$col\" rows=\"$row\" style=\"width: $width; height: $height;\">$content</textarea>" . $buttons;
+		$editor  = "<textarea name=\"$name\" id=\"$id\" cols=\"$col\" rows=\"$row\" style=\"width: $width; height: $height;\">$content</textarea>".$buttons;
 
 		return $editor;
 	}

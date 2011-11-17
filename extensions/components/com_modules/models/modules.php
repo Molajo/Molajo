@@ -91,7 +91,7 @@ class ModulesModelModules extends JModelList
 		$this->setState('filter.language', $language);
 
 		// Load the parameters.
-		$parameters = JComponentHelper::getParams('com_modules');
+		$parameters = JComponentHelper::getParameters('com_modules');
 		$this->setState('parameters', $parameters);
 
 		// List state information.
@@ -151,7 +151,7 @@ class ModulesModelModules extends JModelList
 			if ($ordering == 'ordering') {
 				$query->order('position ASC');
 			}
-			$query->order($this->_db->nameQuote($ordering) . ' ' . $this->getState('list.direction'));
+			$query->order($this->_db->nameQuote($ordering).' '.$this->getState('list.direction'));
 			if ($ordering == 'position') {
 				$query->order('ordering ASC');
 			}
@@ -173,10 +173,10 @@ class ModulesModelModules extends JModelList
 		$application = $this->getState('filter.application_id') ? 'administrator' : 'site';
 		foreach($items as $item) {
 			$extension = $item->module;
-			$source = constant('JPATH_' . strtoupper($application)) . "/modules/$extension";
-				$lang->load("$extension.sys", constant('JPATH_' . strtoupper($application)), null, false, false)
+			$source = constant('JPATH_'.strtoupper($application))."/modules/$extension";
+				$lang->load("$extension.sys", constant('JPATH_'.strtoupper($application)), null, false, false)
 			||	$lang->load("$extension.sys", $source, null, false, false)
-			||	$lang->load("$extension.sys", constant('JPATH_' . strtoupper($application)), $lang->getDefault(), false, false)
+			||	$lang->load("$extension.sys", constant('JPATH_'.strtoupper($application)), $lang->getDefault(), false, false)
 			||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 			$item->name = MolajoText::_($item->name);
 			if (is_null($item->pages)) {
@@ -282,7 +282,7 @@ class ModulesModelModules extends JModelList
 
 		// Filter on the language.
 		if ($language = $this->getState('filter.language')) {
-			$query->where('a.language = ' . $db->quote($language));
+			$query->where('a.language = '.$db->quote($language));
 		}
 
 

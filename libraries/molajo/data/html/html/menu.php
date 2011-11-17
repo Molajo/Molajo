@@ -78,13 +78,13 @@ abstract class MolajoHtmlMenu
             $query->select('a.id AS value, a.title AS text, a.level, a.menutype');
             $query->from('#__menu AS a');
             $query->where('a.parent_id > 0');
-            $query->where('a.type <> ' . $db->quote('url'));
+            $query->where('a.type <> '.$db->quote('url'));
             $query->where('a.client_id = 0');
 
             // Filter on the published state
             if (isset($config['published'])) {
                 if (is_numeric($config['published'])) {
-                    $query->where('a.published = ' . (int)$config['published']);
+                    $query->where('a.published = '.(int)$config['published']);
                 }
                 elseif ($config['published'] === '')
                 {
@@ -106,7 +106,7 @@ abstract class MolajoHtmlMenu
                 }
                 $lookup[$item->menutype][] = &$item;
 
-                $item->text = str_repeat('- ', $item->level) . $item->text;
+                $item->text = str_repeat('- ', $item->level).$item->text;
             }
             self::$items = array();
 
@@ -116,13 +116,13 @@ abstract class MolajoHtmlMenu
                 self::$items[] = MolajoHTML::_('select.optgroup', $menu->text);
 
                 // Special "Add to this Menu" option:
-                self::$items[] = MolajoHTML::_('select.option', $menu->value . '.1', MolajoText::_('JLIB_HTML_ADD_TO_THIS_MENU'));
+                self::$items[] = MolajoHTML::_('select.option', $menu->value.'.1', MolajoText::_('JLIB_HTML_ADD_TO_THIS_MENU'));
 
                 // Menu items:
                 if (isset($lookup[$menu->value])) {
                     foreach ($lookup[$menu->value] as &$item)
                     {
-                        self::$items[] = MolajoHTML::_('select.option', $menu->value . '.' . $item->value, $item->text);
+                        self::$items[] = MolajoHTML::_('select.option', $menu->value.'.'.$item->value, $item->text);
                     }
                 }
 
@@ -153,7 +153,7 @@ abstract class MolajoHtmlMenu
         return MolajoHTML::_(
             'select.genericlist', $options, $name,
             array(
-                 'id' => isset($config['id']) ? $config['id'] : 'assetgroups_' . ++$count,
+                 'id' => isset($config['id']) ? $config['id'] : 'assetgroups_'.++$count,
                  'list.attr' => (is_null($attribs) ? 'class="inputbox" size="1"' : $attribs),
                  'list.select' => (int)$selected,
                  'list.translate' => false
@@ -179,9 +179,9 @@ abstract class MolajoHtmlMenu
         if ($id) {
             $query->select('ordering AS value, title AS text');
             $query->from($db->quoteName('#__menu'));
-            $query->where($db->quoteName('menutype') . ' = ' . $db->quote($row->menutype));
-            $query->where($db->quoteName('parent_id') . ' = ' . (int)$row->parent_id);
-            $query->where($db->quoteName('published') . ' != -2');
+            $query->where($db->quoteName('menutype').' = '.$db->quote($row->menutype));
+            $query->where($db->quoteName('parent_id').' = '.(int)$row->parent_id);
+            $query->where($db->quoteName('published').' != -2');
             $query->order('ordering');
             $order = MolajoHTML::_('list.genericordering', $query);
             $ordering = MolajoHTML::_(
@@ -191,7 +191,7 @@ abstract class MolajoHtmlMenu
         }
         else
         {
-            $ordering = '<input type="hidden" name="ordering" value="' . $row->ordering . '" />' . MolajoText::_('JGLOBAL_NEWITEMSLAST_DESC');
+            $ordering = '<input type="hidden" name="ordering" value="'.$row->ordering.'" />'.MolajoText::_('JGLOBAL_NEWITEMSLAST_DESC');
         }
 
         return $ordering;
@@ -214,8 +214,8 @@ abstract class MolajoHtmlMenu
 
         // get a list of the menu items
         $query->select('m.id, m.parent_id, m.title, m.menutype');
-        $query->from($db->quoteName('#__menu') . ' AS m');
-        $query->where($db->quoteName('mpublished') . ' = 1');
+        $query->from($db->quoteName('#__menu').' AS m');
+        $query->where($db->quoteName('mpublished').' = 1');
         $query->order('m.menutype, m.parent_id, m.ordering');
         $db->setQuery($query);
 
@@ -322,13 +322,13 @@ abstract class MolajoHtmlMenu
                 }
                 else
                 {
-                    $txt = $pre . $v->title;
+                    $txt = $pre.$v->title;
                 }
                 $pt = $v->parent_id;
                 $list[$id] = $v;
                 $list[$id]->treename = "$indent$txt";
                 $list[$id]->children = count(@$children[$id]);
-                $list = MolajoHTMLMenu::TreeRecurse($id, $indent . $spacer, $list, $children, $maxlevel, $level + 1, $type);
+                $list = MolajoHTMLMenu::TreeRecurse($id, $indent.$spacer, $list, $children, $maxlevel, $level + 1, $type);
             }
         }
         return $list;

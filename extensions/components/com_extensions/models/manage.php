@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Import library dependencies
-require_once dirname(__FILE__) . '/extension.php';
+require_once dirname(__FILE__).'/extension.php';
 
 /**
  * Installer Manage Model
@@ -105,7 +105,7 @@ class InstallerModelManage extends InstallerModel
 
 			// Get a table object for the extension type
 			$table = JTable::getInstance('Extension');
-			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+			JTable::addIncludePath(JPATH_ADMINISTRATOR.'/components/com_templates/tables');
 			// Enable the extension in the table and store it in the database
 			foreach($eid as $i=>$id) {
 				$table->load($id);
@@ -259,17 +259,17 @@ class InstallerModelManage extends InstallerModel
 			$query->where('protected!=1');
 		}
 		if ($enabled != '') {
-			$query->where('enabled=' . intval($enabled));
+			$query->where('enabled='.intval($enabled));
 		}
 		if ($type) {
-			$query->where('type=' . $this->_db->Quote($type));
+			$query->where('type='.$this->_db->Quote($type));
 		}
 		if ($application != '') {
-			$query->where('application_id=' . intval($application));
+			$query->where('application_id='.intval($application));
 		}
 		if ($group != '' && in_array($type, array('plugin', 'library', ''))) {
 
-			$query->where('folder=' . $this->_db->Quote($group == '*' ? '' : $group));
+			$query->where('folder='.$this->_db->Quote($group == '*' ? '' : $group));
 		}
 
 		// Filter by search in id
@@ -294,8 +294,8 @@ class InstallerModelManage extends InstallerModel
 		// Get the form.
 		jimport('joomla.form.form');
 		$app = MolajoFactory::getApplication();
-		JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
-		JForm::addFieldPath(JPATH_COMPONENT . '/models/fields');
+		JForm::addFormPath(JPATH_COMPONENT.'/models/forms');
+		JForm::addFieldPath(JPATH_COMPONENT.'/models/fields');
 		$form = JForm::getInstance('com_installer.manage', 'manage', array('load_data' => $loadData));
 
 		// Check for an error.

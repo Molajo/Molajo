@@ -81,7 +81,7 @@ class MolajoUtility
      */
     public static function getHash($seed)
     {
-        return md5(MolajoFactory::getConfig()->get('secret') . $seed);
+        return md5(MolajoFactory::getConfig()->get('secret').$seed);
     }
 
     /**
@@ -155,7 +155,7 @@ class MolajoUtility
     {
         $result = var_export($var, true);
 
-        return '<pre>' . ($htmlSafe ? htmlspecialchars($result, ENT_COMPAT, 'UTF-8') : $result) . '</pre>';
+        return '<pre>'.($htmlSafe ? htmlspecialchars($result, ENT_COMPAT, 'UTF-8') : $result).'</pre>';
     }
 
     /**

@@ -9,4 +9,4 @@
 defined('MOLAJO') or die;
 
 /** end row **/
-include dirname(__FILE__) . '/form/' . 'table_body_row_end.php';
+include dirname(__FILE__).'/form/'.'table_body_row_end.php';

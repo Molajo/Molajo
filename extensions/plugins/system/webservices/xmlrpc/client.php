@@ -143,7 +143,7 @@ class JXXMLRPCHelper
 			$return = $response->value();
 		} else {
 			// Error request
-			$return = JError::raiseWarning(400, $response->faultCode() . '-' . $response->faultString() );
+			$return = JError::raiseWarning(400, $response->faultCode().'-'.$response->faultString() );
 
 			if ($dump) {
 				$file	= JPATH_BASE.DS.'logs'.DS.'dump.'.$method.'.'.date( 'Ymd' ).'.txt';

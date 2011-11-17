@@ -65,7 +65,7 @@ class plgContentVote extends MolajoPlugin
 				$uri = MolajoFactory::getURI();
 				$uri->setQuery($uri->getQuery().'&hitcount=0');
 
-				$html .= '<form method="post" action="' . $uri->toString() . '">';
+				$html .= '<form method="post" action="'.$uri->toString().'">';
 				$html .= '<div class="content_vote">';
 				$html .= JText::_( 'PLG_VOTE_POOR' );
 				$html .= '<input type="radio" title="'.JText::sprintf('PLG_VOTE_VOTE', '1').'" name="user_rating" value="1" />';

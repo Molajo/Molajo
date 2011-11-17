@@ -52,7 +52,7 @@ class MenusControllerMenus extends JController
 		$cid	= JRequest::getVar('cid', array(), '', 'array');
 
 		if (!is_array($cid) || count($cid) < 1) {
-			MolajoError::raiseWarning(500, MolajoText::_('COM_MENUS_NO_MENUS_SELECTED'));
+			MolajoError::raiseWarning(500, MolajoText::_('MENU_NO_MENUS_SELECTED'));
 		} else {
 			// Get the model.
 			$model = $this->getModel();
@@ -65,7 +65,7 @@ class MenusControllerMenus extends JController
 			if (!$model->delete($cid)) {
 				$this->setMessage($model->getError());
 			} else {
-			$this->setMessage(MolajoText::plural('COM_MENUS_N_MENUS_DELETED', count($cid)));
+			$this->setMessage(MolajoText::plural('MENU_N_MENUS_DELETED', count($cid)));
 			}
 		}
 

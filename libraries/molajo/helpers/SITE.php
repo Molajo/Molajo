@@ -128,7 +128,7 @@ class MolajoSiteHelper
 
         $query->select('application_id');
         $query->from($db->namequote('#__site_applications'));
-        $query->where($db->namequote('site_id') . ' = ' . (int)$id);
+        $query->where($db->namequote('site_id').' = '.(int)$id);
 
         $db->setQuery($query->__toString());
 
@@ -160,9 +160,9 @@ class MolajoSiteHelper
         $files = JFolder::files(MOLAJO_SITE_PATH.'/classes', '\.php$', false, false);
         foreach ($files as $file) {
             if ($file == 'helper.php') {
-                $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/' . $file, 'Molajo' . ucfirst(MOLAJO_SITE) . 'Site' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/'.$file, 'Molajo'.ucfirst(MOLAJO_SITE).'Site'.ucfirst(substr($file, 0, strpos($file, '.'))));
             } else {
-                $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/' . $file, 'Molajo' . ucfirst(MOLAJO_SITE) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $filehelper->requireClassFile(MOLAJO_SITE_PATH.'/classes/'.$file, 'Molajo'.ucfirst(MOLAJO_SITE).ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
     }

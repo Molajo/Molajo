@@ -10,9 +10,9 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoMenu class
+ * MolajoMenu Class
  *
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Application
  * @since       1.0
  */
@@ -62,7 +62,7 @@ class MolajoMenu extends JObject
         }
 
         if (empty($instances[$application])) {
-            $classname = 'Molajo' . ucfirst($application) . 'Menu';
+            $classname = 'Molajo'.ucfirst($application).'Menu';
             $instance = new $classname($options);
 
             $instances[$application] = & $instance;
@@ -76,14 +76,15 @@ class MolajoMenu extends JObject
      *
      * Class constructor
      *
+     * Loads all Menus and Menu Items for the Application
+     *
      * @param   array    $options  An array of configuration options.
      *
-     * @return  MolajoMenu  A MolajoMenu object
+     * @return  Menu object
      * @since   1.0
      */
     public function __construct($options = array())
     {
-        // Load the menu items
         $this->load();
 
         foreach ($this->_items as $k => $item)
@@ -92,10 +93,25 @@ class MolajoMenu extends JObject
                 $this->_default[$item->language] = $item->id;
             }
 
-            // Decode the item params
-            $result = new JRegistry;
-            $result->loadJSON($item->parameters);
-            $item->parameters = $result;
+            /** Menu Parameters */
+            $menu = new JRegistry;
+            $menu->loadJSON($item->parameters);
+            $item->menu_parameters = $menu;
+
+             /** Menu Custom Fields */
+            $menuFields = new JRegistry;
+            $menuFields->loadJSON($item->custom_fields);
+            $item->menu_custom_fields = $menuFields;
+
+            /** Menu Item Parameters */
+            $menuItem = new JRegistry;
+            $menuItem->loadJSON($item->menu_item_parameters);
+            $item->menu_item_parameters = $menuItem;
+
+            /** Menu Item Custom Fields */
+            $menuItemFields = new JRegistry;
+            $menuItemFields->loadJSON($item->menu_item_custom_fields);
+            $item->menu_item_custom_fields = $menuItemFields;
         }
     }
 
@@ -203,9 +219,9 @@ class MolajoMenu extends JObject
     /**
      * getItems
      *
-     * Gets menu items by attribute
+     * Get all menu items for a specific menu using the extension_instance_id
      *
-     * @param   string   $attributes  The field name
+     * @param   string   $attributes  The field name (extension_instance_id)
      * @param   string   $values      The value of the field
      * @param   boolean  $firstonly   If true, only returns the first item found
      *
@@ -231,15 +247,14 @@ class MolajoMenu extends JObject
                         $test = false;
                         break;
                     }
-                }
-                else {
+
+                } else {
                     if ($item->$attributes[$i] != $values[$i]) {
                         $test = false;
                         break;
                     }
                 }
             }
-
             if ($test) {
                 if ($firstonly) {
                     return $item;
@@ -253,7 +268,7 @@ class MolajoMenu extends JObject
     }
 
     /**
-     * getParams
+     * getParameters
      *
      * Gets the parameter object for a certain menu item
      *
@@ -261,10 +276,10 @@ class MolajoMenu extends JObject
      *
      * @return  JRegistry  A JRegistry object
      */
-    public function getParams($id)
+    public function getParameters($id)
     {
         if ($menu = $this->getItem($id)) {
-            return $menu->parameters;
+            return $menu->menu_item_parameters;
         }
         else {
             return new JRegistry;
@@ -286,25 +301,12 @@ class MolajoMenu extends JObject
     /**
      * authorise
      *
-     * Method to check MolajoMenu object authorization against an access control
-     * object and optionally an access extension object
-     *
-     * @param   integer  $id    The menu id
-     *
-     * @return  boolean  True if authorised
-     * @since   11.1
+     * All Menus and Menu Items are already filtered by ACL in Molajo
+     * @deprecated
      */
     public function authorise($id)
     {
-        $menu = $this->getItem($id);
-
-        if ($menu) {
-//todo: amy acl
-            $acl = new MolajoACL();
-            return $acl->checkPermissions('user', MolajoFactory::getUser()->id, MOLAJO_ACL_ACTION_VIEW, $menu->asset_id, $menu->access);
-        } else {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -317,7 +319,7 @@ class MolajoMenu extends JObject
      */
     public function load()
     {
-        $this->_items  = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MENUS);
+        $this->_items  = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MENUS);
 
         foreach($this->_items as &$item) {
 

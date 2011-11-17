@@ -53,13 +53,13 @@ class MolajoFilterHelper
 
         /** filter parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->params);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         $acl = new MolajoACL ();
         $userGroups = $acl->getList('usergroups');
 
         /** retrieve defined filters by group **/
-        $filters = $systemParams->get('filters');
+        $filters = $systemParameters->get('filters');
 
         /** initialize with default black and white list values **/
         $blackListTags = array();

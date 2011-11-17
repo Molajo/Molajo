@@ -54,7 +54,7 @@ class plgContentJoomla extends MolajoPlugin
 		$db->setQuery('SELECT id FROM #__users WHERE send_email = 1');
 		$users = (array) $db->loadResultArray();
 
-		$default_language = MolajoComponentHelper::getParams('com_languages')->get('administrator');
+		$default_language = MolajoComponentHelper::getParameters('com_languages')->get('administrator');
 		$debug = MolajoFactory::getConfig()->get('debug_lang');
 
 		foreach ($users as $user_id)
@@ -167,7 +167,7 @@ class plgContentJoomla extends MolajoPlugin
 		// Count the items in this category
 		$query->select('COUNT(id)');
 		$query->from($table);
-		$query->where('catid = ' . $catid);
+		$query->where('catid = '.$catid);
 		$db->setQuery($query);
 		$count = $db->loadResult();
 
@@ -209,7 +209,7 @@ class plgContentJoomla extends MolajoPlugin
 			$query = $db->getQuery(true);
 			$query->select('COUNT(id)');
 			$query->from($table);
-			$query->where('catid IN (' . implode(',', $childCategoryIds) . ')');
+			$query->where('catid IN ('.implode(',', $childCategoryIds).')');
 			$db->setQuery($query);
 			$count = $db->loadResult();
 

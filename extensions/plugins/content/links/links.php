@@ -37,26 +37,26 @@ return;
 
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
         $loc = $this->location;
 
         /** add links for URLs **/
-        if ($systemParams->def('enable_add_line_breaks', 0) == 1) {
+        if ($systemParameters->def('enable_add_line_breaks', 0) == 1) {
 //            $content->$loc = MolajoHelperURLs::addLinks ($content->$loc);
         }
 
         /** external link treatment **/
         if (isset($query['print']) && $query['print']) {
         } else {
-            if ($systemParams->def('enable_external_links', 0) == 1) {
-                require_once dirname(__FILE__) . '/externallinks/driver.php';
+            if ($systemParameters->def('enable_external_links', 0) == 1) {
+                require_once dirname(__FILE__).'/externallinks/driver.php';
                 MolajoLinksExternalLinks::driver ($context, &$content, &$parameters, $page = 0, $this->location);
             }
         }
 
         /** footnotes **/
-        if ($systemParams->def('enable_footnotes', 0) == 1 && isset($query['print']) && $query['print']) {
-            require_once dirname(__FILE__) . '/footnotes/driver.php';
+        if ($systemParameters->def('enable_footnotes', 0) == 1 && isset($query['print']) && $query['print']) {
+            require_once dirname(__FILE__).'/footnotes/driver.php';
             MolajoLinksFootnotes::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
 

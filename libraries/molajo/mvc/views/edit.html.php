@@ -37,7 +37,7 @@ class MolajoViewEdit extends MolajoView
 //    protected $layoutHelper;
 //    protected $print;
 //    protected $user;
-//    protected $pageclass_sfx;
+//    protected $pageclass_suffix;
 
     /**
      * display
@@ -60,10 +60,10 @@ class MolajoViewEdit extends MolajoView
 
         /** parameters */
         if (MolajoFactory::getApplication()->getName() == 'site') {
-            $this->parameters = MolajoFactory::getApplication()->getParams();
-            //$this->_mergeParams ($this->item, $this->parameters, JRequest::getVar('option'));
+            $this->parameters = MolajoFactory::getApplication()->getParameters();
+            //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
-            $this->parameters = MolajoComponentHelper::getParams(JRequest::getVar('option'));
+            $this->parameters = MolajoComponentHelper::getParameters(JRequest::getVar('option'));
         }
 
         $this->user = MolajoFactory::getUser();
@@ -81,7 +81,7 @@ class MolajoViewEdit extends MolajoView
         }
 
         /** ACL: form field authorisations **/
-        $aclClass = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
+        $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
         $acl = new $aclClass();
         $acl->getFormAuthorisations(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
 
@@ -97,7 +97,7 @@ class MolajoViewEdit extends MolajoView
         }
 
         //Escape strings for HTML output
-        $this->state->get('page_class_suffix', htmlspecialchars($this->parameters->get('pageclass_sfx')));
+        $this->state->get('page_class_suffix', htmlspecialchars($this->parameters->get('pageclass_suffix')));
 
         if (MolajoFactory::getApplication()->getName() == 'site') {
             $documentHelper = new MolajoDocumentHelper ();

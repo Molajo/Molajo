@@ -106,7 +106,7 @@ class MolajoFieldStickied extends MolajoField
 
         if ($value == null) {
         } else {
-            $query->where('a.stickied = ' . trim($value));
+            $query->where('a.stickied = '.trim($value));
         }
     }
 }

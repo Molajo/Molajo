@@ -346,7 +346,7 @@ abstract class MolajoFactory
      */
     public static function getCache($group = '', $handler = 'callback', $storage = null)
     {
-        $hash = md5($group . $handler . $storage);
+        $hash = md5($group.$handler.$storage);
         if (isset(self::$cache[$hash])) {
             return self::$cache[$hash];
         }
@@ -518,7 +518,7 @@ abstract class MolajoFactory
 
             foreach (libxml_get_errors() as $error)
             {
-                MolajoError::raiseWarning(100, 'XML: ' . $error->message);
+                MolajoError::raiseWarning(100, 'XML: '.$error->message);
             }
         }
 
@@ -584,7 +584,7 @@ abstract class MolajoFactory
             $mainLocale = $locale;
 
             if ($mainLocale !== false) {
-                $classname = str_replace('-', '_', $mainLocale) . 'Date';
+                $classname = str_replace('-', '_', $mainLocale).'Date';
 
                 if (class_exists($classname)) {
                 } else {
@@ -594,7 +594,7 @@ abstract class MolajoFactory
                 $classname = 'JDate';
             }
         }
-        $key = $time . '-' . $tzOffset;
+        $key = $time.'-'.$tzOffset;
 
         $tmp = new $classname($time, $tzOffset);
         return $tmp;
@@ -623,7 +623,7 @@ abstract class MolajoFactory
         // Sanitize the namespace.
         $namespace = ucfirst((string)preg_replace('/[^A-Z_]/i', '', $namespace));
 
-        $name = 'MolajoConfig' . $namespace;
+        $name = 'MolajoConfig'.$namespace;
 
         if ($type == 'PHP' && class_exists($name)) {
             $config = new $name();
@@ -684,7 +684,7 @@ abstract class MolajoFactory
 
         if (MolajoError::isError($db)) {
             header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: ' . (string)$db);
+            jexit('Database Error: '.(string)$db);
         }
 
         if ($db->getErrorNum() > 0) {
@@ -807,13 +807,13 @@ abstract class MolajoFactory
             $SCPOptions = JClientHelper::getCredentials('scp');
 
             if ($FTPOptions['enabled'] == 1 && $use_network) {
-                $prefix = 'ftp://' . $FTPOptions['user'] . ':' . $FTPOptions['pass'] . '@' . $FTPOptions['host'];
-                $prefix .= $FTPOptions['port'] ? ':' . $FTPOptions['port'] : '';
+                $prefix = 'ftp://'.$FTPOptions['user'].':'.$FTPOptions['pass'].'@'.$FTPOptions['host'];
+                $prefix .= $FTPOptions['port'] ? ':'.$FTPOptions['port'] : '';
                 $prefix .= $FTPOptions['root'];
             }
             else if ($SCPOptions['enabled'] == 1 && $use_network) {
-                $prefix = 'ssh2.sftp://' . $SCPOptions['user'] . ':' . $SCPOptions['pass'] . '@' . $SCPOptions['host'];
-                $prefix .= $SCPOptions['port'] ? ':' . $SCPOptions['port'] : '';
+                $prefix = 'ssh2.sftp://'.$SCPOptions['user'].':'.$SCPOptions['pass'].'@'.$SCPOptions['host'];
+                $prefix .= $SCPOptions['port'] ? ':'.$SCPOptions['port'] : '';
                 $prefix .= $SCPOptions['root'];
             }
             else {

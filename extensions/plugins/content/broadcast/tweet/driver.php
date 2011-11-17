@@ -29,15 +29,15 @@ class MolajoBroadcastTweet {
     function driver ()
     {
         /** com_responses parameters **/
-        $responsesParams = MolajoComponentHelper::getParams('com_responses', true);
+        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
 
 
         /** email **/
-        if ($responsesParams->def('xxxx', 0) == '0') {
+        if ($responsesParameters->def('xxxx', 0) == '0') {
             return false;
         }
 
-        $this->days = $responsesParams->def('xxxx', 7);
+        $this->days = $responsesParameters->def('xxxx', 7);
 
         return true;
     }

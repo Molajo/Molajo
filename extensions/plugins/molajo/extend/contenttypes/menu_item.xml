@@ -12,8 +12,8 @@
                     name="menu_item"
                     type="menuitem"
                     default=""
-                    label="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_MENU_ITEM_LABEL"
-                    description="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_MENU_ITEM_DESC"
+                    label="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_ITEM_LABEL"
+                    description="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_ITEM_DESC"
                     >
                 </field>
 

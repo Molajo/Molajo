@@ -15,12 +15,12 @@ class protectBadWords
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
 		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
-		$tamkaLibraryPluginParams = new JParameter($tamkaLibraryPlugin->parameters);
+		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 		
 	/**
 	 * 	Filter content through array of Bad Words
 	 */
-		$badWords = explode(",", $tamkaLibraryPluginParams->def('badword', ''));
+		$badWords = explode(",", $tamkaLibraryPluginParameters->def('badword', ''));
 		return str_replace($badWords, '', $cleanString);	
 			
 	}

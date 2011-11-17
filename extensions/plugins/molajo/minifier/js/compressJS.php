@@ -25,11 +25,11 @@ class CompressJS extends MolajoPlugin	{
 	/**
 	 * 	Create temporary folder, if it doesn't already exist, to store all dynamic Javascript files
 	 */		
-		$store_path = JPATH_ROOT . '/tmp/_js';
+		$store_path = JPATH_ROOT.'/tmp/_js';
 		
 		if (!JFolder :: exists($store_path) && !JFolder :: create($store_path)) {
 			$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
-			$response->error_message = "Could not create the folder " . $store_path . " Please check permissions.";
+			$response->error_message = "Could not create the folder ".$store_path." Please check permissions.";
 			return false;
 		}		
 		
@@ -37,14 +37,14 @@ class CompressJS extends MolajoPlugin	{
 	 * 	Delete all files older than number of minutes specified -- (3600*24) is one day
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('system', 'tamka_compress_js');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 		
 		$jsFiles = JFolder::files( $store_path, '(css|js)$', false, false );
 		for($i = 0; $i < count($jsFiles); $i++) {
-			if (filemtime($store_path.DS.$jsFiles[$i]) < (time() - ($pluginParams->def('minutes', 60) * 60))) {
+			if (filemtime($store_path.DS.$jsFiles[$i]) < (time() - ($pluginParameters->def('minutes', 60) * 60))) {
 				if (!JFile::delete($store_path.DS.$jsFiles[$i])) {
 					$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
-					$response->error_message = "Could not delete the file " . $store_path.DS.$jsFiles[$i] . " Please check permissions.";
+					$response->error_message = "Could not delete the file ".$store_path.DS.$jsFiles[$i]." Please check permissions.";
 					return;
 				}				
 			}
@@ -78,7 +78,7 @@ class CompressJS extends MolajoPlugin	{
 			if (substr($strSrc, 0, 4) == 'http') {
 				$jsMergedFileContents .= JFile::read($strSrc);
 			} else {
-				$jsMergedFileContents .= JFile::read($urlhost . $strSrc);
+				$jsMergedFileContents .= JFile::read($urlhost.$strSrc);
 			}
 		}	
 	
@@ -105,21 +105,21 @@ class CompressJS extends MolajoPlugin	{
 	/**
 	 * 	Compress using Minify
 	 */
-		require_once(JPATH_BASE . DS . 'plugins' . DS . 'system' . DS. 'tamka_compress_js' . DS . 'js.php');		
+		require_once(JPATH_BASE.DS.'plugins'.DS.'system'.DS. 'tamka_compress_js'.DS.'js.php');
 		$jsMergedFileContents = JSMin::minify ($jsMergedFileContents);
 				
 	/**
 	 *  Output merged JS into a single file
 	 */		
-		$file = MolajoUtility::getHash($cssMergedExtensionsFilenames) . '.js';
+		$file = MolajoUtility::getHash($cssMergedExtensionsFilenames).'.js';
 		$compressedJSFile = $store_path.DS.$file;
-		$hrefFileName = JURI::base(true) . '/tmp/_js/' . $file;
+		$hrefFileName = JURI::base(true).'/tmp/_js/'.$file;
 		
 		/*	Use existing file if it exists			*/
 		if (!JFile::exists($compressedJSFile))	{		
-			if (!JFile::write($compressedJSFile, $jsMergedFileContents . $lnEnd . $newInlineScript)) {
+			if (!JFile::write($compressedJSFile, $jsMergedFileContents.$lnEnd.$newInlineScript)) {
 				$response->type = MOLAJO_AUTHENTICATE_STATUS_FAILURE;
-				$response->error_message = "Could not create the file " . $compressedJSFile . " Please check permissions.";
+				$response->error_message = "Could not create the file ".$compressedJSFile." Please check permissions.";
 				return false;	
 			}
 		}
@@ -140,12 +140,12 @@ class CompressJS extends MolajoPlugin	{
 	 */		
 		$newHtml = '';			
 		$type = 'text/javascript';
-		$newHtml .= '<script type="'.$type.'" src="'.$hrefFileName.'"></script>' . $lnEnd;		
+		$newHtml .= '<script type="'.$type.'" src="'.$hrefFileName.'"></script>'.$lnEnd;
 		
 	/**
 	 * 	Position new Javascript File link at bottom of page 
 	 */
-		$buffer = substr($buffer, 0, strripos ($buffer, '</body>')) .  $newHtml . '</body>'. $lnEnd .'</html>';		
+		$buffer = substr($buffer, 0, strripos ($buffer, '</body>')). $newHtml.'</body>'. $lnEnd .'</html>';
 				
 	/**
 	 * 	Re-write buffer

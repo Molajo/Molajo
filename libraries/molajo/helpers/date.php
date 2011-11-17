@@ -25,7 +25,7 @@ class MolajoDateHelper
      */
     function convertCCYYMMDD($date)
     {
-        return substr($date, 0, 4) . '-' . substr($date, 5, 2) . '-' . substr($date, 8, 2);
+        return substr($date, 0, 4).'-'.substr($date, 5, 2).'-'.substr($date, 8, 2);
     }
 
     /**
@@ -88,12 +88,12 @@ class MolajoDateHelper
         /** difference in days */
         $remove_years_months = array();
         if ($years > 0) {
-            $remove_years_months[] = $years . (($years == 1) ? ' year' : ' years');
+            $remove_years_months[] = $years.(($years == 1) ? ' year' : ' years');
         }
         if ($months > 0) {
-            $remove_years_months[] = $months . (($months == 1) ? ' month' : ' months');
+            $remove_years_months[] = $months.(($months == 1) ? ' month' : ' months');
         }
-        $remove_years_months = count($remove_years_months) > 0 ? '+' . implode(' ', $remove_years_months) : 'now';
+        $remove_years_months = count($remove_years_months) > 0 ? '+'.implode(' ', $remove_years_months) : 'now';
 
         $days = $current_date - strtotime($remove_years_months, $parameter_date);
         $days = date('z', $days);
@@ -155,10 +155,10 @@ class MolajoDateHelper
         }
 
         if ($numeric_value == 1) {
-            return ', ' . $numeric_value . ' ' . strtolower(MolajoText::_($singular_literal));
+            return ', '.$numeric_value.' '.strtolower(MolajoText::_($singular_literal));
         }
 
-        return ', ' . $numeric_value . ' ' . strtolower(MolajoText::_($plural_literal));
+        return ', '.$numeric_value.' '.strtolower(MolajoText::_($plural_literal));
     }
 
     /**

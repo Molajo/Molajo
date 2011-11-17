@@ -38,7 +38,7 @@ class InstallerController extends MolajoController
         }
 
         if(JRequest::getCmd('next_step', '', 'post')) {
-            $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=display&layout=' . JRequest::getCmd('next_step', 'post'), false));
+            $this->setRedirect(MolajoRoute::_('index.php?option=com_installer&view=display&layout='.JRequest::getCmd('next_step', 'post'), false));
             $this->redirect();
 //            $this->getView('display')->setLayout('step2');
         }

@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 
 	if (!empty($fieldSets)) {
 		$fieldSet = array_shift($fieldSets);
-		$label = !empty($fieldSet->label) ? $fieldSet->label : 'COM_MENUS_'.$fieldSet->name.'_FIELDSET_LABEL';
+		$label = !empty($fieldSet->label) ? $fieldSet->label : 'MENU_'.$fieldSet->name.'_FIELDSET_LABEL';
 		echo MolajoHTML::_('sliders.panel',MolajoText::_($label), 'request-options');
 		if (isset($fieldSet->description) && trim($fieldSet->description)) :
 			echo '<p class="tip">'.$this->escape(MolajoText::_($fieldSet->description)).'</p>';
@@ -41,7 +41,7 @@ defined('_JEXEC') or die;
 	$fieldSets = $this->form->getFieldsets('parameters');
 
 	foreach ($fieldSets as $name => $fieldSet) :
-		$label = !empty($fieldSet->label) ? $fieldSet->label : 'COM_MENUS_'.$name.'_FIELDSET_LABEL';
+		$label = !empty($fieldSet->label) ? $fieldSet->label : 'MENU_'.$name.'_FIELDSET_LABEL';
 		echo MolajoHTML::_('sliders.panel',MolajoText::_($label), $name.'-options');
 			if (isset($fieldSet->description) && trim($fieldSet->description)) :
 				echo '<p class="tip">'.$this->escape(MolajoText::_($fieldSet->description)).'</p>';

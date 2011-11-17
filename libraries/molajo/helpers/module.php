@@ -57,7 +57,7 @@ abstract class MolajoModuleHelper
             $result->showtitle = 0;
             $result->showsubtitle = 0;
             $result->control = '';
-            $result->params = '';
+            $result->parameters = '';
             $result->user = 0;
         }
 
@@ -92,10 +92,10 @@ abstract class MolajoModuleHelper
         if (count($result) == 0) {
 
             if (JRequest::getBool('tp')
-                && MolajoComponentHelper::getParams('com_templates')->get('template_positions_display')
+                && MolajoComponentHelper::getParameters('com_templates')->get('template_positions_display')
             ) {
 
-                $result[0] = self::getModule('mod_' . $position);
+                $result[0] = self::getModule('mod_'.$position);
                 $result[0]->title = $position;
                 $result[0]->content = $position;
                 $result[0]->position = $position;
@@ -142,7 +142,7 @@ abstract class MolajoModuleHelper
 
         // Get module path
         $module->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->title);
-        $path = MOLAJO_EXTENSION_MODULES.'/'.$module->title.'/'.$module->title . '.php';
+        $path = MOLAJO_EXTENSION_MODULES.'/'.$module->title.'/'.$module->title.'.php';
 
         // Load the module
         if (file_exists($path)) {
@@ -298,7 +298,7 @@ abstract class MolajoModuleHelper
             return $modules;
         }
 
-        $modules = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_MODULES);
+        $modules = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MODULES);
 
         return $modules;
     }
@@ -312,37 +312,37 @@ abstract class MolajoModuleHelper
      * 'oldstatic'    1.5. definition of module caching, one cache file for all pages with the same module id and user aid,
      * 'itemid'        changes on itemid change,
      * To be called from inside the module:
-     * 'safeuri'        id created from $cacheparams->modeparams array,
+     * 'safeuri'        id created from $cacheparameters->modeparameters array,
      * 'id'            module sets own cache id's
      *
      * @param   object  $module    Module object
-     * @param   object  $moduleparams module parameters
-     * @param   object  $cacheparams module cache parameters - id or url parameters, depending on the module cache mode
+     * @param   object  $moduleparameters module parameters
+     * @param   object  $cacheparameters module cache parameters - id or url parameters, depending on the module cache mode
      * @param   array   $parameters - parameters for given mode - calculated id or an array of safe url parameters and their
      *                     variable types, for valid values see {@link JFilterInput::clean()}.
      *
      * @since   11.1
      */
-    public static function moduleCache($module, $moduleparams, $cacheparams)
+    public static function moduleCache($module, $moduleparameters, $cacheparameters)
     {
-        if (!isset ($cacheparams->modeparams)) {
-            $cacheparams->modeparams = null;
+        if (!isset ($cacheparameters->modeparameters)) {
+            $cacheparameters->modeparameters = null;
         }
 
-        if (!isset ($cacheparams->cachegroup)) {
-            $cacheparams->cachegroup = $module->title;
+        if (!isset ($cacheparameters->cachegroup)) {
+            $cacheparameters->cachegroup = $module->title;
         }
 
         $user = MolajoFactory::getUser();
-        $cache = MolajoFactory::getCache($cacheparams->cachegroup, 'callback');
+        $cache = MolajoFactory::getCache($cacheparameters->cachegroup, 'callback');
         $conf = MolajoFactory::getConfig();
 
         // Turn cache off for internal callers if parameters are set to off and for all logged in users
-        if ($moduleparams->get('owncache', null) === 0 || $conf->get('caching') == 0 || $user->get('id')) {
+        if ($moduleparameters->get('owncache', null) === 0 || $conf->get('caching') == 0 || $user->get('id')) {
             $cache->setCaching(false);
         }
 
-        $cache->setLifeTime($moduleparams->get('cache_time', $conf->get('cachetime') * 60));
+        $cache->setLifeTime($moduleparameters->get('cache_time', $conf->get('cachetime') * 60));
 
         $wrkaroundoptions = array(
             'nopathway' => 1,
@@ -357,39 +357,39 @@ abstract class MolajoModuleHelper
         $acl = new MolajoACL();
         $view_levels = md5(serialize($acl->getList('viewaccess')));
 
-        switch ($cacheparams->cachemode) {
+        switch ($cacheparameters->cachemode) {
 
             case 'id':
-                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $cacheparams->modeparams, $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $cacheparameters->modeparameters, $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'safeuri':
                 $secureid = null;
-                if (is_array($cacheparams->modeparams)) {
+                if (is_array($cacheparameters->modeparameters)) {
                     $uri = JRequest::get();
                     $safeuri = new stdClass();
-                    foreach ($cacheparams->modeparams AS $key => $value) {
+                    foreach ($cacheparameters->modeparameters AS $key => $value) {
                         // Use int filter for id/catid to clean out spamy slugs
                         if (isset($uri[$key])) {
                             $safeuri->$key = JRequest::_cleanVar($uri[$key], 0, $value);
                         }
                     }
                 }
-                $secureid = md5(serialize(array($safeuri, $cacheparams->method, $moduleparams)));
-                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id . $view_levels . $secureid, $wrkarounds, $wrkaroundoptions);
+                $secureid = md5(serialize(array($safeuri, $cacheparameters->method, $moduleparameters)));
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id.$view_levels.$secureid, $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'static':
-                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->title . md5(serialize($cacheparams->methodparams)), $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->title.md5(serialize($cacheparameters->methodparameters)), $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'oldstatic': // provided for backward compatibility, not really usefull
-                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id . $view_levels, $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id.$view_levels, $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'itemid':
             default:
-                $ret = $cache->get(array($cacheparams->class, $cacheparams->method), $cacheparams->methodparams, $module->id . $view_levels . JRequest::getVar('Itemid', null, 'default', 'INT'), $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id.$view_levels.JRequest::getVar('Itemid', null, 'default', 'INT'), $wrkarounds, $wrkaroundoptions);
                 break;
         }
 

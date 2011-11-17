@@ -26,7 +26,7 @@ class plgButtonImage extends MolajoPlugin
 	function onDisplay($name)
 	{
 		$app = MolajoFactory::getApplication();
-		$parameters = MolajoComponentHelper::getParams('com_media');
+		$parameters = MolajoComponentHelper::getParameters('com_media');
 		$ranks = array('publisher', 'editor', 'author', 'registered');
 		$acl = MolajoFactory::getACL();
 

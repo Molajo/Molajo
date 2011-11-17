@@ -30,17 +30,17 @@ class MolajoSystemBackup {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** backup **/
-        if ($systemParams->def('enable_backup', 0) == '0') {
+        if ($systemParameters->def('enable_backup', 0) == '0') {
             return false;
         }
-        if ($systemParams->def('backup_days', 7) == '0') {
+        if ($systemParameters->def('backup_days', 7) == '0') {
             return false;
         }
 
-        $this->days = $systemParams->def('backup_days', 7);
+        $this->days = $systemParameters->def('backup_days', 7);
 
         return true;
     }

@@ -128,9 +128,9 @@ class MolajoDocumentHTML extends MolajoDocument
         }
 
         $this->title = (isset($data['title']) && !empty($data['title']) && !stristr($this->title, $data['title']))
-                ? $this->title . $data['title'] : $this->title;
+                ? $this->title.$data['title'] : $this->title;
         $this->description = (isset($data['description']) && !empty($data['description']) && !stristr($this->description, $data['description']))
-                ? $this->description . $data['description'] : $this->description;
+                ? $this->description.$data['description'] : $this->description;
         $this->link = (isset($data['link'])) ? $data['link'] : $this->link;
 
         if (isset($data['metaTags'])) {
@@ -192,7 +192,7 @@ class MolajoDocumentHTML extends MolajoDocument
     public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
     {
         $attribs = JArrayHelper::toString($attribs);
-        $generatedTag = '<link href="' . $href . '" ' . $relType . '="' . $relation . '" ' . $attribs;
+        $generatedTag = '<link href="'.$href.'" '.$relType.'="'.$relation.'" '.$attribs;
         $this->_links[] = $generatedTag;
     }
 
@@ -210,7 +210,7 @@ class MolajoDocumentHTML extends MolajoDocument
     public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
     {
         $href = str_replace('\\', '/', $href);
-        $this->_links[] = '<link href="' . $href . '" rel="' . $relation . '" type="' . $type . '"';
+        $this->_links[] = '<link href="'.$href.'" rel="'.$relation.'" type="'.$type.'"';
     }
 
     /**
@@ -255,7 +255,7 @@ class MolajoDocumentHTML extends MolajoDocument
         if ($this->_caching == true && $type == 'modules') {
             $cache = MolajoFactory::getCache('com_modules', '');
             $hash = md5(serialize(array($name, $attribs, $result, $renderer)));
-            $cbuffer = $cache->get('cbuffer_' . $type);
+            $cbuffer = $cache->get('cbuffer_'.$type);
 
             if (isset($cbuffer[$hash])) {
                 return JCache::getWorkarounds($cbuffer[$hash], array('mergehead' => 1));
@@ -274,7 +274,7 @@ class MolajoDocumentHTML extends MolajoDocument
 
                 $cbuffer[$hash] = $tmpdata;
 
-                $cache->store($cbuffer, 'cbuffer_' . $type);
+                $cache->store($cbuffer, 'cbuffer_'.$type);
             }
 
         } else {
@@ -348,7 +348,7 @@ class MolajoDocumentHTML extends MolajoDocument
         $result = '';
 
         $operators = '(\+|\-|\*|\/|==|\!=|\<\>|\<|\>|\<=|\>=|and|or|xor)';
-        $words = preg_split('# ' . $operators . ' #', $condition, null, PREG_SPLIT_DELIM_CAPTURE);
+        $words = preg_split('# '.$operators.' #', $condition, null, PREG_SPLIT_DELIM_CAPTURE);
         for ($i = 0, $n = count($words); $i < $n; $i += 2)
         {
             // odd parts (modules)
@@ -357,7 +357,7 @@ class MolajoDocumentHTML extends MolajoDocument
                     ? 0 : count(MolajoModuleHelper::getModules($name));
         }
 
-        $str = 'return ' . implode(' ', $words) . ';';
+        $str = 'return '.implode(' ', $words).';';
 
         return eval($str);
     }
@@ -380,9 +380,9 @@ class MolajoDocumentHTML extends MolajoDocument
             $active = $menu->getActive();
             /** todo: amy acl */
             if ($active) {
-                $where[] = 'parent = ' . $active->id;
+                $where[] = 'parent = '.$active->id;
                 $where[] = 'published = 1';
-                $dbo->setQuery('SELECT COUNT(*) FROM #__menu_items WHERE ' . implode(' AND ', $where));
+                $dbo->setQuery('SELECT COUNT(*) FROM #__menu_items WHERE '.implode(' AND ', $where));
                 $children = $dbo->loadResult();
             } else {
                 $children = 0;
@@ -423,11 +423,11 @@ class MolajoDocumentHTML extends MolajoDocument
         $dirs = array($path, MOLAJO_BASE_FOLDER.'/');
         foreach ($dirs as $dir)
         {
-            $icon = $dir . 'favicon.ico';
+            $icon = $dir.'favicon.ico';
             if (file_exists($icon)) {
                 $path = str_replace(MOLAJO_BASE_FOLDER.'/', '', $dir);
                 $path = str_replace('\\', '/', $path);
-                $this->addFavicon(JURI::base(true).'/'.$path . 'favicon.ico');
+                $this->addFavicon(JURI::base(true).'/'.$path.'favicon.ico');
                 break;
             }
         }
@@ -436,7 +436,7 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
-     * Fetch the template, and initialise the params
+     * Fetch the template, and initialise the parameters
      *
      * @param   array  $parameters  parameters to determine the template
      */
@@ -456,16 +456,16 @@ class MolajoDocumentHTML extends MolajoDocument
         $lang = MolajoFactory::getLanguage();
         // 1.5 or core then 1.6
         // todo: amy go thru all the language loads and make certain paths are simplified and correct
-        $lang->load('tpl_' . $template, MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load('tpl_' . $template, $directory.'/'.$template, null, false, false)
-        || $lang->load('tpl_' . $template, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-        || $lang->load('tpl_' . $template, $directory.'/'.$template, $lang->getDefault(), false, false);
+        $lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
+        || $lang->load('tpl_'.$template, $directory.'/'.$template, null, false, false)
+        || $lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
+        || $lang->load('tpl_'.$template, $directory.'/'.$template, $lang->getDefault(), false, false);
 
 
         // Assign the variables
         $this->template = $template;
         $this->baseurl = JURI::base(true);
-        $this->params = isset($parameters['parameters']) ? $parameters['parameters'] : new JRegistry;
+        $this->parameters = isset($parameters['parameters']) ? $parameters['parameters'] : new JRegistry;
 
         // Load
         $this->_template = $this->_loadTemplate($directory.'/'.$template, $file);

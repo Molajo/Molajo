@@ -150,7 +150,7 @@ abstract class MolajoPluginHelper
         $plugin->type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
         $plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
 
-        $path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name . '.php';
+        $path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
 
         if (JFile::exists($path)) {
             require_once $path;
@@ -165,7 +165,7 @@ abstract class MolajoPluginHelper
                 $dispatcher = JDispatcher::getInstance();
             }
 
-            $className = 'plg' . $plugin->type . $plugin->name;
+            $className = 'plg'.$plugin->type.$plugin->name;
             if (class_exists($className)) {
 
             } else {
@@ -191,7 +191,7 @@ abstract class MolajoPluginHelper
             return $plugins;
         }
 
-        $plugins = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_PLUGINS);
+        $plugins = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_PLUGINS);
         return $plugins;
     }
 }

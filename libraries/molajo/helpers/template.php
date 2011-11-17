@@ -44,7 +44,7 @@ abstract class MolajoTemplateHelper
         }
 
         if (is_object($menuItem)) {
-            $id = $menuItem->template_style_id;
+            $id = $menuItem->template_id;
         }
 
         /** Override if Template ID sent in */
@@ -58,7 +58,7 @@ abstract class MolajoTemplateHelper
         }
 
         /** Retrieve Template from the DB */
-        $templates = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_TEMPLATES, $id);
+        $templates = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_TEMPLATES, $id);
 
         foreach ($templates as $template) {
             $registry = new JRegistry;

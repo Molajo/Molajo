@@ -30,7 +30,7 @@ class MolajoSystemOffline {
     {
         /** system plugin **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** config **/
         $config =& MolajoFactory::getConfig();
@@ -40,7 +40,7 @@ class MolajoSystemOffline {
             return false;
         }
 
-        if ($systemParams->def('enable_offline_bypass', '') == '') {
+        if ($systemParameters->def('enable_offline_bypass', '') == '') {
             return false;
         }
 
@@ -50,7 +50,7 @@ class MolajoSystemOffline {
 
         /** verify bypass **/
         $this->bypass = $JRequest::getString('bypass', '');
-        if ($this->bypass == $systemParams->def('bypass', '')) {
+        if ($this->bypass == $systemParameters->def('bypass', '')) {
             $config->setValue('config.offline', 0);
             setcookie('bypass', $this->bypass);
             return true;

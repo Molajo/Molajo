@@ -1,27 +1,18 @@
 <?php
 /**
- * @version		$Id: mod_menu.php 20806 2011-02-21 19:44:59Z dextercowley $
- * @package		Joomla.Site
- * @subpackage	mod_menu
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  Menu
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// no direct access
-defined('JPATH_PLATFORM') or die;
+$layout = $parameters->def('layout', '');
+$wrap = $parameters->def('wrap', '');
 
-// Include the syndicate functions only once
-require_once dirname(__FILE__).'/helper.php';
+$filehelper = new MolajoFileHelper();
+$filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'modMenuHelper');
 
-$list	= modMenuHelper::getList($parameters);
-$app	= MolajoFactory::getApplication();
-$menu	= $app->getMenu();
-$active	= $menu->getActive();
-$active_id = isset($active) ? $active->id : $menu->getDefault()->id;
-$path	= isset($active) ? $active->tree : array();
-$showAll	= $parameters->get('showAllChildren');
-$class_sfx	= htmlspecialchars($parameters->get('class_sfx'));
+$rowset	= modMenuHelper::getList($parameters);
 
-if(count($list)) {
-	require MolajoModuleHelper::getLayoutPath('mod_menu', $parameters->get('layout', 'default'));
-}
+require_once dirname(__FILE__).'/tmpl/default.php';

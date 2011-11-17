@@ -23,14 +23,14 @@ class modBreadCrumbsHelper
 		for ($i = 0; $i < $count; $i ++)
 		{
 			$items[$i]->name = stripslashes(htmlspecialchars($items[$i]->name, ENT_COMPAT, 'UTF-8'));
-			$items[$i]->link = JRoute::_($items[$i]->link);
+			$items[$i]->link = MolajoRoute::_($items[$i]->link);
 		}
 
 		if ($parameters->get('showHome', 1))
 		{
 			$item = new stdClass();
 			$item->name = $parameters->get('homeText', JText::_('MOD_BREADCRUMBS_HOME'));
-			$item->link = JRoute::_('index.php?Itemid='.$app->getMenu()->getDefault()->id);
+			$item->link = MolajoRoute::_('index.php?Itemid='.$app->getMenu()->getDefault()->id);
 			array_unshift($items, $item);
 		}
 

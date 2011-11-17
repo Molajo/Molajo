@@ -7,8 +7,9 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $parameters->def('layout', 'admin_launchpad');
-$wrap = $parameters->def('wrap', 'none');
+$renderer	= MolajoFactory::getDocument()->loadRenderer('module');
+$module		= MolajoModuleHelper::getModule('mod_layout');
+$module->parameters	= "wrap=section\nlayout=admin_dashboard";
+$capture = $renderer->render($module);
+echo $capture;
 
-$filehelper = new MolajoFileHelper();
-$filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'MolajoLaunchpadHelper');

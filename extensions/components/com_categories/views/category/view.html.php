@@ -148,6 +148,6 @@ class CategoriesViewCategory extends JView
 		else {
 			$url = null;
 		}
-		MolajoToolbarHelper::help($ref_key, JComponentHelper::getParams( $component )->exists('helpURL'), $url, $component);
+		MolajoToolbarHelper::help($ref_key, JComponentHelper::getParameters( $component )->exists('helpURL'), $url, $component);
 	}
 }

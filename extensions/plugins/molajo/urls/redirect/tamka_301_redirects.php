@@ -17,7 +17,7 @@ class plgSystemTamka_301_redirects extends MolajoPlugin
 		$application =& MolajoFactory::getApplication('JSite');
 		$router =& $application->getRouter();
 
-		if ($router->getMode() == JROUTER_MODE_SEF) {
+		if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
 			$router->attachParseRule(array(&$this, 'Tamka301Redirect'));
 		}
 	
@@ -43,7 +43,7 @@ class plgSystemTamka_301_redirects extends MolajoPlugin
 		$ret = $uri->toString();
 
 	 	/*	Remove base and left forward slash '/' */
- 		$base = JURI::base(true) . '/';
+ 		$base = JURI::base(true).'/';
 		if (trim($base) == '/') {
  			$uriString = substr($uriString, 1, (strlen($uriString) - 1));
 		} else {
@@ -61,7 +61,7 @@ class plgSystemTamka_301_redirects extends MolajoPlugin
 
 		$query = 'SELECT new_path ' .
 			' FROM `#__tamka_301_redirects` ' .
-			' WHERE old_path = "' . Trim($uriString) . '"';
+			' WHERE old_path = "'.Trim($uriString).'"';
 
 		$db->setQuery($query);
 		$redirectTo = $db->loadResult();
@@ -71,9 +71,9 @@ class plgSystemTamka_301_redirects extends MolajoPlugin
 			return $vars;
 		}
 
-		$redirectTo = JURI::base() . $redirectTo;
+		$redirectTo = JURI::base().$redirectTo;
 
-		header('Location: ' . htmlspecialchars( $redirectTo ), true, '301');
+		header('Location: '.htmlspecialchars( $redirectTo ), true, '301');
 		$mainframe->redirect($redirectTo);
 		$app = & MolajoFactory::getApplication();
 		$app->close();

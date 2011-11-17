@@ -100,7 +100,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
                     ->setPath(
                 'source',
                 ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER : MOLAJO_BASE_FOLDER) .
-                '/components/' . $this->parent->extension->element
+                '/components/'.$this->parent->extension->element
             );
         }
 
@@ -117,7 +117,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         $lang = MolajoFactory::getLanguage();
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
-                : MOLAJO_BASE_FOLDER).'/components/' . $extension;
+                : MOLAJO_BASE_FOLDER).'/components/'.$extension;
 
         if ($this->manifest->administration->files) {
             $element = $this->manifest->administration->files;
@@ -138,9 +138,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
                 $source = "$path/$folder";
             }
         }
-        $lang->load($extension . '.sys', $source, null, false, false) || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-        || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false);
+        $lang->load($extension.'.sys', $source, null, false, false) || $lang->load($extension.'.sys', MOLAJO_BASE_FOLDER, null, false, false)
+        || $lang->load($extension.'.sys', $source, $lang->getDefault(), false, false)
+        || $lang->load($extension.'.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false);
     }
 
     /**
@@ -177,8 +177,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $this->parent->set('message', MolajoText::_((string)$this->manifest->description));
 
         // Set the installation target paths
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$this->get('element')));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$this->get('element')));
 
         // copy this as its used as a common base
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator'));
@@ -242,7 +242,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             }
 
             // Set the class name
-            $classname = $this->get('element') . 'InstallerScript';
+            $classname = $this->get('element').'InstallerScript';
 
             if (class_exists($classname)) {
                 // Create a new instance
@@ -488,7 +488,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $row->set('protected', 0);
         $row->set('access', 0);
         $row->set('application_id', 1);
-        $row->set('params', $this->parent->getParams());
+        $row->set('parameters', $this->parent->getParameters());
         $row->set('manifest_cache', $this->parent->generateManifestCache());
 
         if (!$row->store()) {
@@ -608,8 +608,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         }
 
         // Set the installation target paths
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$this->get('element')));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$this->get('element')));
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
         /**
@@ -673,7 +673,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             }
 
             // Set the class name
-            $classname = $element . 'InstallerScript';
+            $classname = $element.'InstallerScript';
 
             if (class_exists($classname)) {
                 // Create a new instance
@@ -950,7 +950,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             $row->protected = 0;
             $row->access = 1;
             $row->application_id = 1;
-            $row->params = $this->parent->getParams();
+            $row->parameters = $this->parent->getParameters();
         }
 
         $row->name = $this->get('name');
@@ -1023,8 +1023,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         }
 
         // Get the admin and site paths for the component
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $row->element));
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $row->element));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$row->element));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$row->element));
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
         /**
@@ -1070,7 +1070,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $this->set('element', $element);
 
         // Attempt to load the admin language file; might have uninstall strings
-        $this->loadLanguage(MOLAJO_BASE_FOLDER.'/components/' . $element);
+        $this->loadLanguage(MOLAJO_BASE_FOLDER.'/components/'.$element);
 
         /**
          * ---------------------------------------------------------------------------------------------
@@ -1089,7 +1089,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             }
 
             // Set the class name
-            $classname = $row->element . 'InstallerScript';
+            $classname = $row->element.'InstallerScript';
 
             if (class_exists($classname)) {
                 // create a new instance
@@ -1185,7 +1185,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         // Remove the schema version
         $query = $db->getQuery(true);
-        $query->delete()->from('#__schemas')->where('extension_id = ' . $id);
+        $query->delete()->from('#__schemas')->where('extension_id = '.$id);
         $db->setQuery($query);
         $db->query();
 
@@ -1197,8 +1197,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         // Remove categories for this component
         $query = $db->getQuery(true);
-        $query->delete()->from('#__categories')->where('extension=' . $db->quote($element), 'OR')
-                ->where('extension LIKE ' . $db->quote($element . '.%'));
+        $query->delete()->from('#__categories')->where('extension='.$db->quote($element), 'OR')
+                ->where('extension LIKE '.$db->quote($element.'.%'));
         $db->setQuery($query);
         $db->query();
         // Check for errors.
@@ -1269,7 +1269,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
         $query->where('m.parent_id = 1');
         $query->where("m.application_id = 1");
-        $query->where('e.element = ' . $db->quote($option));
+        $query->where('e.element = '.$db->quote($option));
 
         $db->setQuery($query);
 
@@ -1296,7 +1296,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             $query->clear();
             $query->select('e.extension_id');
             $query->from('#__extensions AS e');
-            $query->where('e.element = ' . $db->quote($option));
+            $query->where('e.element = '.$db->quote($option));
 
             $db->setQuery($query);
 
@@ -1312,7 +1312,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             $data['application_id'] = 1;
             $data['title'] = (string)$menuElement;
             $data['alias'] = (string)$menuElement;
-            $data['link'] = 'index.php?option=' . $option;
+            $data['link'] = 'index.php?option='.$option;
             $data['type'] = 'component';
             $data['published'] = 0;
             $data['parent_id'] = 1;
@@ -1341,7 +1341,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             $data['application_id'] = 1;
             $data['title'] = $option;
             $data['alias'] = $option;
-            $data['link'] = 'index.php?option=' . $option;
+            $data['link'] = 'index.php?option='.$option;
             $data['type'] = 'component';
             $data['published'] = 0;
             $data['parent_id'] = 1;
@@ -1390,38 +1390,38 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
             // Set the sub menu link
             if ((string)$child->attributes()->link) {
-                $data['link'] = 'index.php?' . $child->attributes()->link;
+                $data['link'] = 'index.php?'.$child->attributes()->link;
             }
             else
             {
                 $request = array();
 
                 if ((string)$child->attributes()->act) {
-                    $request[] = 'act=' . $child->attributes()->act;
+                    $request[] = 'act='.$child->attributes()->act;
                 }
 
                 if ((string)$child->attributes()->task) {
-                    $request[] = 'task=' . $child->attributes()->task;
+                    $request[] = 'task='.$child->attributes()->task;
                 }
 
                 if ((string)$child->attributes()->controller) {
-                    $request[] = 'controller=' . $child->attributes()->controller;
+                    $request[] = 'controller='.$child->attributes()->controller;
                 }
 
                 if ((string)$child->attributes()->view) {
-                    $request[] = 'view=' . $child->attributes()->view;
+                    $request[] = 'view='.$child->attributes()->view;
                 }
 
                 if ((string)$child->attributes()->layout) {
-                    $request[] = 'layout=' . $child->attributes()->layout;
+                    $request[] = 'layout='.$child->attributes()->layout;
                 }
 
                 if ((string)$child->attributes()->sub) {
-                    $request[] = 'sub=' . $child->attributes()->sub;
+                    $request[] = 'sub='.$child->attributes()->sub;
                 }
 
-                $qstring = (count($request)) ? '&' . implode('&', $request) : '';
-                $data['link'] = 'index.php?option=' . $option . $qstring;
+                $qstring = (count($request)) ? '&'.implode('&', $request) : '';
+                $data['link'] = 'index.php?option='.$option.$qstring;
             }
 
             $table = MolajoTable::getInstance('menu');
@@ -1461,8 +1461,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $query = $db->getQuery(true);
         $query->select('id');
         $query->from('#__menu');
-        $query->where($query->qn('application_id') . ' = 1');
-        $query->where($query->qn('component_id') . ' = ' . (int)$id);
+        $query->where($query->qn('application_id').' = 1');
+        $query->where($query->qn('component_id').' = '.(int)$id);
 
         $db->setQuery($query);
 
@@ -1525,9 +1525,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         foreach ($site_components as $component)
         {
-            if (file_exists(MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml')) {
+            if (file_exists(MOLAJO_BASE_FOLDER.'/components/'.$component.'/'.str_replace('com_', '', $component).'.xml')) {
                 $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-                    MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml'
+                    MOLAJO_BASE_FOLDER.'/components/'.$component.'/'.str_replace('com_', '', $component).'.xml'
                 );
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'component');
@@ -1542,9 +1542,9 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
 
         foreach ($admin_components as $component)
         {
-            if (file_exists(MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml')) {
+            if (file_exists(MOLAJO_BASE_FOLDER.'/components/'.$component.'/'.str_replace('com_', '', $component).'.xml')) {
                 $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(
-                    MOLAJO_BASE_FOLDER.'/components/' . $component.'/'.str_replace('com_', '', $component) . '.xml'
+                    MOLAJO_BASE_FOLDER.'/components/'.$component.'/'.str_replace('com_', '', $component).'.xml'
                 );
                 $extension = MolajoTable::getInstance('extension');
                 $extension->set('type', 'component');
@@ -1571,10 +1571,10 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         // Need to find to find where the XML file is since we don't store this normally
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $short_element = str_replace('com_', '', $this->parent->extension->element);
-        $manifestPath = $client->path.'/components/' . $this->parent->extension->element.'/'.$short_element . '.xml';
+        $manifestPath = $client->path.'/components/'.$this->parent->extension->element.'/'.$short_element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
-        $this->parent->setPath('source', $client->path.'/components/' . $this->parent->extension->element);
+        $this->parent->setPath('source', $client->path.'/components/'.$this->parent->extension->element);
         $this->parent->setPath('extension_root', $this->parent->getPath('source'));
 
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -1582,7 +1582,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
         $this->parent->extension->enabled = 1;
-        $this->parent->extension->params = $this->parent->getParams();
+        $this->parent->extension->parameters = $this->parent->getParameters();
 
         try
         {
@@ -1633,8 +1633,8 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         }
 
         // Set the installation target paths
-        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
-        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/' . $this->get('element')));
+        $this->parent->setPath('extension_site', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$this->get('element')));
+        $this->parent->setPath('extension_administrator', JPath::clean(MOLAJO_BASE_FOLDER.'/components/'.$this->get('element')));
         $this->parent->setPath('extension_root', $this->parent->getPath('extension_administrator')); // copy this as its used as a common base
 
         /**
@@ -1666,7 +1666,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
             }
 
             // Set the class name
-            $classname = $element . 'InstallerScript';
+            $classname = $element.'InstallerScript';
 
             if (class_exists($classname)) {
                 // create a new instance
@@ -1831,7 +1831,7 @@ class MolajoInstallerComponent extends MolajoAdapterInstance
         // Need to find to find where the XML file is since we don't store this normally
         $client = MolajoApplicationHelper::getApplicationInfo($this->parent->extension->application_id);
         $short_element = str_replace('com_', '', $this->parent->extension->element);
-        $manifestPath = $client->path.'/components/' . $this->parent->extension->element.'/'.$short_element . '.xml';
+        $manifestPath = $client->path.'/components/'.$this->parent->extension->element.'/'.$short_element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

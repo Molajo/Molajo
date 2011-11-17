@@ -35,8 +35,8 @@ class MolajoRouter extends JObject
         $query = $db->getQuery(true);
         $query->select('MIN(id)');
         $query->from($tableParam);
-        $query->where('start_publishing_datetime like "' . $ccyy . '-' . $mm . '-' . $dd . '%"');
-        $query->where('alias = ' . $db->Quote($alias));
+        $query->where('start_publishing_datetime like "'.$ccyy.'-'.$mm.'-'.$dd.'%"');
+        $query->where('alias = '.$db->Quote($alias));
         $query->where('state > -10');
 
         $db->setQuery($query);
@@ -58,9 +58,9 @@ class MolajoRouter extends JObject
      */
     public function getItemRoute($id, $catid, $data, $singleItemParam, $typeParam, $componentOptionParam)
     {
-        $data->slug = $data->alias ? ($data->id . ':' . $data->alias) : $data->id;
-        $data->catslug = $data->category_alias ? ($data->catid . ':' . $data->category_alias) : $data->catid;
-        $data->parent_slug = $data->category_alias ? ($data->parent_id . ':' . $data->parent_alias) : $data->parent_id;
+        $data->slug = $data->alias ? ($data->id.':'.$data->alias) : $data->id;
+        $data->catslug = $data->category_alias ? ($data->catid.':'.$data->category_alias) : $data->catid;
+        $data->parent_slug = $data->category_alias ? ($data->parent_id.':'.$data->parent_alias) : $data->parent_id;
 
         $needles = array(
             $singleItemParam => array((int)$id)
@@ -69,12 +69,12 @@ class MolajoRouter extends JObject
         /** amy add more documentation and options for the WP URLs here */
         $timestamp = JHTML::_('date', $data->start_publishing_datetime, 'U');
 
-        $link = 'index.php?option=' . $componentOptionParam .
-                '&view=' . $singleItemParam .
-                '&id=' . $id .
-                '&alias=' . $data->alias .
+        $link = 'index.php?option='.$componentOptionParam .
+                '&view='.$singleItemParam .
+                '&id='.$id .
+                '&alias='.$data->alias .
                 '&layout=item' .
-                '&ts=' . $timestamp;
+                '&ts='.$timestamp;
 
         if ((int)$catid > 1) {
             $categories = JCategories::getInstance($typeParam);
@@ -82,15 +82,15 @@ class MolajoRouter extends JObject
             if ($category) {
                 $needles['category'] = array_reverse($category->getPath());
                 $needles['categories'] = $needles['category'];
-                $link .= '&catid=' . $catid;
+                $link .= '&catid='.$catid;
             }
         }
 
         if ($itemID = self::_findItem($needles, $componentOptionParam)) {
-            $link .= '&Itemid=' . $itemID;
+            $link .= '&Itemid='.$itemID;
         }
         elseif ($itemID = self::_findItem(null, $componentOptionParam)) {
-            $link .= '&Itemid=' . $itemID;
+            $link .= '&Itemid='.$itemID;
         }
 
         return $link;
@@ -127,10 +127,10 @@ class MolajoRouter extends JObject
             );
 
             if ($data = self::_findItem($needles, $componentOptionParam)) {
-                $link = 'index.php?Itemid=' . $data;
+                $link = 'index.php?Itemid='.$data;
             } else {
 
-                $link = 'index.php?option=' . $componentOptionParam . '&view=category&id=' . $id;
+                $link = 'index.php?option='.$componentOptionParam.'&view=category&id='.$id;
                 if ($category) {
                     $catids = array_reverse($category->getPath());
                     $needles = array(
@@ -138,9 +138,9 @@ class MolajoRouter extends JObject
                         'categories' => $catids
                     );
                     if ($data = self::_findItem($needles, $componentOptionParam)) {
-                        $link .= '&Itemid=' . $data;
+                        $link .= '&Itemid='.$data;
                     } elseif ($data = self::_findItem(null, $componentOptionParam)) {
-                        $link .= '&Itemid=' . $data;
+                        $link .= '&Itemid='.$data;
                     }
                 }
             }
@@ -162,9 +162,9 @@ class MolajoRouter extends JObject
     public function getFormRoute($data, $id = 0, $singleItemParam, $typeParam, $componentOptionParam)
     {
         if ($id) {
-            $link = 'index.php?option=' . $componentOptionParam . '&task=' . $singleItemParam . '.edit&id=' . $id;
+            $link = 'index.php?option='.$componentOptionParam.'&task='.$singleItemParam.'.edit&id='.$id;
         } else {
-            $link = 'index.php?option=' . $componentOptionParam . '&task=' . $singleItemParam . '.edit&id=0';
+            $link = 'index.php?option='.$componentOptionParam.'&task='.$singleItemParam.'.edit&id=0';
         }
         return $link;
     }

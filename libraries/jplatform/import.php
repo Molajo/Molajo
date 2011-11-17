@@ -81,4 +81,4 @@ JLoader::import('joomla.base.object');
 
 // Register classes that don't follow one file per class naming conventions.
 JLoader::register('JText', JPATH_PLATFORM . '/joomla/methods.php');
-JLoader::register('JRoute', JPATH_PLATFORM . '/joomla/methods.php');
+JLoader::register('MolajoRoute', JPATH_PLATFORM . '/joomla/methods.php');

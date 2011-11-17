@@ -19,15 +19,15 @@ class MolajoBroadcastEmail extends MolajoPlugin
 	 * 	Initialization
 	 */
 $plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_email');
-$pluginParams = new JParameter( $plugin->parameters );
+$pluginParameters = new JParameter( $plugin->parameters );
 
 
 	/**
 	 * 	Prepare Email Content - Author
 	 */
 		$email_author = '';
-		if ($pluginParams->def('author', 1) !== 0) {
-			$email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParams->get('author'));
+		if ($pluginParameters->def('author', 1) !== 0) {
+			$email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParameters->get('author'));
 		}
 
 
@@ -35,7 +35,7 @@ $pluginParams = new JParameter( $plugin->parameters );
 	 * 	Prepare Email Content - Article
 	 */
 		$email_title	= '';
-		if ($pluginParams->def('title', 1) == 1) {
+		if ($pluginParameters->def('title', 1) == 1) {
 			$email_title = $article->title;
 		}
 
@@ -53,7 +53,7 @@ $pluginParams = new JParameter( $plugin->parameters );
 
 		global $mainframe;		
 	 	$SiteName 		= $mainframe->getSiteConfig('sitename');
-		$articleURL = TamkaContentHelperRoute::getSiteURL () . TamkaContentHelperRoute::getArticleURL ($article->id);
+		$articleURL = TamkaContentHelperRoute::getSiteURL ().TamkaContentHelperRoute::getArticleURL ($article->id);
 		$ArticleTitle = $article->title;
 		
 		$mailfrom 		= $mainframe->getSiteConfig('mailfrom');
@@ -62,28 +62,28 @@ $pluginParams = new JParameter( $plugin->parameters );
 	/**
 	 * 	Format Email - Subject and Message
 	*/
-		$emailSubject	= '[' . $SiteName . '] ' .   $email_title;;
+		$emailSubject	= '['.$SiteName.'] '.  $email_title;;
 
 		$emailMessage = JText::_( 'At your request, ' );
-		$emailMessage .= $SiteName . JText::_( ' is notifying you of a post' );
+		$emailMessage .= $SiteName.JText::_( ' is notifying you of a post' );
 		if ($email_title) {
-			$emailMessage .= JText::_( ' entitled "' ) . $email_title;
+			$emailMessage .= JText::_( ' entitled "' ).$email_title;
 		}
 		if ($email_author) {
-			$emailMessage .= JText::_( '" written by ' ) . $email_author;
+			$emailMessage .= JText::_( '" written by ' ).$email_author;
 		} else {
 			$emailMessage .= JText::_( '." ' );
 		}
 
 		if ($articleURL) {
-			$emailMessage .= JText::_( ' To read more of this post, visit: ' ) . $articleURL;
+			$emailMessage .= JText::_( ' To read more of this post, visit: ' ).$articleURL;
 		}
 		$emailMessage .= '. ';
 
 	/**
 	 * 	Format Email - How to update User Settings
 	*/
-		$emailMessage .= JText::_( ' To discontinue these messages, please visit: ' ) . $articleURL;
+		$emailMessage .= JText::_( ' To discontinue these messages, please visit: ' ).$articleURL;
 		$emailMessage .= JText::_( ' and update your User Settings. Thanks! ' ) ;
 		
 	/**

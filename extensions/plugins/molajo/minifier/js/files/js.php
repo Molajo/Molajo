@@ -109,7 +109,7 @@ class JSMin {
             $this->a === ':' || $this->a === '[' || $this->a === '!' ||
             $this->a === '&' || $this->a === '|' || $this->a === '?')) {
 
-          $this->output .= $this->a . $this->b;
+          $this->output .= $this->a.$this->b;
 
           for (;;) {
             $this->a = $this->get();

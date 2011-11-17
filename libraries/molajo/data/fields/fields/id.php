@@ -85,7 +85,7 @@ class MolajoFieldId extends MolajoField
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.id = ' . $value);
+            $query->where('a.id = '.$value);
         }
     }
 

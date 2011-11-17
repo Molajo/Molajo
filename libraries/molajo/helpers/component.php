@@ -96,11 +96,15 @@ class MolajoComponentHelper
     public static function isEnabled($option, $strict = false)
     {
         $result = self::getComponent($option, $strict);
-        return $result[0]->enabled;
+        if ($result[0]->status == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
-     * getParams
+     * getParameters
      *
      * Gets the parameter object for the component
      *
@@ -112,7 +116,7 @@ class MolajoComponentHelper
      * @see     JRegistry
      * @since  1.0
      */
-    public static function getParams($option, $strict = false)
+    public static function getParameters($option, $strict = false)
     {
         $component = self::getComponent($option, $strict);
         return $component[0]->parameters;
@@ -130,8 +134,7 @@ class MolajoComponentHelper
      */
     protected static function _load($option)
     {
-        self::$_components[$option] = MolajoExtensionHelper::getExtensions(MOLAJO_EXTENSION_TYPE_COMPONENTS, $option);
-
+        self::$_components[$option] = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_COMPONENTS, $option);
         if (isset(self::$_components[$option]->parameters)) {
             $temp = new JRegistry;
             $temp->loadString(self::$_components[$option]->parameters);
@@ -159,9 +162,8 @@ class MolajoComponentHelper
         MolajoFactory::getApplication()->scope = $request['option'];
 
         /** extension path and entry point */
-        $path = $request['component_path'].'/'.$request['no_com_option'] . '.php';
-echo $path;
-die;
+        $path = $request['component_path'].'/'.$request['no_com_option'].'.php';
+
         /** installation does not have enabled extensions */
         if ($request['application_id'] == 0
             && file_exists($path)

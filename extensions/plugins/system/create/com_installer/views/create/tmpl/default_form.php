@@ -74,7 +74,7 @@ require_once MOLAJO_LIBRARY_COM_INSTALLER.'/controllers/create.php';
 	}
 </script>
 
-<form enctype="multipart/form-data" action="<?php echo JRoute::_('index.php?option=com_installer&view=create');?>" method="post" name="adminForm" id="adminForm">
+<form enctype="multipart/form-data" action="<?php echo MolajoRoute::_('index.php?option=com_installer&view=create');?>" method="post" name="adminForm" id="adminForm">
 
 	<?php if ($this->ftp) : ?>
 		<?php echo $this->loadTemplate('ftp'); ?>

@@ -158,11 +158,11 @@ class MolajoForm
 
             if ($this->findField($k, $group)) {
                 // If the field exists set the value.
-                $this->data->set($group . '.' . $k, $v);
+                $this->data->set($group.'.'.$k, $v);
             }
             else if (is_object($v) || JArrayHelper::isAssociative($v)) {
                 // If the value is an object or an associative array, hand it off to the recursive bind level method
-                $this->bindLevel($group . '.' . $k, $v);
+                $this->bindLevel($group.'.'.$k, $v);
             }
         }
     }
@@ -209,8 +209,8 @@ class MolajoForm
             // Get the field value from the data calendar.
             if ($group) {
                 // Filter the value if it exists.
-                if ($calendar->exists($group . '.' . $name)) {
-                    $output->set($group . '.' . $name, $this->filterField($field, $calendar->get($group . '.' . $name, (string)$field['default'])));
+                if ($calendar->exists($group.'.'.$name)) {
+                    $output->set($group.'.'.$name, $this->filterField($field, $calendar->get($group.'.'.$name, (string)$field['default'])));
                 }
             }
             else {
@@ -416,7 +416,7 @@ class MolajoForm
                 if (empty($fieldsets[(string)$set])) {
 
                     // Attempt to get the fieldset element for data (throughout the entire form document).
-                    $tmp = $this->xml->xpath('//fieldset[@name="' . (string)$set . '"]');
+                    $tmp = $this->xml->xpath('//fieldset[@name="'.(string)$set.'"]');
 
                     // If no element was found, build a very simple fieldset object.
                     if (empty($tmp)) {
@@ -560,7 +560,7 @@ class MolajoForm
     {
         // If a group is set use it.
         if ($group) {
-            $return = $this->data->get($group . '.' . $name, $default);
+            $return = $this->data->get($group.'.'.$name, $default);
         }
         else {
             $return = $this->data->get($name, $default);
@@ -696,7 +696,7 @@ class MolajoForm
         if (!is_file($file)) {
 
             // Not an absolute path so let's attempt to find one using JPath.
-            $file = JPath::find(self::addFormPath(), strtolower($file) . '.xml');
+            $file = JPath::find(self::addFormPath(), strtolower($file).'.xml');
 
             // If unable to find the file return false.
             if (!$file) {
@@ -964,7 +964,7 @@ class MolajoForm
 
         // If a group is set use it.
         if ($group) {
-            $this->data->set($group . '.' . $name, $value);
+            $this->data->set($group.'.'.$name, $value);
         }
         else {
             $this->data->set($name, $value);
@@ -1021,7 +1021,7 @@ class MolajoForm
 
             // Get the value from the calendar data.
             if ($group) {
-                $value = $calendar->get($group . '.' . $name);
+                $value = $calendar->get($group.'.'.$name);
             }
             else {
                 $value = $calendar->get($name);
@@ -1155,7 +1155,7 @@ class MolajoForm
                     if (substr($number, 0, 2) == '+1') {
                         $number = substr($number, 2);
                     }
-                    $result = '1.' . $number;
+                    $result = '1.'.$number;
                 }
                     // If not, does it match ITU-T?
                 elseif (preg_match('/^\+(?:[0-9] ?){6,14}[0-9]$/', $value) == 1) {
@@ -1163,7 +1163,7 @@ class MolajoForm
                     $countrycode = (string)preg_replace('/[^\d]/', '', $countrycode);
                     $number = strstr($value, ' ');
                     $number = (string)preg_replace('/[^\d]/', '', $number);
-                    $result = $countrycode . '.' . $number;
+                    $result = $countrycode.'.'.$number;
                 }
                     // If not, does it match EPP?
                 elseif (preg_match('/^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$/', $value) == 1) {
@@ -1185,12 +1185,12 @@ class MolajoForm
                         $length = strlen($value);
                         // if it is fewer than 13 digits assume it is a local number
                         if ($length <= 12) {
-                            $result = '.' . $value;
+                            $result = '.'.$value;
 
                         } else {
                             // If it has 13 or more digits let's make a country code.
                             $cclen = $length - 12;
-                            $result = substr($value, 0, $cclen) . '.' . substr($value, $cclen);
+                            $result = substr($value, 0, $cclen).'.'.substr($value, $cclen);
                         }
                     }
                         // If not let's not save anything.
@@ -1251,7 +1251,7 @@ class MolajoForm
             foreach ($elements as $element)
             {
                 // If there are matching field elements add them to the fields array.
-                if ($tmp = $element->xpath('descendant::field[@name="' . $name . '"]')) {
+                if ($tmp = $element->xpath('descendant::field[@name="'.$name.'"]')) {
                     $fields = array_merge($fields, $tmp);
                 }
             }
@@ -1278,7 +1278,7 @@ class MolajoForm
         }
         else {
             // Get an array of fields with the correct name.
-            $fields = $this->xml->xpath('//field[@name="' . $name . '"]');
+            $fields = $this->xml->xpath('//field[@name="'.$name.'"]');
 
             // Make sure something was found.
             if (!$fields) {
@@ -1328,7 +1328,7 @@ class MolajoForm
            * with the appropriate name attribute, and also any <field /> elements with
            * the appropriate fieldset attribute.
            */
-        $fields = $this->xml->xpath('//fieldset[@name="' . $name . '"]//field | //field[@fieldset="' . $name . '"]');
+        $fields = $this->xml->xpath('//fieldset[@name="'.$name.'"]//field | //field[@fieldset="'.$name.'"]');
 
         return $fields;
     }
@@ -1430,7 +1430,7 @@ class MolajoForm
         if (!empty($group)) {
 
             // Get any fields elements with the correct group name.
-            $elements = $this->xml->xpath('//fields[@name="' . (string)$group[0] . '"]');
+            $elements = $this->xml->xpath('//fields[@name="'.(string)$group[0].'"]');
 
             // Check to make sure that there are no parent groups for each element.
             foreach ($elements as $element)
@@ -1452,7 +1452,7 @@ class MolajoForm
                 foreach ($current as $element)
                 {
                     // Get any fields elements with the correct group name.
-                    $children = $element->xpath('descendant::fields[@name="' . (string)$group[$i] . '"]');
+                    $children = $element->xpath('descendant::fields[@name="'.(string)$group[$i].'"]');
 
                     // For the found fields elements validate that they are in the correct groups.
                     foreach ($children as $fields)
@@ -1890,7 +1890,7 @@ class MolajoForm
             $name = $child['name'];
 
             // Does this node exist?
-            $fields = $source->xpath($type . '[@name="' . $name . '"]');
+            $fields = $source->xpath($type.'[@name="'.$name.'"]');
 
             if (empty($fields)) {
                 // This node does not exist, so add it.

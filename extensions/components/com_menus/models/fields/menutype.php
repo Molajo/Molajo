@@ -54,15 +54,15 @@ class JFormFieldMenuType extends JFormFieldList
 		switch ($this->value)
 		{
 			case 'url':
-				$value = MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL');
+				$value = MolajoText::_('MENU_TYPE_EXTERNAL_URL');
 				break;
 
 			case 'alias':
-				$value = MolajoText::_('COM_MENUS_TYPE_ALIAS');
+				$value = MolajoText::_('MENU_TYPE_ALIAS');
 				break;
 
 			case 'separator':
-				$value = MolajoText::_('COM_MENUS_TYPE_SEPARATOR');
+				$value = MolajoText::_('MENU_TYPE_SEPARATOR');
 				break;
 
 			default:
@@ -100,7 +100,7 @@ class JFormFieldMenuType extends JFormFieldList
 		$types		= $this->_getTypeOptions();
 		$recordId	= (int) $this->form->getValue('id');
 
-		$html[] = '<h2 class="modal-title">'.MolajoText::_('COM_MENUS_TYPE_CHOOSE').'</h2>';
+		$html[] = '<h2 class="modal-title">'.MolajoText::_('MENU_TYPE_CHOOSE').'</h2>';
 		$html[] = '<ul class="menu_types">';
 
 		foreach ($types as $name => $list)
@@ -128,26 +128,26 @@ class JFormFieldMenuType extends JFormFieldList
 
 		$html[] = '<li>';
 		$html[] = '<dl class="menu_type">';
-		$html[] = '	<dt>'.MolajoText::_('COM_MENUS_TYPE_SYSTEM').'</dt>';
+		$html[] = '	<dt>'.MolajoText::_('MENU_TYPE_SYSTEM').'</dt>';
 		$html[] = '	<dd>';
 		$html[] = '		<ul>';
 		$html[] = '			<li>';
 		$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 									base64_encode(json_encode(array('id' => $recordId, 'title'=>'url'))).'\')"' .
-									' title="'.MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL_DESC').'">'.
-									MolajoText::_('COM_MENUS_TYPE_EXTERNAL_URL').'</a>';
+									' title="'.MolajoText::_('MENU_TYPE_EXTERNAL_URL_DESC').'">'.
+									MolajoText::_('MENU_TYPE_EXTERNAL_URL').'</a>';
 		$html[] = '			</li>';
 		$html[] = '			<li>';
 		$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 									base64_encode(json_encode(array('id' => $recordId, 'title'=>'alias'))).'\')"' .
-									' title="'.MolajoText::_('COM_MENUS_TYPE_ALIAS_DESC').'">'.
-									MolajoText::_('COM_MENUS_TYPE_ALIAS').'</a>';
+									' title="'.MolajoText::_('MENU_TYPE_ALIAS_DESC').'">'.
+									MolajoText::_('MENU_TYPE_ALIAS').'</a>';
 		$html[] = '			</li>';
 		$html[] = '			<li>';
 		$html[] = '				<a class="choose_type" href="#" onclick="Joomla.submitbutton(\'item.setType\', \''.
 									base64_encode(json_encode(array('id' => $recordId, 'title'=>'separator'))).'\')"' .
-									' title="'.MolajoText::_('COM_MENUS_TYPE_SEPARATOR_DESC').'">'.
-									MolajoText::_('COM_MENUS_TYPE_SEPARATOR').'</a>';
+									' title="'.MolajoText::_('MENU_TYPE_SEPARATOR_DESC').'">'.
+									MolajoText::_('MENU_TYPE_SEPARATOR').'</a>';
 		$html[] = '			</li>';
 		$html[] = '		</ul>';
 		$html[] = '	</dd>';
@@ -412,19 +412,19 @@ class JFormFieldMenuType extends JFormFieldList
 
 		// get the template layouts
 		// TODO: This should only search one template -- the current template for this item (default of specified)
-		$folders = JFolder::folders(JPATH_SITE . '/templates','',false,true);
+		$folders = JFolder::folders(JPATH_SITE.'/templates','',false,true);
 		// Array to hold association between template file names and templates
 		$templateName = array();
 		foreach($folders as $folder)
 		{
-			if (JFolder::exists($folder . '/html/' . $component . '/' . $view)) {
+			if (JFolder::exists($folder.'/html/'.$component.'/'.$view)) {
 				$template = JFile::getName($folder);
 					$lang->load('tpl_'.$template.'.sys', JPATH_SITE, null, false, false)
 				||	$lang->load('tpl_'.$template.'.sys', JPATH_SITE.'/templates/'.$template, null, false, false)
 				||	$lang->load('tpl_'.$template.'.sys', JPATH_SITE, $lang->getDefault(), false, false)
 				||	$lang->load('tpl_'.$template.'.sys', JPATH_SITE.'/templates/'.$template, $lang->getDefault(), false, false);
 
-				$templateLayouts = JFolder::files($folder . '/html/' . $component . '/' . $view, '.xml$', false, true);
+				$templateLayouts = JFolder::files($folder.'/html/'.$component.'/'.$view, '.xml$', false, true);
 
 
 				foreach ($templateLayouts as $layout)
@@ -461,7 +461,7 @@ class JFormFieldMenuType extends JFormFieldList
 				// Only add the layout request argument if not the default layout.
 				if ($layout != 'default') {
 					// If the template is set, add in format template:layout so we save the template name
-					$o->request['layout'] = (isset($templateName[$file])) ? $templateName[$file] . ':' . $layout : $layout;
+					$o->request['layout'] = (isset($templateName[$file])) ? $templateName[$file].':'.$layout : $layout;
 				}
 
 				// Load layout metadata if it exists.

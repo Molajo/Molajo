@@ -32,7 +32,7 @@ abstract class MolajoHtmlTabs
     {
         MolajoHTMLTabs::_loadBehavior($group, $parameters);
 
-        return '<dl class="tabs" id="' . $group . '"><dt style="display:none;"></dt><dd style="display:none;">';
+        return '<dl class="tabs" id="'.$group.'"><dt style="display:none;"></dt><dd style="display:none;">';
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class MolajoHtmlTabs
      */
     public static function panel($text, $id)
     {
-        return '</dd><dt class="tabs ' . $id . '"><span><h3><a href="javascript:void(0);">' . $text . '</a></h3></span></dt><dd class="tabs">';
+        return '</dd><dt class="tabs '.$id.'"><span><h3><a href="javascript:void(0);">'.$text.'</a></h3></span></dt><dd class="tabs">';
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class MolajoHtmlTabs
             foreach ($opt as $k => $v)
             {
                 if ($v) {
-                    $options .= $k . ': ' . $v . ',';
+                    $options .= $k.': '.$v.',';
                 }
             }
 
@@ -102,8 +102,8 @@ abstract class MolajoHtmlTabs
             $options .= '}';
 
             $js = '	window.addEvent(\'domready\', function(){
-						$$(\'dl#' . $group . '.tabs\').each(function(tabs){
-							new JTabs(tabs, ' . $options . ');
+						$$(\'dl#'.$group.'.tabs\').each(function(tabs){
+							new JTabs(tabs, '.$options.');
 						});
 					});';
 

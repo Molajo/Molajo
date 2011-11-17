@@ -325,7 +325,7 @@ class MolajoUser extends JObject
         if ($loadsetupfile) {
             $type = str_replace(' ', '_', strtolower($this->usertype));
 
-            $file = $parampath.'/'.$type . '.xml';
+            $file = $parampath.'/'.$type.'.xml';
             if (file_exists($file)) {
             } else {
                 $file = $parampath.'/'.'user.xml';
@@ -419,7 +419,7 @@ class MolajoUser extends JObject
 
             $salt = MolajoUserHelper::genRandomPassword(32);
             $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
-            $array['password'] = $crypt . ':' . $salt;
+            $array['password'] = $crypt.':'.$salt;
 
             // Set the registration timestamp
             $this->set('register_datetime', MolajoFactory::getDate()->toMySQL());
@@ -452,7 +452,7 @@ class MolajoUser extends JObject
 
                 $salt = MolajoUserHelper::genRandomPassword(32);
                 $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
-                $array['password'] = $crypt . ':' . $salt;
+                $array['password'] = $crypt.':'.$salt;
             }
         }
 

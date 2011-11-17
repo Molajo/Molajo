@@ -10,26 +10,29 @@ defined('MOLAJO') or die;
 /**
  * Configuration Model
  *
- * @package        Molajo
- * @subpackage    Model
+ * @package     Molajo
+ * @subpackage  Model
  * @since       1.0
  */
 class MolajoModelConfiguration
 {
     /**
      * @var string $option
+     *
      * @since 1.0
      */
     protected $option;
 
     /**
      * @var int $extension_instance_id
+     *
      * @since 1.0
      */
     protected $extension_instance_id;
 
     /**
      * @var array $overrides
+     *
      * @since 1.0
      */
     protected $overrides = array();
@@ -64,14 +67,14 @@ class MolajoModelConfiguration
         $query = $db->getQuery(true);
 
         /** option or core **/
-        $component_option = $this->getComponentOptionKey($option_id);
+        $key = $this->getComponentOptionKey($option_id);
 
         /** validation query **/
         $query->select($db->namequote('option_value'), $db->namequote('option_value_literal'));
-        $query->from($db->namequote('#__extension_configurations'));
-        $query->where($db->namequote('option_id') . ' = ' . (int) $option_id);
-        $query->where($db->namequote('extension_instance_id') . ' = ' . (int) $this->extension_instance_id);
-        $query->where($db->namequote('ordering') . ' > 0 ');
+        $query->from($db->namequote('#__menu_items'));
+        $query->where($db->namequote('option_id').' = '.(int) $option_id);
+        $query->where($db->namequote('extension_instance_id').' = '.(int) $key);
+        $query->where($db->namequote('ordering').' > 0 ');
 
         $db->setQuery($query->__toString());
 
@@ -102,21 +105,22 @@ class MolajoModelConfiguration
      */
     public function getOptionLiteralValue($option_id, $option_value)
     {
+
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         /** option or core **/
-        $component_option = $this->getComponentOptionKey($option_id);
+        $key = $this->getComponentOptionKey($option_id);
 
         /** retrieve value **/
         $query = $db->getQuery(true);
 
         $query->select($db->namequote('option_value_literal'));
-        $query->from($db->namequote('#__extension_configurations'));
-        $query->where($db->namequote('option_id') . ' = ' . (int)$option_id);
-        $query->where($db->namequote('extension_type_id') . ' = ' . (int) $this->extension_type_id);
-        $query->where($db->namequote('option_value') . ' = ' . $db->quote(trim($option_value)));
-        $query->where($db->namequote('ordering') . ' > 0 ');
+        $query->from($db->namequote('#__menu_items'));
+        $query->where($db->namequote('option_id').' = '.(int)$option_id);
+        $query->where($db->namequote('extension_instance_id').' = '.(int) $key);
+        $query->where($db->namequote('option_value').' = '.$db->quote(trim($option_value)));
+        $query->where($db->namequote('ordering').' > 0 ');
 
         $db->setQuery($query->__toString());
 
@@ -156,12 +160,12 @@ class MolajoModelConfiguration
         /** validation query **/
         $query = $db->getQuery(true);
 
-        $query->select('DISTINCT ' . $db->namequote('option_value') . ' AS value');
-        $query->select($db->namequote('option_value_literal') . ' as text');
-        $query->from($db->namequote('#__extension_configurations'));
-        $query->where($db->namequote('option_id') . ' = ' . (int) $option_id);
-        $query->where($db->namequote('extension_instance_id') . ' = ' . (int) $this->extension_instance_id);
-        $query->where($db->namequote('ordering') . ' > 0 ');
+        $query->select('DISTINCT '.$db->namequote('option_value').' AS value');
+        $query->select($db->namequote('option_value_literal').' as text');
+        $query->from($db->namequote('#__menu_items'));
+        $query->where($db->namequote('option_id').' = '.(int) $option_id);
+        $query->where($db->namequote('extension_instance_id').' = '.(int) $this->extension_instance_id);
+        $query->where($db->namequote('ordering').' > 0 ');
         $query->order($db->namequote('ordering'));
 
         $db->setQuery($query->__toString());
@@ -184,7 +188,6 @@ class MolajoModelConfiguration
      */
     private function getComponentOptionKey($option_id)
     {
-        //echo '<pre>';var_dump($this->overrides);'</pre>';
         foreach ($this->overrides as $configurationOverrides => $override) {
             if ($configurationOverrides == $option_id) {
                 if ($override == $this->extension_instance_id) {
@@ -201,13 +204,11 @@ class MolajoModelConfiguration
     /**
      * setOverridesArray
      *
-     * To override the default Molajo configuration values, add a record for the option_id with an ordering of 0
-     * This method creates an array for all option_id types and the associated component_option value
-     * The component_option core is used when there is no override for that option_id set
-     * The component option is used for overrides
+     * To override the default Molajo configuration values, add a record for the
+     * option_id with an ordering of 0.
+     * This method creates an array for all option_id types and associated value
+     * The core is used when there is no override for that option_id set
      *
-     * @param string $option
-     * @param int $option_id
      * @return string
      */
     private function setOverridesArray()
@@ -216,10 +217,10 @@ class MolajoModelConfiguration
         $query = $db->getQuery(true);
 
         /** retrieve all option_id values **/
-        $query->select('DISTINCT ' . $db->namequote('option_id'));
-        $query->from($db->namequote('#__extension_configurations'));
-        $query->where($db->namequote('ordering') . ' = 0');
-        $query->where($db->namequote('option_id') . ' > 0');
+        $query->select('DISTINCT '.$db->namequote('option_id'));
+        $query->from($db->namequote('#__menu_items'));
+        $query->where($db->namequote('ordering').' = 0');
+        $query->where($db->namequote('option_id').' > 0');
         $query->order($db->namequote('option_id'));
 
         $db->setQuery($query->__toString());
@@ -240,18 +241,18 @@ class MolajoModelConfiguration
                 $query = $db->getQuery(true);
 
                 $query->select($db->namequote('extension_instance_id'));
-                $query->from($db->namequote('#__extension_configurations'));
-                $query->where($db->namequote('ordering') . ' = 0');
-                $query->where($db->namequote('option_id') . ' = ' . (int) $item->option_id);
-                $query->where($db->namequote('extension_instance_id') . ' = ' . (int) $this->extension_instance_id);
+                $query->from($db->namequote('#__menu_items'));
+                $query->where($db->namequote('ordering').' = 0');
+                $query->where($db->namequote('option_id').' = '.(int) $item->option_id);
+                $query->where($db->namequote('extension_instance_id').' = '.(int) $this->extension_instance_id);
 
                 $db->setQuery($query->__toString());
 
                 if ($extensionResults = $db->loadResult()) {
-                    $optionArray[$item->extension_instance_id] = $extensionResults;
+                    $optionArray[$item->option_id] = $extensionResults;
                 } else {
                     /** core is 1 */
-                    $optionArray[$item->extension_instance_id] = 1;
+                    $optionArray[$item->option_id] = 1;
                 }
             }
         }
@@ -262,27 +263,21 @@ class MolajoModelConfiguration
     }
 
     /**
-     * setOverridesArray
+     * retrieveExtensionInstaneID
      *
-     * To override the default Molajo configuration values, add a record for the option_id with an ordering of 0
-     * This method creates an array for all option_id types and the associated component_option value
-     * The component_option core is used when there is no override for that option_id set
-     * The component option is used for overrides
+     * Retrieve the primary key for the extension instance for the $option
      *
-     * @param string $option
-     * @param int $option_id
-     * @return string
+     * @return null
      */
     private function retrieveExtensionInstanceID()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        /** retrieve all option_id values **/
-        $query->select('DISTINCT a.extension_type_id ') ;
+        $query->select('DISTINCT a.'.$db->namequote('id').' AS extension_instance_id ') ;
         $query->from($db->namequote('#__extension_instances').' as a');
         $query->from($db->namequote('#__extensions').' as b');
-        $query->where('a.extension_id = b.id');
+        $query->where('a.'.$db->namequote('extension_id').' = b.'.$db->namequote('id'));
         $query->where($db->namequote('name').' = '.$db->quote($this->option));
 
         $db->setQuery($query->__toString());

@@ -45,7 +45,7 @@ class UsersHelperDebug
 			{
 				// Load language
 				$extension 	= $item->value;
-				$source 	= JPATH_ADMINISTRATOR . '/components/' . $extension;
+				$source 	= JPATH_ADMINISTRATOR.'/components/'.$extension;
 				$lang->load("$extension.sys", JPATH_ADMINISTRATOR, null, false, false)
 				||	$lang->load("$extension.sys", $source, null, false, false)
 				||	$lang->load("$extension.sys", JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
@@ -117,7 +117,7 @@ class UsersHelperDebug
 				// Load language
 				$lang 		= MolajoFactory::getLanguage();
 				$extension 	= 'com_config';
-				$source 	= JPATH_ADMINISTRATOR . '/components/' . $extension;
+				$source 	= JPATH_ADMINISTRATOR.'/components/'.$extension;
 
 					$lang->load($extension, JPATH_ADMINISTRATOR, null, false, false)
 				||	$lang->load($extension, $source, null, false, false)

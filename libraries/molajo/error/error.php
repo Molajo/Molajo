@@ -184,7 +184,7 @@ abstract class MolajoError
         // See what to do with this kind of error
         $handler = MolajoError::getErrorHandling($level);
 
-        $function = 'handle' . ucfirst($handler['mode']);
+        $function = 'handle'.ucfirst($handler['mode']);
         if (is_callable(array('MolajoError', $function))) {
             $reference = call_user_func_array(array('MolajoError', $function),
                                               array(&$exception,
@@ -194,8 +194,8 @@ abstract class MolajoError
         {
             // This is required to prevent a very unhelpful white-screen-of-death
             jexit(
-                'MolajoError::raise -> Static method MolajoError::' . $function . ' does not exist.' . ' Contact a developer to debug' .
-                '<br /><strong>Error was</strong> ' . '<br />' . $exception->getMessage()
+                'MolajoError::raise -> Static method MolajoError::'.$function.' does not exist.'.' Contact a developer to debug' .
+                '<br /><strong>Error was</strong> '.'<br />'.$exception->getMessage()
             );
         }
         // We don't need to store the error, since MolajoException already does that for us!
@@ -315,11 +315,11 @@ abstract class MolajoError
     {
         $levels = MolajoError::$levels;
 
-        $function = 'handle' . ucfirst($mode);
+        $function = 'handle'.ucfirst($mode);
 
         if (is_callable(array('MolajoError', $function))) {
         } else {
-            return MolajoError::raiseError(E_ERROR, 'MolajoError:' . MolajoError_ILLEGAL_MODE, 'Error Handling mode is not known', 'Mode: ' . $mode . ' is not implemented.');
+            return MolajoError::raiseError(E_ERROR, 'MolajoError:'.MolajoError_ILLEGAL_MODE, 'Error Handling mode is not known', 'Mode: '.$mode.' is not implemented.');
         }
 
         foreach ($levels as $eLevel => $eTitle)
@@ -331,7 +331,7 @@ abstract class MolajoError
             // Set callback options
             if ($mode == 'callback') {
                 if (!is_array($options)) {
-                    return MolajoError::raiseError(E_ERROR, 'MolajoError:' . MolajoError_ILLEGAL_OPTIONS, 'Options for callback not valid');
+                    return MolajoError::raiseError(E_ERROR, 'MolajoError:'.MolajoError_ILLEGAL_OPTIONS, 'Options for callback not valid');
                 }
 
                 if (!is_callable($options)) {
@@ -347,9 +347,9 @@ abstract class MolajoError
 
                     return MolajoError::raiseError(
                         E_ERROR,
-                        'MolajoError:' . MolajoError_CALLBACK_NOT_CALLABLE,
+                        'MolajoError:'.MolajoError_CALLBACK_NOT_CALLABLE,
                         'Function is not callable',
-                        'Function:' . $tmp[1] . ' scope ' . $tmp[0] . '.'
+                        'Function:'.$tmp[1].' scope '.$tmp[0].'.'
                     );
                 }
             }
@@ -500,21 +500,21 @@ abstract class MolajoError
         if (isset($_SERVER['HTTP_HOST'])) {
             // output as html
             echo "<br /><b>jos-$level_human</b>: "
-                 . $error->get('message') . "<br />\n"
-                 . (constant('JDEBUG') ? nl2br($trace) : '');
+                .$error->get('message')."<br />\n"
+                .(constant('JDEBUG') ? nl2br($trace) : '');
         }
         else
         {
             // Output as simple text
             if (defined('STDERR')) {
-                fwrite(STDERR, "Molajo$level_human: " . $error->get('message') . "\n");
+                fwrite(STDERR, "Molajo$level_human: ".$error->get('message')."\n");
                 if (constant('JDEBUG')) {
                     fwrite(STDERR, $trace);
                 }
             }
             else
             {
-                echo "Molajo$level_human: " . $error->get('message') . "\n";
+                echo "Molajo$level_human: ".$error->get('message')."\n";
                 if (constant('JDEBUG')) {
                     echo $trace;
                 }
@@ -544,10 +544,10 @@ abstract class MolajoError
 
         if (isset($_SERVER['HTTP_HOST'])) {
             // Output as html
-            echo "<br /><b>Molajo$level_human</b>: " . $error->get('message') . "<br />\n";
+            echo "<br /><b>Molajo$level_human</b>: ".$error->get('message')."<br />\n";
 
             if ($info != null) {
-                echo "&#160;&#160;&#160;" . $info . "<br />\n";
+                echo "&#160;&#160;&#160;".$info."<br />\n";
             }
 
             echo $error->getBacktrace(true);
@@ -555,9 +555,9 @@ abstract class MolajoError
         else
         {
             // Output as simple text
-            echo "Molajo$level_human: " . $error->get('message') . "\n";
+            echo "Molajo$level_human: ".$error->get('message')."\n";
             if ($info != null) {
-                echo "\t" . $info . "\n";
+                echo "\t".$info."\n";
             }
 
         }
@@ -585,18 +585,18 @@ abstract class MolajoError
 
         if (isset($_SERVER['HTTP_HOST'])) {
             // Output as html
-            jexit("<br /><b>Molajo$level_human</b>: " . $error->get('message') . "<br />\n");
+            jexit("<br /><b>Molajo$level_human</b>: ".$error->get('message')."<br />\n");
         }
         else
         {
             // Output as simple text
             if (defined('STDERR')) {
-                fwrite(STDERR, "Molajo$level_human: " . $error->get('message') . "\n");
+                fwrite(STDERR, "Molajo$level_human: ".$error->get('message')."\n");
                 jexit();
             }
             else
             {
-                jexit("Molajo$level_human: " . $error->get('message') . "\n");
+                jexit("Molajo$level_human: ".$error->get('message')."\n");
             }
         }
 
@@ -643,7 +643,7 @@ abstract class MolajoError
         static $log;
 
         if ($log == null) {
-            $fileName = date('Y-m-d') . '.error.log';
+            $fileName = date('Y-m-d').'.error.log';
             $options['format'] = "{DATE}\t{TIME}\t{LEVEL}\t{CODE}\t{MESSAGE}";
             $log = JLog::getInstance($fileName, $options);
         }
@@ -698,7 +698,7 @@ abstract class MolajoError
             $document->setError($error);
 
             @ob_end_clean();
-            $document->setTitle(MolajoText::_('Error') . ': ' . $error->get('code'));
+            $document->setTitle(MolajoText::_('Error').': '.$error->get('code'));
             $data = $document->render(false, array('template' => $template, 'directory' => MOLAJO_EXTENSION_TEMPATES, 'debug' => $config->get('debug')));
 
             // Failsafe to get the error displayed.
@@ -772,18 +772,18 @@ abstract class MolajoError
             for ($i = count($backtrace) - 1; $i >= 0; $i--)
             {
                 echo '		<tr>';
-                echo '				<td class="TD">' . $j . '</td>';
+                echo '				<td class="TD">'.$j.'</td>';
 
                 if (isset($backtrace[$i]['class'])) {
-                    echo '		<td class="TD">' . $backtrace[$i]['class'] . $backtrace[$i]['type'] . $backtrace[$i]['function'] . '()</td>';
+                    echo '		<td class="TD">'.$backtrace[$i]['class'].$backtrace[$i]['type'].$backtrace[$i]['function'].'()</td>';
                 }
                 else
                 {
-                    echo '		<td class="TD">' . $backtrace[$i]['function'] . '()</td>';
+                    echo '		<td class="TD">'.$backtrace[$i]['function'].'()</td>';
                 }
 
                 if (isset($backtrace[$i]['file'])) {
-                    echo '				<td class="TD">' . $backtrace[$i]['file'] . ':' . $backtrace[$i]['line'] . '</td>';
+                    echo '				<td class="TD">'.$backtrace[$i]['file'].':'.$backtrace[$i]['line'].'</td>';
                 }
                 else
                 {

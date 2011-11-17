@@ -152,7 +152,7 @@ class MolajoAuthentication extends JObservable
            */
         foreach ($plugins as $plugin)
         {
-            $className = 'plg' . $plugin->type . $plugin->name;
+            $className = 'plg'.$plugin->type.$plugin->name;
             if (class_exists($className)) {
                 $plugin = new $className($this, (array)$plugin);
             }
@@ -210,7 +210,7 @@ class MolajoAuthentication extends JObservable
            */
         foreach ($plugins as $plugin)
         {
-            $className = 'plg' . ucfirst($plugin->type) . ucfirst($plugin->name);
+            $className = 'plg'.ucfirst($plugin->type).ucfirst($plugin->name);
             if (class_exists($className)) {
                 $plugin = new $className($this, (array)$plugin);
             }

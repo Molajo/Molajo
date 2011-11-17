@@ -56,7 +56,7 @@ class plgSystemSef extends MolajoPlugin
 
 		// OBJECT <param name="xx", value="yy"> -- fix it only inside the <param> tag
 		$regex		= '#(<param\s+)name\s*=\s*"(movie|src|url)"[^>]\s*value\s*=\s*"(?!/|'.$protocols.'|\#|\')([^"]*)"#m';
-		$buffer	= preg_replace($regex, '$1name="$2" value="' . $base . '$3"', $buffer);
+		$buffer	= preg_replace($regex, '$1name="$2" value="'.$base.'$3"', $buffer);
         $this->checkBuffer($buffer);
 
 		// OBJECT <param value="xx", name="yy"> -- fix it only inside the <param> tag
@@ -66,7 +66,7 @@ class plgSystemSef extends MolajoPlugin
 
 		// OBJECT data="xx" attribute -- fix it only in the object tag
 		$regex =	'#(<object\s+[^>]*)data\s*=\s*"(?!/|'.$protocols.'|\#|\')([^"]*)"#m';
-		$buffer	= preg_replace($regex, '$1data="' . $base . '$2"$3', $buffer);
+		$buffer	= preg_replace($regex, '$1data="'.$base.'$2"$3', $buffer);
         $this->checkBuffer($buffer);
 
 		JResponse::setBody($buffer);
@@ -103,7 +103,7 @@ class plgSystemSef extends MolajoPlugin
 		$original	= $matches[0];
 		$url		= $matches[1];
 		$url		= str_replace('&amp;','&',$url);
-		$route		= JRoute::_('index.php?'.$url);
+		$route		= MolajoRoute::_('index.php?'.$url);
 
 		return 'href="'.$route;
 	}

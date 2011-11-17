@@ -33,7 +33,7 @@
 					label="MOD_MENU_FIELD_MENUTYPE_LABEL"
 					description="MOD_MENU_FIELD_MENUTYPE_DESC" />
 				<field
-					name="startLevel"
+					name="start_level"
 					type="list"
 					default="1"
 					label="MOD_MENU_FIELD_STARTLEVEL_LABEL"
@@ -52,7 +52,7 @@
 				</field>
 
 				<field
-					name="endLevel"
+					name="end_level"
 					type="list"
 					default="0"
 					label="MOD_MENU_FIELD_ENDLEVEL_LABEL"
@@ -72,7 +72,7 @@
 				</field>
 
 				<field
-					name="showAllChildren"
+					name="show_all_children"
 					type="radio"
 					default="0"
 					label="MOD_MENU_FIELD_ALLCHILDREN_LABEL"
@@ -93,7 +93,7 @@
 					description="MOD_MENU_FIELD_TAG_ID_DESC" />
 
 				<field
-					name="class_sfx"
+					name="class_suffix"
 					type="text"
 					label="MOD_MENU_FIELD_CLASS_LABEL"
 					description="MOD_MENU_FIELD_CLASS_DESC" />
@@ -127,12 +127,14 @@
 					<option
 						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
 				</field>
+
 				<field
 					name="cache_time"
 					type="text"
 					default="900"
 					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
 					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+
 				<field
 					name="cachemode"
 					type="hidden"
@@ -140,6 +142,7 @@
 					<option
 						value="itemid"></option>
 				</field>
+
 			</fieldset>
 		</fields>
 	</config>

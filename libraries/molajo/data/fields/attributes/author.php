@@ -69,7 +69,7 @@ class MolajoAttributeAuthor extends MolajoAttribute
         /** $this->value */
         if ($results === false) {
         } else {
-            $value = 'author="' . $results . '"';
+            $value = 'author="'.$results.'"';
         }
         parent::__set('value', $value);
 
@@ -96,7 +96,7 @@ class MolajoAttributeAuthor extends MolajoAttribute
 
         $query->select('a.id AS value');
         $query->from('#__user AS a');
-        $query->where('a.id IN (' . (int)$id . ')');
+        $query->where('a.id IN ('.(int)$id.')');
 
         $db->setQuery($query);
 

@@ -24,12 +24,12 @@ class modLoginHelper
 
 			$query->select($db->nameQuote('link'));
 			$query->from($db->nameQuote('#__menu_items'));
-			$query->where($db->nameQuote('published') . '=1');
-			$query->where($db->nameQuote('id') . '=' . $db->quote($itemid));
+			$query->where($db->nameQuote('published').'=1');
+			$query->where($db->nameQuote('id').'='.$db->quote($itemid));
 
 			$db->setQuery($query);
 			if ($link = $db->loadResult()) {
-				if ($router->getMode() == JROUTER_MODE_SEF) {
+				if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
 					$url = 'index.php?Itemid='.$itemid;
 				}
 				else {
@@ -43,7 +43,7 @@ class modLoginHelper
 			$uri = MolajoFactory::getURI();
 			$vars = $router->parse($uri);
 			unset($vars['language']);
-			if ($router->getMode() == JROUTER_MODE_SEF)
+			if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF)
 			{
 				if (isset($vars['Itemid']))
 				{

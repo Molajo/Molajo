@@ -9,11 +9,11 @@
 defined('MOLAJO') or die; 
 
 /** begin table head **/
-include dirname(__FILE__) . '/form/table_head_begin.php';
+include dirname(__FILE__).'/form/table_head_begin.php';
 /** begin table head row **/
-include dirname(__FILE__) . '/form/table_head_row_begin.php';
+include dirname(__FILE__).'/form/table_head_row_begin.php';
 /** begin table head row column first **/
-include dirname(__FILE__) . '/form/table_head_column_first.php';
+include dirname(__FILE__).'/form/table_head_column_first.php';
 
 /** loop thru header columns **/
 $this->tempColumnCount = 1;
@@ -35,6 +35,6 @@ for ($i=1; $i < 1000; $i++) {
     }
 }
 /** end of head row **/
-include dirname(__FILE__) . '/form/table_head_row_end.php';
+include dirname(__FILE__).'/form/table_head_row_end.php';
 /** end of head **/
-include dirname(__FILE__) . '/form/table_head_end.php';
+include dirname(__FILE__).'/form/table_head_end.php';

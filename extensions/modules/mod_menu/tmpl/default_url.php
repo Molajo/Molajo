@@ -1,38 +1,35 @@
 <?php
 /**
- * @version		$Id: default_url.php 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla.Site
- * @subpackage	mod_menu
+ * @package     Molajo
+ * @subpackage  Menu
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
+defined('MOLAJO') or die;
 
-// No direct access.
-defined('JPATH_PLATFORM') or die;
-
-// Note. It is important to remove spaces between elements.
 $class = $item->anchor_css ? 'class="'.$item->anchor_css.'" ' : '';
-$title = $item->anchor_title ? 'title="'.$item->anchor_title.'" ' : '';
-if ($item->menu_image) {
-		$item->parameters->get('menu_text', 1 ) ?
-		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" /><span class="image-title">'.$item->title.'</span> ' :
-		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" />';
+$title = $item->link_title ? 'title="'.$item->link_title.'" ' : '';
+if ($item->anchor_image) {
+		$item->menu_item_parameters->get('anchor_include_text', 1 ) ?
+		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" /><span class="image-title">'.$item->menu_item_title.'</span> ' :
+		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" />';
 } 
-else { $linktype = $item->title;
+else { $linktype = $item->menu_item_title;
 }
 
-switch ($item->browserNav) :
+switch ($item->menu_item_link_target) :
 	default:
 	case 0:
-?><a <?php echo $class; ?>href="<?php echo $item->flink; ?>" <?php echo $title; ?>><?php echo $linktype; ?></a><?php
+?><a <?php echo $class; ?>href="<?php echo $item->menu_item_flink; ?>" <?php echo $title; ?>><?php echo $linktype; ?></a><?php
 		break;
 	case 1:
 		// _blank
-?><a <?php echo $class; ?>href="<?php echo $item->flink; ?>" target="_blank" <?php echo $title; ?>><?php echo $linktype; ?></a><?php
+?><a <?php echo $class; ?>href="<?php echo $item->menu_item_flink; ?>" target="_blank" <?php echo $title; ?>><?php echo $linktype; ?></a><?php
 		break;
 	case 2:
 		// window.open
 		$attribs = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,'.$parameters->get('window_open');
-?><a <?php echo $class; ?>href="<?php echo $item->flink; ?>" onclick="window.open(this.href,'targetWindow','<?php echo $attribs;?>');return false;" <?php echo $title; ?>><?php echo $linktype; ?></a><?php
+?><a <?php echo $class; ?>href="<?php echo $item->menu_item_flink; ?>" onclick="window.open(this.href,'targetWindow','<?php echo $attribs;?>');return false;" <?php echo $title; ?>><?php echo $linktype; ?></a><?php
 		break;
 endswitch;

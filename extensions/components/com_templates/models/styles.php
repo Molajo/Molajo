@@ -64,7 +64,7 @@ class TemplatesModelStyles extends JModelList
 		$this->setState('filter.application_id', $application_id);
 
 		// Load the parameters.
-		$parameters = JComponentHelper::getParams('com_templates');
+		$parameters = JComponentHelper::getParameters('com_templates');
 		$this->setState('parameters', $parameters);
 
 		// List state information.
@@ -113,8 +113,8 @@ class TemplatesModelStyles extends JModelList
 		$query->from('`#__template_styles` AS a');
 
 		// Join on menus.
-		$query->select('COUNT(m.template_style_id) AS assigned');
-		$query->leftjoin('#__menu_items AS m ON m.template_style_id = a.id');
+		$query->select('COUNT(m.template_id) AS assigned');
+		$query->leftjoin('#__menu_items AS m ON m.template_id = a.id');
 		$query->group('a.id');
 
 		// Join over the language

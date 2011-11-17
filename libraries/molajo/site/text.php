@@ -86,8 +86,8 @@ class MolajoText
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
     {
         $lang = MolajoFactory::getLanguage();
-        if ($lang->hasKey($string . '_' . $alt)) {
-            return self::_($string . '_' . $alt, $jsSafe, $interpretBackSlashes);
+        if ($lang->hasKey($string.'_'.$alt)) {
+            return self::_($string.'_'.$alt, $jsSafe, $interpretBackSlashes);
         }
         else {
             return self::_($string, $jsSafe, $interpretBackSlashes);
@@ -125,7 +125,7 @@ class MolajoText
             $found = false;
             $suffixes = $lang->getPluralSuffixes((int)$n);
             foreach ($suffixes as $suffix) {
-                $key = $string . '_' . $suffix;
+                $key = $string.'_'.$suffix;
                 if ($lang->hasKey($key)) {
                     $found = true;
                     break;

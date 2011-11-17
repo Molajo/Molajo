@@ -207,7 +207,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         }
 
         /** context **/
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task;
+        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task;
 
         /** ids **/
         $idArray = JRequest::getVar('cid', array(), '', 'array');
@@ -305,7 +305,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         $results = $this->cleanCache();
 
         if ($errorFoundForBatch === false) {
-            $this->redirectClass->setRedirectMessage(MolajoText::plural('MOLAJO_N_ITEMS_' . strtoupper($task), count($idArray)));
+            $this->redirectClass->setRedirectMessage(MolajoText::plural('MOLAJO_N_ITEMS_'.strtoupper($task), count($idArray)));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('message'));
             return $this->redirectClass->setSuccessIndicator(true);
         } else {
@@ -360,7 +360,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
 
         if ($column == 'state') {
             if ($newValue) {
-                $event = 'onContentChange' . ucfirst(strtolower($column));
+                $event = 'onContentChange'.ucfirst(strtolower($column));
                 $this->dispatcher->trigger($event, array($context, $this->id, $newValue));
             }
         }

@@ -35,7 +35,7 @@ class MolajoFormFieldFilters extends MolajoFormField
     protected function getInput()
     {
         /** retrieve user's ACL groups **/
-        $className = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
+        $className = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
         $acl = new $className ();
         $groups = $acl->getList('groups', $user_id = '', $actions = '', JRequest::getCmd('option'), $asset = '');
 
@@ -51,16 +51,16 @@ class MolajoFormFieldFilters extends MolajoFormField
         $html[] = '	<thead>';
         $html[] = '	<tr>';
         $html[] = '		<th>';
-        $html[] = '			<span class="acl-action">' . MolajoText::_('MOLAJO_FILTER_GROUPS_LABEL') . '</span>';
+        $html[] = '			<span class="acl-action">'.MolajoText::_('MOLAJO_FILTER_GROUPS_LABEL').'</span>';
         $html[] = '		</th>';
         $html[] = '		<th>';
-        $html[] = '			<span class="acl-action" title="' . MolajoText::_('MOLAJO_FILTER_TYPE_LABEL') . '">' . MolajoText::_('MOLAJO_FILTER_TYPE_LABEL') . '</span>';
+        $html[] = '			<span class="acl-action" title="'.MolajoText::_('MOLAJO_FILTER_TYPE_LABEL').'">'.MolajoText::_('MOLAJO_FILTER_TYPE_LABEL').'</span>';
         $html[] = '		</th>';
         $html[] = '		<th>';
-        $html[] = '			<span class="acl-action" title="' . MolajoText::_('MOLAJO_FILTER_TAGS_LABEL') . '">' . MolajoText::_('MOLAJO_FILTER_TAGS_LABEL') . '</span>';
+        $html[] = '			<span class="acl-action" title="'.MolajoText::_('MOLAJO_FILTER_TAGS_LABEL').'">'.MolajoText::_('MOLAJO_FILTER_TAGS_LABEL').'</span>';
         $html[] = '		</th>';
         $html[] = '		<th>';
-        $html[] = '			<span class="acl-action" title="' . MolajoText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL') . '">' . MolajoText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL') . '</span>';
+        $html[] = '			<span class="acl-action" title="'.MolajoText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL').'">'.MolajoText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL').'</span>';
         $html[] = '		</th>';
         $html[] = '	</tr>';
         $html[] = '	</thead>';
@@ -77,25 +77,25 @@ class MolajoFormFieldFilters extends MolajoFormField
 
             $html[] = '	<tr>';
             $html[] = '		<th class="acl-groups left">';
-            $html[] = '			' . str_repeat('<span class="gi">|&mdash;</span>', $group->level) . $group->text;
+            $html[] = '			'.str_repeat('<span class="gi">|&mdash;</span>', $group->level).$group->text;
             $html[] = '		</th>';
             $html[] = '		<td >';
-            $html[] = '				<select name="' . $this->name . '[' . $group->value . '][filter_type]" id="' . $this->id . $group->value . '_filter_type" class="hasTip" title="' . MolajoText::_('MOLAJO_FILTER_TYPE_LABEL') . '::' . MolajoText::_('MOLAJO_FILTER_TYPE_DESC') . '">';
-            $html[] = '					<option value="BL"' . ($group_filter['filter_type'] == 'BL'
-                    ? ' selected="selected"' : '') . '>' . MolajoText::_('MOLAJO_OPTION_BLACK_LIST') . '</option>';
-            $html[] = '					<option value="WL"' . ($group_filter['filter_type'] == 'WL'
-                    ? ' selected="selected"' : '') . '>' . MolajoText::_('MOLAJO_OPTION_WHITE_LIST') . '</option>';
-            $html[] = '					<option value="NH"' . ($group_filter['filter_type'] == 'NH'
-                    ? ' selected="selected"' : '') . '>' . MolajoText::_('MOLAJO_OPTION_NO_HTML') . '</option>';
-            $html[] = '					<option value="NONE"' . ($group_filter['filter_type'] == 'NONE'
-                    ? ' selected="selected"' : '') . '>' . MolajoText::_('MOLAJO_OPTION_NO_FILTER') . '</option>';
+            $html[] = '				<select name="'.$this->name.'['.$group->value.'][filter_type]" id="'.$this->id.$group->value.'_filter_type" class="hasTip" title="'.MolajoText::_('MOLAJO_FILTER_TYPE_LABEL').'::'.MolajoText::_('MOLAJO_FILTER_TYPE_DESC').'">';
+            $html[] = '					<option value="BL"'.($group_filter['filter_type'] == 'BL'
+                    ? ' selected="selected"' : '').'>'.MolajoText::_('MOLAJO_OPTION_BLACK_LIST').'</option>';
+            $html[] = '					<option value="WL"'.($group_filter['filter_type'] == 'WL'
+                    ? ' selected="selected"' : '').'>'.MolajoText::_('MOLAJO_OPTION_WHITE_LIST').'</option>';
+            $html[] = '					<option value="NH"'.($group_filter['filter_type'] == 'NH'
+                    ? ' selected="selected"' : '').'>'.MolajoText::_('MOLAJO_OPTION_NO_HTML').'</option>';
+            $html[] = '					<option value="NONE"'.($group_filter['filter_type'] == 'NONE'
+                    ? ' selected="selected"' : '').'>'.MolajoText::_('MOLAJO_OPTION_NO_FILTER').'</option>';
             $html[] = '				</select>';
             $html[] = '		</td>';
             $html[] = '		<td >';
-            $html[] = '				<calendar name="' . $this->name . '[' . $group->value . '][filter_tags]" id="' . $this->id . $group->value . '_filter_tags" title="' . MolajoText::_('MOLAJO_FILTER_TAGS_LABEL') . '" value="' . $group_filter['filter_tags'] . '"/>';
+            $html[] = '				<calendar name="'.$this->name.'['.$group->value.'][filter_tags]" id="'.$this->id.$group->value.'_filter_tags" title="'.MolajoText::_('MOLAJO_FILTER_TAGS_LABEL').'" value="'.$group_filter['filter_tags'].'"/>';
             $html[] = '		</td>';
             $html[] = '		<td >';
-            $html[] = '				<calendar name="' . $this->name . '[' . $group->value . '][filter_attributes]" id="' . $this->id . $group->value . '_filter_attributes" title="' . MolajoText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL') . '" value="' . $group_filter['filter_attributes'] . '"/>';
+            $html[] = '				<calendar name="'.$this->name.'['.$group->value.'][filter_attributes]" id="'.$this->id.$group->value.'_filter_attributes" title="'.MolajoText::_('MOLAJO_FILTER_ATTRIBUTES_LABEL').'" value="'.$group_filter['filter_attributes'].'"/>';
             $html[] = '		</td>';
             $html[] = '	</tr>';
         }

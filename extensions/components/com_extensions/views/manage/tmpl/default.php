@@ -92,7 +92,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php echo MolajoText::_('COM_INSTALLER_TYPE_' . $item->type); ?>
+					<?php echo MolajoText::_('COM_INSTALLER_TYPE_'.$item->type); ?>
 				</td>
 				<td class="center">
 					<?php echo @$item->version != '' ? $item->version : '&#160;'; ?>

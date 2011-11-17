@@ -26,7 +26,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 200, 'content_link', 'MOLAJO_FIELD_CONTENT_LINK_LABEL', 12),
 (1, 200, 'content_numeric_value', 'MOLAJO_FIELD_CONTENT_NUMERIC_VALUE_LABEL', 13),
 (1, 200, 'content_text', 'MOLAJO_FIELD_CONTENT_TEXT_LABEL', 14),
-(1, 200, 'content_type', 'MOLAJO_FIELD_CONTENT_TYPE_LABEL', 15),
+(1, 200, 'content_type_id', 'MOLAJO_FIELD_CONTENT_TYPE_LABEL', 15),
 (1, 200, 'created', 'MOLAJO_FIELD_CREATED_LABEL', 16),
 (1, 200, 'created_by', 'MOLAJO_FIELD_CREATED_BY_LABEL', 17),
 (1, 200, 'created_by_alias', 'MOLAJO_FIELD_CREATED_BY_ALIAS_LABEL', 18),
@@ -82,7 +82,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 /* 230 MOLAJO_CONFIG_OPTION_ID_CONTENT_TYPES */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 230, '', '', 0),
-(1, 230, 'content_type', 'Content Type', 1);
+(1, 230, 'content_type_id', 'Content Type', 1);
 
 /* 250 MOLAJO_CONFIG_OPTION_ID_STATE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
@@ -144,7 +144,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 330, 'alias', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_ALIAS', 2),
 (1, 330, 'created_by', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_AUTHOR', 3),
 (1, 330, 'catid', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_CATEGORY', 4),
-(1, 330, 'content_type', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_CONTENT_TYPE', 5),
+(1, 330, 'content_type_id', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_CONTENT_TYPE', 5),
 (1, 330, 'created', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_CREATE_DATE', 6),
 (1, 330, 'featured', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_FEATURED', 7),
 (1, 330, 'language', 'MOLAJO_CONFIG_MANAGER_OPTION_FILTER_LANGUAGE', 9),

@@ -60,7 +60,7 @@ class ModulesModelModule extends JModelAdmin
 		$this->setState('module.id', $pk);
 
 		// Load the parameters.
-		$parameters	= JComponentHelper::getParams('com_modules');
+		$parameters	= JComponentHelper::getParameters('com_modules');
 		$this->setState('parameters', $parameters);
 	}
 

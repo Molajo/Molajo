@@ -13,7 +13,7 @@ class Twitter {
 	
 	function __construct($user, $pass, $debug=false) {
 		// Store an auth key for the HTTP Authorization: header
-		$this->auth = base64_encode($user . ':' . $pass);
+		$this->auth = base64_encode($user.':'.$pass);
 		$this->debug = $debug;
 	}
 	
@@ -27,12 +27,12 @@ class Twitter {
 			$this->error = "Socket error #{$errno}: {$errstr}";
 			return false;
 		}
-		$post_data = "status=" . urlencode($new_status);
+		$post_data = "status=".urlencode($new_status);
 		$to_send  = "POST /statuses/update.xml HTTP/1.1\r\n";
 		$to_send .= "Host: twitter.com\r\n";
-		$to_send .= "Content-Length: " . strlen($post_data) . "\r\n";
+		$to_send .= "Content-Length: ".strlen($post_data)."\r\n";
 		$to_send .= "Authorization: Basic {$this->auth}\r\n\r\n";
-		$to_send .= $post_data . "\r\n\r\n";
+		$to_send .= $post_data."\r\n\r\n";
 		$bytes = fwrite($fp, $to_send);
 		if ($bytes === false) {
 			$this->error = "Socket error: Error sending data.";

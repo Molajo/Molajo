@@ -80,21 +80,21 @@ class plgMolajoResponses extends MolajoPlugin	{
         }
 
         /** com_responses parameters **/
-        $responsesParams = MolajoComponentHelper::getParams('com_responses', true);
+        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
 
         /** response type 1: comments **/
-        if (($responsesParams->def('enable_comments', 0) == '1') &&
-            (in_array($content->catid, $responsesParams->def('enable_comments_categories', array())))) {
-            require_once dirname(__FILE__) . '/comments/driver.php';
+        if (($responsesParameters->def('enable_comments', 0) == '1') &&
+            (in_array($content->catid, $responsesParameters->def('enable_comments_categories', array())))) {
+            require_once dirname(__FILE__).'/comments/driver.php';
             $commentResults = MolajoResponsesComments::driver ($context, &$content, &$parameters, $page = 0, $this->location, $this->closed);
         } else {
             $commentResults = false;
         }
 
         /** response type 2: ratings **/
-        if (($responsesParams->def('enable_ratings', 0) == '1') &&
-            (in_array($content->catid, $responsesParams->def('enable_ratings_categories', array())))) {
-            require_once dirname(__FILE__) . '/ratings/driver.php';
+        if (($responsesParameters->def('enable_ratings', 0) == '1') &&
+            (in_array($content->catid, $responsesParameters->def('enable_ratings_categories', array())))) {
+            require_once dirname(__FILE__).'/ratings/driver.php';
             $ratingResults = false;
             //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$parameters, $page = 0);
         } else {
@@ -102,9 +102,9 @@ class plgMolajoResponses extends MolajoPlugin	{
         }
 
         /** response type 3: bookmarks **/
-        if (($responsesParams->def('enable_bookmarks', 0) == '1') &&
-            (in_array($content->catid, $responsesParams->def('enable_bookmarks_categories', array())))) {
-            require_once dirname(__FILE__) . '/bookmarks/driver.php';
+        if (($responsesParameters->def('enable_bookmarks', 0) == '1') &&
+            (in_array($content->catid, $responsesParameters->def('enable_bookmarks_categories', array())))) {
+            require_once dirname(__FILE__).'/bookmarks/driver.php';
             $bookmarkResults = false;
             //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$parameters, $page = 0);
         } else {
@@ -112,11 +112,11 @@ class plgMolajoResponses extends MolajoPlugin	{
         }
 
         /** response type 4: broadcasting (subscriptions, feeds) **/
-        if (($responsesParams->def('enable_broadcast', 0) == '1') &&
-            (in_array($content->catid, $responsesParams->def('enable_broadcast_categories', array())))) {
+        if (($responsesParameters->def('enable_broadcast', 0) == '1') &&
+            (in_array($content->catid, $responsesParameters->def('enable_broadcast_categories', array())))) {
 
-            if ($responsesParams->def('enable_feeds', 0) == '1') {
-                require_once dirname(__FILE__) . '/subscriptions/driver.php';
+            if ($responsesParameters->def('enable_feeds', 0) == '1') {
+                require_once dirname(__FILE__).'/subscriptions/driver.php';
                 $rssResults = false;
                 //$ratingResults = MolajoResponsesFeeds::driver ($context, &$content, &$parameters, $page = 0);
             } else {
@@ -124,8 +124,8 @@ class plgMolajoResponses extends MolajoPlugin	{
                 $rssResults = false;
             }
 
-            if ($responsesParams->def('enable_subscriptions', 0) == '1') {
-                require_once dirname(__FILE__) . '/subscriptions/driver.php';
+            if ($responsesParameters->def('enable_subscriptions', 0) == '1') {
+                require_once dirname(__FILE__).'/subscriptions/driver.php';
                 $subscriptionResults = false;
                 //$ratingResults = MolajoResponsesSubscriptions::driver ($context, &$content, &$parameters, $page = 0);
             } else {
@@ -134,9 +134,9 @@ class plgMolajoResponses extends MolajoPlugin	{
         }
 
         /** response type 5: log **/
-        if ($responsesParams->def('enable_logs', 0) == '1') {
+        if ($responsesParameters->def('enable_logs', 0) == '1') {
 
-            if (in_array($content->catid, $responsesParams->def('enable_bookmarks_categories', array()))) {
+            if (in_array($content->catid, $responsesParameters->def('enable_bookmarks_categories', array()))) {
                  echo 'Category enabled for bookmarks: '.$content->catid.'<br />';
             }
 

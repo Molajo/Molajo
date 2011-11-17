@@ -34,15 +34,15 @@ class ResponsesActivityLog extends MolajoPlugin
 	 * 	Parameters
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_comments');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 				
 		$showCategoriesAll = false;
-		$showCategories = explode(',', $pluginParams->get('categories'));
-		if ($pluginParams->get('categories')) {
+		$showCategories = explode(',', $pluginParameters->get('categories'));
+		if ($pluginParameters->get('categories')) {
 		} else {
 			$showCategoriesAll = true;
 		}
-		$includeorexclude = $pluginParams->def('include_or_exclude', 'Include');
+		$includeorexclude = $pluginParameters->def('include_or_exclude', 'Include');
 
 		// 	Is it the right Category?
 		$show = false;
@@ -61,8 +61,8 @@ class ResponsesActivityLog extends MolajoPlugin
 		}
  
 		//	For Frontpage and Blog layouts, see if comment link is desired
-		$frontpage = $pluginParams->def('frontpage', '0');	
-		$bloglayout = $pluginParams->def('bloglayout', '0');
+		$frontpage = $pluginParameters->def('frontpage', '0');
+		$bloglayout = $pluginParameters->def('bloglayout', '0');
 				
 		$view = JRequest::getVar('view');
 		if ((($view == "frontpage") || ($parameters->get('frontpage', 0) == 1)) && ($frontpage == 0) ) {
@@ -84,7 +84,7 @@ class ResponsesActivityLog extends MolajoPlugin
 		$result = stristr($article->text, "{close comments}");
  		if ($result) {
 			$article->text = str_replace( "{close comments}", "", $article->text );
-			$commentsExpiredMessage = $pluginParams->def('closedmessage', JText::_( 'Comments are now closed.') );
+			$commentsExpiredMessage = $pluginParameters->def('closedmessage', JText::_( 'Comments are now closed.') );
 			$closeComments = true;			
  		}
 		 		 		
@@ -127,7 +127,7 @@ class ResponsesActivityLog extends MolajoPlugin
 		 * Follow with Close Message, if appropriate
 		 */
  		if ($closeComments == true) {
-			$article->text .= '<h3>' . $commentsExpiredMessage . '</h3>';
+			$article->text .= '<h3>'.$commentsExpiredMessage.'</h3>';
  		}
 	}
 }

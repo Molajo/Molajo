@@ -25,7 +25,7 @@ class MenusModelItem extends JModelAdmin
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.0
 	 */
-	protected $text_prefix = 'COM_MENUS_ITEM';
+	protected $text_prefix = 'MENU_ITEM';
 
 	/**
 	 * @var		string	The help screen key for the menu item.
@@ -107,7 +107,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		if (empty($pks)) {
-			$this->setError(MolajoText::_('COM_MENUS_NO_ITEM_SELECTED'));
+			$this->setError(MolajoText::_('MENU_NO_ITEM_SELECTED'));
 			return false;
 		}
 
@@ -187,7 +187,7 @@ class MenusModelItem extends JModelAdmin
 		// Check that user has create permission for menus
 		$user	= MolajoFactory::getUser();
 		if (!$user->authorise('core.create', 'com_menus')) {
-			$this->setError(MolajoText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
+			$this->setError(MolajoText::_('MENU_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
 		}
 
@@ -344,12 +344,12 @@ class MenusModelItem extends JModelAdmin
 		// Check that user has create and edit permission for menus
 		$user	= MolajoFactory::getUser();
 		if (!$user->authorise('core.create', 'com_menus')) {
-			$this->setError(MolajoText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_CREATE'));
+			$this->setError(MolajoText::_('MENU_BATCH_MENU_ITEM_CANNOT_CREATE'));
 			return false;
 		}
 
 		if (!$user->authorise('core.edit', 'com_menus')) {
-			$this->setError(MolajoText::_('COM_MENUS_BATCH_MENU_ITEM_CANNOT_EDIT'));
+			$this->setError(MolajoText::_('MENU_BATCH_MENU_ITEM_CANNOT_EDIT'));
 			return false;
 		}
 
@@ -694,7 +694,7 @@ class MenusModelItem extends JModelAdmin
 	 */
 	protected function getReorderConditions($table)
 	{
-		return 'menu_id = ' . $this->_db->Quote($table->menu_id);
+		return 'menu_id = '.$this->_db->Quote($table->menu_id);
 	}
 
 	/**
@@ -750,7 +750,7 @@ class MenusModelItem extends JModelAdmin
 		}
 
 		// Load the parameters.
-		$parameters	= JComponentHelper::getParams('com_menus');
+		$parameters	= JComponentHelper::getParameters('com_menus');
 		$this->setState('parameters', $parameters);
 	}
 
@@ -1081,7 +1081,7 @@ class MenusModelItem extends JModelAdmin
 
 					if ($table->home == $value) {
 						unset($pks[$i]);
-						MolajoError::raiseNotice(403, MolajoText::_('COM_MENUS_ERROR_ALREADY_HOME'));
+						MolajoError::raiseNotice(403, MolajoText::_('MENU_ERROR_ALREADY_HOME'));
 					}
 					else {
 						$table->home = $value;
@@ -1110,7 +1110,7 @@ class MenusModelItem extends JModelAdmin
 					unset($pks[$i]);
 					if (!$onehome) {
 						$onehome = true;
-						MolajoError::raiseNotice(403, MolajoText::sprintf('COM_MENUS_ERROR_ONE_HOME'));
+						MolajoError::raiseNotice(403, MolajoText::sprintf('MENU_ERROR_ONE_HOME'));
 					}
 				}
 			}

@@ -55,7 +55,7 @@ class MolajoResponsesComments {
      * @var		array
      * @access	public
      */
-    protected $responsesParams;
+    protected $responsesParameters;
 
     /**
      * $closed_message
@@ -111,8 +111,8 @@ class MolajoResponsesComments {
         }
 
         /** response component parameters **/
-        $this->responsesParams = MolajoComponentHelper::getParams('com_responses', true);
-        if (in_array($content->catid, $this->responsesParams->def('enable_comments_categories', array()))) {
+        $this->responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        if (in_array($content->catid, $this->responsesParameters->def('enable_comments_categories', array()))) {
         } else {
             return;
         }
@@ -123,7 +123,7 @@ class MolajoResponsesComments {
         } else {
             $closed = false;
         }
-        $opendays = (int) $this->responsesParams->def('opendays', 0);
+        $opendays = (int) $this->responsesParameters->def('opendays', 0);
         if ((int) $opendays < 1) {
             $opendays = 99999999;
         }
@@ -146,11 +146,11 @@ class MolajoResponsesComments {
 
         /** closed message **/
         if ($closed == true) {
-            $this->closed_message = $this->responsesParams->def('closed_message', JText::_('COM_RESPONSES_CONFIG_CLOSED_MESSAGE_DEFAULT'));
+            $this->closed_message = $this->responsesParameters->def('closed_message', JText::_('COM_RESPONSES_CONFIG_CLOSED_MESSAGE_DEFAULT'));
         } else {
             $this->closed_message = '';
         }
-        $this->no_responses_message = $this->responsesParams->def('be_the_first_to_comment_message', JText::_('COM_RESPONSES_CONFIG_SUMMARY_MESSAGE_FIRST_DEFAULT'));
+        $this->no_responses_message = $this->responsesParameters->def('be_the_first_to_comment_message', JText::_('COM_RESPONSES_CONFIG_SUMMARY_MESSAGE_FIRST_DEFAULT'));
 
         /** language **/
         $language = MolajoFactory::getLanguage();
@@ -162,7 +162,7 @@ class MolajoResponsesComments {
         $renderedLayouts = '';
 
         /** Layout: Summary **/
-        $showSummary = $this->responsesParams->def('show_summary', 3);
+        $showSummary = $this->responsesParameters->def('show_summary', 3);
 
         if (($showSummary == 3)                                  /** always **/
         || (($showSummary == 1) && ($multiple === true))         /** summary **/
@@ -175,7 +175,7 @@ class MolajoResponsesComments {
 
         /** Layout: Form **/
         if ($closed == false) {
-            $showForm = $this->responsesParams->def('show_form', 2);
+            $showForm = $this->responsesParameters->def('show_form', 2);
 
             if (($showForm == 3)                                  /** always **/
             || (($showForm == 1) && ($multiple === true))         /** summary **/
@@ -274,12 +274,12 @@ class MolajoResponsesComments {
         /** model **/
         $modelPath = JPATH_SITE.'/components/com_responses/models/responses.php';
         require_once $modelPath;
-        $order_date = $this->responsesParams->def('order_date', 'a.created');
+        $order_date = $this->responsesParameters->def('order_date', 'a.created');
         if ($order_date == 'a.start_publishing_datetime') {
         } else {
             $order_date = 'a.created';
         }
-        $orderby_sec = $this->responsesParams->def('orderby_sec', 'asc');
+        $orderby_sec = $this->responsesParameters->def('orderby_sec', 'asc');
         if ($orderby_sec == 'desc') {
         } else {
             $orderby_sec = 'asc';
@@ -299,7 +299,7 @@ class MolajoResponsesComments {
         for ($i = 0, $n = count($this->items); $i < $n; $i++)
         {
                 $item = &$this->items[$i];
-                $item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
+                $item->slug = $item->alias ? ($item->id.':'.$item->alias) : $item->id;
 
                 $item->event = new stdClass();
                 $dispatcher = JDispatcher::getInstance();

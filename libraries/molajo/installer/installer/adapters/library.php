@@ -33,14 +33,14 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
             $this->parent->setPath('source', JPATH_PLATFORM.'/'.$this->parent->extension->element);
         }
         $this->manifest = $this->parent->getManifest();
-        $extension = 'lib_' . strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
+        $extension = 'lib_'.strtolower(JFilterInput::getInstance()->clean((string)$this->manifest->name, 'cmd'));
         $name = strtolower((string)$this->manifest->libraryname);
         $lang = MolajoFactory::getLanguage();
-        $source = $path ? $path : JPATH_PLATFORM . "/$name";
-        $lang->load($extension . '.sys', $source, null, false, false)
-        || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load($extension . '.sys', $source, $lang->getDefault(), false, false)
-        || $lang->load($extension . '.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false);
+        $source = $path ? $path : JPATH_PLATFORM."/$name";
+        $lang->load($extension.'.sys', $source, null, false, false)
+        || $lang->load($extension.'.sys', MOLAJO_BASE_FOLDER, null, false, false)
+        || $lang->load($extension.'.sys', $source, $lang->getDefault(), false, false)
+        || $lang->load($extension.'.sys', MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false);
     }
 
     /**
@@ -64,7 +64,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
         $this->set('element', $element);
 
         $db = $this->parent->getDbo();
-        $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="library" AND element = "' . $element . '"');
+        $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="library" AND element = "'.$element.'"');
         $result = $db->loadResult();
         if ($result) {
             // Already installed, can we upgrade?
@@ -144,7 +144,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
         $row->protected = 0;
         $row->access = 1;
         $row->application_id = 0;
-        $row->params = $this->parent->getParams();
+        $row->parameters = $this->parent->getParameters();
         $row->custom_data = ''; // custom data
         $row->manifest_cache = $this->parent->generateManifestCache();
         if (!$row->store()) {
@@ -158,7 +158,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
         // Lastly, we will copy the manifest file to its appropriate place.
         $manifest = array();
         $manifest['src'] = $this->parent->getPath('manifest');
-        $manifest['dest'] = MOLAJO_SITE_MANIFESTS.'/libraries/' . basename($this->parent->getPath('manifest'));
+        $manifest['dest'] = MOLAJO_SITE_MANIFESTS.'/libraries/'.basename($this->parent->getPath('manifest'));
         if (!$this->parent->copyFiles(array($manifest), true)) {
             // Install failed, rollback changes
             $this->parent->abort(MolajoText::_('JLIB_INSTALLER_ABORT_LIB_INSTALL_COPY_SETUP'));
@@ -190,7 +190,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
         $this->set('element', $element);
         $installer = new MolajoInstaller; // we don't want to compromise this instance!
         $db = $this->parent->getDbo();
-        $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="library" AND element = "' . $element . '"');
+        $db->setQuery('SELECT extension_id FROM #__extensions WHERE type="library" AND element = "'.$element.'"');
         $result = $db->loadResult();
         if ($result) {
             // Already installed, which would make sense
@@ -229,7 +229,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
             return false;
         }
 
-        $manifestFile = MOLAJO_SITE_MANIFESTS.'/libraries/' . $row->element . '.xml';
+        $manifestFile = MOLAJO_SITE_MANIFESTS.'/libraries/'.$row->element.'.xml';
 
         // Because libraries may not have their own folders we cannot use the standard method of finding an installation manifest
         if (file_exists($manifestFile)) {
@@ -299,7 +299,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
         $file_list = JFolder::files(MOLAJO_SITE_MANIFESTS.'/libraries', '\.xml$');
         foreach ($file_list as $file)
         {
-            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_SITE_MANIFESTS.'/libraries/' . $file);
+            $manifest_details = MolajoApplicationHelper::parseXMLInstallFile(MOLAJO_SITE_MANIFESTS.'/libraries/'.$file);
             $file = JFile::stripExt($file);
             $extension = MolajoTable::getInstance('extension');
             $extension->set('type', 'library');
@@ -333,7 +333,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
            * time they can be adequately removed.
            */
 
-        $manifestPath = MOLAJO_SITE_MANIFESTS.'/libraries/' . $this->parent->extension->element . '.xml';
+        $manifestPath = MOLAJO_SITE_MANIFESTS.'/libraries/'.$this->parent->extension->element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
         $manifest_details = MolajoApplicationHelper::parseXMLInstallFile($this->parent->getPath('manifest'));
@@ -341,7 +341,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
         $this->parent->extension->state = 0;
         $this->parent->extension->name = $manifest_details['name'];
         $this->parent->extension->enabled = 1;
-        $this->parent->extension->params = $this->parent->getParams();
+        $this->parent->extension->parameters = $this->parent->getParameters();
         if ($this->parent->extension->store()) {
             return true;
         }
@@ -362,7 +362,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
     public function refreshManifestCache()
     {
         // Need to find to find where the XML file is since we don't store this normally
-        $manifestPath = MOLAJO_SITE_MANIFESTS.'/libraries/' . $this->parent->extension->element . '.xml';
+        $manifestPath = MOLAJO_SITE_MANIFESTS.'/libraries/'.$this->parent->extension->element.'.xml';
         $this->parent->manifest = $this->parent->isManifest($manifestPath);
         $this->parent->setPath('manifest', $manifestPath);
 

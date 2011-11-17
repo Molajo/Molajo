@@ -38,7 +38,7 @@ class MolajoFieldState extends MolajoField
      */
     public function getOptions()
     {
-        $this->params = MolajoComponentHelper::getParams(JRequest::getVar('option'));
+        $this->parameters = MolajoComponentHelper::getParameters(JRequest::getVar('option'));
         $this->config_component_state_spam = JRequest::getCmd('config_component_state_spam', '0');
 
         $options = array();
@@ -46,10 +46,10 @@ class MolajoFieldState extends MolajoField
         $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_PUBLISHED, MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
         $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
         $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_TRASHED, MolajoText::_('MOLAJO_OPTION_TRASHED'));
-        if ($this->params->def('config_component_state_spam', '0') == 1) {
+        if ($this->parameters->def('config_component_state_spam', '0') == 1) {
             $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_SPAMMED, MolajoText::_('MOLAJO_OPTION_SPAMMED'));
         }
-        if ($this->params->def('config_component_version_management', '1') == 1) {
+        if ($this->parameters->def('config_component_version_management', '1') == 1) {
             $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_VERSION, MolajoText::_('MOLAJO_OPTION_VERSION'));
         }
         $options[] = MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
@@ -109,7 +109,7 @@ class MolajoFieldState extends MolajoField
     {
         $query->select('a.state');
         if (is_numeric($value)) {
-            $query->where('a.state = ' . (int)$value);
+            $query->where('a.state = '.(int)$value);
         } else if ($value == '*') {
 
         } else {

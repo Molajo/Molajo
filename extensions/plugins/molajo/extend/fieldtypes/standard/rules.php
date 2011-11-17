@@ -63,7 +63,7 @@ class JFormFieldRules extends JFormField
 		if ($section == 'component') {
 			// Need to find the asset id by the name of the component.
 			$db = MolajoFactory::getDbo();
-			$db->setQuery('SELECT id FROM #__assets WHERE name = ' . $db->quote($component));
+			$db->setQuery('SELECT id FROM #__assets WHERE name = '.$db->quote($component));
 			$assetId = (int) $db->loadResult();
 
 			if ($error = $db->getErrorMsg()) {
@@ -97,7 +97,7 @@ class JFormFieldRules extends JFormField
 		// Prepare output
 		$html = array();
 		$html[] = '<div id="permissions-sliders" class="pane-sliders">';
-		$html[] = '<p class="rule-desc">' . JText::_('MOLAJO_RULES_SETTINGS_DESC') . '</p>';
+		$html[] = '<p class="rule-desc">'.JText::_('MOLAJO_RULES_SETTINGS_DESC').'</p>';
 		$html[] = '<ul id="rules">';
 
 		// Start a row for each user group.
@@ -116,7 +116,7 @@ class JFormFieldRules extends JFormField
 
 			$html[] = '<div class="panel">';
 			$html[] =	'<h3 class="pane-toggler title"><a href="javascript:void(0);"><span>';
-			$html[] =	str_repeat('<span class="level">|&ndash;</span> ', $curLevel = $group->level) . $group->text;
+			$html[] =	str_repeat('<span class="level">|&ndash;</span> ', $curLevel = $group->level).$group->text;
 			$html[] =	'</span></a></h3>';
 			$html[] =	'<div class="pane-slider content pane-hide">';
 			$html[] =		'<div class="mypanel">';
@@ -124,19 +124,19 @@ class JFormFieldRules extends JFormField
 			$html[] =				'<thead>';
 			$html[] =					'<tr>';
 
-			$html[] =						'<th class="actions" id="actions-th' . $group->value . '">';
-			$html[] =							'<span class="acl-action">' . JText::_('MOLAJO_RULES_ACTION') . '</span>';
+			$html[] =						'<th class="actions" id="actions-th'.$group->value.'">';
+			$html[] =							'<span class="acl-action">'.JText::_('MOLAJO_RULES_ACTION').'</span>';
 			$html[] =						'</th>';
 
-			$html[] =						'<th class="settings" id="settings-th' . $group->value . '">';
-			$html[] =							'<span class="acl-action">' . JText::_('MOLAJO_RULES_SELECT_SETTING') . '</span>';
+			$html[] =						'<th class="settings" id="settings-th'.$group->value.'">';
+			$html[] =							'<span class="acl-action">'.JText::_('MOLAJO_RULES_SELECT_SETTING').'</span>';
 			$html[] =						'</th>';
 
 			// The calculated setting is not shown for the root group of global configuration.
 			$canCalculateSettings = ($group->parent_id || !empty($component));
 			if ($canCalculateSettings) {
-				$html[] =					'<th id="aclactionth' . $group->value . '">';
-				$html[] =						'<span class="acl-action">' . JText::_('MOLAJO_RULES_CALCULATED_SETTING') . '</span>';
+				$html[] =					'<th id="aclactionth'.$group->value.'">';
+				$html[] =						'<span class="acl-action">'.JText::_('MOLAJO_RULES_CALCULATED_SETTING').'</span>';
 				$html[] =					'</th>';
 			}
 
@@ -147,15 +147,15 @@ class JFormFieldRules extends JFormField
 			foreach ($actions as $action)
 			{
 				$html[] =				'<tr>';
-				$html[] =					'<td headers="actions-th' . $group->value . '">';
-				$html[] =						'<label class="hasTip" for="' . $this->id . '_' . $action->name . '_' . $group->value . '" title="'.htmlspecialchars(JText::_($action->title).'::'.JText::_($action->description), ENT_COMPAT, 'UTF-8').'">';
+				$html[] =					'<td headers="actions-th'.$group->value.'">';
+				$html[] =						'<label class="hasTip" for="'.$this->id.'_'.$action->name.'_'.$group->value.'" title="'.htmlspecialchars(JText::_($action->title).'::'.JText::_($action->description), ENT_COMPAT, 'UTF-8').'">';
 				$html[] =						JText::_($action->title);
 				$html[] =						'</label>';
 				$html[] =					'</td>';
 
-				$html[] =					'<td headers="settings-th' . $group->value . '">';
+				$html[] =					'<td headers="settings-th'.$group->value.'">';
 
-				$html[] = '<select name="' . $this->name . '[' . $action->name . '][' . $group->value . ']" id="' . $this->id . '_' . $action->name . '_' . $group->value . '" title="' . JText::sprintf('MOLAJO_RULES_SELECT_ALLOW_DENY_GROUP', JText::_($action->title), trim($group->text)) . '">';
+				$html[] = '<select name="'.$this->name.'['.$action->name.']['.$group->value.']" id="'.$this->id.'_'.$action->name.'_'.$group->value.'" title="'.JText::sprintf('MOLAJO_RULES_SELECT_ALLOW_DENY_GROUP', JText::_($action->title), trim($group->text)).'">';
 
 				$inheritedRule	= JAccess::checkGroup($group->value, $action->name, $assetId);
 
@@ -165,12 +165,12 @@ class JFormFieldRules extends JFormField
 				// Build the dropdowns for the permissions sliders
 
 				// The parent group has "Not Set", all children can rightly "Inherit" from that.
-				$html[] = '<option value=""' . ($assetRule === null ? ' selected="selected"' : '') . '>' .
-							JText::_(empty($group->parent_id) && empty($component) ? 'MOLAJO_RULES_NOT_SET' : 'MOLAJO_RULES_INHERITED') . '</option>';
-				$html[] = '<option value="1"' . ($assetRule === true ? ' selected="selected"' : '') . '>' .
-							JText::_('MOLAJO_RULES_ALLOWED') . '</option>';
-				$html[] = '<option value="0"' . ($assetRule === false ? ' selected="selected"' : '') . '>' .
-							JText::_('MOLAJO_RULES_DENIED') . '</option>';
+				$html[] = '<option value=""'.($assetRule === null ? ' selected="selected"' : '').'>' .
+							JText::_(empty($group->parent_id) && empty($component) ? 'MOLAJO_RULES_NOT_SET' : 'MOLAJO_RULES_INHERITED').'</option>';
+				$html[] = '<option value="1"'.($assetRule === true ? ' selected="selected"' : '').'>' .
+							JText::_('MOLAJO_RULES_ALLOWED').'</option>';
+				$html[] = '<option value="0"'.($assetRule === false ? ' selected="selected"' : '').'>' .
+							JText::_('MOLAJO_RULES_DENIED').'</option>';
 
 				$html[] = '</select>&#160; ';
 
@@ -184,7 +184,7 @@ class JFormFieldRules extends JFormField
 				// Build the Calculated Settings column.
 				// The inherited settings column is not displayed for the root group in global configuration.
 				if ($canCalculateSettings) {
-					$html[] = '<td headers="aclactionth' . $group->value . '">';
+					$html[] = '<td headers="aclactionth'.$group->value.'">';
 
 					// This is where we show the current effective settings considering currrent group, path and cascade.
 					// Check whether this is a component or global. Change the text slightly.

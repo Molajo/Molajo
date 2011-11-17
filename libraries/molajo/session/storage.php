@@ -56,18 +56,18 @@ abstract class MolajoSessionStorage extends JObject
 
         if (empty($instances[$name])) {
 
-            $class = 'MolajoSessionStorage' . ucfirst($name);
+            $class = 'MolajoSessionStorage'.ucfirst($name);
             if (class_exists($class)) {
 
             } else {
-                $path = dirname(__FILE__).'/storage/' . $name . '.php';
+                $path = dirname(__FILE__).'/storage/'.$name.'.php';
 
                 if (file_exists($path)) {
                     require_once $path;
 
                 } else {
                     // No call to MolajoError::raiseError here, as it tries to close the non-existing session
-                    jexit('Unable to load session storage class: ' . $name);
+                    jexit('Unable to load session storage class: '.$name);
                 }
             }
 

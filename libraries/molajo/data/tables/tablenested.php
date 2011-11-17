@@ -108,11 +108,11 @@ class MolajoTableNested extends MolajoTable
 
         // Get the path from the node to the root.
         $query = $this->_db->getQuery(true);
-        $select = ($diagnostic) ? 'p.' . $k . ', p.parent_id, p.level, p.lft, p.rgt' : 'p.*';
+        $select = ($diagnostic) ? 'p.'.$k.', p.parent_id, p.level, p.lft, p.rgt' : 'p.*';
         $query->select($select);
-        $query->from($this->_tbl . ' AS n, ' . $this->_tbl . ' AS p');
+        $query->from($this->_tbl.' AS n, '.$this->_tbl.' AS p');
         $query->where('n.lft BETWEEN p.lft AND p.rgt');
-        $query->where('n.' . $k . ' = ' . (int)$pk);
+        $query->where('n.'.$k.' = '.(int)$pk);
         $query->order('p.lft');
 
         $this->_db->setQuery($query);
@@ -145,11 +145,11 @@ class MolajoTableNested extends MolajoTable
 
         // Get the node and children as a tree.
         $query = $this->_db->getQuery(true);
-        $select = ($diagnostic) ? 'n.' . $k . ', n.parent_id, n.level, n.lft, n.rgt' : 'n.*';
+        $select = ($diagnostic) ? 'n.'.$k.', n.parent_id, n.level, n.lft, n.rgt' : 'n.*';
         $query->select($select);
-        $query->from($this->_tbl . ' AS n, ' . $this->_tbl . ' AS p');
+        $query->from($this->_tbl.' AS n, '.$this->_tbl.' AS p');
         $query->where('n.lft BETWEEN p.lft AND p.rgt');
-        $query->where('p.' . $k . ' = ' . (int)$pk);
+        $query->where('p.'.$k.' = '.(int)$pk);
         $query->order('n.lft');
         $this->_db->setQuery($query);
         $tree = $this->_db->loadObjectList();
@@ -237,17 +237,17 @@ class MolajoTableNested extends MolajoTable
         $query = $this->_db->getQuery(true);
         $query->select($k);
         $query->from($this->_tbl);
-        $query->where('parent_id = ' . $this->parent_id);
+        $query->where('parent_id = '.$this->parent_id);
         if ($where) {
             $query->where($where);
         }
         $position = 'after';
         if ($delta > 0) {
-            $query->where('rgt > ' . $this->rgt);
+            $query->where('rgt > '.$this->rgt);
             $query->order('rgt ASC');
             $position = 'after';
         } else {
-            $query->where('lft < ' . $this->lft);
+            $query->where('lft < '.$this->lft);
             $query->order('lft DESC');
             $position = 'before';
         }
@@ -294,7 +294,7 @@ class MolajoTableNested extends MolajoTable
         $query = $this->_db->getQuery(true);
         $query->select($k);
         $query->from($this->_tbl);
-        $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+        $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
         $this->_db->setQuery($query);
         $children = $this->_db->loadColumn();
 
@@ -326,7 +326,7 @@ class MolajoTableNested extends MolajoTable
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
         $query->set('lft = lft * (-1), rgt = rgt * (-1)');
-        $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+        $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
         $this->_db->setQuery($query);
 
         $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
@@ -337,8 +337,8 @@ class MolajoTableNested extends MolajoTable
         // Compress the left values.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = lft - ' . (int)$node->width);
-        $query->where('lft > ' . (int)$node->rgt);
+        $query->set('lft = lft - '.(int)$node->width);
+        $query->where('lft > '.(int)$node->rgt);
         $this->_db->setQuery($query);
 
         $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
@@ -346,8 +346,8 @@ class MolajoTableNested extends MolajoTable
         // Compress the right values.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('rgt = rgt - ' . (int)$node->width);
-        $query->where('rgt > ' . (int)$node->rgt);
+        $query->set('rgt = rgt - '.(int)$node->width);
+        $query->where('rgt > '.(int)$node->rgt);
         $this->_db->setQuery($query);
 
         $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
@@ -374,7 +374,7 @@ class MolajoTableNested extends MolajoTable
         {
             // Get the last root node as the reference node.
             $query = $this->_db->getQuery(true);
-            $query->select($this->_tbl_key . ', parent_id, level, lft, rgt');
+            $query->select($this->_tbl_key.', parent_id, level, lft, rgt');
             $query->from($this->_tbl);
             $query->where('parent_id = 0');
             $query->order('lft DESC');
@@ -406,7 +406,7 @@ class MolajoTableNested extends MolajoTable
         // Shift left values.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = lft + ' . (int)$node->width);
+        $query->set('lft = lft + '.(int)$node->width);
         $query->where($repositionData->left_where);
         $this->_db->setQuery($query);
 
@@ -415,7 +415,7 @@ class MolajoTableNested extends MolajoTable
         // Shift right values.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('rgt = rgt + ' . (int)$node->width);
+        $query->set('rgt = rgt + '.(int)$node->width);
         $query->where($repositionData->right_where);
         $this->_db->setQuery($query);
 
@@ -431,9 +431,9 @@ class MolajoTableNested extends MolajoTable
         // Move the nodes back into position in the tree using the calculated offsets.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('rgt = ' . (int)$offset . ' - rgt');
-        $query->set('lft = ' . (int)$offset . ' - lft');
-        $query->set('level = level + ' . (int)$levelOffset);
+        $query->set('rgt = '.(int)$offset.' - rgt');
+        $query->set('lft = '.(int)$offset.' - lft');
+        $query->set('level = level + '.(int)$levelOffset);
         $query->where('lft < 0');
         $this->_db->setQuery($query);
 
@@ -446,14 +446,14 @@ class MolajoTableNested extends MolajoTable
 
             // Update the title and alias fields if they exist for the table.
             if (property_exists($this, 'title') && $this->title !== null) {
-                $query->set('title = ' . $this->_db->Quote($this->title));
+                $query->set('title = '.$this->_db->Quote($this->title));
             }
             if (property_exists($this, 'alias') && $this->alias !== null) {
-                $query->set('alias = ' . $this->_db->Quote($this->alias));
+                $query->set('alias = '.$this->_db->Quote($this->alias));
             }
 
-            $query->set('parent_id = ' . (int)$repositionData->new_parent_id);
-            $query->where($this->_tbl_key . ' = ' . (int)$node->$k);
+            $query->set('parent_id = '.(int)$repositionData->new_parent_id);
+            $query->where($this->_tbl_key.' = '.(int)$node->$k);
             $this->_db->setQuery($query);
 
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_MOVE_FAILED');
@@ -532,21 +532,21 @@ class MolajoTableNested extends MolajoTable
             $query = $this->_db->getQuery(true);
             $query->delete();
             $query->from($this->_tbl);
-            $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+            $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
 
             // Compress the left values.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
-            $query->set('lft = lft - ' . (int)$node->width);
-            $query->where('lft > ' . (int)$node->rgt);
+            $query->set('lft = lft - '.(int)$node->width);
+            $query->where('lft > '.(int)$node->rgt);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
 
             // Compress the right values.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
-            $query->set('rgt = rgt - ' . (int)$node->width);
-            $query->where('rgt > ' . (int)$node->rgt);
+            $query->set('rgt = rgt - '.(int)$node->width);
+            $query->where('rgt > '.(int)$node->rgt);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
         }
 
@@ -557,7 +557,7 @@ class MolajoTableNested extends MolajoTable
             $query = $this->_db->getQuery(true);
             $query->delete();
             $query->from($this->_tbl);
-            $query->where('lft = ' . (int)$node->lft);
+            $query->where('lft = '.(int)$node->lft);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
 
             // Shift all node's children up a level.
@@ -566,28 +566,28 @@ class MolajoTableNested extends MolajoTable
             $query->set('lft = lft - 1');
             $query->set('rgt = rgt - 1');
             $query->set('level = level - 1');
-            $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+            $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
 
             // Adjust all the parent values for direct children of the deleted node.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
-            $query->set('parent_id = ' . (int)$node->parent_id);
-            $query->where('parent_id = ' . (int)$node->$k);
+            $query->set('parent_id = '.(int)$node->parent_id);
+            $query->where('parent_id = '.(int)$node->$k);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
 
             // Shift all of the left values that are right of the node.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('lft = lft - 2');
-            $query->where('lft > ' . (int)$node->rgt);
+            $query->where('lft > '.(int)$node->rgt);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
 
             // Shift all of the right values that are right of the node.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
             $query->set('rgt = rgt - 2');
-            $query->where('rgt > ' . (int)$node->rgt);
+            $query->where('rgt > '.(int)$node->rgt);
             $this->_runQuery($query, 'MOLAJO_DATABASE_ERROR_DELETE_FAILED');
         }
 
@@ -609,9 +609,9 @@ class MolajoTableNested extends MolajoTable
         $this->parent_id = (int)$this->parent_id;
         if ($this->parent_id > 0) {
             $query = $this->_db->getQuery(true);
-            $query->select('COUNT(' . $this->_tbl_key . ')');
+            $query->select('COUNT('.$this->_tbl_key.')');
             $query->from($this->_tbl);
-            $query->where($this->_tbl_key . ' = ' . $this->parent_id);
+            $query->where($this->_tbl_key.' = '.$this->parent_id);
             $this->_db->setQuery($query);
 
             if ($this->_db->loadResult()) {
@@ -653,7 +653,7 @@ class MolajoTableNested extends MolajoTable
         $k = $this->_tbl_key;
 
         if ($this->_debug) {
-            echo "\n" . get_class($this) . "::store\n";
+            echo "\n".get_class($this)."::store\n";
             $this->_logtable(true, false);
         }
         /*
@@ -677,7 +677,7 @@ class MolajoTableNested extends MolajoTable
                 if ($this->_location_id == 0) {
                     // Get the last root node as the reference node.
                     $query = $this->_db->getQuery(true);
-                    $query->select($this->_tbl_key . ', parent_id, level, lft, rgt');
+                    $query->select($this->_tbl_key.', parent_id, level, lft, rgt');
                     $query->from($this->_tbl);
                     $query->where('parent_id = 0');
                     $query->order('lft DESC');
@@ -838,10 +838,10 @@ class MolajoTableNested extends MolajoTable
             if ($checkoutSupport) {
                 // Ensure that children are not checked out.
                 $query = $this->_db->getQuery(true);
-                $query->select('COUNT(' . $k . ')');
+                $query->select('COUNT('.$k.')');
                 $query->from($this->_tbl);
-                $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
-                $query->where('(checked_out <> 0 AND checked_out <> ' . (int)$userId . ')');
+                $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
+                $query->where('(checked_out <> 0 AND checked_out <> '.(int)$userId.')');
                 $this->_db->setQuery($query);
 
                 // Check for checked out children.
@@ -856,12 +856,12 @@ class MolajoTableNested extends MolajoTable
             if ($node->parent_id) {
                 // Get any ancestor nodes that have a lower publishing state.
                 $query = $this->_db->getQuery(true)
-                        ->select('n.' . $k)
-                        ->from($this->_db->quoteName($this->_tbl) . ' AS n')
-                        ->where('n.lft < ' . (int)$node->lft)
-                        ->where('n.rgt > ' . (int)$node->rgt)
+                        ->select('n.'.$k)
+                        ->from($this->_db->quoteName($this->_tbl).' AS n')
+                        ->where('n.lft < '.(int)$node->lft)
+                        ->where('n.rgt > '.(int)$node->rgt)
                         ->where('n.parent_id > 0')
-                        ->where('n.published < ' . (int)$compareState);
+                        ->where('n.published < '.(int)$compareState);
 
                 // Just fetch one row (one is one too many).
                 $this->_db->setQuery($query, 0, 1);
@@ -886,11 +886,11 @@ class MolajoTableNested extends MolajoTable
 
             // Update and cascade the publishing state.
             $query = $this->_db->getQuery(true)
-                    ->update($this->_db->quoteName($this->_tbl) . ' AS n')
-                    ->set('n.published = ' . (int)$state)
+                    ->update($this->_db->quoteName($this->_tbl).' AS n')
+                    ->set('n.published = '.(int)$state)
                     ->where(
-                '(n.lft > ' . (int)$this->lft . ' AND n.rgt < ' . (int)$this->rgt . ')' .
-                ' OR n.' . $k . ' = ' . (int)$pk
+                '(n.lft > '.(int)$this->lft.' AND n.rgt < '.(int)$this->rgt.')' .
+                ' OR n.'.$k.' = '.(int)$pk
             );
             $this->_db->setQuery($query);
 
@@ -954,7 +954,7 @@ class MolajoTableNested extends MolajoTable
         $query = $this->_db->getQuery(true);
         $query->select($this->_tbl_key);
         $query->from($this->_tbl);
-        $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+        $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
         $this->_db->setQuery($query);
         $children = $this->_db->loadColumn();
 
@@ -969,9 +969,9 @@ class MolajoTableNested extends MolajoTable
         // Shift left and right values for the node and it's children.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = lft - ' . (int)$sibling->width);
-        $query->set('rgt = rgt - ' . (int)$sibling->width);
-        $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+        $query->set('lft = lft - '.(int)$sibling->width);
+        $query->set('rgt = rgt - '.(int)$sibling->width);
+        $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
         $this->_db->setQuery($query);
 
         // Check for a database error.
@@ -985,10 +985,10 @@ class MolajoTableNested extends MolajoTable
         // Shift left and right values for the sibling and it's children.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = lft + ' . (int)$node->width);
-        $query->set('rgt = rgt + ' . (int)$node->width);
-        $query->where('lft BETWEEN ' . (int)$sibling->lft . ' AND ' . (int)$sibling->rgt);
-        $query->where($this->_tbl_key . ' NOT IN (' . implode(',', $children) . ')');
+        $query->set('lft = lft + '.(int)$node->width);
+        $query->set('rgt = rgt + '.(int)$node->width);
+        $query->where('lft BETWEEN '.(int)$sibling->lft.' AND '.(int)$sibling->rgt);
+        $query->where($this->_tbl_key.' NOT IN ('.implode(',', $children).')');
         $this->_db->setQuery($query);
 
         // Check for a database error.
@@ -1044,7 +1044,7 @@ class MolajoTableNested extends MolajoTable
         $query = $this->_db->getQuery(true);
         $query->select($this->_tbl_key);
         $query->from($this->_tbl);
-        $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+        $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
         $this->_db->setQuery($query);
         $children = $this->_db->loadColumn();
 
@@ -1059,9 +1059,9 @@ class MolajoTableNested extends MolajoTable
         // Shift left and right values for the node and it's children.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = lft + ' . (int)$sibling->width);
-        $query->set('rgt = rgt + ' . (int)$sibling->width);
-        $query->where('lft BETWEEN ' . (int)$node->lft . ' AND ' . (int)$node->rgt);
+        $query->set('lft = lft + '.(int)$sibling->width);
+        $query->set('rgt = rgt + '.(int)$sibling->width);
+        $query->where('lft BETWEEN '.(int)$node->lft.' AND '.(int)$node->rgt);
         $this->_db->setQuery($query);
 
         // Check for a database error.
@@ -1075,10 +1075,10 @@ class MolajoTableNested extends MolajoTable
         // Shift left and right values for the sibling and it's children.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = lft - ' . (int)$node->width);
-        $query->set('rgt = rgt - ' . (int)$node->width);
-        $query->where('lft BETWEEN ' . (int)$sibling->lft . ' AND ' . (int)$sibling->rgt);
-        $query->where($this->_tbl_key . ' NOT IN (' . implode(',', $children) . ')');
+        $query->set('lft = lft - '.(int)$node->width);
+        $query->set('rgt = rgt - '.(int)$node->width);
+        $query->where('lft BETWEEN '.(int)$sibling->lft.' AND '.(int)$sibling->rgt);
+        $query->where($this->_tbl_key.' NOT IN ('.implode(',', $children).')');
         $this->_db->setQuery($query);
 
         // Check for a database error.
@@ -1148,7 +1148,7 @@ class MolajoTableNested extends MolajoTable
                 $query = $this->_db->getQuery(true);
                 $query->select($k);
                 $query->from($this->_tbl);
-                $query->where('alias = ' . $this->_db->quote('root'));
+                $query->where('alias = '.$this->_db->quote('root'));
                 $this->_db->setQuery($query);
 
                 $result = $this->_db->loadColumn();
@@ -1203,7 +1203,7 @@ class MolajoTableNested extends MolajoTable
         // Build the structure of the recursive query.
         if (!isset($this->_cache['rebuild.sql'])) {
             $query = $this->_db->getQuery(true);
-            $query->select($this->_tbl_key . ', alias');
+            $query->select($this->_tbl_key.', alias');
             $query->from($this->_tbl);
             $query->where('parent_id = %d');
 
@@ -1231,8 +1231,8 @@ class MolajoTableNested extends MolajoTable
             // $rightId is the current right value, which is incremented on recursion return.
             // Increment the level for the children.
             // Add this item's alias to the path (but avoid a leading /)
-            $rightId = $this->rebuild($node->{$this->_tbl_key}, $rightId, $level + 1, $path . (empty($path) ? ''
-                    : '/') . $node->alias);
+            $rightId = $this->rebuild($node->{$this->_tbl_key}, $rightId, $level + 1, $path.(empty($path) ? ''
+                    : '/').$node->alias);
 
             // If there is an update failure, return false to break out of the recursion.
             if ($rightId === false) return false;
@@ -1242,11 +1242,11 @@ class MolajoTableNested extends MolajoTable
         // the children of this node we also know the right value.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('lft = ' . (int)$leftId);
-        $query->set('rgt = ' . (int)$rightId);
-        $query->set('level = ' . (int)$level);
-        $query->set('path = ' . $this->_db->quote($path));
-        $query->where($this->_tbl_key . ' = ' . (int)$parentId);
+        $query->set('lft = '.(int)$leftId);
+        $query->set('rgt = '.(int)$rightId);
+        $query->set('level = '.(int)$level);
+        $query->set('path = '.$this->_db->quote($path));
+        $query->where($this->_tbl_key.' = '.(int)$parentId);
         $this->_db->setQuery($query);
 
         // If there is an update failure, return false to break out of the recursion.
@@ -1283,9 +1283,9 @@ class MolajoTableNested extends MolajoTable
         // Get the aliases for the path from the node to the root node.
         $query = $this->_db->getQuery(true);
         $query->select('p.alias');
-        $query->from($this->_tbl . ' AS n, ' . $this->_tbl . ' AS p');
+        $query->from($this->_tbl.' AS n, '.$this->_tbl.' AS p');
         $query->where('n.lft BETWEEN p.lft AND p.rgt');
-        $query->where('n.' . $this->_tbl_key . ' = ' . (int)$pk);
+        $query->where('n.'.$this->_tbl_key.' = '.(int)$pk);
         $query->order('p.lft');
         $this->_db->setQuery($query);
 
@@ -1302,8 +1302,8 @@ class MolajoTableNested extends MolajoTable
         // Update the path field for the node.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('path = ' . $this->_db->quote($path));
-        $query->where($this->_tbl_key . ' = ' . (int)$pk);
+        $query->set('path = '.$this->_db->quote($path));
+        $query->where($this->_tbl_key.' = '.(int)$pk);
         $this->_db->setQuery($query);
 
         // Check for a database error.
@@ -1337,8 +1337,8 @@ class MolajoTableNested extends MolajoTable
                 // Do an update to change the lft values in the table for each id
                 $query = $this->_db->getQuery(true);
                 $query->update($this->_tbl);
-                $query->where($this->_tbl_key . ' = ' . (int)$idArray[$i]);
-                $query->set('lft = ' . (int)$lft_array[$i]);
+                $query->where($this->_tbl_key.' = '.(int)$idArray[$i]);
+                $query->set('lft = '.(int)$lft_array[$i]);
                 $this->_db->setQuery($query);
 
                 // Check for a database error.
@@ -1391,9 +1391,9 @@ class MolajoTableNested extends MolajoTable
 
         // Get the node data.
         $query = $this->_db->getQuery(true);
-        $query->select($this->_tbl_key . ', parent_id, level, lft, rgt');
+        $query->select($this->_tbl_key.', parent_id, level, lft, rgt');
         $query->from($this->_tbl);
-        $query->where($k . ' = ' . (int)$id);
+        $query->where($k.' = '.(int)$id);
         $this->_db->setQuery($query, 0, 1);
 
         $row = $this->_db->loadObject();
@@ -1444,8 +1444,8 @@ class MolajoTableNested extends MolajoTable
         switch ($position)
         {
             case 'first-child':
-                $data->left_where = 'lft > ' . $referenceNode->lft;
-                $data->right_where = 'rgt >= ' . $referenceNode->lft;
+                $data->left_where = 'lft > '.$referenceNode->lft;
+                $data->right_where = 'rgt >= '.$referenceNode->lft;
 
                 $data->new_lft = $referenceNode->lft + 1;
                 $data->new_rgt = $referenceNode->lft + $nodeWidth;
@@ -1454,8 +1454,8 @@ class MolajoTableNested extends MolajoTable
                 break;
 
             case 'last-child':
-                $data->left_where = 'lft > ' . ($referenceNode->rgt);
-                $data->right_where = 'rgt >= ' . ($referenceNode->rgt);
+                $data->left_where = 'lft > '.($referenceNode->rgt);
+                $data->right_where = 'rgt >= '.($referenceNode->rgt);
 
                 $data->new_lft = $referenceNode->rgt;
                 $data->new_rgt = $referenceNode->rgt + $nodeWidth - 1;
@@ -1464,8 +1464,8 @@ class MolajoTableNested extends MolajoTable
                 break;
 
             case 'before':
-                $data->left_where = 'lft >= ' . $referenceNode->lft;
-                $data->right_where = 'rgt >= ' . $referenceNode->lft;
+                $data->left_where = 'lft >= '.$referenceNode->lft;
+                $data->right_where = 'rgt >= '.$referenceNode->lft;
 
                 $data->new_lft = $referenceNode->lft;
                 $data->new_rgt = $referenceNode->lft + $nodeWidth - 1;
@@ -1475,8 +1475,8 @@ class MolajoTableNested extends MolajoTable
 
             default:
             case 'after':
-                $data->left_where = 'lft > ' . $referenceNode->rgt;
-                $data->right_where = 'rgt > ' . $referenceNode->rgt;
+                $data->left_where = 'lft > '.$referenceNode->rgt;
+                $data->right_where = 'rgt > '.$referenceNode->rgt;
 
                 $data->new_lft = $referenceNode->rgt + 1;
                 $data->new_rgt = $referenceNode->rgt + $nodeWidth;
@@ -1502,15 +1502,15 @@ class MolajoTableNested extends MolajoTable
 
     protected function _logtable($showData = true, $showQuery = true)
     {
-        $sep = "\n" . str_pad('', 40, '-');
+        $sep = "\n".str_pad('', 40, '-');
         $buffer = '';
         if ($showQuery) {
-            $buffer .= "\n" . $this->_db->getQuery() . $sep;
+            $buffer .= "\n".$this->_db->getQuery().$sep;
         }
 
         if ($showData) {
             $query = $this->_db->getQuery(true);
-            $query->select($this->_tbl_key . ', parent_id, lft, rgt, level');
+            $query->select($this->_tbl_key.', parent_id, lft, rgt, level');
             $query->from($this->_tbl);
             $query->order($this->_tbl_key);
             $this->_db->setQuery($query);

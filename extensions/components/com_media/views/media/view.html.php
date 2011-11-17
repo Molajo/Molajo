@@ -22,7 +22,7 @@ class MediaViewMedia extends JView
 	function display($tpl = null)
 	{
 		$app	= MolajoFactory::getApplication();
-		$config = JComponentHelper::getParams('com_media');
+		$config = JComponentHelper::getParameters('com_media');
 
 		$lang	= MolajoFactory::getLanguage();
 

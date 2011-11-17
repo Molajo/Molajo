@@ -25,13 +25,13 @@ class MediaAudio extends MolajoPlugin
 	{
 		//	Get Parameters
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_media_audio');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 
 		//	Document
 		$document =& MolajoFactory::getDocument();
 
 		//	Add Javascript
-		$document->addScript( JURI::base() . 'plugins/content/tamka_media_audio/audio-player.js' );
+		$document->addScript( JURI::base().'plugins/content/tamka_media_audio/audio-player.js' );
 
 	    // Expression to search for {audio}Toggle|Text to toggle.{/audio}
 		$regex = "#{audio}(.*?){/audio}#s";
@@ -56,28 +56,28 @@ class MediaAudio extends MolajoPlugin
 			$replacewith = '';
 			$replacewith .= '<span class="audioplayer">';
 			$replacewith .= '<object type="application/x-shockwave-flash" ';
-			$replacewith .= 'data="' . JURI::base() . 'plugins/content/tamka_media_audio/player.swf" ';
-			$replacewith .= 'width="290" height="24" id="audioplayer' . ($i + 1) . '">';
-			$replacewith .= '<param name="movie" value="' . JURI::base() . 'plugins/content/tamka_media_audio/player.swf"' . ' />';
-			$replacewith .= '<param name="FlashVars" value="playerID=' . ($i + 1);
-			$replacewith .= '&amp;bg=0x' . $pluginParams->def('bgColor', 'E5E5E5');
-			$replacewith .= '&amp;leftbg=0x' . $pluginParams->def('leftbgColor', 'CCCCCC');
-			$replacewith .= '&amp;lefticon=0x' . $pluginParams->def('lefticonColor', '333333');
-			$replacewith .= '&amp;rightbg=0x' . $pluginParams->def('rightbgColor', 'B4B4B4');
-			$replacewith .= '&amp;rightbghover=0x' . $pluginParams->def('rightbghoverColor', '999999');
-			$replacewith .= '&amp;righticon=0x' . $pluginParams->def('righticonColor', '333333');
-			$replacewith .= '&amp;righticonhover=0x' . $pluginParams->def('rightbghoverColor', '999999');
-			$replacewith .= '&amp;text=0x' . $pluginParams->def('textColor', '333333');
-			$replacewith .= '&amp;slider=0x' . $pluginParams->def('volsliderColor', '666666');
-			$replacewith .= '&amp;track=0x' . $pluginParams->def('trackColor', 'FFFFFF');
-			$replacewith .= '&amp;border=0x' . $pluginParams->def('borderColor', 'CCCCCC');
-			$replacewith .= '&amp;loader=0x' . $pluginParams->def('loaderColor', '009900');
+			$replacewith .= 'data="'.JURI::base().'plugins/content/tamka_media_audio/player.swf" ';
+			$replacewith .= 'width="290" height="24" id="audioplayer'.($i + 1).'">';
+			$replacewith .= '<param name="movie" value="'.JURI::base().'plugins/content/tamka_media_audio/player.swf"'.' />';
+			$replacewith .= '<param name="FlashVars" value="playerID='.($i + 1);
+			$replacewith .= '&amp;bg=0x'.$pluginParameters->def('bgColor', 'E5E5E5');
+			$replacewith .= '&amp;leftbg=0x'.$pluginParameters->def('leftbgColor', 'CCCCCC');
+			$replacewith .= '&amp;lefticon=0x'.$pluginParameters->def('lefticonColor', '333333');
+			$replacewith .= '&amp;rightbg=0x'.$pluginParameters->def('rightbgColor', 'B4B4B4');
+			$replacewith .= '&amp;rightbghover=0x'.$pluginParameters->def('rightbghoverColor', '999999');
+			$replacewith .= '&amp;righticon=0x'.$pluginParameters->def('righticonColor', '333333');
+			$replacewith .= '&amp;righticonhover=0x'.$pluginParameters->def('rightbghoverColor', '999999');
+			$replacewith .= '&amp;text=0x'.$pluginParameters->def('textColor', '333333');
+			$replacewith .= '&amp;slider=0x'.$pluginParameters->def('volsliderColor', '666666');
+			$replacewith .= '&amp;track=0x'.$pluginParameters->def('trackColor', 'FFFFFF');
+			$replacewith .= '&amp;border=0x'.$pluginParameters->def('borderColor', 'CCCCCC');
+			$replacewith .= '&amp;loader=0x'.$pluginParameters->def('loaderColor', '009900');
 			$replacewith .= '&amp;soundFile=';
 			$replacewith .= urlencode($audioFile);
 			$replacewith .= '" />';
 			$replacewith .= '<param name="quality" value="high" />';
 			$replacewith .= '<param name="menu" value="false" />';
-			$replacewith .= '<param name="bgcolor" value="#' . $pluginParams->def('pagebgColor', 'FFFFFF') . '" /></object>';
+			$replacewith .= '<param name="bgcolor" value="#'.$pluginParameters->def('pagebgColor', 'FFFFFF').'" /></object>';
 			$replacewith .= '</span>';
 
 			// Replace the Plugin+Text

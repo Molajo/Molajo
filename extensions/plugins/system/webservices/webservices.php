@@ -37,12 +37,12 @@ class plgMolajoWebServices extends MolajoPlugin	{
 
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
         $loc = $this->location;
 
         /** syntax highlighter **/
-        if (($systemParams->def('enable_google_maps', 0) == 1) && (!$systemParams->def('google_maps_api_key', '') == '')) {
-            require_once dirname(__FILE__) . '/googlemaps/driver.php';
+        if (($systemParameters->def('enable_google_maps', 0) == 1) && (!$systemParameters->def('google_maps_api_key', '') == '')) {
+            require_once dirname(__FILE__).'/googlemaps/driver.php';
             MolajoWebServicesGoogleMaps::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
 
@@ -66,11 +66,11 @@ class plgMolajoWebServices extends MolajoPlugin	{
 
         /** retrieve parameters for system plugin molajo library **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** test for google analytics **/
-        if (($systemParams->def('enable_google_analytics', 0) == '1') && ($systemParams->get('google_analytics_tracking_code'))) {
-            require_once dirname(__FILE__) . '/googleanalytics/driver.php';
+        if (($systemParameters->def('enable_google_analytics', 0) == '1') && ($systemParameters->get('google_analytics_tracking_code'))) {
+            require_once dirname(__FILE__).'/googleanalytics/driver.php';
             MolajoWebservicesGoogleAnalytics::driver ();
         }
     }

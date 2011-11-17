@@ -50,7 +50,7 @@ class InstallerViewCreate extends InstallerViewDefault
     protected function addToolbar()
     {
         $canDo	= InstallerHelper::getActions();
-        MolajoToolbarHelper::title(JText::_('PLG_SYSTEM_CREATE_HEADER_' . $this->getName()), 'install.png');
+        MolajoToolbarHelper::title(JText::_('PLG_SYSTEM_CREATE_HEADER_'.$this->getName()), 'install.png');
 
         if ($canDo->get('admin')) {
             MolajoToolbarHelper::preferences('com_installer');
@@ -59,6 +59,6 @@ class InstallerViewCreate extends InstallerViewDefault
         MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_INSTALL');
 
         $document = MolajoFactory::getDocument();
-        $document->setTitle(JText::_('PLG_SYSTEM_CREATE_TITLE_' . $this->getName()));
+        $document->setTitle(JText::_('PLG_SYSTEM_CREATE_TITLE_'.$this->getName()));
     }
 }

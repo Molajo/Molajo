@@ -50,15 +50,15 @@ class MolajoContentQuotes {
     {
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** Block Quotes **/
-        if ($systemParams->def('enable_blockquotes', 0) == 1) {
+        if ($systemParameters->def('enable_blockquotes', 0) == 1) {
             MolajoContentQuotes::blockQuotes  ($context, &$content, &$parameters, $page, $location);
         }
 
         /** Pull Quotes **/
-        if ($systemParams->def('enable_pullquotes', 0) == 1) {
+        if ($systemParameters->def('enable_pullquotes', 0) == 1) {
             MolajoContentQuotes::pullQuotes  ($context, &$content, &$parameters, $page, $location);
         }
         return;

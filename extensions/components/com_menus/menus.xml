@@ -9,7 +9,7 @@
 	<authorEmail>collaborate@molajo.org</authorEmail>
 	<authorUrl>molajo.org</authorUrl>
 	<version>1.0</version>
-	<description>COM_MENUS_DESCRIPTION</description>
+	<description>MENU_DESCRIPTION</description>
 	<administration>
 		<files folder="admin">
 			<filename>config.xml</filename>

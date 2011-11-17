@@ -37,11 +37,11 @@ class plgMolajoMedia extends MolajoPlugin	{
 
         /** parameters **/
         $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
-        $systemParams = new JParameter($molajoSystemPlugin->parameters);
+        $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** view access **/
-        if ($systemParams->def('enable_audio', 0) == 1) {
-            require_once dirname(__FILE__) . '/audio/driver.php';
+        if ($systemParameters->def('enable_audio', 0) == 1) {
+            require_once dirname(__FILE__).'/audio/driver.php';
             MolajoMediaAudio::driver ($context, &$content, &$parameters, $page = 0, $this->location);
         }
         return;

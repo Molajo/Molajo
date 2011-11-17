@@ -187,7 +187,7 @@ class plgUserMolajo extends MolajoPlugin
 		}
 
 		//TODO : move this out of the plugin
-		$config	= MolajoComponentHelper::getParams('com_users');
+		$config	= MolajoComponentHelper::getParameters('com_users');
 		// Default to Registered.
 		$defaultUserGroup = $config->get('new_user_group', 2);
 

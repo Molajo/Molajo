@@ -17,7 +17,7 @@ class ResponsesSubscriptions extends MolajoPlugin
 	/**
 	 * Make certain Tamka Library is ready to load
 	 */
-		 if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
 		  		JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
 		 		return NULL;
 		 }
@@ -44,7 +44,7 @@ class ResponsesSubscriptions extends MolajoPlugin
 	/**
 	 * Make certain Tamka Library is ready to load
 	 */
-		 if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
 		  		JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
 		 		return NULL;
 		 }
@@ -70,19 +70,19 @@ class ResponsesSubscriptions extends MolajoPlugin
 	 * 	Initialization
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_email');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 
 	/**
 	 * 	Should Tamka email?
 	 */	
 		/* 	What Categories should be included or excluded?		*/
 		$showCategoriesAll = false;
-		$showCategories = explode(',', $pluginParams->get('categories'));
-		if ($pluginParams->get('categories')) {
+		$showCategories = explode(',', $pluginParameters->get('categories'));
+		if ($pluginParameters->get('categories')) {
 		} else {
 			$showCategoriesAll = true;
 		}
-		$includeorexclude = $pluginParams->def('include_or_exclude', 'Include');
+		$includeorexclude = $pluginParameters->def('include_or_exclude', 'Include');
 
 		// 	Is this the right Category?
 		$show = false;
@@ -115,8 +115,8 @@ class ResponsesSubscriptions extends MolajoPlugin
 	 * 	Prepare Email Content - Author
 	 */
 		$email_author = '';
-		if ($pluginParams->def('author', 1) !== 0) {
-			$email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParams->get('author'));
+		if ($pluginParameters->def('author', 1) !== 0) {
+			$email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParameters->get('author'));
 		}
 
 
@@ -124,7 +124,7 @@ class ResponsesSubscriptions extends MolajoPlugin
 	 * 	Prepare Email Content - Article
 	 */
 		$email_title	= '';
-		if ($pluginParams->def('title', 1) == 1) {
+		if ($pluginParameters->def('title', 1) == 1) {
 			$email_title = $article->title;
 		}
 
@@ -142,7 +142,7 @@ class ResponsesSubscriptions extends MolajoPlugin
 
 		global $mainframe;		
 	 	$SiteName 		= $mainframe->getSiteConfig('sitename');
-		$articleURL = TamkaContentHelperRoute::getSiteURL () . TamkaContentHelperRoute::getArticleURL ($article->id);
+		$articleURL = TamkaContentHelperRoute::getSiteURL ().TamkaContentHelperRoute::getArticleURL ($article->id);
 		$ArticleTitle = $article->title;
 		
 		$mailfrom 		= $mainframe->getSiteConfig('mailfrom');
@@ -151,28 +151,28 @@ class ResponsesSubscriptions extends MolajoPlugin
 	/**
 	 * 	Format Email - Subject and Message
 	*/
-		$emailSubject	= '[' . $SiteName . '] ' .   $email_title;;
+		$emailSubject	= '['.$SiteName.'] '.  $email_title;;
 
 		$emailMessage = JText::_( 'At your request, ' );
-		$emailMessage .= $SiteName . JText::_( ' is notifying you of a post' );
+		$emailMessage .= $SiteName.JText::_( ' is notifying you of a post' );
 		if ($email_title) {
-			$emailMessage .= JText::_( ' entitled "' ) . $email_title;
+			$emailMessage .= JText::_( ' entitled "' ).$email_title;
 		}
 		if ($email_author) {
-			$emailMessage .= JText::_( '" written by ' ) . $email_author;
+			$emailMessage .= JText::_( '" written by ' ).$email_author;
 		} else {
 			$emailMessage .= JText::_( '." ' );
 		}
 
 		if ($articleURL) {
-			$emailMessage .= JText::_( ' To read more of this post, visit: ' ) . $articleURL;
+			$emailMessage .= JText::_( ' To read more of this post, visit: ' ).$articleURL;
 		}
 		$emailMessage .= '. ';
 
 	/**
 	 * 	Format Email - How to update User Settings
 	*/
-		$emailMessage .= JText::_( ' To discontinue these messages, please visit: ' ) . $articleURL;
+		$emailMessage .= JText::_( ' To discontinue these messages, please visit: ' ).$articleURL;
 		$emailMessage .= JText::_( ' and update your User Settings. Thanks! ' ) ;
 		
 	/**

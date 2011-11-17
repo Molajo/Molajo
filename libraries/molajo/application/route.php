@@ -70,11 +70,11 @@ class MolajoRoute
 
             // Make sure our URL path begins with a slash.
             if (!preg_match('#^/#', $url)) {
-                $url = '/' . $url;
+                $url = '/'.$url;
             }
 
             // Build the URL.
-            $url = $scheme . '://' . $prefix . $url;
+            $url = $scheme.'://'.$prefix.$url;
         }
 
         if ($xhtml) {

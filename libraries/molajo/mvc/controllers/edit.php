@@ -242,7 +242,7 @@ class MolajoControllerEdit extends MolajoController
 
         /** Preparation: Save form or version data **/
         MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task . '.' . JRequest::getInt('datakey');
+        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task.'.'.JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
         if ((int)$this->id) {
@@ -394,12 +394,12 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Preparation: Save form or version data **/
-        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . 'delete';
+        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.'delete';
 
         /** only trashed and version items can be deleted **/
         if ($this->table->state == MOLAJO_STATUS_TRASHED || $this->table->state == MOLAJO_STATUS_VERSION) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED') . ' ' . $this->id, 'error');
+            $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED').' '.$this->id, 'error');
             $this->redirectClass->setRedirect(MolajoRoute::_($this->redirectClass->redirectFailure, false));
             return false;
         }

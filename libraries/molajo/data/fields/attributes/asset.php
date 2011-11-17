@@ -69,7 +69,7 @@ class MolajoAttributeAsset extends MolajoAttribute
         /** $this->value */
         if ($results === false) {
         } else {
-            $value = 'asset="' . $results . '"';
+            $value = 'asset="'.$results.'"';
         }
         parent::__set('value', $value);
 
@@ -96,7 +96,7 @@ class MolajoAttributeAsset extends MolajoAttribute
 
         $query->select('a.id AS value');
         $query->from('#__assets AS a');
-        $query->where('a.id IN (' . (int)$id . ')');
+        $query->where('a.id IN ('.(int)$id.')');
 
         $db->setQuery($query);
 

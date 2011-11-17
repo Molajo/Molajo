@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 $user = MolajoFactory::getUser();
 ?>
 <script type='text/javascript'>
-var image_base_path = '<?php $parameters = JComponentHelper::getParams('com_media');
+var image_base_path = '<?php $parameters = JComponentHelper::getParameters('com_media');
 echo $parameters->get('image_path', 'images');?>/';
 </script>
 <form action="index.php?option=com_media&amp;asset=<?php echo JRequest::getCmd('asset');?>&amp;author=<?php echo JRequest::getCmd('author');?>" id="imageForm" method="post" enctype="multipart/form-data">

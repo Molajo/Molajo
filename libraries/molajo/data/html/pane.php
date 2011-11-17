@@ -38,7 +38,7 @@ abstract class MolajoPane extends JObject
         // Deprecation warning.
         JLog::add('JPane::getInstance is deprecated.', JLog::WARNING, 'deprecated');
 
-        $classname = 'JPane' . $behavior;
+        $classname = 'JPane'.$behavior;
         $instance = new $classname($parameters);
 
         return $instance;
@@ -153,7 +153,7 @@ class MolajoPaneTabs extends MolajoPane
         // Deprecation warning.
         JLog::add('JPane::startPane is deprecated.', JLog::WARNING, 'deprecated');
 
-        return '<dl class="tabs" id="' . $id . '">';
+        return '<dl class="tabs" id="'.$id.'">';
     }
 
     /**
@@ -190,7 +190,7 @@ class MolajoPaneTabs extends MolajoPane
         // Deprecation warning.
         JLog::add('JPaneTabs::startPanel is deprecated.', JLog::WARNING, 'deprecated');
 
-        return '<dt class="' . $id . '"><span>' . $text . '</span></dt><dd>';
+        return '<dt class="'.$id.'"><span>'.$text.'</span></dt><dd>';
     }
 
     /**
@@ -237,7 +237,7 @@ class MolajoPaneTabs extends MolajoPane
         foreach ($opt as $k => $v)
         {
             if ($v) {
-                $options .= $k . ': ' . $v . ',';
+                $options .= $k.': '.$v.',';
             }
         }
         if (substr($options, -1) == ',') {
@@ -245,7 +245,7 @@ class MolajoPaneTabs extends MolajoPane
         }
         $options .= '}';
 
-        $js = '	window.addEvent(\'domready\', function(){ $$(\'dl.tabs\').each(function(tabs){ new JTabs(tabs, ' . $options . '); }); });';
+        $js = '	window.addEvent(\'domready\', function(){ $$(\'dl.tabs\').each(function(tabs){ new JTabs(tabs, '.$options.'); }); });';
 
         $document->addScriptDeclaration($js);
         MolajoHTML::_('script', 'system/tabs.js', false, true);
@@ -303,7 +303,7 @@ class MolajoPaneSliders extends MolajoPane
         // Deprecation warning.
         JLog::add('JPaneSliders::startPane is deprecated.', JLog::WARNING, 'deprecated');
 
-        return '<div id="' . $id . '" class="pane-sliders">';
+        return '<div id="'.$id.'" class="pane-sliders">';
     }
 
     /**
@@ -340,8 +340,8 @@ class MolajoPaneSliders extends MolajoPane
         // Deprecation warning.
         JLog::add('JPaneSliders::startPanel is deprecated.', JLog::WARNING, 'deprecated');
 
-        return '<div class="panel">' . '<h3 class="pane-toggler title" id="' . $id . '"><a href="javascript:void(0);"><span>' . $text
-               . '</span></a></h3>' . '<div class="pane-slider content">';
+        return '<div class="panel">'.'<h3 class="pane-toggler title" id="'.$id.'"><a href="javascript:void(0);"><span>'.$text
+              .'</span></a></h3>'.'<div class="pane-slider content">';
     }
 
     /**
@@ -397,7 +397,7 @@ class MolajoPaneSliders extends MolajoPane
         foreach ($opt as $k => $v)
         {
             if ($v) {
-                $options .= $k . ': ' . $v . ',';
+                $options .= $k.': '.$v.',';
             }
         }
         if (substr($options, -1) == ',') {
@@ -406,7 +406,7 @@ class MolajoPaneSliders extends MolajoPane
         $options .= '}';
 
         $js = '	window.addEvent(\'domready\', function(){ new Fx.Accordion($$(\'.panel h3.pane-toggler\'), $$(\'.panel div.pane-slider\'), '
-              . $options . '); });';
+             .$options.'); });';
 
         $document->addScriptDeclaration($js);
     }

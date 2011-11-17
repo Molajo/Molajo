@@ -14,7 +14,7 @@ class plgContenttamka_media_video extends MolajoPlugin
 	{
 		//	Get Parameters
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_media_video');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 
 		//	Document
 		$document =& MolajoFactory::getDocument();
@@ -49,9 +49,9 @@ class plgContenttamka_media_video extends MolajoPlugin
 				$videoID = $videoFile;
 			}
 
-			$videoFile = 'http://www.youtube.com/v/' . $videoID;
+			$videoFile = 'http://www.youtube.com/v/'.$videoID;
 
-			if ($pluginParams->def('fs', 0) == 1) {
+			if ($pluginParameters->def('fs', 0) == 1) {
 				$allowFullScreen1 = '<param name="allowFullScreen" value="true"></param>';
 				$allowFullScreen2 = 'allowfullscreen="true"';
 			} else {
@@ -60,26 +60,26 @@ class plgContenttamka_media_video extends MolajoPlugin
 			}
 
 			$videoSource = '<object type="application/x-shockwave-flash" ';
-			$videoSource .= 'width="'. $pluginParams->def('width', 400);
-			$videoSource .= '" height="'. $pluginParams->def('height', 330);
-			$videoSource .= '" data="' . $videoFile;
-			$videoSource .= '&amp;rel=' . $pluginParams->def('rel', 1);
-			$videoSource .= '&amp;autoplay=' . $pluginParams->def('autoplay', 0);
-			$videoSource .= '&amp;loop=' . $pluginParams->def('loop', 0);
-			$videoSource .= '&amp;enablejsapi=' . $pluginParams->def('enablejsapi', 0);
-			$videoSource .= '&amp;disablekb=' . $pluginParams->def('disablekb', 0);
-			$videoSource .= '&amp;egm=' . $pluginParams->def('egm', 1);
-			$videoSource .= '&amp;border=' . $pluginParams->def('border', 1);
-			$videoSource .= '&amp;color1=0x' . $pluginParams->def('color1', '0E0906');
-			$videoSource .= '&amp;color2=0x' . $pluginParams->def('color2', 'D9D9D9');
-			$videoSource .= '&amp;start=' . $pluginParams->def('start', 0);
-			$videoSource .= '&amp;fs=' . $pluginParams->def('fs', 1);
+			$videoSource .= 'width="'. $pluginParameters->def('width', 400);
+			$videoSource .= '" height="'. $pluginParameters->def('height', 330);
+			$videoSource .= '" data="'.$videoFile;
+			$videoSource .= '&amp;rel='.$pluginParameters->def('rel', 1);
+			$videoSource .= '&amp;autoplay='.$pluginParameters->def('autoplay', 0);
+			$videoSource .= '&amp;loop='.$pluginParameters->def('loop', 0);
+			$videoSource .= '&amp;enablejsapi='.$pluginParameters->def('enablejsapi', 0);
+			$videoSource .= '&amp;disablekb='.$pluginParameters->def('disablekb', 0);
+			$videoSource .= '&amp;egm='.$pluginParameters->def('egm', 1);
+			$videoSource .= '&amp;border='.$pluginParameters->def('border', 1);
+			$videoSource .= '&amp;color1=0x'.$pluginParameters->def('color1', '0E0906');
+			$videoSource .= '&amp;color2=0x'.$pluginParameters->def('color2', 'D9D9D9');
+			$videoSource .= '&amp;start='.$pluginParameters->def('start', 0);
+			$videoSource .= '&amp;fs='.$pluginParameters->def('fs', 1);
 
 		   	// Create Flash Player
 			$replacewith = '';
 			$replacewith .= '<span class="videoplayer">';
- 			$replacewith .= $videoSource . '">';
-			$replacewith .= '<param name="movie" value="' . $videoFile . '" />';
+ 			$replacewith .= $videoSource.'">';
+			$replacewith .= '<param name="movie" value="'.$videoFile.'" />';
 			$replacewith .= '<param name="wmode" value="transparent" />';
 			$replacewith .= '</object>';
 			$replacewith .= '</span>';

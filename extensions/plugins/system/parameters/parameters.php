@@ -110,7 +110,7 @@ class plgSystemParameters extends MolajoPlugin
      */
     function getComponentParameterSets ()
     {
-        $parameters = JComponentHelper::getParams(JRequest::getVar('component'));
+        $parameters = JComponentHelper::getParameters(JRequest::getVar('component'));
         $layoutParameters = $this->getSiteLayouts (JRequest::getVar('component'));
         return $this->getLayoutParameterOptions ($layoutParameters, $parameters);
     }
@@ -125,7 +125,7 @@ class plgSystemParameters extends MolajoPlugin
      */
     function getDetailItemParameterSets($data)
     {
-        $parameters = JComponentHelper::getParams(JRequest::getVar('option'));
+        $parameters = JComponentHelper::getParameters(JRequest::getVar('option'));
         return $this->getLayoutParameterOptions (array('config_component_single_item_parameter'), $parameters);
     }
 
@@ -157,7 +157,7 @@ class plgSystemParameters extends MolajoPlugin
         $this->getSiteLayouts($option);
 
         $typeArray = array('config_component_'.$view.'_'.$layout.'_parameter');
-        $parameters = JComponentHelper::getParams($option);
+        $parameters = JComponentHelper::getParameters($option);
 
         return $this->getLayoutParameterOptions ($typeArray, $parameters);
     }

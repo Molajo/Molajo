@@ -22,7 +22,7 @@ abstract class MolajoHtmlContent
      * Fire onContentPrepare for content that isn't part of an article.
      *
      * @param   string  $text     The content to be transformed.
-     * @param   array   $parameters   The content params.
+     * @param   array   $parameters   The content parameters.
      * @param   string  $context  The context of the content to be transformed.
      *
      * @return  string   The content after transformation.

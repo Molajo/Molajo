@@ -50,11 +50,11 @@ class MenusControllerItems extends JControllerAdmin
 
 		if ($model->rebuild()) {
 			// Reorder succeeded.
-			$this->setMessage(MolajoText::_('COM_MENUS_ITEMS_REBUILD_SUCCESS'));
+			$this->setMessage(MolajoText::_('MENU_ITEMS_REBUILD_SUCCESS'));
 			return true;
 		} else {
 			// Rebuild failed.
-			$this->setMessage(MolajoText::sprintf('COM_MENUS_ITEMS_REBUILD_FAILED'));
+			$this->setMessage(MolajoText::sprintf('MENU_ITEMS_REBUILD_FAILED'));
 			return false;
 		}
 	}
@@ -110,10 +110,10 @@ class MenusControllerItems extends JControllerAdmin
 				MolajoError::raiseWarning(500, $model->getError());
 			} else {
 				if ($value == 1) {
-					$ntext = 'COM_MENUS_ITEMS_SET_HOME';
+					$ntext = 'MENU_ITEMS_SET_HOME';
 				}
 				else {
-					$ntext = 'COM_MENUS_ITEMS_UNSET_HOME';
+					$ntext = 'MENU_ITEMS_UNSET_HOME';
 				}
 				$this->setMessage(MolajoText::plural($ntext, count($cid)));
 			}

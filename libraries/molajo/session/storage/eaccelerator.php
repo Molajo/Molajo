@@ -73,7 +73,7 @@ class MolajoSessionStorageEaccelerator extends MolajoSessionStorage
      */
     public function read($id)
     {
-        $sess_id = 'sess_' . $id;
+        $sess_id = 'sess_'.$id;
         return (string)eaccelerator_get($sess_id);
     }
 
@@ -89,7 +89,7 @@ class MolajoSessionStorageEaccelerator extends MolajoSessionStorage
      */
     public function write($id, $session_data)
     {
-        $sess_id = 'sess_' . $id;
+        $sess_id = 'sess_'.$id;
         return eaccelerator_put($sess_id, $session_data, ini_get("session.gc_maxlifetime"));
     }
 
@@ -102,7 +102,7 @@ class MolajoSessionStorageEaccelerator extends MolajoSessionStorage
      */
     public function destroy($id)
     {
-        $sess_id = 'sess_' . $id;
+        $sess_id = 'sess_'.$id;
         return eaccelerator_rm($sess_id);
     }
 

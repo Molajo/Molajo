@@ -17,7 +17,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	/**
 	 * Make certain Tamka Library is ready to load
 	 */
-		 if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
 		  		JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
 		 		return NULL;
 		 }
@@ -67,19 +67,19 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	 * 	Initialization
 	 */
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_ping');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 
 	/**
 	 * 	Should Tamka Ping?
 	 */	
 		/* 	What Categories should be included or excluded?		*/
 		$showCategoriesAll = false;
-		$showCategories = explode(',', $pluginParams->get('categories'));
-		if ($pluginParams->get('categories')) {
+		$showCategories = explode(',', $pluginParameters->get('categories'));
+		if ($pluginParameters->get('categories')) {
 		} else {
 			$showCategoriesAll = true;
 		}
-		$includeorexclude = $pluginParams->def('include_or_exclude', 'Include');
+		$includeorexclude = $pluginParameters->def('include_or_exclude', 'Include');
 
 		// 	Is this the right Category?
 		$show = false;
@@ -113,7 +113,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	 */
 		global $mainframe;		
 	 	$SiteName 		= $mainframe->getSiteConfig('sitename');
-		$articleURL = TamkaContentHelperRoute::getSiteURL () . TamkaContentHelperRoute::getArticleURL ($article->id);
+		$articleURL = TamkaContentHelperRoute::getSiteURL ().TamkaContentHelperRoute::getArticleURL ($article->id);
 		$ArticleTitle = $article->title;
 
 	/**
@@ -124,7 +124,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	/**
 	 * Set Twitter Status to Post Title and Tiny URL (less than 140 characters recommended)
 	 */
-		$twitterStatus = substr(trim($ArticleTitle), 0, (140 - strlen($tinyURL))) . ' ' . $tinyURL;
+		$twitterStatus = substr(trim($ArticleTitle), 0, (140 - strlen($tinyURL))).' '.$tinyURL;
 
 	/**
 	 * 	Login to Twitter Account and set the new Twitter Status

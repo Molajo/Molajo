@@ -42,7 +42,7 @@ class MolajoFieldCreated extends MolajoField
      */
     public function getOptions()
     {
-        $dateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $dateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $dateModel->getMonthsCreate();
     }
 
@@ -100,7 +100,7 @@ class MolajoFieldCreated extends MolajoField
             return;
         }
         $db = $this->getDbo();
-        $query->where('SUBSTRING(a.created, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.created, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
     }
 
     /**

@@ -35,37 +35,37 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 		}
 
 		//	Load Style tags
-		$document->addStyleSheet( JURI::base() . 'plugins/content/tamka_article_social_bookmark/socialbookmark.css' );
+		$document->addStyleSheet( JURI::base().'plugins/content/tamka_article_social_bookmark/socialbookmark.css' );
 
 		//	Get Parameters
 		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_article_social_bookmark');
-		$pluginParams = new JParameter( $plugin->parameters );
+		$pluginParameters = new JParameter( $plugin->parameters );
 
-		$parameterblogandarticle = $pluginParams->def('blogandarticle', 0);
-		$parametersquareorcircle = $pluginParams->def('squareorcircle', 0);
-		$parameterposition = $pluginParams->def('position', 0);
+		$parameterblogandarticle = $pluginParameters->def('blogandarticle', 0);
+		$parametersquareorcircle = $pluginParameters->def('squareorcircle', 0);
+		$parameterposition = $pluginParameters->def('position', 0);
 
-		$includeBlinklist 	= $pluginParams->def('blinklist', 1);
-		$includeDelicious 	= $pluginParams->def('delicious', 1);
-		$includeDigg 		= $pluginParams->def('digg', 1);
-		$includeFlickr 		= $pluginParams->def('flickr', 1);
-		$includeFurl 		= $pluginParams->def('furl', 1);
-		$includeMagnolia 	= $pluginParams->def('magnolia', 1);
-		$includeNewsvine 	= $pluginParams->def('newsvine', 1);
-		$includeReddit 		= $pluginParams->def('reddit', 1);
-		$includeStumbleupon = $pluginParams->def('stumbleupon', 1);
-		$includeTechnorati 	= $pluginParams->def('technorati', 1);
-		$includeTwitter 	= $pluginParams->def('twitter', 1);		
-		$includeTweetmeme 	= $pluginParams->def('tweetmeme', 1);		
+		$includeBlinklist 	= $pluginParameters->def('blinklist', 1);
+		$includeDelicious 	= $pluginParameters->def('delicious', 1);
+		$includeDigg 		= $pluginParameters->def('digg', 1);
+		$includeFlickr 		= $pluginParameters->def('flickr', 1);
+		$includeFurl 		= $pluginParameters->def('furl', 1);
+		$includeMagnolia 	= $pluginParameters->def('magnolia', 1);
+		$includeNewsvine 	= $pluginParameters->def('newsvine', 1);
+		$includeReddit 		= $pluginParameters->def('reddit', 1);
+		$includeStumbleupon = $pluginParameters->def('stumbleupon', 1);
+		$includeTechnorati 	= $pluginParameters->def('technorati', 1);
+		$includeTwitter 	= $pluginParameters->def('twitter', 1);
+		$includeTweetmeme 	= $pluginParameters->def('tweetmeme', 1);
 
 		/* 	What Categories should be included or excluded?		*/
 		$showCategoriesAll = false;
-		$showCategories = explode(',', $pluginParams->get('categories'));	
-		if ($pluginParams->get('categories')) {
+		$showCategories = explode(',', $pluginParameters->get('categories'));
+		if ($pluginParameters->get('categories')) {
 		} else {
 			$showCategoriesAll = true;
 		}
-		$includeorexclude = $pluginParams->def('include_or_exclude', 'Include');
+		$includeorexclude = $pluginParameters->def('include_or_exclude', 'Include');
 
 		// 	Is it the right Category?
 		$show = false;
@@ -100,12 +100,12 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 		$urlhost = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 
 		$ArticleTitle = $article->title;
-		$ArticleURL = $urlhost . $article->readmore_link;
+		$ArticleURL = $urlhost.$article->readmore_link;
 		
 	/**
 	 *	Retrieve Tiny URL (Make certain Tamka Library is ready to load)
 	 */
-		if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+		if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
 			JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
 			return NULL;
 		}
@@ -123,11 +123,11 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 	/**
 	 * Encode
 	 */	
-		$encodedURL = urlencode('url=' . $ArticleURL);
-		$encodedURL = ('url=' . $ArticleURL);
-		$encodedTitle = urlencode('&title=' . $ArticleTitle );
+		$encodedURL = urlencode('url='.$ArticleURL);
+		$encodedURL = ('url='.$ArticleURL);
+		$encodedTitle = urlencode('&title='.$ArticleTitle );
 		$encodedshortTitle = urlencode(trim(substr($ArticleTitle, 0, 80)));		
-		$encoded = $encodedURL . $encodedTitle;
+		$encoded = $encodedURL.$encodedTitle;
 
 		// Add the xHTML to the body of the page
 		if ($parameterposition == 1) {
@@ -138,34 +138,34 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 
 		// Add Tags
 		if ($includeBlinklist == 1) {
-			$bookmarks .= '<li class="blinklist"><a href="http://blinklist.com/index.php?Action=Blink/addblink.php&amp;' . $encoded . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'blinklist.png" alt="Blinklist" /></a></li>';
+			$bookmarks .= '<li class="blinklist"><a href="http://blinklist.com/index.php?Action=Blink/addblink.php&amp;'.$encoded.'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'blinklist.png" alt="Blinklist" /></a></li>';
 		}
 		if ($includeDelicious == 1) {
-			$bookmarks .= '<li class="delicious"><a href="http://del.icio.us/post?' . $encoded . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'delicious.png" alt="del.icio.us" /></a></li>';
+			$bookmarks .= '<li class="delicious"><a href="http://del.icio.us/post?'.$encoded.'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'delicious.png" alt="del.icio.us" /></a></li>';
 		}
 		if ($includeDigg == 1) {
-			$bookmarks .= '<li class="digg"><a href="http://digg.com/submit?phase=2&amp;' . $encoded . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'digg.png" alt="digg" /></a></li>';
+			$bookmarks .= '<li class="digg"><a href="http://digg.com/submit?phase=2&amp;'.$encoded.'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'digg.png" alt="digg" /></a></li>';
 		}
 		if ($includeFurl == 1) {
-			$bookmarks .= '<li class="furl"><a href="http://furl.net/storeIt.jsp?u=' . urlencode($ArticleURL) . '&amp;t=' . urlencode($ArticleTitle) . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'furl.png" alt="furl" /></a></li>';
+			$bookmarks .= '<li class="furl"><a href="http://furl.net/storeIt.jsp?u='.urlencode($ArticleURL).'&amp;t='.urlencode($ArticleTitle).'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'furl.png" alt="furl" /></a></li>';
 		}
 		if ($includeMagnolia == 1) {
-			$bookmarks .= '<li class="magnolia"><a href="http://ma.gnolia.com/bookmarklet/add?' . $encoded . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'magnolia.png" alt="magnolia" /></a></li>';
+			$bookmarks .= '<li class="magnolia"><a href="http://ma.gnolia.com/bookmarklet/add?'.$encoded.'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'magnolia.png" alt="magnolia" /></a></li>';
 		}
 		if ($includeNewsvine == 1) {
-			$bookmarks .= '<li class="newsvine"><a href="http://www.newsvine.com/_tools/seed&amp;save?popoff=0&amp;u=' . urlencode($ArticleURL) . '&amp;h=' . urlencode($ArticleTitle) . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'newsvine.png" alt="newsvine" /></a></li>';
+			$bookmarks .= '<li class="newsvine"><a href="http://www.newsvine.com/_tools/seed&amp;save?popoff=0&amp;u='.urlencode($ArticleURL).'&amp;h='.urlencode($ArticleTitle).'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'newsvine.png" alt="newsvine" /></a></li>';
 		}
 		if ($includeReddit == 1) {
-			$bookmarks .= '<li class="reddit"><a href="http://reddit.com/submit?' . $encoded . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'reddit.png" alt="reddit" /></a></li>';
+			$bookmarks .= '<li class="reddit"><a href="http://reddit.com/submit?'.$encoded.'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'reddit.png" alt="reddit" /></a></li>';
 		}
 		if ($includeStumbleupon == 1) {
-			$bookmarks .= '<li class="stumbleupon"><a href="http://www.stumbleupon.com/submit?' . $encoded . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'stumbleupon.png" alt="stumbleupon" /></a></li>';
+			$bookmarks .= '<li class="stumbleupon"><a href="http://www.stumbleupon.com/submit?'.$encoded.'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'stumbleupon.png" alt="stumbleupon" /></a></li>';
 		}
 		if ($includeTechnorati == 1) {
-			$bookmarks .= '<li class="technorati"><a href="http://www.technorati.com/faves?add=' . urlencode($ArticleURL) . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/' . $sizeshape . 'technorati.png" alt="technorati" /></a></li>';
+			$bookmarks .= '<li class="technorati"><a href="http://www.technorati.com/faves?add='.urlencode($ArticleURL).'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/'.$sizeshape.'technorati.png" alt="technorati" /></a></li>';
 		}
 		if ($includeTwitter == 1) {
-			$bookmarks .= '<li class="twitter"><a href="http://twitter.com/home/?status=' . $encodedshortTitle . '+' . urlencode($tinyURL) . '"><img src="' . JURI::base() . 'plugins/content/tamka_article_social_bookmark/Twitter_24x24.png" alt="tweet this" /></a></li>';
+			$bookmarks .= '<li class="twitter"><a href="http://twitter.com/home/?status='.$encodedshortTitle.'+'.urlencode($tinyURL).'"><img src="'.JURI::base().'plugins/content/tamka_article_social_bookmark/Twitter_24x24.png" alt="tweet this" /></a></li>';
 		}
 		if (($includeTweetmeme == 1) && ($view == 'article')) {		
 			$bookmarks .= '<li class="tweetmeme"><script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script></li>';
@@ -174,9 +174,9 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 
 		// Add the xHTML to the body of the page
 		if ($parameterposition == 1) {
-			$article->text = '<div class="socialbookmark-top">' . $bookmarks . '</div><div class="socialbookmark-top2"></div>' . $article->text;
+			$article->text = '<div class="socialbookmark-top">'.$bookmarks.'</div><div class="socialbookmark-top2"></div>'.$article->text;
 		} else {
-			$article->text.= '<div class="socialbookmark-bottom">' . $bookmarks . '</div>';
+			$article->text.= '<div class="socialbookmark-bottom">'.$bookmarks.'</div>';
 		}
 
 		// Exit successfully

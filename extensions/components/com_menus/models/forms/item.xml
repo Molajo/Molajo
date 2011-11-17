@@ -15,8 +15,8 @@
 		<field
 			name="title"
 			type="text"
-			label="COM_MENUS_ITEM_FIELD_TITLE_LABEL"
-			description="COM_MENUS_ITEM_FIELD_TITLE_DESC"
+			label="MENU_ITEM_TITLE_LABEL"
+			description="MENU_ITEM_TITLE_DESC"
 			class="inputbox"
 			size="40"
 			required="true"/>
@@ -31,21 +31,13 @@
 
 		<field name="aliastip"
 			type="spacer"
-			label="COM_MENUS_TIP_ALIAS_LABEL"/>
-
-		<field
-			name="note"
-			type="text"
-			label="JFIELD_NOTE_LABEL"
-			description="COM_MENUS_ITEM_FIELD_NOTE_DESC"
-			class="inputbox"
-			size="40"/>
+			label="MENU_TIP_ALIAS_LABEL"/>
 
 		<field
 			name="link"
 			type="link"
-			label="COM_MENUS_ITEM_FIELD_LINK_LABEL"
-			description="COM_MENUS_ITEM_FIELD_LINK_DESC"
+			label="MENU_ITEM_LINK_LABEL"
+			description="MENU_ITEM_LINK_DESC"
 			readonly="true"
 			class="inputbox"
 			size="50"/>
@@ -53,8 +45,8 @@
 		<field
 			name="menu_id"
 			type="menu"
-			label="COM_MENUS_ITEM_FIELD_ASSIGNED_LABEL"
-			description="COM_MENUS_ITEM_FIELD_ASSIGNED_DESC"
+			label="MENU_ITEM_ASSIGNED_LABEL"
+			description="MENU_ITEM_ASSIGNED_DESC"
 			class="inputbox"
 			required="true"
 			onchange="Joomla.submitbutton('item.setMenuType',this.value);"
@@ -63,8 +55,8 @@
 		<field
 			name="type"
 			type="menu_id"
-			label="COM_MENUS_ITEM_FIELD_TYPE_LABEL"
-			description="COM_MENUS_ITEM_FIELD_TYPE_DESC"
+			label="MENU_ITEM_TYPE_LABEL"
+			description="MENU_ITEM_TYPE_DESC"
 			class="inputbox"
 			required="true"
 			size="40" />
@@ -94,14 +86,14 @@
 		<field
 			name="parent_id"
 			type="menuparent"
-			label="COM_MENUS_ITEM_FIELD_PARENT_LABEL"
-			description="COM_MENUS_ITEM_FIELD_PARENT_DESC"
+			label="MENU_ITEM_PARENT_LABEL"
+			description="MENU_ITEM_PARENT_DESC"
 			default="1"
 			filter="int"
 			class="inputbox"
 			size="1">
 			<option
-				value="1">COM_MENUS_ITEM_ROOT</option>
+				value="1">MENU_ITEM_ROOT</option>
 		</field>
 
 		<field
@@ -118,19 +110,6 @@
 			class="inputbox"/>
 
 		<field
-			name="browserNav"
-			type="list"
-			label="COM_MENUS_ITEM_FIELD_BROWSERNAV_LABEL"
-			description="COM_MENUS_ITEM_FIELD_BROWSERNAV_DESC"
-			default="Parent"
-			filter="int"
-			class="inputbox">
-				<option value="0">COM_MENUS_FIELD_VALUE_PARENT</option>
-				<option value="1">COM_MENUS_FIELD_VALUE_NEW_WITH_NAV</option>
-				<option value="2">COM_MENUS_FIELD_VALUE_NEW_WITHOUT_NAV</option>
-			</field>
-
-		<field
 			name="access"
 			type="accesslevel"
 			id="access"
@@ -140,22 +119,11 @@
 			default="1"
 			filter="integer"/>
 
-
-		<field
-			name="template_style_id"
-			type="templatestyle"
-			label="COM_MENUS_ITEM_FIELD_TEMPLATE_LABEL"
-			description="COM_MENUS_ITEM_FIELD_TEMPLATE_DESC"
-			filter="int"
-			class="inputbox">
-			<option value="0">JOPTION_USE_DEFAULT</option>
-		</field>
-
 		<field
 			name="home"
 			type="radio"
-			label="COM_MENUS_ITEM_FIELD_HOME_LABEL"
-			description="COM_MENUS_ITEM_FIELD_HOME_DESC"
+			label="MENU_ITEM_HOME_LABEL"
+			description="MENU_ITEM_HOME_DESC"
 			default="0"
 			class="inputbox"
 			filter="integer">
@@ -169,7 +137,7 @@
 			name="language"
 			type="contentlanguage"
 			label="JFIELD_LANGUAGE_LABEL"
-			description="COM_MENUS_ITEM_FIELD_LANGUAGE_DESC"
+			description="MENU_ITEM_LANGUAGE_DESC"
 			class="inputbox">
 			<option value="*">JALL</option>
 		</field>
@@ -206,5 +174,28 @@
 	</fieldset>
 
 	<fields name="parameters">
+        <field
+                name="link_target"
+                type="list"
+                label="MENU_ITEM_BROWSERNAV_LABEL"
+                description="MENU_ITEM_BROWSERNAV_DESC"
+                default="Parent"
+                filter="int"
+                class="inputbox">
+                    <option value="0">MENU_FIELD_VALUE_PARENT</option>
+                    <option value="1">MENU_FIELD_VALUE_NEW_WITH_NAV</option>
+                    <option value="2">MENU_FIELD_VALUE_NEW_WITHOUT_NAV</option>
+                </field>
+
+            <field
+                name="template_id"
+                type="templatestyle"
+                label="MENU_ITEM_TEMPLATE_LABEL"
+                description="MENU_ITEM_TEMPLATE_DESC"
+                filter="int"
+                class="inputbox">
+                <option value="0">JOPTION_USE_DEFAULT</option>
+            </field>
+
 	</fields>
 </form>

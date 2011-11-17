@@ -161,7 +161,7 @@ class MolajoFormHelper
      */
     protected static function loadClass($entity, $type)
     {
-        $class = 'MolajoForm' . ucfirst($entity) . ucfirst($type);
+        $class = 'MolajoForm'.ucfirst($entity).ucfirst($type);
         if (class_exists($class)) return $class;
 
         // Get the field search path array.
@@ -185,7 +185,7 @@ class MolajoFormHelper
         }
 
         // Try to find the class file.
-        if ($file = JPath::find($paths, strtolower($type) . '.php')) {
+        if ($file = JPath::find($paths, strtolower($type).'.php')) {
             require_once $file;
         }
 
@@ -254,7 +254,7 @@ class MolajoFormHelper
         if (empty($paths)) {
             // While we support limited number of entities (form, field and rule)
             // we can do this simple pluralisation:
-            $entity_plural = $entity . 's';
+            $entity_plural = $entity.'s';
             // But when someday we would want to support more entities, then we should consider adding
             // an inflector class to "libraries/joomla/utilities" and use it here (or somebody can use a real inflector in his subclass).
             // see also: pluralization snippet by Paul Osman in JControllerForm's constructor.
