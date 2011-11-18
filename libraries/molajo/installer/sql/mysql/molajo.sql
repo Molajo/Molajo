@@ -418,7 +418,8 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`,
+    `position`, `custom_fields`, `parameters`,
     `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `content_type_id`,
         `name`, '', '', '',
@@ -426,13 +427,14 @@ INSERT INTO `molajo_extension_instances`
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
         1, 0, 0,
         '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
-        '0000-00-00 00:00:00', 0, '{}', '{}',
+        '0000-00-00 00:00:00', 0,
+        SUBSTRING(`name`, 5, 99), '{}', '{}',
         'en-GB', 0, `id`
     FROM `molajo_extensions`
     WHERE `content_type_id` = 1350
       AND NOT (`name` = 'mod_menu');
 
-# Admin Menu Module
+# Administrator Menu Module
 SET @menu_id = (SELECT `id` FROM `molajo_extension_instances` WHERE `title` = 'Admin' AND `content_type_id` = 1300);
 
 INSERT INTO `molajo_extension_instances`
@@ -442,7 +444,8 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`,
+    `position`, `custom_fields`, `parameters`,
     `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `content_type_id`,
         'Administrator Menu', '', '', '',
@@ -450,13 +453,16 @@ INSERT INTO `molajo_extension_instances`
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
         1, 0, 0,
         '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
-        '0000-00-00 00:00:00', 0, '{}',
-        CONCAT('{"wrap":"none","layout":"admin_launchpad","menu_id":', @menu_id, ',"start_level":"","end_level":"","show_all_children":"","max_depth":""}'),
+        '0000-00-00 00:00:00', 0,
+        SUBSTRING(`name`, 5, 99), '{}',
+        CONCAT('{"menu_id":"', @menu_id, '","wrap":"none","layout":"admin_launchpad","start_level":"0","end_level":"0","show_all_children":"0","max_depth":"0","tag_id":"","class_suffix":"","window_open":"","layout":"","moduleclass_suffix":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}'),
         'en-GB', 0, `id`
     FROM `molajo_extensions`
     WHERE `content_type_id` = 1350
      AND `name` = 'mod_menu';
-
+/*
+{"menu_id":"209","wrap":"none","layout":"admin_launchpad","start_level":"0","end_level":"0","show_all_children":"0","max_depth":"0","tag_id":"","class_suffix":"","window_open":"","layout":"","moduleclass_suffix":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}
+ */
 # Main Menu Module
 SET @menu_id = (SELECT `id` FROM `molajo_extension_instances` WHERE `title` = 'Main Menu' AND `content_type_id` = 1300);
 
@@ -467,7 +473,8 @@ INSERT INTO `molajo_extension_instances`
     `status`, `start_publishing_datetime`, `stop_publishing_datetime`,
     `version`, `version_of_id`, `status_prior_to_version`,
     `created_datetime`, `created_by`, `modified_datetime`, `modified_by`,
-    `checked_out_datetime`, `checked_out_by`, `custom_fields`, `parameters`,
+    `checked_out_datetime`, `checked_out_by`,
+    `position`, `custom_fields`, `parameters`,
     `language`, `translation_of_id`, `ordering`)
   SELECT `id`, `content_type_id`,
         'Main Menu', '', '', '',
@@ -475,7 +482,8 @@ INSERT INTO `molajo_extension_instances`
         1, '2011-11-11 11:11:11', '0000-00-00 00:00:00',
         1, 0, 0,
         '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
-        '0000-00-00 00:00:00', 0, '{}',
+        '0000-00-00 00:00:00', 0,
+        SUBSTRING(`name`, 5, 99), '{}',
         CONCAT('{"wrap":"none","layout":"list","menu_id":', @menu_id, ',"start_level":"","end_level":"","show_all_children":"","max_depth":""}'),
         'en-GB', 0, `id`
     FROM `molajo_extensions`
@@ -488,11 +496,12 @@ INSERT INTO `molajo_assets`
     FROM `molajo_extension_instances`
     WHERE `content_type_id` = 1350;
 
-INSERT INTO `molajo_asset_modules`
+/*INSERT INTO `molajo_asset_modules`
 (`asset_id`, `extension_instance_id`, `position`)
  SELECT `id`, `source_id`, SUBSTRING(`title`, 5, 99)
     FROM `molajo_assets`
     WHERE `content_type_id` = 1350;
+*/
 
 # Plugins
 
@@ -1438,7 +1447,7 @@ INSERT INTO `molajo_application_extension_instances`
           'mod_footer',
           'mod_header',
           'mod_layout',
-          'mod_login',
+          'Main Menu',
           'mod_logout',
           'mod_menu',
           'mod_pagination',
@@ -1463,7 +1472,7 @@ INSERT INTO `molajo_application_extension_instances`
         'mod_login',
         'mod_logout',
         'mod_members',
-        'mod_menu',
+        'Administrator Menu',
         'mod_pagination',
         'mod_search',
         'mod_toolbar');

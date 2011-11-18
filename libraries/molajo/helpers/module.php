@@ -80,8 +80,7 @@ abstract class MolajoModuleHelper
         $result = array();
 
         $modules = self::_load();
-//echo '<pre>';var_dump($modules);'</pre>';
-        
+
         $total = count($modules);
         for ($i = 0; $i < $total; $i++)
         {
@@ -142,15 +141,15 @@ abstract class MolajoModuleHelper
 
         // Get module path
         $module->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->title);
-        $path = MOLAJO_EXTENSION_MODULES.'/'.$module->title.'/'.$module->title.'.php';
+        $path = MOLAJO_EXTENSION_MODULES.'/'.$module->extension_name.'/'.$module->extension_name.'.php';
 
         // Load the module
         if (file_exists($path)) {
 
             $lang = MolajoFactory::getLanguage();
 
-            $lang->load($module->title, MOLAJO_EXTENSION_MODULES, null, false, false)
-            || $lang->load($module->title, MOLAJO_EXTENSION_MODULES, $lang->getDefault(), false, false);
+            $lang->load($module->extension_name, MOLAJO_EXTENSION_MODULES, null, false, false)
+            || $lang->load($module->extension_name, MOLAJO_EXTENSION_MODULES, $lang->getDefault(), false, false);
 
             /** view */
             $view = new MolajoView ();
@@ -158,7 +157,6 @@ abstract class MolajoModuleHelper
             /** defaults */
             $request = array();
             $state = array();
-            $parameters = array();
             $rowset = array();
             $pagination = array();
             $layout = 'default';
@@ -173,7 +171,7 @@ abstract class MolajoModuleHelper
             $user = MolajoFactory::getUser();
 
             $parameters = new JRegistry;
-            $parameters->loadJSON($module->parameters);
+            $parameters->loadString($module->parameters);
 
             $request = self::getRequest($module, $parameters, $wrap);
 

@@ -340,6 +340,7 @@ class MolajoApplication extends JObject
     public function authorise($itemid)
     {
         $menus = $this->getMenu();
+
         if ($menus == null) {
             return false;
         }
@@ -464,7 +465,6 @@ class MolajoApplication extends JObject
             $this->triggerEvent('onAfterDispatch');
         }
 
-            // Uncaught exceptions.
         catch (Exception $e)
         {
             $code = $e->getCode();
@@ -490,7 +490,7 @@ class MolajoApplication extends JObject
         $template = $this->getTemplate(true);
 
         $parameters = array(
-            'template' => $template[0]->name,
+            'template' => $template[0]->title,
             'file' => $file.'.php',
             'directory' => MOLAJO_EXTENSION_TEMPLATES,
             'parameters' => $template[0]->parameters

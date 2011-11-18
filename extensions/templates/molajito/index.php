@@ -32,7 +32,7 @@ if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
         <section>
             <?php if (MolajoFactory::getUser()->id == 0) :
             else : ?>
-                <jdoc:include type="modules" name="launchpad" wrap="none" />
+                <jdoc:include type="modules" name="menu" wrap="none" />
             <?php endif; ?>
             <jdoc:include type="component" />
         </section>

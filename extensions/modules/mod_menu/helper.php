@@ -29,8 +29,9 @@ class modMenuHelper
 		$db			= MolajoFactory::getDbo();
 		$user		= MolajoFactory::getUser();
 		$app		= MolajoFactory::getApplication();
+
 		$menu		= $app->getMenu();
- 
+
         $active	= $menu->getActive();
         if (isset($active)) {
             $active_id = $active->id;
@@ -51,8 +52,8 @@ class modMenuHelper
         /** Module Parameters */
 		$start		= (int) $parameters->get('start_level');
 		$end		= (int) $parameters->get('end_level');
-		$show_all	= $parameters->get('show_all_children');
-		$max_depth	= $parameters->get('max_depth');
+		$show_all	= (int) $parameters->get('show_all_children');
+		$max_depth	= (int) $parameters->get('max_depth');
 
         /** Retrieve Menu and Menu Items */
 		$items 		= $menu->getItems('extension_instance_id', $parameters->get('menu_id'));
@@ -62,19 +63,18 @@ class modMenuHelper
         /** Process Menu Items */
 		if ($items) {
 			foreach($items as $i => $item) {
-//echo '<pre>';var_dump($item);'</pre>';
 
                 /** save for the layout */
                 $item->active_id = $active_id;
                 $item->path = $path;
 
-                $item->template_id =
-                $item->link_target
+//                $item->template_id =
+//                $item->link_target
 
 				if (($start && $start > $item->menu_item_level)
 					|| ($end && $item->menu_item_level > $end)
 					|| (!$show_all && $item->menu_item_level > 1 && !in_array($item->menu_item_parent_id, $path))
-					|| ($max_depth && $item->menu_item_level > $max_depth)
+					|| ($max_depth > 0 && $item->menu_item_level > $max_depth)
 					|| ($start > 1 && !in_array($item->menu_item_tree[0], $path))
 				) {
 					unset($items[$i]);
@@ -97,38 +97,23 @@ class modMenuHelper
 				$item->menu_item_active	= false;
 				$item->menu_item_flink = $item->request;
 
-				switch ($item->menu_item_type)
+				switch ($item->content_type_id)
 				{
 					case MOLAJO_CONTENT_TYPE_MENU_ITEM_SEPARATOR:
-						// No further action needed.
 						continue;
 
-					case MOLAJO_CONTENT_TYPE_MENU_ITEM_EXTERNAL_URL:
-						if ((strpos($item->request, 'index.php?') === 0) && (strpos($item->request, 'Itemid=') === false)) {
-							// If this is an internal Joomla link, ensure the Itemid is set.
-							$item->menu_item_flink = $item->request.'&Itemid='.$item->id;
-						}
+					case MOLAJO_CONTENT_TYPE_MENU_ITEM_LINK:
+						$item->menu_item_flink = $item->sef_request;
 						break;
 
-					case MOLAJO_CONTENT_TYPE_MENU_ITEM_ALIAS:
-						// If this is an alias use the item id stored in the parameters to make the link.
-						$item->menu_item_flink = 'index.php?Itemid='.$item->menu_item_parameters->get('aliasoptions');
-						break;
 
                     case MOLAJO_CONTENT_TYPE_MENU_ITEM_MODULE;
-
+                        break;
 
 					default:
-                        $classname = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Application';
-						$router = $classname::getRouter();
-						if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
-							$item->menu_item_flink = 'index.php?Itemid='.$item->id;
-						}
-						else {
-							$item->menu_item_flink .= '&Itemid='.$item->id;
-						}
+						$item->menu_item_flink = $item->sef_request;
 						break;
-				}
+                }
 
 				if (strcasecmp(substr($item->menu_item_flink, 0, 4), 'http') && (strpos($item->menu_item_flink, 'index.php?') !== false)) {
 					$item->menu_item_flink = MolajoRoute::_($item->menu_item_flink, true, $item->menu_item_parameters->get('secure'));

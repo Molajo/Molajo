@@ -11,8 +11,8 @@ defined('MOLAJO') or die;
 $class = $item->anchor_css ? 'class="'.$item->anchor_css.'" ' : '';
 $title = $item->link_title ? 'title="'.$item->link_title.'" ' : '';
 if ($item->anchor_image) {
-		$item->menu_item_add_menu_title == 1) ?
-		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" /><span class="image-title">'.$item->menu_item_title.'</span> ' :
+//		$item->menu_item_add_menu_title == 1) ?
+//		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" /><span class="image-title">'.$item->menu_item_title.'</span> ' :
 		$linktype = '<img src="'.$item->anchor_image.'" alt="'.$item->menu_item_title.'" />';
 } 
 else { $linktype = $item->menu_item_title;

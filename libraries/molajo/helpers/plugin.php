@@ -38,7 +38,7 @@ abstract class MolajoPluginHelper
 
             foreach ($plugins as $p) {
                 // Is this plugin in the right group?
-                if ($p->type == $type && $p->name == $plugin) {
+                if ($p->folder == $type && $p->title == $plugin) {
                     $result = $p;
                     break;
                 }
@@ -48,7 +48,7 @@ abstract class MolajoPluginHelper
 
             foreach ($plugins as $p) {
 
-                if ($p->type == $type) {
+                if ($p->folder == $type) {
                     $result[] = $p;
                 }
             }
@@ -109,8 +109,8 @@ abstract class MolajoPluginHelper
 
             for ($i = 0, $t = count($plugins); $i < $t; $i++) {
 
-                if (($plugins[$i]->type == $type)
-                    && ($plugins[$i]->name == $plugin || $plugin === null)
+                if (($plugins[$i]->folder == $type)
+                    && ($plugins[$i]->title == $plugin || $plugin === null)
                 ) {
 
                     self::_import($plugins[$i], $autocreate, $dispatcher);
@@ -147,10 +147,10 @@ abstract class MolajoPluginHelper
     {
         static $paths = array();
 
-        $plugin->type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
-        $plugin->name = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->name);
+        $plugin->folder = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->folder);
+        $plugin->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->title);
 
-        $path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->type.'/'.$plugin->name.'/'.$plugin->name.'.php';
+        $path = MOLAJO_EXTENSION_PLUGINS.'/'.$plugin->folder.'/'.$plugin->title.'/'.$plugin->title.'.php';
 
         if (JFile::exists($path)) {
             require_once $path;
@@ -165,11 +165,11 @@ abstract class MolajoPluginHelper
                 $dispatcher = JDispatcher::getInstance();
             }
 
-            $className = 'plg'.$plugin->type.$plugin->name;
+            $className = 'plg'.$plugin->folder.$plugin->title;
             if (class_exists($className)) {
 
             } else {
-                $plugin = self::getPlugin($plugin->type, $plugin->name);
+                $plugin = self::getPlugin($plugin->folder, $plugin->title);
                 new $className($dispatcher, (array)($plugin));
             }
         }

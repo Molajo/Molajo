@@ -89,29 +89,28 @@ class MolajoMenu extends JObject
 
         foreach ($this->_items as $k => $item)
         {
-            if ($item->home) {
-                $this->_default[$item->language] = $item->id;
+            if ($item->menu_item_home) {
+                $this->_default[$item->menu_item_language] = $item->id;
             }
+///echo '<pre>';var_dump($item);'</pre>';
 
-            /** Menu Parameters */
+            /** Menu */
             $menu = new JRegistry;
             $menu->loadJSON($item->parameters);
-            $item->menu_parameters = $menu;
-
-             /** Menu Custom Fields */
-            $menuFields = new JRegistry;
-            $menuFields->loadJSON($item->custom_fields);
-            $item->menu_custom_fields = $menuFields;
+            $item->parameters = $menu;
 
             /** Menu Item Parameters */
             $menuItem = new JRegistry;
             $menuItem->loadJSON($item->menu_item_parameters);
             $item->menu_item_parameters = $menuItem;
 
-            /** Menu Item Custom Fields */
             $menuItemFields = new JRegistry;
             $menuItemFields->loadJSON($item->menu_item_custom_fields);
             $item->menu_item_custom_fields = $menuItemFields;
+
+            $menuItemMetadata = new JRegistry;
+            $menuItemMetadata->loadJSON($item->menu_item_metadata);
+            $item->menu_item_metadata = $menuItemMetadata;
         }
     }
 
@@ -328,11 +327,9 @@ class MolajoMenu extends JObject
                 $parent_tree = $this->_items[$item->menu_item_parent_id]->tree;
             }
 
-            // Create tree.
             $parent_tree[] = $item->id;
             $item->tree = $parent_tree;
 
-            // Create the query array.
             $url = str_replace('index.php?', '', $item->request);
             $url = str_replace('&amp;', '&', $url);
             parse_str($url, $item->query);

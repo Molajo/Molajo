@@ -71,7 +71,7 @@ class MolajoModelConfiguration
 
         /** validation query **/
         $query->select($db->namequote('option_value'), $db->namequote('option_value_literal'));
-        $query->from($db->namequote('#__menu_items'));
+        $query->from($db->namequote('#__component_options'));
         $query->where($db->namequote('option_id').' = '.(int) $option_id);
         $query->where($db->namequote('extension_instance_id').' = '.(int) $key);
         $query->where($db->namequote('ordering').' > 0 ');
@@ -116,7 +116,7 @@ class MolajoModelConfiguration
         $query = $db->getQuery(true);
 
         $query->select($db->namequote('option_value_literal'));
-        $query->from($db->namequote('#__menu_items'));
+        $query->from($db->namequote('#__component_options'));
         $query->where($db->namequote('option_id').' = '.(int)$option_id);
         $query->where($db->namequote('extension_instance_id').' = '.(int) $key);
         $query->where($db->namequote('option_value').' = '.$db->quote(trim($option_value)));
@@ -162,7 +162,7 @@ class MolajoModelConfiguration
 
         $query->select('DISTINCT '.$db->namequote('option_value').' AS value');
         $query->select($db->namequote('option_value_literal').' as text');
-        $query->from($db->namequote('#__menu_items'));
+        $query->from($db->namequote('#__component_options'));
         $query->where($db->namequote('option_id').' = '.(int) $option_id);
         $query->where($db->namequote('extension_instance_id').' = '.(int) $this->extension_instance_id);
         $query->where($db->namequote('ordering').' > 0 ');
@@ -218,7 +218,7 @@ class MolajoModelConfiguration
 
         /** retrieve all option_id values **/
         $query->select('DISTINCT '.$db->namequote('option_id'));
-        $query->from($db->namequote('#__menu_items'));
+        $query->from($db->namequote('#__component_options'));
         $query->where($db->namequote('ordering').' = 0');
         $query->where($db->namequote('option_id').' > 0');
         $query->order($db->namequote('option_id'));
@@ -241,7 +241,7 @@ class MolajoModelConfiguration
                 $query = $db->getQuery(true);
 
                 $query->select($db->namequote('extension_instance_id'));
-                $query->from($db->namequote('#__menu_items'));
+                $query->from($db->namequote('#__component_options'));
                 $query->where($db->namequote('ordering').' = 0');
                 $query->where($db->namequote('option_id').' = '.(int) $item->option_id);
                 $query->where($db->namequote('extension_instance_id').' = '.(int) $this->extension_instance_id);

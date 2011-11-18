@@ -46,7 +46,7 @@ abstract class MolajoXYZHelper
      * Get Extension Instance by Type and Name, Title or ID 
      * 
      * @static
-     * @param $extension_type_id
+     * @param $content_type_id
      * @param $extension
      * 
      * @return null|stdClass

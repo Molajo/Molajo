@@ -36,11 +36,11 @@ abstract class MolajoExtensionHelper
      * Retrieves requested Extension
      *
      * @static
-     * @param $extension_type_id
+     * @param $content_type_id
      * @param null $extension
      * @return bool|mixed
      */
-    static public function getExtensions($extension_type_id, $extension = null)
+    static public function getExtensions($content_type_id, $extension = null)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -63,64 +63,64 @@ abstract class MolajoExtensionHelper
         $query->where('a.'.$db->namequote('name').' != "responses"');
         $query->where('a.'.$db->namequote('name').' != "broadcast"');
 
-
         /** Extensions */
         $query->select('a.'.$db->namequote('id').' as extension_id');
-        $query->select('a.'.$db->namequote('name'));
+        $query->select('a.'.$db->namequote('name').' as extension_name');
         $query->select('a.'.$db->namequote('element'));
         $query->select('a.'.$db->namequote('folder'));
         
         $query->from($db->namequote('#__extensions').' as a');
         
-        $query->where('a.'.$db->namequote('extension_type_id').' = '. (int) $extension_type_id);
+        $query->where('a.'.$db->namequote('content_type_id').' = '. (int) $content_type_id);
 
         /** Extension Instances */
         $query->select('b.'.$db->namequote('id').' as extension_instance_id');
         $query->select('b.'.$db->namequote('title'));
         $query->select('b.'.$db->namequote('subtitle'));
-        $query->select('b.'.$db->namequote('alias'));   
+        $query->select('b.'.$db->namequote('alias'));
+        $query->select('b.'.$db->namequote('content_text'));
         $query->select('b.'.$db->namequote('protected'));       
         $query->select('b.'.$db->namequote('featured'));        
         $query->select('b.'.$db->namequote('stickied')); 
         $query->select('b.'.$db->namequote('status'));                
         $query->select('b.'.$db->namequote('custom_fields'));
         $query->select('b.'.$db->namequote('parameters'));
+        $query->select('b.'.$db->namequote('position'));
         $query->select('b.'.$db->namequote('ordering'));
-
-        if ($extension_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MODULES) {
-            $query->select('b.'.$db->namequote('position'));
-            $query->select('b.'.$db->namequote('content_text'));
-        }
+        $query->select('b.'.$db->namequote('language'));
 
         $query->from($db->namequote('#__extension_instances').' as b');
 
         if ($extension == null) {
         } else {
             $query->where('(b.'.$db->namequote('title').' = '.$db->quote($extension).
-                          ' OR '.'b.'.$db->namequote('id').' = '.(int)$extension.')');
+                          ' OR '.'b.'.$db->namequote('id').' = '.(int) $extension.')');
         }
 
         $query->where('a.'.$db->namequote('id').' = b.'.$db->namequote('extension_id'));
-        $query->where('b.'.$db->namequote('extension_type_id').' = '. (int) $extension_type_id);
+        $query->where('b.'.$db->namequote('content_type_id').' = '. (int) $content_type_id);
+
         $query->where('b.'.$db->namequote('status').' = '.MOLAJO_STATUS_PUBLISHED);
         $query->where('(b.start_publishing_datetime = '.$db->Quote($nullDate).' OR b.start_publishing_datetime <= '.$db->Quote($now).')');
         $query->where('(b.stop_publishing_datetime = '.$db->Quote($nullDate).' OR b.stop_publishing_datetime >= '.$db->Quote($now).')');
 
-        /** Extension Instance ACL */
         $query->from($db->namequote('#__assets').' as b_assets');
-        $query->from($db->namequote('#__source_tables').' as b_source');
-        $query->where('b_assets.source_table_id = b_source.id');
-        $query->where('b_source.'.$db->namequote('source_table').' = "__extension_instances"');
+        $query->from($db->namequote('#__content_types').' as b_ctype');
+        $query->where('b_assets.content_type_id = b_ctype.id');
+        $query->where('b_ctype.'.$db->namequote('source_table').' = "__extension_instances"');
         $query->where('b_assets.source_id = b.id');
 
+        /** Extension Instance ACL */
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
 
         /** Extension Instance Options */
-        if ($extension_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MENUS) {
+        if ($content_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MENUS) {
             $query->select('c.'.$db->namequote('id').' as id');
+            $query->select('c.'.$db->namequote('content_type_id').' as content_type_id');
             $query->select('c.'.$db->namequote('title').' as menu_item_title');
             $query->select('c.'.$db->namequote('subtitle').' as menu_item_subtitle');
             $query->select('c.'.$db->namequote('alias').' as menu_item_alias');
+            $query->select('c.'.$db->namequote('content_text').' as menu_item_content_text');
             $query->select('c.'.$db->namequote('protected').' as menu_item_protected');
             $query->select('c.'.$db->namequote('featured').' as menu_item_featured');
             $query->select('c.'.$db->namequote('stickied').' as menu_item_stickied');
@@ -128,32 +128,33 @@ abstract class MolajoExtensionHelper
             $query->select('c.'.$db->namequote('custom_fields').' as menu_item_custom_fields');
             $query->select('c.'.$db->namequote('parameters').' as menu_item_parameters');
             $query->select('c.'.$db->namequote('ordering').' as menu_item_ordering');
-            $query->select('c.'.$db->namequote('menu_item_type').' as menu_item_type');
+            $query->select('c.'.$db->namequote('home').' as menu_item_home');
             $query->select('c.'.$db->namequote('parent_id').' as menu_item_parent_id');
-            $query->select('c.'.$db->namequote('level').' as menu_item_level');
             $query->select('c.'.$db->namequote('lft').' as menu_item_lft');
             $query->select('c.'.$db->namequote('rgt').' as menu_item_rgt');
-            $query->select('c.'.$db->namequote('image').' as anchor_image');
-            $query->select('c.'.$db->namequote('home').' as home');
-            $query->select('c.'.$db->namequote('language').' as language');
+            $query->select('c.'.$db->namequote('level').' as menu_item_level');
+            $query->select('c.'.$db->namequote('metadata').' as menu_item_metadata');
+            $query->select('c.'.$db->namequote('language').' as menu_item_language');
 
             $query->from($db->namequote('#__menu_items').' as c');
 
-            $query->where('a.'.$db->namequote('id').' = c.'.$db->namequote('extension_id'));
             $query->where('b.'.$db->namequote('id').' = c.'.$db->namequote('extension_instance_id'));
-            $query->where('c.'.$db->namequote('extension_type_id').' = '. (int) $extension_type_id);
+
             $query->where('c.'.$db->namequote('status').' = '.MOLAJO_STATUS_PUBLISHED);
             $query->where('(c.start_publishing_datetime = '.$db->Quote($nullDate).' OR c.start_publishing_datetime <= '.$db->Quote($now).')');
             $query->where('(c.stop_publishing_datetime = '.$db->Quote($nullDate).' OR c.stop_publishing_datetime >= '.$db->Quote($now).')');
 
-            /** Extension Instance ACL */
             $query->select('c_assets.'.$db->namequote('sef_request'));
             $query->select('c_assets.'.$db->namequote('request'));
+            $query->select('c_assets.'.$db->namequote('template_id').' as menu_item_template_id');
+
             $query->from($db->namequote('#__assets').' as c_assets');
-            $query->from($db->namequote('#__source_tables').' as c_source');
-            $query->where('c_assets.source_table_id = c_source.id');
-            $query->where('c_source.'.$db->namequote('source_table').' = "__menu_items"');
+            $query->from($db->namequote('#__content_types').' as c_ctype');
+            $query->where('c_assets.content_type_id = c_ctype.id');
+            $query->where('c_ctype.'.$db->namequote('source_table').' = "__menu_items"');
             $query->where('c_assets.source_id = c.id');
+
+            /** Menu Item ACL */
             $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'c_assets'));
 
             $query->order('b.title, c.lft');
@@ -171,7 +172,7 @@ abstract class MolajoExtensionHelper
 
         $db->setQuery($query->__toString());
 
-        if ($extension_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MENUS) {
+        if ($content_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MENUS) {
             $extensions = $db->loadObjectList('id');
         } else {
             $extensions = $db->loadObjectList();

@@ -553,7 +553,7 @@ class MolajoApplicationHelper
         $request['wrap_date'] = '';
         $request['wrap_author'] = '';
         $request['wrap_more_array'] = array();
- 
+
         return $request;
     }
 

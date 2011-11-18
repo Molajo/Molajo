@@ -7,12 +7,9 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $parameters->def('layout', '');
-$wrap = $parameters->def('wrap', '');
-
 $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'modMenuHelper');
 
 $rowset	= modMenuHelper::getList($parameters);
 
-require_once dirname(__FILE__).'/tmpl/default.php';
+//require_once dirname(__FILE__).'/tmpl/default.php';
