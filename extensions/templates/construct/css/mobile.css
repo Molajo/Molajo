@@ -25,9 +25,9 @@ p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address{margin-bottom:15px}
 i{font-style:italic;}
 input.button{padding:0 10px;}
 li > p{margin:0.2em 0 0 1em;}
-ol,ul,li{font-size:1em;margin:0.2em 0;}
+ol,ul,li{font-size:1em;margin:0.2em 0 0.1em 0}
 li{margin:0;list-style-type:none;}
-ul {font-size:1.4em;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:bold;line-height:normal;margin:0px;padding:0;}
+ul {font-size:1.4em;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:bold;line-height:normal;margin:0;padding:0;}
 #content-container {padding:10px}
 #content-container,#nav {margin:10px}
 #footer {padding:10px;}

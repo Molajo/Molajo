@@ -1,9 +1,9 @@
-<?php
-defined('_JEXEC') or die;
+<?php defined('_JEXEC') or die;
 /**
-* @package		Template Framework for Molajo 1.6
-* @author		Joomla Engineering http://joomlaengineering.com
-* @copyright	Copyright (C) 2010, 2011 Matt Thomas | Joomla Engineering. All rights reserved.
+* @package		Unified HTML5 Template Framework for Joomla!
+* @author		Cristina Solana http://nightshiftcreative.com
+* @author		Matt Thomas http://construct-framework.com | http://betweenbrain.com
+* @copyright	Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */
 
@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 jimport('joomla.filesystem.file');
 
 // Returns a reference to the global document object
-$doc 					= MolajoFactory::getDocument();
+$doc 					= JFactory::getDocument();
 // Define relative shortcut for current template directory
 $template 				= 'templates/'.$this->template;
 
@@ -40,3 +40,4 @@ if ($this->direction == 'rtl')
 	<jdoc:include type="component" />
 </body>
 </html>
+<?php }

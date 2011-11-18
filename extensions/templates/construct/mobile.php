@@ -1,13 +1,14 @@
 <?php defined('_JEXEC') or die;
 /**
-* @package		Template Framework for Molajo 1.6
-* @author		Joomla Engineering http://joomlaengineering.com
-* @copyright	Copyright (C) 2010, 2011 Matt Thomas | Joomla Engineering. All rights reserved.
+* @package		Unified HTML5 Template Framework for Joomla!+
+* @author		Cristina Solana http://nightshiftcreative.com
+* @author		Matt Thomas http://construct-framework.com | http://betweenbrain.com
+* @copyright	Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */	
 
 // To enable use of site configuration
-$app 					= MolajoFactory::getApplication();
+$app 					= JFactory::getApplication();
 // Get the base URL of the website
 $baseUrl 				= JURI::base();
 
@@ -16,46 +17,64 @@ $mobileResults = $mobileLayoutOverride->getIncludeFile ();
 
 if ($mobileResults) {
     $alternateIndexFile = $mobileResults;
-	include_once $alternateIndexFile;	
+	include_once $alternateIndexFile;
 } else {
 ?>
 
 <!DOCTYPE html> 
-<html>
+<html class="no-js">
 	<head>
-		<meta http-equiv="Content-Type" content="<?php echo $contenttype; ?>; charset=utf-8" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="<?php echo $baseUrl.'templates/'.$this->template; ?>/css/mobile.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.css" />
 		<?php //Load Mobile Extended Template Style Overrides
 		$mobileCssFile = $mobileStyleOverride->getIncludeFile ();		
 		if ($mobileCssFile) : ?>
 			<link rel="stylesheet" href="<?php echo $baseUrl.$mobileCssFile; ?>" type="text/css" media="screen" />			
 		<?php endif; ?>		
-		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
 		<script>
 			(function($) { //enable using $ along side of other libraries
 				$(document).ready(function() {
-					$('body').removeClass("noscript");
+					$('html').removeClass("no-js");
 				});
 			})(jQuery) // releases $ to other libraries
 		</script>
 	</head>
 
-<body class="noscript">	
+<body>
 	<div data-role="page" data-theme="<?php echo $mPageDataTheme; ?>">
 		<div id="header" data-role="header" data-theme="<?php echo $mHeaderDataTheme; ?>">
-			<h1><a href="<?php echo $baseUrl; ?>/" title="<?php echo $app->getSiteConfig('sitename'); ?>"><?php echo $app->getSiteConfig('sitename'); ?></a></h1>
+			
+			<h1><a href="<?php echo $baseUrl; ?>/" title="<?php echo $app->getCfg('sitename'); ?>"><?php echo $app->getCfg('sitename'); ?></a></h1>
+			
 			<?php if ($showDiagnostics) : ?>
 				<ul id="diagnostics">
-					<li><?php echo $currentComponent; ?></li>
-					<?php if($articleId)	echo '<li>article-'.$articleId.'</li>'; ?>
-					<?php if($itemId)		echo '<li>item-'.$itemId.'</li>'; ?>
-					<?php if($catId)		echo '<li>category-'.$catId.'</li>'; ?>
-					<?php if($sectionId) 	echo '<li>section-'.$sectionId.'</li>'; ?>
-					<?php if($view)			echo '<li>'.$view.' view</li>'; ?>
-				</ul>
-			<?php endif; ?>				
+				    <li>column layout <?php echo $columnLayout; ?></li>
+					<li>component <?php echo $currentComponent; ?></li>					
+				    <?php if($view)			echo '<li>'.$view.' view</li>'; ?>						
+				    <?php if($articleId)	echo '<li>article '.$articleId.'</li>'; ?>
+				    <?php if($itemId)		echo '<li>menu item '.$itemId.'</li>'; ?>
+				    <?php if($sectionId) 	echo '<li>section '.$sectionId.'</li>'; ?>
+				    <?php if($catId)   		echo '<li>category '.$catId.'</li>'; ?>
+				    <?php if ($catId && ($inheritStyle || $inheritLayout)) {
+				    		if ($parentCategory) {
+				    		    echo '<li>parent category '.$parentCategory.'</li>';
+				    		}
+				    		$results = getAncestorCategories($catId);
+						    if ($results) {
+						        echo '<li>ancestor categories';
+							        if (count($results) > 0) {
+								        foreach ($results as $item) {
+									        echo ' '.$item->id.' ';
+								        }			
+							        }								
+						        echo'</li>';
+						    }
+						  } ?>
+			    </ul>
+			<?php endif; ?>		
 		</div>
 	
 		<?php if ( $mNavPosition && ($this->countModules('nav'))) : ?>

@@ -1,8 +1,9 @@
 <?php defined('_JEXEC') or die;
 /**
-* @package		Template Framework for Molajo 1.6
-* @author		Joomla Engineering http://joomlaengineering.com
-* @copyright	Copyright (C) 2010, 2011 Matt Thomas | Joomla Engineering. All rights reserved.
+* @package		Unified HTML5 Template Framework for Joomla!
+* @author		Cristina Solana http://nightshiftcreative.com
+* @author		Matt Thomas http://construct-framework.com | http://betweenbrain.com
+* @copyright	Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */
 
@@ -12,63 +13,67 @@ if (JFile::exists(dirname(__FILE__).'/helper.php')) {
 }
 
 // To enable use of site configuration
-$app 					= MolajoFactory::getApplication();
+$app 					= JFactory::getApplication();
 // Get the base URL of the website
 $baseUrl 				= JURI::base();
 // Returns a reference to the global document object
-$doc 					= MolajoFactory::getDocument();
-// Define relative shortcut for current template directory
+$doc 					= JFactory::getDocument();
+// Is version 1.6 and later
+$isOnward = (substr(JVERSION, 0, 3) >= '1.6');
+// Is version 1.5
+$isPresent = (substr(JVERSION, 0, 3) == '1.5');
+// Define relative path to the  current template directory
 $template 				= 'templates/'.$this->template;
 // Define absolute path to the template directory
 $templateDir			= JPATH_THEMES.'/'.$this->template;
 // Get the current URL
 $url 					= clone(JURI::getInstance());
 // To access the current user object
-$user 					= MolajoFactory::getUser();
+$user 					= JFactory::getUser();
 // Get the current view
 $view     				= JRequest::getCmd('view');
 
 // Define shortcuts for template parameters
-$customStyleSheet 		= $this->parameters->get('customStyleSheet');
-$detectTablets			= $this->parameters->get('detectTablets');
-$enableSwitcher 		= $this->parameters->get('enableSwitcher');
-$IECSS3					= $this->parameters->get('IECSS3');
-$IECSS3Targets			= $this->parameters->get('IECSS3Targets');
-$IE6TransFix			= $this->parameters->get('IE6TransFix');
-$IE6TransFixTargets		= $this->parameters->get('IE6TransFixTargets');
-$fluidMedia				= $this->parameters->get('fluidMedia');
-$fullWidth				= $this->parameters->get('fullWidth');
-$googleWebFont 			= $this->parameters->get('googleWebFont');
-$googleWebFontSize		= $this->parameters->get('googleWebFontSize');
-$googleWebFontTargets	= $this->parameters->get('googleWebFontTargets');
-$googleWebFont2			= $this->parameters->get('googleWebFont2');
-$googleWebFontSize2		= $this->parameters->get('googleWebFontSize2');
-$googleWebFontTargets2	= $this->parameters->get('googleWebFontTargets2');
-$googleWebFont3			= $this->parameters->get('googleWebFont3');
-$googleWebFontSize3		= $this->parameters->get('googleWebFontSize3');
-$googleWebFontTargets3	= $this->parameters->get('googleWebFontTargets3');
-$inheritLayout			= $this->parameters->get('inheritLayout');
-$inheritStyle			= $this->parameters->get('inheritStyle');
-$loadMoo 				= $this->parameters->get('loadMoo');
-$loadModal				= $this->parameters->get('loadModal');
-$loadjQuery 			= $this->parameters->get('loadjQuery');
-$mContentDataTheme		= $this->parameters->get('mContentDataTheme');
-$mdetect 				= $this->parameters->get('mdetect');
-$mFooterDataTheme		= $this->parameters->get('mFooterDataTheme');
-$mHeaderDataTheme		= $this->parameters->get('mHeaderDataTheme');
-$mNavPosition			= $this->parameters->get('mNavPosition');
-$mNavDataTheme			= $this->parameters->get('mNavDataTheme');
-$mPageDataTheme			= $this->parameters->get('mPageDataTheme');
-$setGeneratorTag		= $this->parameters->get('setGeneratorTag');
-$showDiagnostics 		= $this->parameters->get('showDiagnostics');
-$siteWidth				= $this->parameters->get('siteWidth');
-$siteWidthType			= $this->parameters->get('siteWidthType');
-$siteWidthUnit			= $this->parameters->get('siteWidthUnit');
-$showPageLinks 			= $this->parameters->get('showPageLinks');
-$stickyFooterHeight		= $this->parameters->get('stickyFooterHeight');
-$useStickyFooter 		= $this->parameters->get('useStickyFooter');
+$customStyleSheet 		= $this->params->get('customStyleSheet');
+$detectTablets			= $this->params->get('detectTablets');
+$enableSwitcher 		= $this->params->get('enableSwitcher');
+$fluidMedia				= $this->params->get('fluidMedia');
+$fullWidth				= $this->params->get('fullWidth');
+$googleWebFont 			= $this->params->get('googleWebFont');
+$googleWebFontSize		= $this->params->get('googleWebFontSize');
+$googleWebFontTargets	= $this->params->get('googleWebFontTargets');
+$googleWebFont2			= $this->params->get('googleWebFont2');
+$googleWebFontSize2		= $this->params->get('googleWebFontSize2');
+$googleWebFontTargets2	= $this->params->get('googleWebFontTargets2');
+$googleWebFont3			= $this->params->get('googleWebFont3');
+$googleWebFontSize3		= $this->params->get('googleWebFontSize3');
+$googleWebFontTargets3	= $this->params->get('googleWebFontTargets3');
+$gridSystem				= $this->params->get('gridSystem');
+$IECSS3					= $this->params->get('IECSS3');
+$IECSS3Targets			= $this->params->get('IECSS3Targets');
+$IE6TransFix			= $this->params->get('IE6TransFix');
+$IE6TransFixTargets		= $this->params->get('IE6TransFixTargets');
+$inheritLayout			= $this->params->get('inheritLayout');
+$inheritStyle			= $this->params->get('inheritStyle');
+$loadMoo 				= $this->params->get('loadMoo');
+$loadModal				= $this->params->get('loadModal');
+$loadjQuery 			= $this->params->get('loadjQuery');
+$mContentDataTheme		= $this->params->get('mContentDataTheme');
+$mdetect 				= $this->params->get('mdetect');
+$mFooterDataTheme		= $this->params->get('mFooterDataTheme');
+$mHeaderDataTheme		= $this->params->get('mHeaderDataTheme');
+$mNavPosition			= $this->params->get('mNavPosition');
+$mNavDataTheme			= $this->params->get('mNavDataTheme');
+$mPageDataTheme			= $this->params->get('mPageDataTheme');
+$setGeneratorTag		= $this->params->get('setGeneratorTag');
+$showDiagnostics 		= $this->params->get('showDiagnostics');
+$siteWidth				= $this->params->get('siteWidth');
+$siteWidthType			= $this->params->get('siteWidthType');
+$siteWidthUnit			= $this->params->get('siteWidthUnit');
+$stickyFooterHeight		= $this->params->get('stickyFooterHeight');
+$useStickyFooter 		= $this->params->get('useStickyFooter');
 
-// Define absolute paths to filess
+// Define absolute paths to files
 $mdetectFile 			= JPATH_THEMES.'/'.$this->template.'/elements/mdetect.php';
 $mTemplate				= JPATH_THEMES.'/'.$this->template.'/mobile.php';
 $alternatemTemplate		= JPATH_THEMES.'/'.$this->template.'/layouts/mobile.php';
@@ -76,25 +81,33 @@ $alternatemTemplate		= JPATH_THEMES.'/'.$this->template.'/layouts/mobile.php';
 // Change generator tag
 $this->setGenerator($setGeneratorTag);
 
-// Load the MooTools JavaScript Library
-if ($loadMoo) {
+// Enable Mootols
+if ( $isOnward && $loadMoo ) {
 	JHTML::_('behavior.framework', true);
-	if ($loadModal) {
-		// Enable modal pop-ups - see html/mod_footer/default.php to customize
-		JHTML::_('behavior.modal');
-	}
+}
+
+// Behavior.mootools is depreciated and may be removed after 1.6
+if ( $isPresent && $loadMoo ) {	
+	JHTML::_('behavior.mootools');
+}
+
+// Enable modal pop-ups
+if ( $loadMoo && $loadModal ) {	
+	JHTML::_('behavior.modal');
 }
 
 // Remove MooTools if set to no.
 if ( !$loadMoo ) {
 	$head=$this->getHeadData();
 	reset($head['scripts']);
-	unset($head['scripts'][$this->baseurl.'/media/system/js/mootools-core.js']);
-	unset($head['scripts'][$this->baseurl.'/media/system/js/mootools-more.js']);
+	unset($head['scripts'][$this->baseurl . '/media/system/js/mootools.js']);
+	unset($head['scripts'][$this->baseurl . '/plugins/system/mtupgrade/mootools.js']);
+	unset($head['scripts'][$this->baseurl . '/media/system/js/mootools-core.js']);
+	unset($head['scripts'][$this->baseurl . '/media/system/js/mootools-more.js']);		
 	$this->setHeadData($head);
 }
 
-// Fix Google Web Font name for CSS
+// Change Google Web Font name for CSS
 $googleWebFontFamily 	= str_replace(array('+',':bold',':italic')," ",$googleWebFont);
 $googleWebFontFamily2 	= str_replace(array('+',':bold',':italic')," ",$googleWebFont2);
 $googleWebFontFamily3 	= str_replace(array('+',':bold',':italic')," ",$googleWebFont3);
@@ -196,7 +209,6 @@ $column4Count = (int) ($this->countModules('column-4') > 0);
 $columnGroupBetaCount = $column3Count + $column4Count;
 if ($columnGroupBetaCount) : $columnGroupBetaClass = 'count-'.$columnGroupBetaCount; endif;
 
-
 $columnLayout= 'main-only';
 	
 if (($columnGroupAlphaCount > 0 ) && ($columnGroupBetaCount == 0)) :
@@ -217,14 +229,42 @@ if ($view == 'article')
 $articleId = JRequest::getInt('id');
 else ($articleId = NULL);
 
+#------------------------------- Section ID -------------------------------#
+
+function getSection($id) {
+	  $database = JFactory::getDBO();
+	  if ((substr(JVERSION, 0, 3) >= '1.6')) {
+		  return NULL;
+		}
+	  elseif(JRequest::getCmd('view', 0) == "section") {
+			return $id;
+		}
+	  elseif(JRequest::getCmd('view', 0) == "category") {
+			$sql = "SELECT section FROM #__categories WHERE id = $id ";
+			$database->setQuery( $sql );
+			return $database->loadResult();
+		}
+	  elseif(JRequest::getCmd('view', 0) == "article") {
+			$temp = explode(":",$id);
+			$sql = "SELECT sectionid FROM #__content WHERE id = ".$temp[0];
+			$database->setQuery( $sql );
+			return $database->loadResult();
+		}		
+	}
+	
+$sectionId = getSection(JRequest::getInt('id'));
+
 #------------------------------ Category ID -------------------------------#
 
 function getCategory($id) {
-	$database = MolajoFactory::getDBO();
-		if(JRequest::getCmd('view', 0) == "category") {
+	$database = JFactory::getDBO();
+	  if(JRequest::getCmd('view', 0) == "section") {
+			return null;
+		}
+	  elseif((JRequest::getCmd('view', 0) == "category") || (JRequest::getCmd('view', 0) == "categories")) {
 			return $id;
 		}		
-		elseif(JRequest::getCmd('view', 0) == "article") {
+	  elseif(JRequest::getCmd('view', 0) == "article") {
 			$temp = explode(":",$id);
 			$sql = "SELECT catid FROM #__content WHERE id = ".$temp[0];
 			$database->setQuery( $sql );
@@ -236,10 +276,10 @@ $catId = getCategory(JRequest::getInt('id'));
 
 #------------------------- Ancestor Category IDs --------------------------#
 
-if ($isOnward && $catId && ($inheritStyle || $inheritLayout)) {
+if ($catId && ($inheritStyle || $inheritLayout)) {
 	
 	function getParentCategory($id) {
-		$database = MolajoFactory::getDBO();
+		$database = JFactory::getDBO();	
 		$sql = "SELECT parent_id 
 		FROM #__categories 
 		WHERE id = $id";
@@ -250,7 +290,7 @@ if ($isOnward && $catId && ($inheritStyle || $inheritLayout)) {
 	$parentCategory = getParentCategory($catId);
 
 	function getAncestorCategories($id) {
-		$database = MolajoFactory::getDBO();
+		$database = JFactory::getDBO();	
 		$sql = "SELECT b.id, b.title
 		FROM #__categories a,
 		#__categories b
@@ -264,14 +304,16 @@ if ($isOnward && $catId && ($inheritStyle || $inheritLayout)) {
 	}
 	
 }
-$baseUrl = JURI::base();
+
 #--------------------------------- Alias ----------------------------------#
 
-$currentAlias = JSite::getMenu()->getActive()->alias;
+if ($itemId) {
+    $currentAlias 							= JSite::getMenu()->getActive()->alias;
+}
 
 #----------------------------- Component Name -----------------------------#
 
-$currentComponent = JRequest::getCmd('option');
+$currentComponent 							= JRequest::getCmd('option');
 
 #------------------Extended Template Style Overrides------------------------#
 
@@ -286,7 +328,7 @@ $styleOverride->includeFile[] 				= $template.'/css/item/'.$overrideTheme.'-item
 $styleOverride->includeFile[] 				= $template.'/css/item/item-'.$itemId.'.css';
 $styleOverride->includeFile[] 				= $template.'/css/category/'.$overrideTheme.'-category-'.$catId.'.css';
 $styleOverride->includeFile[] 				= $template.'/css/category/category-'.$catId.'.css';
-if ($catId && $inheritStyle) {
+if ($isOnward && $catId && $inheritStyle) {
 	$styleOverride->includeFile[] 			= $template.'/css/category/category-'.$parentCategory.'.css';	
 
 	$results 								= getAncestorCategories($catId);
@@ -302,6 +344,9 @@ if ($view == 'category') {
 if ($view == 'categories') {
 	$styleOverride->includeFile[]			= $template.'/css/category/categories.css';
 }
+$styleOverride->includeFile[] 				= $template.'/css/section/'.$overrideTheme.'-section-'.$sectionId.'.css';
+$styleOverride->includeFile[] 				= $template.'/css/section/section-'.$sectionId.'.css';
+$styleOverride->includeFile[] 				= $template.'/css/section/section.css';
 $styleOverride->includeFile[] 				= $template.'/css/component/'.$currentComponent.'.css';
 $styleOverride->includeFile[] 				= $template.'/css/component/'.$overrideTheme.'-'.$currentComponent.'.css';
 
@@ -314,6 +359,7 @@ $mobileStyleOverride->includeFile 			= array ();
 $mobileStyleOverride->includeFile[]			= $template.'/css/article/article-'.$articleId.'-mobile.css';
 $mobileStyleOverride->includeFile[]			= $template.'/css/item/item-'.$itemId.'-mobile.css';
 $mobileStyleOverride->includeFile[]			= $template.'/css/category/category-'.$catId.'-mobile.css';
+$mobileStyleOverride->includeFile[]			= $template.'/css/section/section-'.$sectionId.'-mobile.css';
 $mobileStyleOverride->includeFile[]			= $template.'/css/component/'.$currentComponent.'-mobile.css';
 
 #-------------------Extended Template Layout Overrides-----------------------#
@@ -329,7 +375,7 @@ $layoutOverride->includeFile[] 				= $template.'/layouts/item/'.$overrideTheme.'
 $layoutOverride->includeFile[] 				= $template.'/layouts/item/item-'.$itemId.'.php';	
 $layoutOverride->includeFile[] 				= $template.'/layouts/category/'.$overrideTheme.'-category-'.$catId.'.php';	
 $layoutOverride->includeFile[] 				= $template.'/layouts/category/category-'.$catId.'.php';
-if ($catId && $inheritLayout) {
+if ($isOnward && $catId && $inheritLayout) {
 	$layoutOverride->includeFile[] 			= $template.'/layouts/category/category-'.$parentCategory.'.php';	
 
 	$results 								= getAncestorCategories($catId);
@@ -345,6 +391,9 @@ if ($view == 'category') {
 if ($view == 'categories') {
 	$layoutOverride->includeFile[]			= $template.'/layouts/category/categories.php';
 }
+$layoutOverride->includeFile[] 				= $template.'/layouts/section/'.$overrideTheme.'-section-'.$sectionId.'.php';	
+$layoutOverride->includeFile[] 				= $template.'/layouts/section/section-'.$sectionId.'.php';	
+$layoutOverride->includeFile[] 				= $template.'/layouts/section/section.php';	
 $layoutOverride->includeFile[] 				= $template.'/layouts/component/'.$overrideTheme.'-'.$currentComponent.'.php';	
 $layoutOverride->includeFile[] 				= $template.'/layouts/component/'.$currentComponent.'.php';	
 $layoutOverride->includeFile[] 				= $template.'/layouts/'.$overrideTheme.'-index.php';
@@ -367,18 +416,30 @@ $mobileLayoutOverride->includeFile[]		= $template.'/layouts/mobile.php';
 #---------------------------- Head Elements --------------------------------#
 
 // Custom tags
-$doc->addCustomTag('<meta name="copyright" content="'.$app->getSiteConfig('sitename').'" />');
 
-// Transparent favicon
-$doc->addFavicon($template.'/favicon.png', 'image/png','icon');
+// Always force latest IE rendering engine (even in intranet) & Chrome Frame
+$doc->addCustomTag('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">');
+// Mobile viewport optimized: j.mp/bplateviewport
+$doc->addCustomTag(' <meta name="viewport" content="width=device-width, initial-scale=1.0">');
+
+$doc->addCustomTag('<meta name="copyright" content="'.$app->getCfg('sitename').'" />');
+
+// Site icons
+$doc->addFavicon($template.'/favicon.png','image/png','shortcut icon');
+$doc->addFavicon($template.'/apple-touch-icon.png','image/png','apple-touch-icon');
 
 // Style sheets
 $doc->addStyleSheet($template.'/css/screen.css','text/css','screen');
 $doc->addStyleSheet($template.'/css/print.css','text/css','print');
-if ($customStyleSheet !='-1')
+if ($gridSystem !='-1') {
+	$doc->addStyleSheet($template.'/css/grids/'.$gridSystem,'text/css','screen');
+}
+if ($customStyleSheet !='-1') {
 	$doc->addStyleSheet($template.'/css/'.$customStyleSheet,'text/css','screen');
-if ($this->direction == 'rtl')
+}
+if ($this->direction == 'rtl') {
 	$doc->addStyleSheet($template.'/css/rtl.css','text/css','screen');
+}
 // Override style sheet returned from our template helper
 $cssFile = $styleOverride->getIncludeFile ();
 if ($cssFile) {
@@ -390,9 +451,9 @@ if ($enableSwitcher) {
 	$doc->addCustomTag('<link rel="alternate stylesheet" href="'.$template.'/css/diagnostic.css" type="text/css" media="screen" title="diagnostic" />');
 	$doc->addCustomTag('<link rel="alternate stylesheet" href="'.$template.'/css/wireframe.css" type="text/css" media="screen" title="wireframe" />');
 	$doc->addScript($template.'/js/styleswitch.js');
-}
+} 	
 
-// Typography	
+// Typography
 if ($googleWebFont) {
 	$doc->addStyleSheet('http://fonts.googleapis.com/css?family='.$googleWebFont.'');
 	$doc->addStyleDeclaration('  '.$googleWebFontTargets.' {font-family:'.$googleWebFontFamily.', serif;font-size:'.$googleWebFontSize.';}');
@@ -407,47 +468,55 @@ if ($googleWebFont3) {
 }
 
 // JavaScript
-$doc->addScript($template.'/js/head.min.js');
+
+//Quick port of Modernizer's method of replacing "no-js" HTML class with "js" - NOTE: removes all other classes added to HTML element
+$doc->addCustomTag("\n".'  <script type="text/javascript">docElement = document.documentElement;docElement.className = docElement.className.replace(/\bno-js\b/, \'js\');</script>');
+
 $doc->addCustomTag("\n".'  <script type="text/javascript">window.addEvent(\'domready\',function(){new SmoothScroll({duration:1200},window);});</script>');
-if ($loadjQuery)
+if ($loadjQuery) {
 	$doc->addScript($loadjQuery);
+}
 
 // Layout Declarations
-if ($siteWidth)
-	$doc->addStyleDeclaration("\n".'  #body-container, #header-above {'.$siteWidthType.':'.$siteWidth.$siteWidthUnit.'}');
-if (($siteWidthType == 'max-width') && $fluidMedia )
-	$doc->addStyleDeclaration("\n".'  img, object {max-width:100%}');		
-if (!$fullWidth)
-	$doc->addStyleDeclaration("\n".'  #header, #footer {'.$siteWidthType.':'.$siteWidth.$siteWidthUnit.'; margin:0 auto}');
-	
-// Internet Explorer Fixes	
-if ($IECSS3) {
-  $doc->addCustomTag("\n".'  <!--[if !IE 9]>
-  <style type="text/css">'.$IECSS3Targets.' {behavior:url("'.$baseUrl.'templates/'.$this->template.'/js/PIE.htc")}</style>
-  <![endif]-->');
+if ($siteWidth) {
+	$doc->addStyleDeclaration("\n".'  #body-container, #header-above {'.$siteWidthType.':'.$siteWidth.$siteWidthUnit.';}');
+}
+if (($siteWidthType == 'max-width') && $fluidMedia ) {
+	$doc->addStyleDeclaration("\n".'  img, object {max-width:100%;}');
+}
+if (!$fullWidth) {
+	$doc->addStyleDeclaration("\n".'  #header, #footer {'.$siteWidthType.':'.$siteWidth.$siteWidthUnit.'; margin:0 auto;}');
 }
 if ($useStickyFooter) {
-	$doc->addStyleDeclaration("\n".'  .sticky-footer #body-container {padding-bottom:'.$stickyFooterHeight.'px;}
-  .sticky-footer #footer {margin-top:-'.$stickyFooterHeight.'px;height:'.$stickyFooterHeight.'px;}');
-	$doc->addCustomTag("\n".'  <!--[if lt IE 7]>
-  <style type="text/css">body.sticky-footer #footer-push {display:table;height:100%}</style>
-  <![endif]-->');
+	$doc->addStyleDeclaration("\n".'  .sticky-footer #body-container {padding-bottom:'.$stickyFooterHeight.'px;}');
+	$doc->addStyleDeclaration("\n".'  .sticky-footer #footer {margin-top:-'.$stickyFooterHeight.'px;height:'.$stickyFooterHeight.'px;}');
 }
 
-$doc->addCustomTag('<!--[if lt IE 7]>
-  <link rel="stylesheet" href="'.$template.'/css/ie6.css" type="text/css" media="screen" />
-  <style type="text/css">
-  body {text-align:center}
-  #body-container {text-align:left}');  
-  if (!$fullWidth) {
-  $doc->addCustomTag('#body-container, #header-above, #header, #footer {width: expression( document.body.clientWidth >'.($siteWidth -1).' ? "'.$siteWidth.$siteWidthUnit.'" : "auto" );margin:0 auto}');
-  }
-  else {
-  $doc->addCustomTag('#body-container, #header-above {width: expression( document.body.clientWidth >'.($siteWidth -1).' ? "'.$siteWidth.$siteWidthUnit.'" : "auto" );margin:0 auto}');
-  }
-  $doc->addCustomTag('</style>');
-  if ($IE6TransFix) {
-  $doc->addCustomTag('  <script type="text/javascript" src="'.$template.'/js/DD_belatedPNG_0.0.8a-min.js"></script>
-  <script>DD_belatedPNG.fix(\''.$IE6TransFixTargets.'\');</script>');
-  }
-  $doc->addCustomTag('<![endif]-->');
+// Internet Explorer Fixes
+$doc->addCustomTag("\n".'  <!--[if lt IE 9]>');
+$doc->addCustomTag("\n".'  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>');
+if ($IECSS3) {
+  $doc->addCustomTag("\n".'  <style type="text/css">'.$IECSS3Targets.' {behavior:url("'.$baseUrl.'templates/'.$this->template.'/js/PIE.htc")}</style>');
+}
+$doc->addCustomTag('<![endif]-->');
+
+// Internet Explorer 6 Fixes
+$doc->addCustomTag("\n".'  <!--[if lt IE 7]>');
+$doc->addCustomTag("\n".'  <link rel="stylesheet" href="'.$template.'/css/ie6.css" type="text/css" media="screen" />');
+$doc->addCustomTag("\n".'  <style type="text/css">');
+$doc->addCustomTag("\n".'  body {text-align:center;}');
+$doc->addCustomTag("\n".'  #body-container {text-align:left;}');
+if ($useStickyFooter) {
+	$doc->addCustomTag("\n".'  body.sticky-footer #footer-push {display:table;height:100%;}');
+}
+if(!$fullWidth){
+	$doc->addCustomTag("\n".'  #body-container, #header-above, #header, #footer {width: expression( document.body.clientWidth >'.($siteWidth -1).' ? "'.$siteWidth.$siteWidthUnit.'" : "auto" );margin:0 auto;}');
+} else {
+	$doc->addCustomTag("\n".'  #body-container, #header-above {width: expression( document.body.clientWidth >'.($siteWidth -1).' ? "'.$siteWidth.$siteWidthUnit.'" : "auto" );margin:0 auto;}');
+}
+$doc->addCustomTag("\n".'  </style>');
+if($IE6TransFix) {
+	$doc->addCustomTag("\n".'  <script type="text/javascript" src="'.$template.'/js/DD_belatedPNG_0.0.8a-min.js"></script>');
+	$doc->addCustomTag("\n".'  <script type="text/javascript">DD_belatedPNG.fix(\''.$IE6TransFixTargets.'\');</script>');
+}
+$doc->addCustomTag('<![endif]-->');

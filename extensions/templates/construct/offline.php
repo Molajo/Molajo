@@ -1,8 +1,9 @@
 <?php defined('_JEXEC') or die;
 /**
-* @package		Template Framework for Molajo 1.6
-* @author		Joomla Engineering http://joomlaengineering.com
-* @copyright	Copyright (C) 2010, 2011 Matt Thomas | Joomla Engineering. All rights reserved.
+* @package		Unified HTML5 Template Framework for Joomla!+
+* @author		Cristina Solana http://nightshiftcreative.com
+* @author		Matt Thomas http://construct-framework.com | http://betweenbrain.com
+* @copyright	Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
 * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
 */
 
@@ -17,7 +18,6 @@ if(JFile::exists($logicFile)) {
 
 // Mobile device detection
 $mTemplate				= JPATH_THEMES.'/'.$this->template.'/mobile-offline.php';
-$alternatemTemplate		= JPATH_THEMES.'/'.$this->template.'/layouts/mobile-offline.php';
 
 // Initialize mobile device detection
 if(JFile::exists($mdetectFile)) {
@@ -28,22 +28,23 @@ if(JFile::exists($mdetectFile)) {
 	$isTablet			= $uagent_obj->DetectTierTablet();
 }
 
-// Check if mobile device detecion is turned on and test if visitor is a mobile device. If so, load mobile sub-template
+// Check if mobile device detection is turned on and test if visitor is a mobile device. If so, load mobile version
 if (( $mdetect && $isMobile ) || ( $mdetect && $detectTablets && $isTablet )) {
 	if(JFile::exists($mTemplate)) {
 	 	include_once $mTemplate;
 	}
-}
-
-// Check for layout override
-if(JFile::exists($template.'/layouts/offline.php')) {
+} // Check for layout override
+elseif (JFile::exists($template.'/layouts/offline.php')) {	
 	include_once $template.'/layouts/offline.php';
 }
 else {
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 <jdoc:include type="head" />
 </head>
@@ -87,66 +88,73 @@ else {
 			</div><!-- end header-above -->
 		<?php endif; ?>	
 	
-		<div id="header" class="clear clearfix">
+		<header id="header" class="clear clearfix">
 			<div class="gutter clearfix">
 
 				<div class="date-container">
-					<span class="date-weekday"><?php	$now = &MolajoFactory::getDate(); echo $now->toFormat('%A').','; ?></span>
-					<span class="date-month"><?php 		$now = &MolajoFactory::getDate(); echo $now->toFormat('%B'); ?></span>
-					<span class="date-day"><?php 		$now = &MolajoFactory::getDate(); echo $now->toFormat('%d').','; ?></span>
-					<span class="date-year"><?php 		$now = &MolajoFactory::getDate(); echo $now->toFormat('%Y'); ?></span>
+					<span class="date-weekday"><?php	$now = &JFactory::getDate(); echo $now->toFormat('%A').','; ?></span>
+					<span class="date-month"><?php 		$now = &JFactory::getDate(); echo $now->toFormat('%B'); ?></span>
+					<span class="date-day"><?php 		$now = &JFactory::getDate(); echo $now->toFormat('%d').','; ?></span>
+					<span class="date-year"><?php 		$now = &JFactory::getDate(); echo $now->toFormat('%Y'); ?></span>
 				</div>
 				
 				<?php if ($showDiagnostics) : ?>
-					<ul id="diagnostics">
-						<li><?php echo $currentComponent; ?></li>
-						<?php if($view)			echo '<li>'.$view.' view</li>'; ?>						
-						<?php if($articleId)	echo '<li>article-'.$articleId.'</li>'; ?>
-						<?php if($itemId)		echo '<li>item-'.$itemId.'</li>'; ?>
-						<?php if($catId)		echo '<li>category-'.$catId.'</li>'; ?>
-						<?php if($sectionId) 	echo '<li>section-'.$sectionId.'</li>'; ?>
-						<?php if($isOnward && $catId && ($inheritStyle || $inheritLayout)) {							
-								echo '<li>Parent Category '.$parentCategory.'</li>';							
-								echo '<li>Ancestor Categories:';		
-								$results = getAncestorCategories($catId);
+				<ul id="diagnostics">
+					<li>column layout <?php echo $columnLayout; ?></li>
+					<li>component <?php echo $currentComponent; ?></li>					
+					<?php if($view)			echo '<li>'.$view.' view</li>'; ?>						
+					<?php if($articleId)	echo '<li>article '.$articleId.'</li>'; ?>
+					<?php if($itemId)		echo '<li>menu item '.$itemId.'</li>'; ?>
+					<?php if($sectionId) 	echo '<li>section '.$sectionId.'</li>'; ?>
+					<?php if($catId)   		echo '<li>category '.$catId.'</li>'; ?>
+					<?php if ($catId && ($inheritStyle || $inheritLayout)) {
+							if ($parentCategory) {
+								echo '<li>parent category '.$parentCategory.'</li>';
+							}
+							$results = getAncestorCategories($catId);
+							if ($results) {
+								echo '<li>ancestor categories';
 									if (count($results) > 0) {
 										foreach ($results as $item) {
-											echo ' '.$item->id.',';
+											echo ' '.$item->id.' ';
 										}			
-									}
+									}								
 								echo'</li>';
-								} ?>
-					</ul>
+							}
+						  } ?>
+				</ul>
 				<?php endif; ?>	
 				
-				<h1 id="logo"><a href="<?php echo $this->baseurl ?>/" title="<?php echo $app->getSiteConfig('sitename');?>"><?php echo $app->getSiteConfig('sitename');?></a></h1>
+				<h1 id="logo"><a href="<?php echo $this->baseurl ?>/" title="<?php echo $app->getCfg('sitename');?>"><?php echo $app->getCfg('sitename');?></a></h1>
 				
 				<?php if ($this->countModules('header')) : ?>
 					<jdoc:include type="modules" name="header" style="jexhtml" />	
 				<?php endif; ?>						
-										
-				<ul id="access">
-					<li>Jump to:</li>
-					<li><a href="<?php $url->setFragment('content'); echo $url->toString();?>" class="to-content">Content</a></li>					
-					<?php if ($this->countModules('nav')) : ?>
-						<li><a href="<?php $url->setFragment('nav'); echo $url->toString();?>" class="to-nav">Navigation</a></li>
-					<?php endif; ?>					
-					<?php if ($contentBelowCount) : ?>
-						<li><a href="<?php $url->setFragment('additional'); echo $url->toString();?>" class="to-additional">Additional Information</a></li>
-					<?php endif; ?>
-				</ul>				
+				
+				<nav>						
+					<ul id="access">
+						<li>Jump to:</li>
+						<li><a href="<?php $url->setFragment('content'); echo $url->toString();?>" class="to-content">Content</a></li>					
+						<?php if ($this->countModules('nav')) : ?>
+							<li><a href="<?php $url->setFragment('nav'); echo $url->toString();?>" class="to-nav">Navigation</a></li>
+						<?php endif; ?>					
+						<?php if ($contentBelowCount) : ?>
+							<li><a href="<?php $url->setFragment('additional'); echo $url->toString();?>" class="to-additional">Additional Information</a></li>
+						<?php endif; ?>
+					</ul>
+				</nav>
 				
 				<?php if ($enableSwitcher) : ?>
-					<ul id="style-switch">
-						<li class="narrow"><a href="#" onclick="setActiveStyleSheet('diagnostic'); return false;" title="Diagnostic">Diagnostic Mode</a></li>
-						<li class="wide"><a href="#" onclick="setActiveStyleSheet('normal'); return false;" title="Normal">Normal Mode</a></li>
-					</ul>
+				<ul id="style-switch">
+					<li class="narrow"><a href="#" onclick="setActiveStyleSheet('diagnostic'); return false;" title="Diagnostic">Diagnostic Mode</a></li>
+					<li class="wide"><a href="#" onclick="setActiveStyleSheet('normal'); return false;" title="Normal">Normal Mode</a></li>
+				</ul>
 				<?php endif; ?>	
 
 			</div><!--end gutter -->
-		</div><!-- end header-->
+		</header><!-- end header-->
 		   
-		<div id="body-container">
+		<section id="body-container">
 
 			<?php if ($headerBelowCount) : ?>
 				<div id="header-below" class="clearfix">						
@@ -271,7 +279,45 @@ else {
 								</div><!-- end content-above -->
 							<?php endif; ?>
 							
-							<div id="offline">
+							<?php if (substr(JVERSION, 0, 3) >= '1.6') { ?>
+							
+							    <div id="offline">
+								    <?php if ($this->countModules('offline')) : ?>								
+										    <jdoc:include type="modules" name="offline" style="jexhtml" />								
+								    <?php endif; ?>	
+					      
+								    <?php if ($this->getBuffer('message')) : ?>
+									    <jdoc:include type="message" />
+								    <?php endif; ?>							
+
+								    <h3><?php echo $app->getCfg('offline_message'); ?></h3>
+	
+								    <form action="<?php echo JRoute::_('index.php', true); ?>" method="post" id="form-login">
+								    <fieldset class="input">									
+									    <label id="form-login-username" for="username"><?php echo JText::_('JGLOBAL_USERNAME') ?>
+										    <input name="username" id="username" type="text" class="inputbox" alt="<?php echo JText::_('JGLOBAL_USERNAME') ?>" size="18" />
+									    </label>			
+									    <label id="form-login-password" for="passwd"><?php echo JText::_('JGLOBAL_PASSWORD') ?>
+										    <input type="password" name="password" class="inputbox" size="18" alt="<?php echo JText::_('JGLOBAL_PASSWORD') ?>" id="passwd" />
+									    </label>									
+									    <label id="form-login-remember" for="remember"><?php echo JText::_('JGLOBAL_REMEMBER_ME') ?>
+										    <input type="checkbox" name="remember" class="inputbox" value="yes" alt="<?php echo JText::_('JGLOBAL_REMEMBER_ME') ?>" id="remember" />
+									    </label>
+									    <input type="submit" name="Submit" class="button" value="<?php echo JText::_('JLOGIN') ?>" />
+									    <input type="hidden" name="option" value="com_users" />
+									    <input type="hidden" name="task" value="user.login" />
+									    <input type="hidden" name="return" value="<?php echo base64_encode(JURI::base()) ?>" />
+									    <?php echo JHtml::_('form.token'); ?>
+								    </fieldset>
+								    </form>
+							    </div>
+							
+							<?php
+							}
+                            else { 
+                            ?>
+                            
+                                <div id="offline">
 								<?php if ($this->countModules('offline')) : ?>								
 										<jdoc:include type="modules" name="offline" style="jexhtml" />								
 								<?php endif; ?>	
@@ -280,7 +326,7 @@ else {
 									<jdoc:include type="message" />
 								<?php endif; ?>	
 																
-								<h3><?php echo $app->getSiteConfig('offline_message'); ?></h3>
+								<h3><?php echo $app->getCfg('offline_message'); ?></h3>
 								<?php if(JPluginHelper::isEnabled('authentication', 'openid')) : ?>
 								<?php JHTML::_('script', 'openid.js'); ?>
 								<?php endif; ?>
@@ -303,8 +349,10 @@ else {
 										<?php echo JHTML::_( 'form.token' ); ?>
 									</form>
 								</div><!--end offline-->
-								
-						<?php if ($contentBelowCount) : ?>
+							
+							<?php } ?>
+	
+							<?php if ($contentBelowCount) : ?>
 								<div id="content-below" class="clearfix">						
 									<?php if ($this->countModules('content-below-1')) : ?>
 										<div id="content-below-1" class="<?php echo $contentBelowClass ?>">
@@ -420,10 +468,10 @@ else {
 				<?php endif; ?>
 
 			</div><!-- end content-container -->
-		</div><!-- end body-container -->
+		</section><!-- end body-container -->
 	</div><!-- end footer-push -->
     
-	<div id="footer" class="clear clearfix">
+	<footer id="footer" class="clear clearfix">
 		<div class="gutter clearfix">			
 			
 			<a id="to-page-top" href="<?php $url->setFragment('page-top'); echo $url->toString();?>" class="to-additional">Back to Top</a>
@@ -439,7 +487,7 @@ else {
 			<?php endif; ?>
 
 		</div><!--end gutter -->
-	</div><!-- end footer -->
+	</footer><!-- end footer -->
 
 	<?php if ($this->countModules('debug')) : ?>
 		<jdoc:include type="modules" name="debug" style="raw" />

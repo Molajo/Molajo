@@ -1,8 +1,9 @@
 <?php
 /**
- * @package     Template Framework for Molajo 1.6
- * @author      Joomla Engineering http://joomlaengineering.com
- * @copyright   Copyright (C) 2010, 2011 Matt Thomas | Joomla Engineering. All rights reserved.
+ * @package		Unified HTML5 Template Framework for Joomla!+
+ * @author		Cristina Solana http://nightshiftcreative.com
+ * @author		Matt Thomas http://construct-framework.com | http://betweenbrain.com
+ * @copyright	Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
  * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;

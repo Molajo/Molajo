@@ -6,7 +6,7 @@ h3 { font-weight: bold;font-family: Helvetica,Arial,sans-serif;font-size: 12px;c
 h4 {font-weight: bold;font-family: Arial, Helvetica, sans-serif;color: #333}
 a:link, a:visited {color: #1B57B1; text-decoration: none;font-weight: normal}
 a:hover {color: #00c;text-decoration: underline;font-weight: normal}
-.caption{padding:0 10px 0 10px;}
-.caption img{border:1px solid #CCC}
-.caption p{font-size:.90em;color:#666;text-align:center;}
-.teaser { background:#ccc;}
+div.caption{padding:0 10px 0 10px;}
+div.caption img{border:1px solid #CCC}
+div.caption p{font-size:.90em;color:#666;text-align:center;}
+div.teaser { background:#ccc;}
