@@ -19,9 +19,7 @@ This is an explanation of the various elements defined within a Molajo Templates
 
 A template page can be used to generate different types of layouts. For example, if the site requires a certain layout for the home page than the blog or the article view, a template page is useful.
 
-There are many locations where the page can be selected. After setting the default template, as described in the previous post, you can set a default page value for the application. That value will be used if no other configuration options are made.
-
-The first page configuration found in the this order is used for the page layout:
+There are many levels within the application where the page can be defined. The first page configuration found in the this order is used for the page layout:
 
 1. If a URL Request Parameter of `page=value` is found, `value` is used as page. This is useful for testing layouts.
 2. The page configuration value for a detail item which is defined in the editor for that content in the parameter section.
