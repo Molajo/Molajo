@@ -1,0 +1,66 @@
+Sample Template
+
+1. template.xml
+
+Used by the installer to define metadata, files and folders and parameters for the template.
+
+2. index.php
+
+Initial file retrieved and executed by Molajo during the rendering process.
+
+<jdoc:include type="head" />
+
+<jdoc:include type="page" />
+
+3. css folder
+
+4. js folder
+
+5. language folder
+
+6. page folder
+
+Tbe <jdoc:include type="page" /> is located in the index.php file and it identifies
+the location to render the configured template page output.
+
+The template page parameter can be defined in several places in Molajo.
+
+The value Molajo elects to use is the first found, given this search order:
+
+- URL Request Parameter: page=value
+- Content Item Configuration
+- Menu Item Configuration (only for Component Menu Item Type)
+- Primary or secondary Category Configuration
+- Component Configuration
+- Application Configuration (which defaults to default or the only option available in the page subfolder)
+
+Within the page folder is a folder for each page option available to the application.
+
+The following are special purpose pages and should be available in each template:
+
+- default
+- error
+- logon (for applications that first require logon, like the administrator)
+- offline
+- print
+
+6a. error
+
+6b. logon
+
+6c. offline
+
+6d. print
+
+6e. default (or any other page value)
+
+The page subfolder can have the following files and folders (and others, as needed).
+
+- css - Molajo will automatically load the css files contained within this subfolder if the page is used.
+- js - same as css
+- images - to store images, if necessary
+index.php - should contain html and jdoc statements defining layout
+
+
+This README file on the root of the website lists all README files available.
+

@@ -18,6 +18,7 @@ class MolajoConfigApplication {
 	public $unicodeslugs = '0';
 
     /* Application Access */
+    public $html5 = '1';
     public $application_logon_requirement = '1';
     public $application_guest_option = 'com_login';
     public $application_default_option = 'com_dashboard';
