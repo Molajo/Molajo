@@ -30,13 +30,13 @@ $(function(){
 				
 				// Toggle editor action buttons
 				// will need to add check for actual state
-				$('.editor .actions li a').click(function () {
+				$('.editor .actions li a').click(function() {
 				      $(this).toggleClass("enabled");
 				});
 				
 				//Search field hide and slide
 				$('span.lp_search').hide();
-				$('a.icon_search').click(function () {
+				$('a.icon_search').click(function() {
 					//smoothen toggle, possibly add animate function
 				      $('span.lp_search').slideToggle('fast');
 				});
