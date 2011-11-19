@@ -14,11 +14,12 @@
 
 	<files>
 		<filename>index.php</filename>
-		<folder>body</folder>
+		<filename>README.md</filename>
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
 		<folder>language</folder>
+		<folder>page</folder>
 	</files>
 
 	<config>

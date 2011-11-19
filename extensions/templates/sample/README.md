@@ -4,20 +4,33 @@ This is an explanation of the various elements defined within a Molajo Templates
 
 ## Molajo Configuration ##
 
-### Specifying a Template ###
+### Install a Template: ###
+
+1. Login to the Administrator as the system admin.
+2. Navigate to the Extend-Install menu item.
+3. Install using the ZIP or URL format, or use the Create option to start with this sample.
+
+### Configure the Template ###
+
+1. In the Administrator, navigate to the Build-Template menu item.
+2. Select the Template and update it to be the *default* template.
 
 ### Specifying a Page Layout ###
 
-The value Molajo elects to use is the first found, given this search order:
+A template page can be used to generate different types of layouts. For example, if the site requires a certain layout for the home page than the blog or the article view, a template page is useful.
 
-* URL Request Parameter: page=value
-* Content Item Configuration
-* Menu Item Configuration (only for Component Menu Item Type)
-* Primary or secondary Category Configuration
-* Component Configuration
-* Application Configuration
-* The default folder
-* The alphabetically first option available in the page subfolder
+There are many locations where the page can be selected. After setting the default template, as described in the previous post, you can set a default page value for the application. That value will be used if no other configuration options are made.
+
+The first page configuration found in the this order is used for the page layout:
+
+1. If a URL Request Parameter of `page=value` is found, `value` is used as page. This is useful for testing layouts.
+2. The page configuration value for a detail item which is defined in the editor for that content in the parameter section.
+3. The menu item page configuration (only for a *Component Menu Item Type*) will be selected next.
+4. The page configuration for a category associated with the content (primary category has precedence over secondary categories).
+5. Components each have a configuration section where page can be specified. If a value has not been found above, the component page will be used.
+6. Application Configuration
+7. The default folder within the page folder, or the only folder there.
+8. The template/index.php file would be used without a page.
 
 ## Template Folders and Files ##
 
@@ -127,7 +140,7 @@ In Molajo, a component is the primary output for the page. Rendered output for t
 
 ### doc: include type="modules" ###
 
-    <jdoc:include type="modules" name="sidebar" wrap="div" />
+    <doc:include type="modules" name="sidebar" wrap="div" />
 
 Renders modules identified by the `position` identified in the name attribute. Note: depending on the specific module, the criteria might prohibit the module from rendering on this specific page. For example. the module might select only that content which shares a common tag. If there are no such matches, the module will not display even if it has the position specified.
 
@@ -137,7 +150,7 @@ In the module configuration, the position is identified.
 
 ### doc: include type="module" ###
 
-    <jdoc:include type="module" name="mainmenu" title="Main Menu" wrap="none" color="blue" />
+    <doc:include type="module" name="mainmenu" title="Main Menu" wrap="none" color="blue" />
 
 Renders a single module, rather than all modules defined for a specific position, as is true with the previous doc statement.
 
