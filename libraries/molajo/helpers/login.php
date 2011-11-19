@@ -17,36 +17,36 @@ defined('MOLAJO') or die;
  */
 class MolajoLoginHelper
 {
-	/**
-	 * getLanguageList
+    /**
+     * getLanguageList
      *
      * Get an HTML select list of the available languages.
-	 *
-	 * @return	string
-	 */
-	public static function getLanguageList()
-	{
-		$languages = array();
-		$languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_PATH_ADMINISTRATOR, false, true);
-		array_unshift($languages, JHtml::_('select.option', '', MolajoText::_('JDEFAULT')));
-		return JHtml::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
-	}
+     *
+     * @return    string
+     */
+    public static function getLanguageList()
+    {
+        $languages = array();
+        $languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
+        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoText::_('JDEFAULT')));
+        return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
+    }
 
-	/**
-	 * getReturnURI
+    /**
+     * getReturnURI
      *
      * Get the redirect URI after login.
-	 *
-	 * @return	string
-	 */
-	public static function getReturnURI()
-	{
-		$uri = MolajoFactory::getURI();
-		$return = 'index.php'.$uri->toString(array('query'));
-		if($return == 'index.php?option=com_login'){
-			return base64_encode('index.php');
+     *
+     * @return    string
+     */
+    public static function getReturnURI()
+    {
+        $uri = MolajoFactory::getURI();
+        $return = 'index.php'.$uri->toString(array('query'));
+        if ($return == 'index.php?option=com_login') {
+            return base64_encode('index.php');
         } else {
             return base64_encode($return);
-		}
-	}
+        }
+    }
 }

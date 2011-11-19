@@ -1,0 +1,11 @@
+@charset "utf-8";
+html{
+	overflow-y:auto;
+}
+#page,
+#content {
+	padding:10px;
+}
+p {
+	margin-bottom:0;
+}

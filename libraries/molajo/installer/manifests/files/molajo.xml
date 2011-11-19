@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension version="1" type="file" method="upgrade">
+    <name>Molajo Team</name>
+    <author>Molajo</author>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <copyright>(C) 2011 Individual Molajo Contributors. All rights reserved</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <version>1.0</version>
+    <creationDate>May 2011</creationDate>
+    <description>FILES_MOLAJO_DESCRIPTION</description>
+
+    <fileset>
+        <files>
+            <folder>administrator</folder>
+            <folder>cache</folder>
+            <folder>components</folder>
+            <folder>images</folder>
+            <folder>includes</folder>
+            <folder>installation</folder>
+            <folder>language</folder>
+            <folder>libraries</folder>
+            <folder>logs</folder>
+            <folder>media</folder>
+            <folder>modules</folder>
+            <folder>plugins</folder>
+            <folder>templates</folder>
+            <folder>tmp</folder>
+            <file>htaccess.txt</file>
+            <file>index.php</file>
+            <file>LICENSE.txt</file>
+            <file>README.txt</file>
+            <file>robots.txt</file>
+        </files>
+    </fileset>
+
+    <updateservers>
+        <server type="collection">http://update.molajo.org/core/list.xml</server>
+        <server type="collection">http://update.molajo.org/options/list.xml</server>
+    </updateservers>
+</extension>

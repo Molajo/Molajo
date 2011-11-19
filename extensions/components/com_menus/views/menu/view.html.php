@@ -1,0 +1,85 @@
+<?php
+/**
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
+
+jimport('joomla.application.component.view');
+
+/**
+ * The HTML Menus Menu Item View.
+ *
+ * @package		Joomla.Administrator
+ * @subpackage	com_menus
+ * * * @since		1.0
+ */
+class MenusViewMenu extends JView
+{
+	protected $form;
+	protected $item;
+	protected $state;
+
+	/**
+	 * Display the view
+	 */
+	public function display($tpl = null)
+	{
+		$this->form	= $this->get('Form');
+		$this->item	= $this->get('Item');
+		$this->state	= $this->get('State');
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors'))) {
+			MolajoError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
+
+		parent::display($tpl);
+		$this->addToolbar();
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @since	1.0
+	 */
+	protected function addToolbar()
+	{
+		JRequest::setVar('hidemainmenu', true);
+
+		$user		= MolajoFactory::getUser();
+		$isNew		= ($this->item->id == 0);
+		$canDo		= MenusHelper::getActions($this->state->get('filter.parent_id'));
+
+		MolajoToolbarHelper::title(MolajoText::_($isNew ? 'MENU_VIEW_NEW_MENU_TITLE' : 'MENU_VIEW_EDIT_MENU_TITLE'), 'menu.png');
+
+		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
+		if ($isNew && $canDo->get('core.create')) {
+			if ($canDo->get('core.edit')) {
+				MolajoToolbarHelper::apply('menu.apply');
+			}
+			MolajoToolbarHelper::save('menu.save');
+		}
+
+		// If user can edit, can save the item.
+		if (!$isNew && $canDo->get('core.edit')) {
+			MolajoToolbarHelper::apply('menu.apply');
+			MolajoToolbarHelper::save('menu.save');
+		}
+
+		// If the user can create new items, allow them to see Save & New
+		if ($canDo->get('core.create')) {
+			MolajoToolbarHelper::save2new('menu.save2new');
+		}
+		if ($isNew) {
+			MolajoToolbarHelper::cancel('menu.cancel');
+		} else {
+			MolajoToolbarHelper::cancel('menu.cancel', 'JTOOLBAR_CLOSE');
+		}
+		MolajoToolbarHelper::divider();
+		MolajoToolbarHelper::help('JHELP_MENUS_MENU_MANAGER_EDIT');
+	}
+}

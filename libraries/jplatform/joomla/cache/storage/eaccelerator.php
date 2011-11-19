@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * eAccelerator cache storage handler
@@ -23,8 +23,6 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	 * Constructor
 	 *
 	 * @param   array  $options  Optional parameters.
-	 *
-	 * @return  JCacheStorageEaccelerator
 	 *
 	 * @since   11.1
 	 */

@@ -1,0 +1,8 @@
+* {
+	background : transparent !important;
+	color : black !important;
+	text-shadow : none !important;
+	filter : none !important;
+	-ms-filter : none !important;
+}
+.buttonheading {display:none}

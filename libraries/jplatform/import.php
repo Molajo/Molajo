@@ -6,8 +6,6 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('_JEXEC') or die;
-
 // Set the platform root path as a constant if necessary.
 if (!defined('JPATH_PLATFORM'))
 {
@@ -47,6 +45,11 @@ if (!class_exists('JLoader'))
 	require_once JPATH_PLATFORM . '/loader.php';
 }
 
+class_exists('JLoader') or die;
+
+// Setup the autoloaders.
+JLoader::setup();
+
 /**
  * Import the base Joomla Platform libraries.
  */
@@ -78,4 +81,4 @@ JLoader::import('joomla.base.object');
 
 // Register classes that don't follow one file per class naming conventions.
 JLoader::register('JText', JPATH_PLATFORM . '/joomla/methods.php');
-JLoader::register('JRoute', JPATH_PLATFORM . '/joomla/methods.php');
+JLoader::register('MolajoRoute', JPATH_PLATFORM . '/joomla/methods.php');

@@ -1,0 +1,12 @@
+<fieldset
+    name="request">
+
+    <field
+        name="asset"
+        type="internal_link"
+        description="MENU_ITEM_TYPE_INTERNAL_LINK_DESC"
+        label="MENU_ITEM_TYPE_INTERNAL_LINK_LABEL"
+        required="true"
+    />
+
+</fieldset>

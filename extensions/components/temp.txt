@@ -1,0 +1,17 @@
+com_articles
+com_assets
+com_categories
+com_comments
+com_configuration
+com_contacts
+com_dashboard
+com_extensions
+com_groups
+com_installer
+com_layouts
+com_login
+com_maintain
+com_media
+com_profile
+com_search
+com_users

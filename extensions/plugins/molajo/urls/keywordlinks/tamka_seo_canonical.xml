@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="plugin" group="content" version="1.5"  method="upgrade">
+    <name>Tamka SEO Canonical</name>
+    <author>Tamka Project</author>
+    <creationDate>March 2009</creationDate>
+    <copyright>Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See http://tamka.org/copyright</copyright>
+    <license>http://www.gnu.org/licenses/licenses.html#GPL GPL v 2, or later</license>
+	<authorEmail>team@tamka.org</authorEmail>
+	<authorUrl>http://joomlacode.org/gf/project/tamka/</authorUrl>
+	<version>1.0</version>
+	<description>Tamka SEO Canonical</description>
+    <files>
+        <filename plugin="tamka_seo_canonical">tamka_seo_canonical.php</filename>
+    </files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_content_tamka_seo_canonical.ini</language>
+	</languages>
+	<parameters>
+	</parameters>
+</install>

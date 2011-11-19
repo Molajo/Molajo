@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 JLoader::register('JDatabaseQueryMySQLi', dirname(__FILE__) . '/mysqliquery.php');
 JLoader::register('JDatabaseExporterMySQLi', dirname(__FILE__) . '/mysqliexporter.php');
@@ -55,8 +55,6 @@ class JDatabaseMySQLi extends JDatabase
 	 * Constructor.
 	 *
 	 * @param   array  $options  List of options used to configure the connection
-	 *
-	 * @return  void
 	 *
 	 * @since   11.1
 	 */
@@ -152,8 +150,6 @@ class JDatabaseMySQLi extends JDatabase
 
 	/**
 	 * Destructor.
-	 *
-	 * @return  void
 	 *
 	 * @since   11.1
 	 */
@@ -418,7 +414,7 @@ class JDatabaseMySQLi extends JDatabase
 	 *
 	 * @param   string  $table  The name of the table.
 	 *
-	 * @return  array  An arry of the column specification for the table.
+	 * @return  array  An array of the column specification for the table.
 	 *
 	 * @since   11.1
 	 * @throws  JDatabaseException
@@ -471,7 +467,6 @@ class JDatabaseMySQLi extends JDatabase
 	 */
 	public function hasUTF()
 	{
-		jimport('joomla.log.log');
 		JLog::add('JDatabaseMySQLi::hasUTF() is deprecated.', JLog::WARNING, 'deprecated');
 		return true;
 	}

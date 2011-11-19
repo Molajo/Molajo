@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="layout" group="extension" method="upgrade">
+    <name>LAYOUT_EXTENSION_TABLE_NAME</name>
+    <author>Amy Stephen</author>
+    <creationDate>October 2011</creationDate>
+    <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>LAYOUT_EXTENSION_TABLE_DESCRIPTION</description>
+	<files>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.layout_extension_table.ini</language>
+		<language tag="language/en-GB">en-GB.layout_extension_table.sys.ini</language>
+	</languages>
+</extension>

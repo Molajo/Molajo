@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * LDAP client class
@@ -257,7 +257,7 @@ class JLDAP extends JObject
 	}
 
 	/**
-	 * Perform an LDAP search using comma seperated search strings
+	 * Perform an LDAP search using comma separated search strings
 	 *
 	 * @param   string  $search  search string of search values
 	 *

@@ -14,48 +14,49 @@ defined('MOLAJO') or die;
  * @subpackage  Date Helper
  * @since       1.0
  */
-class MolajoDateHelper {
+class MolajoDateHelper
+{
 
     /**
      * convertCCYYMMDD
-     * 
+     *
      * @param date $date
      * @return string CCYY-MM-DD
      */
-    function convertCCYYMMDD ($date)
+    function convertCCYYMMDD($date)
     {
         return substr($date, 0, 4).'-'.substr($date, 5, 2).'-'.substr($date, 8, 2);
     }
 
     /**
      * differenceDays
-     * 
+     *
      * @param $date1 string expressed as CCYY-MM-DD
      * @param $date2 string expressed as CCYY-MM-DD
      * returns integer difference in days
      */
-    function differenceDays ($date1, $date2)
+    function differenceDays($date1, $date2)
     {
-       $day1mm = substr($date1, 5, 2);
-       $day1dd = substr($date1, 8, 2);
-       $day1ccyy = substr($date1, 0, 4);
-       $gregdate1 = gregoriantojd ( $day1mm, $day1dd, $day1ccyy );
+        $day1mm = substr($date1, 5, 2);
+        $day1dd = substr($date1, 8, 2);
+        $day1ccyy = substr($date1, 0, 4);
+        $gregdate1 = gregoriantojd($day1mm, $day1dd, $day1ccyy);
 
-       $day2mm = substr($date2, 5, 2);
-       $day2dd = substr($date2, 8, 2);
-       $day2ccyy = substr($date2, 0, 4);
-       $gregdate2 = gregoriantojd ( $day2mm, $day2dd, $day2ccyy );
+        $day2mm = substr($date2, 5, 2);
+        $day2dd = substr($date2, 8, 2);
+        $day2ccyy = substr($date2, 0, 4);
+        $gregdate2 = gregoriantojd($day2mm, $day2dd, $day2ccyy);
 
-       return $gregdate1 - $gregdate2;
+        return $gregdate1 - $gregdate2;
     }
 
     /**
      * prettydate
-     * 
+     *
      * @param  $date
      * @return string human-readable pretty date
      */
-    function prettydate ($parameter_date)
+    function prettydate($parameter_date)
     {
         /** user time zone */
         $parameter_date = MolajoDateHelper::getUTCDate($parameter_date, 'user');
@@ -67,8 +68,9 @@ class MolajoDateHelper {
         /** verify dates */
         if ($parameter_date === false
             || $parameter_date < 0
-            || $parameter_date > $current_date) {
-                return false;
+            || $parameter_date > $current_date
+        ) {
+            return false;
         }
 
         /** difference in years */
@@ -78,7 +80,7 @@ class MolajoDateHelper {
         $endMonth = date('m', $current_date);
         $startMonth = date('m', $parameter_date);
         $months = $endMonth - $startMonth;
-        if ($months < 0)  {
+        if ($months < 0) {
             $months = $months + 12;
             $years = $years - 1;
         }
@@ -104,19 +106,19 @@ class MolajoDateHelper {
             $seconds = date('s', $current_date) - date('s', $parameter_date);
 
             /** difference in hours */
-            $hours = round($seconds/(60*60), 0);
+            $hours = round($seconds / (60 * 60), 0);
             if ($hours > 0) {
-                $seconds = $seconds - round($seconds/(60*60), 0);
+                $seconds = $seconds - round($seconds / (60 * 60), 0);
             }
 
             /** difference in minutes */
             $minutes = 0;
             if ($seconds > 0) {
-                $minutes = round($seconds/60, 0);
+                $minutes = round($seconds / 60, 0);
 
                 /** difference in seconds */
                 if ($minutes > 0) {
-                    $seconds = $seconds - round($seconds/60, 0);
+                    $seconds = $seconds - round($seconds / 60, 0);
                 }
             }
         }
@@ -127,12 +129,12 @@ class MolajoDateHelper {
         }
 
         /** format pretty date */
-        $prettyDate = MolajoDateHelper::prettyDateFormat ($years, 'MOLAJO_YEAR_SINGULAR', 'MOLAJO_YEAR_PLURAL');
-        $prettyDate .= MolajoDateHelper::prettyDateFormat ($months, 'MOLAJO_MONTH_SINGULAR', 'MOLAJO_MONTH_PLURAL');
-        $prettyDate .= MolajoDateHelper::prettyDateFormat ($days, 'MOLAJO_DAY_SINGULAR', 'MOLAJO_DAY_PLURAL');
-        $prettyDate .= MolajoDateHelper::prettyDateFormat ($hours, 'MOLAJO_HOUR_SINGULAR', 'MOLAJO_HOUR_PLURAL');
-        $prettyDate .= MolajoDateHelper::prettyDateFormat ($minutes, 'MOLAJO_MINUTE_SINGULAR', 'MOLAJO_MINUTE_PLURAL');
-        $prettyDate .= MolajoDateHelper::prettyDateFormat ($seconds, 'MOLAJO_SECOND_SINGULAR', 'MOLAJO_SECOND_PLURAL');
+        $prettyDate = MolajoDateHelper::prettyDateFormat($years, 'MOLAJO_YEAR_SINGULAR', 'MOLAJO_YEAR_PLURAL');
+        $prettyDate .= MolajoDateHelper::prettyDateFormat($months, 'MOLAJO_MONTH_SINGULAR', 'MOLAJO_MONTH_PLURAL');
+        $prettyDate .= MolajoDateHelper::prettyDateFormat($days, 'MOLAJO_DAY_SINGULAR', 'MOLAJO_DAY_PLURAL');
+        $prettyDate .= MolajoDateHelper::prettyDateFormat($hours, 'MOLAJO_HOUR_SINGULAR', 'MOLAJO_HOUR_PLURAL');
+        $prettyDate .= MolajoDateHelper::prettyDateFormat($minutes, 'MOLAJO_MINUTE_SINGULAR', 'MOLAJO_MINUTE_PLURAL');
+        $prettyDate .= MolajoDateHelper::prettyDateFormat($seconds, 'MOLAJO_SECOND_SINGULAR', 'MOLAJO_SECOND_PLURAL');
 
         /** remove leading comma */
         return trim(substr($prettyDate, 1, strlen($prettyDate) - 1));
@@ -144,9 +146,9 @@ class MolajoDateHelper {
      * @param  $numeric_value
      * @param  $singular_literal
      * @param  $plural_literal
-     * @return void
+     * @return void, mixed
      */
-    function prettyDateFormat ($numeric_value, $singular_literal, $plural_literal)
+    function prettyDateFormat($numeric_value, $singular_literal, $plural_literal)
     {
         if ($numeric_value == 0) {
             return;
@@ -174,11 +176,11 @@ class MolajoDateHelper {
      * $year = $dateComponents['year'];
      * echo MolajoDateHelper::buildCalendar ($month,$year,$dateArray);
      */
-    function buildCalendar ($month, $year, $dateArray)
+    function buildCalendar($month, $year, $dateArray)
     {
-        $daysOfWeek = array('S','M','T','W','T','F','S');
-        $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
-        $numberDays = date('t',$firstDayOfMonth);
+        $daysOfWeek = array('S', 'M', 'T', 'W', 'T', 'F', 'S');
+        $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
+        $numberDays = date('t', $firstDayOfMonth);
         $dateComponents = getdate($firstDayOfMonth);
         $monthName = $dateComponents['month'];
         $dayOfWeek = $dateComponents['wday'];
@@ -186,32 +188,32 @@ class MolajoDateHelper {
         $calendar = "<table class='calendar'>";
         $calendar .= "<caption>$monthName $year</caption>";
         $calendar .= "<tr>";
-        foreach($daysOfWeek as $day) {
-          $calendar .= "<th class='header'>$day</th>";
+        foreach ($daysOfWeek as $day) {
+            $calendar .= "<th class='header'>$day</th>";
         }
 
         $currentDay = 1;
         $calendar .= "</tr><tr>";
         if ($dayOfWeek > 0) {
-          $calendar .= "<td colspan='$dayOfWeek'>&nbsp;</td>";
+            $calendar .= "<td colspan='$dayOfWeek'>&nbsp;</td>";
         }
 
         $month = str_pad($month, 2, "0", STR_PAD_LEFT);
         while ($currentDay <= $numberDays) {
-          if ($dayOfWeek == 7) {
-               $dayOfWeek = 0;
-               $calendar .= "</tr><tr>";
-          }
-          $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
-          $date = "$year-$month-$currentDayRel";
-          $calendar .= "<td class='day' rel='$date'>$currentDay</td>";
-          $currentDay++;
-          $dayOfWeek++;
+            if ($dayOfWeek == 7) {
+                $dayOfWeek = 0;
+                $calendar .= "</tr><tr>";
+            }
+            $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
+            $date = "$year-$month-$currentDayRel";
+            $calendar .= "<td class='day' rel='$date'>$currentDay</td>";
+            $currentDay++;
+            $dayOfWeek++;
         }
 
         if ($dayOfWeek != 7) {
-          $remainingDays = 7 - $dayOfWeek;
-          $calendar .= "<td colspan='$remainingDays'>&nbsp;</td>";
+            $remainingDays = 7 - $dayOfWeek;
+            $calendar .= "<td colspan='$remainingDays'>&nbsp;</td>";
         }
 
         $calendar .= "</tr>";
@@ -233,38 +235,38 @@ class MolajoDateHelper {
      * @param string $server_or_user_UTC
      * @return void
      */
-    function getUTCDate ($input_date, $server_or_user_UTC = 'user')
+    function getUTCDate($input_date, $server_or_user_UTC = 'user')
     {
 
-		$config = MolajoFactory::getConfig();
-		$user	= MolajoFactory::getUser();
+        $config = MolajoFactory::getConfig();
+        $user = MolajoFactory::getUser();
 
-		// If a known filter is given use it.
-		switch (strtoupper((string) $server_or_user_UTC))
-		{
-			case 'SERVER_UTC':
-				// Convert a date to UTC based on the server timezone.
-				if (intval($input_date)) {
-					// Get a date object based on the correct timezone.
-					$date = MolajoFactory::getDate($input_date, 'UTC');
-					$date->setTimezone(new DateTimeZone($config->get('offset')));
+        // If a known filter is given use it.
+        switch (strtoupper((string)$server_or_user_UTC))
+        {
+            case 'SERVER_UTC':
+                // Convert a date to UTC based on the server timezone.
+                if (intval($input_date)) {
+                    // Get a date object based on the correct timezone.
+                    $date = MolajoFactory::getDate($input_date, 'UTC');
+                    $date->setTimezone(new DateTimeZone($config->get('offset')));
 
-					// Transform the date string.
-					return $date->toMySQL(true);
-				}
-				break;
+                    // Transform the date string.
+                    return $date->toMySQL(true);
+                }
+                break;
 
-			default:
-				// Convert a date to UTC based on the user timezone.
-				if (intval($input_date)) {
-					// Get a date object based on the correct timezone.
-					$date = MolajoFactory::getDate($input_date, 'UTC');
-					$date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
+            default:
+                // Convert a date to UTC based on the user timezone.
+                if (intval($input_date)) {
+                    // Get a date object based on the correct timezone.
+                    $date = MolajoFactory::getDate($input_date, 'UTC');
+                    $date->setTimezone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
 
-					// Transform the date string.
-					return $date->toMySQL(true);
-				}
-				break;
-		}
+                    // Transform the date string.
+                    return $date->toMySQL(true);
+                }
+                break;
+        }
     }
 }

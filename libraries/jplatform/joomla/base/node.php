@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Tree Node Class.
@@ -118,7 +118,7 @@ class JNode extends JObject
 	/**
 	 * Test if this node has children
 	 *
-	 * @return   boolean  True if there are chilren
+	 * @return   boolean  True if there are children
 	 *
 	 * @since    11.1
 	 */

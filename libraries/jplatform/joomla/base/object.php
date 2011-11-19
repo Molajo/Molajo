@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Base object class.
@@ -34,8 +34,6 @@ class JObject
 	 *
 	 * @param   mixed  $properties  Either and associative array or another
 	 *                              object to set the initial properties of the object.
-	 *
-	 * @return  JObject
 	 *
 	 * @since   11.1
 	 */
@@ -207,7 +205,7 @@ class JObject
 		{
 			foreach ((array) $properties as $k => $v)
 			{
-				// Use the set function which might be overriden.
+				// Use the set function which might be overridden.
 				$this->set($k, $v);
 			}
 			return true;

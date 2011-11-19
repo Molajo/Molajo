@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="module" group="molajo" method="upgrade">
+    <name>PLG_MOLAJO_CATEGORIZATION_NAME</name>
+    <author>Amy Stephen</author>
+    <creationDate>May 2011</creationDate>
+    <copyright>Copyright (C) 2011 Amy Stephen. All rights reserved. See http://molajo.org/copyright</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>PLG_MOLAJO_CATEGORIZATION_DESCRIPTION</description>
+	<files>
+		<filename plugin="categorization.php">categorization.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+		<folder>meta</folder>
+		<folder>tags</folder>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.plg_molajo_categorization.ini</language>
+		<language tag="language/en-GB">en-GB.plg_molajo_categorization.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="parameters">
+			<fieldset name="basic">
+				<field
+					default=""
+					description="PLG_MOLAJO_CATEGORIZATION_FIELD_XXX_DESC"
+					label="PLG_MOLAJO_CATEGORIZATION_FIELD_XXX_LABEL"
+                                        name="email"
+					size="60"
+                                        type="text"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

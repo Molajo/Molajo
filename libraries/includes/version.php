@@ -2,15 +2,13 @@
 /**
  * @package     Molajo
  * @subpackage  Version
- *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Version information class for the Molajo CMS.
+ * Version information class for Molajo
  *
  * @package  Molajo
  * @since    1.0
@@ -27,7 +25,7 @@ final class MolajoVersion
 	public $MAINTENANCE = '0';
 
 	/** @var  string  Development STATUS. */
-	public $STATUS = 'Alpha';
+	public $STATUS = 'Prealpha';
 
 	/** @var  string  Build number. */
 	public $BUILD = 0;
@@ -36,10 +34,10 @@ final class MolajoVersion
 	public $CODE_NAME = 'Phoenix';
 
 	/** @var  string  Release date. */
-	public $RELEASE_DATE = '01-Sept-2011';
+	public $RELEASE_DATE = '11-Nov-2011';
 
 	/** @var  string  Release time. */
-	public $RELEASE_TIME = '06:00';
+	public $RELEASE_TIME = '11:11';
 
 	/** @var  string  Release timezone. */
 	public $RELEASE_TIME_ZONE = 'GMT';
@@ -75,7 +73,7 @@ final class MolajoVersion
 	public function getHelpVersion()
 	{
 		if ($this->RELEASE > '1.0') {
-			return '.' . str_replace('.', '', $this->RELEASE);
+			return '.'.str_replace('.', '', $this->RELEASE);
 		}
 		else {
 			return '';
@@ -131,16 +129,16 @@ final class MolajoVersion
 
 		// If masked pretend to look like Mozilla 5.0 but still identify ourselves.
 		if ($mask) {
-			return 'Mozilla/5.0 '. $this->PRODUCT .'/'. $this->RELEASE . '.'.$this->DEV_LEVEL . ($component ? ' '. $component : '');
+			return 'Mozilla/5.0 '. $this->PRODUCT .'/'. $this->RELEASE.'.'.$this->DEV_LEVEL.($component ? ' '. $component : '');
 		}
 		else {
-			return $this->PRODUCT .'/'. $this->RELEASE . '.'.$this->DEV_LEVEL . ($component ? ' '. $component : '');
+			return $this->PRODUCT .'/'. $this->RELEASE.'.'.$this->DEV_LEVEL.($component ? ' '. $component : '');
 		}
 	}
 }
 
 // Define the Joomla version if not already defined.
 if (!defined('MOLAJOVERSION')) {
-	$jversion = new MolajoVersion;
-	define('MOLAJOVERSION', $jversion->getShortVersion());
+	$molajoversion = new MolajoVersion;
+	define('MOLAJOVERSION', $molajoversion->getShortVersion());
 }

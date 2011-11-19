@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.filesystem.helper');
 jimport('joomla.utilities.utility');
@@ -131,11 +131,9 @@ class JStream extends JObject
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $writeprefix  Prefix of the stream (optional). Unlike the JPATH_*, this has a final path seperator!
+	 * @param   string  $writeprefix  Prefix of the stream (optional). Unlike the JPATH_*, this has a final path separator!
 	 * @param   string  $readprefix   The read prefix (optional).
 	 * @param   array   $context      The context options (optional).
-	 *
-	 * @return  JStream
 	 *
 	 * @since   11.1
 	 */
@@ -149,8 +147,6 @@ class JStream extends JObject
 
 	/**
 	 * Destructor
-	 *
-	 * @return  void
 	 *
 	 * @since   11.1
 	 */

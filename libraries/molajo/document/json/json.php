@@ -20,75 +20,77 @@ defined('MOLAJO') or die;
 
 class MolajoDocumentJSON extends MolajoDocument
 {
-	/**
-	 * Document name
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	protected $_name = 'molajo';
+    /**
+     * Document name
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $_name = 'molajo';
 
-	/**
-	 * Class constructor
-	 *
-	 * @param   array  $options  Associative array of options
-	 *
-	 * @return  MolajoDocumentJson
-	 *
-	 * @since  1.0
-	 */
-	public function __construct($options = array())
-	{
-		parent::__construct($options);
+    /**
+     * Class constructor
+     *
+     * @param   array  $options  Associative array of options
+     *
+     * @return  MolajoDocumentJson
+     *
+     * @since  1.0
+     */
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
 
-		//set mime type
-		$this->_mime = 'application/json';
+        //set mime type
+        $this->_mime = 'application/json';
 
-		//set document type
-		$this->_type = 'json';
-	}
+        //set document type
+        $this->_type = 'json';
+    }
 
-	/**
-	 * Render the document.
-	 *
-	 * @param   boolean  $cache   If true, cache the output
-	 * @param   array    $params  Associative array of attributes
-	 *
-	 * @return  The rendered data
-	 *
-	 * @since  1.0
-	 */
-	public function render($cache = false, $params = array())
-	{
-		JResponse::allowCache(false);
-		JResponse::setHeader('Content-disposition', 'attachment; filename="'.$this->getName().'.json"', true);
+    /**
+     * Render the document.
+     *
+     * @param   boolean  $cache   If true, cache the output
+     * @param   array    $parameters  Associative array of attributes
+     *
+     * @return  The rendered data
+     *
+     * @since  1.0
+     */
+    public function render($cache = false, $parameters = array())
+    {
+        JResponse::allowCache(false);
+        JResponse::setHeader('Content-disposition', 'attachment; filename="'.$this->getName().'.json"', true);
 
-		parent::render();
+        parent::render();
 
-		return $this->getBuffer();
-	}
+        return $this->getBuffer();
+    }
 
-	/**
-	 * Returns the document name
-	 *
-	 * @return  string
-	 *
-	 * @since  1.0
-	 */
-	public function getName() {
-		return $this->_name;
-	}
+    /**
+     * Returns the document name
+     *
+     * @return  string
+     *
+     * @since  1.0
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
 
-	/**
-	 * Sets the document name
-	 *
-	 * @param   string  $name  Document name
-	 *
-	 * @return  void
-	 *
-	 * @since  1.0
-	 */
-	public function setName($name = 'molajo') {
-		$this->_name = $name;
-	}
+    /**
+     * Sets the document name
+     *
+     * @param   string  $name  Document name
+     *
+     * @return  void
+     *
+     * @since  1.0
+     */
+    public function setName($name = 'molajo')
+    {
+        $this->_name = $name;
+    }
 }

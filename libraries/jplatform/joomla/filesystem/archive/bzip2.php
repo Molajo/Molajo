@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die();
+defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.filesystem.stream');
 
@@ -30,8 +30,6 @@ class JArchiveBzip2 extends JObject
 
 	/**
 	 * Constructor tries to load the bz2 extension if not loaded
-	 *
-	 * @return  void
 	 *
 	 * @since   11.1
 	 */
@@ -121,7 +119,6 @@ class JArchiveBzip2 extends JObject
 				return JError::raiseWarning(100, $this->get('error.message'));
 			}
 
-			$written = 0;
 			do
 			{
 				$this->_data = $input->read($input->get('chunksize', 8196));

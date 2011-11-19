@@ -17,34 +17,34 @@ defined('MOLAJO') or die;
  */
 class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
 {
-	/**
-	 * Renders the error stack and returns the results as a string
-	 *
-	 * @param   string  $name    (unused)
-	 * @param   array   $params  Associative array of values
-	 * @param   string  $content
-	 *
-	 * @return  string  The output of the script
-	 *
-	 * @since   11.1
-	 */
-	public function render($name, $params = array (), $content = null)
-	{
-		// Initialise variables.
-		$buffer	= null;
-		$lists	= null;
+    /**
+     * Renders the error stack and returns the results as a string
+     *
+     * @param   string  $name    (unused)
+     * @param   array   $parameters  Associative array of values
+     * @param   string  $content
+     *
+     * @return  string  The output of the script
+     *
+     * @since   11.1
+     */
+    public function render($name, $parameters = array(), $content = null)
+    {
+        // Initialise variables.
+        $buffer = null;
+        $lists = null;
 
-		// Get the message queue
-		$messages = MolajoFactory::getApplication()->getMessageQueue();
+        // Get the message queue
+        $messages = MolajoFactory::getApplication()->getMessageQueue();
 
-	    // Record the scope.
-		$scope = MolajoFactory::getApplication()->scope;
+        // Record the scope.
+        $scope = MolajoFactory::getApplication()->scope;
 
-		// Set scope to module name
-		MolajoFactory::getApplication()->scope = 'message';
+        // Set scope to module name
+        MolajoFactory::getApplication()->scope = 'message';
 
-		// Build the sorted message list
-		if ($messages == null) {
+        // Build the sorted message list
+        if ($messages == null) {
 
         } else {
 
@@ -54,8 +54,8 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             /** defaults */
             $request = array();
             $state = array();
-            $params = array();
-            $rowset = array ();
+            $parameters = array();
+            $rowset = array();
             $pagination = array();
             $layout_type = 'document';
             $layout = 'messages';
@@ -65,7 +65,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $params = new MolajoRegistry;
+            $parameters = new JRegistry;
 
             $request['wrap_title'] = '';
             $request['wrap_id'] = 'system-message-container';
@@ -92,7 +92,7 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             $view->state = array();
 
             /** 6. Parameters */
-            $view->params = $params;
+            $view->parameters = $parameters;
 
             /** 7. Query */
             $view->rowset = $messages;
@@ -114,10 +114,10 @@ class MolajoDocumentRendererMessage extends MolajoDocumentRenderer
             $view->display();
             $buffer = ob_get_contents();
             ob_end_clean();
-		}
+        }
 
-		MolajoFactory::getApplication()->scope = $scope;
+        MolajoFactory::getApplication()->scope = $scope;
 
-    	return $buffer;
-	}
+        return $buffer;
+    }
 }
