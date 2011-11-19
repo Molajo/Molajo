@@ -252,7 +252,7 @@ li {
 
 nav ul,
 nav ol {
-	list-style: none none;
+  list-style: none none;
 }
 
 /* =============================================================================
@@ -1018,8 +1018,8 @@ ul.menu-horizontal li {
 }
 
 .pagenav li {
-	margin: 0;
-	list-style: none;
+  margin: 0;
+  list-style: none;
 }
 
 .pagenav-next {
@@ -1134,11 +1134,11 @@ ul.menu-horizontal li {
 }
 
 .tip-title {
-	padding: 15px 0 5px;
-	margin: -15px 0 0;
-	font-size: 1em;
+  padding: 15px 0 5px;
+  margin: -15px 0 0;
+  font-size: 1em;
     font-weight: bold;
-	background: url(../images/selector-arrow.png) no-repeat;
+  background: url(../images/selector-arrow.png) no-repeat;
 }
 
 .tip-text {
@@ -1184,8 +1184,8 @@ ul.menu-horizontal li {
 #footer ul.menu,
 #footer ul.menu li {
     display: inline;
-	list-style: none outside none;
-	margin: 0;
+  list-style: none outside none;
+  margin: 0;
     padding: 0;
 }
 
@@ -1324,14 +1324,14 @@ ul.menu {
 ul.menu li {
     float: left;
     position: relative;
-	margin: 0;
+  margin: 0;
     padding: 0;
 }
 
 ul.menu a,
 ul.menu span.separator {
-	display: block;
-	padding: .1em .7em;
+  display: block;
+  padding: .1em .7em;
 }
 /* use padding to indent text */
 
