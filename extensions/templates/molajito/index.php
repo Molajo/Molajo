@@ -23,22 +23,22 @@ if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
 <?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
 <head>
-    <jdoc:include type="head" />
+    <doc:include type="head" />
 </head>
 <body>
 	<div class="container">
-        <jdoc:include type="modules" name="header" wrap="header" />
-        <jdoc:include type="message" />
+        <doc:include type="modules" name="header" wrap="header" />
+        <doc:include type="message" />
         <section>
             <?php if (MolajoFactory::getUser()->id == 0) :
             else : ?>
-                <jdoc:include type="modules" name="menu" wrap="none" />
+                <doc:include type="modules" name="menu" wrap="none" />
             <?php endif; ?>
-            <jdoc:include type="component" />
+            <doc:include type="component" />
         </section>
-        <jdoc:include type="modules" name="footer" wrap="footer" />
+        <doc:include type="modules" name="footer" wrap="footer" />
     </div>
-<jdoc:include type="modules" name="debug" />
+<doc:include type="modules" name="debug" />
 </body>
 <noscript>
     <?php echo MolajoText::_('JGLOBAL_WARNJAVASCRIPT') ?>

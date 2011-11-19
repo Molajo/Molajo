@@ -9,17 +9,17 @@ defined('MOLAJO') or die; ?>
 <div class="container">
     <div class="titlerow">
         <div class="title">
-            <jdoc:include type="modules" name="title" wrap="none" />
+            <doc:include type="modules" name="title" wrap="none" id="thisid" class="thisclass" />
         </div>
         <div class="toolbar">
-            <jdoc:include type="modules" name="toolbar" wrap="none" />
+            <doc:include type="modules" name="toolbar" wrap="none" />
         </div>
     </div>
-    <jdoc:include type="modules" name="submenu" wrap="nav" />
+    <doc:include type="modules" name="submenu" wrap="nav" />
     <section>
-        <jdoc:include type="message" />
-        <jdoc:include type="modules" name="filters" wrap="none" />
-        <jdoc:include type="modules" name="grid" wrap="div" />
-        <jdoc:include type="modules" name="gridbatch" wrap="div" />
+        <doc:include type="message" />
+        <doc:include type="modules" name="filters" wrap="none" />
+        <doc:include type="modules" name="grid" wrap="div" />
+        <doc:include type="modules" name="gridbatch" wrap="div" />
     </section>
 </div>

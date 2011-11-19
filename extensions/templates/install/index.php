@@ -14,14 +14,14 @@ if ($configHTML == true): ?>
 <?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <jdoc:include type="head" />
+    <doc:include type="head" />
     <?php include dirname(__FILE__).'/lib/media.php'; ?>
 </head>
 <body class="<?php echo $lcbrowser.' '.$lcbrowser.$ver.' '.strtolower($browser->getPlatform()); ?>">
 	<div id="wrap">
         <?php include dirname(__FILE__).'/lib/header.php'; ?>
 		<div id="main" class="step<?php echo $stepNumber; ?>">
-            <jdoc:include type="component" />
+            <doc:include type="component" />
         </div>
 		<?php include dirname(__FILE__).'/lib/footer.php'; ?>
 	</div>

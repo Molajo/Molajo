@@ -480,11 +480,11 @@ class MolajoDocumentHTML extends MolajoDocument
     {
         $matches = array();
 
-        if (preg_match_all('#<jdoc:include\ type="([^"]+)" (.*)\/>#iU', $this->_template, $matches)) {
+        if (preg_match_all('#<doc:include\ type="([^"]+)" (.*)\/>#iU', $this->_template, $matches)) {
             $template_tags_first = array();
             $template_tags_last = array();
 
-            // Step through the jdocs in reverse order.
+            // Step through the docs in reverse order.
             for ($i = count($matches[0]) - 1; $i >= 0; $i--) {
                 $type = $matches[1][$i];
                 $attribs = empty($matches[2][$i]) ? array() : MolajoUtility::parseAttributes($matches[2][$i]);
@@ -497,7 +497,7 @@ class MolajoDocumentHTML extends MolajoDocument
                     $template_tags_last[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attribs' => $attribs);
                 }
             }
-            // Reverse the last array so the jdocs are in forward order.
+            // Reverse the last array so the docs are in forward order.
             $template_tags_last = array_reverse($template_tags_last);
 
             $this->_template_tags = $template_tags_first + $template_tags_last;
@@ -516,8 +516,8 @@ class MolajoDocumentHTML extends MolajoDocument
         $replace = array();
         $with = array();
 
-        foreach ($this->_template_tags AS $jdoc => $args) {
-            $replace[] = $jdoc;
+        foreach ($this->_template_tags AS $doc => $args) {
+            $replace[] = $doc;
             $with[] = $this->getBuffer($args['type'], $args['name'], $args['attribs']);
         }
 

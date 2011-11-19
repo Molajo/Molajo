@@ -8,11 +8,11 @@
 defined('MOLAJO') or die;
 ?>
 <div class="container">
-    <jdoc:include type="modules" name="header" wrap="header" />
-    <jdoc:include type="message" />
+    <doc:include type="modules" name="header" wrap="header" />
+    <doc:include type="message" />
     <section>
-        <jdoc:include type="modules" name="menu" wrap="none" />
-        <jdoc:include type="component" />
+        <doc:include type="modules" name="menu" wrap="none" />
+        <doc:include type="component" />
     </section>
-    <jdoc:include type="modules" name="footer" wrap="footer" />
+    <doc:include type="modules" name="footer" wrap="footer" />
 </div>

@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die;
 ?>
-<jdoc:include type="message" />
-<jdoc:include type="component" />
+<doc:include type="message" />
+<doc:include type="component" />

@@ -14,10 +14,10 @@ if (MolajoFactory::getApplication()->getConfig('html5', true)): ?>
 <?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
 <head>
-    <jdoc:include type="head" />
+    <doc:include type="head" />
 </head>
 <body class="contentpane">
-	<jdoc:include type="message" />
-	<jdoc:include type="component" />
+	<doc:include type="message" />
+	<doc:include type="component" />
 </body>
 </html>

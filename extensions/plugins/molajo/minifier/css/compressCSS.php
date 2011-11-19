@@ -93,14 +93,14 @@ class compressCSS extends MolajoPlugin	{
 		}	
 		
 	/**
-	 * 	Same as previous, except process jdoc Type2=CSS Statements
+	 * 	Same as previous, except process doc Type2=CSS Statements
 	 */		
 		$matches = array();
 		$cssMergedJDOC = array();
    		$cssMergedJDOCFilenames = array();
 		$countJDOC = 0;		
 		
-		if (preg_match_all('#<jdoc:include\ type2="([^"]+)" (.*)\/>#iU', $buffer, $matches))
+		if (preg_match_all('#<doc:include\ type2="([^"]+)" (.*)\/>#iU', $buffer, $matches))
 		{
 			$countJDOC = count($matches[1]);
 
