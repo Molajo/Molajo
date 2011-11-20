@@ -4,27 +4,57 @@ class MolajoConfig {
 /**
  *  Application Configuration
  */
+
 	/* Cache Settings */
-	public $caching;
-	public $cachetime;
-	public $cache_handler;
+	public $caching = '';
+	public $cachetime = '';
+	public $cache_handler = '';
 
 	/* Meta Settings */
-	public $MetaDesc;
-	public $MetaKeys;
-	public $MetaAuthor;
+	public $MetaDesc = '';
+	public $MetaKeys = '';
+	public $MetaAuthor = '';
 
 	/* SEO Settings */
-	public $sef;
-	public $sef_rewrite;
-	public $sef_suffix;
-	public $unicodeslugs;
+	public $sef = '1';
+	public $sef_rewrite = '0';
+	public $sef_suffix = '0';
+	public $unicodeslugs = '0';
+	public $force_ssl = '0';
+
+    /* User Defaults */
+	public $editor = 'none';
+	public $access = '1';
 
     /* Application Access */
-    public $application_logon_requirement;
-    public $application_guest_option;
-    public $application_default_option;
-    public $default_template_extension_id;
+    public $application_logon_requirement = '';
+    public $application_guest_option = '';
+    public $application_default_option = '';
+    public $default_template_extension = '';
+
+	/* Locale Settings */
+    public $language = 'en-GB';
+	public $offset = 'UTC';
+	public $offset_user = 'UTC';
+
+	/* Debug Settings */
+	public $debug = '0';
+	public $debug_language = '0';
+
+	/* Feed Settings */
+	public $feed_limit = '10';
+	public $feed_email = 'site';
+    public $list_limit = '20';
+
+	/* Other */
+    public $html5 = '1';
+    public $image_xsmall = '50';
+    public $image_small = '75';
+    public $image_medium = '150';
+    public $image_large = '300';
+    public $image_xlarge = '500';
+    public $image_folder = 'images';
+    public $thumb_folder = 'thumbs';
 
 /**
  *  Site Configuration Settings
@@ -33,9 +63,6 @@ class MolajoConfig {
 	public $offline;
 	public $offline_message;
 	public $sitename;
-	public $editor;
-	public $list_limit;
-	public $access;
 
 	/* Database Settings */
 	public $dbtype;
@@ -62,11 +89,6 @@ class MolajoConfig {
 	public $media_path;
 	public $tmp_path;
 	public $live_site;
-	public $force_ssl;
-
-	/* Locale Settings */
-	public $offset;
-	public $offset_user;
 
 	/* Session settings */
 	public $lifetime;
@@ -81,22 +103,4 @@ class MolajoConfig {
 	public $smtpuser;
 	public $smtppass;
 	public $smtphost;
-
-	/* Debug Settings */
-	public $debug;
-	public $debug_language;
-
-	/* Feed Settings */
-	public $feed_limit;
-	public $feed_email;
-
-	/* Other */
-    public $html5;
-    public $image_xsmall;
-    public $image_small;
-    public $image_medium;
-    public $image_large;
-    public $image_xlarge;
-    public $image_folder;
-    public $thumb_folder;
 }

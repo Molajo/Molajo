@@ -627,7 +627,7 @@ class MolajoApplicationHelper
                 $session->set('page.parameters', $item->parameters);
             }
         } else {
-            $session->set('page.title', MolajoFactory::getSiteConfig()->get('sitename', 'Molajo'));
+            $session->set('page.title', MolajoFactory::getConfig()->get('sitename', 'Molajo'));
             $session->set('page.subtitle', '');
             $session->set('page.metakey', '');
             $session->set('page.metadesc', '');
@@ -659,14 +659,14 @@ class MolajoApplicationHelper
             $title = $session->get('page.title');
         }
         if (empty($title)) {
-            $title = MolajoFactory::getSiteConfig()->get('sitename', 'Molajo');
+            $title = MolajoFactory::getConfig()->get('sitename', 'Molajo');
         }
 
-        if (MolajoFactory::getSiteConfig()->get('sitename_pagetitles', 0) == 1) {
-            $title = MolajoText::sprintf('JPAGETITLE', MolajoFactory::getSiteConfig()->get('sitename', 'Molajo'), $title);
+        if (MolajoFactory::getConfig()->get('sitename_pagetitles', 0) == 1) {
+            $title = MolajoText::sprintf('JPAGETITLE', MolajoFactory::getConfig()->get('sitename', 'Molajo'), $title);
 
-        } elseif (MolajoFactory::getSiteConfig()->get('sitename_pagetitles', 0) == 2) {
-            $title = MolajoText::sprintf('JPAGETITLE', $title, MolajoFactory::getSiteConfig()->get('sitename', 'Molajo'));
+        } elseif (MolajoFactory::getConfig()->get('sitename_pagetitles', 0) == 2) {
+            $title = MolajoText::sprintf('JPAGETITLE', $title, MolajoFactory::getConfig()->get('sitename', 'Molajo'));
         }
 
         $document->setTitle($title);

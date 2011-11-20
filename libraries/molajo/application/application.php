@@ -316,7 +316,6 @@ class MolajoApplication extends JObject
 
         JRequest::set($result, 'get', false);
 
-        ///** todo: amy configuration for ssl by application */
         if ($this->getConfig('force_ssl') >= 1
             && strtolower($uri->getScheme()) != 'https') {
                 $uri->setScheme('https');

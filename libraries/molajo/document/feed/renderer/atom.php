@@ -42,7 +42,7 @@ class MolajoDocumentRendererAtom extends MolajoDocumentRenderer
         $app = MolajoFactory::getApplication();
 
         // Gets and sets timezone offset from site configuration
-        $tz = new DateTimeZone($app->getSiteConfig('offset'));
+        $tz = new DateTimeZone($app->getConfig('offset'));
         $now = MolajoFactory::getDate();
         $now->setTimeZone($tz);
 
@@ -52,11 +52,11 @@ class MolajoDocumentRendererAtom extends MolajoDocumentRenderer
         $url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
         $syndicationURL = MolajoRoute::_('&format=feed&type=atom');
 
-        if ($app->getSiteConfig('sitename_pagetitles', 0) == 1) {
-            $title = MolajoText::sprintf('JPAGETITLE', $app->getSiteConfig('sitename'), $data->title);
+        if ($app->getConfig('sitename_pagetitles', 0) == 1) {
+            $title = MolajoText::sprintf('JPAGETITLE', $app->getConfig('sitename'), $data->title);
         }
-        elseif ($app->getSiteConfig('sitename_pagetitles', 0) == 2) {
-            $title = MolajoText::sprintf('JPAGETITLE', $data->title, $app->getSiteConfig('sitename'));
+        elseif ($app->getConfig('sitename_pagetitles', 0) == 2) {
+            $title = MolajoText::sprintf('JPAGETITLE', $data->title, $app->getConfig('sitename'));
         }
         else {
             $title = $data->title;

@@ -401,7 +401,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		/*	For Core SEF Pathinfo, index.php will be first */
 		$pathinfo = '';
 
-		if ($app->getSiteConfig('sef_rewrite') == 1) {
+		if ($app->getConfig('sef_rewrite') == 1) {
 		} else {
 			if ($uriArray[$i] == 'index.php') {
 				$pathinfo = 'index.php';

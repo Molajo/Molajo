@@ -133,7 +133,7 @@ class UsersModelMail extends JModelAdmin
 		$parameters = JComponentHelper::getParameters('com_users');
 
 		// Build email message format.
-		$mailer->setSender(array($app->getSiteConfig('mailfrom'), $app->getSiteConfig('fromname')));
+		$mailer->setSender(array($app->getConfig('mailfrom'), $app->getConfig('fromname')));
 		$mailer->setSubject($parameters->get('mailSubjectPrefix').stripslashes($subject));
 		$mailer->setBody($message_body.$parameters->get('mailBodySuffix'));
 		$mailer->IsHTML($mode);
@@ -141,7 +141,7 @@ class UsersModelMail extends JModelAdmin
 		// Add recipients
 		if ($bcc) {
 			$mailer->addBCC($rows);
-			$mailer->addRecipient($app->getSiteConfig('mailfrom'));
+			$mailer->addRecipient($app->getConfig('mailfrom'));
 		} else {
 			$mailer->addRecipient($rows);
 		}

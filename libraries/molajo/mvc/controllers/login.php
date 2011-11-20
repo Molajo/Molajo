@@ -84,8 +84,8 @@ class MolajoControllerLogin extends MolajoController
                 $lifetime = time() + 365 * 24 * 60 * 60;
 
                 // Use domain and path set in config for cookie if it exists.
-                $cookie_domain = $this->getSiteConfig('cookie_domain', '');
-                $cookie_path = $this->getSiteConfig('cookie_path', '/');
+                $cookie_domain = $this->getConfig('cookie_domain', '');
+                $cookie_path = $this->getConfig('cookie_path', '/');
                 setcookie(
                     MolajoUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime,
                     $cookie_path, $cookie_domain
@@ -213,8 +213,8 @@ class MolajoControllerLogin extends MolajoController
         if (in_array(false, $results, true)) {
         } else {
             // Use domain and path set in config for cookie if it exists.
-            $cookie_domain = $this->getSiteConfig('cookie_domain', '');
-            $cookie_path = $this->getSiteConfig('cookie_path', '/');
+            $cookie_domain = $this->getConfig('cookie_domain', '');
+            $cookie_path = $this->getConfig('cookie_path', '/');
             setcookie(MolajoUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, $cookie_path, $cookie_domain);
 
             return true;

@@ -45,7 +45,7 @@ abstract class MolajoHtmlBehavior
 
         // If no debugging value is set, use the configuration setting
         if ($debug === null) {
-            $config = JFactory::getSiteConfig();
+            $config = JFactory::getConfig();
             $debug = $config->get('debug');
         }
 
@@ -105,7 +105,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/caption'.$uncompressed.'.js', true, true);
 
         // Attach caption to document
@@ -143,7 +143,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/validate'.$uncompressed.'.js', true, true);
         $loaded = true;
     }
@@ -168,7 +168,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/switcher'.$uncompressed.'.js', true, true);
 
         $script = "
@@ -207,7 +207,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/combobox'.$uncompressed.'.js', true, true);
         $loaded = true;
     }
@@ -328,7 +328,7 @@ abstract class MolajoHtmlBehavior
             self::framework();
 
             // Load the javascript and css
-            $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+            $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
             MolajoHTML::_('script', 'system/modal'.$uncompressed.'.js', true, true);
             MolajoHTML::_('stylesheet', 'system/modal.css', array(), true);
 
@@ -442,7 +442,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/swf'.$uncompressed.'.js', true, true);
         MolajoHTML::_('script', 'system/progressbar'.$uncompressed.'.js', true, true);
         MolajoHTML::_('script', 'system/uploader'.$uncompressed.'.js', true, true);
@@ -616,7 +616,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/mootree'.$uncompressed.'.js', true, true, false, false);
         MolajoHTML::_('stylesheet', 'system/mootree.css', array(), true);
 
@@ -685,7 +685,7 @@ abstract class MolajoHtmlBehavior
         $tag = JFactory::getLanguage()->getTag();
 
         //Add uncompressed versions when debug is enabled
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('stylesheet', 'system/calendar-jos.css', array(' title' => MolajoText::_('JLIB_HTML_BEHAVIOR_GREEN'), ' media' => 'all'), true);
         MolajoHTML::_('script', $tag.'/calendar'.$uncompressed.'.js', false, true);
         MolajoHTML::_('script', $tag.'/calendar-setup'.$uncompressed.'.js', false, true);
@@ -717,7 +717,7 @@ abstract class MolajoHtmlBehavior
         self::framework(true);
 
         //Add uncompressed versions when debug is enabled
-        $uncompressed = JFactory::getSiteConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('stylesheet', 'system/mooRainbow.css', array('media' => 'all'), true);
         MolajoHTML::_('script', 'system/mooRainbow.js', false, true);
 
@@ -770,7 +770,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $config = JFactory::getSiteConfig();
+        $config = JFactory::getConfig();
         $lifetime = ($config->get('lifetime') * 60000);
         $refreshTime = ($lifetime <= 60000) ? 30000 : $lifetime - 60000;
         // Refresh time is 1 minute less than the liftime assined in the configuration.php file.

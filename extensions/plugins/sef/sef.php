@@ -24,7 +24,7 @@ class plgSystemSef extends MolajoPlugin
 	{
 		$app = MolajoFactory::getApplication();
 
-		if ($app->getName() != 'site' || $app->getSiteConfig('sef')=='0') {
+		if ($app->getName() != 'site' || $app->getConfig('sef')=='0') {
 			return true;
 		}
 

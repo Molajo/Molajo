@@ -47,7 +47,7 @@ class MolajoSessionHelper extends JObject
         $options = array();
         $options['name'] = $name;
 
-        if ($this->_getSiteConfig('force_ssl') == 2) {
+        if ($this->_getConfig('force_ssl') == 2) {
             $options['force_ssl'] = true;
         }
 
@@ -144,7 +144,7 @@ class MolajoSessionHelper extends JObject
     }
 
     /**
-     * _getSiteConfig
+     * _getConfig
      *
      * Gets a configuration value.
      *
@@ -155,7 +155,7 @@ class MolajoSessionHelper extends JObject
      *
      * @since  1.0
      */
-    protected function _getSiteConfig($varname, $default = null)
+    protected function _getConfig($varname, $default = null)
     {
         return MolajoFactory::getConfig()->get(''.$varname, $default);
     }

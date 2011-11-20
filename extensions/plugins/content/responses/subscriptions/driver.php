@@ -141,12 +141,12 @@ class ResponsesSubscriptions extends MolajoPlugin
 	 */
 
 		global $mainframe;		
-	 	$SiteName 		= $mainframe->getSiteConfig('sitename');
+	 	$SiteName 		= $mainframe->getConfig('sitename');
 		$articleURL = TamkaContentHelperRoute::getSiteURL ().TamkaContentHelperRoute::getArticleURL ($article->id);
 		$ArticleTitle = $article->title;
 		
-		$mailfrom 		= $mainframe->getSiteConfig('mailfrom');
-		$fromname 		= $mainframe->getSiteConfig('fromname');
+		$mailfrom 		= $mainframe->getConfig('mailfrom');
+		$fromname 		= $mainframe->getConfig('fromname');
 
 	/**
 	 * 	Format Email - Subject and Message
