@@ -72,7 +72,7 @@ class JFormFieldUser extends JFormField
 		if ($this->value) {
 			$table->load($this->value);
 		} else {
-			$table->username = JText::_('MOLAJO_FORM_SELECT_USER');
+			$table->username = MolajoText::_('MOLAJO_FORM_SELECT_USER');
 		}
 
 		// Create a dummy text field with the user name.
@@ -86,10 +86,10 @@ class JFormFieldUser extends JFormField
 		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
 		if ($this->element['readonly'] != 'true') {
-			$html[] = '		<a class="modal_'.$this->id.'" title="'.JText::_('MOLAJO_FORM_CHANGE_USER').'"' .
+			$html[] = '		<a class="modal_'.$this->id.'" title="'.MolajoText::_('MOLAJO_FORM_CHANGE_USER').'"' .
 							' href="'.$link.'"' .
 							' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
-			$html[] = '			'.JText::_('MOLAJO_FORM_CHANGE_USER').'</a>';
+			$html[] = '			'.MolajoText::_('MOLAJO_FORM_CHANGE_USER').'</a>';
 		}
 		$html[] = '  </div>';
 		$html[] = '</div>';

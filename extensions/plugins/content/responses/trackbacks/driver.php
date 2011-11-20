@@ -18,15 +18,15 @@ class ResponsesTrackbacks extends MolajoPlugin
 	 * Make certain Tamka Library is ready to load
 	 */
 		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
-		  		JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
+		  		JError::raiseWarning( '700', MolajoText::_('The Tamka Library is required for this extension.' ));
 		 		return NULL;
 		 }
 		 if (!function_exists('tamkaimport')) {
-		 		JError::raiseWarning( '725', JText::_('The Tamka Library must be enabled for this extension.' ));
+		 		JError::raiseWarning( '725', MolajoText::_('The Tamka Library must be enabled for this extension.' ));
 		 		return NULL;
 		 }
 		 if (!version_compare('0.1', 'TAMKA')) {
-		 		JError::raiseWarning( '750', JText::_('The Tamka Library Version is outdated.' ));
+		 		JError::raiseWarning( '750', MolajoText::_('The Tamka Library Version is outdated.' ));
 		 		return NULL;
 		 }
 		tamkaimport('tamka.routehelper.content');
@@ -45,15 +45,15 @@ class ResponsesTrackbacks extends MolajoPlugin
 	 * Make certain Tamka Library is ready to load
 	 */
 		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
-		  		JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
+		  		JError::raiseWarning( '700', MolajoText::_('The Tamka Library is required for this extension.' ));
 		 		return NULL;
 		 }
 		 if (!function_exists('tamkaimport')) {
-		 		JError::raiseWarning( '725', JText::_('The Tamka Library must be enabled for this extension.' ));
+		 		JError::raiseWarning( '725', MolajoText::_('The Tamka Library must be enabled for this extension.' ));
 		 		return NULL;
 		 }
 		 if (!version_compare('0.1', 'TAMKA')) {
-		 		JError::raiseWarning( '750', JText::_('The Tamka Library Version is outdated.' ));
+		 		JError::raiseWarning( '750', MolajoText::_('The Tamka Library Version is outdated.' ));
 		 		return NULL;
 		 }
 		tamkaimport('tamka.routehelper.content');
@@ -129,10 +129,10 @@ class ResponsesTrackbacks extends MolajoPlugin
 		}
 
 		if ($isNew) {
-			$neworupdatedArticle = 	JText::_( ' a new post' );
+			$neworupdatedArticle = 	MolajoText::_( ' a new post' );
 			$neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%" ';
 		} else {
-			$neworupdatedArticle = 	JText::_( ' an updated post' );
+			$neworupdatedArticle = 	MolajoText::_( ' an updated post' );
 			$neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%"';
 		}
 
@@ -153,27 +153,27 @@ class ResponsesTrackbacks extends MolajoPlugin
 	*/
 		$emailSubject	= '['.$SiteName.'] '.  $email_title;;
 
-		$emailMessage = JText::_( 'At your request, ' );
-		$emailMessage .= $SiteName.JText::_( ' is notifying you of a post' );
+		$emailMessage = MolajoText::_( 'At your request, ' );
+		$emailMessage .= $SiteName.MolajoText::_( ' is notifying you of a post' );
 		if ($email_title) {
-			$emailMessage .= JText::_( ' entitled "' ).$email_title;
+			$emailMessage .= MolajoText::_( ' entitled "' ).$email_title;
 		}
 		if ($email_author) {
-			$emailMessage .= JText::_( '" written by ' ).$email_author;
+			$emailMessage .= MolajoText::_( '" written by ' ).$email_author;
 		} else {
-			$emailMessage .= JText::_( '." ' );
+			$emailMessage .= MolajoText::_( '." ' );
 		}
 
 		if ($articleURL) {
-			$emailMessage .= JText::_( ' To read more of this post, visit: ' ).$articleURL;
+			$emailMessage .= MolajoText::_( ' To read more of this post, visit: ' ).$articleURL;
 		}
 		$emailMessage .= '. ';
 
 	/**
 	 * 	Format Email - How to update User Settings
 	*/
-		$emailMessage .= JText::_( ' To discontinue these messages, please visit: ' ).$articleURL;
-		$emailMessage .= JText::_( ' and update your User Settings. Thanks! ' ) ;
+		$emailMessage .= MolajoText::_( ' To discontinue these messages, please visit: ' ).$articleURL;
+		$emailMessage .= MolajoText::_( ' and update your User Settings. Thanks! ' ) ;
 		
 	/**
 	 * 	Format Email - encoding

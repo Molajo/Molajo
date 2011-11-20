@@ -25,7 +25,7 @@ if (class_exists('MolajoFileHelper')) {
     if (file_exists(COM_INSTALLER_OVERRIDES.'/com_installer/helpers/file.php')) {
         JLoader::register('MolajoFileHelper', COM_INSTALLER_OVERRIDES.'/com_installer/helpers/file.php');
     } else {
-        JError::raiseNotice(500, JText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.'MolajoFileHelper'));
+        JError::raiseNotice(500, MolajoText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.'MolajoFileHelper'));
         return;
     }
 }

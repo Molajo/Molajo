@@ -59,7 +59,7 @@ class JFormFieldEditors extends JFormFieldList
 			||	$lang->load('plg_editors_'.$option->value, JPATH_PLUGINS .'/editors/'.$option->value, null, false, false)
 			||	$lang->load('plg_editors_'.$option->value, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
 			||	$lang->load('plg_editors_'.$option->value, JPATH_PLUGINS .'/editors/'.$option->value, $lang->getDefault(), false, false);
-			$options[$i]->text = JText::_($option->text);
+			$options[$i]->text = MolajoText::_($option->text);
 		}
 
 		// Check for a database error.

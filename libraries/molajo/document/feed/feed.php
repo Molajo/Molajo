@@ -9,9 +9,11 @@
 defined('MOLAJO') or die;
 
 /**
- * DocumentFeed class, provides an easy interface to parse and display any feed document
+ * MolajoDocumentFeed
  *
- * @package    Molajo
+ * Parse and display any feed document
+ *
+ * @package     Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -165,6 +167,8 @@ class MolajoDocumentFeed extends MolajoDocument
     public $items = array();
 
     /**
+     * __construct
+     *
      * Class constructor
      *
      * @param   array  $options Associative array of options
@@ -175,11 +179,12 @@ class MolajoDocumentFeed extends MolajoDocument
     {
         parent::__construct($options);
 
-        //set document type
         $this->_type = 'feed';
     }
 
     /**
+     * render
+     *
      * Render the document
      *
      * @param   boolean  $cache   If true, cache the output
@@ -233,6 +238,8 @@ class MolajoDocumentFeed extends MolajoDocument
     }
 
     /**
+     * addItem
+     *
      * Adds an MolajoFeedItem to the feed.
      *
      * @param   object MolajoFeedItem $item The feeditem to add to the feed.

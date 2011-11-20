@@ -9,9 +9,11 @@
 defined('MOLAJO') or die;
 
 /**
- * DocumentError class, provides an easy interface to parse and display an error page
+ * DocumentError class
  *
- * @package    Molajo
+ * Parse and display an error page
+ *
+ * @package     Molajo
  * @subpackage  Document
  * @since       1.0
  */
@@ -26,6 +28,8 @@ class MolajoDocumentError extends MolajoDocument
     var $_error;
 
     /**
+     * __construct
+     *
      * Class constructor
      *
      * @param   string  $type        Either HTML or text
@@ -45,6 +49,8 @@ class MolajoDocumentError extends MolajoDocument
     }
 
     /**
+     * setError
+     *
      * Set error object
      *
      * @param   object  $error  Error object to set
@@ -64,11 +70,12 @@ class MolajoDocumentError extends MolajoDocument
     }
 
     /**
+     * render
+     *
      * Render the document
      *
      * @param   boolean  $cache    If true, cache the output
      * @param   array    $parameters   Associative array of attributes
-     *
      *
      * @return  string   The rendered data
      *
@@ -77,7 +84,8 @@ class MolajoDocumentError extends MolajoDocument
     public function render($cache = false, $parameters = array())
     {
         // If no error object is set return null
-        if (!isset($this->_error)) {
+        if (isset($this->_error)) {
+        } else {
             return;
         }
 
@@ -87,10 +95,10 @@ class MolajoDocumentError extends MolajoDocument
 
         // check template
         $directory = isset($parameters['directory']) ? $parameters['directory'] : 'templates';
-        $template = isset($parameters['template']) ? JFilterInput::getInstance()->clean($parameters['template'], 'cmd')
-                : 'system';
+        $template = isset($parameters['template']) ? JFilterInput::getInstance()->clean($parameters['template'], 'cmd') : 'system';
 
-        if (!file_exists($directory.'/'.$template.'/'.$file)) {
+        if (file_exists($directory.'/'.$template.'/'.$file)) {
+        } else {
             $template = 'system';
         }
 
@@ -108,6 +116,8 @@ class MolajoDocumentError extends MolajoDocument
     }
 
     /**
+     * _loadTemplate
+     *
      * Load a template file
      *
      * @param   string  $template   The name of the template
@@ -137,6 +147,8 @@ class MolajoDocumentError extends MolajoDocument
     }
 
     /**
+     * renderBacktrace
+     *
      * Render the backtrace
      *
      * @return  string  The contents of the backtrace

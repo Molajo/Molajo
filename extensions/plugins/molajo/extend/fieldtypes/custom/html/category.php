@@ -80,7 +80,7 @@ abstract class JHtmlCategory
                                    /*   Process new Extension Group */
                                    $categoryExtension = $item->extension;
                                    $lang->load($item->extension, JPATH_ADMINISTRATOR, null, false, false);
-                                   $categoryExtensionText = JText::_($item->extension);
+                                   $categoryExtensionText = MolajoText::_($item->extension);
 
                                    self::$items[$hash][] = JHTML::_('select.option',  '<OPTGROUP>', ' - '.$categoryExtensionText.' - ' );
                                 }

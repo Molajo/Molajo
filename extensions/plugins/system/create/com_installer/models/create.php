@@ -84,7 +84,7 @@ class InstallerModelCreate extends JModel
             return $this->_createPlugin();
 
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_INVALID_EXTENSION_TYPE_FAILED').': '. $this->getState('create.createtype'), 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_INVALID_EXTENSION_TYPE_FAILED').': '. $this->getState('create.createtype'), 'error');
             return false;
         }
     }
@@ -111,7 +111,7 @@ class InstallerModelCreate extends JModel
         $filehelper = new MolajoFileHelper();
         $results = $filehelper->requireClassFile ($classFolder.$filename, $extensionClassname);
         if ($results === false) {
-           MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_CREATE_EXTENSION_FAILED').': '. $extensionClassname, 'error');
+           MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_CREATE_EXTENSION_FAILED').': '. $extensionClassname, 'error');
             return false;
         }
 
@@ -120,7 +120,7 @@ class InstallerModelCreate extends JModel
         $extension = $extensionCreator->create();
         if ($extension) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
             return false;
         }
 
@@ -128,7 +128,7 @@ class InstallerModelCreate extends JModel
         $results = $this->_installExtension(strtolower($extension));
         if ($results) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
             return false;
         }
 
@@ -150,7 +150,7 @@ class InstallerModelCreate extends JModel
         $filehelper = new MolajoFileHelper();
         $results = $filehelper->requireClassFile ($classFolder.$filename, $extensionClassname);
         if ($results === false) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_CREATE_EXTENSION_FAILED').': '. $extensionClassname, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_CREATE_EXTENSION_FAILED').': '. $extensionClassname, 'error');
             return false;
         }
 
@@ -159,7 +159,7 @@ class InstallerModelCreate extends JModel
         $extension = $extensionCreator->create();
         if ($extension) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
             return false;
         }
 
@@ -167,7 +167,7 @@ class InstallerModelCreate extends JModel
         $results = $this->_installExtension($extension);
         if ($results) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED').': '. $this->getState('create.createtype'), 'error');
             return false;
         }
 
@@ -182,7 +182,7 @@ class InstallerModelCreate extends JModel
         $results = $installer->purge();
         if ($results) {
         } else {
-            MolajoFactory::getApplication()->setUserState('com_installer.message', JText::_('PLG_SYSTEM_CREATE_PURGE_DISCOVERY_FAILED'));
+            MolajoFactory::getApplication()->setUserState('com_installer.message', MolajoText::_('PLG_SYSTEM_CREATE_PURGE_DISCOVERY_FAILED'));
             return false;
         }
 
@@ -198,7 +198,7 @@ class InstallerModelCreate extends JModel
         $discoveredExtensionID = $dbo->loadResult();
         if ((int) $discoveredExtensionID > 0) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_RETRIEVE_EXTENSION_ID_FAILED').': '. $discoveredExtensionID, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_RETRIEVE_EXTENSION_ID_FAILED').': '. $discoveredExtensionID, 'error');
             return false;
         }
 
@@ -207,7 +207,7 @@ class InstallerModelCreate extends JModel
         $result = $installer->discover_install($discoveredExtensionID);
         if ($result) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_MSG_DISCOVER_INSTALL_FAILED').': '. $discoveredExtensionID, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_MSG_DISCOVER_INSTALL_FAILED').': '. $discoveredExtensionID, 'error');
             return false;
         }
 
@@ -222,12 +222,12 @@ class InstallerModelCreate extends JModel
         $dbo->setQuery($query);
         $discoveredExtensionID = $dbo->loadResult();
         if ((int) $discoveredExtensionID > 0) {
-            MolajoFactory::getApplication()->setUserState('com_installer.message', JText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED'));
+            MolajoFactory::getApplication()->setUserState('com_installer.message', MolajoText::_('PLG_SYSTEM_CREATE_INSTALL_EXTENSION_FAILED'));
             return false;
         }
 echo '$discoveredExtensionID '.$discoveredExtensionID.'<br />';
         /** results **/
-        MolajoFactory::getApplication()->enqueueMessage(JText::sprintf('PLG_SYSTEM_CREATE_INSTALL_SUCCESS', JText::_('PLG_SYSTEM_CREATE_INSTALL_TYPE_'.strtoupper($this->getState('create.createtype')))));
+        MolajoFactory::getApplication()->enqueueMessage(MolajoText::sprintf('PLG_SYSTEM_CREATE_INSTALL_SUCCESS', MolajoText::_('PLG_SYSTEM_CREATE_INSTALL_TYPE_'.strtoupper($this->getState('create.createtype')))));
         return true;
     }
 
@@ -241,18 +241,18 @@ echo '$discoveredExtensionID '.$discoveredExtensionID.'<br />';
     {
         if (JFolder::exists($source)) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$source, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$source, 'error');
             return false;
         }
 
         if (JFolder::exists($destination)) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_DESTINATION_FOLDER_ALREADY_EXISTS').' '.$destination, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_DESTINATION_FOLDER_ALREADY_EXISTS').' '.$destination, 'error');
             return false;
         }
 
         $results = JFolder::copy($source, $destination);
         if ($results == false) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_COPY_FOLDER_FAILED').' '.$source.' '.$destination, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_COPY_FOLDER_FAILED').' '.$source.' '.$destination, 'error');
             return false;
         }
 
@@ -330,17 +330,17 @@ echo '$discoveredExtensionID '.$discoveredExtensionID.'<br />';
     {
         if (JFolder::exists($path)) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$path, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$path, 'error');
             return false;
         }
         if (JFolder::exists($path.'/'.$existingName)) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$path.$existingName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$path.$existingName, 'error');
             return false;
         }
         $results = JFolder::move($existingName, $newName, $path);
         if ($results == false) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_RENAME_FOLDER_FAILED').' '.$path.$existingName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_RENAME_FOLDER_FAILED').' '.$path.$existingName, 'error');
             return false;
         }
 
@@ -359,22 +359,22 @@ echo '$discoveredExtensionID '.$discoveredExtensionID.'<br />';
     {
         if (JFolder::exists($path)) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$path, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_FOLDER_NOT_FOUND').' '.$path, 'error');
             return false;
         }
         if (JFile::exists($path.'/'.$existingName)) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_FILE_NOT_FOUND').' '.$path.$existingName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_FILE_NOT_FOUND').' '.$path.$existingName, 'error');
             return false;
         }
         if (JFile::exists($path.'/'.$newName)) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_FILE_ALREADY_EXISTS').' '.$path.$newName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_FILE_ALREADY_EXISTS').' '.$path.$newName, 'error');
             return false;
         }
 
         $results = JFile::move($existingName, $newName, $path);
         if ($results == false) {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_RENAME_FILE_FAILED').' '.$path.$existingName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_RENAME_FILE_FAILED').' '.$path.$existingName, 'error');
             return false;
         }
 
@@ -393,7 +393,7 @@ echo '$discoveredExtensionID '.$discoveredExtensionID.'<br />';
     {
         if (JFile::exists($file)) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_CREATE_CHANGE_WORDS_FILE_NOT_FOUND').': '. $file, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('PLG_SYSTEM_CREATE_CHANGE_WORDS_FILE_NOT_FOUND').': '. $file, 'error');
             return false;
         }
 

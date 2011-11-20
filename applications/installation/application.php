@@ -75,7 +75,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         /** 5. Set Language in Config */
         $conf = MolajoFactory::getConfig();
         $conf->set('language', $options['language']);
-        $conf->set('debug_lang', $forced['debug']);
+        $conf->set('debug_language', $forced['debug']);
         $conf->set('sampledata', $forced['sampledata']);
     }
 

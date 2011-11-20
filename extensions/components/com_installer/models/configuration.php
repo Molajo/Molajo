@@ -62,7 +62,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 
 		/* Debug Settings */
 		$registry->set('debug', 0);
-		$registry->set('debug_lang', 0);
+		$registry->set('debug_language', 0);
 
 		/* Database Settings */
 		$registry->set('dbtype', $config->db_type);

@@ -9,9 +9,11 @@
 defined('MOLAJO') or die;
 
 /**
- * DocumentHTML class, provides an easy interface to parse and display an HTML document
+ * DocumentHTML class
  *
- * @package     Joomla.Platform
+ * Interface to parse and display an HTML document
+ *
+ * @package     Molajo
  * @subpackage  Document
  * @since       11.1
  */
@@ -31,6 +33,9 @@ class MolajoDocumentHTML extends MolajoDocument
      */
     public $_custom = array();
 
+    /**
+     * @var null
+     */
     public $template = null;
     public $baseurl = null;
     public $parameters = null;
@@ -42,7 +47,7 @@ class MolajoDocumentHTML extends MolajoDocument
     protected $_template = '';
 
     /**
-     * Array of parsed template MolajoDoc tags
+     * Array of parsed template doc tags
      */
     protected $_template_tags = array();
 
@@ -52,6 +57,8 @@ class MolajoDocumentHTML extends MolajoDocument
     protected $_caching = null;
 
     /**
+     * __construct
+     *
      * Class constructor
      *
      * @param   array  $options Associative array of options
@@ -69,6 +76,8 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
+     * getHeadData
+     *
      * Get the HTML document head data
      *
      * @return  array  The document head data in array form
@@ -90,6 +99,8 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
+     * setHeadData
+     *
      * Set the HTML document head data
      *
      * @param   array  $data    The document head data in array form
@@ -101,14 +112,11 @@ class MolajoDocumentHTML extends MolajoDocument
         }
 
         $this->title = (isset($data['title']) && !empty($data['title'])) ? $data['title'] : $this->title;
-        $this->description = (isset($data['description']) && !empty($data['description'])) ? $data['description']
-                : $this->description;
+        $this->description = (isset($data['description']) && !empty($data['description'])) ? $data['description'] : $this->description;
         $this->link = (isset($data['link']) && !empty($data['link'])) ? $data['link'] : $this->link;
-        $this->_metaTags = (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags']
-                : $this->_metaTags;
+        $this->_metaTags = (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags'] : $this->_metaTags;
         $this->_links = (isset($data['links']) && !empty($data['links'])) ? $data['links'] : $this->_links;
-        $this->_styleSheets = (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets']
-                : $this->_styleSheets;
+        $this->_styleSheets = (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets'] : $this->_styleSheets;
         $this->_style = (isset($data['style']) && !empty($data['style'])) ? $data['style'] : $this->_style;
         $this->_scripts = (isset($data['scripts']) && !empty($data['scripts'])) ? $data['scripts'] : $this->_scripts;
         $this->_script = (isset($data['script']) && !empty($data['script'])) ? $data['script'] : $this->_script;
@@ -116,13 +124,14 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
+     * mergeHeadData
+     *
      * Merge the HTML document head data
      *
      * @param   array  $data    The document head data in array form
      */
     public function mergeHeadData($data)
     {
-
         if (empty($data) || !is_array($data)) {
             return;
         }
@@ -241,50 +250,22 @@ class MolajoDocumentHTML extends MolajoDocument
             return parent::$_buffer;
         }
 
-        $result = null;
         if (isset(parent::$_buffer[$type][$name])) {
             return parent::$_buffer[$type][$name];
         }
 
-        // If the buffer has been explicitly turned off don't display or attempt to render
-        if ($result === false) {
-            return null;
-        }
-
         $renderer = $this->loadRenderer($type);
-        if ($this->_caching == true && $type == 'modules') {
-            $cache = MolajoFactory::getCache('com_modules', '');
-            $hash = md5(serialize(array($name, $attribs, $result, $renderer)));
-            $cbuffer = $cache->get('cbuffer_'.$type);
 
-            if (isset($cbuffer[$hash])) {
-                return JCache::getWorkarounds($cbuffer[$hash], array('mergehead' => 1));
-            } else {
+        // todo: amy put back module caching
+        $results = $renderer->render($name, $attribs, false);
 
-                $options = array();
-                $options['nopathway'] = 1;
-                $options['nomodules'] = 1;
-                $options['modulemode'] = 1;
-
-                $this->setBuffer($renderer->render($name, $attribs, $result), $type, $name);
-
-                $data = parent::$_buffer[$type][$name];
-
-                $tmpdata = JCache::setWorkarounds($data, $options);
-
-                $cbuffer[$hash] = $tmpdata;
-
-                $cache->store($cbuffer, 'cbuffer_'.$type);
-            }
-
-        } else {
-            $this->setBuffer($renderer->render($name, $attribs, $result), $type, $name);
-        }
-
+        $this->setBuffer($results, $type, $name);
         return parent::$_buffer[$type][$name];
     }
 
     /**
+     * setBuffer
+     *
      * Set the contents a document includes
      *
      * @param   string  $content    The content to be set in the buffer.
@@ -292,19 +273,17 @@ class MolajoDocumentHTML extends MolajoDocument
      */
     public function setBuffer($content, $options = array())
     {
-        // The following code is just for backward compatibility.
-        if (func_num_args() > 1
-            && !is_array($options)) {
-            $args = func_get_args();
-            $options = array();
-            $options['type'] = $args[1];
-            $options['name'] = (isset($args[2])) ? $args[2] : null;
-        }
-
+        if (func_num_args() > 1 && !is_array($options)) {
+			$args = func_get_args(); $options = array();
+			$options['type'] = $args[1];
+			$options['name'] = (isset($args[2])) ? $args[2] : null;
+		}
         parent::$_buffer[$options['type']][$options['name']] = $content;
     }
 
     /**
+     * parse
+     *
      * Parses the template and populates the buffer
      *
      * @param   array  $parameters  parameters for fetching the template
@@ -316,6 +295,8 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
+     * render
+     *
      * Outputs the template to the browser.
      *
      * @param   boolean  $cache        If true, cache the output
@@ -337,6 +318,8 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
+     * countModules
+     *
      * Count the modules based on the given condition
      *
      * @param   string  $condition  The condition to use
@@ -349,12 +332,16 @@ class MolajoDocumentHTML extends MolajoDocument
 
         $operators = '(\+|\-|\*|\/|==|\!=|\<\>|\<|\>|\<=|\>=|and|or|xor)';
         $words = preg_split('# '.$operators.' #', $condition, null, PREG_SPLIT_DELIM_CAPTURE);
-        for ($i = 0, $n = count($words); $i < $n; $i += 2)
-        {
-            // odd parts (modules)
+
+        for ($i = 0, $n = count($words); $i < $n; $i += 2) {
             $name = strtolower($words[$i]);
-            $words[$i] = ((isset(parent::$_buffer['modules'][$name])) && (parent::$_buffer['modules'][$name] === false))
-                    ? 0 : count(MolajoModuleHelper::getModules($name));
+
+            if ((isset(parent::$_buffer['modules'][$name]))
+                && (parent::$_buffer['modules'][$name] === false)) {
+                $words[$i] = 0;
+            } else {
+                $words[$i] = count(MolajoModuleHelper::getModules($name));
+            }
         }
 
         $str = 'return '.implode(' ', $words).';';
@@ -403,26 +390,19 @@ class MolajoDocumentHTML extends MolajoDocument
     {
         $contents = '';
 
-        $directory = '/users/amystephen/sites/molajo/extensions/templates/molajito/';
-        $filename = 'index.php';
-
-        // Check to see if we have a valid template file
         if (file_exists($directory.'/'.$filename)) {
-            // Store the file path
             $this->_file = $directory.'/'.$filename;
 
-            //get the file content
             ob_start();
             require $directory.'/'.$filename;
             $contents = ob_get_contents();
             ob_end_clean();
         }
 
-        // Try to find a favicon by checking the template and root folder
+        /** Favicon */
         $path = $directory.'/';
-        $dirs = array($path, MOLAJO_BASE_FOLDER.'/');
-        foreach ($dirs as $dir)
-        {
+        $dirs = array($path, $path.'images/', MOLAJO_BASE_FOLDER.'/');
+        foreach ($dirs as $dir) {
             $icon = $dir.'favicon.ico';
             if (file_exists($icon)) {
                 $path = str_replace(MOLAJO_BASE_FOLDER.'/', '', $dir);
@@ -436,13 +416,20 @@ class MolajoDocumentHTML extends MolajoDocument
     }
 
     /**
+     * _fetchTemplate
+     *
      * Fetch the template, and initialise the parameters
      *
      * @param   array  $parameters  parameters to determine the template
      */
     protected function _fetchTemplate($parameters = array())
     {
-        $directory = isset($parameters['directory']) ? $parameters['directory'] : 'templates';
+        if (isset($parameters['directory'])) {
+            $directory = $parameters['directory'];
+        } else {
+            $directory = MOLAJO_EXTENSION_TEMPLATES;
+        }
+
         $filter = JFilterInput::getInstance();
         $template = $filter->clean($parameters['template'], 'cmd');
         $file = $filter->clean($parameters['file'], 'cmd');
@@ -452,22 +439,17 @@ class MolajoDocumentHTML extends MolajoDocument
             $template = 'system';
         }
 
-        // Load the language file for the template
+        /** Language File */
         $lang = MolajoFactory::getLanguage();
-        // 1.5 or core then 1.6
-        // todo: amy go thru all the language loads and make certain paths are simplified and correct
-        $lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load('tpl_'.$template, $directory.'/'.$template, null, false, false)
-        || $lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-        || $lang->load('tpl_'.$template, $directory.'/'.$template, $lang->getDefault(), false, false);
+        $lang->load('template_'.$template, MOLAJO_EXTENSION_TEMPLATES.'/'.$template, $lang->getDefault(), false, false);
 
-
-        // Assign the variables
+        /** Variables */
         $this->template = $template;
         $this->baseurl = JURI::base(true);
+
         $this->parameters = isset($parameters['parameters']) ? $parameters['parameters'] : new JRegistry;
 
-        // Load
+        /** Load Template */
         $this->_template = $this->_loadTemplate($directory.'/'.$template, $file);
     }
 
@@ -520,7 +502,8 @@ class MolajoDocumentHTML extends MolajoDocument
             $replace[] = $doc;
             $with[] = $this->getBuffer($args['type'], $args['name'], $args['attribs']);
         }
-
+//echo 'Replace <pre>';var_dump($replace);'</pre>';
+//echo 'With <pre>';var_dump($with);'</pre>';
         return str_replace($replace, $with, $this->_template);
     }
 }

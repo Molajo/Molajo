@@ -32,18 +32,18 @@ $app = MolajoFactory::getApplication();
 	<form action="<?php echo MolajoRoute::_('index.php', true); ?>" method="post" id="form-login">
 	<fieldset class="input">
 		<p id="form-login-username">
-			<label for="username"><?php echo JText::_('JGLOBAL_USERNAME') ?></label>
-			<input name="username" id="username" type="text" class="inputbox" alt="<?php echo JText::_('JGLOBAL_USERNAME') ?>" size="18" />
+			<label for="username"><?php echo MolajoText::_('JGLOBAL_USERNAME') ?></label>
+			<input name="username" id="username" type="text" class="inputbox" alt="<?php echo MolajoText::_('JGLOBAL_USERNAME') ?>" size="18" />
 		</p>
 		<p id="form-login-password">
-			<label for="passwd"><?php echo JText::_('JGLOBAL_PASSWORD') ?></label>
-			<input type="password" name="password" class="inputbox" size="18" alt="<?php echo JText::_('JGLOBAL_PASSWORD') ?>" id="passwd" />
+			<label for="passwd"><?php echo MolajoText::_('JGLOBAL_PASSWORD') ?></label>
+			<input type="password" name="password" class="inputbox" size="18" alt="<?php echo MolajoText::_('JGLOBAL_PASSWORD') ?>" id="passwd" />
 		</p>
 		<p id="form-login-remember">
-			<label for="remember"><?php echo JText::_('JGLOBAL_REMEMBER_ME') ?></label>
-			<input type="checkbox" name="remember" class="inputbox" value="yes" alt="<?php echo JText::_('JGLOBAL_REMEMBER_ME') ?>" id="remember" />
+			<label for="remember"><?php echo MolajoText::_('JGLOBAL_REMEMBER_ME') ?></label>
+			<input type="checkbox" name="remember" class="inputbox" value="yes" alt="<?php echo MolajoText::_('JGLOBAL_REMEMBER_ME') ?>" id="remember" />
 		</p>
-		<input type="submit" name="Submit" class="button" value="<?php echo JText::_('JLOGIN') ?>" />
+		<input type="submit" name="Submit" class="button" value="<?php echo MolajoText::_('JLOGIN') ?>" />
 		<input type="hidden" name="option" value="com_users" />
 		<input type="hidden" name="task" value="user.login" />
 		<input type="hidden" name="return" value="<?php echo base64_encode(JURI::base()) ?>" />

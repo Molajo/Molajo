@@ -102,7 +102,7 @@ JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
  */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
-
+ 
 /**
 print_r(get_defined_constants(true));
 */

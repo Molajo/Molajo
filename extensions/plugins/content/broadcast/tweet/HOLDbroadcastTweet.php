@@ -18,15 +18,15 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	 * Make certain Tamka Library is ready to load
 	 */
 		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
-		  		JError::raiseWarning( '700', JText::_('The Tamka Library is required for this extension.' ));
+		  		JError::raiseWarning( '700', MolajoText::_('The Tamka Library is required for this extension.' ));
 		 		return NULL;
 		 }
 		 if (!function_exists('tamkaimport')) {
-		 		JError::raiseWarning( '725', JText::_('The Tamka Library must be enabled for this extension.' ));
+		 		JError::raiseWarning( '725', MolajoText::_('The Tamka Library must be enabled for this extension.' ));
 		 		return NULL;
 		 }
 		 if (!version_compare('0.1', 'TAMKA')) {
-		 		JError::raiseWarning( '750', JText::_('The Tamka Library Version is outdated.' ));
+		 		JError::raiseWarning( '750', MolajoText::_('The Tamka Library Version is outdated.' ));
 		 		return NULL;
 		 }
 		tamkaimport('tamka.routehelper.content');
@@ -51,7 +51,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 		$loadedExtensionsArray = get_loaded_extensions ();
 		$isLoaded = extension_loaded  ( 'curl'  );
 		if (!$isLoaded) {
-			JError::raiseWarning( '800', JText::_('The PHP curl extension must be loaded before the Tamka Twitter Post Plugin can function. Ask your system administrator to activate curl in PHP.' ));
+			JError::raiseWarning( '800', MolajoText::_('The PHP curl extension must be loaded before the Tamka Twitter Post Plugin can function. Ask your system administrator to activate curl in PHP.' ));
 			return NULL;
 		}
 

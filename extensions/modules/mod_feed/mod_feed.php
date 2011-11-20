@@ -20,7 +20,7 @@ $rssrtl	= $parameters->get('rssrtl', 0);
 if (empty ($rssurl))
 {
 	echo '<div>';
-	echo JText::_('MOD_FEED_ERR_NO_URL');
+	echo MolajoText::_('MOD_FEED_ERR_NO_URL');
 	echo '</div>';
 	return;
 }

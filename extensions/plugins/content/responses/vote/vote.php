@@ -57,7 +57,7 @@ class plgContentVote extends MolajoPlugin
 				$img .= $starImageOff;
 			}
 			$html .= '<span class="content_rating">';
-			$html .= JText::sprintf( 'PLG_VOTE_USER_RATING', $img, $rating_count );
+			$html .= MolajoText::sprintf( 'PLG_VOTE_USER_RATING', $img, $rating_count );
 			$html .= "</span>\n<br />\n";
 
 			if ( $view == 'article' && $row->state == 1)
@@ -67,14 +67,14 @@ class plgContentVote extends MolajoPlugin
 
 				$html .= '<form method="post" action="'.$uri->toString().'">';
 				$html .= '<div class="content_vote">';
-				$html .= JText::_( 'PLG_VOTE_POOR' );
-				$html .= '<input type="radio" title="'.JText::sprintf('PLG_VOTE_VOTE', '1').'" name="user_rating" value="1" />';
-				$html .= '<input type="radio" title="'.JText::sprintf('PLG_VOTE_VOTE', '2').'" name="user_rating" value="2" />';
-				$html .= '<input type="radio" title="'.JText::sprintf('PLG_VOTE_VOTE', '3').'" name="user_rating" value="3" />';
-				$html .= '<input type="radio" title="'.JText::sprintf('PLG_VOTE_VOTE', '4').'" name="user_rating" value="4" />';
-				$html .= '<input type="radio" title="'.JText::sprintf('PLG_VOTE_VOTE', '5').'" name="user_rating" value="5" checked="checked" />';
-				$html .= JText::_( 'PLG_VOTE_BEST' );
-				$html .= '&#160;<input class="button" type="submit" name="submit_vote" value="'. JText::_( 'PLG_VOTE_RATE' ) .'" />';
+				$html .= MolajoText::_( 'PLG_VOTE_POOR' );
+				$html .= '<input type="radio" title="'.MolajoText::sprintf('PLG_VOTE_VOTE', '1').'" name="user_rating" value="1" />';
+				$html .= '<input type="radio" title="'.MolajoText::sprintf('PLG_VOTE_VOTE', '2').'" name="user_rating" value="2" />';
+				$html .= '<input type="radio" title="'.MolajoText::sprintf('PLG_VOTE_VOTE', '3').'" name="user_rating" value="3" />';
+				$html .= '<input type="radio" title="'.MolajoText::sprintf('PLG_VOTE_VOTE', '4').'" name="user_rating" value="4" />';
+				$html .= '<input type="radio" title="'.MolajoText::sprintf('PLG_VOTE_VOTE', '5').'" name="user_rating" value="5" checked="checked" />';
+				$html .= MolajoText::_( 'PLG_VOTE_BEST' );
+				$html .= '&#160;<input class="button" type="submit" name="submit_vote" value="'. MolajoText::_( 'PLG_VOTE_RATE' ) .'" />';
 				$html .= '<input type="hidden" name="task" value="article.vote" />';
 				$html .= '<input type="hidden" name="hitcount" value="0" />';
 				$html .= '<input type="hidden" name="url" value="'.  $uri->toString() .'" />';

@@ -160,8 +160,8 @@ class protectBackup extends MolajoPlugin	{
         foreach ( $emailAddressArray as $emailAddress ) {
                 $bcc[] = $emailAddress;
         }
-        $emailSubject	= '['.$sitename.JText::_( ' Database Backup ').$backupCreatedDate.']';
-        $emailMessage = JText::_( 'ATTACHED' );
+        $emailSubject	= '['.$sitename.MolajoText::_( ' Database Backup ').$backupCreatedDate.']';
+        $emailMessage = MolajoText::_( 'ATTACHED' );
         $mode = 1;
         $attachment = $zipFilename;
 

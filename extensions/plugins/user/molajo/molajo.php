@@ -44,14 +44,14 @@ class plgUserMolajo extends MolajoPlugin
 				$lang->load('plg_user_molajo', JPATH_ADMINISTRATOR);
 
 				// Compute the mail subject.
-				$emailSubject = JText::sprintf(
+				$emailSubject = MolajoText::sprintf(
 					'PLG_USER_JOOMLA_NEW_USER_EMAIL_SUBJECT',
 					$user['name'],
 					$config->get('sitename')
 				);
 
 				// Compute the mail body.
-				$emailBody = JText::sprintf(
+				$emailBody = MolajoText::sprintf(
 					'PLG_USER_JOOMLA_NEW_USER_EMAIL_BODY',
 					$user['name'],
 					$config->get('sitename'),
@@ -74,7 +74,7 @@ class plgUserMolajo extends MolajoPlugin
 
 				if (!$mail->Send()) {
 					// TODO: Probably should raise a plugin error but this event is not error checked.
-					JError::raiseWarning(500, JText::_('ERROR_SENDING_EMAIL'));
+					JError::raiseWarning(500, MolajoText::_('ERROR_SENDING_EMAIL'));
 				}
 		}
 		else {
@@ -99,7 +99,7 @@ class plgUserMolajo extends MolajoPlugin
 		}
 
 		if ($instance->get('block') == 1) {
-			return JError::raiseWarning('SOME_ERROR_CODE', JText::_('JERROR_NOLOGIN_BLOCKED'));
+			return JError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('JERROR_NOLOGIN_BLOCKED'));
 		}
 
 		// Register the needed session variables

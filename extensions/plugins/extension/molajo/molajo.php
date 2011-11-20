@@ -236,7 +236,7 @@ class plgExtensionMolajo extends MolajoPlugin
 			if (strlen($data))
 			{
 				// 	we have a single entry in the update server line, let us presume this is an extension line
-				$this->addUpdateSite(JText::_('PLG_EXTENSION_JOOMLA_UNKNOWN_SITE'), 'extension', $data, true);
+				$this->addUpdateSite(MolajoText::_('PLG_EXTENSION_JOOMLA_UNKNOWN_SITE'), 'extension', $data, true);
 			}
 		}
 	}

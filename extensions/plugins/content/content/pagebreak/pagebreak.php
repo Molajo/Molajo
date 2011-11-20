@@ -182,7 +182,7 @@ class plgContentPagebreak extends MolajoPlugin
 	 */
 	protected function _createTOC(&$row, &$matches, &$page)
 	{   
-		$heading = isset($row->title) ? $row->title : JText::_('PLG_CONTENT_PAGEBREAK_NO_TITLE');
+		$heading = isset($row->title) ? $row->title : MolajoText::_('PLG_CONTENT_PAGEBREAK_NO_TITLE');
 
           
 		// TOC header.
@@ -191,7 +191,7 @@ class plgContentPagebreak extends MolajoPlugin
 		
 		if($this->parameters->get('article_index')==1)
 		{
-			$headingtext= JText::_('PLG_CONTENT_PAGEBREAK_ARTICLE_INDEX');
+			$headingtext= MolajoText::_('PLG_CONTENT_PAGEBREAK_ARTICLE_INDEX');
 	        
 			if($this->parameters->get('article_index_text'))
 	        {
@@ -226,10 +226,10 @@ class plgContentPagebreak extends MolajoPlugin
 				} elseif (@$attrs2['title']) {
 					$title	= stripslashes($attrs2['title']);
 				} else {
-					$title	= JText::sprintf('Page #', $i);
+					$title	= MolajoText::sprintf('Page #', $i);
 				}
 			} else {
-				$title	= JText::sprintf('Page #', $i);
+				$title	= MolajoText::sprintf('Page #', $i);
 			}
 
 			$row->toc .= '
@@ -250,7 +250,7 @@ class plgContentPagebreak extends MolajoPlugin
 			<li>
 				
 					<a href="'. $link .'" class="toclink">'
-					. JText::_('PLG_CONTENT_PAGEBREAK_ALL_PAGES') .
+					. MolajoText::_('PLG_CONTENT_PAGEBREAK_ALL_PAGES') .
 					'</a>
 			
 			</li>
@@ -266,7 +266,7 @@ class plgContentPagebreak extends MolajoPlugin
 	protected function _createNavigation(&$row, $page, $n)
 	{
 		$pnSpace = '';
-		if (JText::_('JGLOBAL_LT') || JText::_('JGLOBAL_LT')) {
+		if (MolajoText::_('JGLOBAL_LT') || MolajoText::_('JGLOBAL_LT')) {
 			$pnSpace = ' ';
 		}
 
@@ -275,9 +275,9 @@ class plgContentPagebreak extends MolajoPlugin
 
 			$link_next = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($page_next));
 			// Next >>
-			$next = '<a href="'. $link_next .'">'.JText::_('JNEXT').$pnSpace.JText::_('JGLOBAL_GT').JText::_('JGLOBAL_GT') .'</a>';
+			$next = '<a href="'. $link_next .'">'.MolajoText::_('JNEXT').$pnSpace.MolajoText::_('JGLOBAL_GT').MolajoText::_('JGLOBAL_GT') .'</a>';
 		} else {
-			$next = JText::_('JNEXT');
+			$next = MolajoText::_('JNEXT');
 		}
 
 		if ($page > 0) {
@@ -285,9 +285,9 @@ class plgContentPagebreak extends MolajoPlugin
 
 			$link_prev = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($page_prev));
 			// << Prev
-			$prev = '<a href="'. $link_prev .'">'. JText::_('JGLOBAL_LT').JText::_('JGLOBAL_LT').$pnSpace.JText::_('JPREV') .'</a>';
+			$prev = '<a href="'. $link_prev .'">'. MolajoText::_('JGLOBAL_LT').MolajoText::_('JGLOBAL_LT').$pnSpace.MolajoText::_('JPREV') .'</a>';
 		} else {
-			$prev = JText::_('JPREV');
+			$prev = MolajoText::_('JPREV');
 		}
 
 		$row->text .= '<ul><li>'.$prev.' </li><li>'.$next .'</li></ul>';

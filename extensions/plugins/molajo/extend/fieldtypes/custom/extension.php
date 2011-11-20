@@ -79,7 +79,7 @@ class MolajoFormFieldExtension extends JFormFieldList
 		$lang = MolajoFactory::getLanguage();
 		foreach ($options as $i=>$option) {
                     $lang->load($option->value, JPATH_ADMINISTRATOR, null, false, false);
-                    $options[$i]->text = JText::_($option->text);
+                    $options[$i]->text = MolajoText::_($option->text);
 		}
 
 		// Check for a database error.

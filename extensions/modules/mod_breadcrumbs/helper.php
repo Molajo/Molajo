@@ -29,7 +29,7 @@ class modBreadCrumbsHelper
 		if ($parameters->get('showHome', 1))
 		{
 			$item = new stdClass();
-			$item->name = $parameters->get('homeText', JText::_('MOD_BREADCRUMBS_HOME'));
+			$item->name = $parameters->get('homeText', MolajoText::_('MOD_BREADCRUMBS_HOME'));
 			$item->link = MolajoRoute::_('index.php?Itemid='.$app->getMenu()->getDefault()->id);
 			array_unshift($items, $item);
 		}

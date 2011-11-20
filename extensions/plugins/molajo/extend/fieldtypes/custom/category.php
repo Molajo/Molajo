@@ -73,7 +73,7 @@ class JFormFieldCategory extends JFormFieldList
                 }
 
                 if (isset($this->element['show_root'])) {
-                        array_unshift($options, JHtml::_('select.option', '0', JText::_('JGLOBAL_ROOT')));
+                        array_unshift($options, JHtml::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
                 }
 
 		// if no value exists, try to load a selected filter category from the list view

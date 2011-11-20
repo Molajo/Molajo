@@ -154,7 +154,7 @@
 		</field>
 
 		<field
-			name="debug_lang"
+			name="debug_language"
 			type="radio"
 			default="0"
 			label="COM_CONFIG_FIELD_DEBUG_LANG_LABEL"

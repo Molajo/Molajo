@@ -79,7 +79,7 @@ class protectBanned
 		}
 	
 		if ($banned == true) {
-			JError::raiseError( 600, JText::_("IP Address has been banned: ").$userip );
+			JError::raiseError( 600, MolajoText::_("IP Address has been banned: ").$userip );
 			return true;
 		}
         }
@@ -107,7 +107,7 @@ class protectBanned
 		}
 	
 		if ($banned == true) {
-			JError::raiseError( 601, JText::_("Email address has been banned: ").$useremail );
+			JError::raiseError( 601, MolajoText::_("Email address has been banned: ").$useremail );
 			return true;
 		}
         }
@@ -135,7 +135,7 @@ class protectBanned
 		}
 
 		if ($banned == true) {
-			JError::raiseError( 602, JText::_("URL has been banned: ").$useruri );
+			JError::raiseError( 602, MolajoText::_("URL has been banned: ").$useruri );
 			return true;
 		}
 		

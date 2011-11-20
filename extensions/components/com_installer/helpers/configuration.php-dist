@@ -84,7 +84,7 @@ class MolajoConfig {
 
 	/* Debug Settings */
 	public $debug = '0';
-	public $debug_lang = '0';
+	public $debug_language = '0';
 
 	/* Meta Settings */
 	public $MetaDesc = 'Long Live Molajo!';

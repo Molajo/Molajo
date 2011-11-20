@@ -33,7 +33,7 @@ class plgAuthenticationMolajo extends MolajoPlugin
         /** disallow empty password */
 		if (empty($credentials['password'])) {
 			$response->status = JAUTHENTICATE_STATUS_FAILURE;
-			$response->error_message = JText::_('JGLOBAL_AUTH_EMPTY_PASS_NOT_ALLOWED');
+			$response->error_message = MolajoText::_('JGLOBAL_AUTH_EMPTY_PASS_NOT_ALLOWED');
 			return false;
 		}
 
@@ -53,7 +53,7 @@ class plgAuthenticationMolajo extends MolajoPlugin
 		if ($result) {
         } else {
 			$response->status = JAUTHENTICATE_STATUS_FAILURE;
-			$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
+			$response->error_message = MolajoText::_('JGLOBAL_AUTH_NO_USER');
             return false;
 		}
 
@@ -67,7 +67,7 @@ class plgAuthenticationMolajo extends MolajoPlugin
         if ($crypt == $testcrypt) {
         } else {
             $response->status = JAUTHENTICATE_STATUS_FAILURE;
-            $response->error_message = JText::_('JGLOBAL_AUTH_INVALID_PASS');
+            $response->error_message = MolajoText::_('JGLOBAL_AUTH_INVALID_PASS');
         }
 
         /** retrieve user information */

@@ -66,10 +66,10 @@ As is the case with CSS files, files with .js file extensions will be loaded by 
 
 The language folder is used to define language strings for translation.
 
-language
-    en-GB
-        en-GB.template_sample.ini
-        en-GB.template_sample.sys.ini
+    language
+        en-GB
+            en-GB.template_sample.ini
+            en-GB.template_sample.sys.ini
 
 ### 6. page folder ###
 
@@ -179,7 +179,7 @@ To determine what wrap options are available, review the list of subfolders defi
 
 #### Override or create new Wraps ####
 
-Wraps can be created or overridden. See the extensions/layouts/README for more information on how to do so.
+Wraps can be created or overridden. See the `extensions/layouts/README` for more information on how to do so.
 
 ## Sharing Templates ##
 

@@ -11,14 +11,14 @@ defined('MOLAJO') or die;
 /**
  * Abstract class for a renderer
  *
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Document
  * @since       1.0
  */
 class MolajoDocumentRenderer extends JObject
 {
     /**
-     * Reference to the MolajoDocument object that instantiated the renderer
+     * Reference to the document object that instantiated the renderer
      *
      * @var    object
      * @since  11.1
@@ -34,9 +34,11 @@ class MolajoDocumentRenderer extends JObject
     protected $_mime = "text/html";
 
     /**
+     * __construct
+     *
      * Class constructor
      *
-     * @param   object   $doc  A reference to the MolajoDocument object that instantiated the renderer
+     * @param   object   $doc  A reference to the document object that instantiated the renderer
      *
      * @since   11.1
      */
@@ -46,6 +48,8 @@ class MolajoDocumentRenderer extends JObject
     }
 
     /**
+     * render
+     *
      * Renders a script and returns the results as a string
      *
      * @param   string   $name     The name of the element to render
@@ -55,9 +59,7 @@ class MolajoDocumentRenderer extends JObject
      * @return  string   The output of the script
      * @since   11.1
      */
-    public function render($name, $parameters = null, $content = null)
-    {
-    }
+    public function render($name, $parameters = null, $content = null) {}
 
     /**
      * Return the content type of the renderer

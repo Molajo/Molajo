@@ -32,7 +32,7 @@ class MolajoApplication extends JObject
     protected $_messageQueue = array();
 
     /**
-     * The name of the application.
+     * Name of the application.
      *
      * @var    array
      * @since  1.0
@@ -40,7 +40,7 @@ class MolajoApplication extends JObject
     protected $_name = null;
 
     /**
-     * The scope of the application.
+     * Scope of the application.
      *
      * @var    string
      * @since  1.0
@@ -48,7 +48,7 @@ class MolajoApplication extends JObject
     public $scope = null;
 
     /**
-     * The time the request was made.
+     * Time the request was made.
      *
      * @var    date
      * @since  1.0
@@ -56,7 +56,7 @@ class MolajoApplication extends JObject
     public $requestTime = null;
 
     /**
-     * The time the request was made, expressed as a Unix timestamp.
+     * Time the request was made, expressed as a Unix timestamp.
      *
      * @var    integer
      * @since  1.0
@@ -64,7 +64,7 @@ class MolajoApplication extends JObject
     public $startTime = null;
 
     /**
-     * The application input object.
+     * Application input object.
      *
      * @var    integer
      * @since  1.0
@@ -264,8 +264,7 @@ class MolajoApplication extends JObject
 
         /** Load Library Language Files for the Base and Application */
         $language = MolajoFactory::getLanguage();
-        $language->load('lib_molajo', MOLAJO_BASE_FOLDER);
-        $language->load('lib_molajo', MOLAJO_APPLICATION_PATH);
+        $language->load('lib_molajo', MOLAJO_EXTENSION_TEMPLATES);
 
         /** Set User Editor in Configuration */
         $editor = MolajoFactory::getUser()->getParam('editor', $config->get('editor', 'none'));
@@ -484,24 +483,22 @@ class MolajoApplication extends JObject
      */
     public function render()
     {
-        $session = MolajoFactory::getSession();
-        $file = $session->get('page.layout');
-
         $template = $this->getTemplate(true);
 
         $parameters = array(
             'template' => $template[0]->title,
-            'file' => $file.'.php',
+            'file' => 'index.php',
             'directory' => MOLAJO_EXTENSION_TEMPLATES,
             'parameters' => $template[0]->parameters
         );
 
         $document = MolajoFactory::getDocument();
-        $document->parse($parameters);
 
+        $document->parse($parameters);
         $this->triggerEvent('onBeforeRender');
 
-        JResponse::setBody($document->render(false, $parameters));
+        $body = $document->render(false, $parameters);
+        JResponse::setBody($body);
 
         $this->triggerEvent('onAfterRender');
     }

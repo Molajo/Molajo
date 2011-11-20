@@ -56,7 +56,7 @@ class JFormFieldGroupedList extends JFormField
 					// Create a new option object based on the <option /> element.
 					$tmp = JHtml::_('select.option',
 						($element['value']) ? (string) $element['value'] : trim((string) $element),
-						JText::alt(trim((string) $element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
+						MolajoText::alt(trim((string) $element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
 						((string) $element['disabled']=='true'));
 
 					// Set some option attributes.
@@ -74,7 +74,7 @@ class JFormFieldGroupedList extends JFormField
 
 					// Get the group label.
 					if ($groupLabel = (string) $element['label']) {
-						$label = JText::_($groupLabel);
+						$label = MolajoText::_($groupLabel);
 					}
 
 					// Initialize the group if necessary.
@@ -92,8 +92,8 @@ class JFormFieldGroupedList extends JFormField
 
 						// Create a new option object based on the <option /> element.
 						$tmp = JHtml::_('select.option',
-							($option['value']) ? (string) $option['value'] : JText::_(trim((string) $option)),
-							JText::_(trim((string) $option)), 'value', 'text',
+							($option['value']) ? (string) $option['value'] : MolajoText::_(trim((string) $option)),
+							MolajoText::_(trim((string) $option)), 'value', 'text',
 							((string) $option['disabled']=='true'));
 
 						// Set some option attributes.
@@ -113,7 +113,7 @@ class JFormFieldGroupedList extends JFormField
 
 				// Unknown element type.
 				default:
-					JError::raiseError(500, JText::sprintf('MOLAJO_FORM_ERROR_FIELDS_GROUPEDLIST_ELEMENT_NAME', $element->getName()));
+					JError::raiseError(500, MolajoText::sprintf('MOLAJO_FORM_ERROR_FIELDS_GROUPEDLIST_ELEMENT_NAME', $element->getName()));
 					break;
 			}
 		}

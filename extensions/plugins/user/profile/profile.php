@@ -118,10 +118,10 @@ class plgUserProfile extends MolajoPlugin
 	public static function tos($value)
 	{
 		if ($value) {
-			return JText::_('JYES');
+			return MolajoText::_('JYES');
 		}
 		else {
-			return JText::_('JNO');
+			return MolajoText::_('JNO');
 		}
 	}
 

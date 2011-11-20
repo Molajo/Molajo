@@ -48,7 +48,7 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/language.php', 'MolajoLanguage');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/language.php', 'MolajoLanguage');
 
 /**
  *  Application

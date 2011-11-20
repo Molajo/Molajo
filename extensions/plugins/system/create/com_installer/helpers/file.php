@@ -25,7 +25,7 @@ class MolajoFileHelper
             if (file_exists($file)) {
                 JLoader::register($class, $file);
             } else {
-                JError::raiseNotice(500, JText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.$class.' '.$file), 'error');
+                JError::raiseNotice(500, MolajoText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.$class.' '.$file), 'error');
                 return false;
             }
         }

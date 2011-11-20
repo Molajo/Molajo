@@ -6756,7 +6756,7 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 }
 
 jQuery.fn.extend({
-	load: function( url, parameters, callback ) {
+	load: function( url, params, callback ) {
 		if ( typeof url !== "string" && _load ) {
 			return _load.apply( this, arguments );
 
@@ -6775,16 +6775,16 @@ jQuery.fn.extend({
 		var type = "GET";
 
 		// If the second parameter was provided
-		if ( parameters ) {
+		if ( params ) {
 			// If it's a function
-			if ( jQuery.isFunction( parameters ) ) {
+			if ( jQuery.isFunction( params ) ) {
 				// We assume that it's the callback
-				callback = parameters;
-				parameters = undefined;
+				callback = params;
+				params = undefined;
 
 			// Otherwise, build a param string
-			} else if ( typeof parameters === "object" ) {
-				parameters = jQuery.param( parameters, jQuery.ajaxSettings.traditional );
+			} else if ( typeof params === "object" ) {
+				params = jQuery.param( params, jQuery.ajaxSettings.traditional );
 				type = "POST";
 			}
 		}
@@ -6796,7 +6796,7 @@ jQuery.fn.extend({
 			url: url,
 			type: type,
 			dataType: "html",
-			data: parameters,
+			data: params,
 			// Complete callback (responseText is used internally)
 			complete: function( jqXHR, status, responseText ) {
 				// Store the response as specified by the jqXHR object
@@ -7383,9 +7383,9 @@ jQuery.extend({
 
 		} else {
 			// If traditional, encode the "old" way (the way 1.3.2 or older
-			// did it), otherwise encode parameters recursively.
+			// did it), otherwise encode params recursively.
 			for ( var prefix in a ) {
-				buildParameters( prefix, a[ prefix ], traditional, add );
+				buildParams( prefix, a[ prefix ], traditional, add );
 			}
 		}
 
@@ -7394,7 +7394,7 @@ jQuery.extend({
 	}
 });
 
-function buildParameters( prefix, obj, traditional, add ) {
+function buildParams( prefix, obj, traditional, add ) {
 	if ( jQuery.isArray( obj ) ) {
 		// Serialize array item.
 		jQuery.each( obj, function( i, v ) {
@@ -7410,14 +7410,14 @@ function buildParameters( prefix, obj, traditional, add ) {
 				// a server error. Possible fixes are to modify rack's
 				// deserialization algorithm or to provide an option or flag
 				// to force array serialization to be shallow.
-				buildParameters( prefix + "[" + ( typeof v === "object" || jQuery.isArray(v) ? i : "" ) + "]", v, traditional, add );
+				buildParams( prefix + "[" + ( typeof v === "object" || jQuery.isArray(v) ? i : "" ) + "]", v, traditional, add );
 			}
 		});
 
 	} else if ( !traditional && obj != null && typeof obj === "object" ) {
 		// Serialize object item.
 		for ( var name in obj ) {
-			buildParameters( prefix + "[" + name + "]", obj[ name ], traditional, add );
+			buildParams( prefix + "[" + name + "]", obj[ name ], traditional, add );
 		}
 
 	} else {

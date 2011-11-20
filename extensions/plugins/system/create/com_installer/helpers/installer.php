@@ -25,32 +25,32 @@ class InstallerHelper
 	public static function addSubmenu($vName = 'install')
 	{
 		JSubMenuHelper::addEntry(
-			JText::_('PLG_SYSTEM_CREATE_SUBMENU_CREATE'),
+			MolajoText::_('PLG_SYSTEM_CREATE_SUBMENU_CREATE'),
 			'index.php?option=com_installer&view=create',
 			$vName == 'create'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_INSTALLER_SUBMENU_INSTALL'),
+			MolajoText::_('COM_INSTALLER_SUBMENU_INSTALL'),
 			'index.php?option=com_installer',
 			$vName == 'install'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_INSTALLER_SUBMENU_UPDATE'),
+			MolajoText::_('COM_INSTALLER_SUBMENU_UPDATE'),
 			'index.php?option=com_installer&view=update',
 			$vName == 'update'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_INSTALLER_SUBMENU_MANAGE'),
+			MolajoText::_('COM_INSTALLER_SUBMENU_MANAGE'),
 			'index.php?option=com_installer&view=manage',
 			$vName == 'manage'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_INSTALLER_SUBMENU_DISCOVER'),
+			MolajoText::_('COM_INSTALLER_SUBMENU_DISCOVER'),
 			'index.php?option=com_installer&view=discover',
 			$vName == 'discover'
 		);
 		JSubMenuHelper::addEntry(
-			JText::_('COM_INSTALLER_SUBMENU_WARNINGS'),
+			MolajoText::_('COM_INSTALLER_SUBMENU_WARNINGS'),
 			'index.php?option=com_installer&view=warnings',
 			$vName == 'warnings'
 		);

@@ -72,7 +72,7 @@ class MolajoDocument extends JObject
      *
      * @var    string
      */
-    public $_generator = 'Molajo 1.0 - Flexible Content Management';
+    public $_generator = 'Molajo 1.0 - Web Application Development Framework';
 
     /**
      * Document modified date
@@ -182,11 +182,13 @@ class MolajoDocument extends JObject
     public static $_buffer = null;
 
     /**
+     * __construct
+     *
      * Class constructor.
      *
      * @param   array  $options  Associative array of options
      *
-     * @return  MolajoDocument
+     * @return  document
      *
      * @since   11.1
      */
@@ -221,20 +223,20 @@ class MolajoDocument extends JObject
         if (array_key_exists('base', $options)) {
             $this->setBase($options['base']);
         }
-
     }
 
     /**
-     * Returns the global MolajoDocument object, only creating it
-     * if it doesn't already exist.
+     * getInstance
      *
-     * @param   string  $type       The document type to instantiate
+     * Returns the global document object, creating it if not existing
+     *
+     * @param   string  $format     The document type to instantiate
      * @param   array   $attribues  Array of attributes
      *
      * @return  object  The document object.
      * @since   11.1
      */
-    public static function getInstance($type = 'html', $attributes = array())
+    public static function getInstance($format = 'html', $attributes = array())
     {
         static $instances;
 
@@ -242,27 +244,25 @@ class MolajoDocument extends JObject
             $instances = array();
         }
 
-        $signature = serialize(array($type, $attributes));
+        $signature = serialize(array($format, $attributes));
 
         if (empty($instances[$signature])) {
-            $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-            $path = dirname(__FILE__).'/'.$type.'/'.$type.'.php';
-            $ntype = null;
+            $format = preg_replace('/[^A-Z0-9_\.-]/i', '', $format);
+            $path = dirname(__FILE__).'/'.$format.'/'.$format.'.php';
+            $holdFormat = null;
 
-            // Check if the document type exists
             if (file_exists($path)) {
             } else {
-                // Default to the raw format
-                $ntype = $type;
-                $type = 'raw';
+                $holdFormat = $format;
+                $format = 'raw';
             }
 
             // Determine the path and class
-            $class = 'MolajoDocument'.ucfirst($type);
+            $class = 'MolajoDocument'.ucfirst($format);
             if (class_exists($class)) {
 
             } else {
-                $path = dirname(__FILE__).'/'.$type.'/'.$type.'.php';
+                $path = dirname(__FILE__).'/'.$format.'/'.$format.'.php';
                 if (file_exists($path)) {
                     require_once $path;
 
@@ -274,10 +274,9 @@ class MolajoDocument extends JObject
             $instance = new $class($attributes);
             $instances[$signature] = &$instance;
 
-            if (is_null($ntype)) {
+            if (is_null($holdFormat)) {
             } else {
-                // Set the type to the Document type originally requested
-                $instance->setType($ntype);
+                $instance->setType($holdFormat);
             }
         }
 
@@ -285,19 +284,23 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setType
+     *
      * Set the document type
      *
-     * @param   string  $type
+     * @param   string  $format
      *
      * @return
      * @since   11.1
      */
-    public function setType($type)
+    public function setType($format)
     {
-        $this->_type = $type;
+        $this->_type = $format;
     }
 
     /**
+     * getType
+     *
      * Returns the document type
      *
      * @return  string
@@ -309,6 +312,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getBuffer
+     *
      * Get the contents of the document buffer
      *
      * @return  The contents of the document buffer
@@ -320,6 +325,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setBuffer
+     *
      * Set the contents of the document buffer
      *
      * @param   string  $content  The content to be set in the buffer.
@@ -334,6 +341,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getMetaData
+     *
      * Gets a meta tag.
      *
      * @param   string  $name        Value of name or http-equiv tag
@@ -365,6 +374,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setMetaData
+     *
      * Sets or alters a meta tag.
      *
      * @param   string   $name        Value of name or http-equiv tag
@@ -381,11 +392,11 @@ class MolajoDocument extends JObject
 
         if ($name == 'generator') {
             $this->setGenerator($content);
-        }
-        else if ($name == 'description') {
+
+        } else if ($name == 'description') {
             $this->setDescription($content);
-        }
-        else {
+
+        } else {
             if ($http_equiv == true) {
                 $this->_metaTags['http-equiv'][$name] = $content;
 
@@ -393,98 +404,110 @@ class MolajoDocument extends JObject
                 if ($sync && strtolower($name) == 'content-type') {
                     $this->setMimeEncoding($content, false);
                 }
-            }
-            else {
+
+            } else {
                 $this->_metaTags['standard'][$name] = $content;
             }
         }
     }
 
     /**
+     * addScript
+     *
      * Adds a linked script to the page
      *
      * @param   string  $url        URL to the linked script
-     * @param   string  $type        Type of script. Defaults to 'text/javascript'
-     * @param   bool    $defer        Adds the defer attribute.
-     * @param   bool    $async        Adds the async attribute.
+     * @param   string  $format     Type of script. Defaults to 'text/javascript'
+     * @param   bool    $defer      Adds the defer attribute.
+     * @param   bool    $async      Adds the async attribute.
      * @return
      * @since    11.1
      */
-    public function addScript($url, $type = "text/javascript", $defer = false, $async = false)
+    public function addScript($url, $format = "text/javascript", $defer = false, $async = false)
     {
-        $this->_scripts[$url]['mime'] = $type;
+        $this->_scripts[$url]['mime'] = $format;
         $this->_scripts[$url]['defer'] = $defer;
         $this->_scripts[$url]['async'] = $async;
     }
 
     /**
+     * addScriptDeclaration
+     *
      * Adds a script to the page
      *
      * @param   string  $content    Script
-     * @param   string  $type    Scripting mime (defaults to 'text/javascript')
+     * @param   string  $format     Scripting mime (defaults to 'text/javascript')
      *
      * @return  void
      * @since    11.1
      */
-    public function addScriptDeclaration($content, $type = 'text/javascript')
+    public function addScriptDeclaration($content, $format = 'text/javascript')
     {
-        if (!isset($this->_script[strtolower($type)])) {
-            $this->_script[strtolower($type)] = $content;
-        }
-        else {
-            $this->_script[strtolower($type)] .= chr(13).$content;
+        if (!isset($this->_script[strtolower($format)])) {
+            $this->_script[strtolower($format)] = $content;
+
+        } else {
+            $this->_script[strtolower($format)] .= chr(13).$content;
         }
     }
 
     /**
+     * addStyleSheet
+     *
      * Adds a linked stylesheet to the page
      *
      * @param   string  $url      URL to the linked style sheet
-     * @param   string  $type     Mime encoding type
+     * @param   string  $format   Mime encoding type
      * @param   string  $media    Media type that this stylesheet applies to
      * @param   array   $attribs  Array of attributes
      *
      * @return  void
      * @since    11.1
      */
-    public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array())
+    public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array())
     {
-        $this->_styleSheets[$url]['mime'] = $type;
+        $this->_styleSheets[$url]['mime'] = $format;
         $this->_styleSheets[$url]['media'] = $media;
         $this->_styleSheets[$url]['attribs'] = $attribs;
     }
 
     /**
+     * addStyleDeclaration
+     *
      * Adds a stylesheet declaration to the page
      *
      * @param   string  $content  Style declarations
-     * @param   string  $type     Type of stylesheet (defaults to 'text/css')
+     * @param   string  $format   Type of stylesheet (defaults to 'text/css')
      *
      * @return  void
      */
-    public function addStyleDeclaration($content, $type = 'text/css')
+    public function addStyleDeclaration($content, $format = 'text/css')
     {
-        if (!isset($this->_style[strtolower($type)])) {
-            $this->_style[strtolower($type)] = $content;
-        }
-        else {
-            $this->_style[strtolower($type)] .= chr(13).$content;
+        if (!isset($this->_style[strtolower($format)])) {
+            $this->_style[strtolower($format)] = $content;
+
+        } else {
+            $this->_style[strtolower($format)] .= chr(13).$content;
         }
     }
 
     /**
+     * setCharset
+     *
      * Sets the document charset
      *
-     * @param   string  $type  Charset encoding string
+     * @param   string  $format  Charset encoding string
      *
      * @return  void
      */
-    public function setCharset($type = 'utf-8')
+    public function setCharset($format = 'utf-8')
     {
-        $this->_charset = $type;
+        $this->_charset = $format;
     }
 
     /**
+     * getCharset
+     *
      * Returns the document charset encoding.
      *
      * @return string
@@ -495,6 +518,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setLanguage
+     *
      * Sets the global document language declaration. Default is English (en-gb).
      *
      * @param   string    $lang
@@ -507,6 +532,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getLanguage
+     *
      * Returns the document language.
      *
      * @return string
@@ -517,6 +544,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setDirection
+     *
      * Sets the global document direction declaration. Default is left-to-right (ltr).
      *
      * @param   string  $lang
@@ -529,10 +558,11 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getDirection
+     *
      * Returns the document direction declaration.
      *
      * @return string
-     *
      */
     public function getDirection()
     {
@@ -540,6 +570,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setTitle
+     *
      * Sets the title of the document
      *
      * @param   string    $title
@@ -552,6 +584,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getTitle
+     *
      * Return the title of the document.
      *
      * @return  string
@@ -562,6 +596,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setBase
+     *
      * Sets the base URI of the document
      *
      * @param  string  $base
@@ -574,10 +610,11 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getBase
+     *
      * Return the base URI of the document.
      *
      * @return  string
-     *
      */
     public function getBase()
     {
@@ -585,6 +622,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setDescription
+     *
      * Sets the description of the document
      *
      * @param  string  $title
@@ -597,10 +636,11 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getDescription
+     *
      * Return the title of the page.
      *
      * @return  string
-     *
      */
     public function getDescription()
     {
@@ -608,6 +648,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setLink
+     *
      * Sets the document link
      *
      * @param  string  $url  A url
@@ -620,6 +662,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getLink
+     *
      * Returns the document base url
      *
      * @return string
@@ -630,6 +674,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setGenerator
+     *
      * Sets the document generator
      *
      * @param  string
@@ -642,6 +688,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getGenerator
+     *
      * Returns the document generator
      *
      * @return string
@@ -652,6 +700,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setModifiedDate
+     *
      * Sets the document modified date
      *
      * @param  string
@@ -664,6 +714,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * getModifiedDate
+     *
      * Returns the document modified date
      *
      * @return string
@@ -674,6 +726,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setMimeEncoding
+     *
      * Sets the document MIME encoding that is sent to the browser.
      *
      * This usually will be text/html because most browsers cannot yet
@@ -682,22 +736,23 @@ class MolajoDocument extends JObject
      * ({@link http://www.w3.org/TR/xhtml-media-types/
      * http://www.w3.org/TR/xhtml-media-types/}) for more details.
      *
-     * @param   string  $type
+     * @param   string  $format
      * @param   bool    $sync  Should the type be synced with HTML?
      *
      * @return  void
      */
-    public function setMimeEncoding($type = 'text/html', $sync = true)
+    public function setMimeEncoding($format = 'text/html', $sync = true)
     {
-        $this->_mime = strtolower($type);
+        $this->_mime = strtolower($format);
 
-        // Syncing with meta-data
         if ($sync) {
-            $this->setMetaData('content-type', $type, true, false);
+            $this->setMetaData('content-type', $format, true, false);
         }
     }
 
     /**
+     * getMimeEncoding
+     *
      * Return the document MIME encoding that is sent to the browser.
      *
      * @return  string
@@ -708,6 +763,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setLineEnd
+     *
      * Sets the line end style to Windows, Mac, Unix or a custom string.
      *
      * @param   string  $style  "win", "mac", "unix" or custom string.
@@ -733,6 +790,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * _getLineEnd
+     *
      * Returns the lineEnd
      *
      * @return  string
@@ -743,6 +802,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * setTab
+     *
      * Sets the string used to indent HTML
      *
      * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
@@ -755,6 +816,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * _getTab
+     *
      * Returns a string containing the unit for indenting HTML
      *
      * @return  string
@@ -765,20 +828,22 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * loadRenderer
+     *
      * Load a renderer
      *
-     * @param   string  $type  The renderer type
+     * @param   string  $format  The renderer type
      *
      * @return  mixed  Object or null if class does not exist
      * @since   11.1
      */
-    public function loadRenderer($type)
+    public function loadRenderer($format)
     {
-        $class = 'MolajoDocumentRenderer'.$type;
+        $class = 'MolajoDocumentRenderer'.$format;
 
         if (class_exists($class)) {
         } else {
-            $path = dirname(__FILE__).'/'.$this->_type.'/renderer/'.$type.'.php';
+            $path = dirname(__FILE__).'/'.$this->_type.'/renderer/'.$format.'.php';
 
             if (file_exists($path)) {
                 require_once $path;
@@ -793,11 +858,12 @@ class MolajoDocument extends JObject
         }
 
         $instance = new $class($this);
-
         return $instance;
     }
 
     /**
+     * parse
+     *
      * Parses the document and prepares the buffers
      *
      * @return null
@@ -808,6 +874,8 @@ class MolajoDocument extends JObject
     }
 
     /**
+     * render
+     *
      * Outputs the document
      *
      * @param   boolean  $cache     If true, cache the output

@@ -21,5 +21,5 @@ if ($evenodd == 'even') { $evenodd = 'odd'; } else { $evenodd = 'even'; } ?>
 
 <div id="data_<?php echo $this->id; ?>"><?php echo $this->worktext; ?></div>
 
-<h6><?php echo $this->title.JText::_(' links'); ?></h6>
+<h6><?php echo $this->title.MolajoText::_(' links'); ?></h6>
 <div id="footnotes_<?php echo $this->id; ?>" class="footnoteholder <?php echo 'fn'.$evenodd; ?>"></div>

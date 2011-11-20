@@ -89,8 +89,6 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
         $buffer .= $tab.'<meta name="generator" content="'.htmlspecialchars($document->getGenerator()).'" />'.$lnEnd;
         $buffer .= $tab.'<title>'.htmlspecialchars($document->getTitle(), ENT_COMPAT, 'UTF-8').'</title>'.$lnEnd;
 
-        //todo: amy fix link declarations
-
         /** Generate link declarations */
         foreach ($document->_links as $link => $linkAtrr)
         {
@@ -168,21 +166,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
             $buffer .= $tab.'</script>'.$lnEnd;
         }
 
-        /**  script language declarations */
-        if (count(MolajoText::script())) {
-            $buffer .= $tab.'<script type="text/javascript">'.$lnEnd;
-            $buffer .= $tab.$tab.'(function() {'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.'var strings = '.json_encode(MolajoText::script()).';'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.'if (typeof Joomla == \'undefined\') {'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.$tab.'Joomla = {};'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.$tab.'Joomla.MolajoText = strings;'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.'}'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.'else {'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.$tab.'Joomla.MolajoText.load(strings);'.$lnEnd;
-            $buffer .= $tab.$tab.$tab.'}'.$lnEnd;
-            $buffer .= $tab.$tab.'})();'.$lnEnd;
-            $buffer .= $tab.'</script>'.$lnEnd;
-        }
+        
 
         foreach ($document->_custom as $custom) {
             $buffer .= $tab.$custom.$lnEnd;

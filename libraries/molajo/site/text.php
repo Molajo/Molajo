@@ -256,6 +256,4 @@ class MolajoText
     }
 }
 
-class JText extends MolajoText
-{
-}
+class JText extends MolajoText {}

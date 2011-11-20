@@ -19,11 +19,11 @@ $upper_limit = $lang->getUpperLimitSearchWord();
 $button			= $parameters->get('button', '');
 $imagebutton	= $parameters->get('imagebutton', '');
 $button_pos		= $parameters->get('button_pos', 'left');
-$button_text	= htmlspecialchars($parameters->get('button_text', JText::_('MOD_SEARCH_SEARCHBUTTON_TEXT')));
+$button_text	= htmlspecialchars($parameters->get('button_text', MolajoText::_('MOD_SEARCH_SEARCHBUTTON_TEXT')));
 $width			= intval($parameters->get('width', 20));
 $maxlength		= $upper_limit;
-$text			= htmlspecialchars($parameters->get('text', JText::_('MOD_SEARCH_SEARCHBOX_TEXT')));
-$label			= htmlspecialchars($parameters->get('label', JText::_('MOD_SEARCH_LABEL_TEXT')));
+$text			= htmlspecialchars($parameters->get('text', MolajoText::_('MOD_SEARCH_SEARCHBOX_TEXT')));
+$label			= htmlspecialchars($parameters->get('label', MolajoText::_('MOD_SEARCH_LABEL_TEXT')));
 $set_Itemid		= intval($parameters->get('set_itemid', 0));
 $layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
 

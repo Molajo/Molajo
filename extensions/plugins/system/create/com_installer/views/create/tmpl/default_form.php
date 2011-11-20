@@ -20,13 +20,13 @@ require_once MOLAJO_LIBRARY_COM_INSTALLER.'/controllers/create.php';
 
 		// do field validation
 		if (form.component_singular_item_name.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_SINGULAR_ITEM_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_SINGULAR_ITEM_NAME', true); ?>");
 		} else if (form.component_singular_item_name.value == "item") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_SINGULAR_ITEM_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_SINGULAR_ITEM_NAME', true); ?>");
 		} else if (form.component_plural_item_name.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLURAL_ITEM_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLURAL_ITEM_NAME', true); ?>");
 		} else if (form.component_plural_item_name.value == "items") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLURAL_ITEM_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLURAL_ITEM_NAME', true); ?>");
 		} else {
 			form.createtype.value = 'component';
 			form.submit();
@@ -38,9 +38,9 @@ require_once MOLAJO_LIBRARY_COM_INSTALLER.'/controllers/create.php';
 
 		// do field validation
 		if (form.module_name.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_MODULE_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_MODULE_NAME', true); ?>");
 		} else if (form.module_component.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_MODULE_COMPONENT', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_MODULE_COMPONENT', true); ?>");
 		} else {
 			form.createtype.value = 'module';
 			form.submit();
@@ -52,9 +52,9 @@ require_once MOLAJO_LIBRARY_COM_INSTALLER.'/controllers/create.php';
 
 		// do field validation
 		if (form.plugin_name.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLUGIN_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLUGIN_NAME', true); ?>");
 		} else if (form.plugin_type.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLUGIN_TYPE', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_PLUGIN_TYPE', true); ?>");
 		} else {
 			form.createtype.value = 'plugin';
 			form.submit();
@@ -66,7 +66,7 @@ require_once MOLAJO_LIBRARY_COM_INSTALLER.'/controllers/create.php';
 
 		// do field validation
 		if (form.template_name.value == "") {
-			alert("<?php echo JText::_('PLG_SYSTEM_CREATE_SPECIFY_A_TEMPLATE_NAME', true); ?>");
+			alert("<?php echo MolajoText::_('PLG_SYSTEM_CREATE_SPECIFY_A_TEMPLATE_NAME', true); ?>");
 		} else {
 			form.createtype.value = 'template';
 			form.submit();
@@ -84,74 +84,74 @@ require_once MOLAJO_LIBRARY_COM_INSTALLER.'/controllers/create.php';
 
 		<fieldset class="uploadform">
 
-			<legend><?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_COMPONENT'); ?></legend>
+			<legend><?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_COMPONENT'); ?></legend>
 
                 <label for="component_singular_item_name">
-                    <?php echo JText::_('PLG_SYSTEM_CREATE_COMPONENT_SINGULAR_ITEM_NAME'); ?>
+                    <?php echo MolajoText::_('PLG_SYSTEM_CREATE_COMPONENT_SINGULAR_ITEM_NAME'); ?>
                 </label>
                     <input type="text" id="component_singular_item_name" name="component_singular_item_name" class="input_box" size="70" value="<?php echo $this->state->get('create.component_singular_item_name'); ?>" />
 
                 <label for="component_plural_item_name">
-                    <?php echo JText::_('PLG_SYSTEM_CREATE_COMPONENT_PLURAL_ITEM_NAME'); ?>
+                    <?php echo MolajoText::_('PLG_SYSTEM_CREATE_COMPONENT_PLURAL_ITEM_NAME'); ?>
                 </label>
                     <input type="text" id="component_plural_item_name" name="component_plural_item_name" class="input_box" size="70" value="<?php echo $this->state->get('create.component_plural_item_name'); ?>" />
 
-                <input class="button" type="button" value="<?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_COMPONENT'); ?>" onclick="Joomla.submitbutton_component()" />
+                <input class="button" type="button" value="<?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_COMPONENT'); ?>" onclick="Joomla.submitbutton_component()" />
 		</fieldset>
 
         <div class="clr"></div>
 
 		<fieldset class="uploadform">
-			<legend><?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_MODULE'); ?></legend>
+			<legend><?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_MODULE'); ?></legend>
 
 			<label for="module_name">
-                <?php echo JText::_('PLG_SYSTEM_CREATE_MODULE_NAME'); ?>
+                <?php echo MolajoText::_('PLG_SYSTEM_CREATE_MODULE_NAME'); ?>
             </label>
                 <input type="text" id="module_name" name="module_name" class="input_box" size="70" value="<?php echo $this->state->get('create.module_name'); ?>" />
 
             <label for="module_component">
-                <?php echo JText::_('PLG_SYSTEM_CREATE_MODULE_COMPONENT'); ?>
+                <?php echo MolajoText::_('PLG_SYSTEM_CREATE_MODULE_COMPONENT'); ?>
             </label>
                 <select name="module_component" class="input_box">
-                    <option value=""><?php echo JText::_('PLG_SYSTEM_CREATE_SELECT_COMPONENT');?></option>
+                    <option value=""><?php echo MolajoText::_('PLG_SYSTEM_CREATE_SELECT_COMPONENT');?></option>
                     <?php echo JHtml::_('select.options', JHtml::_('molajocomponent.options'), 'value', 'text', $this->state->get('create.module_component'));?>
                 </select>
 
-			<input class="button" type="button" value="<?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_MODULE'); ?>" onclick="Joomla.submitbutton_module()" />
+			<input class="button" type="button" value="<?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_MODULE'); ?>" onclick="Joomla.submitbutton_module()" />
 		</fieldset>
 
         <div class="clr"></div>
 
 		<fieldset class="uploadform">
-			<legend><?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_PLUGIN'); ?></legend>
+			<legend><?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_PLUGIN'); ?></legend>
 
 			<label for="plugin_name">
-                <?php echo JText::_('PLG_SYSTEM_CREATE_PLUGIN_NAME'); ?>
+                <?php echo MolajoText::_('PLG_SYSTEM_CREATE_PLUGIN_NAME'); ?>
             </label>
                 <input type="text" id="plugin_name" name="plugin_name" class="input_box" size="70" value="<?php echo $this->state->get('create.plugin_name'); ?>" />
 
             <label for="plugin_type">
-                <?php echo JText::_('PLG_SYSTEM_CREATE_PLUGIN_TYPE'); ?>
+                <?php echo MolajoText::_('PLG_SYSTEM_CREATE_PLUGIN_TYPE'); ?>
             </label>
                 <select name="plugin_type" class="input_box">
-                    <option value=""><?php echo JText::_('PLG_SYSTEM_CREATE_SELECT_PLUGIN_TYPE');?></option>
+                    <option value=""><?php echo MolajoText::_('PLG_SYSTEM_CREATE_SELECT_PLUGIN_TYPE');?></option>
                     <?php echo JHtml::_('select.options', JHtml::_('plugintype.options'), 'value', 'text', $this->state->get('create.plugin_option'));?>
                 </select>
 
-			<input class="button" type="button" value="<?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_PLUGIN'); ?>" onclick="Joomla.submitbutton_plugin()" />
+			<input class="button" type="button" value="<?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_PLUGIN'); ?>" onclick="Joomla.submitbutton_plugin()" />
 		</fieldset>
 
         <div class="clr"></div>
 
 		<fieldset class="uploadform">
-			<legend><?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_TEMPLATE'); ?></legend>
+			<legend><?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_TEMPLATE'); ?></legend>
 
 			<label for="template_name">
-                <?php echo JText::_('PLG_SYSTEM_CREATE_TEMPLATE_NAME'); ?>
+                <?php echo MolajoText::_('PLG_SYSTEM_CREATE_TEMPLATE_NAME'); ?>
             </label>
                 <input type="text" id="template_name" name="template_name" class="input_box" size="70" value="<?php echo $this->state->get('create.template_name'); ?>" />
 
-			<input class="button" type="button" value="<?php echo JText::_('PLG_SYSTEM_CREATE_CREATE_TEMPLATE'); ?>" onclick="Joomla.submitbutton_template()" />
+			<input class="button" type="button" value="<?php echo MolajoText::_('PLG_SYSTEM_CREATE_CREATE_TEMPLATE'); ?>" onclick="Joomla.submitbutton_template()" />
 		</fieldset>
 
 		<input type="hidden" name="type" value="" />

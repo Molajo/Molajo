@@ -126,7 +126,7 @@ class JFormFieldComponentLayout extends JFormField
 			
 			// Add a Use Global option if useglobal="true" in XML file
 			if ($this->element['useglobal'] == 'true') {
-				$groups[JText::_('JOPTION_FROM_STANDARD')]['items'][]	= JHTML::_('select.option', '', JText::_('JGLOBAL_USE_GLOBAL'));
+				$groups[MolajoText::_('JOPTION_FROM_STANDARD')]['items'][]	= JHTML::_('select.option', '', MolajoText::_('JGLOBAL_USE_GLOBAL'));
 			}
 
 			// Add the layout options from the component path.
@@ -134,7 +134,7 @@ class JFormFieldComponentLayout extends JFormField
 				// Create the group for the component
 				$groups['_']			= array();
 				$groups['_']['id']		= $this->id.'__';
-				$groups['_']['text']	= JText::sprintf('JOPTION_FROM_COMPONENT');
+				$groups['_']['text']	= MolajoText::sprintf('JOPTION_FROM_COMPONENT');
 				$groups['_']['items']	= array();
 
 				foreach ($component_layouts as $i=>$file)
@@ -158,7 +158,7 @@ class JFormFieldComponentLayout extends JFormField
 					// Add an option to the component group
 					$value = JFile::stripext(JFile::getName($file));
 					$component_layouts[$i] = $value;
-					$text = isset($menu['option']) ? JText::_($menu['option']) : (isset($menu['title']) ? JText::_($menu['title']) : $value);
+					$text = isset($menu['option']) ? MolajoText::_($menu['option']) : (isset($menu['title']) ? MolajoText::_($menu['title']) : $value);
 					$groups['_']['items'][]	= JHTML::_('select.option', '_:'.$value, $text);
 				}
 			}
@@ -200,14 +200,14 @@ class JFormFieldComponentLayout extends JFormField
 							// Create the group for the template
 							$groups[$template->name]=array();
 							$groups[$template->name]['id']=$this->id.'_'.$template->element;
-							$groups[$template->name]['text']=JText::sprintf('JOPTION_FROM_TEMPLATE', $template->name);
+							$groups[$template->name]['text']=MolajoText::sprintf('JOPTION_FROM_TEMPLATE', $template->name);
 							$groups[$template->name]['items']=array();
 
 							foreach ($files as $file)
 							{
 								// Add an option to the template group
 								$value = JFile::stripext(JFile::getName($file));
-								$text = $lang->hasKey($key = strtoupper('TPL_'.$template->name.'_'.$extn.'_'.$view.'_LAYOUT_'.$value)) ? JText::_($key) : $value;
+								$text = $lang->hasKey($key = strtoupper('TPL_'.$template->name.'_'.$extn.'_'.$view.'_LAYOUT_'.$value)) ? MolajoText::_($key) : $value;
 								$groups[$template->name]['items'][]	= JHTML::_('select.option', $template->element.':'.$value, $text);
 							}
 						}

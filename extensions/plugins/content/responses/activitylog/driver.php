@@ -84,7 +84,7 @@ class ResponsesActivityLog extends MolajoPlugin
 		$result = stristr($article->text, "{close comments}");
  		if ($result) {
 			$article->text = str_replace( "{close comments}", "", $article->text );
-			$commentsExpiredMessage = $pluginParameters->def('closedmessage', JText::_( 'Comments are now closed.') );
+			$commentsExpiredMessage = $pluginParameters->def('closedmessage', MolajoText::_( 'Comments are now closed.') );
 			$closeComments = true;			
  		}
 		 		 		

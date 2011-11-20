@@ -55,7 +55,7 @@ class plgContentJoomla extends MolajoPlugin
 		$users = (array) $db->loadResultArray();
 
 		$default_language = MolajoComponentHelper::getParameters('com_languages')->get('administrator');
-		$debug = MolajoFactory::getConfig()->get('debug_lang');
+		$debug = MolajoFactory::getConfig()->get('debug_language');
 
 		foreach ($users as $user_id)
 		{
@@ -126,8 +126,8 @@ class plgContentJoomla extends MolajoPlugin
 			{
 				// Show error if items are found in the category
 				if ($count > 0 ) {
-					$msg = JText::sprintf('COM_CATEGORIES_DELETE_NOT_ALLOWED', $data->get('title')) .
-					JText::plural('COM_CATEGORIES_N_ITEMS_ASSIGNED', $count);
+					$msg = MolajoText::sprintf('COM_CATEGORIES_DELETE_NOT_ALLOWED', $data->get('title')) .
+					MolajoText::plural('COM_CATEGORIES_N_ITEMS_ASSIGNED', $count);
 					JError::raiseWarning(403, $msg);
 					$result = false;
 				}
@@ -140,8 +140,8 @@ class plgContentJoomla extends MolajoPlugin
 					}
 					elseif ($count > 0)
 					{
-						$msg = JText::sprintf('COM_CATEGORIES_DELETE_NOT_ALLOWED', $data->get('title')) .
-						JText::plural('COM_CATEGORIES_HAS_SUBCATEGORY_ITEMS', $count);
+						$msg = MolajoText::sprintf('COM_CATEGORIES_DELETE_NOT_ALLOWED', $data->get('title')) .
+						MolajoText::plural('COM_CATEGORIES_HAS_SUBCATEGORY_ITEMS', $count);
 						JError::raiseWarning(403, $msg);
 						$result = false;
 					}

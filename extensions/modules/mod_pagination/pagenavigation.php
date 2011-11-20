@@ -139,7 +139,7 @@ class plgContentPagenavigation extends JPlugin
 			}
 
 			$pnSpace = "";
-			if (JText::_('JGLOBAL_LT') || JText::_('JGLOBAL_GT')) {
+			if (MolajoText::_('JGLOBAL_LT') || MolajoText::_('JGLOBAL_GT')) {
 				$pnSpace = " ";
 			}
 
@@ -164,7 +164,7 @@ class plgContentPagenavigation extends JPlugin
 					$html .= '
 					<li class="pagenav-prev">
 						<a href="'. $row->prev .'" rel="next">'
-							. JText::_('JGLOBAL_LT').$pnSpace.JText::_('JPREV').'</a>
+							. MolajoText::_('JGLOBAL_LT').$pnSpace.MolajoText::_('JPREV').'</a>
 					</li>'
 					;
 				}
@@ -175,7 +175,7 @@ class plgContentPagenavigation extends JPlugin
 					$html .= '
 					<li class="pagenav-next">
 						<a href="'. $row->next .'" rel="prev">'
-							. JText::_('JNEXT').$pnSpace.JText::_('JGLOBAL_GT') .'</a>
+							. MolajoText::_('JNEXT').$pnSpace.MolajoText::_('JGLOBAL_GT') .'</a>
 					</li>'
 					;
 				}

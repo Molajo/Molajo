@@ -181,7 +181,7 @@ abstract class MolajoFactory
             self::$config->set('smtphost', self::$siteConfig->get('smtphost', ''));
 
             self::$config->set('debug', self::$siteConfig->get('debug', '0'));
-            self::$config->set('debug_lang', self::$siteConfig->get('debug_lang', '0'));
+            self::$config->set('debug_language', self::$siteConfig->get('debug_language', '0'));
 
             self::$config->set('feed_limit', self::$siteConfig->get('feed_limit', '10'));
             self::$config->set('feed_email', self::$siteConfig->get('feed_email', 'author'));
@@ -749,7 +749,7 @@ abstract class MolajoFactory
     {
         $conf = self::getApplicationConfig();
         $locale = $conf->get('language');
-        $debug = $conf->get('debug_lang');
+        $debug = $conf->get('debug_language');
         $lang = MolajoLanguage::getInstance($locale, $debug);
 
         return $lang;

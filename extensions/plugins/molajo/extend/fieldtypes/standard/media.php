@@ -103,19 +103,19 @@ class JFormFieldMedia extends JFormField
 		// The button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
-		$html[] = '		<a class="modal" title="'.JText::_('JSELECT').'"' .
+		$html[] = '		<a class="modal" title="'.MolajoText::_('JSELECT').'"' .
 					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
 					' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
-		$html[] = '			'.JText::_('JSELECT').'</a>';
+		$html[] = '			'.MolajoText::_('JSELECT').'</a>';
 		$html[] = '	</div>';
 		$html[] = '</div>';
 		
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
-		$html[] = '		<a title="'.JText::_('JCLEAR').'"' .
+		$html[] = '		<a title="'.MolajoText::_('JCLEAR').'"' .
 					' href="#"'.
 					' onclick="javascript:document.getElementById(\''.$this->id.'\').value=\'\';">';
-		$html[] = '			'.JText::_('JCLEAR').'</a>';
+		$html[] = '			'.MolajoText::_('JCLEAR').'</a>';
 		$html[] = '	</div>';
 		$html[] = '</div>';
 

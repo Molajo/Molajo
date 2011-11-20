@@ -98,7 +98,7 @@ class MolajoConfigHelper
         $config->set('smtphost', $siteConfig->get('smtphost', ''));
 
         $config->set('debug', $siteConfig->get('debug', '0'));
-        $config->set('debug_lang', $siteConfig->get('debug_lang', '0'));
+        $config->set('debug_language', $siteConfig->get('debug_language', '0'));
 
         $config->set('feed_limit', $siteConfig->get('feed_limit', '10'));
         $config->set('feed_email', $siteConfig->get('feed_email', 'author'));

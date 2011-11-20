@@ -147,11 +147,6 @@ foreach ($files as $file) {
 }
 
 /**
- *  Language  
- */
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/language/latin_transliterate.php', 'MolajoLanguageTransliterate');
-
-/**
  *  MVC
  */
 

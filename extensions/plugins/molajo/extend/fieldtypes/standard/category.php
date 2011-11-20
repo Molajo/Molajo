@@ -72,11 +72,11 @@ class JFormFieldCategory extends JFormFieldList
 			}
 
 			if (isset($this->element['show_root'])) {
-				array_unshift($options, JHtml::_('select.option', '0', JText::_('JGLOBAL_ROOT')));
+				array_unshift($options, JHtml::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
 			}
 		}
 		else {
-			JError::raiseWarning(500, JText::_('MOLAJO_FORM_ERROR_FIELDS_CATEGORY_ERROR_EXTENSION_EMPTY'));
+			JError::raiseWarning(500, MolajoText::_('MOLAJO_FORM_ERROR_FIELDS_CATEGORY_ERROR_EXTENSION_EMPTY'));
 		}
 
 		// Merge any additional options in the XML definition.

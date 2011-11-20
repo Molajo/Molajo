@@ -68,7 +68,7 @@ class plgSearchWeblinks extends MolajoPlugin
 		if ($text == '') {
 			return array();
 		}
-		$section	= JText::_('PLG_SEARCH_WEBLINKS');
+		$section	= MolajoText::_('PLG_SEARCH_WEBLINKS');
 
 		$wheres	= array();
 		switch ($phrase)

@@ -125,7 +125,7 @@ class plgSearchCategories extends MolajoPlugin
 				$count = count($rows);
 				for ($i = 0; $i < $count; $i++) {
 					$rows[$i]->href = ContentHelperRoute::getCategoryRoute($rows[$i]->slug);
-					$rows[$i]->section	= JText::_('JCATEGORY');
+					$rows[$i]->section	= MolajoText::_('JCATEGORY');
 				}
 
 				$return = array();

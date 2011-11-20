@@ -36,10 +36,6 @@ class MolajoConfigSite {
 	public $live_site = ''; 					// Optional, Full url to Joomla install.
 	public $force_ssl = 0;						// Force areas of the site to be SSL ONLY.  0 = None, 1 = Administrator, 2 = Both Site and Administrator
 
-	/* Locale Settings */
-	public $offset = 'UTC';
-	public $offset_user = 'UTC';
-
 	/* Session settings */
 	public $lifetime = '15';
 	public $session_handler = 'database';
@@ -56,7 +52,7 @@ class MolajoConfigSite {
 
 	/* Debug Settings */
 	public $debug = '0';
-	public $debug_lang = '0';
+	public $debug_language = '0';
 
 	/* Feed Settings */
 	public $feed_limit = 10;

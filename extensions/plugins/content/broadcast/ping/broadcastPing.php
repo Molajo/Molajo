@@ -117,8 +117,8 @@ class BroadcastPing {
 		 * 	If No Ping Services were selected, provide warning.
 		 */
 		if ($tamkaPingCounter == 0) {
-			$message = JText::_('No Ping Services were activated in the Tamka Library System Plugin.');
-           	$mainframe->enqueueMessage(JText::_('Warning: ').$message);
+			$message = MolajoText::_('No Ping Services were activated in the Tamka Library System Plugin.');
+           	$mainframe->enqueueMessage(MolajoText::_('Warning: ').$message);
         	return false;
 		}
 	}
@@ -153,12 +153,12 @@ class BroadcastPing {
      */        
 		if ($response->faultCode() == 0)  {
         	/* Table */
-			$message = JText::_('Ping to: ').$pingServer." for ".$sourceTitle." URL: ".$sourceURL." Site name: ".$sourceSiteName;
-           	$mainframe->enqueueMessage(JText::_('Success: ').$message);
+			$message = MolajoText::_('Ping to: ').$pingServer." for ".$sourceTitle." URL: ".$sourceURL." Site name: ".$sourceSiteName;
+           	$mainframe->enqueueMessage(MolajoText::_('Success: ').$message);
         	return true;
 		}  else {
-			$message = JText::_('Error: ').$pingServer.": ".$response->faultCode()." ".$response->faultString();
-           	$mainframe->enqueueMessage(JText::_('Ping error: ').$message);
+			$message = MolajoText::_('Error: ').$pingServer.": ".$response->faultCode()." ".$response->faultString();
+           	$mainframe->enqueueMessage(MolajoText::_('Ping error: ').$message);
            	return false;
         }
 

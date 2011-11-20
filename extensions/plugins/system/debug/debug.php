@@ -97,22 +97,22 @@ class plgSystemDebug extends MolajoPlugin
 		$errors = JError::getErrors();
 
 		if (!empty($errors)) {
-			echo '<h4>'.JText::_('PLG_DEBUG_ERRORS').'</h4><ol>';
+			echo '<h4>'.MolajoText::_('PLG_DEBUG_ERRORS').'</h4><ol>';
 			while($error = JError::getError(true)) {
-				echo '<li>'.$error->getMessage().'<br /><h4>'.JText::_('PLG_DEBUG_INFO').'</h4><pre>'.print_r($error->get('info'), true).'</pre><br /><h4>'.JText::_('PLG_DEBUG_BACKTRACE').'</h4>'.JError::renderBacktrace($error).'</li>';
+				echo '<li>'.$error->getMessage().'<br /><h4>'.MolajoText::_('PLG_DEBUG_INFO').'</h4><pre>'.print_r($error->get('info'), true).'</pre><br /><h4>'.MolajoText::_('PLG_DEBUG_BACKTRACE').'</h4>'.JError::renderBacktrace($error).'</li>';
 			}
 			echo '</ol>';
 		}
 
 		if ($this->parameters->get('profile', 1)) {
-			echo '<h4>'.JText::_('PLG_DEBUG_PROFILE_INFORMATION').'</h4>';
+			echo '<h4>'.MolajoText::_('PLG_DEBUG_PROFILE_INFORMATION').'</h4>';
 			foreach ($profiler->getBuffer() as $mark) {
 				echo '<div>'.$mark.'</div>';
 			}
 		}
 
 		if ($this->parameters->get('memory', 1)) {
-			echo '<h4>'.JText::_('PLG_DEBUG_MEMORY_USAGE').'</h4>';
+			echo '<h4>'.MolajoText::_('PLG_DEBUG_MEMORY_USAGE').'</h4>';
 			$bytes = $profiler->getMemory();
 			echo JHtml::_('number.bytes', $bytes);
 			echo ' ('.number_format($bytes).' Bytes)';
@@ -123,7 +123,7 @@ class plgSystemDebug extends MolajoPlugin
 
 			$db	= MolajoFactory::getDbo();
 
-			echo '<h4>'.JText::sprintf('PLG_DEBUG_QUERIES_LOGGED',  $db->getTicker()).'</h4>';
+			echo '<h4>'.MolajoText::sprintf('PLG_DEBUG_QUERIES_LOGGED',  $db->getTicker()).'</h4>';
 
 			if ($log = $db->getLog()) {
 				echo '<ol>';
@@ -180,29 +180,29 @@ class plgSystemDebug extends MolajoPlugin
 					$totalOtherQueryTypes = count($otherQueryTypeTicker);
 					$totalQueryTypes = $totalSelectQueryTypes + $totalOtherQueryTypes;
 
-					echo '<h4>'.JText::sprintf('PLG_DEBUG_QUERY_TYPES_LOGGED', $totalQueryTypes).'</h4>';
+					echo '<h4>'.MolajoText::sprintf('PLG_DEBUG_QUERY_TYPES_LOGGED', $totalQueryTypes).'</h4>';
 
 					if ($totalSelectQueryTypes) {
-						echo '<h5>'.JText::sprintf('PLG_DEBUG_SELECT_QUERIES').'</h5>';
+						echo '<h5>'.MolajoText::sprintf('PLG_DEBUG_SELECT_QUERIES').'</h5>';
 						arsort($selectQueryTypeTicker);
 						echo '<ol>';
 
 						foreach($selectQueryTypeTicker as $table => $occurrences)
 						{
-							echo '<li>'.JText::sprintf('PLG_DEBUG_QUERY_TYPE_AND_OCCURRENCES', $table, $occurrences).'</li>';
+							echo '<li>'.MolajoText::sprintf('PLG_DEBUG_QUERY_TYPE_AND_OCCURRENCES', $table, $occurrences).'</li>';
 						}
 
 						echo '</ol>';
 					}
 
 					if ($totalOtherQueryTypes) {
-						echo '<h5>'.JText::sprintf('PLG_DEBUG_OTHER_QUERIES').'</h5>';
+						echo '<h5>'.MolajoText::sprintf('PLG_DEBUG_OTHER_QUERIES').'</h5>';
 						arsort($otherQueryTypeTicker);
 						echo '<ol>';
 
 						foreach($otherQueryTypeTicker as $table => $occurrences)
 						{
-							echo '<li>'.JText::sprintf('PLG_DEBUG_QUERY_TYPE_AND_OCCURRENCES', $table, $occurrences).'</li>';
+							echo '<li>'.MolajoText::sprintf('PLG_DEBUG_QUERY_TYPE_AND_OCCURRENCES', $table, $occurrences).'</li>';
 						}
 						echo '</ol>';
 					}
@@ -211,11 +211,11 @@ class plgSystemDebug extends MolajoPlugin
 		}
 
 		// Show language debug only if enabled
-		if (MolajoFactory::getApplication()->getConfig('debug_lang')) {
+		if (MolajoFactory::getApplication()->getConfig('debug_language')) {
 			$lang = MolajoFactory::getLanguage();
 
 			if ($this->parameters->get('language_errorfiles', 1)) {
-				echo '<h4>'.JText::_('PLG_DEBUG_LANGUAGE_FILES_IN_ERROR').'</h4>';
+				echo '<h4>'.MolajoText::_('PLG_DEBUG_LANGUAGE_FILES_IN_ERROR').'</h4>';
 				$errorfiles = $lang->getErrorFiles();
 
 				if (count($errorfiles)) {
@@ -228,12 +228,12 @@ class plgSystemDebug extends MolajoPlugin
 					echo '</ul>';
 				}
 				else {
-					echo '<pre>'.JText::_('JNONE').'</pre>';
+					echo '<pre>'.MolajoText::_('JNONE').'</pre>';
 				}
 			}
 
 			if ($this->parameters->get('language_files', 1)) {
-				echo '<h4>'.JText::_('PLG_DEBUG_LANGUAGE_FILES_LOADED').'</h4>';
+				echo '<h4>'.MolajoText::_('PLG_DEBUG_LANGUAGE_FILES_LOADED').'</h4>';
 				echo '<ul>';
 				$extensions	= $lang->getPaths();
 
@@ -252,7 +252,7 @@ class plgSystemDebug extends MolajoPlugin
 				$stripPref	= $this->parameters->get('strip-prefix');
 				$stripSuff	= $this->parameters->get('strip-suffix');
 
-				echo '<h4>'.JText::_('PLG_DEBUG_UNTRANSLATED_STRINGS').'</h4>';
+				echo '<h4>'.MolajoText::_('PLG_DEBUG_UNTRANSLATED_STRINGS').'</h4>';
 				echo '<pre>';
 				$orphans = $lang->getOrphans();
 
@@ -311,12 +311,12 @@ class plgSystemDebug extends MolajoPlugin
 
 					foreach ($guesses as $file => $keys)
 					{
-						echo "\n\n# ".($file ? $file : JText::_('PLG_DEBUG_UNKNOWN_FILE'))."\n\n";
+						echo "\n\n# ".($file ? $file : MolajoText::_('PLG_DEBUG_UNKNOWN_FILE'))."\n\n";
 						echo implode("\n", $keys);
 					}
 				}
 				else {
-					echo JText::_('JNONE');
+					echo MolajoText::_('JNONE');
 				}
 				echo '</pre>';
 			}

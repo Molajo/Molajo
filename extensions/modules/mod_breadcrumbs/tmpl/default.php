@@ -14,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
 <div class="breadcrumbs<?php echo $parameters->get('layout_class_suffix'); ?>">
 <?php if ($parameters->get('showHere', 1))
 	{
-		echo JText::_('MOD_BREADCRUMBS_HERE');
+		echo MolajoText::_('MOD_BREADCRUMBS_HERE');
 	}
 ?>
 <?php for ($i = 0; $i < $count; $i ++) :

@@ -146,11 +146,11 @@ class MolajoResponsesComments {
 
         /** closed message **/
         if ($closed == true) {
-            $this->closed_message = $this->responsesParameters->def('closed_message', JText::_('COM_RESPONSES_CONFIG_CLOSED_MESSAGE_DEFAULT'));
+            $this->closed_message = $this->responsesParameters->def('closed_message', MolajoText::_('COM_RESPONSES_CONFIG_CLOSED_MESSAGE_DEFAULT'));
         } else {
             $this->closed_message = '';
         }
-        $this->no_responses_message = $this->responsesParameters->def('be_the_first_to_comment_message', JText::_('COM_RESPONSES_CONFIG_SUMMARY_MESSAGE_FIRST_DEFAULT'));
+        $this->no_responses_message = $this->responsesParameters->def('be_the_first_to_comment_message', MolajoText::_('COM_RESPONSES_CONFIG_SUMMARY_MESSAGE_FIRST_DEFAULT'));
 
         /** language **/
         $language = MolajoFactory::getLanguage();

@@ -46,7 +46,7 @@ class protectAkismet
 			
                 if ($akismet->isCommentSpam()) {
                         global $mainframe;
-                        $mainframe->enqueueMessage(JText::_('Comment identified as Spam by Akismet.'));
+                        $mainframe->enqueueMessage(MolajoText::_('Comment identified as Spam by Akismet.'));
                         $published = 2;
                 }
  *

@@ -84,7 +84,7 @@ class MolajoConfig {
 
 	/* Debug Settings */
 	public $debug;
-	public $debug_lang;
+	public $debug_language;
 
 	/* Feed Settings */
 	public $feed_limit;

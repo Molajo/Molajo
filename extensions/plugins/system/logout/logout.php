@@ -70,7 +70,7 @@ class plgSystemLogout extends MolajoPlugin
 		if ($error->getCode() == 403) {
 			// Redirect to the home page
 //			$this->loadLanguage();
-			$app->redirect('index.php', JText::_('PLG_SYSTEM_LOGOUT_REDIRECT'), null, true, false);
+			$app->redirect('index.php', MolajoText::_('PLG_SYSTEM_LOGOUT_REDIRECT'), null, true, false);
 		}
 		else {
 			// Render the error page.

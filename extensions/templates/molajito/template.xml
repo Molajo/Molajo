@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Molajo 1.0//DTD template 1.0//EN" "http://molajo.org/xml/dtd/1.0/template-install.dtd">
+<extension type="template" version="1.0" method="upgrade">
+
+    <name>TEMPLATE_MOLAJITO_NAME</name>
+	<author>Cristina Solana</author>
+	<creationDate>November 2011</creationDate>
+	<copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
+	<authorEmail>collaborate@molajo.org</authorEmail>
+	<authorUrl>http://molajo.org</authorUrl>
+	<version>1.0</version>
+	<description>TEMPLATE_MOLAJITO_DESCRIPTION</description>
+
+	<files>
+		<filename>index.php</filename>
+		<filename>README.md</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>page</folder>
+	</files>
+
+	<config>
+		<fields name="parameters">
+			<fieldset name="basic">
+				<field
+					name="choice"
+					type="list"
+					default="1"
+					label="TEMPLATE_MOLAJITO_FIELD_CHOICE_LABEL"
+					description="TEMPLATE_MOLAJITO_FIELD_CHOICE_DESC">
+					<option value="0">DISABLED</option>
+					<option	value="1">ENABLED</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
