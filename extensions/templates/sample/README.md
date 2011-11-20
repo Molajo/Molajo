@@ -4,11 +4,15 @@ This is an explanation of the various elements defined within a Molajo Templates
 
 ## Molajo Configuration ##
 
+### HTML5 ###
+
+To request HTML5 rendered output, use the Configuration-Application menu item and locate the HTML parameter.
+
 ### Install a Template: ###
 
 1. Login to the Administrator as the system admin.
 2. Navigate to the Extend-Install menu item.
-3. Install using the ZIP or URL format, or use the Create option to start with this sample.
+3. Install using the ZIP or URL format and a file or link, or use the Create option to start with the sample template.
 
 ### Configure the Template ###
 
@@ -17,18 +21,22 @@ This is an explanation of the various elements defined within a Molajo Templates
 
 ### Specifying a Page Layout ###
 
-A template page can be used to generate different types of layouts. For example, if the site requires a certain layout for the home page than the blog or the article view, a template page is useful.
+A template page is used to specify different types of layouts. For example, if the site requires a certain layout for the home page, a different layout for the blog page, and yet another layout for the article page, three different page layouts can be created and associated with that type of content.
 
-There are many levels within the application where the page can be defined. The first page configuration found in the this order is used for the page layout:
+Within Molajo, there is a lot of flexibility in how the page parameter is set. For very simple websites, simply using the default page will work. Other times, it will be helpful to think about the best way to configure this option.
 
-1. If a URL Request Parameter of `page=value` is found, `value` is used as page. This is useful for testing layouts.
-2. The page configuration value for a detail item which is defined in the editor for that content in the parameter section.
-3. The menu item page configuration (only for a *Component Menu Item Type*) will be selected next.
-4. The page configuration for a category associated with the content (primary category has precedence over secondary categories).
-5. Components each have a configuration section where page can be specified. If a value has not been found above, the component page will be used.
-6. Application Configuration
-7. The default folder within the page folder, or the only folder there.
-8. The template/index.php file would be used without a page.
+Molajo uses the most specific configuration available for the page value. This is the sequence from the most to the least specific:
+
+1. When the URL Request Parameter of `page=value` is found, it will always be the used. This is a useful tool for testing layouts without having to reconfigure Molajo.
+2. The page configuration value for a detail item is the next most specific option. The value for the page layout can be defined in the detail item editor parameter section. An example of when this could be useful is for magazine articles where it is desired to have three or four different layouts to keep things interesting.
+3. The next value Molajo looks for is on the *Component Menu Items.* This allows a different layout to be used for specific reasons without impact default values established for components or categories.
+4. After the menu item, Molajo will look to see if there is a page option for the primary or secondary categories. Using categories as page assignment is another way to treat content differently. One could associate content with a season and then create four seasonal layouts.
+5. Next, Molajo will look to see if a layout was defined in the components configuration. In that sense, a blog component could display a different page layout than a news item component.
+6. For very simple sites, creating one layout and defining it as the default for the entire Application could suffix. The "default" page is automatically set at the application level. Simply using the default page in that case will work without mapping it to any content or components or categories.
+
+### Modules and Positions ###
+
+Molajo uses Module doc statements, as explained below, to determine which *positions* are desired. The *position* is used as a key to retrieve and render only those modules so defined. Position values are set in the Administrator using the Build-Modules menu option when editing a module.
 
 ## Template Folders and Files ##
 
@@ -56,7 +64,12 @@ As is the case with CSS files, files with .js file extensions will be loaded by 
 
 ### 5. language folder ###
 
+The language folder is used to define language strings for translation.
 
+language
+    en-GB
+        en-GB.template_sample.ini
+        en-GB.template_sample.sys.ini
 
 ### 6. page folder ###
 
@@ -68,7 +81,7 @@ Page options available to the application are derived from the set of subfolders
 
 The following are special purpose page formats that should be available in each template:
 
-* **default** page layout is only selected when a special layout is needed, otherwise, Molajo will use the default page layout.
+* **default** good candidate for the primary layout as Molajo will use this if nothing is specified.
 * **error** used if Molajo is unable to process the request due to a problem like a 404-page not found or a 500-component not found condition.
 * **logon** necessary for templates used by applications requiring logon, like the administrator or an intranet.
 * **offline** during site development or maintainance, an application can be configured to appear offline and not allow visitors without appropriate access to enter. This page layout is used to inform visitors of the situation.
@@ -90,7 +103,7 @@ A Molajo page layout is comprised of the following files and folders. (Additiona
 
 Molajo templates use a mix of HTML, php, and special **doc Statements** to instruct the application what content is desired and to correctly locate rendered output.
 
-### What <?php and the `defined('MOLAJO') or die;`? ###
+### What <?php and the `defined('MOLAJO') or die;`?> ###
 
     <?php
     /**
@@ -142,9 +155,9 @@ In Molajo, a component is the primary output for the page. Rendered output for t
 
 Renders modules identified by the `position` identified in the name attribute. Note: depending on the specific module, the criteria might prohibit the module from rendering on this specific page. For example. the module might select only that content which shares a common tag. If there are no such matches, the module will not display even if it has the position specified.
 
-#### Where are positions specified? ####
+#### How are positions associated with modules? ####
 
-In the module configuration, the position is identified.
+In the Administrator Build-Module-Configuration, edit a module. The position is one of the parameters that must be identified. Molajo scans the layout files to extract the doc modules statements and then uses the position values to search for modules defined for that position. If there are multiple positions defined for that position, Molajo uses the ordering value to determine the rendering sequence. The results are placed within the layout at the point of the doc statement.
 
 ### doc: include type="module" ###
 
