@@ -438,12 +438,6 @@ class MolajoApplicationHelper
         /** 14. parameters */
         $parameters = MolajoComponentHelper::getParameters($option);
 
-            // Setup the category parameters.
-            //		$cparameters = $category->getParameters();
-            //		$category->parameters = clone($parameters);
-            //		$category->parameters->merge($cparameters);
-            // $this->getState('request.option')->get('page_class_suffix', '') = htmlspecialchars($this->parameters->get('pageclass_suffix'));
-
         /** other */
         $extension = JRequest::getCmd('extension', '');
         $component_specific = JRequest::getCmd('component_specific', '');
@@ -474,9 +468,6 @@ class MolajoApplicationHelper
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
 
-//  $session->set('page.wrap', $parameters->def('wrap', 'none'));
-        //        $session->set('page.wrap_id', $parameters->def('wrap_id', ''));
-        //        $session->set('page.wrap_class', $parameters->def('wrap_class', ''));
         $session->set('page.wrap', 'none');
         $session->set('page.wrap_id', '');
         $session->set('page.wrap_class', '');

@@ -71,6 +71,8 @@ abstract class MolajoPlugin extends JEvent
     }
 
     /**
+     * loadLanguage
+     *
      * Loads the plugin language file
      *
      * @param   string   $extension    The extension for which a language file should be loaded
@@ -79,16 +81,11 @@ abstract class MolajoPlugin extends JEvent
      * @return  boolean  True, if the file has successfully loaded.
      * @since   11.1
      */
-    public function loadLanguage($extension = '', $basePath = MOLAJO_BASE_FOLDER)
+    public function loadLanguage($extension = '', $basePath = MOLAJO_EXTENSION_PLUGINS)
     {
         if (empty($extension)) {
             $extension = 'plg'.ucfirst($this->_type).ucfirst($this->_name);
         }
-
-        $lang = MolajoFactory::getLanguage();
-
-        $lang->load(strtolower($extension), $basePath, null, false, false)
-        || $lang->load(strtolower($extension), MOLAJO_EXTENSION_PLUGINS.'/'.$this->_type.'/'.$this->_name, null, false, false)
-        || $lang->load(strtolower($extension), MOLAJO_APPLICATION_PATH, null, false, false);
+        MolajoFactory::getLanguage()->load(strtolower($extension), MOLAJO_EXTENSION_PLUGINS.'/'.$this->_type.'/'.$extension, null, false, false);
     }
 }

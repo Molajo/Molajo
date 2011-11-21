@@ -30,7 +30,7 @@ class plgButtonPagebreak extends MolajoPlugin
 		$doc = MolajoFactory::getDocument();
 		$template = $app->getTemplate();
 
-		$link = 'index.php?option=com_articles&amp;view=article&amp;layout=pagebreak&amp;tmpl=component&amp;e_name='.$name;
+		$link = 'index.php?option=com_articles&amp;view=article&amp;layout=pagebreak&amp;layout=component&amp;e_name='.$name;
 
 		JHtml::_('behavior.modal');
 

@@ -438,7 +438,7 @@ class MolajoDocumentHTML extends MolajoDocument
         } else {
             $template = 'system';
         }
-
+/** todo: amy figure out best place for each extension to load language */
         /** Language File */
         $lang = MolajoFactory::getLanguage();
         $lang->load('template_'.$template, MOLAJO_EXTENSION_TEMPLATES.'/'.$template, $lang->getDefault(), false, false);

@@ -77,6 +77,12 @@ class MolajoView extends JView
     public $layout_path;
 
     /**
+     * @var object $layout_path_url
+     * @since 1.0
+     */
+    public $layout_path_url;
+
+    /**
      * @var object $layout_type
      * @since 1.0
      */
@@ -87,6 +93,7 @@ class MolajoView extends JView
      * @since 1.0
      */
     public $layout;
+
     /**
      * @var object $wrap
      * @since 1.0
@@ -190,10 +197,11 @@ class MolajoView extends JView
      *
      * Looks for path of Request Layout as a layout folder, in this order:
      *
-     *  1. [template]/html/[extension-name]/[viewname(if component)]/[layout-folder]
-     *  2. [template]/[layout-type]/[layout-folder]
-     *  3. [extension_type]/[extension-name]/[views/viewname(if component)]/tmpl/[layout-folder]
-     *  4. layouts/[layout_type]/[layout-folder]
+     *  1. [template]/layouts/[layout-type]/[layout-folder]
+     *  2. [extension_type]/[extension-name]/layouts/[layout-type]/[layout-folder]
+     *      => For plugins, add plugin subfolder following [extension_type]
+     *      => For components, add "views" subfolder following [extension-name]
+     *  3. layouts/[layout_type]/[layout-folder]
      *
      * @return bool|string
      */
@@ -201,80 +209,61 @@ class MolajoView extends JView
     {
         /** initialize layout */
         $this->layout_path = false;
+        $templateObject = MolajoFactory::getApplication()->getTemplate();
+        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.$templateObject[0]->title;
 
-        /** @var $template */
-        $template = MOLAJO_EXTENSION_TEMPLATES.'/'.MolajoFactory::getApplication(MOLAJO_APPLICATION)->getTemplate().'html';
-        $template = MOLAJO_EXTENSION_TEMPLATES.'/molajito/html';
+        /** 1. @var $templateLayoutPath [template]/layouts/[layout-type]/[layout-folder] */
+        $templateLayoutPath = $template.'/layouts/'.$layout_type.'/'.$layout;
+        $templateLayoutPathURL = JURI::root().'extensions/templates/'.$templateObject[0]->title.'/layouts/'.$layout_type.'/'.$layout;
 
-        /** 1. @var $templateExtensionPath [template]/html/[extension-name]/[viewname(if component)]/[layout-folder] */
-        $templateExtensionPath = '';
-        if ($layout_type == 'extensions') {
-            if ($this->request['extension_type'] == 'plugin') {
-                $templateExtensionPath = $template.'/'.$this->request['plugin_folder'].'/'.$this->request['option'];
-
-            } else if ($this->request['extension_type'] == 'module') {
-                $templateExtensionPath = $template.'/'.$this->request['option'];
-
-            } else if ($this->request['extension_type'] == 'component') {
-                $templateExtensionPath = $template.'/'.$this->request['option'].'/'.$this->request['view'];
-            }
-        }
-
-        /** 2. @var $templateLayoutPath [template]/[layout-folder] */
-        $templateLayoutPath = $template.'/'.$layout_type;
-
-        /** 3. @var $extensionPath [extension_type]/[extension-name]/[views-viewname(if component)]/tmpl/[layout-folder] */
+        /** 2. @var $extensionPath [extension_type]/[extension-name]/layouts/[layout-type]/[layout-folder] */
         $extensionPath = '';
-        if ($layout_type == 'extensions') {
-            if ($this->request['extension_type'] == 'plugins') {
-                $extensionPath = MOLAJO_EXTENSION_PLUGINS.'/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/tmpl';
+        if ($this->request['extension_type'] == 'plugin') {
+            $extensionPath = MOLAJO_EXTENSION_PLUGINS.'/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/layouts/'.$layout_type.'/'.$layout;
+            $extensionPathURL = JURI::root().'extensions/plugins/'.$this->request['plugin_folder'].'/'.$this->request['option'].'/layouts/'.$layout_type.'/'.$layout;
 
-            } else if ($this->request['extension_type'] == 'modules') {
-                $extensionPath = MOLAJO_EXTENSION_MODULES.'/'.$this->request['option'].'/tmpl';
+        } else if ($this->request['extension_type'] == 'component') {
+            $extensionPath = MOLAJO_EXTENSION_COMPONENTS.'/'.$this->request['option'].'/views/'.$this->request['view'].'/layouts/'.$layout_type.'/'.$layout;
+            $extensionPathURL = JURI::root().'extensions/components/'.$this->request['option'].'/views/'.$this->request['view'].'/layouts/'.$layout_type.'/'.$layout;
 
-            } else {
-                $extensionPath = MOLAJO_EXTENSION_COMPONENTS.'/'.$this->request['option'].'/views/'.$this->request['view'].'/tmpl';
-            }
+        } else if ($this->request['extension_type'] == 'module') {
+            $extensionPath = MOLAJO_EXTENSION_MODULES.'/'.$this->request['option'].'/layouts/'.$layout_type.'/'.$layout;
+            $extensionPathURL = JURI::root().'extensions/modules/'.$this->request['option'].'/layouts/'.$layout_type.'/'.$layout;
+
         } else {
-            $extensionPath = $templateLayoutPath;
+            $extensionPath = '';
+            $extensionPathURL = '';
         }
 
-        /** 4. $corePath layouts/[layout_type]/[layout-folder] */
-        if ($layout_type == 'extensions') {
-            $corePath = MOLAJO_EXTENSION_LAYOUTS.'/extensions/';
-        } else if ($layout_type == 'formfields') {
-            $corePath = MOLAJO_EXTENSION_LAYOUTS.'/formfields/';
-        } else if ($layout_type == 'document') {
-            $corePath = MOLAJO_EXTENSION_LAYOUTS.'/document/';
-        } else if ($layout_type == 'wraps') {
-            $corePath = MOLAJO_EXTENSION_LAYOUTS.'/wraps/';
-        }
+        /** 3. $corePath layouts/[layout_type]/[layout-folder] */
+        $corePath = MOLAJO_EXTENSION_LAYOUTS.'/'.$layout_type.'/'.$layout;
+        $corePathURL = JURI::root().'extensions/layouts/'.$layout_type.'/'.$layout;
 
         /**
          * Determine path in order of priority
          */
-        /** 1. template extension override **/
-        if (is_dir($templateExtensionPath.'/'.$layout)) {
-            $this->layout_path = $templateExtensionPath.'/'.$layout;
+
+        /* 1. Template */
+        if (is_dir($templateLayoutPath)) {
+            $this->layout_path = $templateLayoutPath;
+            $this->layout_path_url = $templateLayoutPathURL;
             return;
 
-            /** 2. template layout override **/
-        } else if (is_dir($templateLayoutPath.'/'.$layout)) {
-            $this->layout_path = $templateLayoutPath.'/'.$layout;
+        /** 2. Extension **/
+        } else if (is_dir($extensionPath)) {
+            $this->layout_path = $extensionPath;
+            $this->layout_path_url = $extensionPathURL;
             return;
 
-            /** 3. extension layout **/
-        } else if (is_dir($extensionPath.'/'.$layout)) {
-            $this->layout_path = $extensionPath.'/'.$layout;
-            return;
-
-            /** 4. molajo library **/
-        } else if (is_dir($corePath.'/'.$layout)) {
-            $this->layout_path = $corePath.'/'.$layout;
+        /** 3. Core **/
+        } else if (is_dir($corePath)) {
+            $this->layout_path = $corePath;
+            $this->layout_path_url = $corePathURL;
             return;
         }
 
         $this->layout_path = false;
+        $this->layout_path_url = false;
     }
 
     /**
@@ -299,7 +288,7 @@ class MolajoView extends JView
         $rowCount = 1;
 
         /** Media */
-        $this->loadMedia($layout, $layout_type);
+        $this->loadMedia();
 
         /** Language */
         $this->loadLanguage($layout, $layout_type);
@@ -313,8 +302,8 @@ class MolajoView extends JView
          *  If the custom.php file exists in layoutFolder, layout handles $this->rowset processing
          *
          */
-        if (file_exists($this->layout_path.'/layouts/custom.php')) {
-            include $this->layout_path.'/layouts/custom.php';
+        if (file_exists($this->layout_path.'/custom.php')) {
+            include $this->layout_path.'/custom.php';
 
         } else {
 
@@ -353,8 +342,8 @@ class MolajoView extends JView
                         echo $this->row->event->beforeDisplayContent;
                     }
 
-                    if (file_exists($this->layout_path.'/layouts/top.php')) {
-                        include $this->layout_path.'/layouts/top.php';
+                    if (file_exists($this->layout_path.'/top.php')) {
+                        include $this->layout_path.'/top.php';
                     }
                 }
 
@@ -362,8 +351,8 @@ class MolajoView extends JView
                 } else {
 
                     /** item: header */
-                    if (file_exists($this->layout_path.'/layouts/header.php')) {
-                        include $this->layout_path.'/layouts/header.php';
+                    if (file_exists($this->layout_path.'/header.php')) {
+                        include $this->layout_path.'/header.php';
 
                         /** event: After Display of Title */
                         if (isset($this->row->event->afterDisplayTitle)) {
@@ -372,21 +361,21 @@ class MolajoView extends JView
                     }
 
                     /** item: body */
-                    if (file_exists($this->layout_path.'/layouts/body.php')) {
-                        include $this->layout_path.'/layouts/body.php';
+                    if (file_exists($this->layout_path.'/body.php')) {
+                        include $this->layout_path.'/body.php';
                     }
 
                     /** item: footer */
-                    if (file_exists($this->layout_path.'/layouts/footer.php')) {
-                        include $this->layout_path.'/layouts/footer.php';
+                    if (file_exists($this->layout_path.'/footer.php')) {
+                        include $this->layout_path.'/footer.php';
                     }
 
                     $rowCount++;
                 }
 
                 /** layout: bottom */
-                if (file_exists($this->layout_path.'/layouts/bottom.php')) {
-                    include $this->layout_path.'/layouts/bottom.php';
+                if (file_exists($this->layout_path.'/bottom.php')) {
+                    include $this->layout_path.'/bottom.php';
 
                     /** event: After Layout is finished */
                     if (isset($this->row->event->afterDisplayContent)) {
@@ -407,22 +396,14 @@ class MolajoView extends JView
      *
      * Language
      *
-     * Automatically includes the following files (if existing)
-     *
-     * 1. Master Layout folder Language Files found in => layout/[current-language]/
-     * 2. Current Layout folder Language Files found in => layout/[layout-type]/[layout-name]/[current-language]/
-     *
+     * Automatically includes Language Files (if existing) for layouts
+     * 
      * @param $this->layout_path
      * @return void
      */
     protected function loadLanguage($layout, $layout_type)
     {
-        $defaultLanguage = MolajoFactory::getLanguage()->getDefault();
-        MolajoFactory::getLanguage()->load('layout', MOLAJO_EXTENSION_LAYOUTS, $defaultLanguage, false, false);
-        /** not plural */
-        MolajoFactory::getLanguage()->load('layout_'.substr($layout_type, 0, strlen($layout_type) - 1).'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
-        /** head does not have an s at the end */
-        MolajoFactory::getLanguage()->load('layout_'.$layout_type.'_'.$layout, $this->layout_path, $defaultLanguage, false, false);
+        MolajoFactory::getLanguage()->load('layout_'.substr($layout_type, 0, strlen($layout_type) - 1).'_'.$layout, $this->layout_path, MolajoFactory::getLanguage()->getDefault(), false, false);
     }
 
     /**
@@ -430,79 +411,41 @@ class MolajoView extends JView
      *
      * Automatically includes the following files (if existing)
      *
-     * 1. Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js]
-     * 2. Component specific CSS and JS in => media/system/[application]/[com_component]/css[js]/XYZ.css[js]
-     * 3. Asset ID specific CSS and JS in => media/system/[application]/[asset_id]/css[js]/XYZ.css[js]
-     * 4. Layout specific CSS and JS in => layouts/[layout-type]/[layout-name]/css[js]/XYZ.css[js]
+     * 1. Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js]
+     * 2. Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js]
+     * 3. Asset ID specific CSS and JS in => media/[asset_id]/css[js]/XYZ.css[js]
+     *
+     * 4. Layout Path determined earlier (Template, Extension, Core precedence)
      *
      * Note: Right-to-left css files should begin with rtl_
      *
-     * @param $this->layout_path
-     *
      * @return void
      */
-    protected function loadMedia($layout, $layout_type)
+    protected function loadMedia()
     {
-        if (MOLAJO_APPLICATION_PATH == '') {
-            $applicationName = 'frontend';
-        } else {
-            $applicationName = MOLAJO_APPLICATION_PATH;
-        }
-
-        /** Application-specific CSS and JS in => media/system/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$applicationName;
-        $urlPath = JURI::root().'media/system/'.$applicationName;
-
-        if (isset($this->parameters->load_application_css)
-            && $this->parameters->get('load_application_css', true) === true
-        ) {
-            $this->loadMediaCSS($filePath, $urlPath);
-        }
-        if (isset($this->parameters->load_application_css)
-            && $this->parameters->get('load_application_css', true) === true
-        ) {
-            $this->loadMediaJS($filePath, $urlPath);
-        }
-
-        /** Component specific CSS and JS in => media/system/[application]/[com_component]/css[js]/XYZ.css[js] */
-        if (isset($this->parameters->load_component_css)
-            && $this->parameters->get('load_component_css', true) === true
-        ) {
-            $this->loadMediaCSS($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
-        }
-        if (isset($this->parameters->load_component_js)
-            && $this->parameters->get('load_component_js', true) === true
-        ) {
-            $this->loadMediaJS($filePath.'/'.$this->request['option'], $urlPath.'/'.$this->request['option']);
-        }
-
-        /** Asset ID specific CSS and JS in => media/system/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        if (isset($this->parameters->load_asset_css)
-            && $this->parameters->get('load_asset_css', true) === true
-        ) {
-            $this->loadMediaCSS($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-        }
-        if (isset($this->parameters->load_asset_js)
-            && $this->parameters->get('load_asset_js', true) === true
-        ) {
-            $this->loadMediaJS($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
-        }
-
-        /** Layout specific CSS and JS in => layouts/[layout_type]/[asset_id]/css[js]/XYZ.css[js] */
-
-        $filePath = $this->layout_path;
-
-        $urlPath = JURI::root().'extensions/layouts/'.$layout_type.'/'.$layout;
-
-        //        if (isset($this->parameters->load_layout_css)
-        //            && $this->parameters->get('load_layout_css', true) === true) {
+        /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.MOLAJO_APPLICATION;
+        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.MOLAJO_APPLICATION;
         $this->loadMediaCSS($filePath, $urlPath);
-        //        }
-        //        if (isset($this->parameters->load_layout_js)
-        //            && $this->parameters->get('load_layout_js', true) === true) {
-        //            $this->loadMediaJS ($filePath.'/'.$this->request['asset_id'], $urlPath.'/'.$this->request['asset_id']);
         $this->loadMediaJS($filePath, $urlPath);
-        //        }
+
+        /** Component specific CSS and JS in => media/[com_component]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$this->request['option'];
+        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['option'];
+        $this->loadMediaCSS($filePath, $urlPath);
+        $this->loadMediaJS($filePath, $urlPath);
+
+        /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
+/** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.$this->request['asset_id'];
+        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
+        $this->loadMediaCSS($filePath, $urlPath);
+        $this->loadMediaJS($filePath, $urlPath);
+*/
+        /** Layout specific CSS and JS in path identified in getPath */
+        $filePath = $this->layout_path;
+        $urlPath = $this->layout_path_url;
+        $this->loadMediaCSS($filePath, $urlPath);
+        $this->loadMediaJS($filePath, $urlPath);
     }
 
     /**

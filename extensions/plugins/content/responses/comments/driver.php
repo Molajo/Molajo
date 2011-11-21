@@ -222,7 +222,7 @@ class MolajoResponsesComments {
         $this->total = $summaryModel->getTotal();
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/com_responses/views/summary/tmpl/default.php';
+        $layoutPath = JPATH_SITE.'/components/com_responses/views/summary/layouts/default.php';
 
         /** generate layout **/
         $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
@@ -258,7 +258,7 @@ class MolajoResponsesComments {
         }
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/com_responses/views/form/tmpl/create.php';
+        $layoutPath = JPATH_SITE.'/components/com_responses/views/form/layouts/create.php';
 
         /** generate layout **/
         $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
@@ -308,7 +308,7 @@ class MolajoResponsesComments {
         }
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/com_responses/views/responses/tmpl/default.php';
+        $layoutPath = JPATH_SITE.'/components/com_responses/views/responses/layouts/default.php';
 
         /** generate layout **/
         $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);

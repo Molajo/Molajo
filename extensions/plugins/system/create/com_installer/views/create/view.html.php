@@ -23,7 +23,7 @@ class InstallerViewCreate extends InstallerViewDefault
      */
     function display($tpl=null)
     {
-        $this->_addPath('template', COM_INSTALLER_OVERRIDES.'/com_installer/views/create/tmpl');
+        $this->_addPath('template', COM_INSTALLER_OVERRIDES.'/com_installer/views/create/layouts');
         $state	= $this->get('State');
 
         $showMessage	= false;

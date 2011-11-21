@@ -235,7 +235,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
             case 'html':
             default:
                 $template	= $this->getTemplate(true);
-                $file		= JRequest::getCmd('tmpl', 'index');
+                $file		= JRequest::getCmd('layout', 'index');
                 $parameters = array(
                     'template'	=> $template->template,
                     'file'		=> $file.'.php',

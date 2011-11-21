@@ -57,7 +57,7 @@ class ModulesViewModules extends JView
 		if ($canDo->get('core.create')) {
 			//MolajoToolbarHelper::addNew('module.add');
 			$bar = MolajoToolbar::getInstance('toolbar');
-			$bar->appendButton('Popup', 'new', 'JTOOLBAR_NEW', 'index.php?option=com_modules&amp;view=select&amp;tmpl=component', 850, 400);
+			$bar->appendButton('Popup', 'new', 'JTOOLBAR_NEW', 'index.php?option=com_modules&amp;view=select&amp;layout=component', 850, 400);
 		}
 
 		if ($canDo->get('core.edit')) {

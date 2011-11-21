@@ -37,7 +37,6 @@ class MolajoComponentHelper
     public static function getComponentName($default = NULL)
     {
         static $option;
-
         if ($option) {
             return $option;
         }

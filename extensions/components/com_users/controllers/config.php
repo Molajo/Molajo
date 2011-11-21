@@ -55,12 +55,12 @@ class UsersControllerConfig extends JController
 		if ($return === false)
 		{
 			$message = MolajoText::sprintf('COM_USERS_CONFIG_IMPORT_FAILED', $model->getError());
-			$this->setRedirect('index.php?option=com_users&view=config&layout=import&tmpl=component', $message, 'notice');
+			$this->setRedirect('index.php?option=com_users&view=config&layout=import&layout=component', $message, 'notice');
 			return false;
 		}
 		else
 		{
-			$this->setRedirect('index.php?option=com_users&view=config&layout=close&tmpl=component');
+			$this->setRedirect('index.php?option=com_users&view=config&layout=close&layout=component');
 			return true;
 		}
 	}
@@ -113,11 +113,11 @@ class UsersControllerConfig extends JController
 
 		if ($return === false) {
 			$message = MolajoText::sprintf('COM_USERS_CONFIG_SAVE_FAILED', $model->getError());
-			$this->setRedirect('index.php?option=com_users&view=config&tmpl=component', $message, 'notice');
+			$this->setRedirect('index.php?option=com_users&view=config&layout=component', $message, 'notice');
 			return false;
 		}
 		else {
-			$this->setRedirect('index.php?option=com_users&view=config&layout=close&tmpl=component');
+			$this->setRedirect('index.php?option=com_users&view=config&layout=close&layout=component');
 			return true;
 		}
 	}

@@ -156,7 +156,7 @@ class InstallerModel extends JModelList
 					||	$lang->load("$extension.sys", $source, $lang->getDefault(), false, false);
 				break;
 				case 'template':
-					$extension = 'tpl_'.$item->element;
+					$extension = 'template_'.$item->element;
 					$source = $path.'/templates/'.$item->element;
 						$lang->load("$extension.sys", $path, null, false, false)
 					||	$lang->load("$extension.sys", $source, null, false, false)

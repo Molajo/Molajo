@@ -657,7 +657,6 @@ class MolajoLanguage extends JObject
             $result = true;
 
         } else {
-
             $result = $this->loadLanguage($filename, $extension);
 
             // Check whether there was a problem with loading the file

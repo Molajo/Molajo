@@ -79,13 +79,6 @@ class MolajoApplication extends JObject
     private $template = null;
 
     /**
-     * @var bool $_language_filter
-     *
-     * @since 1.0
-     */
-    private $_language_filter = false;
-
-    /**
      * @var bool $_detect_browser
      *
      * @since 1.0
@@ -250,7 +243,10 @@ class MolajoApplication extends JObject
 
         /** 4. site default for application */
         if (empty($options['language'])) {
-            $options['language'] = $config->get('language', 'en-GB');
+            $language = $config->get('language', 'en-GB');
+            if ($language && MolajoLanguage::exists($language)) {
+                    $options['language'] = $language;
+            }
         }
 
         /** 5. default */
@@ -262,9 +258,9 @@ class MolajoApplication extends JObject
         /** Set Language in Configuration */
         $config->set('language', $options['language']);
 
-        /** Load Library Language Files for the Base and Application */
+        /** Load Base Language files */
         $language = MolajoFactory::getLanguage();
-        $language->load('lib_molajo', MOLAJO_EXTENSION_TEMPLATES);
+        $results = $language->load('base', MOLAJO_EXTENSION_LANGUAGES);
 
         /** Set User Editor in Configuration */
         $editor = MolajoFactory::getUser()->getParam('editor', $config->get('editor', 'none'));
@@ -990,29 +986,6 @@ class MolajoApplication extends JObject
         $registry->loadObject($config);
 
         return $config;
-    }
-    /**
-     * Set the current state of the language filter.
-     *
-     * @return    boolean    The old state
-     * @since    1.6
-     */
-    public function setLanguageFilter($state = false)
-    {
-        $old = $this->_language_filter;
-        $this->_language_filter = $state;
-        return $old;
-    }
-
-    /**
-     * Return the current state of the language filter.
-     *
-     * @return    boolean
-     * @since    1.6
-     */
-    public function getLanguageFilter()
-    {
-        return $this->_language_filter;
     }
 
     /**

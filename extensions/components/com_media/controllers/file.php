@@ -123,13 +123,13 @@ class MediaControllerFile extends JController
 		$user	= MolajoFactory::getUser();
 
 		// Get some data from the request
-		$tmpl	= JRequest::getCmd('tmpl');
+		$layout	= JRequest::getCmd('layout');
 		$paths	= JRequest::getVar('rm', array(), '', 'array');
 		$folder = JRequest::getVar('folder', '', '', 'path');
 
-		if ($tmpl == 'component') {
+		if ($layout == 'component') {
 			// We are inside the iframe
-			$this->setRedirect('index.php?option=com_media&view=mediaList&folder='.$folder.'&tmpl=component');
+			$this->setRedirect('index.php?option=com_media&view=mediaList&folder='.$folder.'&layout=component');
 		} else {
 			$this->setRedirect('index.php?option=com_media&folder='.$folder);
 		}

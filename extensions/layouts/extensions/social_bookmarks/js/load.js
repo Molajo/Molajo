@@ -4,7 +4,7 @@
 // License GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html
 
 // Twitter
-$.get('index.php?option=com_layouts&tmpl=component&view=popup&layout=dummy', function(html)
+$.get('index.php?option=com_layouts&layout=component&view=popup&layout=dummy', function(html)
 {
 	var $response = $( html );
 
@@ -21,7 +21,7 @@ $.get('index.php?option=com_layouts&tmpl=component&view=popup&layout=dummy', fun
 
 
 // Facebook
-$.get('index.php?option=com_layouts&tmpl=component&view=popup&layout=dummy', function(html)
+$.get('index.php?option=com_layouts&layout=component&view=popup&layout=dummy', function(html)
 {
 	var $response = $( html );
 

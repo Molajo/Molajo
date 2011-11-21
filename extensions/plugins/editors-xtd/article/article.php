@@ -62,7 +62,7 @@ class plgButtonArticle extends MolajoPlugin
 		 * Use the built-in element view to select the article.
 		 * Currently uses blank class.
 		 */
-		$link = 'index.php?option=com_articles&amp;view=articles&amp;layout=modal&amp;tmpl=component';
+		$link = 'index.php?option=com_articles&amp;view=articles&amp;layout=modal&amp;layout=component';
 
 		$button = new JObject();
 		$button->set('modal', true);

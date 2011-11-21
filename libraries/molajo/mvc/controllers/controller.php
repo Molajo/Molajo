@@ -132,17 +132,13 @@ class MolajoController extends JController
         /** language files */
         $lang = MolajoFactory::getLanguage();
 
-        //		$template = MolajoFactory::getApplication()->getTemplate(true)->template;
-        $template = 'molajito';
-        $lang->load('tpl_'.$template, MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", null, false, false)
-        || $lang->load('tpl_'.$template, MOLAJO_APPLICATIONS_PATH, $lang->getDefault(), false, false)
-        || $lang->load('tpl_'.$template, MOLAJO_EXTENSION_TEMPLATES."/$template", $lang->getDefault(), false, false);
+        /** template */
+        $template = MolajoFactory::getApplication()->getTemplate();
+        $templateTitle = $template[0]->title;
+        $lang->load('template_'.$templateTitle, MOLAJO_EXTENSION_TEMPLATES.'/'.$templateTitle, $lang->getDefault(), false, false);
 
-        $lang->load($this->request['option'], MOLAJO_BASE_FOLDER, null, false, false)
-        || $lang->load($this->request['option'], $this->request['component_path'], null, false, false)
-        || $lang->load($this->request['option'], MOLAJO_BASE_FOLDER, $lang->getDefault(), false, false)
-        || $lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
+        /** component */
+        $lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
 
         if ($this->request['task'] == 'edit') {
             $results = $this->checkOutItem();

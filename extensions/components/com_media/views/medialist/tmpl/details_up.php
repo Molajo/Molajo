@@ -13,11 +13,11 @@ $user = MolajoFactory::getUser();
 ?>
 		<tr>
 			<td class="imgTotal">
-				<a href="index.php?option=com_media&amp;view=mediaList&amp;tmpl=component&amp;folder=<?php echo $this->state->parent; ?>" target="folderframe">
+				<a href="index.php?option=com_media&amp;view=mediaList&amp;layout=component&amp;folder=<?php echo $this->state->parent; ?>" target="folderframe">
 					<?php echo MolajoHTML::_('image','media/folderup_16.png', '..', array('width' => 16, 'height' => 16), true); ?></a>
 			</td>
 			<td class="description">
-				<a href="index.php?option=com_media&amp;view=mediaList&amp;tmpl=component&amp;folder=<?php echo $this->state->parent; ?>" target="folderframe">..</a>
+				<a href="index.php?option=com_media&amp;view=mediaList&amp;layout=component&amp;folder=<?php echo $this->state->parent; ?>" target="folderframe">..</a>
 			</td>
 			<td>&#160;</td>
 			<td>&#160;</td>

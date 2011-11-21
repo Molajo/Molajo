@@ -227,6 +227,7 @@ abstract class MolajoFactory
 
         return self::$siteConfig;
     }
+
     /**
      * Get the Application configuration object
      *
@@ -254,7 +255,6 @@ abstract class MolajoFactory
 
         return self::$appConfig;
     }
-
 
     /**
      * Get a session object

@@ -34,13 +34,13 @@ class MediaControllerFolder extends JController
 		$user	= MolajoFactory::getUser();
 
 		// Get some data from the request
-		$tmpl	= JRequest::getCmd('tmpl');
+		$layout	= JRequest::getCmd('layout');
 		$paths	= JRequest::getVar('rm', array(), '', 'array');
 		$folder = JRequest::getVar('folder', '', '', 'path');
 
-		if ($tmpl == 'component') {
+		if ($layout == 'component') {
 			// We are inside the iframe
-			$this->setRedirect('index.php?option=com_media&view=mediaList&folder='.$folder.'&tmpl=component');
+			$this->setRedirect('index.php?option=com_media&view=mediaList&folder='.$folder.'&layout=component');
 		} else {
 			$this->setRedirect('index.php?option=com_media&folder='.$folder);
 		}
@@ -134,7 +134,7 @@ class MediaControllerFolder extends JController
 		$folderCheck	= JRequest::getVar('foldername', null, '', 'string', JREQUEST_ALLOWRAW);
 		$parent			= JRequest::getVar('folderbase', '', '', 'path');
 
-		$this->setRedirect('index.php?option=com_media&folder='.$parent.'&tmpl='.JRequest::getCmd('tmpl', 'index'));
+		$this->setRedirect('index.php?option=com_media&folder='.$parent.'&layout='.JRequest::getCmd('layout', 'index'));
 
 		if (strlen($folder) > 0)
 		{

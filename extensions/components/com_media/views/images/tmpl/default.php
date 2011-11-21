@@ -31,7 +31,7 @@ echo $parameters->get('image_path', 'images');?>/';
 		</div>
 	</fieldset>
 
-	<iframe id="imageframe" name="imageframe" src="index.php?option=com_media&amp;view=imagesList&amp;tmpl=component&amp;folder=<?php echo $this->state->folder?>&amp;asset=<?php echo JRequest::getCmd('asset');?>&amp;author=<?php echo JRequest::getCmd('author');?>"></iframe>
+	<iframe id="imageframe" name="imageframe" src="index.php?option=com_media&amp;view=imagesList&amp;layout=component&amp;folder=<?php echo $this->state->folder?>&amp;asset=<?php echo JRequest::getCmd('asset');?>&amp;author=<?php echo JRequest::getCmd('author');?>"></iframe>
 
 	<fieldset>
 		<table class="properties">
@@ -72,13 +72,13 @@ echo $parameters->get('image_path', 'images');?>/';
 
 		<input type="hidden" id="dirPath" name="dirPath" />
 		<input type="hidden" id="f_file" name="f_file" />
-		<input type="hidden" id="tmpl" name="component" />
+		<input type="hidden" id="layout" name="component" />
 
 	</fieldset>
 </form>
 
 <?php if ($user->authorise('core.create', 'com_media')): ?>
-	<form action="<?php echo JURI::base(); ?>index.php?option=com_media&amp;task=file.upload&amp;tmpl=component&amp;<?php echo $this->session->getName().'='.$this->session->getId(); ?>&amp;<?php echo JUtility::getToken();?>=1&amp;asset=<?php echo JRequest::getCmd('asset');?>&amp;author=<?php echo JRequest::getCmd('author');?>&amp;format=<?php echo $this->config->get('enable_flash')=='1' ? 'json' : '' ?>" id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data">
+	<form action="<?php echo JURI::base(); ?>index.php?option=com_media&amp;task=file.upload&amp;layout=component&amp;<?php echo $this->session->getName().'='.$this->session->getId(); ?>&amp;<?php echo JUtility::getToken();?>=1&amp;asset=<?php echo JRequest::getCmd('asset');?>&amp;author=<?php echo JRequest::getCmd('author');?>&amp;format=<?php echo $this->config->get('enable_flash')=='1' ? 'json' : '' ?>" id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data">
 		<fieldset id="uploadform">
 			<legend><?php echo $this->config->get('upload_maxsize')=='0' ? MolajoText::_('COM_MEDIA_UPLOAD_FILES_NOLIMIT') : MolajoText::sprintf('COM_MEDIA_UPLOAD_FILES', $this->config->get('upload_maxsize')); ?></legend>
 			<fieldset id="upload-noflash" class="actions">
@@ -104,7 +104,7 @@ echo $parameters->get('image_path', 'images');?>/';
 			<ul class="upload-queue" id="upload-queue">
 				<li style="display: none"></li>
 			</ul>
-			<input type="hidden" name="return-url" value="<?php echo base64_encode('index.php?option=com_media&view=images&tmpl=component&fieldid='.JRequest::getCmd('fieldid', '').'&e_name='.JRequest::getCmd('e_name').'&asset='.JRequest::getCmd('asset').'&author='.JRequest::getCmd('author')); ?>" />
+			<input type="hidden" name="return-url" value="<?php echo base64_encode('index.php?option=com_media&view=images&layout=component&fieldid='.JRequest::getCmd('fieldid', '').'&e_name='.JRequest::getCmd('e_name').'&asset='.JRequest::getCmd('asset').'&author='.JRequest::getCmd('author')); ?>" />
 		</fieldset>
 	</form>
 <?php  endif; ?>

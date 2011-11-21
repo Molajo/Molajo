@@ -806,7 +806,7 @@ class MenusModelItem extends JModelAdmin
 				$formFile = false;
 
 				// Check for the layout XML file. Use standard xml file if it exists.
-				$path = JPath::clean($base.'/views/'.$view.'/tmpl/'.$layout.'.xml');
+				$path = JPath::clean($base.'/views/'.$view.'/layouts/'.$layout.'.xml');
 				if (JFile::exists($path)) {
 					$formFile = $path;
 				}
@@ -853,7 +853,7 @@ class MenusModelItem extends JModelAdmin
 			}
 
 			// Get the help data from the XML file if present.
-			$help = $xml->xpath('/metadata/layout/help');
+			$help = $xml->xpath('/metadata/layouts/help');
 			if (!empty($help)) {
 				$helpKey = trim((string) $help[0]['key']);
 				$helpURL = trim((string) $help[0]['url']);

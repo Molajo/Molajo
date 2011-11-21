@@ -17,7 +17,7 @@ $function	= 'jSelectUser_'.$field;
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=users&layout=modal&tmpl=component&groups='.JRequest::getVar('groups', '', 'default', 'BASE64').'&excluded='.JRequest::getVar('excluded', '', 'default', 'BASE64'));?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=users&layout=modal&layout=component&groups='.JRequest::getVar('groups', '', 'default', 'BASE64').'&excluded='.JRequest::getVar('excluded', '', 'default', 'BASE64'));?>" method="post" name="adminForm" id="adminForm">
 	<fieldset class="filter">
 		<div class="left">
 			<label for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER'); ?></label>

@@ -115,7 +115,7 @@ class JFormFieldModuleLayout extends JFormField
 			}
 
 			// Build the search paths for module layouts.
-			$module_path = JPath::clean($client->path.'/modules/'.$module.'/tmpl');
+			$module_path = JPath::clean($client->path.'/modules/'.$module.'/layouts');
 
 			// Prepare array of component layouts
 			$module_layouts = array();
@@ -145,10 +145,10 @@ class JFormFieldModuleLayout extends JFormField
 				foreach ($templates as $template)
 				{
 					// Load language file
-						$lang->load('tpl_'.$template->element.'.sys', $client->path, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, null, false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path, $lang->getDefault(), false, false)
-					||	$lang->load('tpl_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
+						$lang->load('template_'.$template->element.'.sys', $client->path, null, false, false)
+					||	$lang->load('template_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, null, false, false)
+					||	$lang->load('template_'.$template->element.'.sys', $client->path, $lang->getDefault(), false, false)
+					||	$lang->load('template_'.$template->element.'.sys', $client->path.'/templates/'.$template->element, $lang->getDefault(), false, false);
 
 					$template_path = JPath::clean($client->path.'/templates/'.$template->element.'/html/'.$module);
 

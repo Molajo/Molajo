@@ -391,7 +391,7 @@ class JFormFieldMenuType extends JFormFieldList
 		$lang = MolajoFactory::getLanguage();
 
 		// Get the layouts from the view folder.
-		$path = JPATH_SITE.'/components/'.$component.'/views/'.$view.'/tmpl';
+		$path = JPATH_SITE.'/components/'.$component.'/views/'.$view.'/layouts';
 		if (JFolder::exists($path)) {
 			$layouts = array_merge($layouts, JFolder::files($path, '.xml$', false, true));
 		}
@@ -419,10 +419,10 @@ class JFormFieldMenuType extends JFormFieldList
 		{
 			if (JFolder::exists($folder.'/html/'.$component.'/'.$view)) {
 				$template = JFile::getName($folder);
-					$lang->load('tpl_'.$template.'.sys', JPATH_SITE, null, false, false)
-				||	$lang->load('tpl_'.$template.'.sys', JPATH_SITE.'/templates/'.$template, null, false, false)
-				||	$lang->load('tpl_'.$template.'.sys', JPATH_SITE, $lang->getDefault(), false, false)
-				||	$lang->load('tpl_'.$template.'.sys', JPATH_SITE.'/templates/'.$template, $lang->getDefault(), false, false);
+					$lang->load('template_'.$template.'.sys', JPATH_SITE, null, false, false)
+				||	$lang->load('template_'.$template.'.sys', JPATH_SITE.'/templates/'.$template, null, false, false)
+				||	$lang->load('template_'.$template.'.sys', JPATH_SITE, $lang->getDefault(), false, false)
+				||	$lang->load('template_'.$template.'.sys', JPATH_SITE.'/templates/'.$template, $lang->getDefault(), false, false);
 
 				$templateLayouts = JFolder::files($folder.'/html/'.$component.'/'.$view, '.xml$', false, true);
 

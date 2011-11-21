@@ -68,10 +68,10 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
         if ($styles) {
             foreach ($styles as $style) {
                 $template = $style->template;
-                $lang->load('tpl_'.$template.'.sys', $application->path, null, false, false)
-                || $lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, null, false, false)
-                || $lang->load('tpl_'.$template.'.sys', $application->path, $lang->getDefault(), false, false)
-                || $lang->load('tpl_'.$template.'.sys', $application->path.'/templates/'.$template, $lang->getDefault(), false, false);
+                $lang->load('template_'.$template.'.sys', $application->path, null, false, false)
+                || $lang->load('template_'.$template.'.sys', $application->path.'/templates/'.$template, null, false, false)
+                || $lang->load('template_'.$template.'.sys', $application->path, $lang->getDefault(), false, false)
+                || $lang->load('template_'.$template.'.sys', $application->path.'/templates/'.$template, $lang->getDefault(), false, false);
                 $name = MolajoText::_($style->name);
                 // Initialize the group if necessary.
                 if (!isset($groups[$name])) {

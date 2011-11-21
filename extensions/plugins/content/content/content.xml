@@ -16,7 +16,7 @@
 		<folder>notes</folder>
 		<folder>quotes</folder>
 		<folder>syntaxhighlighter</folder>
-		<folder>tmpl</folder>
+		<folder>layout</folder>
 	</files>
 	<languages>
 		<language tag="language/en-GB">en-GB.plg_molajo_content.ini</language>

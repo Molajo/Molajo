@@ -66,7 +66,7 @@ class JFormFieldModulePosition extends JFormFieldText
 
 		// Setup variables for display.
 		$html	= array();
-		$link	= 'index.php?option=com_modules&amp;view=positions&amp;layout=modal&amp;tmpl=component&amp;function=jSelectPosition_'.$this->id.'&amp;application_id='.$application_id;
+		$link	= 'index.php?option=com_modules&amp;view=positions&amp;layout=modal&amp;layout=component&amp;function=jSelectPosition_'.$this->id.'&amp;application_id='.$application_id;
 
 		// The current user display field.
 		$html[] = '<div class="fltlft">';

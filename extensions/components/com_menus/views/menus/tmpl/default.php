@@ -111,7 +111,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 						?>
 						<li>
 							<?php if ($canEdit) : ?>
-								<a class="modal" href="<?php echo MolajoRoute::_('index.php?option=com_modules&task=module.edit&id='.$module->id.'&return='.$return.'&tmpl=component&layout=modal');?>" rel="{handler: 'iframe', size: {x: 1024, y: 450}}"  title="<?php echo MolajoText::_('MENU_EDIT_MODULE_SETTINGS');?>">
+								<a class="modal" href="<?php echo MolajoRoute::_('index.php?option=com_modules&task=module.edit&id='.$module->id.'&return='.$return.'&layout=component&layout=modal');?>" rel="{handler: 'iframe', size: {x: 1024, y: 450}}"  title="<?php echo MolajoText::_('MENU_EDIT_MODULE_SETTINGS');?>">
 								<?php echo MolajoText::sprintf('MENU_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?></a>
 							<?php else :?>
 								<?php echo MolajoText::sprintf('MENU_MODULE_ACCESS_POSITION', $this->escape($module->title), $this->escape($module->access_title), $this->escape($module->position)); ?>

@@ -118,7 +118,7 @@ class MolajoResponsesRatings {
         $this->item	= $responsesModel->getItems();
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/com_responses/views/summary/tmpl/default.php';
+        $layoutPath = JPATH_SITE.'/components/com_responses/views/summary/layouts/default.php';
 
         /** generate layout **/
         return MolajoResponsesRatings::generate_layout ($layoutPath);
@@ -155,7 +155,7 @@ class MolajoResponsesRatings {
         }
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/com_responses/views/form/tmpl/create.php';
+        $layoutPath = JPATH_SITE.'/components/com_responses/views/form/layouts/create.php';
 
         /** generate layout **/
         return MolajoResponsesRatings::generate_layout ($layoutPath);

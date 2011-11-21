@@ -309,10 +309,10 @@ class TemplatesModelStyle extends JModelAdmin
 		$formFile	= JPath::clean($application->path.'/templates/'.$template.'/templateDetails.xml');
 
 		// Load the core and/or local language file(s).
-			$lang->load('tpl_'.$template, $application->path, null, false, false)
-		||	$lang->load('tpl_'.$template, $application->path.'/templates/'.$template, null, false, false)
-		||	$lang->load('tpl_'.$template, $application->path, $lang->getDefault(), false, false)
-		||	$lang->load('tpl_'.$template, $application->path.'/templates/'.$template, $lang->getDefault(), false, false);
+			$lang->load('template_'.$template, $application->path, null, false, false)
+		||	$lang->load('template_'.$template, $application->path.'/templates/'.$template, null, false, false)
+		||	$lang->load('template_'.$template, $application->path, $lang->getDefault(), false, false)
+		||	$lang->load('template_'.$template, $application->path.'/templates/'.$template, $lang->getDefault(), false, false);
 
 		if (file_exists($formFile)) {
 			// Get the template form.

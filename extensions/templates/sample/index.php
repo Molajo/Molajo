@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-if (MolajoFactory::getDocument()->html5 === true): ?>
+if (MolajoFactory::getConfig()->get('html5', true) === true): ?>
 <!DOCTYPE html>
 <?php else: ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,6 +17,6 @@ if (MolajoFactory::getDocument()->html5 === true): ?>
     <doc:include type="head" />
 </head>
 <body>
-<?php include dirname(__FILE__).'/'.MolajoFactory::getDocument()->page; ?>
+<?php include dirname(__FILE__).'/pages/'.MolajoFactory::getDocument()->page; ?>
 </body>
 </html>

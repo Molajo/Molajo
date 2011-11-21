@@ -55,7 +55,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
             $client = 'ADMINISTRATOR';
         }
 
-        $extension = "tpl_$name";
+        $extension = "template_$name";
         $lang = MolajoFactory::getLanguage();
         $source = $path ? $path : ($this->parent->extension->application_id ? MOLAJO_BASE_FOLDER
                 : MOLAJO_BASE_FOLDER).'/templates/'.$name;

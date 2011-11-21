@@ -15,7 +15,7 @@
 	<description>MOD_SYNDICATE_DESCRIPTION</description>
 	<files>
 		<filename module="mod_syndicate">mod_syndicate.php</filename>
-		<folder>tmpl</folder>
+		<folder>layout</folder>
 		<filename>helper.php</filename>
 		<filename>index.html</filename>		<filename>mod_syndicate.xml</filename>
 	</files>

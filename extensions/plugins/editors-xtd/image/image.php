@@ -47,7 +47,7 @@ class plgButtonImage extends MolajoPlugin
 			||  count($user->getAuthorisedCategories($asset, 'create')) > 0
 			|| ($user->authorise('edit.own', $asset) && $author == $user->id))
 		{
-			$link = 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;e_name='.$name.'&amp;asset='.$asset.'&amp;author='.$author;
+			$link = 'index.php?option=com_media&amp;view=images&amp;layout=component&amp;e_name='.$name.'&amp;asset='.$asset.'&amp;author='.$author;
 			JHtml::_('behavior.modal');
 			$button = new JObject;
 			$button->set('modal', true);

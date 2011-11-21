@@ -248,12 +248,6 @@ class MolajoCategories
         // Group by
         $query->group('c.id');
 
-        // Filter by language
-        if ($app->getLanguageFilter()) {
-            $query->where('('.($id != 'root' ? 'c.id=s.id OR '
-                                  : '').'c.language in ('.$db->Quote(MolajoFactory::getLanguage()->getTag()).','.$db->Quote('*').'))');
-        }
-
         // Get the results
         $db->setQuery($query);
         $results = $db->loadObjectList('id');

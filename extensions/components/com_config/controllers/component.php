@@ -79,7 +79,7 @@ class ConfigControllerComponent extends JController
 			$app->setUserState('com_config.config.global.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(MolajoRoute::_('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', false));
+			$this->setRedirect(MolajoRoute::_('index.php?option=com_config&view=component&component='.$option.'&layout=component', false));
 			return false;
 		}
 
@@ -99,7 +99,7 @@ class ConfigControllerComponent extends JController
 
 			// Save failed, go back to the screen and display a notice.
 			$message = MolajoText::sprintf('JERROR_SAVE_FAILED', $model->getError());
-			$this->setRedirect('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', $message, 'error');
+			$this->setRedirect('index.php?option=com_config&view=component&component='.$option.'&layout=component', $message, 'error');
 			return false;
 		}
 
@@ -108,12 +108,12 @@ class ConfigControllerComponent extends JController
 		{
 			case 'apply':
 				$message = MolajoText::_('COM_CONFIG_SAVE_SUCCESS');
-				$this->setRedirect('index.php?option=com_config&view=component&component='.$option.'&tmpl=component', $message);
+				$this->setRedirect('index.php?option=com_config&view=component&component='.$option.'&layout=component', $message);
 				break;
 
 			case 'save':
 			default:
-				$this->setRedirect('index.php?option=com_config&view=close&tmpl=component');
+				$this->setRedirect('index.php?option=com_config&view=close&layout=component');
 				break;
 		}
 

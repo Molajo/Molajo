@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="layout" group="wrap" method="upgrade">
-    <name>LAYOUT_WRAPS_OUTLINE_NAME</name>
+    <name>LAYOUT_WRAP_OUTLINE_NAME</name>
     <author>Molajo Contributors</author>
     <creationDate>June 2011</creationDate>
     <copyright>Copyright (C) Individual Molajo Contributors. All rights reserved.</copyright>
@@ -8,13 +8,13 @@
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
-    <description>LAYOUT_WRAPS_OUTLINE_DESCRIPTION</description>
+    <description>LAYOUT_WRAP_OUTLINE_DESCRIPTION</description>
 	<files>
 		<folder>layouts</folder>
 		<folder>language</folder>
 	</files>
 	<languages>
-		<language tag="language/en-GB">en-GB.layouts_wraps_table_name.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_wraps_table_name.sys.ini</language>
+		<language tag="language/en-GB">en-GB.layout_wrap_table_name.ini</language>
+		<language tag="language/en-GB">en-GB.layout_wrap_table_name.sys.ini</language>
 	</languages>
 </extension>

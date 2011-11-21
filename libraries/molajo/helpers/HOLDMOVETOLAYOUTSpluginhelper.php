@@ -27,7 +27,7 @@ abstract class MolajoPluginHelper
 
         /** template and base path for the layout **/
         $tPath = MOLAJO_EXTENSION_TEMPLATES.'/'.$template.'/html/'.$widget['type'].'/'.$widget['name'].'/'.$layout.'.php';
-        $bPath = MOLAJO_WIDGETS.'/'.$widget['type'].'/'.$widget['name'].'/tmpl/'.$defaultLayout.'.php';
+        $bPath = MOLAJO_WIDGETS.'/'.$widget['type'].'/'.$widget['name'].'/layouts/'.$defaultLayout.'.php';
 
         /** use layout overrides, if available **/
         if (file_exists($tPath)) {

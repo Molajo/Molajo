@@ -108,7 +108,7 @@ class MolajoFormFieldMedia extends MolajoFormField
         $html[] = '	<div class="blank">';
         $html[] = '		<a class="modal" title="'.MolajoText::_('MOLAJO_FORM_BUTTON_SELECT').'"' .
                   ' href="'.($this->element['readonly'] ? '' : ($link ? $link
-                : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
+                : 'index.php?option=com_media&amp;view=images&amp;layout=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
                   ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
         $html[] = '			'.MolajoText::_('MOLAJO_FORM_BUTTON_SELECT').'</a>';
         $html[] = '	</div>';

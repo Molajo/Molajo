@@ -96,13 +96,13 @@ JDEBUG ? $_PROFILER->mark('afterRoute') : null;
  */
 $app->dispatch();
 JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
- 
+
 /**
  *  Render
  */
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
- 
+
 /**
 print_r(get_defined_constants(true));
 */

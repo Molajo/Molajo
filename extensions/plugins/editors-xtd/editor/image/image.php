@@ -46,7 +46,7 @@ class plgButtonImage extends MolajoPlugin
 		$doc		= MolajoFactory::getDocument();
 		$template	= $app->getTemplate();
 
-		$link = 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;e_name='.$name;
+		$link = 'index.php?option=com_media&amp;view=images&amp;layout=component&amp;e_name='.$name;
 
 		JHtml::_('behavior.modal');
 

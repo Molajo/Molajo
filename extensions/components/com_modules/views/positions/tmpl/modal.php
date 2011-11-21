@@ -22,7 +22,7 @@ $state		= $this->state->get('filter.state');
 $template	= $this->state->get('filter.template');
 $type		= $this->state->get('filter.type');
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option=com_modules&view=positions&layout=modal&tmpl=component&function='.$function.'&application_id=' .$application_id);?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRoute::_('index.php?option=com_modules&view=positions&layout=modal&layout=component&function='.$function.'&application_id=' .$application_id);?>" method="post" name="adminForm" id="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
 			<label for="filter_search">

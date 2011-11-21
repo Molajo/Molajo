@@ -7,17 +7,11 @@
 
 User-agent: *
 Disallow: /administrator/
-Disallow: /cache/
-Disallow: /components/
-Disallow: /includes/
+Disallow: /applications/
+Disallow: /content/
+Disallow: /extensions/
 Disallow: /installation/
 Disallow: /language/
-Disallow: /layouts/
 Disallow: /libraries/
-Disallow: /logs/
-Disallow: /media/
-Disallow: /modules/
-Disallow: /plugins/
-Disallow: /templates/
-Disallow: /tmp/
+Disallow: /sites/
 

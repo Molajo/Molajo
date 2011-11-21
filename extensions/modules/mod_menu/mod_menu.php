@@ -12,4 +12,4 @@ $filehelper->requireClassFile(dirname(__FILE__).'/helper.php', 'modMenuHelper');
 
 $rowset	= modMenuHelper::getList($parameters);
 
-//require_once dirname(__FILE__).'/tmpl/default.php';
+//require_once dirname(__FILE__).'/layouts/default.php';

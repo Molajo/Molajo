@@ -147,10 +147,7 @@ abstract class MolajoModuleHelper
         if (file_exists($path)) {
 
             $lang = MolajoFactory::getLanguage();
-
-            $lang->load($module->extension_name, MOLAJO_EXTENSION_MODULES, null, false, false)
-            || $lang->load($module->extension_name, MOLAJO_EXTENSION_MODULES, $lang->getDefault(), false, false);
-
+            $lang->load($module->extension_name, MOLAJO_EXTENSION_MODULES.'/'.$module->extension_name, $lang->getDefault(), false, false);
             /** view */
             $view = new MolajoView ();
 

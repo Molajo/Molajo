@@ -281,7 +281,7 @@ class plgSystemMolajo extends MolajoPlugin
         foreach ($folders as $folder) {
 
             /** rename files that do not fit the pattern **/
-            if (basename($folder) == 'tmpl') {
+            if (basename($folder) == 'layout') {
                 $files = JFolder::files($folder, $filter = '.php', $recurse = false, $full = false, $exclude = array(), $excludefilter = array('^\..*','.*~','*_*.php'));
 
                 /** process each file **/

@@ -104,7 +104,7 @@ class JFormFieldMedia extends JFormField
 		$html[] = '<div class="button2-left">';
 		$html[] = '	<div class="blank">';
 		$html[] = '		<a class="modal" title="'.MolajoText::_('JSELECT').'"' .
-					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
+					' href="'.($this->element['readonly'] ? '' : ($link ? $link : 'index.php?option=com_media&amp;view=images&amp;layout=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
 					' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
 		$html[] = '			'.MolajoText::_('JSELECT').'</a>';
 		$html[] = '	</div>';

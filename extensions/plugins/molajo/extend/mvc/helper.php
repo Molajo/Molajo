@@ -143,9 +143,9 @@ class extendHelper
         $app = MolajoFactory::getApplication();
 
         if ($app->getName() == 'administrator') {
-            $file = JPATH_ADMINISTRATOR.'/components/'.$component_option.'/views/'.$component_view.'/tmpl/'.$component_layout.'.php';
+            $file = JPATH_ADMINISTRATOR.'/components/'.$component_option.'/views/'.$component_view.'/layouts/'.$component_layout.'.php';
         } else {
-            $file = JPATH_SITE.'/components/'.$component_option.'/views/'.$component_view.'/tmpl/'.$component_layout.'.php';
+            $file = JPATH_SITE.'/components/'.$component_option.'/views/'.$component_view.'/layouts/'.$component_layout.'.php';
         }
 
         if (JFile::exists($file)) {
