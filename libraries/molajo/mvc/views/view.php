@@ -302,8 +302,8 @@ class MolajoView extends JView
          *  If the custom.php file exists in layoutFolder, layout handles $this->rowset processing
          *
          */
-        if (file_exists($this->layout_path.'/custom.php')) {
-            include $this->layout_path.'/custom.php';
+        if (file_exists($this->layout_path.'/layouts/custom.php')) {
+            include $this->layout_path.'/layouts/custom.php';
 
         } else {
 
@@ -342,8 +342,8 @@ class MolajoView extends JView
                         echo $this->row->event->beforeDisplayContent;
                     }
 
-                    if (file_exists($this->layout_path.'/top.php')) {
-                        include $this->layout_path.'/top.php';
+                    if (file_exists($this->layout_path.'/layouts/top.php')) {
+                        include $this->layout_path.'/layouts/top.php';
                     }
                 }
 
@@ -351,8 +351,8 @@ class MolajoView extends JView
                 } else {
 
                     /** item: header */
-                    if (file_exists($this->layout_path.'/header.php')) {
-                        include $this->layout_path.'/header.php';
+                    if (file_exists($this->layout_path.'/layouts/header.php')) {
+                        include $this->layout_path.'/layouts/header.php';
 
                         /** event: After Display of Title */
                         if (isset($this->row->event->afterDisplayTitle)) {
@@ -361,21 +361,21 @@ class MolajoView extends JView
                     }
 
                     /** item: body */
-                    if (file_exists($this->layout_path.'/body.php')) {
-                        include $this->layout_path.'/body.php';
+                    if (file_exists($this->layout_path.'/layouts/body.php')) {
+                        include $this->layout_path.'/layouts/body.php';
                     }
 
                     /** item: footer */
-                    if (file_exists($this->layout_path.'/footer.php')) {
-                        include $this->layout_path.'/footer.php';
+                    if (file_exists($this->layout_path.'/layouts/footer.php')) {
+                        include $this->layout_path.'/layouts/footer.php';
                     }
 
                     $rowCount++;
                 }
 
                 /** layout: bottom */
-                if (file_exists($this->layout_path.'/bottom.php')) {
-                    include $this->layout_path.'/bottom.php';
+                if (file_exists($this->layout_path.'/layouts/bottom.php')) {
+                    include $this->layout_path.'/layouts/bottom.php';
 
                     /** event: After Layout is finished */
                     if (isset($this->row->event->afterDisplayContent)) {
@@ -459,21 +459,21 @@ class MolajoView extends JView
      */
     protected function loadMediaCSS($filePath, $urlPath)
     {
-        if (JFolder::exists($filePath.'/css')) {
+        if (JFolder::exists($filePath.'/layouts/css')) {
         } else {
             return;
         }
 
-        $files = JFolder::files($filePath.'/css', '\.css$', false, false);
+        $files = JFolder::files($filePath.'/layouts/css', '\.css$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
                     if ($this->document->direction == 'rtl') {
-                        $this->document->addStyleSheet($urlPath.'/css/'.$file);
+                        $this->document->addStyleSheet($urlPath.'/layouts/css/'.$file);
                     }
                 } else {
-                    $this->document->addStyleSheet($urlPath.'/css/'.$file);
+                    $this->document->addStyleSheet($urlPath.'/layouts/css/'.$file);
                 }
             }
         }
@@ -490,16 +490,16 @@ class MolajoView extends JView
      */
     protected function loadMediaJS($filePath, $urlPath)
     {
-        if (JFolder::exists($filePath.'/js')) {
+        if (JFolder::exists($filePath.'/layouts/js')) {
         } else {
             return;
         }
         //todo: differentiate between script and scripts
-        $files = JFolder::files($filePath.'/js', '\.js$', false, false);
+        $files = JFolder::files($filePath.'/layouts/js', '\.js$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
-                $this->document->addScript($urlPath.'/js/'.$file);
+                $this->document->addScript($urlPath.'/layouts/js/'.$file);
             }
         }
     }
