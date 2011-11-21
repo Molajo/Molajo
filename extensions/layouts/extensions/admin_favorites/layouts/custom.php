@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 //MolajoHTML::_('behavior.keepalive');
 ?>
-<form action="<?php //echo MolajoRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="form-login">
+<form action="<?php //echo MolajoRouteHelper::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="form-login">
 	<fieldset class="loginform">
 
 				<label id="mod-login-username-lbl" for="mod-login-username">

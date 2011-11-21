@@ -75,7 +75,7 @@ class MenusControllerItems extends JControllerAdmin
 		else
 		{
 			// Nothing to reorder
-			$this->setRedirect(MolajoRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
 			return true;
 		}
 	}
@@ -119,6 +119,6 @@ class MenusControllerItems extends JControllerAdmin
 			}
 		}
 
-		$this->setRedirect(MolajoRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
+		$this->setRedirect(MolajoRouteHelper::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
 	}
 }

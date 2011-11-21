@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.language.help');
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option=com_admin&amp;view=help'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_admin&amp;view=help'); ?>" method="post" name="adminForm" id="adminForm">
 <div class="width-40 fltlft">
 	<fieldset class="adminform">
 		<legend><?php echo MolajoText::_('COM_ADMIN_SEARCH'); ?></legend>

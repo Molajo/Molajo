@@ -60,7 +60,7 @@ class MolajoACL
     public function getUserPermissionSet($option, $entity, $set)
     {
         /** component parameters **/
-        $parameters = MolajoComponentHelper::getParameters($option);
+        $parameters = MolajoApplicationComponent::getParameters($option);
 
         /** loop thru config options and add ToolBar buttons **/
         $count = 0;

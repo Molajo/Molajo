@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 /**
  * Molajo System Plugin
  */
-class plgSystemMolajo extends MolajoPlugin
+class plgSystemMolajo extends MolajoApplicationPlugin
 {
     /**
      * System Event: onAfterInitialise

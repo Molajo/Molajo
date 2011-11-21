@@ -10,8 +10,8 @@ defined('MOLAJO') or die;
 /**
  * Molajo View
  *
- * @package        Molajo
- * @subpackage    View
+ * @package      Molajo
+ * @subpackage   View
  * @since        1.0
  */
 class MolajoView extends JView
@@ -426,8 +426,8 @@ class MolajoView extends JView
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$this->request['option'].'/layouts';
         $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['option'].'/layouts';
-        MolajoTemplateHelper::loadMediaCSS($filePath, $urlPath);
-        MolajoTemplateHelper::loadMediaJS($filePath, $urlPath);
+        MolajoApplicationTemplate::loadMediaCSS($filePath, $urlPath);
+        MolajoApplicationTemplate::loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
 /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.$this->request['asset_id'];
@@ -438,8 +438,8 @@ class MolajoView extends JView
         /** Layout specific CSS and JS in path identified in getPath */
         $filePath = $this->layout_path.'/layouts';
         $urlPath = $this->layout_path_url.'/layouts';
-        MolajoTemplateHelper::loadMediaCSS($filePath, $urlPath);
-        MolajoTemplateHelper::loadMediaJS($filePath, $urlPath);
+        MolajoApplicationTemplate::loadMediaCSS($filePath, $urlPath);
+        MolajoApplicationTemplate::loadMediaJS($filePath, $urlPath);
     }
 }
 

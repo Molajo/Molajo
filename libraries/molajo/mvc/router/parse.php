@@ -16,12 +16,12 @@ defined('MOLAJO') or die;
  * @subpackage    Router
  * @since 1.5
  */
-class MolajoRouterParse extends MolajoRouter
+class MolajoApplicationRouterParse extends MolajoApplicationRouter
 {
     /**
      * parseRoute
      *
-     * called out of ArticlesParseRoute (ex), which is activated by MolajoRouterSite::_parseSefRoute()
+     * called out of ArticlesParseRoute (ex), which is activated by MolajoApplicationRouterSite::_parseSefRoute()
      *
      * @param array     $segments An array of URL arguments
      * @param string    $componentParam ex com_articles
@@ -40,7 +40,7 @@ class MolajoRouterParse extends MolajoRouter
         $app = MolajoFactory::getApplication();
         $menu = $app->getMenu();
         $item = $menu->getActive();
-        $parameters = MolajoComponentHelper::getParameters($componentParam);
+        $parameters = MolajoApplicationComponent::getParameters($componentParam);
         $advanced = $parameters->get('sef_advanced_link', 0);
         $db = MolajoFactory::getDBO();
 

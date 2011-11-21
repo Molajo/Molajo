@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @package		Molajo
  * @subpackage	Compress
  */
-class plgSystemCompress extends MolajoPlugin
+class plgSystemCompress extends MolajoApplicationPlugin
 {
 	/**
 	 * @access  protected

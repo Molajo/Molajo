@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstallerTemplate extends MolajoAdapterInstance
+class MolajoInstallerAdapterTemplate extends MolajoAdapterInstance
 {
     protected $name = null;
 
@@ -28,7 +28,7 @@ class MolajoInstallerTemplate extends MolajoAdapterInstance
      *
      * @param   string  $path  The path where to find language files.
      *
-     * @return  MolajoInstallerTemplate
+     * @return  MolajoInstallerAdapterTemplate
      *
      * @since   11.1
      */

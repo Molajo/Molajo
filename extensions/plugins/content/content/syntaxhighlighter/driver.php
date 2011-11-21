@@ -51,7 +51,7 @@ class MolajoContentSyntaxHighlighter {
     function driver ($context, &$content, &$parameters, $page, $location)
     {
         /** parameters **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
         if ($systemParameters->def('enable_syntax_highlighter', 0) == 0) {
             return;
@@ -90,8 +90,8 @@ class MolajoContentSyntaxHighlighter {
                 MolajoContentSyntaxHighlighter::_processCode();
 
                 /** layout **/
-                $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'syntaxhighlighter');
-                $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+                $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'syntaxhighlighter');
+                $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
 
                 $temp = str_replace($codeMatches[0], $renderedLayout, $temp);
         }

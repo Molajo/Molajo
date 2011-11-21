@@ -20,7 +20,7 @@ class MolajoMediaOembed {
      */
     function driver ($context, &$content, &$parameters, $page, $location)
     {
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 $temp = $content->$location;
 
@@ -36,11 +36,11 @@ die();
 
 			$link = $replacethis;
 
-			$external_link = MolajoHelperURLs::checkURLExternal ($link);
+			$external_link = MolajoApplicationHelperURLs::checkURLExternal ($link);
 
-			$valid_link = MolajoHelperURLs::checkURLValidity ($link);
+			$valid_link = MolajoApplicationHelperURLs::checkURLValidity ($link);
 			if ($valid_link) {
-				$output_Host = MolajoHelperURLs::getHost ($link);
+				$output_Host = MolajoApplicationHelperURLs::getHost ($link);
 			}
 
 			$mediaEmbedHelper = new TamkaMediaEmbedHelper ();
@@ -77,11 +77,11 @@ die();
 			$text = substr($text, (stripos($text, '>') + 1), 9999);
 			$text = substr($text, 0, stripos($text, '<'));
 
-			$external_link = MolajoHelperURLs::checkURLExternal ($link);
+			$external_link = MolajoApplicationHelperURLs::checkURLExternal ($link);
 
-			$valid_link = MolajoHelperURLs::checkURLValidity ($link);
+			$valid_link = MolajoApplicationHelperURLs::checkURLValidity ($link);
 			if ($valid_link) {
-				$output_Host = MolajoHelperURLs::getHost ($link);
+				$output_Host = MolajoApplicationHelperURLs::getHost ($link);
 			}
 
 			$mediaEmbedHelper = new TamkaMediaEmbedHelper ();

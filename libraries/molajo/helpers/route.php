@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @package     Joomla.Platform
  * @since       11.1
  */
-class MolajoRoute
+class MolajoRouteHelper
 {
     /**
      * Translates an internal Joomla URL to a humanly readible URL.

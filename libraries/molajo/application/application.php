@@ -264,11 +264,11 @@ class MolajoApplication extends JObject
 
         /** Set User Editor in Configuration */
         $editor = MolajoFactory::getUser()->getParam('editor', $config->get('editor', 'none'));
-        if (MolajoPluginHelper::isEnabled('editors', $editor)) {
+        if (MolajoApplicationPlugin::isEnabled('editors', $editor)) {
 
         } else {
             $editor = $config->get('editor');
-            if (MolajoPluginHelper::isEnabled('editors', $editor)) {
+            if (MolajoApplicationPlugin::isEnabled('editors', $editor)) {
             } else {
                 $editor = 'none';
             }
@@ -283,7 +283,7 @@ class MolajoApplication extends JObject
         }
 
         /** Trigger onAfterInitialise Event */
-        MolajoPluginHelper::importPlugin('system');
+        MolajoApplicationPlugin::importPlugin('system');
         $this->triggerEvent('onAfterInitialise');
     }
 
@@ -319,7 +319,7 @@ class MolajoApplication extends JObject
         }
 
         /** trigger onAfterRoute Event */
-        MolajoPluginHelper::importPlugin('system');
+        MolajoApplicationPlugin::importPlugin('system');
         $this->triggerEvent('onAfterRoute');
     }
 
@@ -348,7 +348,7 @@ class MolajoApplication extends JObject
             $uri = MolajoFactory::getURI();
             $return = (string)$uri;
             $url = 'index.php?option=com_users&view=login&return='.$return;
-            $url = MolajoRoute::_($url, false);
+            $url = MolajoRouteHelper::_($url, false);
             $this->redirect($url, MolajoText::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
 
             return false;
@@ -377,7 +377,7 @@ class MolajoApplication extends JObject
             $name = $this->_name;
         }
 
-        $menu = MolajoMenu::getInstance($name, $options);
+        $menu = MolajoApplicationMenu::getInstance($name, $options);
 
         if (MolajoError::isError($menu)) {
             return null;
@@ -404,7 +404,7 @@ class MolajoApplication extends JObject
             $name = MOLAJO_APPLICATION;
         }
 
-        $router = MolajoRouter::getInstance($name, $options);
+        $router = MolajoApplicationRouter::getInstance($name, $options);
         if (MolajoError::isError($router)) {
             return null;
         }
@@ -426,19 +426,17 @@ class MolajoApplication extends JObject
     {
         try
         {
-            /** Application Helper */
-            $class = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'ApplicationHelper';
-            $helper = new $class ();
+            /** Helper */
+            $helper = new MolajoApplicationComponent ();
 
-            /** Verify Component */
+            /** Verify */
             $option = $helper->verifyComponent($option);
 
-            /** Retrieve Request Object for Option */
+            /** Request */
             $request = $helper->getRequest($option);
 
+            /** Document */
             $document = MolajoFactory::getDocument();
-            $user = MolajoFactory::getUser();
-
             switch ($document->getType()) {
                 case 'html':
                     $document->setMetaData('keywords', $this->getConfig('MetaKeys'));
@@ -447,15 +445,17 @@ class MolajoApplication extends JObject
                 default:
                     break;
             }
-
             $document->setTitle($this->getConfig('sitename'));
             $document->setDescription($this->getConfig('MetaDesc'));
 
-            $contents = MolajoComponentHelper::renderComponent($request);
+            /** Render */
+            $contents = MolajoApplicationComponent::renderComponent($request);
 
+            /** Buffer */
             $document->setBuffer($contents, 'component');
 
-            MolajoPluginHelper::importPlugin('system');
+            /** Events */
+            MolajoApplicationPlugin::importPlugin('system');
             $this->triggerEvent('onAfterDispatch');
         }
 
@@ -478,7 +478,7 @@ class MolajoApplication extends JObject
      */
     public function render()
     {
-        MolajoTemplateHelper::renderTemplate();
+        MolajoApplicationTemplate::renderTemplate();
     }
 
     /**
@@ -695,7 +695,7 @@ class MolajoApplication extends JObject
      */
     function getTemplate()
     {
-        return MolajoTemplateHelper::getTemplate();
+        return MolajoApplicationTemplate::getTemplate();
     }
 
     /**
@@ -729,7 +729,7 @@ class MolajoApplication extends JObject
             $name = $this->_name;
         }
 
-        $pathway = MolajoPathway::getInstance($name, $options);
+        $pathway = MolajoApplicationPathway::getInstance($name, $options);
 
         if (MolajoError::isError($pathway)) {
             return null;

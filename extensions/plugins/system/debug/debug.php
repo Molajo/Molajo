@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Plugin
  * @subpackage	System.debug
  */
-class plgSystemDebug extends MolajoPlugin
+class plgSystemDebug extends MolajoApplicationPlugin
 {
 	/**
 	 * Constructor

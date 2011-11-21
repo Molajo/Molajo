@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage	Application
  * @since       1.0
  */
-class MolajoInstallationPathway extends MolajoPathway {}
+class MolajoInstallationPathway extends MolajoApplicationPathway {}

@@ -50,7 +50,7 @@ class UsersModelUser extends JModelAdmin
 
 		// Get the dispatcher and load the users plugins.
 		$dispatcher	= JDispatcher::getInstance();
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 
 		// Trigger the data preparation event.
 		$results = $dispatcher->trigger('onContentPrepareData', array('com_users.user', $result));
@@ -98,7 +98,7 @@ class UsersModelUser extends JModelAdmin
 		// TODO: Maybe this can go into the parent model somehow?
 		// Get the dispatcher and load the users plugins.
 		$dispatcher	= JDispatcher::getInstance();
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 
 		// Trigger the data preparation event.
 		$results = $dispatcher->trigger('onContentPrepareData', array('com_users.profile', $data));
@@ -198,7 +198,7 @@ class UsersModelUser extends JModelAdmin
 		$iAmSuperAdmin	= $user->authorise('core.admin');
 
 		// Trigger the onUserBeforeSave event.
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 		$dispatcher = JDispatcher::getInstance();
 
 		if (in_array($user->id, $pks)) {
@@ -265,7 +265,7 @@ class UsersModelUser extends JModelAdmin
 		$table		= $this->getTable();
 		$pks		= (array) $pks;
 
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 
 		// Access checks.
 		foreach ($pks as $i => $pk)
@@ -361,7 +361,7 @@ class UsersModelUser extends JModelAdmin
 		$table		= $this->getTable();
 		$pks		= (array) $pks;
 		
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 
 		// Access checks.
 		foreach ($pks as $i => $pk)
@@ -567,7 +567,7 @@ class UsersModelUser extends JModelAdmin
 		}
 		else {
 			jimport('joomla.user.helper');
-			$result = MolajoUserHelper::getUserGroups($userId);
+			$result = MolajoSiteUser::getUserGroups($userId);
 		}
 
 		return $result;

@@ -26,9 +26,9 @@ define('JPATH_THEMES',          MOLAJO_EXTENSION_TEMPLATES);
 /**
  * File Subsystem
  */
-require_once MOLAJO_LIBRARY.'/error/error.php';
-require_once MOLAJO_LIBRARY.'/error/exception.php';
-require_once MOLAJO_LIBRARY.'/site/text.php';
+require_once MOLAJO_LIBRARY.'/framework/error.php';
+require_once MOLAJO_LIBRARY.'/framework/exception.php';
+require_once MOLAJO_LIBRARY.'/framework/text.php';
 require_once JOOMLA_LIBRARY.'/registry/registry.php';
 
 $filehelper = new MolajoFileHelper();
@@ -48,7 +48,7 @@ foreach ($files as $file) {
         $filehelper->requireClassFile(JOOMLA_LIBRARY.'/base/'.$file, 'J'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/language.php', 'MolajoLanguage');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/framework/language.php', 'MolajoLanguage');
 
 /**
  *  Application

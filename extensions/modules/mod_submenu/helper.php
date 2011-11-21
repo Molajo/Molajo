@@ -1,23 +1,43 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @subpackage  Module
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Submenu Helper
- *
- * @package     Molajo
- * @subpackage  Submenu Helper
- * @since       1.0
+ * @package		Molajo
+ * @subpackage	mod_header
+ * @since		1.0
  */
-class MolajoSubmenuHelper
+abstract class MolajoSubmenuHelper
 {
     /**
+	 * $data
+	 *
+	 * @since	1.0
+	 */
+	protected static $data = array();
+
+	/**
+	 * Helper method to generate data
+	 *
+	 * @param	array	A named array with keys link, image, text, access and imagePath
+	 *
+	 * @return	string	HTML for button
+	 * @since	1.0
+	 */
+	public static function getList($parameters)
+	{
+        $tmpobj = new JObject();
+        $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));
+        $data[]=$tmpobj;
+        return $data;
+	}
+
+   /**
      * add
      *
      * @since    1.0
@@ -25,7 +45,7 @@ class MolajoSubmenuHelper
     public static function add()
     {
         /** component parameters **/
-        $parameters = MolajoComponentHelper::getParameters(JRequest::getCmd('option'));
+        $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
 
         /** Toolbar title and buttons **/
         for ($i = 1; $i < 1000; $i++) {

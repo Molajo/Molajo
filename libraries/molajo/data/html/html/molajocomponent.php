@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage    HTML
  * @since        1.5
  */
-abstract class MolajoHtmlMolajoComponent
+abstract class MolajoHtmlMolajoApplicationComponent
 {
     /**
      * @var    array    Cached array of the component items.

@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @package Editors-xtd
  * @since 1.5
  */
-class plgButtonPagebreak extends MolajoPlugin
+class plgButtonPagebreak extends MolajoApplicationPlugin
 {
 	/**
 	 * Display the button

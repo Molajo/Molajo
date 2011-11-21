@@ -109,7 +109,7 @@ class MolajoControllerLogin extends MolajoController
      */
     protected function _loginFailed($type, $response, $options = Array())
     {
-        MolajoPluginHelper::getPlugin('user');
+        MolajoApplicationPlugin::getPlugin('user');
         if ($type == 'authenticate') {
             JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
         } else {
@@ -203,7 +203,7 @@ class MolajoControllerLogin extends MolajoController
         }
 
         // Import the user plugin group.
-        MolajoPluginHelper::importPlugin('user');
+        MolajoApplicationPlugin::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
         $results = $this->triggerEvent('onUserLogout', array($parameters, $options));

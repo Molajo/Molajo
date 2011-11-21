@@ -525,7 +525,7 @@ class MolajoPagination extends JObject
         $data->all = new MolajoPaginationObject(MolajoText::_('MOLAJO_HTML_VIEW_ALL'), $this->prefix);
         if (!$this->_viewall) {
             $data->all->base = '0';
-            $data->all->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart=');
+            $data->all->link = MolajoRouteHelper::_($parameters.'&'.$this->prefix.'limitstart=');
         }
 
         // Set the start and previous data objects.
@@ -539,9 +539,9 @@ class MolajoPagination extends JObject
             //$page = $page == 0 ? '' : $page;
 
             $data->start->base = '0';
-            $data->start->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart=0');
+            $data->start->link = MolajoRouteHelper::_($parameters.'&'.$this->prefix.'limitstart=0');
             $data->previous->base = $page;
-            $data->previous->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$page);
+            $data->previous->link = MolajoRouteHelper::_($parameters.'&'.$this->prefix.'limitstart='.$page);
         }
 
         // Set the next and end data objects.
@@ -553,9 +553,9 @@ class MolajoPagination extends JObject
             $end = ($this->get('pages.total') - 1) * $this->limit;
 
             $data->next->base = $next;
-            $data->next->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$next);
+            $data->next->link = MolajoRouteHelper::_($parameters.'&'.$this->prefix.'limitstart='.$next);
             $data->end->base = $end;
-            $data->end->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$end);
+            $data->end->link = MolajoRouteHelper::_($parameters.'&'.$this->prefix.'limitstart='.$end);
         }
 
         $data->pages = array();
@@ -569,7 +569,7 @@ class MolajoPagination extends JObject
             $data->pages[$i] = new MolajoPaginationObject($i, $this->prefix);
             if ($i != $this->get('pages.current') || $this->_viewall) {
                 $data->pages[$i]->base = $offset;
-                $data->pages[$i]->link = MolajoRoute::_($parameters.'&'.$this->prefix.'limitstart='.$offset);
+                $data->pages[$i]->link = MolajoRouteHelper::_($parameters.'&'.$this->prefix.'limitstart='.$offset);
             }
         }
         return $data;

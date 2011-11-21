@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstallerFile extends MolajoAdapterInstance
+class MolajoInstallerAdapterFile extends MolajoAdapterInstance
 {
     protected $route = 'install';
 

@@ -43,7 +43,7 @@ MolajoHTML::_('behavior.modal');
 	}
 </script>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_menus&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_menus&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
 
 <div class="width-60 fltlft">
 	<fieldset class="adminform">

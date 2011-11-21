@@ -75,9 +75,9 @@ class MolajoButtonHelp extends MolajoButton
     protected function _getCommand($ref, $com, $override, $component)
     {
         // Get Help URL
-        $url = MolajoHelp::createURL($ref, $com, $override, $component);
+        $url = MolajoApplicationHelp::createURL($ref, $com, $override, $component);
         $url = htmlspecialchars($url, ENT_QUOTES);
-        $cmd = "popupWindow('$url', '".MolajoText::_('MolajoHelp', true)."', 700, 500, 1)";
+        $cmd = "popupWindow('$url', '".MolajoText::_('MolajoApplicationHelp', true)."', 700, 500, 1)";
 
         return $cmd;
     }

@@ -196,7 +196,7 @@ class MolajoLanguage extends JObject
         $this->setLanguage($lang);
         $this->setDebug($debug);
 
-        $filename = MOLAJO_EXTENSION_LANGUAGES."/language/overrides/$lang.override.ini";
+        $filename = MOLAJO_EXTENSION_LANGUAGES."/overrides/$lang.override.ini";
 
         if (file_exists($filename)
             && $contents = $this->parse($filename)) {
@@ -212,7 +212,7 @@ class MolajoLanguage extends JObject
         if (class_exists($class)) {
 
         } else {
-            $localise = MOLAJO_EXTENSION_LANGUAGES."/language/$lang/$lang.localise.php";
+            $localise = MOLAJO_EXTENSION_LANGUAGES."/$lang/$lang.localise.php";
             if (file_exists($localise)) {
                 require_once $localise;
             }
@@ -610,7 +610,7 @@ class MolajoLanguage extends JObject
             return false;
         }
 
-        $path = "$basePath/language/$lang";
+        $path = "$basePath/$lang";
 
         if (isset($paths[$path])) {
             return $paths[$path];
@@ -662,6 +662,7 @@ class MolajoLanguage extends JObject
             // Check whether there was a problem with loading the file
             if ($result === false
                 && $default === true) {
+
                 // No strings, so either file doesn't exist or the file is invalid
                 $oldFilename = $filename;
 
@@ -1102,9 +1103,14 @@ class MolajoLanguage extends JObject
      */
     public static function getLanguagePath($basePath = MOLAJO_EXTENSION_LANGUAGES, $language = null)
     {
-        $dir = "$basePath/language";
+        if ($basePath == MOLAJO_EXTENSION_LANGUAGES) {
+            $dir = $basePath;
+        } else {
+            $dir = $basePath.'/language';
+        }
 
-        if (!empty($language)) {
+        if (empty($language)) {
+        } else {
             $dir .= "/$language";
         }
 
@@ -1233,7 +1239,7 @@ class MolajoLanguage extends JObject
      */
     public static function parseXMLLanguageFile($path)
     {
-        if ($xml = JFactory::getXML($path)) {
+        if ($xml = MolajoFactory::getXML($path)) {
         } else {
             return null;
         }

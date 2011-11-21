@@ -34,7 +34,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
         } else {
             $title = isset($attribs['title']) ? $attribs['title'] : null;
 
-            $module = MolajoModuleHelper::getModule($module, $title);
+            $module = MolajoApplicationModule::getModule($module, $title);
 
             if (is_object($module)) {
             } else {
@@ -73,7 +73,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
         }
 
         $contents = '';
-        // Default for compatibility purposes. Set cachemode parameter or use MolajoModuleHelper::moduleCache from within the
+        // Default for compatibility purposes. Set cachemode parameter or use MolajoApplicationModule::moduleCache from within the
         // module instead
         $cachemode = $parameters->get('cachemode', 'oldstatic');
 
@@ -85,14 +85,14 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
             // Default to itemid creating method and workarounds on
             $cacheparameters = new stdClass;
             $cacheparameters->cachemode = $cachemode;
-            $cacheparameters->class = 'MolajoModuleHelper';
+            $cacheparameters->class = 'MolajoApplicationModule';
             $cacheparameters->method = 'renderModule';
             $cacheparameters->methodparameters = array($module, $attribs);
 
-            $contents = MolajoModuleHelper::ModuleCache($module, $parameters, $cacheparameters);
+            $contents = MolajoApplicationModule::ModuleCache($module, $parameters, $cacheparameters);
 
         } else {
-            $contents = MolajoModuleHelper::renderModule($module, $attribs);
+            $contents = MolajoApplicationModule::renderModule($module, $attribs);
         }
 
         return $contents;

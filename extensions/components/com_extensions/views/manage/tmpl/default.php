@@ -16,7 +16,7 @@ MolajoHTML::_('behavior.multiselect');
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option=com_installer&view=manage');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_installer&view=manage');?>" method="post" name="adminForm" id="adminForm">
 	<?php if ($this->showMessage) : ?>
 		<?php echo $this->loadTemplate('message'); ?>
 	<?php endif; ?>

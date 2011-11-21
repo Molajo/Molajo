@@ -144,13 +144,13 @@ class plgContentPagenavigation extends JPlugin
 			}
 
 			if ($row->prev) {
-				$row->prev = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->prev->slug, $row->prev->catslug));
+				$row->prev = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->prev->slug, $row->prev->catslug));
 			} else {
 				$row->prev = '';
 			}
 
 			if ($row->next) {
-				$row->next = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->next->slug, $row->next->catslug));
+				$row->next = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->next->slug, $row->next->catslug));
 			} else {
 				$row->next = '';
 			}

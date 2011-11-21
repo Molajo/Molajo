@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 $langs	= MolajoLoginHelper::getLanguageList();
 $return	= MolajoLoginHelper::getReturnURI();
 ?>
-<form action="<?php echo MolajoRoute::_('index.php', true, $this->parameters->get('usesecure')); ?>" method="post" id="form-login">
+<form action="<?php echo MolajoRouteHelper::_('index.php', true, $this->parameters->get('usesecure')); ?>" method="post" id="form-login">
 	<fieldset class="loginform">
         <label id="" class="" for="login-username"><?php echo MolajoText::_('JGLOBAL_USERNAME'); ?>
 			<input name="username" id="login-username" class="" type="text" size="15" />

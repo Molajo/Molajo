@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 
 
-<form action="<?php echo MolajoRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 <div class="width-100">
 	<h3 class="title fltlft">
 		<?php echo MolajoText::_('COM_TEMPLATES_SITE_PREVIEW'); ?>

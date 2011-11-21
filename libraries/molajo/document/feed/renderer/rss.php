@@ -46,7 +46,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
 
         $uri = MolajoFactory::getURI();
         $url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-        $syndicationURL = MolajoRoute::_('&format=feed&type=rss');
+        $syndicationURL = MolajoRouteHelper::_('&format=feed&type=rss');
 
         if ($app->getConfig('sitename_pagetitles', 0) == 1) {
             $title = MolajoText::sprintf('JPAGETITLE', $app->getConfig('sitename'), $data->title);

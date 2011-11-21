@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 MolajoHTML::_('behavior.keepalive');
 ?>
 <?php if ($type == 'logout') : ?>
-<form action="<?php echo MolajoRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="login-form">
+<form action="<?php echo MolajoRouteHelper::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="login-form">
 <?php if ($parameters->get('greeting')) : ?>
 	<div class="login-greeting">
 	<?php if($parameters->get('name') == 0) : {
@@ -31,7 +31,7 @@ MolajoHTML::_('behavior.keepalive');
 	</div>
 </form>
 <?php else : ?>
-<form action="<?php echo MolajoRoute::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="login-form" >
+<form action="<?php echo MolajoRouteHelper::_('index.php', true, $parameters->get('usesecure')); ?>" method="post" id="login-form" >
 	<?php if ($parameters->get('pretext')): ?>
 		<div class="pretext">
 		<p><?php echo $parameters->get('pretext'); ?></p>
@@ -60,18 +60,18 @@ MolajoHTML::_('behavior.keepalive');
 	</fieldset>
 	<ul>
 		<li>
-			<a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=reset'); ?>">
+			<a href="<?php echo MolajoRouteHelper::_('index.php?option=com_users&view=reset'); ?>">
 			<?php echo MolajoText::_('MOD_LOGIN_FORGOT_YOUR_PASSWORD'); ?></a>
 		</li>
 		<li>
-			<a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=remind'); ?>">
+			<a href="<?php echo MolajoRouteHelper::_('index.php?option=com_users&view=remind'); ?>">
 			<?php echo MolajoText::_('MOD_LOGIN_FORGOT_YOUR_USERNAME'); ?></a>
 		</li>
 		<?php
 		$usersConfig = JComponentHelper::getParameters('com_users');
 		if ($usersConfig->get('allowUserRegistration')) : ?>
 		<li>
-			<a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=registration'); ?>">
+			<a href="<?php echo MolajoRouteHelper::_('index.php?option=com_users&view=registration'); ?>">
 				<?php echo MolajoText::_('MOD_LOGIN_REGISTER'); ?></a>
 		</li>
 		<?php endif; ?>

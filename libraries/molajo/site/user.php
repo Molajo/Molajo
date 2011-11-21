@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Site
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -9,7 +9,7 @@
 defined('MOLAJO') or die;
 
 /**
- * User Helper
+ * Site User
  *
  * Provides static methods to perform various tasks for user and authorization classes
  *
@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
  * @subpackage  User Helper
  * @since       1.0
  */
-abstract class MolajoUserHelper
+abstract class MolajoSiteUser
 {
     /**
      * Method to add a user to a group.
@@ -200,7 +200,7 @@ abstract class MolajoUserHelper
 
         // Get the dispatcher and load the user's plugins.
         $dispatcher = JDispatcher::getInstance();
-        MolajoPluginHelper::importPlugin('user');
+        MolajoApplicationPlugin::importPlugin('user');
 
         $data = new JObject;
 
@@ -285,7 +285,7 @@ abstract class MolajoUserHelper
     public static function getCryptedPassword($plaintext, $salt = '', $encryption = 'md5-hex', $show_encrypt = false)
     {
         // Get the salt to use.
-        $salt = MolajoUserHelper::getSalt($encryption, $salt, $plaintext);
+        $salt = MolajoSiteUser::getSalt($encryption, $salt, $plaintext);
 
         // Encrypt the password.
         switch ($encryption)
@@ -318,7 +318,7 @@ abstract class MolajoUserHelper
             case 'aprmd5' :
                 $length = strlen($plaintext);
                 $context = $plaintext.'$apr1$'.$salt;
-                $binary = MolajoUserHelper::_bin(md5($plaintext.$salt.$plaintext));
+                $binary = MolajoSiteUser::_bin(md5($plaintext.$salt.$plaintext));
 
                 for ($i = $length; $i > 0; $i -= 16) {
                     $context .= substr($binary, 0, ($i > 16 ? 16 : $i));
@@ -327,7 +327,7 @@ abstract class MolajoUserHelper
                     $context .= ($i & 1) ? chr(0) : $plaintext[0];
                 }
 
-                $binary = MolajoUserHelper::_bin(md5($context));
+                $binary = MolajoSiteUser::_bin(md5($context));
 
                 for ($i = 0; $i < 1000; $i++) {
                     $new = ($i & 1) ? $plaintext : substr($binary, 0, 16);
@@ -338,7 +338,7 @@ abstract class MolajoUserHelper
                         $new .= $plaintext;
                     }
                     $new .= ($i & 1) ? substr($binary, 0, 16) : $plaintext;
-                    $binary = MolajoUserHelper::_bin(md5($new));
+                    $binary = MolajoSiteUser::_bin(md5($new));
                 }
 
                 $p = array();
@@ -348,10 +348,10 @@ abstract class MolajoUserHelper
                     if ($j == 16) {
                         $j = 5;
                     }
-                    $p[] = MolajoUserHelper::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
+                    $p[] = MolajoSiteUser::_toAPRMD5((ord($binary[$i]) << 16) | (ord($binary[$k]) << 8) | (ord($binary[$j])), 5);
                 }
 
-                return '$apr1$'.$salt.'$'.implode('', $p).MolajoUserHelper::_toAPRMD5(ord($binary[11]), 3);
+                return '$apr1$'.$salt.'$'.implode('', $p).MolajoSiteUser::_toAPRMD5(ord($binary[11]), 3);
 
             case 'md5-hex' :
             default :

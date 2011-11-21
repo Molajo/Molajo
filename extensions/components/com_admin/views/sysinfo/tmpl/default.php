@@ -16,7 +16,7 @@ MolajoHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 MolajoHTML::_('behavior.switcher');
 ?>
 
-<form action="<?php echo MolajoRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 	<div id="config-document">
 		<div id="page-site" class="tab">
 			<div class="noshow">

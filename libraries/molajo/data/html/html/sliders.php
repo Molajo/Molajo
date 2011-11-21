@@ -81,7 +81,7 @@ abstract class MolajoHtmlSliders
             // Include mootools framework.
             MolajoHTML::_('behavior.framework', true);
 
-            $document = JFactory::getDocument();
+            $document = MolajoFactory::getDocument();
 
             $display = (isset($parameters['startOffset']) && isset($parameters['startTransition']) && $parameters['startTransition'])
                     ? (int)$parameters['startOffset'] : null;

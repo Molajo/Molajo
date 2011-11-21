@@ -60,7 +60,7 @@ class MediaControllerFolder extends JController
 			$ret = true;
 
 			if (count($paths)) {
-				MolajoPluginHelper::importPlugin('content');
+				MolajoApplicationPlugin::importPlugin('content');
 				$dispatcher	= JDispatcher::getInstance();
 				foreach ($paths as $path) {
 					if ($path !== JFile::makeSafe($path)) {
@@ -160,7 +160,7 @@ class MediaControllerFolder extends JController
 			{
 				// Trigger the onContentBeforeSave event.
 				$object_file = new JObject(array('filepath' => $path));
-				MolajoPluginHelper::importPlugin('content');
+				MolajoApplicationPlugin::importPlugin('content');
 				$dispatcher	= JDispatcher::getInstance();
 				$result = $dispatcher->trigger('onContentBeforeSave', array('com_media.folder', &$object_file));
 				if (in_array(false, $result, true)) {

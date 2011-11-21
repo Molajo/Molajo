@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Plugin
  * @subpackage	System.cache
  */
-class plgSystemCache extends MolajoPlugin
+class plgSystemCache extends MolajoApplicationPlugin
 {
 
 	var $_cache = null;

@@ -29,7 +29,7 @@ class MolajoSystemCron {
     function driver ()
     {
         /** system plugin **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** cron **/

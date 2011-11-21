@@ -29,7 +29,7 @@ class MolajoBroadcastPing {
     function driver ()
     {
         /** com_responses parameters **/
-        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        $responsesParameters = MolajoApplicationComponent::getParameters('com_responses', true);
 
 
         /** email **/

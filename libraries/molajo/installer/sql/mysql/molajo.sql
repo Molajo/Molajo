@@ -238,7 +238,7 @@ INSERT INTO `molajo_extension_instances`
 
 INSERT INTO `molajo_assets`
   (`content_type_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`,  `template_id`, `language`,  `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT `content_type_id`, `id`, `title`, CONCAT('extensions/languages/', `id`), CONCAT('index.php?option=com_extensions&view=languages&id=', `id`), 1, 0, 'en-GB', 0, 0, 1
+  SELECT `content_type_id`, `id`, `title`, CONCAT('extensions/language/', `id`), CONCAT('index.php?option=com_extensions&view=languages&id=', `id`), 1, 0, 'en-GB', 0, 0, 1
     FROM `molajo_extension_instances`
     WHERE `content_type_id` = 40;
 

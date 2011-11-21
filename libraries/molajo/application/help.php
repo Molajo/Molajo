@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Language
  * @since       1.0
  */
-class MolajoHelp
+class MolajoApplicationHelp
 {
     /**
      * Create a URL for a given help key reference
@@ -36,7 +36,7 @@ class MolajoHelp
         $app = MolajoFactory::getApplication();
 
         if (is_null($component)) {
-            $component = MolajoComponentHelper::getComponentName();
+            $component = MolajoApplicationComponent::getComponentName();
         }
 
 
@@ -59,7 +59,7 @@ class MolajoHelp
             // Component help URL overrides user and global.
             if ($useComponent) {
                 // Look for help URL in component parameters.
-                $parameters = MolajoComponentHelper::getParameters($component);
+                $parameters = MolajoApplicationComponent::getParameters($component);
                 $url = $parameters->get('helpURL');
 
                 if ($url == '') {

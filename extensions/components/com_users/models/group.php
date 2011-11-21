@@ -114,7 +114,7 @@ class UsersModelGroup extends JModelAdmin
 	public function save($data)
 	{
 		// Include the content plugins for events.
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 
 		// Check the super admin permissions for group
 		// We get the parent group permissions and then check the group permissions manually
@@ -199,7 +199,7 @@ class UsersModelGroup extends JModelAdmin
 		$table = $this->getTable();
 
 		// Trigger the onUserBeforeSave event.
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 		$dispatcher = JDispatcher::getInstance();
         // Check if I am a Super Admin
 		$iAmSuperAdmin	= $user->authorise('core.admin');

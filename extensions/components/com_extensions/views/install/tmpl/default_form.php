@@ -49,7 +49,7 @@ defined('_JEXEC') or die;
 	}
 </script>
 
-<form enctype="multipart/form-data" action="<?php echo MolajoRoute::_('index.php?option=com_installer&view=install');?>" method="post" name="adminForm" id="adminForm">
+<form enctype="multipart/form-data" action="<?php echo MolajoRouteHelper::_('index.php?option=com_installer&view=install');?>" method="post" name="adminForm" id="adminForm">
 
 	<?php if ($this->ftp) : ?>
 		<?php echo $this->loadTemplate('ftp'); ?>

@@ -13,7 +13,7 @@ defined('MOLAJO') or die;
  *
  * @package Aloha
  */
-class plgEditorAloha extends MolajoPlugin
+class plgEditorAloha extends MolajoApplicationPlugin
 {
     /**
      * onInit

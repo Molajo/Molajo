@@ -200,7 +200,7 @@ class TemplatesModelSource extends JModelForm
 		$filePath	= JPath::clean($application->path.'/templates/'.$template->element.'/'.$fileName);
 
 		// Include the extension plugins for the save events.
-		MolajoPluginHelper::importPlugin('extension');
+		MolajoApplicationPlugin::importPlugin('extension');
 
 		// Set FTP credentials, if given.
 		JClientHelper::setCredentialsFromRequest('ftp');

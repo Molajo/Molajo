@@ -14,4 +14,4 @@ defined('MOLAJO') or die;
  * @subpackage	Application
  * @since       1.0
  */
-class MolajoInstallationRouter extends MolajoRouter {}
+class MolajoInstallationRouter extends MolajoApplicationRouter {}

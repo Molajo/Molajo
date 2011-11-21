@@ -187,7 +187,7 @@ class MolajoUser extends JObject
             $id = $identifier;
 
         } else {
-            if ($id = MolajoUserHelper::getUserId($identifier)) {
+            if ($id = MolajoSiteUser::getUserId($identifier)) {
 
             } else {
                 MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
@@ -406,7 +406,7 @@ class MolajoUser extends JObject
 
             // Check the password and create the crypted password
             if (empty($array['password'])) {
-                $array['password'] = MolajoUserHelper::genRandomPassword();
+                $array['password'] = MolajoSiteUser::genRandomPassword();
                 $array['password2'] = $array['password'];
             }
 
@@ -417,8 +417,8 @@ class MolajoUser extends JObject
 
             $this->password_clear = JArrayHelper::getValue($array, 'password', '', 'string');
 
-            $salt = MolajoUserHelper::genRandomPassword(32);
-            $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
+            $salt = MolajoSiteUser::genRandomPassword(32);
+            $crypt = MolajoSiteUser::getCryptedPassword($array['password'], $salt);
             $array['password'] = $crypt.':'.$salt;
 
             // Set the registration timestamp
@@ -450,8 +450,8 @@ class MolajoUser extends JObject
 
                 $this->password_clear = JArrayHelper::getValue($array, 'password', '', 'string');
 
-                $salt = MolajoUserHelper::genRandomPassword(32);
-                $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
+                $salt = MolajoSiteUser::genRandomPassword(32);
+                $crypt = MolajoSiteUser::getCryptedPassword($array['password'], $salt);
                 $array['password'] = $crypt.':'.$salt;
             }
         }
@@ -566,7 +566,7 @@ class MolajoUser extends JObject
             }
 
             // Fire the onUserBeforeSave event.
-            MolajoPluginHelper::importPlugin('user');
+            MolajoApplicationPlugin::importPlugin('user');
             $dispatcher = JDispatcher::getInstance();
 
             $result = $dispatcher->trigger('onUserBeforeSave', array($oldUser->getProperties(), $isNew, $this->getProperties()));
@@ -612,7 +612,7 @@ class MolajoUser extends JObject
      */
     public function delete()
     {
-        MolajoPluginHelper::importPlugin('user');
+        MolajoApplicationPlugin::importPlugin('user');
 
         // Trigger the onUserBeforeDelete event
         $dispatcher = JDispatcher::getInstance();

@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Application
  * @since       1.0
  */
-class MolajoPathway extends JObject
+class MolajoApplicationPathway extends JObject
 {
     /**
      * @var    array  Array to hold the pathway item objects
@@ -33,21 +33,12 @@ class MolajoPathway extends JObject
     protected $_count = 0;
 
     /**
-     * Class constructor
-     * @since  1.0
-     */
-    function __construct($options = array())
-    {
-        $this->_pathway = array();
-    }
-
-    /**
-     * Returns a MolajoPathway object
+     * Returns a MolajoApplicationPathway object
      *
      * @param   string  $application  The name of the client
      * @param   array   $options An associative array of options
      *
-     * @return  MolajoPathway  A MolajoPathway object.
+     * @return  MolajoApplicationPathway  A MolajoApplicationPathway object.
      * @since   1.0
      */
     public static function getInstance($application, $options = array())
@@ -67,7 +58,7 @@ class MolajoPathway extends JObject
             if (file_exists($path)) {
                 require_once $path;
 
-                $classname = 'MolajoPathway'.ucfirst($application);
+                $classname = 'MolajoApplicationPathway'.ucfirst($application);
                 $instance = new $classname($options);
             }
             else
@@ -80,6 +71,15 @@ class MolajoPathway extends JObject
         }
 
         return $instances[$application];
+    }
+
+    /**
+     * Class constructor
+     * @since  1.0
+     */
+    function __construct($options = array())
+    {
+        $this->_pathway = array();
     }
 
     /**
@@ -97,7 +97,7 @@ class MolajoPathway extends JObject
     }
 
     /**
-     * Set the MolajoPathway items array.
+     * Set the MolajoApplicationPathway items array.
      *
      * @param   array  $pathway    An array of pathway objects.
      *
@@ -185,7 +185,7 @@ class MolajoPathway extends JObject
      * @param   string   $name  Name of the item
      * @param   string   $link  Link to the item
      *
-     * @return  MolajoPathway  Pathway item object
+     * @return  MolajoApplicationPathway  Pathway item object
      * @since   1.0
      */
     protected function _makeItem($name, $link)

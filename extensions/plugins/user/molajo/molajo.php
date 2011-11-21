@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage	User.molajo
  * @since		1.5
  */
-class plgUserMolajo extends MolajoPlugin
+class plgUserMolajo extends MolajoApplicationPlugin
 {
 	/**
 	 * Utility method to act on a user after it has been saved.
@@ -181,13 +181,13 @@ class plgUserMolajo extends MolajoPlugin
 	{
 		$instance = MolajoUser::getInstance($user->username);
 
-		if ($id = intval(MolajoUserHelper::getUserId($user->username)))  {
+		if ($id = intval(MolajoSiteUser::getUserId($user->username)))  {
 			$instance->load($id);
 			return $instance;
 		}
 
 		//TODO : move this out of the plugin
-		$config	= MolajoComponentHelper::getParameters('com_users');
+		$config	= MolajoApplicationComponent::getParameters('com_users');
 		// Default to Registered.
 		$defaultUserGroup = $config->get('new_user_group', 2);
 

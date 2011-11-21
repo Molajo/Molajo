@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstallerPlugin extends MolajoAdapterInstance
+class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
 {
     /**
      * Install function routing

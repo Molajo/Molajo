@@ -28,7 +28,7 @@ defined('MOLAJO') or die;
  * @subpackage  Extension Helper
  * @since       1.0
  */
-abstract class MolajoExtensionHelper
+abstract class MolajoApplicationExtension
 {
     /**
      * getExtensions

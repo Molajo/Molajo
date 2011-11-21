@@ -45,7 +45,7 @@ abstract class MolajoHtmlBehavior
 
         // If no debugging value is set, use the configuration setting
         if ($debug === null) {
-            $config = JFactory::getConfig();
+            $config = MolajoFactory::getConfig();
             $debug = $config->get('debug');
         }
 
@@ -105,11 +105,11 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/caption'.$uncompressed.'.js', true, true);
 
         // Attach caption to document
-        JFactory::getDocument()->addScriptDeclaration(
+        MolajoFactory::getDocument()->addScriptDeclaration(
             "window.addEvent('load', function() {
 				new JCaption('".$selector."');
 			});"
@@ -143,7 +143,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/validate'.$uncompressed.'.js', true, true);
         $loaded = true;
     }
@@ -168,7 +168,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/switcher'.$uncompressed.'.js', true, true);
 
         $script = "
@@ -181,7 +181,7 @@ abstract class MolajoHtmlBehavior
 				}
 			});";
 
-        JFactory::getDocument()->addScriptDeclaration($script);
+        MolajoFactory::getDocument()->addScriptDeclaration($script);
         $loaded = true;
     }
 
@@ -207,7 +207,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/combobox'.$uncompressed.'.js', true, true);
         $loaded = true;
     }
@@ -274,7 +274,7 @@ abstract class MolajoHtmlBehavior
         $options = MolajoHTMLBehavior::_getJSObject($opt);
 
         // Attach tooltips to document
-        JFactory::getDocument()->addScriptDeclaration(
+        MolajoFactory::getDocument()->addScriptDeclaration(
             "window.addEvent('domready', function() {
 			$$('$selector').each(function(el) {
 				var title = el.get('title');
@@ -320,7 +320,7 @@ abstract class MolajoHtmlBehavior
         static $modals;
         static $included;
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
 
         // Load the necessary files if they haven't yet been loaded
         if (!isset($included)) {
@@ -328,7 +328,7 @@ abstract class MolajoHtmlBehavior
             self::framework();
 
             // Load the javascript and css
-            $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+            $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
             MolajoHTML::_('script', 'system/modal'.$uncompressed.'.js', true, true);
             MolajoHTML::_('stylesheet', 'system/modal.css', array(), true);
 
@@ -415,7 +415,7 @@ abstract class MolajoHtmlBehavior
         MolajoHTML::_('script', 'system/multiselect.js', true, true);
 
         // Attach multiselect to document
-        JFactory::getDocument()->addScriptDeclaration(
+        MolajoFactory::getDocument()->addScriptDeclaration(
             "window.addEvent('domready', function() {
 				new Joomla.JMultiSelect('".$id."');
 			});"
@@ -442,12 +442,12 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/swf'.$uncompressed.'.js', true, true);
         MolajoHTML::_('script', 'system/progressbar'.$uncompressed.'.js', true, true);
         MolajoHTML::_('script', 'system/uploader'.$uncompressed.'.js', true, true);
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
 
         static $uploaders;
 
@@ -616,7 +616,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('script', 'system/mootree'.$uncompressed.'.js', true, true, false, false);
         MolajoHTML::_('stylesheet', 'system/mootree.css', array(), true);
 
@@ -656,7 +656,7 @@ abstract class MolajoHtmlBehavior
 			tree'.$treeName.'.adopt(\''.$id.'\');})';
 
         // Attach tooltips to document
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
         $document->addScriptDeclaration($js);
 
         // Set static array
@@ -681,11 +681,11 @@ abstract class MolajoHtmlBehavior
             return;
         }
 
-        $document = JFactory::getDocument();
-        $tag = JFactory::getLanguage()->getTag();
+        $document = MolajoFactory::getDocument();
+        $tag = MolajoFactory::getLanguage()->getTag();
 
         //Add uncompressed versions when debug is enabled
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('stylesheet', 'system/calendar-jos.css', array(' title' => MolajoText::_('JLIB_HTML_BEHAVIOR_GREEN'), ' media' => 'all'), true);
         MolajoHTML::_('script', $tag.'/calendar'.$uncompressed.'.js', false, true);
         MolajoHTML::_('script', $tag.'/calendar-setup'.$uncompressed.'.js', false, true);
@@ -717,11 +717,11 @@ abstract class MolajoHtmlBehavior
         self::framework(true);
 
         //Add uncompressed versions when debug is enabled
-        $uncompressed = JFactory::getConfig()->get('debug') ? '-uncompressed' : '';
+        $uncompressed = MolajoFactory::getConfig()->get('debug') ? '-uncompressed' : '';
         MolajoHTML::_('stylesheet', 'system/mooRainbow.css', array('media' => 'all'), true);
         MolajoHTML::_('script', 'system/mooRainbow.js', false, true);
 
-        JFactory::getDocument()
+        MolajoFactory::getDocument()
                 ->addScriptDeclaration(
             "window.addEvent('domready', function(){
 				var nativeColorUi = false;
@@ -770,7 +770,7 @@ abstract class MolajoHtmlBehavior
         // Include MooTools framework
         self::framework();
 
-        $config = JFactory::getConfig();
+        $config = MolajoFactory::getConfig();
         $lifetime = ($config->get('lifetime') * 60000);
         $refreshTime = ($lifetime <= 60000) ? 30000 : $lifetime - 60000;
         // Refresh time is 1 minute less than the liftime assined in the configuration.php file.
@@ -780,7 +780,7 @@ abstract class MolajoHtmlBehavior
             $refreshTime = 3600000;
         }
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
         $script = '';
         $script .= 'function keepAlive() {';
         $script .= '	var myAjax = new Request({method: "get", url: "index.php"}).send();';
@@ -818,7 +818,7 @@ abstract class MolajoHtmlBehavior
 
         $js = "window.addEvent('domready', function () {if (top == self) {document.documentElement.style.display = 'block'; }" .
               " else {top.location = self.location; }});";
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
         $document->addStyleDeclaration('html { display:none }');
         $document->addScriptDeclaration($js);
 

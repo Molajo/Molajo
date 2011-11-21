@@ -29,7 +29,7 @@ class MolajoBroadcastEmail {
     function driver ()
     {
         /** com_responses parameters **/
-        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        $responsesParameters = MolajoApplicationComponent::getParameters('com_responses', true);
 
         /** email **/
         if ($responsesParameters->def('xxxx', 0) == '0') {

@@ -9,14 +9,14 @@ defined('MOLAJO') or die;
 
 
 
-class plgMolajoBackup extends MolajoPlugin	{
+class plgMolajoBackup extends MolajoApplicationPlugin	{
 
     function onAfterInitialise () {
 
         /**
          * 	Get Tamka Plugin Information
          */
-        $plugin 	=& MolajoPluginHelper::getPlugin( 'molajo', 'backup');
+        $plugin 	=& MolajoApplicationPlugin::getPlugin( 'molajo', 'backup');
         $pluginParameters = new JParameter($plugin->parameters);
 
         /**

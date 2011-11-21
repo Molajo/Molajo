@@ -23,9 +23,13 @@ $filehelper->requireClassFile(MOLAJO_LIBRARY.'/access/user.php', 'MolajoUser');
 /**
  *  Application
  */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/application.php', 'MolajoApplication');
 $files = JFolder::files(MOLAJO_LIBRARY.'/application', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    if ($file == 'application') {
+    } else {
+        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/application/'.$file, 'MolajoApplication'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 
 /**
@@ -112,6 +116,14 @@ if (class_exists($formatClass)) {
 }
 
 /**
+ *  Framework
+ */
+$files = JFolder::files(MOLAJO_LIBRARY.'/framework', '\.php$', false, false);
+foreach ($files as $file) {
+    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/framework/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))));
+}
+
+/**
  *  Helpers
  */
 $files = JFolder::files(MOLAJO_LIBRARY.'/helpers', '\.php$', false, false);
@@ -124,17 +136,17 @@ foreach ($files as $file) {
  */
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/adapter.php', 'MolajoAdapter');
 $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/adapterinstance.php', 'MolajoAdapterInstance');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/helper.php', 'MolajoInstallerHelper');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/installer.php', 'MolajoInstaller');
 $files = JFolder::files(MOLAJO_LIBRARY.'/installer/installer', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'helper.php') {
+    if ($file == 'installer.php') {
     } else {
-        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))));
+        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/'.$file, 'MolajoInstaller'.ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 $files = JFolder::files(MOLAJO_LIBRARY.'/installer/installer/adapters', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/adapters/'.$file, 'MolajoInstaller'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/installer/installer/adapters/'.$file, 'MolajoInstallerAdapter'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 /** updater */
 $files = JFolder::files(MOLAJO_LIBRARY.'/installer/updater', '\.php$', false, false);
@@ -181,24 +193,29 @@ foreach ($files as $file) {
 /** Router */
 $files = JFolder::files(MOLAJO_LIBRARY_MVC.'/router/', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY_MVC.'/router/'.$file, 'MolajoRouter'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    $filehelper->requireClassFile(MOLAJO_LIBRARY_MVC.'/router/'.$file, 'MolajoApplicationRouter'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  Session
  */
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/session/session.php', 'MolajoSession');
-$filehelper->requireClassFile(MOLAJO_LIBRARY.'/session/storage.php', 'MolajoSessionStorage');
-$files = JFolder::files(MOLAJO_LIBRARY.'/session/storage', '\.php$', false, false);
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/framework/session/session.php', 'MolajoSession');
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/framework/session/storage.php', 'MolajoSessionStorage');
+$files = JFolder::files(MOLAJO_LIBRARY.'/framework/session/storage', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/session/storage/'.$file, 'MolajoSessionStorage'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/framework/session/storage/'.$file, 'MolajoSessionStorage'.ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  Site
  */
+$filehelper->requireClassFile(MOLAJO_LIBRARY.'/site/site.php', 'MolajoSite');
 $files = JFolder::files(MOLAJO_LIBRARY.'/site', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_LIBRARY.'/site/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    if ($file == 'site') {
+    } else {
+        $filehelper->requireClassFile(MOLAJO_LIBRARY.'/site/'.$file, 'MolajoSite'.ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
+
 

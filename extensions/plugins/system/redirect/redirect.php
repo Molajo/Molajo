@@ -14,7 +14,7 @@ defined('JPATH_BASE') or die;
  * @package		Joomla.Plugin
  * @subpackage	System.redirect
  */
-class plgSystemRedirect extends MolajoPlugin
+class plgSystemRedirect extends MolajoApplicationPlugin
 {
 	/**
 	 * Object Constructor.

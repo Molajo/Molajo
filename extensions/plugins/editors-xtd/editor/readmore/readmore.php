@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @package Editors-xtd
  * @since 1.5
  */
-class plgButtonReadmore extends MolajoPlugin
+class plgButtonReadmore extends MolajoApplicationPlugin
 {
 	/**
 	 * readmore button

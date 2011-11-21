@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstallerComponent extends MolajoAdapterInstance
+class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
 {
     /**
      * Copy of the XML manifest file

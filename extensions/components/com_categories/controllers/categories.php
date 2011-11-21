@@ -44,7 +44,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 		JRequest::checkToken() or die;
 
 		$extension = JRequest::getCmd('extension');
-		$this->setRedirect(MolajoRoute::_('index.php?option=com_categories&view=categories&extension='.$extension, false));
+		$this->setRedirect(MolajoRouteHelper::_('index.php?option=com_categories&view=categories&extension='.$extension, false));
 
 		// Initialise variables.
 		$model = $this->getModel();
@@ -79,7 +79,7 @@ class CategoriesControllerCategories extends JControllerAdmin
 			parent::saveorder();
 		} else {
 			// Nothing to reorder
-			$this->setRedirect(MolajoRoute::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option='.$this->option.'&view='.$this->view_list, false));
 			return true;
 		}
 	}

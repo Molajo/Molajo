@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage	Extension.Joomla
  * @since		1.6
  */
-class plgExtensionMolajo extends MolajoPlugin
+class plgExtensionMolajo extends MolajoApplicationPlugin
 {
 	/**
 	 * @var		integer Extension Identifier

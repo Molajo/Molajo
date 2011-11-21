@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage	Editors-xtd.image
  * @since 1.5
  */
-class plgButtonImage extends MolajoPlugin
+class plgButtonImage extends MolajoApplicationPlugin
 {
 	/**
 	 * Constructor

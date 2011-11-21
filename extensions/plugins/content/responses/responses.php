@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 
-class plgMolajoResponses extends MolajoPlugin	{
+class plgMolajoResponses extends MolajoApplicationPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object
@@ -80,7 +80,7 @@ class plgMolajoResponses extends MolajoPlugin	{
         }
 
         /** com_responses parameters **/
-        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        $responsesParameters = MolajoApplicationComponent::getParameters('com_responses', true);
 
         /** response type 1: comments **/
         if (($responsesParameters->def('enable_comments', 0) == '1') &&
@@ -172,7 +172,7 @@ class plgMolajoResponses extends MolajoPlugin	{
         }
 
         /** com_responses enabled? **/
-        if (MolajoComponentHelper::isEnabled('com_responses')) {
+        if (MolajoApplicationComponent::isEnabled('com_responses')) {
         } else {
             return false;
         }

@@ -50,7 +50,7 @@ class MolajoDocumentRendererAtom extends MolajoDocumentRenderer
 
         $uri = MolajoFactory::getURI();
         $url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-        $syndicationURL = MolajoRoute::_('&format=feed&type=atom');
+        $syndicationURL = MolajoRouteHelper::_('&format=feed&type=atom');
 
         if ($app->getConfig('sitename_pagetitles', 0) == 1) {
             $title = MolajoText::sprintf('JPAGETITLE', $app->getConfig('sitename'), $data->title);

@@ -65,7 +65,7 @@ class AdminModelHelp extends JModel
 		if (is_null($this->page))
 		{
 			$page = JRequest::getCmd('page', 'JHELP_START_HERE');
-			$this->page = MolajoHelp::createUrl($page);
+			$this->page = MolajoApplicationHelp::createUrl($page);
 		}
 		return $this->page;
 	}
@@ -79,7 +79,7 @@ class AdminModelHelp extends JModel
 		{
 			$lang = MolajoFactory::getLanguage();
 			$this->lang_tag = $lang->getTag();
-			jimport('joomla.filesystem.folder');
+
 			if (!JFolder::exists(JPATH_BASE.'/help/'.$this->lang_tag)) {
 				$this->lang_tag = 'en-GB'; // use english as fallback
 			}
@@ -142,7 +142,7 @@ class AdminModelHelp extends JModel
 	{
 		if (!$this->latest_version_check) {
 			$override = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help{major}{minor}:Joomla_Version_{major}_{minor}_{maintenance}';
-			$this->latest_version_check = MolajoHelp::createUrl('MOLAJOVERSION', false, $override);
+			$this->latest_version_check = MolajoApplicationHelp::createUrl('MOLAJOVERSION', false, $override);
 		}
 		return $this->latest_version_check;
 	}

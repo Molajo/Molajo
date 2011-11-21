@@ -323,6 +323,6 @@ class MolajoControllerRedirect extends MolajoController
         }
 
         /** redirect **/
-        MolajoFactory::getApplication()->redirect(MolajoRoute::_($link, false), $this->redirectMessage, $this->redirectMessageType);
+        MolajoFactory::getApplication()->redirect(MolajoRouteHelper::_($link, false), $this->redirectMessage, $this->redirectMessageType);
     }
 }

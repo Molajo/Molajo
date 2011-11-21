@@ -30,7 +30,7 @@ class MediaController extends JController
 	 */
 	public function display($cachable = false, $urlparameters = false)
 	{
-		MolajoPluginHelper::importPlugin('content');
+		MolajoApplicationPlugin::importPlugin('content');
 		$vName = JRequest::getCmd('view', 'media');
 		switch ($vName)
 		{

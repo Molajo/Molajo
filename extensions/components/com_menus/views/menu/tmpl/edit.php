@@ -26,7 +26,7 @@ MolajoHTML::_('behavior.formvalidation');
 	}
 </script>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_menus&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_menus&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="item-form">
 <div class="width-40">
 	<fieldset class="adminform">
 		<legend><?php echo MolajoText::_('MENU_MENU_DETAILS');?></legend>

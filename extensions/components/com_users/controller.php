@@ -78,7 +78,7 @@ class UsersController extends JController
 			// Somehow the person just went to the form - we don't allow that.
 			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=users', false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option=com_users&view=users', false));
 
 			return false;
 		}
@@ -86,7 +86,7 @@ class UsersController extends JController
 			// Somehow the person just went to the form - we don't allow that.
 			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=groups', false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option=com_users&view=groups', false));
 
 			return false;
 		}
@@ -94,7 +94,7 @@ class UsersController extends JController
 			// Somehow the person just went to the form - we don't allow that.
 			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(MolajoRoute::_('index.php?option=com_users&view=levels', false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option=com_users&view=levels', false));
 
 			return false;
 		}

@@ -21,7 +21,7 @@ class protectBanned
 	/**
 	 * 	Retrieve Library Parameters
 	 */
-		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
+		$tamkaLibraryPlugin 	=& MolajoApplicationPlugin::getPlugin( 'system', 'tamka');
 		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 
                 $this->checkIP ($userip);

@@ -299,7 +299,7 @@ abstract class MolajoHtml
             if ($relative) {
 
                 // Get the template
-                $app = JFactory::getApplication();
+                $app = MolajoFactory::getApplication();
                 $template = $app->getTemplate();
 
                 // Prepare array of files
@@ -492,7 +492,7 @@ abstract class MolajoHtml
             // If inclusion is required
         else
         {
-            $document = JFactory::getDocument();
+            $document = MolajoFactory::getDocument();
             foreach ($includes as $include)
             {
                 $document->addStylesheet($include, 'text/css', null, $attribs);
@@ -550,7 +550,7 @@ abstract class MolajoHtml
             // If inclusion is required
         else
         {
-            $document = JFactory::getDocument();
+            $document = MolajoFactory::getDocument();
             foreach ($includes as $include)
             {
                 $document->addScript($include);
@@ -571,12 +571,12 @@ abstract class MolajoHtml
     {
         // If no debugging value is set, use the configuration setting
         if ($debug === null) {
-            $debug = JFactory::getConfig()->get('debug');
+            $debug = MolajoFactory::getConfig()->get('debug');
         }
 
         $uncompressed = $debug ? '-uncompressed' : '';
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
         $document->addScript(JURI::root(true).'/media/system/js/core'.$uncompressed.'.js');
     }
 
@@ -619,13 +619,13 @@ abstract class MolajoHtml
     public static function date($input = 'now', $format = null, $tz = true, $gregorian = false)
     {
         // Get some system objects.
-        $config = JFactory::getConfig();
-        $user = JFactory::getUser();
+        $config = MolajoFactory::getConfig();
+        $user = MolajoFactory::getUser();
 
         // UTC date converted to user time zone.
         if ($tz === true) {
             // Get a date object based on UTC.
-            $date = JFactory::getDate($input, 'UTC');
+            $date = MolajoFactory::getDate($input, 'UTC');
 
             // Set the correct time zone based on the user configuration.
             $date->setTimeZone(new DateTimeZone($user->getParam('timezone', $config->get('offset'))));
@@ -634,7 +634,7 @@ abstract class MolajoHtml
         elseif ($tz === false)
         {
             // Get a date object based on UTC.
-            $date = JFactory::getDate($input, 'UTC');
+            $date = MolajoFactory::getDate($input, 'UTC');
 
             // Set the correct time zone based on the server configuration.
             $date->setTimeZone(new DateTimeZone($config->get('offset')));
@@ -642,13 +642,13 @@ abstract class MolajoHtml
             // No date conversion.
         elseif ($tz === null)
         {
-            $date = JFactory::getDate($input);
+            $date = MolajoFactory::getDate($input);
         }
             // UTC date converted to given time zone.
         else
         {
             // Get a date object based on UTC.
-            $date = JFactory::getDate($input, 'UTC');
+            $date = MolajoFactory::getDate($input, 'UTC');
 
             // Set the correct time zone based on the server configuration.
             $date->setTimeZone(new DateTimeZone($tz));
@@ -659,7 +659,7 @@ abstract class MolajoHtml
             $format = MolajoText::_('DATE_FORMAT_LC1');
         }
             // format is an existing language key
-        elseif (JFactory::getLanguage()->hasKey($format))
+        elseif (MolajoFactory::getLanguage()->hasKey($format))
         {
             $format = MolajoText::_($format);
         }
@@ -773,7 +773,7 @@ abstract class MolajoHtml
 
             // Only display the triggers once for each control.
             if (!in_array($id, $done)) {
-                $document = JFactory::getDocument();
+                $document = MolajoFactory::getDocument();
                 $document
                         ->addScriptDeclaration(
                     'window.addEvent(\'domready\', function() {Calendar.setup({
@@ -786,7 +786,7 @@ abstract class MolajoHtml
 				// Alignment (defaults to "Bl")
 				align: "Tl",
 				singleClick: true,
-				firstDay: '.JFactory::getLanguage()->getFirstDay().'
+				firstDay: '.MolajoFactory::getLanguage()->getFirstDay().'
 				});});'
                 );
                 $done[] = $id;

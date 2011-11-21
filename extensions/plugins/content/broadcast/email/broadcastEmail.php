@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class MolajoBroadcastEmail extends MolajoPlugin
+class MolajoBroadcastEmail extends MolajoApplicationPlugin
 {
 
 	function OnBeforeContentSave ( &$article, $isNew )	{
@@ -18,7 +18,7 @@ class MolajoBroadcastEmail extends MolajoPlugin
 	/**
 	 * 	Initialization
 	 */
-$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_email');
+$plugin =& MolajoApplicationPlugin::getPlugin('content', 'tamka_post_email');
 $pluginParameters = new JParameter( $plugin->parameters );
 
 

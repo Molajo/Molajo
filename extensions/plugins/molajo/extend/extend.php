@@ -16,7 +16,7 @@ defined('JPATH_BASE') or die;
  * @subpackage	Fields
  * @version	1.6
  */
-class plgSystemExtend extends MolajoPlugin
+class plgSystemExtend extends MolajoApplicationPlugin
 {
     /**
      * __construct

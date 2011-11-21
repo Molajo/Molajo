@@ -36,7 +36,7 @@ class ModulesControllerModule extends JControllerForm
 		// Look for the Extension ID.
 		$extensionId = JRequest::getInt('eid');
 		if (empty($extensionId)) {
-			$this->setRedirect(MolajoRoute::_('index.php?option='.$this->option.'&view='.$this->view_item.'&layout=edit', false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option='.$this->option.'&view='.$this->view_item.'&layout=edit', false));
 			return MolajoError::raiseWarning(500, MolajoText::_('COM_MODULES_ERROR_INVALID_EXTENSION'));
 		}
 

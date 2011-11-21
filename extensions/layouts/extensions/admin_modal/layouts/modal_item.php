@@ -15,7 +15,7 @@ $function	= JRequest::getCmd('function', 'jSelect');
 $this->escape($this->state->get('list.ordering'))	= $this->escape($this->state->get('list.ordering'));
 $this->escape($this->state->get('list.direction'))	= $this->escape($this->state->get('list.direction'));
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option='.$this->request['option'].'&view='.$this->state->get('request.view').$function); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option='.$this->request['option'].'&view='.$this->state->get('request.view').$function); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
 			<label for="filter_search">

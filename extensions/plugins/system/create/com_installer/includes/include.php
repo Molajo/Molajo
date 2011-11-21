@@ -38,7 +38,7 @@ $filehelper->requireClassFile (COM_INSTALLER_OVERRIDES.'/controllers/controller.
 $filehelper->requireClassFile (COM_INSTALLER_OVERRIDES.'/helper/installer.php', 'InstallerHelper');
 
 /** JHtml Classes **/
-$filehelper->requireClassFile (COM_INSTALLER_OVERRIDES.'/jhtml/molajocomponent.php', 'JHtmlMolajoComponent');
+$filehelper->requireClassFile (COM_INSTALLER_OVERRIDES.'/jhtml/molajocomponent.php', 'JHtmlMolajoApplicationComponent');
 $filehelper->requireClassFile (COM_INSTALLER_OVERRIDES.'/jhtml/plugintype.php', 'JHtmlPluginType');
 
 /** JForm Classes **/

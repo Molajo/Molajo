@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class ResponsesActivityLog extends MolajoPlugin
+class ResponsesActivityLog extends MolajoApplicationPlugin
 {
 	function onAfterDisplayContent( &$article, &$parameters, $limitstart )
 	{
@@ -33,7 +33,7 @@ class ResponsesActivityLog extends MolajoPlugin
 	/**
 	 * 	Parameters
 	 */
-		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_comments');
+		$plugin =& MolajoApplicationPlugin::getPlugin('content', 'tamka_comments');
 		$pluginParameters = new JParameter( $plugin->parameters );
 				
 		$showCategoriesAll = false;

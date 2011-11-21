@@ -1,21 +1,41 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Module
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Toolbar Helper
- *
- * @package     Molajo
- * @subpackage  Toolbar Helper
- * @since       1.0
+ * @package		Molajo
+ * @subpackage	mod_header
+ * @since		1.0
  */
-class MolajoToolbarHelper
+abstract class MolajoToolbarHelper
 {
+    /**
+	 * $data
+	 *
+	 * @since	1.0
+	 */
+	protected static $data = array();
+
+	/**
+	 * Helper method to generate data
+	 *
+	 * @param	array	A named array with keys link, image, text, access and imagePath
+	 *
+	 * @return	string	HTML for button
+	 * @since	1.0
+	 */
+	public static function getList($parameters)
+	{
+        $tmpobj = new JObject();
+        $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));
+        $data[]=$tmpobj;
+        return $data;
+	}
     /**
      * addButtonsDisplayLayout
      *
@@ -25,7 +45,7 @@ class MolajoToolbarHelper
     public function addButtonsDisplayLayout($state, $userToolbarButtonPermissions)
     {
         /** ToolBar title **/
-        $parameters = MolajoComponentHelper::getParameters(JRequest::getCmd('option'));
+        $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
         $this->addTitle($parameters->def('config_manager_title_image', 1),
                         $parameters->def('config_manager_title', 1),
                         JRequest::getCmd('DefaultView'),
@@ -52,7 +72,7 @@ class MolajoToolbarHelper
         JRequest::setVar('hidemainmenu', true);
 
         /** ToolBar title **/
-        $parameters = MolajoComponentHelper::getParameters(JRequest::getCmd('option'));
+        $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
         $this->addTitle($parameters->def('config_manager_title_image', 1),
                         $parameters->def('config_manager_title', 1),
                         JRequest::getCmd('DefaultView'),
@@ -101,7 +121,7 @@ class MolajoToolbarHelper
     public function buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item)
     {
         /** component parameters **/
-        $parameters = MolajoComponentHelper::getParameters(JRequest::getCmd('option'));
+        $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
 
         /** loop thru config options and add ToolBar buttons **/
         $count = 0;
@@ -237,7 +257,7 @@ class MolajoToolbarHelper
      */
     public function addSpamButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        $parameters = MolajoComponentHelper::getParameters(JRequest::getVar('option'));
+        $parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
         if ($parameters->def('config_component_state_spam', '0') == 1) {
             self::custom(JRequest::getCmd('DefaultView').'.spam', 'spam.png', 'spam_f2.png', 'MolajoToolbar_SPAM', true);
         }
@@ -401,7 +421,7 @@ class MolajoToolbarHelper
      */
     public function addHelpButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::help('MolajoHelp_CONTENT_ARTICLE_MANAGER');
+        self::help('MolajoApplicationHelp_CONTENT_ARTICLE_MANAGER');
     }
 
     /**
@@ -427,7 +447,7 @@ class MolajoToolbarHelper
         } else {
             return;
         }
-        $parameters = MolajoComponentHelper::getParameters(JRequest::getVar('option'));
+        $parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
         if ($parameters->def('config_component_version_management', '1') == 1) {
             self::custom(JRequest::getCmd('EditView').'.restore', 'restore.png', 'restore_f2.png', 'MolajoToolbar_RESTORE', false);
         }

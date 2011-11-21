@@ -330,7 +330,7 @@ class CategoriesModelCategory extends JModelAdmin
 		$isNew		= true;
 
 		// Include the content plugins for the on save events.
-		MolajoPluginHelper::importPlugin('content');
+		MolajoApplicationPlugin::importPlugin('content');
 
 		// Load the row if saving an existing category.
 		if ($pk > 0) {

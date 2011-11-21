@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @package Editors-xtd
  * @since 1.5
  */
-class plgButtonImage extends MolajoPlugin
+class plgButtonImage extends MolajoApplicationPlugin
 {
 	/**
 	 * Display the button
@@ -26,7 +26,7 @@ class plgButtonImage extends MolajoPlugin
 	function onDisplay($name)
 	{
 		$app = MolajoFactory::getApplication();
-		$parameters = MolajoComponentHelper::getParameters('com_media');
+		$parameters = MolajoApplicationComponent::getParameters('com_media');
 		$ranks = array('publisher', 'editor', 'author', 'registered');
 		$acl = MolajoFactory::getACL();
 

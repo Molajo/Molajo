@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  *
  * @return	string
  */
-class plgMolajoURLs extends MolajoPlugin	{
+class plgMolajoURLs extends MolajoApplicationPlugin	{
 
     /**
      * MolajoOnAfterInitialise

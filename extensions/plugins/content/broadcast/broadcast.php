@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-class plgMolajoBroadcast extends MolajoPlugin	{
+class plgMolajoBroadcast extends MolajoApplicationPlugin	{
 
     /**
      * plgMolajoBroadcast::MolajoOnContentChangeState
@@ -32,7 +32,7 @@ class plgMolajoBroadcast extends MolajoPlugin	{
         }
 
         /** com_responses parameters **/
-        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        $responsesParameters = MolajoApplicationComponent::getParameters('com_responses', true);
    
         /** broadcasting enabled **/
         if ($responsesParameters->def('enable_broadcast', 0) == '1') {

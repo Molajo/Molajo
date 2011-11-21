@@ -9,20 +9,20 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoApplicationHelper
+ * Component Helper
  *
  * @package     Molajo
- * @subpackage  Application Helper
+ * @subpackage  Component Helper
  * @since       1.0
  */
-class MolajoApplicationHelper
+class MolajoApplicationComponent
 {
     /**
-     * @var null $_applications
+     * @var array $_components - list of components from cache
      *
-     * @since 1.0
+     * @since  1.0
      */
-    protected static $_applications = null;
+    protected static $_components = array();
 
     /**
      * Verifies login requirement for application and default options
@@ -52,225 +52,167 @@ class MolajoApplicationHelper
     /**
      * getComponentName
      *
-     * @deprecated
+     * Return the name of the request component [main component]
+     * Moved in from the Application Helper
+     *
+     * @param   string  $default The default option
+     * @return  string  Option
+     * @since   1.0
      */
     public static function getComponentName($default = NULL)
     {
-        return MolajoComponentHelper::getComponentName($default);
+        static $option;
+        if ($option) {
+            return $option;
+        }
+
+        $option = strtolower(JRequest::getCmd('option'));
+
+        if (empty($option)) {
+            $option = $default;
+        }
+
+        JRequest::setVar('option', $option);
+        return $option;
     }
 
     /**
-     * getApplicationInfo
+     * getComponent
      *
-     * Retrieves Application info from database
+     * Get component information.
      *
-     * This method will return a application information array if called
-     * with no arguments which can be used to add custom application information.
+     * @param   string   $option  component option.
+     * @param   boolean  $string  If set and the component does not exist, the enabled attribute will be set to false
      *
-     * @param   integer  $id        A application identifier, can be ID or Name
-     * @param   boolean  $byName    If True, find the application by its name
-     *
-     * @return  boolean  True if the information is added. False on error
-     * @since   1.0
+     * @return  object   An object with information about the component.
+     * @since  1.0
      */
-    public static function getApplicationInfo($id = null, $byName = false)
+    public static function getComponent($option, $strict = false)
     {
-        if (self::$_applications === null) {
+        if (isset(self::$_components[$option])) {
+            $result = self::$_components[$option];
 
-            $obj = new stdClass();
-
-            if ($id == 'installation') {
-                $obj->id = 0;
-                $obj->name = 'installation';
-                $obj->path = 'installation';
-
-                self::$_applications[0] = clone $obj;
+        } else {
+            if (self::_load($option)) {
+                $result = self::$_components[$option];
 
             } else {
-
-                $db = MolajoFactory::getDbo();
-
-                $query = $db->getQuery(true);
-
-                $query->select('id');
-                $query->select('name');
-                $query->select('path');
-                $query->from($db->namequote('#__applications'));
-
-                $db->setQuery($query->__toString());
-
-                if ($results = $db->loadObjectList()) {
-                } else {
-                    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-                    return false;
-                }
-
-                if ($db->getErrorNum()) {
-                    return new MolajoException($db->getErrorMsg());
-                }
-
-                foreach ($results as $result) {
-                    $obj->id = $result->id;
-                    $obj->name = $result->name;
-                    $obj->path = $result->path;
-
-                    self::$_applications[$result->id] = clone $obj;
-                }
+                $result = new stdClass;
+                $result->enabled = $strict ? false : true;
+                $result->parameters = new JRegistry;
             }
         }
 
-        /** All applications requested */
-        if (is_null($id)) {
-            return self::$_applications;
-        }
-
-        /** Name lookup */
-        if ($byName) {
-            foreach (self::$_applications as $application) {
-                if ($application->name == strtolower($id)) {
-                    return $application;
-                }
-            }
-
-        } else {
-            if (isset(self::$_applications[$id])) {
-                return self::$_applications[$id];
-            }
-        }
-
-        /** Name and or ID lookup unsuccessful */
-        return null;
+        return $result;
     }
 
     /**
-     * loadApplicationClasses
+     * isEnabled
      *
-     * @param string $application_name
+     * Checks if the component is enabled
      *
-     * @return bool
+     * @param   string   $option  The component option.
+     * @param   boolean  $string  If set and the component does not exist, false will be returned
      *
-     * @since   1.0
+     * @return  boolean
+     * @since  1.0
      */
-    public static function loadApplicationClasses()
+    public static function isEnabled($option, $strict = false)
     {
-        $filehelper = new MolajoFileHelper();
-        $files = JFolder::files(MOLAJO_APPLICATION_PATH, '\.php$', false, false);
-
-        foreach ($files as $file) {
-            if ($file == 'configuration.php') {
-                
-            } else if ($file == 'helper.php') {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Application'.ucfirst(substr($file, 0, strpos($file, '.'))));
-            } else {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).ucfirst(substr($file, 0, strpos($file, '.'))));
-            }
+        $result = self::getComponent($option, $strict);
+        if ($result[0]->status == 1) {
+            return true;
+        } else {
+            return false;
         }
     }
 
     /**
-     * parseXMLInstallFile
+     * getParameters
      *
-     * Parse an XML install manifest file.
+     * Gets the parameter object for the component
      *
-     * @param string $path Full path to XML file.
+     * @param   string   $option  The option for the component.
+     * @param   boolean  $strict  If set and the component does not exist, false will be returned
      *
-     * @return array|bool XML metadata.
+     * @return  JRegistry  A JRegistry object.
      *
-     * @since   1.0
+     * @see     JRegistry
+     * @since  1.0
      */
-    public static function parseXMLInstallFile($path)
+    public static function getParameters($option, $strict = false)
     {
-        if ($xml = MolajoFactory::getXML($path)) {
-        } else {
-            return false;
-        }
-
-        /** XML Root: install - all extensions except languages which use metafile */
-        if ($xml->getName() == 'metafile' || $xml->getName() == 'install') {
-
-        } else {
-            return false;
-        }
-
-        return MolajoApplicationHelper::parseInstallXML($xml);
+        $component = self::getComponent($option, $strict);
+        return $component[0]->parameters;
     }
 
     /**
-     * parseXMLLangMetaFile
+     * _load
      *
-     * Parse an XML language meta file.
+     * Load installed components into the _components array.
      *
-     * @param   string   $path Full path to XML file.
+     * @param   string  $option  The element value for the extension
      *
-     * @return  array    XML metadata.
-     *
-     * @since   1.0
+     * @return  bool  True on success
+     * @since  1.0
      */
-    public static function parseXMLLangMetaFile($path)
+    protected static function _load($option)
     {
-        if ($xml = MolajoFactory::getXML($path)) {
-        } else {
-            return false;
+        self::$_components[$option] = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_COMPONENTS, $option);
+        if (isset(self::$_components[$option]->parameters)) {
+            $temp = new JRegistry;
+            $temp->loadString(self::$_components[$option]->parameters);
+            self::$_components[$option]->parameters = $temp;
         }
 
-        /** XML Root: install - all extensions except languages which use metafile */
-        if ($xml->getName() == 'metafile') {
-        } else {
-            return false;
-        }
-
-        return MolajoApplicationHelper::parseInstallXML($xml);
+        return true;
     }
 
     /**
-     * parseInstallXML
+     * renderComponent
      *
-     * Parses install manifest XML
+     * Render the component.
      *
-     * @param string $xml
+     * @param   string  $request An array of component information
+     * @param   array   $parameters  The component parameters
      *
-     * @return array|bool XML metadata.
-     *
-     * @since   1.0
+     * @return  object
+     * @since  1.0
      */
-    public function parseInstallXML($xml)
+    public static function renderComponent($request, $parameters = array())
     {
-        $data = array();
+        /** scope */
+        $scope = MolajoFactory::getApplication()->scope;
+        MolajoFactory::getApplication()->scope = $request['option'];
 
-        $data['name'] = (string)$xml->name;
+        /** path */
+        $path = $request['component_path'].'/'.$request['no_com_option'].'.php';
 
-        if ($xml->getName() == 'metafile') {
-            $data['type'] = 'language';
+        /** installation */
+        if ($request['application_id'] == 0
+            && file_exists($path)) {
 
-        } else if ($xml->getName() == 'install') {
-            $data['type'] = (string)$xml->attributes()->type;
+        /** language */
+        } elseif (self::isEnabled($request['option'])
+                  && file_exists($path)) {
+            MolajoFactory::getLanguage()->load($request['option'], $path, MolajoFactory::getLanguage()->getDefault(), false, false);
 
         } else {
-            return false;
+            MolajoError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
 
-        if ((string)$xml->creationDate()) {
-            $data['creationDate'] = (string)$xml->creationDate();
-        } else {
-            $data['creationDate'] = MolajoText::_('Unknown');
-        }
+        /** execute the component */
+        ob_start();
+        require_once $path;
+        $output = ob_get_contents();
+        ob_end_clean();
 
-        if ((string)$xml->author()) {
-            $data['author'] = (string)$xml->author();
-        } else {
-            $data['author'] = MolajoText::_('Unknown');
-        }
+        /** Revert scope */
+        MolajoFactory::getApplication()->scope = $scope;
 
-        $data['copyright'] = (string)$xml->copyright;
-        $data['authorEmail'] = (string)$xml->authorEmail;
-        $data['authorUrl'] = (string)$xml->authorUrl;
-        $data['version'] = (string)$xml->version;
-        $data['description'] = (string)$xml->description;
-        $data['group'] = (string)$xml->group;
-
-        return $data;
+        return $output;
     }
-    
+        
     /**
      * getRequest
      *
@@ -289,7 +231,7 @@ class MolajoApplicationHelper
         $layout = '';
         $format = '';
         $component_table = '';
-        
+
         $molajoConfig = new MolajoModelConfiguration ($option);
 
         /** 1. Option */
@@ -436,7 +378,7 @@ class MolajoApplicationHelper
         }
 
         /** 14. parameters */
-        $parameters = MolajoComponentHelper::getParameters($option);
+        $parameters = MolajoApplicationComponent::getParameters($option);
 
         /** other */
         $extension = JRequest::getCmd('extension', '');
@@ -642,7 +584,7 @@ class MolajoApplicationHelper
 
         $pathway = $appClass->getPathway();
         $title = null;
-        $parameters = MolajoComponentHelper::getParameters($session->get('page.option'));
+        $parameters = MolajoApplicationComponent::getParameters($session->get('page.option'));
 
         //        $title = $this->parameters->get('page_title', '');
 
@@ -675,9 +617,9 @@ class MolajoApplicationHelper
         //        if ($this->parameters->get('show_feed_link', 1)) {
         //            $link = '&format=feed&limitstart=';
         //            $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-        //            $document->addHeadLink(MolajoRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
+        //            $document->addHeadLink(MolajoRouteHelper::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
         //            $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-        //            $document->addHeadLink(MolajoRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
+        //            $document->addHeadLink(MolajoRouteHelper::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
         //        }
 
         //        $session->set('page.parameters', $this->parameters);

@@ -25,7 +25,7 @@ defined('MOLAJO') or die;
  * @subpackage	Content.pagebreak
  * @since		1.6
  */
-class plgContentPagebreak extends MolajoPlugin
+class plgContentPagebreak extends MolajoApplicationPlugin
 {
 	/**
 	 * Constructor
@@ -205,7 +205,7 @@ class plgContentPagebreak extends MolajoPlugin
 		$row->toc .= '<ul>
 		<li>
 			
-			<a href="'. MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart=') .'" class="toclink">'
+			<a href="'. MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart=') .'" class="toclink">'
 			. $heading .
 			'</a>
 			
@@ -215,7 +215,7 @@ class plgContentPagebreak extends MolajoPlugin
 		$i = 2;
 
 		foreach ($matches as $bot) {
-			$link = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($i-1));
+			$link = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($i-1));
 
 
 			if (@$bot[0]) {
@@ -245,7 +245,7 @@ class plgContentPagebreak extends MolajoPlugin
 		}
 
 		if ($this->parameters->get('showall')) {
-			$link = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=1&limitstart=');
+			$link = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=1&limitstart=');
 			$row->toc .= '
 			<li>
 				
@@ -273,7 +273,7 @@ class plgContentPagebreak extends MolajoPlugin
 		if ($page < $n-1) {
 			$page_next = $page + 1;
 
-			$link_next = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($page_next));
+			$link_next = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($page_next));
 			// Next >>
 			$next = '<a href="'. $link_next .'">'.MolajoText::_('JNEXT').$pnSpace.MolajoText::_('JGLOBAL_GT').MolajoText::_('JGLOBAL_GT') .'</a>';
 		} else {
@@ -283,7 +283,7 @@ class plgContentPagebreak extends MolajoPlugin
 		if ($page > 0) {
 			$page_prev = $page - 1 == 0 ? '' : $page - 1;
 
-			$link_prev = MolajoRoute::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($page_prev));
+			$link_prev = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($row->slug, $row->catid).'&showall=&limitstart='. ($page_prev));
 			// << Prev
 			$prev = '<a href="'. $link_prev .'">'. MolajoText::_('JGLOBAL_LT').MolajoText::_('JGLOBAL_LT').$pnSpace.MolajoText::_('JPREV') .'</a>';
 		} else {

@@ -38,7 +38,7 @@ class MolajoFieldState extends MolajoField
      */
     public function getOptions()
     {
-        $this->parameters = MolajoComponentHelper::getParameters(JRequest::getVar('option'));
+        $this->parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
         $this->config_component_state_spam = JRequest::getCmd('config_component_state_spam', '0');
 
         $options = array();

@@ -73,13 +73,13 @@ class MolajoMediaAudio {
         /** initialization **/
         $workText = $content->$location;
 
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $this->systemParameters = new JParameter($molajoSystemPlugin->parameters);
         $this->audio_folder = 'images/'.$this->systemParameters->def('audio_folder', 'audio');
 
         /** layout: loads JS for head **/
-        $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio_head');
-        MolajoPluginHelper::generateLayout ($layoutPath);
+        $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio_head');
+        MolajoApplicationPlugin::generateLayout ($layoutPath);
 
         for ( $i=0; $i < count($matches[0]); $i++ ) {
 
@@ -88,16 +88,16 @@ class MolajoMediaAudio {
             $this->id = $i;
 
             /** layout **/
-            $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio');
-            $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+            $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio');
+            $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
 
             /** replace **/
             $workText = str_replace( $matches[0][$i], $renderedLayout, $workText ) ;
         }
 
         /** layout: loads JS for footer **/
-        $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio');
-        MolajoPluginHelper::generateLayout ($layoutPath);
+        $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'media'), $layout = 'audio');
+        MolajoApplicationPlugin::generateLayout ($layoutPath);
 
         /** update source **/
         $content->$location = $workText;

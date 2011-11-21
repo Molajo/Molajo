@@ -31,7 +31,7 @@ class modelContentItem
     public function getData ($component_option, $id, $whereString = null, $sql_table_name=null, $sql_table_name=null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -74,7 +74,7 @@ class modelContentItem
     {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -110,7 +110,7 @@ class modelContentItem
     {
         $app = MolajoFactory::getApplication();
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -140,7 +140,7 @@ class modelContentItem
     public function deleteMatching ($component_option, $id, $custom_field, $sql_table_name=null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -194,7 +194,7 @@ class modelContentItem
     public function checkTable ($sql_table_name, $sql_table_name=null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -231,7 +231,7 @@ class modelContentItem
      public function createTable ($sql_table_name=null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {

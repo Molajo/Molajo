@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage	Editors-xtd.pagebreak
  * @since 1.5
  */
-class plgButtonPagebreak extends MolajoPlugin
+class plgButtonPagebreak extends MolajoApplicationPlugin
 {
 	/**
 	 * Constructor

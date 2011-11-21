@@ -111,7 +111,7 @@ class MolajoResponsesComments {
         }
 
         /** response component parameters **/
-        $this->responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        $this->responsesParameters = MolajoApplicationComponent::getParameters('com_responses', true);
         if (in_array($content->catid, $this->responsesParameters->def('enable_comments_categories', array()))) {
         } else {
             return;
@@ -225,7 +225,7 @@ class MolajoResponsesComments {
         $layoutPath = JPATH_SITE.'/components/com_responses/views/summary/layouts/default.php';
 
         /** generate layout **/
-        $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
     }
 
    /**
@@ -261,7 +261,7 @@ class MolajoResponsesComments {
         $layoutPath = JPATH_SITE.'/components/com_responses/views/form/layouts/create.php';
 
         /** generate layout **/
-        $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
     }
 
     /**
@@ -311,6 +311,6 @@ class MolajoResponsesComments {
         $layoutPath = JPATH_SITE.'/components/com_responses/views/responses/layouts/default.php';
 
         /** generate layout **/
-        $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
     }
 }

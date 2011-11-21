@@ -16,12 +16,12 @@ defined('MOLAJO') or die;
  * @subpackage    Router
  * @since 1.5
  */
-class MolajoRouterBuild extends MolajoRouter
+class MolajoApplicationRouterBuild extends MolajoApplicationRouter
 {
     /**
      * buildRoute
      *
-     * called out of MolajoRouterSite::_buildSefRoute()
+     * called out of MolajoApplicationRouterSite::_buildSefRoute()
      *
      * @param array     $query An array of URL arguments
      * @param string    $componentParam ex com_articles
@@ -35,7 +35,7 @@ class MolajoRouterBuild extends MolajoRouter
     function buildRoute(&$query, $componentParam, $singleParam, $multipleParam, $typeParam, $tableParam)
     {
         $menu = MolajoFactory::getApplication()->getMenu();
-        $parameters = MolajoComponentHelper::getParameters($componentParam);
+        $parameters = MolajoApplicationComponent::getParameters($componentParam);
         $advanced = $parameters->get('sef_advanced_link', 0);
         $segments = array();
         $temp = array();

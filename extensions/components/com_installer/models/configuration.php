@@ -74,7 +74,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 
 		/* Server Settings */
 		$registry->set('live_site', '');
-		$registry->set('secret', MolajoUserHelper::genRandomPassword(16));
+		$registry->set('secret', MolajoSiteUser::genRandomPassword(16));
 		$registry->set('gzip', 0);
 		$registry->set('error_reporting', -1);
 		$registry->set('helpurl', 'http://help.molajo.org/');
@@ -216,8 +216,8 @@ class InstallerModelConfiguration extends MolajoModelDummy
 		}
 
 		// Create random salt/password for the admin user
-		$salt = MolajoUserHelper::genRandomPassword(32);
-		$crypt = MolajoUserHelper::getCryptedPassword($config->admin_password, $salt);
+		$salt = MolajoSiteUser::genRandomPassword(32);
+		$crypt = MolajoSiteUser::getCryptedPassword($config->admin_password, $salt);
 		$cryptpass = $crypt.':'.$salt;
 
 		// create the admin user

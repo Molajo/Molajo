@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-class plgMolajoMedia extends MolajoPlugin	{
+class plgMolajoMedia extends MolajoApplicationPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object
@@ -36,7 +36,7 @@ class plgMolajoMedia extends MolajoPlugin	{
         }
 
         /** parameters **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** view access **/

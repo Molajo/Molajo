@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoExtension extends JObject
+class MolajoInstallerExtension extends JObject
 {
     /**
      * Filename of the extension

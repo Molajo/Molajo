@@ -90,16 +90,16 @@ class MolajoLinksFootnotes {
             $this->linktext = trim($matches[2][$i]);
 
             /** layout **/
-            $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'links'), $layout = 'footnote');
-            $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+            $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'links'), $layout = 'footnote');
+            $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
 
             /** replace **/
             $this->worktext = str_replace( $matches[0][$i], $renderedLayout, $this->worktext ) ;
         }
 
         /** layout **/
-        $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'links'), $layout = 'footnote_footer');
-        $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+        $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'links'), $layout = 'footnote_footer');
+        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
 
         /** replace article text **/
         $content->$location = $renderedLayout;

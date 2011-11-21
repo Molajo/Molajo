@@ -23,7 +23,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $loggeduser = MolajoFactory::getUser();
 ?>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_users&view=users');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_users&view=users');?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('COM_USERS_SEARCH_USERS'); ?></label>
@@ -114,13 +114,13 @@ $loggeduser = MolajoFactory::getUser();
 				</td>
 				<td>
 					<?php if ($canEdit) : ?>
-					<a href="<?php echo MolajoRoute::_('index.php?option=com_users&task=user.edit&id='.(int) $item->id); ?>" title="<?php echo MolajoText::sprintf('COM_USERS_EDIT_USER', $this->escape($item->name)); ?>">
+					<a href="<?php echo MolajoRouteHelper::_('index.php?option=com_users&task=user.edit&id='.(int) $item->id); ?>" title="<?php echo MolajoText::sprintf('COM_USERS_EDIT_USER', $this->escape($item->name)); ?>">
 						<?php echo $this->escape($item->name); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->name); ?>
 					<?php endif; ?>
 					<?php if (JDEBUG) : ?>
-						<div class="fltrt"><div class="button2-left smallsub"><div class="blank"><a href="<?php echo MolajoRoute::_('index.php?option=com_users&view=debuguser&user_id='.(int) $item->id);?>">
+						<div class="fltrt"><div class="button2-left smallsub"><div class="blank"><a href="<?php echo MolajoRouteHelper::_('index.php?option=com_users&view=debuguser&user_id='.(int) $item->id);?>">
 						<?php echo MolajoText::_('COM_USERS_DEBUG_USER');?></a></div></div></div>
 					<?php endif; ?>
 				</td>

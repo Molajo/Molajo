@@ -97,7 +97,7 @@ class MolajoFormFieldMedia extends MolajoFormField
             array_pop($folder);
             $folder = implode('/', $folder);
         }
-        elseif (file_exists(MOLAJO_BASE_FOLDER.'/'.MolajoComponentHelper::getParameters('com_media')->get('image_path', 'images').'/'.$directory)) {
+        elseif (file_exists(MOLAJO_BASE_FOLDER.'/'.MolajoApplicationComponent::getParameters('com_media')->get('image_path', 'images').'/'.$directory)) {
             $folder = $directory;
         }
         else {

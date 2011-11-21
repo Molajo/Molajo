@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class ResponsesSubscriptions extends MolajoPlugin
+class ResponsesSubscriptions extends MolajoApplicationPlugin
 {
 
 	function OnBeforeContentSave ( &$article, $isNew )	{
@@ -69,7 +69,7 @@ class ResponsesSubscriptions extends MolajoPlugin
 	/**
 	 * 	Initialization
 	 */
-		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_email');
+		$plugin =& MolajoApplicationPlugin::getPlugin('content', 'tamka_post_email');
 		$pluginParameters = new JParameter( $plugin->parameters );
 
 	/**

@@ -228,7 +228,7 @@ class MolajoPaneTabs extends MolajoPane
         // Include mootools framework
         MolajoHTML::_('behavior.framework', true);
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
 
         $options = '{';
         $opt['onActive'] = (isset($parameters['onActive'])) ? $parameters['onActive'] : null;
@@ -380,7 +380,7 @@ class MolajoPaneSliders extends MolajoPane
         // Include mootools framework.
         MolajoHTML::_('behavior.framework', true);
 
-        $document = JFactory::getDocument();
+        $document = MolajoFactory::getDocument();
 
         $options = '{';
         $opt['onActive'] = 'function(toggler, i) { toggler.addClass(\'pane-toggler-down\');' .

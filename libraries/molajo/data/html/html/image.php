@@ -45,7 +45,7 @@ abstract class MolajoHtmlImage
         JLog::add('JImage::site is deprecated.', JLog::WARNING, 'deprecated');
 
         static $paths;
-        $app = JFactory::getApplication();
+        $app = MolajoFactory::getApplication();
 
         if (!$paths) {
             $paths = array();
@@ -124,7 +124,7 @@ abstract class MolajoHtmlImage
         // Deprecation warning.
         JLog::add('JImage::administrator is deprecated.', JLog::WARNING, 'deprecated');
 
-        $app = JFactory::getApplication();
+        $app = MolajoFactory::getApplication();
 
         if (is_array($attribs)) {
             $attribs = JArrayHelper::toString($attribs);

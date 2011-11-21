@@ -9,13 +9,13 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoModuleHelper
+ * MolajoApplicationModule
  *
  * @package     Molajo
  * @subpackage  Helper
  * @since       1.0
  */
-abstract class MolajoModuleHelper
+abstract class MolajoApplicationModule
 {
     /**
      * getModule
@@ -91,7 +91,7 @@ abstract class MolajoModuleHelper
         if (count($result) == 0) {
 
             if (JRequest::getBool('tp')
-                && MolajoComponentHelper::getParameters('com_templates')->get('template_positions_display')
+                && MolajoApplicationComponent::getParameters('com_templates')->get('template_positions_display')
             ) {
 
                 $result[0] = self::getModule('mod_'.$position);
@@ -294,7 +294,7 @@ abstract class MolajoModuleHelper
             return $modules;
         }
 
-        $modules = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MODULES);
+        $modules = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MODULES);
 
         return $modules;
     }

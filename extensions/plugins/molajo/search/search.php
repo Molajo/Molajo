@@ -17,7 +17,7 @@ require_once JPATH_SITE.'/components/com_weblinks/helpers/route.php';
  * @subpackage	Search
  * @since		1.6
  */
-class plgSearchWeblinks extends MolajoPlugin
+class plgSearchWeblinks extends MolajoApplicationPlugin
 {
 	/**
 	 * @return array An array of search areas

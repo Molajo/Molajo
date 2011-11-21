@@ -233,7 +233,7 @@ class MolajoInstallerLibrary extends MolajoAdapterInstance
 
         // Because libraries may not have their own folders we cannot use the standard method of finding an installation manifest
         if (file_exists($manifestFile)) {
-            $manifest = new MolajoLibraryManifest($manifestFile);
+            $manifest = new MolajoInstallerLibrarymanifest($manifestFile);
             // Set the plugin root path
             $this->parent->setPath('extension_root', JPATH_PLATFORM.'/'.$manifest->libraryname);
 

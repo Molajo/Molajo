@@ -63,7 +63,7 @@ class MolajoViewEdit extends MolajoView
             $this->parameters = MolajoFactory::getApplication()->getParameters();
             //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
-            $this->parameters = MolajoComponentHelper::getParameters(JRequest::getVar('option'));
+            $this->parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
         }
 
         $this->user = MolajoFactory::getUser();

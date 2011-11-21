@@ -40,7 +40,7 @@ class MolajoLinksExternalLinks {
         for ( $i=0; $i < count($matches[0]); $i++ ) {
             if ($firsttime) {
                 $firsttime = false;
-                $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+                $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
                 $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
                 $rel = $systemParameters->def('index_external_links', 'noindex');
@@ -52,7 +52,7 @@ class MolajoLinksExternalLinks {
 
             }
 
-            $verify = MolajoHelperURLs::checkURLExternal ($matches[1][$i]);
+            $verify = MolajoApplicationHelperURLs::checkURLExternal ($matches[1][$i]);
             if (verify == true) {
                     $content->$location = str_replace( $matches[0][$i], '<a class="external" href="'.$matches[1][$i].'" rel="'.$rel.'" title="'.$matches[2][$i].'">'.$matches[2][$i].'</a>', $content->$location);
             }

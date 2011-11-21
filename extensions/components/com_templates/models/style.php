@@ -369,7 +369,7 @@ class TemplatesModelStyle extends JModelAdmin
 		$isNew		= true;
 
 		// Include the extension plugins for the save events.
-		MolajoPluginHelper::importPlugin('extension');
+		MolajoApplicationPlugin::importPlugin('extension');
 
 		// Load the row if saving an existing record.
 		if ($pk > 0) {

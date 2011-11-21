@@ -50,7 +50,7 @@ class TemplatesController extends JController
 			// Somehow the person just went to the form - we don't allow that.
 			$this->setError(MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(MolajoRoute::_('index.php?option=com_templates&view=styles', false));
+			$this->setRedirect(MolajoRouteHelper::_('index.php?option=com_templates&view=styles', false));
 
 			return false;
 		}

@@ -116,10 +116,10 @@ class modMenuHelper
                 }
 
 				if (strcasecmp(substr($item->menu_item_flink, 0, 4), 'http') && (strpos($item->menu_item_flink, 'index.php?') !== false)) {
-					$item->menu_item_flink = MolajoRoute::_($item->menu_item_flink, true, $item->menu_item_parameters->get('secure'));
+					$item->menu_item_flink = MolajoRouteHelper::_($item->menu_item_flink, true, $item->menu_item_parameters->get('secure'));
 				}
 				else {
-					$item->menu_item_flink = MolajoRoute::_($item->menu_item_flink);
+					$item->menu_item_flink = MolajoRouteHelper::_($item->menu_item_flink);
 				}
 				
 				$item->menu_item_title = htmlspecialchars($item->menu_item_title);

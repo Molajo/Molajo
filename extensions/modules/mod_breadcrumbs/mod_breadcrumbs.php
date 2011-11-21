@@ -11,7 +11,7 @@
 defined('JPATH_PLATFORM') or die;
 
 // Include the syndicate functions only once
-require_once dirname(__FILE__).DS.'helper.php';
+require_once dirname(__FILE__).'/helper.php';
 
 // Get the breadcrumbs
 $list	= modBreadCrumbsHelper::getList($parameters);
@@ -20,4 +20,4 @@ $count	= count($list);
 // Set the default separator
 $separator = modBreadCrumbsHelper::setSeparator($parameters->get('separator'));
 
-require MolajoModuleHelper::getLayoutPath('mod_breadcrumbs', $parameters->get('layout', 'default'));
+require MolajoApplicationModule::getLayoutPath('mod_breadcrumbs', $parameters->get('layout', 'default'));

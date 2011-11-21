@@ -11,7 +11,7 @@
 defined('MOLAJO') or die;
 
 
-class plgContentLoadmodule extends MolajoPlugin
+class plgContentLoadmodule extends MolajoApplicationPlugin
 {
 	protected static $modules=array();
 	/**

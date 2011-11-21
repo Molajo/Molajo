@@ -15,11 +15,11 @@ defined('MOLAJO') or die;
  * @subpackage  Editor Button Helper
  * @since       1.0
  */
-class MolajoEditorbuttonHelper extends MolajoPlugin
+class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
 {
 
     /**
-     * MolajoHelperEditorbutton::MolajoOnDisplay
+     * MolajoApplicationHelperEditorbutton::MolajoOnDisplay
      *
      * Content Component Plugin that applies text and URL functions to content object
      *
@@ -31,7 +31,7 @@ class MolajoEditorbuttonHelper extends MolajoPlugin
     function checkCriteria($name)
     {
         /** parameters **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         $editorButtonsArray = new object;

@@ -38,7 +38,7 @@ class MolajoLanguageHelper
             $installed == false;
 
         } elseif ($installed === true) {
-            $installed_languages = MolajoExtensionHelper::getExtensions(2);
+            $installed_languages = MolajoApplicationExtension::getExtensions(2);
         }
 
         foreach ($langs as $lang => $metadata)
@@ -122,7 +122,7 @@ class MolajoLanguageHelper
                     $languages[$key][] = new JObject(array('lang_code' => $metadata['tag']));
                 }
             } else {
-                $languages['default'] = MolajoExtensionHelper::getExtensions(2);
+                $languages['default'] = MolajoApplicationExtension::getExtensions(2);
                 $languages['sef'] = array();
                 $languages['lang_code'] = array();
 

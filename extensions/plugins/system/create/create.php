@@ -10,7 +10,7 @@ defined( 'MOLAJO' ) or die( 'Restricted access' );
 /**
  * Molajo System Plugin
  */
-class plgSystemCreate extends MolajoPlugin
+class plgSystemCreate extends MolajoApplicationPlugin
 {
 
     /**

@@ -64,7 +64,7 @@ class MediaControllerFile extends JController
 			$filepath = JPath::clean(COM_MEDIA_BASE.'/'.$folder.'/'.strtolower($file['name']));
 
 			// Trigger the onContentBeforeSave event.
-			MolajoPluginHelper::importPlugin('content');
+			MolajoApplicationPlugin::importPlugin('content');
 			$dispatcher	= JDispatcher::getInstance();
 			$object_file = new JObject($file);
 			$object_file->filepath = $filepath;
@@ -150,7 +150,7 @@ class MediaControllerFile extends JController
 
 			if (count($paths))
 			{
-				MolajoPluginHelper::importPlugin('content');
+				MolajoApplicationPlugin::importPlugin('content');
 				$dispatcher	= JDispatcher::getInstance();
 				foreach ($paths as $path)
 				{

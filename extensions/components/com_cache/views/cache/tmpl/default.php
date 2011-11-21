@@ -14,7 +14,7 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_cache'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_cache'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-select fltrt">
 			<select name="filter_application_id" class="inputbox" onchange="this.form.submit()">

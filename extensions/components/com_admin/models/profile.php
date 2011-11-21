@@ -59,7 +59,7 @@ class AdminModelProfile extends UsersModelUser
 		// TODO: Maybe this can go into the parent model somehow?
 		// Get the dispatcher and load the users plugins.
 		$dispatcher	= JDispatcher::getInstance();
-		MolajoPluginHelper::importPlugin('user');
+		MolajoApplicationPlugin::importPlugin('user');
 
 		// Trigger the data preparation event.
 		$results = $dispatcher->trigger('onContentPrepareData', array('com_admin.profile', $data));

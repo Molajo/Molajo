@@ -17,7 +17,7 @@ $task = $request['task'];
 if ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu')) {
     $logoutLink = '';
 } else {
-    $logoutLink = MolajoRoute::_('index.php?option=com_login&task=logout&'. JUtility::getToken() .'=1');
+    $logoutLink = MolajoRouteHelper::_('index.php?option=com_login&task=logout&'. JUtility::getToken() .'=1');
 }
 $hideLinks	= JRequest::getBool('hidemainmenu');
 

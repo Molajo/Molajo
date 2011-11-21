@@ -22,7 +22,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 $canOrder	= $user->authorise('core.edit.state', 'com_modules');
 $saveOrder	= $listOrder == 'ordering';
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option=com_modules'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_modules'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
@@ -124,7 +124,7 @@ $saveOrder	= $listOrder == 'ordering';
 						<?php echo MolajoHTML::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'modules.', $canCheckin); ?>
 					<?php endif; ?>
 					<?php if ($canEdit) : ?>
-						<a href="<?php echo MolajoRoute::_('index.php?option=com_modules&task=module.edit&id='.(int) $item->id); ?>">
+						<a href="<?php echo MolajoRouteHelper::_('index.php?option=com_modules&task=module.edit&id='.(int) $item->id); ?>">
 							<?php echo $this->escape($item->title); ?></a>
 					<?php else : ?>
 							<?php echo $this->escape($item->title); ?>

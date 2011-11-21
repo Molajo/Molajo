@@ -129,17 +129,6 @@ class MolajoController extends JController
      */
     public function display($cachable = false, $urlparameters = false)
     {
-        /** language files */
-        $lang = MolajoFactory::getLanguage();
-
-        /** template */
-        $template = MolajoFactory::getApplication()->getTemplate();
-        $templateTitle = $template[0]->title;
-        $lang->load('template_'.$templateTitle, MOLAJO_EXTENSION_TEMPLATES.'/'.$templateTitle, $lang->getDefault(), false, false);
-
-        /** component */
-        $lang->load($this->request['option'], $this->request['component_path'], $lang->getDefault(), false, false);
-
         if ($this->request['task'] == 'edit') {
             $results = $this->checkOutItem();
             if ($results === false) {
@@ -263,7 +252,7 @@ class MolajoController extends JController
         ) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
-            MolajoPluginHelper::importPlugin($this->request['plugin_type']);
+            MolajoApplicationPlugin::importPlugin($this->request['plugin_type']);
         }
 
         /** check authorisation **/

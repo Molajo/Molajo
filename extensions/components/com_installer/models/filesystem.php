@@ -473,7 +473,7 @@ class MolajoInstallationModelFilesystem extends JModel
 		$arr['ftp_host'] = $vars['ftp_host'];
 		$arr['ftp_port'] = $vars['ftp_port'];
 
-		$app->setCfg($arr, 'config');
+		$app->setConfig($arr, 'config');
 	}
 
     /**

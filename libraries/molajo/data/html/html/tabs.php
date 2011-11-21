@@ -107,7 +107,7 @@ abstract class MolajoHtmlTabs
 						});
 					});';
 
-            $document = JFactory::getDocument();
+            $document = MolajoFactory::getDocument();
             $document->addScriptDeclaration($js);
             MolajoHTML::_('script', 'system/tabs.js', false, true);
 

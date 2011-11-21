@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 
-abstract class MolajoPluginHelper
+abstract class MolajoApplicationPlugin
 {
     /**
      * Get the path to a layout for a plugin

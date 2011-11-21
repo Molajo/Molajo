@@ -26,4 +26,4 @@ $layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'))
 
 $text = htmlspecialchars($parameters->get('text'));
 
-require MolajoModuleHelper::getLayoutPath('mod_syndicate', $parameters->get('layout', 'default'));
+require MolajoApplicationModule::getLayoutPath('mod_syndicate', $parameters->get('layout', 'default'));

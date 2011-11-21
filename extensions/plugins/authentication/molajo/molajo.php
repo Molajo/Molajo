@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage	Authentication
  * @since       1.0
  */
-class plgAuthenticationMolajo extends MolajoPlugin
+class plgAuthenticationMolajo extends MolajoApplicationPlugin
 {
 	/**
 	 * onUserAuthenticate
@@ -62,7 +62,7 @@ class plgAuthenticationMolajo extends MolajoPlugin
         $crypt	= $parts[0];
         $salt	= @$parts[1];
 
-        $testcrypt = MolajoUserHelper::getCryptedPassword($credentials['password'], $salt);
+        $testcrypt = MolajoSiteUser::getCryptedPassword($credentials['password'], $salt);
 
         if ($crypt == $testcrypt) {
         } else {

@@ -9,7 +9,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 
 
-class plgSystemTamka_Router extends MolajoPlugin	{
+class plgSystemTamka_Router extends MolajoApplicationPlugin	{
 
 /**
  * OnAfterInitialise
@@ -375,7 +375,7 @@ class plgSystemTamka_Router extends MolajoPlugin	{
 		$format = "";
 		$type = "";
 		
-		$plugin 		=& MolajoPluginHelper::getPlugin( 'system', 'tamka_router');
+		$plugin 		=& MolajoApplicationPlugin::getPlugin( 'system', 'tamka_router');
 		$pluginParameters 	= new JParameter($plugin->parameters);
 
 		$tagbaseValue = trim(strtolower($pluginParameters->def('tagbase', 'tag')));

@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Plugin
  * @subpackage	System.sef
  */
-class plgSystemSef extends MolajoPlugin
+class plgSystemSef extends MolajoApplicationPlugin
 {
 	/**
 	 * Converting the site URL to fit to the HTTP request
@@ -103,7 +103,7 @@ class plgSystemSef extends MolajoPlugin
 		$original	= $matches[0];
 		$url		= $matches[1];
 		$url		= str_replace('&amp;','&',$url);
-		$route		= MolajoRoute::_('index.php?'.$url);
+		$route		= MolajoRouteHelper::_('index.php?'.$url);
 
 		return 'href="'.$route;
 	}

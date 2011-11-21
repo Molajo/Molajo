@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Plugin
  * @subpackage	System.remember
  */
-class plgSystemRemember extends MolajoPlugin
+class plgSystemRemember extends MolajoApplicationPlugin
 {
 	function onAfterInitialise()
 	{

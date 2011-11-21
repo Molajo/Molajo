@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 
-class plgMolajoTags extends MolajoPlugin	{
+class plgMolajoTags extends MolajoApplicationPlugin	{
 
     /**
      * plgMolajoTags::MolajoOnContentChangeState
@@ -33,7 +33,7 @@ class plgMolajoTags extends MolajoPlugin	{
         }
 
         /** com_tags parameters **/
-        $responsesParameters = MolajoComponentHelper::getParameters('com_tags', true);
+        $responsesParameters = MolajoApplicationComponent::getParameters('com_tags', true);
 
         /** broadcasting enabled **/
         if ($responsesParameters->def('enable_broadcast', 0) == '1') {

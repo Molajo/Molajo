@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstallerPackage extends MolajoAdapterInstance
+class MolajoInstallerAdapterPackage extends MolajoAdapterInstance
 {
     /**
      * Method of system

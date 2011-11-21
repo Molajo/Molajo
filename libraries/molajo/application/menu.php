@@ -1,8 +1,7 @@
 <?php
 /**
- * @package    Molajo
- * @subpackage  Application
- *
+ * @package     Molajo
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -10,16 +9,16 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoMenu Class
+ * MolajoApplicationMenu Class
  *
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Menu Helper
  * @since       1.0
  */
-class MolajoMenu extends JObject
+class MolajoApplicationMenu extends JObject
 {
     /**
-     * Array to hold the menu items
+     * Array to hold menu items
      *
      * @var    array
      * @since   1.0
@@ -27,7 +26,7 @@ class MolajoMenu extends JObject
     protected $_items = array();
 
     /**
-     * Identifier of the default menu item
+     * Default menu item ID
      *
      * @var    integer
      * @since   1.0
@@ -35,7 +34,7 @@ class MolajoMenu extends JObject
     protected $_default = array();
 
     /**
-     * Identifier of the active menu item
+     * Active menu item ID
      *
      * @var    integer
      * @since   1.0
@@ -45,12 +44,12 @@ class MolajoMenu extends JObject
     /**
      * getInstance
      *
-     * Returns a MolajoMenu object
+     * Returns a menu object
      *
      * @param   string  $application   The name of the application
-     * @param   array   $options  An associative array of options
+     * @param   array   $options        Associative array of options
      *
-     * @return  MolajoMenu  A menu object.
+     * @return  menu    A menu object.
      * @since   1.0
      */
     public static function getInstance($application, $options = array())
@@ -62,7 +61,7 @@ class MolajoMenu extends JObject
         }
 
         if (empty($instances[$application])) {
-            $classname = 'Molajo'.ucfirst($application).'Menu';
+            $classname = 'MolajoApplicationMenu';
             $instance = new $classname($options);
 
             $instances[$application] = & $instance;
@@ -142,7 +141,7 @@ class MolajoMenu extends JObject
      * @param   integer  $id            The menu item id.
      * @param   string   $language    The language cod (since 1.6).
      *
-     * @return  boolean  True, if succesfull
+     * @return  boolean
      * @since   1.0
      */
     public function setDefault($id, $language = '')
@@ -158,22 +157,18 @@ class MolajoMenu extends JObject
     /**
      * getDefault
      *
-     * Get the default item by language code.
+     * Get the default menu item by language code.
      *
-     * @param   string   $language   The language code, default * meaning all.
+     * @param   string   $language
      *
      * @return  object   The item object
      * @since   1.0
      */
-    function getDefault($language = '*')
+    function getDefault($language = 'en-GB')
     {
         if (array_key_exists($language, $this->_default)) {
             return $this->_items[$this->_default[$language]];
-        }
-        else if (array_key_exists('*', $this->_default)) {
-            return $this->_items[$this->_default['*']];
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -218,9 +213,9 @@ class MolajoMenu extends JObject
     /**
      * getItems
      *
-     * Get all menu items for a specific menu using the extension_instance_id
+     * Get all menu items for a specific menu using extension_instance_id
      *
-     * @param   string   $attributes  The field name (extension_instance_id)
+     * @param   string   $attributes  The field name or extension_instance_id
      * @param   string   $values      The value of the field
      * @param   boolean  $firstonly   If true, only returns the first item found
      *
@@ -258,7 +253,6 @@ class MolajoMenu extends JObject
                 if ($firstonly) {
                     return $item;
                 }
-
                 $items[] = $item;
             }
         }
@@ -318,7 +312,7 @@ class MolajoMenu extends JObject
      */
     public function load()
     {
-        $this->_items  = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MENUS);
+        $this->_items  = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MENUS);
 
         foreach($this->_items as &$item) {
 

@@ -126,7 +126,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
             }
 
             /** render the component */
-            $contents = MolajoComponentHelper::renderComponent($request, $parameters = array());
+            $contents = MolajoApplicationComponent::renderComponent($request, $parameters = array());
             $document->setBuffer($contents, 'component');
         }
 
@@ -322,12 +322,12 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
 	/**
 	 * getPathway
      *
-     * Returns the application MolajoPathway object.
+     * Returns the application MolajoApplicationPathway object.
 	 *
 	 * @param   string  $name     The name of the application.
 	 * @param   array   $options  An optional associative array of configuration settings.
 	 *
-	 * @return  MolajoPathway  A MolajoPathway object
+	 * @return  MolajoApplicationPathway  A MolajoApplicationPathway object
 	 *
 	 * @since  1.0
 	 */
@@ -344,7 +344,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
 	 * @param   string  $name     The name of the application/application.
 	 * @param   array   $options  An optional associative array of configuration settings.
 	 *
-	 * @return  MolajoMenu  MolajoMenu object.
+	 * @return  MolajoApplicationMenu  MolajoApplicationMenu object.
 	 *
 	 * @since  1.0
 	 */
@@ -354,7 +354,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
 	}
 
 	/**
-     * setCfg
+     * setConfig
      *
 	 * Set configuration values
 	 *
@@ -363,7 +363,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
 	 *
 	 * @return	void
 	 */
-	public function setCfg(array $vars = array(), $namespace = 'config')
+	public function setConfig(array $vars = array(), $namespace = 'config')
 	{
 		$this->_registry->loadArray($vars, $namespace);
 	}

@@ -340,7 +340,7 @@ class ModulesModelModule extends JModelAdmin
 				}
 				else {
 					$app = MolajoFactory::getApplication();
-					$app->redirect(MolajoRoute::_('index.php?option=com_modules&view=modules',false));
+					$app->redirect(MolajoRouteHelper::_('index.php?option=com_modules&view=modules',false));
 					return false;
 				}
 			}
@@ -535,7 +535,7 @@ class ModulesModelModule extends JModelAdmin
 		$isNew		= true;
 
 		// Include the content modules for the onSave events.
-		MolajoPluginHelper::importPlugin('extension');
+		MolajoApplicationPlugin::importPlugin('extension');
 
 		// Load the row if saving an existing record.
 		if ($pk > 0) {

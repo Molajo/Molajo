@@ -67,7 +67,7 @@ class MolajoResponsesRatings {
         }
 
         /** response component parameters **/
-        $responsesParameters = MolajoComponentHelper::getParameters('com_responses', true);
+        $responsesParameters = MolajoApplicationComponent::getParameters('com_responses', true);
         if (in_array($content->catid, $responsesParameters->def('enable_comments_categories', array()))) {
         } else {
             return;

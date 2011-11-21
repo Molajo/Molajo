@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Template Helper
  * @since       1.0
  */
-abstract class MolajoTemplateHelper
+abstract class MolajoApplicationTemplate
 {
     /**
      * Get the template
@@ -30,7 +30,7 @@ abstract class MolajoTemplateHelper
         $condition = '';
 
         /** Menu Item Template */
-        $menu = MolajoMenu::getInstance(MOLAJO_APPLICATION, array());
+        $menu = MolajoApplicationMenu::getInstance(MOLAJO_APPLICATION, array());
 
         if ($menu == null) {
             $menuItem = null;
@@ -58,7 +58,7 @@ abstract class MolajoTemplateHelper
         }
 
         /** Retrieve Template from the DB */
-        $templates = MolajoExtensionHelper::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_TEMPLATES, $id);
+        $templates = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_TEMPLATES, $id);
 
         foreach ($templates as $template) {
             $registry = new JRegistry;
@@ -138,7 +138,6 @@ abstract class MolajoTemplateHelper
 
         return;
     }
-
 
     /**
      * loadMediaCSS

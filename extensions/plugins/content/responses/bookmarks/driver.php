@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class ResponsesSocialBookmarks extends MolajoPlugin
+class ResponsesSocialBookmarks extends MolajoApplicationPlugin
 {
 	function onAfterDisplayContent ( &$article, &$parameters, $limitstart )
 	{
@@ -38,7 +38,7 @@ class ResponsesSocialBookmarks extends MolajoPlugin
 		$document->addStyleSheet( JURI::base().'plugins/content/tamka_article_social_bookmark/socialbookmark.css' );
 
 		//	Get Parameters
-		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_article_social_bookmark');
+		$plugin =& MolajoApplicationPlugin::getPlugin('content', 'tamka_article_social_bookmark');
 		$pluginParameters = new JParameter( $plugin->parameters );
 
 		$parameterblogandarticle = $pluginParameters->def('blogandarticle', 0);

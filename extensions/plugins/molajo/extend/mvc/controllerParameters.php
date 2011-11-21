@@ -30,7 +30,7 @@ class extendControllerParameters {
     public function verifyGlobal ($task, $component_option, $category, $form)
     {
         $app = MolajoFactory::getApplication();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         /** client **/
@@ -91,7 +91,7 @@ class extendControllerParameters {
         $user = MolajoFactory::getUser();
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
-        $systemPlugin =& MolajoPluginHelper::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
         $fieldParameters = new JParameter($systemPlugin->parameters);
 
         /** enabled **/
@@ -186,7 +186,7 @@ class extendControllerParameters {
      *      Content Type and appended into the Plugin Form Object
      *
      * @param object $contentTypeFilenames - list of contentype folder filenames
-     * @param form $form - MolajoPlugin Parameter Form Object from the Plugin Component
+     * @param form $form - MolajoApplicationPlugin Parameter Form Object from the Plugin Component
      * @param stromg $path - path to the pattern parameter file
      *
      */
@@ -229,7 +229,7 @@ class extendControllerParameters {
      * This function creates itself.
      *
      * @param object $contentTypeFilenames - list of contentype folder filenames
-     * @param form $form - MolajoPlugin Parameter Form Object
+     * @param form $form - MolajoApplicationPlugin Parameter Form Object
      * @param stromg $path - path to the pattern parameter file
      *
      */

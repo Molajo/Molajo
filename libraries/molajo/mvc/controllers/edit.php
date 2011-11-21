@@ -400,7 +400,7 @@ class MolajoControllerEdit extends MolajoController
         if ($this->table->state == MOLAJO_STATUS_TRASHED || $this->table->state == MOLAJO_STATUS_VERSION) {
         } else {
             $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED').' '.$this->id, 'error');
-            $this->redirectClass->setRedirect(MolajoRoute::_($this->redirectClass->redirectFailure, false));
+            $this->redirectClass->setRedirect(MolajoRouteHelper::_($this->redirectClass->redirectFailure, false));
             return false;
         }
 

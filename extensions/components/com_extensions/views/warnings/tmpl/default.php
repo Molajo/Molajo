@@ -11,7 +11,7 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo MolajoRoute::_('index.php?option=com_installer&view=warnings');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_installer&view=warnings');?>" method="post" name="adminForm" id="adminForm">
 <?php
 
 if (!count($this->messages)) {

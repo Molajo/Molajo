@@ -110,7 +110,7 @@ class MolajoWebServicesGoogleMaps {
 //                $document =& MolajoFactory::getDocument();
 //                $document->addScript('http://maps.google.com/maps/api/js?sensor=false');
 
-                $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+                $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
                 $systemParameters = new JParameter($molajoSystemPlugin->parameters);
             }
 

@@ -12,14 +12,14 @@ abstract class JFactory extends MolajoFactory {}
 class JAccess extends MolajoACL {}
 
 class JApplicationHelper extends MolajoApplicationHelper {}
-class JMenu extends MolajoMenu {}
-class JPathway extends MolajoPathway {}
-class JRouter extends MolajoRouter {}
+class JMenu extends MolajoApplicationMenu {}
+class JPathway extends MolajoApplicationPathway {}
+class JRouter extends MolajoApplicationRouter {}
 class JSession extends MolajoSession {}
 abstract class JSessionStorage extends MolajoSessionStorage {}
 
-abstract class JModuleHelper extends MolajoModuleHelper {}
-class JComponentHelper extends MolajoComponentHelper {}
+abstract class JModuleHelper extends MolajoApplicationModule {}
+class JComponentHelper extends MolajoApplicationComponent {}
 
 class JTableAsset extends MolajoTableAsset {}
 class JTableCategory extends MolajoTableCategory {}
@@ -57,41 +57,41 @@ class JFormHelper extends MolajoFormHelper {}
 
 //abstract class MolajoToolbarHelper extends MolajoRenderToolbarHelper {}
 
-class JHelp extends MolajoHelp {}
+class JHelp extends MolajoApplicationHelp {}
 class JLanguageHelper extends MolajoLanguageHelper {}
 abstract class JMailHelper extends MolajoMailHelper {}
 
-abstract class JPluginHelper extends MolajoPluginHelper {}
-abstract class JPlugin extends MolajoPlugin {}
+abstract class JPluginHelper extends MolajoApplicationPlugin {}
+abstract class JPlugin extends MolajoApplicationPlugin {}
 
 class JAuthentication extends MolajoAuthentication {}
 class JAuthenticationResponse extends MolajoAuthenticationResponse {}
-abstract class JUserHelper extends MolajoUserHelper {}
+abstract class JUserHelper extends MolajoSiteUser {}
 class JUser extends MolajoUser {}
 
-class JRoute extends MolajoRoute {}
+class JRoute extends MolajoRouteHelper {}
 class JUtility extends MolajoUtility {}
 /**
 JFTP -
 https://github.com/AmyStephen/joomla-platform/commit/0f5dfc4c6f68fcffde62a2f44217a8934644c5a0
 */
 
-class JExtension extends MolajoExtension {}
+class JExtension extends MolajoApplicationExtension {}
 abstract class JInstallerHelper extends MolajoInstallerHelper {}
 class JInstaller extends MolajoInstaller {}
 //class JAdapterInstance extends MolajoAdapterInstance {}
 
-//class JInstallerComponent extends MolajoInstallerComponent {}
-//class JInstallerFile extends MolajoInstallerFile {}
-//class JInstallerLanguage extends MolajoInstallerLanguage {}
+//class JInstallerComponent extends MolajoInstallerAdapterComponent {}
+//class JInstallerFile extends MolajoInstallerAdapterFile {}
+//class JInstallerLanguage extends MolajoInstallerAdapterLanguage {}
 //class JInstallerLibrary extends MolajoInstallerLibrary {}
-//class JInstallerModule extends MolajoInstallerModule {}
-//class JInstallerPackage extends MolajoInstallerPackage {}
-//class JInstallerPlugin extends MolajoInstallerPlugin {}
-//class JInstallerTemplate extends MolajoInstallerTemplate {}
+//class JInstallerModule extends MolajoInstallerAdapterModule {}
+//class JInstallerPackage extends MolajoInstallerAdapterPackage {}
+//class JInstallerPlugin extends MolajoInstallerAdapterPlugin {}
+//class JInstallerTemplate extends MolajoInstallerAdapterTemplate {}
 
-class JLibraryManifest extends MolajoLibraryManifest {}
-class JPackageManifest extends MolajoPackageManifest {}
+class JLibraryManifest extends MolajoInstallerLibrarymanifest {}
+class JPackageManifest extends MolajoInstallerPackagemanifest {}
 
 class JUpdate extends MolajoUpdate {}
 class JUpdateAdapter extends MolajoUpdateAdapter {}
@@ -99,13 +99,4 @@ class JUpdater extends MolajoUpdater {}
 //class JUpdaterCollection extends MolajoUpdaterCollection {}
 //class JUpdaterExtension extends MolajoUpdaterExtension {}
 
-
-
-/** legacy support */
-jimport('joomla.application.component.controlleradmin');
-jimport('joomla.application.component.controllerform');
-jimport('joomla.application.component.modeladmin');
-jimport('joomla.application.component.modelform');
-jimport('joomla.application.component.modelitem');
-jimport('joomla.application.component.modellist');
  

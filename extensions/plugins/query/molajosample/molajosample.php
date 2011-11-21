@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage	Query Plugin
  * @since		1.6
  */
-class plgQueryMolajosample extends MolajoPlugin
+class plgQueryMolajosample extends MolajoApplicationPlugin
 {
     
     /**

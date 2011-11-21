@@ -49,7 +49,7 @@ class MolajoContentQuotes {
     function driver ($context, &$content, &$parameters, $page, $location)
     {
         /** parameters **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** Block Quotes **/
@@ -97,8 +97,8 @@ class MolajoContentQuotes {
             }
 
             /** layout **/
-            $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'blockquote');
-            $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+            $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'blockquote');
+            $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
  
             /** replace **/
             $workText = str_replace( $matches[0][$i], $renderedLayout, $workText ) ;
@@ -132,8 +132,8 @@ class MolajoContentQuotes {
             $this->unique = $i;
 
             /** layout **/
-            $layoutPath = MolajoPluginHelper::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'pullquote');
-            $renderedLayout = MolajoPluginHelper::generateLayout ($layoutPath);
+            $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'pullquote');
+            $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
 
             /** replace (pullquote stay within article) **/
             $workText = str_replace( $matches[0][$i],($this->excerpt.' '.$renderedLayout), $workText );

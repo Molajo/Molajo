@@ -9,7 +9,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 
 
-class plgSystemTamka_301_redirects extends MolajoPlugin
+class plgSystemTamka_301_redirects extends MolajoApplicationPlugin
 {
 
 	function onAfterInitialise() {

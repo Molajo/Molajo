@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class URLsKeywordLinks extends MolajoPlugin	{
+class URLsKeywordLinks extends MolajoApplicationPlugin	{
 	
 	function onPrepareContent( &$article, &$parameters, $limitstart )
 	{

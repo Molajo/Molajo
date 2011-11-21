@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage	Editors-xtd.article
  * @since 1.5
  */
-class plgButtonArticle extends MolajoPlugin
+class plgButtonArticle extends MolajoApplicationPlugin
 {
 	/**
 	 * Constructor

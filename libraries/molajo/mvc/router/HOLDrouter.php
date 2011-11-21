@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage    Router
  * @since 1.5
  */
-class MolajoRouter extends JObject
+class MolajoApplicationRouter extends JObject
 {
     /**
      * parseDateURLs
@@ -185,7 +185,7 @@ class MolajoRouter extends JObject
         if (self::$lookup === null) {
             self::$lookup = array();
 
-            $component = MolajoComponentHelper::getComponent($componentOptionParam);
+            $component = MolajoApplicationComponent::getComponent($componentOptionParam);
             $items = $menus->getItems('component_id', $component->id);
 
             foreach ($items as $data) {

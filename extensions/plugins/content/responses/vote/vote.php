@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package		Joomla.Plugin
  * @subpackage	Content.vote
  */
-class plgContentVote extends MolajoPlugin
+class plgContentVote extends MolajoApplicationPlugin
 {
 	/**
 	 * Constructor

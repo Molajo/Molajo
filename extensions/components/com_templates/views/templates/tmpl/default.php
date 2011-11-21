@@ -22,7 +22,7 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_templates&view=templates'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_templates&view=templates'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo MolajoText::_('JSEARCH_FILTER_LABEL'); ?></label>
@@ -76,7 +76,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 					<?php echo MolajoHTML::_('templates.thumb', $item->element, $item->application_id); ?>
 				</td>
 				<td class="template-name">
-					<a href="<?php echo MolajoRoute::_('index.php?option=com_templates&view=template&id='.(int) $item->extension_id); ?>">
+					<a href="<?php echo MolajoRouteHelper::_('index.php?option=com_templates&view=template&id='.(int) $item->extension_id); ?>">
 						<?php echo  MolajoText::sprintf( 'COM_TEMPLATES_TEMPLATE_DETAILS', $item->name) ;?></a>
 					<p>
 					<?php if($this->preview && $item->application_id == '0'): ?>

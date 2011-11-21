@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-class plgMolajoContent extends MolajoPlugin	{
+class plgMolajoContent extends MolajoApplicationPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object
@@ -36,7 +36,7 @@ class plgMolajoContent extends MolajoPlugin	{
 //        }
         $this->location = 'introtext';
         /** parameters **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
         $loc = $this->location;
 
@@ -89,7 +89,7 @@ class plgMolajoContent extends MolajoPlugin	{
         if ($app->getName() == 'administrator') { return; }
 
         /** retrieve parameters for system plugin molajo library **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** talk like a pirate day **/

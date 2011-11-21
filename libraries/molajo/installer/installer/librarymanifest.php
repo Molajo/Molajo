@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoLibrarymanifest extends JObject
+class MolajoInstallerLibrarymanifest extends JObject
 {
     /**
      * @var string name Name of Library
@@ -97,7 +97,7 @@ class MolajoLibrarymanifest extends JObject
      *
      * @param   string  $xmlpath  Path to an XML file to load the manifest from.
      *
-     * @return  MolajoLibraryManifest
+     * @return  MolajoInstallerLibrarymanifest
      *
      * @since   11.1
      */

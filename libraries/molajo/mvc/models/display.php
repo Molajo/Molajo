@@ -128,8 +128,8 @@ class MolajoModelDisplay extends JModel
 
         $this->dispatcher = JDispatcher::getInstance();
 
-        MolajoPluginHelper::importPlugin('query');
-        MolajoPluginHelper::importPlugin($this->request['plugin_type']);
+        MolajoApplicationPlugin::importPlugin('query');
+        MolajoApplicationPlugin::importPlugin($this->request['plugin_type']);
 
         if ($this->request['id'] == 0) {
             $this->model->populateStateMultiple();
@@ -445,7 +445,7 @@ class MolajoModelDisplay extends JModel
                 $items[$i]->url = '';
                 $items[$i]->readmore_link = '';
                 // TODO: Change based on shownoauth
-                //                $items[$i]->readmore_link = MolajoRoute::_(ContentHelperRoute::getArticleRoute($items[$i]->slug, $items[$i]->catslug));
+                //                $items[$i]->readmore_link = MolajoRouteHelper::_(ContentHelperRoute::getArticleRoute($items[$i]->slug, $items[$i]->catslug));
 
                 /** trigger events */
                 //                $this->_triggerEvents();
@@ -896,7 +896,7 @@ class MolajoModelDisplay extends JModel
      */
     public function getOptionList($field1, $field2, $showKey = false, $showKeyFirst = false, $table = null)
     {
-        $this->parameters = MolajoComponentHelper::getParameters($this->request['option']);
+        $this->parameters = MolajoApplicationComponent::getParameters($this->request['option']);
 
         $this->query = $this->_db->getQuery(true);
 

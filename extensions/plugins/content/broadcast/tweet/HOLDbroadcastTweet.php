@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 jimport( 'joomla.plugin.plugin' );
 
-class plgContenttamka_post_twitter extends MolajoPlugin
+class plgContenttamka_post_twitter extends MolajoApplicationPlugin
 {
 	
 	function OnBeforeContentSave ( &$article, $isNew )	{
@@ -66,7 +66,7 @@ class plgContenttamka_post_twitter extends MolajoPlugin
 	/**
 	 * 	Initialization
 	 */
-		$plugin =& MolajoPluginHelper::getPlugin('content', 'tamka_post_ping');
+		$plugin =& MolajoApplicationPlugin::getPlugin('content', 'tamka_post_ping');
 		$pluginParameters = new JParameter( $plugin->parameters );
 
 	/**

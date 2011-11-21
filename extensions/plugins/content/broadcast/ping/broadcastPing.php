@@ -19,7 +19,7 @@ class BroadcastPing {
 	/**
 	 * 	Tamka Library Parameters
 	 */
-		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
+		$tamkaLibraryPlugin 	=& MolajoApplicationPlugin::getPlugin( 'system', 'tamka');
 		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 		global $mainframe;
 		$tamkaPingCounter = 0;	

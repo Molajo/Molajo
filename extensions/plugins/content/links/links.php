@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-class plgMolajoLinks extends MolajoPlugin	{
+class plgMolajoLinks extends MolajoApplicationPlugin	{
 
     /**
      * @var string	Stores name of data element containing text for content object
@@ -36,13 +36,13 @@ return;
         }
 
         /** parameters **/
-        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
         $loc = $this->location;
 
         /** add links for URLs **/
         if ($systemParameters->def('enable_add_line_breaks', 0) == 1) {
-//            $content->$loc = MolajoHelperURLs::addLinks ($content->$loc);
+//            $content->$loc = MolajoApplicationHelperURLs::addLinks ($content->$loc);
         }
 
         /** external link treatment **/

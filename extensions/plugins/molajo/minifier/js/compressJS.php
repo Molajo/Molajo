@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 jimport( 'joomla.plugin.plugin' );
 jimport('joomla.filesystem.file');
 
-class CompressJS extends MolajoPlugin	{
+class CompressJS extends MolajoApplicationPlugin	{
 	
 	function onAfterRender()	{		
 
@@ -36,7 +36,7 @@ class CompressJS extends MolajoPlugin	{
 	/**
 	 * 	Delete all files older than number of minutes specified -- (3600*24) is one day
 	 */
-		$plugin =& MolajoPluginHelper::getPlugin('system', 'tamka_compress_js');
+		$plugin =& MolajoApplicationPlugin::getPlugin('system', 'tamka_compress_js');
 		$pluginParameters = new JParameter( $plugin->parameters );
 		
 		$jsFiles = JFolder::files( $store_path, '(css|js)$', false, false );

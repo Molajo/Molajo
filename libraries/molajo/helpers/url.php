@@ -121,7 +121,7 @@ class MolajoURLHelper
     /**
      * encodeLink
      * @param object $option_Link
-     * $url = MolajoHelperURL::encodeLink ($option_Link);
+     * $url = MolajoApplicationHelperURL::encodeLink ($option_Link);
      */
     function encodeLink($option_Link)
     {
@@ -131,7 +131,7 @@ class MolajoURLHelper
     /**
      * encodeLinkText
      * @param object $option_Text
-     * $url = MolajoHelperURL::encodeLinkText ($option_Text);
+     * $url = MolajoApplicationHelperURL::encodeLinkText ($option_Text);
      */
     function encodeLinkText($option_Text)
     {
@@ -141,7 +141,7 @@ class MolajoURLHelper
     /**
      * addTrailingSlash
      * @param object $option_Text
-     * $url = MolajoHelperURL::encodeLinkText ($option_InputText);
+     * $url = MolajoApplicationHelperURL::encodeLinkText ($option_InputText);
      */
     function addTrailingSlash($option_InputText)
     {
@@ -151,7 +151,7 @@ class MolajoURLHelper
     /**
      * removeTrailingSlash
      * @param object $option_Text
-     * $url = MolajoHelperURL::removeTrailingSlash ($option_InputText);
+     * $url = MolajoApplicationHelperURL::removeTrailingSlash ($option_InputText);
      */
     function removeTrailingSlash($option_InputText)
     {

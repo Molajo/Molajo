@@ -29,7 +29,7 @@ $fieldsets = $this->form->getFieldsets();
 	}
 </script>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_admin&view=profile&layout=edit&id='.$this->item->id); ?>" method="post" name="adminForm" id="profile-form" class="form-validate">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_admin&view=profile&layout=edit&id='.$this->item->id); ?>" method="post" name="adminForm" id="profile-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
 			<legend><?php echo MolajoText::_('COM_ADMIN_USER_ACCOUNT_DETAILS'); ?></legend>

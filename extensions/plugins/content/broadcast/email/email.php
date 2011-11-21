@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage	Content.joomla
  * @since		1.6
  */
-class plgContentJoomla extends MolajoPlugin
+class plgContentJoomla extends MolajoApplicationPlugin
 {
 	/**
 	 * Example after save content method
@@ -54,7 +54,7 @@ class plgContentJoomla extends MolajoPlugin
 		$db->setQuery('SELECT id FROM #__users WHERE send_email = 1');
 		$users = (array) $db->loadResultArray();
 
-		$default_language = MolajoComponentHelper::getParameters('com_languages')->get('administrator');
+		$default_language = MolajoApplicationComponent::getParameters('com_languages')->get('administrator');
 		$debug = MolajoFactory::getConfig()->get('debug_language');
 
 		foreach ($users as $user_id)

@@ -23,7 +23,7 @@ MolajoHTML::_('behavior.formvalidation');
 	}
 </script>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_plugins&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_plugins&layout=edit&extension_id='.(int) $this->item->extension_id); ?>" method="post" name="adminForm" id="style-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
 			<legend><?php echo MolajoText::_('JDETAILS') ?></legend>

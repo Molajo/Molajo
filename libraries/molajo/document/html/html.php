@@ -340,7 +340,7 @@ class MolajoDocumentHTML extends MolajoDocument
                 && (parent::$_buffer['modules'][$name] === false)) {
                 $words[$i] = 0;
             } else {
-                $words[$i] = count(MolajoModuleHelper::getModules($name));
+                $words[$i] = count(MolajoApplicationModule::getModules($name));
             }
         }
 

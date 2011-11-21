@@ -16,7 +16,7 @@ class protectAkismet
 	/**
 	 * 	Retrieve User Group Parameter for Auto Publish 
 	 */
-		$tamkaLibraryPlugin 	=& MolajoPluginHelper::getPlugin( 'system', 'tamka');
+		$tamkaLibraryPlugin 	=& MolajoApplicationPlugin::getPlugin( 'system', 'tamka');
 		$tamkaLibraryPluginParameters = new JParameter($tamkaLibraryPlugin->parameters);
 		$spamProtectionOption = $tamkaLibraryPluginParameters->def('spamprevention', '1');
 

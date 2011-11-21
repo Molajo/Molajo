@@ -31,4 +31,4 @@ if ($imagebutton) {
 	$img = modSearchHelper::getSearchImage($button_text);
 }
 $mitemid = $set_Itemid > 0 ? $set_Itemid : JRequest::getInt('Itemid');
-require MolajoModuleHelper::getLayoutPath('mod_search', $parameters->get('layout', 'default'));
+require MolajoApplicationModule::getLayoutPath('mod_search', $parameters->get('layout', 'default'));

@@ -27,7 +27,7 @@ MolajoHTML::_('behavior.keepalive');
 	}
 </script>
 
-<form action="<?php echo MolajoRoute::_('index.php?option=com_templates&layout=edit'); ?>" method="post" name="adminForm" id="source-form" class="form-validate">
+<form action="<?php echo MolajoRouteHelper::_('index.php?option=com_templates&layout=edit'); ?>" method="post" name="adminForm" id="source-form" class="form-validate">
 	<?php if ($this->ftp) : ?>
 		<?php echo $this->loadTemplate('ftp'); ?>
 	<?php endif; ?>

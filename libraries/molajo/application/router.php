@@ -22,7 +22,7 @@ define('MOLAJO_ROUTER_MODE_SEF', 1);
  * @subpackage  Application
  * @since       1.0
  */
-class MolajoRouter extends JObject
+class MolajoApplicationRouter extends JObject
 {
     /**
      * The rewrite mode
@@ -109,7 +109,7 @@ class MolajoRouter extends JObject
 		$vars = array();
 
 		// Get the application
-		$app = JFactory::getApplication();
+		$app = MolajoFactory::getApplication();
 
 		if ($app->getConfig('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
 			//forward to https
