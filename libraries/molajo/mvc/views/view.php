@@ -423,17 +423,11 @@ class MolajoView extends JView
      */
     protected function loadMedia()
     {
-        /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.MOLAJO_APPLICATION;
-        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.MOLAJO_APPLICATION;
-        $this->loadMediaCSS($filePath, $urlPath);
-        $this->loadMediaJS($filePath, $urlPath);
-
-        /** Component specific CSS and JS in => media/[com_component]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$this->request['option'];
-        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['option'];
-        $this->loadMediaCSS($filePath, $urlPath);
-        $this->loadMediaJS($filePath, $urlPath);
+        /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
+        $filePath = MOLAJO_SITE_PATH_MEDIA.'/system/'.$this->request['option'].'/layouts';
+        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['option'].'/layouts';
+        MolajoTemplateHelper::loadMediaCSS($filePath, $urlPath);
+        MolajoTemplateHelper::loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
 /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.$this->request['asset_id'];
@@ -442,66 +436,10 @@ class MolajoView extends JView
         $this->loadMediaJS($filePath, $urlPath);
 */
         /** Layout specific CSS and JS in path identified in getPath */
-        $filePath = $this->layout_path;
-        $urlPath = $this->layout_path_url;
-        $this->loadMediaCSS($filePath, $urlPath);
-        $this->loadMediaJS($filePath, $urlPath);
-    }
-
-    /**
-     * loadMediaCSS
-     *
-     * Loads the CS located within the folder, as specified by the filepath
-     *
-     * @param $filePath
-     * @param $urlPath
-     * @return void
-     */
-    protected function loadMediaCSS($filePath, $urlPath)
-    {
-        if (JFolder::exists($filePath.'/layouts/css')) {
-        } else {
-            return;
-        }
-
-        $files = JFolder::files($filePath.'/layouts/css', '\.css$', false, false);
-
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                if (substr($file, 0, 4) == 'rtl_') {
-                    if ($this->document->direction == 'rtl') {
-                        $this->document->addStyleSheet($urlPath.'/layouts/css/'.$file);
-                    }
-                } else {
-                    $this->document->addStyleSheet($urlPath.'/layouts/css/'.$file);
-                }
-            }
-        }
-    }
-
-    /**
-     * loadMediaJS
-     *
-     * Loads the JS located within the folder, as specified by the filepath
-     *
-     * @param $filePath
-     * @param $urlPath
-     * @return void
-     */
-    protected function loadMediaJS($filePath, $urlPath)
-    {
-        if (JFolder::exists($filePath.'/layouts/js')) {
-        } else {
-            return;
-        }
-        //todo: differentiate between script and scripts
-        $files = JFolder::files($filePath.'/layouts/js', '\.js$', false, false);
-
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                $this->document->addScript($urlPath.'/layouts/js/'.$file);
-            }
-        }
+        $filePath = $this->layout_path.'/layouts';
+        $urlPath = $this->layout_path_url.'/layouts';
+        MolajoTemplateHelper::loadMediaCSS($filePath, $urlPath);
+        MolajoTemplateHelper::loadMediaJS($filePath, $urlPath);
     }
 }
 

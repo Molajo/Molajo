@@ -148,6 +148,7 @@ abstract class MolajoModuleHelper
 
             $lang = MolajoFactory::getLanguage();
             $lang->load($module->extension_name, MOLAJO_EXTENSION_MODULES.'/'.$module->extension_name, $lang->getDefault(), false, false);
+            
             /** view */
             $view = new MolajoView ();
 

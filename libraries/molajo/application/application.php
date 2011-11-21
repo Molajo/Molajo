@@ -478,24 +478,7 @@ class MolajoApplication extends JObject
      */
     public function render()
     {
-        $template = $this->getTemplate(true);
-
-        $parameters = array(
-            'template' => $template[0]->title,
-            'file' => 'index.php',
-            'directory' => MOLAJO_EXTENSION_TEMPLATES,
-            'parameters' => $template[0]->parameters
-        );
-
-        $document = MolajoFactory::getDocument();
-
-        $document->parse($parameters);
-        $this->triggerEvent('onBeforeRender');
-
-        $body = $document->render(false, $parameters);
-        JResponse::setBody($body);
-
-        $this->triggerEvent('onAfterRender');
+        MolajoTemplateHelper::renderTemplate();
     }
 
     /**
