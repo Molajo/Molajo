@@ -75,8 +75,7 @@ INSERT INTO `molajo_sites` (`id`, `name`, `path`, `base_url`, `description`, `pa
 INSERT INTO `molajo_applications` (`id`, `name`, `path`, `home`, `description`, `parameters`, `custom_fields`)
   VALUES
     (1, 'site', '', 0, 'Primary application for site visitors', '{}', '{}'),
-    (2, 'administrator', 'administrator', 0, 'Administrative site area for site construction', '{}', '{}'),
-    (3, 'content', 'content', 0, 'Area for content development', '{}', '{}');
+    (2, 'administrator', 'administrator', 0, 'Administrative site area for site construction', '{}', '{}');
 
 #
 # UPDATE SITES
@@ -465,6 +464,7 @@ INSERT INTO `molajo_extensions`
     ('construct', 1500, '', '', 1),
     ('install', 1500, '', '', 1),
     ('molajito', 1500, '', '', 1),
+    ('sample', 1500, '', '', 1),    
     ('system', 1500, '', '', 1);
 
 INSERT INTO `molajo_extension_instances`
@@ -1271,7 +1271,7 @@ INSERT INTO `molajo_group_view_groups`
 
 ##  Administrator 
 INSERT INTO `molajo_users` (`id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('42', 'admin',  'Administrator',  '',  '',  'admin@example.com',  'admin',  '0',  '1',  '0',  '2011-11-11 11:11:11',  '0000-00-00 00:00:00', '{}', '{}');
-INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (42, 1), (42, 2), (42, 3);
+INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (42, 1), (42, 2);
 INSERT INTO `molajo_groups`
   (`extension_instance_id`, `title`, `alias`, `content_text`, `content_type_id`,
    `parent_id`, `lft`, `rgt`, `level`, `ordering`,
@@ -1282,7 +1282,7 @@ INSERT INTO `molajo_user_groups` (`user_id`, `group_id`) VALUES (42, 3), (42, 4)
 
 ##  Sample Registered User 
 INSERT INTO `molajo_users` (`id`, `username`, `first_name`, `last_name`, `content_text`, `email`, `password`, `block`, `activation`, `send_email`, `register_datetime`, `last_visit_datetime`, `parameters`, `custom_fields`) VALUES ('100', 'mark', 'Mark', 'Robinson', '<p>Great guy who sells insurance and coaches Little League.</p>', 'mark.robinson@example.com', 'mark', '0', '1', '0', '2011-11-02 17:45:17', '0000-00-00 00:00:00', '{}', '{"favorite_color":"red","nickname":"Fred","claim_to_fame":"No search results for Mark on Google."}');
-INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (100, 1), (100, 3);
+INSERT INTO `molajo_user_applications` (`user_id`, `application_id`) VALUES (100, 1);
 INSERT INTO `molajo_groups`
   (`extension_instance_id`, `title`, `alias`, `content_text`, `content_type_id`,
    `parent_id`, `lft`, `rgt`, `level`, `ordering`,
@@ -1325,8 +1325,7 @@ INSERT INTO `molajo_site_applications`
   (`site_id`, `application_id`)
   VALUES
     (1, 1),
-    (1, 2),
-    (1, 3);
+    (1, 2);
 
 ##  1. components 
 INSERT INTO `molajo_application_extension_instances`
@@ -1334,7 +1333,7 @@ INSERT INTO `molajo_application_extension_instances`
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
-    WHERE b.id IN (1, 3)
+    WHERE b.id = 1
       AND a.content_type_id = 1050
        AND a.title IN
         ('com_articles',
@@ -1397,7 +1396,7 @@ INSERT INTO `molajo_application_extension_instances`
      `molajo_applications` b
     WHERE content_type_id = 1300
       AND NOT(a.title = 'Admin')
-      AND b.id IN (1, 3);
+      AND b.id = 1;
 
 INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
@@ -1415,7 +1414,7 @@ INSERT INTO `molajo_application_extension_instances`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE content_type_id = 1350
-      AND b.id IN (1, 3)
+      AND b.id = 1
       AND a.title IN
           ('mod_breadcrumbs',
           'mod_content',
@@ -1470,7 +1469,7 @@ INSERT INTO `molajo_application_extension_instances`
      `molajo_applications` b
     WHERE content_type_id = 1500
       AND a.title = 'construct'
-      AND b.id IN (1, 3);
+      AND b.id = 1;
 
 INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
@@ -1496,7 +1495,7 @@ INSERT INTO `molajo_application_extension_instances`
     FROM `molajo_extension_instances` a,
      `molajo_applications` b
     WHERE content_type_id = 1500
-      AND a.title = 'system';
+      AND (a.title = 'sample' OR a.title = 'system');
 
 ##  site extension instances 
 INSERT INTO `molajo_site_extension_instances`

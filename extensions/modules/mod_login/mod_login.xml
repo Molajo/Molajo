@@ -15,7 +15,7 @@
 	<description>MOD_LOGIN_DESCRIPTION</description>
 	<files>
 		<filename module="mod_login">mod_login.php</filename>
-		<folder>layout</folder>
+		<folder>layouts</folder>
 		<filename>helper.php</filename>
 		<filename>index.html</filename>		<filename>mod_login.xml</filename>
 	</files>

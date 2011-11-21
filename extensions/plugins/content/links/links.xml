@@ -15,7 +15,7 @@
 		<folder>externallinks</folder>
 		<folder>footnotes</folder>
 		<folder>language</folder>
-		<folder>layout</folder>
+		<folder>layouts</folder>
 	</files>
 	<languages>
 		<language tag="language/en-GB">en-GB.plg_molajo_links.ini</language>

@@ -15,7 +15,7 @@
 	<description>MOD_SEARCH_DESCRIPTION</description>
 	<files>
 		<filename module="mod_search">mod_search.php</filename>
-		<folder>layout</folder>
+		<folder>layouts</folder>
 		<filename>helper.php</filename>
 		<filename>index.html</filename>		<filename>mod_search.xml</filename>
 	</files>
