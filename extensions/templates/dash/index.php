@@ -17,24 +17,27 @@
 		</header>
 		<nav id="launchpad">
 			<ul class="menu_main">
-				<li><a href="?config" class="icon_configure"></a></li>
+				<li><a href="?content" class="icon_content"></a></li>
 				<li><a href="?access" class="icon_access"></a></li>
-				<li><a href="?create" class="icon_create"></a></li>
 				<li><a href="?build" class="icon_build"></a></li>
+				<li><a href="?config" class="icon_configure"></a></li>
+				<li><a href="?extend" class="icon_extend"></a></li>
 				<li><a href="#" class="icon_search"></a><span class="lp_search"><input type"search" name="search" autocomplete autofocus></span></li>
 			</ul>
 			<?php
-				if(isset($_GET['config'])){
+				if(isset($_GET['content'])) {
 					include('includes/lp_item.html');
-				}else if(isset($_GET['access'])){
+				} else if(isset($_GET['access'])) {
 					include('includes/lp_item.html');
-				}else if(isset($_GET['create'])){
+				} else if(isset($_GET['build'])) {
 					include('includes/lp_item.html');
-				}else if(isset($_GET['build'])){
+				} else if(isset($_GET['configure'])) {
 					include('includes/lp_item.html');
-				}else if(isset($_GET['edit'])){
+				} else if(isset($_GET['extend'])) {
 					include('includes/lp_item.html');
-				}else if(isset($_GET['list'])){
+				} else if(isset($_GET['edit'])) {
+					include('includes/lp_item.html');
+				} else if(isset($_GET['list'])) {
 					include('includes/lp_item.html');
 				} else {
 					include('includes/lp_item.html');
@@ -44,20 +47,18 @@
 		<section class="dash">
 			<div id="">
 				<?php
-					if(isset($_GET['config'])){
-						include('includes/config.html');
-					}else if(isset($_GET['access'])){
-						include('includes/access.html');
-					}else if(isset($_GET['create'])){
-						include('includes/create.html');
-					}else if(isset($_GET['build'])){
-						include('includes/build.html');
-					}else if(isset($_GET['edit'])){
+					if(isset($_GET['content'])){
 						include('includes/edit.html');
-					}else if(isset($_GET['list'])){
-						include('includes/list.html');
+					}else if(isset($_GET['access'])){
+						include('includes/edit.html');
+					}else if(isset($_GET['build'])){
+						include('includes/edit.html');
+					}else if(isset($_GET['config'])){
+						include('includes/edit.html');
+					}else if(isset($_GET['extend'])){
+						include('includes/edit.html');
 					} else {
-						include('includes/dash.html');
+						include('includes/edit.html');
 					}
 				?>
 			</div>
