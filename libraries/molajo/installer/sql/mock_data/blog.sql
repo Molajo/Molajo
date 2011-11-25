@@ -13,18 +13,18 @@
 # System Category
 #
 INSERT INTO `molajo_categories`
-    (`id`, `title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `content_type_id`, `version`, `parent_id`, `lft`, `rgt`, `level`, `language`, `ordering`)
+    (`id`, `title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `content_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
   VALUES
-    (2, 'Content', '', 'content', '<p>Category for Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 3250, 0, 0, 0, 0, 0, 'en-GB', 1);
+    (25, 'Content', '', 'content', '<p>Category for Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 3250, 0, 0, 0, 0, 0, 'en-GB', 1);
 
 INSERT INTO `molajo_assets`
   (`content_type_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`,  `template_id`, `language`,  `translation_of_id`, `redirect_to_id`, `view_group_id`)
-  SELECT 3250, `id`, `title`, 'categories/1', 'index.php?option=com_categories&id=1', 1, 0, 'en-GB', 0, 0, 1
-    FROM  molajo_groups;
+  SELECT 3250, `id`, `title`, 'categories/1', 'index.php?option=com_categories&id=10', 10, 0, 'en-GB', 0, 0, 1
+    FROM  molajo_categories;
 
 # ARTICLES
 INSERT INTO `molajo_content`
-    (`id`, `title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `content_type_id`, `version`, `parent_id`, `lft`, `rgt`, `level`, `language`, `ordering`)
+    (`id`, `title`, `subtitle`, `alias`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `content_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
   VALUES
     (1, 'Article 1', '', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 10000, 0, 0, 0, 0, 0, 'en-GB', 1),
     (2, 'Article 2', '', 'content', '<p>Content</p>', 1, '2011-11-01 00:00:00', '0000-00-00 00:00:00', 2, 10000, 0, 0, 0, 0, 0, 'en-GB', 2),

@@ -4,7 +4,7 @@ com_categories
 com_comments
 com_configuration
 com_contacts
-com_dashboard
+com_dashboards
 com_extensions
 com_groups
 com_installer
