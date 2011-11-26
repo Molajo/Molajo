@@ -53,10 +53,10 @@
         />
 
         <field
-            name="content_type_id"
+            name="asset_type_id"
             type="text"
-            label="MOLAJO_FIELD_CONTENT_TYPE_LABEL"
-            description="MOLAJO_FIELD_CONTENT_TYPE_DESC"
+            label="MOLAJO_FIELD_ASSET_TYPE_LABEL"
+            description="MOLAJO_FIELD_ASSET_TYPE_DESC"
             class="inputbox"
             size="45"
         />
@@ -505,7 +505,7 @@
 
             <field name="tags"
                 type="tags"
-                content_type_id="10"
+                asset_type_id="10"
                 multiple="true"
                 order="title"
                 count="5"
@@ -526,7 +526,7 @@
 
             <field name="tag_category"
                 type="tags"
-                content_type_id="20"
+                asset_type_id="20"
                 multiple="true"
                 count="5"
                 label="MOLAJO_FIELD_ATTRIBS_TAG_CATEGORIES_LABEL"

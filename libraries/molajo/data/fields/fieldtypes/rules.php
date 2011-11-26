@@ -223,7 +223,7 @@ class MolajoFormFieldRules extends MolajoFormField
                         elseif ($inheritedRule === false) {
                             // Other actions cannot be changed.
                             $html[] = '<span class="icon-16-denied"><span class="icon-16-locked">' .
-                                      MolajoText::_('MOLAJO_RULES_NOT_ALLOWED_ADMIN_CONFLICT').'</span></span>';
+                                      MolajoText::_('MOLAJO_RULES_NOT_ALLOWED_ADMINISTER_CONFLICT').'</span></span>';
                         }
                         else {
                             $html[] = '<span class="icon-16-allowed"><span class="icon-16-locked">' .

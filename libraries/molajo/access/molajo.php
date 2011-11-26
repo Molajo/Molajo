@@ -26,7 +26,7 @@ class MolajoACL
      * @return     boolean
      * @since      1.6
      */
-    public function authoriseTask($option, $entity, $task, $catid = 0, $id = 0, $item = array())
+    public function authoriseTask($option, $entity, $task, $item = array())
     {
         $authoriseTaskMethod = 'check'.ucfirst(strtolower($task)).'Authorisation';
         $class = $this->getMethodClass($authoriseTaskMethod, $option);
@@ -37,7 +37,7 @@ class MolajoACL
 
         $aclClass = new $class();
         if (method_exists($aclClass, $authoriseTaskMethod)) {
-            return $aclClass->$authoriseTaskMethod ($option, $entity, $task, $catid, $id, $item);
+            return $aclClass->$authoriseTaskMethod ($option, $entity, $task, $item);
         } else {
             MolajoError::raiseError(403, MolajoText::_('MOLAJO_ACL_CLASS_METHOD_NOT_FOUND').' '.$aclClass.'::'.$authoriseTaskMethod);
             return false;
@@ -45,7 +45,7 @@ class MolajoACL
     }
 
     /**
-     *  Type 1 --> getUserPermissionSet --> authoriseTask
+     *  Type 1 --> getUserPermissionTaskset --> authoriseTask
      *
      * Evaluates User Permissions for a set of tasks and passes back an array with results
      *
@@ -53,23 +53,23 @@ class MolajoACL
      *
      * @param string $option 'com_articles', etc.
      * @param string $entity 'article', or 'comment', etc.
-     * @param string $set maps to a configuration set of tasks
+     * @param string $task_set maps to a configuration set of tasks
      *
      * @return array
      */
-    public function getUserPermissionSet($option, $entity, $set)
+    public function getUserPermissionTaskset($option, $entity, $task_set)
     {
         /** component parameters **/
         $parameters = MolajoApplicationComponent::getParameters($option);
 
-        /** loop thru config options and add ToolBar buttons **/
+        /** loop thru configuration options for task set **/
         $count = 0;
         $processedOptionArray = array();
         $userPermissions = array();
 
         for ($i = 1; $i < 99; $i++) {
 
-            $optionValue = $parameters->def($set.$i, null);
+            $optionValue = $parameters->def($task_set.$i, null);
 
             if ($optionValue == null) {
                 break;
@@ -104,14 +104,14 @@ class MolajoACL
      *
      * @return boolean
      */
-    public function getUserItemPermissions($option, $entity, $task, $catid, $id, $item)
+    public function getUserItemPermissions($option, $entity, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $tasks = $molajoConfig->getOptionList(MOLAJO_CONFIG_OPTION_ID_ACL_ITEM_TESTS);
+        $tasks = $molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS);
 
         foreach ($tasks as $single) {
             $taskName = strtolower($single->value);
-            $aclResults = $this->authoriseTask($option, $entity, $taskName, $catid, $id, $item);
+            $aclResults = $this->authoriseTask($option, $entity, $item);
             $itemFieldname = 'can'.ucfirst(strtolower($taskName));
             $item->$itemFieldname = $aclResults;
         }
@@ -271,7 +271,7 @@ class MolajoACL
                 $acl_implementation = $session->get('page.acl_implementation');
             } else {
                 $molajoConfig = new MolajoModelConfiguration ($option);
-                $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
+                $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION);
             }
 
             $implementedClass = 'MolajoACL'.ucfirst($acl_implementation);

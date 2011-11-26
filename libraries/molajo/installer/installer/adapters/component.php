@@ -187,7 +187,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
 
         // Make sure that we have an admin element
         if (!$this->manifest->administration) {
-            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ERROR_COMP_INSTALL_ADMIN_ELEMENT'));
+            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ERROR_COMP_INSTALL_ADMINISTER_ELEMENT'));
             return false;
         }
 
@@ -652,7 +652,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
 
         // Make sure that we have an admin element
         if (!$this->manifest->administration) {
-            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_ADMIN_ELEMENT'));
+            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ABORT_COMP_UPDATE_ADMINISTER_ELEMENT'));
             return false;
         }
 
@@ -1470,7 +1470,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
 
         // Check for error
         if ($error = $db->getErrorMsg()) {
-            MolajoError::raiseWarning('', MolajoText::_('JLIB_INSTALLER_ERROR_COMP_REMOVING_ADMIN_MENUS_FAILED'));
+            MolajoError::raiseWarning('', MolajoText::_('JLIB_INSTALLER_ERROR_COMP_REMOVING_ADMINISTER_MENUS_FAILED'));
 
             if ($error && $error != 1) {
                 MolajoError::raiseWarning(100, $error);
@@ -1645,7 +1645,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
 
         // Make sure that we have an admin element
         if (!$this->manifest->administration) {
-            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ERROR_COMP_INSTALL_ADMIN_ELEMENT'));
+            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ERROR_COMP_INSTALL_ADMINISTER_ELEMENT'));
             return false;
         }
 

@@ -227,7 +227,7 @@ class JFormFieldRules extends JFormField
 						elseif ($inheritedRule === false) {
 							// Other actions cannot be changed.
 							$html[] = '<span class="icon-16-denied"><span class="icon-16-locked">'.
-										MolajoText::_('MOLAJO_RULES_NOT_ALLOWED_ADMIN_CONFLICT').'</span></span>';
+										MolajoText::_('MOLAJO_RULES_NOT_ALLOWED_ADMINISTER_CONFLICT').'</span></span>';
 						}
 						else {
 							$html[] = '<span class="icon-16-allowed"><span class="icon-16-locked">'.
@@ -276,8 +276,8 @@ class JFormFieldRules extends JFormField
 		$db		= MolajoFactory::getDBO();
 		$query	= $db->getQuery(true)
 			->select('a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level, a.parent_id')
-			->from('#__groups AS a')
-			->leftJoin('`#__groups` AS b ON a.lft > b.lft AND a.rgt < b.rgt')
+			->from('#__categories AS a')
+			->leftJoin('`#__categories` AS b ON a.lft > b.lft AND a.rgt < b.rgt')
 			->group('a.id')
 			->order('a.lft ASC');
 

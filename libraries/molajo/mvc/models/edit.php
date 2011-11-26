@@ -84,7 +84,7 @@ class MolajoModelEdit extends JModel
 
         /** retrieve json fields **/
         $jsonModel = JModel::getInstance('ModelConfiguration', 'Molajo', array('ignore_request' => true));
-        $jsonFields = $jsonModel->getOptionList(MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
+        $jsonFields = $jsonModel->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
 
         foreach ($jsonFields as $count => $jsonField) {
 
@@ -99,7 +99,7 @@ class MolajoModelEdit extends JModel
 
         /** acl-append item-specific task permissions **/
         $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
-        // amy       $aclClass::getUserItemPermissions (JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $item->catid, $item->id, $item);
+        $aclClass::getUserItemPermissions (JRequest::getVar('option'), JRequest::getVar('EditView'), $item);
 
         return $item;
     }
@@ -946,7 +946,7 @@ class MolajoModelEdit extends JModel
     protected function getReorderConditions($table)
     {
         $condition = array();
-        $condition[] = 'content_type_id = '.(int)$table->content_type_id;
+        $condition[] = 'asset_type_id = '.(int)$table->asset_type_id;
         $condition[] = 'catid = '.(int)$table->catid;
         return $condition;
     }

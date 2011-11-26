@@ -92,7 +92,7 @@ class MolajoTableContent extends MolajoTable
     public function bind($array, $ignore = '')
     {
         $jsonModel = JModel::getInstance('ModelConfiguration', 'Molajo', array('ignore_request' => true));
-        $results = $jsonModel->getOptionList(MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
+        $results = $jsonModel->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
 
         foreach ($results as $count => $result) {
             if (isset($array[$result->value]) && is_array($array[$result->value])) {

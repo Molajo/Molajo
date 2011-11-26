@@ -44,15 +44,15 @@ foreach ($rowset as $i => &$item) :
 	// Render the menu item.
 	switch ($item->menu_item_type) :
 
-		case MOLAJO_CONTENT_TYPE_MENU_ITEM_SEPARATOR:
+		case MOLAJO_ASSET_TYPE_MENU_ITEM_SEPARATOR:
 			require_once dirname(__FILE__).'/default_separator.php';
 			break;
 
-		case MOLAJO_CONTENT_TYPE_MENU_ITEM_COMPONENT:
+		case MOLAJO_ASSET_TYPE_MENU_ITEM_COMPONENT:
 			require_once dirname(__FILE__).'/default_component.php';
 			break;
 
-		case MOLAJO_CONTENT_TYPE_MENU_ITEM_MODULE:
+		case MOLAJO_ASSET_TYPE_MENU_ITEM_MODULE:
 			require_once dirname(__FILE__).'/default_module.php';
 			break;
 

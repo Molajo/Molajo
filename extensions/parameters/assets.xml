@@ -13,7 +13,7 @@
             />
 
         <field
-            name="content_type_id"
+            name="asset_type_id"
             type="hidden"
             filter="unset"
             />

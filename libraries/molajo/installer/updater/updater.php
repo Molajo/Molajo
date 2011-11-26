@@ -70,13 +70,13 @@ class MolajoUpdater extends MolajoAdapter
         $retval = false;
         // Push it into an array
         if (!is_array($eid)) {
-            $query = 'SELECT DISTINCT update_site_id, type, location FROM #__update_sites WHERE enabled = 1';
+            $query = 'SELECT DISTINCT extension_site_id, type, location FROM #__extension_sites WHERE enabled = 1';
         }
         else
         {
-            $query = 'SELECT DISTINCT update_site_id, type, location FROM #__update_sites' .
-                     ' WHERE update_site_id IN' .
-                     '  (SELECT update_site_id FROM #__update_sites_extensions WHERE extension_id IN ('.implode(',', $eid).'))';
+            $query = 'SELECT DISTINCT extension_site_id, type, location FROM #__extension_sites' .
+                     ' WHERE extension_site_id IN' .
+                     '  (SELECT extension_site_id FROM #__extension_sites_extensions WHERE extension_id IN ('.implode(',', $eid).'))';
         }
         $dbo->setQuery($query);
         $results = $dbo->loadAssocList();
@@ -91,8 +91,8 @@ class MolajoUpdater extends MolajoAdapter
             }
             $update_result = $this->_adapters[$result['type']]->findUpdate($result);
             if (is_array($update_result)) {
-                if (array_key_exists('update_sites', $update_result) && count($update_result['update_sites'])) {
-                    $results = JArrayHelper::arrayUnique(array_merge($results, $update_result['update_sites']));
+                if (array_key_exists('extension_sites', $update_result) && count($update_result['extension_sites'])) {
+                    $results = JArrayHelper::arrayUnique(array_merge($results, $update_result['extension_sites']));
                     $result_count = count($results);
                 }
                 if (array_key_exists('updates', $update_result) && count($update_result['updates'])) {

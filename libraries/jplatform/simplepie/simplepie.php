@@ -621,10 +621,10 @@ class SimplePie
 
 	/**
 	 * @var string Class used for content-type sniffing
-	 * @see SimplePie::set_content_type_sniffer_class()
+	 * @see SimplePie::set_asset_type_sniffer_class()
 	 * @access private
 	 */
-	var $content_type_sniffer_class = 'SimplePie_Content_Type_Sniffer';
+	var $asset_type_sniffer_class = 'SimplePie_Content_Type_Sniffer';
 
 	/**
 	 * @var string Class used for item sources.
@@ -1290,11 +1290,11 @@ class SimplePie
 	 * @link http://php.net/manual/en/keyword.extends.php PHP4 extends documentation
 	 * @link http://php.net/manual/en/language.oop5.basic.php#language.oop5.basic.extends PHP5 extends documentation
 	 */
-	function set_content_type_sniffer_class($class = 'SimplePie_Content_Type_Sniffer')
+	function set_asset_type_sniffer_class($class = 'SimplePie_Content_Type_Sniffer')
 	{
 		if (SimplePie_Misc::is_subclass_of($class, 'SimplePie_Content_Type_Sniffer'))
 		{
-			$this->content_type_sniffer_class = $class;
+			$this->asset_type_sniffer_class = $class;
 			return true;
 		}
 		return false;
@@ -1659,7 +1659,7 @@ class SimplePie
 				if (!$this->force_feed)
 				{
 					// Check if the supplied URL is a feed, if it isn't, look for it.
-					$locate = new $this->locator_class($file, $this->timeout, $this->useragent, $this->file_class, $this->max_checked_feeds, $this->content_type_sniffer_class);
+					$locate = new $this->locator_class($file, $this->timeout, $this->useragent, $this->file_class, $this->max_checked_feeds, $this->asset_type_sniffer_class);
 					if (!$locate->is_feed($file))
 					{
 						// We need to unset this so that if SimplePie::set_file() has been called that object is untouched
@@ -1689,7 +1689,7 @@ class SimplePie
 
 				$headers = $file->headers;
 				$data = $file->body;
-				$sniffer = new $this->content_type_sniffer_class($file);
+				$sniffer = new $this->asset_type_sniffer_class($file);
 				$sniffed = $sniffer->get_type();
 			}
 			else
@@ -1845,7 +1845,7 @@ class SimplePie
 		return $this->sanitize->output_encoding;
 	}
 
-	function handle_content_type($mime = 'text/html')
+	function handle_asset_type($mime = 'text/html')
 	{
 		if (!headers_sent())
 		{
@@ -1974,7 +1974,7 @@ class SimplePie
 
 					if ($file->success && ($file->method & SIMPLEPIE_FILE_SOURCE_REMOTE === 0 || ($file->status_code === 200 || $file->status_code > 206 && $file->status_code < 300)) && strlen($file->body) > 0)
 					{
-						$sniffer = new $this->content_type_sniffer_class($file);
+						$sniffer = new $this->asset_type_sniffer_class($file);
 						if (substr($sniffer->get_type(), 0, 6) === 'image/')
 						{
 							if ($cache->save(array('headers' => $file->headers, 'body' => $file->body)))
@@ -14062,16 +14062,16 @@ class SimplePie_Locator
 	var $base_location = 0;
 	var $checked_feeds = 0;
 	var $max_checked_feeds = 10;
-	var $content_type_sniffer_class = 'SimplePie_Content_Type_Sniffer';
+	var $asset_type_sniffer_class = 'SimplePie_Content_Type_Sniffer';
 
-	function SimplePie_Locator(&$file, $timeout = 10, $useragent = null, $file_class = 'SimplePie_File', $max_checked_feeds = 10, $content_type_sniffer_class = 'SimplePie_Content_Type_Sniffer')
+	function SimplePie_Locator(&$file, $timeout = 10, $useragent = null, $file_class = 'SimplePie_File', $max_checked_feeds = 10, $asset_type_sniffer_class = 'SimplePie_Content_Type_Sniffer')
 	{
 		$this->file =& $file;
 		$this->file_class = $file_class;
 		$this->useragent = $useragent;
 		$this->timeout = $timeout;
 		$this->max_checked_feeds = $max_checked_feeds;
-		$this->content_type_sniffer_class = $content_type_sniffer_class;
+		$this->asset_type_sniffer_class = $asset_type_sniffer_class;
 	}
 
 	function find($type = SIMPLEPIE_LOCATOR_ALL, &$working)
@@ -14083,7 +14083,7 @@ class SimplePie_Locator
 
 		if ($this->file->method & SIMPLEPIE_FILE_SOURCE_REMOTE)
 		{
-			$sniffer = new $this->content_type_sniffer_class($this->file);
+			$sniffer = new $this->asset_type_sniffer_class($this->file);
 			if ($sniffer->get_type() !== 'text/html')
 			{
 				return null;
@@ -14129,7 +14129,7 @@ class SimplePie_Locator
 	{
 		if ($file->method & SIMPLEPIE_FILE_SOURCE_REMOTE)
 		{
-			$sniffer = new $this->content_type_sniffer_class($file);
+			$sniffer = new $this->asset_type_sniffer_class($file);
 			$sniffed = $sniffer->get_type();
 			if (in_array($sniffed, array('application/rss+xml', 'application/rdf+xml', 'text/rdf', 'application/atom+xml', 'text/xml', 'application/xml')))
 			{

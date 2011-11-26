@@ -19,14 +19,14 @@ $return	= MolajoLoginHelper::getReturnURI();
         <label id="" class="" for="login-password"><?php echo MolajoText::_('JGLOBAL_PASSWORD'); ?>
 			<input name="password" id="login-password" class="" type="password" size="15" />
 		</label>
-        <label id="" class="" for="lang"><?php echo MolajoText::_('LAYOUT_EXTENSION_ADMIN_LOGIN_LANGUAGE'); ?>
+        <label id="" class="" for="lang"><?php echo MolajoText::_('LAYOUT_EXTENSION_ADMINISTER_LOGIN_LANGUAGE'); ?>
         <?php echo $langs; ?>
 		</label>
 		<?php /* TODO: add forgot username + password */ ?>
 		<a href="<?php echo JURI::root(); ?>"><?php echo MolajoText::_('COM_LOGIN_RETURN_TO_SITE_HOME_PAGE') ?></a>
 		<?php /* <a href="#" onclick="document.getElementById('form-login').submit();">
-			<?php echo MolajoText::_('LAYOUT_EXTENSION_ADMIN_LOGIN_LOGIN'); ?></a> */ ?>
-		<input type="submit" value="<?php echo MolajoText::_( 'LAYOUT_EXTENSION_ADMIN_LOGIN_LOGIN' ); ?>" />
+			<?php echo MolajoText::_('LAYOUT_EXTENSION_ADMINISTER_LOGIN_LOGIN'); ?></a> */ ?>
+		<input type="submit" value="<?php echo MolajoText::_( 'LAYOUT_EXTENSION_ADMINISTER_LOGIN_LOGIN' ); ?>" />
 		<input type="hidden" name="option" value="com_login" />
 		<input type="hidden" name="task" value="login" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />

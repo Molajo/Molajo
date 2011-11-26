@@ -52,7 +52,7 @@ class extendController extends plgSystemExtend {
      * @var object
      * @since	1.6
      */
-    protected $content_type_ids;
+    protected $asset_type_ids;
 
     /**
      * @var object
@@ -223,7 +223,7 @@ die();
         if (!extendControllerParameters::verifyGlobal($this->task, $this->component_option, $this->category, $form)) { return; }
 
         /* look thru contenttype folder filenames */
-        $this->content_type_ids = array ();
+        $this->asset_type_ids = array ();
 
         foreach ($contentTypeFilenames as $contentTypeFilename) {
 
@@ -236,12 +236,12 @@ die();
             /** add to valid content type array **/
             if ($results == true) {
                 /** TODO: Add event for OnAfterParameterValidation **/
-                $this->content_type_ids[] = $contentType;
+                $this->asset_type_ids[] = $contentType;
             }
         }
 
         /** no content types to process **/
-        if (count($this->content_type_ids) == 0) { return; }
+        if (count($this->asset_type_ids) == 0) { return; }
 
         /** task based subcontrollers process content types **/
         if ($this->task =='display' || $this->task=='add' || $this->task=='edit') {
@@ -286,12 +286,12 @@ die();
     public function display ($form=null, $context=null, $content=null, $fieldParameters=null, $limitstart=null)
     {
         /** no content types to process **/
-        if (count($this->content_type_ids) == 0) { return; }
+        if (count($this->asset_type_ids) == 0) { return; }
 echo 'hello';
 die();
         /** process content types identified in controller **/
         $this->custom_fields = array();
-        foreach ($this->content_type_ids as $contentType) {
+        foreach ($this->asset_type_ids as $contentType) {
 
             /** retrieve custom fields **/
             $customFields = modelForm::getCustomFields ($contentType);
@@ -343,7 +343,7 @@ die();
     public function save ($context, &$content, $isNew)
     {
         /** no content types to process **/
-        if (count($this->content_type_ids) == 0) { return; }
+        if (count($this->asset_type_ids) == 0) { return; }
 
         /** get request form object containing component and custom field content **/
         $formdata = modelForm::getRequestForm ();
@@ -355,7 +355,7 @@ die();
 
         /** process content types identified in controller **/
         $this->custom_fields = array();
-        foreach ($this->content_type_ids as $contentType) {
+        foreach ($this->asset_type_ids as $contentType) {
 
             /** retrieve custom fields for content types **/
             $customFields = modelForm::getCustomFields ($contentType);

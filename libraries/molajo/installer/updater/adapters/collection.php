@@ -45,7 +45,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
     /**
      * @var array A list of discovered update sites
      */
-    protected $update_sites;
+    protected $extension_sites;
 
     /**
      * A list of discovered updates
@@ -100,7 +100,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
         {
             case 'CATEGORY':
                 if (isset($attrs['REF'])) {
-                    $this->update_sites[] = array('type' => 'collection', 'location' => $attrs['REF'], 'update_site_id' => $this->_update_site_id);
+                    $this->extension_sites[] = array('type' => 'collection', 'location' => $attrs['REF'], 'extension_site_id' => $this->_extension_site_id);
                 }
                 else
                 {
@@ -110,7 +110,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
                 break;
             case 'EXTENSION':
                 $update = MolajoTable::getInstance('update');
-                $update->set('update_site_id', $this->_update_site_id);
+                $update->set('extension_site_id', $this->_extension_site_id);
                 foreach ($this->_updatecols as $col)
                 {
                     // Reset the values if it doesn't exist
@@ -185,7 +185,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
     /**
      * Finds an update
      *
-     * @param   array  $options  Options to use: update_site_id: the unique ID of the update site to look at
+     * @param   array  $options  Options to use: extension_site_id: the unique ID of the update site to look at
      *
      * @return  array  Update_sites and updates discovered
      *
@@ -194,7 +194,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
     public function findUpdate($options)
     {
         $url = $options['location'];
-        $this->_update_site_id = $options['update_site_id'];
+        $this->_extension_site_id = $options['extension_site_id'];
         if (substr($url, -4) != '.xml') {
             if (substr($url, -1) != '/') {
                 $url .= '/';
@@ -203,15 +203,15 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
         }
 
         $this->base = new stdClass;
-        $this->update_sites = array();
+        $this->extension_sites = array();
         $this->updates = array();
         $dbo = $this->parent->getDBO();
 
         if (!($fp = @fopen($url, "r"))) {
             $query = $dbo->getQuery(true);
-            $query->update('#__update_sites');
+            $query->update('#__extension_sites');
             $query->set('enabled = 0');
-            $query->where('update_site_id = '.$this->_update_site_id);
+            $query->where('extension_site_id = '.$this->_extension_site_id);
             $dbo->setQuery($query);
             $dbo->Query();
 
@@ -235,6 +235,6 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
             }
         }
         // TODO: Decrement the bad counter if non-zero
-        return array('update_sites' => $this->update_sites, 'updates' => $this->updates);
+        return array('extension_sites' => $this->extension_sites, 'updates' => $this->updates);
     }
 }

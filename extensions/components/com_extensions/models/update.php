@@ -40,7 +40,7 @@ class InstallerModelUpdate extends JModelList
 				'folder',
 				'extension_id',
 				'update_id',
-				'update_site_id',
+				'extension_site_id',
 			);
 		}
 
@@ -117,7 +117,7 @@ class InstallerModelUpdate extends JModelList
 	}
 
 	/**
-	 * Enables any disabled rows in #__update_sites table
+	 * Enables any disabled rows in #__extension_sites table
 	 *
 	 * @return	boolean result of operation
 	 * @since	1.0
@@ -125,7 +125,7 @@ class InstallerModelUpdate extends JModelList
 	public function enableSites()
 	{
 		$db = MolajoFactory::getDBO();
-		$db->setQuery('UPDATE #__update_sites SET enabled = 1 WHERE enabled = 0');
+		$db->setQuery('UPDATE #__extension_sites SET enabled = 1 WHERE enabled = 0');
 		if ($db->Query()) {
 			if ($rows = $db->getAffectedRows()) {
 				$this->_message .= MolajoText::plural('COM_INSTALLER_ENABLED_UPDATES', $rows);

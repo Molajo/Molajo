@@ -368,7 +368,7 @@ class MolajoModelDisplay extends JModel
         $nowDate = $this->_db->Quote(MolajoFactory::getDate()->toMySQL());
 
         /** retrieve names of json fields for this type of content **/
-        $jsonFields = $this->molajoConfig->getOptionList(MOLAJO_CONFIG_OPTION_ID_JSON_FIELDS);
+        $jsonFields = $this->molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
 
         /** ACL **/
         $aclClass = 'MolajoACL'.ucfirst($this->request['view']);
@@ -498,9 +498,6 @@ class MolajoModelDisplay extends JModel
                 $acl = new $aclClass();
                 $results = $acl->getUserItemPermissions($this->request['option'],
                                                         $this->request['view'],
-                                                        $this->request['task'],
-                                                        $items[$i]->id,
-                                                        $items[$i]->category_id,
                                                         $items[$i]);
                 if ($results === false) {
                     $keep = false;

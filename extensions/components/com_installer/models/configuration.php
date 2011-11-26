@@ -318,9 +318,9 @@ class InstallerModelConfiguration extends MolajoModelDummy
 
 		$query = 'INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
                   SELECT DISTINCT c.group_id as group_id, b.id as asset_id, 3 as `action_id`
-                    FROM `#__groups`          a,
+                    FROM `#__categories`      a,
                       `#__assets`             b,
-                      `#__group_view_groups` c
+                      `#__group_view_groups`  c
                     WHERE a.id = c.group_id
                       AND b.access = c.view_group_id';
 
@@ -334,7 +334,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
         /** 4-Edit, 5-Publish, 6-Delete */
 		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
                       SELECT DISTINCT a.id as group_id, b.id as asset_id, c.id as action_id
-                        FROM `#__groups`          a,
+                        FROM `#__categories`      a,
                           `#__assets`             b,
                           `#__actions`            c
                         WHERE a.id = 4
@@ -350,7 +350,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
         /** 2-Create, 7-Admin for Components */
 		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
                       SELECT DISTINCT a.id as group_id, b.asset_id, c.id as action_id
-                        FROM `#__groups`          a,
+                        FROM `#__categories`      a,
                           `#__extensions`         b,
                           `#__actions`            c
                         WHERE a.id = 4
@@ -368,7 +368,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
         /** 1-Login in Site Application */
 		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
                       SELECT DISTINCT a.id as group_id, b.asset_id, c.id as action_id
-                        FROM `#__groups`          a,
+                        FROM `#__categories`      a,
                           `#__extensions`         b,
                           `#__actions`            c
                         WHERE a.id = 4
@@ -386,7 +386,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
         /** 1-Login in Site Application */
 		$query = 'INSERT INTO `#__permissions_groups` (`group_id`, `asset_id`, `action_id`)
                       SELECT DISTINCT a.id as group_id, b.asset_id, c.id as action_id
-                        FROM `#__groups`        a,
+                        FROM `#__categories`    a,
                           `#__applications`     b,
                           `#__actions`          c
                         WHERE a.id = 4

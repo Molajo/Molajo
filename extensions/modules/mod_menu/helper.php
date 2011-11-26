@@ -97,17 +97,17 @@ class modMenuHelper
 				$item->menu_item_active	= false;
 				$item->menu_item_flink = $item->request;
 
-				switch ($item->content_type_id)
+				switch ($item->asset_type_id)
 				{
-					case MOLAJO_CONTENT_TYPE_MENU_ITEM_SEPARATOR:
+					case MOLAJO_ASSET_TYPE_MENU_ITEM_SEPARATOR:
 						continue;
 
-					case MOLAJO_CONTENT_TYPE_MENU_ITEM_LINK:
+					case MOLAJO_ASSET_TYPE_MENU_ITEM_LINK:
 						$item->menu_item_flink = $item->sef_request;
 						break;
 
 
-                    case MOLAJO_CONTENT_TYPE_MENU_ITEM_MODULE;
+                    case MOLAJO_ASSET_TYPE_MENU_ITEM_MODULE;
                         break;
 
 					default:

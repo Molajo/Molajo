@@ -293,12 +293,12 @@ class MolajoControllerRedirect extends MolajoController
             $link = $this->redirectSuccess;
 
             /** failure **/
-        } else if ($this->successIndicator === false || $task == 'apply' || $task == 'save2new') {
+        } else if ($this->successIndicator === false || $task == 'apply' || $task == 'saveandnew') {
             $link = $this->redirectReturn;
             if ($this->request['EditView'] == '') {
             } else {
                 $id = $this->data['id'];
-                if ((int)$id == 0 || $task == 'save2new') {
+                if ((int)$id == 0 || $task == 'saveandnew') {
                     $link .= '&task='.$this->request['EditView'].'.add'.'&datakey='.$this->datakey;
 
                 } else {

@@ -282,7 +282,7 @@ abstract class MolajoApplicationPlugin extends JEvent
             return $plugins;
         }
 
-        $plugins = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_PLUGINS);
+        $plugins = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN);
         return $plugins;
     }
 

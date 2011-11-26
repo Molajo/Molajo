@@ -58,7 +58,7 @@ abstract class MolajoApplicationTemplate
         }
 
         /** Retrieve Template from the DB */
-        $templates = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_TEMPLATES, $id);
+        $templates = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $id);
 
         foreach ($templates as $template) {
             $registry = new JRegistry;

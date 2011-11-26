@@ -12,17 +12,17 @@ defined('MOLAJO') or die;
  *
  * Queries the extension tables for various rendered extension types
  *
- * MOLAJO_CONTENT_TYPE_EXTENSION_CORE 0
- * MOLAJO_CONTENT_TYPE_EXTENSION_COMPONENTS 1
- * MOLAJO_CONTENT_TYPE_EXTENSION_LANGUAGES 2
- * MOLAJO_CONTENT_TYPE_EXTENSION_LAYOUTS 3
- * MOLAJO_CONTENT_TYPE_EXTENSION_LIBRARIES 10
- * MOLAJO_CONTENT_TYPE_EXTENSION_MANIFESTS 4
- * MOLAJO_CONTENT_TYPE_EXTENSION_MENUS 5
- * MOLAJO_CONTENT_TYPE_EXTENSION_MODULES 6
- * MOLAJO_CONTENT_TYPE_EXTENSION_PARAMETERS 7
- * MOLAJO_CONTENT_TYPE_EXTENSION_PLUGINS 8
- * MOLAJO_CONTENT_TYPE_EXTENSION_TEMPLATES 9
+ * MOLAJO_ASSET_TYPE_EXTENSION_CORE 0
+ * MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT 1
+ * MOLAJO_ASSET_TYPE_EXTENSION_LANGUAGE 2
+ * MOLAJO_ASSET_TYPE_EXTENSION_LAYOUT 3
+ * MOLAJO_ASSET_TYPE_EXTENSION_LIBRARY 10
+ * MOLAJO_ASSET_TYPE_EXTENSION_MANIFEST 4
+ * MOLAJO_ASSET_TYPE_EXTENSION_MENU 5
+ * MOLAJO_ASSET_TYPE_EXTENSION_MODULE 6
+ * MOLAJO_ASSET_TYPE_EXTENSION_PARAMETER 7
+ * MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN 8
+ * MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE 9
  *
  * @package     Molajo
  * @subpackage  Extension Helper
@@ -36,11 +36,11 @@ abstract class MolajoApplicationExtension
      * Retrieves requested Extension
      *
      * @static
-     * @param $content_type_id
+     * @param $asset_type_id
      * @param null $extension
      * @return bool|mixed
      */
-    static public function getExtensions($content_type_id, $extension = null)
+    static public function getExtensions($asset_type_id, $extension = null)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -71,7 +71,7 @@ abstract class MolajoApplicationExtension
         
         $query->from($db->namequote('#__extensions').' as a');
         
-        $query->where('a.'.$db->namequote('content_type_id').' = '. (int) $content_type_id);
+        $query->where('a.'.$db->namequote('asset_type_id').' = '. (int) $asset_type_id);
 
         /** Extension Instances */
         $query->select('b.'.$db->namequote('id').' as extension_instance_id');
@@ -98,15 +98,15 @@ abstract class MolajoApplicationExtension
         }
 
         $query->where('a.'.$db->namequote('id').' = b.'.$db->namequote('extension_id'));
-        $query->where('b.'.$db->namequote('content_type_id').' = '. (int) $content_type_id);
+        $query->where('b.'.$db->namequote('asset_type_id').' = '. (int) $asset_type_id);
 
         $query->where('b.'.$db->namequote('status').' = '.MOLAJO_STATUS_PUBLISHED);
         $query->where('(b.start_publishing_datetime = '.$db->Quote($nullDate).' OR b.start_publishing_datetime <= '.$db->Quote($now).')');
         $query->where('(b.stop_publishing_datetime = '.$db->Quote($nullDate).' OR b.stop_publishing_datetime >= '.$db->Quote($now).')');
 
         $query->from($db->namequote('#__assets').' as b_assets');
-        $query->from($db->namequote('#__content_types').' as b_ctype');
-        $query->where('b_assets.content_type_id = b_ctype.id');
+        $query->from($db->namequote('#__asset_types').' as b_ctype');
+        $query->where('b_assets.asset_type_id = b_ctype.id');
         $query->where('b_ctype.'.$db->namequote('source_table').' = "__extension_instances"');
         $query->where('b_assets.source_id = b.id');
 
@@ -114,9 +114,9 @@ abstract class MolajoApplicationExtension
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'b_assets'));
 
         /** Extension Instance Options */
-        if ($content_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MENUS) {
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_MENU) {
             $query->select('c.'.$db->namequote('id').' as id');
-            $query->select('c.'.$db->namequote('content_type_id').' as content_type_id');
+            $query->select('c.'.$db->namequote('asset_type_id').' as asset_type_id');
             $query->select('c.'.$db->namequote('title').' as menu_item_title');
             $query->select('c.'.$db->namequote('subtitle').' as menu_item_subtitle');
             $query->select('c.'.$db->namequote('alias').' as menu_item_alias');
@@ -149,8 +149,8 @@ abstract class MolajoApplicationExtension
             $query->select('c_assets.'.$db->namequote('template_id').' as menu_item_template_id');
 
             $query->from($db->namequote('#__assets').' as c_assets');
-            $query->from($db->namequote('#__content_types').' as c_ctype');
-            $query->where('c_assets.content_type_id = c_ctype.id');
+            $query->from($db->namequote('#__asset_types').' as c_ctype');
+            $query->where('c_assets.asset_type_id = c_ctype.id');
             $query->where('c_ctype.'.$db->namequote('source_table').' = "__menu_items"');
             $query->where('c_assets.source_id = c.id');
 
@@ -172,7 +172,7 @@ abstract class MolajoApplicationExtension
 
         $db->setQuery($query->__toString());
 
-        if ($content_type_id == MOLAJO_CONTENT_TYPE_EXTENSION_MENUS) {
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_MENU) {
             $extensions = $db->loadObjectList('id');
         } else {
             $extensions = $db->loadObjectList();

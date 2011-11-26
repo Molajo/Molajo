@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset
-            name="component_options"
+            name="extension_options"
             label="MOLAJO_CONFIG_FIELDSET_COMPONENT_OPTIONS_LABEL">
 
         <field
-            name="config_component_options"
+            name="config_extension_options"
             type="spacer"
             class="spacer"
             hr="false"
-            label="MOLAJO_COMPONENT_OPTIONS_LABEL"
-            description="MOLAJO_COMPONENT_OPTIONS_DESC"
+            label="MOLAJO_EXTENSION_OPTIONS_LABEL"
+            description="MOLAJO_EXTENSION_OPTIONS_DESC"
             />
 
         <field
@@ -18,8 +18,8 @@
             type="spacer"
             class="spacer"
             hr="true"
-            label="MOLAJO_COMPONENT_OPTIONS_TAG_LABEL"
-            description="MOLAJO_COMPONENT_OPTIONS_TAG_DESC"
+            label="MOLAJO_EXTENSION_OPTIONS_TAG_LABEL"
+            description="MOLAJO_EXTENSION_OPTIONS_TAG_DESC"
             />
 
             <field name="config_component_tags"
@@ -47,8 +47,8 @@
             type="spacer"
             class="spacer"
             hr="true"
-            label="MOLAJO_COMPONENT_OPTIONS_COMMENT_LABEL"
-            description="MOLAJO_COMPONENT_OPTIONS_COMMENT_DESC"
+            label="MOLAJO_EXTENSION_OPTIONS_COMMENT_LABEL"
+            description="MOLAJO_EXTENSION_OPTIONS_COMMENT_DESC"
             />
 
             <field name="config_component_state_spam"
@@ -76,8 +76,8 @@
             type="spacer"
             class="spacer"
             hr="true"
-            label="MOLAJO_COMPONENT_OPTIONS_VERSION_HISTORY_LABEL"
-            description="MOLAJO_COMPONENT_OPTIONS_VERSION_HISTORY_DESC"
+            label="MOLAJO_EXTENSION_OPTIONS_VERSION_HISTORY_LABEL"
+            description="MOLAJO_EXTENSION_OPTIONS_VERSION_HISTORY_DESC"
             />
 
             <field name="config_component_version_management"
@@ -119,8 +119,8 @@
             type="spacer"
             class="spacer"
             hr="true"
-            label="MOLAJO_COMPONENT_OPTIONS_UNINSTALL_LABEL"
-            description="MOLAJO_COMPONENT_OPTIONS_UNINSTALL_DESC"
+            label="MOLAJO_EXTENSION_OPTIONS_UNINSTALL_LABEL"
+            description="MOLAJO_EXTENSION_OPTIONS_UNINSTALL_DESC"
             />
 
             <field name="config_component_uninstall"
@@ -868,10 +868,10 @@
             description="MOLAJO_CONFIG_MANAGER_SUB_MENUS_DESC"
             />
 
-        <field name="config_manager_sub_menu_for_content_type_ids"
+        <field name="config_manager_sub_menu_for_asset_type_ids"
                 type="radio"
-                label="MOLAJO_CONFIG_MANAGER_SUB_MENU_FOR_CONTENT_TYPES_LABEL"
-                description="MOLAJO_CONFIG_MANAGER_SUB_MENU_FOR_CONTENT_TYPES_DESC"
+                label="MOLAJO_CONFIG_MANAGER_SUB_MENU_FOR_ASSET_TYPES_LABEL"
+                description="MOLAJO_CONFIG_MANAGER_SUB_MENU_FOR_ASSET_TYPES_DESC"
                 default="0"
                 >
                 <option value="0">MOLAJO_CONFIG_OPTION_NO</option>
@@ -1435,7 +1435,7 @@
                 query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                 key_field="option_value"
                 value_field="option_value_literal"
-                default="save2new"
+                default="saveandnew"
                 label="MOLAJO_CONFIG_MANAGER_EDITOR_BUTTON_BAR_NEW_OPTION3_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_EDITOR_BUTTON_BAR_NEW_OPTION3_DESC"
                 >
@@ -1574,7 +1574,7 @@
                 query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 210 order by option_value_literal ASC"
                 key_field="option_value"
                 value_field="option_value_literal"
-                default="save2new"
+                default="saveandnew"
                 label="MOLAJO_CONFIG_MANAGER_EDITOR_BUTTON_BAR_EDIT_OPTION3_LABEL"
                 description="MOLAJO_CONFIG_MANAGER_EDITOR_BUTTON_BAR_EDIT_OPTION3_DESC"
                 >

@@ -29,13 +29,14 @@ abstract class MolajoToolbarHelper
 	 * @return	string	HTML for button
 	 * @since	1.0
 	 */
-	public static function getList($parameters)
+	public function getList($parameters)
 	{
-        $tmpobj = new JObject();
-        $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));
-        $data[]=$tmpobj;
+        $object = new JObject();
+        $object->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));
+        $data[] = $object;
         return $data;
 	}
+    
     /**
      * addButtonsDisplayLayout
      *
@@ -44,18 +45,16 @@ abstract class MolajoToolbarHelper
      */
     public function addButtonsDisplayLayout($state, $userToolbarButtonPermissions)
     {
-        /** ToolBar title **/
         $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
+
         $this->addTitle($parameters->def('config_manager_title_image', 1),
                         $parameters->def('config_manager_title', 1),
                         JRequest::getCmd('DefaultView'),
                         JRequest::getCmd('option'),
                         JRequest::getCmd('view'));
 
-        /** Process Buttons **/
         $buttonParameterFieldName = 'config_manager_button_bar_option';
-
-        $this->buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, 0, array());
+        $this->_buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, 0, array());
 
         return;
     }
@@ -68,11 +67,10 @@ abstract class MolajoToolbarHelper
      */
     public function addButtonsEditLayout($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        /** do not allow during edit session **/
         JRequest::setVar('hidemainmenu', true);
 
-        /** ToolBar title **/
         $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
+
         $this->addTitle($parameters->def('config_manager_title_image', 1),
                         $parameters->def('config_manager_title', 1),
                         JRequest::getCmd('DefaultView'),
@@ -84,9 +82,7 @@ abstract class MolajoToolbarHelper
         } else {
             $buttonParameterFieldName = 'config_manager_editor_button_bar_edit_option';
         }
-
-        /** Process Buttons **/
-        $this->buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item);
+        $this->_buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item);
     }
 
     /**
@@ -115,10 +111,15 @@ abstract class MolajoToolbarHelper
 
     /**
      * buttonLoop
-     * @param string $buttonParameterFieldName - Parameter name in configuraiton file for Toolbar Button Section
-     * @return int
+     *
+     * @param $buttonParameterFieldName - Parameter name in configuraiton file for Toolbar Button Section
+     * @param $state
+     * @param $userToolbarButtonPermissions
+     * @param $id
+     * @param $item
+     * @return void
      */
-    public function buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item)
+    private function _buttonLoop($buttonParameterFieldName, $state, $userToolbarButtonPermissions, $id, $item)
     {
         /** component parameters **/
         $parameters = MolajoApplicationComponent::getParameters(JRequest::getCmd('option'));
@@ -178,7 +179,7 @@ abstract class MolajoToolbarHelper
      */
     public function addArchiveButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::archiveList(JRequest::getCmd('DefaultView').'.archive', 'MolajoToolbar_ARCHIVE');
+        self::archiveList('archive', 'MOLAJO_TOOLBAR_ARCHIVE_BUTTON');
     }
 
     /**
@@ -189,7 +190,7 @@ abstract class MolajoToolbarHelper
      */
     public function addCheckinButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::custom(JRequest::getCmd('DefaultView').'.checkin', 'checkin.png', 'checkin_f2.png', 'MolajoToolbar_CHECKIN', true);
+        self::checkinList('checkin', 'MOLAJO_TOOLBAR_CHECKIN_BUTTON');
     }
 
     /**
@@ -370,7 +371,7 @@ abstract class MolajoToolbarHelper
      * @param    array $userToolbarButtonPermissions
      * @since    1.0
      */
-    public function addSave2newButton($state, $userToolbarButtonPermissions, $id, $item = null)
+    public function addSavethennewButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
         if ((int)$id == 0) {
             return;
@@ -381,7 +382,7 @@ abstract class MolajoToolbarHelper
         if ($item->state == MOLAJO_STATUS_ARCHIVED || $item->state == MOLAJO_STATUS_VERSION) {
             return;
         }
-        self::custom(JRequest::getCmd('EditView').'.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+        self::custom(JRequest::getCmd('EditView').'.saveandnew', 'savethennew.png', 'savethennew_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
     }
 
     /**
@@ -390,7 +391,7 @@ abstract class MolajoToolbarHelper
      * @param    array $userToolbarButtonPermissions
      * @since    1.0
      */
-    public function addSave2copyButton($state, $userToolbarButtonPermissions, $id, $item = null)
+    public function addSaveascopyButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
         if ((int)$id == 0) {
             return;

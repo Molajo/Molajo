@@ -54,27 +54,27 @@ class MolajoAttributeAccept extends MolajoAttribute
         $filetypes = explode(',', $this->element['filetype']);
         if (count($filetypes) == 0) {
             $filetypes = array();
-            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
-            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
-            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
-            $filetypes[] == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES;
+            $filetypes[] == MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES;
         }
 
         foreach ($filetypes as $type) {
 
             $request = 0;
 
-            if ($type == MOLAJO_CONFIG_OPTION_ID_AUDIO_MIMES || strtolower($type = 'audio')) {
-                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+            if ($type == MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES || strtolower($type = 'audio')) {
+                $request = MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES;
                 $literal = 'audio';
-            } else if ($type == MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES || strtolower($type = 'image') || strtolower($type == 'images')) {
-                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+            } else if ($type == MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES || strtolower($type = 'image') || strtolower($type == 'images')) {
+                $request = MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES;
                 $literal = 'image';
-            } else if ($type == MOLAJO_CONFIG_OPTION_ID_TEXT_MIMES || strtolower($type = 'text')) {
-                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+            } else if ($type == MOLAJO_EXTENSION_OPTION_ID_TEXT_MIMES || strtolower($type = 'text')) {
+                $request = MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES;
                 $literal = 'text';
-            } else if ($type == MOLAJO_CONFIG_OPTION_ID_VIDEO_MIMES || strtolower($type = 'video') || strtolower($type == 'videos')) {
-                $request = MOLAJO_CONFIG_OPTION_ID_IMAGE_MIMES;
+            } else if ($type == MOLAJO_EXTENSION_OPTION_ID_VIDEO_MIMES || strtolower($type = 'video') || strtolower($type == 'videos')) {
+                $request = MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES;
                 $literal = 'video';
             }
 

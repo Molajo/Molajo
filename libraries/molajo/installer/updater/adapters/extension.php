@@ -39,7 +39,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
         {
             case 'UPDATE':
                 $this->current_update = MolajoTable::getInstance('update');
-                $this->current_update->update_site_id = $this->_update_site_id;
+                $this->current_update->extension_site_id = $this->_extension_site_id;
                 $this->current_update->details_url = $this->_url;
                 break;
             // Don't do anything
@@ -134,7 +134,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
     {
         $url = $options['location'];
         $this->_url = &$url;
-        $this->_update_site_id = $options['update_site_id'];
+        $this->_extension_site_id = $options['extension_site_id'];
         //echo '<p>Find update for extension run on <a href="'. $url .'">'. $url .'</a></p>';
         if (substr($url, -4) != '.xml') {
             if (substr($url, -1) != '/') {
@@ -147,9 +147,9 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
 
         if (!($fp = @fopen($url, "r"))) {
             $query = $dbo->getQuery(true);
-            $query->update('#__update_sites');
+            $query->update('#__extension_sites');
             $query->set('enabled = 0');
-            $query->where('update_site_id = '.$this->_update_site_id);
+            $query->where('extension_site_id = '.$this->_extension_site_id);
             $dbo->setQuery($query);
             $dbo->Query();
 
@@ -181,6 +181,6 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
         {
             $updates = array();
         }
-        return array('update_sites' => array(), 'updates' => $updates);
+        return array('extension_sites' => array(), 'updates' => $updates);
     }
 }

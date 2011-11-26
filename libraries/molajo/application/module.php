@@ -294,7 +294,7 @@ abstract class MolajoApplicationModule
             return $modules;
         }
 
-        $modules = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MODULES);
+        $modules = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
 
         return $modules;
     }

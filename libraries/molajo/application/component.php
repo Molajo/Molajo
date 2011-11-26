@@ -158,7 +158,7 @@ class MolajoApplicationComponent
      */
     protected static function _load($option)
     {
-        self::$_components[$option] = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_COMPONENTS, $option);
+        self::$_components[$option] = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, $option);
         if (isset(self::$_components[$option]->parameters)) {
             $temp = new JRegistry;
             $temp->loadString(self::$_components[$option]->parameters);
@@ -249,7 +249,7 @@ class MolajoApplicationComponent
         }
 
         /** 4. Controller */
-        $controller = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_TASK_TO_CONTROLLER, $task);
+        $controller = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER, $task);
         if ($controller === false) {
             MolajoError::raiseError(500, MolajoText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
             return false;
@@ -262,11 +262,11 @@ class MolajoApplicationComponent
             if ($view == null) {
                 $results = false;
             } else {
-                $results = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_VIEWS, $view);
+                $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS, $view);
             }
 
             if ($results === false) {
-                $view = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_DEFAULT_VIEW);
+                $view = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW);
                 if ($view === false) {
                     $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_VIEW_DEFINED'), 'error');
                     return false;
@@ -274,7 +274,7 @@ class MolajoApplicationComponent
             }
 
             /** 7. Model **/
-            $model = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_MODEL);
+            $model = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_MODEL);
             if ($model === false) {
                 $model = $view;
             }
@@ -285,17 +285,17 @@ class MolajoApplicationComponent
                 $results = false;
             } else {
                 if ($view == 'edit') {
-                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_LAYOUTS, $layout);
+                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_LAYOUTS, $layout);
                 } else {
-                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_LAYOUTS, $layout);
+                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS, $layout);
                 }
             }
 
             if ($results === false) {
                 if ($view == 'edit') {
-                    $layout = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS);
+                    $layout = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS);
                 } else {
-                    $layout = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS);
+                    $layout = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS);
                 }
                 if ($layout === false) {
                     $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
@@ -309,17 +309,17 @@ class MolajoApplicationComponent
                 $results = false;
             } else {
                 if ($view == 'edit') {
-                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_EDIT_VIEW_FORMATS, $format);
+                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_FORMATS, $format);
                 } else {
-                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_CONFIG_OPTION_ID_DISPLAY_VIEW_FORMATS, $format);
+                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_FORMATS, $format);
                 }
             }
 
             if ($results === false) {
                 if ($view == 'edit') {
-                    $format = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS);
+                    $format = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS);
                 } else {
-                    $format = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS);
+                    $format = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS);
                 }
                 if ($format === false) {
                     $format = 'html';
@@ -360,19 +360,19 @@ class MolajoApplicationComponent
         $catid = JRequest::getInt('catid');
 
         /** 11. acl implementation */
-        $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_ACL_IMPLEMENTATION);
+        $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION);
         if ($acl_implementation === false) {
             $acl_implementation = 'core';
         }
 
         /** 12. component table */
-        $component_table = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_TABLE);
+        $component_table = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_TABLE);
         if ($component_table === false) {
             $component_table = '_common';
         }
 
         /** 13. plugin helper */
-        $plugin_type = $molajoConfig->getOptionValue(MOLAJO_CONFIG_OPTION_ID_PLUGIN_TYPE);
+        $plugin_type = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE);
         if ($plugin_type === false) {
             $plugin_type = 'content';
         }

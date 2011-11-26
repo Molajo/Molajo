@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * Handles the standard single-item save, delete, and cancel tasks
  *
  * Cancel: cancel and close
- * Save: apply, create, save, save2copy, save2new, restore
+ * Save: apply, create, save, save2copy, saveandnew, restore
  * Delete: delete
  *
  * Called from the Multiple Controller for batch (copy, move) and delete
@@ -130,11 +130,11 @@ class MolajoControllerEdit extends MolajoController
     }
 
     /**
-     * apply, create, save, save2copy, save2new
+     * apply, create, save, save2copy, saveandnew
      *
      * Methods used to save a record with different redirect results.
      *
-     * Tasks: apply, create, save, save2copy, save2new all processed by saveItemForm to prepare data
+     * Tasks: apply, create, save, save2copy, saveandnew all processed by saveItemForm to prepare data
      * and then SaveItem to actually save the data
      *
      * @return    Boolean
@@ -160,9 +160,9 @@ class MolajoControllerEdit extends MolajoController
         return $this->saveItemForm('save2copy');
     }
 
-    public function save2new()
+    public function saveandnew()
     {
-        return $this->saveItemForm('save2new');
+        return $this->saveItemForm('saveandnew');
     }
 
     /**
@@ -170,7 +170,7 @@ class MolajoControllerEdit extends MolajoController
      *
      * Used to obtain form data and send to saveItem for save processing
      *
-     * Method called by apply, create, save, save2copy and save2new tasks
+     * Method called by apply, create, save, save2copy and saveandnew tasks
      *
      * @return    Boolean
      * @since    1.0

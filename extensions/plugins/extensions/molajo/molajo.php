@@ -59,15 +59,15 @@ class plgExtensionMolajo extends MolajoApplicationPlugin
 		// look if the location is used already; doesn't matter what type
 		// you can't have two types at the same address, doesn't make sense
 		$query = $dbo->getQuery(true);
-		$query->select('update_site_id')->from('#__update_sites')->where('location = '. $dbo->Quote($location));
+		$query->select('extension_site_id')->from('#__extension_sites')->where('location = '. $dbo->Quote($location));
 		$dbo->setQuery($query);
-		$update_site_id = (int)$dbo->loadResult();
+		$extension_site_id = (int)$dbo->loadResult();
 
 		// if it doesn't exist, add it!
-		if (!$update_site_id) 
+		if (!$extension_site_id)
 		{
 			$query->clear();
-			$query->insert('#__update_sites');
+			$query->insert('#__extension_sites');
 			$query->set('name = '.$dbo->Quote($name));
 			$query->set('type = '. $dbo->Quote($type));
 			$query->set('location = '. $dbo->Quote($location));
@@ -76,25 +76,25 @@ class plgExtensionMolajo extends MolajoApplicationPlugin
 			if ($dbo->query()) 
 			{
 				// link up this extension to the update site
-				$update_site_id = $dbo->insertid();
+				$extension_site_id = $dbo->insertid();
 			}
 		}
 
 		// check if it has an update site id (creation might have faileD)
-		if ($update_site_id) 
+		if ($extension_site_id)
 		{
 			$query->clear();
 			// look for an update site entry that exists
-			$query->select('update_site_id')->from('#__update_sites_extensions');
-			$query->where('update_site_id = '. $update_site_id)->where('extension_id = '. $this->eid);
+			$query->select('extension_site_id')->from('#__extension_sites_extensions');
+			$query->where('extension_site_id = '. $extension_site_id)->where('extension_id = '. $this->eid);
 			$dbo->setQuery($query);
 			$tmpid = (int)$dbo->loadResult();
 			if(!$tmpid)
 			{
 				// link this extension to the relevant update site
 				$query->clear();
-				$query->insert('#__update_sites_extensions');
-				$query->set('update_site_id = '. $update_site_id);
+				$query->insert('#__extension_sites_extensions');
+				$query->set('extension_site_id = '. $extension_site_id);
 				$query->set('extension_id = '. $this->eid);
 				$dbo->setQuery($query);
 				$dbo->query();
@@ -133,16 +133,16 @@ class plgExtensionMolajo extends MolajoApplicationPlugin
 	{
 		if ($eid)
 		{
-			// wipe out any update_sites_extensions links
+			// wipe out any extension_sites_extensions links
 			$db = MolajoFactory::getDBO();
 			$query = $db->getQuery(true);
-			$query->delete()->from('#__update_sites_extensions')->where('extension_id = '. $eid);
+			$query->delete()->from('#__extension_sites_extensions')->where('extension_id = '. $eid);
 			$db->setQuery($query);
 			$db->Query();
 
 			// delete any unused update sites
 			$query->clear();
-			$query->select('update_site_id')->from('#__update_sites_extensions');
+			$query->select('extension_site_id')->from('#__extension_sites_extensions');
 			$db->setQuery($query);
 			$results = $db->loadResultArray();
 
@@ -150,25 +150,25 @@ class plgExtensionMolajo extends MolajoApplicationPlugin
 			{
 				// so we need to delete the update sites and their associated updates
 				$updatesite_delete = $db->getQuery(true);
-				$updatesite_delete->delete()->from('#__update_sites');
+				$updatesite_delete->delete()->from('#__extension_sites');
 				$updatesite_query = $db->getQuery(true);
-				$updatesite_query->select('update_site_id')->from('#__update_sites');
+				$updatesite_query->select('extension_site_id')->from('#__extension_sites');
 
 				// if we get results back then we can exclude them
 				if(count($results))
 				{
-					$updatesite_query->where('update_site_id NOT IN ('. implode(',', $results) .')');
-					$updatesite_delete->where('update_site_id NOT IN ('. implode(',', $results) .')');
+					$updatesite_query->where('extension_site_id NOT IN ('. implode(',', $results) .')');
+					$updatesite_delete->where('extension_site_id NOT IN ('. implode(',', $results) .')');
 				}
 				// so lets find what update sites we're about to nuke and remove their associated extensions
 				$db->setQuery($updatesite_query);
-				$update_sites_pending_delete = $db->loadResultArray();
-				if(is_array($update_sites_pending_delete) && count($update_sites_pending_delete))
+				$extension_sites_pending_delete = $db->loadResultArray();
+				if(is_array($extension_sites_pending_delete) && count($extension_sites_pending_delete))
 				{
 					// nuke any pending updates with this site before we delete it
 					// TODO: investigate alternative of using a query after the delete below with a query and not in like above
 					$query->clear();
-					$query->delete()->from('#__updates')->where('update_site_id IN ('. implode(',', $update_sites_pending_delete) .')');
+					$query->delete()->from('#__updates')->where('extension_site_id IN ('. implode(',', $extension_sites_pending_delete) .')');
 					$db->setQuery($query);
 					$db->query();
 				}

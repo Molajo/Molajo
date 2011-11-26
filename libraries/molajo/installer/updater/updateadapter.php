@@ -35,7 +35,7 @@ class MolajoUpdateadapter extends MolajoAdapterInstance
      * @var    string
      * @since  11.1
      */
-    protected $_update_site_id = 0;
+    protected $_extension_site_id = 0;
 
     /**
      * Columns in the extensions table to be updated

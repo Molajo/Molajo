@@ -86,7 +86,7 @@ class MolajoViewEdit extends MolajoView
         $acl->getFormAuthorisations(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
 
         /** ACL: component level authorisations **/
-        $this->permissions = $acl->getUserPermissionSet(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
+        $this->permissions = $acl->getUserPermissionTaskset(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'));
 
         /** page heading, toolbar buttons and submenu **/
         if (($this->getLayout() == 'modal') || (!JRequest::getCmd('format') == 'html')) {

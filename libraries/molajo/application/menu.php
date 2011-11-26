@@ -312,7 +312,7 @@ class MolajoApplicationMenu extends JObject
      */
     public function load()
     {
-        $this->_items  = MolajoApplicationExtension::getExtensions(MOLAJO_CONTENT_TYPE_EXTENSION_MENUS);
+        $this->_items  = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MENU);
 
         foreach($this->_items as &$item) {
 

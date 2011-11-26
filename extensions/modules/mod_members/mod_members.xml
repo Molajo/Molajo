@@ -22,7 +22,7 @@
 		<language tag="en-GB">en-GB.mod_online.ini</language>
 		<language tag="en-GB">en-GB.mod_online.sys.ini</language>
 	</languages>
-	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_ADMIN_ONLINE" />
+	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_ADMINISTER_ONLINE" />
 	<config>
 		<fields name="parameters">
 			<fields name="advanced">
