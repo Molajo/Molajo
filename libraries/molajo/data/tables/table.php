@@ -68,8 +68,8 @@ abstract class MolajoTable extends JObject
         $this->_tbl_key = $key;
         $this->_db = &$db;
 
-        if ($fields = $this->getFields()) {
-            foreach ($fields as $name => $v) {
+        if ($names = $this->getFields()) {
+            foreach ($names as $name => $v) {
                 if (property_exists($this, $name)) {
                 } else {
                     $this->$name = null;
@@ -91,15 +91,15 @@ abstract class MolajoTable extends JObject
 
         if ($cache === null) {
             $name = $this->_tbl;
-            $fields = $this->_db->getTableFields($name, false);
+            $names = $this->_db->getTableFields($name, false);
 
-            if (isset($fields[$name])) {
+            if (isset($names[$name])) {
             } else {
                 $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
                 $this->setError($e);
                 return false;
             }
-            $cache = $fields[$name];
+            $cache = $names[$name];
         }
 
         return $cache;
@@ -339,17 +339,17 @@ abstract class MolajoTable extends JObject
         $query = $this->_db->getQuery(true);
         $query->select('*');
         $query->from($this->_tbl);
-        $fields = array_keys($this->getProperties());
+        $names = array_keys($this->getProperties());
 
-        foreach ($keys as $field => $value)
+        foreach ($keys as $name => $value)
         {
-            if (in_array($field, $fields)) {
+            if (in_array($name, $names)) {
             } else {
-                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $field));
+                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $name));
                 $this->setError($e);
                 return false;
             }
-            $query->where($this->_db->quoteName($field).' = '.$this->_db->quote($value));
+            $query->where($this->_db->quoteName($name).' = '.$this->_db->quote($value));
         }
 
         $this->_db->setQuery($query);

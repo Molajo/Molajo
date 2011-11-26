@@ -8,17 +8,17 @@
  */
 defined('MOLAJO') or die;
 
-$fieldSets = $this->form->getFieldsets();
-foreach ($fieldSets as $name => $fieldSet) { ?>
+$nameSets = $this->form->getFieldsets();
+foreach ($nameSets as $name => $nameSet) { ?>
 
-        <?php echo MolajoHTML::_('sliders.panel',MolajoText::_($fieldSet->label), $name.'-options');?>
-        <?php if (isset($fieldSet->description) && trim($fieldSet->description)) :?>
-                <p class="tip"><?php echo $this->escape(MolajoText::_($fieldSet->description));?></p>
+        <?php echo MolajoHTML::_('sliders.panel',MolajoText::_($nameSet->label), $name.'-options');?>
+        <?php if (isset($nameSet->description) && trim($nameSet->description)) :?>
+                <p class="tip"><?php echo $this->escape(MolajoText::_($nameSet->description));?></p>
         <?php endif;?>
         <fieldset class="panelform">
                 <ul class="adminformlist">
-                <?php foreach ($this->form->getFieldset($name) as $field) : ?>
-                        <li><?php echo $field->label; ?><?php echo $field->input; ?></li>
+                <?php foreach ($this->form->getFieldset($name) as $name) : ?>
+                        <li><?php echo $name->label; ?><?php echo $name->input; ?></li>
                 <?php endforeach; ?>
                 </ul>
         </fieldset>

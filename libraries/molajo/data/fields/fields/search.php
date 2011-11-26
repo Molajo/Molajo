@@ -28,11 +28,11 @@ class MolajoFieldSearch extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('search');
-        parent::setRequestFilter('string');
+        parent::setFilter('string');
 
-        parent::setTableColumnSortable(false);
-        parent::setTableColumnCheckbox(false);
-        parent::setDisplayDataType('string');
+        parent::setSortable(false);
+        parent::setCheckbox(false);
+        parent::setDisplayType('string');
     }
 
     /**
@@ -42,26 +42,26 @@ class MolajoFieldSearch extends MolajoField
      */
     public function getOptions()
     {
-        $this->requestValueDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
-        return $this->requestValueDateModel->getMonthsPublish();
+        $this->valueDateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        return $this->valueDateModel->getMonthsPublish();
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
         /** return filtered and validated value **/
-        return $this->requestValue;
+        return $this->value;
     }
 
     /**

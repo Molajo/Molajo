@@ -262,21 +262,21 @@ class MolajoModelDisplay extends JModel
     protected function processFilter($filterName)
     {
         /** class name **/
-        $fieldClassName = 'MolajoField'.ucfirst($filterName);
+        $nameClassName = 'MolajoField'.ucfirst($filterName);
 
         /** class file **/
-        $this->molajoField->requireFieldClassFile($filterName);
+        $this->molajoField->getClass($filterName);
 
         /** class instantiation **/
-        if (class_exists($fieldClassName)) {
-            $molajoSpecificFieldClass = new $fieldClassName();
+        if (class_exists($nameClassName)) {
+            $molajoSpecificFieldClass = new $nameClassName();
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$nameClassName, 'error');
             return false;
         }
 
         /** retrieve filtered, validated value **/
-        $filterValue = $molajoSpecificFieldClass->getSelectedValue();
+        $filterValue = $molajoSpecificFieldClass->getValue();
 
         /** set state **/
         $this->setState('filter.'.$filterName, $filterValue);
@@ -333,11 +333,11 @@ class MolajoModelDisplay extends JModel
     {
         /** extract actual column names from table **/
         $table = $this->getTable();
-        $fields = $table->getProperties();
+        $names = $table->getProperties();
 
         $this->tableFieldList = array();
-        foreach ($fields as $fieldname => $value) {
-            $this->tableFieldList[] = $fieldname;
+        foreach ($names as $name => $value) {
+            $this->tableFieldList[] = $name;
         }
 
         /** create query **/
@@ -485,8 +485,8 @@ class MolajoModelDisplay extends JModel
                 }
 
                 /** Perform JSON to array conversion... **/
-                foreach ($jsonFields as $field) {
-                    $attribute = $field->value;
+                foreach ($jsonFields as $name) {
+                    $attribute = $name->value;
                     if (property_exists($items[$i], $attribute)) {
                         $registry = new JRegistry;
                         $registry->loadJSON($items[$i]->$attribute);
@@ -574,11 +574,11 @@ class MolajoModelDisplay extends JModel
         $this->query = $this->_db->getQuery(true);
 
         /** Process each field that is 1) required 2) selected for display and 3) selected as a filter **/
-        $fieldArray = array();
+        $nameArray = array();
 
         /** load all available columns into select list **/
-        foreach ($this->tableFieldList as $fieldName) {
-            $this->setQueryInformation($fieldName, false);
+        foreach ($this->tableFieldList as $name) {
+            $this->setQueryInformation($name, false);
         }
 
         /** process search filter */
@@ -884,14 +884,14 @@ class MolajoModelDisplay extends JModel
      *
      * Return Query results for two fields
      *
-     * @param string $field1
-     * @param string $field2
+     * @param string $name1
+     * @param string $name2
      * @param boolean $showKey
      * @param boolean $showKeyFirst
      * @param string $table
      * @return object query results
      */
-    public function getOptionList($field1, $field2, $showKey = false, $showKeyFirst = false, $table = null)
+    public function getOptionList($name1, $name2, $showKey = false, $showKeyFirst = false, $table = null)
     {
         $this->parameters = MolajoApplicationComponent::getParameters($this->request['option']);
 
@@ -900,14 +900,14 @@ class MolajoModelDisplay extends JModel
         /** select **/
         if ($showKey == true) {
             if ($showKeyFirst == true) {
-                $fieldArray2 = 'CONCAT('.$this->_db->namequote($field1).', ": ",'.$this->_db->namequote($field2).' )';
+                $nameArray2 = 'CONCAT('.$this->_db->namequote($name1).', ": ",'.$this->_db->namequote($name2).' )';
             } else {
-                $fieldArray2 = 'CONCAT('.$this->_db->namequote($field2).', " (",'.$this->_db->namequote($field1).', ")")';
+                $nameArray2 = 'CONCAT('.$this->_db->namequote($name2).', " (",'.$this->_db->namequote($name1).', ")")';
             }
         } else {
-            $fieldArray2 = $field2;
+            $nameArray2 = $name2;
         }
-        $this->query->select('DISTINCT '.$this->_db->namequote($field1).' AS value, '.$fieldArray2.' as text');
+        $this->query->select('DISTINCT '.$this->_db->namequote($name1).' AS value, '.$nameArray2.' as text');
 
         /** from **/
         if ($table == null) {
@@ -932,7 +932,7 @@ class MolajoModelDisplay extends JModel
             /** configuration option not selected **/
             if ($filterName == '0') {
 
-            } else if ($filterName == $field2) {
+            } else if ($filterName == $name2) {
 
                 /** process selected filter (only where clause) **/
             } else {
@@ -941,13 +941,13 @@ class MolajoModelDisplay extends JModel
         }
 
         /** group by **/
-        $this->query->group($field1, $fieldArray2);
+        $this->query->group($name1, $nameArray2);
 
         /** order by **/
         if ($showKey == true && $showKeyFirst == true) {
-            $this->query->order($field1);
+            $this->query->order($name1);
         } else {
-            $this->query->order($field2);
+            $this->query->order($name2);
         }
 
         /** run query and return results **/
@@ -958,27 +958,27 @@ class MolajoModelDisplay extends JModel
     /**
      * setQueryInformation
      *
-     * @param string $fieldName
+     * @param string $name
      * @param boolean $onlyWhereClause - true - all query parts; false - only where clause
      * @return sets $query object
      */
-    public function setQueryInformation($fieldname, $onlyWhereClause = false)
+    public function setQueryInformation($name, $onlyWhereClause = false)
     {
         $selectedState = $this->getState('filter.state');
-        $fieldClassName = 'MolajoField'.ucfirst($fieldname);
-        $this->molajoField->requireFieldClassFile($fieldname, false);
+        $nameClassName = 'MolajoField'.ucfirst($name);
+        $this->molajoField->getClass($name, false);
 
-        if (class_exists($fieldClassName)) {
-            $value = $this->getState('filter.'.$fieldname);
-            $molajoSpecificFieldClass = new $fieldClassName();
+        if (class_exists($nameClassName)) {
+            $value = $this->getState('filter.'.$name);
+            $molajoSpecificFieldClass = new $nameClassName();
             $molajoSpecificFieldClass->getQueryInformation($this->query, $value, $selectedState, $onlyWhereClause, $this->request['view']);
 
         } else {
             if ($onlyWhereClause === true) {
-                MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+                MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$nameClassName, 'error');
                 return false;
             } else {
-                $this->query->select('a.'.$fieldname);
+                $this->query->select('a.'.$name);
                 return true;
             }
         }
@@ -1098,14 +1098,14 @@ class MolajoModelDisplay extends JModel
     private function saveSelective()
     {
         /** 1: required fields **/
-        $fieldArray = array();
+        $nameArray = array();
         $requireList = 'id,title,alias,state,catid,created_by,access,checked_out,checked_out_time,search';
         $requiredArray = explode(',', $requireList);
 
         foreach ($requiredArray as $required) {
-            if (in_array($required, $fieldArray)) {
+            if (in_array($required, $nameArray)) {
             } else {
-                $fieldArray[] = $required;
+                $nameArray[] = $required;
             }
         }
 
@@ -1114,22 +1114,22 @@ class MolajoModelDisplay extends JModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $fieldName = $this->parameters->get($this->filterFieldName.$i);
+            $name = $this->parameters->get($this->filterFieldName.$i);
 
             /** end of filter processing **/
-            if ($fieldName == null) {
+            if ($name == null) {
                 break;
             }
 
             /** configuration option not selected **/
-            if ($fieldName == '0') {
+            if ($name == '0') {
 
                 /** selected twice by user in configuration **/
-            } else if (in_array($fieldName, $fieldArray)) {
+            } else if (in_array($name, $nameArray)) {
 
                 /** store for filtering and then processing **/
             } else {
-                $fieldArray[] = $fieldName;
+                $nameArray[] = $name;
             }
         }
 
@@ -1138,29 +1138,29 @@ class MolajoModelDisplay extends JModel
 
         for ($i = 1; $i < 1000; $i++) {
 
-            $fieldName = $this->parameters->def($this->filterFieldName.$i);
+            $name = $this->parameters->def($this->filterFieldName.$i);
 
             /** end of filter processing **/
-            if ($fieldName == null) {
+            if ($name == null) {
                 break;
             }
 
             /** configuration option not selected **/
-            if ($fieldName == '0') {
+            if ($name == '0') {
 
                 /** listed twice, ignore after first use **/
-            } else if (in_array($fieldName, $fieldArray)) {
+            } else if (in_array($name, $nameArray)) {
 
                 /** process selected field **/
             } else {
-                $fieldArray[] = $fieldName;
+                $nameArray[] = $name;
             }
         }
 
         /** filter by known field names and append into query object **/
-        foreach ($fieldArray as $fieldName) {
-            if ((in_array($fieldName, $this->tableFieldList)) || $fieldName == 'search') {
-                $this->setQueryInformation($fieldName, false);
+        foreach ($nameArray as $name) {
+            if ((in_array($name, $this->tableFieldList)) || $name == 'search') {
+                $this->setQueryInformation($name, false);
             }
         }
     }

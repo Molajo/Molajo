@@ -176,21 +176,22 @@
         />
 
         <field
-            name="state"
+            name="status"
             type="list"
-            label="MOLAJO_FIELD_STATE_LABEL"
-            description="MOLAJO_FIELD_STATE_DESC"
+            label="MOLAJO_FIELD_STATUS_LABEL"
+            description="MOLAJO_FIELD_STATUS_DESC"
             class="inputbox"
             filter="intval"
             size="1"
             default="1"
             >
-            <option value="2">MOLAJO_OPTION_ARCHIVED</option>
-            <option value="1">MOLAJO_OPTION_PUBLISHED</option>
-            <option value="0">MOLAJO_OPTION_UNPUBLISHED</option>
-            <option value="-1">MOLAJO_OPTION_TRASHED</option>
-            <option value="-2">MOLAJO_OPTION_SPAMMED</option>
-            <option value="-10">MOLAJO_OPTION_VERSION</option>
+            <option value="2">MOLAJO_OPTION_STATUS_ARCHIVED</option>
+            <option value="1">MOLAJO_OPTION_STATUS_PUBLISHED</option>
+            <option value="0">MOLAJO_OPTION_STATUS_UNPUBLISHED</option>
+            <option value="-1">MOLAJO_OPTION_STATUS_TRASHED</option>
+            <option value="-2">MOLAJO_OPTION_STATUS_SPAMMED</option>
+            <option value="-10">MOLAJO_OPTION_STATUS_VERSION</option>
+            <option value="-11">MOLAJO_OPTION_STATUS_DRAFT</option>            
         </field>
 
         <field
@@ -240,8 +241,8 @@
         <field
             name="state_prior_to_version"
             type="text"
-            label="MOLAJO_FIELD_STATE_LABEL"
-            description="MOLAJO_FIELD_STATE_DESC"
+            label="MOLAJO_FIELD_STATUS_LABEL"
+            description="MOLAJO_FIELD_STATUS_DESC"
             class="readonly"
             size="1"
         />

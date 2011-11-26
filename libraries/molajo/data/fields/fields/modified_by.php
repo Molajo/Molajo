@@ -28,11 +28,11 @@ class MolajoFieldModified_by extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('modified_by');
-        parent::setRequestFilter('integer');
+        parent::setFilter('integer');
 
-        parent::setTableColumnSortable(true);
-        parent::setTableColumnCheckbox(false);
-        parent::setDisplayDataType('string');
+        parent::setSortable(true);
+        parent::setCheckbox(false);
+        parent::setDisplayType('string');
     }
 
     /**
@@ -47,16 +47,16 @@ class MolajoFieldModified_by extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
@@ -64,7 +64,7 @@ class MolajoFieldModified_by extends MolajoField
         $this->validateRequestValue();
 
         /** return filtered and validated value **/
-        return $this->requestValue;
+        return $this->value;
     }
 
     /**
@@ -74,7 +74,7 @@ class MolajoFieldModified_by extends MolajoField
      */
     public function validateRequestValue()
     {
-        return MolajoModelDisplay::validateValue('modified_by', $this->requestValue, 'integer', $table = null);
+        return MolajoModelDisplay::validateValue('modified_by', $this->value, 'integer', $table = null);
     }
 
     /**

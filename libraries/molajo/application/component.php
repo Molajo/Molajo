@@ -426,8 +426,8 @@ class MolajoApplicationComponent
         $session->set('page.acl_implementation', $acl_implementation);
         $session->set('page.component_table', $component_table);
         $session->set('page.component_path', $component_path);
-        $session->set('page.filter_fieldname', 'config_manager_list_filters');
-        $session->set('page.select_fieldname', 'config_manager_grid_column');
+        $session->set('page.filter_name', 'config_manager_list_filters');
+        $session->set('page.select_name', 'config_manager_grid_column');
 
         /** other */
         $session->set('page.extension', $extension);
@@ -471,8 +471,8 @@ class MolajoApplicationComponent
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');
-        $request['filter_fieldname'] = $session->get('page.filter_fieldname');
-        $request['select_fieldname'] = $session->get('page.select_fieldname');
+        $request['filter_name'] = $session->get('page.filter_name');
+        $request['select_name'] = $session->get('page.select_name');
 
         $request['title'] = $session->get('page.title');
         $request['subtitle'] = $session->get('page.subtitle');

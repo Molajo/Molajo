@@ -100,7 +100,7 @@ class extendController extends plgSystemExtend {
      * @var object
      * @since	1.6
      */
-    protected $fieldParameters;
+    protected $nameParameters;
 
     /**
      * initiation
@@ -111,7 +111,7 @@ class extendController extends plgSystemExtend {
      * @param object $form
      * @param string $context
      * @param object $content
-     * @param object $fieldParameters
+     * @param object $nameParameters
      * @param int $limitstart
      * @param int $isNew
      *
@@ -245,7 +245,7 @@ die();
 
         /** task based subcontrollers process content types **/
         if ($this->task =='display' || $this->task=='add' || $this->task=='edit') {
-            return extendController::display ($form, $context, $content, $fieldParameters, $limitstart);
+            return extendController::display ($form, $context, $content, $nameParameters, $limitstart);
         }
         if ($this->task=='save') {
             return extendController::save ($context, &$content, $isNew);
@@ -283,7 +283,7 @@ die();
      * @return	string
      * @since	1.6
      */
-    public function display ($form=null, $context=null, $content=null, $fieldParameters=null, $limitstart=null)
+    public function display ($form=null, $context=null, $content=null, $nameParameters=null, $limitstart=null)
     {
         /** no content types to process **/
         if (count($this->asset_type_ids) == 0) { return; }

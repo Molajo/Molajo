@@ -28,7 +28,7 @@ class MolajoViewEdit extends MolajoView
 //    protected $form;
 //    protected $toolbar;
 //    protected $slider_id;
-//    protected $fieldsetName;
+//    protected $namesetName;
 //    protected $userToolbarButtonPermissions;
 //    protected $isNew;
 

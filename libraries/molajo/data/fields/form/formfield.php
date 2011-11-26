@@ -120,7 +120,7 @@ abstract class MolajoFormField
      * @var    string
      * @since  1.0
      */
-    protected $fieldname;
+    protected $name;
 
     /**
      * The group of the field.
@@ -178,7 +178,7 @@ abstract class MolajoFormField
      * @var    integer
      * @since  1.0
      */
-    static protected $generated_fieldname = '__field';
+    static protected $generated_name = '__field';
 
     /**
      * Tracks pre and post processing for Form Fieldtypes
@@ -229,7 +229,7 @@ abstract class MolajoFormField
             case 'type':
             case 'validate':
             case 'value':
-            case 'fieldname':
+            case 'name':
             case 'group':
                 return $this->$name;
                 break;
@@ -350,9 +350,9 @@ abstract class MolajoFormField
         $this->group = $group;
 
         // Set the field name and id.
-        $this->fieldname = $this->getFieldName($name);
-        $this->name = $this->getName($this->fieldname);
-        $this->id = $this->getId($id, $this->fieldname);
+        $this->name = $this->getFieldName($name);
+        $this->name = $this->getName($this->name);
+        $this->id = $this->getId($id, $this->name);
 
         // Set the field default value.
         $this->value = $value;
@@ -363,14 +363,14 @@ abstract class MolajoFormField
     /**
      * Method to get the id used for the field calendar tag.
      *
-     * @param   string  $fieldId    The field element id.
-     * @param   string  $fieldName  The field element name.
+     * @param   string  $nameId    The field element id.
+     * @param   string  $name  The field element name.
      *
      * @return  string  The id to be used for the field calendar tag.
      *
      * @since   1.0
      */
-    protected function getId($fieldId, $fieldName)
+    protected function getId($nameId, $name)
     {
         // Initialise variables.
         $id = '';
@@ -393,10 +393,10 @@ abstract class MolajoFormField
 
         // If we already have an id segment add the field id/name as another level.
         if ($id) {
-            $id .= '_'.($fieldId ? $fieldId : $fieldName);
+            $id .= '_'.($nameId ? $nameId : $name);
         }
         else {
-            $id .= ($fieldId ? $fieldId : $fieldName);
+            $id .= ($nameId ? $nameId : $name);
         }
 
         // Clean up any invalid characters.
@@ -466,11 +466,11 @@ abstract class MolajoFormField
             $this->rowset[0]['disabled'] = false;
         }
 
-        /** fieldname */
-        if (isset($this->fieldname)) {
-            $this->rowset[0]['fieldname'] = trim($this->fieldname);
+        /** name */
+        if (isset($this->name)) {
+            $this->rowset[0]['name'] = trim($this->name);
         } else {
-            $this->rowset[0]['fieldname'] = '';
+            $this->rowset[0]['name'] = '';
         }
 
         /** group */
@@ -687,13 +687,13 @@ abstract class MolajoFormField
     /**
      * Method to get the name used for the field calendar tag.
      *
-     * @param   string  $fieldName  The field element name.
+     * @param   string  $name  The field element name.
      *
      * @return  string  The name to be used for the field calendar tag.
      *
      * @since   1.0
      */
-    protected function getName($fieldName)
+    protected function getName($name)
     {
         // Initialise variables.
         $name = '';
@@ -722,10 +722,10 @@ abstract class MolajoFormField
 
         // If we already have a name segment add the field name as another level.
         if ($name) {
-            $name .= '['.$fieldName.']';
+            $name .= '['.$name.']';
         }
         else {
-            $name .= $fieldName;
+            $name .= $name;
         }
 
         // If the field should support multiple values add the final array segment.
@@ -745,14 +745,14 @@ abstract class MolajoFormField
      *
      * @since   1.0
      */
-    protected function getFieldName($fieldName)
+    protected function getFieldName($name)
     {
-        if ($fieldName) {
-            return $fieldName;
+        if ($name) {
+            return $name;
         }
         else {
             self::$count = self::$count + 1;
-            return self::$generated_fieldname.self::$count;
+            return self::$generated_name.self::$count;
         }
     }
 }

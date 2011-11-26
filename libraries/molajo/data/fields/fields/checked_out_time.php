@@ -28,7 +28,7 @@ class MolajoFieldChecked_out_time extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('checked_out_time');
-        parent::setRequestFilter('date');
+        parent::setFilter('date');
     }
 
     /**
@@ -41,11 +41,11 @@ class MolajoFieldChecked_out_time extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
     }
 

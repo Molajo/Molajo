@@ -28,7 +28,7 @@ class MolajoFieldReturn extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('return');
-        parent::setRequestFilter('base64');
+        parent::setFilter('base64');
     }
 
     /**
@@ -41,16 +41,16 @@ class MolajoFieldReturn extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
@@ -58,7 +58,7 @@ class MolajoFieldReturn extends MolajoField
         $this->validateRequestValue();
 
         /** return filtered and validated value **/
-        return $this->requestValue;
+        return $this->value;
     }
 
     /**
@@ -68,15 +68,15 @@ class MolajoFieldReturn extends MolajoField
      */
     public function validateRequestValue()
     {
-        if (empty($this->requestValue)) {
+        if (empty($this->value)) {
             return JURI::base();
         }
 
-        if (JUri::isInternal(base64_decode($this->requestValue))) {
+        if (JUri::isInternal(base64_decode($this->value))) {
             return JURI::base();
         }
 
-        return base64_decode($this->requestValue);
+        return base64_decode($this->value);
     }
 
     /**

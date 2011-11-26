@@ -31,8 +31,8 @@ if (defined('MOLAJO_SITE')) {
     $xml = simplexml_load_file(MOLAJO_BASE_FOLDER.'/sites/sites.xml', 'SimpleXMLElement');
     $count = $xml->count;
     for ($i = 1; $i < $count + 1; $i++) {
-        $fieldName = 'site'.$i;
-        if ($siteURL == $xml->$fieldName) {
+        $name = 'site'.$i;
+        if ($siteURL == $xml->$name) {
             define('MOLAJO_SITE', $i);
             break;
         }

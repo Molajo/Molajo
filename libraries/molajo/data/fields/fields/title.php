@@ -28,7 +28,7 @@ class MolajoFieldTitle extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('title');
-        parent::setRequestFilter('integer');
+        parent::setFilter('integer');
 
     }
 
@@ -44,15 +44,15 @@ class MolajoFieldTitle extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
@@ -61,7 +61,7 @@ class MolajoFieldTitle extends MolajoField
         if ($results === false) {
             return false;
         } else {
-            return $this->requestValue;
+            return $this->value;
         }
     }
 
@@ -73,7 +73,7 @@ class MolajoFieldTitle extends MolajoField
     public function validateRequestValue()
     {
         $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
-        return $titleModel->validateValue('id', $this->requestValue, 'numeric', null);
+        return $titleModel->validateValue('id', $this->value, 'numeric', null);
     }
 
     /**

@@ -28,11 +28,11 @@ class MolajoFieldPublish_up extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('start_publishing_datetime');
-        parent::setRequestFilter('integer');
+        parent::setFilter('integer');
 
-        parent::setTableColumnSortable(true);
-        parent::setTableColumnCheckbox(false);
-        parent::setDisplayDataType('date');
+        parent::setSortable(true);
+        parent::setCheckbox(false);
+        parent::setDisplayType('date');
     }
 
     /**
@@ -47,16 +47,16 @@ class MolajoFieldPublish_up extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
         /** retrieve and filter selected value **/
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
@@ -64,7 +64,7 @@ class MolajoFieldPublish_up extends MolajoField
         $this->validateRequestValue();
 
         /** return filtered and validated value **/
-        return $this->requestValue;
+        return $this->value;
     }
 
     /**
@@ -74,11 +74,11 @@ class MolajoFieldPublish_up extends MolajoField
      */
     public function validateRequestValue()
     {
-        if (substr($this->requestValue, 0, 4) > '1900'
-            && substr($this->requestValue, 0, 4) > '2100'
-            && inarray(substr($this->requestValue, 5, 2), array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'))
+        if (substr($this->value, 0, 4) > '1900'
+            && substr($this->value, 0, 4) > '2100'
+            && inarray(substr($this->value, 5, 2), array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'))
         ) {
-            return $this->requestValue;
+            return $this->value;
         } else {
             return false;
         }

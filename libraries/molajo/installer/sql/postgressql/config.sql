@@ -51,7 +51,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 200, 'stop_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_DOWN_LABEL', 37),
 (1, 200, 'start_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_UP_LABEL', 38),
 (1, 200, 'rgt', 'MOLAJO_FIELD_RGT_LABEL', 39),
-(1, 200, 'state', 'MOLAJO_FIELD_STATE_LABEL', 40),
+(1, 200, 'state', 'MOLAJO_FIELD_STATUS_LABEL', 40),
 (1, 200, 'state_prior_to_version', 'MOLAJO_FIELD_STATE_PRIOR_TO_VERSION_LABEL', 41),
 (1, 200, 'stickied', 'MOLAJO_FIELD_STICKIED_LABEL', 42),
 (1, 200, 'user_default', 'MOLAJO_FIELD_USER_DEFAULT_LABEL', 43),
@@ -69,7 +69,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 210, 'ordering', 'MOLAJO_FIELD_ORDERING_LABEL', 3),
 (1, 210, 'stop_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_DOWN_LABEL', 4),
 (1, 210, 'start_publishing_datetime', 'MOLAJO_FIELD_PUBLISH_UP_LABEL', 5),
-(1, 210, 'state', 'MOLAJO_FIELD_STATE_LABEL', 6),
+(1, 210, 'state', 'MOLAJO_FIELD_STATUS_LABEL', 6),
 (1, 210, 'stickied', 'MOLAJO_FIELD_STICKIED_LABEL', 7);
 
 /* 220 MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS */
@@ -87,12 +87,12 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 /* 250 MOLAJO_EXTENSION_OPTION_ID_STATUS */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 250, '', '', 0),
-(1, 250, '2', 'MOLAJO_OPTION_ARCHIVED', 1),
-(1, 250, '1', 'MOLAJO_OPTION_PUBLISHED', 2),
-(1, 250, '0', 'MOLAJO_OPTION_UNPUBLISHED', 3),
-(1, 250, '-1', 'MOLAJO_OPTION_TRASHED', 4),
-(1, 250, '-2', 'MOLAJO_OPTION_SPAMMED', 5),
-(1, 250, '-10', 'MOLAJO_OPTION_VERSION', 6);
+(1, 250, '2', 'MOLAJO_OPTION_STATUS_ARCHIVED', 1),
+(1, 250, '1', 'MOLAJO_OPTION_STATUS_PUBLISHED', 2),
+(1, 250, '0', 'MOLAJO_OPTION_STATUS_UNPUBLISHED', 3),
+(1, 250, '-1', 'MOLAJO_OPTION_STATUS_TRASHED', 4),
+(1, 250, '-2', 'MOLAJO_OPTION_STATUS_SPAMMED', 5),
+(1, 250, '-10', 'MOLAJO_OPTION_STATUS_VERSION', 6);
 
 /* USER INTERFACE */
 
@@ -124,7 +124,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 310, 'restore', 'MOLAJO_CONFIG_MANAGER_OPTION_BUTTON_RESTORE', 4),
 (1, 310, 'save', 'MOLAJO_CONFIG_MANAGER_OPTION_BUTTON_SAVE', 5),
 (1, 310, 'saveandnew', 'MOLAJO_CONFIG_MANAGER_OPTION_BUTTON_SAVE_AND_NEW', 6),
-(1, 310, 'save2copy', 'MOLAJO_CONFIG_MANAGER_OPTION_BUTTON_SAVE_AS_COPY', 7),
+(1, 310, 'saveascopy', 'MOLAJO_CONFIG_MANAGER_OPTION_BUTTON_SAVE_AS_COPY', 7),
 (1, 310, 'separator', 'MOLAJO_CONFIG_MANAGER_OPTION_BUTTON_SEPARATOR', 8);
 
 /* 320 MOLAJO_EXTENSION_OPTION_ID_TOOLBAR_SUBMENU_LINKS */;
@@ -340,7 +340,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 1100, 'cancel', 'edit', 5),
 (1, 1100, 'create', 'edit', 6),
 (1, 1100, 'save', 'edit', 7),
-(1, 1100, 'save2copy', 'edit', 8),
+(1, 1100, 'saveascopy', 'edit', 8),
 (1, 1100, 'saveandnew', 'edit', 9),
 (1, 1100, 'restore', 'edit', 10);
 
@@ -379,7 +379,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 1101, 'cancel', 'edit', 5),
 (1, 1101, 'create', 'edit', 6),
 (1, 1101, 'save', 'edit', 7),
-(1, 1101, 'save2copy', 'edit', 8),
+(1, 1101, 'saveascopy', 'edit', 8),
 (1, 1101, 'saveandnew', 'edit', 9),
 (1, 1101, 'restore', 'edit', 10);
 
@@ -604,7 +604,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 10200, 'reorder', 'publish', 22),
 (1, 10200, 'restore', 'publish', 23),
 (1, 10200, 'save', 'edit', 24),
-(1, 10200, 'save2copy', 'edit', 25),
+(1, 10200, 'saveascopy', 'edit', 25),
 (1, 10200, 'saveandnew', 'edit', 26),
 (1, 10200, 'saveorder', 'publish', 27),
 (1, 10200, 'search', 'view', 28),

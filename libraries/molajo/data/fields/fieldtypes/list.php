@@ -86,7 +86,7 @@ class MolajoFormFieldList extends MolajoFormField
             }
 
             // Create a new option object based on the <option /> element.
-            $tmp = MolajoHTML::_('select.option', (string)$option['value'], MolajoText::alt(trim((string)$option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text', ((string)$option['disabled'] == 'true'));
+            $tmp = MolajoHTML::_('select.option', (string)$option['value'], MolajoText::alt(trim((string)$option), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)), 'value', 'text', ((string)$option['disabled'] == 'true'));
 
             // Set some option attributes.
             $tmp->class = (string)$option['class'];

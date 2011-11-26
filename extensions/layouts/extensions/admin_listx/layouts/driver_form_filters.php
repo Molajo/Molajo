@@ -20,8 +20,8 @@ if ($this->parameters->def('config_manager_list_search', 1) == '1') {
     include dirname(__FILE__).'/form/form_filter_search.php';
 }
 
-/** $fieldFilters used to prevent list filters column if no list filters are specified **/
-$fieldFilters = false;
+/** $nameFilters used to prevent list filters column if no list filters are specified **/
+$nameFilters = false;
 
 /** do not load filters twice **/
 $loadFilterArray = array();
@@ -55,7 +55,7 @@ for ($i=1; $i < 1000; $i++) {
 
         /** first one - build row and column **/
         if ($i == 1) {
-            $fieldFilters = true;
+            $nameFilters = true;
             if ($anyFilters == false) {
                 $anyFilters = true;
                 include dirname(__FILE__).'/form/form_filter_begin.php';
@@ -64,17 +64,17 @@ for ($i=1; $i < 1000; $i++) {
         }
 
         /** class name **/
-        $fieldClassName = 'MolajoField'.ucfirst($this->tempColumnName);
+        $nameClassName = 'MolajoField'.ucfirst($this->tempColumnName);
 
         /** class file **/
         $mf = new MolajoField ();
-        $mf->requireFieldClassFile ($this->tempColumnName);
+        $mf->getClass ($this->tempColumnName);
 
         /** class instantiation **/
-        if (class_exists($fieldClassName)) {
-            $fcn = new $fieldClassName ();
+        if (class_exists($nameClassName)) {
+            $fcn = new $nameClassName ();
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$fieldClassName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$nameClassName, 'error');
             return false;
         }
 
@@ -89,7 +89,7 @@ for ($i=1; $i < 1000; $i++) {
     }
 }
 
-if ($fieldFilters == true) {
+if ($nameFilters == true) {
     include dirname(__FILE__).'/form/form_filter_fields_end.php';
 }
 

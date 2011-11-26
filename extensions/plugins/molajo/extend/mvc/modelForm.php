@@ -55,7 +55,7 @@ class modelForm
 
         /** initialise **/
         $customFields = array();
-        $fieldInd = 0;
+        $nameInd = 0;
 
         /** load content type form **/
         $contentTypeForm = new JForm ($contentType);
@@ -63,18 +63,18 @@ class modelForm
 
         /** retrieve custom field names and add to array **/
         $contentTypeFieldSets = $contentTypeForm->getFieldsets();
-        foreach ($contentTypeFieldSets as $contentTypeFieldSet => $fieldSet) :
+        foreach ($contentTypeFieldSets as $contentTypeFieldSet => $nameSet) :
 
             foreach ($contentTypeForm->getFieldset($contentTypeFieldSet) as $customField) :
 
-                $customFields [$fieldInd]->name = substr($customField->name, (stripos($customField->name,'[')+1), (stripos($customField->name,']')-stripos($customField->name,'[')-1));
+                $customFields [$nameInd]->name = substr($customField->name, (stripos($customField->name,'[')+1), (stripos($customField->name,']')-stripos($customField->name,'[')-1));
 
                 if (isset($customField->multiple) && $customField->multiple == true) {
-                    $customFields[$fieldInd]->multiple = 1;
+                    $customFields[$nameInd]->multiple = 1;
                 } else {
-                    $customFields[$fieldInd]->multiple = 0;
+                    $customFields[$nameInd]->multiple = 0;
                 }
-                $fieldInd++;
+                $nameInd++;
 
             endforeach;
         endforeach;

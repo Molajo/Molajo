@@ -189,20 +189,20 @@ class MolajoForm
         $output = new JRegistry;
 
         // Get the fields for which to filter the data.
-        $fields = $this->findFieldsByGroup($group);
-        if (!$fields) {
+        $names = $this->findFieldsByGroup($group);
+        if (!$names) {
             // PANIC!
             return false;
         }
 
         // Filter the fields.
-        foreach ($fields as $field)
+        foreach ($names as $name)
         {
             // Initialise variables.
-            $name = (string)$field['name'];
+            $name = (string)$name['name'];
 
             // Get the field groups for the element.
-            $attrs = $field->xpath('ancestor::fields[@name]/@name');
+            $attrs = $name->xpath('ancestor::fields[@name]/@name');
             $groups = array_map('strval', $attrs ? $attrs : array());
             $group = implode('.', $groups);
 
@@ -210,13 +210,13 @@ class MolajoForm
             if ($group) {
                 // Filter the value if it exists.
                 if ($calendar->exists($group.'.'.$name)) {
-                    $output->set($group.'.'.$name, $this->filterField($field, $calendar->get($group.'.'.$name, (string)$field['default'])));
+                    $output->set($group.'.'.$name, $this->filterField($name, $calendar->get($group.'.'.$name, (string)$name['default'])));
                 }
             }
             else {
                 // Filter the value if it exists.
                 if ($calendar->exists($name)) {
-                    $output->set($name, $this->filterField($field, $calendar->get($name, (string)$field['default'])));
+                    $output->set($name, $this->filterField($name, $calendar->get($name, (string)$name['default'])));
                 }
             }
         }
@@ -313,7 +313,7 @@ class MolajoForm
     public function getFieldset($set = null)
     {
         // Initialise variables.
-        $fields = array();
+        $names = array();
 
         // Get all of the field elements in the fieldset.
         if ($set) {
@@ -326,7 +326,7 @@ class MolajoForm
 
         // If no field elements were found return empty.
         if (empty($elements)) {
-            return $fields;
+            return $names;
         }
 
         // Build the result array from the found field elements.
@@ -338,12 +338,12 @@ class MolajoForm
             $group = implode('.', $groups);
 
             // If the field is successfully loaded add it to the result array.
-            if ($field = $this->loadField($element, $group)) {
-                $fields[$field->id] = $field;
+            if ($name = $this->loadField($element, $group)) {
+                $names[$name->id] = $name;
             }
         }
 
-        return $fields;
+        return $names;
     }
 
     /**
@@ -358,12 +358,12 @@ class MolajoForm
     public function getFieldsets($group = null)
     {
         // Initialise variables.
-        $fieldsets = array();
+        $namesets = array();
         $sets = array();
 
         // Make sure there is a valid MolajoForm XML document.
         if (!($this->xml instanceof JXMLElement)) {
-            return $fieldsets;
+            return $namesets;
         }
 
         if ($group) {
@@ -386,7 +386,7 @@ class MolajoForm
         // If no fieldsets are found return empty.
         if (empty($sets)) {
 
-            return $fieldsets;
+            return $namesets;
         }
 
         // Process each found fieldset.
@@ -396,48 +396,48 @@ class MolajoForm
             if ((string)$set['name']) {
 
                 // Only create it if it doesn't already exist.
-                if (empty($fieldsets[(string)$set['name']])) {
+                if (empty($namesets[(string)$set['name']])) {
 
                     // Build the fieldset object.
-                    $fieldset = (object)array('name' => '', 'label' => '', 'description' => '');
+                    $nameset = (object)array('name' => '', 'label' => '', 'description' => '');
                     foreach ($set->attributes() as $name => $value)
                     {
-                        $fieldset->$name = (string)$value;
+                        $nameset->$name = (string)$value;
                     }
 
                     // Add the fieldset object to the list.
-                    $fieldsets[$fieldset->name] = $fieldset;
+                    $namesets[$nameset->name] = $nameset;
                 }
             }
                 // Must be dealing with a fieldset attribute.
             else {
 
                 // Only create it if it doesn't already exist.
-                if (empty($fieldsets[(string)$set])) {
+                if (empty($namesets[(string)$set])) {
 
                     // Attempt to get the fieldset element for data (throughout the entire form document).
                     $tmp = $this->xml->xpath('//fieldset[@name="'.(string)$set.'"]');
 
                     // If no element was found, build a very simple fieldset object.
                     if (empty($tmp)) {
-                        $fieldset = (object)array('name' => (string)$set, 'label' => '', 'description' => '');
+                        $nameset = (object)array('name' => (string)$set, 'label' => '', 'description' => '');
                     }
                         // Build the fieldset object from the element.
                     else {
-                        $fieldset = (object)array('name' => '', 'label' => '', 'description' => '');
+                        $nameset = (object)array('name' => '', 'label' => '', 'description' => '');
                         foreach ($tmp[0]->attributes() as $name => $value)
                         {
-                            $fieldset->$name = (string)$value;
+                            $nameset->$name = (string)$value;
                         }
                     }
 
                     // Add the fieldset object to the list.
-                    $fieldsets[$fieldset->name] = $fieldset;
+                    $namesets[$nameset->name] = $nameset;
                 }
             }
         }
 
-        return $fieldsets;
+        return $namesets;
     }
 
     /**
@@ -470,26 +470,26 @@ class MolajoForm
     public function getGroup($group, $nested = false)
     {
         // Initialise variables.
-        $fields = array();
+        $names = array();
 
         // Get all of the field elements in the field group.
         $elements = $this->findFieldsByGroup($group, $nested);
 
         // If no field elements were found return empty.
         if (empty($elements)) {
-            return $fields;
+            return $names;
         }
 
         // Build the result array from the found field elements.
         foreach ($elements as $element)
         {
             // If the field is successfully loaded add it to the result array.
-            if ($field = $this->loadField($element, $group)) {
-                $fields[$field->id] = $field;
+            if ($name = $this->loadField($element, $group)) {
+                $names[$name->id] = $name;
             }
         }
 
-        return $fields;
+        return $names;
     }
 
     /**
@@ -506,8 +506,8 @@ class MolajoForm
     public function getInput($name, $group = null, $value = null)
     {
         // Attempt to get the form field.
-        if ($field = $this->getField($name, $group, $value)) {
-            return $field->calendar;
+        if ($name = $this->getField($name, $group, $value)) {
+            return $name->calendar;
         }
 
         return '';
@@ -526,8 +526,8 @@ class MolajoForm
     public function getLabel($name, $group = null)
     {
         // Attempt to get the form field.
-        if ($field = $this->getField($name, $group)) {
-            return $field->label;
+        if ($name = $this->getField($name, $group)) {
+            return $name->label;
         }
 
         return '';
@@ -640,15 +640,15 @@ class MolajoForm
         foreach ($elements as $element)
         {
             // Get an array of fields with the correct name.
-            $fields = $element->xpath('descendant-or-self::field');
-            foreach ($fields as $field)
+            $names = $element->xpath('descendant-or-self::field');
+            foreach ($names as $name)
             {
                 // Get the group names as strings for ancestor fields elements.
-                $attrs = $field->xpath('ancestor::fields[@name]/@name');
+                $attrs = $name->xpath('ancestor::fields[@name]/@name');
                 $groups = array_map('strval', $attrs ? $attrs : array());
 
                 // Check to see if the field exists in the current form.
-                if ($current = $this->findField((string)$field['name'], implode('.', $groups))) {
+                if ($current = $this->findField((string)$name['name'], implode('.', $groups))) {
 
                     // If set to replace found fields remove it from the current definition.
                     if ($replace) {
@@ -658,7 +658,7 @@ class MolajoForm
 
                         // Else remove it from the incoming definition so it isn't replaced.
                     else {
-                        unset($field);
+                        unset($name);
                     }
                 }
             }
@@ -838,11 +838,11 @@ class MolajoForm
         if ($group) {
 
             // Get the fields elements for a given group.
-            $fields = & $this->findGroup($group);
+            $names = & $this->findGroup($group);
 
             // If an appropriate fields element was found for the group, add the element.
-            if (isset($fields[0]) && ($fields[0] instanceof JXMLElement)) {
-                self::addNode($fields[0], $element);
+            if (isset($names[0]) && ($names[0] instanceof JXMLElement)) {
+                self::addNode($names[0], $element);
             }
         }
         else {
@@ -1001,21 +1001,21 @@ class MolajoForm
         $calendar = new JRegistry($data);
 
         // Get the fields for which to validate the data.
-        $fields = $this->findFieldsByGroup($group);
-        if (!$fields) {
+        $names = $this->findFieldsByGroup($group);
+        if (!$names) {
             // PANIC!
             return false;
         }
 
         // Validate the fields.
-        foreach ($fields as $field)
+        foreach ($names as $name)
         {
             // Initialise variables.
             $value = null;
-            $name = (string)$field['name'];
+            $name = (string)$name['name'];
 
             // Get the group names as strings for ancestor fields elements.
-            $attrs = $field->xpath('ancestor::fields[@name]/@name');
+            $attrs = $name->xpath('ancestor::fields[@name]/@name');
             $groups = array_map('strval', $attrs ? $attrs : array());
             $group = implode('.', $groups);
 
@@ -1028,7 +1028,7 @@ class MolajoForm
             }
 
             // Validate the field.
-            $valid = $this->validateField($field, $group, $value, $calendar);
+            $valid = $this->validateField($name, $group, $value, $calendar);
 
             // Check for an error.
             if (MolajoError::isError($valid)) {
@@ -1234,7 +1234,7 @@ class MolajoForm
     {
         // Initialise variables.
         $element = false;
-        $fields = array();
+        $names = array();
 
         // Make sure there is a valid MolajoForm XML document.
         if (!($this->xml instanceof JXMLElement)) {
@@ -1252,49 +1252,49 @@ class MolajoForm
             {
                 // If there are matching field elements add them to the fields array.
                 if ($tmp = $element->xpath('descendant::field[@name="'.$name.'"]')) {
-                    $fields = array_merge($fields, $tmp);
+                    $names = array_merge($names, $tmp);
                 }
             }
 
             // Make sure something was found.
-            if (!$fields) {
+            if (!$names) {
                 return false;
             }
 
             // Use the first correct match in the given group.
             $groupNames = explode('.', $group);
-            foreach ($fields as & $field)
+            foreach ($names as & $name)
             {
                 // Get the group names as strings for ancestor fields elements.
-                $attrs = $field->xpath('ancestor::fields[@name]/@name');
+                $attrs = $name->xpath('ancestor::fields[@name]/@name');
                 $names = array_map('strval', $attrs ? $attrs : array());
 
                 // If the field is in the exact group use it and break out of the loop.
                 if ($names == (array)$groupNames) {
-                    $element = & $field;
+                    $element = & $name;
                     break;
                 }
             }
         }
         else {
             // Get an array of fields with the correct name.
-            $fields = $this->xml->xpath('//field[@name="'.$name.'"]');
+            $names = $this->xml->xpath('//field[@name="'.$name.'"]');
 
             // Make sure something was found.
-            if (!$fields) {
+            if (!$names) {
                 return false;
             }
 
             // Search through the fields for the right one.
-            foreach ($fields as & $field)
+            foreach ($names as & $name)
             {
                 // If we find an ancestor fields element with a group name then it isn't what we want.
-                if ($field->xpath('ancestor::fields[@name]')) {
+                if ($name->xpath('ancestor::fields[@name]')) {
                     continue;
                 }
                     // Found it!
                 else {
-                    $element = & $field;
+                    $element = & $name;
                     break;
                 }
             }
@@ -1328,9 +1328,9 @@ class MolajoForm
            * with the appropriate name attribute, and also any <field /> elements with
            * the appropriate fieldset attribute.
            */
-        $fields = $this->xml->xpath('//fieldset[@name="'.$name.'"]//field | //field[@fieldset="'.$name.'"]');
+        $names = $this->xml->xpath('//fieldset[@name="'.$name.'"]//field | //field[@fieldset="'.$name.'"]');
 
-        return $fields;
+        return $names;
     }
 
     /**
@@ -1350,7 +1350,7 @@ class MolajoForm
     {
         // Initialise variables.
         $false = false;
-        $fields = array();
+        $names = array();
 
         // Make sure there is a valid MolajoForm XML document.
         if (!($this->xml instanceof JXMLElement)) {
@@ -1372,20 +1372,20 @@ class MolajoForm
 
                     // If we also want fields in nested groups then just merge the arrays.
                     if ($nested) {
-                        $fields = array_merge($fields, $tmp);
+                        $names = array_merge($names, $tmp);
                     }
                         // If we want to exclude nested groups then we need to check each field.
                     else {
                         $groupNames = explode('.', $group);
-                        foreach ($tmp as $field)
+                        foreach ($tmp as $name)
                         {
                             // Get the names of the groups that the field is in.
-                            $attrs = $field->xpath('ancestor::fields[@name]/@name');
+                            $attrs = $name->xpath('ancestor::fields[@name]/@name');
                             $names = array_map('strval', $attrs ? $attrs : array());
 
                             // If the field is in the specific group then add it to the return list.
                             if ($names == (array)$groupNames) {
-                                $fields = array_merge($fields, array($field));
+                                $names = array_merge($names, array($name));
                             }
                         }
                     }
@@ -1394,14 +1394,14 @@ class MolajoForm
         }
         else if ($group === false) {
             // Get only field elements not in a group.
-            $fields = $this->xml->xpath('descendant::fields[not(@name)]/field | descendant::fields[not(@name)]/fieldset/field ');
+            $names = $this->xml->xpath('descendant::fields[not(@name)]/field | descendant::fields[not(@name)]/fieldset/field ');
         }
         else {
             // Get an array of all the <field /> elements.
-            $fields = $this->xml->xpath('//field');
+            $names = $this->xml->xpath('//field');
         }
 
-        return $fields;
+        return $names;
     }
 
     /**
@@ -1455,16 +1455,16 @@ class MolajoForm
                     $children = $element->xpath('descendant::fields[@name="'.(string)$group[$i].'"]');
 
                     // For the found fields elements validate that they are in the correct groups.
-                    foreach ($children as $fields)
+                    foreach ($children as $names)
                     {
                         // Get the group names as strings for ancestor fields elements.
-                        $attrs = $fields->xpath('ancestor-or-self::fields[@name]/@name');
+                        $attrs = $names->xpath('ancestor-or-self::fields[@name]/@name');
                         $names = array_map('strval', $attrs ? $attrs : array());
 
                         // If the group names for the fields element match the valid names at this
                         // level add the fields element.
                         if ($validNames == $names) {
-                            $tmp[] = $fields;
+                            $tmp[] = $names;
                         }
                     }
                 }
@@ -1504,11 +1504,11 @@ class MolajoForm
         $type = $element['type'] ? (string)$element['type'] : 'text';
 
         // Load the MolajoFormField object for the field.
-        $field = $this->loadFieldType($type);
+        $name = $this->loadFieldType($type);
 
         // If the object could not be loaded, get a text field object.
-        if ($field === false) {
-            $field = $this->loadFieldType('text');
+        if ($name === false) {
+            $name = $this->loadFieldType('text');
         }
 
         // Get the value for the form field if not set.
@@ -1533,10 +1533,10 @@ class MolajoForm
         }
 
         // Setup the MolajoFormField object.
-        $field->setForm($this);
+        $name->setForm($this);
 
-        if ($field->setup($element, $value, $group)) {
-            return $field;
+        if ($name->setup($element, $value, $group)) {
+            return $name;
         }
         else {
             return false;
@@ -1890,9 +1890,9 @@ class MolajoForm
             $name = $child['name'];
 
             // Does this node exist?
-            $fields = $source->xpath($type.'[@name="'.$name.'"]');
+            $names = $source->xpath($type.'[@name="'.$name.'"]');
 
-            if (empty($fields)) {
+            if (empty($names)) {
                 // This node does not exist, so add it.
                 self::addNode($source, $child);
             }
@@ -1900,11 +1900,11 @@ class MolajoForm
                 // This node does exist.
                 switch ($type) {
                     case 'field':
-                        self::mergeNode($fields[0], $child);
+                        self::mergeNode($names[0], $child);
                         break;
 
                     default:
-                        self::mergeNodes($fields[0], $child);
+                        self::mergeNodes($names[0], $child);
                         break;
                 }
             }

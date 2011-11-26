@@ -52,7 +52,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
                     // Create a new option object based on the <option /> element.
                     $tmp = MolajoHTML::_('select.option',
                                          ($element['value']) ? (string)$element['value'] : trim((string)$element),
-                                         MolajoText::alt(trim((string)$element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)), 'value', 'text',
+                                         MolajoText::alt(trim((string)$element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)), 'value', 'text',
                         ((string)$element['disabled'] == 'true'));
 
                     // Set some option attributes.

@@ -28,7 +28,7 @@ class MolajoFieldAlias extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('alias');
-        parent::setRequestFilter('string');
+        parent::setFilter('string');
 
     }
 
@@ -44,20 +44,20 @@ class MolajoFieldAlias extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
         /** return filtered and validated value **/
-        return $this->requestValue;
+        return $this->value;
     }
 
     /**
@@ -67,7 +67,7 @@ class MolajoFieldAlias extends MolajoField
      */
     public function validateRequestValue()
     {
-        //return MolajoModelDisplay::validateValue('alias', $this->requestValue, 'string', $table = null);
+        //return MolajoModelDisplay::validateValue('alias', $this->value, 'string', $table = null);
     }
 
     /**

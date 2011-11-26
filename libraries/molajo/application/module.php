@@ -266,8 +266,8 @@ abstract class MolajoApplicationModule
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');
-        $request['filter_fieldname'] = $session->get('page.filter_fieldname');
-        $request['select_fieldname'] = $session->get('page.select_fieldname');
+        $request['filter_name'] = $session->get('page.filter_name');
+        $request['select_name'] = $session->get('page.select_name');
         $request['title'] = $module->title;
         $request['subtitle'] = $module->subtitle;
         $request['metakey'] = $session->get('page.metakey');

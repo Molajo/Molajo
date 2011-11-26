@@ -192,22 +192,22 @@ class extendHelper
 
         /** identify **/
         if (isset($tableInfo[$component_option])) {
-            $field_name = $tableInfo[$component_option]['field_name'];
-            if ($field_name == false) {
+            $name_name = $tableInfo[$component_option]['field_name'];
+            if ($name_name == false) {
                 return true;
             }
         } else {
-            $field_name = 'catid';
+            $name_name = 'catid';
         }
 
-        if (isset($content->$field_name)) {
-            $category = (int) $content->$field_name;
+        if (isset($content->$name_name)) {
+            $category = (int) $content->$name_name;
         }
-        if (isset($form->$field_name)) {
-            $category = $form->$field_name;
+        if (isset($form->$name_name)) {
+            $category = $form->$name_name;
         }
-        if (JRequest::getInt($field_name) > 0) {
-            $category = JRequest::getInt($field_name);
+        if (JRequest::getInt($name_name) > 0) {
+            $category = JRequest::getInt($name_name);
         }
         $valid = extendHelper::verifyCategory ($category);
         if ($valid) {
@@ -283,9 +283,9 @@ class extendHelper
 
         /** identify **/
         if (isset($tableInfo[$component_option])) {
-            $field_name = $tableInfo[$component_option]['field_name'];
+            $name_name = $tableInfo[$component_option]['field_name'];
         } else {
-            $field_name = 'id';
+            $name_name = 'id';
         }
 
         if (!JRequest::getInt('id') == 0) {
@@ -314,7 +314,7 @@ class extendHelper
             }
         }
         
-        $valid = extendHelper::verifyComponentID ($component_option, $id, $field_name);
+        $valid = extendHelper::verifyComponentID ($component_option, $id, $name_name);
         if ($valid) {
             return $id;
         } else {
@@ -333,7 +333,7 @@ class extendHelper
      *
      * @return boolean
      */
-    public function verifyComponentID ($component_option, $id, $field_name)
+    public function verifyComponentID ($component_option, $id, $name_name)
     {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
@@ -364,9 +364,9 @@ class extendHelper
 
         /** language does not use id **/
         $db->setQuery(
-            'SELECT '.$field_name .
+            'SELECT '.$name_name .
                 ' FROM '.$db->namequote(trim($table)) .
-                '   WHERE '.$field_name.' = '. (int) $id
+                '   WHERE '.$name_name.' = '. (int) $id
         );
 
         if (!$results = $db->query()) {

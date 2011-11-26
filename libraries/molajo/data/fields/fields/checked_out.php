@@ -28,7 +28,7 @@ class MolajoFieldChecked_out extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('checked_out');
-        parent::setRequestFilter('integer');
+        parent::setFilter('integer');
     }
 
     /**
@@ -41,11 +41,11 @@ class MolajoFieldChecked_out extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
     }
 

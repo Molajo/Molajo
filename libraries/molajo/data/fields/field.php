@@ -1,179 +1,197 @@
 <?php
 /**
- * @version     $id: field.php
  * @package     Molajo
- * @subpackage  Filter
+ * @subpackage  Field
  * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Utility class for managing the Access Filter Field
+ * Utility class for managing fields 
  *
- * @package    Molajo
- * @subpackage    HTML
- * @since    1.0
+ * @package     Molajo
+ * @subpackage  Field
+ * @since       1.0
  */
 class MolajoField
 {
     /**
-     * $fieldName
+     * $name
      *
      * @var string
      */
-    public $fieldName = null;
+    public $name = null;
 
     /**
-     * $requestFilter
+     * $filter
      *
      * @var string
      */
-    public $requestFilter = null;
+    public $filter = null;
 
     /**
-     * $requestValue
+     * $value
      *
      * @var string
      */
-    public $requestValue = null;
+    public $value = null;
 
     /**
-     * $tableColumnSortable
+     * $sortable
      *
      * @var string
      */
-    public $tableColumnSortable = false;
+    public $sortable = false;
 
     /**
-     * $tableColumnCheckbox
+     * $checkbox
      *
      * @var string
      */
-    public $tableColumnCheckbox = false;
+    public $checkbox = false;
 
     /**
-     * $fieldDataType
-     *
+     * $displayType
+     * 
      * @var string
      */
-    public $displayDataType = 'string';
+    public $displayType = 'string';
 
     /**
      * __construct
      */
-    public function __construct()
+    public function __construct() {}
+
+    /**
+     * setName
+     *
+     * Sets the Field Name
+     * 
+     * @param $name
+     * @return void
+     */
+    protected function setName($name)
     {
+        $this->name = $name;
     }
 
     /**
-     * setFieldName
+     * setFilter
      *
-     * Returns list of Option Values
+     * Sets the selected field filter 
+     * 
+     * @param string $filter
+     * @return void
      */
-    protected function setFieldName($field)
+    protected function setFilter($filter = 'integer')
     {
-        $this->fieldName = $field;
+        $this->filter = $filter;
     }
 
     /**
-     * setRequestFilter
+     * getValue
      *
-     * Returns Selected Value
+     * Retrieves the field value given the selected filter
      */
-    protected function setRequestFilter($filter = 'integer')
+    public function getValue()
     {
-        $this->requestFilter = $filter;
-    }
-
-    /**
-     * getSelectedValue
-     *
-     * Returns Selected Value
-     */
-    public function getSelectedValue()
-    {
-
         /** float: digits and periods **/
-        if ($this->requestFilter == 'float') {
-            $this->requestValue = JRequest::getFloat('filter_'.$this->fieldName, null);
+        if ($this->filter == 'float') {
+            $this->value = JRequest::getFloat('filter_'.$this->name, null);
 
             /** base64: URL **/
-        } else if ($this->requestFilter == 'base64') {
-            $this->requestValue = JRequest::getVar($this->fieldName, null, 'default', 'base64');
+        } else if ($this->filter == 'base64') {
+            $this->value = JRequest::getVar($this->name, null, 'default', 'base64');
 
             /** boolean: true or false **/
-        } else if ($this->requestFilter == 'boolean') {
-            $this->requestValue = JRequest::getBool('filter_'.$this->fieldName, null);
+        } else if ($this->filter == 'boolean') {
+            $this->value = JRequest::getBool('filter_'.$this->name, null);
 
             /** command: [A-Za-z0-9.-_] **/
-        } else if ($this->requestFilter == 'command') {
-            $this->requestValue = JRequest::getCmd('filter_'.$this->fieldName, null);
+        } else if ($this->filter == 'command') {
+            $this->value = JRequest::getCmd('filter_'.$this->name, null);
 
             /** word: [A-Za-z_] **/
-        } else if ($this->requestFilter == 'word') {
-            $this->requestValue = JRequest::getWord('filter_'.$this->fieldName, null);
+        } else if ($this->filter == 'word') {
+            $this->value = JRequest::getWord('filter_'.$this->name, null);
 
             /** string: only filters 'bad' HTML code **/
-        } else if ($this->requestFilter == 'string') {
-            $this->requestValue = JRequest::getString('filter_'.$this->fieldName, null);
+        } else if ($this->filter == 'string') {
+            $this->value = JRequest::getString('filter_'.$this->name, null);
 
             /** integer **/
         } else {
-            $this->requestValue = JRequest::getInt('filter_'.$this->fieldName, null);
+            $this->value = JRequest::getInt('filter_'.$this->name, null);
         }
 
         /** retain value from previous page load if current request is null **/
-        if ($this->requestValue == null) {
-            $this->requestValue = MolajoFactory::getApplication()->getUserState('filter.'.$this->fieldName);
+        if ($this->value == null) {
+            $this->value = MolajoFactory::getApplication()->getUserState('filter.'.$this->name);
         }
     }
 
     /**
-     * setTableColumnSortable
+     * setSortable
      *
-     * Display property
+     * Set sortable property for field
+     * 
+     * @param bool $value
+     * @return void
      */
-    protected function setTableColumnSortable($option = true)
+    protected function setSortable($value = false)
     {
-        $this->tableColumnSortable = $option;
+        $this->sortable = $value;
     }
 
     /**
-     * setTableColumnCheckbox
+     * setCheckbox
      *
-     * Display property
+     * Set checkbox property for field
+     * 
+     * @param bool $value
+     * @return void
      */
-    protected function setTableColumnCheckbox($option = false)
+    protected function setCheckbox($value = false)
     {
-        $this->tableColumnCheckbox = $option;
+        $this->checkbox = $value;
     }
 
     /**
-     * setTableColumnCheckbox
+     * setDisplayType
      *
-     * Display property
+     * Set displaytype property for field
+     * 
+     * @param bool $value
+     * @return void
      */
-    protected function setDisplayDataType($option = false)
+    protected function setDisplayType($value = false)
     {
-        $this->displayDataType = $option;
+        $this->displayType = $value;
     }
 
     /**
-     * requireFieldClassFile
+     * getClass
      *
-     * Returns Selected Value
+     * Loads Field Class file
+     * 
+     * @param $name
+     * @param bool $reportError
+     *
+     * @return bool
      */
-    public function requireFieldClassFile($fieldName, $reportError = true)
+    public function getClass($name, $reportError = true)
     {
-        if (class_exists('MolajoField'.ucfirst($fieldName))) {
+        if (class_exists('MolajoField'.ucfirst($name))) {
         } else {
-            $fieldClassFile = MOLAJO_LIBRARY.'/fields/fields/'.$fieldName.'.php';
-            if (JFile::exists($fieldClassFile)) {
-                require_once $fieldClassFile;
+            
+            $nameClassFile = MOLAJO_LIBRARY_DATA.'/fields/fields/'.$name.'.php';
+            if (JFile::exists($nameClassFile)) {
+                require_once $nameClassFile;
+                
             } else {
                 if ($reportError === true) {
-                    MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_FILENAME').' '.'MolajoField'.ucfirst($fieldName).' '.$fieldClassFile, 'error');
+                    MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_FILENAME').' '.'MolajoField'.ucfirst($name).' '.$nameClassFile, 'error');
                     return false;
                 }
             }

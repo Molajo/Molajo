@@ -396,7 +396,7 @@ abstract class MolajoToolbarHelper
         if ((int)$id == 0) {
             return;
         }
-        self::custom(JRequest::getCmd('EditView').'.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+        self::custom(JRequest::getCmd('EditView').'.saveascopy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
     }
 
     /**

@@ -890,8 +890,8 @@ class MolajoACLCore extends MolajoACL
         }
 
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $fieldsEditState = $molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_PUBLISH_FIELDS);
-        foreach ($fieldsEditState as $count => $editstateItem) {
+        $namesEditState = $molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_PUBLISH_FIELDS);
+        foreach ($namesEditState as $count => $editstateItem) {
             $form->setFieldAttribute($editstateItem->value, 'disabled', 'true');
             $form->setFieldAttribute($editstateItem->value, 'filter', 'unset');
         }

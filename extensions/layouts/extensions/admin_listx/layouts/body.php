@@ -25,12 +25,12 @@ for ($i=1; $i < 1000; $i++) {
         if ($fileExists === false) {
 
             /** custom field rendering **/
-            $fieldClassName = 'MolajoField'.ucfirst($this->tempColumnName);
+            $nameClassName = 'MolajoField'.ucfirst($this->tempColumnName);
             $mf = new MolajoField ();
-            $mf->requireFieldClassFile ($this->tempColumnName, false);
+            $mf->getClass ($this->tempColumnName, false);
 
-            if (class_exists($fieldClassName)) {
-                $MolajoFieldClass = new $fieldClassName();
+            if (class_exists($nameClassName)) {
+                $MolajoFieldClass = new $nameClassName();
                 if (method_exists($MolajoFieldClass, 'render')) {
                     $mfc = new $MolajoFieldClass ();
                     $results = $mfc->render ($layout='admin', $this->row, $this->row->rowCount);

@@ -28,7 +28,7 @@ class MolajoFieldCreated_by extends MolajoField
     {
         parent::__construct();
         parent::setFieldname('created_by');
-        parent::setRequestFilter('integer');
+        parent::setFilter('integer');
 
     }
 
@@ -45,20 +45,20 @@ class MolajoFieldCreated_by extends MolajoField
     }
 
     /**
-     *  getSelectedValue
+     *  getValue
      *
      *  Returns Selected Value
      */
-    public function getSelectedValue()
+    public function getValue()
     {
-        parent::getSelectedValue();
+        parent::getValue();
 
-        if ($this->requestValue == null) {
+        if ($this->value == null) {
             return false;
         }
 
         /** return filtered and validated value **/
-        return $this->requestValue;
+        return $this->value;
     }
 
     /**

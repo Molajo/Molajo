@@ -1365,30 +1365,30 @@ class MolajoInstaller extends MolajoAdapter
             return '{}';
         }
         // Getting the fieldset tags
-        $fieldsets = $this->manifest->config->fields->fieldset;
+        $namesets = $this->manifest->config->fields->fieldset;
 
         // Creating the data collection variable:
         $ini = array();
 
         // Iterating through the fieldsets:
-        foreach ($fieldsets as $fieldset)
+        foreach ($namesets as $nameset)
         {
-            if (!count($fieldset->children())) {
+            if (!count($nameset->children())) {
                 // Either the tag does not exist or has no children therefore we return zero files processed.
                 return null;
             }
 
             // Iterating through the fields and collecting the name/default values:
-            foreach ($fieldset as $field)
+            foreach ($nameset as $name)
             {
                 // Check against the null value since otherwise default values like "0"
                 // cause entire parameters to be skipped.
 
-                if (($name = $field->attributes()->name) === null) {
+                if (($name = $name->attributes()->name) === null) {
                     continue;
                 }
 
-                if (($value = $field->attributes()->default) === null) {
+                if (($value = $name->attributes()->default) === null) {
                     continue;
                 }
 

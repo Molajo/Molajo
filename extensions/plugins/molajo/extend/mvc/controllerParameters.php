@@ -31,19 +31,19 @@ class extendControllerParameters {
     {
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
-        $fieldParameters = new JParameter($systemPlugin->parameters);
+        $nameParameters = new JParameter($systemPlugin->parameters);
 
         /** client **/
-        if ($fieldParameters->def('global_restriction_client', '') == '') {
-        } else if ($fieldParameters->def('global_restriction_client', '') == MOLAJO_APPLICATION_ID) {
+        if ($nameParameters->def('global_restriction_client', '') == '') {
+        } else if ($nameParameters->def('global_restriction_client', '') == MOLAJO_APPLICATION_ID) {
         } else {
             return false;
         }
 
         /** component **/
-        if (is_array($fieldParameters->get('global_restriction_component'))) {
-            if (implode('', $fieldParameters->get('global_restriction_component')) == '') {
-            } else if (in_array($component_option, $fieldParameters->get('global_restriction_component'))) {
+        if (is_array($nameParameters->get('global_restriction_component'))) {
+            if (implode('', $nameParameters->get('global_restriction_component')) == '') {
+            } else if (in_array($component_option, $nameParameters->get('global_restriction_component'))) {
             } else {
                 return false;
             }
@@ -53,9 +53,9 @@ class extendControllerParameters {
         if ($category == null) {      /** new content and some components do not use category **/
         } else {
             if ($task == 'display' || $task == 'edit') {
-                if (is_array($fieldParameters->get('global_restriction_category'))) {
-                    if (implode('', $fieldParameters->get('global_restriction_category')) == '') {
-                    } else if (in_array($category, $fieldParameters->get('global_restriction_category'))) {
+                if (is_array($nameParameters->get('global_restriction_category'))) {
+                    if (implode('', $nameParameters->get('global_restriction_category')) == '') {
+                    } else if (in_array($category, $nameParameters->get('global_restriction_category'))) {
                     } else {
                         return false;
                     }
@@ -65,9 +65,9 @@ class extendControllerParameters {
 
         /** named forms **/
         if ($task == 'edit' || $task == 'save') {
-            if (is_array($fieldParameters->get('global_restriction_forms'))) {
-                if (implode('', $fieldParameters->get('global_restriction_forms')) == '') {
-                } else if (in_array($form->getName(), $fieldParameters->get('global_restriction_forms'))) {
+            if (is_array($nameParameters->get('global_restriction_forms'))) {
+                if (implode('', $nameParameters->get('global_restriction_forms')) == '') {
+                } else if (in_array($form->getName(), $nameParameters->get('global_restriction_forms'))) {
                 } else {
                     return false;
                 }
@@ -92,35 +92,35 @@ class extendControllerParameters {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
         $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
-        $fieldParameters = new JParameter($systemPlugin->parameters);
+        $nameParameters = new JParameter($systemPlugin->parameters);
 
         /** enabled **/
-        if ((int) $fieldParameters->def($contentType.'_enable', 0) == 0) {
+        if ((int) $nameParameters->def($contentType.'_enable', 0) == 0) {
             return false;
         }
 
         /** client **/
-        if ($fieldParameters->def($contentType.'_client_criteria', '') == '') {
-        } else if ($fieldParameters->def($contentType.'_client_criteria', '') == MOLAJO_APPLICATION_ID) {
+        if ($nameParameters->def($contentType.'_client_criteria', '') == '') {
+        } else if ($nameParameters->def($contentType.'_client_criteria', '') == MOLAJO_APPLICATION_ID) {
         } else {
             return false;
         }
 
         /** component **/
-        if (is_array($fieldParameters->get($contentType.'_component_criteria'))) {
-            if (implode('', $fieldParameters->get($contentType.'_component_criteria')) == '') {
-            } else if (in_array($component_option, $fieldParameters->get($contentType.'_component_criteria'))) {
+        if (is_array($nameParameters->get($contentType.'_component_criteria'))) {
+            if (implode('', $nameParameters->get($contentType.'_component_criteria')) == '') {
+            } else if (in_array($component_option, $nameParameters->get($contentType.'_component_criteria'))) {
             } else {
                 return false;
             }
         }
 
         /** category **/
-        if (is_array($fieldParameters->get($contentType.'_category_criteria'))) {
-            if (implode('', $fieldParameters->get($contentType.'_category_criteria')) == '') {
+        if (is_array($nameParameters->get($contentType.'_category_criteria'))) {
+            if (implode('', $nameParameters->get($contentType.'_category_criteria')) == '') {
             } else if ($category == null) {
                 return false;
-            } else if (in_array($category, $fieldParameters->get($contentType.'_category_criteria'))) {
+            } else if (in_array($category, $nameParameters->get($contentType.'_category_criteria'))) {
             } else {
                 return false;
             }
@@ -128,9 +128,9 @@ class extendControllerParameters {
 
         /** named forms **/
         if ($task == 'edit' || $task == 'save') {
-            if (is_array($fieldParameters->get($contentType.'_forms_criteria'))) {
-                if (implode('', $fieldParameters->get($contentType.'_forms_criteria')) == '') {
-                } else if (in_array($form->getName(), $fieldParameters->get($contentType.'_forms_criteria'))) {
+            if (is_array($nameParameters->get($contentType.'_forms_criteria'))) {
+                if (implode('', $nameParameters->get($contentType.'_forms_criteria')) == '') {
+                } else if (in_array($form->getName(), $nameParameters->get($contentType.'_forms_criteria'))) {
                 } else {
                     return false;
                 }
@@ -140,9 +140,9 @@ class extendControllerParameters {
         /** menu items **/
         if ($app->getMenu()->getActive() == null) {
         } else {
-            if (is_array($fieldParameters->get($contentType.'_menu_item_criteria'))) {
-                if (implode('', $fieldParameters->get($contentType.'_menu_item_criteria')) == '') {
-                } else if (in_array($app->getMenu()->getActive(), $fieldParameters->get($contentType.'_menu_item_criteria'))) {
+            if (is_array($nameParameters->get($contentType.'_menu_item_criteria'))) {
+                if (implode('', $nameParameters->get($contentType.'_menu_item_criteria')) == '') {
+                } else if (in_array($app->getMenu()->getActive(), $nameParameters->get($contentType.'_menu_item_criteria'))) {
                 } else {
                     return false;
                 }
@@ -150,9 +150,9 @@ class extendControllerParameters {
         }
 
         /** published state and date checks **/
-        if (!(int) $fieldParameters->def($contentType.'_published_criteria', 1) == 1) { return false; }
-        $publishUp = $fieldParameters->def($contentType.'_start_publishing_datetime_criteria', '');
-        $publishDown = $fieldParameters->def($contentType.'_stop_publishing_datetime_criteria', '');
+        if (!(int) $nameParameters->def($contentType.'_published_criteria', 1) == 1) { return false; }
+        $publishUp = $nameParameters->def($contentType.'_start_publishing_datetime_criteria', '');
+        $publishDown = $nameParameters->def($contentType.'_stop_publishing_datetime_criteria', '');
         if ($publishUp == '' && $publishDown == '') {
         } else if (date('Y-m-d') > $publishUp && date('Y-m-d') < $publishDown) {
         } else {
@@ -162,12 +162,12 @@ class extendControllerParameters {
         /** access **/
         $acl	= new MolajoACL();
         $groups = $acl->getList('Viewaccess');
-        if (!in_array($fieldParameters->def($contentType.'_access_criteria', 0), $groups)) {
+        if (!in_array($nameParameters->def($contentType.'_access_criteria', 0), $groups)) {
             return false;
         }
 
         /** language **/
-        if ($fieldParameters->def($contentType.'_language_criteria', '*') == '*') {
+        if ($nameParameters->def($contentType.'_language_criteria', '*') == '*') {
         } else {
         }
 

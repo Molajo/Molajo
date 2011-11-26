@@ -154,25 +154,25 @@ abstract class MolajoHtmlList
     {
         $options = array();
         if (!array_key_exists('archived', $config) || $config['archived']) {
-            $options[] = MolajoHTML::_('select.option', '2', MolajoText::_('MOLAJO_OPTION_ARCHIVED'));
+            $options[] = MolajoHTML::_('select.option', '2', MolajoText::_('MOLAJO_OPTION_STATUS_ARCHIVED'));
         }
         if (!array_key_exists('published', $config) || $config['published']) {
-            $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_PUBLISHED'));
+            $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STATUS_PUBLISHED'));
         }
         if (!array_key_exists('unpublished', $config) || $config['unpublished']) {
-            $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNPUBLISHED'));
+            $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_STATUS_UNPUBLISHED'));
         }
         if ($parameters->def(config_component_state_spam, 0) == '1') {
             if (!array_key_exists('spam', $config) || $config['spam']) {
-                $options[] = MolajoHTML::_('select.option', '-1', MolajoText::_('MOLAJO_OPTION_SPAMMED'));
+                $options[] = MolajoHTML::_('select.option', '-1', MolajoText::_('MOLAJO_OPTION_STATUS_SPAMMED'));
             }
         }
         if (!array_key_exists('trash', $config) || $config['trash']) {
-            $options[] = MolajoHTML::_('select.option', '-2', MolajoText::_('MOLAJO_OPTION_TRASHED'));
+            $options[] = MolajoHTML::_('select.option', '-2', MolajoText::_('MOLAJO_OPTION_STATUS_TRASHED'));
         }
         if ($parameters->def(config_component_version_management, 1) == '1') {
             if (!array_key_exists('version', $config) || $config['version']) {
-                $options[] = MolajoHTML::_('select.option', '-10', MolajoText::_('MOLAJO_OPTION_VERSION'));
+                $options[] = MolajoHTML::_('select.option', '-10', MolajoText::_('MOLAJO_OPTION_STATUS_VERSION'));
             }
         }
         if (!array_key_exists('all', $config) || $config['all']) {

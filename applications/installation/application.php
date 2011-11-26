@@ -188,8 +188,8 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
 
         $request['acl_implementation'] = 'core';
         $request['component_table'] = '__dummy';
-        $request['filter_fieldname'] = '';
-        $request['select_fieldname'] = '';
+        $request['filter_name'] = '';
+        $request['select_name'] = '';
 
         $request['title'] = 'Molajo Installer: Step '.substr($request['layout'], -1);
         $request['subtitle'] = '';

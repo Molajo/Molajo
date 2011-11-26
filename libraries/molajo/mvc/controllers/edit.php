@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * Handles the standard single-item save, delete, and cancel tasks
  *
  * Cancel: cancel and close
- * Save: apply, create, save, save2copy, saveandnew, restore
+ * Save: apply, create, save, saveascopy, saveandnew, restore
  * Delete: delete
  *
  * Called from the Multiple Controller for batch (copy, move) and delete
@@ -130,11 +130,11 @@ class MolajoControllerEdit extends MolajoController
     }
 
     /**
-     * apply, create, save, save2copy, saveandnew
+     * apply, create, save, saveascopy, saveandnew
      *
      * Methods used to save a record with different redirect results.
      *
-     * Tasks: apply, create, save, save2copy, saveandnew all processed by saveItemForm to prepare data
+     * Tasks: apply, create, save, saveascopy, saveandnew all processed by saveItemForm to prepare data
      * and then SaveItem to actually save the data
      *
      * @return    Boolean
@@ -155,9 +155,9 @@ class MolajoControllerEdit extends MolajoController
         return $this->saveItemForm('save');
     }
 
-    public function save2copy()
+    public function saveascopy()
     {
-        return $this->saveItemForm('save2copy');
+        return $this->saveItemForm('saveascopy');
     }
 
     public function saveandnew()
@@ -170,7 +170,7 @@ class MolajoControllerEdit extends MolajoController
      *
      * Used to obtain form data and send to saveItem for save processing
      *
-     * Method called by apply, create, save, save2copy and saveandnew tasks
+     * Method called by apply, create, save, saveascopy and saveandnew tasks
      *
      * @return    Boolean
      * @since    1.0
@@ -185,7 +185,7 @@ class MolajoControllerEdit extends MolajoController
         $data = JRequest::getVar('jform', array(), 'post', 'array');
 
         /** Preparation: save as copy id and task cleanup **/
-        if ($task == 'save2copy') {
+        if ($task == 'saveascopy') {
             $this->id = 0;
             $data['id'] = 0;
             $task = 'apply';

@@ -14,19 +14,19 @@ defined('_JEXEC') or die;
 ?>
 <fieldset id="filter-bar">
 	<div class="filter-search fltlft">
-		<?php foreach($this->form->getFieldSet('search') as $field): ?>
-			<?php if (!$field->hidden): ?>
-				<?php echo $field->label; ?>
+		<?php foreach($this->form->getFieldSet('search') as $name): ?>
+			<?php if (!$name->hidden): ?>
+				<?php echo $name->label; ?>
 			<?php endif; ?>
-			<?php echo $field->input; ?>
+			<?php echo $name->input; ?>
 		<?php endforeach; ?>
 	</div>
 	<div class="filter-select fltrt">
-		<?php foreach($this->form->getFieldSet('select') as $field): ?>
-			<?php if (!$field->hidden): ?>
-				<?php echo $field->label; ?>
+		<?php foreach($this->form->getFieldSet('select') as $name): ?>
+			<?php if (!$name->hidden): ?>
+				<?php echo $name->label; ?>
 			<?php endif; ?>
-			<?php echo $field->input; ?>
+			<?php echo $name->input; ?>
 		<?php endforeach; ?>
 	</div>
 </fieldset>
