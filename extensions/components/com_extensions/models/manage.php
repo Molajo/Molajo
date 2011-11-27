@@ -125,7 +125,7 @@ class InstallerModelManage extends InstallerModel
 			}
 		} else {
 			$result = false;
-			MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+			MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
 		}
 		return $result;
 	}

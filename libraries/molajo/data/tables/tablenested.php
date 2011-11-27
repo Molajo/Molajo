@@ -877,7 +877,7 @@ class MolajoTableNested extends MolajoTable
 
                 if (!empty($rows)) {
                     $e = new MolajoException(
-                        MolajoText::_('MOLAJO_DATABASE_ERROR_ANCESTOR_NODES_LOWER_STATE')
+                        MolajoText::_('MOLAJO_DATABASE_ERROR_ANCESTOR_NODES_LOWER_STATUS')
                     );
                     $this->setError($e);
                     return false;

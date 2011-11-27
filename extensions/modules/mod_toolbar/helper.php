@@ -214,7 +214,7 @@ abstract class MolajoToolbarHelper
      */
     public function addEditButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::editList(JRequest::getCmd('EditView').'.edit', 'JTOOLBAR_EDIT');
+        self::editList(JRequest::getCmd('EditView').'.edit', 'TOOLBAR_EDIT');
     }
 
     /**
@@ -259,7 +259,7 @@ abstract class MolajoToolbarHelper
     public function addSpamButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
         $parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
-        if ($parameters->def('config_component_state_spam', '0') == 1) {
+        if ($parameters->def('state_spam', '0') == 1) {
             self::custom(JRequest::getCmd('DefaultView').'.spam', 'spam.png', 'spam_f2.png', 'MolajoToolbar_SPAM', true);
         }
     }
@@ -315,7 +315,7 @@ abstract class MolajoToolbarHelper
         if ($state == MOLAJO_STATUS_ARCHIVED || $state == MOLAJO_STATUS_VERSION) {
             return;
         }
-        self::apply(JRequest::getCmd('EditView').'.apply', 'JTOOLBAR_APPLY');
+        self::apply(JRequest::getCmd('EditView').'.apply', 'TOOLBAR_APPLY');
     }
 
     /**
@@ -348,7 +348,7 @@ abstract class MolajoToolbarHelper
      */
     public function addOpenButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::custom(JRequest::getCmd('EditView').'.open', 'open.png', 'open_f2.png', 'JTOOLBAR_OPEN', false);
+        self::custom(JRequest::getCmd('EditView').'.open', 'open.png', 'open_f2.png', 'TOOLBAR_OPEN', false);
     }
 
     /**
@@ -382,7 +382,7 @@ abstract class MolajoToolbarHelper
         if ($item->state == MOLAJO_STATUS_ARCHIVED || $item->state == MOLAJO_STATUS_VERSION) {
             return;
         }
-        self::custom(JRequest::getCmd('EditView').'.saveandnew', 'savethennew.png', 'savethennew_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+        self::custom(JRequest::getCmd('EditView').'.saveandnew', 'savethennew.png', 'savethennew_f2.png', 'TOOLBAR_SAVEANDNEW', false);
     }
 
     /**
@@ -396,7 +396,7 @@ abstract class MolajoToolbarHelper
         if ((int)$id == 0) {
             return;
         }
-        self::custom(JRequest::getCmd('EditView').'.saveascopy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+        self::custom(JRequest::getCmd('EditView').'.saveascopy', 'save-copy.png', 'save-copy_f2.png', 'TOOLBAR_SAVEASCOPY', false);
     }
 
     /**
@@ -433,7 +433,7 @@ abstract class MolajoToolbarHelper
      */
     public function addNewButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::addNew(JRequest::getCmd('EditView').'.add', 'JTOOLBAR_NEW');
+        self::addNew(JRequest::getCmd('EditView').'.add', 'TOOLBAR_NEW');
     }
 
     /**
@@ -449,7 +449,7 @@ abstract class MolajoToolbarHelper
             return;
         }
         $parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
-        if ($parameters->def('config_component_version_management', '1') == 1) {
+        if ($parameters->def('version_management', '1') == 1) {
             self::custom(JRequest::getCmd('EditView').'.restore', 'restore.png', 'restore_f2.png', 'MolajoToolbar_RESTORE', false);
         }
     }

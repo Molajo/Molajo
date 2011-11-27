@@ -45,9 +45,9 @@ class InstallerViewDiscover extends InstallerViewDefault
 		/*
 		 * Set toolbar items for the page
 		 */
-		MolajoToolbarHelper::custom('discover.install', 'upload', 'upload', 'JTOOLBAR_INSTALL', true, false);
+		MolajoToolbarHelper::custom('discover.install', 'upload', 'upload', 'TOOLBAR_INSTALL', true, false);
 		MolajoToolbarHelper::custom('discover.refresh', 'refresh', 'refresh','COM_INSTALLER_TOOLBAR_DISCOVER',false,false);
-		MolajoToolbarHelper::custom('discover.purge', 'purge', 'purge', 'JTOOLBAR_PURGE_CACHE', false,false);
+		MolajoToolbarHelper::custom('discover.purge', 'purge', 'purge', 'TOOLBAR_PURGE_CACHE', false,false);
 		MolajoToolbarHelper::divider();
 		parent::addToolbar();
 		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_DISCOVER');

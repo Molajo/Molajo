@@ -126,7 +126,7 @@ class plgSystemParameters extends MolajoApplicationPlugin
     function getDetailItemParameterSets($data)
     {
         $parameters = JComponentHelper::getParameters(JRequest::getVar('option'));
-        return $this->getLayoutParameterOptions (array('config_component_single_item_parameter'), $parameters);
+        return $this->getLayoutParameterOptions (array('single_item_parameter'), $parameters);
     }
 
     /**
@@ -156,7 +156,7 @@ class plgSystemParameters extends MolajoApplicationPlugin
         }
         $this->getSiteLayouts($option);
 
-        $typeArray = array('config_component_'.$view.'_'.$layout.'_parameter');
+        $typeArray = array(''.$view.'_'.$layout.'_parameter');
         $parameters = JComponentHelper::getParameters($option);
 
         return $this->getLayoutParameterOptions ($typeArray, $parameters);
@@ -288,7 +288,7 @@ class plgSystemParameters extends MolajoApplicationPlugin
                 /** process each file **/
                 foreach ($files as $file) {
                     $layout = substr($file, 0, strlen($file)-4);
-                    $viewLayout[] = 'config_component_'.$view.'_'.$layout.'_parameter';
+                    $viewLayout[] = ''.$view.'_'.$layout.'_parameter';
                 }
             } else {
                 $view = basename($folder);

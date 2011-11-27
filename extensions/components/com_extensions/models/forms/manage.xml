@@ -38,7 +38,7 @@
 				hidden="true"
 				onchange="this.form.submit();"
 			>
-				<option value="">COM_INSTALLER_VALUE_STATE_SELECT</option>
+				<option value="">COM_INSTALLER_VALUE_STATUS_SELECT</option>
 				<option value="0">JDISABLED</option>
 				<option value="1">JENABLED</option>
 			</field>

@@ -49,7 +49,7 @@ abstract class MolajoSubmenuHelper
 
         /** Toolbar title and buttons **/
         for ($i = 1; $i < 1000; $i++) {
-            $value = $parameters->get('config_manager_sub_menu'.$i);
+            $value = $parameters->get('config_manager_submenu'.$i);
             if ($value == null) {
                 break;
             }
@@ -64,7 +64,7 @@ abstract class MolajoSubmenuHelper
         /** loop thru config options **/
         for ($i = 1; $i < $max; $i++) {
 
-            $SubmenuValue = $parameters->def('config_manager_sub_menu'.$i, 0);
+            $SubmenuValue = $parameters->def('config_manager_submenu'.$i, 0);
 
             if (!$SubmenuValue == '0') {
                 $functionName = 'add'.ucfirst($SubmenuValue).'Submenu';

@@ -35,7 +35,7 @@ class MolajoButtonHelp extends MolajoButton
      */
     public function fetchButton($type = 'Help', $ref = '', $com = false, $override = null, $component = null)
     {
-        $text = MolajoText::_('JTOOLBAR_HELP');
+        $text = MolajoText::_('TOOLBAR_HELP');
         $class = $this->fetchIconClass('help');
         $doTask = $this->_getCommand($ref, $com, $override, $component);
 

@@ -451,7 +451,7 @@ class MolajoController extends JController
     public function createVersion($context)
     {
         /** activated? **/
-        if ($this->parameters->def('config_component_version_management', 1) == 1) {
+        if ($this->parameters->def('version_management', 1) == 1) {
         } else {
             return true;
         }
@@ -463,7 +463,7 @@ class MolajoController extends JController
 
         /** versions deleted with delete **/
         if ($this->task == 'delete'
-            && $this->parameters->def('config_component_retain_versions_after_delete', 1) == 0
+            && $this->parameters->def('retain_versions_after_delete', 1) == 0
         ) {
             return true;
         }
@@ -501,7 +501,7 @@ class MolajoController extends JController
     public function maintainVersionCount($context)
     {
         /** activiated? **/
-        if ($this->parameters->def('config_component_version_management', 1) == 1) {
+        if ($this->parameters->def('version_management', 1) == 1) {
         } else {
             return;
         }
@@ -512,11 +512,11 @@ class MolajoController extends JController
         }
 
         /** versions deleted with delete **/
-        if ($this->task == 'delete' && $this->parameters->def('config_component_retain_versions_after_delete', 1) == 0) {
+        if ($this->task == 'delete' && $this->parameters->def('retain_versions_after_delete', 1) == 0) {
             $maintainVersions = 0;
         } else {
             /** retrieve versions desired **/
-            $maintainVersions = $this->parameters->def('config_component_maintain_version_count', 5);
+            $maintainVersions = $this->parameters->def('maintain_version_count', 5);
         }
 
         /** delete extra versions **/

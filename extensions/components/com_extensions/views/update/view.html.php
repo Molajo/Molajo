@@ -48,7 +48,7 @@ class InstallerViewUpdate extends InstallerViewDefault
 
 		MolajoToolbarHelper::custom('update.update', 'upload', 'upload', 'COM_INSTALLER_TOOLBAR_UPDATE', true, false);
 		MolajoToolbarHelper::custom('update.find', 'refresh', 'refresh', 'COM_INSTALLER_TOOLBAR_FIND_UPDATES',false,false);
-		MolajoToolbarHelper::custom('update.purge', 'purge', 'purge', 'JTOOLBAR_PURGE_CACHE', false,false);
+		MolajoToolbarHelper::custom('update.purge', 'purge', 'purge', 'TOOLBAR_PURGE_CACHE', false,false);
 		MolajoToolbarHelper::divider();
 		parent::addToolbar();
 		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_UPDATE');

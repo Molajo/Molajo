@@ -78,7 +78,7 @@ class MolajoControllerEdit extends MolajoController
     {
         parent::initialise('save');
 
-        if ($this->parameters->def('config_component_version_management', 1) == 1) {
+        if ($this->parameters->def('version_management', 1) == 1) {
         } else {
             $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_RESTORE_DISABLED_IN_CONFIGURATION'));
             $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));

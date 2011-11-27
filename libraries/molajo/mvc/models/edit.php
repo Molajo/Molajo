@@ -903,7 +903,7 @@ class MolajoModelEdit extends JModel
                     // Prune items that you can't change.
                     unset($ids[$i]);
                     $this->checkin($id);
-                    MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+                    MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
                     $allowed = false;
                     continue;
                 }
@@ -978,7 +978,7 @@ class MolajoModelEdit extends JModel
             if (!$this->canEditState($table)) {
                 // Prune items that you can't change.
                 unset($ids[$i]);
-                MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+                MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
 
             } else if ($table->ordering != $order[$i]) {
                 $table->ordering = $order[$i];

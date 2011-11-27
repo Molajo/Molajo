@@ -63,14 +63,14 @@ class InstallerViewManage extends InstallerViewDefault
 	{
 		$canDo	= InstallerHelper::getActions();
 		if ($canDo->get('core.edit.state')) {
-			MolajoToolbarHelper::publish('manage.publish', 'JTOOLBAR_ENABLE');
-			MolajoToolbarHelper::unpublish('manage.unpublish', 'JTOOLBAR_DISABLE');
+			MolajoToolbarHelper::publish('manage.publish', 'TOOLBAR_ENABLE');
+			MolajoToolbarHelper::unpublish('manage.unpublish', 'TOOLBAR_DISABLE');
 			MolajoToolbarHelper::divider();
 		}
-		MolajoToolbarHelper::custom('manage.refresh', 'refresh', 'refresh', 'JTOOLBAR_REFRESH_CACHE',true);
+		MolajoToolbarHelper::custom('manage.refresh', 'refresh', 'refresh', 'TOOLBAR_REFRESH_CACHE',true);
 		MolajoToolbarHelper::divider();
 		if ($canDo->get('core.delete')) {
-			MolajoToolbarHelper::deleteList('', 'manage.remove', 'JTOOLBAR_UNINSTALL');
+			MolajoToolbarHelper::deleteList('', 'manage.remove', 'TOOLBAR_UNINSTALL');
 			MolajoToolbarHelper::divider();
 		}
 		parent::addToolbar();
