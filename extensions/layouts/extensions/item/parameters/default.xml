@@ -1,13 +1,13 @@
 <metadata>
     <layout
-        title="COM_ARTICLES_DISPLAY_VIEW_LIST_LAYOUT"
-        option="COM_ARTICLES_DISPLAY_VIEW_LIST_LAYOUT_OPTION"
+        title="COM_ARTICLES_VIEWS_DISPLAY_LIST_LAYOUT"
+        option="COM_ARTICLES_VIEWS_DISPLAY_LIST_LAYOUT_OPTION"
         >
         <help
             key = "MOLAJO_HELP_MENU_ITEM_LIST_LAYOUT"
             />
         <message>
-            <![CDATA[MOLAJO_DISPLAY_VIEW_LIST_LAYOUT_DESC]]>
+            <![CDATA[MOLAJO_VIEWS_DISPLAY_LIST_LAYOUT_DESC]]>
         </message>
     </layouts>
 

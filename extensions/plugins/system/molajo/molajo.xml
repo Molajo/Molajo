@@ -432,7 +432,7 @@
                             description="PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_DESC"
                             default="shThemeDefault.css">
                             <option
-                                    value="shThemeDefault.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_DEFAULT</option>
+                                    value="shThemeDefault.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTIONS_DEFAULT</option>
                             <option
                                     value="shThemeDjango.css">PLG_SYSTEM_MOLAJO_CONTENT_SYNTAX_HIGHLIGHTER_TEMPLATE_OPTION_DJANGO</option>
                             <option

@@ -222,27 +222,30 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 320, '', '', 0),
-      (1, 320, 'access', 'MANAGER_OPTION_FILTER_ACCESS', 1),
-      (1, 320, 'alias', 'MANAGER_OPTION_FILTER_ALIAS', 2),
-      (1, 320, 'category', 'MANAGER_OPTION_FILTER_CATEGORY', 4),
-      (1, 320, 'created_by', 'MANAGER_OPTION_FILTER_AUTHOR', 3),
-      (1, 320, 'created', 'MANAGER_OPTION_FILTER_CREATE_DATE', 6),
-      (1, 320, 'featured', 'MANAGER_OPTION_FILTER_FEATURED', 7),
-      (1, 320, 'groups_administer_action', 'MOLAJO_FIELD_GROUPS_ADMINISTER_ACTION', 2),
-      (1, 320, 'groups_create_action', 'MOLAJO_FIELD_GROUPS_CREATE_ACTION', 3),
-      (1, 320, 'groups_delete_action', 'MOLAJO_FIELD_GROUPS_DELETE_ACTION', 4),
-      (1, 320, 'groups_edit_action', 'MOLAJO_FIELD_GROUPS_EDIT_ACTION', 5),
-      (1, 320, 'groups_publish_action', 'MOLAJO_FIELD_GROUPS_PUBLISH_ACTION', 6),
-      (1, 320, 'groups_view_action', 'MOLAJO_FIELD_GROUPS_VIEW_ACTION', 7),
-      (1, 320, 'language', 'MANAGER_OPTION_FILTER_LANGUAGE', 9),
-      (1, 320, 'modified', 'MANAGER_OPTION_FILTER_UPDATE_DATE', 10),
-      (1, 320, 'start_publishing_datetime', 'MANAGER_OPTION_FILTER_PUBLISH_DATE', 11),
-      (1, 320, 'status', 'MANAGER_OPTION_FILTER_STATUS', 12),
-      (1, 320, 'stickied', 'MANAGER_OPTION_FILTER_STICKIED', 13),
-      (1, 320, 'subtitle', 'MANAGER_OPTION_FILTER_SUBTITLE', 15);
-      (1, 320, 'title', 'MANAGER_OPTION_FILTER_TITLE', 14),
-
-
+      (1, 320, 'alias', 'MOLAJO_FIELD_ALIAS_LABEL', 1),
+      (1, 320, 'category_id_primary', 'MOLAJO_FIELD_CATEGORY_ID_PRIMARY', 2),
+      (1, 320, 'category_id_list', 'MOLAJO_FIELD_CATEGORY_ID_LIST', 3),
+      (1, 320, 'category_id_tags', 'MOLAJO_FIELD_CATEGORY_ID_TAGS', 4),
+      (1, 320, 'created_by', 'MOLAJO_FIELD_CREATED_BY_LABEL', 5),
+      (1, 320, 'created_datetime', 'MOLAJO_FIELD_CREATED_DATETIME_LABEL', 6),
+      (1, 320, 'featured', 'MOLAJO_FIELD_FEATURED_LABEL', 7),
+      (1, 320, 'groups_administer_action', 'MOLAJO_FIELD_GROUPS_ADMINISTER_ACTION', 8),
+      (1, 320, 'groups_create_action', 'MOLAJO_FIELD_GROUPS_CREATE_ACTION', 9),
+      (1, 320, 'groups_delete_action', 'MOLAJO_FIELD_GROUPS_DELETE_ACTION', 10),
+      (1, 320, 'groups_edit_action', 'MOLAJO_FIELD_GROUPS_EDIT_ACTION', 11),
+      (1, 320, 'groups_publish_action', 'MOLAJO_FIELD_GROUPS_PUBLISH_ACTION', 12),
+      (1, 320, 'groups_view_action', 'MOLAJO_FIELD_GROUPS_VIEW_ACTION', 13),
+      (1, 320, 'language', 'MOLAJO_FIELD_LANGUAGE_LABEL', 14),
+      (1, 320, 'modified_by', 'MOLAJO_FIELD_MODIFIED_BY_LABEL', 15),
+      (1, 320, 'modified_datetime', 'MOLAJO_FIELD_MODIFIED_DATETIME_LABEL', 16),
+      (1, 320, 'path', 'MOLAJO_FIELD_PATH_LABEL', 17),
+      (1, 320, 'position', 'MOLAJO_FIELD_POSITION_LABEL', 18),
+      (1, 320, 'start_publishing_datetime', 'MOLAJO_FIELD_START_PUBLISHING_DATETIME_LABEL', 19),
+      (1, 320, 'status', 'MOLAJO_FIELD_STATUS_LABEL', 20),
+      (1, 320, 'stickied', 'MOLAJO_FIELD_STICKIED_LABEL', 21),
+      (1, 320, 'stop_publishing_datetime', 'MOLAJO_FIELD_STOP_PUBLISHING_DATETIME_LABEL', 22),
+      (1, 320, 'subtitle', 'MOLAJO_FIELD_SUBTITLE_LABEL', 23),
+      (1, 320, 'title', 'MOLAJO_FIELD_TITLE_LABEL', 24);
 
 # 330 MOLAJO_EXTENSION_OPTION_ID_TOOLBAR_EDIT
 INSERT INTO `molajo_extension_options`
@@ -274,7 +277,7 @@ INSERT INTO `molajo_extension_options`
 
 # MIME from ftp://ftp.iana.org/assignments/media-types/
 
-# 400 MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES
+# 400 MOLAJO_EXTENSION_OPTION_ID_MIMES_AUDIO
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -320,7 +323,7 @@ INSERT INTO `molajo_extension_options`
       (1, 400, 'vnd.sealedmedia.softseal-mpeg', 'vnd.sealedmedia.softseal-mpeg', 39),
       (1, 400, 'vnd.vmx.cvsd', 'vnd.vmx.cvsd', 40);
 
-# 410 MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES
+# 410 MOLAJO_EXTENSION_OPTION_ID_MIMES_IMAGE
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -358,7 +361,7 @@ INSERT INTO `molajo_extension_options`
       (1, 410, 'vnd.sealedmedia.softseal-jpg', 'vnd.sealedmedia.softseal-jpg', 31),
       (1, 410, 'vnd.xiff', 'vnd.xiff', 32);
 
-# 420 MOLAJO_EXTENSION_OPTION_ID_TEXT_MIMES
+# 420 MOLAJO_EXTENSION_OPTION_ID_MIMES_TEXT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -394,7 +397,7 @@ INSERT INTO `molajo_extension_options`
       (1, 420, 'vnd.wap.si', 'vnd.wap.si', 29),
       (1, 420, 'vnd.wap.wmlscript', 'vnd.wap.wmlscript', 30);
 
-# 430 MOLAJO_EXTENSION_OPTION_ID_VIDEO_MIMES
+# 430 MOLAJO_EXTENSION_OPTION_ID_MIMES_VIDEO
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -441,7 +444,7 @@ INSERT INTO `molajo_extension_options`
 
 # CONTROLLER TASKS
 
-# 1100 MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER
+# 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -486,56 +489,16 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 1100, 'login', 'login', 28),
-      (1, 1100, 'logout', 'logout', 29);
-
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 1101, 'apply', 'edit', 4),
-      (1, 1101, 'cancel', 'edit', 5),
-      (1, 1101, 'create', 'edit', 6),
-      (1, 1101, 'save', 'edit', 7),
-      (1, 1101, 'saveascopy', 'edit', 8),
-      (1, 1101, 'saveandnew', 'edit', 9),
-      (1, 1101, 'restore', 'edit', 10);
-
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 1101, 'archive', 'multiple', 11),
-      (1, 1101, 'publish', 'multiple', 12),
-      (1, 1101, 'unpublish', 'multiple', 13),
-      (1, 1101, 'spam', 'multiple', 14),
-      (1, 1101, 'trash', 'multiple', 15),
-      (1, 1101, 'feature', 'multiple', 16),
-      (1, 1101, 'unfeature', 'multiple', 17),
-      (1, 1101, 'sticky', 'multiple', 18),
-      (1, 1101, 'unsticky', 'multiple', 19),
-      (1, 1101, 'checkin', 'multiple', 20),
-      (1, 1101, 'reorder', 'multiple', 21),
-      (1, 1101, 'orderup', 'multiple', 22),
-      (1, 1101, 'orderdown', 'multiple', 23),
-      (1, 1101, 'saveorder', 'multiple', 24),
-      (1, 1101, 'delete', 'multiple', 25),
-      (1, 1101, 'copy', 'multiple', 26),
-      (1, 1101, 'move', 'multiple', 27);
-
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 1101, 'login', 'login', 28),
-      (1, 1101, 'logout', 'login', 29);
+      (1, 1100, 'logout', 'login', 29);
 
 # OPTION
 
-# 1800 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_OPTION
+# 1800 MOLAJO_EXTENSION_OPTION_ID_OPTIONS_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 1800, '', '', 0),
-      (1, 1800, 2552, 2552, 1),
-      (1, 1801, '', '', 0),
-      (1, 1801, 2559, 2559, 1);
+      (1, 1800, 2552, 2552, 1);
 
 # VIEWS
 
@@ -547,16 +510,16 @@ INSERT INTO `molajo_extension_options`
       (1, 2000, 'display', 'display', 1),
       (1, 2000, 'edit', 'edit', 2);
 
-# 2100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW
+# 2100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 2100, '', '', 0),
       (1, 2100, 'display', 'display', 1);
 
-# VIEW LAYOUTS
+# LAYOUTS
 
-# 3000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS
+# 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -566,21 +529,21 @@ INSERT INTO `molajo_extension_options`
       (1, 3000, 'items', 'items', 1),
       (1, 3000, 'table', 'table', 1);
 
-# 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS
+# 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 3100, '', '', 0),
       (1, 3100, 'default', 'default', 1);
 
-# 3200 MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_LAYOUTS
+# 3200 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 3200, '', '', 0),
       (1, 3200, 'default', 'default', 1);
 
-# 3300 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS
+# 3300 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -589,41 +552,25 @@ INSERT INTO `molajo_extension_options`
 
 # VIEW FORMATS
 
-# 4000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_FORMATS
+# 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 4000, '', '', 0),
-      (1, 4000, 'html', 'html', 1);
+      (1, 4000, 'error', 'error', 1),
+      (1, 4000, 'feed', 'feed', 2),
+      (1, 4000, 'html', 'html', 3),
+      (1, 4000, 'json', 'json', 4),
+      (1, 4000, 'raw', 'raw', 5),
+      (1, 4000, 'xls', 'xls', 6),
+      (1, 4000, 'xml', 'xml', 7);
 
-# 4100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS
+# 4100 MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 4100, '', '', 0),
       (1, 4100, 'html', 'html', 1);
-
-# 4200 MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_FORMATS
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 4200, '', '', 0),
-      (1, 4200, 'error', 'error', 1),
-      (1, 4200, 'feed', 'feed', 2),
-      (1, 4200, 'html', 'html', 3),
-      (1, 4200, 'json', 'json', 4),
-      (1, 4200, 'opensearch', 'opensearch', 5),
-      (1, 4200, 'raw', 'raw', 6),
-      (1, 4200, 'xls', 'xls', 7),
-      (1, 4200, 'xml', 'xml', 8),
-      (1, 4200, 'xmlrpc', 'xmlrpc', 9);
-
-# 4300 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 4300, '', '', 0),
-      (1, 4300, 'html', 'html', 1);
 
 # 6000 MOLAJO_EXTENSION_OPTION_ID_PLUGIN_TYPE
 INSERT INTO `molajo_extension_options`
@@ -707,7 +654,7 @@ INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `o
 
 # CONTROLLER TASKS
 
-# 1100 MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER
+# 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 1100, '', '', 0),
 (13, 1100, 'display', 'display', 3);
@@ -723,26 +670,26 @@ INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `o
 (13, 2000, '', '', 0),
 (13, 2000, 'display', 'display', 1);
 
-# 2100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW
+# 2100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 2100, '', '', 0),
 (13, 2100, 'display', 'display', 1);
 
 # VIEW LAYOUTS
 
-# 3000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS
+# 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 3000, '', '', 0),
 (13, 3000, 'login', 'login', 1);
 
-# 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS
+# 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 3100, '', '', 0),
 (13, 3100, 'login', 'login', 1);
 
 # VIEW FORMATS
 
-# 4000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_FORMATS
+# 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (13, 4000, '', '', 0),
 (13, 4000, 'html', 'html', 1),
@@ -783,7 +730,7 @@ INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `o
 (8, 100, '', '', 0),
 (8, 100, '__dummy', '__dummy', 1);
 
-# 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS
+# 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT
 INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (8, 3100, '', '', 0),
 (8, 3100, 'admin_dashboard', 'admin_dashboard', 1);

@@ -169,7 +169,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 
 /* MIME from ftp://ftp.iana.org/assignments/media-types/ */
 
-/* 400 MOLAJO_EXTENSION_OPTION_ID_AUDIO_MIMES */;
+/* 400 MOLAJO_EXTENSION_OPTION_ID_MIMES_AUDIO */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 400, '', '', 0),
 (1, 400, 'rtp-enc-aescm128', 'rtp-enc-aescm128', 1),
@@ -213,7 +213,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 400, 'vnd.sealedmedia.softseal-mpeg', 'vnd.sealedmedia.softseal-mpeg', 39),
 (1, 400, 'vnd.vmx.cvsd', 'vnd.vmx.cvsd', 40);
 
-/* 410 MOLAJO_EXTENSION_OPTION_ID_IMAGE_MIMES */;
+/* 410 MOLAJO_EXTENSION_OPTION_ID_MIMES_IMAGE */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 410, '', '', 0),
 (1, 410, 'cgm', 'cgm', 1),
@@ -249,7 +249,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 410, 'vnd.sealedmedia.softseal-jpg', 'vnd.sealedmedia.softseal-jpg', 31),
 (1, 410, 'vnd.xiff', 'vnd.xiff', 32);
 
-/* 420 MOLAJO_EXTENSION_OPTION_ID_TEXT_MIMES */;
+/* 420 MOLAJO_EXTENSION_OPTION_ID_MIMES_TEXT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 420, '', '', 0),
 (1, 420, 'n3', 'n3', 1),
@@ -283,7 +283,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 420, 'vnd.wap.si', 'vnd.wap.si', 29),
 (1, 420, 'vnd.wap.wmlscript', 'vnd.wap.wmlscript', 30);
 
-/* 430 MOLAJO_EXTENSION_OPTION_ID_VIDEO_MIMES */;
+/* 430 MOLAJO_EXTENSION_OPTION_ID_MIMES_VIDEO */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 430, '', '', 0),
 (1, 430, 'jpm', 'jpm', 1),
@@ -328,7 +328,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 
 /* CONTROLLER TASKS */
 
-/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER */;
+/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 1100, '', '', 0),
 (1, 1100, 'add', 'display', 1),
@@ -367,7 +367,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 1100, 'login', 'login', 28),
 (1, 1100, 'logout', 'logout', 29);
 
-/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER +application id */;
+/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 1101, '', '', 0),
 (1, 1101, 'add', 'display', 1),
@@ -408,7 +408,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 
 /* OPTION */
 
-/* 1800 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_OPTION */;
+/* 1800 MOLAJO_EXTENSION_OPTION_ID_OPTIONS_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 1800, '', '', 0),
 (1, 1800, 2552, 2552, 1),
@@ -423,7 +423,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 2000, 'display', 'display', 1),
 (1, 2000, 'edit', 'edit', 2);
 
-/* 2100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW */;
+/* 2100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 2100, '', '', 0),
 (1, 2100, 'display', 'display', 1);
@@ -434,14 +434,14 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 2001, 'display', 'display', 1),
 (1, 2001, 'edit', 'edit', 2);
 
-/* 2100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW +application id **/
+/* 2100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 2101, '', '', 0),
 (1, 2101, 'display', 'display', 1);
 
 /* VIEW LAYOUTS */
 
-/* 3000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS */;
+/* 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3000, '', '', 0),
 (1, 3000, 'default', 'default', 1),
@@ -449,54 +449,54 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 3000, 'items', 'items', 1),
 (1, 3000, 'table', 'table', 1);
 
-/* 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS */;
+/* 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3100, '', '', 0),
 (1, 3100, 'default', 'default', 1);
 
-/* 3200 MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_LAYOUTS */;
+/* 3200 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3200, '', '', 0),
 (1, 3200, 'default', 'default', 1);
 
-/* 3300 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS */;
+/* 3300 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3300, '', '', 0),
 (1, 3300, 'default', 'default', 1);
 
-/* 3000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS +application id **/
+/* 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3001, '', '', 0),
 (1, 3001, 'default', 'default', 1);
 
-/* 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
+/* 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3101, '', '', 0),
 (1, 3101, 'default', 'default', 1);
 
-/* 3200 MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_LAYOUTS +application id **/
+/* 3200 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3201, '', '', 0),
 (1, 3201, 'default', 'default', 1);
 
-/* 3300 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_LAYOUTS +application id **/
+/* 3300 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 3301, '', '', 0),
 (1, 3301, 'default', 'default', 1);
 
 /* VIEW FORMATS */
 
-/* 4000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_FORMATS */
+/* 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4000, '', '', 0),
 (1, 4000, 'html', 'html', 1);
 
-/* 4100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS */;
+/* 4100 MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4100, '', '', 0),
 (1, 4100, 'html', 'html', 1);
 
-/* 4200 MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_FORMATS */
+/* 4200 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_FORMATS */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4200, '', '', 0),
 (1, 4200, 'error', 'error', 1),
@@ -509,23 +509,23 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 4200, 'xml', 'xml', 8),
 (1, 4200, 'xmlrpc', 'xmlrpc', 9);
 
-/* 4300 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS */;
+/* 4300 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_FORMATS_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4300, '', '', 0),
 (1, 4300, 'html', 'html', 1);
 
 
-/* 4000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_FORMATS +application id */
+/* 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS +application id */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4001, '', '', 0),
 (1, 4001, 'html', 'html', 1);
 
-/* 4100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_FORMATS +application id */;
+/* 4100 MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4101, '', '', 0),
 (1, 4101, 'html', 'html', 1);
 
-/* 4200 MOLAJO_EXTENSION_OPTION_ID_EDIT_VIEW_FORMATS +application id */
+/* 4200 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_FORMATS +application id */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4201, '', '', 0),
 (1, 4201, 'error', 'error', 1),
@@ -538,7 +538,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 4201, 'xml', 'xml', 8),
 (1, 4201, 'xmlrpc', 'xmlrpc', 9);
 
-/* 4300 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_EDIT_VIEW_FORMATS +application id */;
+/* 4300 MOLAJO_EXTENSION_OPTION_ID_VIEWS_EDIT_FORMATS_DEFAULT +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 4301, '', '', 0),
 (1, 4301, 'html', 'html', 1);
@@ -631,7 +631,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 
 /* CONTROLLER TASKS */
 
-/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER */;
+/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 1100, '', '', 0),
 (2559, 1100, 'display', 'display', 3);
@@ -640,7 +640,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (2559, 1100, 'login', 'login', 28),
 (2559, 1100, 'logout', 'login', 29);
 
-/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASK_TO_CONTROLLER +application id */;
+/* 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER +application id */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 1101, '', '', 0),
 (2559, 1101, 'display', 'display', 3);
@@ -656,7 +656,7 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (2559, 2000, '', '', 0),
 (2559, 2000, 'display', 'display', 1);
 
-/* 2100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW */;
+/* 2100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 2100, '', '', 0),
 (2559, 2100, 'display', 'display', 1);
@@ -666,36 +666,36 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (2559, 2001, '', '', 0),
 (2559, 2001, 'display', 'display', 1);
 
-/* 2100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_VIEW +application id **/
+/* 2100 MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 2101, '', '', 0),
 (2559, 2101, 'display', 'display', 1);
 
 /* VIEW LAYOUTS */
 
-/* 3000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS */;
+/* 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 3000, '', '', 0),
 (2559, 3000, 'login', 'login', 1);
 
-/* 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS */;
+/* 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT */;
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 3100, '', '', 0),
 (2559, 3100, 'login', 'login', 1);
 
-/* 3000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_LAYOUTS +application id **/
+/* 3000 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 3001, '', '', 0),
 (2559, 3001, 'admin_login', 'admin_login', 1);
 
-/* 3100 MOLAJO_EXTENSION_OPTION_ID_DEFAULT_DISPLAY_VIEW_LAYOUTS +application id **/
+/* 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT +application id **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 3101, '', '', 0),
 (2559, 3101, 'admin_login', 'admin_login', 1);
 
 /* VIEW FORMATS */
 
-/* 4000 MOLAJO_EXTENSION_OPTION_ID_DISPLAY_VIEW_FORMATS */
+/* 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS */
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (2559, 4000, '', '', 0),
 (2559, 4000, 'html', 'html', 1),
