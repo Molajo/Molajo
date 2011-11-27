@@ -13,7 +13,7 @@ INSERT INTO `molajo_action_types` (`id` ,`title`)
     (4, 'edit'),
     (5, 'publish'),
     (6, 'delete'),
-    (7, 'admin');
+    (7, 'administer');
 
 #
 # Asset Types

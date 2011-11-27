@@ -575,17 +575,17 @@ INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `opt
 (1, 10100, 'edit', 'edit', 3),
 (1, 10100, 'publish', 'publish', 4),
 (1, 10100, 'delete', 'delete', 5),
-(1, 10100, 'admin', 'admin', 6);
+(1, 10100, 'administer', 'administer', 6);
 
 /** 10000 MOLAJO_EXTENSION_OPTION_ID_TASK_ACL_METHODS **/
 INSERT INTO `molajo_configurations` (`extension_instances_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`) VALUES
 (1, 10200, '', '', 0),
 (1, 10200, 'add', 'create', 1),
-(1, 10200, 'admin', 'admin', 2),
+(1, 10200, 'administer', 'administer', 2),
 (1, 10200, 'apply', 'edit', 3),
 (1, 10200, 'archive', 'publish', 4),
 (1, 10200, 'cancel', '', 5),
-(1, 10200, 'checkin', 'admin', 6),
+(1, 10200, 'checkin', 'administer', 6),
 (1, 10200, 'close', '', 7),
 (1, 10200, 'copy', 'create', 8),
 (1, 10200, 'create', 'create', 9),

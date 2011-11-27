@@ -52,7 +52,7 @@ class InstallerViewCreate extends InstallerViewDefault
         $canDo	= InstallerHelper::getActions();
         MolajoToolbarHelper::title(MolajoText::_('PLG_SYSTEM_CREATE_HEADER_'.$this->getName()), 'install.png');
 
-        if ($canDo->get('admin')) {
+        if ($canDo->get('administer')) {
             MolajoToolbarHelper::preferences('com_installer');
             MolajoToolbarHelper::divider();
         }

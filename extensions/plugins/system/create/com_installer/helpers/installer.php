@@ -70,7 +70,7 @@ class InstallerHelper
 		$assetName = 'com_installer';
 
 		$actions = array(
-			'admin', 'manage', 'edit.state', 'delete'
+			'administer', 'manage', 'edit.state', 'delete'
 		);
 
 		foreach ($actions as $action) {

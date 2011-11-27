@@ -85,7 +85,7 @@ class MolajoACLCore extends MolajoACL
     public function checkTaskAdmin($option, $entity, $item)
     {
         $molajoConfig = new MolajoModelConfiguration ($option);
-        $taskTests = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS, 'admin');
+        $taskTests = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_ACL_TASK_TO_METHODS, 'administer');
 
         if (is_array($taskTests)) {
         } else {

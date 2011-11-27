@@ -189,7 +189,7 @@ class JFormFieldRules extends JFormField
 					// This is where we show the current effective settings considering currrent group, path and cascade.
 					// Check whether this is a component or global. Change the text slightly.
 
-					if (JAccess::checkGroup($group->value, 'admin') !== true)
+					if (JAccess::checkGroup($group->value, 'administer') !== true)
 					{
 						if ($inheritedRule === null) {
 							$html[] = '<span class="icon-16-unset">'.
@@ -220,7 +220,7 @@ class JFormFieldRules extends JFormField
 					else {
 						// Special handling for  groups that have global admin because they can't  be denied.
 						// The admin rights can be changed.
-						if ($action->name === 'admin') {
+						if ($action->name === 'administer') {
 							$html[] = '<span class="icon-16-allowed">'.
 										MolajoText::_('MOLAJO_RULES_ALLOWED').'</span>';
 						}

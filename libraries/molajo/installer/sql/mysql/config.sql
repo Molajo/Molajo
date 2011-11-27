@@ -442,7 +442,7 @@ INSERT INTO `molajo_extension_options`
 
 # MVC
 
-# CONTROLLER TASKS
+# TASKS AND CONTROLLERS
 
 # 1100 MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER
 INSERT INTO `molajo_extension_options`
@@ -491,15 +491,6 @@ INSERT INTO `molajo_extension_options`
       (1, 1100, 'login', 'login', 28),
       (1, 1100, 'logout', 'login', 29);
 
-# OPTION
-
-# 1800 MOLAJO_EXTENSION_OPTION_ID_OPTIONS_DEFAULT
-INSERT INTO `molajo_extension_options`
-  (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
-    VALUES
-      (1, 1800, '', '', 0),
-      (1, 1800, 2552, 2552, 1);
-
 # VIEWS
 
 # 2000 MOLAJO_EXTENSION_OPTION_ID_VIEWS
@@ -524,46 +515,42 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 3000, '', '', 0),
-      (1, 3000, 'default', 'default', 1),
-      (1, 3000, 'item', 'item', 1),
-      (1, 3000, 'items', 'items', 1),
-      (1, 3000, 'table', 'table', 1);
+      (1, 3000, 'item', 'item', 1);
+      (1, 3000, 'admin_list', 'admin_list', 1);
 
 # 3100 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 3100, '', '', 0),
-      (1, 3100, 'default', 'default', 1);
+      (1, 3100, 'admin_list', 'admin_list', 1);
 
 # 3200 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 3200, '', '', 0),
-      (1, 3200, 'default', 'default', 1);
+      (1, 3200, 'edit', 'edit', 1);
 
 # 3300 MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT_DEFAULT
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 3300, '', '', 0),
-      (1, 3300, 'default', 'default', 1);
+      (1, 3300, 'edit', 'edit', 1);
 
-# VIEW FORMATS
+# FORMATS
 
 # 4000 MOLAJO_EXTENSION_OPTION_ID_FORMATS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 4000, '', '', 0),
-      (1, 4000, 'error', 'error', 1),
-      (1, 4000, 'feed', 'feed', 2),
-      (1, 4000, 'html', 'html', 3),
-      (1, 4000, 'json', 'json', 4),
-      (1, 4000, 'raw', 'raw', 5),
-      (1, 4000, 'xls', 'xls', 6),
-      (1, 4000, 'xml', 'xml', 7);
+      (1, 4000, 'feed', 'feed', 1),
+      (1, 4000, 'html', 'html', 2),
+      (1, 4000, 'json', 'json', 3),
+      (1, 4000, 'raw', 'raw', 4),
+      (1, 4000, 'xml', 'xml', 5);
 
 # 4100 MOLAJO_EXTENSION_OPTION_ID_FORMATS_DEFAULT
 INSERT INTO `molajo_extension_options`
@@ -579,16 +566,16 @@ INSERT INTO `molajo_extension_options`
       (1, 6000, '', '', 0),
       (1, 6000, 'content', 'content', 1);
 
-/** ACL Component Information
+# ACL Component Information
 
-/** 10000 MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION **/
+# 10000 MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 10000, '', '', 0),
       (1, 10000, 1, 'Core ACL Implementation', 1);
 
-/** 10100 MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS **/
+# 10100 MOLAJO_EXTENSION_OPTION_ID_ACL_ITEM_TESTS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
@@ -598,19 +585,19 @@ INSERT INTO `molajo_extension_options`
       (1, 10100, 'edit', 'edit', 3),
       (1, 10100, 'publish', 'publish', 4),
       (1, 10100, 'delete', 'delete', 5),
-      (1, 10100, 'admin', 'admin', 6);
+      (1, 10100, 'administer', 'administer', 6);
 
-/** 10000 MOLAJO_EXTENSION_OPTION_ID_TASK_ACL_METHODS **/
+# 10000 MOLAJO_EXTENSION_OPTION_ID_TASK_ACL_METHODS
 INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `option_id`, `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (1, 10200, '', '', 0),
       (1, 10200, 'add', 'create', 1),
-      (1, 10200, 'admin', 'admin', 2),
+      (1, 10200, 'administer', 'administer', 2),
       (1, 10200, 'apply', 'edit', 3),
       (1, 10200, 'archive', 'publish', 4),
       (1, 10200, 'cancel', '', 5),
-      (1, 10200, 'checkin', 'admin', 6),
+      (1, 10200, 'checkin', 'administer', 6),
       (1, 10200, 'close', '', 7),
       (1, 10200, 'copy', 'create', 8),
       (1, 10200, 'create', 'create', 9),
@@ -650,7 +637,7 @@ INSERT INTO `molajo_extension_options` (`extension_instance_id`, `option_id`, `o
 (13, 100, '', '', 0),
 (13, 100, '__dummy', '__dummy', 1);
 
-/** MVC
+# MVC
 
 # CONTROLLER TASKS
 

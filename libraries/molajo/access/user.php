@@ -537,27 +537,27 @@ class MolajoUser extends JObject
             // Check if I am a Super Admin
             $acl = new MolajoACL ();
 
-            $iAmSuperAdmin = $acl->checkPermissions('user', $my->id, 'admin', '', '');
+            $iAmSuperAdmin = $acl->checkPermissions('user', $my->id, 'administer', '', '');
 
             // We are only worried about edits to this account if I am not a Super Admin.
             if ($iAmSuperAdmin != true) {
                 if ($isNew) {
                     // Check if the new user is being put into a Super Admin group.
                     foreach ($this->groups as $key => $groupId) {
-                        if ($acl->checkPermissions('group', $groupId, 'admin', '', '')) {
+                        if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
                             throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                         }
                     }
                 } else {
                     // I am not a Super Admin, and this one is, so fail.
-                    if ($acl->checkPermissions('user', $this->id, 'admin', '', '')) {
+                    if ($acl->checkPermissions('user', $this->id, 'administer', '', '')) {
                         throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                     }
 
                     if ($this->groups != null) {
                         // I am not a Super Admin and I'm trying to make one.
                         foreach ($this->groups as $groupId) {
-                            if ($acl->checkPermissions('group', $groupId, 'admin', '', '')) {
+                            if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
                                 throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                             }
                         }
