@@ -346,7 +346,6 @@ CREATE INDEX `fk_content_asset_types_index` ON `molajo_content` (`asset_type_id`
 
 CREATE INDEX `fk_content_extension_instances_index` ON `molajo_content` (`extension_instance_id` ASC) ;
 
-
 -- -----------------------------------------------------
 -- Table 12 `molajo_users`
 -- -----------------------------------------------------

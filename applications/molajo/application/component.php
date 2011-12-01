@@ -232,8 +232,7 @@ echo '<pre>';var_dump($request);'</pre>';
         $layout = '';
         $format = '';
         $component_table = '';
-echo $option;
-        die;
+
         $molajoConfig = new MolajoModelConfiguration ($option);
 
         /** 1. Option */
