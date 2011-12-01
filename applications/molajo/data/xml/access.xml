@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="articles">
+	<section name="component">
+		<action name="admin" title="MOLAJO_ADMIN" description="MOLAJO_ADMINISTER_DESC" />
+        <action name="create" title="MOLAJO_CREATE" description="MOLAJO_CREATE_DESC" />
+		<action name="edit" title="MOLAJO_EDIT" description="MOLAJO_EDIT_DESC" />
+		<action name="publish" title="MOLAJO_PUBLISH" description="MOLAJO_PUBLISH_DESC" />
+		<action name="delete" title="MOLAJO_DELETE" description="MOLAJO_DELETE_DESC" />
+	    <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESC" />
+ 	</section>
+	<section name="category">
+        <action name="create" title="MOLAJO_CREATE" description="MOLAJO_CREATE_DESC" />
+        <action name="edit" title="MOLAJO_EDIT" description="MOLAJO_EDIT_DESC" />
+		<action name="publish" title="MOLAJO_PUBLISH" description="MOLAJO_PUBLISH_DESC" />
+        <action name="delete" title="MOLAJO_DELETE" description="MOLAJO_DELETE_DESC" />
+        <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESC" />
+ 	</section>
+	<section name="article">
+        <action name="edit" title="MOLAJO_EDIT" description="MOLAJO_EDIT_DESC" />
+		<action name="publish" title="MOLAJO_PUBLISH" description="MOLAJO_PUBLISH_DESC" />
+        <action name="delete" title="MOLAJO_DELETE" description="MOLAJO_DELETE_DESC" />
+	    <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESC" />
+	</section>
+</access>

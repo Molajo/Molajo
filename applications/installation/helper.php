@@ -24,8 +24,8 @@ class MolajoInstallationApplicationHelper extends MolajoApplicationHelper {
 	 */
 	public static function findOption()
 	{
-		JRequest::setVar('option', 'com_installer');
-		return 'com_installer';
+		JRequest::setVar('option', 'installer');
+		return 'installer';
 	}
 
 }

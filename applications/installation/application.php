@@ -107,7 +107,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         {
             // Get the component if not set.
             if ($component == null) {
-                $component = JRequest::getCmd('option', 'com_installer');
+                $component = JRequest::getCmd('option', 'installer');
             }
 
             JRequest::setVar('option', $component);
@@ -155,8 +155,8 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         $request['controller'] = 'display';
         $request['extension_type'] = 'component';
 
-        $request['option'] = JRequest::getCmd('option', 'com_installer');
-        $request['no_com_option'] = substr($request['option'], 4, 9999);
+        $request['option'] = JRequest::getCmd('option', 'installer');
+        $request['no_option'] = substr($request['option'], 4, 9999);
         $request['view'] = JRequest::getCmd('view', 'display');
         $request['layout'] = JRequest::getCmd('layout', 'step1');
         $request['model'] = JRequest::getCmd('model', 'display');
@@ -182,7 +182,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         $request['component_specific'] = '';
 
         $request['current_url'] = JURI::base().'/installation';
-        $request['component_path'] = MOLAJO_EXTENSION_COMPONENTS.'/'.$request['option'];
+        $request['component_path'] = MOLAJO_CMS_COMPONENTS.'/'.$request['option'];
         $request['base_url'] = MOLAJO_BASE_FOLDER.'/installation';
         $request['item_id'] = null;
 
@@ -199,7 +199,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         $request['position'] = '';
 
         JRequest::setVar('option', $request['option']);
-        JRequest::setVar('no_com_option', $request['no_com_option']);
+        JRequest::setVar('no_option', $request['no_option']);
         JRequest::setVar('view', $request['view']);
         JRequest::setVar('layout', $request['layout']);
         JRequest::setVar('model', $request['model']);
@@ -239,7 +239,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
                 $parameters = array(
                     'template'	=> $template->template,
                     'file'		=> $file.'.php',
-                    'directory'	=> MOLAJO_EXTENSION_TEMPLATES,
+                    'directory'	=> MOLAJO_CMS_TEMPLATES,
                     'parameters'	=> $template->parameters
                 );
                 break;
@@ -471,7 +471,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
      */
  	public function getLocaliseAdmin($db=false)
  	{
- 		$path = JLanguage::getLanguagePath(MOLAJO_APPLICATIONS_PATH);
+ 		$path = JLanguage::getLanguagePath(MOLAJO_APPLICATIONS);
  		$langfiles[] = JFolder::folders($path);
 
  		if ($db) {

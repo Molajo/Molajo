@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="layout" group="extension" method="upgrade">
+    <name>LAYOUT_EXTENSION_ADMINISTER_MODAL_NAME</name>
+    <author>Molajo Contributors</author>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>LAYOUT_EXTENSION_ADMINISTER_MODAL_DESCRIPTION</description>
+	<files>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>language</folder>
+		<folder>layouts</folder>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.layout_extension_admin_modal.ini</language>
+		<language tag="language/en-GB">en-GB.layout_extension_admin_modal.sys.ini</language>
+	</languages>
+</extension>

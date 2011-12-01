@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="layout" group="extension" method="upgrade">
+    <name>LAYOUT_EXTENSION_ADMINISTER_FOOTER_NAME</name>
+    <author>Cristina Solana</author>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright (C) 2011 Cristina Solana. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>LAYOUT_EXTENSION_ADMINISTER_FOOTER_DESCRIPTION</description>
+	<files>
+		<folder>language</folder>
+		<folder>layouts</folder>
+	</files>
+	<languages>
+		<language tag="language/en-GB">en-GB.layout_extension_admin_footer.ini</language>
+		<language tag="language/en-GB">en-GB.layout_extension_admin_footer.sys.ini</language>
+	</languages>
+</extension>

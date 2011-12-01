@@ -45,6 +45,9 @@ if (file_exists(MOLAJO_BASE_FOLDER.'/defines.php')) {
 	include_once MOLAJO_BASE_FOLDER.'/defines.php';
 }
 
-/** Load libraries */
-define('LIBRARIES', MOLAJO_BASE_FOLDER.'/libraries/');
-include_once LIBRARIES.'/index.php';
+/** Load Molajo Sites */
+if (defined('MOLAJO_SITES')) {
+} else {
+    define('MOLAJO_SITES', MOLAJO_BASE_FOLDER.'/sites/');
+}
+include_once MOLAJO_SITES.'/index.php';

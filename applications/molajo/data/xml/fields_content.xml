@@ -1,0 +1,325 @@
+<fieldset
+    name="fields_content"
+    label="FIELDSET_CONTENT_LABEL"
+    desc="FIELDSET_CONTENT_DESC">
+
+    <field
+        name="id"
+        type="text"
+        class="readonly"
+        label="FIELD_ID_LABEL"
+        description ="FIELD_ID_DESC"
+        size="10"
+        default="0"
+        readonly="true"
+    />
+
+    <field
+        name="extension_instance_id"
+        type="extension_instance"
+        label="FIELD_EXTENSION_INSTANCE_LABEL"
+        description="FIELD_EXTENSION_INSTANCE_DESC"
+        readonly="true"
+    />
+
+    <field
+        name="asset_type_id"
+        type="asset_type"
+        label="FIELD_ASSET_TYPE_LABEL"
+        description="FIELD_ASSET_TYPE_DESC"
+        readonly="true"
+    />
+
+    <field
+        name="title"
+        type="text"
+        label="FIELD_TITLE_LABEL"
+        description="FIELD_TITLE_DESC"
+        class="inputbox"
+        size="30"
+        required="true"
+    />
+
+    <field
+        name="subtitle"
+        type="text"
+        label="FIELD_SUBTITLE_LABEL"
+        description="FIELD_SUBTITLE_DESC"
+        class="inputbox"
+        size="30"
+        required="false"
+    />
+
+    <field
+        name="path"
+        type="text"
+        label="FIELD_PATH_LABEL"
+        description="FIELD_PATH_DESC"
+        class="inputbox"
+        size="45"
+    />
+
+    <field
+        name="alias"
+        type="text"
+        label="FIELD_ALIAS_LABEL"
+        description="FIELD_ALIAS_DESC"
+        class="inputbox"
+        size="45"
+    />
+
+    <field
+        name="content_text"
+        type="editor"
+        class="inputbox"
+        label="FIELD_CONTENT_TEXT_LABEL"
+        description="FIELD_CONTENT_TEXT_DESC"
+        filter="MolajoApplicationFilter::filterText"
+        buttons="true"
+    />
+
+    <field
+        name="protected"
+        type="radio"
+        label="FIELD_PROTECTED_LABEL"
+        description="FIELD_PROTECTED_DESC"
+        default="0"
+        >
+        <option value="0">NO</option>
+        <option value="1">YES</option>
+    </field>
+
+    <field
+        name="featured"
+        type="radio"
+        label="FIELD_FEATURED_LABEL"
+        description="FIELD_FEATURED_DESC"
+        default="0"
+        >
+        <option value="0">NO</option>
+        <option value="1">YES</option>
+    </field>
+
+    <field
+        name="stickied"
+        type="radio"
+        label="FIELD_STICKIED_LABEL"
+        description="FIELD_STICKIED_DESC"
+        default="0"
+        >
+        <option value="0">NO</option>
+        <option value="1">YES</option>
+    </field>
+
+    <field
+        name="status"
+        type="list"
+        label="FIELD_STATUS_LABEL"
+        description="FIELD_STATUS_DESC"
+        class="inputbox"
+        filter="intval"
+        size="1"
+        default="1"
+        >
+        <option value="2">OPTION_STATUS_ARCHIVED</option>
+        <option value="1">OPTION_STATUS_PUBLISHED</option>
+        <option value="0">OPTION_STATUS_UNPUBLISHED</option>
+        <option value="-1">OPTION_STATUS_TRASHED</option>
+        <option value="-2">OPTION_STATUS_SPAMMED</option>
+        <option value="-10">OPTION_STATUS_VERSION</option>
+        <option value="-11">OPTION_STATUS_DRAFT</option>
+    </field>
+
+    <field
+        name="start_publishing_datetime"
+        type="calendar"
+        label="FIELD_START_PUBLISHING_DATETIME_LABEL"
+        description="FIELD_START_PUBLISHING_DATETIME_DESC"
+        class="inputbox"
+        format="%Y-%m-%d %H:%M:%S"
+        size="22"
+        filter="user_utc"
+    />
+
+    <field
+        name="stop_publishing_datetime"
+        type="calendar"
+        label="FIELD_STOP_PUBLISHING_DATETIME_LABEL"
+        description="FIELD_STOP_PUBLISHING_DATETIME_DESC"
+        class="inputbox"
+        format="%Y-%m-%d %H:%M:%S"
+        size="22"
+        filter="user_utc"
+    />
+
+    <field
+        name="version"
+        type="text"
+        class="readonly"
+        label="FIELD_VERSION_LABEL"
+        description="FIELD_VERSION_DESC"
+        readonly="true"
+        filter="unset"
+    />
+
+    <field
+        name="version_of_id"
+        type="text"
+        class="readonly"
+        label="FIELD_VERSION_OF_ID_LABEL"
+        description="FIELD_VERSION_OF_ID_DESC"
+        readonly="true"
+        filter="unset"
+    />
+
+    <field
+        name="status_prior_to_version"
+        type="text"
+        label="FIELD_STATUS_PRIOR_TO_VERSION_LABEL"
+        description="FIELD_STATUS_PRIOR_TO_VERSION_DESC"
+        class="readonly"
+        size="1"
+    />
+
+    <field
+        name="created_datetime"
+        type="calendar"
+        label="FIELD_CREATED_DATETIME_LABEL"
+        description="FIELD_CREATED_DATETIME_DESC"
+        class="inputbox"
+        size="22"
+        format="%Y-%m-%d %H:%M:%S"
+        filter="user_utc"
+    />
+
+    <field
+        name="created_by"
+        type="user"
+        label="FIELD_CREATED_BY_LABEL"
+        description="FIELD_CREATED_BY_DESC"
+    />
+
+    <field
+        name="modified_datetime"
+        type="calendar"
+        class="readonly"
+        label="FIELD_MODIFIED_DATETIME_LABEL"
+        description="FIELD_MODIFIED_DATETIME_DESC"
+        size="22"
+        readonly="true"
+        format="%Y-%m-%d %H:%M:%S"
+        filter="user_utc"
+    />
+
+    <field
+        name="modified_by"
+        type="user"
+        label="FIELD_MODIFIED_BY_LABEL"
+        description="FIELD_MODIFIED_BY_DESC"
+        class="readonly"
+        readonly="true"
+        filter="unset"
+    />
+
+    <field
+        name="checked_out_datetime"
+        label="FIELD_CHECKED_OUT_DATETIME_LABEL"
+        description="FIELD_CHECKED_OUT_DATETIME_DESC"
+        type="hidden"
+        filter="unset"
+    />
+
+    <field
+        name="checked_out_by"
+        label="FIELD_CHECKED_OUT_BY_LABEL"
+        description="FIELD_CHECKED_OUT_BY_DESC"
+        type="hidden"
+        filter="unset"
+    />
+
+    <field
+        name="root"
+        label="FIELD_ROOT_LABEL"
+        description="FIELD_ROOT_DESC"
+        type="hidden"
+        filter="unset"
+    />
+
+    <field
+        name="parent_id"
+        label="FIELD_PARENT_ID_LABEL"
+        description="FIELD_PARENT_ID_DESC"
+        type="hidden"
+        filter="unset"
+    />
+
+    <field
+        name="lft"
+        filter="unset"
+        type="hidden"
+        label="FIELD_LFT_LABEL"
+        description="FIELD_LFT_DESC"
+    />
+
+    <field
+        name="rgt"
+        filter="unset"
+        type="hidden"
+        label="FIELD_RGT_LABEL"
+        description="FIELD_RGT_DESC"
+    />
+
+    <field
+        name="lvl"
+        filter="unset"
+        type="hidden"
+        label="FIELD_LVL_LABEL"
+        description="FIELD_LVL_DESC"
+    />
+
+    <field
+        name="home"
+        type="radio"
+        label="FIELD_HOME_LABEL"
+        description="FIELD_HOME_DESC"
+        default="1"
+        >
+        <option value="0">NO</option>
+        <option value="1">YES</option>
+    </field>
+
+    <field
+        name="position"
+        description="FIELD_POSITION_DESC"
+        label="FIELD_POSITION_LABEL"
+        type="text"
+        filter="unset"
+    />
+
+    <field
+        name="language"
+        type="language"
+        label="FIELD_LANGUAGE_LABEL"
+        description="FIELD_LANGUAGE_DESC"
+        class="inputbox"
+        >
+        <option value="en-GB">en-GB</option>
+    </field>
+
+    <field
+        name="translation_of_id"
+        label="FIELD_TRANSLATION_OF_ID_LABEL"
+        description="FIELD_TRANSLATION_OF_ID_DESC"
+        type="hidden"
+    />
+
+    <field
+        name="ordering"
+        type="text"
+        label="FIELD_ORDERING_LABEL"
+        description="FIELD_ORDERING_DESC"
+        class="inputbox"
+        size="6"
+        default="0"
+    />
+</fieldset>

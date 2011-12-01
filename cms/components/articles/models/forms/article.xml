@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <include path="core" name="fields_content" />
+    <include path="core" name="fields_custom_fields" />
+    <include path="core" name="fields_parameters" />
+    <include path="core" name="fields_metadata" />
+</form>

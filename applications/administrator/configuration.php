@@ -24,8 +24,8 @@ class MolajoConfigApplication {
     
     /* Application Access */
     public $application_logon_requirement = '1';
-    public $application_guest_option = 'com_login';
-    public $application_default_option = 'com_dashboard';
+    public $application_guest_option = 'login';
+    public $application_default_option = 'dashboard';
     public $default_template_extension = 'Molajito';
 
 	/* Locale */
