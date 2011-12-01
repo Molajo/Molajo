@@ -92,9 +92,9 @@ class MolajoTableUser extends MolajoTable
             // Load the user groups.
             $this->_db->setQuery(
                 'SELECT g.id, g.title' .
-                ' FROM #__groups AS g' .
+                ' FROM #__content AS g' .
                 ' JOIN #__user_groups AS m ON m.group_id = g.id' .
-                ' WHERE m.user_id = '.(int)$userId
+                ' WHERE m.user_id = '. (int) $userId
             );
             // Add the groups to the user data.
             $this->groups = $this->_db->loadAssocList('title', 'id');
@@ -138,7 +138,7 @@ class MolajoTableUser extends MolajoTable
             // Get the titles for the user groups.
             $this->_db->setQuery(
                 'SELECT '.$this->_db->quoteName('id').', '.$this->_db->quoteName('title') .
-                ' FROM '.$this->_db->quoteName('#__groups') .
+                ' FROM '.$this->_db->quoteName('#__content') .
                 ' WHERE '.$this->_db->quoteName('id').' = '.implode(' OR '.$this->_db->quoteName('id').' = ', $this->groups)
             );
             // Set the titles for the user groups.
@@ -342,33 +342,6 @@ class MolajoTableUser extends MolajoTable
             return false;
         }
 
-        /*
-        * Clean Up Related Data.
-        */
-
-        $this->_db->setQuery(
-            'DELETE FROM '.$this->_db->quoteName('#__messages_cfg') .
-            ' WHERE '.$this->_db->quoteName('user_id').' = '.(int)$this->$k
-        );
-        $this->_db->query();
-
-        // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
-
-        $this->_db->setQuery(
-            'DELETE FROM '.$this->_db->quoteName('#__messages') .
-            ' WHERE '.$this->_db->quoteName('user_id_to').' = '.(int)$this->$k
-        );
-        $this->_db->query();
-
-        // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
 
         return true;
     }

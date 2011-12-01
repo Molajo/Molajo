@@ -284,7 +284,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
 		}
 
 		// Add user as group - type_id = 0 for User
-		$query	= 'INSERT INTO #__groups (id, parent_id, lft, rgt, title, asset_id, type_id, protected) '
+		$query	= 'INSERT INTO #__content (id, parent_id, lft, rgt, title, asset_id, type_id, protected) '
 				. ' SELECT 5, 0, 0, 0, '.$db->quote('Administrator').', 6, 0, 1';
 		$db->setQuery($query);
 		if (!$db->query()) {

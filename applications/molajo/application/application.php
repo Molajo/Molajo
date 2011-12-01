@@ -125,6 +125,7 @@ class MolajoApplication extends JObject
             }
 
             $results = MolajoApplicationHelper::loadApplicationClasses();
+
             if ($results === false) {
                 return false;
             }
@@ -426,15 +427,14 @@ class MolajoApplication extends JObject
     {
         try
         {
-            /** Helper */
+            /** Option */
             $helper = new MolajoApplicationComponent ();
-
-            /** Verify */
             $option = $helper->verifyComponent($option);
 
             /** Request */
             $request = $helper->getRequest($option);
-
+echo '<pre>';var_dump($request);'</pre>';
+            die;
             /** Document */
             $document = MolajoFactory::getDocument();
             switch ($document->getType()) {

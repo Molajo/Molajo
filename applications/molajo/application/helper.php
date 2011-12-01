@@ -122,6 +122,7 @@ class MolajoApplicationHelper
         $files = JFolder::files(MOLAJO_APPLICATION_PATH, '\.php$', false, false);
 
         foreach ($files as $file) {
+
             if ($file == 'configuration.php') {
                 
             } else if ($file == 'helper.php') {

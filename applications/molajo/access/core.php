@@ -607,14 +607,15 @@ class MolajoACLCore extends MolajoACL
      */
     public function getGroupsList($id, $option, $task, $parameters = array())
     {
-
         $db = MolajoFactory::getDBO();
         $query = $db->getQuery(true);
 
-        $query->select('DISTINCT b.view_group_id as id');
+        $query->select('DISTINCT g.id as value');
+        $query->select('g.title as title');
         $query->from('#__content a');
-        $query->join('LEFT', '#__groups AS b ON a.lft > b.lft AND a.rgt < b.rgt');
-        $query->where('a.xxxxamy');
+        $query->join('LEFT', '#__content AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+        $query->where('a.');
+
         $db->setQuery(
             'SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level' .
             ' FROM #__content AS a' .
@@ -649,9 +650,9 @@ class MolajoACLCore extends MolajoACL
         if ($action == MOLAO_ACTION_TYPE_VIEW) {
             $query->from('#__view_groups a');
             $query->join('LEFT', '#__group_view_groups AS b ON b.view_group_id = a.id');
-            $query->join('LEFT', '#__groups AS c ON c.id = b.group_id');
+            $query->join('LEFT', '#__content AS c ON c.id = b.group_id');
         } else {
-            $query->from('#__groups c');
+            $query->from('#__content c');
         }
 
         /** Guest: 3 - Public: 4 */

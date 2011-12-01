@@ -29,7 +29,7 @@ class MolajoTableGroup extends MolajoTable
      */
     public function __construct(&$db)
     {
-        parent::__construct('#__groups', 'id', $db);
+        parent::__construct('#__content', 'id', $db);
     }
 
     /**
@@ -200,7 +200,7 @@ class MolajoTableGroup extends MolajoTable
 
         /**
          * Delete all Group Related Content
-         * 1. #__groups
+         * 1. #__content
          * 2. #__user_groups
          * 3. #__permissions_groups
          * 4. #__group_view_groups

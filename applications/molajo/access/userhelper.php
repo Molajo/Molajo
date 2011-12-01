@@ -42,7 +42,7 @@ abstract class MolajoUserhelper
             $db = MolajoFactory::getDbo();
             $db->setQuery(
                 'SELECT `title`' .
-                ' FROM `#__groups`' .
+                ' FROM `#__content`' .
                 ' WHERE `id` = '.(int) $groupId
             );
             $title = $db->loadResult();
@@ -152,7 +152,7 @@ abstract class MolajoUserhelper
         $db = MolajoFactory::getDbo();
         $db->setQuery(
             'SELECT `id`, `title`' .
-            ' FROM `#__groups`' .
+            ' FROM `#__content`' .
             ' WHERE `id` = '.implode(' OR `id` = ', $user->groups)
         );
         $results = $db->loadObjectList();

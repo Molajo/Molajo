@@ -501,7 +501,7 @@ CREATE INDEX `fk_user_applications_applications_index` ON `molajo_user_applicati
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__users.id' ,
-  `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__groups.id' ,
+  `group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__content.id' ,
   PRIMARY KEY (`group_id`, `user_id`) ,
   CONSTRAINT `fk_user_groups_users`
     FOREIGN KEY (`user_id` )
@@ -561,7 +561,7 @@ CREATE INDEX `fk_group_view_groups_groups_index` ON `molajo_group_view_groups` (
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_user_view_groups` (
   `user_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__users.id' ,
-  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__groups.id' ,
+  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__content.id' ,
   PRIMARY KEY (`view_group_id`, `user_id`) ,
   CONSTRAINT `fk_user_view_groups_users`
     FOREIGN KEY (`user_id` )
@@ -585,7 +585,7 @@ CREATE INDEX `fk_user_view_groups_view_groups_index` ON `molajo_user_view_groups
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `molajo_view_group_permissions` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__groups.id' ,
+  `view_group_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__content.id' ,
   `asset_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__assets.id' ,
   `action_id` INT(11) UNSIGNED NOT NULL COMMENT 'Foreign Key to #__actions.id' ,
   PRIMARY KEY (`id`) ,

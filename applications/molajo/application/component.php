@@ -200,7 +200,8 @@ class MolajoApplicationComponent
         } else {
             MolajoError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
-
+echo '<pre>';var_dump($request);'</pre>';
+        die;
         /** execute the component */
         ob_start();
         require_once $path;
@@ -231,7 +232,8 @@ class MolajoApplicationComponent
         $layout = '';
         $format = '';
         $component_table = '';
-
+echo $option;
+        die;
         $molajoConfig = new MolajoModelConfiguration ($option);
 
         /** 1. Option */
