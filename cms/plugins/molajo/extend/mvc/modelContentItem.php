@@ -12,9 +12,9 @@ defined('MOLAJO') or die;
  *
  * Table containing Custom Field Name and Values, linked to Component Items
  *
- * @package	Content
- * @subpackage	Extend
- * @version	1.6
+ * @package    Content
+ * @subpackage    Extend
+ * @version    1.6
  */
 class modelContentItem
 {
@@ -28,21 +28,21 @@ class modelContentItem
      *
      * @return object Component Custom Fields
      */
-    public function getData ($component_option, $id, $whereString = null, $sql_table_name=null, $sql_table_name=null)
+    public function getData($component_option, $id, $whereString = null, $sql_table_name = null, $sql_table_name = null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPlugin::getPlugin('system', 'extend');
         $nameParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $nameParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
-	$query = $db->getQuery(true);
+        $query = $db->getQuery(true);
 
         $query->select('field_name, field_value');
         $query->from($db->namequote($sql_table_name));
-        $query->where($db->namequote('component_option').' = '.$db->quote(trim($component_option)));
-        $query->where('content_id = '. (int) $id);
+        $query->where($db->namequote('component_option') . ' = ' . $db->quote(trim($component_option)));
+        $query->where('content_id = ' . (int)$id);
         if ($whereString) {
             $query->where($whereString);
         }
@@ -68,26 +68,26 @@ class modelContentItem
      * @param string $value - custom field value
      * @param int $ordering
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function insert ($component_option, $id, $name, $value, $ordering, $sql_table_name=null)
+    public function insert($component_option, $id, $name, $value, $ordering, $sql_table_name = null)
     {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
-        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPlugin::getPlugin('system', 'extend');
         $nameParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
             $sql_table_name = $nameParameters->def('sql_table_name', '#__molajo_custom_fields');
         }
 
-        $query = 'INSERT INTO '.$db->namequote(trim($sql_table_name)) .
-                    ' VALUES ( '
-                    .$db->quote(trim($component_option)).', '
-                    .(int) $id.', '
-                    .$db->quote(trim($name)).', '
-                    .$db->quote(trim($value)).', '
-                    .$db->quote(trim($ordering)).') ';
+        $query = 'INSERT INTO ' . $db->namequote(trim($sql_table_name)) .
+                 ' VALUES ( '
+                 . $db->quote(trim($component_option)) . ', '
+                 . (int)$id . ', '
+                 . $db->quote(trim($name)) . ', '
+                 . $db->quote(trim($value)) . ', '
+                 . $db->quote(trim($ordering)) . ') ';
 
         $db->setQuery($query);
 
@@ -106,11 +106,11 @@ class modelContentItem
      *
      * @return boolean
      */
-    public function delete ($component_option, $id, $sql_table_name=null)
+    public function delete($component_option, $id, $sql_table_name = null)
     {
         $app = MolajoFactory::getApplication();
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPlugin::getPlugin('system', 'extend');
         $nameParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -118,9 +118,9 @@ class modelContentItem
         }
 
         $query = 'DELETE FROM '
-                    .$db->namequote(trim($sql_table_name))
-                    .' WHERE '.$db->namequote('content_id').' = '.(int) $id
-                    .' AND '.$db->namequote('component_option').' = '.$db->quote(trim($component_option));
+                 . $db->namequote(trim($sql_table_name))
+                 . ' WHERE ' . $db->namequote('content_id') . ' = ' . (int)$id
+                 . ' AND ' . $db->namequote('component_option') . ' = ' . $db->quote(trim($component_option));
 
         $db->setQuery($query);
 
@@ -137,10 +137,10 @@ class modelContentItem
      *
      * @return boolean
      */
-    public function deleteMatching ($component_option, $id, $custom_field, $sql_table_name=null)
+    public function deleteMatching($component_option, $id, $custom_field, $sql_table_name = null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPlugin::getPlugin('system', 'extend');
         $nameParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -148,10 +148,10 @@ class modelContentItem
         }
 
         $query = 'DELETE FROM '
-                    .$db->namequote(trim($sql_table_name))
-                    .' WHERE '.$db->namequote('content_id').' = '.(int) $id
-                    .' AND '.$db->namequote('component_option').' = '.$db->quote(trim($component_option))
-                    .' AND '.$db->namequote('field_name').' = '.$db->quote(trim($custom_field));
+                 . $db->namequote(trim($sql_table_name))
+                 . ' WHERE ' . $db->namequote('content_id') . ' = ' . (int)$id
+                 . ' AND ' . $db->namequote('component_option') . ' = ' . $db->quote(trim($component_option))
+                 . ' AND ' . $db->namequote('field_name') . ' = ' . $db->quote(trim($custom_field));
 
         $db->setQuery($query);
 
@@ -168,7 +168,7 @@ class modelContentItem
      *
      * @return string
      */
-    public function buildWhereClause ($custom_fields)
+    public function buildWhereClause($custom_fields)
     {
         $nameString = '';
         foreach ($custom_fields as $customField) :
@@ -180,7 +180,7 @@ class modelContentItem
         endforeach;
 
         /** return formatted string **/
-        return $db->namequote('field_name').' IN ('.$nameString.')';
+        return $db->namequote('field_name') . ' IN (' . $nameString . ')';
     }
 
     /**
@@ -191,10 +191,10 @@ class modelContentItem
      *
      * @return binary
      */
-    public function checkTable ($sql_table_name, $sql_table_name=null)
+    public function checkTable($sql_table_name, $sql_table_name = null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPlugin::getPlugin('system', 'extend');
         $nameParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {
@@ -202,17 +202,17 @@ class modelContentItem
         }
 
         $query = 'SELECT * FROM '
-           .$db->namequote(trim($sql_table_name))
-            .' WHERE 1 = 2 ';
+                 . $db->namequote(trim($sql_table_name))
+                 . ' WHERE 1 = 2 ';
 
         $db->setQuery($query);
         $db->query();
 
-        if ((int) $db->getErrorNum() == 0) {
+        if ((int)$db->getErrorNum() == 0) {
             return true;
 
-        } else if ((int) $db->getErrorNum() == 1146) {
-            return modelContentItem::createTable ($sql_table_name);
+        } else if ((int)$db->getErrorNum() == 1146) {
+            return modelContentItem::createTable($sql_table_name);
 
         } else {
             $app->enqueueMessage($db->getErrorMsg(), 'error');
@@ -228,10 +228,10 @@ class modelContentItem
      *
      * @return binary
      */
-     public function createTable ($sql_table_name=null)
+    public function createTable($sql_table_name = null)
     {
         $db = MolajoFactory::getDbo();
-        $systemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'extend');
+        $systemPlugin =& MolajoPlugin::getPlugin('system', 'extend');
         $nameParameters = new JParameter($systemPlugin->parameters);
 
         if ($sql_table_name == null) {

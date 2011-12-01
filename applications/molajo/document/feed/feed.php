@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -210,24 +210,24 @@ class MolajoDocumentFeed extends MolajoDocument
 
         // set filename for rss feeds
         $file = strtolower(str_replace('.', '', $type));
-        $file = $cache_path.'/'.$file.'_'.$option.'.xml';
+        $file = $cache_path . '/' . $file . '_' . $option . '.xml';
 
 
         // Instantiate feed renderer and set the mime encoding
         $renderer = $this->loadRenderer(($type) ? $type : 'rss');
         if (!is_a($renderer, 'MolajoDocumentRenderer')) {
-            MolajoError::raiseError(404, MolajoText::_('JGLOBAL_RESOURCE_NOT_FOUND'));
+            MolajoError::raiseError(404, MolajoTextHelper::_('JGLOBAL_RESOURCE_NOT_FOUND'));
         }
         $this->setMimeEncoding($renderer->getContentType());
 
         // Output
         // Generate prolog
-        $data = "<?xml version=\"1.0\" encoding=\"".$this->_charset."\"?>\n";
-        $data .= "<!-- generator=\"".$this->getGenerator()."\" -->\n";
+        $data = "<?xml version=\"1.0\" encoding=\"" . $this->_charset . "\"?>\n";
+        $data .= "<!-- generator=\"" . $this->getGenerator() . "\" -->\n";
 
         // Generate stylesheet links
         foreach ($this->_styleSheets as $src => $attr) {
-            $data .= "<?xml-stylesheet href=\"$src\" type=\"".$attr['mime']."\"?>\n";
+            $data .= "<?xml-stylesheet href=\"$src\" type=\"" . $attr['mime'] . "\"?>\n";
         }
 
         // Render the feed

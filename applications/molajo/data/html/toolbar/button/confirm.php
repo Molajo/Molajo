@@ -27,8 +27,8 @@ class MolajoButtonConfirm extends MolajoButton
 
     public function fetchButton($type = 'Confirm', $msg = '', $name = '', $text = '', $task = '', $list = true, $hideMenu = false)
     {
-        $text = MolajoText::_($text);
-        $msg = MolajoText::_($msg, true);
+        $text = MolajoTextHelper::_($text);
+        $msg = MolajoTextHelper::_($msg, true);
         $class = $this->fetchIconClass($name);
         $doTask = $this->_getCommand($msg, $name, $task, $list);
 
@@ -49,7 +49,7 @@ class MolajoButtonConfirm extends MolajoButton
      */
     public function fetchId($type = 'Confirm', $name = '', $text = '', $task = '', $list = true, $hideMenu = false)
     {
-        return $this->_parent->getName().'-'.$name;
+        return $this->_parent->getName() . '-' . $name;
     }
 
     /**
@@ -63,7 +63,7 @@ class MolajoButtonConfirm extends MolajoButton
     protected function _getCommand($msg, $name, $task, $list)
     {
         MolajoHTML::_('behavior.framework');
-        $message = MolajoText::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
+        $message = MolajoTextHelper::_('MOLAJO_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
         $message = addslashes($message);
 
         if ($list) {

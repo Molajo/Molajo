@@ -7,6 +7,7 @@
  */
 defined('MOLAJO') or die; ?>
 <?php if ($this->row->label == "") {
-} else { ?>
+} else {
+    ?>
 </label>
 <?php }

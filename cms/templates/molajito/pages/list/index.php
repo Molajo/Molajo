@@ -8,11 +8,11 @@
 defined('MOLAJO') or die;
 ?>
 <div class="container">
-    <doc:include type="modules" name="header" wrap="header" />
-    <doc:include type="message" />
+    <doc:include type="modules" name="header" wrap="header"/>
+    <doc:include type="message"/>
     <section>
-        <doc:include type="modules" name="menu" wrap="none" />
-        <doc:include type="component" />
+        <doc:include type="modules" name="menu" wrap="none"/>
+        <doc:include type="component"/>
     </section>
-    <doc:include type="modules" name="footer" wrap="footer" />
+    <doc:include type="modules" name="footer" wrap="footer"/>
 </div>

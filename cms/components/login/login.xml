@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.0.0" method="upgrade">
-	<name>LOGIN</name>
-	<author>Molajo Contributors</author>
-	<creationDate>January 2012</creationDate>
-	<copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
-	<authorEmail>collaborate@molajo.org</authorEmail>
-	<authorUrl>http://molajo.org</authorUrl>
-	<version>1.0</version>
-	<description>LOGIN_DESCRIPTION</description>
+    <name>LOGIN</name>
+    <author>Molajo Contributors</author>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>LOGIN_DESCRIPTION</description>
 
-	<administration>
+    <administration>
 
-		<files folder="admin">
-			<filename>access.xml</filename>
-			<filename>controller.php</filename>
-			<filename>login.php</filename>
-			<folder>language</folder>
-			<folder>models</folder>
-			<folder>views</folder>
-		</files>
+        <files folder="admin">
+            <filename>access.xml</filename>
+            <filename>controller.php</filename>
+            <filename>login.php</filename>
+            <folder>language</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+        </files>
 
-		<languages folder="admin">
-			<language tag="en-GB">login/language/en-GB/en-GB.login.ini</language>
-			<language tag="en-GB">login/language/en-GB/en-GB.login.sys.ini</language>
-		</languages>
-        
-	</administration>
+        <languages folder="admin">
+            <language tag="en-GB">login/language/en-GB/en-GB.login.ini</language>
+            <language tag="en-GB">login/language/en-GB/en-GB.login.sys.ini</language>
+        </languages>
+
+    </administration>
 
 </extension>

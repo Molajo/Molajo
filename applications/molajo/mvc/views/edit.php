@@ -3,7 +3,7 @@
  * @version     $id: single.html.php
  * @package     Molajo
  * @subpackage  Single View
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -26,6 +26,7 @@ class MolajoViewEdit extends MolajoView
     /** editor variables  **/
 //    protected $section;
     protected $form;
+
 //    protected $toolbar;
 //    protected $slider_id;
 //    protected $namesetName;
@@ -63,7 +64,7 @@ class MolajoViewEdit extends MolajoView
             $this->parameters = MolajoFactory::getApplication()->getParameters();
             //$this->_mergeParameters ($this->item, $this->parameters, JRequest::getVar('option'));
         } else {
-            $this->parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
+            $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         }
 
         $this->user = MolajoFactory::getUser();
@@ -81,7 +82,7 @@ class MolajoViewEdit extends MolajoView
         }
 
         /** ACL: form field authorisations **/
-        $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
+        $aclClass = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
         $acl = new $aclClass();
         $acl->getFormAuthorisations(JRequest::getVar('option'), JRequest::getVar('EditView'), JRequest::getVar('task'), $this->item->id, $this->form, $this->item);
 

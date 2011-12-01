@@ -102,7 +102,7 @@ class MolajoAdapter extends JObject
     public function setAdapter($name, &$adapter = null, $options = array())
     {
         if (!is_object($adapter)) {
-            $fullpath = $this->_basepath.'/'.$this->_adapterfolder.'/'.strtolower($name).'.php';
+            $fullpath = $this->_basepath . '/' . $this->_adapterfolder . '/' . strtolower($name) . '.php';
 
             if (!file_exists($fullpath)) {
                 return false;
@@ -111,7 +111,7 @@ class MolajoAdapter extends JObject
             // Try to load the adapter object
             require_once $fullpath;
 
-            $class = $this->_classprefix.ucfirst($name);
+            $class = $this->_classprefix . ucfirst($name);
             if (!class_exists($class)) {
                 return false;
             }
@@ -158,16 +158,16 @@ class MolajoAdapter extends JObject
      */
     public function loadAllAdapters($options = array())
     {
-        $list = JFolder::files($this->_basepath.'/'.$this->_adapterfolder);
+        $list = JFolder::files($this->_basepath . '/' . $this->_adapterfolder);
 
         foreach ($list as $filename)
         {
             if (JFile::getExt($filename) == 'php') {
                 // Try to load the adapter object
-                require_once $this->_basepath.'/'.$this->_adapterfolder.'/'.$filename;
+                require_once $this->_basepath . '/' . $this->_adapterfolder . '/' . $filename;
 
                 $name = JFile::stripExt($filename);
-                $class = $this->_classprefix.ucfirst($name);
+                $class = $this->_classprefix . ucfirst($name);
 
                 if (!class_exists($class)) {
                     continue; // skip to next one

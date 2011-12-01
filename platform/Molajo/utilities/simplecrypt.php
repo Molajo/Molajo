@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -79,7 +79,7 @@ class MolajoSimplecrypt extends JObject
 
         for ($i = 0, $count = count($ai); $i < $count; $i++)
         {
-            $s1 = $s1.$this->_intToHex((int)$ai[$i]);
+            $s1 = $s1 . $this->_intToHex((int)$ai[$i]);
         }
 
         return $s1;
@@ -218,7 +218,7 @@ class MolajoSimplecrypt extends JObject
         (int)$j = count($ai1);
         for ($i = 0; $i < $j; $i = strlen($s))
         {
-            $s = $s.$s;
+            $s = $s . $s;
         }
 
         for ($k = 0; $k < $j; $k++)
@@ -251,7 +251,7 @@ class MolajoSimplecrypt extends JObject
             (string)$s = strtoupper(dechex($j));
         }
         (int)$k = (int)$i - (int)$j * 16;
-        (string)$s = $s.strtoupper(dechex($k));
+        (string)$s = $s . strtoupper(dechex($k));
 
         return $s;
     }
@@ -273,7 +273,7 @@ class MolajoSimplecrypt extends JObject
         (int)$j = count($ac);
         for ($i = 0; $i < $j; $i = strlen($s1))
         {
-            $s1 = $s1.$s1;
+            $s1 = $s1 . $s1;
         }
 
         for ($k = 0; $k < $j; $k++)

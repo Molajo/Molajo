@@ -3,7 +3,7 @@
 namespace Gedmo\Mapping\Driver;
 
 use Gedmo\Mapping\Driver,
-    SimpleXMLElement;
+SimpleXMLElement;
 
 
 /**

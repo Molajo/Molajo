@@ -61,17 +61,16 @@ class ComponentOptions
      *
      * @ORM\ManyToOne(targetEntity="ExtensionInstances")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
      * })
      */
     private $extensionInstance;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -91,7 +90,7 @@ class ComponentOptions
     /**
      * Get protected
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProtected()
     {
@@ -111,7 +110,7 @@ class ComponentOptions
     /**
      * Get optionId
      *
-     * @return integer 
+     * @return integer
      */
     public function getOptionId()
     {
@@ -131,7 +130,7 @@ class ComponentOptions
     /**
      * Get optionValueLiteral
      *
-     * @return string 
+     * @return string
      */
     public function getOptionValueLiteral()
     {
@@ -151,7 +150,7 @@ class ComponentOptions
     /**
      * Get optionValue
      *
-     * @return string 
+     * @return string
      */
     public function getOptionValue()
     {
@@ -171,7 +170,7 @@ class ComponentOptions
     /**
      * Get ordering
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdering()
     {
@@ -191,7 +190,7 @@ class ComponentOptions
     /**
      * Get extensionInstance
      *
-     * @return data\Entity\ExtensionInstances 
+     * @return data\Entity\ExtensionInstances
      */
     public function getExtensionInstance()
     {

@@ -46,8 +46,8 @@ abstract class MolajoHtmlEmail
         $replacement .= "\n <!--";
         $replacement .= "\n var prefix = '&#109;a' + 'i&#108;' + '&#116;o';";
         $replacement .= "\n var path = 'hr' + 'ef' + '=';";
-        $replacement .= "\n var addy".$rand." = '".@$mail[0]."' + '&#64;';";
-        $replacement .= "\n addy".$rand." = addy".$rand." + '".implode("' + '&#46;' + '", $mail_parts)."';";
+        $replacement .= "\n var addy" . $rand . " = '" . @$mail[0] . "' + '&#64;';";
+        $replacement .= "\n addy" . $rand . " = addy" . $rand . " + '" . implode("' + '&#46;' + '", $mail_parts) . "';";
 
         if ($mailto) {
             // Special handling when mail text is different from mail address
@@ -58,27 +58,27 @@ abstract class MolajoHtmlEmail
                     // Split email by @ symbol
                     $text = explode('@', $text);
                     $text_parts = explode('.', $text[1]);
-                    $replacement .= "\n var addy_text".$rand." = '".@$text[0]."' + '&#64;' + '".implode("' + '&#46;' + '", @$text_parts)
-                                                                          ."';";
+                    $replacement .= "\n var addy_text" . $rand . " = '" . @$text[0] . "' + '&#64;' + '" . implode("' + '&#46;' + '", @$text_parts)
+                                                                           . "';";
                 }
                 else
                 {
-                    $replacement .= "\n var addy_text".$rand." = '".$text."';";
+                    $replacement .= "\n var addy_text" . $rand . " = '" . $text . "';";
                 }
-                $replacement .= "\n document.write('<a ' + path + '\'' + prefix + ':' + addy".$rand." + '\'>');";
-                $replacement .= "\n document.write(addy_text".$rand.");";
+                $replacement .= "\n document.write('<a ' + path + '\'' + prefix + ':' + addy" . $rand . " + '\'>');";
+                $replacement .= "\n document.write(addy_text" . $rand . ");";
                 $replacement .= "\n document.write('<\/a>');";
             }
             else
             {
-                $replacement .= "\n document.write('<a ' + path + '\'' + prefix + ':' + addy".$rand." + '\'>');";
-                $replacement .= "\n document.write(addy".$rand.");";
+                $replacement .= "\n document.write('<a ' + path + '\'' + prefix + ':' + addy" . $rand . " + '\'>');";
+                $replacement .= "\n document.write(addy" . $rand . ");";
                 $replacement .= "\n document.write('<\/a>');";
             }
         }
         else
         {
-            $replacement .= "\n document.write(addy".$rand.");";
+            $replacement .= "\n document.write(addy" . $rand . ");";
         }
         $replacement .= "\n //-->";
         $replacement .= '\n </script>';
@@ -89,7 +89,7 @@ abstract class MolajoHtmlEmail
         $replacement .= "\n document.write('<span style=\'display: none;\'>');";
         $replacement .= "\n //-->";
         $replacement .= "\n </script>";
-        $replacement .= MolajoText::_('JLIB_HTML_CLOAKING');
+        $replacement .= MolajoTextHelper::_('JLIB_HTML_CLOAKING');
         $replacement .= "\n <script type='text/javascript'>";
         $replacement .= "\n <!--";
         $replacement .= "\n document.write('</');";

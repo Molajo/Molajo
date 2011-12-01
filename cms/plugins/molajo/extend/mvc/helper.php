@@ -12,9 +12,9 @@ defined('MOLAJO') or die;
  *
  * Various functions needed in the application
  *
- * @package	Content
- * @subpackage	Extend
- * @version	1.6
+ * @package    Content
+ * @subpackage    Extend
+ * @version    1.6
  */
 class extendHelper
 {
@@ -26,11 +26,11 @@ class extendHelper
      *
      * @return boolean
      */
-    public function getComponentOption ()
+    public function getComponentOption()
     {
         $component_option = JRequest::getVar('option');
 
-        $valid = extendHelper::verifyComponentOption ($component_option);
+        $valid = extendHelper::verifyComponentOption($component_option);
         if ($valid) {
             return $component_option;
         } else {
@@ -45,16 +45,16 @@ class extendHelper
      *
      * @return boolean
      */
-    public function verifyComponentOption ($component_option)
+    public function verifyComponentOption($component_option)
     {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
 
         $db->setQuery(
             'SELECT element ' .
-                ' FROM '.$db->namequote(trim('#__extensions')).
-                ' WHERE element = '.$db->quote(trim($component_option)) .
-                '   AND type = "component" '
+            ' FROM ' . $db->namequote(trim('#__extensions')) .
+            ' WHERE element = ' . $db->quote(trim($component_option)) .
+            '   AND type = "component" '
         );
 
         if (!$results = $db->query()) {
@@ -76,11 +76,11 @@ class extendHelper
      *
      * @return boolean
      */
-    public function getComponentView ($component_option)
+    public function getComponentView($component_option)
     {
         $component_view = JRequest::getVar('view');
 
-        $valid = extendHelper::verifyComponentView ($component_option, $component_view);
+        $valid = extendHelper::verifyComponentView($component_option, $component_view);
         if ($valid) {
             return $component_view;
         } else {
@@ -95,19 +95,19 @@ class extendHelper
      *
      * @return boolean
      */
-    public function verifyComponentView ($component_option, $component_view)
+    public function verifyComponentView($component_option, $component_view)
     {
         $app = MolajoFactory::getApplication();
         if ($app->getName() == 'administrator') {
-            $folder = JPATH_ADMINISTRATOR.'/components/'.$component_option.'/views/'.$component_view;
+            $folder = JPATH_ADMINISTRATOR . '/components/' . $component_option . '/views/' . $component_view;
         } else {
-            $folder = JPATH_SITE.'/components/'.$component_option.'/views/'.$component_view;
+            $folder = JPATH_SITE . '/components/' . $component_option . '/views/' . $component_view;
         }
 
         if (JFolder::exists($folder)) {
             return true;
         } else {
-            $app->enqueueMessage('ComponInvalid View'.$component_view, 'error');
+            $app->enqueueMessage('ComponInvalid View' . $component_view, 'error');
             return false;
         }
     }
@@ -119,11 +119,11 @@ class extendHelper
      *
      * @return boolean
      */
-    public function getComponentLayout ($component_option, $component_view)
+    public function getComponentLayout($component_option, $component_view)
     {
         $component_layout = JRequest::getVar('layout');
 
-        $valid = extendHelper::verifyComponentLayout ($component_option, $component_view, $component_layout);
+        $valid = extendHelper::verifyComponentLayout($component_option, $component_view, $component_layout);
         if ($valid) {
             return $component_layout;
         } else {
@@ -138,20 +138,20 @@ class extendHelper
      *
      * @return boolean
      */
-    public function verifyComponentLayout ($component_option, $component_view, $component_layout)
+    public function verifyComponentLayout($component_option, $component_view, $component_layout)
     {
         $app = MolajoFactory::getApplication();
 
         if ($app->getName() == 'administrator') {
-            $file = JPATH_ADMINISTRATOR.'/components/'.$component_option.'/views/'.$component_view.'/layouts/'.$component_layout.'.php';
+            $file = JPATH_ADMINISTRATOR . '/components/' . $component_option . '/views/' . $component_view . '/layouts/' . $component_layout . '.php';
         } else {
-            $file = JPATH_SITE.'/components/'.$component_option.'/views/'.$component_view.'/layouts/'.$component_layout.'.php';
+            $file = JPATH_SITE . '/components/' . $component_option . '/views/' . $component_view . '/layouts/' . $component_layout . '.php';
         }
 
         if (JFile::exists($file)) {
             return true;
         } else {
-            $app->enqueueMessage('ComponInvalid Layout'.$component_layout, 'error');
+            $app->enqueueMessage('ComponInvalid Layout' . $component_layout, 'error');
             return false;
         }
     }
@@ -170,10 +170,10 @@ class extendHelper
      *
      * @return boolean
      */
-    public function getComponentCategory ($context, $content, $form, $IsNew, $task, $component_option)
+    public function getComponentCategory($context, $content, $form, $IsNew, $task, $component_option)
     {
         /** known table names **/
-        $tableInfo = array (
+        $tableInfo = array(
             'banners' => array('field_name' => 'catid'),
             'categories' => array('field_name' => 'id'),
             'contact' => array('field_name' => 'catid'),
@@ -201,7 +201,7 @@ class extendHelper
         }
 
         if (isset($content->$name_name)) {
-            $category = (int) $content->$name_name;
+            $category = (int)$content->$name_name;
         }
         if (isset($form->$name_name)) {
             $category = $form->$name_name;
@@ -209,7 +209,7 @@ class extendHelper
         if (JRequest::getInt($name_name) > 0) {
             $category = JRequest::getInt($name_name);
         }
-        $valid = extendHelper::verifyCategory ($category);
+        $valid = extendHelper::verifyCategory($category);
         if ($valid) {
             return $category;
         } else {
@@ -224,15 +224,15 @@ class extendHelper
      *
      * @return boolean
      */
-    public function verifyCategory ($component_option, $category)
+    public function verifyCategory($component_option, $category)
     {
         $db = MolajoFactory::getDbo();
 
         $db->setQuery(
             'SELECT id ' .
-                ' FROM '.$db->namequote(trim('#__categories')).
-                ' WHERE extension = '.$db->namequote($component_option).
-                '   AND id = '. (int) $category
+            ' FROM ' . $db->namequote(trim('#__categories')) .
+            ' WHERE extension = ' . $db->namequote($component_option) .
+            '   AND id = ' . (int)$category
         );
 
         if (!$results = $db->query()) {
@@ -247,7 +247,7 @@ class extendHelper
         }
     }
 
-   /**
+    /**
      * getComponentID
      *
      * Retrieves id value for item
@@ -260,11 +260,11 @@ class extendHelper
      *
      * @return boolean
      */
-    public function getComponentID ($context, $content, $form, $isnNew, $component_option)
+    public function getComponentID($context, $content, $form, $isnNew, $component_option)
     {
 
         /** known table names **/
-        $tableInfo = array (
+        $tableInfo = array(
             'banners' => array('field_name' => 'id'),
             'categories' => array('field_name' => 'id'),
             'contact' => array('field_name' => 'id'),
@@ -289,21 +289,21 @@ class extendHelper
         }
 
         if (!JRequest::getInt('id') == 0) {
-            $id = (int) JRequest::getVar('id');
+            $id = (int)JRequest::getVar('id');
 
         } else if ($component_option == 'users') {
-                if (is_object($content)) {
-                    $id = $content->id;
+            if (is_object($content)) {
+                $id = $content->id;
 
-                } else {
-                    return false;
-                }
+            } else {
+                return false;
+            }
 
         } else if (is_object($content)) {
-             $id = $content->id;
+            $id = $content->id;
 
         } else if (is_object($form)) {
-             $id = $form->id;
+            $id = $form->id;
         }
 
         if ($id == null) {
@@ -313,8 +313,8 @@ class extendHelper
                 return false;
             }
         }
-        
-        $valid = extendHelper::verifyComponentID ($component_option, $id, $name_name);
+
+        $valid = extendHelper::verifyComponentID($component_option, $id, $name_name);
         if ($valid) {
             return $id;
         } else {
@@ -333,13 +333,13 @@ class extendHelper
      *
      * @return boolean
      */
-    public function verifyComponentID ($component_option, $id, $name_name)
+    public function verifyComponentID($component_option, $id, $name_name)
     {
         $db = MolajoFactory::getDbo();
         $app = MolajoFactory::getApplication();
 
         /** known table names **/
-        $tableInfo = array (
+        $tableInfo = array(
             'banners' => array('table_name' => '#__banners'),
             'contact' => array('table_name' => '#__contact_details'),
             'categories' => array('table_name' => '#__categories'),
@@ -364,9 +364,9 @@ class extendHelper
 
         /** language does not use id **/
         $db->setQuery(
-            'SELECT '.$name_name .
-                ' FROM '.$db->namequote(trim($table)) .
-                '   WHERE '.$name_name.' = '. (int) $id
+            'SELECT ' . $name_name .
+            ' FROM ' . $db->namequote(trim($table)) .
+            '   WHERE ' . $name_name . ' = ' . (int)$id
         );
 
         if (!$results = $db->query()) {
@@ -388,7 +388,7 @@ class extendHelper
      *
      * @return string
      */
-    public function getCustomFieldsWhereClause ($custom_fields)
+    public function getCustomFieldsWhereClause($custom_fields)
     {
         $nameString = '';
         foreach (custom_fields as $customField) :
@@ -400,6 +400,6 @@ class extendHelper
         endforeach;
 
         /** return formatted string **/
-        return ' AND '.$db->namequote('field_name').' IN ('.$nameString.')';
+        return ' AND ' . $db->namequote('field_name') . ' IN (' . $nameString . ')';
     }
 }

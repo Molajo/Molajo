@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -28,7 +28,7 @@ class MolajoLoginHelper
     {
         $languages = array();
         $languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
-        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoText::_('JDEFAULT')));
+        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoTextHelper::_('JDEFAULT')));
         return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
     }
 
@@ -42,7 +42,7 @@ class MolajoLoginHelper
     public static function getReturnURI()
     {
         $uri = MolajoFactory::getURI();
-        $return = 'index.php'.$uri->toString(array('query'));
+        $return = 'index.php' . $uri->toString(array('query'));
         if ($return == 'index.php?option=login') {
             return base64_encode('index.php');
         } else {

@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -83,7 +83,7 @@ class MolajoTableAsset extends MolajoTable
     public function check()
     {
         if ($this->content_table == null) {
-            $this->setError(MolajoText::_('ASSET_TABLE_MUST_HAVE_CONTENT_TABLE_VALUE'));
+            $this->setError(MolajoTextHelper::_('ASSET_TABLE_MUST_HAVE_CONTENT_TABLE_VALUE'));
             return false;
         }
         return true;

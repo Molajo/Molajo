@@ -56,7 +56,7 @@ class MolajoToolbar extends JObject
         $this->_name = $name;
 
         // Set base path to find buttons.
-        $this->_buttonPath[] = dirname(__FILE__).'/'.'toolbar'.'/'.'button';
+        $this->_buttonPath[] = dirname(__FILE__) . '/' . 'toolbar' . '/' . 'button';
 
     }
 
@@ -149,7 +149,7 @@ class MolajoToolbar extends JObject
         $html = array();
 
         // Start toolbar div.
-        $html[] = '<div class="toolbar-list" id="'.$this->_name.'">';
+        $html[] = '<div class="toolbar-list" id="' . $this->_name . '">';
         $html[] = '<ul>';
 
         // Render each button in the toolbar.
@@ -182,7 +182,7 @@ class MolajoToolbar extends JObject
 
         // Check for error.
         if ($button === false) {
-            return MolajoText::sprintf('MOLAJO_HTML_BUTTON_NOT_DEFINED', $type);
+            return MolajoTextHelper::sprintf('MOLAJO_HTML_BUTTON_NOT_DEFINED', $type);
         }
         return $button->render($node);
     }
@@ -203,11 +203,11 @@ class MolajoToolbar extends JObject
         }
 
         if (!class_exists('JButton')) {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
+            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('MOLAJO_HTML_BUTTON_BASE_CLASS'));
             return false;
         }
 
-        $buttonClass = 'JButton'.$type;
+        $buttonClass = 'JButton' . $type;
         if (!class_exists($buttonClass)) {
             if (isset ($this->_buttonPath)) {
                 $dirs = $this->_buttonPath;
@@ -215,12 +215,12 @@ class MolajoToolbar extends JObject
                 $dirs = array();
             }
 
-            $file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)).'.php', 'path');
+            $file = JFilterInput::getInstance()->clean(str_replace('_', DS, strtolower($type)) . '.php', 'path');
 
             if ($buttonFile = JPath::find($dirs, $file)) {
                 include_once $buttonFile;
             } else {
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
+                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_HTML_BUTTON_NO_LOAD', $buttonClass, $buttonFile));
                 return false;
             }
         }

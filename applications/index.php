@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Bootstrap
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -10,16 +10,16 @@ defined('MOLAJO') or die;
 /**
  *  Load Classes
  */
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/phpversion.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/defines.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/installcheck.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/joomla.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/config.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/application.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/site.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/platform.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/other.php';
-require_once MOLAJO_APPLICATIONS.'/molajo/includes/overrides.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/phpversion.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/defines.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/installcheck.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/joomla.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/config.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/application.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/site.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/platform.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/other.php';
+require_once MOLAJO_APPLICATIONS . '/molajo/includes/overrides.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
@@ -67,7 +67,7 @@ JDEBUG ? $_PROFILER->mark('afterRender') : null;
 
 /**
 print_r(get_defined_constants(true));
-*/
+ */
 /**
  *  Display
  */

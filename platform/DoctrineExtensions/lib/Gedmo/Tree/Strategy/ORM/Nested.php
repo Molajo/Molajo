@@ -5,10 +5,10 @@ namespace Gedmo\Tree\Strategy\ORM;
 use Gedmo\Tool\Wrapper\EntityWrapper;
 use Gedmo\Tool\Wrapper\AbstractWrapper;
 use Gedmo\Tree\Strategy,
-    Doctrine\ORM\EntityManager,
-    Gedmo\Tree\TreeListener,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Query;
+Doctrine\ORM\EntityManager,
+Gedmo\Tree\TreeListener,
+Doctrine\ORM\Mapping\ClassMetadataInfo,
+Doctrine\ORM\Query;
 
 /**
  * This strategy makes tree act like
@@ -221,19 +221,22 @@ class Nested implements Strategy
      * {@inheritdoc}
      */
     public function processPreRemove($em, $node)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
     public function processPrePersist($em, $node)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
     public function processMetadataLoad($em, $meta)
-    {}
+    {
+    }
 
     /**
      * Update the $node with a diferent $parent
@@ -326,7 +329,7 @@ class Nested implements Strategy
             $newRootId = $parentRootId;
         } elseif (!isset($config['root'])) {
             $start = isset($this->treeEdges[$meta->name]) ?
-                $this->treeEdges[$meta->name] : $this->max($em, $config['useObjectClass']);
+                    $this->treeEdges[$meta->name] : $this->max($em, $config['useObjectClass']);
             $this->treeEdges[$meta->name] = $start + 2;
             $start++;
         } else {

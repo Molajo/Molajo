@@ -1,78 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="plugin" group="system" version="1.5"  method="upgrade">
-	<name>Tamka Router</name>
+<install type="plugin" group="system" version="1.5" method="upgrade">
+    <name>Tamka Router</name>
     <author>Tamka Project</author>
     <creationDate>March 2009</creationDate>
-    <copyright>Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See http://tamka.org/copyright</copyright>
+    <copyright>Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See
+        http://tamka.org/copyright
+    </copyright>
     <license>http://www.gnu.org/licenses/licenses.html#GPL GPL v 2, or later</license>
-	<authorEmail>team@tamka.org</authorEmail>
-	<authorUrl>http://joomlacode.org/gf/project/tamka/</authorUrl>
-	<version>1.0</version>
-	<description>Tamka Router that implements Pretty Permanent URLs</description>
+    <authorEmail>team@tamka.org</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/tamka/</authorUrl>
+    <version>1.0</version>
+    <description>Tamka Router that implements Pretty Permanent URLs</description>
     <files>
         <filename plugin="tamka_router">tamka_router.php</filename>
-		<folder>tamka_router</folder>        
+        <folder>tamka_router</folder>
     </files>
-	<languages>
-		<language tag="en-GB">en-GB.plg_system_tamka_router.ini</language>
-	</languages>
-	<parameters>
-		<param type="spacer" />
-		<param type="spacer" default="Tamka URL Option: Tamka creates one, and only one, URL for each detail item, such as an Article, Contact, News Feed, Poll, or Web Link. Here, you can configure the pattern used for those URLs." />
-		<param type="spacer" />
-		<param name="option" type="list" default="1" label="Tamka URL Option" description="Select the Tamka URL Option preferred or choose Custom URL and define a pattern, below.">
-			<option value="1">http://example.com/category/detail</option>
-			<option value="2">http://example.com/section/category/detail</option>
-			<option value="3">http://example.com/section/detail</option>
-			<option value="4">http://example.com/ccyy/mm/dd/detail</option>
-			<option value="5">http://example.com/ccyy/mm/detail</option>
-			<option value="6">Custom URL, pattern defined below</option>
-		</param>
-		<param type="spacer" />
-		<param type="spacer" default="Custom URL: If Custom URL was selected above, specify the combination of section, category, ccyy, mm, dd values desired, ending with the literal 'detail', for a Custom URL. Note: separate each option with a forward slash." />
-		<param type="spacer" />
-		<param name="customurl" type="text" default="category/detail" label="Custom URL Pattern" description="If Custom URL was selected above, enter the Custom URL pattern, separated by forward slashes, using the preferred combination of year, month, day, section, category values desired, ending with the literal 'detail'." />
-		<param type="spacer" />
-		<param type="spacer" default="Alias or ID: For each portion of the URL, Tamka can use with the alias value (ex. my-article-alias), or the numeric key value (ex. 123). Selecting 'ID' with 'Use Detail Alias, not ID' instructs Tamka to use the numeric values for all levels of the URL except the Detail level. (ex. 123/my-article-alias.)" />
-		<param type="spacer" />
-		<param name="idoralias" type="radio" default="1" label="Alias or ID" description="Use the URL Alias Value or the numeric key for section, category, and article components within the URL.">
-			<option value="1">Alias</option>
-			<option value="2">Numeric ID</option>
-		</param>
-		<param name="detailalias" type="radio" default="1" label="Use Article Alias, not ID" description="If ID was selected for the previous option, and 'Yes' is selected for this option, Tamka will use the Alias for the Detail level of the URL and the Numeric IDs for the upper levels of the URL. An example for a category/article URL would look like http://example.com/123/article-alias">
-			<option value="1">Yes</option>
-			<option value="0">No</option>
-		</param>
-		<param type="spacer" />
-		<param type="spacer" default="File extension: Configure Tamka URLs to not use any file extension, or to use an extension of your preference. (ex. html)" />
-		<param type="spacer" />
-		<param name="extension" type="list" default="2" label="Extension" description="Select the file extension desired, if any." >
-			<option value="">No extension</option>
-			<option value=".php">.php</option>
-			<option value=".html">.html</option>
-			<option value=".htm">.htm</option>
-		</param>
-		<param type="spacer" />
-		<param type="spacer" default="Default Menu Item: For Blogs and Groups that do not have a matching Menu Item." />
-		<param type="spacer" />
-		<param name="defaultmenuitemblog" type="menuitem" default="1" label="Blog Menu Item" description="Default Menu item for Blog Posts without a matching Menu Item, given the URL." />
-		<param name="defaultmenuitemgroup" type="menuitem" default="1" label="Group Menu Item" description="Default Menu item for Group Discussions without a matching Menu Item, given the URL." />
-		<param type="spacer" />
-		<param type="spacer" default="Base: Use the specified value for the base of Tag and Tag Menu Summary pages. " />
-		<param type="spacer" />
-		<param name="tagbase" type="text" default="tag" label="Tag Base" description="Specify the value to use in the base URL to indicate a tag has been clicked. If you specify the value tag, the URL would be http://example.com/tag/tag-value." />
-		<param name="tagmenubase" type="text" default="menu" label="Tag Menu Base" description="Specify the value to use in the base URL to indicate a Tag Menu has been clicked. If you specify the value menu, the URL would be http://example.com/menu/tag-value." />
-		<param name="page" type="text" default="page" label="Pagination" description="Specify the value to use in the base URL to indicate a pagination link has been clicked. If you specify the value page, the URL would be http://example.com/page/3." />
-		<param name="datebase" type="text" default="date" label="Date Base" description="Specify the value to use in the base URL to indicate a Blog Calendar link has been clicked. If you specify the value tag, the URL would be http://example.com/date/ccyy/mm." />		
-		<param type="spacer" />
-		<param type="spacer" default="No WWW: Configure Tamka to remove WWW from incoming URLs, and 301 redirect to the same location without the WWW." />
-		<param type="spacer" />
-		<param name="noWWW" type="list" default="0" label="No WWW" description="Electing this option will remove WWW from incoming URLs and 301 redirect to the same location, without that value." >
-			<option value="1">Remove WWW and redirect</option>
-			<option value="0">No</option>
-		</param>	
-		<param type="spacer" />
-		<param type="spacer" default="Note: Tamka URLs work in conjunction with Molajo URL options." />
-		<param type="spacer" />
-	</parameters>
+    <languages>
+        <language tag="en-GB">en-GB.plg_system_tamka_router.ini</language>
+    </languages>
+    <parameters>
+        <param type="spacer"/>
+        <param type="spacer"
+               default="Tamka URL Option: Tamka creates one, and only one, URL for each detail item, such as an Article, Contact, News Feed, Poll, or Web Link. Here, you can configure the pattern used for those URLs."/>
+        <param type="spacer"/>
+        <param name="option" type="list" default="1" label="Tamka URL Option"
+               description="Select the Tamka URL Option preferred or choose Custom URL and define a pattern, below.">
+            <option value="1">http://example.com/category/detail</option>
+            <option value="2">http://example.com/section/category/detail</option>
+            <option value="3">http://example.com/section/detail</option>
+            <option value="4">http://example.com/ccyy/mm/dd/detail</option>
+            <option value="5">http://example.com/ccyy/mm/detail</option>
+            <option value="6">Custom URL, pattern defined below</option>
+        </param>
+        <param type="spacer"/>
+        <param type="spacer"
+               default="Custom URL: If Custom URL was selected above, specify the combination of section, category, ccyy, mm, dd values desired, ending with the literal 'detail', for a Custom URL. Note: separate each option with a forward slash."/>
+        <param type="spacer"/>
+        <param name="customurl" type="text" default="category/detail" label="Custom URL Pattern"
+               description="If Custom URL was selected above, enter the Custom URL pattern, separated by forward slashes, using the preferred combination of year, month, day, section, category values desired, ending with the literal 'detail'."/>
+        <param type="spacer"/>
+        <param type="spacer"
+               default="Alias or ID: For each portion of the URL, Tamka can use with the alias value (ex. my-article-alias), or the numeric key value (ex. 123). Selecting 'ID' with 'Use Detail Alias, not ID' instructs Tamka to use the numeric values for all levels of the URL except the Detail level. (ex. 123/my-article-alias.)"/>
+        <param type="spacer"/>
+        <param name="idoralias" type="radio" default="1" label="Alias or ID"
+               description="Use the URL Alias Value or the numeric key for section, category, and article components within the URL.">
+            <option value="1">Alias</option>
+            <option value="2">Numeric ID</option>
+        </param>
+        <param name="detailalias" type="radio" default="1" label="Use Article Alias, not ID"
+               description="If ID was selected for the previous option, and 'Yes' is selected for this option, Tamka will use the Alias for the Detail level of the URL and the Numeric IDs for the upper levels of the URL. An example for a category/article URL would look like http://example.com/123/article-alias">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </param>
+        <param type="spacer"/>
+        <param type="spacer"
+               default="File extension: Configure Tamka URLs to not use any file extension, or to use an extension of your preference. (ex. html)"/>
+        <param type="spacer"/>
+        <param name="extension" type="list" default="2" label="Extension"
+               description="Select the file extension desired, if any.">
+            <option value="">No extension</option>
+            <option value=".php">.php</option>
+            <option value=".html">.html</option>
+            <option value=".htm">.htm</option>
+        </param>
+        <param type="spacer"/>
+        <param type="spacer" default="Default Menu Item: For Blogs and Groups that do not have a matching Menu Item."/>
+        <param type="spacer"/>
+        <param name="defaultmenuitemblog" type="menuitem" default="1" label="Blog Menu Item"
+               description="Default Menu item for Blog Posts without a matching Menu Item, given the URL."/>
+        <param name="defaultmenuitemgroup" type="menuitem" default="1" label="Group Menu Item"
+               description="Default Menu item for Group Discussions without a matching Menu Item, given the URL."/>
+        <param type="spacer"/>
+        <param type="spacer" default="Base: Use the specified value for the base of Tag and Tag Menu Summary pages. "/>
+        <param type="spacer"/>
+        <param name="tagbase" type="text" default="tag" label="Tag Base"
+               description="Specify the value to use in the base URL to indicate a tag has been clicked. If you specify the value tag, the URL would be http://example.com/tag/tag-value."/>
+        <param name="tagmenubase" type="text" default="menu" label="Tag Menu Base"
+               description="Specify the value to use in the base URL to indicate a Tag Menu has been clicked. If you specify the value menu, the URL would be http://example.com/menu/tag-value."/>
+        <param name="page" type="text" default="page" label="Pagination"
+               description="Specify the value to use in the base URL to indicate a pagination link has been clicked. If you specify the value page, the URL would be http://example.com/page/3."/>
+        <param name="datebase" type="text" default="date" label="Date Base"
+               description="Specify the value to use in the base URL to indicate a Blog Calendar link has been clicked. If you specify the value tag, the URL would be http://example.com/date/ccyy/mm."/>
+        <param type="spacer"/>
+        <param type="spacer"
+               default="No WWW: Configure Tamka to remove WWW from incoming URLs, and 301 redirect to the same location without the WWW."/>
+        <param type="spacer"/>
+        <param name="noWWW" type="list" default="0" label="No WWW"
+               description="Electing this option will remove WWW from incoming URLs and 301 redirect to the same location, without that value.">
+            <option value="1">Remove WWW and redirect</option>
+            <option value="0">No</option>
+        </param>
+        <param type="spacer"/>
+        <param type="spacer" default="Note: Tamka URLs work in conjunction with Molajo URL options."/>
+        <param type="spacer"/>
+    </parameters>
 </install>

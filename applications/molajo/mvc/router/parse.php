@@ -3,7 +3,7 @@
  * @version     $id: parse.php
  * @package     Molajo
  * @subpackage  Router
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -16,12 +16,12 @@ defined('MOLAJO') or die;
  * @subpackage    Router
  * @since 1.5
  */
-class MolajoApplicationRouterParse extends MolajoApplicationRouter
+class MolajoRouterParse extends MolajoRouter
 {
     /**
      * parseRoute
      *
-     * called out of ArticlesParseRoute (ex), which is activated by MolajoApplicationRouterSite::_parseSefRoute()
+     * called out of ArticlesParseRoute (ex), which is activated by MolajoRouterSite::_parseSefRoute()
      *
      * @param array     $segments An array of URL arguments
      * @param string    $componentParam ex articles
@@ -40,7 +40,7 @@ class MolajoApplicationRouterParse extends MolajoApplicationRouter
         $app = MolajoFactory::getApplication();
         $menu = $app->getMenu();
         $item = $menu->getActive();
-        $parameters = MolajoApplicationComponent::getParameters($componentParam);
+        $parameters = MolajoComponent::getParameters($componentParam);
         $advanced = $parameters->get('sef_advanced_link', 0);
         $db = MolajoFactory::getDBO();
 
@@ -103,7 +103,7 @@ class MolajoApplicationRouterParse extends MolajoApplicationRouter
         if ((int)($segments[1]) > 0 && $segments[1] < 32) {
             $mm = (int)$segments[1];
             if ($mm < 10) {
-                $mm = '0'.$mm;
+                $mm = '0' . $mm;
             }
         } else {
             return false;
@@ -113,14 +113,14 @@ class MolajoApplicationRouterParse extends MolajoApplicationRouter
         if ((int)($segments[2]) > 0 && $segments[2] < 32) {
             $dd = (int)$segments[2];
             if ($dd < 10) {
-                $dd = '0'.$dd;
+                $dd = '0' . $dd;
             }
         } else {
             return false;
         }
 
         /** alias */
-        $alias = trim(substr($segments[3], 0, 2).'-'.substr($segments[3], 3, strlen($segments[3]) - 3));
+        $alias = trim(substr($segments[3], 0, 2) . '-' . substr($segments[3], 3, strlen($segments[3]) - 3));
 
         /** run query */
         if (count($segments) > 3) {

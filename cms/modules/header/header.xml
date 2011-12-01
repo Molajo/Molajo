@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.0" application="administrator" method="upgrade">
-	<name>HEADER_NAME</name>
-	<author>Molajo Contributors</author>
-	<creationDate>January 2012</creationDate>
-	<copyright>Copyright 2011 Amy Stephen. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see	LICENSE.txt</license>
-	<authorEmail>collaborate@molajo.org</authorEmail>
-	<authorUrl>http://molajo.org</authorUrl>
-	<version>1.0</version>
-	<description>HEADER_DESCRIPTION</description>
-	<files>
-		<filename module="header">header.php</filename>
-		<folder>language</folder>
-	</files>
+    <name>HEADER_NAME</name>
+    <author>Molajo Contributors</author>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright 2011 Amy Stephen. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>HEADER_DESCRIPTION</description>
+    <files>
+        <filename module="header">header.php</filename>
+        <folder>language</folder>
+    </files>
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.header.ini</language>
         <language tag="en-GB">language/en-GB/en-GB.header.sys.ini</language>
     </languages>
-	<config>
-		<fields name="parameters">
-            <fieldset include="advanced" />
-		</fields>
-	</config>
+    <config>
+        <fields name="parameters">
+            <fieldset include="advanced"/>
+        </fields>
+    </config>
 </extension>

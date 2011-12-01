@@ -9,12 +9,12 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_WRAP_TABLE_DESCRIPTION</description>
-	<files>
-		<folder>layouts</folder>
-		<folder>language</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_wrap_table_name.ini</language>
-		<language tag="language/en-GB">en-GB.layout_wrap_table_name.sys.ini</language>
-	</languages>
+    <files>
+        <folder>layouts</folder>
+        <folder>language</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_wrap_table_name.ini</language>
+        <language tag="language/en-GB">en-GB.layout_wrap_table_name.sys.ini</language>
+    </languages>
 </extension>

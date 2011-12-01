@@ -1,14 +1,14 @@
 <fieldset
-    name="spam_protection"
-    label="SPAM_PROTECTION_FIELDSET_OPTIONS"
-    >
+        name="spam_protection"
+        label="SPAM_PROTECTION_FIELDSET_OPTIONS"
+        >
 
     <field
-        name="spam_protection"
-        type="list"
-        description="CONTACT_FORM_SPAM_DESC"
-        label="CONTACT_FORM_SPAM_LABEL"
-        >
+            name="spam_protection"
+            type="list"
+            description="CONTACT_FORM_SPAM_DESC"
+            label="CONTACT_FORM_SPAM_LABEL"
+            >
         <option value="">USE_GLOBAL</option>
         <option value="0">NO</option>
         <option value="1">YES</option>

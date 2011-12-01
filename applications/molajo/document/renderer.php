@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -59,7 +59,9 @@ class MolajoDocumentRenderer extends JObject
      * @return  string   The output of the script
      * @since   11.1
      */
-    public function render($name, $parameters = null, $content = null) {}
+    public function render($name, $parameters = null, $content = null)
+    {
+    }
 
     /**
      * Return the content type of the renderer

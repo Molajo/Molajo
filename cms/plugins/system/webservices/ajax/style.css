@@ -1,16 +1,93 @@
-* {margin:0; padding:0}
-body {font:12px Verdana,Arial; color:#777; background:#222}
-a {color:#999; text-decoration:none}
-a:hover {color:#bbb}
-#wrapper {width:500px; margin:75px auto}
-#buttons {height:35px}
-.button {border:1px solid #eee; background:#ccc; border-radius:3px; -moz-border-radius:3px; padding:4px 0 5px; width:245px; text-align:center; cursor:pointer; float:left; color:#555}
-.button:hover {border:1px solid #fff; background:#d9d9d9; color:#333}
-.floatright {float:right}
-#output {display:none; border-radius:3px; -moz-border-radius:3px; margin-bottom:10px; height:35px}
-.red {border:1px solid #895454; background:#5c3333; color:#af7272; text-shadow:1px 1px #341d1d}
-.green {border:1px solid #548954; background:#355c33; color:#79af72; text-shadow:1px 1px #21341d}
-#content {float:left; padding:10px 0 0 10px}
-.close {float:right; cursor:pointer; padding:1px 4px 2px; margin:8px 10px 0 0}
-.red .close {border:1px solid #895454}
-.green .close {border:1px solid #548954}
+* {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font: 12px Verdana, Arial;
+    color: #777;
+    background: #222
+}
+
+a {
+    color: #999;
+    text-decoration: none
+}
+
+a:hover {
+    color: #bbb
+}
+
+#wrapper {
+    width: 500px;
+    margin: 75px auto
+}
+
+#buttons {
+    height: 35px
+}
+
+.button {
+    border: 1px solid #eee;
+    background: #ccc;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 4px 0 5px;
+    width: 245px;
+    text-align: center;
+    cursor: pointer;
+    float: left;
+    color: #555
+}
+
+.button:hover {
+    border: 1px solid #fff;
+    background: #d9d9d9;
+    color: #333
+}
+
+.floatright {
+    float: right
+}
+
+#output {
+    display: none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    margin-bottom: 10px;
+    height: 35px
+}
+
+.red {
+    border: 1px solid #895454;
+    background: #5c3333;
+    color: #af7272;
+    text-shadow: 1px 1px #341d1d
+}
+
+.green {
+    border: 1px solid #548954;
+    background: #355c33;
+    color: #79af72;
+    text-shadow: 1px 1px #21341d
+}
+
+#content {
+    float: left;
+    padding: 10px 0 0 10px
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    padding: 1px 4px 2px;
+    margin: 8px 10px 0 0
+}
+
+.red .close {
+    border: 1px solid #895454
+}
+
+.green .close {
+    border: 1px solid #548954
+}

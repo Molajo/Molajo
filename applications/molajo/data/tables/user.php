@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -69,7 +69,7 @@ class MolajoTableUser extends MolajoTable
         $this->_db->setQuery(
             'SELECT *' .
             ' FROM #__users' .
-            ' WHERE id = '.(int)$userId
+            ' WHERE id = ' . (int)$userId
         );
         $data = (array)$this->_db->loadAssoc();
 
@@ -94,7 +94,7 @@ class MolajoTableUser extends MolajoTable
                 'SELECT g.id, g.title' .
                 ' FROM #__content AS g' .
                 ' JOIN #__user_groups AS m ON m.group_id = g.id' .
-                ' WHERE m.user_id = '. (int) $userId
+                ' WHERE m.user_id = ' . (int)$userId
             );
             // Add the groups to the user data.
             $this->groups = $this->_db->loadAssocList('title', 'id');
@@ -137,9 +137,9 @@ class MolajoTableUser extends MolajoTable
 
             // Get the titles for the user groups.
             $this->_db->setQuery(
-                'SELECT '.$this->_db->quoteName('id').', '.$this->_db->quoteName('title') .
-                ' FROM '.$this->_db->quoteName('#__content') .
-                ' WHERE '.$this->_db->quoteName('id').' = '.implode(' OR '.$this->_db->quoteName('id').' = ', $this->groups)
+                'SELECT ' . $this->_db->quoteName('id') . ', ' . $this->_db->quoteName('title') .
+                ' FROM ' . $this->_db->quoteName('#__content') .
+                ' WHERE ' . $this->_db->quoteName('id') . ' = ' . implode(' OR ' . $this->_db->quoteName('id') . ' = ', $this->groups)
             );
             // Set the titles for the user groups.
             $this->groups = $this->_db->loadAssocList('title', 'id');
@@ -162,22 +162,22 @@ class MolajoTableUser extends MolajoTable
     function check()
     {
         if (trim($this->name) == '') {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_YOUR_NAME'));
             return false;
         }
 
         if (trim($this->username) == '') {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_PLEASE_ENTER_A_USER_NAME'));
             return false;
         }
 
         if (preg_match("#[<>\"'%;()&]#i", $this->username) || strlen(utf8_decode($this->username)) < 2) {
-            $this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_VALID_AZ09', 2));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_VALID_AZ09', 2));
             return false;
         }
 
         if ((trim($this->email) == "") || !MolajoMailHelper::isEmailAddress($this->email)) {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_VALID_MAIL'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_VALID_MAIL'));
             return false;
         }
 
@@ -189,26 +189,26 @@ class MolajoTableUser extends MolajoTable
 
         // check for existing username
         $query = 'SELECT id'
-                .' FROM #__users '
-                .' WHERE username = '.$this->_db->Quote($this->username)
-                .' AND id != '.(int)$this->id;
+                 . ' FROM #__users '
+                 . ' WHERE username = ' . $this->_db->Quote($this->username)
+                 . ' AND id != ' . (int)$this->id;
         ;
         $this->_db->setQuery($query);
         $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_USERNAME_INUSE'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_USERNAME_INUSE'));
             return false;
         }
 
         // check for existing email
         $query = 'SELECT id'
-                .' FROM #__users '
-                .' WHERE email = '.$this->_db->Quote($this->email)
-                .' AND id != '.(int)$this->id;
+                 . ' FROM #__users '
+                 . ' WHERE email = ' . $this->_db->Quote($this->email)
+                 . ' AND id != ' . (int)$this->id;
         $this->_db->setQuery($query);
         $xid = intval($this->_db->loadResult());
         if ($xid && $xid != intval($this->id)) {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_EMAIL_INUSE'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_EMAIL_INUSE'));
             return false;
         }
 
@@ -222,7 +222,7 @@ class MolajoTableUser extends MolajoTable
         //			$this->_db->setQuery($query);
         //			$xid = intval($this->_db->loadResult());
         //			if ($rootUser==$this->username && (!$xid || $xid && $xid != intval($this->id))  || $xid && $xid == intval($this->id) && $rootUser!=$this->username) {
-        //				$this->setError( MolajoText::_('MOLAJO_DATABASE_ERROR_USERNAME_CANNOT_CHANGE'));
+        //				$this->setError( MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_USERNAME_CANNOT_CHANGE'));
         //				return false;
         //			}
 
@@ -258,7 +258,7 @@ class MolajoTableUser extends MolajoTable
 
         // Handle error if it exists.
         if (!$return) {
-            $this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->getErrorMsg()));
             return false;
         }
 
@@ -270,8 +270,8 @@ class MolajoTableUser extends MolajoTable
         if ($return && is_array($this->groups) && count($this->groups)) {
             // Delete the old user group maps.
             $this->_db->setQuery(
-                'DELETE FROM '.$this->_db->quoteName('#__user_groups') .
-                ' WHERE '.$this->_db->quoteName('user_id').' = '.(int)$this->id
+                'DELETE FROM ' . $this->_db->quoteName('#__user_groups') .
+                ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->id
             );
             $this->_db->query();
 
@@ -283,8 +283,8 @@ class MolajoTableUser extends MolajoTable
 
             // Set the new user group maps.
             $this->_db->setQuery(
-                'INSERT INTO '.$this->_db->quoteName('#__user_groups').' ('.$this->_db->quoteName('user_id').', '.$this->_db->quoteName('group_id').')' .
-                ' VALUES ('.$this->id.', '.implode('), ('.$this->id.', ', $this->groups).')'
+                'INSERT INTO ' . $this->_db->quoteName('#__user_groups') . ' (' . $this->_db->quoteName('user_id') . ', ' . $this->_db->quoteName('group_id') . ')' .
+                ' VALUES (' . $this->id . ', ' . implode('), (' . $this->id . ', ', $this->groups) . ')'
             );
             $this->_db->query();
 
@@ -318,8 +318,8 @@ class MolajoTableUser extends MolajoTable
 
         // Delete the user.
         $this->_db->setQuery(
-            'DELETE FROM '.$this->_db->quoteName($this->_tbl) .
-            ' WHERE '.$this->_db->quoteName($this->_tbl_key).' = '.(int)$this->$k
+            'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
+            ' WHERE ' . $this->_db->quoteName($this->_tbl_key) . ' = ' . (int)$this->$k
         );
         $this->_db->query();
 
@@ -331,8 +331,8 @@ class MolajoTableUser extends MolajoTable
 
         // Delete the user group maps.
         $this->_db->setQuery(
-            'DELETE FROM '.$this->_db->quoteName('#__user_groups') .
-            ' WHERE '.$this->_db->quoteName('user_id').' = '.(int)$this->$k
+            'DELETE FROM ' . $this->_db->quoteName('#__user_groups') .
+            ' WHERE ' . $this->_db->quoteName('user_id') . ' = ' . (int)$this->$k
         );
         $this->_db->query();
 
@@ -362,7 +362,7 @@ class MolajoTableUser extends MolajoTable
                 $userId = $this->id;
             } else {
                 // do not translate
-                jexit(MolajoText::_('MOLAJO_DATABASE_ERROR_SETLASTVISIT'));
+                jexit(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_SETLASTVISIT'));
             }
         }
 
@@ -372,9 +372,9 @@ class MolajoTableUser extends MolajoTable
         // Update the database row for the user.
         // 			' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($this->_db->toSQLDate($date)) .
         $this->_db->setQuery(
-            'UPDATE '.$this->_db->quoteName($this->_tbl) .
-            ' SET '.$this->_db->quoteName('last_visit_datetime').' = '.$this->_db->Quote($date) .
-            ' WHERE '.$this->_db->quoteName('id').' = '.(int)$userId
+            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
+            ' SET ' . $this->_db->quoteName('last_visit_datetime') . ' = ' . $this->_db->Quote($date) .
+            ' WHERE ' . $this->_db->quoteName('id') . ' = ' . (int)$userId
         );
         $this->_db->query();
 

@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Site
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -117,11 +117,11 @@ class MolajoSite extends JObject
                 return false;
             }
 
-            $classname = $prefix.ucfirst($site).'Site';
+            $classname = $prefix . ucfirst($site) . 'Site';
             if (class_exists($classname)) {
                 $instance = new $classname($config);
             } else {
-                return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_SITE_INSTANTIATION_ERROR', $classname));
+                return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_INSTANTIATION_ERROR', $classname));
             }
             $instances[$site] = &$instance;
         }
@@ -153,7 +153,7 @@ class MolajoSite extends JObject
         if ($this->_name == 'installation') {
             $this->_createSiteConfiguration();
         } else {
-            $this->_createSiteConfiguration(MOLAJO_SITE_PATH.'/'.$config['config_file']);
+            $this->_createSiteConfiguration(MOLAJO_SITE_PATH . '/' . $config['config_file']);
         }
     }
 
@@ -206,7 +206,7 @@ class MolajoSite extends JObject
             return true;
         }
 
-        MolajoError::raiseError(403, MolajoText::_('SITE_NOT_AUTHORIZED_FOR_APPLICATION'));
+        MolajoError::raiseError(403, MolajoTextHelper::_('SITE_NOT_AUTHORIZED_FOR_APPLICATION'));
         return false;
     }
 
@@ -247,23 +247,23 @@ class MolajoSite extends JObject
     {
         if (defined('MOLAJO_SITE_PATH_CACHE')) {
         } else {
-            define('MOLAJO_SITE_PATH_CACHE', $this->getSiteConfig('cache_path', MOLAJO_SITE_PATH.'/cache'));
+            define('MOLAJO_SITE_PATH_CACHE', $this->getSiteConfig('cache_path', MOLAJO_SITE_PATH . '/cache'));
         }
         if (defined('MOLAJO_SITE_PATH_IMAGES')) {
         } else {
-            define('MOLAJO_SITE_PATH_IMAGES', $this->getSiteConfig('images_path', MOLAJO_SITE_PATH.'/images'));
+            define('MOLAJO_SITE_PATH_IMAGES', $this->getSiteConfig('images_path', MOLAJO_SITE_PATH . '/images'));
         }
         if (defined('MOLAJO_SITE_PATH_LOGS')) {
         } else {
-            define('MOLAJO_SITE_PATH_LOGS', $this->getSiteConfig('logs_path', MOLAJO_SITE_PATH.'/logs'));
+            define('MOLAJO_SITE_PATH_LOGS', $this->getSiteConfig('logs_path', MOLAJO_SITE_PATH . '/logs'));
         }
         if (defined('MOLAJO_SITE_PATH_MEDIA')) {
         } else {
-            define('MOLAJO_SITE_PATH_MEDIA', $this->getSiteConfig('media_path', MOLAJO_SITE_PATH.'/media'));
+            define('MOLAJO_SITE_PATH_MEDIA', $this->getSiteConfig('media_path', MOLAJO_SITE_PATH . '/media'));
         }
         if (defined('MOLAJO_SITE_PATH_TMP')) {
         } else {
-            define('MOLAJO_SITE_PATH_TMP', $this->getSiteConfig('tmp_path', MOLAJO_SITE_PATH.'/tmp'));
+            define('MOLAJO_SITE_PATH_TMP', $this->getSiteConfig('tmp_path', MOLAJO_SITE_PATH . '/tmp'));
         }
     }
 
@@ -281,6 +281,6 @@ class MolajoSite extends JObject
      */
     public function getSiteConfig($varname, $default = null)
     {
-		return MolajoFactory::getSiteConfig()->get(''.$varname, $default);
+        return MolajoFactory::getSiteConfig()->get('' . $varname, $default);
     }
 }

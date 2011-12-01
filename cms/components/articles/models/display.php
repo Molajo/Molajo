@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Display Model
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -12,8 +12,10 @@ defined('MOLAJO') or die;
  *
  * ArticlesModelDisplay extends MolajoModelDisplay extends JModel extends JObject
  *
- * @package	    Molajo
- * @subpackage	Model
+ * @package        Molajo
+ * @subpackage    Model
  * @since       1.0
  */
-class ArticlesModelDisplay extends MolajoModelDisplay {}
+class ArticlesModelDisplay extends MolajoModelDisplay
+{
+}

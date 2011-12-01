@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @subpackage   menus
  * @since        1.6
  */
-class MolajoApplicationMenuFORCOMPONENT
+class MolajoMenuFORCOMPONENT
 {
     /**
      * Defines the valid request variables for the reverse lookup.
@@ -30,12 +30,12 @@ class MolajoApplicationMenuFORCOMPONENT
     public static function addSubmenu($vName)
     {
         JSubMenuHelper::addEntry(
-            MolajoText::_('MENU_SUBMENU_MENUS'),
+            MolajoTextHelper::_('MENU_SUBMENU_MENUS'),
             'index.php?option=menus&view=menus',
             $vName == 'menus'
         );
         JSubMenuHelper::addEntry(
-            MolajoText::_('MENU_SUBMENU_ITEMS'),
+            MolajoTextHelper::_('MENU_SUBMENU_ITEMS'),
             'index.php?option=menus&view=items',
             $vName == 'items'
         );
@@ -57,7 +57,7 @@ class MolajoApplicationMenuFORCOMPONENT
         if (empty($parentId)) {
             $assetName = 'menus';
         } else {
-            $assetName = 'menus.item.'.(int)$parentId;
+            $assetName = 'menus.item.' . (int)$parentId;
         }
 
         $actions = array(
@@ -107,7 +107,7 @@ class MolajoApplicationMenuFORCOMPONENT
 
         ksort($request);
 
-        return 'index.php?'.http_build_query($request, '', '&');
+        return 'index.php?' . http_build_query($request, '', '&');
     }
 
     /**
@@ -143,13 +143,13 @@ class MolajoApplicationMenuFORCOMPONENT
 
         // Filter by the type
         if ($menuType) {
-            $query->where('(a.menu_id = '.$db->quote($menuType).' OR a.parent_id = 0)');
+            $query->where('(a.menu_id = ' . $db->quote($menuType) . ' OR a.parent_id = 0)');
         }
 
         if ($parentId) {
             if ($mode == 2) {
                 // Prevent the parent and children from showing.
-                $query->join('LEFT', '`#__content` AS p ON p.id = '.(int)$parentId);
+                $query->join('LEFT', '`#__content` AS p ON p.id = ' . (int)$parentId);
                 $query->where('(a.lft <= p.lft OR a.rgt >= p.rgt)');
             }
         }
@@ -157,9 +157,9 @@ class MolajoApplicationMenuFORCOMPONENT
         if (empty($published)) {
         } else {
             if (is_array($published)) {
-                $published = '('.implode(',', $published).')';
+                $published = '(' . implode(',', $published) . ')';
             }
-            $query->where('a.published IN '.$published);
+            $query->where('a.published IN ' . $published);
         }
 
         $query->group('a.id');
@@ -178,7 +178,7 @@ class MolajoApplicationMenuFORCOMPONENT
 
         // Pad the option text with spaces using depth lvl as a multiplier.
         foreach ($links as &$link) {
-            $link->text = str_repeat('- ', $link->lvl).$link->text;
+            $link->text = str_repeat('- ', $link->lvl) . $link->text;
         }
 
         if (empty($menuType)) {
@@ -186,7 +186,7 @@ class MolajoApplicationMenuFORCOMPONENT
             $query->clear();
             $query->select('*');
             $query->from('#__menus');
-            $query->where('menu_id <> '.$db->quote(''));
+            $query->where('menu_id <> ' . $db->quote(''));
             $query->order('title, menu_id');
             $db->setQuery($query);
 

@@ -2,16 +2,17 @@
 /**
  * @package     Molajo
  * @subpackage  Molajo Media
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-class plgMolajoMedia extends MolajoApplicationPlugin	{
+class plgMolajoMedia extends MolajoPlugin
+{
 
     /**
-     * @var string	Stores name of data element containing text for content object
-     * @since	1.6
+     * @var string    Stores name of data element containing text for content object
+     * @since    1.6
      */
     protected $location;
 
@@ -20,29 +21,29 @@ class plgMolajoMedia extends MolajoApplicationPlugin	{
      *
      * Content Component Plugin that applies text and URL functions to content object
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	stromg		The 'page' number
-     * @return	string
-     * @since	1.6
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    stromg        The 'page' number
+     * @return    string
+     * @since    1.6
      */
-    function MolajoOnContentPrepare ($context, &$content, &$parameters, $page = 0)
+    function MolajoOnContentPrepare($context, &$content, &$parameters, $page = 0)
     {
         return;
         /** init **/
-        if (!plgMolajoMedia::initialization ($context, $content)) {
+        if (!plgMolajoMedia::initialization($context, $content)) {
             return;
         }
 
         /** parameters **/
-        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** view access **/
         if ($systemParameters->def('enable_audio', 0) == 1) {
             require_once dirname(__FILE__) . '/audio/driver.php';
-            MolajoMediaAudio::driver ($context, &$content, &$parameters, $page = 0, $this->location);
+            MolajoMediaAudio::driver($context, &$content, &$parameters, $page = 0, $this->location);
         }
         return;
     }
@@ -53,7 +54,8 @@ class plgMolajoMedia extends MolajoApplicationPlugin	{
      * @param object $content
      * @return binary
      */
-    function initialization ($context, $content) {
+    function initialization($context, $content)
+    {
 
         /** request values **/
         $option = JRequest::getVar('option');

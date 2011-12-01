@@ -57,7 +57,7 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
     public function __construct($options = array())
     {
         if (!$this->test()) {
-            return MolajoError::raiseError(404, MolajoText::_('JLIB_SESSION_MEMCACHE_EXTENSION_NOT_AVAILABLE'));
+            return MolajoError::raiseError(404, MolajoTextHelper::_('JLIB_SESSION_MEMCACHE_EXTENSION_NOT_AVAILABLE'));
         }
 
         parent::__construct($options);
@@ -121,7 +121,7 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
      */
     public function read($id)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
         $this->_setExpire($sess_id);
         return $this->_db->get($sess_id);
     }
@@ -138,13 +138,13 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
      */
     public function write($id, $session_data)
     {
-        $sess_id = 'sess_'.$id;
-        if ($this->_db->get($sess_id.'_expire')) {
-            $this->_db->replace($sess_id.'_expire', time(), 0);
+        $sess_id = 'sess_' . $id;
+        if ($this->_db->get($sess_id . '_expire')) {
+            $this->_db->replace($sess_id . '_expire', time(), 0);
         }
         else
         {
-            $this->_db->set($sess_id.'_expire', time(), 0);
+            $this->_db->set($sess_id . '_expire', time(), 0);
         }
         if ($this->_db->get($sess_id)) {
             $this->_db->replace($sess_id, $session_data, $this->_compress);
@@ -167,8 +167,8 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
      */
     public function destroy($id)
     {
-        $sess_id = 'sess_'.$id;
-        $this->_db->delete($sess_id.'_expire');
+        $sess_id = 'sess_' . $id;
+        $this->_db->delete($sess_id . '_expire');
         return $this->_db->delete($sess_id);
     }
 
@@ -210,16 +210,16 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
     protected function _setExpire($key)
     {
         $lifetime = ini_get("session.gc_maxlifetime");
-        $expire = $this->_db->get($key.'_expire');
+        $expire = $this->_db->get($key . '_expire');
 
         // set prune period
         if ($expire + $lifetime < time()) {
             $this->_db->delete($key);
-            $this->_db->delete($key.'_expire');
+            $this->_db->delete($key . '_expire');
         }
         else
         {
-            $this->_db->replace($key.'_expire', time());
+            $this->_db->replace($key . '_expire', time());
         }
     }
 }

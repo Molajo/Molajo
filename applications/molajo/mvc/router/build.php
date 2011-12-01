@@ -3,7 +3,7 @@
  * @version     $id: router.php
  * @package     Molajo
  * @subpackage  Router
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -16,12 +16,12 @@ defined('MOLAJO') or die;
  * @subpackage    Router
  * @since 1.5
  */
-class MolajoApplicationRouterBuild extends MolajoApplicationRouter
+class MolajoRouterBuild extends MolajoRouter
 {
     /**
      * buildRoute
      *
-     * called out of MolajoApplicationRouterSite::_buildSefRoute()
+     * called out of MolajoRouterSite::_buildSefRoute()
      *
      * @param array     $query An array of URL arguments
      * @param string    $componentParam ex articles
@@ -35,7 +35,7 @@ class MolajoApplicationRouterBuild extends MolajoApplicationRouter
     function buildRoute(&$query, $componentParam, $singleParam, $multipleParam, $typeParam, $tableParam)
     {
         $menu = MolajoFactory::getApplication()->getMenu();
-        $parameters = MolajoApplicationComponent::getParameters($componentParam);
+        $parameters = MolajoComponent::getParameters($componentParam);
         $advanced = $parameters->get('sef_advanced_link', 0);
         $segments = array();
         $temp = array();

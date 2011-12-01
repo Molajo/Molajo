@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Module
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -24,16 +24,16 @@ if ($session->get('page.task') == 'add') {
 }
 
 $acl = new MolajoACL ();
-$permissions = $acl->getUserPermissions ($session->get('page.option'), $session->get('page.view'), $buttonSet);
+$permissions = $acl->getUserPermissions($session->get('page.option'), $session->get('page.view'), $buttonSet);
 
 /** Build the Toolbar
 $toolbar = new MolajoToolbarHelper ();
 $toolbar->addButtonsDisplayLayout ($session->get('page.option'), $permissions);
-*/
+ */
 /**
 $toolbar = MolajoToolbar::getInstance('toolbar')->render('toolbar');
-require MolajoApplicationModule::getLayoutPath('toolbar', $parameters->get('layout', 'default'));
-*/
+require MolajoModule::getLayoutPath('toolbar', $parameters->get('layout', 'default'));
+ */
 // wrap div == cf
 $request['wrap'] = $module->style;
 $request['position'] = $module->position;

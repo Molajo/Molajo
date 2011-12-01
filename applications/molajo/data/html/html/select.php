@@ -46,7 +46,7 @@ abstract class MolajoHtmlSelect
      */
     public static function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
     {
-        $arr = array(MolajoHTML::_('select.option', '0', MolajoText::_($no)), MolajoHTML::_('select.option', '1', MolajoText::_($yes)));
+        $arr = array(MolajoHTML::_('select.option', '0', MolajoTextHelper::_($no)), MolajoHTML::_('select.option', '1', MolajoTextHelper::_($yes)));
         return MolajoHTML::_('select.radiolist', $arr, $name, $attribs, 'value', 'text', (int)$selected, $id);
     }
 
@@ -106,7 +106,7 @@ abstract class MolajoHtmlSelect
                 $attribs = $options['list.attr'];
             }
             if ($attribs != '') {
-                $attribs = ' '.$attribs;
+                $attribs = ' ' . $attribs;
             }
         }
 
@@ -114,9 +114,9 @@ abstract class MolajoHtmlSelect
         $id = str_replace(array('[', ']'), '', $id);
 
         $baseIndent = str_repeat($options['format.indent'], $options['format.depth']++);
-        $html = $baseIndent.'<select'.($id !== '' ? ' id="'.$id.'"'
-                : '').' name="'.$name.'"'.$attribs.'>'.$options['format.eol']
-               .self::options($data, $options).$baseIndent.'</select>'.$options['format.eol'];
+        $html = $baseIndent . '<select' . ($id !== '' ? ' id="' . $id . '"'
+                : '') . ' name="' . $name . '"' . $attribs . '>' . $options['format.eol']
+                . self::options($data, $options) . $baseIndent . '</select>' . $options['format.eol'];
         return $html;
     }
 
@@ -144,7 +144,7 @@ abstract class MolajoHtmlSelect
      *                            list.select: either the value of one selected option or an array
      *                            of selected options. Default: none.
      *                            list.translate: Boolean. If set, text and labels are translated via
-     *                            MolajoText::_().
+     *                            MolajoTextHelper::_().
      *
      * @return  string  HTML for the select list
      *
@@ -177,7 +177,7 @@ abstract class MolajoHtmlSelect
                 $attribs = $options['list.attr'];
             }
             if ($attribs != '') {
-                $attribs = ' '.$attribs;
+                $attribs = ' ' . $attribs;
             }
         }
 
@@ -188,8 +188,8 @@ abstract class MolajoHtmlSelect
         $options['groups'] = false;
 
         $baseIndent = str_repeat($options['format.indent'], $options['format.depth']++);
-        $html = $baseIndent.'<select'.($id !== '' ? ' id="'.$id.'"'
-                : '').' name="'.$name.'"'.$attribs.'>'.$options['format.eol'];
+        $html = $baseIndent . '<select' . ($id !== '' ? ' id="' . $id . '"'
+                : '') . ' name="' . $name . '"' . $attribs . '>' . $options['format.eol'];
         $groupIndent = str_repeat($options['format.indent'], $options['format.depth']++);
 
         foreach ($data as $dataKey => $group)
@@ -238,14 +238,14 @@ abstract class MolajoHtmlSelect
             }
             else
             {
-                $html .= $groupIndent.'<optgroup'.(empty($id) ? '' : ' id="'.$id.'"').' label="'
-                        .($options['group.label.toHtml'] ? htmlspecialchars($label, ENT_COMPAT, 'UTF-8')
-                                : $label).'">'.$options['format.eol']
-                        .self::options($subList, $options).$groupIndent.'</optgroup>'.$options['format.eol'];
+                $html .= $groupIndent . '<optgroup' . (empty($id) ? '' : ' id="' . $id . '"') . ' label="'
+                         . ($options['group.label.toHtml'] ? htmlspecialchars($label, ENT_COMPAT, 'UTF-8')
+                                : $label) . '">' . $options['format.eol']
+                         . self::options($subList, $options) . $groupIndent . '</optgroup>' . $options['format.eol'];
             }
         }
 
-        $html .= $baseIndent.'</select>'.$options['format.eol'];
+        $html .= $baseIndent . '</select>' . $options['format.eol'];
 
         return $html;
     }
@@ -432,7 +432,7 @@ abstract class MolajoHtmlSelect
      *                               -list.select: either the value of one selected option or an array
      *                                of selected options. Default: none.
      *                               -list.translate: Boolean. If set, text and labels are translated via
-     *                                MolajoText::_(). Default is false.
+     *                                MolajoTextHelper::_(). Default is false.
      *                               -option.id: The property in each option array to use as the
      *                                selection id attribute. Defaults to none.
      *                               -option.key: The property in each option array to use as the
@@ -538,14 +538,14 @@ abstract class MolajoHtmlSelect
 
             $key = (string)$key;
             if ($options['groups'] && $key == '<OPTGROUP>') {
-                $html .= $baseIndent.'<optgroup label="'.($options['list.translate'] ? MolajoText::_($text)
-                        : $text).'">'.$options['format.eol'];
+                $html .= $baseIndent . '<optgroup label="' . ($options['list.translate'] ? MolajoTextHelper::_($text)
+                        : $text) . '">' . $options['format.eol'];
                 $baseIndent = str_repeat($options['format.indent'], ++$options['format.depth']);
             }
             elseif ($options['groups'] && $key == '</OPTGROUP>')
             {
                 $baseIndent = str_repeat($options['format.indent'], --$options['format.depth']);
-                $html .= $baseIndent.'</optgroup>'.$options['format.eol'];
+                $html .= $baseIndent . '</optgroup>' . $options['format.eol'];
             }
             else
             {
@@ -553,11 +553,11 @@ abstract class MolajoHtmlSelect
                 $splitText = explode(' - ', $text, 2);
                 $text = $splitText[0];
                 if (isset($splitText[1])) {
-                    $text .= ' - '.$splitText[1];
+                    $text .= ' - ' . $splitText[1];
                 }
 
                 if ($options['list.translate'] && !empty($label)) {
-                    $label = MolajoText::_($label);
+                    $label = MolajoTextHelper::_($label);
                 }
                 if ($options['option.label.toHtml']) {
                     $label = htmlentities($label);
@@ -569,8 +569,8 @@ abstract class MolajoHtmlSelect
                 {
                     $attr = trim($attr);
                 }
-                $extra = ($id ? ' id="'.$id.'"' : '').($label ? ' label="'.$label.'"' : '').($attr
-                        ? ' '.$attr : '').$extra;
+                $extra = ($id ? ' id="' . $id . '"' : '') . ($label ? ' label="' . $label . '"' : '') . ($attr
+                        ? ' ' . $attr : '') . $extra;
                 if (is_array($options['list.select'])) {
                     foreach ($options['list.select'] as $val)
                     {
@@ -587,15 +587,15 @@ abstract class MolajoHtmlSelect
                 }
 
                 if ($options['list.translate']) {
-                    $text = MolajoText::_($text);
+                    $text = MolajoTextHelper::_($text);
                 }
 
                 // Generate the option, encoding as required
-                $html .= $baseIndent.'<option value="'.($options['option.key.toHtml']
-                        ? htmlspecialchars($key, ENT_COMPAT, 'UTF-8') : $key).'"'
-                        .$extra.'>'.($options['option.text.toHtml']
+                $html .= $baseIndent . '<option value="' . ($options['option.key.toHtml']
+                        ? htmlspecialchars($key, ENT_COMPAT, 'UTF-8') : $key) . '"'
+                         . $extra . '>' . ($options['option.text.toHtml']
                         ? htmlentities(html_entity_decode($text), ENT_COMPAT, 'UTF-8') : $text)
-                        .'</option>'.$options['format.eol'];
+                         . '</option>' . $options['format.eol'];
             }
         }
 
@@ -633,11 +633,11 @@ abstract class MolajoHtmlSelect
         foreach ($data as $ind => $obj)
         {
             $k = $obj->$optKey;
-            $t = $translate ? MolajoText::_($obj->$optText) : $obj->$optText;
+            $t = $translate ? MolajoTextHelper::_($obj->$optText) : $obj->$optText;
             $id = (isset($obj->id) ? $obj->id : null);
 
             $extra = '';
-            $extra .= $id ? ' id="'.$obj->id.'"' : '';
+            $extra .= $id ? ' id="' . $obj->id . '"' : '';
             if (is_array($selected)) {
                 foreach ($selected as $val)
                 {
@@ -652,9 +652,9 @@ abstract class MolajoHtmlSelect
             {
                 $extra .= ((string)$k == (string)$selected ? ' checked="checked"' : '');
             }
-            $html .= "\n\t".'<input type="radio" name="'.$name.'"'.' id="'.$id_text.$k.'" value="'.$k.'"'.' '.$extra.' '
-                    .$attribs.'/>'."\n\t".'<label for="'.$id_text.$k.'"'.' id="'.$id_text.$k.'-lbl" class="radiobtn">'.$t
-                    .'</label>';
+            $html .= "\n\t" . '<input type="radio" name="' . $name . '"' . ' id="' . $id_text . $k . '" value="' . $k . '"' . ' ' . $extra . ' '
+                     . $attribs . '/>' . "\n\t" . '<label for="' . $id_text . $k . '"' . ' id="' . $id_text . $k . '-lbl" class="radiobtn">' . $t
+                     . '</label>';
         }
         $html .= "\n";
         return $html;

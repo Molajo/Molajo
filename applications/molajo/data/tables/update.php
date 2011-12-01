@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -39,7 +39,7 @@ class MolajoTableUpdate extends MolajoTable
     {
         // check for valid name
         if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
             return false;
         }
         return true;
@@ -77,9 +77,9 @@ class MolajoTableUpdate extends MolajoTable
         $dbo = MolajoFactory::getDBO();
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col.' = '.$dbo->Quote($val);
+            $where[] = $col . ' = ' . $dbo->Quote($val);
         }
-        $query = 'SELECT update_id FROM #__updates WHERE '.implode(' AND ', $where);
+        $query = 'SELECT update_id FROM #__updates WHERE ' . implode(' AND ', $where);
         $dbo->setQuery($query);
         return $dbo->loadResult();
     }

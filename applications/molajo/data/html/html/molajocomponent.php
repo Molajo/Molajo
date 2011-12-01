@@ -3,7 +3,7 @@
  * @version     $id: molajocomponent
  * @package     Molajo
  * @subpackage  HTML Class
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage    HTML
  * @since        1.5
  */
-abstract class MolajoHtmlMolajoApplicationComponent
+abstract class MolajoHtmlMolajoComponent
 {
     /**
      * @var    array    Cached array of the component items.
@@ -53,7 +53,7 @@ abstract class MolajoHtmlMolajoApplicationComponent
 
             $translated = array();
             foreach ($results as $item) {
-                $translated[$i]->value = MolajoText::_($item->value);
+                $translated[$i]->value = MolajoTextHelper::_($item->value);
                 $translated[$i]->text = $item->text;
                 $i++;
             }
@@ -65,7 +65,7 @@ abstract class MolajoHtmlMolajoApplicationComponent
 
             /** load into select list **/
             foreach ($translatedSorted as $item) {
-                $options[] = MolajoHTML::_('select.option', $item->value, MolajoText::_($item->text));
+                $options[] = MolajoHTML::_('select.option', $item->value, MolajoTextHelper::_($item->text));
             }
         }
 

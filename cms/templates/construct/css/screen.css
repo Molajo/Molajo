@@ -252,7 +252,7 @@ li {
 
 nav ul,
 nav ol {
-	list-style: none none;
+    list-style: none none;
 }
 
 /* =============================================================================
@@ -444,7 +444,7 @@ table {
 body {
     color: #333;
     line-height: 1.6em;
-    font-family: Helvetica,Arial,FreeSans,sans-serif;
+    font-family: Helvetica, Arial, FreeSans, sans-serif;
 }
 
 a,
@@ -814,9 +814,9 @@ table.category {
 }
 
 .drop-shadow {
-    -webkit-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-    -moz-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
     padding: 5px;
     margin: 5px;
 }
@@ -985,6 +985,7 @@ label.invalid {
 ul.menu-horizontal li {
     float: left;
 }
+
 /* Use -horizontal menu class suffix */
 
 .outline {
@@ -1018,8 +1019,8 @@ ul.menu-horizontal li {
 }
 
 .pagenav li {
-	margin: 0;
-	list-style: none;
+    margin: 0;
+    list-style: none;
 }
 
 .pagenav-next {
@@ -1050,7 +1051,7 @@ ul.menu-horizontal li {
     border-radius: 10px;
     -moz-background-clip: padding;
     -webkit-background-clip: padding-box;
-    background-clip: padding-box; 
+    background-clip: padding-box;
     padding: 5px;
     margin: 5px;
 }
@@ -1128,17 +1129,17 @@ ul.menu-horizontal li {
     padding: 5px;
     max-width: 400px;
     z-index: 50;
-    -webkit-box-shadow: 5px 5px 10px rgba(0,0,0,0.6);
-    -moz-box-shadow: 5px 5px 10px rgba(0,0,0,0.6);
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
 }
 
 .tip-title {
-	padding: 15px 0 5px;
-	margin: -15px 0 0;
-	font-size: 1em;
+    padding: 15px 0 5px;
+    margin: -15px 0 0;
+    font-size: 1em;
     font-weight: bold;
-	background: url(../images/selector-arrow.png) no-repeat;
+    background: url(../images/selector-arrow.png) no-repeat;
 }
 
 .tip-text {
@@ -1184,8 +1185,8 @@ ul.menu-horizontal li {
 #footer ul.menu,
 #footer ul.menu li {
     display: inline;
-	list-style: none outside none;
-	margin: 0;
+    list-style: none outside none;
+    margin: 0;
     padding: 0;
 }
 
@@ -1324,15 +1325,16 @@ ul.menu {
 ul.menu li {
     float: left;
     position: relative;
-	margin: 0;
+    margin: 0;
     padding: 0;
 }
 
 ul.menu a,
 ul.menu span.separator {
-	display: block;
-	padding: .1em .7em;
+    display: block;
+    padding: .1em .7em;
 }
+
 /* use padding to indent text */
 
 ul.menu ul {
@@ -1341,6 +1343,7 @@ ul.menu ul {
     z-index: 999;
     width: 16em;
 }
+
 /* change width to alter sub-menu widths */
 
 ul.menu ul li {
@@ -1367,6 +1370,7 @@ nav:after,
 #column-group-beta ul.menu {
     padding: 0;
 }
+
 /* adjust to resize menus */
 
 #column-group-alpha ul.menu li,
@@ -1401,8 +1405,9 @@ nav ul.menu li span.separator {
     padding: 6px 15px 5px;
 }
 
-nav ul.menu ul ul{
-    margin:0 0 0 100%;top:0
+nav ul.menu ul ul {
+    margin: 0 0 0 100%;
+    top: 0
 }
 
 /* =============================================================================
@@ -1456,19 +1461,19 @@ nav ul.menu ul ul{
  * nav ul li:hover ul{display:block;}
  * Flip last item to keep witin area
  */
- 
+
 /* =============================================================================
-   Third Level Centered Suckerfish
-   ========================================================================== */  
+Third Level Centered Suckerfish
+========================================================================== */
 /*
- * nav ul li:hover ul li ul {display: none;}
- * nav ul li:hover ul li a,
- * nav ul li:hover ul li:hover ul { display: block;}
- */
+* nav ul li:hover ul li ul {display: none;}
+* nav ul li:hover ul li a,
+* nav ul li:hover ul li:hover ul { display: block;}
+*/
 
 /* =============================================================================
    suckerfish functionality
-   ========================================================================== */    
+   ========================================================================== */
 ul.menu li:hover ul ul,
 ul.menu ul li:hover ul ul,
 ul.menu ul ul li:hover ul ul,
@@ -1583,9 +1588,9 @@ html,
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    -webkit-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-    -moz-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
     padding: 5px 10px;
     margin: 5px 0;
     opacity: 0.9;

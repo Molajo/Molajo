@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Editor Button Helper
  * @since       1.0
  */
-class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
+class MolajoEditorbuttonHelper extends MolajoPlugin
 {
 
     /**
@@ -31,7 +31,7 @@ class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
     function checkCriteria($name)
     {
         /** parameters **/
-        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         $editorButtonsArray = new object;
@@ -41,7 +41,7 @@ class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
 
         for ($i = 1; $i < 99; $i++) {
 
-            $buttonName = $systemParameters->def('editor_button_sequence'.$i);
+            $buttonName = $systemParameters->def('editor_button_sequence' . $i);
             //echo 'Next Button'.' '.$buttonName .'<br />';
             //echo 'Category Parameter'.' '.var_dump($systemParameters->def('enable_editor_'.$buttonName.'_categories')) .'<br />';
             //echo 'above'.'<br />';
@@ -64,7 +64,7 @@ class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
 
                 /** categories **/
                 $categoryFound = false;
-                $categoryArray = $systemParameters->def('enable_editor_'.$buttonName.'_categories', array());
+                $categoryArray = $systemParameters->def('enable_editor_' . $buttonName . '_categories', array());
 
                 /** none **/
                 if ($categoryFound === false && (is_array($categoryArray) === false || count($categoryArray) == 0 || $categoryArray[0] == 'none')) {
@@ -84,7 +84,7 @@ class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
 
                     /** component  **/
                     if ($categoryFound === false) {
-                        $componentCategoriesModel = JModel::getInstance(ucfirst(JRequest::getCmd('DefaultView')).'Model', ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+                        $componentCategoriesModel = JModel::getInstance(ucfirst(JRequest::getCmd('DefaultView')) . 'Model', ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
                         if ($componentCategoriesModel->checkCategories($categoryArray)) {
                             $categoryFound = true;
                             //        echo 'found category for component<br />';
@@ -94,8 +94,8 @@ class MolajoEditorbuttonHelper extends MolajoApplicationPlugin
 
                 /** build button if criteria met **/
                 if ($categoryFound === true) {
-                    require_once dirname(__FILE__).'/'.$buttonName.'/driver.php';
-                    $className = 'MolajoEditorButton'.ucfirst($buttonName);
+                    require_once dirname(__FILE__) . '/' . $buttonName . '/driver.php';
+                    $className = 'MolajoEditorButton' . ucfirst($buttonName);
                     $buttonClass = new $className ();
                     $editorButtonsArray[] = $buttonClass->buildButton($name);
                 }

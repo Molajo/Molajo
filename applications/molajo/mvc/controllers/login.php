@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Login Controller
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -94,7 +94,7 @@ class MolajoControllerLogin extends MolajoController
         }
 
         /** success message */
-        $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_SUCCESSFUL_LOGON'));
+        $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_SUCCESSFUL_LOGON'));
         $this->redirectClass->setSuccessIndicator(true);
     }
 
@@ -109,7 +109,7 @@ class MolajoControllerLogin extends MolajoController
      */
     protected function _loginFailed($type, $response, $options = Array())
     {
-        MolajoApplicationPlugin::getPlugin('user');
+        MolajoPlugin::getPlugin('user');
         if ($type == 'authenticate') {
             JDispatcher::getInstance()->trigger('onUserLoginFailure', array($response, $options));
         } else {
@@ -118,8 +118,8 @@ class MolajoControllerLogin extends MolajoController
 
         if (isset($options['silent']) && $options['silent']) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('JLIB_LOGIN_AUTHORIZED'));
-            $this->redirectClass->setRedirectMessageType(MolajoText::_('warning'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('JLIB_LOGIN_AUTHORIZED'));
+            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('warning'));
         }
         return $this->redirectClass->setSuccessIndicator(false);
     }
@@ -203,7 +203,7 @@ class MolajoControllerLogin extends MolajoController
         }
 
         // Import the user plugin group.
-        MolajoApplicationPlugin::importPlugin('user');
+        MolajoPlugin::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
         $results = $this->triggerEvent('onUserLogout', array($parameters, $options));

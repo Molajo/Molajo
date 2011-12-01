@@ -1,70 +1,277 @@
-.main-only #content-main{float:right;text-align:right;direction:rtl}
-.main-only #load-first{text-align:right;direction:rtl}
+.main-only #content-main {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
 
-.alpha-1-main #load-first{text-align:right;direction:rtl}
-.alpha-1-main #content-main{float:left;text-align:right;direction:rtl}
-.alpha-1-main #column-group-alpha{float:right;text-align:right;direction:rtl}
+.main-only #load-first {
+    text-align: right;
+    direction: rtl
+}
 
-.alpha-2-main #load-first{text-align:right;direction:rtl}
-.alpha-2-main #content-main{float:left;text-align:right;direction:rtl}
-.alpha-2-main #column-group-alpha{float:right;text-align:right;direction:rtl}
+.alpha-1-main #load-first {
+    text-align: right;
+    direction: rtl
+}
 
-.main-beta-1 #content-main{float:right;text-align:right;direction:rtl}
-.main-beta-1 #column-group-beta{float:left;text-align:right;direction:rtl}
+.alpha-1-main #content-main {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
 
-.main-beta-2 #content-main{float:right;text-align:right;direction:rtl}
-.main-beta-2 #column-group-beta{float:left;text-align:right;direction:rtl}
+.alpha-1-main #column-group-alpha {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
 
-.alpha-1-main-beta-1 #content-main{float:left;text-align:right;direction:rtl}
-.alpha-1-main-beta-1 #column-group-alpha{float:right;text-align:right;direction:rtl}
-.alpha-1-main-beta-1 #column-group-beta{float:left;text-align:right;direction:rtl}
+.alpha-2-main #load-first {
+    text-align: right;
+    direction: rtl
+}
 
-.alpha-2-main-beta-1 #content-main{float:left;text-align:right;direction:rtl}
-.alpha-2-main-beta-1 #column-group-alpha{float:right;text-align:right;direction:rtl}
-.alpha-2-main-beta-1 #column-group-beta{float:left;text-align:right;direction:rtl}
+.alpha-2-main #content-main {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
 
-.alpha-1-main-beta-2 #content-main{float:left;text-align:right;direction:rtl}
-.alpha-1-main-beta-2 #column-group-alpha{float:right;text-align:right;direction:rtl}
-.alpha-1-main-beta-2 #column-group-beta{float:left;text-align:right;direction:rtl}
+.alpha-2-main #column-group-alpha {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
 
-.alpha-2-main-beta-2 #content-main{float:left;text-align:right;direction:rtl}
-.alpha-2-main-beta-2 #column-group-alpha{float:right;text-align:right;direction:rtl}
-.alpha-2-main-beta-2 #column-group-beta{float:left;text-align:right;direction:rtl}
+.main-beta-1 #content-main {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+.main-beta-1 #column-group-beta {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.main-beta-2 #content-main {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+.main-beta-2 #column-group-beta {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-1-main-beta-1 #content-main {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-1-main-beta-1 #column-group-alpha {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-1-main-beta-1 #column-group-beta {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-2-main-beta-1 #content-main {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-2-main-beta-1 #column-group-alpha {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-2-main-beta-1 #column-group-beta {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-1-main-beta-2 #content-main {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-1-main-beta-2 #column-group-alpha {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-1-main-beta-2 #column-group-beta {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-2-main-beta-2 #content-main {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-2-main-beta-2 #column-group-alpha {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+.alpha-2-main-beta-2 #column-group-beta {
+    float: left;
+    text-align: right;
+    direction: rtl
+}
 
 .count-1,
 .count-2,
 .count-3,
 .count-4,
 .count-5,
-.count-6{float:right;direction:rtl}
+.count-6 {
+    float: right;
+    direction: rtl
+}
 
-.date-container{float:left}
-.date-container span{float:right}
+.date-container {
+    float: left
+}
 
-#access{float:right;direction:rtl}
-#access li{float:right;direction:rtl}
-#breadcrumbs {float:right;text-align:right;direction:rtl}
-#content-container{padding:0;margin:0;text-align:right;direction:rtl}
-#column-group-alpha{float:right}
-#column-group-beta{float:left}
+.date-container span {
+    float: right
+}
+
+#access {
+    float: right;
+    direction: rtl
+}
+
+#access li {
+    float: right;
+    direction: rtl
+}
+
+#breadcrumbs {
+    float: right;
+    text-align: right;
+    direction: rtl
+}
+
+#content-container {
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    direction: rtl
+}
+
+#column-group-alpha {
+    float: right
+}
+
+#column-group-beta {
+    float: left
+}
+
 #column-group-alpha ul#mainlevel li,
-#left ul.menu li{float: right;position: relative;direction: rtl}
+#left ul.menu li {
+    float: right;
+    position: relative;
+    direction: rtl
+}
+
 #column-group-alpha ul.menu ul,
 #column-group-alpha ul.menu ul ul,
-#column-group-alpha ul.menu ul ul ul{display: none;position: absolute;top: 10px;right: 75%;z-index:900}
+#column-group-alpha ul.menu ul ul ul {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 75%;
+    z-index: 900
+}
+
 #column-group-beta ul#mainlevel li,
-#column-group-beta ul.menu li{width: 100%;list-style:none;padding:0 0 0 0;margin:0;text-align:left;direction: rtl}
+#column-group-beta ul.menu li {
+    width: 100%;
+    list-style: none;
+    padding: 0 0 0 0;
+    margin: 0;
+    text-align: left;
+    direction: rtl
+}
+
 #column-group-beta ul#mainlevel li,
-#column-group-beta ul.menu li{float: right;position: relative;direction: rtl}
+#column-group-beta ul.menu li {
+    float: right;
+    position: relative;
+    direction: rtl
+}
+
 #column-group-beta ul.menu ul,
 #column-group-beta ul.menu ul ul,
-#column-group-beta ul.menu ul ul ul{display: none;position: absolute;top: 10px;right: -75%;z-index:900}
-#footer p{text-align:right;direction:rtl}
-#header{text-align:right;direction:rtl}
-#load-first{float:right}
-#nav{float:right; direction: rtl}
-#nav ul{padding:0; margin:0;list-style-type: none; }
-#nav ul li{float:right;direction: rtl}
-#nav ul li ul{display: none}
-#nav ul.menu li:hover ul{right:0; direction: rtl}
-#nav ul.menu li:hover ul li:hover ul{left:-105px;direction: rtl}
+#column-group-beta ul.menu ul ul ul {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: -75%;
+    z-index: 900
+}
+
+#footer p {
+    text-align: right;
+    direction: rtl
+}
+
+#header {
+    text-align: right;
+    direction: rtl
+}
+
+#load-first {
+    float: right
+}
+
+#nav {
+    float: right;
+    direction: rtl
+}
+
+#nav ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+#nav ul li {
+    float: right;
+    direction: rtl
+}
+
+#nav ul li ul {
+    display: none
+}
+
+#nav ul.menu li:hover ul {
+    right: 0;
+    direction: rtl
+}
+
+#nav ul.menu li:hover ul li:hover ul {
+    left: -105px;
+    direction: rtl
+}

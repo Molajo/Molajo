@@ -7,4 +7,4 @@
  */
 defined('MOLAJO') or die;
 $current_folder = basename(dirname(__FILE__));
-require_once MOLAJO_PLATFORM.'/mvc/entry.php';
+require_once MOLAJO_PLATFORM . '/mvc/entry.php';

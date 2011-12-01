@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Application
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -10,8 +10,10 @@ defined('MOLAJO') or die;
 /**
  * Molajo Installation Menu
  *
- * @package		Molajo
- * @subpackage	Application
+ * @package        Molajo
+ * @subpackage    Application
  * @since       1.0
  */
-class MolajoInstallationMenu extends MolajoApplicationMenu {}
+class MolajoInstallationMenu extends MolajoMenu
+{
+}

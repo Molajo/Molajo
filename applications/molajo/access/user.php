@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  User
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -190,7 +190,7 @@ class MolajoUser extends JObject
             if ($id = MolajoUserhelper::getUserId($identifier)) {
 
             } else {
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
+                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
                 $retval = false;
                 return $retval;
             }
@@ -319,16 +319,16 @@ class MolajoUser extends JObject
         // Set the default parampath if not set already
         if (isset($parampath)) {
         } else {
-            $parampath = MOLAJO_CMS_COMPONENTS.'/users/models';
+            $parampath = MOLAJO_CMS_COMPONENTS . '/users/models';
         }
 
         if ($loadsetupfile) {
             $type = str_replace(' ', '_', strtolower($this->usertype));
 
-            $file = $parampath.'/'.$type.'.xml';
+            $file = $parampath . '/' . $type . '.xml';
             if (file_exists($file)) {
             } else {
-                $file = $parampath.'/'.'user.xml';
+                $file = $parampath . '/' . 'user.xml';
             }
 
             $this->_parameters->loadSetupFile($file);
@@ -411,7 +411,7 @@ class MolajoUser extends JObject
             }
 
             if (isset($array['password2']) && $array['password'] != $array['password2']) {
-                $this->setError(MolajoText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
+                $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
                 return false;
             }
 
@@ -419,7 +419,7 @@ class MolajoUser extends JObject
 
             $salt = MolajoUserhelper::genRandomPassword(32);
             $crypt = MolajoUserhelper::getCryptedPassword($array['password'], $salt);
-            $array['password'] = $crypt.':'.$salt;
+            $array['password'] = $crypt . ':' . $salt;
 
             // Set the registration timestamp
             $this->set('register_datetime', MolajoFactory::getDate()->toMySQL());
@@ -444,7 +444,7 @@ class MolajoUser extends JObject
             } else {
                 if ($array['password'] == $array['password2']) {
                 } else {
-                    $this->setError(MolajoText::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
+                    $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
                     return false;
                 }
 
@@ -452,7 +452,7 @@ class MolajoUser extends JObject
 
                 $salt = MolajoUserhelper::genRandomPassword(32);
                 $crypt = MolajoUserhelper::getCryptedPassword($array['password'], $salt);
-                $array['password'] = $crypt.':'.$salt;
+                $array['password'] = $crypt . ':' . $salt;
             }
         }
 
@@ -475,7 +475,7 @@ class MolajoUser extends JObject
         // Bind the array
         if ($this->setProperties($array)) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_USER_ERROR_BIND_ARRAY'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_BIND_ARRAY'));
             return false;
         }
 
@@ -545,20 +545,20 @@ class MolajoUser extends JObject
                     // Check if the new user is being put into a Super Admin group.
                     foreach ($this->groups as $key => $groupId) {
                         if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
-                            throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                            throw new Exception(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                         }
                     }
                 } else {
                     // I am not a Super Admin, and this one is, so fail.
                     if ($acl->checkPermissions('user', $this->id, 'administer', '', '')) {
-                        throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                        throw new Exception(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                     }
 
                     if ($this->groups != null) {
                         // I am not a Super Admin and I'm trying to make one.
                         foreach ($this->groups as $groupId) {
                             if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
-                                throw new Exception(MolajoText::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                                throw new Exception(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                             }
                         }
                     }
@@ -566,7 +566,7 @@ class MolajoUser extends JObject
             }
 
             // Fire the onUserBeforeSave event.
-            MolajoApplicationPlugin::importPlugin('user');
+            MolajoPlugin::importPlugin('user');
             $dispatcher = JDispatcher::getInstance();
 
             $result = $dispatcher->trigger('onUserBeforeSave', array($oldUser->getProperties(), $isNew, $this->getProperties()));
@@ -612,7 +612,7 @@ class MolajoUser extends JObject
      */
     public function delete()
     {
-        MolajoApplicationPlugin::importPlugin('user');
+        MolajoPlugin::importPlugin('user');
 
         // Trigger the onUserBeforeDelete event
         $dispatcher = JDispatcher::getInstance();
@@ -647,7 +647,7 @@ class MolajoUser extends JObject
         $table = $this->getTable();
         if ($table->load($id)) {
         } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
             return false;
         }
         $this->_parameters->loadJSON($table->parameters);

@@ -44,7 +44,7 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
         $extension = $this->element['extension'] ? (string)$this->element['extension']
                 : (string)$this->element['scope'];
         if (isset($this->element['show_root'])) {
-            array_unshift($options, MolajoHTML::_('select.option', '0', MolajoText::_('JGLOBAL_ROOT')));
+            array_unshift($options, MolajoHTML::_('select.option', '0', MolajoTextHelper::_('JGLOBAL_ROOT')));
         }
 
         /** state **/
@@ -58,7 +58,7 @@ class MolajoFormFieldCategory extends MolajoFormFieldList
         /** acl **/
         if ($action = (string)$this->element['action']) {
             foreach ($options as $i => $option) {
-                if (!MolajoFactory::getUser()->authorise($action, $extension.'.category.'.$option->value)) {
+                if (!MolajoFactory::getUser()->authorise($action, $extension . '.category.' . $option->value)) {
                     unset($options[$i]);
                 }
             }

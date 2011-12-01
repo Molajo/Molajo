@@ -59,7 +59,7 @@ class MolajoFormFieldSql extends MolajoFormFieldList
                 $newitems = array();
                 $i = 0;
                 foreach ($items as $item) {
-                    $newitems[$i]->$value = MolajoText::_($item->$value);
+                    $newitems[$i]->$value = MolajoTextHelper::_($item->$value);
                     $newitems[$i]->$key = $item->$key;
                     $i++;
                 }

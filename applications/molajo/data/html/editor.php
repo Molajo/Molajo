@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Attributes
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -264,7 +264,7 @@ class MolajoEditor extends JObservable
         }
 
         // Get plugins
-        $plugins = MolajoApplicationPlugin::getPlugin('editors-xtd');
+        $plugins = MolajoPlugin::getPlugin('editors-xtd');
 
         foreach ($plugins as $plugin)
         {
@@ -272,8 +272,8 @@ class MolajoEditor extends JObservable
                 continue;
             }
 
-            $isLoaded = MolajoApplicationPlugin::importPlugin('editors-xtd', $plugin->name, false);
-            $className = 'plgButton'.$plugin->name;
+            $isLoaded = MolajoPlugin::importPlugin('editors-xtd', $plugin->name, false);
+            $className = 'plgButton' . $plugin->name;
 
             if (class_exists($className)) {
                 $plugin = new $className($this, (array)$plugin);
@@ -305,12 +305,12 @@ class MolajoEditor extends JObservable
 
         // Build the path to the needed editor plugin
         $name = JFilterInput::getInstance()->clean($this->_name, 'cmd');
-        $path = MOLAJO_CMS_PLUGINS.'/editors/'.$name.'.php';
+        $path = MOLAJO_CMS_PLUGINS . '/editors/' . $name . '.php';
 
         if (!JFile::exists($path)) {
-            $path = MOLAJO_CMS_PLUGINS.'/editors/'.$name.'/'.$name.'.php';
+            $path = MOLAJO_CMS_PLUGINS . '/editors/' . $name . '/' . $name . '.php';
             if (!JFile::exists($path)) {
-                $message = MolajoText::_('MOLAJO_HTML_EDITOR_CANNOT_LOAD');
+                $message = MolajoTextHelper::_('MOLAJO_HTML_EDITOR_CANNOT_LOAD');
                 MolajoError::raiseWarning(500, $message);
                 return false;
             }
@@ -320,19 +320,19 @@ class MolajoEditor extends JObservable
         require_once $path;
 
         // Get the plugin
-        $plugin = MolajoApplicationPlugin::getPlugin('editors', $this->_name);
+        $plugin = MolajoPlugin::getPlugin('editors', $this->_name);
         $parameters = new JRegistry;
         $parameters->loadJSON($plugin->parameters);
         $parameters->loadArray($config);
         $plugin->parameters = $parameters;
 
         // Build editor plugin classname
-        $name = 'plgEditor'.$this->_name;
+        $name = 'plgEditor' . $this->_name;
 
         if ($this->_editor = new $name ($this, (array)$plugin)) {
             // Load plugin parameters
             $this->initialise();
-            MolajoApplicationPlugin::importPlugin('editors-xtd');
+            MolajoPlugin::importPlugin('editors-xtd');
         }
     }
 }

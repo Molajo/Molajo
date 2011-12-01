@@ -47,17 +47,16 @@ class Sessions
      *
      * @ORM\ManyToOne(targetEntity="Applications")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
      * })
      */
     private $application;
 
 
-
     /**
      * Get sessionId
      *
-     * @return string 
+     * @return string
      */
     public function getSessionId()
     {
@@ -77,7 +76,7 @@ class Sessions
     /**
      * Get sessionTime
      *
-     * @return string 
+     * @return string
      */
     public function getSessionTime()
     {
@@ -97,7 +96,7 @@ class Sessions
     /**
      * Get data
      *
-     * @return text 
+     * @return text
      */
     public function getData()
     {
@@ -117,7 +116,7 @@ class Sessions
     /**
      * Get userId
      *
-     * @return integer 
+     * @return integer
      */
     public function getUserId()
     {
@@ -137,7 +136,7 @@ class Sessions
     /**
      * Get application
      *
-     * @return data\Entity\Applications 
+     * @return data\Entity\Applications
      */
     public function getApplication()
     {

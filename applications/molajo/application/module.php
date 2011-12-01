@@ -1,21 +1,21 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * MolajoApplicationModule
+ * MolajoModule
  *
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Application
  * @since       1.0
  */
-abstract class MolajoApplicationModule
+abstract class MolajoModule
 {
     /**
      * getModule
@@ -91,10 +91,10 @@ abstract class MolajoApplicationModule
         if (count($result) == 0) {
 
             if (JRequest::getBool('tp')
-                && MolajoApplicationComponent::getParameters('templates')->get('template_positions_display')
+                && MolajoComponent::getParameters('templates')->get('template_positions_display')
             ) {
 
-                $result[0] = self::getModule(''.$position);
+                $result[0] = self::getModule('' . $position);
                 $result[0]->title = $position;
                 $result[0]->content = $position;
                 $result[0]->position = $position;
@@ -141,14 +141,14 @@ abstract class MolajoApplicationModule
 
         // Get module path
         $module->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->title);
-        $path = MOLAJO_CMS_MODULES.'/'.$module->extension_name.'/'.$module->extension_name.'.php';
+        $path = MOLAJO_CMS_MODULES . '/' . $module->extension_name . '/' . $module->extension_name . '.php';
 
         // Load the module
         if (file_exists($path)) {
 
             $lang = MolajoFactory::getLanguage();
-            $lang->load($module->extension_name, MOLAJO_CMS_MODULES.'/'.$module->extension_name, $lang->getDefault(), false, false);
-            
+            $lang->load($module->extension_name, MOLAJO_CMS_MODULES . '/' . $module->extension_name, $lang->getDefault(), false, false);
+
             /** view */
             $view = new MolajoView ();
 
@@ -252,7 +252,6 @@ abstract class MolajoApplicationModule
         $request['controller'] = 'module';
         $request['extension_type'] = 'module';
         $request['option'] = $session->get('page.option');
-        $request['no_option'] = $session->get('page.no_option');
         $request['view'] = 'module';
         $request['model'] = 'module';
         $request['task'] = 'display';
@@ -294,7 +293,7 @@ abstract class MolajoApplicationModule
             return $modules;
         }
 
-        $modules = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
+        $modules = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
 
         return $modules;
     }
@@ -372,20 +371,20 @@ abstract class MolajoApplicationModule
                     }
                 }
                 $secureid = md5(serialize(array($safeuri, $cacheparameters->method, $moduleparameters)));
-                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id.$view_levels.$secureid, $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id . $view_levels . $secureid, $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'static':
-                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->title.md5(serialize($cacheparameters->methodparameters)), $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->title . md5(serialize($cacheparameters->methodparameters)), $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'oldstatic': // provided for backward compatibility, not really usefull
-                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id.$view_levels, $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id . $view_levels, $wrkarounds, $wrkaroundoptions);
                 break;
 
             case 'itemid':
             default:
-                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id.$view_levels.JRequest::getVar('Itemid', null, 'default', 'INT'), $wrkarounds, $wrkaroundoptions);
+                $ret = $cache->get(array($cacheparameters->class, $cacheparameters->method), $cacheparameters->methodparameters, $module->id . $view_levels . JRequest::getVar('Itemid', null, 'default', 'INT'), $wrkarounds, $wrkaroundoptions);
                 break;
         }
 

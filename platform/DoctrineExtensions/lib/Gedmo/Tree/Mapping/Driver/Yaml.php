@@ -3,9 +3,9 @@
 namespace Gedmo\Tree\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\File,
-    Gedmo\Mapping\Driver,
-    Doctrine\Common\Persistence\Mapping\ClassMetadata,
-    Gedmo\Exception\InvalidMappingException;
+Gedmo\Mapping\Driver,
+Doctrine\Common\Persistence\Mapping\ClassMetadata,
+Gedmo\Exception\InvalidMappingException;
 
 /**
  * This is a yaml mapping driver for Tree

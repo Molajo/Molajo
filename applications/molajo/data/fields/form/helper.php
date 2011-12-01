@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Form
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -161,7 +161,7 @@ class MolajoFormHelper
      */
     protected static function loadClass($entity, $type)
     {
-        $class = 'MolajoForm'.ucfirst($entity).ucfirst($type);
+        $class = 'MolajoForm' . ucfirst($entity) . ucfirst($type);
         if (class_exists($class)) return $class;
 
         // Get the field search path array.
@@ -173,7 +173,7 @@ class MolajoFormHelper
             // Add the complex type prefix to the paths.
             for ($i = 0, $n = count($paths); $i < $n; $i++) {
                 // Derive the new path.
-                $path = $paths[$i].'/'.strtolower(substr($type, 0, $pos));
+                $path = $paths[$i] . '/' . strtolower(substr($type, 0, $pos));
 
                 // If the path does not exist, add it.
                 if (!in_array($path, $paths)) {
@@ -185,7 +185,7 @@ class MolajoFormHelper
         }
 
         // Try to find the class file.
-        if ($file = JPath::find($paths, strtolower($type).'.php')) {
+        if ($file = JPath::find($paths, strtolower($type) . '.php')) {
             require_once $file;
         }
 
@@ -254,11 +254,11 @@ class MolajoFormHelper
         if (empty($paths)) {
             // While we support limited number of entities (form, field and rule)
             // we can do this simple pluralisation:
-            $entity_plural = $entity.'s';
+            $entity_plural = $entity . 's';
             // But when someday we would want to support more entities, then we should consider adding
             // an inflector class to "libraries/joomla/utilities" and use it here (or somebody can use a real inflector in his subclass).
             // see also: pluralization snippet by Paul Osman in JControllerForm's constructor.
-            $paths[] = dirname(__FILE__).'/'.$entity_plural;
+            $paths[] = dirname(__FILE__) . '/' . $entity_plural;
         }
 
         // Force the new path(s) to an array.

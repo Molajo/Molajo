@@ -4,7 +4,7 @@
  * @subpackage  Utility
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -81,7 +81,7 @@ class MolajoUtility
      */
     public static function getHash($seed)
     {
-        return md5(MolajoFactory::getConfig()->get('secret').$seed);
+        return md5(MolajoFactory::getConfig()->get('secret') . $seed);
     }
 
     /**
@@ -155,7 +155,7 @@ class MolajoUtility
     {
         $result = var_export($var, true);
 
-        return '<pre>'.($htmlSafe ? htmlspecialchars($result, ENT_COMPAT, 'UTF-8') : $result).'</pre>';
+        return '<pre>' . ($htmlSafe ? htmlspecialchars($result, ENT_COMPAT, 'UTF-8') : $result) . '</pre>';
     }
 
     /**

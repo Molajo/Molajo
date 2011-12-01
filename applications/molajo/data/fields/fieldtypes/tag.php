@@ -49,7 +49,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
         }
         if ((int)$tagtype == 0) {
         } else {
-            $query->where('tag_type = '.(int)$tagtype);
+            $query->where('tag_type = ' . (int)$tagtype);
         }
         $query->order('ordering, title');
 
@@ -61,7 +61,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
         $lang = MolajoFactory::getLanguage();
         foreach ($options as $i => $option) {
             $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
-            $options[$i]->text = MolajoText::_($option->text);
+            $options[$i]->text = MolajoTextHelper::_($option->text);
         }
 
         // Check for a database error.

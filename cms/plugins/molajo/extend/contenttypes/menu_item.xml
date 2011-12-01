@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-        <fields name="attribs">
+    <fields name="attribs">
 
-            <fieldset
+        <fieldset
                 name="menu_item"
                 label="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_SLIDER_LABEL"
                 addfieldpath="/plugins/system/extend/fieldtypes"
                 >
 
-                <field
+            <field
                     name="menu_item"
                     type="menuitem"
                     default=""
                     label="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_ITEM_LABEL"
                     description="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_ITEM_DESC"
                     >
-                </field>
+            </field>
 
-                <field
+            <field
                     name="new_category"
                     type="text"
                     default=""
@@ -25,8 +25,8 @@
                     description="PLG_SYSTEM_EXTEND_FIELD_MENU_ITEM_NEW_CATEGORY_DESC"
                     filter="string"
                     >
-                </field>
+            </field>
 
-            </fieldset>
+        </fieldset>
     </fields>
 </form>

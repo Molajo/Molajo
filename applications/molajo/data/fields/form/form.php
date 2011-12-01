@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Form
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -158,11 +158,11 @@ class MolajoForm
 
             if ($this->findField($k, $group)) {
                 // If the field exists set the value.
-                $this->data->set($group.'.'.$k, $v);
+                $this->data->set($group . '.' . $k, $v);
             }
             else if (is_object($v) || JArrayHelper::isAssociative($v)) {
                 // If the value is an object or an associative array, hand it off to the recursive bind level method
-                $this->bindLevel($group.'.'.$k, $v);
+                $this->bindLevel($group . '.' . $k, $v);
             }
         }
     }
@@ -209,8 +209,8 @@ class MolajoForm
             // Get the field value from the data calendar.
             if ($group) {
                 // Filter the value if it exists.
-                if ($calendar->exists($group.'.'.$name)) {
-                    $output->set($group.'.'.$name, $this->filterField($name, $calendar->get($group.'.'.$name, (string)$name['default'])));
+                if ($calendar->exists($group . '.' . $name)) {
+                    $output->set($group . '.' . $name, $this->filterField($name, $calendar->get($group . '.' . $name, (string)$name['default'])));
                 }
             }
             else {
@@ -416,7 +416,7 @@ class MolajoForm
                 if (empty($namesets[(string)$set])) {
 
                     // Attempt to get the fieldset element for data (throughout the entire form document).
-                    $tmp = $this->xml->xpath('//fieldset[@name="'.(string)$set.'"]');
+                    $tmp = $this->xml->xpath('//fieldset[@name="' . (string)$set . '"]');
 
                     // If no element was found, build a very simple fieldset object.
                     if (empty($tmp)) {
@@ -560,7 +560,7 @@ class MolajoForm
     {
         // If a group is set use it.
         if ($group) {
-            $return = $this->data->get($group.'.'.$name, $default);
+            $return = $this->data->get($group . '.' . $name, $default);
         }
         else {
             $return = $this->data->get($name, $default);
@@ -696,7 +696,7 @@ class MolajoForm
         if (!is_file($file)) {
 
             // Not an absolute path so let's attempt to find one using JPath.
-            $file = JPath::find(self::addFormPath(), strtolower($file).'.xml');
+            $file = JPath::find(self::addFormPath(), strtolower($file) . '.xml');
 
             // If unable to find the file return false.
             if (!$file) {
@@ -964,7 +964,7 @@ class MolajoForm
 
         // If a group is set use it.
         if ($group) {
-            $this->data->set($group.'.'.$name, $value);
+            $this->data->set($group . '.' . $name, $value);
         }
         else {
             $this->data->set($name, $value);
@@ -1021,7 +1021,7 @@ class MolajoForm
 
             // Get the value from the calendar data.
             if ($group) {
-                $value = $calendar->get($group.'.'.$name);
+                $value = $calendar->get($group . '.' . $name);
             }
             else {
                 $value = $calendar->get($name);
@@ -1155,7 +1155,7 @@ class MolajoForm
                     if (substr($number, 0, 2) == '+1') {
                         $number = substr($number, 2);
                     }
-                    $result = '1.'.$number;
+                    $result = '1.' . $number;
                 }
                     // If not, does it match ITU-T?
                 elseif (preg_match('/^\+(?:[0-9] ?){6,14}[0-9]$/', $value) == 1) {
@@ -1163,7 +1163,7 @@ class MolajoForm
                     $countrycode = (string)preg_replace('/[^\d]/', '', $countrycode);
                     $number = strstr($value, ' ');
                     $number = (string)preg_replace('/[^\d]/', '', $number);
-                    $result = $countrycode.'.'.$number;
+                    $result = $countrycode . '.' . $number;
                 }
                     // If not, does it match EPP?
                 elseif (preg_match('/^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$/', $value) == 1) {
@@ -1185,12 +1185,12 @@ class MolajoForm
                         $length = strlen($value);
                         // if it is fewer than 13 digits assume it is a local number
                         if ($length <= 12) {
-                            $result = '.'.$value;
+                            $result = '.' . $value;
 
                         } else {
                             // If it has 13 or more digits let's make a country code.
                             $cclen = $length - 12;
-                            $result = substr($value, 0, $cclen).'.'.substr($value, $cclen);
+                            $result = substr($value, 0, $cclen) . '.' . substr($value, $cclen);
                         }
                     }
                         // If not let's not save anything.
@@ -1251,7 +1251,7 @@ class MolajoForm
             foreach ($elements as $element)
             {
                 // If there are matching field elements add them to the fields array.
-                if ($tmp = $element->xpath('descendant::field[@name="'.$name.'"]')) {
+                if ($tmp = $element->xpath('descendant::field[@name="' . $name . '"]')) {
                     $names = array_merge($names, $tmp);
                 }
             }
@@ -1278,7 +1278,7 @@ class MolajoForm
         }
         else {
             // Get an array of fields with the correct name.
-            $names = $this->xml->xpath('//field[@name="'.$name.'"]');
+            $names = $this->xml->xpath('//field[@name="' . $name . '"]');
 
             // Make sure something was found.
             if (!$names) {
@@ -1328,7 +1328,7 @@ class MolajoForm
            * with the appropriate name attribute, and also any <field /> elements with
            * the appropriate fieldset attribute.
            */
-        $names = $this->xml->xpath('//fieldset[@name="'.$name.'"]//field | //field[@fieldset="'.$name.'"]');
+        $names = $this->xml->xpath('//fieldset[@name="' . $name . '"]//field | //field[@fieldset="' . $name . '"]');
 
         return $names;
     }
@@ -1430,7 +1430,7 @@ class MolajoForm
         if (!empty($group)) {
 
             // Get any fields elements with the correct group name.
-            $elements = $this->xml->xpath('//fields[@name="'.(string)$group[0].'"]');
+            $elements = $this->xml->xpath('//fields[@name="' . (string)$group[0] . '"]');
 
             // Check to make sure that there are no parent groups for each element.
             foreach ($elements as $element)
@@ -1452,7 +1452,7 @@ class MolajoForm
                 foreach ($current as $element)
                 {
                     // Get any fields elements with the correct group name.
-                    $children = $element->xpath('descendant::fields[@name="'.(string)$group[$i].'"]');
+                    $children = $element->xpath('descendant::fields[@name="' . (string)$group[$i] . '"]');
 
                     // For the found fields elements validate that they are in the correct groups.
                     foreach ($children as $names)
@@ -1521,12 +1521,12 @@ class MolajoForm
                 $lang = MolajoFactory::getLanguage();
                 if ($lang->hasKey($default)) {
                     $debug = $lang->setDebug(false);
-                    $default = MolajoText::_($default);
+                    $default = MolajoTextHelper::_($default);
                     $lang->setDebug($debug);
                 }
                 else
                 {
-                    $default = MolajoText::_($default);
+                    $default = MolajoTextHelper::_($default);
                 }
             }
             $value = $this->getValue((string)$element['name'], $group, $default);
@@ -1596,7 +1596,7 @@ class MolajoForm
         // Add the field paths.
         foreach ($paths as $path)
         {
-            $path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
+            $path = MOLAJO_BASE_FOLDER . '/' . ltrim($path, '/\\');
             self::addFieldPath($path);
         }
 
@@ -1607,7 +1607,7 @@ class MolajoForm
         // Add the form paths.
         foreach ($paths as $path)
         {
-            $path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
+            $path = MOLAJO_BASE_FOLDER . '/' . ltrim($path, '/\\');
             self::addFormPath($path);
         }
 
@@ -1618,7 +1618,7 @@ class MolajoForm
         // Add the rule paths.
         foreach ($paths as $path)
         {
-            $path = MOLAJO_BASE_FOLDER.'/'.ltrim($path, '/\\');
+            $path = MOLAJO_BASE_FOLDER . '/' . ltrim($path, '/\\');
             self::addRulePath($path);
         }
 
@@ -1642,7 +1642,7 @@ class MolajoForm
     {
         // Make sure there is a valid JXMLElement.
         if (!$element instanceof JXMLElement) {
-            return new MolajoException(MolajoText::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
+            return new MolajoException(MolajoTextHelper::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
         }
 
         // Initialise variables.
@@ -1661,12 +1661,12 @@ class MolajoForm
                 }
                 else {
                     if ($element['label']) {
-                        $message = MolajoText::_($element['label']);
+                        $message = MolajoTextHelper::_($element['label']);
                     }
                     else {
-                        $message = MolajoText::_($element['name']);
+                        $message = MolajoTextHelper::_($element['name']);
                     }
-                    $message = MolajoText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_REQUIRED', $message);
+                    $message = MolajoTextHelper::sprintf('MOLAJO_FORM_VALIDATE_FIELD_REQUIRED', $message);
                 }
                 return new MolajoException($message, 2, E_WARNING);
             }
@@ -1679,7 +1679,7 @@ class MolajoForm
 
             // If the object could not be loaded return an error message.
             if ($rule === false) {
-                return new MolajoException(MolajoText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
+                return new MolajoException(MolajoTextHelper::sprintf('MOLAJO_FORM_VALIDATE_FIELD_RULE_MISSING', $rule), -2, E_ERROR);
             }
 
             // Run the field validation rule test.
@@ -1698,10 +1698,10 @@ class MolajoForm
             $message = (string)$element['message'];
 
             if ($message) {
-                return new MolajoException(MolajoText::_($message), 1, E_WARNING);
+                return new MolajoException(MolajoTextHelper::_($message), 1, E_WARNING);
             }
             else {
-                return new MolajoException(MolajoText::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', MolajoText::_((string)$element['label'])), 1, E_WARNING);
+                return new MolajoException(MolajoTextHelper::sprintf('MOLAJO_FORM_VALIDATE_FIELD_INVALID', MolajoTextHelper::_((string)$element['label'])), 1, E_WARNING);
             }
         }
 
@@ -1778,7 +1778,7 @@ class MolajoForm
             $data = trim($data);
 
             if (empty($data)) {
-                throw new Exception(MolajoText::_('MOLAJO_FORM_ERROR_NO_DATA'));
+                throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_NO_DATA'));
             }
 
             // Instantiate the form.
@@ -1787,14 +1787,14 @@ class MolajoForm
             // Load the data.
             if (substr(trim($data), 0, 1) == '<') {
                 if ($forms[$name]->load($data, $replace, $xpath) == false) {
-                    throw new Exception(MolajoText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+                    throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
                     return false;
                 }
             }
             else {
                 if ($forms[$name]->loadFile($data, $replace, $xpath) == false) {
-                    throw new Exception(MolajoText::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+                    throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
                     return false;
                 }
@@ -1890,7 +1890,7 @@ class MolajoForm
             $name = $child['name'];
 
             // Does this node exist?
-            $names = $source->xpath($type.'[@name="'.$name.'"]');
+            $names = $source->xpath($type . '[@name="' . $name . '"]');
 
             if (empty($names)) {
                 // This node does not exist, so add it.

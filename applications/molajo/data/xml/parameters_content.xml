@@ -1,53 +1,53 @@
 <fieldset
-    name="selection_options"
-    label="ANCHOR_OPTIONS_LABEL">
+        name="selection_options"
+        label="ANCHOR_OPTIONS_LABEL">
 
     <field
-        name="category_id"
-        type="category"
-        description="CATEGORY_DESC"
-        label="CATEGORY_LABEL"
-        show_root="true"
-        multiple="true"
-        size="10">
+            name="category_id"
+            type="category"
+            description="CATEGORY_DESC"
+            label="CATEGORY_LABEL"
+            show_root="true"
+            multiple="true"
+            size="10">
         <option value="">ALL_CATEGORIES</option>
     </field>
-    
+
     <field
-        name="author"
-        type="users"
-        description="AUTHOR_DESC"
-        label="AUTHOR_LABEL"
-        multiple="true"
-        size="10">
+            name="author"
+            type="users"
+            description="AUTHOR_DESC"
+            label="AUTHOR_LABEL"
+            multiple="true"
+            size="10">
         <option value="">ALL_AUTHORS</option>
     </field>
 
     <field
-        name="number_of_items"
-        type="text"
-        description="NUMBER_OF_ITEMS_DESC"
-        label="NUMBER_OF_ITEMS_LABEL"
-        size="10"
-        />
+            name="number_of_items"
+            type="text"
+            description="NUMBER_OF_ITEMS_DESC"
+            label="NUMBER_OF_ITEMS_LABEL"
+            size="10"
+            />
 
     <field
-        name="featured"
-        type="radio"
-        default="1"
-        label="FEATURED_LABEL"
-        description="FEATURED_DESC">
+            name="featured"
+            type="radio"
+            default="1"
+            label="FEATURED_LABEL"
+            description="FEATURED_DESC">
         <option value="1">ONLY</option>
         <option value="0">INCLUDE</option>
         <option value="-1">EXCLUDE</option>
     </field>
 
     <field
-        name="order_by"
-        type="list"
-        description="ITEMS_ORDER_BY_DESC"
-        label="ITEMS_ORDER_BY_LABEL"
-        >
+            name="order_by"
+            type="list"
+            description="ITEMS_ORDER_BY_DESC"
+            label="ITEMS_ORDER_BY_LABEL"
+            >
         <option value="">USE_GLOBAL</option>
         <option value="1">NEWEST_FIRST</option>
         <option value="2">OLDEST_FIRST</option>
@@ -57,11 +57,11 @@
     </field>
 
     <field
-        name="pagination"
-        type="list"
-        description="PAGINATION_DESC"
-        label="PAGINATION_LABEL"
-        >
+            name="pagination"
+            type="list"
+            description="PAGINATION_DESC"
+            label="PAGINATION_LABEL"
+            >
         <option value="">USE_GLOBAL</option>
         <option value="0">HIDE</option>
         <option value="1">SHOW</option>

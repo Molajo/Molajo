@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Menu
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -17,12 +17,13 @@ $task = $request['task'];
 if ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu')) {
     $logoutLink = '';
 } else {
-    $logoutLink = MolajoRouteHelper::_('index.php?option=login&task=logout&'. JUtility::getToken() .'=1');
+    $logoutLink = MolajoRouteHelper::_('index.php?option=login&task=logout&' . JUtility::getToken() . '=1');
 }
-$hideLinks	= JRequest::getBool('hidemainmenu');
+$hideLinks = JRequest::getBool('hidemainmenu');
 
 $output = array();
-$output[] = '<span class="logout">' .($hideLinks ? '' : '<a href="'.$logoutLink.'">').MolajoText::_('JLOGOUT').($hideLinks ? '' : '</a>').'</span>';
+$output[] = '<span class="logout">' . ($hideLinks ? ''
+        : '<a href="' . $logoutLink . '">') . MolajoTextHelper::_('JLOGOUT') . ($hideLinks ? '' : '</a>') . '</span>';
 
 /** rtl support */
 if ($document->direction == "rtl") :

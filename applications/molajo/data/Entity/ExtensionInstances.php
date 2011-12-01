@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="extension_instances")
  * @ORM\Entity
  * use repository for handy tree functions
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository") 
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class ExtensionInstances
 {
@@ -174,7 +174,7 @@ class ExtensionInstances
 
     /**
      * @var integer $lft
-	 * @Gedmo\TreeLeft
+     * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer", nullable=false)
      */
     private $lft;
@@ -248,7 +248,7 @@ class ExtensionInstances
      * @ORM\Column(name="ordering", type="integer", nullable=false)
      */
     private $ordering;
-	
+
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="ExtensionInstances", inversedBy="children")
@@ -260,18 +260,18 @@ class ExtensionInstances
      * @ORM\OneToMany(targetEntity="ExtensionInstances", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    private $children; 
-	
+    private $children;
+
     /**
      * @var Applications
      *
      * @ORM\ManyToMany(targetEntity="Applications", inversedBy="extensionInstance")
      * @ORM\JoinTable(name="application_extension_instances",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
      *   }
      * )
      */
@@ -283,28 +283,28 @@ class ExtensionInstances
      * @ORM\ManyToMany(targetEntity="Assets", mappedBy="extensionInstance")
      */
     private $asset;
-	
+
     /**
      * @var Sites
      *
      * @ORM\ManyToMany(targetEntity="Sites", inversedBy="extensionInstance")
      * @ORM\JoinTable(name="site_extension_instances",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="site_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
      *   }
      * )
      */
-    private  $site;
+    private $site;
 
     /**
      * @var ContentTypes
      *
      * @ORM\ManyToOne(targetEntity="ContentTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
      * })
      */
     private $contentType;
@@ -314,7 +314,7 @@ class ExtensionInstances
      *
      * @ORM\ManyToOne(targetEntity="Extensions")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="extension_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_id", referencedColumnName="id")
      * })
      */
     private $extension;
@@ -322,15 +322,15 @@ class ExtensionInstances
     public function __construct()
     {
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->asset = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->site = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->asset = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->site = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -350,7 +350,7 @@ class ExtensionInstances
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -370,7 +370,7 @@ class ExtensionInstances
     /**
      * Get subtitle
      *
-     * @return string 
+     * @return string
      */
     public function getSubtitle()
     {
@@ -390,7 +390,7 @@ class ExtensionInstances
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias()
     {
@@ -410,7 +410,7 @@ class ExtensionInstances
     /**
      * Get contentText
      *
-     * @return text 
+     * @return text
      */
     public function getContentText()
     {
@@ -430,7 +430,7 @@ class ExtensionInstances
     /**
      * Get protected
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProtected()
     {
@@ -450,7 +450,7 @@ class ExtensionInstances
     /**
      * Get featured
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFeatured()
     {
@@ -470,7 +470,7 @@ class ExtensionInstances
     /**
      * Get stickied
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStickied()
     {
@@ -490,7 +490,7 @@ class ExtensionInstances
     /**
      * Get status
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatus()
     {
@@ -510,7 +510,7 @@ class ExtensionInstances
     /**
      * Get startPublishingDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStartPublishingDatetime()
     {
@@ -530,7 +530,7 @@ class ExtensionInstances
     /**
      * Get stopPublishingDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStopPublishingDatetime()
     {
@@ -550,7 +550,7 @@ class ExtensionInstances
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -570,7 +570,7 @@ class ExtensionInstances
     /**
      * Get versionOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersionOfId()
     {
@@ -590,7 +590,7 @@ class ExtensionInstances
     /**
      * Get statusPriorToVersion
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusPriorToVersion()
     {
@@ -610,7 +610,7 @@ class ExtensionInstances
     /**
      * Get createdDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedDatetime()
     {
@@ -630,7 +630,7 @@ class ExtensionInstances
     /**
      * Get createdBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -650,7 +650,7 @@ class ExtensionInstances
     /**
      * Get modifiedDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getModifiedDatetime()
     {
@@ -670,7 +670,7 @@ class ExtensionInstances
     /**
      * Get modifiedBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getModifiedBy()
     {
@@ -690,7 +690,7 @@ class ExtensionInstances
     /**
      * Get checkedOutDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCheckedOutDatetime()
     {
@@ -710,7 +710,7 @@ class ExtensionInstances
     /**
      * Get checkedOutBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCheckedOutBy()
     {
@@ -730,7 +730,7 @@ class ExtensionInstances
     /**
      * Get parentId
      *
-     * @return integer 
+     * @return integer
      */
     public function getParentId()
     {
@@ -750,7 +750,7 @@ class ExtensionInstances
     /**
      * Get root
      *
-     * @return integer 
+     * @return integer
      */
     public function getRoot()
     {
@@ -770,7 +770,7 @@ class ExtensionInstances
     /**
      * Get lft
      *
-     * @return integer 
+     * @return integer
      */
     public function getLft()
     {
@@ -790,7 +790,7 @@ class ExtensionInstances
     /**
      * Get rgt
      *
-     * @return integer 
+     * @return integer
      */
     public function getRgt()
     {
@@ -810,7 +810,7 @@ class ExtensionInstances
     /**
      * Get lvl
      *
-     * @return integer 
+     * @return integer
      */
     public function getLvl()
     {
@@ -830,7 +830,7 @@ class ExtensionInstances
     /**
      * Get home
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHome()
     {
@@ -850,7 +850,7 @@ class ExtensionInstances
     /**
      * Get position
      *
-     * @return string 
+     * @return string
      */
     public function getPosition()
     {
@@ -870,7 +870,7 @@ class ExtensionInstances
     /**
      * Get customFields
      *
-     * @return text 
+     * @return text
      */
     public function getCustomFields()
     {
@@ -890,7 +890,7 @@ class ExtensionInstances
     /**
      * Get parameters
      *
-     * @return text 
+     * @return text
      */
     public function getParameters()
     {
@@ -910,7 +910,7 @@ class ExtensionInstances
     /**
      * Get metadata
      *
-     * @return text 
+     * @return text
      */
     public function getMetadata()
     {
@@ -930,7 +930,7 @@ class ExtensionInstances
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -950,7 +950,7 @@ class ExtensionInstances
     /**
      * Get translationOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTranslationOfId()
     {
@@ -970,7 +970,7 @@ class ExtensionInstances
     /**
      * Get ordering
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdering()
     {
@@ -990,7 +990,7 @@ class ExtensionInstances
     /**
      * Get application
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getApplication()
     {
@@ -1010,7 +1010,7 @@ class ExtensionInstances
     /**
      * Get asset
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getAsset()
     {
@@ -1030,7 +1030,7 @@ class ExtensionInstances
     /**
      * Get site
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getSite()
     {
@@ -1050,7 +1050,7 @@ class ExtensionInstances
     /**
      * Get contentType
      *
-     * @return data\Entity\ContentTypes 
+     * @return data\Entity\ContentTypes
      */
     public function getContentType()
     {
@@ -1070,20 +1070,20 @@ class ExtensionInstances
     /**
      * Get extension
      *
-     * @return data\Entity\Extensions 
+     * @return data\Entity\Extensions
      */
     public function getExtension()
     {
         return $this->extension;
     }
-	
+
     public function setParent(ExtensionIntances $parent = null)
     {
-        $this->parent = $parent;    
+        $this->parent = $parent;
     }
 
     public function getParent()
     {
-        return $this->parent;   
+        return $this->parent;
     }
 }

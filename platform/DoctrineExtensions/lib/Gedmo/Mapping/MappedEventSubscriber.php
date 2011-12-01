@@ -78,14 +78,14 @@ abstract class MappedEventSubscriber implements EventSubscriber
             if (!isset($this->adapters[$m[1]])) {
                 $adapterClass = $this->getNamespace() . '\\Mapping\\Event\\Adapter\\' . $m[1];
                 if (!class_exists($adapterClass)) {
-                    $adapterClass = 'Gedmo\\Mapping\\Event\\Adapter\\'.$m[1];
+                    $adapterClass = 'Gedmo\\Mapping\\Event\\Adapter\\' . $m[1];
                 }
                 $this->adapters[$m[1]] = new $adapterClass;
             }
             $this->adapters[$m[1]]->setEventArgs($args);
             return $this->adapters[$m[1]];
         } else {
-            throw new \Gedmo\Exception\InvalidArgumentException('Event mapper does not support event arg class: '.$class);
+            throw new \Gedmo\Exception\InvalidArgumentException('Event mapper does not support event arg class: ' . $class);
         }
     }
 
@@ -97,7 +97,8 @@ abstract class MappedEventSubscriber implements EventSubscriber
      * @param string $class
      * @return array
      */
-    public function getConfiguration(ObjectManager $objectManager, $class) {
+    public function getConfiguration(ObjectManager $objectManager, $class)
+    {
         $config = array();
         if (isset($this->configurations[$class])) {
             $config = $this->configurations[$class];

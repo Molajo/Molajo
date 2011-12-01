@@ -52,7 +52,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
                     // Create a new option object based on the <option /> element.
                     $tmp = MolajoHTML::_('select.option',
                                          ($element['value']) ? (string)$element['value'] : trim((string)$element),
-                                         MolajoText::alt(trim((string)$element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)), 'value', 'text',
+                                         MolajoTextHelper::alt(trim((string)$element), preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)), 'value', 'text',
                         ((string)$element['disabled'] == 'true'));
 
                     // Set some option attributes.
@@ -70,7 +70,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 
                     // Get the group label.
                     if ($groupLabel = (string)$element['label']) {
-                        $label = MolajoText::_($groupLabel);
+                        $label = MolajoTextHelper::_($groupLabel);
                     }
 
                     // Initialize the group if necessary.
@@ -89,8 +89,8 @@ class MolajoFormFieldGroupedList extends MolajoFormField
                         // Create a new option object based on the <option /> element.
                         $tmp = MolajoHTML::_('select.option',
                                              ($option['value']) ? (string)$option['value']
-                                                     : MolajoText::_(trim((string)$option)),
-                                             MolajoText::_(trim((string)$option)), 'value', 'text',
+                                                     : MolajoTextHelper::_(trim((string)$option)),
+                                             MolajoTextHelper::_(trim((string)$option)), 'value', 'text',
                             ((string)$option['disabled'] == 'true'));
 
                         // Set some option attributes.
@@ -110,7 +110,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
 
                 // Unknown element type.
                 default:
-                    MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_FORM_ERROR_FIELDS_GROUPEDLIST_ELEMENT_NAME', $element->getName()));
+                    MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_FORM_ERROR_FIELDS_GROUPEDLIST_ELEMENT_NAME', $element->getName()));
                     break;
             }
         }
@@ -133,13 +133,13 @@ class MolajoFormFieldGroupedList extends MolajoFormField
         $attr = '';
 
         // Initialize some field attributes.
-        $attr .= $this->element['class'] ? ' class="'.(string)$this->element['class'].'"' : '';
+        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
         $attr .= ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-        $attr .= $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
+        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
         $attr .= $this->multiple ? ' multiple="multiple"' : '';
 
         // Initialize JavaScript field attributes.
-        $attr .= $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
+        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
         // Get the field groups.
         $groups = (array)$this->getGroups();
@@ -147,7 +147,7 @@ class MolajoFormFieldGroupedList extends MolajoFormField
         // Create a read-only list (no name) with a hidden calendar to store the value.
         if ((string)$this->element['readonly'] == 'true') {
             $html[] = MolajoHTML::_('select.groupedlist', $groups, null, array('list.attr' => $attr, 'id' => $this->id, 'list.select' => $this->value, 'group.items' => null, 'option.key.toHtml' => false, 'option.text.toHtml' => false));
-            $html[] = '<calendar type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
+            $html[] = '<calendar type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
         }
             // Create a regular list.
         else {

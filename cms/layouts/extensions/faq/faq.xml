@@ -9,16 +9,16 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_FAQ_DESCRIPTION</description>
-	<files>
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-		<folder>parameters</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_faq.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_faq.sys.ini</language>
-	</languages>
+    <files>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+        <folder>parameters</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_faq.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_faq.sys.ini</language>
+    </languages>
 </extension>

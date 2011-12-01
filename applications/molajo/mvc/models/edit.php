@@ -3,7 +3,7 @@
  * @version     $id: single.php
  * @package     Molajo
  * @subpackage  Single Model
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -40,7 +40,7 @@ class MolajoModelEdit extends JModel
     {
         parent::__construct($config);
         JRequest::setVar('view', JRequest::getCmd('EditView'));
-        $this->parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
+        $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
     }
 
     /**
@@ -98,8 +98,8 @@ class MolajoModelEdit extends JModel
         }
 
         /** acl-append item-specific task permissions **/
-        $aclClass = 'MolajoACL'.ucfirst(JRequest::getCmd('DefaultView'));
-        $aclClass::getUserItemPermissions (JRequest::getVar('option'), JRequest::getVar('EditView'), $item);
+        $aclClass = 'MolajoACL' . ucfirst(JRequest::getCmd('DefaultView'));
+        $aclClass::getUserItemPermissions(JRequest::getVar('option'), JRequest::getVar('EditView'), $item);
 
         return $item;
     }
@@ -130,7 +130,7 @@ class MolajoModelEdit extends JModel
         if ($table->checked_out == MolajoFactory::getUser()->get('id')) {
             return true;
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_ROW_NOT_CHECKED_OUT_FOR_EDIT'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_ROW_NOT_CHECKED_OUT_FOR_EDIT'));
             return false;
         }
     }
@@ -156,14 +156,14 @@ class MolajoModelEdit extends JModel
         if ((int)$datakey > 0) {
             $data = MolajoFactory::getApplication()->getUserState($datakey, array());
         }
-        $formName = JRequest::getVar('option').'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.JRequest::getCmd('task').'.'.JRequest::getInt('id').'.'.JRequest::getVar('datakey');
+        $formName = JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey');
 
         $form = $this->loadForm($formName, JRequest::getCmd('view'), array('control' => 'jform', 'load_data' => $loadData));
         if (empty($form)) {
             return false;
         }
 
-        MolajoApplicationPlugin::importPlugin('content');
+        MolajoPlugin::importPlugin('content');
         $dispatcher = JDispatcher::getInstance();
 
         $dispatcher->trigger('onContentPrepareData', array($formName, $data));
@@ -188,7 +188,7 @@ class MolajoModelEdit extends JModel
     {
         $options['control'] = JArrayHelper::getValue($options, 'control', false);
 
-        $hash = md5($source.serialize($options));
+        $hash = md5($source . serialize($options));
         if (isset($this->_forms[$hash]) && !$clear) {
             return $this->_forms[$hash];
         }
@@ -252,7 +252,7 @@ class MolajoModelEdit extends JModel
 
         if ($return === false) {
             foreach ($form->getErrors() as $message) {
-                $this->setError(MolajoText::_($message));
+                $this->setError(MolajoTextHelper::_($message));
             }
             return false;
         }
@@ -307,7 +307,7 @@ class MolajoModelEdit extends JModel
 
         /** reorder - new content is first **/
         if (empty($table->id)) {
-            $table->reorder('catid = '.(int)$table->catid.' AND state >= 0');
+            $table->reorder('catid = ' . (int)$table->catid . ' AND state >= 0');
         }
     }
 
@@ -377,7 +377,7 @@ class MolajoModelEdit extends JModel
 
         if ($fromTable->load($id)) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_REQUESTED_VERSION_NOT_AVAILABLE_FOR_RESTORE'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_REQUESTED_VERSION_NOT_AVAILABLE_FOR_RESTORE'));
             return false;
         }
 
@@ -467,12 +467,12 @@ class MolajoModelEdit extends JModel
         $table = $this->getTable();
         if ($table->load($id)) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_ROW_REQUESTED_IS_NOT_AVAILABLE_TO_SAVE_AS_A_VERSION'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_ROW_REQUESTED_IS_NOT_AVAILABLE_TO_SAVE_AS_A_VERSION'));
             return false;
         }
 
         if ($table->state == MOLAJO_STATUS_VERSION) {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_ROW_IS_A_VERSION_COPY'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_ROW_IS_A_VERSION_COPY'));
             return false;
         }
 
@@ -492,7 +492,7 @@ class MolajoModelEdit extends JModel
                 $columnList .= $db->namequote($column_name);
             }
         }
-        $insertQuery = ' INSERT INTO '.$db->namequote('#'.JRequest::getVar('ComponentTable')).'('.$columnList.')';
+        $insertQuery = ' INSERT INTO ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) . '(' . $columnList . ')';
 
         /** SELECT AND VALUES **/
         $columnList = '';
@@ -509,25 +509,25 @@ class MolajoModelEdit extends JModel
 
                 /** columns **/
                 if ($column_name == 'title') {
-                    $column_name = 'CONCAT('.$db->namequote($column_name).', " "'.', "'.MolajoText::_('MOLAJO_TITLE_VERSION_LITERAL').'") as title';
+                    $column_name = 'CONCAT(' . $db->namequote($column_name) . ', " "' . ', "' . MolajoTextHelper::_('MOLAJO_TITLE_VERSION_LITERAL') . '") as title';
 
                 } else if ($column_name == 'version_of_id') {
-                    $column_name = $db->namequote('id').' as '.$db->namequote('version_of_id');
+                    $column_name = $db->namequote('id') . ' as ' . $db->namequote('version_of_id');
 
                 } else if ($column_name == 'status_prior_to_version') {
-                    $column_name = $db->namequote('state').' as '.$db->namequote('status_prior_to_version');
+                    $column_name = $db->namequote('state') . ' as ' . $db->namequote('status_prior_to_version');
 
                 } else if ($column_name == 'state') {
-                    $column_name = MOLAJO_STATUS_VERSION.' as '.$db->namequote('state');
+                    $column_name = MOLAJO_STATUS_VERSION . ' as ' . $db->namequote('state');
 
                 } else if ($column_name == 'modified') {
-                    $column_name = '"'.MolajoFactory::getDate()->toMySQL().'" as '.$db->namequote('modified');
+                    $column_name = '"' . MolajoFactory::getDate()->toMySQL() . '" as ' . $db->namequote('modified');
 
                 } else if ($column_name == 'modified_by') {
-                    $column_name = MolajoFactory::getUser()->get('id').' as '.$db->namequote('modified_by');
+                    $column_name = MolajoFactory::getUser()->get('id') . ' as ' . $db->namequote('modified_by');
 
                 } else if ($column_name == 'ordering') {
-                    $column_name = $db->namequote('version').' as '.$db->namequote('ordering');
+                    $column_name = $db->namequote('version') . ' as ' . $db->namequote('ordering');
 
                 } else {
                     $column_name = $db->namequote($column_name);
@@ -536,7 +536,7 @@ class MolajoModelEdit extends JModel
                 $columnList .= $column_name;
             }
         }
-        $insertQuery .= ' SELECT '.$columnList.' FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')).' WHERE id = '.(int)$id;
+        $insertQuery .= ' SELECT ' . $columnList . ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) . ' WHERE id = ' . (int)$id;
 
         $db->setQuery($insertQuery);
         if ($db->query()) {
@@ -548,8 +548,8 @@ class MolajoModelEdit extends JModel
         /** retrieve new id **/
         $db->setQuery(
             'SELECT MAX(id) as newID ' .
-            ' FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')) .
-            ' WHERE version_of_id = '.(int)$id
+            ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+            ' WHERE version_of_id = ' . (int)$id
         );
         $newID = $db->loadResultArray();
 
@@ -572,7 +572,7 @@ class MolajoModelEdit extends JModel
         $fromTable = $this->getTable();
         if ($fromTable->load($id)) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_REQUESTED_VERSION_NOT_AVAILABLE_FOR_RESTORE'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_REQUESTED_VERSION_NOT_AVAILABLE_FOR_RESTORE'));
             return false;
         }
 
@@ -580,7 +580,7 @@ class MolajoModelEdit extends JModel
         if ($fromTable->state == MOLAJO_STATUS_VERSION) {
 
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_REQUESTED_VERSION_IS_NOT_A_VERSION'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_REQUESTED_VERSION_IS_NOT_A_VERSION'));
             return false;
         }
 
@@ -642,10 +642,10 @@ class MolajoModelEdit extends JModel
         $db = $this->getDbo();
         $db->setQuery(
             'SELECT id' .
-            ' FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')) .
-            ' WHERE version_of_id = '.(int)$id .
+            ' FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+            ' WHERE version_of_id = ' . (int)$id .
             ' ORDER BY version DESC ' .
-            ' LIMIT '.(int)$maintainVersions
+            ' LIMIT ' . (int)$maintainVersions
         );
         $versionPrimaryKeys = $db->loadResultArray();
 
@@ -660,8 +660,8 @@ class MolajoModelEdit extends JModel
         if ($saveList == '') {
             return;
         }
-        $deleteQuery = 'DELETE FROM '.$db->namequote('#'.JRequest::getVar('ComponentTable')) .
-                       ' WHERE version_of_id = '.(int)$id.' AND id NOT IN ('.$saveList.')';
+        $deleteQuery = 'DELETE FROM ' . $db->namequote('#' . JRequest::getVar('ComponentTable')) .
+                       ' WHERE version_of_id = ' . (int)$id . ' AND id NOT IN (' . $saveList . ')';
 
         $db->setQuery($deleteQuery);
         if ($db->query()) {
@@ -812,13 +812,13 @@ class MolajoModelEdit extends JModel
         $table = $this->getTable();
         if ($table->load($id)) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_NO_ROW_FOR_CHECKIN_TASK'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_NO_ROW_FOR_CHECKIN_TASK'));
             return false;
         }
 
         if (property_exists($table, 'checked_out')) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_NO_CHECKED_OUT_PROPERTY_FOR_CHECKIN_TASK'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_NO_CHECKED_OUT_PROPERTY_FOR_CHECKIN_TASK'));
             return false;
         }
 
@@ -849,20 +849,20 @@ class MolajoModelEdit extends JModel
         $table = $this->getTable();
         if ($table->load($id)) {
         } else {
-            $this->setError(MolajoText::_('MOLAJO_ERROR_NO_ROW_FOR_CHECKIN_TASK'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_NO_ROW_FOR_CHECKIN_TASK'));
             return false;
         }
 
         if ($table->checked_out == 0) {
             if ($table->checkout(MolajoFactory::getUser()->get('id'), $id)) {
             } else {
-                $this->setError(MolajoText::_('MOLAJO_ERROR_CHECKOUT_TASK'));
+                $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_CHECKOUT_TASK'));
                 return false;
             }
         } else {
             if ($table->checked_out == MolajoFactory::getUser()->get('id')) {
             } else {
-                $this->setError(MolajoText::_('MOLAJO_ERROR_DATA_ALREADY_CHECKED_OUT_TO_SOMEONE_ELSE'));
+                $this->setError(MolajoTextHelper::_('MOLAJO_ERROR_DATA_ALREADY_CHECKED_OUT_TO_SOMEONE_ELSE'));
                 return false;
             }
         }
@@ -903,7 +903,7 @@ class MolajoModelEdit extends JModel
                     // Prune items that you can't change.
                     unset($ids[$i]);
                     $this->checkin($id);
-                    MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
+                    MolajoError::raiseWarning(403, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
                     $allowed = false;
                     continue;
                 }
@@ -946,8 +946,8 @@ class MolajoModelEdit extends JModel
     protected function getReorderConditions($table)
     {
         $condition = array();
-        $condition[] = 'asset_type_id = '.(int)$table->asset_type_id;
-        $condition[] = 'catid = '.(int)$table->catid;
+        $condition[] = 'asset_type_id = ' . (int)$table->asset_type_id;
+        $condition[] = 'catid = ' . (int)$table->catid;
         return $condition;
     }
 
@@ -978,7 +978,7 @@ class MolajoModelEdit extends JModel
             if (!$this->canEditState($table)) {
                 // Prune items that you can't change.
                 unset($ids[$i]);
-                MolajoError::raiseWarning(403, MolajoText::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
+                MolajoError::raiseWarning(403, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_EDITSTATUS_NOT_PERMITTED'));
 
             } else if ($table->ordering != $order[$i]) {
                 $table->ordering = $order[$i];
@@ -1028,6 +1028,6 @@ class MolajoModelEdit extends JModel
      */
     public function getTable($type = '', $prefix = '', $config = array())
     {
-        return MolajoTable::getInstance($type = ucfirst(JRequest::getCmd('view')), $prefix = ucfirst(JRequest::getVar('DefaultView').'Table'), $config);
+        return MolajoTable::getInstance($type = ucfirst(JRequest::getCmd('view')), $prefix = ucfirst(JRequest::getVar('DefaultView') . 'Table'), $config);
     }
 }

@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die;
 
-echo '<p>'.$this->row->line1.'</p>';
-echo '<p>'.$this->row->line2.'</p>';
+echo '<p>' . $this->row->line1 . '</p>';
+echo '<p>' . $this->row->line2 . '</p>';

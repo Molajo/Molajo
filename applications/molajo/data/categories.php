@@ -4,7 +4,7 @@
  * @subpackage  Categories
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -123,7 +123,7 @@ class MolajoCategories
      */
     public static function getInstance($extension, $options = array())
     {
-        $hash = md5($extension.serialize($options));
+        $hash = md5($extension . serialize($options));
 
         if (isset(self::$instances[$hash])) {
             return self::$instances[$hash];
@@ -132,7 +132,7 @@ class MolajoCategories
         $classname = 'MolajoCategoriesHelper';
 
         if (!class_exists($classname)) {
-            $path = MOLAJO_PLATFORM.'/helpers/categories.php';
+            $path = MOLAJO_PLATFORM . '/helpers/categories.php';
             if (is_file($path)) {
                 require_once $path;
             }
@@ -206,7 +206,7 @@ class MolajoCategories
         $query->select('c.*');
         $query->select('CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(":", c.id, c.alias) ELSE c.id END as slug');
         $query->from('#__categories as c');
-        $query->where('(c.extension='.$db->Quote($extension).' OR c.extension='.$db->Quote('system').')');
+        $query->where('(c.extension=' . $db->Quote($extension) . ' OR c.extension=' . $db->Quote('system') . ')');
 
         if ($this->_options['access']) {
             $acl = new MolajoACL ();
@@ -224,25 +224,25 @@ class MolajoCategories
         if ($id != 'root') {
             // Get the selected category
             $query->leftJoin('#__categories AS s ON (s.lft <= c.lft AND s.rgt >= c.rgt) OR (s.lft > c.lft AND s.rgt < c.rgt)');
-            $query->where('s.id='.(int)$id);
+            $query->where('s.id=' . (int)$id);
         }
 
         $subQuery = ' (SELECT cat.id as id FROM #__categories AS cat JOIN #__categories AS parent ' .
-                    'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.extension = '.$db->quote($extension) .
+                    'ON cat.lft BETWEEN parent.lft AND parent.rgt WHERE parent.extension = ' . $db->quote($extension) .
                     ' AND parent.published != 1 GROUP BY cat.id) ';
-        $query->leftJoin($subQuery.'AS badcats ON badcats.id = c.id');
+        $query->leftJoin($subQuery . 'AS badcats ON badcats.id = c.id');
         $query->where('badcats.id is null');
 
         // i for item
         if (isset($this->_options['countItems']) && $this->_options['countItems'] == 1) {
             if ($this->_options['published'] == 1) {
-                $query->leftJoin($db->quoteName($this->_table).' AS i ON i.'.$db->quoteName($this->_field).' = c.id AND i.'.$this->_statefield.' = 1');
+                $query->leftJoin($db->quoteName($this->_table) . ' AS i ON i.' . $db->quoteName($this->_field) . ' = c.id AND i.' . $this->_statefield . ' = 1');
             }
             else {
-                $query->leftJoin($db->quoteName($this->_table).' AS i ON i.'.$db->quoteName($this->_field).' = c.id');
+                $query->leftJoin($db->quoteName($this->_table) . ' AS i ON i.' . $db->quoteName($this->_field) . ' = c.id');
             }
 
-            $query->select('COUNT(i.'.$db->quoteName($this->_key).') AS numitems');
+            $query->select('COUNT(i.' . $db->quoteName($this->_key) . ') AS numitems');
         }
 
         // Group by
@@ -509,7 +509,7 @@ class MolajoCategoryNode extends JObject
 
             if ($this->id != 'root') {
                 $this->_path = $parent->getPath();
-                $this->_path[] = $this->id.':'.$this->alias;
+                $this->_path[] = $this->id . ':' . $this->alias;
             }
 
             if (count($parent->_children) > 1) {

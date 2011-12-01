@@ -30,7 +30,7 @@ class MolajoSessionStorageXcache extends MolajoSessionStorage
     public function __construct($options = array())
     {
         if (!$this->test()) {
-            return MolajoError::raiseError(404, MolajoText::_('JLIB_SESSION_XCACHE_EXTENSION_NOT_AVAILABLE'));
+            return MolajoError::raiseError(404, MolajoTextHelper::_('JLIB_SESSION_XCACHE_EXTENSION_NOT_AVAILABLE'));
         }
 
         parent::__construct($options);
@@ -72,7 +72,7 @@ class MolajoSessionStorageXcache extends MolajoSessionStorage
      */
     public function read($id)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
 
         // Check if id exists
         if (!xcache_isset($sess_id)) {
@@ -94,7 +94,7 @@ class MolajoSessionStorageXcache extends MolajoSessionStorage
      */
     public function write($id, $session_data)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
         return xcache_set($sess_id, $session_data, ini_get("session.gc_maxlifetime"));
     }
 
@@ -109,7 +109,7 @@ class MolajoSessionStorageXcache extends MolajoSessionStorage
      */
     public function destroy($id)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
 
         if (!xcache_isset($sess_id)) {
             return true;

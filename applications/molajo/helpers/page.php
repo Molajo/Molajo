@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage  Page Helper
  * @since       1.0
  */
-abstract class MolajoApplicationPage
+abstract class MolajoPageHelper
 {
     /**
      * Get the template
@@ -30,7 +30,7 @@ abstract class MolajoApplicationPage
         $condition = '';
 
         /** Menu Item Page */
-        $menu = MolajoApplicationMenu::getInstance(MOLAJO_APPLICATION, array());
+        $menu = MolajoMenu::getInstance(MOLAJO_APPLICATION, array());
 
         if ($menu == null) {
             $menuItem = null;
@@ -58,14 +58,14 @@ abstract class MolajoApplicationPage
         }
 
         /** Retrieve Page from the DB */
-        $pages = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $id);
+        $pages = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $id);
 
         foreach ($pages as $page) {
             $registry = new JRegistry;
             $registry->loadJSON($page->parameters);
             $page->parameters = $registry;
 
-            if (file_exists(MOLAJO_CMS_TEMPLATES.'/'.$page->title.'/'.'index.php')) {
+            if (file_exists(MOLAJO_CMS_TEMPLATES . '/' . $page->title . '/' . 'index.php')) {
             } else {
                 $page->title = 'default';
             }
@@ -73,7 +73,7 @@ abstract class MolajoApplicationPage
 
         return $pages;
     }
-    
+
     /**
      * renderPage
      *
@@ -101,23 +101,23 @@ abstract class MolajoApplicationPage
         /** Media */
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.MOLAJO_APPLICATION;
-        $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.MOLAJO_APPLICATION;
+        $filePath = MOLAJO_SITE_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
+        $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
         self::loadMediaCSS($filePath, $urlPath);
         self::loadMediaJS($filePath, $urlPath);
 
         /** Page-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_CMS_TEMPLATES.'/'.$page[0]->title;
-        $urlPath = JURI::root().'extensions/templates/'.$page[0]->title;
+        $filePath = MOLAJO_CMS_TEMPLATES . '/' . $page[0]->title;
+        $urlPath = JURI::root() . 'extensions/templates/' . $page[0]->title;
         self::loadMediaCSS($filePath, $urlPath);
         self::loadMediaJS($filePath, $urlPath);
 
         /** Language */
         $lang = MolajoFactory::getLanguage();
-        $lang->load($page[0]->title, MOLAJO_CMS_TEMPLATES.'/'.$page[0]->title, $lang->getDefault(), false, false);
+        $lang->load($page[0]->title, MOLAJO_CMS_TEMPLATES . '/' . $page[0]->title, $lang->getDefault(), false, false);
 
         /** Application  */
-        $applicationClass = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Application';
+        $applicationClass = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
         $app = new $applicationClass ();
 
         /** Parse */
@@ -150,21 +150,21 @@ abstract class MolajoApplicationPage
      */
     public function loadMediaCSS($filePath, $urlPath)
     {
-        if (JFolder::exists($filePath.'/css')) {
+        if (JFolder::exists($filePath . '/css')) {
         } else {
             return;
         }
 
-        $files = JFolder::files($filePath.'/css', '\.css$', false, false);
+        $files = JFolder::files($filePath . '/css', '\.css$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
                     if (MolajoFactory::getDocument()->direction == 'rtl') {
-                        MolajoFactory::getDocument()->addStyleSheet($urlPath.'/css/'.$file);
+                        MolajoFactory::getDocument()->addStyleSheet($urlPath . '/css/' . $file);
                     }
                 } else {
-                    MolajoFactory::getDocument()->addStyleSheet($urlPath.'/css/'.$file);
+                    MolajoFactory::getDocument()->addStyleSheet($urlPath . '/css/' . $file);
                 }
             }
         }
@@ -181,16 +181,16 @@ abstract class MolajoApplicationPage
      */
     public function loadMediaJS($filePath, $urlPath)
     {
-        if (JFolder::exists($filePath.'/js')) {
+        if (JFolder::exists($filePath . '/js')) {
         } else {
             return;
         }
         //todo: differentiate between script and scripts
-        $files = JFolder::files($filePath.'/js', '\.js$', false, false);
+        $files = JFolder::files($filePath . '/js', '\.js$', false, false);
 
         if (count($files) > 0) {
             foreach ($files as $file) {
-                MolajoFactory::getDocument()->addScript($urlPath.'/js/'.$file);
+                MolajoFactory::getDocument()->addScript($urlPath . '/js/' . $file);
             }
         }
     }

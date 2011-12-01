@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -116,7 +116,7 @@ class MolajoApplication extends JObject
 
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
-                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS.'/'.$info->path);
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS . '/' . $info->path);
             }
 
             if (defined('MOLAJO_APPLICATION_ID')) {
@@ -130,11 +130,11 @@ class MolajoApplication extends JObject
                 return false;
             }
 
-            $classname = $prefix.ucfirst($application).'Application';
+            $classname = $prefix . ucfirst($application) . 'Application';
             if (class_exists($classname)) {
                 $instance = new $classname($config);
             } else {
-                return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_INSTANTIATION_ERROR', $classname));
+                return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_APPLICATION_INSTANTIATION_ERROR', $classname));
             }
             $instances[$application] = &$instance;
         }
@@ -172,8 +172,8 @@ class MolajoApplication extends JObject
             $this->_createApplicationConfig();
             $this->_createConfiguration();
         } else {
-            $this->_createApplicationConfig(MOLAJO_APPLICATION_PATH.'/'.$config['config_file']);
-            $this->_createConfiguration(MOLAJO_APPLICATIONS.'/molajo/'.$config['config_file']);
+            $this->_createApplicationConfig(MOLAJO_APPLICATION_PATH . '/' . $config['config_file']);
+            $this->_createConfiguration(MOLAJO_APPLICATIONS . '/molajo/' . $config['config_file']);
         }
 
         /** Session */
@@ -194,7 +194,7 @@ class MolajoApplication extends JObject
         /** Application URI Base */
         if (MOLAJO_APPLICATION == 'site') {
         } else {
-            JURI::root(null, str_ireplace('/'.MOLAJO_APPLICATION, '', JURI::base(true)));
+            JURI::root(null, str_ireplace('/' . MOLAJO_APPLICATION, '', JURI::base(true)));
         }
 
         /** stats */
@@ -246,7 +246,7 @@ class MolajoApplication extends JObject
         if (empty($options['language'])) {
             $language = $config->get('language', 'en-GB');
             if ($language && MolajoLanguage::exists($language)) {
-                    $options['language'] = $language;
+                $options['language'] = $language;
             }
         }
 
@@ -265,11 +265,11 @@ class MolajoApplication extends JObject
 
         /** Set User Editor in Configuration */
         $editor = MolajoFactory::getUser()->getParam('editor', $config->get('editor', 'none'));
-        if (MolajoApplicationPlugin::isEnabled('editors', $editor)) {
+        if (MolajoPlugin::isEnabled('editors', $editor)) {
 
         } else {
             $editor = $config->get('editor');
-            if (MolajoApplicationPlugin::isEnabled('editors', $editor)) {
+            if (MolajoPlugin::isEnabled('editors', $editor)) {
             } else {
                 $editor = 'none';
             }
@@ -280,11 +280,11 @@ class MolajoApplication extends JObject
         $site = new MolajoSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
         if ($authorise === false) {
-            return MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
+            return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
         }
 
         /** Trigger onAfterInitialise Event */
-        MolajoApplicationPlugin::importPlugin('system');
+        MolajoPlugin::importPlugin('system');
         $this->triggerEvent('onAfterInitialise');
     }
 
@@ -304,7 +304,7 @@ class MolajoApplication extends JObject
     public function route()
     {
         if ($itemid = JRequest::getInt('Itemid')) {
-           $this->authorise($itemid);
+            $this->authorise($itemid);
         }
         $uri = JURI::getInstance();
 
@@ -314,13 +314,14 @@ class MolajoApplication extends JObject
         JRequest::set($result, 'get', false);
 
         if ($this->getConfig('force_ssl') >= 1
-            && strtolower($uri->getScheme()) != 'https') {
-                $uri->setScheme('https');
-                $this->redirect((string)$uri);
+            && strtolower($uri->getScheme()) != 'https'
+        ) {
+            $uri->setScheme('https');
+            $this->redirect((string)$uri);
         }
 
         /** trigger onAfterRoute Event */
-        MolajoApplicationPlugin::importPlugin('system');
+        MolajoPlugin::importPlugin('system');
         $this->triggerEvent('onAfterRoute');
     }
 
@@ -348,14 +349,14 @@ class MolajoApplication extends JObject
         if (MolajoFactory::getUser()->get('guest')) {
             $uri = MolajoFactory::getURI();
             $return = (string)$uri;
-            $url = 'index.php?option=users&view=login&return='.$return;
+            $url = 'index.php?option=users&view=login&return=' . $return;
             $url = MolajoRouteHelper::_($url, false);
-            $this->redirect($url, MolajoText::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
+            $this->redirect($url, MolajoTextHelper::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
 
             return false;
         }
 
-        MolajoError::raiseError(403, MolajoText::_('ERROR_NOT_AUTHORIZED'));
+        MolajoError::raiseError(403, MolajoTextHelper::_('ERROR_NOT_AUTHORIZED'));
         return false;
     }
 
@@ -378,7 +379,7 @@ class MolajoApplication extends JObject
             $name = $this->_name;
         }
 
-        $menu = MolajoApplicationMenu::getInstance($name, $options);
+        $menu = MolajoMenu::getInstance($name, $options);
 
         if (MolajoError::isError($menu)) {
             return null;
@@ -405,7 +406,7 @@ class MolajoApplication extends JObject
             $name = MOLAJO_APPLICATION;
         }
 
-        $router = MolajoApplicationRouter::getInstance($name, $options);
+        $router = MolajoRouter::getInstance($name, $options);
         if (MolajoError::isError($router)) {
             return null;
         }
@@ -428,13 +429,13 @@ class MolajoApplication extends JObject
         try
         {
             /** Option */
-            $helper = new MolajoApplicationComponent ();
+            $helper = new MolajoComponent ();
             $option = $helper->verifyComponent($option);
 
             /** Request */
             $request = $helper->getRequest($option);
-echo '<pre>';var_dump($request);'</pre>';
-            die;
+            //echo '<pre>';var_dump($request);'</pre>';
+
             /** Document */
             $document = MolajoFactory::getDocument();
             switch ($document->getType()) {
@@ -449,13 +450,13 @@ echo '<pre>';var_dump($request);'</pre>';
             $document->setDescription($this->getConfig('MetaDesc'));
 
             /** Render */
-            $contents = MolajoApplicationComponent::renderComponent($request);
+            $contents = MolajoComponent::renderComponent($request);
 
             /** Buffer */
             $document->setBuffer($contents, 'component');
 
             /** Events */
-            MolajoApplicationPlugin::importPlugin('system');
+            MolajoPlugin::importPlugin('system');
             $this->triggerEvent('onAfterDispatch');
         }
 
@@ -478,7 +479,7 @@ echo '<pre>';var_dump($request);'</pre>';
      */
     public function render()
     {
-        MolajoApplicationTemplate::renderTemplate();
+        MolajoTemplate::renderTemplate();
     }
 
     /**
@@ -509,7 +510,7 @@ echo '<pre>';var_dump($request);'</pre>';
      */
     public function getConfig($varname, $default = null)
     {
-        return MolajoFactory::getConfig()->get(''.$varname, $default);
+        return MolajoFactory::getConfig()->get('' . $varname, $default);
     }
 
     /**
@@ -695,7 +696,7 @@ echo '<pre>';var_dump($request);'</pre>';
      */
     function getTemplate()
     {
-        return MolajoApplicationTemplate::getTemplate();
+        return MolajoTemplate::getTemplate();
     }
 
     /**
@@ -705,7 +706,7 @@ echo '<pre>';var_dump($request);'</pre>';
      */
     public function setTemplate($template)
     {
-        if (is_dir(MOLAJO_CMS_TEMPLATES.'/'.$template)) {
+        if (is_dir(MOLAJO_CMS_TEMPLATES . '/' . $template)) {
             $this->template = new stdClass();
             $this->template->parameters = new JRegistry;
             $this->template->template = $template;
@@ -729,7 +730,7 @@ echo '<pre>';var_dump($request);'</pre>';
             $name = $this->_name;
         }
 
-        $pathway = MolajoApplicationPathway::getInstance($name, $options);
+        $pathway = MolajoPathway::getInstance($name, $options);
 
         if (MolajoError::isError($pathway)) {
             return null;
@@ -761,7 +762,7 @@ echo '<pre>';var_dump($request);'</pre>';
     {
         // Check for relative internal links.
         if (preg_match('#^index2?\.php#', $url)) {
-            $url = JURI::base().$url;
+            $url = JURI::base() . $url;
         }
 
         // Strip out any line breaks.
@@ -778,14 +779,14 @@ echo '<pre>';var_dump($request);'</pre>';
 
             if ($url[0] == '/') {
                 // We just need the prefix since we have a path relative to the root.
-                $url = $prefix.$url;
+                $url = $prefix . $url;
             }
             else {
                 // It's relative to where we are now, so lets add that.
                 $parts = explode('/', $uri->toString(Array('path')));
                 array_pop($parts);
-                $path = implode('/', $parts).'/';
-                $url = $prefix.$path.$url;
+                $path = implode('/', $parts) . '/';
+                $url = $prefix . $path . $url;
             }
         }
 
@@ -810,16 +811,16 @@ echo '<pre>';var_dump($request);'</pre>';
             $navigator = JBrowser::getInstance();
             if ($navigator->isBrowser('msie')) {
                 // MSIE type browser and/or server cause issues when url contains utf8 character,so use a javascript redirect method
-                echo '<html><head><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /><script>document.location.href=\''.$url.'\';</script></head><body></body></html>';
+                echo '<html><head><meta http-equiv="content-type" content="text/html; charset=' . $document->getCharset() . '" /><script>document.location.href=\'' . $url . '\';</script></head><body></body></html>';
 
             } elseif (!$moved and $navigator->isBrowser('konqueror')) {
                 // WebKit browser (identified as konqueror by Molajo) - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
-                echo '<html><head><meta http-equiv="refresh" content="0; url='.$url.'" /><meta http-equiv="content-type" content="text/html; charset='.$document->getCharset().'" /></head><body></body></html>';
+                echo '<html><head><meta http-equiv="refresh" content="0; url=' . $url . '" /><meta http-equiv="content-type" content="text/html; charset=' . $document->getCharset() . '" /></head><body></body></html>';
             } else {
                 // All other browsers, use the more efficient HTTP header method
                 header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
-                header('Location: '.$url);
-                header('Content-Type: text/html; charset='.$document->getCharset());
+                header('Location: ' . $url);
+                header('Content-Type: text/html; charset=' . $document->getCharset());
             }
         }
 
@@ -917,7 +918,7 @@ echo '<pre>';var_dump($request);'</pre>';
      */
     public static function getHash($seed)
     {
-        return md5(MolajoFactory::getConfig()->get('secret').$seed);
+        return md5(MolajoFactory::getConfig()->get('secret') . $seed);
     }
 
     /**

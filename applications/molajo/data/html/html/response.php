@@ -3,7 +3,7 @@
  * @version     $id: responses
  * @package     Molajo
  * @subpackage  HTML Class
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -26,10 +26,10 @@ abstract class MolajoHtmlResponse
             1 => array('spammed.png', 'responses.unspammed', 'RESPONSES_SPAMMED', 'CONTENT_TOGGLE_TO_UNSPAM'),
         );
         $state = JArrayHelper::getValue($states, (int)$value, $states[1]);
-        $html = JHTML::_('image', 'admin/'.$state[0], MolajoText::_($state[2]), NULL, true);
+        $html = JHTML::_('image', 'admin/' . $state[0], MolajoTextHelper::_($state[2]), NULL, true);
         if ($canChange) {
-            $html = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb'.$i.'\',\''.$state[1].'\')" title="'.MolajoText::_($state[3]).'">'
-                   .$html.'</a>';
+            $html = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb' . $i . '\',\'' . $state[1] . '\')" title="' . MolajoTextHelper::_($state[3]) . '">'
+                    . $html . '</a>';
         }
 
         return $html;

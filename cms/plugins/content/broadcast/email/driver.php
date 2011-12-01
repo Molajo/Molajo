@@ -2,18 +2,19 @@
 /**
  * @package     Molajo
  * @subpackage  Molajo Broadcast Plugin
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-class MolajoBroadcastEmail {
+class MolajoBroadcastEmail
+{
 
     /**
      * Minutes
      *
-     * @var	string
-     * @access	public
+     * @var    string
+     * @access    public
      */
     protected $days;
 
@@ -22,14 +23,14 @@ class MolajoBroadcastEmail {
      *
      * Method called by plgMolajoBroadcast::MolajoOnContentChangeState
      *
-     * @param	none
-     * @return	boolean
-     * @since	1.6
+     * @param    none
+     * @return    boolean
+     * @since    1.6
      */
-    function driver ()
+    function driver()
     {
         /** responses parameters **/
-        $responsesParameters = MolajoApplicationComponent::getParameters('responses', true);
+        $responsesParameters = MolajoComponent::getParameters('responses', true);
 
         /** email **/
         if ($responsesParameters->def('xxxx', 0) == '0') {

@@ -8,5 +8,5 @@
 defined('MOLAJO') or die;
 
 $headertype = 'div';
-include MOLAJO_CMS_LAYOUTS.'/common/headertype.php';
-include MOLAJO_CMS_LAYOUTS.'/common/headings.php';
+include MOLAJO_CMS_LAYOUTS . '/common/headertype.php';
+include MOLAJO_CMS_LAYOUTS . '/common/headings.php';

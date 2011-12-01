@@ -11,7 +11,8 @@ $headinglevel = $this->parameters->get('header_level', 1);
 
 if ($this->parameters->get('html5', true) === true) :
     if ($this->parameters->get('showtitle', false) === true
-        && $this->parameters->get('showsubtitle', false) === true) : ?>
+        && $this->parameters->get('showsubtitle', false) === true
+    ) : ?>
 	<hgroup>
 <?php endif;
 endif;
@@ -20,19 +21,20 @@ if ($this->parameters->get('showtitle', false) === true) :  ?>
     <h<?php echo $headinglevel; ?>>
         <?php echo $this->escape($this->row->title); ?>
     </h<?php echo $headinglevel++; ?>>
-<?php
-endif;
+    <?php
+    endif;
 
 if ($this->parameters->get('showsubtitle', false) === true) :  ?>
     <h<?php echo $headinglevel; ?>>
         <?php echo $this->escape($this->row->subtitle); ?>
     </h<?php echo $headinglevel++; ?>>
-<?php
-endif;
+    <?php
+    endif;
 
 if ($this->parameters->get('html5', true) === true) :
     if ($this->parameters->get('showtitle', false) === true
-        && $this->parameters->get('showsubtitle', false) === true) : ?>
+        && $this->parameters->get('showsubtitle', false) === true
+    ) : ?>
 	</hgroup>
 <?php endif;
 endif;

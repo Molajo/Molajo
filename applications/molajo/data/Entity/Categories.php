@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * use repository for handy tree functions
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository") */
- 
+
 class Categories
 {
     /**
@@ -181,8 +181,8 @@ class Categories
 
     /**
      * @var integer $lft
-	 * @Gedmo\TreeLeft
-	 * @ORM\Column(name="lft", type="integer", nullable=false)
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer", nullable=false)
      */
     private $lft;
 
@@ -255,7 +255,7 @@ class Categories
      * @ORM\Column(name="ordering", type="integer", nullable=false)
      */
     private $ordering;
-	
+
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Categories", inversedBy="children")
@@ -267,30 +267,30 @@ class Categories
      * @ORM\OneToMany(targetEntity="Categories", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    private $children; 
-	
-	/**
+    private $children;
+
+    /**
      * @var Assets
      *
      * @ORM\ManyToMany(targetEntity="Assets", mappedBy="category")
      */
     private $asset;
-	
+
     /**
      * @var ViewGroups
      *
      * @ORM\ManyToMany(targetEntity="ViewGroups", inversedBy="group")
      * @ORM\JoinTable(name="group_view_groups",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="view_group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="view_group_id", referencedColumnName="id")
      *   }
      * )
      */
     private $viewGroup;
-	
+
     /**
      * @var Users
      *
@@ -304,7 +304,7 @@ class Categories
      *
      * @ORM\ManyToOne(targetEntity="ExtensionInstances")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
      * })
      */
     private $extensionInstance;
@@ -312,15 +312,15 @@ class Categories
     public function __construct()
     {
         $this->asset = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->viewGroup = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->viewGroup = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -340,7 +340,7 @@ class Categories
     /**
      * Get contentTypeId
      *
-     * @return integer 
+     * @return integer
      */
     public function getContentTypeId()
     {
@@ -360,7 +360,7 @@ class Categories
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -380,7 +380,7 @@ class Categories
     /**
      * Get subtitle
      *
-     * @return string 
+     * @return string
      */
     public function getSubtitle()
     {
@@ -400,7 +400,7 @@ class Categories
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias()
     {
@@ -420,7 +420,7 @@ class Categories
     /**
      * Get contentText
      *
-     * @return text 
+     * @return text
      */
     public function getContentText()
     {
@@ -440,7 +440,7 @@ class Categories
     /**
      * Get protected
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProtected()
     {
@@ -460,7 +460,7 @@ class Categories
     /**
      * Get featured
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFeatured()
     {
@@ -480,7 +480,7 @@ class Categories
     /**
      * Get stickied
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStickied()
     {
@@ -500,7 +500,7 @@ class Categories
     /**
      * Get status
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatus()
     {
@@ -520,7 +520,7 @@ class Categories
     /**
      * Get startPublishingDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStartPublishingDatetime()
     {
@@ -540,7 +540,7 @@ class Categories
     /**
      * Get stopPublishingDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStopPublishingDatetime()
     {
@@ -560,7 +560,7 @@ class Categories
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -580,7 +580,7 @@ class Categories
     /**
      * Get versionOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersionOfId()
     {
@@ -600,7 +600,7 @@ class Categories
     /**
      * Get statusPriorToVersion
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusPriorToVersion()
     {
@@ -620,7 +620,7 @@ class Categories
     /**
      * Get createdDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedDatetime()
     {
@@ -640,7 +640,7 @@ class Categories
     /**
      * Get createdBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -660,7 +660,7 @@ class Categories
     /**
      * Get modifiedDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getModifiedDatetime()
     {
@@ -680,7 +680,7 @@ class Categories
     /**
      * Get modifiedBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getModifiedBy()
     {
@@ -700,7 +700,7 @@ class Categories
     /**
      * Get checkedOutDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCheckedOutDatetime()
     {
@@ -720,7 +720,7 @@ class Categories
     /**
      * Get checkedOutBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCheckedOutBy()
     {
@@ -740,7 +740,7 @@ class Categories
     /**
      * Get parentId
      *
-     * @return integer 
+     * @return integer
      */
     public function getParentId()
     {
@@ -760,7 +760,7 @@ class Categories
     /**
      * Get root
      *
-     * @return integer 
+     * @return integer
      */
     public function getRoot()
     {
@@ -780,7 +780,7 @@ class Categories
     /**
      * Get lft
      *
-     * @return integer 
+     * @return integer
      */
     public function getLft()
     {
@@ -800,7 +800,7 @@ class Categories
     /**
      * Get rgt
      *
-     * @return integer 
+     * @return integer
      */
     public function getRgt()
     {
@@ -820,7 +820,7 @@ class Categories
     /**
      * Get lvl
      *
-     * @return integer 
+     * @return integer
      */
     public function getLvl()
     {
@@ -840,7 +840,7 @@ class Categories
     /**
      * Get home
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHome()
     {
@@ -860,7 +860,7 @@ class Categories
     /**
      * Get position
      *
-     * @return string 
+     * @return string
      */
     public function getPosition()
     {
@@ -880,7 +880,7 @@ class Categories
     /**
      * Get customFields
      *
-     * @return text 
+     * @return text
      */
     public function getCustomFields()
     {
@@ -900,7 +900,7 @@ class Categories
     /**
      * Get parameters
      *
-     * @return text 
+     * @return text
      */
     public function getParameters()
     {
@@ -920,7 +920,7 @@ class Categories
     /**
      * Get metadata
      *
-     * @return text 
+     * @return text
      */
     public function getMetadata()
     {
@@ -940,7 +940,7 @@ class Categories
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -960,7 +960,7 @@ class Categories
     /**
      * Get translationOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTranslationOfId()
     {
@@ -980,7 +980,7 @@ class Categories
     /**
      * Get ordering
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdering()
     {
@@ -1000,7 +1000,7 @@ class Categories
     /**
      * Get asset
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getAsset()
     {
@@ -1020,7 +1020,7 @@ class Categories
     /**
      * Get viewGroup
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getViewGroup()
     {
@@ -1040,7 +1040,7 @@ class Categories
     /**
      * Get user
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getUser()
     {
@@ -1060,20 +1060,20 @@ class Categories
     /**
      * Get extensionInstance
      *
-     * @return data\Entity\ExtensionInstances 
+     * @return data\Entity\ExtensionInstances
      */
     public function getExtensionInstance()
     {
-        return $this->extensionInstance;		
+        return $this->extensionInstance;
     }
-	
+
     public function setParent(Categories $parent = null)
     {
-        $this->parent = $parent;    
+        $this->parent = $parent;
     }
 
     public function getParent()
     {
-        return $this->parent;   
+        return $this->parent;
     }
 }

@@ -97,10 +97,10 @@ class Assets
      * @ORM\ManyToMany(targetEntity="Categories", inversedBy="asset")
      * @ORM\JoinTable(name="asset_categories",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      *   }
      * )
      */
@@ -112,10 +112,10 @@ class Assets
      * @ORM\ManyToMany(targetEntity="ExtensionInstances", inversedBy="asset")
      * @ORM\JoinTable(name="asset_modules",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
      *   }
      * )
      */
@@ -126,7 +126,7 @@ class Assets
      *
      * @ORM\ManyToOne(targetEntity="ContentTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
      * })
      */
     private $contentType;
@@ -134,14 +134,14 @@ class Assets
     public function __construct()
     {
         $this->category = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->extensionInstance = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->extensionInstance = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -161,7 +161,7 @@ class Assets
     /**
      * Get sourceId
      *
-     * @return integer 
+     * @return integer
      */
     public function getSourceId()
     {
@@ -181,7 +181,7 @@ class Assets
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -201,7 +201,7 @@ class Assets
     /**
      * Get sefRequest
      *
-     * @return string 
+     * @return string
      */
     public function getSefRequest()
     {
@@ -221,7 +221,7 @@ class Assets
     /**
      * Get request
      *
-     * @return string 
+     * @return string
      */
     public function getRequest()
     {
@@ -241,7 +241,7 @@ class Assets
     /**
      * Get primaryCategoryId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrimaryCategoryId()
     {
@@ -261,7 +261,7 @@ class Assets
     /**
      * Get templateId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTemplateId()
     {
@@ -281,7 +281,7 @@ class Assets
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -301,7 +301,7 @@ class Assets
     /**
      * Get translationOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTranslationOfId()
     {
@@ -321,7 +321,7 @@ class Assets
     /**
      * Get redirectToId
      *
-     * @return integer 
+     * @return integer
      */
     public function getRedirectToId()
     {
@@ -341,7 +341,7 @@ class Assets
     /**
      * Get viewGroupId
      *
-     * @return integer 
+     * @return integer
      */
     public function getViewGroupId()
     {
@@ -361,7 +361,7 @@ class Assets
     /**
      * Get category
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getCategory()
     {
@@ -381,7 +381,7 @@ class Assets
     /**
      * Get extensionInstance
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getExtensionInstance()
     {
@@ -401,7 +401,7 @@ class Assets
     /**
      * Get contentType
      *
-     * @return data\Entity\ContentTypes 
+     * @return data\Entity\ContentTypes
      */
     public function getContentType()
     {

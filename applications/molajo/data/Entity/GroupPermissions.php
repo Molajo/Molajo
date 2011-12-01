@@ -26,7 +26,7 @@ class GroupPermissions
      *
      * @ORM\ManyToOne(targetEntity="Actions")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="action_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="action_id", referencedColumnName="id")
      * })
      */
     private $action;
@@ -36,7 +36,7 @@ class GroupPermissions
      *
      * @ORM\ManyToOne(targetEntity="Assets")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })
      */
     private $asset;
@@ -46,17 +46,16 @@ class GroupPermissions
      *
      * @ORM\ManyToOne(targetEntity="Categories")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      * })
      */
     private $group;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +75,7 @@ class GroupPermissions
     /**
      * Get action
      *
-     * @return data\Entity\Actions 
+     * @return data\Entity\Actions
      */
     public function getAction()
     {
@@ -96,7 +95,7 @@ class GroupPermissions
     /**
      * Get asset
      *
-     * @return data\Entity\Assets 
+     * @return data\Entity\Assets
      */
     public function getAsset()
     {
@@ -116,7 +115,7 @@ class GroupPermissions
     /**
      * Get group
      *
-     * @return data\Entity\Categories 
+     * @return data\Entity\Categories
      */
     public function getGroup()
     {

@@ -3,8 +3,8 @@
 namespace Gedmo\Timestampable\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\Xml as BaseXml,
-    Doctrine\Common\Persistence\Mapping\ClassMetadata,
-    Gedmo\Exception\InvalidMappingException;
+Doctrine\Common\Persistence\Mapping\ClassMetadata,
+Gedmo\Exception\InvalidMappingException;
 
 /**
  * This is a xml mapping driver for Timestampable
@@ -38,7 +38,9 @@ class Xml extends BaseXml
     /**
      * {@inheritDoc}
      */
-    public function validateFullMetadata(ClassMetadata $meta, array $config) {}
+    public function validateFullMetadata(ClassMetadata $meta, array $config)
+    {
+    }
 
     /**
      * {@inheritDoc}

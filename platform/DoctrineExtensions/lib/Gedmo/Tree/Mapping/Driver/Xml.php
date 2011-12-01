@@ -3,8 +3,8 @@
 namespace Gedmo\Tree\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\Xml as BaseXml,
-    Doctrine\Common\Persistence\Mapping\ClassMetadata,
-    Gedmo\Exception\InvalidMappingException;
+Doctrine\Common\Persistence\Mapping\ClassMetadata,
+Gedmo\Exception\InvalidMappingException;
 
 /**
  * This is a xml mapping driver for Tree
@@ -62,7 +62,8 @@ class Xml extends BaseXml
     /**
      * {@inheritDoc}
      */
-    public function readExtendedMetadata(ClassMetadata $meta, array &$config) {
+    public function readExtendedMetadata(ClassMetadata $meta, array &$config)
+    {
         /**
          * @var \SimpleXmlElement $xml
          */
@@ -117,12 +118,13 @@ class Xml extends BaseXml
         }
 
         if (isset($xmlDoctrine->{'many-to-one'})) {
-            foreach ($xmlDoctrine->{'many-to-one'} as $manyToOneMapping)  {
+            foreach ($xmlDoctrine->{'many-to-one'} as $manyToOneMapping) {
                 /**
                  * @var \SimpleXMLElement $manyToOneMapping
                  */
                 $manyToOneMappingDoctrine = $manyToOneMapping;
-                $manyToOneMapping = $manyToOneMapping->children(self::GEDMO_NAMESPACE_URI);;
+                $manyToOneMapping = $manyToOneMapping->children(self::GEDMO_NAMESPACE_URI);
+                ;
                 if (isset($manyToOneMapping->{'tree-parent'})) {
                     $field = $this->_getAttribute($manyToOneMappingDoctrine, 'field');
                     if ($meta->associationMappings[$field]['targetEntity'] != $meta->name) {

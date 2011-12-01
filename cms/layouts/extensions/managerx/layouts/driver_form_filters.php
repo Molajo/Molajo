@@ -3,10 +3,10 @@
  * @version     $id: driver
  * @package     Molajo
  * @subpackage  Multiple View
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die; 
+defined('MOLAJO') or die;
 
 /** $anyFilters used to prevent rendering the filter row if neither the search filter or any of the list filters are specified **/
 $anyFilters = false;
@@ -27,8 +27,8 @@ $nameFilters = false;
 $loadFilterArray = array();
 
 /** loop thru filter options **/
-for ($i=1; $i < 1000; $i++) {
-    $this->tempColumnName = $this->parameters->def('config_manager_list_filters'.$i);
+for ($i = 1; $i < 1000; $i++) {
+    $this->tempColumnName = $this->parameters->def('config_manager_list_filters' . $i);
 
     /** encountered end of filters **/
     if ($this->tempColumnName == null) {
@@ -45,10 +45,10 @@ for ($i=1; $i < 1000; $i++) {
     /** no filter was selected for configuration option **/
     if (in_array($this->tempColumnName, $loadFilterArray)) {
 
-    /** no filter was selected for configuration option **/
+        /** no filter was selected for configuration option **/
     } else if ($this->tempColumnName == '0') {
 
-    /** configuration option set for filter list **/
+        /** configuration option set for filter list **/
     } else {
         /** save so it does not get added multiple times **/
         $loadFilterArray[] = $this->tempColumnName;
@@ -64,17 +64,17 @@ for ($i=1; $i < 1000; $i++) {
         }
 
         /** class name **/
-        $nameClassName = 'MolajoField'.ucfirst($this->tempColumnName);
+        $nameClassName = 'MolajoField' . ucfirst($this->tempColumnName);
 
         /** class file **/
         $mf = new MolajoField ();
-        $mf->getClass ($this->tempColumnName);
+        $mf->getClass($this->tempColumnName);
 
         /** class instantiation **/
         if (class_exists($nameClassName)) {
             $fcn = new $nameClassName ();
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_CLASS').' '.$nameClassName, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -82,7 +82,7 @@ for ($i=1; $i < 1000; $i++) {
         $this->tempArray = $fcn->getOptions();
 
         /** selected value **/
-        $this->tempSelected = $this->state->get('filter.'.$this->tempColumnName);
+        $this->tempSelected = $this->state->get('filter.' . $this->tempColumnName);
 
         /** render field filter **/
         include dirname(__FILE__) . '/form/form_filter_field.php';

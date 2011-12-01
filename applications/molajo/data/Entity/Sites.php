@@ -69,34 +69,34 @@ class Sites
      * @ORM\ManyToMany(targetEntity="Applications", inversedBy="site")
      * @ORM\JoinTable(name="site_applications",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="site_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
      *   }
      * )
      */
     private $application;
-	
+
     /**
      * @var ExtensionInstances
      *
      * @ORM\ManyToMany(targetEntity="ExtensionInstances", mappedBy="site")
      */
     private $extensionInstance;
-	
+
 
     public function __construct()
     {
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->extensionInstance = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->extensionInstance = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,7 +116,7 @@ class Sites
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -136,7 +136,7 @@ class Sites
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -156,7 +156,7 @@ class Sites
     /**
      * Get baseUrl
      *
-     * @return string 
+     * @return string
      */
     public function getBaseUrl()
     {
@@ -176,7 +176,7 @@ class Sites
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -196,7 +196,7 @@ class Sites
     /**
      * Get parameters
      *
-     * @return text 
+     * @return text
      */
     public function getParameters()
     {
@@ -216,7 +216,7 @@ class Sites
     /**
      * Get customFields
      *
-     * @return text 
+     * @return text
      */
     public function getCustomFields()
     {
@@ -236,7 +236,7 @@ class Sites
     /**
      * Get application
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getApplication()
     {
@@ -256,7 +256,7 @@ class Sites
     /**
      * Get extensionInstance
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getExtensionInstance()
     {

@@ -29,11 +29,10 @@ class Actions
     private $title;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,7 +52,7 @@ class Actions
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {

@@ -9,12 +9,12 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_FORM_RULES_DESCRIPTION</description>
-	<files>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layouts_rules.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_rules.sys.ini</language>
-	</languages>
+    <files>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layouts_rules.ini</language>
+        <language tag="language/en-GB">en-GB.layouts_rules.sys.ini</language>
+    </languages>
 </extension>

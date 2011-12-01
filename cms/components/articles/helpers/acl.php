@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  ACL
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Component ACL
  *
- * @package	    Molajo
- * @subpackage	ACL
- * @since	    1.0
+ * @package        Molajo
+ * @subpackage    ACL
+ * @since        1.0
  */
 class MolajoACLArticles extends MolajoACL
 {

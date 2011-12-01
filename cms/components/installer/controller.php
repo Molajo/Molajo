@@ -10,9 +10,9 @@ defined('MOLAJO') or die;
 /**
  * Display Controller
  *
- * @package	    Molajo
- * @subpackage	Controller
- * @since	    1.0
+ * @package        Molajo
+ * @subpackage    Controller
+ * @since        1.0
  */
 class InstallerController extends MolajoController
 {
@@ -28,19 +28,19 @@ class InstallerController extends MolajoController
         /** form token check */
 
         /** check for configuration.php file - if exists redirect to error */
-        if(JFile::exists(MOLAJO_BASE_FOLDER.'/configuration.php')) {
-//            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=error', false));
-//            $this->redirect();
+        if (JFile::exists(MOLAJO_BASE_FOLDER . '/configuration.php')) {
+            //            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=error', false));
+            //            $this->redirect();
         }
-        else if(!$this->getModel('display')->can_install) {
+        else if (!$this->getModel('display')->can_install) {
             $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=error', false));
             $this->redirect();
         }
 
-        if(JRequest::getCmd('next_step', '', 'post')) {
-            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout='.JRequest::getCmd('next_step', 'post'), false));
+        if (JRequest::getCmd('next_step', '', 'post')) {
+            $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=display&layout=' . JRequest::getCmd('next_step', 'post'), false));
             $this->redirect();
-//            $this->getView('display')->setLayout('step2');
+            //            $this->getView('display')->setLayout('step2');
         }
 
         parent::display($cachable, $urlparameters);
@@ -67,14 +67,14 @@ class InstallerController extends MolajoController
         /** edit for data completeness -- redirect to appropriate page for errors */
 
         /** save configuration file (display FTP page with config file if necessary) */
-        if(!$this->getModel('configuration')->setup($config)) {
+        if (!$this->getModel('configuration')->setup($config)) {
             // Trow error
         }
 
 
         /** create database (base install + admin user) */
         /** populate sample data, if selected */
-        if(!$model->install($config)) {
+        if (!$model->install($config)) {
             // Trow error
         }
 

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="plugin" group="system" version="1.5"  method="upgrade">
-	<name>Tamka 301 Redirects</name>
+<install type="plugin" group="system" version="1.5" method="upgrade">
+    <name>Tamka 301 Redirects</name>
     <author>Tamka Project</author>
     <creationDate>March 2009</creationDate>
-    <copyright>Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See http://tamka.org/copyright</copyright>
+    <copyright>Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See
+        http://tamka.org/copyright
+    </copyright>
     <license>http://www.gnu.org/licenses/licenses.html#GPL GPL v 2, or later</license>
-	<authorEmail>team@tamka.org</authorEmail>
-	<authorUrl>http://joomlacode.org/gf/project/tamka/</authorUrl>
-	<version>1.0</version>
-	<description>Tamka 301 Redirects - manually add rows to jos_tamka_301_redirects</description>
+    <authorEmail>team@tamka.org</authorEmail>
+    <authorUrl>http://joomlacode.org/gf/project/tamka/</authorUrl>
+    <version>1.0</version>
+    <description>Tamka 301 Redirects - manually add rows to jos_tamka_301_redirects</description>
     <files>
         <filename plugin="tamka_301_redirects">tamka_301_redirects.php</filename>
     </files>
-	<parameters>
-	</parameters>
+    <parameters>
+    </parameters>
 </install>

@@ -1,24 +1,25 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Molajo Responses 
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @subpackage  Molajo Responses
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 
-class plgMolajoResponses extends MolajoApplicationPlugin	{
+class plgMolajoResponses extends MolajoPlugin
+{
 
     /**
-     * @var string	Stores name of data element containing text for content object
-     * @since	1.6
+     * @var string    Stores name of data element containing text for content object
+     * @since    1.6
      */
     protected $location;
 
     /**
-     * @var binary	Used to remember {closed} content items identified in Content Prepare
-     * @since	1.6
+     * @var binary    Used to remember {closed} content items identified in Content Prepare
+     * @since    1.6
      */
     protected $closed;
 
@@ -27,18 +28,18 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
      *
      * Content Component Plugin that applies text and URL functions to content object
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	stromg		The 'page' number
-     * @return	string
-     * @since	1.6
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    stromg        The 'page' number
+     * @return    string
+     * @since    1.6
      */
-    function MolajoOnContentPrepare ($context, &$content, &$parameters, $page = 0)
+    function MolajoOnContentPrepare($context, &$content, &$parameters, $page = 0)
     {
         return;
         /** init **/
-        if (!plgMolajoResponses::initialization ($context, $content)) {
+        if (!plgMolajoResponses::initialization($context, $content)) {
             return;
         }
 
@@ -65,35 +66,37 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
      * Polls
      * Trackback
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	int		The 'page' number
-     * @return	string
-     * @since	1.6
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    int        The 'page' number
+     * @return    string
+     * @since    1.6
      */
-    function MolajoOnContentAfterDisplay ($context, &$content, &$parameters, $page = 0)
+    function MolajoOnContentAfterDisplay($context, &$content, &$parameters, $page = 0)
     {
         /** init **/
-        if (!plgMolajoResponses::initialization ($context, $content)) {
+        if (!plgMolajoResponses::initialization($context, $content)) {
             return;
         }
 
         /** responses parameters **/
-        $responsesParameters = MolajoApplicationComponent::getParameters('responses', true);
+        $responsesParameters = MolajoComponent::getParameters('responses', true);
 
         /** response type 1: comments **/
         if (($responsesParameters->def('enable_comments', 0) == '1') &&
-            (in_array($content->catid, $responsesParameters->def('enable_comments_categories', array())))) {
+            (in_array($content->catid, $responsesParameters->def('enable_comments_categories', array())))
+        ) {
             require_once dirname(__FILE__) . '/comments/driver.php';
-            $commentResults = MolajoResponsesComments::driver ($context, &$content, &$parameters, $page = 0, $this->location, $this->closed);
+            $commentResults = MolajoResponsesComments::driver($context, &$content, &$parameters, $page = 0, $this->location, $this->closed);
         } else {
             $commentResults = false;
         }
 
         /** response type 2: ratings **/
         if (($responsesParameters->def('enable_ratings', 0) == '1') &&
-            (in_array($content->catid, $responsesParameters->def('enable_ratings_categories', array())))) {
+            (in_array($content->catid, $responsesParameters->def('enable_ratings_categories', array())))
+        ) {
             require_once dirname(__FILE__) . '/ratings/driver.php';
             $ratingResults = false;
             //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$parameters, $page = 0);
@@ -103,7 +106,8 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
 
         /** response type 3: bookmarks **/
         if (($responsesParameters->def('enable_bookmarks', 0) == '1') &&
-            (in_array($content->catid, $responsesParameters->def('enable_bookmarks_categories', array())))) {
+            (in_array($content->catid, $responsesParameters->def('enable_bookmarks_categories', array())))
+        ) {
             require_once dirname(__FILE__) . '/bookmarks/driver.php';
             $bookmarkResults = false;
             //$ratingResults = MolajoResponsesRatings::driver ($context, &$content, &$parameters, $page = 0);
@@ -113,7 +117,8 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
 
         /** response type 4: broadcasting (subscriptions, feeds) **/
         if (($responsesParameters->def('enable_broadcast', 0) == '1') &&
-            (in_array($content->catid, $responsesParameters->def('enable_broadcast_categories', array())))) {
+            (in_array($content->catid, $responsesParameters->def('enable_broadcast_categories', array())))
+        ) {
 
             if ($responsesParameters->def('enable_feeds', 0) == '1') {
                 require_once dirname(__FILE__) . '/subscriptions/driver.php';
@@ -137,7 +142,7 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
         if ($responsesParameters->def('enable_logs', 0) == '1') {
 
             if (in_array($content->catid, $responsesParameters->def('enable_bookmarks_categories', array()))) {
-                 echo 'Category enabled for bookmarks: '.$content->catid.'<br />';
+                echo 'Category enabled for bookmarks: ' . $content->catid . '<br />';
             }
 
         }
@@ -164,7 +169,8 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
      * @param object $content
      * @return binary
      */
-    function initialization ($context, $content) {
+    function initialization($context, $content)
+    {
 
         /** no responses for responses **/
         if ($context == 'responses.response') {
@@ -172,7 +178,7 @@ class plgMolajoResponses extends MolajoApplicationPlugin	{
         }
 
         /** responses enabled? **/
-        if (MolajoApplicationComponent::isEnabled('responses')) {
+        if (MolajoComponent::isEnabled('responses')) {
         } else {
             return false;
         }

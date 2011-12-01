@@ -2,13 +2,13 @@
 /**
  * @package     Molajo
  * @subpackage  Field
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * Utility class for managing fields 
+ * Utility class for managing fields
  *
  * @package     Molajo
  * @subpackage  Field
@@ -53,7 +53,7 @@ class MolajoField
 
     /**
      * $displayType
-     * 
+     *
      * @var string
      */
     public $displayType = 'string';
@@ -61,13 +61,15 @@ class MolajoField
     /**
      * __construct
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * setName
      *
      * Sets the Field Name
-     * 
+     *
      * @param $name
      * @return void
      */
@@ -79,8 +81,8 @@ class MolajoField
     /**
      * setFilter
      *
-     * Sets the selected field filter 
-     * 
+     * Sets the selected field filter
+     *
      * @param string $filter
      * @return void
      */
@@ -98,7 +100,7 @@ class MolajoField
     {
         /** float: digits and periods **/
         if ($this->filter == 'float') {
-            $this->value = JRequest::getFloat('filter_'.$this->name, null);
+            $this->value = JRequest::getFloat('filter_' . $this->name, null);
 
             /** base64: URL **/
         } else if ($this->filter == 'base64') {
@@ -106,28 +108,28 @@ class MolajoField
 
             /** boolean: true or false **/
         } else if ($this->filter == 'boolean') {
-            $this->value = JRequest::getBool('filter_'.$this->name, null);
+            $this->value = JRequest::getBool('filter_' . $this->name, null);
 
             /** command: [A-Za-z0-9.-_] **/
         } else if ($this->filter == 'command') {
-            $this->value = JRequest::getCmd('filter_'.$this->name, null);
+            $this->value = JRequest::getCmd('filter_' . $this->name, null);
 
             /** word: [A-Za-z_] **/
         } else if ($this->filter == 'word') {
-            $this->value = JRequest::getWord('filter_'.$this->name, null);
+            $this->value = JRequest::getWord('filter_' . $this->name, null);
 
             /** string: only filters 'bad' HTML code **/
         } else if ($this->filter == 'string') {
-            $this->value = JRequest::getString('filter_'.$this->name, null);
+            $this->value = JRequest::getString('filter_' . $this->name, null);
 
             /** integer **/
         } else {
-            $this->value = JRequest::getInt('filter_'.$this->name, null);
+            $this->value = JRequest::getInt('filter_' . $this->name, null);
         }
 
         /** retain value from previous page load if current request is null **/
         if ($this->value == null) {
-            $this->value = MolajoFactory::getApplication()->getUserState('filter.'.$this->name);
+            $this->value = MolajoFactory::getApplication()->getUserState('filter.' . $this->name);
         }
     }
 
@@ -135,7 +137,7 @@ class MolajoField
      * setSortable
      *
      * Set sortable property for field
-     * 
+     *
      * @param bool $value
      * @return void
      */
@@ -148,7 +150,7 @@ class MolajoField
      * setCheckbox
      *
      * Set checkbox property for field
-     * 
+     *
      * @param bool $value
      * @return void
      */
@@ -161,7 +163,7 @@ class MolajoField
      * setDisplayType
      *
      * Set displaytype property for field
-     * 
+     *
      * @param bool $value
      * @return void
      */
@@ -174,7 +176,7 @@ class MolajoField
      * getClass
      *
      * Loads Field Class file
-     * 
+     *
      * @param $name
      * @param bool $reportError
      *
@@ -182,16 +184,16 @@ class MolajoField
      */
     public function getClass($name, $reportError = true)
     {
-        if (class_exists('MolajoField'.ucfirst($name))) {
+        if (class_exists('MolajoField' . ucfirst($name))) {
         } else {
-            
-            $nameClassFile = MOLAJO_APPLICATIONS_DATA.'/fields/fields/'.$name.'.php';
+
+            $nameClassFile = MOLAJO_APPLICATIONS_DATA . '/fields/fields/' . $name . '.php';
             if (JFile::exists($nameClassFile)) {
                 require_once $nameClassFile;
-                
+
             } else {
                 if ($reportError === true) {
-                    MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_FIELD_FILENAME').' '.'MolajoField'.ucfirst($name).' '.$nameClassFile, 'error');
+                    MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($name) . ' ' . $nameClassFile, 'error');
                     return false;
                 }
             }

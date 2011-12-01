@@ -12,9 +12,9 @@ defined('MOLAJO') or die;
  *
  * Extend Component Content with Content Types, which are XML files containing one or more Custom Fields
  *
- * @package	Content
- * @subpackage	Extend
- * @version	1.6
+ * @package    Content
+ * @subpackage    Extend
+ * @version    1.6
  */
 class modelContentType
 {
@@ -25,16 +25,16 @@ class modelContentType
      *
      * @return object
      */
-    public function getFolderFilenames ($path=null)
+    public function getFolderFilenames($path = null)
     {
         /** default path **/
         if ($path == null) {
-            $path = MOLAJO_EXTEND_ROOT.'/contenttypes';
+            $path = MOLAJO_EXTEND_ROOT . '/contenttypes';
         }
 
         /** retrieve file names for folder **/
         if (JFolder::exists($path)) {
-           return JFolder::files($path, '.xml');
+            return JFolder::files($path, '.xml');
         } else {
             return false;
         }

@@ -9,12 +9,12 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_INSTALLER_STEP4_DESCRIPTION</description>
-	<files>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_installer_step4.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_installer_step4.sys.ini</language>
-	</languages>
+    <files>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_installer_step4.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_installer_step4.sys.ini</language>
+    </languages>
 </extension>

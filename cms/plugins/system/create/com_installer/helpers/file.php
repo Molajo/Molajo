@@ -3,7 +3,7 @@
  * @version     $id: file.php
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -18,14 +18,14 @@ class MolajoFileHelper
      *
      * @return Boolean
      */
-    function requireClassFile ($file, $class)
+    function requireClassFile($file, $class)
     {
         if (class_exists($class)) {
         } else {
             if (file_exists($file)) {
                 JLoader::register($class, $file);
             } else {
-                JError::raiseNotice(500, MolajoText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.$class.' '.$file), 'error');
+                JError::raiseNotice(500, MolajoTextHelper::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE' . ' ' . $class . ' ' . $file), 'error');
                 return false;
             }
         }

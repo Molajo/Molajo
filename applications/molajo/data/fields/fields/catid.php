@@ -3,7 +3,7 @@
  * @version     $id: filterCatid.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -75,12 +75,12 @@ class MolajoFieldCatid extends MolajoField
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.catid = '.$value);
+            $query->where('a.catid = ' . $value);
 
         } else if (is_array($value)) {
             JArrayHelper::toInteger($value);
             $categoryId = implode(',', $value);
-            $query->where('a.catid IN ('.$categoryId.')');
+            $query->where('a.catid IN (' . $categoryId . ')');
         }
     }
 
@@ -94,7 +94,7 @@ class MolajoFieldCatid extends MolajoField
         if ($layout == 'admin') {
             $render = array();
             if ($item->canEdit === true) {
-                $render['link_value'] = 'index.php?option=categories&extension='.JRequest::getVar('option').'&task=category.edit&id='.$item->category_id;
+                $render['link_value'] = 'index.php?option=categories&extension=' . JRequest::getVar('option') . '&task=category.edit&id=' . $item->category_id;
             } else {
                 $render['link_value'] = false;
             }

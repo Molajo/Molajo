@@ -3,7 +3,7 @@
  * @version     $id: filterAccess.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -94,7 +94,7 @@ class MolajoFieldAccess extends MolajoField
         if ((int)$value == 0) {
             return;
         }
-        $aclClass = 'MolajoACL'.ucfirst(strtolower(JRequest::getVar('DefaultView')));
+        $aclClass = 'MolajoACL' . ucfirst(strtolower(JRequest::getVar('DefaultView')));
         $aclClass::getQueryInformation(JRequest::getVar('option'), $query, 'filter', $value);
     }
 

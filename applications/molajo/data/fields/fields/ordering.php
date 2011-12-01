@@ -3,7 +3,7 @@
  * @version     $id: filterOrdering.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -93,7 +93,7 @@ class MolajoFieldOrdering extends MolajoField
     {
         $query->select('a.ordering');
         if (is_numeric($value)) {
-            $query->where('a.ordering = '.(int)$value);
+            $query->where('a.ordering = ' . (int)$value);
         } else if ($value == '*') {
 
         } else {

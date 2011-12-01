@@ -19,15 +19,15 @@
 namespace DoctrineExtensions\Paginate;
 
 use Doctrine\ORM\Query\TreeWalkerAdapter,
-    Doctrine\ORM\Query\AST\SelectStatement,
-    Doctrine\ORM\Query\AST\PathExpression,
-    Doctrine\ORM\Query\AST\InExpression,
-    Doctrine\ORM\Query\AST\InputParameter,
-    Doctrine\ORM\Query\AST\ConditionalPrimary,
-    Doctrine\ORM\Query\AST\ConditionalTerm,
-    Doctrine\ORM\Query\AST\ConditionalExpression,
-    Doctrine\ORM\Query\AST\ConditionalFactor,
-    Doctrine\ORM\Query\AST\WhereClause;
+Doctrine\ORM\Query\AST\SelectStatement,
+Doctrine\ORM\Query\AST\PathExpression,
+Doctrine\ORM\Query\AST\InExpression,
+Doctrine\ORM\Query\AST\InputParameter,
+Doctrine\ORM\Query\AST\ConditionalPrimary,
+Doctrine\ORM\Query\AST\ConditionalTerm,
+Doctrine\ORM\Query\AST\ConditionalExpression,
+Doctrine\ORM\Query\AST\ConditionalFactor,
+Doctrine\ORM\Query\AST\WhereClause;
 
 /**
  * Replaces the whereClause of the AST with a WHERE id IN (:foo_1, :foo_2) equivalent
@@ -71,7 +71,7 @@ class WhereInWalker extends TreeWalkerAdapter
         }
 
         $pathExpression = new PathExpression(
-                        PathExpression::TYPE_STATE_FIELD, $parentName, $parent['metadata']->getSingleIdentifierFieldName()
+            PathExpression::TYPE_STATE_FIELD, $parentName, $parent['metadata']->getSingleIdentifierFieldName()
         );
         $pathExpression->type = PathExpression::TYPE_STATE_FIELD;
         $inExpression = new InExpression($pathExpression);
@@ -86,39 +86,39 @@ class WhereInWalker extends TreeWalkerAdapter
         // if no existing whereClause
         if ($AST->whereClause === null) {
             $AST->whereClause = new WhereClause(
-                            new ConditionalExpression(array(
-                                new ConditionalTerm(array(
-                                    new ConditionalFactor($conditionalPrimary)
-                                ))
-                            ))
+                new ConditionalExpression(array(
+                                               new ConditionalTerm(array(
+                                                                        new ConditionalFactor($conditionalPrimary)
+                                                                   ))
+                                          ))
             );
         } else { // add to the existing using AND
             // existing AND clause
             if ($AST->whereClause->conditionalExpression instanceof ConditionalTerm) {
                 $AST->whereClause->conditionalExpression->conditionalFactors[] = $conditionalPrimary;
             }
-            // single clause where
+                // single clause where
             elseif ($AST->whereClause->conditionalExpression instanceof ConditionalPrimary) {
                 $AST->whereClause->conditionalExpression = new ConditionalExpression(
-                                array(
-                                    new ConditionalTerm(
-                                            array(
-                                                $AST->whereClause->conditionalExpression,
-                                                $conditionalPrimary
-                                            )
-                                    )
-                                )
+                    array(
+                         new ConditionalTerm(
+                             array(
+                                  $AST->whereClause->conditionalExpression,
+                                  $conditionalPrimary
+                             )
+                         )
+                    )
                 );
             }
-            // an OR clause
+                // an OR clause
             elseif ($AST->whereClause->conditionalExpression instanceof ConditionalExpression) {
                 $tmpPrimary = new ConditionalPrimary;
                 $tmpPrimary->conditionalExpression = $AST->whereClause->conditionalExpression;
                 $AST->whereClause->conditionalExpression = new ConditionalTerm(
-                                array(
-                                    $tmpPrimary,
-                                    $conditionalPrimary,
-                                )
+                    array(
+                         $tmpPrimary,
+                         $conditionalPrimary,
+                    )
                 );
             } else {
                 // error check to provide a more verbose error on failure

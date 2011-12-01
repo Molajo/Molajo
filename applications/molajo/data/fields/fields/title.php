@@ -3,7 +3,7 @@
  * @version     $id: filterTitle.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -39,7 +39,7 @@ class MolajoFieldTitle extends MolajoField
      */
     public function getOptions()
     {
-        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $titleModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $titleModel->getOptionList('id', 'title', $showKey = true, $showKeyFirst = false, $table = '');
     }
 
@@ -72,7 +72,7 @@ class MolajoFieldTitle extends MolajoField
      */
     public function validateRequestValue()
     {
-        $titleModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $titleModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $titleModel->validateValue('id', $this->value, 'numeric', null);
     }
 
@@ -92,9 +92,9 @@ class MolajoFieldTitle extends MolajoField
             return;
         }
         if ($selectedState == '*' || $selectedState == MOLAJO_STATUS_VERSION) {
-            $query->where('(a.id = '.(int)$value.' OR a.version_of_id = '.(int)$value.')');
+            $query->where('(a.id = ' . (int)$value . ' OR a.version_of_id = ' . (int)$value . ')');
         } else {
-            $query->where('a.id = '.(int)$value);
+            $query->where('a.id = ' . (int)$value);
         }
 
     }
@@ -118,7 +118,7 @@ class MolajoFieldTitle extends MolajoField
             $render['column_name'] = 'title';
 
             if ($item->canEdit === true) {
-                $render['link_value'] = 'index.php?option='.JRequest::getVar('option').'&task=edit&id='.$item->id;
+                $render['link_value'] = 'index.php?option=' . JRequest::getVar('option') . '&task=edit&id=' . $item->id;
                 $render['print_value'] = $item->title;
             } else {
                 $render['link_value'] = false;

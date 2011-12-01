@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="content")
  * @ORM\Entity
  * use repository for handy tree functions
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository") 
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class Content
 {
@@ -174,7 +174,7 @@ class Content
 
     /**
      * @var integer $lft
-	 * @Gedmo\TreeLeft
+     * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer", nullable=false)
      */
     private $lft;
@@ -248,7 +248,7 @@ class Content
      * @ORM\Column(name="ordering", type="integer", nullable=false)
      */
     private $ordering;
-	
+
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Content", inversedBy="children")
@@ -260,14 +260,14 @@ class Content
      * @ORM\OneToMany(targetEntity="Content", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    private $children; 
-	
+    private $children;
+
     /**
      * @var ContentTypes
      *
      * @ORM\ManyToOne(targetEntity="ContentTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
      * })
      */
     private $contentType;
@@ -277,17 +277,16 @@ class Content
      *
      * @ORM\ManyToOne(targetEntity="ExtensionInstances")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="extension_instance_id", referencedColumnName="id")
      * })
      */
     private $extensionInstance;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -307,7 +306,7 @@ class Content
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -327,7 +326,7 @@ class Content
     /**
      * Get subtitle
      *
-     * @return string 
+     * @return string
      */
     public function getSubtitle()
     {
@@ -347,7 +346,7 @@ class Content
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias()
     {
@@ -367,7 +366,7 @@ class Content
     /**
      * Get contentText
      *
-     * @return text 
+     * @return text
      */
     public function getContentText()
     {
@@ -387,7 +386,7 @@ class Content
     /**
      * Get protected
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProtected()
     {
@@ -407,7 +406,7 @@ class Content
     /**
      * Get featured
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFeatured()
     {
@@ -427,7 +426,7 @@ class Content
     /**
      * Get stickied
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStickied()
     {
@@ -447,7 +446,7 @@ class Content
     /**
      * Get status
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatus()
     {
@@ -467,7 +466,7 @@ class Content
     /**
      * Get startPublishingDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStartPublishingDatetime()
     {
@@ -487,7 +486,7 @@ class Content
     /**
      * Get stopPublishingDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStopPublishingDatetime()
     {
@@ -507,7 +506,7 @@ class Content
     /**
      * Get version
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersion()
     {
@@ -527,7 +526,7 @@ class Content
     /**
      * Get versionOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getVersionOfId()
     {
@@ -547,7 +546,7 @@ class Content
     /**
      * Get statusPriorToVersion
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusPriorToVersion()
     {
@@ -567,7 +566,7 @@ class Content
     /**
      * Get createdDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedDatetime()
     {
@@ -587,7 +586,7 @@ class Content
     /**
      * Get createdBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -607,7 +606,7 @@ class Content
     /**
      * Get modifiedDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getModifiedDatetime()
     {
@@ -627,7 +626,7 @@ class Content
     /**
      * Get modifiedBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getModifiedBy()
     {
@@ -647,7 +646,7 @@ class Content
     /**
      * Get checkedOutDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCheckedOutDatetime()
     {
@@ -667,7 +666,7 @@ class Content
     /**
      * Get checkedOutBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCheckedOutBy()
     {
@@ -687,7 +686,7 @@ class Content
     /**
      * Get parentId
      *
-     * @return integer 
+     * @return integer
      */
     public function getParentId()
     {
@@ -707,7 +706,7 @@ class Content
     /**
      * Get root
      *
-     * @return integer 
+     * @return integer
      */
     public function getRoot()
     {
@@ -727,7 +726,7 @@ class Content
     /**
      * Get lft
      *
-     * @return integer 
+     * @return integer
      */
     public function getLft()
     {
@@ -747,7 +746,7 @@ class Content
     /**
      * Get rgt
      *
-     * @return integer 
+     * @return integer
      */
     public function getRgt()
     {
@@ -767,7 +766,7 @@ class Content
     /**
      * Get lvl
      *
-     * @return integer 
+     * @return integer
      */
     public function getLvl()
     {
@@ -787,7 +786,7 @@ class Content
     /**
      * Get home
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHome()
     {
@@ -807,7 +806,7 @@ class Content
     /**
      * Get position
      *
-     * @return string 
+     * @return string
      */
     public function getPosition()
     {
@@ -827,7 +826,7 @@ class Content
     /**
      * Get customFields
      *
-     * @return text 
+     * @return text
      */
     public function getCustomFields()
     {
@@ -847,7 +846,7 @@ class Content
     /**
      * Get parameters
      *
-     * @return text 
+     * @return text
      */
     public function getParameters()
     {
@@ -867,7 +866,7 @@ class Content
     /**
      * Get metadata
      *
-     * @return text 
+     * @return text
      */
     public function getMetadata()
     {
@@ -887,7 +886,7 @@ class Content
     /**
      * Get language
      *
-     * @return string 
+     * @return string
      */
     public function getLanguage()
     {
@@ -907,7 +906,7 @@ class Content
     /**
      * Get translationOfId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTranslationOfId()
     {
@@ -927,7 +926,7 @@ class Content
     /**
      * Get ordering
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdering()
     {
@@ -947,7 +946,7 @@ class Content
     /**
      * Get contentType
      *
-     * @return data\Entity\ContentTypes 
+     * @return data\Entity\ContentTypes
      */
     public function getContentType()
     {
@@ -967,20 +966,20 @@ class Content
     /**
      * Get extensionInstance
      *
-     * @return data\Entity\ExtensionInstances 
+     * @return data\Entity\ExtensionInstances
      */
     public function getExtensionInstance()
     {
         return $this->extensionInstance;
     }
-	
+
     public function setParent(Content $parent = null)
     {
-        $this->parent = $parent;    
+        $this->parent = $parent;
     }
 
     public function getParent()
     {
-        return $this->parent;   
+        return $this->parent;
     }
 }

@@ -7,5 +7,5 @@
  */
 defined('MOLAJO') or die;
 ?>
-<doc:include type="message" />
-<doc:include type="component" />
+<doc:include type="message"/>
+<doc:include type="component"/>

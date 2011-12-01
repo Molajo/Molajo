@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -35,11 +35,11 @@ class MolajoFileHelper
         if (file_exists($file)) {
             JLoader::register($class, $file);
         } else {
-            if (class_exists('MolajoError') && class_exists('MolajoText') && class_exists('MolajoFactory')) {
-                MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS'.' '.$file.' '.$class), 'error');
+            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoFactory')) {
+                MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_FILE_NOT_FOUND_FOR_CLASS' . ' ' . $file . ' ' . $class), 'error');
                 return false;
             } else {
-                echo 'MolajoFileHelper Error: file not found '.$file. ' for Class: '.$class;
+                echo 'MolajoFileHelper Error: file not found ' . $file . ' for Class: ' . $class;
                 exit;
             }
         }
@@ -47,13 +47,13 @@ class MolajoFileHelper
         if (class_exists($class)) {
             return true;
         } else {
-            if (class_exists('MolajoError') && class_exists('MolajoText') && class_exists('MolajoFactory')) {
-                MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE'.' '.$class.' '.$file), 'error');
+            if (class_exists('MolajoError') && class_exists('MolajoTextHelper') && class_exists('MolajoFactory')) {
+                MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_CLASS_NOT_FOUND_IN_FILE' . ' ' . $class . ' ' . $file), 'error');
                 return false;
             } else {
-                echo 'MolajoFileHelper Error class not found '.$class;
+                echo 'MolajoFileHelper Error class not found ' . $class;
                 exit;
-            } 
+            }
         }
     }
 }

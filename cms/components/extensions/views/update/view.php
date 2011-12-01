@@ -1,8 +1,8 @@
 <?php
 /**
- * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @version        $Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
+ * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -13,44 +13,44 @@ include_once dirname(__FILE__) . '/../default/view.php';
 /**
  * Extension Manager Update View
  *
- * @package		Joomla.Administrator
- * @subpackage	installer
- * * * @since		1.0
+ * @package        Joomla.Administrator
+ * @subpackage    installer
+ * * * @since        1.0
  */
 class InstallerViewUpdate extends InstallerViewDefault
 {
-	/**
-	 * @since	1.0
-	 */
-	function display($tpl=null)
-	{
-		// Get data from the model
-		$this->state		= $this->get('State');
-		$this->items		= $this->get('Items');
-		$this->pagination	= $this->get('Pagination');
+    /**
+     * @since    1.0
+     */
+    function display($tpl = null)
+    {
+        // Get data from the model
+        $this->state = $this->get('State');
+        $this->items = $this->get('Items');
+        $this->pagination = $this->get('Pagination');
 
-		$paths = new stdClass();
-		$paths->first = '';
+        $paths = new stdClass();
+        $paths->first = '';
 
-		$this->assignRef('paths', $paths);
+        $this->assignRef('paths', $paths);
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @since	1.0
-	 */
-	protected function addToolbar()
-	{
-		$canDo	= InstallerHelper::getActions();
+    /**
+     * Add the page title and toolbar.
+     *
+     * @since    1.0
+     */
+    protected function addToolbar()
+    {
+        $canDo = InstallerHelper::getActions();
 
-		MolajoToolbarHelper::custom('update.update', 'upload', 'upload', 'INSTALLER_TOOLBAR_UPDATE', true, false);
-		MolajoToolbarHelper::custom('update.find', 'refresh', 'refresh', 'INSTALLER_TOOLBAR_FIND_UPDATES',false,false);
-		MolajoToolbarHelper::custom('update.purge', 'purge', 'purge', 'TOOLBAR_PURGE_CACHE', false,false);
-		MolajoToolbarHelper::divider();
-		parent::addToolbar();
-		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_UPDATE');
-	}
+        MolajoToolbarHelper::custom('update.update', 'upload', 'upload', 'INSTALLER_TOOLBAR_UPDATE', true, false);
+        MolajoToolbarHelper::custom('update.find', 'refresh', 'refresh', 'INSTALLER_TOOLBAR_FIND_UPDATES', false, false);
+        MolajoToolbarHelper::custom('update.purge', 'purge', 'purge', 'TOOLBAR_PURGE_CACHE', false, false);
+        MolajoToolbarHelper::divider();
+        parent::addToolbar();
+        MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_UPDATE');
+    }
 }

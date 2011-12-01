@@ -2,204 +2,207 @@
 /**
  * @package     Molajo
  * @subpackage  Molajo Responses Subscriptions
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-jimport( 'joomla.plugin.plugin' );
+jimport('joomla.plugin.plugin');
 
-class ResponsesSubscriptions extends MolajoApplicationPlugin
+class ResponsesSubscriptions extends MolajoPlugin
 {
 
-	function OnBeforeContentSave ( &$article, $isNew )	{
-	
-	/**
-	 * Make certain Tamka Library is ready to load
-	 */
-		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
-		  		JError::raiseWarning( '700', MolajoText::_('The Tamka Library is required for this extension.' ));
-		 		return NULL;
-		 }
-		 if (!function_exists('tamkaimport')) {
-		 		JError::raiseWarning( '725', MolajoText::_('The Tamka Library must be enabled for this extension.' ));
-		 		return NULL;
-		 }
-		 if (!version_compare('0.1', 'TAMKA')) {
-		 		JError::raiseWarning( '750', MolajoText::_('The Tamka Library Version is outdated.' ));
-		 		return NULL;
-		 }
-		tamkaimport('tamka.routehelper.content');
-				
-	/**
-	 * 	Determine if Article was Published prior to save
-	 */		
-		$currentlyPublished = TamkaContentHelperRoute::checkArticleforPublished ($article->id);
-		JRequest::setVar('onBeforePublished', $currentlyPublished);
+    function OnBeforeContentSave(&$article, $isNew)
+    {
 
-	}
-		
-	function onAfterContentSave( &$article, $isNew )	{
-	
-	/**
-	 * Make certain Tamka Library is ready to load
-	 */
-		 if (!file_exists(JPATH_PLUGINS.DS.'system'.DS.'tamka.php')) {
-		  		JError::raiseWarning( '700', MolajoText::_('The Tamka Library is required for this extension.' ));
-		 		return NULL;
-		 }
-		 if (!function_exists('tamkaimport')) {
-		 		JError::raiseWarning( '725', MolajoText::_('The Tamka Library must be enabled for this extension.' ));
-		 		return NULL;
-		 }
-		 if (!version_compare('0.1', 'TAMKA')) {
-		 		JError::raiseWarning( '750', MolajoText::_('The Tamka Library Version is outdated.' ));
-		 		return NULL;
-		 }
-		tamkaimport('tamka.routehelper.content');
+        /**
+         * Make certain Tamka Library is ready to load
+         */
+        if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+            JError::raiseWarning('700', MolajoTextHelper::_('The Tamka Library is required for this extension.'));
+            return NULL;
+        }
+        if (!function_exists('tamkaimport')) {
+            JError::raiseWarning('725', MolajoTextHelper::_('The Tamka Library must be enabled for this extension.'));
+            return NULL;
+        }
+        if (!version_compare('0.1', 'TAMKA')) {
+            JError::raiseWarning('750', MolajoTextHelper::_('The Tamka Library Version is outdated.'));
+            return NULL;
+        }
+        tamkaimport('tamka.routehelper.content');
 
-	/**
-	 * 	Article must be Published as of this moment with public access
-	 */		
-		$results = TamkaContentHelperRoute::checkArticleforBroadcast ($article->id);
-		if ($results == false) {
-			return;
-		}
-			
-	/**
-	 * 	Initialization
-	 */
-		$plugin =& MolajoApplicationPlugin::getPlugin('content', 'tamka_post_email');
-		$pluginParameters = new JParameter( $plugin->parameters );
+        /**
+         *     Determine if Article was Published prior to save
+         */
+        $currentlyPublished = TamkaContentHelperRoute::checkArticleforPublished($article->id);
+        JRequest::setVar('onBeforePublished', $currentlyPublished);
 
-	/**
-	 * 	Should Tamka email?
-	 */	
-		/* 	What Categories should be included or excluded?		*/
-		$showCategoriesAll = false;
-		$showCategories = explode(',', $pluginParameters->get('categories'));
-		if ($pluginParameters->get('categories')) {
-		} else {
-			$showCategoriesAll = true;
-		}
-		$includeorexclude = $pluginParameters->def('include_or_exclude', 'Include');
+    }
 
-		// 	Is this the right Category?
-		$show = false;
-		if ($article->sectionid == 0 && $article->catid == 0) {
-			$show = false;
-			return;
-		}
-		if ($includeorexclude == 'Include' && (in_array($article->catid, $showCategories) || $showCategoriesAll)) {
-			$show = true;
-		}
-		if ($includeorexclude == 'Exclude' && (in_array($article->catid, $showCategories) == false) && ($showCategoriesAll == false)) {
-			$show = true;
-		}
-		if ($show == false) {
-			return;
-		}
+    function onAfterContentSave(&$article, $isNew)
+    {
 
-	/**
-	 * 	Determine if Article is moving from Unpublished to Published state
-	 */		
-		$currentlyPublished = TamkaContentHelperRoute::checkArticleforPublished ($article->id);	
-				
-		//	If published state was 0 in before update - and is now 1 - it's a new publish		
-		$onBeforePublished = JRequest::getVar('onBeforePublished');
-		if ($onBeforePublished == 1)  {
-			return;
-		}
+        /**
+         * Make certain Tamka Library is ready to load
+         */
+        if (!file_exists(JPATH_PLUGINS . DS . 'system' . DS . 'tamka.php')) {
+            JError::raiseWarning('700', MolajoTextHelper::_('The Tamka Library is required for this extension.'));
+            return NULL;
+        }
+        if (!function_exists('tamkaimport')) {
+            JError::raiseWarning('725', MolajoTextHelper::_('The Tamka Library must be enabled for this extension.'));
+            return NULL;
+        }
+        if (!version_compare('0.1', 'TAMKA')) {
+            JError::raiseWarning('750', MolajoTextHelper::_('The Tamka Library Version is outdated.'));
+            return NULL;
+        }
+        tamkaimport('tamka.routehelper.content');
 
-	/**
-	 * 	Prepare Email Content - Author
-	 */
-		$email_author = '';
-		if ($pluginParameters->def('author', 1) !== 0) {
-			$email_author = TamkaContentHelperRoute::getAuthorInfo ($article->id, $pluginParameters->get('author'));
-		}
+        /**
+         *     Article must be Published as of this moment with public access
+         */
+        $results = TamkaContentHelperRoute::checkArticleforBroadcast($article->id);
+        if ($results == false) {
+            return;
+        }
+
+        /**
+         *     Initialization
+         */
+        $plugin =& MolajoPlugin::getPlugin('content', 'tamka_post_email');
+        $pluginParameters = new JParameter($plugin->parameters);
+
+        /**
+         *     Should Tamka email?
+         */
+        /* 	What Categories should be included or excluded?		*/
+        $showCategoriesAll = false;
+        $showCategories = explode(',', $pluginParameters->get('categories'));
+        if ($pluginParameters->get('categories')) {
+        } else {
+            $showCategoriesAll = true;
+        }
+        $includeorexclude = $pluginParameters->def('include_or_exclude', 'Include');
+
+        // 	Is this the right Category?
+        $show = false;
+        if ($article->sectionid == 0 && $article->catid == 0) {
+            $show = false;
+            return;
+        }
+        if ($includeorexclude == 'Include' && (in_array($article->catid, $showCategories) || $showCategoriesAll)) {
+            $show = true;
+        }
+        if ($includeorexclude == 'Exclude' && (in_array($article->catid, $showCategories) == false) && ($showCategoriesAll == false)) {
+            $show = true;
+        }
+        if ($show == false) {
+            return;
+        }
+
+        /**
+         *     Determine if Article is moving from Unpublished to Published state
+         */
+        $currentlyPublished = TamkaContentHelperRoute::checkArticleforPublished($article->id);
+
+        //	If published state was 0 in before update - and is now 1 - it's a new publish
+        $onBeforePublished = JRequest::getVar('onBeforePublished');
+        if ($onBeforePublished == 1) {
+            return;
+        }
+
+        /**
+         *     Prepare Email Content - Author
+         */
+        $email_author = '';
+        if ($pluginParameters->def('author', 1) !== 0) {
+            $email_author = TamkaContentHelperRoute::getAuthorInfo($article->id, $pluginParameters->get('author'));
+        }
 
 
-	/**
-	 * 	Prepare Email Content - Article
-	 */
-		$email_title	= '';
-		if ($pluginParameters->def('title', 1) == 1) {
-			$email_title = $article->title;
-		}
+        /**
+         *     Prepare Email Content - Article
+         */
+        $email_title = '';
+        if ($pluginParameters->def('title', 1) == 1) {
+            $email_title = $article->title;
+        }
 
-		if ($isNew) {
-			$neworupdatedArticle = 	MolajoText::_( ' a new post' );
-			$neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%" ';
-		} else {
-			$neworupdatedArticle = 	MolajoText::_( ' an updated post' );
-			$neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%"';
-		}
+        if ($isNew) {
+            $neworupdatedArticle = MolajoTextHelper::_(' a new post');
+            $neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%" ';
+        } else {
+            $neworupdatedArticle = MolajoTextHelper::_(' an updated post');
+            $neworupdatedQuery = ' AND parameters LIKE "%emailnotificationposts=1%"';
+        }
 
-	/**
-	 * 	Prepare content - Site name, Article title, URL
-	 */
+        /**
+         *     Prepare content - Site name, Article title, URL
+         */
 
-		global $mainframe;		
-	 	$SiteName 		= $mainframe->getConfig('sitename');
-		$articleURL = TamkaContentHelperRoute::getSiteURL ().TamkaContentHelperRoute::getArticleURL ($article->id);
-		$ArticleTitle = $article->title;
-		
-		$mailfrom 		= $mainframe->getConfig('mailfrom');
-		$fromname 		= $mainframe->getConfig('fromname');
+        global $mainframe;
+        $SiteName = $mainframe->getConfig('sitename');
+        $articleURL = TamkaContentHelperRoute::getSiteURL() . TamkaContentHelperRoute::getArticleURL($article->id);
+        $ArticleTitle = $article->title;
 
-	/**
-	 * 	Format Email - Subject and Message
-	*/
-		$emailSubject	= '['.$SiteName.'] '.  $email_title;;
+        $mailfrom = $mainframe->getConfig('mailfrom');
+        $fromname = $mainframe->getConfig('fromname');
 
-		$emailMessage = MolajoText::_( 'At your request, ' );
-		$emailMessage .= $SiteName.MolajoText::_( ' is notifying you of a post' );
-		if ($email_title) {
-			$emailMessage .= MolajoText::_( ' entitled "' ).$email_title;
-		}
-		if ($email_author) {
-			$emailMessage .= MolajoText::_( '" written by ' ).$email_author;
-		} else {
-			$emailMessage .= MolajoText::_( '." ' );
-		}
+        /**
+         *     Format Email - Subject and Message
+         */
+        $emailSubject = '[' . $SiteName . '] ' . $email_title;
+        ;
 
-		if ($articleURL) {
-			$emailMessage .= MolajoText::_( ' To read more of this post, visit: ' ).$articleURL;
-		}
-		$emailMessage .= '. ';
+        $emailMessage = MolajoTextHelper::_('At your request, ');
+        $emailMessage .= $SiteName . MolajoTextHelper::_(' is notifying you of a post');
+        if ($email_title) {
+            $emailMessage .= MolajoTextHelper::_(' entitled "') . $email_title;
+        }
+        if ($email_author) {
+            $emailMessage .= MolajoTextHelper::_('" written by ') . $email_author;
+        } else {
+            $emailMessage .= MolajoTextHelper::_('." ');
+        }
 
-	/**
-	 * 	Format Email - How to update User Settings
-	*/
-		$emailMessage .= MolajoText::_( ' To discontinue these messages, please visit: ' ).$articleURL;
-		$emailMessage .= MolajoText::_( ' and update your User Settings. Thanks! ' ) ;
-		
-	/**
-	 * 	Format Email - encoding
-	*/
-		$emailSubject	= html_entity_decode ($emailSubject, ENT_QUOTES);
-		$emailMessage 	= html_entity_decode ($emailMessage, ENT_QUOTES);
+        if ($articleURL) {
+            $emailMessage .= MolajoTextHelper::_(' To read more of this post, visit: ') . $articleURL;
+        }
+        $emailMessage .= '. ';
 
-	/**
-	 * 	Send Email - retrieve list and send individually
-	*/
-		$db	=& MolajoFactory::getDBO();
+        /**
+         *     Format Email - How to update User Settings
+         */
+        $emailMessage .= MolajoTextHelper::_(' To discontinue these messages, please visit: ') . $articleURL;
+        $emailMessage .= MolajoTextHelper::_(' and update your User Settings. Thanks! ');
 
-		$query = 'SELECT name, email ' .
-				' FROM #__users ' .
-				' WHERE block = 0 ' .
-				'   AND activated = "" ';
-		$query .= $neworupdatedQuery;
+        /**
+         *     Format Email - encoding
+         */
+        $emailSubject = html_entity_decode($emailSubject, ENT_QUOTES);
+        $emailMessage = html_entity_decode($emailMessage, ENT_QUOTES);
 
-		$db->setQuery( $query );
-		$rows = $db->loadObjectList();
+        /**
+         *     Send Email - retrieve list and send individually
+         */
+        $db =& MolajoFactory::getDBO();
 
-		foreach ( $rows as $row ) {
-			$name 			= $row->name;
-			$email 			= $row->email;
-			JUtility::sendMail($mailfrom, $fromname, $email, $emailSubject, $emailMessage);
-		}
-		return;
-	}
+        $query = 'SELECT name, email ' .
+                 ' FROM #__users ' .
+                 ' WHERE block = 0 ' .
+                 '   AND activated = "" ';
+        $query .= $neworupdatedQuery;
+
+        $db->setQuery($query);
+        $rows = $db->loadObjectList();
+
+        foreach ($rows as $row) {
+            $name = $row->name;
+            $email = $row->email;
+            JUtility::sendMail($mailfrom, $fromname, $email, $emailSubject, $emailMessage);
+        }
+        return;
+    }
 }

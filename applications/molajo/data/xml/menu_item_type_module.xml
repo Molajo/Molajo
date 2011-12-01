@@ -1,12 +1,12 @@
 <fieldset
-    name="request">
+        name="request">
 
     <field
-        name="module"
-        type="module"
-        description="MENU_ITEM_TYPE_MODULE_DESC"
-        label="MENU_ITEM_TYPE_MODULE_LABEL"
-        required="true"
-    />
+            name="module"
+            type="module"
+            description="MENU_ITEM_TYPE_MODULE_DESC"
+            label="MENU_ITEM_TYPE_MODULE_LABEL"
+            required="true"
+            />
 
 </fieldset>

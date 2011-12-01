@@ -34,8 +34,8 @@ class ClosureTreeRepository extends AbstractTreeRepository
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
         $qb = $this->_em->createQueryBuilder();
         $qb->select('node')
-            ->from($config['useObjectClass'], 'node')
-            ->where('node.' . $config['parent'] . " IS NULL");
+                ->from($config['useObjectClass'], 'node')
+                ->where('node.' . $config['parent'] . " IS NULL");
         return $qb->getQuery();
     }
 
@@ -70,8 +70,8 @@ class ClosureTreeRepository extends AbstractTreeRepository
                 if ($direct) {
                     $qb = $this->_em->createQueryBuilder();
                     $qb->select('COUNT(node)')
-                        ->from($config['useObjectClass'], 'node')
-                        ->where('node.' . $config['parent'] . ' = :node');
+                            ->from($config['useObjectClass'], 'node')
+                            ->where('node.' . $config['parent'] . ' = :node');
 
                     $q = $qb->getQuery();
                 } else {
@@ -133,9 +133,10 @@ class ClosureTreeRepository extends AbstractTreeRepository
      */
     public function getPath($node)
     {
-        return array_map(function($closure) {
-            return $closure->getAncestor();
-        }, $this->getPathQuery($node)->getResult());
+        return array_map(function($closure)
+            {
+                return $closure->getAncestor();
+            }, $this->getPathQuery($node)->getResult());
     }
 
     /**
@@ -160,9 +161,9 @@ class ClosureTreeRepository extends AbstractTreeRepository
                     throw new InvalidArgumentException("Node is not managed by UnitOfWork");
                 }
                 $qb->select('c, node')
-                    ->from($config['closure'], 'c')
-                    ->innerJoin('c.descendant', 'node')
-                    ->where('c.ancestor = :node');
+                        ->from($config['closure'], 'c')
+                        ->innerJoin('c.descendant', 'node')
+                        ->where('c.ancestor = :node');
                 if ($direct) {
                     $qb->andWhere('c.depth = 1');
                 } else {
@@ -173,7 +174,7 @@ class ClosureTreeRepository extends AbstractTreeRepository
             }
         } else {
             $qb->select('node')
-                ->from($config['useObjectClass'], 'node');
+                    ->from($config['useObjectClass'], 'node');
             if ($direct) {
                 $qb->where('node.' . $config['parent'] . ' IS NULL');
             }
@@ -205,9 +206,10 @@ class ClosureTreeRepository extends AbstractTreeRepository
     {
         $result = $this->childrenQuery($node, $direct, $sortByField, $direction)->getResult();
         if ($node) {
-            $result = array_map(function($closure) {
-                return $closure->getDescendant();
-            }, $result);
+            $result = array_map(function($closure)
+                {
+                    return $closure->getDescendant();
+                }, $result);
         }
         return $result;
     }
@@ -256,8 +258,8 @@ class ClosureTreeRepository extends AbstractTreeRepository
                 $q->getSingleScalarResult();
 
                 $this->listener
-                    ->getStrategy($this->_em, $meta->name)
-                    ->updateNode($this->_em, $nodeToReparent, $node);
+                        ->getStrategy($this->_em, $meta->name)
+                        ->updateNode($this->_em, $nodeToReparent, $node);
 
                 $oid = spl_object_hash($nodeToReparent);
                 $this->_em->getUnitOfWork()->setOriginalEntityProperty($oid, $config['parent'], $parent);

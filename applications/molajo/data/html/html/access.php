@@ -61,7 +61,7 @@ abstract class MolajoHtmlAccess
         }
             // If all levels is allowed, push it into the array.
         elseif ($parameters) {
-            array_unshift($options, MolajoHTML::_('select.option', '', MolajoText::_('JOPTION_ACCESS_SHOW_ALL_LEVELS')));
+            array_unshift($options, MolajoHTML::_('select.option', '', MolajoTextHelper::_('JOPTION_ACCESS_SHOW_ALL_LEVELS')));
         }
 
         return MolajoHTML::_('select.genericlist', $options, $name,
@@ -101,12 +101,12 @@ abstract class MolajoHtmlAccess
         }
 
         for ($i = 0, $n = count($options); $i < $n; $i++) {
-            $options[$i]->text = str_repeat('- ', $options[$i]->level).$options[$i]->text;
+            $options[$i]->text = str_repeat('- ', $options[$i]->level) . $options[$i]->text;
         }
 
         // If all usergroups is allowed, push it into the array.
         if ($allowAll) {
-            array_unshift($options, MolajoHTML::_('select.option', '', MolajoText::_('JOPTION_ACCESS_SHOW_ALL_GROUPS')));
+            array_unshift($options, MolajoHTML::_('select.option', '', MolajoTextHelper::_('JOPTION_ACCESS_SHOW_ALL_GROUPS')));
         }
 
         return MolajoHTML::_('select.genericlist', $options, $name,
@@ -160,20 +160,20 @@ abstract class MolajoHtmlAccess
             // If checkSuperAdmin is true, only add item if the user is superadmin or the group is not super admin
             if ((!$checkSuperAdmin) || $isSuperAdmin || (!JAccess::checkGroup($item->id, 'admin'))) {
                 // Setup  the variable attributes.
-                $eid = $count.'group_'.$item->id;
+                $eid = $count . 'group_' . $item->id;
                 // Don't call in_array unless something is selected
                 $checked = '';
                 if ($selected) {
                     $checked = in_array($item->id, $selected) ? ' checked="checked"' : '';
                 }
-                $rel = ($item->parent_id > 0) ? ' rel="'.$count.'group_'.$item->parent_id.'"' : '';
+                $rel = ($item->parent_id > 0) ? ' rel="' . $count . 'group_' . $item->parent_id . '"' : '';
 
                 // Build the HTML for the item.
                 $html[] = '	<li>';
-                $html[] = '		<input type="checkbox" name="'.$name.'[]" value="'.$item->id.'" id="'.$eid.'"';
-                $html[] = '				'.$checked.$rel.' />';
-                $html[] = '		<label for="'.$eid.'">';
-                $html[] = '		'.str_repeat('<span class="gi">|&mdash;</span>', $item->level).$item->title;
+                $html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item->id . '" id="' . $eid . '"';
+                $html[] = '				' . $checked . $rel . ' />';
+                $html[] = '		<label for="' . $eid . '">';
+                $html[] = '		' . str_repeat('<span class="gi">|&mdash;</span>', $item->level) . $item->title;
                 $html[] = '		</label>';
                 $html[] = '	</li>';
             }
@@ -206,15 +206,15 @@ abstract class MolajoHtmlAccess
             $item = &$actions[$i];
 
             // Setup  the variable attributes.
-            $eid = $count.'action_'.$item->id;
+            $eid = $count . 'action_' . $item->id;
             $checked = in_array($item->id, $selected) ? ' checked="checked"' : '';
 
             // Build the HTML for the item.
             $html[] = '	<li>';
-            $html[] = '		<input type="checkbox" name="'.$name.'[]" value="'.$item->id.'" id="'.$eid.'"';
-            $html[] = '			'.$checked.' />';
-            $html[] = '		<label for="'.$eid.'">';
-            $html[] = '			'.MolajoText::_($item->title);
+            $html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item->id . '" id="' . $eid . '"';
+            $html[] = '			' . $checked . ' />';
+            $html[] = '		<label for="' . $eid . '">';
+            $html[] = '			' . MolajoTextHelper::_($item->title);
             $html[] = '		</label>';
             $html[] = '	</li>';
         }
@@ -278,7 +278,7 @@ abstract class MolajoHtmlAccess
             $options,
             $name,
             array(
-                 'id' => isset($config['id']) ? $config['id'] : 'assetgroups_'.++$count,
+                 'id' => isset($config['id']) ? $config['id'] : 'assetgroups_' . ++$count,
                  'list.attr' => (is_null($attribs) ? 'class="inputbox" size="3"' : $attribs),
                  'list.select' => (int)$selected
             )

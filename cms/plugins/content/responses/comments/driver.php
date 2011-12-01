@@ -2,74 +2,75 @@
 /**
  * @package     Molajo
  * @subpackage  Molajo Responses
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-class MolajoResponsesComments {
+class MolajoResponsesComments
+{
 
     /**
      * Item name
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $item;
 
     /**
      * Form name
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $form;
 
     /**
      * Total
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $total;
 
     /**
      * Users
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $user;
 
     /**
      * Author
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $author;
 
     /**
      * Responses Component Parameters for Administrator
      *
-     * @var		array
-     * @access	public
+     * @var        array
+     * @access    public
      */
     protected $responsesParameters;
 
     /**
      * $closed_message
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $closed_message;
 
     /**
      * $no_responses_message
      *
-     * @var		string
-     * @access	public
+     * @var        string
+     * @access    public
      */
     protected $no_responses_message;
 
@@ -79,20 +80,20 @@ class MolajoResponsesComments {
      * Method called by plgMolajoResponses::MolajoOnContentAfterDisplay to generate
      * all elements of contents including Summary, Form, and existing comment listing.
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	int		The 'page' number
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    int        The 'page' number
      * @param   string          The field containing text for the content object
-     * @return	string
-     * @since	1.6
+     * @return    string
+     * @since    1.6
      */
-    function driver ($context, &$content, &$parameters, $page, $location, $closed_in_content)
+    function driver($context, &$content, &$parameters, $page, $location, $closed_in_content)
     {
         return;
-        
+
         /** user object **/
-        $this->user= MolajoFactory::getUser();
+        $this->user = MolajoFactory::getUser();
 
         /** created by value **/
         if (isset($content->created_by)) {
@@ -111,7 +112,7 @@ class MolajoResponsesComments {
         }
 
         /** response component parameters **/
-        $this->responsesParameters = MolajoApplicationComponent::getParameters('responses', true);
+        $this->responsesParameters = MolajoComponent::getParameters('responses', true);
         if (in_array($content->catid, $this->responsesParameters->def('enable_comments_categories', array()))) {
         } else {
             return;
@@ -123,20 +124,20 @@ class MolajoResponsesComments {
         } else {
             $closed = false;
         }
-        $opendays = (int) $this->responsesParameters->def('opendays', 0);
-        if ((int) $opendays < 1) {
+        $opendays = (int)$this->responsesParameters->def('opendays', 0);
+        if ((int)$opendays < 1) {
             $opendays = 99999999;
         }
         $published = null;
         if (isset($content->start_publishing_datetime)) {
-            $published = MolajoDateHelper::convertCCYYMMDD ($content->start_publishing_datetime);
+            $published = MolajoDateHelper::convertCCYYMMDD($content->start_publishing_datetime);
         } else {
             if (isset($content->created)) {
-                $published = MolajoDateHelper::convertCCYYMMDD ($content->created);
+                $published = MolajoDateHelper::convertCCYYMMDD($content->created);
             }
         }
         if ($published) {
-            $daysSincePublished = MolajoDateHelper::differenceDays (date('Y-m-d'), $published);
+            $daysSincePublished = MolajoDateHelper::differenceDays(date('Y-m-d'), $published);
         } else {
             $daysSincePublished = 0;
         }
@@ -146,15 +147,15 @@ class MolajoResponsesComments {
 
         /** closed message **/
         if ($closed == true) {
-            $this->closed_message = $this->responsesParameters->def('closed_message', MolajoText::_('RESPONSES_CONFIG_CLOSED_MESSAGE_DEFAULT'));
+            $this->closed_message = $this->responsesParameters->def('closed_message', MolajoTextHelper::_('RESPONSES_CONFIG_CLOSED_MESSAGE_DEFAULT'));
         } else {
             $this->closed_message = '';
         }
-        $this->no_responses_message = $this->responsesParameters->def('be_the_first_to_comment_message', MolajoText::_('RESPONSES_CONFIG_SUMMARY_MESSAGE_FIRST_DEFAULT'));
+        $this->no_responses_message = $this->responsesParameters->def('be_the_first_to_comment_message', MolajoTextHelper::_('RESPONSES_CONFIG_SUMMARY_MESSAGE_FIRST_DEFAULT'));
 
         /** language **/
         $language = MolajoFactory::getLanguage();
-        $language->load('responses', JPATH_ADMINISTRATOR.'/components/responses');
+        $language->load('responses', JPATH_ADMINISTRATOR . '/components/responses');
 
         /**
          *  Comment Layouts
@@ -164,10 +165,12 @@ class MolajoResponsesComments {
         /** Layout: Summary **/
         $showSummary = $this->responsesParameters->def('show_summary', 3);
 
-        if (($showSummary == 3)                                  /** always **/
-        || (($showSummary == 1) && ($multiple === true))         /** summary **/
-        || (($showSummary == 2) && ($multiple === false)) ) {    /** detail **/
-            $results = MolajoResponsesComments::renderResponsesSummary ($content->id, $summaryMessage);
+        if (($showSummary == 3) /** always **/
+            || (($showSummary == 1) && ($multiple === true)) /** summary **/
+            || (($showSummary == 2) && ($multiple === false))
+        ) {
+            /** detail **/
+            $results = MolajoResponsesComments::renderResponsesSummary($content->id, $summaryMessage);
             if ($results) {
                 $renderedLayouts .= $results;
             }
@@ -177,11 +180,13 @@ class MolajoResponsesComments {
         if ($closed == false) {
             $showForm = $this->responsesParameters->def('show_form', 2);
 
-            if (($showForm == 3)                                  /** always **/
-            || (($showForm == 1) && ($multiple === true))         /** summary **/
-            || (($showForm == 2) && ($multiple === false)) ) {    /** detail **/
+            if (($showForm == 3) /** always **/
+                || (($showForm == 1) && ($multiple === true)) /** summary **/
+                || (($showForm == 2) && ($multiple === false))
+            ) {
+                /** detail **/
 
-                $results = MolajoResponsesComments::renderResponseForm ($content->id);
+                $results = MolajoResponsesComments::renderResponseForm($content->id);
                 if ($results) {
                     $renderedLayouts .= $results;
                 }
@@ -191,7 +196,7 @@ class MolajoResponsesComments {
         /** Layout: Responses **/
         if ($multiple) {
         } else {
-            $results = MolajoResponsesComments::renderResponsesResponses ($content->id);
+            $results = MolajoResponsesComments::renderResponsesResponses($content->id);
             if ($results) {
                 $renderedLayouts .= $results;
             }
@@ -205,38 +210,40 @@ class MolajoResponsesComments {
      * $id - content id
      * return rendered results
      */
-    function renderResponsesSummary ($id) {
+    function renderResponsesSummary($id)
+    {
 
         /** model **/
-        $modelPath = JPATH_SITE.'/components/responses/models/summary.php';
+        $modelPath = JPATH_SITE . '/components/responses/models/summary.php';
         require_once $modelPath;
 
         $summaryModel = JModel::getInstance('ModelSummary', 'Responses', array('ignore_request' => true));
         $summaryModel->setState('filter.content_id', $id);
         $summaryModel->setState('filter.response_type', 1);
 
-        if ((!$this->user->authorise('edit.state', 'responses')) &&  (!$this->user->authorise('edit', 'responses'))){
+        if ((!$this->user->authorise('edit.state', 'responses')) && (!$this->user->authorise('edit', 'responses'))) {
             $summaryModel->setState('filter.published', 1);
         }
 
         $this->total = $summaryModel->getTotal();
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/responses/views/summary/layouts/default.php';
+        $layoutPath = JPATH_SITE . '/components/responses/views/summary/layouts/default.php';
 
         /** generate layout **/
-        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
+        $renderedLayout = MolajoPlugin::generateLayout($layoutPath);
     }
 
-   /**
+    /**
      * renderResponsesResponses
      * $id - content id
      * return rendered results
      */
-    function renderResponseForm ($content_id) {
+    function renderResponseForm($content_id)
+    {
 
         /** ACL **/
-        require_once JPATH_SITE.'/components/responses/models/response.php';
+        require_once JPATH_SITE . '/components/responses/models/response.php';
         $responsesModel = JModel::getInstance('ModelResponse', 'Responses', array('ignore_request' => true));
         $results = $responsesModel->allowAdd($content_id);
         if ($results === false) {
@@ -244,12 +251,12 @@ class MolajoResponsesComments {
         }
 
         /** model **/
-        require_once JPATH_SITE.'/components/responses/models/form.php';
-        require_once JPATH_ADMINISTRATOR.'/components/responses/tables/response.php';
-        JForm::addFormPath(JPATH_ADMINISTRATOR.'/components/responses/models/forms');
+        require_once JPATH_SITE . '/components/responses/models/form.php';
+        require_once JPATH_ADMINISTRATOR . '/components/responses/tables/response.php';
+        JForm::addFormPath(JPATH_ADMINISTRATOR . '/components/responses/models/forms');
 
         $formModel = JModel::getInstance('ModelForm', 'Responses', array('ignore_request' => true));
-        $formModel->setState('response.content_id', (int) $content_id);
+        $formModel->setState('response.content_id', (int)$content_id);
         $formModel->setState('reponse.id', 0);
         $this->item = $formModel->getItem();
         $this->form = $formModel->getForm();
@@ -258,10 +265,10 @@ class MolajoResponsesComments {
         }
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/responses/views/form/layouts/create.php';
+        $layoutPath = JPATH_SITE . '/components/responses/views/form/layouts/create.php';
 
         /** generate layout **/
-        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
+        $renderedLayout = MolajoPlugin::generateLayout($layoutPath);
     }
 
     /**
@@ -269,10 +276,11 @@ class MolajoResponsesComments {
      * $id - content id
      * return rendered results
      */
-    function renderResponsesResponses ($id) {
+    function renderResponsesResponses($id)
+    {
 
         /** model **/
-        $modelPath = JPATH_SITE.'/components/responses/models/responses.php';
+        $modelPath = JPATH_SITE . '/components/responses/models/responses.php';
         require_once $modelPath;
         $order_date = $this->responsesParameters->def('order_date', 'a.created');
         if ($order_date == 'a.start_publishing_datetime') {
@@ -290,7 +298,7 @@ class MolajoResponsesComments {
         $responsesModel->setState('filter.response_type', 1);
         $responsesModel->setState('list.ordering', $order_date);
         $responsesModel->setState('list.direction', $orderby_sec);
-        if ((!$this->user->authorise('edit.state', 'responses')) &&  (!$this->user->authorise('edit', 'responses'))){
+        if ((!$this->user->authorise('edit.state', 'responses')) && (!$this->user->authorise('edit', 'responses'))) {
             $responsesModel->setState('filter.published', 1);
         }
 
@@ -298,19 +306,19 @@ class MolajoResponsesComments {
 
         for ($i = 0, $n = count($this->items); $i < $n; $i++)
         {
-                $item = &$this->items[$i];
-                $item->slug = $item->alias ? ($item->id.':'.$item->alias) : $item->id;
+            $item = &$this->items[$i];
+            $item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
 
-                $item->event = new stdClass();
-                $dispatcher = JDispatcher::getInstance();
+            $item->event = new stdClass();
+            $dispatcher = JDispatcher::getInstance();
 
-                $item->textual_response = JHtml::_('content.prepare', $item->textual_response);
+            $item->textual_response = JHtml::_('content.prepare', $item->textual_response);
         }
 
         /** layout **/
-        $layoutPath = JPATH_SITE.'/components/responses/views/responses/layouts/default.php';
+        $layoutPath = JPATH_SITE . '/components/responses/views/responses/layouts/default.php';
 
         /** generate layout **/
-        $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
+        $renderedLayout = MolajoPlugin::generateLayout($layoutPath);
     }
 }

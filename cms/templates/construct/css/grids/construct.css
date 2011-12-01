@@ -5,9 +5,10 @@
 body {
     font-size: 76%;
 }
+
 /* 12px in most modern browsers - used as basis of layout and typography.
- * Calculate em based dims as: target dim(px) / container dim(px) = result in em
- */
+* Calculate em based dims as: target dim(px) / container dim(px) = result in em
+*/
 
 #body-container,
 #header-above {

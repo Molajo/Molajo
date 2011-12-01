@@ -1,55 +1,217 @@
 /* -- Browser Normalization -- *//* http://meyerweb.com/eric/tools/css/reset/ */
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{background:transparent;border:0;font-size:100%;margin:0;outline:0;padding:0;vertical-align:baseline;}
-body{line-height:1;}
-ol,ul{list-style:none;}
-img,a img{border:0;}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+img, a img {
+    border: 0;
+}
 
 /* -- Base mobile styles -- */
-body{font-size:76%;line-height:1.8em;}
-b{font-weight:700;}
-blockquote{border-left:10px solid #ddd;margin-left:10px;}
-code{font-family:"Courier New", Courier, monospace;font-size:1em;white-space:pre;}
-div{font-size:1em;}
-em{font-style:italic;}
-fieldset{font-size:100%;}
-form table{font-size:1.1em;}
-form{margin:0;padding:0;}
-hr{display:none;}
-h1{font-size:2em;font-weight:400;}
-h2{font-size:1.7em;font-weight:400;}
-h3{font-size:1.4em;font-weight:400;}
-h4{font-size:1.2em;font-weight:700;}
-h5{font-size:1.0em;font-weight:700;}
-h6{font-size:0.8em;font-weight:700;}
-p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address{margin-bottom:15px}
-i{font-style:italic;}
-input.button{padding:0 10px;}
-li > p{margin:0.2em 0 0 1em;}
-ol,ul,li{font-size:1em;margin:0.2em 0 0.1em 0}
-li{margin:0;list-style-type:none;}
-ul {font-size:1.4em;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:bold;line-height:normal;margin:0;padding:0;}
-#content-container {padding:10px}
-#content-container,#nav {margin:10px}
-#footer {padding:10px;}
-#header h1 {text-align:center}
-#nav ul li a{display:block;overflow:hidden; padding: 10px;text-decoration:none;white-space:nowrap;}
-#nav ul li ul li a{font-size:.7em}
+body {
+    font-size: 76%;
+    line-height: 1.8em;
+}
+
+b {
+    font-weight: 700;
+}
+
+blockquote {
+    border-left: 10px solid #ddd;
+    margin-left: 10px;
+}
+
+code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1em;
+    white-space: pre;
+}
+
+div {
+    font-size: 1em;
+}
+
+em {
+    font-style: italic;
+}
+
+fieldset {
+    font-size: 100%;
+}
+
+form table {
+    font-size: 1.1em;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+hr {
+    display: none;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 1.7em;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 1.4em;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+h5 {
+    font-size: 1.0em;
+    font-weight: 700;
+}
+
+h6 {
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+p, dl, hr, h1, h2, h3, h4, h5, h6, ol, ul, pre, table, address {
+    margin-bottom: 15px
+}
+
+i {
+    font-style: italic;
+}
+
+input.button {
+    padding: 0 10px;
+}
+
+li > p {
+    margin: 0.2em 0 0 1em;
+}
+
+ol, ul, li {
+    font-size: 1em;
+    margin: 0.2em 0 0.1em 0
+}
+
+li {
+    margin: 0;
+    list-style-type: none;
+}
+
+ul {
+    font-size: 1.4em;
+    font-size-adjust: none;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+}
+
+#content-container {
+    padding: 10px
+}
+
+#content-container, #nav {
+    margin: 10px
+}
+
+#footer {
+    padding: 10px;
+}
+
+#header h1 {
+    text-align: center
+}
+
+#nav ul li a {
+    display: block;
+    overflow: hidden;
+    padding: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#nav ul li ul li a {
+    font-size: .7em
+}
 
 /* -- Default styles for devices that don't support JavaScript -- */
-.noscript {background:#9DA2A7;font-family:"Lucida Grande", Lucida, Verdana, sans-serif;font-size:76%;line-height:1.8em;}
-.noscript a, 
-.noscript a:link, 
+.noscript {
+    background: #9DA2A7;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+    font-size: 76%;
+    line-height: 1.8em;
+}
+
+.noscript a,
+.noscript a:link,
 .noscript a:visited,
 .noscript a:focus,
-.noscript a:active{text-decoration:none;color:#00498a;font-weight:bold}
-.noscript a:hover{text-decoration:underline;}
-.noscript li{margin:0;border-top:1px solid #B4B4B4;color:#666666;}
-.noscript ul {background:#fff;}
+.noscript a:active {
+    text-decoration: none;
+    color: #00498a;
+    font-weight: bold
+}
+
+.noscript a:hover {
+    text-decoration: underline;
+}
+
+.noscript li {
+    margin: 0;
+    border-top: 1px solid #B4B4B4;
+    color: #666666;
+}
+
+.noscript ul {
+    background: #fff;
+}
+
 .noscript #content-container,
-.noscript #nav {background:#fff;}
-.noscript #nav ul li a:hover, 
-.noscript #nav ul li a:active{color:#FFF;background:#00498a}
+.noscript #nav {
+    background: #fff;
+}
+
+.noscript #nav ul li a:hover,
+.noscript #nav ul li a:active {
+    color: #FFF;
+    background: #00498a
+}
 
 /* -- Responsive Layouts -- */
-.min-width-768px.landscape #content-container {float:right;width:74%;}
-.min-width-768px.landscape #nav {float:left;width:19%;}
+.min-width-768px.landscape #content-container {
+    float: right;
+    width: 74%;
+}
+
+.min-width-768px.landscape #nav {
+    float: left;
+    width: 19%;
+}

@@ -3,7 +3,7 @@
  * @version     $id: filtercreatedby.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -39,7 +39,7 @@ class MolajoFieldCreated_by extends MolajoField
      */
     public function getOptions()
     {
-        $class = ucfirst(JRequest::getCmd('DefaultView')).'Model'.ucfirst(JRequest::getCmd('DefaultView'));
+        $class = ucfirst(JRequest::getCmd('DefaultView')) . 'Model' . ucfirst(JRequest::getCmd('DefaultView'));
         $authorModel = new $class();
         return $authorModel->getAuthors();
     }
@@ -90,7 +90,7 @@ class MolajoFieldCreated_by extends MolajoField
         if ((int)$value == 0) {
             return;
         }
-        $query->where('a.created_by = '.(int)$value);
+        $query->where('a.created_by = ' . (int)$value);
     }
 
     /**

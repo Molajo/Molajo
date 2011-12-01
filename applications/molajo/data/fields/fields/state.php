@@ -3,7 +3,7 @@
  * @version     $id: filterState.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -38,21 +38,21 @@ class MolajoFieldState extends MolajoField
      */
     public function getOptions()
     {
-        $this->parameters = MolajoApplicationComponent::getParameters(JRequest::getVar('option'));
+        $this->parameters = MolajoComponent::getParameters(JRequest::getVar('option'));
         $this->state_spam = JRequest::getCmd('state_spam', '0');
 
         $options = array();
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_ARCHIVED, MolajoText::_('MOLAJO_OPTION_STATUS_ARCHIVED'));
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_PUBLISHED, MolajoText::_('MOLAJO_OPTION_STATUS_PUBLISHED'));
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_UNPUBLISHED, MolajoText::_('MOLAJO_OPTION_STATUS_UNPUBLISHED'));
-        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_TRASHED, MolajoText::_('MOLAJO_OPTION_STATUS_TRASHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_ARCHIVED, MolajoTextHelper::_('MOLAJO_OPTION_STATUS_ARCHIVED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_PUBLISHED, MolajoTextHelper::_('MOLAJO_OPTION_STATUS_PUBLISHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_UNPUBLISHED, MolajoTextHelper::_('MOLAJO_OPTION_STATUS_UNPUBLISHED'));
+        $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_TRASHED, MolajoTextHelper::_('MOLAJO_OPTION_STATUS_TRASHED'));
         if ($this->parameters->def('state_spam', '0') == 1) {
-            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_SPAMMED, MolajoText::_('MOLAJO_OPTION_STATUS_SPAMMED'));
+            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_SPAMMED, MolajoTextHelper::_('MOLAJO_OPTION_STATUS_SPAMMED'));
         }
         if ($this->parameters->def('version_management', '1') == 1) {
-            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_VERSION, MolajoText::_('MOLAJO_OPTION_STATUS_VERSION'));
+            $options[] = MolajoHTML::_('select.option', MOLAJO_STATUS_VERSION, MolajoTextHelper::_('MOLAJO_OPTION_STATUS_VERSION'));
         }
-        $options[] = MolajoHTML::_('select.option', '*', MolajoText::_('MOLAJO_OPTION_ALL'));
+        $options[] = MolajoHTML::_('select.option', '*', MolajoTextHelper::_('MOLAJO_OPTION_ALL'));
 
         return $options;
     }
@@ -109,7 +109,7 @@ class MolajoFieldState extends MolajoField
     {
         $query->select('a.state');
         if (is_numeric($value)) {
-            $query->where('a.state = '.(int)$value);
+            $query->where('a.state = ' . (int)$value);
         } else if ($value == '*') {
 
         } else {

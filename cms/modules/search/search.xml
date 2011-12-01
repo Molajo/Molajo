@@ -1,131 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension
-	type="module"
-	version="1.6.0"
-	application="site"
-	method="upgrade">
-	<name>search</name>
-	<author>Molajo Project</author>
-	<creationDate>July 2004</creationDate>
-	<copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<authorEmail>collaborate@molajo.org</authorEmail>
-	<authorUrl>molajo.org</authorUrl>
-	<version>1.0</version>
-	<description>SEARCH_DESCRIPTION</description>
-	<files>
-		<filename module="search">search.php</filename>
-		<folder>layouts</folder>
-		<filename>helper.php</filename>
-		<filename>index.html</filename>		<filename>search.xml</filename>
-	</files>
-	<languages>
-		<language tag="en-GB">en-GB.search.ini</language>
-		<language tag="en-GB">en-GB.search.sys.ini</language>
-	</languages>
-	<help key="JHELP_EXTENSIONS_MODULE_MANAGER_SEARCH" />
-	<config>
-		<fields name="parameters">
-			<fieldset name="basic">
-				<field
-					name="label"
-					type="label"
-					label="SEARCH_FIELD_LABEL_TEXT_LABEL"
-					description="SEARCH_FIELD_LABEL_TEXT_DESC" />
-				<field
-					name="width"
-					type="text"
-					default="20"
-					label="SEARCH_FIELD_BOXWIDTH_LABEL"
-					description="SEARCH_FIELD_BOXWIDTH_DESC" />
-				<field
-					name="text"
-					type="text"
-					label="SEARCH_FIELD_TEXT_LABEL"
-					description="SEARCH_FIELD_TEXT_DESC" />
-				<field
-					name="button"
-					type="radio"
-					label="SEARCH_FIELD_BUTTON_LABEL"
-					description="SEARCH_FIELD_BUTTON_DESC">
-					<option
-						value="">JNO</option>
-					<option
-						value="1">JYES</option>
-				</field>
-				<field
-					name="button_pos"
-					type="list"
-					default="right"
-					label="SEARCH_FIELD_BUTTONPOS_LABEL"
-					description="SEARCH_FIELD_BUTTONPOS_DESC">
-					<option
-						value="right">SEARCH_FIELD_VALUE_RIGHT</option>
-					<option
-						value="left">SEARCH_FIELD_VALUE_LEFT</option>
-					<option
-						value="top">SEARCH_FIELD_VALUE_TOP</option>
-					<option
-						value="bottom">SEARCH_FIELD_VALUE_BOTTOM</option>
-				</field>
-				<field
-					name="imagebutton"
-					type="radio"
-					label="SEARCH_FIELD_IMAGEBUTTON_LABEL"
-					description="SEARCH_FIELD_IMAGEBUTTON_DESC">
-					<option
-						value="">JNO</option>
-					<option
-						value="1">JYES</option>
-				</field>
-				<field
-					name="button_text"
-					type="text"
-					label="SEARCH_FIELD_BUTTONTEXT_LABEL"
-					description="SEARCH_FIELD_BUTTONTEXT_DESC" />
-				<field
-					name="set_itemid"
-					type="text"
-					label="SEARCH_FIELD_SETITEMID_LABEL"
-					description="SEARCH_FIELD_SETITEMID_DESC" />
-			</fieldset>
-			<fieldset
-				name="advanced">
-				<field
-					name="layout"
-					type="modulelayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
-				<field
-					name="layout_class_suffix"
-					type="text"
-					label="MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					description="MODULES_FIELD_MODULECLASS_SFX_DESC" />
-				<field
-					name="cache"
-					type="list"
-					default="1"
-					label="MODULES_FIELD_CACHING_LABEL"
-					description="MODULES_FIELD_CACHING_DESC">
-					<option
-						value="1">JGLOBAL_USE_GLOBAL</option>
-					<option
-						value="0">MODULES_FIELD_VALUE_NOCACHING</option>
-				</field>
-				<field
-					name="cache_time"
-					type="text"
-					default="900"
-					label="MODULES_FIELD_CACHE_TIME_LABEL"
-					description="MODULES_FIELD_CACHE_TIME_DESC" />
-				<field
-					name="cachemode"
-					type="hidden"
-					default="itemid">
-					<option
-						value="itemid"></option>
-				</field>
-			</fieldset>
-		</fields>
-	</config>
+        type="module"
+        version="1.6.0"
+        application="site"
+        method="upgrade">
+    <name>search</name>
+    <author>Molajo Project</author>
+    <creationDate>July 2004</creationDate>
+    <copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>SEARCH_DESCRIPTION</description>
+    <files>
+        <filename module="search">search.php</filename>
+        <folder>layouts</folder>
+        <filename>helper.php</filename>
+        <filename>index.html</filename>
+        <filename>search.xml</filename>
+    </files>
+    <languages>
+        <language tag="en-GB">en-GB.search.ini</language>
+        <language tag="en-GB">en-GB.search.sys.ini</language>
+    </languages>
+    <help key="JHELP_EXTENSIONS_MODULE_MANAGER_SEARCH"/>
+    <config>
+        <fields name="parameters">
+            <fieldset name="basic">
+                <field
+                        name="label"
+                        type="label"
+                        label="SEARCH_FIELD_LABEL_TEXT_LABEL"
+                        description="SEARCH_FIELD_LABEL_TEXT_DESC"/>
+                <field
+                        name="width"
+                        type="text"
+                        default="20"
+                        label="SEARCH_FIELD_BOXWIDTH_LABEL"
+                        description="SEARCH_FIELD_BOXWIDTH_DESC"/>
+                <field
+                        name="text"
+                        type="text"
+                        label="SEARCH_FIELD_TEXT_LABEL"
+                        description="SEARCH_FIELD_TEXT_DESC"/>
+                <field
+                        name="button"
+                        type="radio"
+                        label="SEARCH_FIELD_BUTTON_LABEL"
+                        description="SEARCH_FIELD_BUTTON_DESC">
+                    <option
+                            value="">JNO
+                    </option>
+                    <option
+                            value="1">JYES
+                    </option>
+                </field>
+                <field
+                        name="button_pos"
+                        type="list"
+                        default="right"
+                        label="SEARCH_FIELD_BUTTONPOS_LABEL"
+                        description="SEARCH_FIELD_BUTTONPOS_DESC">
+                    <option
+                            value="right">SEARCH_FIELD_VALUE_RIGHT
+                    </option>
+                    <option
+                            value="left">SEARCH_FIELD_VALUE_LEFT
+                    </option>
+                    <option
+                            value="top">SEARCH_FIELD_VALUE_TOP
+                    </option>
+                    <option
+                            value="bottom">SEARCH_FIELD_VALUE_BOTTOM
+                    </option>
+                </field>
+                <field
+                        name="imagebutton"
+                        type="radio"
+                        label="SEARCH_FIELD_IMAGEBUTTON_LABEL"
+                        description="SEARCH_FIELD_IMAGEBUTTON_DESC">
+                    <option
+                            value="">JNO
+                    </option>
+                    <option
+                            value="1">JYES
+                    </option>
+                </field>
+                <field
+                        name="button_text"
+                        type="text"
+                        label="SEARCH_FIELD_BUTTONTEXT_LABEL"
+                        description="SEARCH_FIELD_BUTTONTEXT_DESC"/>
+                <field
+                        name="set_itemid"
+                        type="text"
+                        label="SEARCH_FIELD_SETITEMID_LABEL"
+                        description="SEARCH_FIELD_SETITEMID_DESC"/>
+            </fieldset>
+            <fieldset
+                    name="advanced">
+                <field
+                        name="layout"
+                        type="modulelayout"
+                        label="JFIELD_ALT_LAYOUT_LABEL"
+                        description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field
+                        name="layout_class_suffix"
+                        type="text"
+                        label="MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                        description="MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+                <field
+                        name="cache"
+                        type="list"
+                        default="1"
+                        label="MODULES_FIELD_CACHING_LABEL"
+                        description="MODULES_FIELD_CACHING_DESC">
+                    <option
+                            value="1">JGLOBAL_USE_GLOBAL
+                    </option>
+                    <option
+                            value="0">MODULES_FIELD_VALUE_NOCACHING
+                    </option>
+                </field>
+                <field
+                        name="cache_time"
+                        type="text"
+                        default="900"
+                        label="MODULES_FIELD_CACHE_TIME_LABEL"
+                        description="MODULES_FIELD_CACHE_TIME_DESC"/>
+                <field
+                        name="cachemode"
+                        type="hidden"
+                        default="itemid">
+                    <option
+                            value="itemid"></option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
 </extension>

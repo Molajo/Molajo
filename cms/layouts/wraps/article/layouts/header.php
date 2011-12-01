@@ -12,5 +12,5 @@ if ($this->parameters->get('html5', true) === true) :
 else :
     $headertype = 'div';
 endif;
-include MOLAJO_CMS_LAYOUTS.'/common/headertype.php';
-include MOLAJO_CMS_LAYOUTS.'/common/headings.php';
+include MOLAJO_CMS_LAYOUTS . '/common/headertype.php';
+include MOLAJO_CMS_LAYOUTS . '/common/headings.php';

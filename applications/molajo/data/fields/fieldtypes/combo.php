@@ -38,14 +38,14 @@ class MolajoFormFieldCombo extends MolajoFormFieldList
         $attr = '';
 
         // Initialize some field attributes.
-        $attr .= $this->element['class'] ? ' class="combobox '.(string)$this->element['class'].'"'
+        $attr .= $this->element['class'] ? ' class="combobox ' . (string)$this->element['class'] . '"'
                 : ' class="combobox"';
         $attr .= ((string)$this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
         $attr .= ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
-        $attr .= $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
+        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
 
         // Initialize JavaScript field attributes.
-        $attr .= $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
+        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
         // Get the field options.
         $options = $this->getOptions();
@@ -54,13 +54,13 @@ class MolajoFormFieldCombo extends MolajoFormFieldList
         MolajoHTML::_('behavior.combobox');
 
         // Build the calendar for the combo box.
-        $html[] = '<calendar type="text" name="'.$this->name.'" id="'.$this->id.'"' .
-                  ' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"'.$attr.'/>';
+        $html[] = '<calendar type="text" name="' . $this->name . '" id="' . $this->id . '"' .
+                  ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' . $attr . '/>';
 
         // Build the list for the combo box.
-        $html[] = '<ul id="combobox-'.$this->id.'" style="display:none;">';
+        $html[] = '<ul id="combobox-' . $this->id . '" style="display:none;">';
         foreach ($options as $option) {
-            $html[] = '<li>'.$option->text.'</li>';
+            $html[] = '<li>' . $option->text . '</li>';
         }
         $html[] = '</ul>';
 

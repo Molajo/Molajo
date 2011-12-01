@@ -22,7 +22,7 @@ defined('JPATH_PLATFORM') or die();
  * @subpackage  Language
  * @since       11.1
  */
-class MolajoLanguagetransliterate
+class MolajoTransliterateHelper
 {
     /**
      * Returns strings transliterated from UTF-8 to Latin

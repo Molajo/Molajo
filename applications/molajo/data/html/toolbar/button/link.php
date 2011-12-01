@@ -26,7 +26,7 @@ class MolajoButtonLink extends MolajoButton
 
     public function fetchButton($type = 'Link', $name = 'back', $text = '', $url = null)
     {
-        $text = MolajoText::_($text);
+        $text = MolajoTextHelper::_($text);
         $class = $this->fetchIconClass($name);
         $doTask = $this->_getCommand($url);
 
@@ -50,7 +50,7 @@ class MolajoButtonLink extends MolajoButton
      */
     public function fetchId($type = 'Link', $name = '')
     {
-        return $this->_parent->getName().'-'.$name;
+        return $this->_parent->getName() . '-' . $name;
     }
 
     /**

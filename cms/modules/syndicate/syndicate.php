@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		$Id: syndicate.php 20806 2011-02-21 19:44:59Z dextercowley $
- * @package		Joomla.Site
- * @subpackage	syndicate
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @version        $Id: syndicate.php 20806 2011-02-21 19:44:59Z dextercowley $
+ * @package        Joomla.Site
+ * @subpackage    syndicate
+ * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -19,11 +19,11 @@ $parameters->def('format', 'rss');
 $link = modSyndicateHelper::getLink($parameters);
 
 if (is_null($link)) {
-	return;
+    return;
 }
 
 $layout_class_suffix = htmlspecialchars($parameters->get('layout_class_suffix'));
 
 $text = htmlspecialchars($parameters->get('text'));
 
-require MolajoApplicationModule::getLayoutPath('syndicate', $parameters->get('layout', 'default'));
+require MolajoModule::getLayoutPath('syndicate', $parameters->get('layout', 'default'));

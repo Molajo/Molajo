@@ -3,7 +3,7 @@
  * @version     controller.php
  * @package     Molajo
  * @subpackage  Display Controller
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -127,7 +127,7 @@ class MolajoControllerRedirect extends MolajoController
         ) {
             $extension = '';
         } else {
-            $extension = '&extension='.$extension;
+            $extension = '&extension=' . $extension;
         }
 
         /** component_specific: to add parameter pairs needed in addition to standard **/
@@ -138,7 +138,7 @@ class MolajoControllerRedirect extends MolajoController
             $component_specific = '';
         } elseif (substr($component_specific, 1, 1) == '&') {
         } else {
-            $component_specific .= '&'.$component_specific;
+            $component_specific .= '&' . $component_specific;
         }
 
         /** cancel **/
@@ -147,10 +147,10 @@ class MolajoControllerRedirect extends MolajoController
                 if ($this->id == 0) {
                     $this->redirectSuccess = 'index.php';
                 } else {
-                    $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display&id='.$this->id.$extension.$component_specific;
+                    $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display&id=' . $this->id . $extension . $component_specific;
                 }
             } else {
-                $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=edit&id='.$this->id.$extension.$component_specific;
+                $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=edit&id=' . $this->id . $extension . $component_specific;
             }
             $this->redirectReturn = $this->redirectSuccess;
             return true;
@@ -162,15 +162,15 @@ class MolajoControllerRedirect extends MolajoController
 
         } elseif ($this->request['task'] == 'logout') {
             $this->redirectSuccess = 'index.php';
-            $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
 
         } elseif ($this->request['task'] == 'display') {
-            $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
+            $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
             $this->redirectReturn = $this->redirectSuccess;
 
         } else {
-            $this->redirectSuccess = 'index.php?option='.$this->request['option'].'&view=display'.$extension.$component_specific;
-            $this->redirectReturn = 'index.php?option='.$this->request['option'].'&view=edit'.$extension.$component_specific;
+            $this->redirectSuccess = 'index.php?option=' . $this->request['option'] . '&view=display' . $extension . $component_specific;
+            $this->redirectReturn = 'index.php?option=' . $this->request['option'] . '&view=edit' . $extension . $component_specific;
         }
 
         return;
@@ -271,7 +271,7 @@ class MolajoControllerRedirect extends MolajoController
         if ($this->successIndicator === false) {
 
             if ($this->redirectMessage == null || $this->redirectMessage == '') {
-                $this->redirectMessage = MolajoText::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
+                $this->redirectMessage = MolajoTextHelper::_('MOLAJO_STANDARD_FAILURE_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'error';
@@ -281,7 +281,7 @@ class MolajoControllerRedirect extends MolajoController
 
             /** defaults to success **/
             if ($this->redirectMessage == null) {
-                $this->redirectMessage = MolajoText::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
+                $this->redirectMessage = MolajoTextHelper::_('MOLAJO_STANDARD_SUCCESS_MESSAGE');
             }
             if ($this->redirectMessageType == null) {
                 $this->redirectMessageType = 'message';
@@ -299,10 +299,10 @@ class MolajoControllerRedirect extends MolajoController
             } else {
                 $id = $this->data['id'];
                 if ((int)$id == 0 || $task == 'saveandnew') {
-                    $link .= '&task='.$this->request['EditView'].'.add'.'&datakey='.$this->datakey;
+                    $link .= '&task=' . $this->request['EditView'] . '.add' . '&datakey=' . $this->datakey;
 
                 } else {
-                    $link .= '&task='.$this->request['EditView'].'.edit&id='.(int)$id.'&datakey='.$this->datakey;
+                    $link .= '&task=' . $this->request['EditView'] . '.edit&id=' . (int)$id . '&datakey=' . $this->datakey;
                 }
             }
 
@@ -312,9 +312,9 @@ class MolajoControllerRedirect extends MolajoController
             if ((int)$id == 0) {
                 $idLink = '';
             } else {
-                $idLink = '&id='.(int)$id;
+                $idLink = '&id=' . (int)$id;
             }
-            $link = $this->redirectSuccess.$idLink;
+            $link = $this->redirectSuccess . $idLink;
         }
 
         /** should not be needed */

@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Form
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -63,16 +63,16 @@ class MolajoFormRule
 
         // Check for a valid regex.
         if (empty($this->regex)) {
-            throw new MolajoException(MolajoText::sprintf('MOLAJO_FORM_INVALID_FORM_RULE', get_class($this)));
+            throw new MolajoException(MolajoTextHelper::sprintf('MOLAJO_FORM_INVALID_FORM_RULE', get_class($this)));
         }
 
         // Add unicode property support if available.
         if (JCOMPAT_UNICODE_PROPERTIES) {
-            $this->modifiers = (strpos($this->modifiers, 'u') !== false) ? $this->modifiers : $this->modifiers.'u';
+            $this->modifiers = (strpos($this->modifiers, 'u') !== false) ? $this->modifiers : $this->modifiers . 'u';
         }
 
         // Test the value against the regular expression.
-        if (preg_match(chr(1).$this->regex.chr(1).$this->modifiers, $value)) {
+        if (preg_match(chr(1) . $this->regex . chr(1) . $this->modifiers, $value)) {
             return true;
         }
 

@@ -1,12 +1,12 @@
 <fieldset
-    name="request">
+        name="request">
 
     <field
-        name="component"
-        type="component"
-        description="MENU_ITEM_TYPE_COMPONENT_DESC"
-        label="MENU_ITEM_TYPE_COMPONENT_LABEL"
-        required="true"
-    />
+            name="component"
+            type="component"
+            description="MENU_ITEM_TYPE_COMPONENT_DESC"
+            label="MENU_ITEM_TYPE_COMPONENT_LABEL"
+            required="true"
+            />
 
 </fieldset>

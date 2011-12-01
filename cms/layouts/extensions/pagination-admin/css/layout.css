@@ -5,34 +5,160 @@
 @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-.button1{background:url(../images/j_button1_left.png) no-repeat;margin-left:5px;padding-left:10px;white-space:nowrap}
-.button1 .next{background:url(../images/j_button1_next.png) 100% 0 no-repeat}
-.button1 a{color:#333;cursor:pointer;display:block;float:left;font-size:1.091em;font-weight:700;height:26px;line-height:26px;padding:0 35px 0 6px}
-.button1 a:hover,.button2-left a:hover,.button2-right a:hover,.button2-left button:hover,.button2-left button:hover{color:#0B55C4;text-decoration:none}
-.button1,.button1 div{float:right;height:1%}
-.button2-left{background:url(../images/j_button2_left.png) no-repeat;float:left;margin-right:10px}
-.button2-left .blank{background:url(../images/j_button2_blank.png) 100% 0 no-repeat}
-.button2-left .end{background:url(../images/j_button2_last.png) 100% 0 no-repeat}
-.button2-left .image{background:url(../images/j_button2_image.png) 100% 0 no-repeat}
-.button2-left .next{background:url(../images/j_button2_next.png) 100% 0 no-repeat}
-.button2-left .page a,.button2-right .page a,.button2-left .page span,.button2-right .page span,.button2-left .blank a,.button2-right .blank a,.button2-left .blank span,.button2-right .blank span,.button2-left .blank button,.button2-right .blank button{padding:0 6px}
-.button2-left .page,.button2-left .blank{background:url(../images/j_button2_right_cap.png) 100% 0 no-repeat}
-.button2-left .pagebreak{background:url(../images/j_button2_pagebreak.png) 100% 0 no-repeat}
-.button2-left .readmore,.button2-left .article{background:url(../images/j_button2_readmore.png) 100% 0 no-repeat}
-.button2-left a,.button2-left span,.button2-left button{padding:0 24px 0 6px}
-.button2-left a,.button2-right a,.button2-left button,.button2-right button,.button2-left span,.button2-right span{color:#333;cursor:pointer;display:block;float:left;font-size:1em;height:22px;line-height:22px}
-.button2-left span,.button2-right span{color:#999;cursor:default}
-.button2-left,.button2-right,.button2-left div,.button2-right div{float:left}
-.button2-left.off .end{background:url(../images/j_button2_last_off.png) 100% 0 no-repeat}
-.button2-left.off .next{background:url(../images/j_button2_next_off.png) 100% 0 no-repeat}
-.button2-right{background:url(../images/j_button2_right.png) 100% 0 no-repeat;float:left;margin-left:5px;margin-right:10px}
-.button2-right .prev{background:url(../images/j_button2_prev.png) no-repeat}
-.button2-right .start{background:url(../images/j_button2_first.png) no-repeat}
-.button2-right a,.button2-right span,.button2-right button{padding:0 6px 0 24px}
-.button2-right.off .prev{background:url(../images/j_button2_prev_off.png) no-repeat}
-.button2-right.off .start{background:url(../images/j_button2_first_off.png) no-repeat}
-.page span,.blank span{color:#000;font-weight:700}
-a.pointer{cursor:pointer}
-button{background:#fff;border:1px solid #ccc;margin-top:4px;text-decoration:none}
-button:hover{background:#E8F6FE;border:1px solid #aaa;cursor:pointer;text-decoration:none}
-div.button2-left button{background:transparent;border:0 solid #aaa;margin-top:0}
+.button1 {
+    background: url(../images/j_button1_left.png) no-repeat;
+    margin-left: 5px;
+    padding-left: 10px;
+    white-space: nowrap
+}
+
+.button1 .next {
+    background: url(../images/j_button1_next.png) 100% 0 no-repeat
+}
+
+.button1 a {
+    color: #333;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 1.091em;
+    font-weight: 700;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 35px 0 6px
+}
+
+.button1 a:hover, .button2-left a:hover, .button2-right a:hover, .button2-left button:hover, .button2-left button:hover {
+    color: #0B55C4;
+    text-decoration: none
+}
+
+.button1, .button1 div {
+    float: right;
+    height: 1%
+}
+
+.button2-left {
+    background: url(../images/j_button2_left.png) no-repeat;
+    float: left;
+    margin-right: 10px
+}
+
+.button2-left .blank {
+    background: url(../images/j_button2_blank.png) 100% 0 no-repeat
+}
+
+.button2-left .end {
+    background: url(../images/j_button2_last.png) 100% 0 no-repeat
+}
+
+.button2-left .image {
+    background: url(../images/j_button2_image.png) 100% 0 no-repeat
+}
+
+.button2-left .next {
+    background: url(../images/j_button2_next.png) 100% 0 no-repeat
+}
+
+.button2-left .page a, .button2-right .page a, .button2-left .page span, .button2-right .page span, .button2-left .blank a, .button2-right .blank a, .button2-left .blank span, .button2-right .blank span, .button2-left .blank button, .button2-right .blank button {
+    padding: 0 6px
+}
+
+.button2-left .page, .button2-left .blank {
+    background: url(../images/j_button2_right_cap.png) 100% 0 no-repeat
+}
+
+.button2-left .pagebreak {
+    background: url(../images/j_button2_pagebreak.png) 100% 0 no-repeat
+}
+
+.button2-left .readmore, .button2-left .article {
+    background: url(../images/j_button2_readmore.png) 100% 0 no-repeat
+}
+
+.button2-left a, .button2-left span, .button2-left button {
+    padding: 0 24px 0 6px
+}
+
+.button2-left a, .button2-right a, .button2-left button, .button2-right button, .button2-left span, .button2-right span {
+    color: #333;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 1em;
+    height: 22px;
+    line-height: 22px
+}
+
+.button2-left span, .button2-right span {
+    color: #999;
+    cursor: default
+}
+
+.button2-left, .button2-right, .button2-left div, .button2-right div {
+    float: left
+}
+
+.button2-left.off .end {
+    background: url(../images/j_button2_last_off.png) 100% 0 no-repeat
+}
+
+.button2-left.off .next {
+    background: url(../images/j_button2_next_off.png) 100% 0 no-repeat
+}
+
+.button2-right {
+    background: url(../images/j_button2_right.png) 100% 0 no-repeat;
+    float: left;
+    margin-left: 5px;
+    margin-right: 10px
+}
+
+.button2-right .prev {
+    background: url(../images/j_button2_prev.png) no-repeat
+}
+
+.button2-right .start {
+    background: url(../images/j_button2_first.png) no-repeat
+}
+
+.button2-right a, .button2-right span, .button2-right button {
+    padding: 0 6px 0 24px
+}
+
+.button2-right.off .prev {
+    background: url(../images/j_button2_prev_off.png) no-repeat
+}
+
+.button2-right.off .start {
+    background: url(../images/j_button2_first_off.png) no-repeat
+}
+
+.page span, .blank span {
+    color: #000;
+    font-weight: 700
+}
+
+a.pointer {
+    cursor: pointer
+}
+
+button {
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-top: 4px;
+    text-decoration: none
+}
+
+button:hover {
+    background: #E8F6FE;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    text-decoration: none
+}
+
+div.button2-left button {
+    background: transparent;
+    border: 0 solid #aaa;
+    margin-top: 0
+}

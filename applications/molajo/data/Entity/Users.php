@@ -111,47 +111,47 @@ class Users
      * @ORM\Column(name="custom_fields", type="text", nullable=true)
      */
     private $customFields;
-	
+
     /**
      * @var Applications
      *
      * @ORM\ManyToMany(targetEntity="Applications", inversedBy="user")
      * @ORM\JoinTable(name="user_applications",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
      *   }
      * )
      */
     private $application;
-	
+
     /**
      * @var  Categories
      *
      * @ORM\ManyToMany(targetEntity=" Categories", inversedBy="user")
      * @ORM\JoinTable(name="user_groups",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      *   }
      * )
      */
     private $group;
-	
+
     /**
      * @var ViewGroups
      *
      * @ORM\ManyToMany(targetEntity="ViewGroups", inversedBy="user")
      * @ORM\JoinTable(name="user_view_groups",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="view_group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="view_group_id", referencedColumnName="id")
      *   }
      * )
      */
@@ -160,15 +160,15 @@ class Users
     public function __construct()
     {
         $this->application = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->group = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->viewGroup = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->viewGroup = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -188,7 +188,7 @@ class Users
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -208,7 +208,7 @@ class Users
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -228,7 +228,7 @@ class Users
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -248,7 +248,7 @@ class Users
     /**
      * Get contentText
      *
-     * @return text 
+     * @return text
      */
     public function getContentText()
     {
@@ -268,7 +268,7 @@ class Users
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -288,7 +288,7 @@ class Users
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -308,7 +308,7 @@ class Users
     /**
      * Get block
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getBlock()
     {
@@ -328,7 +328,7 @@ class Users
     /**
      * Get activation
      *
-     * @return string 
+     * @return string
      */
     public function getActivation()
     {
@@ -348,7 +348,7 @@ class Users
     /**
      * Get sendEmail
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSendEmail()
     {
@@ -368,7 +368,7 @@ class Users
     /**
      * Get registerDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getRegisterDatetime()
     {
@@ -388,7 +388,7 @@ class Users
     /**
      * Get lastVisitDatetime
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getLastVisitDatetime()
     {
@@ -408,7 +408,7 @@ class Users
     /**
      * Get parameters
      *
-     * @return text 
+     * @return text
      */
     public function getParameters()
     {
@@ -428,7 +428,7 @@ class Users
     /**
      * Get customFields
      *
-     * @return text 
+     * @return text
      */
     public function getCustomFields()
     {
@@ -448,7 +448,7 @@ class Users
     /**
      * Get application
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getApplication()
     {
@@ -468,7 +468,7 @@ class Users
     /**
      * Get group
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getGroup()
     {
@@ -488,7 +488,7 @@ class Users
     /**
      * Get viewGroup
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getViewGroup()
     {

@@ -3,7 +3,7 @@
 namespace Gedmo\Sortable\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\Xml as BaseXml,
-    Gedmo\Exception\InvalidMappingException;
+Gedmo\Exception\InvalidMappingException;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
@@ -71,20 +71,20 @@ class Xml extends BaseXml
             }
             $this->readSortableGroups($xml->field, $config, 'name');
         }
-        
-        
+
+
         // Search for sortable-groups in association mappings
         if (isset($xml->{'many-to-one'})) {
             $this->readSortableGroups($xml->{'many-to-one'}, $config);
         }
-        
+
         // Search for sortable-groups in association mappings
         if (isset($xml->{'many-to-many'})) {
             $this->readSortableGroups($xml->{'many-to-many'}, $config);
         }
     }
 
-    private function readSortableGroups($mapping, array &$config, $fieldAttr='field')
+    private function readSortableGroups($mapping, array &$config, $fieldAttr = 'field')
     {
         foreach ($mapping as $map) {
             $mappingDoctrine = $map;
@@ -92,7 +92,7 @@ class Xml extends BaseXml
              * @var \SimpleXmlElement $mapping
              */
             $map = $map->children(self::GEDMO_NAMESPACE_URI);
-            
+
             $field = $this->_getAttribute($mappingDoctrine, $fieldAttr);
             if (isset($map->{'sortable-group'})) {
                 if (!isset($config['groups'])) {

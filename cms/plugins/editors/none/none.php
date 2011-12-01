@@ -1,8 +1,8 @@
 <?php
 /**
- * @version		$Id: none.php 21097 2011-04-07 15:38:03Z dextercowley $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @version        $Id: none.php 21097 2011-04-07 15:38:03Z dextercowley $
+ * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -12,22 +12,22 @@ defined('MOLAJO') or die;
 /**
  * Plain Textarea Editor Plugin
  *
- * @package		Joomla.Plugin
- * @subpackage	Editors.none
- * @since		1.5
+ * @package        Joomla.Plugin
+ * @subpackage    Editors.none
+ * @since        1.5
  */
-class plgEditorNone extends MolajoApplicationPlugin
+class plgEditorNone extends MolajoPlugin
 {
-	/**
-	 * Method to handle the onInitEditor event.
-	 *  - Initialises the Editor
-	 *
-	 * @return	string	JavaScript Initialization string
-	 * @since 1.5
-	 */
-	public function onInit()
-	{
-		$txt =	"<script type=\"text/javascript\">
+    /**
+     * Method to handle the onInitEditor event.
+     *  - Initialises the Editor
+     *
+     * @return    string    JavaScript Initialization string
+     * @since 1.5
+     */
+    public function onInit()
+    {
+        $txt = "<script type=\"text/javascript\">
 					function insertAtCursor(myField, myValue) {
 						if (document.selection) {
 							// IE support
@@ -47,144 +47,144 @@ class plgEditorNone extends MolajoApplicationPlugin
 					}
 				</script>";
 
-		return $txt;
-	}
+        return $txt;
+    }
 
-	/**
-	 * Copy editor content to form field.
-	 *
-	 * Not applicable in this editor.
-	 *
-	 * @return	void
-	 */
-	function onSave()
-	{
-		return;
-	}
+    /**
+     * Copy editor content to form field.
+     *
+     * Not applicable in this editor.
+     *
+     * @return    void
+     */
+    function onSave()
+    {
+        return;
+    }
 
-	/**
-	 * Get the editor content.
-	 *
-	 * @param	string	$id		The id of the editor field.
-	 *
-	 * @return	string
-	 */
-	function onGetContent($id)
-	{
-		return "document.getElementById('$id').value;\n";
-	}
+    /**
+     * Get the editor content.
+     *
+     * @param    string    $id        The id of the editor field.
+     *
+     * @return    string
+     */
+    function onGetContent($id)
+    {
+        return "document.getElementById('$id').value;\n";
+    }
 
-	/**
-	 * Set the editor content.
-	 *
-	 * @param	string	$id		The id of the editor field.
-	 * @param	string	$html	The content to set.
-	 *
-	 * @return	string
-	 */
-	function onSetContent($id, $html)
-	{
-		return "document.getElementById('$id').value = $html;\n";
-	}
+    /**
+     * Set the editor content.
+     *
+     * @param    string    $id        The id of the editor field.
+     * @param    string    $html    The content to set.
+     *
+     * @return    string
+     */
+    function onSetContent($id, $html)
+    {
+        return "document.getElementById('$id').value = $html;\n";
+    }
 
-	/**
-	 * @param	string	$id
-	 *
-	 * @return	string
-	 */
-	function onGetInsertMethod($id)
-	{
-		static $done = false;
+    /**
+     * @param    string    $id
+     *
+     * @return    string
+     */
+    function onGetInsertMethod($id)
+    {
+        static $done = false;
 
-		// Do this only once.
-		if (!$done) {
-			$doc = MolajoFactory::getDocument();
-			$js = "\tfunction jInsertEditorText(text, editor) {
+        // Do this only once.
+        if (!$done) {
+            $doc = MolajoFactory::getDocument();
+            $js = "\tfunction jInsertEditorText(text, editor) {
 				insertAtCursor(document.getElementById(editor), text);
 			}";
-			$doc->addScriptDeclaration($js);
-		}
+            $doc->addScriptDeclaration($js);
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Display the editor area.
-	 *
-	 * @param	string	$name		The control name.
-	 * @param	string	$html		The contents of the text area.
-	 * @param	string	$width		The width of the text area (px or %).
-	 * @param	string	$height		The height of the text area (px or %).
-	 * @param	int		$col		The number of columns for the textarea.
-	 * @param	int		$row		The number of rows for the textarea.
-	 * @param	boolean	$buttons	True and the editor buttons will be displayed.
-	 * @param	string	$id			An optional ID for the textarea (note: since 1.6). If not supplied the name is used.
-	 * @param	string	$asset
-	 * @param	object	$author
-	 * @param	array	$parameters		Associative array of editor parameters.
-	 *
-	 * @return	string
-	 */
-	function onDisplay($name, $content, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $parameters = array())
-	{
-		if (empty($id)) {
-			$id = $name;
-		}
+    /**
+     * Display the editor area.
+     *
+     * @param    string    $name        The control name.
+     * @param    string    $html        The contents of the text area.
+     * @param    string    $width        The width of the text area (px or %).
+     * @param    string    $height        The height of the text area (px or %).
+     * @param    int        $col        The number of columns for the textarea.
+     * @param    int        $row        The number of rows for the textarea.
+     * @param    boolean    $buttons    True and the editor buttons will be displayed.
+     * @param    string    $id            An optional ID for the textarea (note: since 1.6). If not supplied the name is used.
+     * @param    string    $asset
+     * @param    object    $author
+     * @param    array    $parameters        Associative array of editor parameters.
+     *
+     * @return    string
+     */
+    function onDisplay($name, $content, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $parameters = array())
+    {
+        if (empty($id)) {
+            $id = $name;
+        }
 
-		// Only add "px" to width and height if they are not given as a percentage
-		if (is_numeric($width)) {
-			$width .= 'px';
-		}
+        // Only add "px" to width and height if they are not given as a percentage
+        if (is_numeric($width)) {
+            $width .= 'px';
+        }
 
-		if (is_numeric($height)) {
-			$height .= 'px';
-		}
+        if (is_numeric($height)) {
+            $height .= 'px';
+        }
 
-		$buttons = $this->_displayButtons($id, $buttons, $asset, $author);
-		$editor  = "<textarea name=\"$name\" id=\"$id\" cols=\"$col\" rows=\"$row\" style=\"width: $width; height: $height;\">$content</textarea>".$buttons;
+        $buttons = $this->_displayButtons($id, $buttons, $asset, $author);
+        $editor = "<textarea name=\"$name\" id=\"$id\" cols=\"$col\" rows=\"$row\" style=\"width: $width; height: $height;\">$content</textarea>" . $buttons;
 
-		return $editor;
-	}
+        return $editor;
+    }
 
-	function _displayButtons($name, $buttons, $asset, $author)
-	{
-		// Load modal popup behavior
-		JHtml::_('behavior.modal', 'a.modal-button');
+    function _displayButtons($name, $buttons, $asset, $author)
+    {
+        // Load modal popup behavior
+        JHtml::_('behavior.modal', 'a.modal-button');
 
-		$args['name'] = $name;
-		$args['event'] = 'onGetInsertMethod';
+        $args['name'] = $name;
+        $args['event'] = 'onGetInsertMethod';
 
-		$return = '';
-		$results[] = $this->update($args);
+        $return = '';
+        $results[] = $this->update($args);
 
-		foreach ($results as $result)
-		{
-			if (is_string($result) && trim($result)) {
-				$return .= $result;
-			}
-		}
+        foreach ($results as $result)
+        {
+            if (is_string($result) && trim($result)) {
+                $return .= $result;
+            }
+        }
 
-		if (is_array($buttons) || (is_bool($buttons) && $buttons)) {
-			$results = $this->_subject->getButtons($name, $buttons, $asset, $author);
+        if (is_array($buttons) || (is_bool($buttons) && $buttons)) {
+            $results = $this->_subject->getButtons($name, $buttons, $asset, $author);
 
-			// This will allow plugins to attach buttons or change the behavior on the fly using AJAX
-			$return .= "\n<div id=\"editor-xtd-buttons\">\n";
+            // This will allow plugins to attach buttons or change the behavior on the fly using AJAX
+            $return .= "\n<div id=\"editor-xtd-buttons\">\n";
 
-			foreach ($results as $button)
-			{
-				// Results should be an object
-				if ($button->get('name')) {
-					$modal		= ($button->get('modal')) ? 'class="modal-button"' : null;
-					$href		= ($button->get('link')) ? 'href="'.JURI::base().$button->get('link').'"' : null;
-					$onclick	= ($button->get('onclick')) ? 'onclick="'.$button->get('onclick').'"' : null;
-					$title      = ($button->get('title')) ? $button->get('title') : $button->get('text');
-					$return .= "<div class=\"button2-left\"><div class=\"".$button->get('name')."\"><a ".$modal." title=\"".$title."\" ".$href." ".$onclick." rel=\"".$button->get('options')."\">".$button->get('text')."</a></div></div>\n";
-				}
-			}
+            foreach ($results as $button)
+            {
+                // Results should be an object
+                if ($button->get('name')) {
+                    $modal = ($button->get('modal')) ? 'class="modal-button"' : null;
+                    $href = ($button->get('link')) ? 'href="' . JURI::base() . $button->get('link') . '"' : null;
+                    $onclick = ($button->get('onclick')) ? 'onclick="' . $button->get('onclick') . '"' : null;
+                    $title = ($button->get('title')) ? $button->get('title') : $button->get('text');
+                    $return .= "<div class=\"button2-left\"><div class=\"" . $button->get('name') . "\"><a " . $modal . " title=\"" . $title . "\" " . $href . " " . $onclick . " rel=\"" . $button->get('options') . "\">" . $button->get('text') . "</a></div></div>\n";
+                }
+            }
 
-			$return .= "</div>\n";
-		}
+            $return .= "</div>\n";
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 }

@@ -37,7 +37,7 @@ class MolajoFormFieldSessionHandler extends MolajoFormFieldList
 
         // Get the options from MolajoSession.
         foreach (MolajoSession::getStores() as $store) {
-            $options[] = MolajoHTML::_('select.option', $store, MolajoText::_('MOLAJO_FORM_VALUE_SESSION_'.$store), 'value', 'text');
+            $options[] = MolajoHTML::_('select.option', $store, MolajoTextHelper::_('MOLAJO_FORM_VALUE_SESSION_' . $store), 'value', 'text');
         }
 
         // Merge any additional options in the XML definition.

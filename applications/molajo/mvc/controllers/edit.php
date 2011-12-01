@@ -3,7 +3,7 @@
  * @version     id: single.php
  * @package     Molajo
  * @subpackage  Single Controller
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -60,7 +60,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** success message **/
-        $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_CANCEL_SUCCESSFUL'));
+        $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_CANCEL_SUCCESSFUL'));
         $this->redirectClass->setSuccessIndicator(true);
     }
 
@@ -80,8 +80,8 @@ class MolajoControllerEdit extends MolajoController
 
         if ($this->parameters->def('version_management', 1) == 1) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_RESTORE_DISABLED_IN_CONFIGURATION'));
-            $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_RESTORE_DISABLED_IN_CONFIGURATION'));
+            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
@@ -218,31 +218,31 @@ class MolajoControllerEdit extends MolajoController
 
         /** Edit: Must have data from form input, copy or restore task **/
         if (empty($data)) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
-            $this->redirectClass->setRedirectMessageType(MolajoText::_('warning'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_SAVE_ITEM_TASK_HAS_NO_DATA_TO_SAVE'));
+            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('warning'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Edit: check for valid state **/
         if ($this->table->state == MOLAJO_STATUS_ARCHIVED) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
-            $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_ARCHIVED_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
         if ($this->table->state == MOLAJO_STATUS_TRASHED) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
-            $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_TRASHED_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
         if ($this->table->state == MOLAJO_STATUS_VERSION) {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
-            $this->redirectClass->setRedirectMessageType(MolajoText::_('error'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MolajoVersion_ROW_CANNOT_BE_CHANGED'));
+            $this->redirectClass->setRedirectMessageType(MolajoTextHelper::_('error'));
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
         /** Preparation: Save form or version data **/
         MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
-        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.$task.'.'.JRequest::getInt('datakey');
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
         if ((int)$this->id) {
@@ -365,9 +365,9 @@ class MolajoControllerEdit extends MolajoController
         }
 
         if ($task == 'restore') {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_RESTORE_SUCCESSFUL'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_RESTORE_SUCCESSFUL'));
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::_('MOLAJO_SAVE_SUCCESSFUL'));
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_SAVE_SUCCESSFUL'));
         }
 
         JRequest::setVar('id', $this->id);
@@ -394,12 +394,12 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Preparation: Save form or version data **/
-        $context = $this->data['option'].'.'.JRequest::getCmd('view').'.'.JRequest::getCmd('layout').'.'.'delete';
+        $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . 'delete';
 
         /** only trashed and version items can be deleted **/
         if ($this->table->state == MOLAJO_STATUS_TRASHED || $this->table->state == MOLAJO_STATUS_VERSION) {
         } else {
-            $this->redirectClass->setRedirectMessage(MolajoText::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED').' '.$this->id, 'error');
+            $this->redirectClass->setRedirectMessage(MolajoTextHelper::sprintf('MOLAJO_ERROR_VERSION_SAVE_FAILED') . ' ' . $this->id, 'error');
             $this->redirectClass->setRedirect(MolajoRouteHelper::_($this->redirectClass->redirectFailure, false));
             return false;
         }

@@ -1,47 +1,47 @@
 <fieldset
-    name="fields_custom_created_by"
-    label="CUSTOM_FIELDSET_CREATED_BY_OPTIONS">
+        name="fields_custom_created_by"
+        label="CUSTOM_FIELDSET_CREATED_BY_OPTIONS">
 
     <field
-        name="created_by_name"
-        type="text"
-        label="CREATED_BY_NAME_LABEL"
-        description="CREATED_BY_NAME_DESC"
-        />
+            name="created_by_name"
+            type="text"
+            label="CREATED_BY_NAME_LABEL"
+            description="CREATED_BY_NAME_DESC"
+            />
 
     <field
-        name="created_by_email"
-        type="email"
-        label="CREATED_BY_EMAIL_LABEL"
-        description="CREATED_BY_EMAIL_DESC"
-        filter="ComponentHelper::filterEmail"
-        size="60"
-        />
+            name="created_by_email"
+            type="email"
+            label="CREATED_BY_EMAIL_LABEL"
+            description="CREATED_BY_EMAIL_DESC"
+            filter="ComponentHelper::filterEmail"
+            size="60"
+            />
 
     <field
-        name="created_by_website"
-        type="url"
-        label="CREATED_BY_WEBSITE_LABEL"
-        description="CREATED_BY_WEBSITE_DESC"
-        filter="ComponentHelper::filterURL"
-        size="60"
-        />
+            name="created_by_website"
+            type="url"
+            label="CREATED_BY_WEBSITE_LABEL"
+            description="CREATED_BY_WEBSITE_DESC"
+            filter="ComponentHelper::filterURL"
+            size="60"
+            />
 
     <field
-        name="created_by_ip_address"
-        type="ip"
-        label="CREATED_BY_IP_ADDRESS_LABEL"
-        description="CREATED_BY_IP_ADDRESS_DESC"
-        filter="ComponentHelper::filterIPAddress"
-        size="60"
-        />
+            name="created_by_ip_address"
+            type="ip"
+            label="CREATED_BY_IP_ADDRESS_LABEL"
+            description="CREATED_BY_IP_ADDRESS_DESC"
+            filter="ComponentHelper::filterIPAddress"
+            size="60"
+            />
 
     <field
-        name="created_by_referer"
-        type="url"
-        label="CREATED_BY_REFERER_LABEL"
-        description="CREATED_BY_REFERER_DESC"
-        filter="ComponentHelper::filterURL"
-        size="60"
-        />
+            name="created_by_referer"
+            type="url"
+            label="CREATED_BY_REFERER_LABEL"
+            description="CREATED_BY_REFERER_DESC"
+            filter="ComponentHelper::filterURL"
+            size="60"
+            />
 </fieldset>

@@ -43,11 +43,10 @@ class UpdateSites
     private $location;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -67,7 +66,7 @@ class UpdateSites
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -87,7 +86,7 @@ class UpdateSites
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -107,7 +106,7 @@ class UpdateSites
     /**
      * Get location
      *
-     * @return string 
+     * @return string
      */
     public function getLocation()
     {

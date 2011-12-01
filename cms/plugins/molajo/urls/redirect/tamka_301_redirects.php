@@ -1,84 +1,86 @@
 <?php
 /**
- * @package		Tamka
- * @subpackage	301 Redirects
- * @copyright	Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See http://tamka.org/copyright
- * @license		GNU General Public License Version 2, or later
+ * @package        Tamka
+ * @subpackage    301 Redirects
+ * @copyright    Copyright (C) 2009 Tämkä Teäm and individual contributors. All rights reserved. See http://tamka.org/copyright
+ * @license        GNU General Public License Version 2, or later
  */
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 
-
-class plgSystemTamka_301_redirects extends MolajoApplicationPlugin
+class plgSystemTamka_301_redirects extends MolajoPlugin
 {
 
-	function onAfterInitialise() {
+    function onAfterInitialise()
+    {
 
-		$application =& MolajoFactory::getApplication('JSite');
-		$router =& $application->getRouter();
+        $application =& MolajoFactory::getApplication('JSite');
+        $router =& $application->getRouter();
 
-		if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
-			$router->attachParseRule(array(&$this, 'Tamka301Redirect'));
-		}
-	
-	}
-	
-	function Tamka301Redirect (&$router, &$uri)	{
+        if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
+            $router->attachParseRule(array(&$this, 'Tamka301Redirect'));
+        }
 
-	 /**
-	 * 	1.	Initialization
-	 */
+    }
 
-				
-		$route = $uri->getPath();
-		$query = $uri->getQuery(true);
+    function Tamka301Redirect(&$router, &$uri)
+    {
 
-		$vars   			= array();
-		$vars 				= $uri->getQuery(true);
+        /**
+         *     1.    Initialization
+         */
 
-	 	/*	Get Path and Query */
-		$uri				= &MolajoFactory::getURI();
-		$uriString			= strtolower($uri->toString(array('path', 'query')));
 
-		$ret = $uri->toString();
+        $route = $uri->getPath();
+        $query = $uri->getQuery(true);
 
-	 	/*	Remove base and left forward slash '/' */
- 		$base = JURI::base(true).'/';
-		if (trim($base) == '/') {
- 			$uriString = substr($uriString, 1, (strlen($uriString) - 1));
-		} else {
-			$uriString = str_replace ( $base, '', $uriString );
-		}
-	 	if (trim($uriString) == '') {
-	 		return $vars;
-	 	}
-	
-	 /**
-	  * See if URL should be redirected
-	  */
-		$db	=& MolajoFactory::getDBO();
-		$redirectTo = '';
+        $vars = array();
+        $vars = $uri->getQuery(true);
 
-		$query = 'SELECT new_path ' .
-			' FROM `#__tamka_301_redirects` ' .
-			' WHERE old_path = "'.Trim($uriString).'"';
+        /*	Get Path and Query */
+        $uri = &MolajoFactory::getURI();
+        $uriString = strtolower($uri->toString(array('path', 'query')));
 
-		$db->setQuery($query);
-		$redirectTo = $db->loadResult();
+        $ret = $uri->toString();
 
-		/*	End of the road - handle 404						*/
-		if ($redirectTo == null) {
-			return $vars;
-		}
+        /*	Remove base and left forward slash '/' */
+        $base = JURI::base(true) . '/';
+        if (trim($base) == '/') {
+            $uriString = substr($uriString, 1, (strlen($uriString) - 1));
+        } else {
+            $uriString = str_replace($base, '', $uriString);
+        }
+        if (trim($uriString) == '') {
+            return $vars;
+        }
 
-		$redirectTo = JURI::base().$redirectTo;
+        /**
+         * See if URL should be redirected
+         */
+        $db =& MolajoFactory::getDBO();
+        $redirectTo = '';
 
-		header('Location: '.htmlspecialchars( $redirectTo ), true, '301');
-		$mainframe->redirect($redirectTo);
-		$app = & MolajoFactory::getApplication();
-		$app->close();
-		return;
+        $query = 'SELECT new_path ' .
+                 ' FROM `#__tamka_301_redirects` ' .
+                 ' WHERE old_path = "' . Trim($uriString) . '"';
 
-	}
+        $db->setQuery($query);
+        $redirectTo = $db->loadResult();
+
+        /*	End of the road - handle 404						*/
+        if ($redirectTo == null) {
+            return $vars;
+        }
+
+        $redirectTo = JURI::base() . $redirectTo;
+
+        header('Location: ' . htmlspecialchars($redirectTo), true, '301');
+        $mainframe->redirect($redirectTo);
+        $app = & MolajoFactory::getApplication();
+        $app->close();
+        return;
+
+    }
 }
+
 ?>

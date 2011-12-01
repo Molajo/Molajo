@@ -3,7 +3,7 @@
  * @version     $id: filterStickied.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -43,8 +43,8 @@ class MolajoFieldStickied extends MolajoField
     public function getOptions()
     {
         $options = array();
-        $options[] = MolajoHTML::_('select.option', '0', MolajoText::_('MOLAJO_OPTION_UNSTICKIED'));
-        $options[] = MolajoHTML::_('select.option', '1', MolajoText::_('MOLAJO_OPTION_STICKIED'));
+        $options[] = MolajoHTML::_('select.option', '0', MolajoTextHelper::_('MOLAJO_OPTION_UNSTICKIED'));
+        $options[] = MolajoHTML::_('select.option', '1', MolajoTextHelper::_('MOLAJO_OPTION_STICKIED'));
 
         return $options;
     }
@@ -106,7 +106,7 @@ class MolajoFieldStickied extends MolajoField
 
         if ($value == null) {
         } else {
-            $query->where('a.stickied = '.trim($value));
+            $query->where('a.stickied = ' . trim($value));
         }
     }
 }

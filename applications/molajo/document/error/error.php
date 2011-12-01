@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -90,14 +90,15 @@ class MolajoDocumentError extends MolajoDocument
         }
 
         //Set the status header
-        JResponse::setHeader('status', $this->_error->getCode().' '.str_replace("\n", ' ', $this->_error->getMessage()));
+        JResponse::setHeader('status', $this->_error->getCode() . ' ' . str_replace("\n", ' ', $this->_error->getMessage()));
         $file = 'error.php';
 
         // check template
         $directory = isset($parameters['directory']) ? $parameters['directory'] : 'templates';
-        $template = isset($parameters['template']) ? JFilterInput::getInstance()->clean($parameters['template'], 'cmd') : 'system';
+        $template = isset($parameters['template']) ? JFilterInput::getInstance()->clean($parameters['template'], 'cmd')
+                : 'system';
 
-        if (file_exists($directory.'/'.$template.'/'.$file)) {
+        if (file_exists($directory . '/' . $template . '/' . $file)) {
         } else {
             $template = 'system';
         }
@@ -109,7 +110,7 @@ class MolajoDocumentError extends MolajoDocument
         $this->error = $this->_error;
 
         // load
-        $data = $this->_loadTemplate($directory.'/'.$template, $file);
+        $data = $this->_loadTemplate($directory . '/' . $template, $file);
 
         parent::render();
         return $data;
@@ -132,13 +133,13 @@ class MolajoDocumentError extends MolajoDocument
         $contents = '';
 
         // Check to see if we have a valid template file
-        if (file_exists($directory.'/'.$filename)) {
+        if (file_exists($directory . '/' . $filename)) {
             // Store the file path
-            $this->_file = $directory.'/'.$filename;
+            $this->_file = $directory . '/' . $filename;
 
             // Get the file content
             ob_start();
-            require_once $directory.'/'.$filename;
+            require_once $directory . '/' . $filename;
             $contents = ob_get_contents();
             ob_end_clean();
         }
@@ -174,14 +175,14 @@ class MolajoDocumentError extends MolajoDocument
             for ($i = count($backtrace) - 1; $i >= 0; $i--)
             {
                 echo    '	<tr>';
-                echo    '		<td class="TD">'.$j.'</td>';
+                echo    '		<td class="TD">' . $j . '</td>';
                 if (isset($backtrace[$i]['class'])) {
-                    echo    '	<td class="TD">'.$backtrace[$i]['class'].$backtrace[$i]['type'].$backtrace[$i]['function'].'()</td>';
+                    echo    '	<td class="TD">' . $backtrace[$i]['class'] . $backtrace[$i]['type'] . $backtrace[$i]['function'] . '()</td>';
                 } else {
-                    echo    '	<td class="TD">'.$backtrace[$i]['function'].'()</td>';
+                    echo    '	<td class="TD">' . $backtrace[$i]['function'] . '()</td>';
                 }
                 if (isset($backtrace[$i]['file'])) {
-                    echo    '		<td class="TD">'.$backtrace[$i]['file'].':'.$backtrace[$i]['line'].'</td>';
+                    echo    '		<td class="TD">' . $backtrace[$i]['file'] . ':' . $backtrace[$i]['line'] . '</td>';
                 } else {
                     echo    '		<td class="TD">&#160;</td>';
                 }

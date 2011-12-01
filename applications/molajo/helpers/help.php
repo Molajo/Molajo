@@ -36,7 +36,7 @@ class MolajoHelpHelper
         $app = MolajoFactory::getApplication();
 
         if (is_null($component)) {
-            $component = MolajoApplicationComponent::getComponentName();
+            $component = MolajoComponent::getComponentName();
         }
 
 
@@ -59,7 +59,7 @@ class MolajoHelpHelper
             // Component help URL overrides user and global.
             if ($useComponent) {
                 // Look for help URL in component parameters.
-                $parameters = MolajoApplicationComponent::getParameters($component);
+                $parameters = MolajoComponent::getParameters($component);
                 $url = $parameters->get('helpURL');
 
                 if ($url == '') {
@@ -91,7 +91,7 @@ class MolajoHelpHelper
         $jlang = explode('-', $lang->getTag());
 
         $debug = $lang->setDebug(false);
-        $keyref = MolajoText::_($ref);
+        $keyref = MolajoTextHelper::_($ref);
         $lang->setDebug($debug);
 
         // Replace substitution codes in help URL.
@@ -124,7 +124,7 @@ class MolajoHelpHelper
         if ($local) {
             $try = str_replace($search, $replace, $url);
 
-            if (!JFile::exists(MOLAJO_BASE_FOLDER.'/'.$try)) {
+            if (!JFile::exists(MOLAJO_BASE_FOLDER . '/' . $try)) {
                 $replace[3] = 'en-GB';
                 $replace[4] = 'en';
                 $replace[5] = 'GB';

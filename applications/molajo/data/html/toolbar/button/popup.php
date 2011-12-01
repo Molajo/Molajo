@@ -29,11 +29,11 @@ class MolajoButtonPopup extends MolajoButton
     {
         MolajoHTML::_('behavior.modal');
 
-        $text = MolajoText::_($text);
+        $text = MolajoTextHelper::_($text);
         $class = $this->fetchIconClass($name);
         $doTask = $this->_getCommand($name, $url, $width, $height, $top, $left);
 
-        $html = "<a class=\"modal\" href=\"$doTask\" rel=\"{handler: 'iframe', size: {x: $width, y: $height}, onClose: function() {".$onClose."}}\">\n";
+        $html = "<a class=\"modal\" href=\"$doTask\" rel=\"{handler: 'iframe', size: {x: $width, y: $height}, onClose: function() {" . $onClose . "}}\">\n";
         $html .= "<span class=\"$class\">\n";
         $html .= "</span>\n";
         $html .= "$text\n";
@@ -53,7 +53,7 @@ class MolajoButtonPopup extends MolajoButton
      */
     public function fetchId($type, $name)
     {
-        return $this->_parent->getName().'-'."popup-$name";
+        return $this->_parent->getName() . '-' . "popup-$name";
     }
 
     /**
@@ -66,7 +66,7 @@ class MolajoButtonPopup extends MolajoButton
     protected function _getCommand($name, $url, $width, $height, $top, $left)
     {
         if (substr($url, 0, 4) !== 'http') {
-            $url = JURI::base().$url;
+            $url = JURI::base() . $url;
         }
 
         return $url;

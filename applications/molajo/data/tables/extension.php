@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -40,7 +40,7 @@ class MolajoTableExtension extends MolajoTable
     {
         // check for valid name
         if (trim($this->name) == '' || trim($this->element) == '') {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_EXTENSION'));
             return false;
         }
         return true;
@@ -78,9 +78,9 @@ class MolajoTableExtension extends MolajoTable
         $dbo = MolajoFactory::getDBO();
         $where = Array();
         foreach ($options as $col => $val) {
-            $where[] = $col.' = '.$dbo->Quote($val);
+            $where[] = $col . ' = ' . $dbo->Quote($val);
         }
-        $query = 'SELECT extension_id FROM #__extensions WHERE '.implode(' AND ', $where);
+        $query = 'SELECT extension_id FROM #__extensions WHERE ' . implode(' AND ', $where);
         $dbo->setQuery($query);
         return $dbo->loadResult();
     }
@@ -116,27 +116,27 @@ class MolajoTableExtension extends MolajoTable
             }
                 // Nothing to set publishing state on, return false.
             else {
-                $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
+                $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
                 return false;
             }
         }
 
         // Build the WHERE clause for the primary keys.
-        $where = $k.'='.implode(' OR '.$k.'=', $pks);
+        $where = $k . '=' . implode(' OR ' . $k . '=', $pks);
 
         // Determine if there is checkin support for the table.
         if (!property_exists($this, 'checked_out') || !property_exists($this, 'checked_out_time')) {
             $checkin = '';
         }
         else {
-            $checkin = ' AND (checked_out = 0 OR checked_out = '.(int)$userId.')';
+            $checkin = ' AND (checked_out = 0 OR checked_out = ' . (int)$userId . ')';
         }
 
         // Update the publishing state for rows with the given primary keys.
         $this->_db->setQuery(
-            'UPDATE '.$this->_db->quoteName($this->_tbl) .
-            ' SET '.$this->_db->quoteName('enabled').' = '.(int)$state .
-            ' WHERE ('.$where.')' .
+            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
+            ' SET ' . $this->_db->quoteName('enabled') . ' = ' . (int)$state .
+            ' WHERE (' . $where . ')' .
             $checkin
         );
         $this->_db->query();

@@ -81,7 +81,7 @@ abstract class File implements Driver
         $fileName = str_replace('\\', '.', $className) . $this->_extension;
 
         // Check whether file exists
-        foreach ((array) $this->_paths as $path) {
+        foreach ((array)$this->_paths as $path) {
             if (file_exists($path . DIRECTORY_SEPARATOR . $fileName)) {
                 return $path . DIRECTORY_SEPARATOR . $fileName;
             }

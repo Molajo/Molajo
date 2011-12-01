@@ -2,12 +2,13 @@
 /**
  * @package     Molajo
  * @subpackage  Links Plugin
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-class MolajoLinksExternalLinks {
+class MolajoLinksExternalLinks
+{
 
     /**
      * MolajoLinksExternalLinks::driver
@@ -20,41 +21,41 @@ class MolajoLinksExternalLinks {
      * should be meaningful enough to make sense when read out of context — either on its own or as part of
      * a sequence of links. Link text should also be terse.”
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	string		The 'page' number
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    string        The 'page' number
      * @param   string          Then name of the text field in the content object
-     * @return	string
-     * @since	1.6
+     * @return    string
+     * @since    1.6
      */
-    function driver ($context, &$content, &$parameters, $page = 0, $location)
+    function driver($context, &$content, &$parameters, $page = 0, $location)
     {
         /** initialization **/
         $firsttime = true;
 
         /** search **/
-        preg_match_all('#<\s*a.*?href\s*=\s*(?:"|\')((?=[a-z0-9]+:).*?)(?:"|\').*?>(.*?)<\s*/\s*a\s*>#i', $content->$location, $matches );
+        preg_match_all('#<\s*a.*?href\s*=\s*(?:"|\')((?=[a-z0-9]+:).*?)(?:"|\').*?>(.*?)<\s*/\s*a\s*>#i', $content->$location, $matches);
 
         /** replace **/
-        for ( $i=0; $i < count($matches[0]); $i++ ) {
+        for ($i = 0; $i < count($matches[0]); $i++) {
             if ($firsttime) {
                 $firsttime = false;
-                $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
+                $molajoSystemPlugin =& MolajoPlugin::getPlugin('system', 'molajo');
                 $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
                 $rel = $systemParameters->def('index_external_links', 'noindex');
-                $rel .= ', '.$systemParameters->def('follow_external_links', 'nofollow');
-                
-		$document =& MolajoFactory::getDocument();
-		$document->addScript(JURI::base().'media/molajo/js/mooexternal.js' );
-		$document->addStyleSheet(JURI::base().'media/molajo/css/external.css' );
+                $rel .= ', ' . $systemParameters->def('follow_external_links', 'nofollow');
+
+                $document =& MolajoFactory::getDocument();
+                $document->addScript(JURI::base() . 'media/molajo/js/mooexternal.js');
+                $document->addStyleSheet(JURI::base() . 'media/molajo/css/external.css');
 
             }
 
-            $verify = MolajoApplicationHelperURLs::checkURLExternal ($matches[1][$i]);
+            $verify = MolajoApplicationHelperURLs::checkURLExternal($matches[1][$i]);
             if (verify == true) {
-                    $content->$location = str_replace( $matches[0][$i], '<a class="external" href="'.$matches[1][$i].'" rel="'.$rel.'" title="'.$matches[2][$i].'">'.$matches[2][$i].'</a>', $content->$location);
+                $content->$location = str_replace($matches[0][$i], '<a class="external" href="' . $matches[1][$i] . '" rel="' . $rel . '" title="' . $matches[2][$i] . '">' . $matches[2][$i] . '</a>', $content->$location);
             }
         }
     }

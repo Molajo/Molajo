@@ -9,17 +9,17 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_FORM_USER_DESCRIPTION</description>
-	<files>
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-		<folder>parameters</folder>
-		<file>layout.xml</file>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layouts_user.ini</language>
-		<language tag="language/en-GB">en-GB.layouts_user.sys.ini</language>
-	</languages>
+    <files>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+        <folder>parameters</folder>
+        <file>layout.xml</file>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layouts_user.ini</language>
+        <language tag="language/en-GB">en-GB.layouts_user.sys.ini</language>
+    </languages>
 </extension>

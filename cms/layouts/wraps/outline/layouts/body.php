@@ -7,8 +7,8 @@
  */
 defined('MOLAJO') or die;
 ?>
-    <div class="mod-preview">
-    <div class="mod-preview-info"><?php echo $this->row->position."[".$this->row->style."]"; ?></div>
+<div class="mod-preview">
+    <div class="mod-preview-info"><?php echo $this->row->position . "[" . $this->row->style . "]"; ?></div>
     <div class="mod-preview-wrapper">
         <?php echo $this->row->content; ?>
     </div>

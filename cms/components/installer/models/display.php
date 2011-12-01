@@ -12,8 +12,8 @@ defined('MOLAJO') or die;
  *
  * InstallerModelDisplay extends MolajoModelDisplay extends JModel extends JObject
  *
- * @package	    Molajo
- * @subpackage	Model
+ * @package        Molajo
+ * @subpackage    Model
  * @since       1.0
  */
 class InstallerModelDisplay extends MolajoModelDummy
@@ -24,11 +24,11 @@ class InstallerModelDisplay extends MolajoModelDummy
     var $can_install = false;
 
     public function __construct($properties = null)
-	{
-		parent::__construct($properties);
+    {
+        parent::__construct($properties);
 
         $this->_init();
-	}
+    }
 
     /**
      * display
@@ -39,10 +39,10 @@ class InstallerModelDisplay extends MolajoModelDummy
     {
         $system_checks = array();
 
-        if(1==1) {
+        if (1 == 1) {
             $this->can_install = true;
         }
-        
+
         return $system_checks;
     }
 
@@ -73,7 +73,7 @@ class InstallerModelDisplay extends MolajoModelDummy
      */
     public function getDBTypes()
     {
-        require_once MOLAJO_CMS_COMPONENTS.'/installer/helpers/installer.php';
+        require_once MOLAJO_CMS_COMPONENTS . '/installer/helpers/installer.php';
 
         return InstallerHelper::detectDBTypes();
     }
@@ -87,7 +87,7 @@ class InstallerModelDisplay extends MolajoModelDummy
      */
     public function getMockDataTypes()
     {
-        require_once MOLAJO_CMS_COMPONENTS.'/installer/helpers/installer.php';
+        require_once MOLAJO_CMS_COMPONENTS . '/installer/helpers/installer.php';
 
         return InstallerHelper::detectMockDataTypes();
     }
@@ -99,9 +99,9 @@ class InstallerModelDisplay extends MolajoModelDummy
      */
     public function getFormFields()
     {
-        if(JRequest::get('post')) {
-            foreach(JRequest::get('post') AS $name => $value) {
-                if(key_exists($name, $this->setup)) {
+        if (JRequest::get('post')) {
+            foreach (JRequest::get('post') AS $name => $value) {
+                if (key_exists($name, $this->setup)) {
                     $this->setup[$name] = $value;
                 }
             }
@@ -110,7 +110,7 @@ class InstallerModelDisplay extends MolajoModelDummy
 
     public function getSetup()
     {
-        if(is_null($this->setup)) {
+        if (is_null($this->setup)) {
             $this->_init();
         }
         return $this->setup;
@@ -133,9 +133,9 @@ class InstallerModelDisplay extends MolajoModelDummy
 
     protected function _init()
     {
-        require_once(MOLAJO_CMS_COMPONENTS.'/installer/helpers/installer.php');
+        require_once(MOLAJO_CMS_COMPONENTS . '/installer/helpers/installer.php');
         var_dump(MolajoLanguageHelper::detectLanguage());
-        if(is_null($this->setup)) {
+        if (is_null($this->setup)) {
             $this->setup = array(
                 'language' => MolajoLanguageHelper::detectLanguage(), // This actually doesn't work right now but that may well be caused by the splitting up of classes
                 'sitename' => '',
@@ -157,15 +157,15 @@ class InstallerModelDisplay extends MolajoModelDummy
         $this->getFormFields();
     }
 
-    public function install($config=array())
+    public function install($config = array())
     {
-		// Get the $config array as a JObject for easier handling.
-		$config = JArrayHelper::toObject($config, 'JObject');
+        // Get the $config array as a JObject for easier handling.
+        $config = JArrayHelper::toObject($config, 'JObject');
 
         var_dump(get_class_methods($this));
 
         // Remove or backup existing tables based on config
-        if($config->remove_tables) {
+        if ($config->remove_tables) {
             $this->deleteTables();
         }
         else {
@@ -173,7 +173,7 @@ class InstallerModelDisplay extends MolajoModelDummy
         }
 
         // Install sample data if required
-        if($config->sample_data) {
+        if ($config->sample_data) {
 
         }
 

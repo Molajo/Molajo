@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -248,7 +248,7 @@ class MolajoDocument extends JObject
 
         if (empty($instances[$signature])) {
             $format = preg_replace('/[^A-Z0-9_\.-]/i', '', $format);
-            $path = dirname(__FILE__).'/'.$format.'/'.$format.'.php';
+            $path = dirname(__FILE__) . '/' . $format . '/' . $format . '.php';
             $holdFormat = null;
 
             if (file_exists($path)) {
@@ -258,16 +258,16 @@ class MolajoDocument extends JObject
             }
 
             // Determine the path and class
-            $class = 'MolajoDocument'.ucfirst($format);
+            $class = 'MolajoDocument' . ucfirst($format);
             if (class_exists($class)) {
 
             } else {
-                $path = dirname(__FILE__).'/'.$format.'/'.$format.'.php';
+                $path = dirname(__FILE__) . '/' . $format . '/' . $format . '.php';
                 if (file_exists($path)) {
                     require_once $path;
 
                 } else {
-                    MolajoError::raiseError(500, MolajoText::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
+                    MolajoError::raiseError(500, MolajoTextHelper::_('JLIB_DOCUMENT_ERROR_UNABLE_LOAD_DOC_CLASS'));
                 }
             }
 
@@ -447,7 +447,7 @@ class MolajoDocument extends JObject
             $this->_script[strtolower($format)] = $content;
 
         } else {
-            $this->_script[strtolower($format)] .= chr(13).$content;
+            $this->_script[strtolower($format)] .= chr(13) . $content;
         }
     }
 
@@ -487,7 +487,7 @@ class MolajoDocument extends JObject
             $this->_style[strtolower($format)] = $content;
 
         } else {
-            $this->_style[strtolower($format)] .= chr(13).$content;
+            $this->_style[strtolower($format)] .= chr(13) . $content;
         }
     }
 
@@ -839,16 +839,16 @@ class MolajoDocument extends JObject
      */
     public function loadRenderer($format)
     {
-        $class = 'MolajoDocumentRenderer'.$format;
+        $class = 'MolajoDocumentRenderer' . $format;
 
         if (class_exists($class)) {
         } else {
-            $path = dirname(__FILE__).'/'.$this->_type.'/renderer/'.$format.'.php';
+            $path = dirname(__FILE__) . '/' . $this->_type . '/renderer/' . $format . '.php';
 
             if (file_exists($path)) {
                 require_once $path;
             } else {
-                MolajoError::raiseError(500, MolajoText::_('Unable to load renderer class'));
+                MolajoError::raiseError(500, MolajoTextHelper::_('Unable to load renderer class'));
             }
         }
 
@@ -890,6 +890,6 @@ class MolajoDocument extends JObject
             JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);
         }
 
-        JResponse::setHeader('Content-Type', $this->_mime.'; charset='.$this->_charset);
+        JResponse::setHeader('Content-Type', $this->_mime . '; charset=' . $this->_charset);
     }
 }

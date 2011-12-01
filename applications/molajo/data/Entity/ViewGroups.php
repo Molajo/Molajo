@@ -40,18 +40,18 @@ class ViewGroups
      *
      * @ORM\ManyToOne(targetEntity="ContentTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
      * })
      */
     private $contentType;
-	
+
     /**
      * @var Categories
      *
      * @ORM\ManyToMany(targetEntity="Categories", mappedBy="viewGroup")
      */
     private $group;
-	
+
     /**
      * @var Users
      *
@@ -62,14 +62,14 @@ class ViewGroups
     public function __construct()
     {
         $this->group = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -89,7 +89,7 @@ class ViewGroups
     /**
      * Get viewGroupNameList
      *
-     * @return text 
+     * @return text
      */
     public function getViewGroupNameList()
     {
@@ -109,7 +109,7 @@ class ViewGroups
     /**
      * Get viewGroupIdList
      *
-     * @return text 
+     * @return text
      */
     public function getViewGroupIdList()
     {
@@ -129,7 +129,7 @@ class ViewGroups
     /**
      * Get contentType
      *
-     * @return data\Entity\ContentTypes 
+     * @return data\Entity\ContentTypes
      */
     public function getContentType()
     {
@@ -149,7 +149,7 @@ class ViewGroups
     /**
      * Get group
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getGroup()
     {
@@ -169,7 +169,7 @@ class ViewGroups
     /**
      * Get user
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getUser()
     {

@@ -16,4 +16,5 @@ use Gedmo\Exception;
 class DependentComponentNotFoundException
     extends \RuntimeException
     implements Exception
-{}
+{
+}

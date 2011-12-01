@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -38,7 +38,7 @@ class MolajoTableSession extends MolajoTable
         $ret = $this->_db->insertObject($this->_tbl, $this, 'session_id');
 
         if (!$ret) {
-            $this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
             return false;
         } else {
             return true;
@@ -51,7 +51,7 @@ class MolajoTableSession extends MolajoTable
         $ret = $this->_db->updateObject($this->_tbl, $this, 'session_id', $updateNulls);
 
         if (!$ret) {
-            $this->setError(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
+            $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_db->stderr()));
             return false;
         } else {
             return true;
@@ -66,8 +66,8 @@ class MolajoTableSession extends MolajoTable
         $application_ids = implode(',', $application_ids);
 
         $query = 'DELETE FROM #__sessions'
-                .' WHERE user_id = '.$this->_db->Quote($userId)
-                .' AND application_id IN ('.$application_ids.')';
+                 . ' WHERE user_id = ' . $this->_db->Quote($userId)
+                 . ' AND application_id IN (' . $application_ids . ')';
 
         $this->_db->setQuery($query);
 
@@ -89,7 +89,7 @@ class MolajoTableSession extends MolajoTable
     function purge($maxLifetime = 1440)
     {
         $past = time() - $maxLifetime;
-        $query = 'DELETE FROM '.$this->_tbl.' WHERE (session_time < \''.(int)$past.'\')'; // Index on 'VARCHAR'
+        $query = 'DELETE FROM ' . $this->_tbl . ' WHERE (session_time < \'' . (int)$past . '\')'; // Index on 'VARCHAR'
         $this->_db->setQuery($query);
 
         return $this->_db->query();
@@ -107,7 +107,7 @@ class MolajoTableSession extends MolajoTable
     function exists($user_id)
     {
         $query = 'SELECT COUNT(user_id) FROM #__sessions'
-                .' WHERE user_id = '.$this->_db->Quote($user_id);
+                 . ' WHERE user_id = ' . $this->_db->Quote($user_id);
 
         $this->_db->setQuery($query);
 
@@ -133,8 +133,8 @@ class MolajoTableSession extends MolajoTable
             $this->$k = $oid;
         }
 
-        $query = 'DELETE FROM '.$this->_db->quoteName($this->_tbl) .
-                 ' WHERE '.$this->_tbl_key.' = '.$this->_db->Quote($this->$k);
+        $query = 'DELETE FROM ' . $this->_db->quoteName($this->_tbl) .
+                 ' WHERE ' . $this->_tbl_key . ' = ' . $this->_db->Quote($this->$k);
 
         $this->_db->setQuery($query);
 

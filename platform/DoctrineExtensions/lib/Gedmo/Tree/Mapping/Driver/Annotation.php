@@ -3,8 +3,8 @@
 namespace Gedmo\Tree\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\AnnotationDriverInterface,
-    Doctrine\Common\Persistence\Mapping\ClassMetadata,
-    Gedmo\Exception\InvalidMappingException;
+Doctrine\Common\Persistence\Mapping\ClassMetadata,
+Gedmo\Exception\InvalidMappingException;
 
 /**
  * This is an annotation mapping driver for Tree
@@ -115,7 +115,8 @@ class Annotation implements AnnotationDriverInterface
     /**
      * {@inheritDoc}
      */
-    public function readExtendedMetadata(ClassMetadata $meta, array &$config) {
+    public function readExtendedMetadata(ClassMetadata $meta, array &$config)
+    {
         $class = $meta->getReflectionClass();
         // class annotations
         if ($annot = $this->reader->getClassAnnotation($class, self::TREE)) {

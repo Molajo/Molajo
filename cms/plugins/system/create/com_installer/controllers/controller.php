@@ -3,7 +3,7 @@
  * @version     $id: installer
  * @package     Molajo
  * @subpackage  Controller
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  *
  * 1. Had to override this Controller so that I could comment out the Helper File require statement to override the Helper File
@@ -16,35 +16,35 @@ jimport('joomla.application.component.controller');
 /**
  * Installer Controller
  *
- * @package		Joomla.Administrator
- * @subpackage	installer
- * @since		1.5
+ * @package        Joomla.Administrator
+ * @subpackage    installer
+ * @since        1.5
  */
 class InstallerController extends JController
 {
     /**
      * Method to display a view.
      *
-     * @param	boolean			If true, the view output will be cached
-     * @param	array			An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+     * @param    boolean            If true, the view output will be cached
+     * @param    array            An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
      *
-     * @return	JController		This object to support chaining.
-     * @since	1.5
+     * @return    JController        This object to support chaining.
+     * @since    1.5
      */
     public function display($cachable = false, $urlparameters = false)
     {
-//		require_once JPATH_COMPONENT.'/helpers/installer.php';
+        //		require_once JPATH_COMPONENT.'/helpers/installer.php';
 
         $document = MolajoFactory::getDocument();
 
         // Set the default view name and format from the Request.
-        $vName		= JRequest::getCmd('view', 'install');
-        $vFormat	= $document->getType();
-        $lName		= JRequest::getCmd('layout', 'default');
+        $vName = JRequest::getCmd('view', 'install');
+        $vFormat = $document->getType();
+        $lName = JRequest::getCmd('layout', 'default');
 
         // Get and render the view.
         if ($view = $this->getView($vName, $vFormat)) {
-            $ftp	= JClientHelper::setCredentialsFromRequest('ftp');
+            $ftp = JClientHelper::setCredentialsFromRequest('ftp');
             $view->assignRef('ftp', $ftp);
 
             // Get the model for the view.
@@ -66,12 +66,12 @@ class InstallerController extends JController
     /**
      * Create a set of extensions.
      *
-     * @since	1.6
+     * @since    1.6
      */
     function create()
     {
         JRequest::checkToken() or die;
-        $model	= $this->getModel('create');
+        $model = $this->getModel('create');
         $results = $model->create();
         $this->setRedirect(MolajoRouteHelper::_('index.php?option=installer&view=create', false));
         return $results;

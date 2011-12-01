@@ -3,7 +3,7 @@
 namespace Gedmo\Sortable\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\AnnotationDriverInterface,
-    Gedmo\Exception\InvalidMappingException;
+Gedmo\Exception\InvalidMappingException;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
@@ -27,7 +27,7 @@ class Annotation implements AnnotationDriverInterface
     const POSITION = 'Gedmo\\Mapping\\Annotation\\SortablePosition';
 
     /**
-     * Annotation to mark field as sorting group 
+     * Annotation to mark field as sorting group
      */
     const GROUP = 'Gedmo\\Mapping\\Annotation\\SortableGroup';
 
@@ -75,9 +75,10 @@ class Annotation implements AnnotationDriverInterface
     /**
      * {@inheritDoc}
      */
-    public function readExtendedMetadata(ClassMetadata $meta, array &$config) {
+    public function readExtendedMetadata(ClassMetadata $meta, array &$config)
+    {
         $class = $meta->getReflectionClass();
-        
+
         // property annotations
         foreach ($class->getProperties() as $property) {
             if ($meta->isMappedSuperclass && !$property->isPrivate() ||

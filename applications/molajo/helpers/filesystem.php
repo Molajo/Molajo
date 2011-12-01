@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -246,7 +246,7 @@ class MolajoFilesystemHelper
         if (!$streams) {
             $streams = array_map(
                 array('JFile', 'stripExt'),
-                JFolder::files(dirname(__FILE__).'/streams', '.php')
+                JFolder::files(dirname(__FILE__) . '/streams', '.php')
             );
         }
 

@@ -3,17 +3,17 @@
  * @version     $id: body.php
  * @package     Molajo
  * @subpackage  Edit Layout
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-defined('MOLAJO') or die; 
+defined('MOLAJO') or die;
 
 /** mt **/
 MolajoHTML::_('behavior.framework', true);
 MolajoHTML::_('behavior.tooltip');
 MolajoHTML::_('behavior.formvalidation');
 MolajoHTML::_('behavior.keepalive');
-MolajoHTML::_('script','system/multiselect.js', false, true);
+MolajoHTML::_('script', 'system/multiselect.js', false, true);
 
 /** form begin **/
 include dirname(__FILE__) . '/form/' . 'form_begin.php';

@@ -9,14 +9,14 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_DOCUMENT_MESSAGES_XML_DESCRIPTION</description>
-	<files>
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_document_messages.ini</language>
-		<language tag="language/en-GB">en-GB.layout_document_messages.sys.ini</language>
-	</languages>
+    <files>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_document_messages.ini</language>
+        <language tag="language/en-GB">en-GB.layout_document_messages.sys.ini</language>
+    </languages>
 </extension>

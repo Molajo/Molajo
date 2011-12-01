@@ -3,15 +3,15 @@
  * @version     $id: layout
  * @package     Molajo
  * @subpackage  Single View
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /** loop through columns **/
 $count = 0;
-for ($i=1; $i < 1000; $i++) {
-    $this->tempColumnName = $this->parameters->def($this->tempSection.$i);
+for ($i = 1; $i < 1000; $i++) {
+    $this->tempColumnName = $this->parameters->def($this->tempSection . $i);
 
     if ($this->tempColumnName == null) {
         break;
@@ -22,7 +22,7 @@ for ($i=1; $i < 1000; $i++) {
         }
         $count++;
         /** see if column exists, if not use default handler **/
-        $filename = dirname(__FILE__).'/form/'.strtolower('edit_'.$this->tempColumnName).'.php';
+        $filename = dirname(__FILE__) . '/form/' . strtolower('edit_' . $this->tempColumnName) . '.php';
         $fileExists = JFile::exists($filename);
 
         if ($fileExists === false) {

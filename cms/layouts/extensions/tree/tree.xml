@@ -9,15 +9,15 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_TREE_DESCRIPTION</description>
-	<files>
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_tree.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_tree.sys.ini</language>
-	</languages>
+    <files>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_tree.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_tree.sys.ini</language>
+    </languages>
 </extension>

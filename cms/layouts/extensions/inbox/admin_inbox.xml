@@ -9,13 +9,13 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_ADMINISTER_TITLE_DESCRIPTION</description>
-	<files>
-		<folder>images</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_title.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_title.sys.ini</language>
-	</languages>
+    <files>
+        <folder>images</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_admin_title.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_admin_title.sys.ini</language>
+    </languages>
 </extension>

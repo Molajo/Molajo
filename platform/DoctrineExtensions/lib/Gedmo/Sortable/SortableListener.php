@@ -46,7 +46,8 @@ class SortableListener extends MappedEventSubscriber
         $meta = $om->getClassMetadata(get_class($object));
         if ($config = $this->getConfiguration($om, $meta->name)) {
             if (isset($config['position'])
-                    && is_null($meta->getReflectionProperty($config['position'])->getValue($object))) {
+                && is_null($meta->getReflectionProperty($config['position'])->getValue($object))
+            ) {
                 $meta->getReflectionProperty($config['position'])->setValue($object, -1);
             }
         }
@@ -147,7 +148,8 @@ class SortableListener extends MappedEventSubscriber
         if (isset($this->relocations[$hash])) {
             foreach ($this->relocations[$hash]['deltas'] as $delta) {
                 if ($delta['start'] <= $newPosition
-                        && ($delta['stop'] > $newPosition || $delta['stop'] < 0)) {
+                    && ($delta['stop'] > $newPosition || $delta['stop'] < 0)
+                ) {
                     $applyDelta += $delta['delta'];
                 }
             }
@@ -184,8 +186,8 @@ class SortableListener extends MappedEventSubscriber
         $groups = array();
         foreach ($config['groups'] as $group) {
             $changed = $changed ||
-                (array_key_exists($group, $changeSet)
-                    && $changeSet[$group][0] != $changeSet[$group][1]);
+                       (array_key_exists($group, $changeSet)
+                        && $changeSet[$group][0] != $changeSet[$group][1]);
             $groups[$group] = $meta->getReflectionProperty($group)->getValue($object);
         }
 
@@ -235,7 +237,8 @@ class SortableListener extends MappedEventSubscriber
         if (isset($this->relocations[$hash])) {
             foreach ($this->relocations[$hash]['deltas'] as $delta) {
                 if ($delta['start'] <= $newPosition
-                        && ($delta['stop'] > $newPosition || $delta['stop'] < 0)) {
+                    && ($delta['stop'] > $newPosition || $delta['stop'] < 0)
+                ) {
                     $applyDelta += $delta['delta'];
                 }
             }
@@ -287,21 +290,21 @@ class SortableListener extends MappedEventSubscriber
                 $absDelta = abs($delta['delta']);
                 $qb = $em->createQueryBuilder();
                 $qb->update($relocation['name'], 'n')
-                   ->set("n.{$config['position']}", "n.{$config['position']} ".$sign." :delta")
-                   ->where("n.{$config['position']} >= :start")
-                   ->setParameter('delta', $absDelta)
-                   ->setParameter('start', $delta['start']);
+                        ->set("n.{$config['position']}", "n.{$config['position']} " . $sign . " :delta")
+                        ->where("n.{$config['position']} >= :start")
+                        ->setParameter('delta', $absDelta)
+                        ->setParameter('start', $delta['start']);
                 if ($delta['stop'] > 0) {
                     $qb->andWhere("n.{$config['position']} < :stop")
-                       ->setParameter('stop', $delta['stop']);
+                            ->setParameter('stop', $delta['stop']);
                 }
                 $i = 1;
                 foreach ($relocation['groups'] as $group => $val) {
                     if (is_null($val)) {
-                        $qb->andWhere($qb->expr()->isNull('n.'.$group));
+                        $qb->andWhere($qb->expr()->isNull('n.' . $group));
                     } else {
-                        $qb->andWhere('n.'.$group.' = :group'.$i);
-                        $qb->setParameter('group'.$i, $val);
+                        $qb->andWhere('n.' . $group . ' = :group' . $i);
+                        $qb->setParameter('group' . $i, $val);
                     }
                     $i++;
                 }
@@ -321,7 +324,7 @@ class SortableListener extends MappedEventSubscriber
             if (is_object($val)) {
                 $val = spl_object_hash($val);
             }
-            $data .= $group.$val;
+            $data .= $group . $val;
         }
         return md5($data);
     }
@@ -330,8 +333,8 @@ class SortableListener extends MappedEventSubscriber
     {
         $maxPos = null;
         $qb = $em->createQueryBuilder();
-        $qb->select('MAX(n.'.$config['position'].')')
-           ->from($meta->name, 'n');
+        $qb->select('MAX(n.' . $config['position'] . ')')
+                ->from($meta->name, 'n');
         $qb = $this->addGroupWhere($qb, $config["groups"], $meta, $object);
         $query = $qb->getQuery();
         $query->useQueryCache(false);
@@ -348,10 +351,10 @@ class SortableListener extends MappedEventSubscriber
         foreach ($groups as $group) {
             $value = $meta->getReflectionProperty($group)->getValue($object);
             if (is_null($value)) {
-                $qb->andWhere($qb->expr()->isNull('n.'.$group));
+                $qb->andWhere($qb->expr()->isNull('n.' . $group));
             } else {
-                $qb->andWhere('n.'.$group.' = :group'.$i);
-                $qb->setParameter('group'.$i, $value);
+                $qb->andWhere('n.' . $group . ' = :group' . $i);
+                $qb->setParameter('group' . $i, $value);
             }
             $i++;
         }
@@ -375,14 +378,16 @@ class SortableListener extends MappedEventSubscriber
 
         try {
             $newDelta = array('start' => $start, 'stop' => $stop, 'delta' => $delta);
-            array_walk($this->relocations[$hash]['deltas'], function(&$val, $idx, $needle) {
-                if ($val['start'] == $needle['start'] && $val['stop'] == $needle['stop']) {
-                    $val['delta'] += $needle['delta'];
-                    throw new \Exception("Found delta. No need to add it again.");
-                }
-            }, $newDelta);
+            array_walk($this->relocations[$hash]['deltas'], function(&$val, $idx, $needle)
+                {
+                    if ($val['start'] == $needle['start'] && $val['stop'] == $needle['stop']) {
+                        $val['delta'] += $needle['delta'];
+                        throw new \Exception("Found delta. No need to add it again.");
+                    }
+                }, $newDelta);
             $this->relocations[$hash]['deltas'][] = $newDelta;
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     /**

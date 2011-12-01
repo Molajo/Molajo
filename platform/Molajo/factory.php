@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Factory
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -98,7 +98,7 @@ abstract class MolajoFactory
         }
 
         if ($file === null) {
-            $file = MOLAJO_PLATFORM.'/configuration.php';
+            $file = MOLAJO_PLATFORM . '/configuration.php';
         }
         self::$config = self::_createConfig($file, $type, '');
 
@@ -152,7 +152,7 @@ abstract class MolajoFactory
         /* Debug */
         self::$config->set('debug', self::$siteConfig->get('debug', '0'));
         self::$config->set('debug_language', self::$siteConfig->get('debug_language', '0'));
-        
+
         /** App Config */
         self::getApplicationConfig();
 
@@ -220,7 +220,7 @@ abstract class MolajoFactory
         if (self::$siteConfig) {
         } else {
             if ($file === null) {
-                $file = MOLAJO_SITE_PATH.'/configuration.php';
+                $file = MOLAJO_SITE_PATH . '/configuration.php';
             }
             self::$siteConfig = self::_createConfig($file, $type, 'Site');
         }
@@ -244,11 +244,11 @@ abstract class MolajoFactory
         if (self::$appConfig) {
         } else {
             if ($file === null) {
-               if (defined('MOLAJO_APPLICATION_PATH')) {
-                   $file = MOLAJO_APPLICATION_PATH.'/configuration.php';
+                if (defined('MOLAJO_APPLICATION_PATH')) {
+                    $file = MOLAJO_APPLICATION_PATH . '/configuration.php';
                 } else {
-                   $file = MOLAJO_APPLICATIONS.'/'.MOLAJO_APPLICATION;
-                }                
+                    $file = MOLAJO_APPLICATIONS . '/' . MOLAJO_APPLICATION;
+                }
             }
 
             self::$appConfig = self::_createConfig($file, $type, 'Application');
@@ -337,7 +337,7 @@ abstract class MolajoFactory
         } else {
             $instance = MolajoUser::getInstance($id);
         }
-//echo '<pre>';var_dump($instance);'</pre>';
+        //echo '<pre>';var_dump($instance);'</pre>';
         return $instance;
     }
 
@@ -356,7 +356,7 @@ abstract class MolajoFactory
      */
     public static function getCache($group = '', $handler = 'callback', $storage = null)
     {
-        $hash = md5($group.$handler.$storage);
+        $hash = md5($group . $handler . $storage);
         if (isset(self::$cache[$hash])) {
             return self::$cache[$hash];
         }
@@ -385,7 +385,9 @@ abstract class MolajoFactory
      *
      * @deprecated
      */
-    public static function getACL() {}
+    public static function getACL()
+    {
+    }
 
     /**
      * Get a database object
@@ -457,7 +459,7 @@ abstract class MolajoFactory
             return $simplepie;
         }
         else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
+            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
         }
 
         return false;
@@ -485,7 +487,7 @@ abstract class MolajoFactory
                 break;
 
             case 'dom':
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoText::_('MOLAJO_UTIL_ERROR_DOMIT'));
+                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('MOLAJO_UTIL_ERROR_DOMIT'));
                 $doc = null;
                 break;
 
@@ -520,7 +522,7 @@ abstract class MolajoFactory
 
         if (empty($xml)) {
             // There was an error
-            MolajoError::raiseWarning(100, MolajoText::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
+            MolajoError::raiseWarning(100, MolajoTextHelper::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
 
             if ($isFile) {
                 MolajoError::raiseWarning(100, $data);
@@ -528,7 +530,7 @@ abstract class MolajoFactory
 
             foreach (libxml_get_errors() as $error)
             {
-                MolajoError::raiseWarning(100, 'XML: '.$error->message);
+                MolajoError::raiseWarning(100, 'XML: ' . $error->message);
             }
         }
 
@@ -594,7 +596,7 @@ abstract class MolajoFactory
             $mainLocale = $locale;
 
             if ($mainLocale !== false) {
-                $classname = str_replace('-', '_', $mainLocale).'Date';
+                $classname = str_replace('-', '_', $mainLocale) . 'Date';
 
                 if (class_exists($classname)) {
                 } else {
@@ -604,7 +606,7 @@ abstract class MolajoFactory
                 $classname = 'JDate';
             }
         }
-        $key = $time.'-'.$tzOffset;
+        $key = $time . '-' . $tzOffset;
 
         $tmp = new $classname($time, $tzOffset);
         return $tmp;
@@ -633,7 +635,7 @@ abstract class MolajoFactory
         // Sanitize the namespace.
         $namespace = ucfirst((string)preg_replace('/[^A-Z_]/i', '', $namespace));
 
-        $name = 'MolajoConfig'.$namespace;
+        $name = 'MolajoConfig' . $namespace;
 
         if ($type == 'PHP' && class_exists($name)) {
             $config = new $name();
@@ -694,11 +696,11 @@ abstract class MolajoFactory
 
         if (MolajoError::isError($db)) {
             header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: '.(string)$db);
+            jexit('Database Error: ' . (string)$db);
         }
 
         if ($db->getErrorNum() > 0) {
-            MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
+            MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
         }
 
         $db->debug($debug);
@@ -818,17 +820,17 @@ abstract class MolajoFactory
             $SCPOptions = JClientHelper::getCredentials('scp');
 
             if ($FTPOptions['enabled'] == 1 && $use_network) {
-                $prefix = 'ftp://'.$FTPOptions['user'].':'.$FTPOptions['pass'].'@'.$FTPOptions['host'];
-                $prefix .= $FTPOptions['port'] ? ':'.$FTPOptions['port'] : '';
+                $prefix = 'ftp://' . $FTPOptions['user'] . ':' . $FTPOptions['pass'] . '@' . $FTPOptions['host'];
+                $prefix .= $FTPOptions['port'] ? ':' . $FTPOptions['port'] : '';
                 $prefix .= $FTPOptions['root'];
             }
             else if ($SCPOptions['enabled'] == 1 && $use_network) {
-                $prefix = 'ssh2.sftp://'.$SCPOptions['user'].':'.$SCPOptions['pass'].'@'.$SCPOptions['host'];
-                $prefix .= $SCPOptions['port'] ? ':'.$SCPOptions['port'] : '';
+                $prefix = 'ssh2.sftp://' . $SCPOptions['user'] . ':' . $SCPOptions['pass'] . '@' . $SCPOptions['host'];
+                $prefix .= $SCPOptions['port'] ? ':' . $SCPOptions['port'] : '';
                 $prefix .= $SCPOptions['root'];
             }
             else {
-                $prefix = MOLAJO_BASE_FOLDER.'/';
+                $prefix = MOLAJO_BASE_FOLDER . '/';
             }
 
             $retval = new JStream($prefix, MOLAJO_BASE_FOLDER, $context);

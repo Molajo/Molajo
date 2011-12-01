@@ -9,13 +9,13 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_SOCIAL_BOOKMARKS_NAME_DESCRIPTION</description>
-	<files>
-		<folder>js</folder>
-		<folder>language</folder>
+    <files>
+        <folder>js</folder>
+        <folder>language</folder>
         <folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_social_bookmarks.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_social_bookmarks.sys.ini</language>
-	</languages>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_social_bookmarks.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_social_bookmarks.sys.ini</language>
+    </languages>
 </extension>

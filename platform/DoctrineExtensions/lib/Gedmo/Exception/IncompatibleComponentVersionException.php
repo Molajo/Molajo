@@ -16,4 +16,5 @@ use Gedmo\Exception;
 class IncompatibleComponentVersionException
     extends \RuntimeException
     implements Exception
-{}
+{
+}

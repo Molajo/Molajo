@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  MolajoFactory
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -28,7 +28,7 @@ class MolajoMail extends PHPMailer
     public function __construct()
     {
         // PHPMailer has an issue using the relative path for it's language files
-        $this->SetLanguage('joomla', JOOMLA_LIBRARY.'/phpmailer/language/');
+        $this->SetLanguage('joomla', JOOMLA_LIBRARY . '/phpmailer/language/');
     }
 
     /**
@@ -67,14 +67,14 @@ class MolajoMail extends PHPMailer
     public function Send()
     {
         if (($this->Mailer == 'mail') && !function_exists('mail')) {
-            return MolajoError::raiseNotice(500, MolajoText::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
+            return MolajoError::raiseNotice(500, MolajoTextHelper::_('MOLAJO_MAIL_FUNCTION_DISABLED'));
         }
 
         @$result = parent::Send();
 
         if ($result == false) {
             // TODO: Set an appropriate error number
-            $result = MolajoError::raiseNotice(500, MolajoText::_($this->ErrorInfo));
+            $result = MolajoError::raiseNotice(500, MolajoTextHelper::_($this->ErrorInfo));
         }
 
         return $result;
@@ -103,7 +103,7 @@ class MolajoMail extends PHPMailer
         }
         else {
             // If it is neither, we throw a warning
-            MolajoError::raiseWarning(0, MolajoText::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
+            MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_MAIL_INVALID_EMAIL_SENDER', $from));
         }
 
         return $this;
@@ -411,10 +411,10 @@ class MolajoMail extends PHPMailer
      */
     public function sendAdminMail($adminName, $adminEmail, $email, $type, $title, $author, $url = null)
     {
-        $subject = MolajoText::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
+        $subject = MolajoTextHelper::sprintf('MOLAJO_MAIL_USER_SUBMITTED', $type);
 
-        $message = sprintf(MolajoText::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-        $message .= MolajoText::_('MOLAJO_MAIL_MSG')."\n";
+        $message = sprintf(MolajoTextHelper::_('MOLAJO_MAIL_MSG_ADMIN'), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
+        $message .= MolajoTextHelper::_('MOLAJO_MAIL_MSG') . "\n";
 
         $this->addRecipient($adminEmail);
         $this->setSubject($subject);

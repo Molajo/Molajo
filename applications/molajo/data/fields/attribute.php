@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Attributes
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -67,7 +67,7 @@ class MolajoAttribute
      */
     public function __get($property)
     {
-        return (isset($this->{'_'.$property}) ? $this->{'_'.$property} : null);
+        return (isset($this->{'_' . $property}) ? $this->{'_' . $property} : null);
     }
 
     /**
@@ -81,8 +81,8 @@ class MolajoAttribute
      */
     public function __set($property, $value)
     {
-        if (isset($this->{'_'.$property})) {
-            $this->{'_'.$property} = $value;
+        if (isset($this->{'_' . $property})) {
+            $this->{'_' . $property} = $value;
         }
     }
 
@@ -96,7 +96,7 @@ class MolajoAttribute
      */
     public function __isset($property)
     {
-        return isset($this->{'_'.$property});
+        return isset($this->{'_' . $property});
     }
 
     /**
@@ -110,14 +110,14 @@ class MolajoAttribute
      */
     public function requireClassFile($reportError = true)
     {
-        $class = 'MolajoAttribute'.ucfirst($this->_name);
+        $class = 'MolajoAttribute' . ucfirst($this->_name);
 
         if (class_exists($class)) {
             return true;
         }
 
         /** component override */
-        $classFile = MOLAJO_APPLICATIONS_DATA.'/fields/attributes/'.$this->_name.'.php';
+        $classFile = MOLAJO_APPLICATIONS_DATA . '/fields/attributes/' . $this->_name . '.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }
@@ -127,13 +127,13 @@ class MolajoAttribute
         }
 
         /** library class */
-        $classFile = MOLAJO_APPLICATIONS_DATA.'/fields/attributes/'.$this->_name.'.php';
+        $classFile = MOLAJO_APPLICATIONS_DATA . '/fields/attributes/' . $this->_name . '.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }
 
         if ($reportError === true) {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoText::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME').' '.$class.' '.$classFile, 'error');
+            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME') . ' ' . $class . ' ' . $classFile, 'error');
             return false;
         }
 

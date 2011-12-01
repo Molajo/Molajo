@@ -2,34 +2,35 @@
 /**
  * @package     Molajo
  * @subpackage  Content Plugin
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-class MolajoContentQuotes {
+class MolajoContentQuotes
+{
 
     /**
      * Excerpt
      *
-     * @var	string
-     * @access	public
+     * @var    string
+     * @access    public
      */
     protected $excerpt;
 
     /**
      * Cite
      *
-     * @var	string
-     * @access	public
+     * @var    string
+     * @access    public
      */
     protected $cite;
 
     /**
      * Unique
      *
-     * @var	string
-     * @access	public
+     * @var    string
+     * @access    public
      */
     protected $unique;
 
@@ -38,28 +39,28 @@ class MolajoContentQuotes {
      *
      * Implements pull quotes and blockquotes/cites
 
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	string		The 'page' number
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    string        The 'page' number
      * @param   string          Then name of the text field in the content object
-     * @return	string
-     * @since	1.6
+     * @return    string
+     * @since    1.6
      */
-    function driver ($context, &$content, &$parameters, $page, $location)
+    function driver($context, &$content, &$parameters, $page, $location)
     {
         /** parameters **/
-        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** Block Quotes **/
         if ($systemParameters->def('enable_blockquotes', 0) == 1) {
-            MolajoContentQuotes::blockQuotes  ($context, &$content, &$parameters, $page, $location);
+            MolajoContentQuotes::blockQuotes($context, &$content, &$parameters, $page, $location);
         }
 
         /** Pull Quotes **/
         if ($systemParameters->def('enable_pullquotes', 0) == 1) {
-            MolajoContentQuotes::pullQuotes  ($context, &$content, &$parameters, $page, $location);
+            MolajoContentQuotes::pullQuotes($context, &$content, &$parameters, $page, $location);
         }
         return;
     }
@@ -73,35 +74,37 @@ class MolajoContentQuotes {
      * @param string $location
      * @return
      */
-    function blockQuotes ($context, &$content, &$parameters, $page, $location)
+    function blockQuotes($context, &$content, &$parameters, $page, $location)
     {
         /** search for pullquotes **/
-        preg_match_all( "#{blockquote}(.*?){/blockquote}#s", $content->$location, $matches );
-        if (count($matches[1])== 0) { return; }
+        preg_match_all("#{blockquote}(.*?){/blockquote}#s", $content->$location, $matches);
+        if (count($matches[1]) == 0) {
+            return;
+        }
         $workText = $content->$location;
 
-        for ( $i=0; $i < count($matches); $i++ ) {
+        for ($i = 0; $i < count($matches); $i++) {
 
             /** model **/
             $this->excerpt = substr($matches[0][$i], 12, strlen($matches[0][$i]) - 25);
             $this->unique = $i;
 
             /** cite: extract from blockquote **/
-            preg_match( "#{cite}(.*?){/cite}#s", $this->excerpt, $matchCite );
+            preg_match("#{cite}(.*?){/cite}#s", $this->excerpt, $matchCite);
 
-            if (count($matchCite)> 0) {
+            if (count($matchCite) > 0) {
                 $this->cite = $matchCite[1];
-                $this->excerpt = str_replace($matchCite[0], '', $this->excerpt ) ;
+                $this->excerpt = str_replace($matchCite[0], '', $this->excerpt);
             } else {
                 $this->cite = '';
             }
 
             /** layout **/
-            $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'blockquote');
-            $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
- 
+            $layoutPath = MolajoPlugin::getLayoutPath(array('type' => 'molajo', 'name' => 'content'), $layout = 'blockquote');
+            $renderedLayout = MolajoPlugin::generateLayout($layoutPath);
+
             /** replace **/
-            $workText = str_replace( $matches[0][$i], $renderedLayout, $workText ) ;
+            $workText = str_replace($matches[0][$i], $renderedLayout, $workText);
         }
         /** update source **/
         $content->$location = $workText;
@@ -116,27 +119,29 @@ class MolajoContentQuotes {
      * @param array $parameters
      * @param int $page
      * @param string $location
-     * @return 
+     * @return
      */
-    function pullQuotes ($context, &$content, &$parameters, $page, $location)
+    function pullQuotes($context, &$content, &$parameters, $page, $location)
     {
         /** search for pullquotes **/
-        preg_match_all( "#{pullquote}(.*?){/pullquote}#s", $content->$location, $matches );
-        if (count($matches[1])== 0) { return; }
+        preg_match_all("#{pullquote}(.*?){/pullquote}#s", $content->$location, $matches);
+        if (count($matches[1]) == 0) {
+            return;
+        }
         $workText = $content->$location;
 
-        for ( $i=0; $i < count($matches); $i++ ) {
+        for ($i = 0; $i < count($matches); $i++) {
 
             /** model **/
             $this->excerpt = substr($matches[0][$i], 11, strlen($matches[0][$i]) - 23);
             $this->unique = $i;
 
             /** layout **/
-            $layoutPath = MolajoApplicationPlugin::getLayoutPath(array('type' =>'molajo', 'name' =>'content'), $layout = 'pullquote');
-            $renderedLayout = MolajoApplicationPlugin::generateLayout ($layoutPath);
+            $layoutPath = MolajoPlugin::getLayoutPath(array('type' => 'molajo', 'name' => 'content'), $layout = 'pullquote');
+            $renderedLayout = MolajoPlugin::generateLayout($layoutPath);
 
             /** replace (pullquote stay within article) **/
-            $workText = str_replace( $matches[0][$i],($this->excerpt.' '.$renderedLayout), $workText );
+            $workText = str_replace($matches[0][$i], ($this->excerpt . ' ' . $renderedLayout), $workText);
         }
         /** update source **/
         $content->$location = $workText;

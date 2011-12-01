@@ -34,22 +34,22 @@ class MolajoFormFieldColorpicker extends MolajoFormField
     protected function getInput()
     {
 
-        $size = $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
-        $maxLength = $this->element['maxlength'] ? ' maxlength="'.(int)$this->element['maxlength'].'"' : '';
+        $size = $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
+        $maxLength = $this->element['maxlength'] ? ' maxlength="' . (int)$this->element['maxlength'] . '"' : '';
 
-        $class = 'class="color {pickerPosition:'."'right'".'}"';
+        $class = 'class="color {pickerPosition:' . "'right'" . '}"';
 
         $readonly = ((string)$this->element['readonly'] == 'true') ? ' readonly="readonly"' : '';
         $disabled = ((string)$this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
 
-        $onchange = $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
+        $onchange = $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
         $document =& MolajoFactory::getDocument();
         $document->addScript('../media/molajo/js/jscolor.js');
 
-        return '<input type="text" name="'.$this->name.'" id="'.$this->id.'"' .
-               ' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' .
-               $class.$size.$disabled.$readonly.$onchange.$maxLength.'/>';
+        return '<input type="text" name="' . $this->name . '" id="' . $this->id . '"' .
+               ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
+               $class . $size . $disabled . $readonly . $onchange . $maxLength . '/>';
 
     }
 }

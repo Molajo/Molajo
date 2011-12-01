@@ -1,10 +1,10 @@
 <?php
 /**
- * @package		Unified HTML5 Template Framework for Joomla!+
- * @author		Cristina Solana http://nightshiftcreative.com
- * @author		Matt Thomas http://construct-framework.com | http://betweenbrain.com
- * @copyright	Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
- * @license		GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
+ * @package        Unified HTML5 Template Framework for Joomla!+
+ * @author        Cristina Solana http://nightshiftcreative.com
+ * @author        Matt Thomas http://construct-framework.com | http://betweenbrain.com
+ * @copyright    Copyright (C) 2009 - 2011 Matt Thomas. All rights reserved.
+ * @license        GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
  */
 defined('_JEXEC') or die;
 
@@ -13,14 +13,14 @@ defined('_JEXEC') or die;
  *
  * Helper functions for the Construct Template Framework
  *
- * @package	Molajo
- * @subpackage	Helper
- * @since	1.0
+ * @package    Molajo
+ * @subpackage    Helper
+ * @since    1.0
  */
 class ConstructTemplateHelper
 {
     /** @var array */
-    public $includeFile = array ();
+    public $includeFile = array();
 
     /**
      * getLayoutOverride
@@ -44,22 +44,22 @@ class ConstructTemplateHelper
      *
      * $helper->includeFile = array
      *  ('file1Index'       => $this->template.'/layouts/index.php',
-     * 	    'file2Index' 	=> $this->template.'/layouts/component/'.$currentComponent.'.php',
-     * 		'file3Index' 	=> $this->template.'/layouts/section/section-'.$sectionId.'.php',
-     * 	);
+     *         'file2Index'     => $this->template.'/layouts/component/'.$currentComponent.'.php',
+     *         'file3Index'     => $this->template.'/layouts/section/section-'.$sectionId.'.php',
+     *     );
      *
      * 4. call the ConstructTemplateHelper getIncludeFile method
      *
-     * 	$results = $helper->getIncludeFile ();
-     * 	if ($results === false) {
-     * 	    $alternateIndexFile = $this->template.'/layouts/index.php';
-     * 	} else {
-     * 	    $alternateIndexFile = $results;
-     * 	}
+     *     $results = $helper->getIncludeFile ();
+     *     if ($results === false) {
+     *         $alternateIndexFile = $this->template.'/layouts/index.php';
+     *     } else {
+     *         $alternateIndexFile = $results;
+     *     }
      *
      * @return string
      */
-    function getIncludeFile ()
+    function getIncludeFile()
     {
         if (count($this->includeFile) == 0) {
             return false;
@@ -67,7 +67,7 @@ class ConstructTemplateHelper
 
         foreach ($this->includeFile as $name => $path) {
             // return first file that exists
-            if(JFile::exists(JPATH_BASE.'/'.$path)) {
+            if (JFile::exists(JPATH_BASE . '/' . $path)) {
                 RETURN $path;
             }
         }

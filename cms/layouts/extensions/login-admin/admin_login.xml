@@ -9,15 +9,15 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_ADMINISTER_LOGIN_DESCRIPTION</description>
-	<files>
-		<folder>css</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_login.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_login.sys.ini</language>
-	</languages>
+    <files>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_admin_login.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_admin_login.sys.ini</language>
+    </languages>
 </extension>

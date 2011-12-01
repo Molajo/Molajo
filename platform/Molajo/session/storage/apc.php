@@ -31,7 +31,7 @@ class MolajoSessionStorageApc extends MolajoSessionStorage
     public function __construct($options = array())
     {
         if (!$this->test()) {
-            return MolajoError::raiseError(404, MolajoText::_('JLIB_SESSION_APC_EXTENSION_NOT_AVAILABLE'));
+            return MolajoError::raiseError(404, MolajoTextHelper::_('JLIB_SESSION_APC_EXTENSION_NOT_AVAILABLE'));
         }
 
         parent::__construct($options);
@@ -74,7 +74,7 @@ class MolajoSessionStorageApc extends MolajoSessionStorage
      */
     public function read($id)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
         return (string)apc_fetch($sess_id);
     }
 
@@ -90,7 +90,7 @@ class MolajoSessionStorageApc extends MolajoSessionStorage
      */
     public function write($id, $session_data)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
         return apc_store($sess_id, $session_data, ini_get("session.gc_maxlifetime"));
     }
 
@@ -105,7 +105,7 @@ class MolajoSessionStorageApc extends MolajoSessionStorage
      */
     public function destroy($id)
     {
-        $sess_id = 'sess_'.$id;
+        $sess_id = 'sess_' . $id;
         return apc_delete($sess_id);
     }
 

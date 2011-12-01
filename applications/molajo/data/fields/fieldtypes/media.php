@@ -77,27 +77,27 @@ class MolajoFormFieldMedia extends MolajoFormField
         $attr = '';
 
         // Initialize some field attributes.
-        $attr .= $this->element['class'] ? ' class="'.(string)$this->element['class'].'"' : '';
-        $attr .= $this->element['size'] ? ' size="'.(int)$this->element['size'].'"' : '';
+        $attr .= $this->element['class'] ? ' class="' . (string)$this->element['class'] . '"' : '';
+        $attr .= $this->element['size'] ? ' size="' . (int)$this->element['size'] . '"' : '';
 
         // Initialize JavaScript field attributes.
-        $attr .= $this->element['onchange'] ? ' onchange="'.(string)$this->element['onchange'].'"' : '';
+        $attr .= $this->element['onchange'] ? ' onchange="' . (string)$this->element['onchange'] . '"' : '';
 
         // The text field.
         $html[] = '<div class="fltlft">';
-        $html[] = '	<calendar type="text" name="'.$this->name.'" id="'.$this->id.'"' .
-                  ' value="'.htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8').'"' .
-                  ' readonly="readonly"'.$attr.' />';
+        $html[] = '	<calendar type="text" name="' . $this->name . '" id="' . $this->id . '"' .
+                  ' value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '"' .
+                  ' readonly="readonly"' . $attr . ' />';
         $html[] = '</div>';
 
         $directory = (string)$this->element['directory'];
-        if ($this->value && file_exists(MOLAJO_BASE_FOLDER.'/'.$this->value)) {
+        if ($this->value && file_exists(MOLAJO_BASE_FOLDER . '/' . $this->value)) {
             $folder = explode('/', $this->value);
             array_shift($folder);
             array_pop($folder);
             $folder = implode('/', $folder);
         }
-        elseif (file_exists(MOLAJO_BASE_FOLDER.'/'.MolajoApplicationComponent::getParameters('media')->get('image_path', 'images').'/'.$directory)) {
+        elseif (file_exists(MOLAJO_BASE_FOLDER . '/' . MolajoComponent::getParameters('media')->get('image_path', 'images') . '/' . $directory)) {
             $folder = $directory;
         }
         else {
@@ -106,20 +106,20 @@ class MolajoFormFieldMedia extends MolajoFormField
         // The button.
         $html[] = '<div class="button2-left">';
         $html[] = '	<div class="blank">';
-        $html[] = '		<a class="modal" title="'.MolajoText::_('MOLAJO_FORM_BUTTON_SELECT').'"' .
-                  ' href="'.($this->element['readonly'] ? '' : ($link ? $link
-                : 'index.php?option=media&amp;view=images&amp;layout=component&amp;asset='.$asset.'&amp;author='.$this->form->getValue($authorField)).'&amp;fieldid='.$this->id.'&amp;folder='.$folder).'"' .
+        $html[] = '		<a class="modal" title="' . MolajoTextHelper::_('MOLAJO_FORM_BUTTON_SELECT') . '"' .
+                  ' href="' . ($this->element['readonly'] ? '' : ($link ? $link
+                : 'index.php?option=media&amp;view=images&amp;layout=component&amp;asset=' . $asset . '&amp;author=' . $this->form->getValue($authorField)) . '&amp;fieldid=' . $this->id . '&amp;folder=' . $folder) . '"' .
                   ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
-        $html[] = '			'.MolajoText::_('MOLAJO_FORM_BUTTON_SELECT').'</a>';
+        $html[] = '			' . MolajoTextHelper::_('MOLAJO_FORM_BUTTON_SELECT') . '</a>';
         $html[] = '	</div>';
         $html[] = '</div>';
 
         $html[] = '<div class="button2-left">';
         $html[] = '	<div class="blank">';
-        $html[] = '		<a title="'.MolajoText::_('MOLAJO_FORM_BUTTON_CLEAR').'"' .
+        $html[] = '		<a title="' . MolajoTextHelper::_('MOLAJO_FORM_BUTTON_CLEAR') . '"' .
                   ' href="#"' .
-                  ' onclick="document.getElementById(\''.$this->id.'\').value=\'\'; document.getElementById(\''.$this->id.'\').onchange();">';
-        $html[] = '			'.MolajoText::_('MOLAJO_FORM_BUTTON_CLEAR').'</a>';
+                  ' onclick="document.getElementById(\'' . $this->id . '\').value=\'\'; document.getElementById(\'' . $this->id . '\').onchange();">';
+        $html[] = '			' . MolajoTextHelper::_('MOLAJO_FORM_BUTTON_CLEAR') . '</a>';
         $html[] = '	</div>';
         $html[] = '</div>';
 

@@ -68,7 +68,7 @@ abstract class MolajoHtml
         $file = (count($parts) == 2 ? array_shift($parts) : '');
         $func = array_shift($parts);
 
-        return array(strtolower($prefix.'.'.$file.'.'.$func), $prefix, $file, $func);
+        return array(strtolower($prefix . '.' . $file . '.' . $func), $prefix, $file, $func);
     }
 
     /**
@@ -96,21 +96,21 @@ abstract class MolajoHtml
             return MolajoHTML::call($function, $args);
         }
 
-        $className = $prefix.ucfirst($file);
+        $className = $prefix . ucfirst($file);
 
         if (!class_exists($className)) {
             jimport('joomla.filesystem.path');
-            if ($path = JPath::find(MolajoHTML::$includePaths, strtolower($file).'.php')) {
+            if ($path = JPath::find(MolajoHTML::$includePaths, strtolower($file) . '.php')) {
                 require_once $path;
 
                 if (!class_exists($className)) {
-                    MolajoError::raiseError(500, MolajoText::sprintf('JLIB_HTML_ERROR_NOTFOUNDINFILE', $className, $func));
+                    MolajoError::raiseError(500, MolajoTextHelper::sprintf('JLIB_HTML_ERROR_NOTFOUNDINFILE', $className, $func));
                     return false;
                 }
             }
             else
             {
-                MolajoError::raiseError(500, MolajoText::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED_NOFILE', $prefix, $file));
+                MolajoError::raiseError(500, MolajoTextHelper::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED_NOFILE', $prefix, $file));
                 return false;
             }
         }
@@ -125,7 +125,7 @@ abstract class MolajoHtml
         }
         else
         {
-            MolajoError::raiseError(500, MolajoText::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED', $className, $func));
+            MolajoError::raiseError(500, MolajoTextHelper::sprintf('JLIB_HTML_ERROR_NOTSUPPORTED', $className, $func));
             return false;
         }
     }
@@ -209,7 +209,7 @@ abstract class MolajoHtml
         }
         else
         {
-            MolajoError::raiseError(500, MolajoText::_('JLIB_HTML_ERROR_FUNCTION_NOT_SUPPORTED'));
+            MolajoError::raiseError(500, MolajoTextHelper::_('JLIB_HTML_ERROR_FUNCTION_NOT_SUPPORTED'));
             return false;
         }
     }
@@ -231,7 +231,7 @@ abstract class MolajoHtml
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        return '<a href="'.$url.'" '.$attribs.'>'.$text.'</a>';
+        return '<a href="' . $url . '" ' . $attribs . '>' . $text . '</a>';
     }
 
     /**
@@ -252,7 +252,7 @@ abstract class MolajoHtml
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        return '<iframe src="'.$url.'" '.$attribs.' name="'.$name.'">'.$noFrames.'</iframe>';
+        return '<iframe src="' . $url . '" ' . $attribs . ' name="' . $name . '">' . $noFrames . '</iframe>';
     }
 
     /**
@@ -287,8 +287,8 @@ abstract class MolajoHtml
 
                 // Try to include files named filename.ext, filename_browser.ext, filename_browser_major.ext, filename_browser_major_minor.ext
                 // where major and minor are the browser version names
-                $potential = array($file, $strip.'_'.$browser.'.'.$ext, $strip.'_'.$browser.'_'.$major.'.'.$ext,
-                                   $strip.'_'.$browser.'_'.$major.'_'.$minor.'.'.$ext);
+                $potential = array($file, $strip . '_' . $browser . '.' . $ext, $strip . '_' . $browser . '_' . $major . '.' . $ext,
+                                   $strip . '_' . $browser . '_' . $major . '_' . $minor . '.' . $ext);
             }
             else
             {
@@ -309,8 +309,8 @@ abstract class MolajoHtml
                 foreach ($potential as $file)
                 {
                     // If the file is in the template folder
-                    if (file_exists(JPATH_THEMES."/$template/$folder/$file")) {
-                        $includes[] = JURI::base(true)."/templates/$template/$folder/$file";
+                    if (file_exists(JPATH_THEMES . "/$template/$folder/$file")) {
+                        $includes[] = JURI::base(true) . "/templates/$template/$folder/$file";
                     }
                     else
                     {
@@ -325,45 +325,45 @@ abstract class MolajoHtml
                                 list($element, $file) = explode('/', $file, 2);
 
                                 // Try to deal with plugins group in the media folder
-                                if (file_exists(JPATH_ROOT."/media/$extension/$element/$folder/$file")) {
-                                    $includes[] = JURI::root(true)."/media/$extension/$element/$folder/$file";
+                                if (file_exists(JPATH_ROOT . "/media/$extension/$element/$folder/$file")) {
+                                    $includes[] = JURI::root(true) . "/media/$extension/$element/$folder/$file";
                                 }
                                     // Try to deal with classical file in a a media subfolder called element
-                                elseif (file_exists(JPATH_ROOT."/media/$extension/$folder/$element/$file"))
+                                elseif (file_exists(JPATH_ROOT . "/media/$extension/$folder/$element/$file"))
                                 {
-                                    $includes[] = JURI::root(true)."/media/$extension/$folder/$element/$file";
+                                    $includes[] = JURI::root(true) . "/media/$extension/$folder/$element/$file";
                                 }
                                     // Try to deal with system files in the template folder
-                                elseif (file_exists(JPATH_THEMES."/$template/$folder/system/$element/$file"))
+                                elseif (file_exists(JPATH_THEMES . "/$template/$folder/system/$element/$file"))
                                 {
-                                    $includes[] = JURI::root(true)."/templates/$template/$folder/system/$element/$file";
+                                    $includes[] = JURI::root(true) . "/templates/$template/$folder/system/$element/$file";
                                 }
                                     // Try to deal with system files in the media folder
-                                elseif (file_exists(JPATH_ROOT."/media/system/$folder/$element/$file"))
+                                elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$element/$file"))
                                 {
-                                    $includes[] = JURI::root(true)."/media/system/$folder/$element/$file";
+                                    $includes[] = JURI::root(true) . "/media/system/$folder/$element/$file";
                                 }
                             }
                                 // Try to deals in the extension media folder
-                            elseif (file_exists(JPATH_ROOT."/media/$extension/$folder/$file"))
+                            elseif (file_exists(JPATH_ROOT . "/media/$extension/$folder/$file"))
                             {
-                                $includes[] = JURI::root(true)."/media/$extension/$folder/$file";
+                                $includes[] = JURI::root(true) . "/media/$extension/$folder/$file";
                             }
                                 // Try to deal with system files in the template folder
-                            elseif (file_exists(JPATH_THEMES."/$template/$folder/system/$file"))
+                            elseif (file_exists(JPATH_THEMES . "/$template/$folder/system/$file"))
                             {
-                                $includes[] = JURI::root(true)."/templates/$template/$folder/system/$file";
+                                $includes[] = JURI::root(true) . "/templates/$template/$folder/system/$file";
                             }
                                 // Try to deal with system files in the media folder
-                            elseif (file_exists(JPATH_ROOT."/media/system/$folder/$file"))
+                            elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$file"))
                             {
-                                $includes[] = JURI::root(true)."/media/system/$folder/$file";
+                                $includes[] = JURI::root(true) . "/media/system/$folder/$file";
                             }
                         }
                             // Try to deal with system files in the media folder
-                        elseif (file_exists(JPATH_ROOT."/media/system/$folder/$file"))
+                        elseif (file_exists(JPATH_ROOT . "/media/system/$folder/$file"))
                         {
-                            $includes[] = JURI::root(true)."/media/system/$folder/$file";
+                            $includes[] = JURI::root(true) . "/media/system/$folder/$file";
                         }
                     }
                 }
@@ -374,8 +374,8 @@ abstract class MolajoHtml
                 $includes = array();
                 foreach ($potential as $file)
                 {
-                    if (file_exists(JPATH_ROOT."/$file")) {
-                        $includes[] = JURI::root(true)."/$file";
+                    if (file_exists(JPATH_ROOT . "/$file")) {
+                        $includes[] = JURI::root(true) . "/$file";
                     }
                 }
             }
@@ -416,7 +416,7 @@ abstract class MolajoHtml
         }
         else
         {
-            return '<img src="'.(count($includes) ? $includes[0] : '').'" alt="'.$alt.'" '.$attribs.' />';
+            return '<img src="' . (count($includes) ? $includes[0] : '') . '" alt="' . $alt . '" ' . $attribs . ' />';
         }
     }
 
@@ -464,7 +464,7 @@ abstract class MolajoHtml
         // Function stylesheet($filename, $path = 'media/system/css/', $attribs = array())
         if (is_string($attribs)) {
             // Assume this was the old $path variable.
-            $file = $attribs.$file;
+            $file = $attribs . $file;
         }
 
         if (is_array($relative)) {
@@ -522,7 +522,7 @@ abstract class MolajoHtml
         // function script($filename, $path = 'media/system/js/', $mootools = true)
         if (is_string($framework)) {
             // Assume this was the old $path variable.
-            $file = $framework.$file;
+            $file = $framework . $file;
             $framework = $relative;
         }
 
@@ -577,7 +577,7 @@ abstract class MolajoHtml
         $uncompressed = $debug ? '-uncompressed' : '';
 
         $document = MolajoFactory::getDocument();
-        $document->addScript(JURI::root(true).'/media/system/js/core'.$uncompressed.'.js');
+        $document->addScript(JURI::root(true) . '/media/system/js/core' . $uncompressed . '.js');
     }
 
     /**
@@ -656,12 +656,12 @@ abstract class MolajoHtml
 
         // If no format is given use the default locale based format.
         if (!$format) {
-            $format = MolajoText::_('DATE_FORMAT_LC1');
+            $format = MolajoTextHelper::_('DATE_FORMAT_LC1');
         }
             // format is an existing language key
         elseif (MolajoFactory::getLanguage()->hasKey($format))
         {
-            $format = MolajoText::_($format);
+            $format = MolajoTextHelper::_($format);
         }
 
         if ($gregorian) {
@@ -725,7 +725,7 @@ abstract class MolajoHtml
         }
 
         if ($href) {
-            $tip = '<a href="'.$href.'">'.$text.'</a>';
+            $tip = '<a href="' . $href . '">' . $text . '</a>';
         }
         else
         {
@@ -733,10 +733,10 @@ abstract class MolajoHtml
         }
 
         if ($title) {
-            $tooltip = $title.'::'.$tooltip;
+            $tooltip = $title . '::' . $tooltip;
         }
 
-        return '<span class="'.$class.'" title="'.$tooltip.'">'.$tip.'</span>';
+        return '<span class="' . $class . '" title="' . $tooltip . '">' . $tip . '</span>';
     }
 
     /**
@@ -778,26 +778,26 @@ abstract class MolajoHtml
                         ->addScriptDeclaration(
                     'window.addEvent(\'domready\', function() {Calendar.setup({
 				// Id of the input field
-				inputField: "'.$id.'",
+				inputField: "' . $id . '",
 				// Format of the input field
-				ifFormat: "'.$format.'",
+				ifFormat: "' . $format . '",
 				// Trigger for the calendar (button ID)
-				button: "'.$id.'_img",
+				button: "' . $id . '_img",
 				// Alignment (defaults to "Bl")
 				align: "Tl",
 				singleClick: true,
-				firstDay: '.MolajoFactory::getLanguage()->getFirstDay().'
+				firstDay: ' . MolajoFactory::getLanguage()->getFirstDay() . '
 				});});'
                 );
                 $done[] = $id;
             }
         }
 
-        return '<input type="text" title="'.(0 !== (int)$value ? MolajoHTML::_('date', $value)
-                : '').'" name="'.$name.'" id="'.$id
-              .'" value="'.htmlspecialchars($value, ENT_COMPAT, 'UTF-8').'" '.$attribs.' />'
-              .($readonly ? ''
-                        : MolajoHTML::_('image', 'system/calendar.png', MolajoText::_('JLIB_HTML_CALENDAR'), array('class' => 'calendar', 'id' => $id.'_img'), true));
+        return '<input type="text" title="' . (0 !== (int)$value ? MolajoHTML::_('date', $value)
+                : '') . '" name="' . $name . '" id="' . $id
+               . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '" ' . $attribs . ' />'
+               . ($readonly ? ''
+                        : MolajoHTML::_('image', 'system/calendar.png', MolajoTextHelper::_('JLIB_HTML_CALENDAR'), array('class' => 'calendar', 'id' => $id . '_img'), true));
     }
 
     /**

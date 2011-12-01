@@ -45,7 +45,7 @@ abstract class MolajoInstallerHelper
         $inputHandle = @ fopen($url, "r");
         $error = strstr($php_errormsg, 'failed to open stream:');
         if (!$inputHandle) {
-            MolajoError::raiseWarning(42, MolajoText::sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
+            MolajoError::raiseWarning(42, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_DOWNLOAD_SERVER_CONNECT', $error));
             return false;
         }
 
@@ -60,11 +60,11 @@ abstract class MolajoInstallerHelper
 
         // Set the target path if not given
         if (!$target) {
-            $target = $config->get('tmp_path').'/'.self::getFilenameFromURL($url);
+            $target = $config->get('tmp_path') . '/' . self::getFilenameFromURL($url);
         }
         else
         {
-            $target = $config->get('tmp_path').'/'.basename($target);
+            $target = $config->get('tmp_path') . '/' . basename($target);
         }
 
         // Initialise contents buffer
@@ -74,7 +74,7 @@ abstract class MolajoInstallerHelper
         {
             $contents .= fread($inputHandle, 4096);
             if ($contents === false) {
-                MolajoError::raiseWarning(44, MolajoText::sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
+                MolajoError::raiseWarning(44, MolajoTextHelper::sprintf('JLIB_INSTALLER_ERROR_FAILED_READING_NETWORK_RESOURCES', $php_errormsg));
                 return false;
             }
         }
@@ -114,7 +114,7 @@ abstract class MolajoInstallerHelper
         $tmpdir = uniqid('install_');
 
         // Clean the paths to use for archive extraction
-        $extractdir = JPath::clean(dirname($p_filename).'/'.$tmpdir);
+        $extractdir = JPath::clean(dirname($p_filename) . '/' . $tmpdir);
         $archivename = JPath::clean($archivename);
 
         // Do the unpacking of the archive
@@ -141,8 +141,8 @@ abstract class MolajoInstallerHelper
         $dirList = array_merge(JFolder::files($extractdir, ''), JFolder::folders($extractdir, ''));
 
         if (count($dirList) == 1) {
-            if (JFolder::exists($extractdir.'/'.$dirList[0])) {
-                $extractdir = JPath::clean($extractdir.'/'.$dirList[0]);
+            if (JFolder::exists($extractdir . '/' . $dirList[0])) {
+                $extractdir = JPath::clean($extractdir . '/' . $dirList[0]);
             }
         }
 
@@ -180,7 +180,7 @@ abstract class MolajoInstallerHelper
         $files = JFolder::files($p_dir, '\.xml$', 1, true);
 
         if (!count($files)) {
-            MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
+            MolajoError::raiseWarning(1, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_NOTFINDXMLSETUPFILE'));
             return false;
         }
 
@@ -201,7 +201,7 @@ abstract class MolajoInstallerHelper
             return $type;
         }
 
-        MolajoError::raiseWarning(1, MolajoText::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
+        MolajoError::raiseWarning(1, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_NOTFINDJOOMLAXMLSETUPFILE'));
         // Free up memory.
         unset($xml);
         return false;
@@ -248,10 +248,10 @@ abstract class MolajoInstallerHelper
         if (is_file($package)) {
             JFile::delete($package);
         }
-        elseif (is_file(JPath::clean($config->get('tmp_path').'/'.$package)))
+        elseif (is_file(JPath::clean($config->get('tmp_path') . '/' . $package)))
         {
             // It might also be just a base filename
-            JFile::delete(JPath::clean($config->get('tmp_path').'/'.$package));
+            JFile::delete(JPath::clean($config->get('tmp_path') . '/' . $package));
         }
     }
 

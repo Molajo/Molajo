@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		$Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- * @since		1.5
+ * @version        $Id: view.html.php 20196 2011-01-09 02:40:25Z ian $
+ * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later; see LICENSE.txt
+ * @since        1.5
  */
 
 // no direct access
@@ -14,35 +14,35 @@ include_once dirname(__FILE__) . '/../default/view.php';
 /**
  * Extension Manager Install View
  *
- * @package		Joomla.Administrator
- * @subpackage	installer
- * @since		1.5
+ * @package        Joomla.Administrator
+ * @subpackage    installer
+ * @since        1.5
  */
 class InstallerViewInstall extends InstallerViewDefault
 {
-	/**
-	 * @since	1.0
-	 */
-	function display($tpl=null)
-	{
-		$paths = new stdClass();
-		$paths->first = '';
-		$state = $this->get('state');
+    /**
+     * @since    1.0
+     */
+    function display($tpl = null)
+    {
+        $paths = new stdClass();
+        $paths->first = '';
+        $state = $this->get('state');
 
-		$this->assignRef('paths', $paths);
-		$this->assignRef('state', $state);
+        $this->assignRef('paths', $paths);
+        $this->assignRef('state', $state);
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @since	1.0
-	 */
-	protected function addToolbar()
-	{
-		parent::addToolbar();
-		MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_INSTALL');
-	}
+    /**
+     * Add the page title and toolbar.
+     *
+     * @since    1.0
+     */
+    protected function addToolbar()
+    {
+        parent::addToolbar();
+        MolajoToolbarHelper::help('JHELP_EXTENSIONS_EXTENSION_MANAGER_INSTALL');
+    }
 }

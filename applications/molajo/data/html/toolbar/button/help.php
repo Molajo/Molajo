@@ -35,7 +35,7 @@ class MolajoButtonHelp extends MolajoButton
      */
     public function fetchButton($type = 'Help', $ref = '', $com = false, $override = null, $component = null)
     {
-        $text = MolajoText::_('TOOLBAR_HELP');
+        $text = MolajoTextHelper::_('TOOLBAR_HELP');
         $class = $this->fetchIconClass('help');
         $doTask = $this->_getCommand($ref, $com, $override, $component);
 
@@ -58,7 +58,7 @@ class MolajoButtonHelp extends MolajoButton
      */
     public function fetchId()
     {
-        return $this->_parent->getName().'-'."help";
+        return $this->_parent->getName() . '-' . "help";
     }
 
     /**
@@ -77,7 +77,7 @@ class MolajoButtonHelp extends MolajoButton
         // Get Help URL
         $url = MolajoApplicationHelper::createURL($ref, $com, $override, $component);
         $url = htmlspecialchars($url, ENT_QUOTES);
-        $cmd = "popupWindow('$url', '".MolajoText::_('MolajoApplicationHelper', true)."', 700, 500, 1)";
+        $cmd = "popupWindow('$url', '" . MolajoTextHelper::_('MolajoApplicationHelper', true) . "', 700, 500, 1)";
 
         return $cmd;
     }

@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -34,7 +34,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
         } else {
             $title = isset($attribs['title']) ? $attribs['title'] : null;
 
-            $module = MolajoApplicationModule::getModule($module, $title);
+            $module = MolajoModule::getModule($module, $title);
 
             if (is_object($module)) {
             } else {
@@ -73,26 +73,27 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
         }
 
         $contents = '';
-        // Default for compatibility purposes. Set cachemode parameter or use MolajoApplicationModule::moduleCache from within the
+        // Default for compatibility purposes. Set cachemode parameter or use MolajoModule::moduleCache from within the
         // module instead
         $cachemode = $parameters->get('cachemode', 'oldstatic');
 
         if ($parameters->get('cache', 0) == 1
             && $conf->get('caching') >= 1
             && $cachemode != 'id'
-            && $cachemode != 'safeuri') {
+            && $cachemode != 'safeuri'
+        ) {
 
             // Default to itemid creating method and workarounds on
             $cacheparameters = new stdClass;
             $cacheparameters->cachemode = $cachemode;
-            $cacheparameters->class = 'MolajoApplicationModule';
+            $cacheparameters->class = 'MolajoModule';
             $cacheparameters->method = 'renderModule';
             $cacheparameters->methodparameters = array($module, $attribs);
 
-            $contents = MolajoApplicationModule::ModuleCache($module, $parameters, $cacheparameters);
+            $contents = MolajoModule::ModuleCache($module, $parameters, $cacheparameters);
 
         } else {
-            $contents = MolajoApplicationModule::renderModule($module, $attribs);
+            $contents = MolajoModule::renderModule($module, $attribs);
         }
 
         return $contents;

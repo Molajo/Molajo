@@ -7,7 +7,11 @@ a.mostread
 a.pathway
 a.readon
 a.tooltip
-button#trigger_{ID} /* Value is set programatically */
+button#trigger_ {
+    ID
+}
+
+/* Value is set programatically */
 button.button
 button.validate
 div#{PANEID} /* Value is set programatically */
@@ -45,7 +49,11 @@ form#poll
 form#selectForm
 form.form-validate
 form.josForm
-form{FORMNAME} /* Value is set programatically */
+form {
+    FORMNAME
+}
+
+/* Value is set programatically */
 h2.tab
 h3.jpane-toggler
 h3.title
@@ -56,9 +64,21 @@ img.calendar
 input#{NAME} /* Value is set programatically */
 input#{VALUE} /* Value is set programatically */
 input#alt
-input#area_{VALUE} /* Value is set programatically */
-input#cb{ITEM_ID} /* Value is set programatically */
-input#cb{ROW_NUMBER} /* Value is set programatically */
+input#area_ {
+    VALUE
+}
+
+/* Value is set programatically */
+input#cb {
+    ITEM_ID
+}
+
+/* Value is set programatically */
+input#cb {
+    ROW_NUMBER
+}
+
+/* Value is set programatically */
 input#contact_email
 input#contact_email_copy
 input#contact_name
@@ -81,7 +101,11 @@ input#search_searchword
 input#title
 input#token
 input#username
-input#voteid{VOTE ID NUMBER} /* Value is set programatically */
+input#voteid {
+    VOTE ID NUMBER
+}
+
+/* Value is set programatically */
 input.button
 input.inputbox
 input.required

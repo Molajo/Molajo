@@ -47,7 +47,7 @@ class Extensions
      *
      * @ORM\ManyToOne(targetEntity="ContentTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="content_type_id", referencedColumnName="id")
      * })
      */
     private $contentType;
@@ -57,17 +57,16 @@ class Extensions
      *
      * @ORM\ManyToOne(targetEntity="UpdateSites")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="update_site_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="update_site_id", referencedColumnName="id")
      * })
      */
     private $updateSite;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,7 +86,7 @@ class Extensions
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -107,7 +106,7 @@ class Extensions
     /**
      * Get element
      *
-     * @return string 
+     * @return string
      */
     public function getElement()
     {
@@ -127,7 +126,7 @@ class Extensions
     /**
      * Get folder
      *
-     * @return string 
+     * @return string
      */
     public function getFolder()
     {
@@ -147,7 +146,7 @@ class Extensions
     /**
      * Get contentType
      *
-     * @return data\Entity\ContentTypes 
+     * @return data\Entity\ContentTypes
      */
     public function getContentType()
     {
@@ -167,7 +166,7 @@ class Extensions
     /**
      * Get updateSite
      *
-     * @return data\Entity\UpdateSites 
+     * @return data\Entity\UpdateSites
      */
     public function getUpdateSite()
     {

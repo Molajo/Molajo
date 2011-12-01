@@ -32,7 +32,7 @@ abstract class MolajoHtmlSliders
     {
         self::_loadBehavior($group, $parameters);
 
-        return '<div id="'.$group.'" class="pane-sliders"><div style="display:none;"><div>';
+        return '<div id="' . $group . '" class="pane-sliders"><div style="display:none;"><div>';
     }
 
     /**
@@ -59,8 +59,8 @@ abstract class MolajoHtmlSliders
      */
     public static function panel($text, $id)
     {
-        return '</div></div><div class="panel"><h3 class="pane-toggler title" id="'.$id.'"><a href="javascript:void(0);"><span>'.$text
-              .'</span></a></h3><div class="pane-slider content">';
+        return '</div></div><div class="panel"><h3 class="pane-toggler title" id="' . $id . '"><a href="javascript:void(0);"><span>' . $text
+               . '</span></a></h3><div class="pane-slider content">';
     }
 
     /**
@@ -90,24 +90,25 @@ abstract class MolajoHtmlSliders
             $options = '{';
             $opt['onActive'] = "function(toggler, i) {toggler.addClass('pane-toggler-down');' .
 				'toggler.removeClass('pane-toggler');i.addClass('pane-down');i.removeClass('pane-hide');Cookie.write('jpanesliders_"
-                              .$group."',$$('div#".$group.".pane-sliders > .panel > h3').indexOf(toggler));}";
+                               . $group . "',$$('div#" . $group . ".pane-sliders > .panel > h3').indexOf(toggler));}";
             $opt['onBackground'] = "function(toggler, i) {toggler.addClass('pane-toggler');' .
 				'toggler.removeClass('pane-toggler-down');i.addClass('pane-hide');i.removeClass('pane-down');if($$('div#"
-                                  .$group.".pane-sliders > .panel > h3').length==$$('div#".$group
-                                  .".pane-sliders > .panel > h3.pane-toggler').length) Cookie.write('jpanesliders_".$group."',-1);}";
+                                   . $group . ".pane-sliders > .panel > h3').length==$$('div#" . $group
+                                   . ".pane-sliders > .panel > h3.pane-toggler').length) Cookie.write('jpanesliders_" . $group . "',-1);}";
             $opt['duration'] = (isset($parameters['duration'])) ? (int)$parameters['duration'] : 300;
             $opt['display'] = (isset($parameters['useCookie']) && $parameters['useCookie'])
-                    ? JRequest::getInt('jpanesliders_'.$group, $display, 'cookie')
+                    ? JRequest::getInt('jpanesliders_' . $group, $display, 'cookie')
                     : $display;
             $opt['show'] = (isset($parameters['useCookie']) && $parameters['useCookie'])
-                    ? JRequest::getInt('jpanesliders_'.$group, $show, 'cookie') : $show;
+                    ? JRequest::getInt('jpanesliders_' . $group, $show, 'cookie') : $show;
             $opt['opacity'] = (isset($parameters['opacityTransition']) && ($parameters['opacityTransition'])) ? 'true'
                     : 'false';
-            $opt['alwaysHide'] = (isset($parameters['allowAllClose']) && (!$parameters['allowAllClose'])) ? 'false' : 'true';
+            $opt['alwaysHide'] = (isset($parameters['allowAllClose']) && (!$parameters['allowAllClose'])) ? 'false'
+                    : 'true';
             foreach ($opt as $k => $v)
             {
                 if ($v) {
-                    $options .= $k.': '.$v.',';
+                    $options .= $k . ': ' . $v . ',';
                 }
             }
             if (substr($options, -1) == ',') {
@@ -115,9 +116,9 @@ abstract class MolajoHtmlSliders
             }
             $options .= '}';
 
-            $js = "window.addEvent('domready', function(){ new Fx.Accordion($$('div#".$group
-                 .".pane-sliders > .panel > h3.pane-toggler'), $$('div#".$group.".pane-sliders > .panel > div.pane-slider'), ".$options
-                 ."); });";
+            $js = "window.addEvent('domready', function(){ new Fx.Accordion($$('div#" . $group
+                  . ".pane-sliders > .panel > h3.pane-toggler'), $$('div#" . $group . ".pane-sliders > .panel > div.pane-slider'), " . $options
+                  . "); });";
 
             $document->addScriptDeclaration($js);
         }

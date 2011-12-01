@@ -3,8 +3,8 @@
 namespace Gedmo\Tree;
 
 use Doctrine\Common\EventArgs,
-    Gedmo\Mapping\MappedEventSubscriber,
-    Doctrine\Common\Persistence\ObjectManager;
+Gedmo\Mapping\MappedEventSubscriber,
+Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * The tree listener handles the synchronization of
@@ -70,9 +70,9 @@ class TreeListener extends MappedEventSubscriber
                 $managerName = 'ODM';
             }
             if (!isset($this->strategyInstances[$config['strategy']])) {
-                $strategyClass = $this->getNamespace().'\\Strategy\\'.$managerName.'\\'.ucfirst($config['strategy']);
+                $strategyClass = $this->getNamespace() . '\\Strategy\\' . $managerName . '\\' . ucfirst($config['strategy']);
                 if (!class_exists($strategyClass)) {
-                    throw new \Gedmo\Exception\InvalidArgumentException($managerName." TreeListener does not support tree type: {$config['strategy']}");
+                    throw new \Gedmo\Exception\InvalidArgumentException($managerName . " TreeListener does not support tree type: {$config['strategy']}");
                 }
                 $this->strategyInstances[$config['strategy']] = new $strategyClass($this);
             }

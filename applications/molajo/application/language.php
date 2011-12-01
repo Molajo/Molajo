@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Language
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -168,11 +168,11 @@ class MolajoLanguage extends JObject
      */
     public static function getInstance($lang, $debug = false)
     {
-        if (isset(self::$languages[$lang.$debug])) {
+        if (isset(self::$languages[$lang . $debug])) {
         } else {
-            self::$languages[$lang.$debug] = new MolajoLanguage($lang, $debug);
+            self::$languages[$lang . $debug] = new MolajoLanguage($lang, $debug);
         }
-        return self::$languages[$lang.$debug];
+        return self::$languages[$lang . $debug];
     }
 
     /**
@@ -196,10 +196,11 @@ class MolajoLanguage extends JObject
         $this->setLanguage($lang);
         $this->setDebug($debug);
 
-        $filename = MOLAJO_CMS_LANGUAGES."/overrides/$lang.override.ini";
+        $filename = MOLAJO_CMS_LANGUAGES . "/overrides/$lang.override.ini";
 
         if (file_exists($filename)
-            && $contents = $this->parse($filename)) {
+            && $contents = $this->parse($filename)
+        ) {
 
             if (is_array($contents)) {
                 $this->override = $contents;
@@ -208,11 +209,11 @@ class MolajoLanguage extends JObject
         }
 
         /** Localise */
-        $class = str_replace('-', '_', $lang.'Localise');
+        $class = str_replace('-', '_', $lang . 'Localise');
         if (class_exists($class)) {
 
         } else {
-            $localise = MOLAJO_CMS_LANGUAGES."/$lang/$lang.localise.php";
+            $localise = MOLAJO_CMS_LANGUAGES . "/$lang/$lang.localise.php";
             if (file_exists($localise)) {
                 require_once $localise;
             }
@@ -266,7 +267,7 @@ class MolajoLanguage extends JObject
         $key = strtoupper($string);
 
         if (isset($this->strings[$key])) {
-            $string = $this->debug ? '**'.$this->strings[$key].'**' : $this->strings[$key];
+            $string = $this->debug ? '**' . $this->strings[$key] . '**' : $this->strings[$key];
 
             // Store debug information
             if ($this->debug) {
@@ -292,7 +293,7 @@ class MolajoLanguage extends JObject
 
                 $this->orphans[$key][] = $caller;
 
-                $string = '??'.$string.'??';
+                $string = '??' . $string . '??';
             }
         }
 
@@ -326,7 +327,7 @@ class MolajoLanguage extends JObject
             return call_user_func($this->transliterator, $string);
         }
 
-        $string = MolajoLanguagetransliterate::utf8_latin_to_ascii($string);
+        $string = MolajoTransliterateHelper::utf8_latin_to_ascii($string);
         $string = JString::strtolower($string);
 
         return $string;
@@ -647,13 +648,14 @@ class MolajoLanguage extends JObject
             $internal = true;
         }
 
-        $filename = $internal ? $lang : $lang.'.'.$extension;
+        $filename = $internal ? $lang : $lang . '.' . $extension;
         $filename = "$path/$filename.ini";
 
         $result = false;
 
         if (isset($this->paths[$extension][$filename])
-                && $reload === false) {
+            && $reload === false
+        ) {
             $result = true;
 
         } else {
@@ -661,14 +663,15 @@ class MolajoLanguage extends JObject
 
             // Check whether there was a problem with loading the file
             if ($result === false
-                && $default === true) {
+                && $default === true
+            ) {
 
                 // No strings, so either file doesn't exist or the file is invalid
                 $oldFilename = $filename;
 
                 // Check the standard file name
                 $path = self::getLanguagePath($basePath, $this->default);
-                $filename = $internal ? $this->default : $this->default.'.'.$extension;
+                $filename = $internal ? $this->default : $this->default . '.' . $extension;
                 $filename = "$path/$filename.ini";
 
                 // If the one we tried is different than the new name, try again
@@ -799,18 +802,18 @@ class MolajoLanguage extends JObject
 
             // Check if we encountered any errors.
             if (count($errors)) {
-                if (basename($filename) != $this->lang.'.ini') {
-                    $this->errorfiles[$filename] = $filename.MolajoText::sprintf('JERROR_PARSING_LANGUAGE_FILE', implode(', ', $errors));
+                if (basename($filename) != $this->lang . '.ini') {
+                    $this->errorfiles[$filename] = $filename . MolajoTextHelper::sprintf('JERROR_PARSING_LANGUAGE_FILE', implode(', ', $errors));
                 }
                 else
                 {
-                    $this->errorfiles[$filename] = $filename.'&#160;: error(s) in line(s) '.implode(', ', $errors);
+                    $this->errorfiles[$filename] = $filename . '&#160;: error(s) in line(s) ' . implode(', ', $errors);
                 }
             }
             elseif ($php_errormsg)
             {
                 // We didn't find any errors but there's probably a parse notice.
-                $this->errorfiles['PHP'.$filename] = 'PHP parser errors :'.$php_errormsg;
+                $this->errorfiles['PHP' . $filename] = 'PHP parser errors :' . $php_errormsg;
             }
 
             $this->debug = true;
@@ -839,7 +842,7 @@ class MolajoLanguage extends JObject
     }
 
     /**
-     * Determine who called MolajoLanguage or MolajoText.
+     * Determine who called MolajoLanguage or MolajoTextHelper.
      *
      * @return  array  Caller information.
      *
@@ -864,7 +867,7 @@ class MolajoLanguage extends JObject
             $class = @ $step['class'];
 
             // We're looking for something outside of language.php
-            if ($class == 'MolajoLanguage' || $class == 'MolajoText') {
+            if ($class == 'MolajoLanguage' || $class == 'MolajoTextHelper') {
             } else {
                 $info['function'] = @ $step['function'];
                 $info['class'] = $class;
@@ -1106,7 +1109,7 @@ class MolajoLanguage extends JObject
         if ($basePath == MOLAJO_CMS_LANGUAGES) {
             $dir = $basePath;
         } else {
-            $dir = $basePath.'/language';
+            $dir = $basePath . '/language';
         }
 
         if (empty($language)) {

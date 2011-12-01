@@ -1,25 +1,25 @@
 <fieldset
-    name="page_options"
-    label="PAGE_OPTIONS_LABEL">
+        name="page_options"
+        label="PAGE_OPTIONS_LABEL">
 
     <field
-        name="page_title"
-        type="text"
-        label="PAGE_TITLE_LABEL"
-        description="PAGE_TITLE_DESC"
-        />
+            name="page_title"
+            type="text"
+            label="PAGE_TITLE_LABEL"
+            description="PAGE_TITLE_DESC"
+            />
 
     <field
-        name="page_id"
-        type="text"
-        label="PAGE_ID_LABEL"
-        description="PAGE_ID_DESC"
-        />
+            name="page_id"
+            type="text"
+            label="PAGE_ID_LABEL"
+            description="PAGE_ID_DESC"
+            />
 
     <field
-        name="page_class_suffix"
-        type="text"
-        label="PAGE_CLASS_LABEL"
-        description="PAGE_CLASS_DESC"
-        />
+            name="page_class_suffix"
+            type="text"
+            label="PAGE_CLASS_LABEL"
+            description="PAGE_CLASS_DESC"
+            />
 </fieldset>

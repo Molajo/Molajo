@@ -76,7 +76,7 @@ class Applications
      * @ORM\ManyToMany(targetEntity="Sites", mappedBy="application")
      */
     private $site;
-	
+
     /**
      * @var Users
      *
@@ -87,15 +87,15 @@ class Applications
     public function __construct()
     {
         $this->extensionInstance = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->site = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->site = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -115,7 +115,7 @@ class Applications
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -135,7 +135,7 @@ class Applications
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -155,7 +155,7 @@ class Applications
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -175,7 +175,7 @@ class Applications
     /**
      * Get home
      *
-     * @return integer 
+     * @return integer
      */
     public function getHome()
     {
@@ -195,7 +195,7 @@ class Applications
     /**
      * Get parameters
      *
-     * @return text 
+     * @return text
      */
     public function getParameters()
     {
@@ -215,7 +215,7 @@ class Applications
     /**
      * Get customFields
      *
-     * @return text 
+     * @return text
      */
     public function getCustomFields()
     {
@@ -235,7 +235,7 @@ class Applications
     /**
      * Get extensionInstance
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getExtensionInstance()
     {
@@ -255,7 +255,7 @@ class Applications
     /**
      * Get site
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getSite()
     {
@@ -275,7 +275,7 @@ class Applications
     /**
      * Get user
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getUser()
     {

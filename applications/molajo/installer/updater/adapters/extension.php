@@ -33,7 +33,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
         array_push($this->_stack, $name);
         $tag = $this->_getStackLocation();
         // reset the data
-        eval('$this->'.$tag.'->_data = "";');
+        eval('$this->' . $tag . '->_data = "";');
 
         switch ($name)
         {
@@ -78,7 +78,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
                 $product = strtolower(JFilterInput::getInstance()->clean($ver->PRODUCT, 'cmd')); // lower case and remove the exclamation mark
                 // Check that the product matches and that the version matches (optionally a regexp)
                 if ($product == $this->current_update->targetplatform['NAME']
-                    && preg_match('/'.$this->current_update->targetplatform['VERSION'].'/', $ver->RELEASE)
+                    && preg_match('/' . $this->current_update->targetplatform['VERSION'] . '/', $ver->RELEASE)
                 ) {
                     // Target platform isn't a valid field in the update table so unset it to prevent J! from trying to store it
                     unset($this->current_update->targetplatform);
@@ -149,13 +149,13 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
             $query = $dbo->getQuery(true);
             $query->update('#__extension_sites');
             $query->set('enabled = 0');
-            $query->where('extension_site_id = '.$this->_extension_site_id);
+            $query->where('extension_site_id = ' . $this->_extension_site_id);
             $dbo->setQuery($query);
             $dbo->Query();
 
-            JLog::add("Error opening url: ".$url, JLog::WARNING, 'updater');
+            JLog::add("Error opening url: " . $url, JLog::WARNING, 'updater');
             $app = MolajoFactory::getApplication();
-            $app->enqueueMessage(MolajoText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url), 'warning');
+            $app->enqueueMessage(MolajoTextHelper::sprintf('JLIB_UPDATER_ERROR_EXTENSION_OPEN_URL', $url), 'warning');
             return false;
         }
 
@@ -167,9 +167,9 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
         while ($data = fread($fp, 8192))
         {
             if (!xml_parse($this->xml_parser, $data, feof($fp))) {
-                JLog::add("Error parsing url: ".$url, JLog::WARNING, 'updater');
+                JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
                 $app = MolajoFactory::getApplication();
-                $app->enqueueMessage(MolajoText::sprintf('JLIB_UPDATER_ERROR_EXTENSION_PARSE_URL', $url), 'warning');
+                $app->enqueueMessage(MolajoTextHelper::sprintf('JLIB_UPDATER_ERROR_EXTENSION_PARSE_URL', $url), 'warning');
                 return false;
             }
         }

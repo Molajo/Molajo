@@ -3,8 +3,8 @@
 namespace Gedmo\Sortable\Mapping\Driver;
 
 use Gedmo\Mapping\Driver\File,
-    Gedmo\Mapping\Driver,
-    Gedmo\Exception\InvalidMappingException;
+Gedmo\Mapping\Driver,
+Gedmo\Exception\InvalidMappingException;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
@@ -77,7 +77,7 @@ class Yaml extends File implements Driver
             $this->readSortableGroups($mapping['manyToMany'], $config);
         }
     }
-    
+
     private function readSortableGroups($mapping, array &$config)
     {
         foreach ($mapping as $field => $fieldMapping) {

@@ -9,14 +9,15 @@ URL: http://stuffandnonsense.co.uk/projects/320andup/
 License: http://creativecommons.org/licenses/MIT/
 */
 body {
-        font-size: 76%;
-    }
-    /* 12px in most modern browsers - used as basis of layout and typography.
-     * Calculate em based dims as: target dim(px) / container dim(px) = result in em
-     */
+    font-size: 76%;
+}
+
+/* 12px in most modern browsers - used as basis of layout and typography.
+* Calculate em based dims as: target dim(px) / container dim(px) = result in em
+*/
 div {
-    -o-transition: all 1s linear; 
-    -moz-transition: all 1s linear; 
+    -o-transition: all 1s linear;
+    -moz-transition: all 1s linear;
     -webkit-transition: all 1s linear;
     -ms-transition: all 1s linear;
     transition: all 1s linear;
@@ -27,17 +28,21 @@ div {
     #body-container {
         width: 95%;
     }
+
     .alpha-1-main #content-main, .alpha-1-main #column-group-alpha, .alpha-2-main #load-first, .alpha-2-main #content-main, .alpha-2-main #column-group-alpha, .main-beta-1 #content-main, .main-beta-1 #load-first, .main-beta-1 #column-group-beta, .main-beta-2 #content-main, .main-beta-2 #load-first, .main-beta-2 #column-group-beta, .alpha-1-main-beta-1 #load-first, .alpha-1-main-beta-1 #content-main, .alpha-1-main-beta-1 #column-group-alpha, .alpha-1-main-beta-1 #column-group-beta, .alpha-2-main-beta-1 #load-first, .alpha-2-main-beta-1 #content-main, .alpha-2-main-beta-1 #column-group-alpha, .alpha-2-main-beta-1 #column-group-beta, .alpha-1-main-beta-2 #load-first, .alpha-1-main-beta-2 #content-main, .alpha-1-main-beta-2 #column-group-alpha, .alpha-1-main-beta-2 #column-group-beta, .alpha-2-main-beta-2 #load-first, .alpha-2-main-beta-2 #content-main, .alpha-2-main-beta-2 #column-group-alpha, .alpha-2-main-beta-2 #column-group-beta, .count-1, .count-2, .count-3, .count-4, .count-5, .count-6, .cols-1, .cols-2 .item, .cols-3 .item, .cols-4 .item, .cols-5 .item, .cols-6 .item, .cols-2 .item, .cols-3 .item, .cols-4 .item, .cols-5 .item, .cols-6 .item {
         float: none;
         margin: 0 auto;
         width: 100%;
     }
-    #column-group-alpha , #column-group-beta {
+
+    #column-group-alpha, #column-group-beta {
         float: right;
     }
+
     .count-2 div, .count-3 div, .count-4 div {
         word-wrap: break-word;
     }
+
     * .gutter, #column-group-alpha .gutter, #column-group-beta .gutter {
         margin: 0;
     }
@@ -47,22 +52,27 @@ div {
     #body-container {
         width: 95%;
     }
+
     .alpha-2-main #load-first, .main-beta-1 #load-first, .main-beta-2 #load-first, .alpha-1-main-beta-1 #load-first, .alpha-2-main-beta-1 #load-first, .alpha-1-main-beta-2 #load-first, .alpha-2-main-beta-2 #load-first, .main-beta-1 #column-group-beta, .main-beta-2 #column-group-beta, .alpha-1-main-beta-1 #column-group-beta, .alpha-2-main-beta-1 #column-group-beta, .alpha-1-main-beta-2 #column-group-beta, .alpha-2-main-beta-2 #column-group-beta, .count-1, .count-2, .count-3, .count-4, .count-5, .count-6, .cols-1, .cols-2 .item, .cols-3 .item, .cols-4 .item, .cols-5 .item, .cols-6 .item, .cols-2 .item, .cols-3 .item, .cols-4 .item, .cols-5 .item, .cols-6 .item {
         float: none;
         margin: 0 auto;
         width: 100%;
     }
+
     .alpha-1-main #column-group-alpha, .alpha-2-main #column-group-alpha, .alpha-1-main-beta-1 #column-group-alpha, .alpha-2-main-beta-1 #column-group-alpha, .alpha-1-main-beta-2 #column-group-alpha, .alpha-2-main-beta-2 #column-group-alpha,
     .alpha-1-main #content-main, .alpha-2-main #content-main, .main-beta-1 #content-main, .main-beta-2 #content-main, .alpha-1-main-beta-1 #content-main, .alpha-2-main-beta-1 #content-main, .alpha-1-main-beta-2 #content-main, .alpha-2-main-beta-2 #content-main {
         float: left;
     }
+
     .count-2 div, .count-3 div, .count-4 div {
         word-wrap: break-word;
     }
+
     * #column-group-alpha .gutter {
         margin: 0;
         margin-left: 1em;
     }
+
     * .gutter, #column-group-beta .gutter {
         margin: 0;
     }
@@ -79,6 +89,7 @@ div {
     .count-2 div, .count-3 div, .count-4 div {
         word-wrap: break-word;
     }
+
     * .gutter {
         margin: 0;
     }
@@ -345,7 +356,7 @@ div {
     }
 
     .alpha-2-main-beta-2 #column-group-alpha {
-    width: 33%;
+        width: 33%;
     }
 
     .alpha-2-main-beta-2 #load-first {
@@ -362,8 +373,6 @@ div {
 }
 
 /* 2x */
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), 
-only screen and (-o-min-device-pixel-ratio: 3/2), 
-only screen and (min-device-pixel-ratio: 1.5) {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5) {
 
 }

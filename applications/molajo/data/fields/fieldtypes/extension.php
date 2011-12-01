@@ -60,10 +60,10 @@ class MolajoFormFieldExtension extends MolajoFormFieldList
         $query->select('element AS value, name AS text');
         $query->from('#__extensions');
         $query->where('enabled = 1');
-        $query->where('type = "'.$extensiontype.'"');
+        $query->where('type = "' . $extensiontype . '"');
         if (trim($exclude) == '') {
         } else {
-            $query->where('extension_id NOT IN ("'.$exclude.'")');
+            $query->where('extension_id NOT IN ("' . $exclude . '")');
         }
         $query->order('ordering, name');
 
@@ -75,7 +75,7 @@ class MolajoFormFieldExtension extends MolajoFormFieldList
         $lang = MolajoFactory::getLanguage();
         foreach ($options as $i => $option) {
             $lang->load($option->value, MOLAJO_BASE_FOLDER, null, false, false);
-            $options[$i]->text = MolajoText::_($option->text);
+            $options[$i]->text = MolajoTextHelper::_($option->text);
         }
 
         // Check for a database error.

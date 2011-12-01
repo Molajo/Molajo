@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       11.1
  */
-abstract class MolajoApplicationPlugin extends JEvent
+abstract class MolajoPlugin extends JEvent
 {
     /**
      * Plugin Parameters
@@ -84,8 +84,8 @@ abstract class MolajoApplicationPlugin extends JEvent
     public function loadLanguage($extension = '', $basePath = MOLAJO_CMS_PLUGINS)
     {
         if (empty($extension)) {
-            $extension = 'plg'.ucfirst($this->_type).ucfirst($this->_name);
+            $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
         }
-        MolajoFactory::getLanguage()->load(strtolower($extension), MOLAJO_CMS_PLUGINS.'/'.$this->_type.'/'.$extension, null, false, false);
+        MolajoFactory::getLanguage()->load(strtolower($extension), MOLAJO_CMS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
     }
 }

@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Login Model
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -66,7 +66,7 @@ class MolajoModelLogin extends JModel
     {
         $languages = array();
         $languages = MolajoLanguageHelper::createLanguageList(null, MOLAJO_BASE_FOLDER, false, true);
-        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoText::_('JDEFAULT')));
+        array_unshift($languages, MolajoHTML::_('select.option', '', MolajoTextHelper::_('JDEFAULT')));
         return MolajoHTML::_('select.genericlist', $languages, 'language', ' class="inputbox"', 'value', 'text', null);
     }
 
@@ -78,7 +78,7 @@ class MolajoModelLogin extends JModel
     public static function getReturnURI()
     {
         $uri = MolajoFactory::getURI();
-        $return = 'index.php'.$uri->toString(array('query'));
+        $return = 'index.php' . $uri->toString(array('query'));
         if ($return != 'index.php?option=login') {
             return base64_encode($return);
         } else {

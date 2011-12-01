@@ -40,9 +40,9 @@ class MolajoFormFieldModal_item extends MolajoFormField
 
         // Build the script.
         $script = array();
-        $script[] = '	function jSelectItem_'.$this->id.'(id, title, catid, object) {';
-        $script[] = '		document.id("'.$this->id.'_id").value = id;';
-        $script[] = '		document.id("'.$this->id.'_name").value = title;';
+        $script[] = '	function jSelectItem_' . $this->id . '(id, title, catid, object) {';
+        $script[] = '		document.id("' . $this->id . '_id").value = id;';
+        $script[] = '		document.id("' . $this->id . '_name").value = title;';
         $script[] = '		SqueezeBox.close();';
         $script[] = '	}';
 
@@ -51,13 +51,13 @@ class MolajoFormFieldModal_item extends MolajoFormField
 
         // Setup variables for display.
         $html = array();
-        $link = 'index.php?option='.$this->element['extension'].'&amp;view='.$this->element['view'].'&amp;layout=modal&amp;layout=component&amp;function=jSelectItem_'.$this->id;
+        $link = 'index.php?option=' . $this->element['extension'] . '&amp;view=' . $this->element['view'] . '&amp;layout=modal&amp;layout=component&amp;function=jSelectItem_' . $this->id;
 
         $db = MolajoFactory::getDBO();
         $db->setQuery(
             'SELECT title' .
-            ' FROM '.$this->element['table'] .
-            ' WHERE id = '.(int)$this->value
+            ' FROM ' . $this->element['table'] .
+            ' WHERE id = ' . (int)$this->value
         );
         $title = $db->loadResult();
 
@@ -69,13 +69,13 @@ class MolajoFormFieldModal_item extends MolajoFormField
 
         // The current user display field.
         $html[] = '<div class="fltlft">';
-        $html[] = '  <calendar type="text" id="'.$this->id.'_name" value="'.$title.'" disabled="disabled" size="35" />';
+        $html[] = '  <calendar type="text" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
         $html[] = '</div>';
 
         // The user select button.
         $html[] = '<div class="button2-left">';
         $html[] = '  <div class="blank">';
-        $html[] = '	<a class="modal" title="'.MolajoText::_('MOLAJO_CHANGE_ITEM').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.MolajoText::_('MOLAJO_SELECT_AN_ITEM').'</a>';
+        $html[] = '	<a class="modal" title="' . MolajoTextHelper::_('MOLAJO_CHANGE_ITEM') . '"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">' . MolajoTextHelper::_('MOLAJO_SELECT_AN_ITEM') . '</a>';
         $html[] = '  </div>';
         $html[] = '</div>';
 
@@ -92,7 +92,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
             $class = ' class="required modal-value"';
         }
 
-        $html[] = '<calendar type="hidden" id="'.$this->id.'_id"'.$class.' name="'.$this->name.'" value="'.$value.'" />';
+        $html[] = '<calendar type="hidden" id="' . $this->id . '_id"' . $class . ' name="' . $this->name . '" value="' . $value . '" />';
 
         return implode("\n", $html);
     }

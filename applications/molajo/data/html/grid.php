@@ -377,7 +377,7 @@ class MolajoGrid
     function toString()
     {
         $output = array();
-        $output[] = '<table'.$this->renderAttributes($this->getTableOptions()).'>';
+        $output[] = '<table' . $this->renderAttributes($this->getTableOptions()) . '>';
 
         if (count($this->specialRows['header'])) {
             $output[] = $this->renderArea($this->specialRows['header'], 'thead', 'th');
@@ -410,21 +410,21 @@ class MolajoGrid
     protected function renderArea($ids, $area = 'tbody', $cell = 'td')
     {
         $output = array();
-        $output[] = '<'.$area.">\n";
+        $output[] = '<' . $area . ">\n";
         foreach ($ids as $id)
         {
-            $output[] = "\t<tr".$this->renderAttributes($this->rows[$id]['_row']).">\n";
+            $output[] = "\t<tr" . $this->renderAttributes($this->rows[$id]['_row']) . ">\n";
             foreach ($this->getColumns() as $name)
             {
                 if (isset($this->rows[$id][$name])) {
                     $column = $this->rows[$id][$name];
-                    $output[] = "\t\t<".$cell.$this->renderAttributes($column->options).'>'.$column->content.'</'.$cell.">\n";
+                    $output[] = "\t\t<" . $cell . $this->renderAttributes($column->options) . '>' . $column->content . '</' . $cell . ">\n";
                 }
             }
 
             $output[] = "\t</tr>\n";
         }
-        $output[] = '</'.$area.'>';
+        $output[] = '</' . $area . '>';
 
         return implode('', $output);
     }
@@ -446,8 +446,8 @@ class MolajoGrid
         $return = array();
         foreach ($attributes as $key => $option)
         {
-            $return[] = $key.'="'.$option.'"';
+            $return[] = $key . '="' . $option . '"';
         }
-        return ' '.implode(' ', $return);
+        return ' ' . implode(' ', $return);
     }
 }

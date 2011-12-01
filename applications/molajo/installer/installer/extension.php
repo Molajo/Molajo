@@ -109,7 +109,7 @@ class MolajoInstallerExtension extends JObject
                     $this->application = (string)$element->attributes()->application;
                     $tmp_application_id = MolajoApplicationHelper::getApplicationInfo($this->application, 1);
                     if ($tmp_application_id == null) {
-                        MolajoError::raiseWarning(100, MolajoText::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
+                        MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_EXTENSION_INVALID_CLIENT_IDENTIFIER'));
                     }
                     else
                     {

@@ -3,8 +3,8 @@
 namespace Gedmo\Tree\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Mapping\ClassMetadata;
+Doctrine\ORM\EntityManager,
+Doctrine\ORM\Mapping\ClassMetadata;
 
 abstract class AbstractTreeRepository extends EntityRepository
 {

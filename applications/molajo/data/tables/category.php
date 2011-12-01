@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -38,7 +38,7 @@ class MolajoTableCategory extends MolajoTableNested
     protected function _getAssetName()
     {
         $k = $this->_tbl_key;
-        return $this->extension.'.category.'.(int)$this->$k;
+        return $this->extension . '.category.' . (int)$this->$k;
     }
 
     /**
@@ -69,7 +69,7 @@ class MolajoTableCategory extends MolajoTableNested
             $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
-            $query->where('id = '.(int)$this->parent_id);
+            $query->where('id = ' . (int)$this->parent_id);
 
             // Get the asset id from the database.
             $db->setQuery($query);
@@ -83,7 +83,7 @@ class MolajoTableCategory extends MolajoTableNested
             $query = $db->getQuery(true);
             $query->select('id');
             $query->from('#__assets');
-            $query->where('name = '.$db->quote($this->extension));
+            $query->where('name = ' . $db->quote($this->extension));
 
             // Get the asset id from the database.
             $db->setQuery($query);
@@ -112,7 +112,7 @@ class MolajoTableCategory extends MolajoTableNested
     {
         // Check for a title.
         if (trim($this->title) == '') {
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MUSTCONTAIN_A_TITLE_CATEGORY'));
             return false;
         }
         $this->alias = trim($this->alias);
@@ -192,7 +192,7 @@ class MolajoTableCategory extends MolajoTableNested
             && ($table->id != $this->id || $this->id == 0)
         ) {
 
-            $this->setError(MolajoText::_('MOLAJO_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS'));
             return false;
         }
         return parent::store($updateNulls);

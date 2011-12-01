@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -124,11 +124,11 @@ class MolajoApplicationHelper
         foreach ($files as $file) {
 
             if ($file == 'configuration.php') {
-                
+
             } else if ($file == 'helper.php') {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Application'.ucfirst(substr($file, 0, strpos($file, '.'))));
+                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application' . ucfirst(substr($file, 0, strpos($file, '.'))));
             } else {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH.'/'.$file, 'Molajo'.ucfirst(MOLAJO_APPLICATION).ucfirst(substr($file, 0, strpos($file, '.'))));
+                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
     }
@@ -218,13 +218,13 @@ class MolajoApplicationHelper
         if ((string)$xml->creationDate()) {
             $data['creationDate'] = (string)$xml->creationDate();
         } else {
-            $data['creationDate'] = MolajoText::_('Unknown');
+            $data['creationDate'] = MolajoTextHelper::_('Unknown');
         }
 
         if ((string)$xml->author()) {
             $data['author'] = (string)$xml->author();
         } else {
-            $data['author'] = MolajoText::_('Unknown');
+            $data['author'] = MolajoTextHelper::_('Unknown');
         }
 
         $data['copyright'] = (string)$xml->copyright;
@@ -243,6 +243,6 @@ class MolajoApplicationHelper
      */
     public static function getComponentName($default = NULL)
     {
-        return MolajoApplicationComponent::getComponentName ($default);
+        return MolajoComponent::getComponentName($default);
     }
 }

@@ -3,12 +3,12 @@
  * @version     $id: mimport
  * @package     Molajo
  * @subpackage  Widget Helper
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-abstract class MolajoApplicationPlugin
+abstract class MolajoPlugin
 {
     /**
      * Get the path to a layout for a plugin
@@ -26,8 +26,8 @@ abstract class MolajoApplicationPlugin
         $defaultLayout = $layout;
 
         /** template and base path for the layout **/
-        $tPath = MOLAJO_CMS_TEMPLATES.'/'.$template.'/html/'.$widget['type'].'/'.$widget['name'].'/'.$layout.'.php';
-        $bPath = MOLAJO_WIDGETS.'/'.$widget['type'].'/'.$widget['name'].'/layouts/'.$defaultLayout.'.php';
+        $tPath = MOLAJO_CMS_TEMPLATES . '/' . $template . '/html/' . $widget['type'] . '/' . $widget['name'] . '/' . $layout . '.php';
+        $bPath = MOLAJO_WIDGETS . '/' . $widget['type'] . '/' . $widget['name'] . '/layouts/' . $defaultLayout . '.php';
 
         /** use layout overrides, if available **/
         if (file_exists($tPath)) {

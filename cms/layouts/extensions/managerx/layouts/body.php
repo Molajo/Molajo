@@ -3,15 +3,15 @@
  * @version     $id: layout
  * @package     Molajo
  * @subpackage  Multiple View
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /** loop through columns **/
-for ($i=1; $i < 1000; $i++) {
+for ($i = 1; $i < 1000; $i++) {
 
-    $this->tempColumnName = $this->parameters->get('config_manager_grid_column'.$i);
+    $this->tempColumnName = $this->parameters->get('config_manager_grid_column' . $i);
 
     if ($this->tempColumnName == null) {
         break;
@@ -19,21 +19,21 @@ for ($i=1; $i < 1000; $i++) {
     } else {
 
         /** custom column file **/
-        $filename = dirname(__FILE__).'/form/'.strtolower('table_body_row_column_'.$this->tempColumnName).'.php';
+        $filename = dirname(__FILE__) . '/form/' . strtolower('table_body_row_column_' . $this->tempColumnName) . '.php';
         $fileExists = JFile::exists($filename);
 
         if ($fileExists === false) {
 
             /** custom field rendering **/
-            $nameClassName = 'MolajoField'.ucfirst($this->tempColumnName);
+            $nameClassName = 'MolajoField' . ucfirst($this->tempColumnName);
             $mf = new MolajoField ();
-            $mf->getClass ($this->tempColumnName, false);
+            $mf->getClass($this->tempColumnName, false);
 
             if (class_exists($nameClassName)) {
                 $MolajoFieldClass = new $nameClassName();
                 if (method_exists($MolajoFieldClass, 'render')) {
                     $mfc = new $MolajoFieldClass ();
-                    $results = $mfc->render ($layout='admin', $this->row, $this->row->rowCount);
+                    $results = $mfc->render($layout = 'admin', $this->row, $this->row->rowCount);
                     if ($results == false) {
                     } else {
                         $this->render = $results;

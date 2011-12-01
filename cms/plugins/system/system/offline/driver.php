@@ -2,18 +2,19 @@
 /**
  * @package     Molajo
  * @subpackage  Molajo System Plugin
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
-class MolajoSystemOffline {
+class MolajoSystemOffline
+{
 
     /**
      * Minutes
      *
-     * @var	string
-     * @access	protected
+     * @var    string
+     * @access    protected
      */
     protected $bypass;
 
@@ -22,14 +23,14 @@ class MolajoSystemOffline {
      *
      * Method called by plgMolajoSystem::MolajoOnAfterInitialise to schedule Cron
      *
-     * @param	none
-     * @return	boolean
-     * @since	1.6
+     * @param    none
+     * @return    boolean
+     * @since    1.6
      */
-    function driver ()
+    function driver()
     {
         /** system plugin **/
-        $molajoSystemPlugin =& MolajoApplicationPlugin::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPlugin::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         /** config **/

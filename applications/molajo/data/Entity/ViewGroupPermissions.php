@@ -26,7 +26,7 @@ class ViewGroupPermissions
      *
      * @ORM\ManyToOne(targetEntity="Actions")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="action_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="action_id", referencedColumnName="id")
      * })
      */
     private $action;
@@ -36,7 +36,7 @@ class ViewGroupPermissions
      *
      * @ORM\ManyToOne(targetEntity="Assets")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * })
      */
     private $asset;
@@ -46,17 +46,16 @@ class ViewGroupPermissions
      *
      * @ORM\ManyToOne(targetEntity="ViewGroups")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="view_group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="view_group_id", referencedColumnName="id")
      * })
      */
     private $viewGroup;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +75,7 @@ class ViewGroupPermissions
     /**
      * Get action
      *
-     * @return data\Entity\Actions 
+     * @return data\Entity\Actions
      */
     public function getAction()
     {
@@ -96,7 +95,7 @@ class ViewGroupPermissions
     /**
      * Get asset
      *
-     * @return data\Entity\Assets 
+     * @return data\Entity\Assets
      */
     public function getAsset()
     {
@@ -116,7 +115,7 @@ class ViewGroupPermissions
     /**
      * Get viewGroup
      *
-     * @return data\Entity\ViewGroups 
+     * @return data\Entity\ViewGroups
      */
     public function getViewGroup()
     {

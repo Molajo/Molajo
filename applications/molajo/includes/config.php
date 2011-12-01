@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Load Molajo Configuration
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -12,11 +12,11 @@ defined('MOLAJO') or die;
  */
 if (class_exists('MolajoVersion')) {
 } else {
-    require_once MOLAJO_APPLICATIONS.'/molajo/includes/version.php';
+    require_once MOLAJO_APPLICATIONS . '/molajo/includes/version.php';
 }
 if (class_exists('MolajoFactory')) {
 } else {
-    require_once MOLAJO_PLATFORM.'/factory.php';
+    require_once MOLAJO_PLATFORM . '/factory.php';
 }
 
 /**
@@ -27,13 +27,13 @@ if (MOLAJO_APPLICATION == 'installation') {
 } else {
 
     /** site configuration */
-    if (file_exists(MOLAJO_SITE_PATH.'/configuration.php')) {
+    if (file_exists(MOLAJO_SITE_PATH . '/configuration.php')) {
     } else {
         echo 'Molajo configuration.php File Missing';
         exit;
     }
-    require_once MOLAJO_SITE_PATH.'/configuration.php';
-    
+    require_once MOLAJO_SITE_PATH . '/configuration.php';
+
     $CONFIG = new MolajoConfigSite();
 
     if (@$CONFIG->error_reporting === 0) {

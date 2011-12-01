@@ -3,8 +3,8 @@
 namespace Gedmo\Timestampable;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata,
-    Doctrine\Common\EventArgs,
-    Gedmo\Mapping\MappedEventSubscriber;
+Doctrine\Common\EventArgs,
+Gedmo\Mapping\MappedEventSubscriber;
 
 /**
  * The Timestampable listener handles the update of
@@ -96,7 +96,7 @@ class TimestampableListener extends MappedEventSubscriber
                                 $objectMeta = $om->getClassMetadata(get_class($changingObject));
                                 $trackedChild instanceof Proxy && $om->refresh($trackedChild);
                                 $value = $objectMeta->getReflectionProperty($trackedChild)
-                                    ->getValue($changingObject);
+                                        ->getValue($changingObject);
                             } else {
                                 $value = $changes[1];
                             }
@@ -104,7 +104,7 @@ class TimestampableListener extends MappedEventSubscriber
                             if ($options['value'] == $value) {
                                 $needChanges = true;
                                 $meta->getReflectionProperty($options['field'])
-                                    ->setValue($object, $ea->getDateValue($meta, $options['field']));
+                                        ->setValue($object, $ea->getDateValue($meta, $options['field']));
                             }
                         }
                     }

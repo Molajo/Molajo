@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -95,7 +95,7 @@ abstract class MolajoTable extends JObject
 
             if (isset($names[$name])) {
             } else {
-                $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
+                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_COLUMNS_NOT_FOUND'));
                 $this->setError($e);
                 return false;
             }
@@ -121,21 +121,21 @@ abstract class MolajoTable extends JObject
     public static function getInstance($type, $prefix = 'MolajoTable', $config = array())
     {
         $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
-        $tableClass = $prefix.ucfirst($type);
+        $tableClass = $prefix . ucfirst($type);
 
         if (class_exists($tableClass)) {
 
         } else {
-            if ($path = JPath::find(MolajoTable::addIncludePath(), strtolower($type).'.php')) {
+            if ($path = JPath::find(MolajoTable::addIncludePath(), strtolower($type) . '.php')) {
                 require_once $path;
 
                 if (class_exists($tableClass)) {
                 } else {
-                    MolajoError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_NOT_FOUND_IN_FILE', $tableClass));
+                    MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_NOT_FOUND_IN_FILE', $tableClass));
                     return false;
                 }
             } else {
-                MolajoError::raiseWarning(0, MolajoText::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
+                MolajoError::raiseWarning(0, MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_NOT_SUPPORTED_FILE_NOT_FOUND', $type));
                 return false;
             }
         }
@@ -161,7 +161,7 @@ abstract class MolajoTable extends JObject
 
         if (isset($_paths)) {
         } else {
-            $_paths = array(dirname(__FILE__).'/table');
+            $_paths = array(dirname(__FILE__) . '/table');
         }
 
         settype($path, 'array');
@@ -275,7 +275,7 @@ abstract class MolajoTable extends JObject
     {
         if (is_object($src) || is_array($src)) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_BIND_FAILED_INVALID_SOURCE_ARGUMENT', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -345,11 +345,11 @@ abstract class MolajoTable extends JObject
         {
             if (in_array($name, $names)) {
             } else {
-                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $name));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_IS_MISSING_FIELD', get_class($this), $name));
                 $this->setError($e);
                 return false;
             }
-            $query->where($this->_db->quoteName($name).' = '.$this->_db->quote($value));
+            $query->where($this->_db->quoteName($name) . ' = ' . $this->_db->quote($value));
         }
 
         $this->_db->setQuery($query);
@@ -362,7 +362,7 @@ abstract class MolajoTable extends JObject
         }
 
         if (empty($row)) {
-            $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_EMPTY_ROW_RETURNED'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_EMPTY_ROW_RETURNED'));
             $this->setError($e);
             return false;
         }
@@ -411,7 +411,7 @@ abstract class MolajoTable extends JObject
 
         if ($stored) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -440,12 +440,12 @@ abstract class MolajoTable extends JObject
         if ((int)$this->asset_id == 0) {
             $query = $this->_db->getQuery(true);
             $query->update($this->_db->quoteName($this->_tbl));
-            $query->set('asset_id = '.(int)$this->asset_id);
-            $query->where($this->_db->quoteName($k).' = '.(int)$this->$k);
+            $query->set('asset_id = ' . (int)$this->asset_id);
+            $query->where($this->_db->quoteName($k) . ' = ' . (int)$this->$k);
             $this->_db->setQuery($query);
 
             if (!$this->_db->query()) {
-                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
                 $this->setError($e);
                 return false;
             }
@@ -477,7 +477,7 @@ abstract class MolajoTable extends JObject
 
         //			if ($this->_db->query()) {
         //            } else {
-        //				$e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
+        //				$e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
         //				$this->setError($e);
         //				return false;
         //			}
@@ -536,7 +536,7 @@ abstract class MolajoTable extends JObject
         if ($orderingFilter) {
             $filterValue = $this->$orderingFilter;
             $this->reorder($orderingFilter
-                                   ? $this->_db->quoteName($orderingFilter).' = '.$this->_db->Quote($filterValue)
+                                   ? $this->_db->quoteName($orderingFilter) . ' = ' . $this->_db->Quote($filterValue)
                                    : '');
         }
 
@@ -564,7 +564,7 @@ abstract class MolajoTable extends JObject
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -592,12 +592,12 @@ abstract class MolajoTable extends JObject
         $query = $this->_db->getQuery(true);
         $query->delete();
         $query->from($this->_tbl);
-        $query->where($this->_tbl_key.' = '.$this->_db->quote($pk));
+        $query->where($this->_tbl_key . ' = ' . $this->_db->quote($pk));
         $this->_db->setQuery($query);
 
         // Check for a database error.
         if (!$this->_db->query()) {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -635,7 +635,7 @@ abstract class MolajoTable extends JObject
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -646,14 +646,14 @@ abstract class MolajoTable extends JObject
         // Check the row out by primary key.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set($this->_db->quoteName('checked_out').' = '.(int)$userId);
-        $query->set($this->_db->quoteName('checked_out_time').' = '.$this->_db->quote($time));
-        $query->where($this->_tbl_key.' = '.$this->_db->quote($pk));
+        $query->set($this->_db->quoteName('checked_out') . ' = ' . (int)$userId);
+        $query->set($this->_db->quoteName('checked_out_time') . ' = ' . $this->_db->quote($time));
+        $query->where($this->_tbl_key . ' = ' . $this->_db->quote($pk));
         $this->_db->setQuery($query);
 
         if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CHECKOUT_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CHECKOUT_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -690,7 +690,7 @@ abstract class MolajoTable extends JObject
 
         // If no primary key is given, return false.
         if ($pk === null) {
-            $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+            $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NULL_PRIMARY_KEY'));
             $this->setError($e);
             return false;
         }
@@ -698,15 +698,15 @@ abstract class MolajoTable extends JObject
         // Check the row in by primary key.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set($this->_db->quoteName('checked_out').' = 0');
-        $query->set($this->_db->quoteName('checked_out_time').' = '.$this->_db->quote($this->_db->getNullDate()));
-        $query->where($this->_tbl_key.' = '.$this->_db->quote($pk));
+        $query->set($this->_db->quoteName('checked_out') . ' = 0');
+        $query->set($this->_db->quoteName('checked_out_time') . ' = ' . $this->_db->quote($this->_db->getNullDate()));
+        $query->where($this->_tbl_key . ' = ' . $this->_db->quote($pk));
         $this->_db->setQuery($query);
 
         // Check for a database error.
         if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CHECKIN_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CHECKIN_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -749,8 +749,8 @@ abstract class MolajoTable extends JObject
         $db = MolajoFactory::getDBO();
         $db->setQuery(
             'SELECT COUNT(user_id)' .
-            ' FROM '.$db->quoteName('#__sessions') .
-            ' WHERE '.$db->quoteName('user_id').' = '.(int)$against
+            ' FROM ' . $db->quoteName('#__sessions') .
+            ' WHERE ' . $db->quoteName('user_id') . ' = ' . (int)$against
         );
         $checkedOut = (boolean)$db->loadResult();
 
@@ -773,7 +773,7 @@ abstract class MolajoTable extends JObject
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -793,7 +793,7 @@ abstract class MolajoTable extends JObject
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
             $e = new MolajoException(
-                MolajoText::sprintf('MOLAJO_DATABASE_ERROR_GET_NEXT_ORDER_FAILED', get_class($this), $this->_db->getErrorMsg())
+                MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_GET_NEXT_ORDER_FAILED', get_class($this), $this->_db->getErrorMsg())
             );
             $this->setError($e);
 
@@ -821,7 +821,7 @@ abstract class MolajoTable extends JObject
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -831,7 +831,7 @@ abstract class MolajoTable extends JObject
 
         // Get the primary keys and ordering values for the selection.
         $query = $this->_db->getQuery(true);
-        $query->select($this->_tbl_key.', ordering');
+        $query->select($this->_tbl_key . ', ordering');
         $query->from($this->_tbl);
         $query->where('ordering >= 0');
         $query->order('ordering');
@@ -846,7 +846,7 @@ abstract class MolajoTable extends JObject
 
         // Check for a database error.
         if ($this->_db->getErrorNum()) {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_REORDER_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -861,15 +861,15 @@ abstract class MolajoTable extends JObject
                     // Update the row ordering field.
                     $query = $this->_db->getQuery(true);
                     $query->update($this->_tbl);
-                    $query->set('ordering = '.($i + 1));
-                    $query->where($this->_tbl_key.' = '.$this->_db->quote($row->$k));
+                    $query->set('ordering = ' . ($i + 1));
+                    $query->where($this->_tbl_key . ' = ' . $this->_db->quote($row->$k));
                     $this->_db->setQuery($query);
 
                     // Check for a database error.
                     if ($this->_db->query()) {
                     } else {
                         $e = new MolajoException(
-                            MolajoText::sprintf(
+                            MolajoTextHelper::sprintf(
                                 'MOLAJO_DATABASE_ERROR_REORDER_UPDATE_ROW_FAILED', get_class($this), $i, $this->_db->getErrorMsg()
                             )
                         );
@@ -902,7 +902,7 @@ abstract class MolajoTable extends JObject
         // If there is no ordering field set an error and return false.
         if (property_exists($this, 'ordering')) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_CLASS_DOES_NOT_SUPPORT_ORDERING', get_class($this)));
             $this->setError($e);
             return false;
         }
@@ -918,17 +918,17 @@ abstract class MolajoTable extends JObject
         $query = $this->_db->getQuery(true);
 
         // Select the primary key and ordering values from the table.
-        $query->select($this->_tbl_key.', ordering');
+        $query->select($this->_tbl_key . ', ordering');
         $query->from($this->_tbl);
 
         // If the movement delta is negative move the row up.
         if ($delta < 0) {
-            $query->where('ordering < '.(int)$this->ordering);
+            $query->where('ordering < ' . (int)$this->ordering);
             $query->order('ordering DESC');
         }
             // If the movement delta is positive move the row down.
         elseif ($delta > 0) {
-            $query->where('ordering > '.(int)$this->ordering);
+            $query->where('ordering > ' . (int)$this->ordering);
             $query->order('ordering ASC');
         }
 
@@ -947,14 +947,14 @@ abstract class MolajoTable extends JObject
             // Update the ordering field for this instance.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
-            $query->set('ordering = '.(int)$this->ordering);
-            $query->where($this->_tbl_key.' = '.$this->_db->quote($this->$k));
+            $query->set('ordering = ' . (int)$this->ordering);
+            $query->where($this->_tbl_key . ' = ' . $this->_db->quote($this->$k));
             $this->_db->setQuery($query);
 
             // Check for a database error.
             if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -964,14 +964,14 @@ abstract class MolajoTable extends JObject
             // Update the ordering field for this instance to the row's ordering value.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
-            $query->set('ordering = '.(int)$row->ordering);
-            $query->where($this->_tbl_key.' = '.$this->_db->quote($this->$k));
+            $query->set('ordering = ' . (int)$row->ordering);
+            $query->where($this->_tbl_key . ' = ' . $this->_db->quote($this->$k));
             $this->_db->setQuery($query);
 
             // Check for a database error.
             if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -980,14 +980,14 @@ abstract class MolajoTable extends JObject
             // Update the ordering field for the row to this instance's ordering value.
             $query = $this->_db->getQuery(true);
             $query->update($this->_tbl);
-            $query->set('ordering = '.(int)$this->ordering);
-            $query->where($this->_tbl_key.' = '.$this->_db->quote($row->$k));
+            $query->set('ordering = ' . (int)$this->ordering);
+            $query->where($this->_tbl_key . ' = ' . $this->_db->quote($row->$k));
             $this->_db->setQuery($query);
 
             // Check for a database error.
             if ($this->_db->query()) {
             } else {
-                $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+                $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_MOVE_FAILED', get_class($this), $this->_db->getErrorMsg()));
                 $this->setError($e);
 
                 return false;
@@ -1031,7 +1031,7 @@ abstract class MolajoTable extends JObject
             }
                 // Nothing to set publishing state on, return false.
             else {
-                $e = new MolajoException(MolajoText::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
+                $e = new MolajoException(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_NO_ROWS_SELECTED'));
                 $this->setError($e);
 
                 return false;
@@ -1041,11 +1041,11 @@ abstract class MolajoTable extends JObject
         // Update the publishing state for rows with the given primary keys.
         $query = $this->_db->getQuery(true);
         $query->update($this->_tbl);
-        $query->set('published = '.(int)$state);
+        $query->set('published = ' . (int)$state);
 
         // Determine if there is checkin support for the table.
         if (property_exists($this, 'checked_out') || property_exists($this, 'checked_out_time')) {
-            $query->where('(checked_out = 0 OR checked_out = '.(int)$userId.')');
+            $query->where('(checked_out = 0 OR checked_out = ' . (int)$userId . ')');
             $checkin = true;
 
         } else {
@@ -1053,14 +1053,14 @@ abstract class MolajoTable extends JObject
         }
 
         // Build the WHERE clause for the primary keys.
-        $query->where($k.' = '.implode(' OR '.$k.' = ', $pks));
+        $query->where($k . ' = ' . implode(' OR ' . $k . ' = ', $pks));
 
         $this->_db->setQuery($query);
 
         // Check for a database error.
         if ($this->_db->query()) {
         } else {
-            $e = new MolajoException(MolajoText::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $e = new MolajoException(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_PUBLISH_FAILED', get_class($this), $this->_db->getErrorMsg()));
             $this->setError($e);
             return false;
         }
@@ -1116,13 +1116,13 @@ abstract class MolajoTable extends JObject
             // Setup the basic query.
             $query->select($this->_db->quoteName($this->_tbl_key));
             $query->from($this->_db->quoteName($this->_tbl));
-            $query->where($this->_db->quoteName($this->_tbl_key).' = '.$this->_db->quote($this->$k));
+            $query->where($this->_db->quoteName($this->_tbl_key) . ' = ' . $this->_db->quote($this->$k));
             $query->group($this->_db->quoteName($this->_tbl_key));
 
             // For each join add the select and join clauses to the query object.
             foreach ($joins as $table) {
-                $query->select('COUNT(DISTINCT '.$table['idfield'].') AS '.$table['idfield']);
-                $query->join('LEFT', $table['name'].' ON '.$table['joinfield'].' = '.$k);
+                $query->select('COUNT(DISTINCT ' . $table['idfield'] . ') AS ' . $table['idfield']);
+                $query->join('LEFT', $table['name'] . ' ON ' . $table['joinfield'] . ' = ' . $k);
             }
 
             // Get the row object from the query.
@@ -1140,16 +1140,16 @@ abstract class MolajoTable extends JObject
             $i = 0;
 
             foreach ($joins as $table) {
-                $k = $table['idfield'].$i;
+                $k = $table['idfield'] . $i;
                 if ($row->$k) {
-                    $msg[] = MolajoText::_($table['label']);
+                    $msg[] = MolajoTextHelper::_($table['label']);
                 }
 
                 $i++;
             }
 
             if (count($msg)) {
-                $this->setError("noDeleteRecord".": ".implode(', ', $msg));
+                $this->setError("noDeleteRecord" . ": " . implode(', ', $msg));
 
                 return false;
             }
@@ -1178,7 +1178,7 @@ abstract class MolajoTable extends JObject
         $map = $mapKeysToText ? ' mapkeystotext="true"' : '';
 
         // Open root node.
-        $xml[] = '<record table="'.$this->_tbl.'"'.$map.'>';
+        $xml[] = '<record table="' . $this->_tbl . '"' . $map . '>';
 
         // Get the publicly accessible instance properties.
         foreach (get_object_vars($this) as $k => $v)
@@ -1188,7 +1188,7 @@ abstract class MolajoTable extends JObject
                 continue;
             }
 
-            $xml[] = '	<'.$k.'><![CDATA['.$v.']]></'.$k.'>';
+            $xml[] = '	<' . $k . '><![CDATA[' . $v . ']]></' . $k . '>';
         }
 
         // Close root node.
@@ -1207,7 +1207,7 @@ abstract class MolajoTable extends JObject
     protected function _lock()
     {
         // Lock the table for writing.
-        $this->_db->setQuery('LOCK TABLES '.$this->_db->quoteName($this->_tbl).' WRITE');
+        $this->_db->setQuery('LOCK TABLES ' . $this->_db->quoteName($this->_tbl) . ' WRITE');
         $this->_db->query();
 
         // Check for a database error.

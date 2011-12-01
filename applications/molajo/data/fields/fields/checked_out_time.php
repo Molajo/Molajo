@@ -3,7 +3,7 @@
  * @version     $id: filterChecked_out_time.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -88,7 +88,7 @@ class MolajoFieldChecked_out_time extends MolajoField
             if ($item->checked_out_time == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->checked_out_time, MolajoText::_('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->checked_out_time, MolajoTextHelper::_('DATE_FORMAT_LC4'));
             }
 
             return $render;

@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -36,10 +36,10 @@ class MolajoUrlHelper
         $url .= md5(strtolower(trim($option_Email)));
         $url .= "?s=$s&d=$d&r=$r";
         if ($img) {
-            $url = '<img src="'.$url.'"';
+            $url = '<img src="' . $url . '"';
             if (count($atts) > 0) {
                 foreach ($atts as $key => $val) {
-                    $url .= ' '.$key.'="'.$val.'"';
+                    $url .= ' ' . $key . '="' . $val . '"';
                 }
             }
             $url .= ' />';
@@ -105,7 +105,7 @@ class MolajoUrlHelper
     function getHost($option_URL)
     {
         $hostArray = parse_url($option_URL);
-        return $hostArray['scheme'].'://'.$hostArray['host'];
+        return $hostArray['scheme'] . '://' . $hostArray['host'];
     }
 
     /**
@@ -145,7 +145,7 @@ class MolajoUrlHelper
      */
     function addTrailingSlash($option_InputText)
     {
-        return untrailingslashit($option_InputText).'/';
+        return untrailingslashit($option_InputText) . '/';
     }
 
     /**
@@ -175,14 +175,14 @@ class MolajoUrlHelper
             return $longurl; // todo: create local short url
 
         } else if ($shortener == '2') {
-            return (implode('', file('http://tinyurl.com/api-create.php?url='.urlencode($longurl))));
+            return (implode('', file('http://tinyurl.com/api-create.php?url=' . urlencode($longurl))));
 
         } else if ($shortener == '3') {
-            return (implode('', file('http://is.gd/api.php?longurl='.urlencode($longurl))));
+            return (implode('', file('http://is.gd/api.php?longurl=' . urlencode($longurl))));
 
         } else if ($shortener == '4') {
 
-            $bitlyURL = file_get_contents("http://api.bit.ly/v3/shorten"."&login=".$username."&apiKey=".$apikey."&longUrl=".urlencode($longurl)."&format=json");
+            $bitlyURL = file_get_contents("http://api.bit.ly/v3/shorten" . "&login=" . $username . "&apiKey=" . $apikey . "&longUrl=" . urlencode($longurl) . "&format=json");
             $bitlyContent = json_decode($bitlyURL, true);
             $bitlyError = $bitlyContent["errorCode"];
             if ($bitlyError == 0) {
@@ -192,7 +192,7 @@ class MolajoUrlHelper
             }
 
         } else if ($shortener == '5') {
-            return (implode('', file('http://api.tr.im/api/trim_simple?url='.urlencode($longurl))));
+            return (implode('', file('http://api.tr.im/api/trim_simple?url=' . urlencode($longurl))));
 
         } else {
             return $longurl;

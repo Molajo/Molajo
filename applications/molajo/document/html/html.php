@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -112,11 +112,14 @@ class MolajoDocumentHTML extends MolajoDocument
         }
 
         $this->title = (isset($data['title']) && !empty($data['title'])) ? $data['title'] : $this->title;
-        $this->description = (isset($data['description']) && !empty($data['description'])) ? $data['description'] : $this->description;
+        $this->description = (isset($data['description']) && !empty($data['description'])) ? $data['description']
+                : $this->description;
         $this->link = (isset($data['link']) && !empty($data['link'])) ? $data['link'] : $this->link;
-        $this->_metaTags = (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags'] : $this->_metaTags;
+        $this->_metaTags = (isset($data['metaTags']) && !empty($data['metaTags'])) ? $data['metaTags']
+                : $this->_metaTags;
         $this->_links = (isset($data['links']) && !empty($data['links'])) ? $data['links'] : $this->_links;
-        $this->_styleSheets = (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets'] : $this->_styleSheets;
+        $this->_styleSheets = (isset($data['styleSheets']) && !empty($data['styleSheets'])) ? $data['styleSheets']
+                : $this->_styleSheets;
         $this->_style = (isset($data['style']) && !empty($data['style'])) ? $data['style'] : $this->_style;
         $this->_scripts = (isset($data['scripts']) && !empty($data['scripts'])) ? $data['scripts'] : $this->_scripts;
         $this->_script = (isset($data['script']) && !empty($data['script'])) ? $data['script'] : $this->_script;
@@ -137,9 +140,9 @@ class MolajoDocumentHTML extends MolajoDocument
         }
 
         $this->title = (isset($data['title']) && !empty($data['title']) && !stristr($this->title, $data['title']))
-                ? $this->title.$data['title'] : $this->title;
+                ? $this->title . $data['title'] : $this->title;
         $this->description = (isset($data['description']) && !empty($data['description']) && !stristr($this->description, $data['description']))
-                ? $this->description.$data['description'] : $this->description;
+                ? $this->description . $data['description'] : $this->description;
         $this->link = (isset($data['link'])) ? $data['link'] : $this->link;
 
         if (isset($data['metaTags'])) {
@@ -201,7 +204,7 @@ class MolajoDocumentHTML extends MolajoDocument
     public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
     {
         $attribs = JArrayHelper::toString($attribs);
-        $generatedTag = '<link href="'.$href.'" '.$relType.'="'.$relation.'" '.$attribs;
+        $generatedTag = '<link href="' . $href . '" ' . $relType . '="' . $relation . '" ' . $attribs;
         $this->_links[] = $generatedTag;
     }
 
@@ -219,7 +222,7 @@ class MolajoDocumentHTML extends MolajoDocument
     public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
     {
         $href = str_replace('\\', '/', $href);
-        $this->_links[] = '<link href="'.$href.'" rel="'.$relation.'" type="'.$type.'"';
+        $this->_links[] = '<link href="' . $href . '" rel="' . $relation . '" type="' . $type . '"';
     }
 
     /**
@@ -274,10 +277,11 @@ class MolajoDocumentHTML extends MolajoDocument
     public function setBuffer($content, $options = array())
     {
         if (func_num_args() > 1 && !is_array($options)) {
-			$args = func_get_args(); $options = array();
-			$options['type'] = $args[1];
-			$options['name'] = (isset($args[2])) ? $args[2] : null;
-		}
+            $args = func_get_args();
+            $options = array();
+            $options['type'] = $args[1];
+            $options['name'] = (isset($args[2])) ? $args[2] : null;
+        }
         parent::$_buffer[$options['type']][$options['name']] = $content;
     }
 
@@ -331,20 +335,21 @@ class MolajoDocumentHTML extends MolajoDocument
         $result = '';
 
         $operators = '(\+|\-|\*|\/|==|\!=|\<\>|\<|\>|\<=|\>=|and|or|xor)';
-        $words = preg_split('# '.$operators.' #', $condition, null, PREG_SPLIT_DELIM_CAPTURE);
+        $words = preg_split('# ' . $operators . ' #', $condition, null, PREG_SPLIT_DELIM_CAPTURE);
 
         for ($i = 0, $n = count($words); $i < $n; $i += 2) {
             $name = strtolower($words[$i]);
 
             if ((isset(parent::$_buffer['modules'][$name]))
-                && (parent::$_buffer['modules'][$name] === false)) {
+                && (parent::$_buffer['modules'][$name] === false)
+            ) {
                 $words[$i] = 0;
             } else {
-                $words[$i] = count(MolajoApplicationModule::getModules($name));
+                $words[$i] = count(MolajoModule::getModules($name));
             }
         }
 
-        $str = 'return '.implode(' ', $words).';';
+        $str = 'return ' . implode(' ', $words) . ';';
 
         return eval($str);
     }
@@ -367,9 +372,9 @@ class MolajoDocumentHTML extends MolajoDocument
             $active = $menu->getActive();
             /** todo: amy acl */
             if ($active) {
-                $where[] = 'parent = '.$active->id;
+                $where[] = 'parent = ' . $active->id;
                 $where[] = 'published = 1';
-                $dbo->setQuery('SELECT COUNT(*) FROM #__content WHERE '.implode(' AND ', $where));
+                $dbo->setQuery('SELECT COUNT(*) FROM #__content WHERE ' . implode(' AND ', $where));
                 $children = $dbo->loadResult();
             } else {
                 $children = 0;
@@ -390,24 +395,24 @@ class MolajoDocumentHTML extends MolajoDocument
     {
         $contents = '';
 
-        if (file_exists($directory.'/'.$filename)) {
-            $this->_file = $directory.'/'.$filename;
+        if (file_exists($directory . '/' . $filename)) {
+            $this->_file = $directory . '/' . $filename;
 
             ob_start();
-            require $directory.'/'.$filename;
+            require $directory . '/' . $filename;
             $contents = ob_get_contents();
             ob_end_clean();
         }
 
         /** Favicon */
-        $path = $directory.'/';
-        $dirs = array($path, $path.'images/', MOLAJO_BASE_FOLDER.'/');
+        $path = $directory . '/';
+        $dirs = array($path, $path . 'images/', MOLAJO_BASE_FOLDER . '/');
         foreach ($dirs as $dir) {
-            $icon = $dir.'favicon.ico';
+            $icon = $dir . 'favicon.ico';
             if (file_exists($icon)) {
-                $path = str_replace(MOLAJO_BASE_FOLDER.'/', '', $dir);
+                $path = str_replace(MOLAJO_BASE_FOLDER . '/', '', $dir);
                 $path = str_replace('\\', '/', $path);
-                $this->addFavicon(JURI::base(true).'/'.$path.'favicon.ico');
+                $this->addFavicon(JURI::base(true) . '/' . $path . 'favicon.ico');
                 break;
             }
         }
@@ -434,14 +439,14 @@ class MolajoDocumentHTML extends MolajoDocument
         $template = $filter->clean($parameters['template'], 'cmd');
         $file = $filter->clean($parameters['file'], 'cmd');
 
-        if (file_exists($directory.'/'.$template.'/'.$file)) {
+        if (file_exists($directory . '/' . $template . '/' . $file)) {
         } else {
             $template = 'system';
         }
-/** todo: amy figure out best place for each extension to load language */
+        /** todo: amy figure out best place for each extension to load language */
         /** Language File */
         $lang = MolajoFactory::getLanguage();
-        $lang->load('template_'.$template, MOLAJO_CMS_TEMPLATES.'/'.$template, $lang->getDefault(), false, false);
+        $lang->load('template_' . $template, MOLAJO_CMS_TEMPLATES . '/' . $template, $lang->getDefault(), false, false);
 
         /** Variables */
         $this->template = $template;
@@ -450,7 +455,7 @@ class MolajoDocumentHTML extends MolajoDocument
         $this->parameters = isset($parameters['parameters']) ? $parameters['parameters'] : new JRegistry;
 
         /** Load Template */
-        $this->_template = $this->_loadTemplate($directory.'/'.$template, $file);
+        $this->_template = $this->_loadTemplate($directory . '/' . $template, $file);
     }
 
     /**
@@ -502,8 +507,8 @@ class MolajoDocumentHTML extends MolajoDocument
             $replace[] = $doc;
             $with[] = $this->getBuffer($args['type'], $args['name'], $args['attribs']);
         }
-//echo 'Replace <pre>';var_dump($replace);'</pre>';
-//echo 'With <pre>';var_dump($with);'</pre>';
+        //echo 'Replace <pre>';var_dump($replace);'</pre>';
+        //echo 'With <pre>';var_dump($with);'</pre>';
         return str_replace($replace, $with, $this->_template);
     }
 }

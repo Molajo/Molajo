@@ -1,10 +1,9 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Router
- *
+ * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -18,11 +17,11 @@ define('MOLAJO_ROUTER_MODE_SEF', 1);
 /**
  * Class to create and parse routes
  *
- * @package    Molajo
+ * @package     Molajo
  * @subpackage  Application
  * @since       1.0
  */
-class MolajoApplicationRouter extends JObject
+class MolajoRouter extends JObject
 {
     /**
      * The rewrite mode
@@ -81,12 +80,12 @@ class MolajoApplicationRouter extends JObject
 
         if (empty($instances[$application])) {
 
-            $classname = 'Molajo'.ucfirst($application).'Router';
+            $classname = 'Molajo' . ucfirst($application) . 'Router';
             if (class_exists($classname)) {
                 $instance = new $classname($options);
 
             } else {
-                $error = MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
+                $error = MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_APPLICATION_ERROR_ROUTER_LOAD', $application));
                 return $error;
             }
 
@@ -106,70 +105,71 @@ class MolajoApplicationRouter extends JObject
      */
     public function parse(&$uri)
     {
-		$vars = array();
+        $vars = array();
 
-		// Get the application
-		$app = MolajoFactory::getApplication();
+        // Get the application
+        $app = MolajoFactory::getApplication();
 
-		if ($app->getConfig('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
-			//forward to https
-			$uri->setScheme('https');
-			$app->redirect((string)$uri);
-		}
+        if ($app->getConfig('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
+            //forward to https
+            $uri->setScheme('https');
+            $app->redirect((string)$uri);
+        }
 
-		// Get the path
-		$path = $uri->getPath();
+        // Get the path
+        $path = $uri->getPath();
 
-		// Remove the base URI path.
-		$path = substr_replace($path, '', 0, strlen(JURI::base(true)));
+        // Remove the base URI path.
+        $path = substr_replace($path, '', 0, strlen(JURI::base(true)));
 
-		// Check to see if a request to a specific entry point has been made.
-		if (preg_match("#.*\.php#u", $path, $matches)) {
+        // Check to see if a request to a specific entry point has been made.
+        if (preg_match("#.*\.php#u", $path, $matches)) {
 
-			// Get the current entry point path relative to the site path.
-			$scriptPath = realpath($_SERVER['SCRIPT_FILENAME'] ? $_SERVER['SCRIPT_FILENAME'] : str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']));
-			$relativeScriptPath = str_replace('\\', '/', str_replace(JPATH_SITE, '', $scriptPath));
+            // Get the current entry point path relative to the site path.
+            $scriptPath = realpath($_SERVER['SCRIPT_FILENAME'] ? $_SERVER['SCRIPT_FILENAME']
+                                           : str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']));
+            $relativeScriptPath = str_replace('\\', '/', str_replace(JPATH_SITE, '', $scriptPath));
 
-			// If a php file has been found in the request path, check to see if it is a valid file.
-			// Also verify that it represents the same file from the server variable for entry script.
-			if (file_exists(JPATH_SITE.$matches[0]) && ($matches[0] == $relativeScriptPath)) {
+            // If a php file has been found in the request path, check to see if it is a valid file.
+            // Also verify that it represents the same file from the server variable for entry script.
+            if (file_exists(JPATH_SITE . $matches[0]) && ($matches[0] == $relativeScriptPath)) {
 
-				// Remove the entry point segments from the request path for proper routing.
-				$path = str_replace($matches[0], '', $path);
-			}
-		}
+                // Remove the entry point segments from the request path for proper routing.
+                $path = str_replace($matches[0], '', $path);
+            }
+        }
 
-		//Remove the suffix
-		if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
-			if ($app->getConfig('sef_suffix') && !(substr($path, -9) == 'index.php' || substr($path, -1) == '/')) {
-				if ($suffix = pathinfo($path, PATHINFO_EXTENSION)) {
-					$path = str_replace('.'.$suffix, '', $path);
-					$vars['format'] = $suffix;
-				}
-			}
-		}
+        //Remove the suffix
+        if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
+            if ($app->getConfig('sef_suffix') && !(substr($path, -9) == 'index.php' || substr($path, -1) == '/')) {
+                if ($suffix = pathinfo($path, PATHINFO_EXTENSION)) {
+                    $path = str_replace('.' . $suffix, '', $path);
+                    $vars['format'] = $suffix;
+                }
+            }
+        }
 
-		//Set the route
-		$uri->setPath(trim($path , '/'));
+        //Set the route
+        $uri->setPath(trim($path, '/'));
 
         // Process the parsed variables based on custom defined rules
         $vars = $this->_processParseRules($uri);
 
- 		// Parse RAW URL
-		if ($this->_mode == MOLAJO_ROUTER_MODE_RAW) {
-			$vars2 = $this->_parseRawRoute($uri);
+        // Parse RAW URL
+        if ($this->_mode == MOLAJO_ROUTER_MODE_RAW) {
+            $vars2 = $this->_parseRawRoute($uri);
             if (is_array($vars2)) {
                 array_merge($vars, $vars2);
             }
-		}
+        }
 
-		// Parse SEF URL
-		if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
+        // Parse SEF URL
+        if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
             $vars2 = $this->_parseSefRoute($uri);
             if (is_array($vars2)) {
                 array_merge($vars, $vars2);
             }
-		}
+        }
 
         return array_merge($this->getVars(), $vars);
     }
@@ -425,7 +425,7 @@ class MolajoApplicationRouter extends JObject
                 }
             }
 
-            $url = 'index.php?'.JURI::buildQuery($vars);
+            $url = 'index.php?' . JURI::buildQuery($vars);
         }
 
         // Decompose link into url component parts

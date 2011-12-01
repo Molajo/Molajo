@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 ?>
-			</td>
-		</tr>
-	</table>
+</td>
+</tr>
+</table>
 </table>

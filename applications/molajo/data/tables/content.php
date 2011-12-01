@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Table
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -27,7 +27,7 @@ class MolajoTableContent extends MolajoTable
      */
     function __construct($db)
     {
-        parent::__construct('#'.JRequest::getCmd('ComponentTable'), 'id', $db);
+        parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
     }
 
     /**
@@ -62,7 +62,7 @@ class MolajoTableContent extends MolajoTable
             $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
-            $query->where('id = '.(int)$this->catid);
+            $query->where('id = ' . (int)$this->catid);
 
             $this->_db->setQuery($query);
             if ($result = $this->_db->loadResult()) {
@@ -125,7 +125,7 @@ class MolajoTableContent extends MolajoTable
     {
         /** title **/
         if (trim($this->title) == '') {
-            $this->setError(MolajoText::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
+            $this->setError(MolajoTextHelper::_('MOLAJO_WARNING_PROVIDE_VALID_NAME'));
             return false;
         }
 
@@ -243,10 +243,10 @@ class MolajoTableContent extends MolajoTable
             $query = $db->getQuery(true);
 
             $query->select($db->namequote('alias'));
-            $query->from($db->namequote('#'.JRequest::getCmd('ComponentTable')));
-            $query->where($db->namequote('alias').' = '.$db->quote($this->alias));
-            $query->where($db->namequote('id').' <> '.(int)$this->id);
-            $query->where($db->namequote('state').' <> '.(int)MOLAJO_STATUS_VERSION);
+            $query->from($db->namequote('#' . JRequest::getCmd('ComponentTable')));
+            $query->where($db->namequote('alias') . ' = ' . $db->quote($this->alias));
+            $query->where($db->namequote('id') . ' <> ' . (int)$this->id);
+            $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATUS_VERSION);
 
             $this->_db->setQuery($query);
 
@@ -257,7 +257,7 @@ class MolajoTableContent extends MolajoTable
             }
 
             if ($aliasFound === false) {
-                $tempAlias = $this->alias.'-'.$i;
+                $tempAlias = $this->alias . '-' . $i;
             }
             $i++;
 

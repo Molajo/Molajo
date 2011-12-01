@@ -110,7 +110,7 @@ class QueryAnalyzer implements SQLLogger
         }
         foreach ($this->queries as $index => $sql) {
             if (!$dumpOnlySql) {
-                $output .= 'Query(' . ($index+1) . ') - ' . $this->queryExecutionTimes[$index] . ' ms' . PHP_EOL;
+                $output .= 'Query(' . ($index + 1) . ') - ' . $this->queryExecutionTimes[$index] . ' ms' . PHP_EOL;
             }
             $output .= $sql . ';' . PHP_EOL;
         }
@@ -192,9 +192,10 @@ class QueryAnalyzer implements SQLLogger
         $converted = $this->getConvertedParams($params, $types);
         if (is_int(key($params))) {
             $index = key($converted);
-            $sql = preg_replace_callback('@\?@sm', function($match) use (&$index, $converted) {
-                return $converted[$index++];
-            }, $sql);
+            $sql = preg_replace_callback('@\?@sm', function($match) use (&$index, $converted)
+                {
+                    return $converted[$index++];
+                }, $sql);
         } else {
             foreach ($converted as $key => $value) {
                 $sql = str_replace(':' . $key, $value, $sql);

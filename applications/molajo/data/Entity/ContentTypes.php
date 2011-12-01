@@ -50,11 +50,10 @@ class ContentTypes
     private $componentOption;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +73,7 @@ class ContentTypes
     /**
      * Get contentType
      *
-     * @return string 
+     * @return string
      */
     public function getContentType()
     {
@@ -94,7 +93,7 @@ class ContentTypes
     /**
      * Get protected
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProtected()
     {
@@ -114,7 +113,7 @@ class ContentTypes
     /**
      * Get sourceTable
      *
-     * @return string 
+     * @return string
      */
     public function getSourceTable()
     {
@@ -134,7 +133,7 @@ class ContentTypes
     /**
      * Get componentOption
      *
-     * @return string 
+     * @return string
      */
     public function getComponentOption()
     {

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-        <fields name="parameters">
+    <fields name="parameters">
 
-            <fieldset
+        <fieldset
                 name="xyzxyz"
                 addfieldpath="/plugins/system/extend/fieldtypes/custom"
                 >
-                <field
+            <field
                     name="xyzxyz_section"
                     type="spacer"
                     hr="false"
@@ -14,7 +14,7 @@
                     description="PLG_SYSTEM_EXTEND_PARAMETER_ABSTRACT_SECTION_DESC"
                     />
 
-                <field
+            <field
                     name="xyzxyz_section"
                     type="spacer"
                     hr="false"
@@ -22,20 +22,22 @@
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_SECTION_PUBLISHING_DESC"
                     />
 
-                <field
+            <field
                     name="xyzxyz_enable"
                     type="radio"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_DESC"
                     default="0"
                     >
-                    <option
-                            value="0">JNO</option>
-                    <option
-                            value="1">JYES</option>
-                </field>
+                <option
+                        value="0">JNO
+                </option>
+                <option
+                        value="1">JYES
+                </option>
+            </field>
 
-                <field
+            <field
                     name="xyzxyz_section_publishing"
                     type="spacer"
                     hr="true"
@@ -43,7 +45,7 @@
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_SECTION_PUBLISHING_DESC"
                     />
 
-		<field
+            <field
                     name="xyzxyz_published_criteria"
                     type="list"
                     default="1"
@@ -51,11 +53,11 @@
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISHED_LABEL"
                     size="1"
                     >
-                    <option value="1">JPUBLISHED</option>
-                    <option value="0">JUNPUBLISHED</option>
-		</field>
+                <option value="1">JPUBLISHED</option>
+                <option value="0">JUNPUBLISHED</option>
+            </field>
 
-		<field
+            <field
                     name="xyzxyz_start_publishing_datetime_criteria"
                     type="calendar"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISH_UP_DESC"
@@ -63,7 +65,7 @@
                     filter="date"
                     />
 
-		<field
+            <field
                     name="xyzxyz_stop_publishing_datetime_criteria"
                     type="calendar"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_PUBLISH_DOWN_DESC"
@@ -71,24 +73,24 @@
                     filter="date"
                     />
 
-		<field
+            <field
                     name="xyzxyz_access_criteria"
                     type="accesslevel"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_ACCESS_DESC"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_ACCESS_LABEL"
                     size="1"
-		/>
+                    />
 
-		<field
+            <field
                     name="xyzxyz_language_criteria"
                     type="contentlanguage"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_LANGUAGE_DESC"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_LANGUAGE_LABEL"
                     >
-                    <option value="*">JALL</option>
-		</field>
+                <option value="*">JALL</option>
+            </field>
 
-                <field
+            <field
                     name="xyzxyz_section_scope"
                     type="spacer"
                     hr="true"
@@ -96,22 +98,25 @@
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_SECTION_SCOPE_DESC"
                     />
 
-                <field
+            <field
                     name="xyzxyz_client_criteria"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_CLIENT_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_CLIENT_DESC"
                     type="list"
                     default=""
                     >
-                    <option
-                            value="">JNOTCRITERIA</option>
-                    <option
-                            value="0">JFRONTEND</option>
-                    <option
-                            value="1">JADMINISTRATOR</option>
-                </field>
+                <option
+                        value="">JNOTCRITERIA
+                </option>
+                <option
+                        value="0">JFRONTEND
+                </option>
+                <option
+                        value="1">JADMINISTRATOR
+                </option>
+            </field>
 
-                <field
+            <field
                     name="xyzxyz_component_criteria"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_COMPONENT_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_COMPONENT_DESC"
@@ -121,11 +126,12 @@
                     size="4"
                     default=""
                     >
-                    <option
-                            value="">JNOTCRITERIA</option>
-                </field>
+                <option
+                        value="">JNOTCRITERIA
+                </option>
+            </field>
 
-                <field
+            <field
                     name="xyzxyz_category_criteria"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_CATEGORY_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_CATEGORY_DESC"
@@ -134,11 +140,12 @@
                     multiple="true"
                     size="4"
                     >
-                    <option
-                            value="">JNOTCRITERIA</option>
-                </field>
+                <option
+                        value="">JNOTCRITERIA
+                </option>
+            </field>
 
-                <field
+            <field
                     name="xyzxyz_menu_item_criteria"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_MENUITEM_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_MENUITEM_DESC"
@@ -147,11 +154,12 @@
                     multiple="true"
                     size="4"
                     >
-                    <option
-                            value="">JNOTCRITERIA</option>
-                </field>
+                <option
+                        value="">JNOTCRITERIA
+                </option>
+            </field>
 
-                <field
+            <field
                     name="xyzxyz_content_item_criteria"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_ITEM_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_ITEM_LABEL"
@@ -161,7 +169,7 @@
                     cols="50"
                     />
 
-                <field
+            <field
                     name="xyzxyz_forms_criteria"
                     label="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_TARGET_FORMS_LABEL"
                     description="PLG_SYSTEM_EXTEND_PARAMETER_CONTENTTYPE_TARGET_FORMS_DESC"
@@ -171,7 +179,7 @@
                     cols="50"
                     />
 
-                <field
+            <field
                     name="xyzxyz_sql_table_name"
                     type="hidden"
                     default=""
@@ -179,7 +187,7 @@
                     description="PLG_SYSTEM_EXTEND_PARAMETER_GLOBAL_SQL_TABLE_NAME_DESC"
                     filter="string"
                     >
-                </field>
-            </fieldset>
+            </field>
+        </fieldset>
     </fields>
 </form>

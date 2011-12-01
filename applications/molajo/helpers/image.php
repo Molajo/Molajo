@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Helper
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -140,13 +140,13 @@ class MolajoImageHelper
         $query->select('content_file');
         $query->from('#__media a');
         $query->where('a.published = 1');
-        $query->where('(a.start_publishing_datetime = '.$db->Quote($nullDate).' OR a.start_publishing_datetime <= '.$db->Quote($now).')');
-        $query->where('(a.stop_publishing_datetime = '.$db->Quote($nullDate).' OR a.stop_publishing_datetime >= '.$db->Quote($now).')');
+        $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
+        $query->where('(a.stop_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.stop_publishing_datetime >= ' . $db->Quote($now) . ')');
 
         $acl = new MolajoACL ();
         $acl->getQueryInformation('', $query, 'viewaccess', array('table_prefix' => 'a'));
 
-        $query->where('a.id = '.(int)$this->id);
+        $query->where('a.id = ' . (int)$this->id);
         $db->setQuery($query->__toString());
 
         $this->filename = $db->loadResult();
@@ -158,13 +158,13 @@ class MolajoImageHelper
         $images = MolajoFactory::getApplication()->getConfig('image_folder', '/images');
 
         /** folders */
-        if (JFolder::exists(MOLAJO_BASE_FOLDER.'/'.$images)) {
+        if (JFolder::exists(MOLAJO_BASE_FOLDER . '/' . $images)) {
         } else {
-            JFolder::create(MOLAJO_BASE_FOLDER.'/'.$images);
+            JFolder::create(MOLAJO_BASE_FOLDER . '/' . $images);
         }
 
         /** make certain original image exists */
-        $this->fileNameOriginal = MOLAJO_BASE_FOLDER.'/'.$images.'/'.$this->filename;
+        $this->fileNameOriginal = MOLAJO_BASE_FOLDER . '/' . $images . '/' . $this->filename;
         if (JFile::exists($this->fileNameOriginal)) {
             return $this->fileNameOriginal;
         } else {
@@ -183,13 +183,13 @@ class MolajoImageHelper
         $images = MolajoFactory::getApplication()->getConfig('thumb_folder', '/images/thumbs');
 
         /** folders */
-        if (JFolder::exists(MOLAJO_BASE_FOLDER.'/'.$images)) {
+        if (JFolder::exists(MOLAJO_BASE_FOLDER . '/' . $images)) {
         } else {
-            JFolder::create(MOLAJO_BASE_FOLDER.'/'.$images);
+            JFolder::create(MOLAJO_BASE_FOLDER . '/' . $images);
         }
 
         /** if resized image already exists, return it */
-        $this->fileNameNew = MOLAJO_BASE_FOLDER.'/'.$images.'/'.'s'.$this->size.'_'.'t'.'_'.$this->type.$this->filename;
+        $this->fileNameNew = MOLAJO_BASE_FOLDER . '/' . $images . '/' . 's' . $this->size . '_' . 't' . '_' . $this->type . $this->filename;
         if (JFile::exists($this->fileNameNew)) {
             return true;
         }

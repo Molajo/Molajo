@@ -120,7 +120,7 @@ class Closure implements Strategy
             'columns' => array('depth')
         );
         if ($cacheDriver = $em->getMetadataFactory()->getCacheDriver()) {
-            $cacheDriver->save($closureMetadata->name."\$CLASSMETADATA", $closureMetadata, null);
+            $cacheDriver->save($closureMetadata->name . "\$CLASSMETADATA", $closureMetadata, null);
         }
     }
 
@@ -128,7 +128,8 @@ class Closure implements Strategy
      * {@inheritdoc}
      */
     public function onFlushEnd($em)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -142,19 +143,22 @@ class Closure implements Strategy
      * {@inheritdoc}
      */
     public function processPreRemove($em, $node)
-    {}
+    {
+    }
 
-     /**
+    /**
      * {@inheritdoc}
      */
     public function processScheduledInsertion($em, $node)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
      */
     public function processScheduledDelete($em, $entity)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -259,12 +263,13 @@ class Closure implements Strategy
 
             $ids = $conn->fetchAll($subQuery, compact('nodeId'));
             if ($ids) {
-                $ids = array_map(function($el) {
-                    return $el['id'];
-                }, $ids);
+                $ids = array_map(function($el)
+                    {
+                        return $el['id'];
+                    }, $ids);
             }
             // using subquery directly, sqlite acts unfriendly
-            $query = "DELETE FROM {$table} WHERE id IN (".implode(', ', $ids).")";
+            $query = "DELETE FROM {$table} WHERE id IN (" . implode(', ', $ids) . ")";
             if (!$conn->executeQuery($query)) {
                 throw new RuntimeException('Failed to remove old closures');
             }

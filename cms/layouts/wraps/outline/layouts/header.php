@@ -7,18 +7,18 @@
  */
 defined('MOLAJO') or die;
 
-static $css=false;
+static $css = false;
 
 if ($css) {
 } else {
-    $css=true;
+    $css = true;
     jimport('joomla.environment.browser');
     $this->document = MolajoFactory::getDocument();
     $browser = JBrowser::getInstance();
 
     $this->document->addStyleDeclaration(".mod-preview-info { padding: 2px 4px 2px 4px; border: 1px solid black; position: absolute; background-color: white; color: red;}");
     $this->document->addStyleDeclaration(".mod-preview-wrapper { background-color:#eee; border: 1px dotted black; color:#700;}");
-    if ($browser->getBrowser()=='msie') {
+    if ($browser->getBrowser() == 'msie') {
         if ($browser->getMajor() <= 7) {
             $this->document->addStyleDeclaration(".mod-preview-info {filter: alpha(opacity=80);}");
             $this->document->addStyleDeclaration(".mod-preview-wrapper {filter: alpha(opacity=50);}");

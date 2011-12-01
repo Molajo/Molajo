@@ -9,5 +9,6 @@ defined('MOLAJO') or die;
 ?>
 <div>
     <h1>Oops...</h1>
+
     <p><?php echo $this->error_message ?></p>
 </div>

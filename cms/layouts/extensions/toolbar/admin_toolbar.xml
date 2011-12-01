@@ -9,13 +9,13 @@
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
     <description>LAYOUT_EXTENSION_ADMINISTER_TOOLBAR_DESCRIPTION</description>
-	<files>
-		<folder>images</folder>
-		<folder>language</folder>
-		<folder>layouts</folder>
-	</files>
-	<languages>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_toolbar.ini</language>
-		<language tag="language/en-GB">en-GB.layout_extension_admin_toolbar.sys.ini</language>
-	</languages>
+    <files>
+        <folder>images</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+    </files>
+    <languages>
+        <language tag="language/en-GB">en-GB.layout_extension_admin_toolbar.ini</language>
+        <language tag="language/en-GB">en-GB.layout_extension_admin_toolbar.sys.ini</language>
+    </languages>
 </extension>

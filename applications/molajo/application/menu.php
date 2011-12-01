@@ -1,21 +1,21 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Menu
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * MolajoApplicationMenu Class
+ * Molajo Menu Class
  *
  * @package     Molajo
- * @subpackage  Menu Helper
+ * @subpackage  Application
  * @since       1.0
  */
-class MolajoApplicationMenu extends JObject
+class MolajoMenu extends JObject
 {
     /**
      * Array to hold menu items
@@ -61,7 +61,7 @@ class MolajoApplicationMenu extends JObject
         }
 
         if (empty($instances[$application])) {
-            $classname = 'MolajoApplicationMenu';
+            $classname = 'MolajoMenu';
             $instance = new $classname($options);
 
             $instances[$application] = & $instance;
@@ -91,7 +91,7 @@ class MolajoApplicationMenu extends JObject
             if ($item->menu_item_home) {
                 $this->_default[$item->menu_item_language] = $item->id;
             }
-///echo '<pre>';var_dump($item);'</pre>';
+            ///echo '<pre>';var_dump($item);'</pre>';
 
             /** Menu */
             $menu = new JRegistry;
@@ -312,9 +312,9 @@ class MolajoApplicationMenu extends JObject
      */
     public function load()
     {
-        $this->_items  = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MENU);
+        $this->_items = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MENU);
 
-        foreach($this->_items as &$item) {
+        foreach ($this->_items as &$item) {
 
             $parent_tree = array();
             if (isset($this->_items[$item->menu_item_parent_id]->tree)) {

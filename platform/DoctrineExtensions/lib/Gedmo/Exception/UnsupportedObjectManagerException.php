@@ -16,4 +16,5 @@ use Gedmo\Exception;
 class UnsupportedObjectManager
     extends InvalidArgumentException
     implements Exception
-{}
+{
+}

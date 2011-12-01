@@ -46,15 +46,15 @@ class MolajoFormFieldFileList extends MolajoFormFieldList
         // Get the path in which to search for file options.
         $path = (string)$this->element['directory'];
         if (!is_dir($path)) {
-            $path = MOLAJO_BASE_FOLDER.'/'.$path;
+            $path = MOLAJO_BASE_FOLDER . '/' . $path;
         }
 
         // Prepend some default options based on field attributes.
         if (!$hideNone) {
-            $options[] = MolajoHTML::_('select.option', '-1', MolajoText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)));
+            $options[] = MolajoHTML::_('select.option', '-1', MolajoTextHelper::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)));
         }
         if (!$hideDefault) {
-            $options[] = MolajoHTML::_('select.option', '', MolajoText::alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)));
+            $options[] = MolajoHTML::_('select.option', '', MolajoTextHelper::alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->name)));
         }
 
         // Get a list of files in the search path with the given filter.
@@ -66,7 +66,7 @@ class MolajoFormFieldFileList extends MolajoFormFieldList
 
                 // Check to see if the file is in the exclude mask.
                 if ($exclude) {
-                    if (preg_match(chr(1).$exclude.chr(1), $file)) {
+                    if (preg_match(chr(1) . $exclude . chr(1), $file)) {
                         continue;
                     }
                 }

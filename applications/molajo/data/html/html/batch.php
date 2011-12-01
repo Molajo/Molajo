@@ -29,14 +29,14 @@ abstract class MolajoHtmlBatch
     {
         // Create the batch selector to change an access level on a selection list.
         $lines = array(
-            '<label id="batch-access-lbl" for="batch-access" class="hasTip" title="'.MolajoText::_('JLIB_HTML_BATCH_ACCESS_LABEL').'::'
-           .MolajoText::_('JLIB_HTML_BATCH_ACCESS_LABEL_DESC').'">', MolajoText::_('JLIB_HTML_BATCH_ACCESS_LABEL'), '</label>',
+            '<label id="batch-access-lbl" for="batch-access" class="hasTip" title="' . MolajoTextHelper::_('JLIB_HTML_BATCH_ACCESS_LABEL') . '::'
+            . MolajoTextHelper::_('JLIB_HTML_BATCH_ACCESS_LABEL_DESC') . '">', MolajoTextHelper::_('JLIB_HTML_BATCH_ACCESS_LABEL'), '</label>',
             MolajoHTML::_(
                 'access.assetgrouplist',
                 'batch[assetgroup_id]', '',
                 'class="inputbox"',
                 array(
-                     'title' => MolajoText::_('JLIB_HTML_BATCH_NOCHANGE'),
+                     'title' => MolajoTextHelper::_('JLIB_HTML_BATCH_NOCHANGE'),
                      'id' => 'batch-access')
             )
         );
@@ -56,13 +56,13 @@ abstract class MolajoHtmlBatch
     public static function item($extension)
     {
         // Create the copy/move options.
-        $options = array(MolajoHTML::_('select.option', 'c', MolajoText::_('JLIB_HTML_BATCH_COPY')),
-                         MolajoHTML::_('select.option', 'm', MolajoText::_('JLIB_HTML_BATCH_MOVE')));
+        $options = array(MolajoHTML::_('select.option', 'c', MolajoTextHelper::_('JLIB_HTML_BATCH_COPY')),
+                         MolajoHTML::_('select.option', 'm', MolajoTextHelper::_('JLIB_HTML_BATCH_MOVE')));
 
         // Create the batch selector to change select the category by which to move or copy.
-        $lines = array('<label id="batch-choose-action-lbl" for="batch-choose-action">', MolajoText::_('JLIB_HTML_BATCH_MENU_LABEL'), '</label>',
+        $lines = array('<label id="batch-choose-action-lbl" for="batch-choose-action">', MolajoTextHelper::_('JLIB_HTML_BATCH_MENU_LABEL'), '</label>',
                        '<fieldset id="batch-choose-action" class="combo">', '<select name="batch[category_id]" class="inputbox" id="batch-category-id">',
-                       '<option value="">'.MolajoText::_('JSELECT').'</option>',
+                       '<option value="">' . MolajoTextHelper::_('JSELECT') . '</option>',
                        MolajoHTML::_('select.options', MolajoHTML::_('category.options', $extension)), '</select>',
                        MolajoHTML::_('select.radiolist', $options, 'batch[move_copy]', '', 'value', 'text', 'm'), '</fieldset>');
 
@@ -80,11 +80,11 @@ abstract class MolajoHtmlBatch
     {
         // Create the batch selector to change an access level on a selection list.
         $lines = array(
-            '<label id="batch-language-lbl" for="batch-language" class="hasTip" title="'.MolajoText::_('JLIB_HTML_BATCH_LANGUAGE_LABEL').'::'.MolajoText::_('JLIB_HTML_BATCH_LANGUAGE_LABEL_DESC').'">',
-            MolajoText::_('JLIB_HTML_BATCH_LANGUAGE_LABEL'),
+            '<label id="batch-language-lbl" for="batch-language" class="hasTip" title="' . MolajoTextHelper::_('JLIB_HTML_BATCH_LANGUAGE_LABEL') . '::' . MolajoTextHelper::_('JLIB_HTML_BATCH_LANGUAGE_LABEL_DESC') . '">',
+            MolajoTextHelper::_('JLIB_HTML_BATCH_LANGUAGE_LABEL'),
             '</label>',
             '<select name="batch[language_id]" class="inputbox" id="batch-language-id">',
-            '<option value="">'.MolajoText::_('JLIB_HTML_BATCH_LANGUAGE_NOCHANGE').'</option>',
+            '<option value="">' . MolajoTextHelper::_('JLIB_HTML_BATCH_LANGUAGE_NOCHANGE') . '</option>',
             MolajoHTML::_('select.options', MolajoHTML::_('contentlanguage.existing', true, true), 'value', 'text'),
             '</select>'
         );

@@ -1,27 +1,27 @@
 <fieldset
-    name="layout_options"
-    label="MENU_LAYOUT_OPTIONS_LABEL"
-    >
+        name="layout_options"
+        label="MENU_LAYOUT_OPTIONS_LABEL"
+        >
 
     <field
-        name="layout"
-        type="text"
-        label="LAYOUT_LABEL"
-        description="LAYOUT_DESC"
-        />
+            name="layout"
+            type="text"
+            label="LAYOUT_LABEL"
+            description="LAYOUT_DESC"
+            />
 
     <field
-        name="wrap"
-        type="text"
-        label="WRAP_LABEL"
-        description="WRAP_DESC"
-        />
+            name="wrap"
+            type="text"
+            label="WRAP_LABEL"
+            description="WRAP_DESC"
+            />
 
     <field
-        name="layout_class_suffix"
-        type="text"
-        label="LAYOUT_CLASS_LABEL"
-        description="LAYOUT_CLASS_DESC"
-        />
+            name="layout_class_suffix"
+            type="text"
+            label="LAYOUT_CLASS_LABEL"
+            description="LAYOUT_CLASS_DESC"
+            />
 
 </fieldset>

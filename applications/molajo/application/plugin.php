@@ -3,19 +3,19 @@
  * @package     Molajo
  * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Plugin Helper
+ * Plugin
  *
  * @package     Molajo
- * @subpackage  Plugin Helper
+ * @subpackage  Plugin
  * @since       1.0
  */
-abstract class MolajoApplicationPlugin extends JEvent
+abstract class MolajoPlugin extends JEvent
 {
     /**
      * Plugin Parameters
@@ -24,27 +24,27 @@ abstract class MolajoApplicationPlugin extends JEvent
      */
     public $parameters = null;
 
-     /**
-      * The name of the plugin
-      *
-      * @var    sring
-      */
-     protected $_name = null;
-
-     /**
-      * The plugin type
-      *
-      * @var    string
-      */
-     protected $_type = null;
+    /**
+     * The name of the plugin
+     *
+     * @var    sring
+     */
+    protected $_name = null;
 
     /**
-     * Returns a MolajoApplicationPathway object
+     * The plugin type
+     *
+     * @var    string
+     */
+    protected $_type = null;
+
+    /**
+     * Returns a plugin object
      *
      * @param   string  $application  The name of the client
      * @param   array   $options An associative array of options
      *
-     * @return  MolajoApplicationPathway  A MolajoApplicationPathway object.
+     * @return  object
      * @since   1.0
      */
     public static function getInstance($application, $options = array())
@@ -59,17 +59,17 @@ abstract class MolajoApplicationPlugin extends JEvent
             //Load the router object
             $info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
-            $path = $info->path.'/includes/plugin.php';
+            $path = $info->path . '/includes/plugin.php';
 
             if (file_exists($path)) {
                 require_once $path;
 
-                $classname = 'MolajoApplicationPlugin'.ucfirst($application);
+                $classname = 'MolajoPlugin' . ucfirst($application);
                 $instance = new $classname($options);
             }
             else
             {
-                $error = MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_PLUGIN_LOAD', $application));
+                $error = MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_APPLICATION_ERROR_PLUGIN_LOAD', $application));
                 return $error;
             }
 
@@ -241,7 +241,7 @@ abstract class MolajoApplicationPlugin extends JEvent
         $plugin->folder = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->folder);
         $plugin->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->title);
 
-        $path = MOLAJO_CMS_PLUGINS.'/'.$plugin->folder.'/'.$plugin->title.'/'.$plugin->title.'.php';
+        $path = MOLAJO_CMS_PLUGINS . '/' . $plugin->folder . '/' . $plugin->title . '/' . $plugin->title . '.php';
 
         if (JFile::exists($path)) {
             require_once $path;
@@ -256,7 +256,7 @@ abstract class MolajoApplicationPlugin extends JEvent
                 $dispatcher = JDispatcher::getInstance();
             }
 
-            $className = 'plg'.$plugin->folder.$plugin->title;
+            $className = 'plg' . $plugin->folder . $plugin->title;
             if (class_exists($className)) {
 
             } else {
@@ -282,7 +282,7 @@ abstract class MolajoApplicationPlugin extends JEvent
             return $plugins;
         }
 
-        $plugins = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN);
+        $plugins = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN);
         return $plugins;
     }
 
@@ -300,8 +300,8 @@ abstract class MolajoApplicationPlugin extends JEvent
     public function loadLanguage($extension = '', $basePath = MOLAJO_CMS_PLUGINS)
     {
         if (empty($extension)) {
-            $extension = 'plg'.ucfirst($this->_type).ucfirst($this->_name);
+            $extension = 'plg' . ucfirst($this->_type) . ucfirst($this->_name);
         }
-        MolajoFactory::getLanguage()->load(strtolower($extension), MOLAJO_CMS_PLUGINS.'/'.$this->_type.'/'.$extension, null, false, false);
+        MolajoFactory::getLanguage()->load(strtolower($extension), MOLAJO_CMS_PLUGINS . '/' . $this->_type . '/' . $extension, null, false, false);
     }
 }

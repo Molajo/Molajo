@@ -1,21 +1,21 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Helper
+ * @subpackage  Application
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Component Helper
+ * Component
  *
  * @package     Molajo
- * @subpackage  Component Helper
+ * @subpackage  Application
  * @since       1.0
  */
-class MolajoApplicationComponent
+class MolajoComponent
 {
     /**
      * @var array $_components - list of components from cache
@@ -30,14 +30,15 @@ class MolajoApplicationComponent
      * @return    string        option
      * @since    1.0
      */
-    public static function verifyComponent($option=null)
+    public static function verifyComponent($option = null)
     {
         if ($option == null) {
             $option = strtolower(JRequest::getCmd('option', null));
         }
 
         if (MolajoFactory::getUser()->get('guest') == 1
-            && MolajoFactory::getApplicationConfig()->get('application_logon_requirement', 1) == 1) {
+            && MolajoFactory::getApplicationConfig()->get('application_logon_requirement', 1) == 1
+        ) {
 
             $option = MolajoFactory::getApplicationConfig()->get('application_guest_option', 'login');
 
@@ -158,7 +159,7 @@ class MolajoApplicationComponent
      */
     protected static function _load($option)
     {
-        self::$_components[$option] = MolajoApplicationExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, $option);
+        self::$_components[$option] = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, $option);
         if (isset(self::$_components[$option]->parameters)) {
             $temp = new JRegistry;
             $temp->loadString(self::$_components[$option]->parameters);
@@ -186,21 +187,23 @@ class MolajoApplicationComponent
         MolajoFactory::getApplication()->scope = $request['option'];
 
         /** path */
-        $path = $request['component_path'].'/'.$request['no_option'].'.php';
+        $path = $request['component_path'] . '/' . $request['option'] . '.php';
 
         /** installation */
         if ($request['application_id'] == 0
-            && file_exists($path)) {
+            && file_exists($path)
+        ) {
 
-        /** language */
+            /** language */
         } elseif (self::isEnabled($request['option'])
-                  && file_exists($path)) {
+                  && file_exists($path)
+        ) {
             MolajoFactory::getLanguage()->load($request['option'], $path, MolajoFactory::getLanguage()->getDefault(), false, false);
 
         } else {
-            MolajoError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+            MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
-//echo '<pre>';var_dump($request);'</pre>';
+        //echo '<pre>';var_dump($request);'</pre>';
 
         /** execute the component */
         ob_start();
@@ -213,7 +216,7 @@ class MolajoApplicationComponent
 
         return $output;
     }
-        
+
     /**
      * getRequest
      *
@@ -221,7 +224,7 @@ class MolajoApplicationComponent
      *
      * @return bool
      */
-    public function getRequest($option=null)
+    public function getRequest($option = null)
     {
         //todo: amy remove all the application-specific values
 
@@ -241,7 +244,7 @@ class MolajoApplicationComponent
         }
 
         /** 2. Component Path */
-        $component_path = MOLAJO_CMS_COMPONENTS.'/'.$option;
+        $component_path = MOLAJO_CMS_COMPONENTS . '/' . $option;
 
         /** 3. Task */
         $task = JRequest::getCmd('task', 'display');
@@ -252,7 +255,7 @@ class MolajoApplicationComponent
         /** 4. Controller */
         $controller = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_TASKS_CONTROLLER, $task);
         if ($controller === false) {
-            MolajoError::raiseError(500, MolajoText::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER').' '.$task);
+            MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_INVALID_TASK_DISPLAY_CONTROLLER') . ' ' . $task);
             return false;
         }
 
@@ -269,7 +272,7 @@ class MolajoApplicationComponent
             if ($results === false) {
                 $view = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT);
                 if ($view === false) {
-                    $this->enqueueMessage(MolajoText::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
+                    $this->enqueueMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -299,7 +302,7 @@ class MolajoApplicationComponent
                     $layout = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT);
                 }
                 if ($layout === false) {
-                    $this->enqueueMessage(MolajoText::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    $this->enqueueMessage(MolajoTextHelper::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -350,11 +353,11 @@ class MolajoApplicationComponent
                 $cids = array();
 
             } else if ($id == 0 && count($cids) == 0) {
-                MolajoError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
+                MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_TASK_MUST_HAVE_REQUEST_ID_TO_EDIT'));
                 return false;
 
             } else if (count($cids) > 1) {
-                MolajoError::raiseError(500, MolajoText::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
+                MolajoError::raiseError(500, MolajoTextHelper::_('MOLAJO_ERROR_TASK_MAY_NOT_HAVE_MULTIPLE_REQUEST_IDS'));
                 return false;
             }
         }
@@ -379,7 +382,7 @@ class MolajoApplicationComponent
         }
 
         /** 14. parameters */
-        $parameters = MolajoApplicationComponent::getParameters($option);
+        $parameters = MolajoComponent::getParameters($option);
 
         /** other */
         $extension = JRequest::getCmd('extension', '');
@@ -406,7 +409,6 @@ class MolajoApplicationComponent
         $session->set('page.controller', $controller);
         $session->set('page.extension_type', 'component');
         $session->set('page.option', $option);
-        $session->set('page.no_option', substr($option, 4, strlen($option) - 4));
         $session->set('page.view', $view);
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
@@ -451,7 +453,6 @@ class MolajoApplicationComponent
         $request['controller'] = $session->get('page.controller');
         $request['extension_type'] = $session->get('page.extension_type');
         $request['option'] = $session->get('page.option');
-        $request['no_option'] = $session->get('page.no_option');
         $request['view'] = $session->get('page.view');
         $request['layout'] = $session->get('page.layout');
         $request['wrap'] = $session->get('page.wrap');
@@ -505,12 +506,12 @@ class MolajoApplicationComponent
         $doquery = false;
 
         if ((int)$session->get('page.item_id') > 0) {
-            $query->select('"" as '.$db->namequote('metakey'));
-            $query->select('"" as '.$db->namequote('metadesc'));
-            $query->select('"" as '.$db->namequote('metadata'));
+            $query->select('"" as ' . $db->namequote('metakey'));
+            $query->select('"" as ' . $db->namequote('metadesc'));
+            $query->select('"" as ' . $db->namequote('metadata'));
             $query->select($db->namequote('parameters'));
             $query->from($db->namequote($session->get('page.component_table')));
-            $query->where($db->namequote('id').' = '.(int)$session->get('page.id'));
+            $query->where($db->namequote('id') . ' = ' . (int)$session->get('page.id'));
             $doquery = true;
 
         } else if ((int)$session->get('page.id') > 0) {
@@ -519,7 +520,7 @@ class MolajoApplicationComponent
             $query->select($db->namequote('metadata'));
             $query->select($db->namequote('parameters'));
             $query->from($db->namequote($session->get('page.component_table')));
-            $query->where($db->namequote('id').' = '.(int)$session->get('page.id'));
+            $query->where($db->namequote('id') . ' = ' . (int)$session->get('page.id'));
             $doquery = true;
 
         } else if ((int)$session->get('page.cid') > 0) {
@@ -528,14 +529,14 @@ class MolajoApplicationComponent
             $query->select($db->namequote('metadata'));
             $query->select($db->namequote('parameters'));
             $query->from($db->namequote('#__categories'));
-            $query->where($db->namequote('id').' > '.(int)$session->get('page.catid'));
+            $query->where($db->namequote('id') . ' > ' . (int)$session->get('page.catid'));
             $doquery = true;
         }
 
         if ($doquery === true) {
             $query->select($db->namequote('id'));
             $query->select($db->namequote('title'));
-            $query->select('"" as '.$db->namequote('subtitle'));
+            $query->select('"" as ' . $db->namequote('subtitle'));
 
             $db->setQuery($query->__toString());
 
@@ -570,7 +571,7 @@ class MolajoApplicationComponent
         }
 
         /** Set Document Information */
-        $classname = 'Molajo'.ucfirst(MOLAJO_APPLICATION).'Application';
+        $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
         $appClass = new $classname();
         $document = MolajoFactory::getDocument();
 
@@ -585,7 +586,7 @@ class MolajoApplicationComponent
 
         $pathway = $appClass->getPathway();
         $title = null;
-        $parameters = MolajoApplicationComponent::getParameters($session->get('page.option'));
+        $parameters = MolajoComponent::getParameters($session->get('page.option'));
 
         //        $title = $this->parameters->get('page_title', '');
 
@@ -597,10 +598,10 @@ class MolajoApplicationComponent
         }
 
         if (MolajoFactory::getConfig()->get('sitename_pagetitles', 0) == 1) {
-            $title = MolajoText::sprintf('JPAGETITLE', MolajoFactory::getConfig()->get('sitename', 'Molajo'), $title);
+            $title = MolajoTextHelper::sprintf('JPAGETITLE', MolajoFactory::getConfig()->get('sitename', 'Molajo'), $title);
 
         } elseif (MolajoFactory::getConfig()->get('sitename_pagetitles', 0) == 2) {
-            $title = MolajoText::sprintf('JPAGETITLE', $title, MolajoFactory::getConfig()->get('sitename', 'Molajo'));
+            $title = MolajoTextHelper::sprintf('JPAGETITLE', $title, MolajoFactory::getConfig()->get('sitename', 'Molajo'));
         }
 
         $document->setTitle($title);

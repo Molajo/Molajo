@@ -3,7 +3,7 @@
  * @version     $id: filterCreated.php
  * @package     Molajo
  * @subpackage  Filter
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -42,7 +42,7 @@ class MolajoFieldCreated extends MolajoField
      */
     public function getOptions()
     {
-        $dateModel = JModel::getInstance('Model'.ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
+        $dateModel = JModel::getInstance('Model' . ucfirst(JRequest::getCmd('DefaultView')), ucfirst(JRequest::getCmd('DefaultView')), array('ignore_request' => true));
         return $dateModel->getMonthsCreate();
     }
 
@@ -100,7 +100,7 @@ class MolajoFieldCreated extends MolajoField
             return;
         }
         $db = $this->getDbo();
-        $query->where('SUBSTRING(a.created, 1, 7) = '.$db->quote(substr($value, 0, 4).'-'.substr($value, 4, 2)));
+        $query->where('SUBSTRING(a.created, 1, 7) = ' . $db->quote(substr($value, 0, 4) . '-' . substr($value, 4, 2)));
     }
 
     /**
@@ -123,7 +123,7 @@ class MolajoFieldCreated extends MolajoField
             if ($item->created == 0) {
                 $render['print_value'] = '';
             } else {
-                $render['print_value'] = JHTML::_('date', $item->created, MolajoText::_('DATE_FORMAT_LC4'));
+                $render['print_value'] = JHTML::_('date', $item->created, MolajoTextHelper::_('DATE_FORMAT_LC4'));
             }
 
             return $render;

@@ -129,10 +129,13 @@ class PaginationAdapter implements \Zend_Paginator_Adapter_Interface
     public function getItems($offset, $itemCountPerPage)
     {
         $ids = $this->createLimitSubquery($offset, $itemCountPerPage)
-            ->getScalarResult();
+                ->getScalarResult();
 
         $ids = array_map(
-            function ($e) { return current($e); },
+            function ($e)
+            {
+                return current($e);
+            },
             $ids
         );
 

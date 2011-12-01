@@ -3,7 +3,7 @@
  * @version     $id: start.php
  * @package     Molajo
  * @subpackage  Installer Overrides for New Create Extensions Feature
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -22,33 +22,33 @@ defined('MOLAJO') or die;
 /** load the File Helper **/
 if (class_exists('MolajoFileHelper')) {
 } else {
-    if (file_exists(INSTALLER_OVERRIDES.'/installer/helpers/file.php')) {
-        JLoader::register('MolajoFileHelper', INSTALLER_OVERRIDES.'/installer/helpers/file.php');
+    if (file_exists(INSTALLER_OVERRIDES . '/installer/helpers/file.php')) {
+        JLoader::register('MolajoFileHelper', INSTALLER_OVERRIDES . '/installer/helpers/file.php');
     } else {
-        JError::raiseNotice(500, MolajoText::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE'.' '.'MolajoFileHelper'));
+        JError::raiseNotice(500, MolajoTextHelper::_('PLG_SYSTEM_CREATE_MISSING_CLASS_FILE' . ' ' . 'MolajoFileHelper'));
         return;
     }
 }
 $filehelper = new MolajoFileHelper();
 
 /** Override Primary Controller **/
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/installer/controllers/controller.php', 'InstallerController');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/installer/controllers/controller.php', 'InstallerController');
 
 /** Override Helper to add Create Submenu **/
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/installer/helpers/installer.php', 'InstallerHelper');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/installer/helpers/installer.php', 'InstallerHelper');
 
 /** JHtml Classes **/
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/jhtml/molajocomponent.php', 'JHtmlMolajoApplicationComponent');
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/jhtml/plugintype.php', 'JHtmlPluginType');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/jhtml/molajocomponent.php', 'JHtmlMolajoComponent');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/jhtml/plugintype.php', 'JHtmlPluginType');
 
 /** JForm Classes **/
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/jform/spacer.php', 'JFormFieldSpacer');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/jform/spacer.php', 'JFormFieldSpacer');
 
 /** Add new Model **/
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/installer/models/create.php', 'InstallerModelCreate');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/installer/models/create.php', 'InstallerModelCreate');
 
 /** Add new View **/
-$filehelper->requireClassFile (INSTALLER_OVERRIDES.'/installer/views/create/view.html.php', 'InstallerViewCreate');
+$filehelper->requireClassFile(INSTALLER_OVERRIDES . '/installer/views/create/view.html.php', 'InstallerViewCreate');
 
 /** Load Dependencies **/
 jimport('joomla.application.component.controller');

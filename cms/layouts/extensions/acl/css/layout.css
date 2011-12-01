@@ -6,76 +6,361 @@
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
 
-span.icon-16-allowed{background:url(../images/icon-16-allow.png) no-repeat right}
-span.icon-16-denied{background:url(../images/icon-16-deny.png) no-repeat right}
-span.icon-16-locked{background:url(../images/checked_out.png) no-repeat right}
-span.icon-16-unset{background:url(../images/icon-16-denyinactive.png) no-repeat right}
+span.icon-16-allowed {
+    background: url(../images/icon-16-allow.png) no-repeat right
+}
+
+span.icon-16-denied {
+    background: url(../images/icon-16-deny.png) no-repeat right
+}
+
+span.icon-16-locked {
+    background: url(../images/checked_out.png) no-repeat right
+}
+
+span.icon-16-unset {
+    background: url(../images/icon-16-denyinactive.png) no-repeat right
+}
 
 /* -- ACL PANEL STYLES  ----------- */
-#permissions-sliders .mypanel table.group-rules{margin:5px}
-#permissions-sliders .pane-toggler span,#permissions-sliders .pane-toggler-down span{padding-left:20px}
-#permissions-sliders .pane-toggler-down span.level,#permissions-sliders .pane-toggler span.level{background-image:none;color:#aaa;padding:0}
-#permissions-sliders .panel{border:0;margin-bottom:3px;margin-left:0}
-#permissions-sliders div.rule-notes{font-size:1.091em}
-#permissions-sliders p.rule-desc{font-size:1.091em;margin-left:0}
-#permissions-sliders ul#rules{padding:5px}
-#permissions-sliders ul#rules .group-kind{color:#025A8D}
-#permissions-sliders ul#rules .mypanel{background:#fff;padding:0}
-#permissions-sliders ul#rules .pane-slider{border:solid 1px #ccc}
-#permissions-sliders ul#rules li{margin:0;padding:0}
-#permissions-sliders ul#rules li h3{background:#fafafa;border:solid 1px #ccc;font-size:1.1em}
-#permissions-sliders ul#rules li h3.pane-toggler-down{color:#000}
-#permissions-sliders ul#rules li h3.pane-toggler-down a{border:solid 0}
-#permissions-sliders ul#rules table.group-rules{border-collapse:collapse;width:100%}
-#permissions-sliders ul#rules table.group-rules td{border:solid 1px #ccc;overflow:hidden;padding:4px;text-align:left;vertical-align:middle}
-#permissions-sliders ul#rules table.group-rules th{background:#ddd;border:solid 1px #ddd;color:#025A8D;font-size:0.9em;overflow:hidden;padding:4px;text-align:left}
-#permissions-sliders ul#rules,#permissions-sliders ul#rules ul{background:#fff;border:solid 0 #ccc;list-style-type:none;margin:0 !important;padding:0 !important}
-.acl-action{font-size:1.091em;margin:auto 0}
-.acl-groups{font-size:1.091em;font-weight:400}
-.check-0,table.adminlist tbody td.check-0{background-color:#FFFFCF}
-.check-a,table.adminlist tbody td.check-a{background-color:#CFFFDA}
-.check-d,table.adminlist tbody td.check-d{background-color:#FFCFCF}
-.red{color:#c00;font-weight:700}
-.swatch{padding:0 15px;text-align:center}
-a.icon-16-allowinactive{background:url(../images/icon-16-allowinactive.png) no-repeat}
-div.acl-options{width:100%}
-dl.tabs dt h3{font-size:1em;font-weight:400;margin:0;padding:0}
-dl.tabs dt h3 a:link{color:#333;outline:medium none;text-decoration:none}
-label#jform_rules-lbl,label#jform_filters-lbl{display:none;float:none;white-space:nowrap}
-label.icon-16-allow{background:url(../images/icon-16-allow.png) no-repeat;left:40%;position:relative;text-indent:-9999em}
-label.icon-16-allow,label.icon-16-deny,a.icon-16-allow,a.icon-16-deny,a.icon-16-allowinactive,a.icon-16-denyinactive{display:block;height:16px;margin:0 auto;width:16px}
-label.icon-16-deny{background:url(../images/icon-16-deny.png) no-repeat;left:40%;position:relative;text-indent:-9999em}
-span.icon-16-allowed,a.icon-16-allow{background:url(../images/icon-16-allow.png) no-repeat}
-span.icon-16-denied,a.icon-16-deny{background:url(../images/icon-16-deny.png) no-repeat}
-span.icon-16-locked{background:url(../images/checked_out.png) 0 0 no-repeat}
-span.icon-16-unset,a.icon-16-denyinactive{background:url(../images/icon-16-denyinactive.png) no-repeat}
-span.icon-16-unset,span.icon-16-allowed,span.icon-16-denied,span.icon-16-locked{padding-left:18px}
-table#acl-config{border-collapse:collapse;margin-top:15px;width:100%}
-table#acl-config td select{float:none}
-table#acl-config th{background:#F4F4F4;border-bottom:1px solid silver;height:25px;vertical-align:middle}
-table#acl-config th.acl-groups{padding-left:8px;text-align:left}
-table#acl-config th.acl-groups span.gi{margin-right:2px}
-table#acl-config thead th,table#acl-config td{height:30px;text-align:center;vertical-align:middle}
-table.aclmodify-table select{margin:1px}
-table.aclmodify-table th.col2,table.aclmodify-table th.col3,table.aclmodify-table th.col4{text-align:center;vertical-align:bottom;width:20%}
-table.aclsummary-table caption,table.aclmodify-table caption,#permissions-sliders ul#rules .pane-slider.pane-hide{display:none}
-table.aclsummary-table td label,table.aclmodify-table td label{min-width:20px}
-table.aclsummary-table td.col2,table.aclsummary-table th.col2,table.aclsummary-table td.col3,table.aclsummary-table th.col3,table.aclsummary-table td.col4,table.aclsummary-table th.col4,table.aclsummary-table td.col5,table.aclsummary-table th.col5,table.aclsummary-table td.col6,table.aclsummary-table th.col6,table.aclmodify-table td.col2,table.aclmodify-table th.col2{border-left:1px solid #cbcbcb}
-table.aclsummary-table th.col1{width:25%}
-table.aclsummary-table th.col2,table.aclsummary-table th.col3,table.aclsummary-table th.col4,table.aclsummary-table th.col5,table.aclsummary-table th.col6{text-align:center;vertical-align:bottom;width:15%}
-table.aclsummary-table,table.aclmodify-table{border-collapse:collapse;font-size:1.091em;width:100%}
-table.group-rules td select{margin:0 !important}
-td.col1{font-size:1.091em;padding:4px;text-align:left}
-tr.row1{background-color:#f0f0ee}
-ul#rules li .pane-sliders .panel h3.title{border:solid 0 #ccc}
-ul#rules table.aclmodify-table{border:solid 1px #000}
-ul#rules table.group-rules td label{border:solid 0 #000;margin:0 !important}
-ul#rules table.group-rules td span{padding-bottom:4px}
-ul.acllegend{font-size:1.091em;list-style:none;padding-bottom:10px}
-ul.acllegend li{display:block;float:left;margin:15px 0 15px 10px;padding-right:20px}
-ul.acllegend li.acl-allowed{background:url(../images/icon-16-allow.png) no-repeat left;padding-left:20px;padding-right:10px}
-ul.acllegend li.acl-denied{background:url(../images/icon-16-deny.png) no-repeat left;padding-left:20px;padding-right:20px}
-ul.acllegend li.acl-editgroups{padding-right:10px}
-ul.acllegend li.acl-resetbtn{padding-right:0}
-ul.config-option-list fieldset{margin:0;padding-left:0;padding-right:0}
-ul.config-option-list,ul.config-option-list li{list-style:none;margin:0;padding:0}
+#permissions-sliders .mypanel table.group-rules {
+    margin: 5px
+}
+
+#permissions-sliders .pane-toggler span, #permissions-sliders .pane-toggler-down span {
+    padding-left: 20px
+}
+
+#permissions-sliders .pane-toggler-down span.level, #permissions-sliders .pane-toggler span.level {
+    background-image: none;
+    color: #aaa;
+    padding: 0
+}
+
+#permissions-sliders .panel {
+    border: 0;
+    margin-bottom: 3px;
+    margin-left: 0
+}
+
+#permissions-sliders div.rule-notes {
+    font-size: 1.091em
+}
+
+#permissions-sliders p.rule-desc {
+    font-size: 1.091em;
+    margin-left: 0
+}
+
+#permissions-sliders ul#rules {
+    padding: 5px
+}
+
+#permissions-sliders ul#rules .group-kind {
+    color: #025A8D
+}
+
+#permissions-sliders ul#rules .mypanel {
+    background: #fff;
+    padding: 0
+}
+
+#permissions-sliders ul#rules .pane-slider {
+    border: solid 1px #ccc
+}
+
+#permissions-sliders ul#rules li {
+    margin: 0;
+    padding: 0
+}
+
+#permissions-sliders ul#rules li h3 {
+    background: #fafafa;
+    border: solid 1px #ccc;
+    font-size: 1.1em
+}
+
+#permissions-sliders ul#rules li h3.pane-toggler-down {
+    color: #000
+}
+
+#permissions-sliders ul#rules li h3.pane-toggler-down a {
+    border: solid 0
+}
+
+#permissions-sliders ul#rules table.group-rules {
+    border-collapse: collapse;
+    width: 100%
+}
+
+#permissions-sliders ul#rules table.group-rules td {
+    border: solid 1px #ccc;
+    overflow: hidden;
+    padding: 4px;
+    text-align: left;
+    vertical-align: middle
+}
+
+#permissions-sliders ul#rules table.group-rules th {
+    background: #ddd;
+    border: solid 1px #ddd;
+    color: #025A8D;
+    font-size: 0.9em;
+    overflow: hidden;
+    padding: 4px;
+    text-align: left
+}
+
+#permissions-sliders ul#rules, #permissions-sliders ul#rules ul {
+    background: #fff;
+    border: solid 0 #ccc;
+    list-style-type: none;
+    margin: 0 !important;
+    padding: 0 !important
+}
+
+.acl-action {
+    font-size: 1.091em;
+    margin: auto 0
+}
+
+.acl-groups {
+    font-size: 1.091em;
+    font-weight: 400
+}
+
+.check-0, table.adminlist tbody td.check-0 {
+    background-color: #FFFFCF
+}
+
+.check-a, table.adminlist tbody td.check-a {
+    background-color: #CFFFDA
+}
+
+.check-d, table.adminlist tbody td.check-d {
+    background-color: #FFCFCF
+}
+
+.red {
+    color: #c00;
+    font-weight: 700
+}
+
+.swatch {
+    padding: 0 15px;
+    text-align: center
+}
+
+a.icon-16-allowinactive {
+    background: url(../images/icon-16-allowinactive.png) no-repeat
+}
+
+div.acl-options {
+    width: 100%
+}
+
+dl.tabs dt h3 {
+    font-size: 1em;
+    font-weight: 400;
+    margin: 0;
+    padding: 0
+}
+
+dl.tabs dt h3 a:link {
+    color: #333;
+    outline: medium none;
+    text-decoration: none
+}
+
+label#jform_rules-lbl, label#jform_filters-lbl {
+    display: none;
+    float: none;
+    white-space: nowrap
+}
+
+label.icon-16-allow {
+    background: url(../images/icon-16-allow.png) no-repeat;
+    left: 40%;
+    position: relative;
+    text-indent: -9999em
+}
+
+label.icon-16-allow, label.icon-16-deny, a.icon-16-allow, a.icon-16-deny, a.icon-16-allowinactive, a.icon-16-denyinactive {
+    display: block;
+    height: 16px;
+    margin: 0 auto;
+    width: 16px
+}
+
+label.icon-16-deny {
+    background: url(../images/icon-16-deny.png) no-repeat;
+    left: 40%;
+    position: relative;
+    text-indent: -9999em
+}
+
+span.icon-16-allowed, a.icon-16-allow {
+    background: url(../images/icon-16-allow.png) no-repeat
+}
+
+span.icon-16-denied, a.icon-16-deny {
+    background: url(../images/icon-16-deny.png) no-repeat
+}
+
+span.icon-16-locked {
+    background: url(../images/checked_out.png) 0 0 no-repeat
+}
+
+span.icon-16-unset, a.icon-16-denyinactive {
+    background: url(../images/icon-16-denyinactive.png) no-repeat
+}
+
+span.icon-16-unset, span.icon-16-allowed, span.icon-16-denied, span.icon-16-locked {
+    padding-left: 18px
+}
+
+table#acl-config {
+    border-collapse: collapse;
+    margin-top: 15px;
+    width: 100%
+}
+
+table#acl-config td select {
+    float: none
+}
+
+table#acl-config th {
+    background: #F4F4F4;
+    border-bottom: 1px solid silver;
+    height: 25px;
+    vertical-align: middle
+}
+
+table#acl-config th.acl-groups {
+    padding-left: 8px;
+    text-align: left
+}
+
+table#acl-config th.acl-groups span.gi {
+    margin-right: 2px
+}
+
+table#acl-config thead th, table#acl-config td {
+    height: 30px;
+    text-align: center;
+    vertical-align: middle
+}
+
+table.aclmodify-table select {
+    margin: 1px
+}
+
+table.aclmodify-table th.col2, table.aclmodify-table th.col3, table.aclmodify-table th.col4 {
+    text-align: center;
+    vertical-align: bottom;
+    width: 20%
+}
+
+table.aclsummary-table caption, table.aclmodify-table caption, #permissions-sliders ul#rules .pane-slider.pane-hide {
+    display: none
+}
+
+table.aclsummary-table td label, table.aclmodify-table td label {
+    min-width: 20px
+}
+
+table.aclsummary-table td.col2, table.aclsummary-table th.col2, table.aclsummary-table td.col3, table.aclsummary-table th.col3, table.aclsummary-table td.col4, table.aclsummary-table th.col4, table.aclsummary-table td.col5, table.aclsummary-table th.col5, table.aclsummary-table td.col6, table.aclsummary-table th.col6, table.aclmodify-table td.col2, table.aclmodify-table th.col2 {
+    border-left: 1px solid #cbcbcb
+}
+
+table.aclsummary-table th.col1 {
+    width: 25%
+}
+
+table.aclsummary-table th.col2, table.aclsummary-table th.col3, table.aclsummary-table th.col4, table.aclsummary-table th.col5, table.aclsummary-table th.col6 {
+    text-align: center;
+    vertical-align: bottom;
+    width: 15%
+}
+
+table.aclsummary-table, table.aclmodify-table {
+    border-collapse: collapse;
+    font-size: 1.091em;
+    width: 100%
+}
+
+table.group-rules td select {
+    margin: 0 !important
+}
+
+td.col1 {
+    font-size: 1.091em;
+    padding: 4px;
+    text-align: left
+}
+
+tr.row1 {
+    background-color: #f0f0ee
+}
+
+ul#rules li .pane-sliders .panel h3.title {
+    border: solid 0 #ccc
+}
+
+ul#rules table.aclmodify-table {
+    border: solid 1px #000
+}
+
+ul#rules table.group-rules td label {
+    border: solid 0 #000;
+    margin: 0 !important
+}
+
+ul#rules table.group-rules td span {
+    padding-bottom: 4px
+}
+
+ul.acllegend {
+    font-size: 1.091em;
+    list-style: none;
+    padding-bottom: 10px
+}
+
+ul.acllegend li {
+    display: block;
+    float: left;
+    margin: 15px 0 15px 10px;
+    padding-right: 20px
+}
+
+ul.acllegend li.acl-allowed {
+    background: url(../images/icon-16-allow.png) no-repeat left;
+    padding-left: 20px;
+    padding-right: 10px
+}
+
+ul.acllegend li.acl-denied {
+    background: url(../images/icon-16-deny.png) no-repeat left;
+    padding-left: 20px;
+    padding-right: 20px
+}
+
+ul.acllegend li.acl-editgroups {
+    padding-right: 10px
+}
+
+ul.acllegend li.acl-resetbtn {
+    padding-right: 0
+}
+
+ul.config-option-list fieldset {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0
+}
+
+ul.config-option-list, ul.config-option-list li {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}

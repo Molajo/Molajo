@@ -4,7 +4,7 @@
  * @subpackage  Pathway
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -18,7 +18,7 @@ defined('MOLAJO') or die;
  * @subpackage  Application
  * @since       1.0
  */
-class MolajoApplicationPathway extends JObject
+class MolajoPathway extends JObject
 {
     /**
      * @var    array  Array to hold the pathway item objects
@@ -33,12 +33,12 @@ class MolajoApplicationPathway extends JObject
     protected $_count = 0;
 
     /**
-     * Returns a MolajoApplicationPathway object
+     * Returns a MolajoPathway object
      *
      * @param   string  $application  The name of the client
      * @param   array   $options An associative array of options
      *
-     * @return  MolajoApplicationPathway  A MolajoApplicationPathway object.
+     * @return  MolajoPathway  A MolajoPathway object.
      * @since   1.0
      */
     public static function getInstance($application, $options = array())
@@ -53,17 +53,17 @@ class MolajoApplicationPathway extends JObject
             //Load the router object
             $info = MolajoApplicationHelper::getApplicationInfo($application, true);
 
-            $path = $info->path.'/includes/pathway.php';
+            $path = $info->path . '/includes/pathway.php';
 
             if (file_exists($path)) {
                 require_once $path;
 
-                $classname = 'MolajoApplicationPathway'.ucfirst($application);
+                $classname = 'MolajoPathway' . ucfirst($application);
                 $instance = new $classname($options);
             }
             else
             {
-                $error = MolajoError::raiseError(500, MolajoText::sprintf('MOLAJO_APPLICATION_ERROR_PATHWAY_LOAD', $application));
+                $error = MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_APPLICATION_ERROR_PATHWAY_LOAD', $application));
                 return $error;
             }
 
@@ -97,7 +97,7 @@ class MolajoApplicationPathway extends JObject
     }
 
     /**
-     * Set the MolajoApplicationPathway items array.
+     * Set the MolajoPathway items array.
      *
      * @param   array  $pathway    An array of pathway objects.
      *
@@ -185,7 +185,7 @@ class MolajoApplicationPathway extends JObject
      * @param   string   $name  Name of the item
      * @param   string   $link  Link to the item
      *
-     * @return  MolajoApplicationPathway  Pathway item object
+     * @return  MolajoPathway  Pathway item object
      * @since   1.0
      */
     protected function _makeItem($name, $link)

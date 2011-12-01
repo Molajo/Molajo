@@ -18,5 +18,5 @@ use Gedmo\Sortable\Mapping\Event\SortableAdapter;
  */
 final class ORM extends BaseAdapterORM implements SortableAdapter
 {
-    
+
 }

@@ -8,20 +8,20 @@
 defined('JPATH_BASE') or die;
 
 /**
- * plgSystemExtend 
+ * plgSystemExtend
  *
  * NOTE: plgUserUserField and plgExtensionExtensionField are child objects of this Class for event standardization
  *
- * @package	Content
- * @subpackage	Fields
- * @version	1.6
+ * @package    Content
+ * @subpackage    Fields
+ * @version    1.6
  */
-class plgSystemExtend extends MolajoApplicationPlugin
+class plgSystemExtend extends MolajoPlugin
 {
     /**
      * __construct
      *
-     * @return	string
+     * @return    string
      */
     public function __construct(& $subject, $config = array())
     {
@@ -30,7 +30,7 @@ class plgSystemExtend extends MolajoApplicationPlugin
         /** load mvc classes **/
         define('MOLAJO', true);
         define('MOLAJO_EXTEND_ROOT', dirname(__FILE__));
-        
+
         /** load mvc classes **/
         require_once dirname(__FILE__) . '/mvc/controller.php';
     }
@@ -38,9 +38,9 @@ class plgSystemExtend extends MolajoApplicationPlugin
     /**
      * onAfterInitialize
      *
-     * @return	string
+     * @return    string
      */
-    public function onAfterInitialize ()
+    public function onAfterInitialize()
     {
         return;
     }
@@ -55,14 +55,14 @@ class plgSystemExtend extends MolajoApplicationPlugin
      *  Provide descriptive $context values so that action can be taken or not taken, depending on the content
      *  All $context values and component table names should be available from component parameters
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	stromg		The 'page' number
-     * @return	string
-     * @since	1.6
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    stromg        The 'page' number
+     * @return    string
+     * @since    1.6
      */
-    public function onContentPrepare ($context, &$content, &$parameters, $page = 0)
+    public function onContentPrepare($context, &$content, &$parameters, $page = 0)
     {
         return true;
     }
@@ -80,16 +80,16 @@ class plgSystemExtend extends MolajoApplicationPlugin
      * @param   array   $content   The associated data for the form.
      * @return  boolean
      *
-     * @since	1.6
+     * @since    1.6
      */
-    public function onContentPrepareForm ($form, $content)
+    public function onContentPrepareForm($form, $content)
     {
 
         /** before onContentAfterSave the onContentPrepareForm is run again without the content object for an unknown reason) **/
         if (!is_object($content)) {
             return;
         }
-        return extendController::initiation ($task='edit', $form, $context=null, $content, $parameters=null, $limitstart=null, $isNew=null, $event='onContentPrepareForm');
+        return extendController::initiation($task = 'edit', $form, $context = null, $content, $parameters = null, $limitstart = null, $isNew = null, $event = 'onContentPrepareForm');
     }
 
     /**
@@ -104,7 +104,7 @@ class plgSystemExtend extends MolajoApplicationPlugin
      * @param object $content
      *
      */
-    public function onContentValidate ($form, $content)
+    public function onContentValidate($form, $content)
     {
         return;
     }
@@ -120,13 +120,13 @@ class plgSystemExtend extends MolajoApplicationPlugin
      *
      * Make certain that Component Objects for Content and Form do not lose Custom Fields during error handling in parent MVC methods
      *
-     * @param	string		The context of the content passed to the plugin.
-     * @param	object		A JTableContent object
-     * @param	bool		If the content is just about to be created
-     * @return	bool		If false, abort the save
-     * @since	1.6
+     * @param    string        The context of the content passed to the plugin.
+     * @param    object        A JTableContent object
+     * @param    bool        If the content is just about to be created
+     * @return    bool        If false, abort the save
+     * @since    1.6
      */
-    public function onContentBeforeSave ($context, &$content, $isNew)
+    public function onContentBeforeSave($context, &$content, $isNew)
     {
         return;
     }
@@ -140,27 +140,28 @@ class plgSystemExtend extends MolajoApplicationPlugin
      *
      * Make certain that Component Objects for Content and Form do not lose Custom Fields during error handling in parent MVC methods
      *
-     * @param	string		The context of the content passed to the plugin (added in 1.6)
-     * @param	object		A JTableContent object
-     * @param	bool		If the content is just about to be created
+     * @param    string        The context of the content passed to the plugin (added in 1.6)
+     * @param    object        A JTableContent object
+     * @param    bool        If the content is just about to be created
      *
-     * @since	1.6
+     * @since    1.6
      */
-    public function onContentAfterSave ($context, &$content, $isNew)
+    public function onContentAfterSave($context, &$content, $isNew)
     {
-        return extendController::initiation ($task='save', $form=null, $context, $content, $parameters=null, $limitstart=null, $isNew=null, $event='onContentAfterSave');
+        return extendController::initiation($task = 'save', $form = null, $context, $content, $parameters = null, $limitstart = null, $isNew = null, $event = 'onContentAfterSave');
     }
+
     /**
      * onContentBeforeDelete
      *
      * Editing could be added here
      *
-     * @param	string	The context for the content passed to the plugin.
-     * @param	object	The data relating to the content that is to be deleted.
-     * @return	boolean
-     * @since	1.6
+     * @param    string    The context for the content passed to the plugin.
+     * @param    object    The data relating to the content that is to be deleted.
+     * @return    boolean
+     * @since    1.6
      */
-    public function onContentBeforeDelete ($context, $content)
+    public function onContentBeforeDelete($context, $content)
     {
         return true;
     }
@@ -172,14 +173,14 @@ class plgSystemExtend extends MolajoApplicationPlugin
      *
      * Use to remove Custom Fields for Component when Component data is deleted
      *
-     * @param	string		$content
-     * @param	array           $content
-     * @param	boolean		false
+     * @param    string        $content
+     * @param    array           $content
+     * @param    boolean        false
      *
      */
-    public function onContentAfterDelete ($context, $content)
+    public function onContentAfterDelete($context, $content)
     {
-        return extendController::initiation ($task='delete', $form=null, $context, $content, $parameters=null, $limitstart=null, $isNew=null, $event='onContentAfterDelete');
+        return extendController::initiation($task = 'delete', $form = null, $context, $content, $parameters = null, $limitstart = null, $isNew = null, $event = 'onContentAfterDelete');
     }
 
     /**
@@ -189,15 +190,15 @@ class plgSystemExtend extends MolajoApplicationPlugin
      *
      * Use to add custom fields to the Component Content object for the current record
      *
-     * @param	string		The context for the content passed to the plugin.
-     * @param	object		The content object.
-     * @param	object		The content parameters
-     * @param	int		The 'page' number
-     * @return	string
-     * @since	1.6
+     * @param    string        The context for the content passed to the plugin.
+     * @param    object        The content object.
+     * @param    object        The content parameters
+     * @param    int        The 'page' number
+     * @return    string
+     * @since    1.6
      */
-    public function onContentAfterTitle ($context, &$content, &$parameters, $limitstart)
+    public function onContentAfterTitle($context, &$content, &$parameters, $limitstart)
     {
-        return extendController::initiation ($task='display', $form=null, $context, $content, $parameters, $limitstart, $isNew=null, $event='onContentAfterTitle');
+        return extendController::initiation($task = 'display', $form = null, $context, $content, $parameters, $limitstart, $isNew = null, $event = 'onContentAfterTitle');
     }
 }

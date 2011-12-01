@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Document
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -61,7 +61,7 @@ class MolajoDocumentJSON extends MolajoDocument
     public function render($cache = false, $parameters = array())
     {
         JResponse::allowCache(false);
-        JResponse::setHeader('Content-disposition', 'attachment; filename="'.$this->getName().'.json"', true);
+        JResponse::setHeader('Content-disposition', 'attachment; filename="' . $this->getName() . '.json"', true);
 
         parent::render();
 

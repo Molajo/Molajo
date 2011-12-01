@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Extend
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -15,30 +15,30 @@ JFormHelper::loadFieldClass('list');
 /**
  * Supports an HTML select list of Dissertation Abstracts (List of Titles from Abstract Category Articles)
  *
- * @package		Joomla.Framework
- * @subpackage	Form
- * @since		1.6
+ * @package        Joomla.Framework
+ * @subpackage    Form
+ * @since        1.6
  */
 class JFormFieldAbstract extends JFormFieldList
 {
     /**
      * The form field type.
      *
-     * @var		string
-     * @since	1.6
+     * @var        string
+     * @since    1.6
      */
     public $tagtype = 'Abstract';
 
     /**
      * Method to get the field options.
      *
-     * @return	array	The field option objects.
-     * @since	1.6
+     * @return    array    The field option objects.
+     * @since    1.6
      */
     protected function getOptions()
     {
         /** retrieve extend parameters **/
-        $extendContentPlugin =& MolajoApplicationPlugin::getPlugin('content', 'extend');
+        $extendContentPlugin =& MolajoPlugin::getPlugin('content', 'extend');
         $extendParameters = new JParameter($extendContentPlugin->parameters);
 
         /** initialization **/

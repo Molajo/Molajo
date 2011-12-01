@@ -12,11 +12,11 @@ jimport('joomla.form.form');
 /**
  * modelForm
  *
- * Interacts with JForm to add and retrieve form fields and values 
+ * Interacts with JForm to add and retrieve form fields and values
  *
- * @package	Content
- * @subpackage	Extend
- * @version	1.6
+ * @package    Content
+ * @subpackage    Extend
+ * @version    1.6
  */
 class modelForm
 {
@@ -28,7 +28,7 @@ class modelForm
      *
      * @return object form
      */
-    public function getRequestForm ()
+    public function getRequestForm()
     {
         return JRequest::getVar('jform', array(), 'post', 'array');
     }
@@ -43,11 +43,11 @@ class modelForm
      *
      * @return object Custom Fields for the specified Content Type
      */
-    public function getCustomFields ($contentType, $path=null)
+    public function getCustomFields($contentType, $path = null)
     {
         /** default path **/
         if ($path == null) {
-            $path = MOLAJO_EXTEND_ROOT.'/contenttypes';
+            $path = MOLAJO_EXTEND_ROOT . '/contenttypes';
         }
 
         /** add path for JForm **/
@@ -67,7 +67,7 @@ class modelForm
 
             foreach ($contentTypeForm->getFieldset($contentTypeFieldSet) as $customField) :
 
-                $customFields [$nameInd]->name = substr($customField->name, (stripos($customField->name,'[')+1), (stripos($customField->name,']')-stripos($customField->name,'[')-1));
+                $customFields [$nameInd]->name = substr($customField->name, (stripos($customField->name, '[') + 1), (stripos($customField->name, ']') - stripos($customField->name, '[') - 1));
 
                 if (isset($customField->multiple) && $customField->multiple == true) {
                     $customFields[$nameInd]->multiple = 1;
@@ -94,15 +94,15 @@ class modelForm
      *
      * @return boolean
      */
-    public function addCustomFieldsForm ($contentType, $form, $path=null)
+    public function addCustomFieldsForm($contentType, $form, $path = null)
     {
         /** load language files **/
         $language = MolajoFactory::getLanguage();
-        $language->load('plg_system_extend_'.$contentType, MOLAJO_EXTEND_ROOT, $language->getDefault(), true, true);
+        $language->load('plg_system_extend_' . $contentType, MOLAJO_EXTEND_ROOT, $language->getDefault(), true, true);
 
         /** default path **/
         if ($path == null) {
-            $path = MOLAJO_EXTEND_ROOT.'/contenttypes';
+            $path = MOLAJO_EXTEND_ROOT . '/contenttypes';
         }
 
         /** custom fields folder **/

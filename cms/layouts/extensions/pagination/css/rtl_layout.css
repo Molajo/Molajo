@@ -5,10 +5,45 @@
 @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-.pagination{border-top:solid 1px #ddd;display:none;float:right;margin:10px 0;padding:10px 10px 0 0;text-align:right;width:100%;}
-.pagination ul{float:right;list-style-type:none;margin:0;padding:0;text-align:right;}
-.pagination li{border:solid 0 #eee;display:inline;float:right;margin:0 2px;padding:2px 5px;text-align:right;}
-.pagenav{padding:2px;}
-.pagination li.pagination-start,.pagination li.pagination-next,.pagination li.pagination-end,.pagination li.pagination-prev{border:0;}
-.pagination li.pagination-start,.pagination li.pagination-start span{padding:0;}
-.pagination li.pagination-start span,.pagination li.pagination-start a{padding:4px 0;}
+.pagination {
+    border-top: solid 1px #ddd;
+    display: none;
+    float: right;
+    margin: 10px 0;
+    padding: 10px 10px 0 0;
+    text-align: right;
+    width: 100%;
+}
+
+.pagination ul {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.pagination li {
+    border: solid 0 #eee;
+    display: inline;
+    float: right;
+    margin: 0 2px;
+    padding: 2px 5px;
+    text-align: right;
+}
+
+.pagenav {
+    padding: 2px;
+}
+
+.pagination li.pagination-start, .pagination li.pagination-next, .pagination li.pagination-end, .pagination li.pagination-prev {
+    border: 0;
+}
+
+.pagination li.pagination-start, .pagination li.pagination-start span {
+    padding: 0;
+}
+
+.pagination li.pagination-start span, .pagination li.pagination-start a {
+    padding: 4px 0;
+}

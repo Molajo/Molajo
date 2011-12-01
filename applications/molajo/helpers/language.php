@@ -3,7 +3,7 @@
  * @package     Molajo
  * @subpackage  Helper
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Amy Stephen. All rights reserved.
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
@@ -38,7 +38,7 @@ class MolajoLanguageHelper
             $installed == false;
 
         } elseif ($installed === true) {
-            $installed_languages = MolajoApplicationExtension::getExtensions(2);
+            $installed_languages = MolajoExtension::getExtensions(2);
         }
 
         foreach ($langs as $lang => $metadata)
@@ -122,7 +122,7 @@ class MolajoLanguageHelper
                     $languages[$key][] = new JObject(array('lang_code' => $metadata['tag']));
                 }
             } else {
-                $languages['default'] = MolajoApplicationExtension::getExtensions(2);
+                $languages['default'] = MolajoExtension::getExtensions(2);
                 $languages['sef'] = array();
                 $languages['lang_code'] = array();
 
