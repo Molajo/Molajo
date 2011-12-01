@@ -136,9 +136,9 @@ class MenusHelper
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('a.id AS value, a.title AS text, a.level, a.menu_id, a.type, a.template_id, a.checked_out');
-        $query->from('#__menu_items AS a');
-        $query->join('LEFT', '`#__menu_items` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
+        $query->select('a.id AS value, a.title AS text, a.lvl, a.menu_id, a.type, a.template_id, a.checked_out');
+        $query->from('#__content AS a');
+        $query->join('LEFT', '`#__content` AS b ON a.lft > b.lft AND a.rgt < b.rgt');
 
         // Filter by the type
         if ($menuType) {
@@ -148,7 +148,7 @@ class MenusHelper
         if ($parentId) {
             if ($mode == 2) {
                 // Prevent the parent and children from showing.
-                $query->join('LEFT', '`#__menu_items` AS p ON p.id = '.(int)$parentId);
+                $query->join('LEFT', '`#__content` AS p ON p.id = '.(int)$parentId);
                 $query->where('(a.lft <= p.lft OR a.rgt >= p.rgt)');
             }
         }
@@ -173,9 +173,9 @@ class MenusHelper
             return false;
         }
 
-        // Pad the option text with spaces using depth level as a multiplier.
+        // Pad the option text with spaces using depth lvl as a multiplier.
         foreach ($links as &$link) {
-            $link->text = str_repeat('- ', $link->level).$link->text;
+            $link->text = str_repeat('- ', $link->lvl).$link->text;
         }
 
         if (empty($menuType)) {

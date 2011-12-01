@@ -341,7 +341,7 @@ class MolajoCategoryNode extends JObject
 
     public $rgt = null;
 
-    public $level = null;
+    public $lvl = null;
 
     public $extension = null;
 

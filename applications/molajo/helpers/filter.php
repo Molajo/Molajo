@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Filter Helper
  * @since       1.0
  */
-class MolajoApplicationFilter
+class MolajoFilterHelper
 {
     /**
      * @var        array    A list of the default whitelist tags.

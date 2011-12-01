@@ -124,6 +124,14 @@ if (class_exists($formatClass)) {
 }
 
 /**
+ *  Helpers
+ */
+$files = JFolder::files(MOLAJO_APPLICATIONS.'/molajo/helpers', '\.php$', false, false);
+foreach ($files as $file) {
+    $filehelper->requireClassFile(MOLAJO_APPLICATIONS.'/molajo/helpers/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))).'Helper');
+}
+
+/**
  *  Installer
  */
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS.'/molajo/installer/adapter.php', 'MolajoAdapter');

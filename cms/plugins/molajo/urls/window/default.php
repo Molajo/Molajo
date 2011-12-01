@@ -780,7 +780,7 @@ class plgSystemTamka_Router extends MolajoApplicationPlugin	{
 
 		//	Retrieve URL for Custom Error Page		//
 		$query = 'SELECT alias 													' .
-			' FROM #__menu_items	 													' .
+			' FROM #__content	 													' .
 			' WHERE link = "index.php?option=tamka_error&view=error" 		' .
 			'   AND published = 1 												';
 

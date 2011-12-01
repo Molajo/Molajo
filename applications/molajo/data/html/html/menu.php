@@ -75,7 +75,7 @@ abstract class MolajoHtmlMenu
             $menus = $db->loadObjectList();
 
             $query->clear();
-            $query->select('a.id AS value, a.title AS text, a.level, a.menutype');
+            $query->select('a.id AS value, a.title AS text, a.lvl, a.menutype');
             $query->from('#__menu AS a');
             $query->where('a.parent_id > 0');
             $query->where('a.type <> '.$db->quote('url'));

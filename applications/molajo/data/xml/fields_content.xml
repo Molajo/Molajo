@@ -74,7 +74,7 @@
         class="inputbox"
         label="FIELD_CONTENT_TEXT_LABEL"
         description="FIELD_CONTENT_TEXT_DESC"
-        filter="MolajoApplicationFilter::filterText"
+        filter="MolajoFilterHelper::filterText"
         buttons="true"
     />
 

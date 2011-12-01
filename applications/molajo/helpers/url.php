@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  URL Helper
  * @since       1.0
  */
-class MolajoURLHelper
+class MolajoUrlHelper
 {
 
     /**

@@ -57,7 +57,7 @@ class JFormHelper extends MolajoFormHelper {}
 
 //abstract class MolajoToolbarHelper extends MolajoRenderToolbarHelper {}
 
-class JHelp extends MolajoApplicationHelp {}
+class JHelp extends MolajoApplicationHelper {}
 class JLanguageHelper extends MolajoLanguageHelper {}
 abstract class JMailHelper extends MolajoMailHelper {}
 

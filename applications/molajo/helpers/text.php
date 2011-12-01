@@ -8,7 +8,7 @@
 defined('MOLAJO') or die;
 
 /**
- * Image Helper
+ * Text Helper
  *
  * @package     Molajo
  * @subpackage  Text Helper
@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 class MolajoTextHelper
 {
-
     /**
      * addLineBreaks - changes line breaks to br tags
      * @param string $text

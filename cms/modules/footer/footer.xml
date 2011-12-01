@@ -26,7 +26,7 @@
                     class="inputbox"
                     label="MOLAJO_FIELD_LINK_LABEL"
                     description="MOLAJO_FIELD_LINK_DESC"
-                    filter="MolajoApplicationFilter::filterURL"
+                    filter="MolajoFilterHelper::filterURL"
                     size="60"
                 />
                 <field

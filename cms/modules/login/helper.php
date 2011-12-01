@@ -23,7 +23,7 @@ class modLoginHelper
 			$query	= $db->getQuery(true);
 
 			$query->select($db->nameQuote('link'));
-			$query->from($db->nameQuote('#__menu_items'));
+			$query->from($db->nameQuote('#__content'));
 			$query->where($db->nameQuote('published').'=1');
 			$query->where($db->nameQuote('id').'='.$db->quote($itemid));
 

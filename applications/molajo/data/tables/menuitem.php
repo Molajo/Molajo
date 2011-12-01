@@ -24,7 +24,7 @@ class MolajoTableMenuitem extends MolajoTableNested
      */
     public function __construct(&$db)
     {
-        parent::__construct('#__menu_items', 'id', $db);
+        parent::__construct('#__content', 'id', $db);
 
         // Set the default access level.
         $this->access = (int)MolajoFactory::getConfig()->get('access');

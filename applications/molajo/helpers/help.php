@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage  Language
  * @since       1.0
  */
-class MolajoApplicationHelp
+class MolajoHelpHelper
 {
     /**
      * Create a URL for a given help key reference

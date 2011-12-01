@@ -200,8 +200,8 @@ class MolajoApplicationComponent
         } else {
             MolajoError::raiseError(404, MolajoText::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
-echo '<pre>';var_dump($request);'</pre>';
-        die;
+//echo '<pre>';var_dump($request);'</pre>';
+
         /** execute the component */
         ob_start();
         require_once $path;

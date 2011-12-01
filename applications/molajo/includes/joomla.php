@@ -14,9 +14,9 @@ if (defined('JPATH_PLATFORM')) {
 } else {
     define('JPATH_PLATFORM', PLATFORM.'/jplatform/');
 }
-require_once JPATH_PLATFORM . '/platform.php';
+require_once JPATH_PLATFORM.'/platform.php';
 require_once JPATH_PLATFORM.'/loader.php';
-require_once MOLAJO_PLATFORM.'/helpers/file.php';
+require_once MOLAJO_APPLICATIONS.'/molajo/helpers/file.php';
 
 if (defined('_JEXEC')) { } else { define('_JEXEC', 1); }
 if (defined('JPATH_BASE')) { } else { define('JPATH_BASE', MOLAJO_BASE_FOLDER); }

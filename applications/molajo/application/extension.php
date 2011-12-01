@@ -132,11 +132,11 @@ abstract class MolajoApplicationExtension
             $query->select('c.'.$db->namequote('parent_id').' as menu_item_parent_id');
             $query->select('c.'.$db->namequote('lft').' as menu_item_lft');
             $query->select('c.'.$db->namequote('rgt').' as menu_item_rgt');
-            $query->select('c.'.$db->namequote('level').' as menu_item_level');
+            $query->select('c.'.$db->namequote('lvl').' as menu_item_lvl');
             $query->select('c.'.$db->namequote('metadata').' as menu_item_metadata');
             $query->select('c.'.$db->namequote('language').' as menu_item_language');
 
-            $query->from($db->namequote('#__menu_items').' as c');
+            $query->from($db->namequote('#__content').' as c');
 
             $query->where('b.'.$db->namequote('id').' = c.'.$db->namequote('extension_instance_id'));
 
@@ -151,7 +151,7 @@ abstract class MolajoApplicationExtension
             $query->from($db->namequote('#__assets').' as c_assets');
             $query->from($db->namequote('#__asset_types').' as c_ctype');
             $query->where('c_assets.asset_type_id = c_ctype.id');
-            $query->where('c_ctype.'.$db->namequote('source_table').' = "__menu_items"');
+            $query->where('c_ctype.'.$db->namequote('source_table').' = "__content"');
             $query->where('c_assets.source_id = c.id');
 
             /** Menu Item ACL */

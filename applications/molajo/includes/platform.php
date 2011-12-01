@@ -17,14 +17,6 @@ $filehelper = new MolajoFileHelper();
  */
 
 /**
- *  Helpers
- */
-$files = JFolder::files(MOLAJO_PLATFORM.'/helpers', '\.php$', false, false);
-foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_PLATFORM.'/helpers/'.$file, 'Molajo'.ucfirst(substr($file, 0, strpos($file, '.'))).'Helper');
-}
-
-/**
  *  Language - language and text already loaded
  */
 $filehelper->requireClassFile(MOLAJO_PLATFORM.'/language/languagetransliterate.php', 'MolajoLanguagetransliterate');

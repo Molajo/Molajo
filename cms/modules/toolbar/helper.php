@@ -422,7 +422,7 @@ abstract class MolajoToolbarHelper
      */
     public function addHelpButton($state, $userToolbarButtonPermissions, $id, $item = null)
     {
-        self::help('MolajoApplicationHelp_CONTENT_ARTICLE_MANAGER');
+        self::help('MolajoApplicationHelper_CONTENT_ARTICLE_MANAGER');
     }
 
     /**
