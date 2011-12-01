@@ -120,14 +120,7 @@ abstract class MolajoFormField
      * @var    string
      * @since  1.0
      */
-    protected $name;
-
-    /**
-     * The group of the field.
-     *
-     * @var    string
-     * @since  1.0
-     */
+   
     protected $group;
 
     /**
