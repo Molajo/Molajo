@@ -36,7 +36,7 @@ abstract class MolajoModule
         for ($i = 0; $i < $total; $i++)
         {
             // Match the name of the module
-            if ($modules[$i]->name == $name) {
+            if ($modules[$i]->title == $name) {
                 // Match the title if we're looking for a specific instance of the module
                 if (!$title || $modules[$i]->title == $title) {
                     $result = &$modules[$i];
@@ -46,7 +46,7 @@ abstract class MolajoModule
         }
 
         // If we didn't find it, and the name is something, create a dummy object
-        if (is_null($result) && substr($name, 0, 4) == '') {
+        if (is_null($result)) {
             $result = new stdClass;
             $result->id = 0;
             $result->title = '';
@@ -129,10 +129,12 @@ abstract class MolajoModule
      *
      * @return  string  The HTML content of the module output.
      */
-    public static function renderModule($module, $attribs = array())
+    public static function renderModule($moduleObject, $attribs = array())
     {
         $output = '';
-
+        $module = $moduleObject->module;
+        
+//echo '<pre>';var_dump($module);'</pre>';
         // Record the scope.
         $scope = MolajoFactory::getApplication()->scope;
 

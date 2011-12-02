@@ -443,7 +443,8 @@ class MolajoDocumentHTML extends MolajoDocument
         } else {
             $template = 'system';
         }
-        /** todo: amy figure out best place for each extension to load language */
+
+        /** todo: amy move this out of document into template helper */
         /** Language File */
         $lang = MolajoFactory::getLanguage();
         $lang->load('template_' . $template, MOLAJO_CMS_TEMPLATES . '/' . $template, $lang->getDefault(), false, false);
@@ -507,8 +508,8 @@ class MolajoDocumentHTML extends MolajoDocument
             $replace[] = $doc;
             $with[] = $this->getBuffer($args['type'], $args['name'], $args['attribs']);
         }
-        //echo 'Replace <pre>';var_dump($replace);'</pre>';
-        //echo 'With <pre>';var_dump($with);'</pre>';
+        echo 'Replace <pre>';var_dump($replace);'</pre>';
+        echo 'With <pre>';var_dump($with);'</pre>';
         return str_replace($replace, $with, $this->_template);
     }
 }

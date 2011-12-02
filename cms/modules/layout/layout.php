@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-$layout = $parameters->def('layout', 'admin_quick_list');
+$layout = $parameters->def('layout', 'quick_list');
 $wrap = $parameters->def('wrap', 'div');
 echo $layout . ' ' . $wrap;
 //require_once dirname(__FILE__).'/helper.php';

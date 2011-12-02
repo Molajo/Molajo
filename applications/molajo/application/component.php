@@ -182,8 +182,6 @@ class MolajoComponent
      */
     public static function renderComponent($request, $parameters = array())
     {
-echo '<pre>';var_dump($request);'</pre>';
-        
         /** scope */
         $scope = MolajoFactory::getApplication()->scope;
         MolajoFactory::getApplication()->scope = $request['option'];

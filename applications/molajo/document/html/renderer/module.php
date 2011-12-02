@@ -30,13 +30,14 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
      */
     public function render($module, $attribs = array(), $content = null)
     {
-        if (is_object($module)) {
+
+        if (is_array($module)) {
         } else {
-            $title = isset($attribs['title']) ? $attribs['title'] : null;
+            $title = isset($attribs['name']) ? $attribs['name'] : null;
 
-            $module = MolajoModule::getModule($module, $title);
+            $module = MolajoModule::getModule($module->extension_name, $title);
 
-            if (is_object($module)) {
+            if (is_array($module)) {
             } else {
                 if (is_null($content)) {
                     return '';
