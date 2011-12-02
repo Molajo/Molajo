@@ -110,7 +110,7 @@ abstract class MolajoTemplate
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_CMS_TEMPLATES . '/' . $template[0]->title;
-        $urlPath = JURI::root() . 'extensions/templates/' . $template[0]->title;
+        $urlPath = JURI::root() . 'cms/templates/' . $template[0]->title;
         self::loadMediaCSS($filePath, $urlPath);
         self::loadMediaJS($filePath, $urlPath);
 
