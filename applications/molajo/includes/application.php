@@ -175,8 +175,6 @@ foreach ($files as $file) {
 /** Models */
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
-    echo MOLAJO_APPLICATIONS_MVC . '/models/' . $file.'<br />';
-    echo 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))).'<br />';
     $filehelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
