@@ -20,7 +20,8 @@ if ($request['controller'] == 'display') {
 $filehelper->requireClassFile($request['component_path'] . '/models/' . $request['model'] . '.php', ucfirst($request['option']) . 'Model' . ucfirst($request['model']));
 
 /** Views */
-$filehelper->requireClassFile($request['component_path'] . '/views/' . $request['view'] . '/' . 'view.' . $request['format'] . '.php', ucfirst($request['option']) . 'View' . ucfirst($request['view']));
+//$filehelper->requireClassFile($request['component_path'] . '/views/' . $request['view'] . '/' . 'view.' . $request['format'] . '.php', ucfirst($request['option']) . 'View' . ucfirst($request['view']));
+$filehelper->requireClassFile($request['component_path'] . '/views/' . $request['view'] . '/' . 'view.php', ucfirst($request['option']) . 'View' . ucfirst($request['view']));
 
 /** ACL */
 if (file_exists($request['component_path'] . '/helpers/router.php')) {

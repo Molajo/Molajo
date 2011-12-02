@@ -20,25 +20,25 @@ defined('MOLAJO') or die;
 class MolajoViewEdit extends MolajoView
 {
     /** data */
-    protected $state;
-    protected $item;
+    public $state;
+    public $item;
 
     /** editor variables  **/
-//    protected $section;
-    protected $form;
+//    public $section;
+    public $form;
 
-//    protected $toolbar;
-//    protected $slider_id;
-//    protected $namesetName;
-//    protected $userToolbarButtonPermissions;
-//    protected $isNew;
+//    public $toolbar;
+//    public $slider_id;
+//    public $namesetName;
+//    public $userToolbarButtonPermissions;
+//    public $isNew;
 
     /** common */
-//    protected $parameters;
-//    protected $layoutHelper;
-//    protected $print;
-//    protected $user;
-//    protected $pageclass_suffix;
+//    public $parameters;
+//    public $layoutHelper;
+//    public $print;
+//    public $user;
+//    public $pageclass_suffix;
 
     /**
      * display

@@ -175,6 +175,8 @@ foreach ($files as $file) {
 /** Models */
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
+    echo MOLAJO_APPLICATIONS_MVC . '/models/' . $file.'<br />';
+    echo 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))).'<br />';
     $filehelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
@@ -187,13 +189,13 @@ foreach ($files as $file) {
 /** Views */
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/views/view.php', 'MolajoView');
 $files = JFolder::files(MOLAJO_APPLICATIONS_MVC . '/views', '\.php$', false, false);
-$includeFormat = JRequest::getCmd('format', 'html');
+//$includeFormat = JRequest::getCmd('format', 'html');
 foreach ($files as $file) {
     if ($file == 'layout.php' || $file == 'view.php') {
     } else {
-        if (strpos($file, $includeFormat)) {
+//        if (strpos($file, $includeFormat)) {
             $filehelper->requireClassFile(MOLAJO_APPLICATIONS_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
-        }
+//        }
     }
 }
 

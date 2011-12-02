@@ -182,6 +182,8 @@ class MolajoComponent
      */
     public static function renderComponent($request, $parameters = array())
     {
+echo '<pre>';var_dump($request);'</pre>';
+        
         /** scope */
         $scope = MolajoFactory::getApplication()->scope;
         MolajoFactory::getApplication()->scope = $request['option'];
@@ -284,6 +286,18 @@ class MolajoComponent
             }
 
             /** 8. Layout **/
+            $layout = JRequest::getCmd('layout', null);
+            if ($layout == null) {
+                $results = false;
+            } else {
+                if ($view == 'edit') {
+                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_EDIT, $layout);
+                } else {
+                    $results = $molajoConfig->getOptionLiteralValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY, $layout);
+                }
+            }
+
+            /** 9. Layout **/
             $layout = JRequest::getCmd('layout', null);
             if ($layout == null) {
                 $results = false;
