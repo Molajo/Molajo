@@ -471,7 +471,6 @@ class MolajoDocumentHTML extends MolajoDocument
         if (preg_match_all('#<doc:include\ type="([^"]+)" (.*)\/>#iU', $this->_template, $matches)) {
             $template_tags_first = array();
             $template_tags_last = array();
-
             // Step through the docs in reverse order.
             for ($i = count($matches[0]) - 1; $i >= 0; $i--) {
                 $type = $matches[1][$i];
@@ -508,8 +507,6 @@ class MolajoDocumentHTML extends MolajoDocument
             $replace[] = $doc;
             $with[] = $this->getBuffer($args['type'], $args['name'], $args['attribs']);
         }
-        echo 'Replace <pre>';var_dump($replace);'</pre>';
-        echo 'With <pre>';var_dump($with);'</pre>';
         return str_replace($replace, $with, $this->_template);
     }
 }
