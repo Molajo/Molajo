@@ -22,6 +22,45 @@ $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(MOLAJO_PLATFORM . '/language/languagetransliterate.php', 'MolajoTransliterateHelper');
 
 /**
+ *  MVC
+ */
+
+/** Controller */
+$filehelper->requireClassFile(MOLAJO_MVC . '/controllers/controller.php', 'MolajoController');
+$files = JFolder::files(MOLAJO_MVC . '/controllers', '\.php$', false, false);
+foreach ($files as $file) {
+    if ($file == 'controller.php') {
+    } else {
+        $filehelper->requireClassFile(MOLAJO_MVC . '/controllers/' . $file, 'MolajoController' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
+}
+
+/** Models */
+$files = JFolder::files(MOLAJO_MVC . '/models', '\.php$', false, false);
+foreach ($files as $file) {
+    $filehelper->requireClassFile(MOLAJO_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
+}
+
+/** Router */
+$files = JFolder::files(MOLAJO_MVC . '/router/', '\.php$', false, false);
+foreach ($files as $file) {
+    $filehelper->requireClassFile(MOLAJO_MVC . '/router/' . $file, 'MolajoRouter' . ucfirst(substr($file, 0, strpos($file, '.'))));
+}
+
+/** Views */
+$filehelper->requireClassFile(MOLAJO_MVC . '/views/view.php', 'MolajoView');
+$files = JFolder::files(MOLAJO_MVC . '/views', '\.php$', false, false);
+//$includeFormat = JRequest::getCmd('format', 'html');
+foreach ($files as $file) {
+    if ($file == 'layout.php' || $file == 'view.php') {
+    } else {
+//        if (strpos($file, $includeFormat)) {
+            $filehelper->requireClassFile(MOLAJO_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
+//        }
+    }
+}
+
+/**
  *  Session
  */
 $filehelper->requireClassFile(MOLAJO_PLATFORM . '/session/session.php', 'MolajoSession');

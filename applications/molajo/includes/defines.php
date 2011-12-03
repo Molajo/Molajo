@@ -12,22 +12,13 @@ if (defined('PLATFORM')) {
     define('PLATFORM', MOLAJO_BASE_FOLDER . '/platform');
 }
 
-if (defined('MOLAJO_APPLICATIONS_MVC')) {
-} else {
-    define('MOLAJO_APPLICATIONS_MVC', MOLAJO_APPLICATIONS . '/molajo/mvc');
-}
-if (defined('MOLAJO_APPLICATIONS_DATA')) {
-} else {
-    define('MOLAJO_APPLICATIONS_DATA', MOLAJO_APPLICATIONS . '/molajo/data');
-}
-if (defined('MOLAJO_APPLICATIONS_DATA_XML')) {
-} else {
-    define('MOLAJO_APPLICATIONS_DATA_XML', MOLAJO_APPLICATIONS_DATA . '/xml');
-}
-
 if (defined('MOLAJO_PLATFORM')) {
 } else {
     define('MOLAJO_PLATFORM', PLATFORM . '/molajo');
+}
+if (defined('MOLAJO_MVC')) {
+} else {
+    define('MOLAJO_MVC', MOLAJO_PLATFORM . '/mvc');
 }
 
 if (defined('MOLAJO_CMS')) {
@@ -63,6 +54,14 @@ if (defined('MOLAJO_CMS_TEMPLATES')) {
     define('MOLAJO_CMS_TEMPLATES', MOLAJO_CMS . '/templates');
 }
 
+if (defined('MOLAJO_APPLICATIONS_DATA')) {
+} else {
+    define('MOLAJO_APPLICATIONS_DATA', MOLAJO_APPLICATIONS . '/molajo/data');
+}
+if (defined('MOLAJO_APPLICATIONS_DATA_XML')) {
+} else {
+    define('MOLAJO_APPLICATIONS_DATA_XML', MOLAJO_APPLICATIONS_DATA . '/xml');
+}
 /**
  *  ACTION TYPES
  */
