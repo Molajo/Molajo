@@ -21,6 +21,15 @@ if (defined('MOLAJO_MVC')) {
     define('MOLAJO_MVC', MOLAJO_PLATFORM . '/mvc');
 }
 
+if (defined('DOCTRINE_PLATFORM')) {
+} else {
+    define('DOCTRINE_PLATFORM', PLATFORM . '/Doctrine');
+}
+if (defined('DOCTRINE_EXTENSIONS_PLATFORM')) {
+} else {
+    define('DOCTRINE_EXTENSIONS_PLATFORM', PLATFORM . '/DoctrineExtensions');
+}
+
 if (defined('MOLAJO_CMS')) {
 } else {
     define('MOLAJO_CMS', MOLAJO_BASE_FOLDER . '/cms');
@@ -58,10 +67,19 @@ if (defined('MOLAJO_APPLICATIONS_DATA')) {
 } else {
     define('MOLAJO_APPLICATIONS_DATA', MOLAJO_APPLICATIONS . '/molajo/data');
 }
-if (defined('MOLAJO_APPLICATIONS_DATA_XML')) {
+if (defined('MOLAJO_APPLICATIONS_DATA')) {
 } else {
-    define('MOLAJO_APPLICATIONS_DATA_XML', MOLAJO_APPLICATIONS_DATA . '/xml');
+    define('MOLAJO_APPLICATIONS_DATA', MOLAJO_APPLICATIONS . '/molajo/data');
 }
+if (defined('MOLAJO_APPLICATIONS_DATA_ENTITIES')) {
+} else {
+    define('MOLAJO_APPLICATIONS_DATA_ENTITIES', MOLAJO_APPLICATIONS . '/molajo/data');
+}
+if (defined('MOLAJO_APPLICATIONS_DATA_PROXIES')) {
+} else {
+    define('MOLAJO_APPLICATIONS_DATA_PROXIES', MOLAJO_APPLICATIONS_DATA . '/proxies');
+}
+
 /**
  *  ACTION TYPES
  */

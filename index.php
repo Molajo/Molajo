@@ -40,7 +40,7 @@ if (strrpos(MOLAJO_BASE_URL, MOLAJO_APPLICATION)) {
     define('MOLAJO_BASE_URL_NOAPP', MOLAJO_BASE_URL);
 }
 
-/** Override Locations */
+/** overrides */
 if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
     include_once MOLAJO_BASE_FOLDER . '/defines.php';
 }

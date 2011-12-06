@@ -33,7 +33,6 @@ class MolajoTableAsset extends MolajoTable
      */
     public $content_table = null;
 
-
     /**
      * @param database A database connector object
      */
@@ -53,7 +52,7 @@ class MolajoTableAsset extends MolajoTable
      * @return  boolean  True on success.
      * @since   1.0
      */
-    public function save($src, $orderingFilter = '', $ignore = '')
+    public function save($source, $orderingFilter = '', $ignore = '')
     {
         if ($this->check()) {
         } else {
@@ -83,7 +82,7 @@ class MolajoTableAsset extends MolajoTable
     public function check()
     {
         if ($this->content_table == null) {
-            $this->setError(MolajoTextHelper::_('ASSET_TABLE_MUST_HAVE_CONTENT_TABLE_VALUE'));
+            $this->setError(MolajoTextHelper::_('ASSET_TABLE_MUST_HAVE_VALUE_FOR_CONTENT_TABLE'));
             return false;
         }
         return true;

@@ -282,7 +282,6 @@ class Content
      */
     private $extensionInstance;
 
-
     /**
      * Get id
      *

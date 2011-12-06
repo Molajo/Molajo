@@ -11,14 +11,26 @@ defined('MOLAJO') or die;
 /**
  * MolajoGroup
  *
- * Provides static methods to perform various tasks for user and authorization classes
- *
- * This class has influences and some method logic from the Horde Auth package
+ * Provides CRUD API to group table
  *
  * @package     Molajo
  * @subpackage  User Helper
  * @since       1.0
  */
-abstract class MolajoGroup
+class MolajoGroup
 {
+
+    public function action () {
+
+    }
+
+    private function create () {
+
+    }
+    private function update () {
+
+    }
+    private function delete () {
+
+    }
 }
