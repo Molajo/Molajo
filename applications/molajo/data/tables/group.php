@@ -79,7 +79,7 @@ class MolajoTableGroup extends MolajoTable
     public function rebuild($parent_id = 0, $left = 0)
     {
         // get the database object
-        $db = &$this->_db;
+        $db = &$this->_database;
 
         // get all children of this node
         $db->setQuery(

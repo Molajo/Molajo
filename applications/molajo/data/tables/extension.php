@@ -133,22 +133,22 @@ class MolajoTableExtension extends MolajoTable
         }
 
         // Update the publishing state for rows with the given primary keys.
-        $this->_db->setQuery(
-            'UPDATE ' . $this->_db->quoteName($this->_tbl) .
-            ' SET ' . $this->_db->quoteName('enabled') . ' = ' . (int)$state .
+        $this->_database->setQuery(
+            'UPDATE ' . $this->_database->quoteName($this->_tbl) .
+            ' SET ' . $this->_database->quoteName('enabled') . ' = ' . (int)$state .
             ' WHERE (' . $where . ')' .
             $checkin
         );
-        $this->_db->query();
+        $this->_database->query();
 
         // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
+        if ($this->_database->getErrorNum()) {
+            $this->setError($this->_database->getErrorMsg());
             return false;
         }
 
         // If checkin is supported and all rows were adjusted, check them in.
-        if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
+        if ($checkin && (count($pks) == $this->_database->getAffectedRows())) {
             // Checkin the rows.
             foreach ($pks as $pk)
             {

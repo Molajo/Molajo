@@ -64,8 +64,8 @@ class MolajoTableContent extends MolajoTable
             $query->from('#__categories');
             $query->where('id = ' . (int)$this->catid);
 
-            $this->_db->setQuery($query);
-            if ($result = $this->_db->loadResult()) {
+            $this->_database->setQuery($query);
+            if ($result = $this->_database->loadResult()) {
                 $assetId = (int)$result;
             }
         }
@@ -248,9 +248,9 @@ class MolajoTableContent extends MolajoTable
             $query->where($db->namequote('id') . ' <> ' . (int)$this->id);
             $query->where($db->namequote('state') . ' <> ' . (int)MOLAJO_STATUS_VERSION);
 
-            $this->_db->setQuery($query);
+            $this->_database->setQuery($query);
 
-            if ($result = $this->_db->loadResult()) {
+            if ($result = $this->_database->loadResult()) {
                 $aliasFound = false;
             } else {
                 $aliasFound = true;

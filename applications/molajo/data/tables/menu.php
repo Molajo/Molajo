@@ -83,52 +83,52 @@ class MolajoTableMenu extends MolajoTable
             $table->load($this->id);
 
             // Verify that no items are cheched out
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->select('id');
             $query->from('#__content');
-            $query->where('menu_id=' . $this->_db->quote($table->menu_id));
+            $query->where('menu_id=' . $this->_database->quote($table->menu_id));
             $query->where('checked_out !=' . (int)$userId);
             $query->where('checked_out !=0');
-            $this->_db->setQuery($query);
-            if ($this->_db->loadRowList()) {
+            $this->_database->setQuery($query);
+            if ($this->_database->loadRowList()) {
                 $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MENU_CHECKOUT')));
                 return false;
             }
 
             // Verify that no module for this menu are cheched out
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->select('id');
             $query->from('#__modules');
-            $query->where('module=' . $this->_db->quote('menu'));
-            $query->where('parameters LIKE ' . $this->_db->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
+            $query->where('module=' . $this->_database->quote('menu'));
+            $query->where('parameters LIKE ' . $this->_database->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
             $query->where('checked_out !=' . (int)$userId);
             $query->where('checked_out !=0');
-            $this->_db->setQuery($query);
-            if ($this->_db->loadRowList()) {
+            $this->_database->setQuery($query);
+            if ($this->_database->loadRowList()) {
                 $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MENU_CHECKOUT')));
                 return false;
             }
 
             // Update the menu items
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->update('#__content');
-            $query->set('menu_id=' . $this->_db->quote($this->menu_id));
-            $query->where('menu_id=' . $this->_db->quote($table->menu_id));
-            $this->_db->setQuery($query);
-            if (!$this->_db->query()) {
-                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $query->set('menu_id=' . $this->_database->quote($this->menu_id));
+            $query->where('menu_id=' . $this->_database->quote($table->menu_id));
+            $this->_database->setQuery($query);
+            if (!$this->_database->query()) {
+                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_database->getErrorMsg()));
                 return false;
             }
 
             // Update the module items
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->update('#__modules');
-            $query->set('parameters=REPLACE(parameters,' . $this->_db->quote('"menu_id":' . json_encode($table->menu_id)) . ',' . $this->_db->quote('"menu_id":' . json_encode($this->menu_id)) . ')');
-            $query->where('module=' . $this->_db->quote('menu'));
-            $query->where('parameters LIKE ' . $this->_db->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
-            $this->_db->setQuery($query);
-            if (!$this->_db->query()) {
-                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $query->set('parameters=REPLACE(parameters,' . $this->_database->quote('"menu_id":' . json_encode($table->menu_id)) . ',' . $this->_database->quote('"menu_id":' . json_encode($this->menu_id)) . ')');
+            $query->where('module=' . $this->_database->quote('menu'));
+            $query->where('parameters LIKE ' . $this->_database->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
+            $this->_database->setQuery($query);
+            if (!$this->_database->query()) {
+                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_database->getErrorMsg()));
                 return false;
             }
         }
@@ -160,53 +160,53 @@ class MolajoTableMenu extends MolajoTable
             $table->load($pk);
 
             // Verify that no items are cheched out
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->select('id');
             $query->from('#__content');
-            $query->where('menu_id=' . $this->_db->quote($table->menu_id));
+            $query->where('menu_id=' . $this->_database->quote($table->menu_id));
             $query->where('client_id=0');
-            $query->where('(checked_out NOT IN (0,' . (int)$userId . ') OR home=1 AND language=' . $this->_db->quote('*') . ')');
-            $this->_db->setQuery($query);
-            if ($this->_db->loadRowList()) {
+            $query->where('(checked_out NOT IN (0,' . (int)$userId . ') OR home=1 AND language=' . $this->_database->quote('*') . ')');
+            $this->_database->setQuery($query);
+            if ($this->_database->loadRowList()) {
                 $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MENU')));
                 return false;
             }
 
             // Verify that no module for this menu are cheched out
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->select('id');
             $query->from('#__modules');
-            $query->where('module=' . $this->_db->quote('menu'));
-            $query->where('parameters LIKE ' . $this->_db->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
+            $query->where('module=' . $this->_database->quote('menu'));
+            $query->where('parameters LIKE ' . $this->_database->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
             $query->where('checked_out !=' . (int)$userId);
             $query->where('checked_out !=0');
-            $this->_db->setQuery($query);
-            if ($this->_db->loadRowList()) {
+            $this->_database->setQuery($query);
+            if ($this->_database->loadRowList()) {
                 $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MENU')));
                 return false;
             }
 
             // Delete the menu items
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->delete();
             $query->from('#__content');
-            $query->where('menu_id=' . $this->_db->quote($table->menu_id));
+            $query->where('menu_id=' . $this->_database->quote($table->menu_id));
             $query->where('client_id=0');
-            $this->_db->setQuery($query);
-            if (!$this->_db->query()) {
-                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $this->_database->setQuery($query);
+            if (!$this->_database->query()) {
+                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_database->getErrorMsg()));
                 return false;
             }
 
             // Update the module items
-            $query = $this->_db->getQuery(true);
+            $query = $this->_database->getQuery(true);
             $query->delete();
             $query->from('#__modules');
-            $query->where('module=' . $this->_db->quote('menu'));
-            $query->where('parameters LIKE ' . $this->_db->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
-            $this->_db->setQuery($query);
-            if (!$this->_db->query()) {
-                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+            $query->where('module=' . $this->_database->quote('menu'));
+            $query->where('parameters LIKE ' . $this->_database->quote('%"menu_id":' . json_encode($table->menu_id) . '%'));
+            $this->_database->setQuery($query);
+            if (!$this->_database->query()) {
+                $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_database->getErrorMsg()));
                 return false;
             }
         }
