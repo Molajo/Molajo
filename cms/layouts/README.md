@@ -62,7 +62,7 @@ A row is set of columns with specific data about a single item contained within 
 
 A column is a single piece of information about an item. Display the data for a column, as follows:
 
-<? echo $this->row->title; ?>
+<?php echo $this->row->title; ?>
 
 
 
@@ -249,39 +249,39 @@ SECTION IX. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
 
 A. $this->app
 
-<? echo '<pre>';var_dump($this->app);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->app); '</pre>';  ?>
 
 B. $this->document
 
-<? echo '<pre>';var_dump($this->document);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->document); '</pre>';  ?>
 
 C. $this->user
 
-<? echo '<pre>';var_dump($this->user);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->user); '</pre>';  ?>
 
 D. $this->request
 
-<? echo '<pre>';var_dump($this->request);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->request); '</pre>';  ?>
 
 E. $this->state
 
-<? echo '<pre>';var_dump($this->state);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->state); '</pre>';  ?>
 
 F. $this->params
 
-<? echo '<pre>';var_dump($this->params);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->params); '</pre>';  ?>
 
 G. $this->rowset
 
-<? echo '<pre>';var_dump($this->rowset);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->rowset); '</pre>';  ?>
 
 H. $this->row
 
-<? echo '<pre>';var_dump($this->row);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->row); '</pre>';  ?>
 
 I. $this->pagination
 
-<? echo '<pre>';var_dump($this->pagination);echo '</pre>';  ?>
+<?php echo '<pre>'; var_dump($this->pagination); '</pre>';  ?>
 
 J. $this->layout_path
 
@@ -289,11 +289,11 @@ J. $this->layout_path
 
 K. $this->layout
 
-<? echo $this->layout;  ?>
+<?php echo $this->layout;  ?>
 
 L. $this->$wrap;
 
-<? echo $this-wrap;  ?>
+<?php echo $this-wrap;  ?>
 
 
 
