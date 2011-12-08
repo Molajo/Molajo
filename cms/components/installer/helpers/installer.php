@@ -3,7 +3,7 @@
  * @version     $id: installer.php
  * @package     Molajo
  * @subpackage  Installer Component
- * @copyright   Copyright (C) 2011 Babs Gösgens. All rights reserved.
+ * @copyright   Copyright (C) 2012 Babs Gösgens. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;

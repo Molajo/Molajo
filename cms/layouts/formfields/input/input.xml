@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="layout" group="formfield" method="upgrade">
-    <name>LAYOUT_FORM_TEXT_NAME</name>
+    <name>LAYOUT_FORMFIELD_TEXT_NAME</name>
     <author>Molajo Contributors</author>
-    <creationDate>July 2011</creationDate>
-    <copyright>Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.</copyright>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later http://www.gnu.org/licenses/gpl.html</license>
     <authorEmail>collaborate@molajo.org</authorEmail>
     <authorUrl>http://molajo.org</authorUrl>
     <version>1.0</version>
-    <description>LAYOUT_FORM_TEXT_DESCRIPTION</description>
+    <description>LAYOUT_FORMFIELD_TEXT_DESCRIPTION</description>
     <files>
         <folder>language</folder>
         <folder>layouts</folder>

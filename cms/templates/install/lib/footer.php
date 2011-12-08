@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Install
- * @copyright   Copyright (C) 2011 Chris Rault. All rights reserved.
+ * @copyright   Copyright (C) 2012 Chris Rault. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;

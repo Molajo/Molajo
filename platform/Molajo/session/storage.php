@@ -4,7 +4,7 @@
  * @subpackage  Session
  *
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
+ * @copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;

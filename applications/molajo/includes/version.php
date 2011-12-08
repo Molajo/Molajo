@@ -2,7 +2,7 @@
 /**
  * @package     Molajo
  * @subpackage  Version
- * @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
+ * @copyright   Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
@@ -43,7 +43,7 @@ final class MolajoVersion
     public $RELEASE_TIME_ZONE = 'GMT';
 
     /** @var  string  Copyright Notice. */
-    public $COPYRIGHT = 'Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.';
+    public $COPYRIGHT = 'Copyright (C) 2012 Individual Molajo Contributors. All rights reserved.';
 
     /** @var  string  Link text. */
     public $LINK_TEXT = '<a href="http://molajo.org">Molajo</a> is Free Software released under the GNU General Public License.';
