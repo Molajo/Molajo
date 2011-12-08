@@ -95,7 +95,8 @@ class ResultSetMappingBuilder extends ResultSetMapping
             if ($associationMapping['isOwningSide'] && $associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
                 foreach ($associationMapping['joinColumns'] AS $joinColumn) {
                     $columnName = $joinColumn['name'];
-                    $renamedColumnName = isset($renamedColumns[$columnName]) ? $renamedColumns[$columnName] : $columnName;
+                    $renamedColumnName = isset($renamedColumns[$columnName]) ? $renamedColumns[$columnName]
+                            : $columnName;
                     if (isset($this->metaMappings[$renamedColumnName])) {
                         throw new \InvalidArgumentException("The column '$renamedColumnName' conflicts with another column in the mapper.");
                     }

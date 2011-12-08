@@ -22,13 +22,13 @@
 namespace Doctrine\DBAL\Schema\Visitor;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform,
-    Doctrine\DBAL\Schema\Table,
-    Doctrine\DBAL\Schema\Schema,
-    Doctrine\DBAL\Schema\Column,
-    Doctrine\DBAL\Schema\ForeignKeyConstraint,
-    Doctrine\DBAL\Schema\Constraint,
-    Doctrine\DBAL\Schema\Sequence,
-    Doctrine\DBAL\Schema\Index;
+Doctrine\DBAL\Schema\Table,
+Doctrine\DBAL\Schema\Schema,
+Doctrine\DBAL\Schema\Column,
+Doctrine\DBAL\Schema\ForeignKeyConstraint,
+Doctrine\DBAL\Schema\Constraint,
+Doctrine\DBAL\Schema\Sequence,
+Doctrine\DBAL\Schema\Index;
 
 class CreateSchemaSqlCollector implements Visitor
 {
@@ -77,13 +77,13 @@ class CreateSchemaSqlCollector implements Visitor
     public function acceptTable(Table $table)
     {
         $this->_createTableQueries = array_merge($this->_createTableQueries,
-            $this->_platform->getCreateTableSQL($table)
+                                                 $this->_platform->getCreateTableSQL($table)
         );
     }
 
     public function acceptColumn(Table $table, Column $column)
     {
-        
+
     }
 
     /**
@@ -95,9 +95,9 @@ class CreateSchemaSqlCollector implements Visitor
         // Append the foreign key constraints SQL
         if ($this->_platform->supportsForeignKeyConstraints()) {
             $this->_createFkConstraintQueries = array_merge($this->_createFkConstraintQueries,
-                (array) $this->_platform->getCreateForeignKeySQL(
-                    $fkConstraint, $localTable->getQuotedName($this->_platform)
-                )
+                                                            (array)$this->_platform->getCreateForeignKeySQL(
+                                                                $fkConstraint, $localTable->getQuotedName($this->_platform)
+                                                            )
             );
         }
     }
@@ -108,7 +108,7 @@ class CreateSchemaSqlCollector implements Visitor
      */
     public function acceptIndex(Table $table, Index $index)
     {
-        
+
     }
 
     /**

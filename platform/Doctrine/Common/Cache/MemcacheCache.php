@@ -74,7 +74,7 @@ class MemcacheCache extends AbstractCache
         foreach ($allSlabs as $server => $slabs) {
             if (is_array($slabs)) {
                 foreach (array_keys($slabs) as $slabId) {
-                    $dump = $this->_memcache->getExtendedStats('cachedump', (int) $slabId);
+                    $dump = $this->_memcache->getExtendedStats('cachedump', (int)$slabId);
 
                     if ($dump) {
                         foreach ($dump as $entries) {
@@ -102,7 +102,7 @@ class MemcacheCache extends AbstractCache
      */
     protected function _doContains($id)
     {
-        return (bool) $this->_memcache->get($id);
+        return (bool)$this->_memcache->get($id);
     }
 
     /**
@@ -110,7 +110,7 @@ class MemcacheCache extends AbstractCache
      */
     protected function _doSave($id, $data, $lifeTime = 0)
     {
-        return $this->_memcache->set($id, $data, 0, (int) $lifeTime);
+        return $this->_memcache->set($id, $data, 0, (int)$lifeTime);
     }
 
     /**

@@ -20,12 +20,12 @@
 namespace Doctrine\ORM\Tools;
 
 use Doctrine\ORM\ORMException,
-    Doctrine\DBAL\Types\Type,
-    Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Mapping\ClassMetadata,
-    Doctrine\ORM\Internal\CommitOrderCalculator,
-    Doctrine\ORM\Tools\Event\GenerateSchemaTableEventArgs,
-    Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
+Doctrine\DBAL\Types\Type,
+Doctrine\ORM\EntityManager,
+Doctrine\ORM\Mapping\ClassMetadata,
+Doctrine\ORM\Internal\CommitOrderCalculator,
+Doctrine\ORM\Tools\Event\GenerateSchemaTableEventArgs,
+Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 
 /**
  * The SchemaTool is a tool to create/drop/update database schemas based on
@@ -94,7 +94,7 @@ class SchemaTool
 
     /**
      * Some instances of ClassMetadata don't need to be processed in the SchemaTool context. This method detects them.
-     * 
+     *
      * @param ClassMetadata $class
      * @param array $processedClasses
      * @return bool
@@ -102,9 +102,9 @@ class SchemaTool
     private function processingNotRequired($class, array $processedClasses)
     {
         return (
-            isset($processedClasses[$class->name]) ||
-            $class->isMappedSuperclass ||
-            ($class->isInheritanceTypeSingleTable() && $class->name != $class->rootEntityName)
+                isset($processedClasses[$class->name]) ||
+                $class->isMappedSuperclass ||
+                ($class->isInheritanceTypeSingleTable() && $class->name != $class->rootEntityName)
         );
     }
 
@@ -157,7 +157,7 @@ class SchemaTool
                 // Add all non-inherited fields as columns
                 $pkColumns = array();
                 foreach ($class->fieldMappings as $fieldName => $mapping) {
-                    if ( ! isset($mapping['inherited'])) {
+                    if (!isset($mapping['inherited'])) {
                         $columnName = $class->getQuotedColumnName($mapping['fieldName'], $this->_platform);
                         $this->_gatherColumn($class, $mapping, $table);
 
@@ -304,7 +304,7 @@ class SchemaTool
 
         // For now, this is a hack required for single table inheritence, since this method is called
         // twice by single table inheritence relations
-        if(!$table->hasIndex('primary')) {
+        if (!$table->hasIndex('primary')) {
             //$table->setPrimaryKey($pkColumns);
         }
 
@@ -326,15 +326,16 @@ class SchemaTool
 
         $options = array();
         $options['length'] = isset($mapping['length']) ? $mapping['length'] : null;
-        $options['notnull'] = isset($mapping['nullable']) ? ! $mapping['nullable'] : true;
+        $options['notnull'] = isset($mapping['nullable']) ? !$mapping['nullable'] : true;
         if ($class->isInheritanceTypeSingleTable() && count($class->parentClasses) > 0) {
             $options['notnull'] = false;
         }
 
         $options['platformOptions'] = array();
-        $options['platformOptions']['version'] = $class->isVersioned && $class->versionField == $mapping['fieldName'] ? true : false;
+        $options['platformOptions']['version'] = $class->isVersioned && $class->versionField == $mapping['fieldName']
+                ? true : false;
 
-        if(strtolower($columnType) == 'string' && $options['length'] === null) {
+        if (strtolower($columnType) == 'string' && $options['length'] === null) {
             $options['length'] = 255;
         }
 
@@ -397,7 +398,7 @@ class SchemaTool
 
                 $this->_gatherRelationJoinColumns($mapping['joinColumns'], $table, $foreignClass, $mapping, $primaryKeyColumns, $uniqueConstraints);
 
-                foreach($uniqueConstraints AS $indexName => $unique) {
+                foreach ($uniqueConstraints AS $indexName => $unique) {
                     $table->addUniqueIndex($unique['columns'], is_numeric($indexName) ? null : $indexName);
                 }
             } else if ($mapping['type'] == ClassMetadata::ONE_TO_MANY && $mapping['isOwningSide']) {
@@ -419,7 +420,7 @@ class SchemaTool
 
                 $theJoinTable->setPrimaryKey($primaryKeyColumns);
 
-                foreach($uniqueConstraints AS $indexName => $unique) {
+                foreach ($uniqueConstraints AS $indexName => $unique) {
                     $theJoinTable->addUniqueIndex($unique['columns'], is_numeric($indexName) ? null : $indexName);
                 }
             }
@@ -483,8 +484,8 @@ class SchemaTool
 
             if (!$definingClass) {
                 throw new \Doctrine\ORM\ORMException(
-                    "Column name `".$joinColumn['referencedColumnName']."` referenced for relation from ".
-                    $mapping['sourceEntity'] . " towards ". $mapping['targetEntity'] . " does not exist."
+                    "Column name `" . $joinColumn['referencedColumnName'] . "` referenced for relation from " .
+                    $mapping['sourceEntity'] . " towards " . $mapping['targetEntity'] . " does not exist."
                 );
             }
 
@@ -492,7 +493,7 @@ class SchemaTool
             $localColumns[] = $columnName;
             $foreignColumns[] = $joinColumn['referencedColumnName'];
 
-            if ( ! $theJoinTable->hasColumn($joinColumn['name'])) {
+            if (!$theJoinTable->hasColumn($joinColumn['name'])) {
                 // Only add the column to the table if it does not exist already.
                 // It might exist already if the foreign key is mapped into a regular
                 // property as well.
@@ -554,8 +555,8 @@ class SchemaTool
         foreach ($dropSchemaSql as $sql) {
             try {
                 $conn->executeQuery($sql);
-            } catch(\Exception $e) {
-                
+            } catch (\Exception $e) {
+
             }
         }
     }
@@ -593,7 +594,7 @@ class SchemaTool
 
     /**
      * Get SQL to drop the tables defined by the passed classes.
-     * 
+     *
      * @param array $classes
      * @return array
      */
@@ -619,7 +620,7 @@ class SchemaTool
                 }
             }
         }
-        
+
         if ($this->_platform->supportsSequences()) {
             foreach ($schema->getSequences() AS $sequence) {
                 $visitor->acceptSequence($sequence);
@@ -650,7 +651,7 @@ class SchemaTool
      * @param boolean $saveMode
      * @return void
      */
-    public function updateSchema(array $classes, $saveMode=false)
+    public function updateSchema(array $classes, $saveMode = false)
     {
         $updateSchemaSql = $this->getUpdateSchemaSql($classes, $saveMode);
         $conn = $this->_em->getConnection();
@@ -663,14 +664,14 @@ class SchemaTool
     /**
      * Gets the sequence of SQL statements that need to be performed in order
      * to bring the given class mappings in-synch with the relational schema.
-     * If $saveMode is set to true the command is executed in the Database, 
+     * If $saveMode is set to true the command is executed in the Database,
      * else SQL is returned.
      *
      * @param array $classes The classes to consider.
      * @param boolean $saveMode True for writing to DB, false for SQL string
      * @return array The sequence of SQL statements.
      */
-    public function getUpdateSchemaSql(array $classes, $saveMode=false)
+    public function getUpdateSchemaSql(array $classes, $saveMode = false)
     {
         $sm = $this->_em->getConnection()->getSchemaManager();
 

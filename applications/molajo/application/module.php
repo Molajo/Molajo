@@ -133,8 +133,8 @@ abstract class MolajoModule
     {
         $output = '';
         $module = $moduleObject->module;
-        
-//echo '<pre>';var_dump($module);'</pre>';
+
+        //echo '<pre>';var_dump($module);'</pre>';
         // Record the scope.
         $scope = MolajoFactory::getApplication()->scope;
 

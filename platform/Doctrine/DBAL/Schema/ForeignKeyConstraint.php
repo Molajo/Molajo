@@ -63,7 +63,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      * @param string $cascade
      * @param string|null $name
      */
-    public function __construct(array $localColumnNames, $foreignTableName, array $foreignColumnNames, $name=null, array $options=array())
+    public function __construct(array $localColumnNames, $foreignTableName, array $foreignColumnNames, $name = null, array $options = array())
     {
         $this->_setName($name);
         $this->_localColumnNames = $localColumnNames;

@@ -9,13 +9,42 @@ defined('MOLAJO') or die;
 $current_folder = basename(dirname(__FILE__));
 require_once MOLAJO_MVC . '/entry.php';
 
-class ArticlesController extends MolajoController {}
-class ArticlesControllerEdit extends MolajoControllerEdit {}
-class ArticlesControllerMultiple extends MolajoControllerMultiple {}
-class ArticlesViewDisplay extends MolajoView {}
-class ArticlesViewEdit extends MolajoViewEdit {}
-class ArticlesTableArticle extends MolajoTableContent {}
-class ArticlesModelDisplay extends MolajoModelDisplay {}
-class ArticlesModelEdit extends MolajoModelEdit {}
-class MolajoACLArticles extends MolajoACL {}
-class ArticlesHelper {}
+class ArticlesController extends MolajoController
+{
+}
+
+class ArticlesControllerEdit extends MolajoControllerEdit
+{
+}
+
+class ArticlesControllerMultiple extends MolajoControllerMultiple
+{
+}
+
+class ArticlesViewDisplay extends MolajoView
+{
+}
+
+class ArticlesViewEdit extends MolajoViewEdit
+{
+}
+
+class ArticlesTableArticle extends MolajoTableContent
+{
+}
+
+class ArticlesModelDisplay extends MolajoModelDisplay
+{
+}
+
+class ArticlesModelEdit extends MolajoModelEdit
+{
+}
+
+class MolajoACLArticles extends MolajoACL
+{
+}
+
+class ArticlesHelper
+{
+}

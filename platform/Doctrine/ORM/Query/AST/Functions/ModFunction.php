@@ -43,8 +43,8 @@ class ModFunction extends FunctionNode
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
         return $sqlWalker->getConnection()->getDatabasePlatform()->getModExpression(
-               $sqlWalker->walkSimpleArithmeticExpression($this->firstSimpleArithmeticExpression),
-               $sqlWalker->walkSimpleArithmeticExpression($this->secondSimpleArithmeticExpression)
+            $sqlWalker->walkSimpleArithmeticExpression($this->firstSimpleArithmeticExpression),
+            $sqlWalker->walkSimpleArithmeticExpression($this->secondSimpleArithmeticExpression)
         );
     }
 
@@ -55,13 +55,13 @@ class ModFunction extends FunctionNode
     {
         $parser->match(Lexer::T_MOD);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        
+
         $this->firstSimpleArithmeticExpression = $parser->SimpleArithmeticExpression();
-        
+
         $parser->match(Lexer::T_COMMA);
-        
+
         $this->secondSimpleArithmeticExpression = $parser->SimpleArithmeticExpression();
-        
+
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

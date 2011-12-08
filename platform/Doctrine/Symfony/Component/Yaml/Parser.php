@@ -19,11 +19,11 @@ use Symfony\Component\Yaml\Exception\ParseException;
  */
 class Parser
 {
-    private $offset         = 0;
-    private $lines          = array();
-    private $currentLineNb  = -1;
-    private $currentLine    = '';
-    private $refs           = array();
+    private $offset = 0;
+    private $lines = array();
+    private $currentLineNb = -1;
+    private $currentLine = '';
+    private $refs = array();
 
     /**
      * Constructor
@@ -54,7 +54,7 @@ class Parser
             throw new ParseException('The YAML value does not appear to be valid UTF-8.');
         }
 
-        if (function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
+        if (function_exists('mb_internal_encoding') && ((int)ini_get('mbstring.func_overload')) & 2) {
             $mbEncoding = mb_internal_encoding();
             mb_internal_encoding('UTF-8');
         }
@@ -86,7 +86,7 @@ class Parser
                 } else {
                     if (isset($values['leadspaces'])
                         && ' ' == $values['leadspaces']
-                        && preg_match('#^(?P<key>'.Inline::REGEX_QUOTED_STRING.'|[^ \'"\{\[].*?) *\:(\s+(?P<value>.+?))?\s*$#u', $values['value'], $matches)
+                        && preg_match('#^(?P<key>' . Inline::REGEX_QUOTED_STRING . '|[^ \'"\{\[].*?) *\:(\s+(?P<value>.+?))?\s*$#u', $values['value'], $matches)
                     ) {
                         // this is a compact notation element, add to next block and parse
                         $c = $this->getRealCurrentLineNb();
@@ -95,7 +95,7 @@ class Parser
 
                         $block = $values['value'];
                         if (!$this->isNextLineIndented()) {
-                            $block .= "\n".$this->getNextEmbedBlock($this->getCurrentLineIndentation() + 2);
+                            $block .= "\n" . $this->getNextEmbedBlock($this->getCurrentLineIndentation() + 2);
                         }
 
                         $data[] = $parser->parse($block);
@@ -103,7 +103,7 @@ class Parser
                         $data[] = $this->parseValue($values['value']);
                     }
                 }
-            } else if (preg_match('#^(?P<key>'.Inline::REGEX_QUOTED_STRING.'|[^ \'"\[\{].*?) *\:(\s+(?P<value>.+?))?\s*$#u', $this->currentLine, $values)) {
+            } else if (preg_match('#^(?P<key>' . Inline::REGEX_QUOTED_STRING . '|[^ \'"\[\{].*?) *\:(\s+(?P<value>.+?))?\s*$#u', $this->currentLine, $values)) {
                 try {
                     $key = Inline::parseScalar($values['key']);
                 } catch (ParseException $e) {
@@ -156,7 +156,7 @@ class Parser
                 if ($isProcessed) {
                     // Merge keys
                     $data = $isProcessed;
-                // hash
+                    // hash
                 } else if (!isset($values['value']) || '' == trim($values['value'], ' ') || 0 === strpos(ltrim($values['value'], ' '), '#')) {
                     // if next line is less indented or equal, then it means that the current value is null
                     if ($this->isNextLineIndented()) {
@@ -403,7 +403,9 @@ class Parser
             return '';
         }
 
-        if (!preg_match('#^(?P<indent>'.($indentation ? str_repeat(' ', $indentation) : ' +').')(?P<text>.*)$#u', $this->currentLine, $matches)) {
+        if (!preg_match('#^(?P<indent>' . ($indentation ? str_repeat(' ', $indentation)
+                                    : ' +') . ')(?P<text>.*)$#u', $this->currentLine, $matches)
+        ) {
             $this->moveToPreviousLine();
 
             return '';
@@ -412,19 +414,20 @@ class Parser
         $textIndent = $matches['indent'];
         $previousIndent = 0;
 
-        $text .= $matches['text'].$separator;
+        $text .= $matches['text'] . $separator;
         while ($this->currentLineNb + 1 < count($this->lines)) {
             $this->moveToNextLine();
 
-            if (preg_match('#^(?P<indent> {'.strlen($textIndent).',})(?P<text>.+)$#u', $this->currentLine, $matches)) {
+            if (preg_match('#^(?P<indent> {' . strlen($textIndent) . ',})(?P<text>.+)$#u', $this->currentLine, $matches)) {
                 if (' ' == $separator && $previousIndent != $matches['indent']) {
-                    $text = substr($text, 0, -1)."\n";
+                    $text = substr($text, 0, -1) . "\n";
                 }
                 $previousIndent = $matches['indent'];
 
-                $text .= str_repeat(' ', $diff = strlen($matches['indent']) - strlen($textIndent)).$matches['text'].($diff ? "\n" : $separator);
+                $text .= str_repeat(' ', $diff = strlen($matches['indent']) - strlen($textIndent)) . $matches['text'] . ($diff
+                        ? "\n" : $separator);
             } else if (preg_match('#^(?P<text> *)$#', $this->currentLine, $matches)) {
-                $text .= preg_replace('#^ {1,'.strlen($textIndent).'}#', '', $matches['text'])."\n";
+                $text .= preg_replace('#^ {1,' . strlen($textIndent) . '}#', '', $matches['text']) . "\n";
             } else {
                 $this->moveToPreviousLine();
 

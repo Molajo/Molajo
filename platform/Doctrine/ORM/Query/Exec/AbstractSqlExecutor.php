@@ -53,5 +53,5 @@ abstract class AbstractSqlExecutor
      * @param array $params  The parameters.
      * @return Doctrine\DBAL\Driver\Statement
      */
-    abstract public function execute(Connection $conn, array $params, array $types);    
+    abstract public function execute(Connection $conn, array $params, array $types);
 }

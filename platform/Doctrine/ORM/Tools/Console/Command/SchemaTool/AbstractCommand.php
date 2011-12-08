@@ -22,13 +22,13 @@
 namespace Doctrine\ORM\Tools\Console\Command\SchemaTool;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Output\OutputInterface,
-    Symfony\Component\Console\Command\Command,
-    Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper,
-    Doctrine\ORM\Tools\SchemaTool,
-    Doctrine\ORM\Mapping\Driver\AbstractFileDriver;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console\Input\InputInterface,
+Symfony\Component\Console\Output\OutputInterface,
+Symfony\Component\Console\Command\Command,
+Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper,
+Doctrine\ORM\Tools\SchemaTool,
+Doctrine\ORM\Mapping\Driver\AbstractFileDriver;
 
 abstract class AbstractCommand extends Command
 {
@@ -52,7 +52,7 @@ abstract class AbstractCommand extends Command
 
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
 
-        if ( ! empty($metadatas)) {
+        if (!empty($metadatas)) {
             // Create SchemaTool
             $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 

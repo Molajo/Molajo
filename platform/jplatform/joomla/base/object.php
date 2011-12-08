@@ -21,227 +21,220 @@ defined('JPATH_PLATFORM') or die;
  */
 class JObject
 {
-	/**
-	 * An array of error messages or JExceptions objects.
-	 *
-	 * @var    array
-	 * @since  11.1
-	 */
-	protected $_errors = array();
+    /**
+     * An array of error messages or JExceptions objects.
+     *
+     * @var    array
+     * @since  11.1
+     */
+    protected $_errors = array();
 
-	/**
-	 * Class constructor, overridden in descendant classes.
-	 *
-	 * @param   mixed  $properties  Either and associative array or another
-	 *                              object to set the initial properties of the object.
-	 *
-	 * @since   11.1
-	 */
-	public function __construct($properties = null)
-	{
-		if ($properties !== null)
-		{
-			$this->setProperties($properties);
-		}
-	}
+    /**
+     * Class constructor, overridden in descendant classes.
+     *
+     * @param   mixed  $properties  Either and associative array or another
+     *                              object to set the initial properties of the object.
+     *
+     * @since   11.1
+     */
+    public function __construct($properties = null)
+    {
+        if ($properties !== null) {
+            $this->setProperties($properties);
+        }
+    }
 
-	/**
-	 * Magic method to convert the object to a string gracefully.
-	 *
-	 * @return  string  The classname.
-	 *
-	 * @since   11.1
-	 */
-	public function __toString()
-	{
-		return get_class($this);
-	}
+    /**
+     * Magic method to convert the object to a string gracefully.
+     *
+     * @return  string  The classname.
+     *
+     * @since   11.1
+     */
+    public function __toString()
+    {
+        return get_class($this);
+    }
 
-	/**
-	 * Sets a default value if not alreay assigned
-	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $default   The default value.
-	 *
-	 * @return  mixed
-	 *
-	 * @since   11.1
-	 */
-	public function def($property, $default = null)
-	{
-		$value = $this->get($property, $default);
-		return $this->set($property, $value);
-	}
+    /**
+     * Sets a default value if not alreay assigned
+     *
+     * @param   string  $property  The name of the property.
+     * @param   mixed   $default   The default value.
+     *
+     * @return  mixed
+     *
+     * @since   11.1
+     */
+    public function def($property, $default = null)
+    {
+        $value = $this->get($property, $default);
+        return $this->set($property, $value);
+    }
 
-	/**
-	 * Returns a property of the object or the default value if the property is not set.
-	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $default   The default value.
-	 *
-	 * @return  mixed    The value of the property.
-	 *
-	 * @since   11.1
-	 *
-	 * @see     getProperties()
-	 */
-	public function get($property, $default = null)
-	{
-		if (isset($this->$property))
-		{
-			return $this->$property;
-		}
-		return $default;
-	}
+    /**
+     * Returns a property of the object or the default value if the property is not set.
+     *
+     * @param   string  $property  The name of the property.
+     * @param   mixed   $default   The default value.
+     *
+     * @return  mixed    The value of the property.
+     *
+     * @since   11.1
+     *
+     * @see     getProperties()
+     */
+    public function get($property, $default = null)
+    {
+        if (isset($this->$property)) {
+            return $this->$property;
+        }
+        return $default;
+    }
 
-	/**
-	 * Returns an associative array of object properties.
-	 *
-	 * @param   boolean  $public  If true, returns only the public properties.
-	 *
-	 * @return  array
-	 *
-	 * @since   11.1
-	 *
-	 * @see     get()
-	 */
-	public function getProperties($public = true)
-	{
-		$vars = get_object_vars($this);
-		if ($public)
-		{
-			foreach ($vars as $key => $value)
-			{
-				if ('_' == substr($key, 0, 1))
-				{
-					unset($vars[$key]);
-				}
-			}
-		}
+    /**
+     * Returns an associative array of object properties.
+     *
+     * @param   boolean  $public  If true, returns only the public properties.
+     *
+     * @return  array
+     *
+     * @since   11.1
+     *
+     * @see     get()
+     */
+    public function getProperties($public = true)
+    {
+        $vars = get_object_vars($this);
+        if ($public) {
+            foreach ($vars as $key => $value)
+            {
+                if ('_' == substr($key, 0, 1)) {
+                    unset($vars[$key]);
+                }
+            }
+        }
 
-		return $vars;
-	}
+        return $vars;
+    }
 
-	/**
-	 * Get the most recent error message.
-	 *
-	 * @param   integer  $i         Option error index.
-	 * @param   boolean  $toString  Indicates if JError objects should return their error message.
-	 *
-	 * @return  string   Error message
-	 *
-	 * @since   11.1
-	 */
-	public function getError($i = null, $toString = true)
-	{
-		// Find the error
-		if ($i === null)
-		{
-			// Default, return the last message
-			$error = end($this->_errors);
-		}
-		elseif (!array_key_exists($i, $this->_errors))
-		{
-			// If $i has been specified but does not exist, return false
-			return false;
-		}
-		else
-		{
-			$error = $this->_errors[$i];
-		}
+    /**
+     * Get the most recent error message.
+     *
+     * @param   integer  $i         Option error index.
+     * @param   boolean  $toString  Indicates if JError objects should return their error message.
+     *
+     * @return  string   Error message
+     *
+     * @since   11.1
+     */
+    public function getError($i = null, $toString = true)
+    {
+        // Find the error
+        if ($i === null) {
+            // Default, return the last message
+            $error = end($this->_errors);
+        }
+        elseif (!array_key_exists($i, $this->_errors))
+        {
+            // If $i has been specified but does not exist, return false
+            return false;
+        }
+        else
+        {
+            $error = $this->_errors[$i];
+        }
 
-		// Check if only the string is requested
-		if (JError::isError($error) && $toString)
-		{
-			return (string) $error;
-		}
+        // Check if only the string is requested
+        if (JError::isError($error) && $toString) {
+            return (string)$error;
+        }
 
-		return $error;
-	}
+        return $error;
+    }
 
-	/**
-	 * Return all errors, if any.
-	 *
-	 * @return  array  Array of error messages or JErrors.
-	 *
-	 * @since   11.1
-	 */
-	public function getErrors()
-	{
-		return $this->_errors;
-	}
+    /**
+     * Return all errors, if any.
+     *
+     * @return  array  Array of error messages or JErrors.
+     *
+     * @since   11.1
+     */
+    public function getErrors()
+    {
+        return $this->_errors;
+    }
 
-	/**
-	 * Modifies a property of the object, creating it if it does not already exist.
-	 *
-	 * @param   string  $property  The name of the property.
-	 * @param   mixed   $value     The value of the property to set.
-	 *
-	 * @return  mixed  Previous value of the property.
-	 *
-	 * @since   11.1
-	 */
-	public function set($property, $value = null)
-	{
-		$previous = isset($this->$property) ? $this->$property : null;
-		$this->$property = $value;
-		return $previous;
-	}
+    /**
+     * Modifies a property of the object, creating it if it does not already exist.
+     *
+     * @param   string  $property  The name of the property.
+     * @param   mixed   $value     The value of the property to set.
+     *
+     * @return  mixed  Previous value of the property.
+     *
+     * @since   11.1
+     */
+    public function set($property, $value = null)
+    {
+        $previous = isset($this->$property) ? $this->$property : null;
+        $this->$property = $value;
+        return $previous;
+    }
 
-	/**
-	 * Set the object properties based on a named array/hash.
-	 *
-	 * @param   mixed  $properties  Either an associative array or another object.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   11.1
-	 *
-	 * @see     set()
-	 */
-	public function setProperties($properties)
-	{
-		if (is_array($properties) || is_object($properties))
-		{
-			foreach ((array) $properties as $k => $v)
-			{
-				// Use the set function which might be overridden.
-				$this->set($k, $v);
-			}
-			return true;
-		}
+    /**
+     * Set the object properties based on a named array/hash.
+     *
+     * @param   mixed  $properties  Either an associative array or another object.
+     *
+     * @return  boolean
+     *
+     * @since   11.1
+     *
+     * @see     set()
+     */
+    public function setProperties($properties)
+    {
+        if (is_array($properties) || is_object($properties)) {
+            foreach ((array)$properties as $k => $v)
+            {
+                // Use the set function which might be overridden.
+                $this->set($k, $v);
+            }
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Add an error message.
-	 *
-	 * @param   string  $error  Error message.
-	 *
-	 * @return  void
-	 *
-	 * @since   11.1
-	 */
-	public function setError($error)
-	{
-		array_push($this->_errors, $error);
-	}
+    /**
+     * Add an error message.
+     *
+     * @param   string  $error  Error message.
+     *
+     * @return  void
+     *
+     * @since   11.1
+     */
+    public function setError($error)
+    {
+        array_push($this->_errors, $error);
+    }
 
-	/**
-	 * Converts the object to a string (the class name).
-	 *
-	 * @return  string
-	 *
-	 * @since   11.1
-	 * @deprecated  12.1    Use magic method __toString()
-	 * @see         __toString()
-	 */
-	function toString()
-	{
-		// Deprecation warning.
-		JLog::add('JObject::toString() is deprecated.', JLog::WARNING, 'deprecated');
+    /**
+     * Converts the object to a string (the class name).
+     *
+     * @return  string
+     *
+     * @since   11.1
+     * @deprecated  12.1    Use magic method __toString()
+     * @see         __toString()
+     */
+    function toString()
+    {
+        // Deprecation warning.
+        JLog::add('JObject::toString() is deprecated.', JLog::WARNING, 'deprecated');
 
-		return $this->__toString();
-	}
+        return $this->__toString();
+    }
 }

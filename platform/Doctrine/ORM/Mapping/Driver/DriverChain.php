@@ -20,8 +20,8 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use Doctrine\ORM\Mapping\Driver\Driver,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\MappingException;
+Doctrine\ORM\Mapping\ClassMetadataInfo,
+Doctrine\ORM\Mapping\MappingException;
 
 /**
  * The DriverChain allows you to add multiple other mapping drivers for
@@ -94,7 +94,7 @@ class DriverChain implements Driver
             if (!isset($driverClasses[$oid])) {
                 $driverClasses[$oid] = $driver->getAllClassNames();
             }
-            
+
             foreach ($driverClasses[$oid] AS $className) {
                 if (strpos($className, $namespace) === 0) {
                     $classNames[$className] = true;

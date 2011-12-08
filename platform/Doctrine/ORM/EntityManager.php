@@ -20,14 +20,14 @@
 namespace Doctrine\ORM;
 
 use Closure, Exception,
-    Doctrine\Common\EventManager,
-    Doctrine\Common\Persistence\ObjectManager,
-    Doctrine\DBAL\Connection,
-    Doctrine\DBAL\LockMode,
-    Doctrine\ORM\Mapping\ClassMetadata,
-    Doctrine\ORM\Mapping\ClassMetadataFactory,
-    Doctrine\ORM\Query\ResultSetMapping,
-    Doctrine\ORM\Proxy\ProxyFactory;
+Doctrine\Common\EventManager,
+Doctrine\Common\Persistence\ObjectManager,
+Doctrine\DBAL\Connection,
+Doctrine\DBAL\LockMode,
+Doctrine\ORM\Mapping\ClassMetadata,
+Doctrine\ORM\Mapping\ClassMetadataFactory,
+Doctrine\ORM\Query\ResultSetMapping,
+Doctrine\ORM\Proxy\ProxyFactory;
 
 /**
  * The EntityManager is the central access point to ORM functionality.
@@ -131,9 +131,9 @@ class EntityManager implements ObjectManager
 
         $this->unitOfWork = new UnitOfWork($this);
         $this->proxyFactory = new ProxyFactory($this,
-                $config->getProxyDir(),
-                $config->getProxyNamespace(),
-                $config->getAutoGenerateProxyClasses());
+            $config->getProxyDir(),
+            $config->getProxyNamespace(),
+            $config->getAutoGenerateProxyClasses());
     }
 
     /**
@@ -210,7 +210,7 @@ class EntityManager implements ObjectManager
             $this->flush();
             $this->conn->commit();
 
-            return $return ?: true;
+            return $return ? : true;
         } catch (Exception $e) {
             $this->close();
             $this->conn->rollback();
@@ -266,7 +266,7 @@ class EntityManager implements ObjectManager
     public function createQuery($dql = "")
     {
         $query = new Query($this);
-        if ( ! empty($dql)) {
+        if (!empty($dql)) {
             $query->setDql($dql);
         }
         return $query;
@@ -369,7 +369,7 @@ class EntityManager implements ObjectManager
         if ($class->subClasses) {
             $entity = $this->find($entityName, $identifier);
         } else {
-            if ( ! is_array($identifier)) {
+            if (!is_array($identifier)) {
                 $identifier = array($class->identifier[0] => $identifier);
             }
             $entity = $this->proxyFactory->getProxy($class->name, $identifier);
@@ -406,7 +406,7 @@ class EntityManager implements ObjectManager
         if ($entity = $this->unitOfWork->tryGetById($identifier, $class->rootEntityName)) {
             return ($entity instanceof $class->name) ? $entity : null;
         }
-        if ( ! is_array($identifier)) {
+        if (!is_array($identifier)) {
             $identifier = array($class->identifier[0] => $identifier);
         }
 
@@ -458,7 +458,7 @@ class EntityManager implements ObjectManager
      */
     public function persist($entity)
     {
-        if ( ! is_object($entity)) {
+        if (!is_object($entity)) {
             throw new \InvalidArgumentException(gettype($entity));
         }
         $this->errorIfClosed();
@@ -475,7 +475,7 @@ class EntityManager implements ObjectManager
      */
     public function remove($entity)
     {
-        if ( ! is_object($entity)) {
+        if (!is_object($entity)) {
             throw new \InvalidArgumentException(gettype($entity));
         }
         $this->errorIfClosed();
@@ -490,7 +490,7 @@ class EntityManager implements ObjectManager
      */
     public function refresh($entity)
     {
-        if ( ! is_object($entity)) {
+        if (!is_object($entity)) {
             throw new \InvalidArgumentException(gettype($entity));
         }
         $this->errorIfClosed();
@@ -508,7 +508,7 @@ class EntityManager implements ObjectManager
      */
     public function detach($entity)
     {
-        if ( ! is_object($entity)) {
+        if (!is_object($entity)) {
             throw new \InvalidArgumentException(gettype($entity));
         }
         $this->unitOfWork->detach($entity);
@@ -524,7 +524,7 @@ class EntityManager implements ObjectManager
      */
     public function merge($entity)
     {
-        if ( ! is_object($entity)) {
+        if (!is_object($entity)) {
             throw new \InvalidArgumentException(gettype($entity));
         }
         $this->errorIfClosed();
@@ -595,7 +595,7 @@ class EntityManager implements ObjectManager
     {
         return $this->unitOfWork->isScheduledForInsert($entity) ||
                $this->unitOfWork->isInIdentityMap($entity) &&
-               ! $this->unitOfWork->isScheduledForDelete($entity);
+               !$this->unitOfWork->isScheduledForDelete($entity);
     }
 
     /**
@@ -661,7 +661,7 @@ class EntityManager implements ObjectManager
      */
     public function getHydrator($hydrationMode)
     {
-        if ( ! isset($this->hydrators[$hydrationMode])) {
+        if (!isset($this->hydrators[$hydrationMode])) {
             $this->hydrators[$hydrationMode] = $this->newHydrator($hydrationMode);
         }
 
@@ -737,10 +737,10 @@ class EntityManager implements ObjectManager
         }
 
         if (is_array($conn)) {
-            $conn = \Doctrine\DBAL\DriverManager::getConnection($conn, $config, ($eventManager ?: new EventManager()));
+            $conn = \Doctrine\DBAL\DriverManager::getConnection($conn, $config, ($eventManager ? : new EventManager()));
         } else if ($conn instanceof Connection) {
             if ($eventManager !== null && $conn->getEventManager() !== $eventManager) {
-                 throw ORMException::mismatchedEventManager();
+                throw ORMException::mismatchedEventManager();
             }
         } else {
             throw new \InvalidArgumentException("Invalid argument: " . $conn);

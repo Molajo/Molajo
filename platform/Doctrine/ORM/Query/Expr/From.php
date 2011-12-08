@@ -39,8 +39,8 @@ class From
 
     public function __construct($from, $alias)
     {
-        $this->_from  = $from;
-        $this->_alias  = $alias;
+        $this->_from = $from;
+        $this->_alias = $alias;
     }
 
     public function getFrom()

@@ -3,7 +3,7 @@
 namespace Doctrine\ORM\Event;
 
 use Doctrine\Common\EventArgs,
-    Doctrine\ORM\EntityManager;
+Doctrine\ORM\EntityManager;
 
 /**
  * Class that holds event arguments for a preInsert/preUpdate event.
@@ -48,13 +48,13 @@ class PreUpdateEventArgs extends LifecycleEventArgs
 
     /**
      * Get the old value of the changeset of the changed field.
-     * 
+     *
      * @param  string $field
      * @return mixed
      */
     public function getOldValue($field)
     {
-    	$this->_assertValidField($field);
+        $this->_assertValidField($field);
 
         return $this->_entityChangeSet[$field][0];
     }
@@ -74,7 +74,7 @@ class PreUpdateEventArgs extends LifecycleEventArgs
 
     /**
      * Set the new value of this field.
-     * 
+     *
      * @param string $field
      * @param mixed $value
      */
@@ -87,10 +87,10 @@ class PreUpdateEventArgs extends LifecycleEventArgs
 
     private function _assertValidField($field)
     {
-    	if (!isset($this->_entityChangeSet[$field])) {
+        if (!isset($this->_entityChangeSet[$field])) {
             throw new \InvalidArgumentException(
-                "Field '".$field."' is not a valid field of the entity ".
-                "'".get_class($this->getEntity())."' in PreInsertUpdateEventArgs."
+                "Field '" . $field . "' is not a valid field of the entity " .
+                "'" . get_class($this->getEntity()) . "' in PreInsertUpdateEventArgs."
             );
         }
     }

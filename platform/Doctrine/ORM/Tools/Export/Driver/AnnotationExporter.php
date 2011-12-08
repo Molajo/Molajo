@@ -23,8 +23,8 @@
 namespace Doctrine\ORM\Tools\Export\Driver;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\AssociationMapping,
-    Doctrine\ORM\Tools\EntityGenerator;
+Doctrine\ORM\Mapping\AssociationMapping,
+Doctrine\ORM\Tools\EntityGenerator;
 
 /**
  * ClassMetadata exporter for PHP classes with annotations
@@ -44,12 +44,12 @@ class AnnotationExporter extends AbstractExporter
      * Converts a single ClassMetadata instance to the exported format
      * and returns it
      *
-     * @param ClassMetadataInfo $metadata 
+     * @param ClassMetadataInfo $metadata
      * @return string $exported
      */
     public function exportClassMetadata(ClassMetadataInfo $metadata)
     {
-        if ( ! $this->_entityGenerator) {
+        if (!$this->_entityGenerator) {
             throw new \RuntimeException('For the AnnotationExporter you must set an EntityGenerator instance with the setEntityGenerator() method.');
         }
         $this->_entityGenerator->setGenerateAnnotations(true);

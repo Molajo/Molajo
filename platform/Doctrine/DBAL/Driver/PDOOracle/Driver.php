@@ -45,7 +45,7 @@ class Driver implements \Doctrine\DBAL\Driver
         $dsn = 'oci:';
         if (isset($params['host'])) {
             $dsn .= 'dbname=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)' .
-                   '(HOST=' . $params['host'] . ')';
+                    '(HOST=' . $params['host'] . ')';
 
             if (isset($params['port'])) {
                 $dsn .= '(PORT=' . $params['port'] . ')';

@@ -58,7 +58,7 @@ class MsSqlSchemaManager extends AbstractSchemaManager
             $default = $default2;
         }
 
-        $length = (int) $tableColumn['LENGTH'];
+        $length = (int)$tableColumn['LENGTH'];
 
         $type = $this->_platform->getDoctrineTypeMapping($dbType);
         switch ($type) {
@@ -86,10 +86,10 @@ class MsSqlSchemaManager extends AbstractSchemaManager
 
         $options = array(
             'length' => ($length == 0 || !in_array($type, array('text', 'string'))) ? null : $length,
-            'unsigned' => (bool) $unsigned,
-            'fixed' => (bool) $fixed,
+            'unsigned' => (bool)$unsigned,
+            'fixed' => (bool)$fixed,
             'default' => $default !== 'NULL' ? $default : null,
-            'notnull' => (bool) ($tableColumn['IS_NULLABLE'] != 'YES'),
+            'notnull' => (bool)($tableColumn['IS_NULLABLE'] != 'YES'),
             'scale' => $tableColumn['SCALE'],
             'precision' => $tableColumn['PRECISION'],
             'autoincrement' => $autoincrement,
@@ -101,7 +101,7 @@ class MsSqlSchemaManager extends AbstractSchemaManager
     /**
      * @override
      */
-    protected function _getPortableTableIndexesList($tableIndexRows, $tableName=null)
+    protected function _getPortableTableIndexesList($tableIndexRows, $tableName = null)
     {
         $result = array();
         foreach ($tableIndexRows AS $tableIndex) {
@@ -133,14 +133,14 @@ class MsSqlSchemaManager extends AbstractSchemaManager
     public function _getPortableTableForeignKeyDefinition($tableForeignKey)
     {
         return new ForeignKeyConstraint(
-                (array) $tableForeignKey['ColumnName'],
-                $tableForeignKey['ReferenceTableName'],
-                (array) $tableForeignKey['ReferenceColumnName'],
-                $tableForeignKey['ForeignKey'],
-                array(
-                    'onUpdate' => str_replace('_', ' ', $tableForeignKey['update_referential_action_desc']),
-                    'onDelete' => str_replace('_', ' ', $tableForeignKey['delete_referential_action_desc']),
-                )
+            (array)$tableForeignKey['ColumnName'],
+            $tableForeignKey['ReferenceTableName'],
+            (array)$tableForeignKey['ReferenceColumnName'],
+            $tableForeignKey['ForeignKey'],
+            array(
+                 'onUpdate' => str_replace('_', ' ', $tableForeignKey['update_referential_action_desc']),
+                 'onDelete' => str_replace('_', ' ', $tableForeignKey['delete_referential_action_desc']),
+            )
         );
     }
 

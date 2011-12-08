@@ -20,7 +20,7 @@
 namespace Doctrine\DBAL\Query;
 
 use Doctrine\DBAL\Query\Expression\CompositeExpression,
-    Doctrine\DBAL\Connection;
+Doctrine\DBAL\Connection;
 
 /**
  * QueryBuilder class is responsible to dynamically create SQL queries.
@@ -58,13 +58,13 @@ class QueryBuilder
      * @var array The array of SQL parts collected.
      */
     private $sqlParts = array(
-        'select'  => array(),
-        'from'    => array(),
-        'join'    => array(),
-        'set'     => array(),
-        'where'   => null,
+        'select' => array(),
+        'from' => array(),
+        'join' => array(),
+        'set' => array(),
+        'where' => null,
         'groupBy' => array(),
-        'having'  => null,
+        'having' => null,
         'orderBy' => array()
     );
 
@@ -467,14 +467,14 @@ class QueryBuilder
     {
         $this->type = self::DELETE;
 
-        if ( ! $delete) {
+        if (!$delete) {
             return $this;
         }
 
         return $this->add('from', array(
-            'table' => $delete,
-            'alias' => $alias
-        ));
+                                       'table' => $delete,
+                                       'alias' => $alias
+                                  ));
     }
 
     /**
@@ -496,14 +496,14 @@ class QueryBuilder
     {
         $this->type = self::UPDATE;
 
-        if ( ! $update) {
+        if (!$update) {
             return $this;
         }
 
         return $this->add('from', array(
-            'table' => $update,
-            'alias' => $alias
-        ));
+                                       'table' => $update,
+                                       'alias' => $alias
+                                  ));
     }
 
     /**
@@ -523,9 +523,9 @@ class QueryBuilder
     public function from($from, $alias)
     {
         return $this->add('from', array(
-            'table' => $from,
-            'alias' => $alias
-        ), true);
+                                       'table' => $from,
+                                       'alias' => $alias
+                                  ), true);
     }
 
     /**
@@ -568,13 +568,13 @@ class QueryBuilder
     public function innerJoin($fromAlias, $join, $alias, $condition = null)
     {
         return $this->add('join', array(
-            $fromAlias => array(
-                'joinType'      => 'inner',
-                'joinTable'     => $join,
-                'joinAlias'     => $alias,
-                'joinCondition' => $condition
-            )
-        ), true);
+                                       $fromAlias => array(
+                                           'joinType' => 'inner',
+                                           'joinTable' => $join,
+                                           'joinAlias' => $alias,
+                                           'joinCondition' => $condition
+                                       )
+                                  ), true);
     }
 
     /**
@@ -596,13 +596,13 @@ class QueryBuilder
     public function leftJoin($fromAlias, $join, $alias, $condition = null)
     {
         return $this->add('join', array(
-            $fromAlias => array(
-                'joinType'      => 'left',
-                'joinTable'     => $join,
-                'joinAlias'     => $alias,
-                'joinCondition' => $condition
-            )
-        ), true);
+                                       $fromAlias => array(
+                                           'joinType' => 'left',
+                                           'joinTable' => $join,
+                                           'joinAlias' => $alias,
+                                           'joinCondition' => $condition
+                                       )
+                                  ), true);
     }
 
     /**
@@ -624,13 +624,13 @@ class QueryBuilder
     public function rightJoin($fromAlias, $join, $alias, $condition = null)
     {
         return $this->add('join', array(
-            $fromAlias => array(
-                'joinType'      => 'right',
-                'joinTable'     => $join,
-                'joinAlias'     => $alias,
-                'joinCondition' => $condition
-            )
-        ), true);
+                                       $fromAlias => array(
+                                           'joinType' => 'right',
+                                           'joinTable' => $join,
+                                           'joinAlias' => $alias,
+                                           'joinCondition' => $condition
+                                       )
+                                  ), true);
     }
 
     /**
@@ -649,7 +649,7 @@ class QueryBuilder
      */
     public function set($key, $value)
     {
-        return $this->add('set', $key .' = ' . $value, true);
+        return $this->add('set', $key . ' = ' . $value, true);
     }
 
     /**
@@ -679,7 +679,7 @@ class QueryBuilder
      */
     public function where($predicates)
     {
-        if ( ! (func_num_args() == 1 && $predicates instanceof CompositeExpression) ) {
+        if (!(func_num_args() == 1 && $predicates instanceof CompositeExpression)) {
             $predicates = new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
         }
 
@@ -808,7 +808,7 @@ class QueryBuilder
      */
     public function having($having)
     {
-        if ( ! (func_num_args() == 1 && $having instanceof CompositeExpression)) {
+        if (!(func_num_args() == 1 && $having instanceof CompositeExpression)) {
             $having = new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
         }
 
@@ -869,7 +869,7 @@ class QueryBuilder
      */
     public function orderBy($sort, $order = null)
     {
-        return $this->add('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), false);
+        return $this->add('orderBy', $sort . ' ' . (!$order ? 'ASC' : $order), false);
     }
 
     /**
@@ -881,7 +881,7 @@ class QueryBuilder
      */
     public function addOrderBy($sort, $order = null)
     {
-        return $this->add('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), true);
+        return $this->add('orderBy', $sort . ' ' . (!$order ? 'ASC' : $order), true);
     }
 
     /**
@@ -933,7 +933,7 @@ class QueryBuilder
     public function resetQueryPart($queryPartName)
     {
         $this->sqlParts[$queryPartName] = is_array($this->sqlParts[$queryPartName])
-            ? array() : null;
+                ? array() : null;
 
         $this->state = self::STATE_DIRTY;
 
@@ -958,8 +958,8 @@ class QueryBuilder
             if (isset($this->sqlParts['join'][$from['alias']])) {
                 foreach ($this->sqlParts['join'][$from['alias']] as $join) {
                     $fromClause .= ' ' . strtoupper($join['joinType'])
-                                 . ' JOIN ' . $join['joinTable'] . ' ' . $join['joinAlias']
-                                 . ' ON ' . ((string) $join['joinCondition']);
+                                   . ' JOIN ' . $join['joinTable'] . ' ' . $join['joinAlias']
+                                   . ' ON ' . ((string)$join['joinCondition']);
                 }
             }
 
@@ -968,20 +968,20 @@ class QueryBuilder
 
         // loop through all JOIN clasues for validation purpose
         foreach ($this->sqlParts['join'] as $fromAlias => $joins) {
-            if ( ! isset($fromClauses[$fromAlias]) ) {
+            if (!isset($fromClauses[$fromAlias])) {
                 throw QueryException::unknownFromAlias($fromAlias, array_keys($fromClauses));
             }
         }
 
         $query .= implode(', ', $fromClauses)
-                . ($this->sqlParts['where'] !== null ? ' WHERE ' . ((string) $this->sqlParts['where']) : '')
-                . ($this->sqlParts['groupBy'] ? ' GROUP BY ' . implode(', ', $this->sqlParts['groupBy']) : '')
-                . ($this->sqlParts['having'] !== null ? ' HAVING ' . ((string) $this->sqlParts['having']) : '')
-                . ($this->sqlParts['orderBy'] ? ' ORDER BY ' . implode(', ', $this->sqlParts['orderBy']) : '');
+                  . ($this->sqlParts['where'] !== null ? ' WHERE ' . ((string)$this->sqlParts['where']) : '')
+                  . ($this->sqlParts['groupBy'] ? ' GROUP BY ' . implode(', ', $this->sqlParts['groupBy']) : '')
+                  . ($this->sqlParts['having'] !== null ? ' HAVING ' . ((string)$this->sqlParts['having']) : '')
+                  . ($this->sqlParts['orderBy'] ? ' ORDER BY ' . implode(', ', $this->sqlParts['orderBy']) : '');
 
         return ($this->maxResults === null && $this->firstResult == null)
-            ? $query
-            : $this->connection->getDatabasePlatform()->modifyLimitQuery($query, $this->maxResults, $this->firstResult);
+                ? $query
+                : $this->connection->getDatabasePlatform()->modifyLimitQuery($query, $this->maxResults, $this->firstResult);
     }
 
     /**
@@ -991,10 +991,11 @@ class QueryBuilder
      */
     private function getSQLForUpdate()
     {
-        $table = $this->sqlParts['from']['table'] . ($this->sqlParts['from']['alias'] ? ' ' . $this->sqlParts['from']['alias'] : '');
+        $table = $this->sqlParts['from']['table'] . ($this->sqlParts['from']['alias']
+                ? ' ' . $this->sqlParts['from']['alias'] : '');
         $query = 'UPDATE ' . $table
-               . ' SET ' . implode(", ", $this->sqlParts['set'])
-               . ($this->sqlParts['where'] !== null ? ' WHERE ' . ((string) $this->sqlParts['where']) : '');
+                 . ' SET ' . implode(", ", $this->sqlParts['set'])
+                 . ($this->sqlParts['where'] !== null ? ' WHERE ' . ((string)$this->sqlParts['where']) : '');
 
         return $query;
     }
@@ -1006,8 +1007,10 @@ class QueryBuilder
      */
     private function getSQLForDelete()
     {
-        $table = $this->sqlParts['from']['table'] . ($this->sqlParts['from']['alias'] ? ' ' . $this->sqlParts['from']['alias'] : '');
-        $query = 'DELETE FROM ' . $table . ($this->sqlParts['where'] !== null ? ' WHERE ' . ((string) $this->sqlParts['where']) : '');
+        $table = $this->sqlParts['from']['table'] . ($this->sqlParts['from']['alias']
+                ? ' ' . $this->sqlParts['from']['alias'] : '');
+        $query = 'DELETE FROM ' . $table . ($this->sqlParts['where'] !== null
+                ? ' WHERE ' . ((string)$this->sqlParts['where']) : '');
 
         return $query;
     }
@@ -1050,9 +1053,9 @@ class QueryBuilder
      * @param string $placeHolder the name to bind with. The string must start with a colon ':'.
      * @return string the placeholder name used.
      */
-    public function createNamedParameter( $value, $type = \PDO::PARAM_STR, $placeHolder = null )
+    public function createNamedParameter($value, $type = \PDO::PARAM_STR, $placeHolder = null)
     {
-        if ( $placeHolder === null ) {
+        if ($placeHolder === null) {
             $this->boundCounter++;
             $placeHolder = ":dcValue" . $this->boundCounter;
         }

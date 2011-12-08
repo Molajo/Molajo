@@ -22,7 +22,7 @@
 namespace Doctrine\ORM\Tools\Console\Helper;
 
 use Symfony\Component\Console\Helper\Helper,
-    Doctrine\ORM\EntityManager;
+Doctrine\ORM\EntityManager;
 
 /**
  * Doctrine CLI Connection Helper.

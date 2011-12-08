@@ -38,9 +38,9 @@ class InfoCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('orm:info')
-            ->setDescription('Show basic information about all mapped entities')
-            ->setHelp(<<<EOT
+                ->setName('orm:info')
+                ->setDescription('Show basic information about all mapped entities')
+                ->setHelp(<<<EOT
 The <info>doctrine:mapping:info</info> shows basic information about which
 entities exist and possibly if their mapping information contains errors or
 not.
@@ -54,12 +54,12 @@ EOT
         $entityManager = $this->getHelper('em')->getEntityManager();
 
         $entityClassNames = $entityManager->getConfiguration()
-                                          ->getMetadataDriverImpl()
-                                          ->getAllClassNames();
+                ->getMetadataDriverImpl()
+                ->getAllClassNames();
 
         if (!$entityClassNames) {
             throw new \Exception(
-                'You do not have any mapped Doctrine ORM entities according to the current configuration. '.
+                'You do not have any mapped Doctrine ORM entities according to the current configuration. ' .
                 'If you have entities or mapping files you should check your mapping configuration for errors.'
             );
         }
@@ -71,7 +71,7 @@ EOT
                 $cm = $entityManager->getClassMetadata($entityClassName);
                 $output->writeln(sprintf("<info>[OK]</info>   %s", $entityClassName));
             } catch (MappingException $e) {
-                $output->writeln("<error>[FAIL]</error> ".$entityClassName);
+                $output->writeln("<error>[FAIL]</error> " . $entityClassName);
                 $output->writeln(sprintf("<comment>%s</comment>", $e->getMessage()));
                 $output->writeln('');
             }

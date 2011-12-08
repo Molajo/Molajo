@@ -22,13 +22,13 @@
 namespace Doctrine\DBAL\Schema\Visitor;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform,
-    Doctrine\DBAL\Schema\Table,
-    Doctrine\DBAL\Schema\Schema,
-    Doctrine\DBAL\Schema\Column,
-    Doctrine\DBAL\Schema\ForeignKeyConstraint,
-    Doctrine\DBAL\Schema\Constraint,
-    Doctrine\DBAL\Schema\Sequence,
-    Doctrine\DBAL\Schema\Index;
+Doctrine\DBAL\Schema\Table,
+Doctrine\DBAL\Schema\Schema,
+Doctrine\DBAL\Schema\Column,
+Doctrine\DBAL\Schema\ForeignKeyConstraint,
+Doctrine\DBAL\Schema\Constraint,
+Doctrine\DBAL\Schema\Sequence,
+Doctrine\DBAL\Schema\Index;
 
 /**
  * Gather SQL statements that allow to completly drop the current schema.

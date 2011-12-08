@@ -80,7 +80,7 @@ class StreamOutput extends Output
      */
     public function doWrite($message, $newline)
     {
-        if (false === @fwrite($this->stream, $message.($newline ? PHP_EOL : ''))) {
+        if (false === @fwrite($this->stream, $message . ($newline ? PHP_EOL : ''))) {
             // @codeCoverageIgnoreStart
             // should never happen
             throw new \RuntimeException('Unable to write output.');

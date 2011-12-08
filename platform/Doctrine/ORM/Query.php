@@ -20,8 +20,8 @@
 namespace Doctrine\ORM;
 
 use Doctrine\DBAL\LockMode,
-    Doctrine\ORM\Query\Parser,
-    Doctrine\ORM\Query\QueryException;
+Doctrine\ORM\Query\Parser,
+Doctrine\ORM\Query\QueryException;
 
 /**
  * A Query object represents a DQL query.
@@ -37,7 +37,7 @@ final class Query extends AbstractQuery
     /**
      * A query object is in CLEAN state when it has NO unparsed/unprocessed DQL parts.
      */
-    const STATE_CLEAN  = 1;
+    const STATE_CLEAN = 1;
     /**
      * A query object is in state DIRTY when it has DQL parts that have not yet been
      * parsed/processed. This is automatically defined as DIRTY when addDqlQueryPart
@@ -260,7 +260,7 @@ final class Query extends AbstractQuery
         $sqlParams = $types = array();
 
         foreach ($this->_params as $key => $value) {
-            if ( ! isset($paramMappings[$key])) {
+            if (!isset($paramMappings[$key])) {
                 throw QueryException::unknownParameter($key);
             }
 
@@ -305,24 +305,24 @@ final class Query extends AbstractQuery
         if (is_array($value)) {
             for ($i = 0, $l = count($value); $i < $l; $i++) {
                 $paramValue = $this->processParameterValue($value[$i]);
-                
+
                 // TODO: What about Entities that have composite primary key?
                 $value[$i] = is_array($paramValue) ? $paramValue[key($paramValue)] : $paramValue;
             }
-            
+
             return array($value);
         }
-        
-        if ( ! (is_object($value) && $this->_em->getMetadataFactory()->hasMetadataFor(get_class($value)))) {
+
+        if (!(is_object($value) && $this->_em->getMetadataFactory()->hasMetadataFor(get_class($value)))) {
             return array($value);
         }
-        
+
         if ($this->_em->getUnitOfWork()->getEntityState($value) === UnitOfWork::STATE_MANAGED) {
             return array_values($this->_em->getUnitOfWork()->getEntityIdentifier($value));
         }
-        
+
         $class = $this->_em->getClassMetadata(get_class($value));
-        
+
         return array_values($class->getIdentifierValues($value));
     }
 
@@ -354,7 +354,7 @@ final class Query extends AbstractQuery
      * Returns the cache driver used for query caching.
      *
      * @return CacheDriver The cache driver used for query caching or NULL, if this
-     * 					   Query does not use query caching.
+     *                        Query does not use query caching.
      */
     public function getQueryCacheDriver()
     {
@@ -374,7 +374,7 @@ final class Query extends AbstractQuery
     public function setQueryCacheLifetime($timeToLive)
     {
         if ($timeToLive !== null) {
-            $timeToLive = (int) $timeToLive;
+            $timeToLive = (int)$timeToLive;
         }
         $this->_queryCacheTTL = $timeToLive;
 
@@ -602,7 +602,7 @@ final class Query extends AbstractQuery
         return md5(
             $this->getDql() . var_export($this->_hints, true) .
             '&firstResult=' . $this->_firstResult . '&maxResult=' . $this->_maxResults .
-            '&hydrationMode='.$this->_hydrationMode.'DOCTRINE_QUERY_CACHE_SALT'
+            '&hydrationMode=' . $this->_hydrationMode . 'DOCTRINE_QUERY_CACHE_SALT'
         );
     }
 

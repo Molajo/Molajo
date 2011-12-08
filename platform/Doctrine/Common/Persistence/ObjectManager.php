@@ -45,7 +45,7 @@ interface ObjectManager
      * Tells the ObjectManager to make an instance managed and persistent.
      *
      * The object will be entered into the database as a result of the flush operation.
-     * 
+     *
      * NOTE: The persist operation always considers objects that are not yet known to
      * this ObjectManager as NEW. Do not pass detached objects to the persist operation.
      *

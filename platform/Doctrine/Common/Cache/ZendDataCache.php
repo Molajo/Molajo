@@ -33,7 +33,7 @@ class ZendDataCache extends AbstractCache
     {
         $this->setNamespace('doctrine::'); // zend data cache format for namespaces ends in ::
     }
-    
+
     /**
      * {@inheritdoc}
      */

@@ -73,7 +73,7 @@ abstract class AbstractSchemaManager
     }
 
     /**
-     * Try any method on the schema manager. Normally a method throws an 
+     * Try any method on the schema manager. Normally a method throws an
      * exception when your DBMS doesn't support it or if an error occurs.
      * This method allows you to try and method on your SchemaManager
      * instance and will return false if it does not work or is not supported.
@@ -175,7 +175,7 @@ abstract class AbstractSchemaManager
 
     /**
      * Return true if all the given tables exist.
-     * 
+     *
      * @param array $tableNames
      * @return bool
      */
@@ -268,7 +268,7 @@ abstract class AbstractSchemaManager
 
     /**
      * Drops a database.
-     * 
+     *
      * NOTE: You can not drop the database this SchemaManager is currently connected to.
      *
      * @param string $database The name of the database to drop
@@ -296,7 +296,7 @@ abstract class AbstractSchemaManager
      */
     public function dropIndex($index, $table)
     {
-        if($index instanceof Index) {
+        if ($index instanceof Index) {
             $index = $index->getQuotedName($this->_platform);
         }
 
@@ -367,7 +367,7 @@ abstract class AbstractSchemaManager
      */
     public function createTable(Table $table)
     {
-        $createFlags = AbstractPlatform::CREATE_INDEXES|AbstractPlatform::CREATE_FOREIGNKEYS;
+        $createFlags = AbstractPlatform::CREATE_INDEXES | AbstractPlatform::CREATE_FOREIGNKEYS;
         $this->_execSql($this->_platform->getCreateTableSQL($table, $createFlags));
     }
 
@@ -648,17 +648,17 @@ abstract class AbstractSchemaManager
      * @param  string $tableName
      * @return array
      */
-    protected function _getPortableTableIndexesList($tableIndexRows, $tableName=null)
+    protected function _getPortableTableIndexesList($tableIndexRows, $tableName = null)
     {
         $result = array();
-        foreach($tableIndexRows AS $tableIndex) {
+        foreach ($tableIndexRows AS $tableIndex) {
             $indexName = $keyName = $tableIndex['key_name'];
-            if($tableIndex['primary']) {
+            if ($tableIndex['primary']) {
                 $keyName = 'primary';
             }
             $keyName = strtolower($keyName);
 
-            if(!isset($result[$keyName])) {
+            if (!isset($result[$keyName])) {
                 $result[$keyName] = array(
                     'name' => $indexName,
                     'columns' => array($tableIndex['column_name']),
@@ -671,7 +671,7 @@ abstract class AbstractSchemaManager
         }
 
         $indexes = array();
-        foreach($result AS $indexKey => $data) {
+        foreach ($result AS $indexKey => $data) {
             $indexes[$indexKey] = new Index($data['name'], $data['columns'], $data['unique'], $data['primary']);
         }
 
@@ -745,20 +745,20 @@ abstract class AbstractSchemaManager
 
     protected function _execSql($sql)
     {
-        foreach ((array) $sql as $query) {
+        foreach ((array)$sql as $query) {
             $this->_conn->executeUpdate($query);
         }
     }
 
     /**
      * Create a schema instance for the current database.
-     * 
+     *
      * @return Schema
      */
     public function createSchema()
     {
         $sequences = array();
-        if($this->_platform->supportsSequences()) {
+        if ($this->_platform->supportsSequences()) {
             $sequences = $this->listSequences();
         }
         $tables = $this->listTables();
@@ -782,7 +782,7 @@ abstract class AbstractSchemaManager
     /**
      * Given a table comment this method tries to extract a typehint for Doctrine Type, or returns
      * the type given as default.
-     * 
+     *
      * @param  string $comment
      * @param  string $currentType
      * @return string
@@ -797,6 +797,6 @@ abstract class AbstractSchemaManager
 
     public function removeDoctrineTypeFromComment($comment, $type)
     {
-        return str_replace('(DC2Type:'.$type.')', '', $comment);
+        return str_replace('(DC2Type:' . $type . ')', '', $comment);
     }
 }

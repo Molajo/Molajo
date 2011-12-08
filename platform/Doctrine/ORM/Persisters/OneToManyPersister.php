@@ -22,7 +22,7 @@
 namespace Doctrine\ORM\Persisters;
 
 use Doctrine\ORM\PersistentCollection,
-    Doctrine\ORM\UnitOfWork;
+Doctrine\ORM\UnitOfWork;
 
 /**
  * Persister for one-to-many collections.
@@ -96,7 +96,8 @@ class OneToManyPersister extends AbstractCollectionPersister
      * @param PersistentCollection $coll
      */
     protected function _getDeleteSQLParameters(PersistentCollection $coll)
-    {}
+    {
+    }
 
     /**
      * Gets the SQL parameters for the corresponding SQL statement to insert the given
@@ -106,7 +107,8 @@ class OneToManyPersister extends AbstractCollectionPersister
      * @param mixed $element
      */
     protected function _getInsertRowSQLParameters(PersistentCollection $coll, $element)
-    {}
+    {
+    }
 
     /**
      * Gets the SQL parameters for the corresponding SQL statement to delete the given
@@ -116,7 +118,8 @@ class OneToManyPersister extends AbstractCollectionPersister
      * @param mixed $element
      */
     protected function _getDeleteRowSQLParameters(PersistentCollection $coll, $element)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -157,8 +160,8 @@ class OneToManyPersister extends AbstractCollectionPersister
     {
         $mapping = $coll->getMapping();
         return $this->_em->getUnitOfWork()
-                  ->getEntityPersister($mapping['targetEntity'])
-                  ->getOneToManyCollection($mapping, $coll->getOwner(), $offset, $length);
+                ->getEntityPersister($mapping['targetEntity'])
+                ->getOneToManyCollection($mapping, $coll->getOwner(), $offset, $length);
     }
 
     /**
@@ -169,7 +172,7 @@ class OneToManyPersister extends AbstractCollectionPersister
     {
         $mapping = $coll->getMapping();
         $uow = $this->_em->getUnitOfWork();
-        
+
         // shortcut for new entities
         if ($uow->getEntityState($element, UnitOfWork::STATE_NEW) == UnitOfWork::STATE_NEW) {
             return false;
@@ -177,9 +180,9 @@ class OneToManyPersister extends AbstractCollectionPersister
 
         // only works with single id identifier entities. Will throw an exception in Entity Persisters
         // if that is not the case for the 'mappedBy' field.
-        $id = current( $uow->getEntityIdentifier($coll->getOwner()) );
+        $id = current($uow->getEntityIdentifier($coll->getOwner()));
 
         return $uow->getEntityPersister($mapping['targetEntity'])
-                   ->exists($element, array($mapping['mappedBy'] => $id));
+                ->exists($element, array($mapping['mappedBy'] => $id));
     }
 }

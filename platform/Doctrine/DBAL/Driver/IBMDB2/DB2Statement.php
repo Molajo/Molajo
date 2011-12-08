@@ -28,7 +28,7 @@ class DB2Statement implements \Doctrine\DBAL\Driver\Statement
     private $_bindParam = array();
 
     /**
-     * DB2_BINARY, DB2_CHAR, DB2_DOUBLE, or DB2_LONG 
+     * DB2_BINARY, DB2_CHAR, DB2_DOUBLE, or DB2_LONG
      * @var <type>
      */
     static private $_typeMap = array(
@@ -292,6 +292,6 @@ class DB2Statement implements \Doctrine\DBAL\Driver\Statement
      */
     function rowCount()
     {
-        return (@db2_num_rows($this->_stmt))?:0;
+        return (@db2_num_rows($this->_stmt)) ? : 0;
     }
 }

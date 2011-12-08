@@ -24,7 +24,7 @@ use ReflectionClass, ReflectionProperty;
 /**
  * A <tt>ClassMetadata</tt> instance holds all the object-relational mapping metadata
  * of an entity and it's associations.
- * 
+ *
  * Once populated, ClassMetadata instances are usually cached in a serialized form.
  *
  * <b>IMPORTANT NOTE:</b>
@@ -47,10 +47,10 @@ class ClassMetadata extends ClassMetadataInfo
      * @var array
      */
     public $reflFields = array();
-    
+
     /**
      * The prototype from which new instances of the mapped class are created.
-     * 
+     *
      * @var object
      */
     private $_prototype;
@@ -103,13 +103,13 @@ class ClassMetadata extends ClassMetadataInfo
         }
         return $this->reflFields[$this->identifier[0]];
     }
-    
+
     /**
      * Validates & completes the given field mapping.
      *
      * @param array $mapping  The field mapping to validated & complete.
      * @return array  The validated and completed field mapping.
-     * 
+     *
      * @throws MappingException
      */
     protected function _validateAndCompleteFieldMapping(array &$mapping)
@@ -124,7 +124,7 @@ class ClassMetadata extends ClassMetadataInfo
 
     /**
      * Extracts the identifier values of an entity of this class.
-     * 
+     *
      * For composite identifiers, the identifier values are returned as an array
      * with the same order as the field order in {@link identifier}.
      *
@@ -215,18 +215,18 @@ class ClassMetadata extends ClassMetadataInfo
     {
         return __CLASS__ . '@' . spl_object_hash($this);
     }
-    
+
     /**
      * Determines which fields get serialized.
      *
      * It is only serialized what is necessary for best unserialization performance.
      * That means any metadata properties that are not set or empty or simply have
      * their default value are NOT serialized.
-     * 
+     *
      * Parts that are also NOT serialized because they can not be properly unserialized:
      *      - reflClass (ReflectionClass)
      *      - reflFields (ReflectionProperty array)
-     * 
+     *
      * @return array The names of all the fields that should be serialized.
      */
     public function __sleep()
@@ -301,7 +301,7 @@ class ClassMetadata extends ClassMetadataInfo
 
     /**
      * Restores some state that can not be serialized/unserialized.
-     * 
+     *
      * @return void
      */
     public function __wakeup()
@@ -330,10 +330,10 @@ class ClassMetadata extends ClassMetadataInfo
             $this->reflFields[$field] = $reflField;
         }
     }
-    
+
     /**
      * Creates a new instance of the mapped class, without invoking the constructor.
-     * 
+     *
      * @return object
      */
     public function newInstance()

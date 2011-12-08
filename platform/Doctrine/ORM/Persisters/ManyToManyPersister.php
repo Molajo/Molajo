@@ -22,7 +22,7 @@
 namespace Doctrine\ORM\Persisters;
 
 use Doctrine\ORM\PersistentCollection,
-    Doctrine\ORM\UnitOfWork;
+Doctrine\ORM\UnitOfWork;
 
 /**
  * Persister for many-to-many collections.
@@ -39,10 +39,10 @@ class ManyToManyPersister extends AbstractCollectionPersister
      */
     protected function _getDeleteRowSQL(PersistentCollection $coll)
     {
-        $mapping   = $coll->getMapping();
+        $mapping = $coll->getMapping();
         $joinTable = $mapping['joinTable'];
-        $columns   = $mapping['joinTableColumns'];
-        
+        $columns = $mapping['joinTableColumns'];
+
         return 'DELETE FROM ' . $joinTable['name'] . ' WHERE ' . implode(' = ? AND ', $columns) . ' = ?';
     }
 
@@ -64,7 +64,8 @@ class ManyToManyPersister extends AbstractCollectionPersister
      * @override
      */
     protected function _getUpdateRowSQL(PersistentCollection $coll)
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -79,7 +80,7 @@ class ManyToManyPersister extends AbstractCollectionPersister
         $joinTable = $mapping['joinTable'];
         $columns = $mapping['joinTableColumns'];
         return 'INSERT INTO ' . $joinTable['name'] . ' (' . implode(', ', $columns) . ')'
-                . ' VALUES (' . implode(', ', array_fill(0, count($columns), '?')) . ')';
+               . ' VALUES (' . implode(', ', array_fill(0, count($columns), '?')) . ')';
     }
 
     /**
@@ -178,7 +179,7 @@ class ManyToManyPersister extends AbstractCollectionPersister
                 $params[] = $identifier[$sourceClass->fieldNames[$srcColumn]];
             }
         } else {
-           $params[] = array_pop($identifier);
+            $params[] = array_pop($identifier);
         }
 
         return $params;
@@ -233,8 +234,8 @@ class ManyToManyPersister extends AbstractCollectionPersister
     {
         $mapping = $coll->getMapping();
         return $this->_em->getUnitOfWork()
-                  ->getEntityPersister($mapping['targetEntity'])
-                  ->getManyToManyCollection($mapping, $coll->getOwner(), $offset, $length);
+                ->getEntityPersister($mapping['targetEntity'])
+                ->getManyToManyCollection($mapping, $coll->getOwner(), $offset, $length);
     }
 
     /**
@@ -258,7 +259,7 @@ class ManyToManyPersister extends AbstractCollectionPersister
             $targetClass = $this->_em->getClassMetadata($mapping['sourceEntity']);
             $sourceId = $uow->getEntityIdentifier($element);
             $targetId = $uow->getEntityIdentifier($coll->getOwner());
-            
+
             $mapping = $sourceClass->associationMappings[$mapping['mappedBy']];
         } else {
             $sourceClass = $this->_em->getClassMetadata($mapping['sourceEntity']);

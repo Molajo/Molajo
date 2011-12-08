@@ -31,13 +31,13 @@ class ListCommand extends Command
     protected function configure()
     {
         $this
-            ->setDefinition(array(
-                new InputArgument('namespace', InputArgument::OPTIONAL, 'The namespace name'),
-                new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
-            ))
-            ->setName('list')
-            ->setDescription('Lists commands')
-            ->setHelp(<<<EOF
+                ->setDefinition(array(
+                                     new InputArgument('namespace', InputArgument::OPTIONAL, 'The namespace name'),
+                                     new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
+                                ))
+                ->setName('list')
+                ->setDescription('Lists commands')
+                ->setHelp(<<<EOF
 The <info>list</info> command lists all commands:
 
   <info>./symfony list</info>
@@ -50,7 +50,7 @@ You can also output the information as XML by using the <comment>--xml</comment>
 
   <info>./symfony list --xml</info>
 EOF
-            );
+        );
     }
 
     /**

@@ -35,13 +35,13 @@ class HelpCommand extends Command
         $this->ignoreValidationErrors = true;
 
         $this
-            ->setDefinition(array(
-                new InputArgument('command_name', InputArgument::OPTIONAL, 'The command name', 'help'),
-                new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
-            ))
-            ->setName('help')
-            ->setDescription('Displays help for a command')
-            ->setHelp(<<<EOF
+                ->setDefinition(array(
+                                     new InputArgument('command_name', InputArgument::OPTIONAL, 'The command name', 'help'),
+                                     new InputOption('xml', null, InputOption::VALUE_NONE, 'To output help as XML'),
+                                ))
+                ->setName('help')
+                ->setDescription('Displays help for a command')
+                ->setHelp(<<<EOF
 The <info>help</info> command displays help for a given command:
 
   <info>./symfony help list</info>
@@ -50,7 +50,7 @@ You can also output the help as XML by using the <comment>--xml</comment> option
 
   <info>./symfony help --xml list</info>
 EOF
-            );
+        );
     }
 
     /**

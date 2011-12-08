@@ -77,7 +77,7 @@ class ApcCache extends AbstractCache
      */
     protected function _doSave($id, $data, $lifeTime = 0)
     {
-        return (bool) apc_store($id, $data, (int) $lifeTime);
+        return (bool)apc_store($id, $data, (int)$lifeTime);
     }
 
     /**

@@ -135,7 +135,8 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(JOOMLA_LIBRARY . '/client', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'ftp.php') {   /** babs cannot run this require statement - not sure why yet */
+    if ($file == 'ftp.php') {
+        /** babs cannot run this require statement - not sure why yet */
     } else if ($file == 'helper.php') {
         $filehelper->requireClassFile(JOOMLA_LIBRARY . '/client/' . $file, 'JClientHelper');
     } else {

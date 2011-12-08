@@ -29,5 +29,7 @@ namespace Doctrine\DBAL\Driver;
  */
 class PDOStatement extends \PDOStatement implements Statement
 {
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 }

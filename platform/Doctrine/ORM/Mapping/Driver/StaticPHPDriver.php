@@ -20,15 +20,15 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo,
- Doctrine\ORM\Mapping\MappingException;
+Doctrine\ORM\Mapping\MappingException;
 
 /**
  * The StaticPHPDriver calls a static loadMetadata() method on your entity
  * classes where you can manually populate the ClassMetadata instance.
  *
- * @license 	http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link    	www.doctrine-project.org
- * @since   	2.0
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link        www.doctrine-project.org
+ * @since       2.0
  * @author      Benjamin Eberlei <kontakt@beberlei.de>
  * @author      Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
@@ -38,28 +38,28 @@ class StaticPHPDriver implements Driver
 {
     /**
      * Paths of entity directories.
-     * 
+     *
      * @var array
      */
     private $_paths = array();
-    
+
     /**
      * Map of all class names.
-     * 
+     *
      * @var array
      */
     private $_classNames;
-    
+
     /**
      * The file extension of mapping documents.
-     * 
+     *
      * @var string
      */
     private $_fileExtension = '.php';
 
     public function __construct($paths)
     {
-        $this->addPaths((array) $paths);
+        $this->addPaths((array)$paths);
     }
 
     public function addPaths(array $paths)
@@ -98,8 +98,8 @@ class StaticPHPDriver implements Driver
             }
 
             $iterator = new \RecursiveIteratorIterator(
-                            new \RecursiveDirectoryIterator($path),
-                            \RecursiveIteratorIterator::LEAVES_ONLY
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::LEAVES_ONLY
             );
 
             foreach ($iterator as $file) {

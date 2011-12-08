@@ -62,8 +62,8 @@ class TableGenerator extends AbstractIdGenerator
                     $updateSql = $conn->getDatabasePlatform()->getTableHiLoUpdateNextValSql(
                         $this->_tableName, $this->_sequenceName, $this->_allocationSize
                     );
-                    
-                    if ($conn->executeUpdate($updateSql, array(1 => $currentLevel, 2 => $currentLevel+1)) !== 1) {
+
+                    if ($conn->executeUpdate($updateSql, array(1 => $currentLevel, 2 => $currentLevel + 1)) !== 1) {
                         // no affected rows, concurrency issue, throw exception
                     }
                 } else {

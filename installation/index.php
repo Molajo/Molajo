@@ -10,8 +10,11 @@ define('DS', DIRECTORY_SEPARATOR);
 
 $root = '';
 $parts = explode(DS, dirname(__FILE__));
-for ($i = 0; $i < count($parts)-1; $i++) {
-    if ($i == 0) { } else { $root .= DS; }
+for ($i = 0; $i < count($parts) - 1; $i++) {
+    if ($i == 0) {
+    } else {
+        $root .= DS;
+    }
     $root .= $parts[$i];
 }
-require_once $root.'/index.php';
+require_once $root . '/index.php';

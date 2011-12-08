@@ -24,5 +24,6 @@ namespace Doctrine\Common;
  * @author heinrich
  *
  */
-class CommonException extends \Exception {
+class CommonException extends \Exception
+{
 }

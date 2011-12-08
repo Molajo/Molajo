@@ -79,7 +79,7 @@ final class CachedReader implements Reader
 
         $annots = $this->delegate->getClassAnnotations($class);
         $this->cache->save($cacheKey, $annots);
-        $this->cache->save('[C]'.$cacheKey, time());
+        $this->cache->save('[C]' . $cacheKey, time());
 
         return $this->loadedAnnotations[$cacheKey] = $annots;
     }
@@ -98,7 +98,7 @@ final class CachedReader implements Reader
     public function getPropertyAnnotations(\ReflectionProperty $property)
     {
         $class = $property->getDeclaringClass();
-        $cacheKey = $class->getName().'$'.$property->getName().self::$CACHE_SALT;
+        $cacheKey = $class->getName() . '$' . $property->getName() . self::$CACHE_SALT;
 
         if (isset($this->loadedAnnotations[$cacheKey])) {
             return $this->loadedAnnotations[$cacheKey];
@@ -113,7 +113,7 @@ final class CachedReader implements Reader
 
         $annots = $this->delegate->getPropertyAnnotations($property);
         $this->cache->save($cacheKey, $annots);
-        $this->cache->save('[C]'.$cacheKey, time());
+        $this->cache->save('[C]' . $cacheKey, time());
 
         return $this->loadedAnnotations[$cacheKey] = $annots;
     }
@@ -132,13 +132,13 @@ final class CachedReader implements Reader
     public function getMethodAnnotations(\ReflectionMethod $method)
     {
         $class = $method->getDeclaringClass();
-        $cacheKey = $class->getName().'#'.$method->getName().self::$CACHE_SALT;
+        $cacheKey = $class->getName() . '#' . $method->getName() . self::$CACHE_SALT;
 
         if (isset($this->loadedAnnotations[$cacheKey])) {
             return $this->loadedAnnotations[$cacheKey];
         }
 
-       // Attempt to grab data from cache
+        // Attempt to grab data from cache
         if (($data = $this->cache->fetch($cacheKey)) !== false) {
             if (!$this->debug || $this->isCacheFresh($cacheKey, $class)) {
                 return $data;
@@ -147,7 +147,7 @@ final class CachedReader implements Reader
 
         $annots = $this->delegate->getMethodAnnotations($method);
         $this->cache->save($cacheKey, $annots);
-        $this->cache->save('[C]'.$cacheKey, time());
+        $this->cache->save('[C]' . $cacheKey, time());
 
         return $this->loadedAnnotations[$cacheKey] = $annots;
     }
@@ -174,6 +174,6 @@ final class CachedReader implements Reader
             return true;
         }
 
-        return $this->cache->fetch('[C]'.$cacheKey) >= filemtime($filename);
+        return $this->cache->fetch('[C]' . $cacheKey) >= filemtime($filename);
     }
 }

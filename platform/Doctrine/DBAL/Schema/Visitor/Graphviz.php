@@ -21,13 +21,13 @@
 namespace Doctrine\DBAL\Schema\Visitor;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform,
- Doctrine\DBAL\Schema\Table,
- Doctrine\DBAL\Schema\Schema,
- Doctrine\DBAL\Schema\Column,
- Doctrine\DBAL\Schema\ForeignKeyConstraint,
- Doctrine\DBAL\Schema\Constraint,
- Doctrine\DBAL\Schema\Sequence,
- Doctrine\DBAL\Schema\Index;
+Doctrine\DBAL\Schema\Table,
+Doctrine\DBAL\Schema\Schema,
+Doctrine\DBAL\Schema\Column,
+Doctrine\DBAL\Schema\ForeignKeyConstraint,
+Doctrine\DBAL\Schema\Constraint,
+Doctrine\DBAL\Schema\Sequence,
+Doctrine\DBAL\Schema\Index;
 
 class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
 {
@@ -41,12 +41,12 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
     public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
         $this->output .= $this->createNodeRelation(
-            $fkConstraint->getLocalTableName() . ":col" . current($fkConstraint->getLocalColumns()).":se",
-            $fkConstraint->getForeignTableName() . ":col" . current($fkConstraint->getForeignColumns()).":se",
+            $fkConstraint->getLocalTableName() . ":col" . current($fkConstraint->getLocalColumns()) . ":se",
+            $fkConstraint->getForeignTableName() . ":col" . current($fkConstraint->getForeignColumns()) . ":se",
             array(
-                'dir'       => 'back',
-                'arrowtail' => 'dot',
-                'arrowhead' => 'normal',
+                 'dir' => 'back',
+                 'arrowtail' => 'dot',
+                 'arrowhead' => 'normal',
             )
         );
     }
@@ -58,10 +58,10 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
 
     public function acceptSchema(Schema $schema)
     {
-        $this->output  = 'digraph "' . sha1( mt_rand() ) . '" {' . "\n";
+        $this->output = 'digraph "' . sha1(mt_rand()) . '" {' . "\n";
         $this->output .= 'splines = true;' . "\n";
         $this->output .= 'overlap = false;' . "\n";
-        $this->output .= 'outputorder=edgesfirst;'."\n";
+        $this->output .= 'outputorder=edgesfirst;' . "\n";
         $this->output .= 'mindist = 0.6;' . "\n";
         $this->output .= 'sep = .2;' . "\n";
     }
@@ -76,13 +76,13 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
         $this->output .= $this->createNode(
             $table->getName(),
             array(
-                'label' => $this->createTableLabel( $table ),
-                'shape' => 'plaintext',
+                 'label' => $this->createTableLabel($table),
+                 'shape' => 'plaintext',
             )
         );
     }
 
-    private function createTableLabel( Table $table )
+    private function createTableLabel(Table $table)
     {
         // Start the table
         $label = '<<TABLE CELLSPACING="0" BORDER="1" ALIGN="LEFT">';
@@ -91,14 +91,14 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
         $label .= '<TR><TD BORDER="1" COLSPAN="3" ALIGN="CENTER" BGCOLOR="#fcaf3e"><FONT COLOR="#2e3436" FACE="Helvetica" POINT-SIZE="12">' . $table->getName() . '</FONT></TD></TR>';
 
         // The attributes block
-        foreach( $table->getColumns() as $column ) {
+        foreach ($table->getColumns() as $column) {
             $columnLabel = $column->getName();
 
             $label .= '<TR>';
             $label .= '<TD BORDER="0" ALIGN="LEFT" BGCOLOR="#eeeeec">';
             $label .= '<FONT COLOR="#2e3436" FACE="Helvetica" POINT-SIZE="12">' . $columnLabel . '</FONT>';
             $label .= '</TD><TD BORDER="0" ALIGN="LEFT" BGCOLOR="#eeeeec"><FONT COLOR="#2e3436" FACE="Helvetica" POINT-SIZE="10">' . strtolower($column->getType()) . '</FONT></TD>';
-            $label .= '<TD BORDER="0" ALIGN="RIGHT" BGCOLOR="#eeeeec" PORT="col'.$column->getName().'">';
+            $label .= '<TD BORDER="0" ALIGN="RIGHT" BGCOLOR="#eeeeec" PORT="col' . $column->getName() . '">';
             if ($table->hasPrimaryKey() && in_array($column->getName(), $table->getPrimaryKey()->getColumns())) {
                 $label .= "\xe2\x9c\xb7";
             }
@@ -111,10 +111,10 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
         return $label;
     }
 
-    private function createNode( $name, $options )
+    private function createNode($name, $options)
     {
         $node = $name . " [";
-        foreach( $options as $key => $value )
+        foreach ($options as $key => $value)
         {
             $node .= $key . '=' . $value . ' ';
         }
@@ -122,10 +122,10 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
         return $node;
     }
 
-    private function createNodeRelation( $node1, $node2, $options )
+    private function createNodeRelation($node1, $node2, $options)
     {
         $relation = $node1 . ' -> ' . $node2 . ' [';
-        foreach( $options as $key => $value )
+        foreach ($options as $key => $value)
         {
             $relation .= $key . '=' . $value . ' ';
         }

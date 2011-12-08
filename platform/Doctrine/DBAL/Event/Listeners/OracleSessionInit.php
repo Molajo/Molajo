@@ -68,9 +68,9 @@ class OracleSessionInit implements EventSubscriber
             array_change_key_case($this->_defaultSessionVars, \CASE_UPPER);
             $vars = array();
             foreach ($this->_defaultSessionVars AS $option => $value) {
-                $vars[] = $option." = '".$value."'";
+                $vars[] = $option . " = '" . $value . "'";
             }
-            $sql = "ALTER SESSION SET ".implode(" ", $vars);
+            $sql = "ALTER SESSION SET " . implode(" ", $vars);
             $args->getConnection()->executeUpdate($sql);
         }
     }

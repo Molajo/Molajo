@@ -20,8 +20,8 @@
 namespace Doctrine\ORM\Proxy;
 
 use Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Mapping\ClassMetadata,
-    Doctrine\ORM\Mapping\AssociationMapping;
+Doctrine\ORM\Mapping\ClassMetadata,
+Doctrine\ORM\Mapping\AssociationMapping;
 
 /**
  * This factory is used to create proxy objects for entities at runtime.
@@ -52,10 +52,10 @@ class ProxyFactory
      */
     public function __construct(EntityManager $em, $proxyDir, $proxyNs, $autoGenerate = false)
     {
-        if ( ! $proxyDir) {
+        if (!$proxyDir) {
             throw ProxyException::proxyDirectoryRequired();
         }
-        if ( ! $proxyNs) {
+        if (!$proxyNs) {
             throw ProxyException::proxyNamespaceRequired();
         }
         $this->_em = $em;
@@ -77,7 +77,7 @@ class ProxyFactory
         $proxyClassName = str_replace('\\', '', $className) . 'Proxy';
         $fqn = $this->_proxyNamespace . '\\' . $proxyClassName;
 
-        if (! class_exists($fqn, false)) {
+        if (!class_exists($fqn, false)) {
             $fileName = $this->_proxyDir . DIRECTORY_SEPARATOR . $proxyClassName . '.php';
             if ($this->_autoGenerate) {
                 $this->_generateProxyClass($this->_em->getClassMetadata($className), $proxyClassName, $fileName, self::$_proxyClassTemplate);
@@ -85,7 +85,7 @@ class ProxyFactory
             require $fileName;
         }
 
-        if ( ! $this->_em->getMetadataFactory()->hasMetadataFor($fqn)) {
+        if (!$this->_em->getMetadataFactory()->hasMetadataFor($fqn)) {
             $this->_em->getMetadataFactory()->setMetadataFor($fqn, $this->_em->getClassMetadata($className));
         }
 
@@ -104,7 +104,7 @@ class ProxyFactory
      */
     public function generateProxyClasses(array $classes, $toDir = null)
     {
-        $proxyDir = $toDir ?: $this->_proxyDir;
+        $proxyDir = $toDir ? : $this->_proxyDir;
         $proxyDir = rtrim($proxyDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         foreach ($classes as $class) {
             /* @var $class ClassMetadata */
@@ -130,7 +130,8 @@ class ProxyFactory
     {
         $methods = $this->_generateMethods($class);
         $sleepImpl = $this->_generateSleep($class);
-        $cloneImpl = $class->reflClass->hasMethod('__clone') ? 'parent::__clone();' : ''; // hasMethod() checks case-insensitive
+        $cloneImpl = $class->reflClass->hasMethod('__clone') ? 'parent::__clone();'
+                : ''; // hasMethod() checks case-insensitive
 
         $placeholders = array(
             '<namespace>',
@@ -138,7 +139,7 @@ class ProxyFactory
             '<methods>', '<sleepImpl>', '<cloneImpl>'
         );
 
-        if(substr($class->name, 0, 1) == "\\") {
+        if (substr($class->name, 0, 1) == "\\") {
             $className = substr($class->name, 1);
         } else {
             $className = $class->name;
@@ -173,7 +174,7 @@ class ProxyFactory
             }
             $methodNames[$method->getName()] = true;
 
-            if ($method->isPublic() && ! $method->isFinal() && ! $method->isStatic()) {
+            if ($method->isPublic() && !$method->isFinal() && !$method->isStatic()) {
                 $methods .= "\n" . '    public function ';
                 if ($method->returnsReference()) {
                     $methods .= '&';
@@ -187,7 +188,7 @@ class ProxyFactory
                         $firstParam = false;
                     } else {
                         $parameterString .= ', ';
-                        $argumentString  .= ', ';
+                        $argumentString .= ', ';
                     }
 
                     // We need to pick the type hint class too
@@ -202,7 +203,7 @@ class ProxyFactory
                     }
 
                     $parameterString .= '$' . $param->getName();
-                    $argumentString  .= '$' . $param->getName();
+                    $argumentString .= '$' . $param->getName();
 
                     if ($param->isDefaultValueAvailable()) {
                         $parameterString .= ' = ' . var_export($param->getDefaultValue(), true);
@@ -254,7 +255,7 @@ class ProxyFactory
 
     /** Proxy class code template */
     private static $_proxyClassTemplate =
-'<?php
+    '<?php
 
 namespace <namespace>;
 

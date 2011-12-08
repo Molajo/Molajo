@@ -35,19 +35,21 @@ final class DriverManager
      * @var array
      * @todo REMOVE. Users should directly supply class names instead.
      */
-     private static $_driverMap = array(
-            'pdo_mysql'  => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-            'pdo_sqlite' => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
-            'pdo_pgsql'  => 'Doctrine\DBAL\Driver\PDOPgSql\Driver',
-            'pdo_oci' => 'Doctrine\DBAL\Driver\PDOOracle\Driver',
-            'oci8' => 'Doctrine\DBAL\Driver\OCI8\Driver',
-            'ibm_db2' => 'Doctrine\DBAL\Driver\IBMDB2\DB2Driver',
-            'pdo_ibm' => 'Doctrine\DBAL\Driver\PDOIbm\Driver',
-            'pdo_sqlsrv' => 'Doctrine\DBAL\Driver\PDOSqlsrv\Driver',
-            );
+    private static $_driverMap = array(
+        'pdo_mysql' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+        'pdo_sqlite' => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+        'pdo_pgsql' => 'Doctrine\DBAL\Driver\PDOPgSql\Driver',
+        'pdo_oci' => 'Doctrine\DBAL\Driver\PDOOracle\Driver',
+        'oci8' => 'Doctrine\DBAL\Driver\OCI8\Driver',
+        'ibm_db2' => 'Doctrine\DBAL\Driver\IBMDB2\DB2Driver',
+        'pdo_ibm' => 'Doctrine\DBAL\Driver\PDOIbm\Driver',
+        'pdo_sqlsrv' => 'Doctrine\DBAL\Driver\PDOSqlsrv\Driver',
+    );
 
     /** Private constructor. This class cannot be instantiated. */
-    private function __construct() { }
+    private function __construct()
+    {
+    }
 
     /**
      * Creates a connection object based on the specified parameters.
@@ -55,57 +57,57 @@ final class DriverManager
      * driver connection.
      *
      * $params must contain at least one of the following.
-     * 
+     *
      * Either 'driver' with one of the following values:
      *     pdo_mysql
      *     pdo_sqlite
      *     pdo_pgsql
      *     pdo_oracle
      *     pdo_sqlsrv
-     * 
+     *
      * OR 'driverClass' that contains the full class name (with namespace) of the
      * driver class to instantiate.
-     * 
+     *
      * Other (optional) parameters:
-     * 
+     *
      * <b>user (string)</b>:
-     * The username to use when connecting. 
-     * 
+     * The username to use when connecting.
+     *
      * <b>password (string)</b>:
      * The password to use when connecting.
-     * 
+     *
      * <b>driverOptions (array)</b>:
      * Any additional driver-specific options for the driver. These are just passed
      * through to the driver.
-     * 
+     *
      * <b>pdo</b>:
      * You can pass an existing PDO instance through this parameter. The PDO
      * instance will be wrapped in a Doctrine\DBAL\Connection.
-     * 
+     *
      * <b>wrapperClass</b>:
      * You may specify a custom wrapper class through the 'wrapperClass'
      * parameter but this class MUST inherit from Doctrine\DBAL\Connection.
-     * 
+     *
      * @param array $params The parameters.
      * @param Doctrine\DBAL\Configuration The configuration to use.
      * @param Doctrine\Common\EventManager The event manager to use.
      * @return Doctrine\DBAL\Connection
      */
     public static function getConnection(
-            array $params,
-            Configuration $config = null,
-            EventManager $eventManager = null)
+        array $params,
+        Configuration $config = null,
+        EventManager $eventManager = null)
     {
         // create default config and event manager, if not set
-        if ( ! $config) {
+        if (!$config) {
             $config = new Configuration();
         }
-        if ( ! $eventManager) {
+        if (!$eventManager) {
             $eventManager = new EventManager();
         }
-        
+
         // check for existing pdo object
-        if (isset($params['pdo']) && ! $params['pdo'] instanceof \PDO) {
+        if (isset($params['pdo']) && !$params['pdo'] instanceof \PDO) {
             throw DBALException::invalidPdoInstance();
         } else if (isset($params['pdo'])) {
             $params['pdo']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -118,18 +120,18 @@ final class DriverManager
         } else {
             $className = self::$_driverMap[$params['driver']];
         }
-        
+
         $driver = new $className();
-        
+
         $wrapperClass = 'Doctrine\DBAL\Connection';
         if (isset($params['wrapperClass'])) {
             if (is_subclass_of($params['wrapperClass'], $wrapperClass)) {
-               $wrapperClass = $params['wrapperClass'];
+                $wrapperClass = $params['wrapperClass'];
             } else {
                 throw DBALException::invalidWrapperClass($params['wrapperClass']);
             }
         }
-        
+
         return new $wrapperClass($params, $driver, $config, $eventManager);
     }
 
@@ -139,22 +141,22 @@ final class DriverManager
      * @param array $params
      */
     private static function _checkParams(array $params)
-    {        
+    {
         // check existance of mandatory parameters
-        
+
         // driver
-        if ( ! isset($params['driver']) && ! isset($params['driverClass'])) {
+        if (!isset($params['driver']) && !isset($params['driverClass'])) {
             throw DBALException::driverRequired();
         }
-        
+
         // check validity of parameters
-        
+
         // driver
-        if ( isset($params['driver']) && ! isset(self::$_driverMap[$params['driver']])) {
+        if (isset($params['driver']) && !isset(self::$_driverMap[$params['driver']])) {
             throw DBALException::unknownDriver($params['driver'], array_keys(self::$_driverMap));
         }
 
-        if (isset($params['driverClass']) && ! in_array('Doctrine\DBAL\Driver', class_implements($params['driverClass'], true))) {
+        if (isset($params['driverClass']) && !in_array('Doctrine\DBAL\Driver', class_implements($params['driverClass'], true))) {
             throw DBALException::invalidDriverClass($params['driverClass']);
         }
     }

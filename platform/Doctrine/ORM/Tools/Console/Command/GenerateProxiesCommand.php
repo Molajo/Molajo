@@ -22,9 +22,9 @@
 namespace Doctrine\ORM\Tools\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console,
-    Doctrine\ORM\Tools\Console\MetadataFilter;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console,
+Doctrine\ORM\Tools\Console\MetadataFilter;
 
 /**
  * Command to (re)generate the proxy classes used by doctrine.
@@ -46,19 +46,19 @@ class GenerateProxiesCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('orm:generate-proxies')
-        ->setDescription('Generates proxy classes for entity classes.')
-        ->setDefinition(array(
-            new InputOption(
-                'filter', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'A string pattern used to match entities that should be processed.'
-            ),
-            new InputArgument(
-                'dest-path', InputArgument::OPTIONAL,
-                'The path to generate your proxy classes. If none is provided, it will attempt to grab from configuration.'
-            ),
-        ))
-        ->setHelp(<<<EOT
+                ->setName('orm:generate-proxies')
+                ->setDescription('Generates proxy classes for entity classes.')
+                ->setDefinition(array(
+                                     new InputOption(
+                                         'filter', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                                         'A string pattern used to match entities that should be processed.'
+                                     ),
+                                     new InputArgument(
+                                         'dest-path', InputArgument::OPTIONAL,
+                                         'The path to generate your proxy classes. If none is provided, it will attempt to grab from configuration.'
+                                     ),
+                                ))
+                ->setHelp(<<<EOT
 Generates proxy classes for entity classes.
 EOT
         );
@@ -70,7 +70,7 @@ EOT
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $em = $this->getHelper('em')->getEntityManager();
-        
+
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
         $metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
 
@@ -79,23 +79,23 @@ EOT
             $destPath = $em->getConfiguration()->getProxyDir();
         }
 
-        if ( ! is_dir($destPath)) {
+        if (!is_dir($destPath)) {
             mkdir($destPath, 0777, true);
         }
 
         $destPath = realpath($destPath);
 
-        if ( ! file_exists($destPath)) {
+        if (!file_exists($destPath)) {
             throw new \InvalidArgumentException(
                 sprintf("Proxies destination directory '<info>%s</info>' does not exist.", $destPath)
             );
-        } else if ( ! is_writable($destPath)) {
+        } else if (!is_writable($destPath)) {
             throw new \InvalidArgumentException(
                 sprintf("Proxies destination directory '<info>%s</info>' does not have write permissions.", $destPath)
             );
         }
 
-        if ( count($metadatas)) {
+        if (count($metadatas)) {
             foreach ($metadatas as $metadata) {
                 $output->write(
                     sprintf('Processing entity "<info>%s</info>"', $metadata->name) . PHP_EOL

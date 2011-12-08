@@ -55,17 +55,17 @@ final class AnnotationReader implements Reader
      * @var array
      */
     private static $globalIgnoredNames = array(
-        'access'=> true, 'author'=> true, 'copyright'=> true, 'deprecated'=> true,
-        'example'=> true, 'ignore'=> true, 'internal'=> true, 'link'=> true, 'see'=> true,
-        'since'=> true, 'tutorial'=> true, 'version'=> true, 'package'=> true,
-        'subpackage'=> true, 'name'=> true, 'global'=> true, 'param'=> true,
-        'return'=> true, 'staticvar'=> true, 'category'=> true, 'staticVar'=> true,
-        'static'=> true, 'var'=> true, 'throws'=> true, 'inheritdoc'=> true,
-        'inheritDoc'=> true, 'license'=> true, 'todo'=> true, 'deprecated'=> true,
-        'deprec'=> true, 'author'=> true, 'property' => true, 'method' => true,
-        'abstract'=> true, 'exception'=> true, 'magic' => true, 'api' => true,
-        'final'=> true, 'filesource'=> true, 'throw' => true, 'uses' => true,
-        'usedby'=> true, 'private' => true, 'Annotation' => true, 'override' => true,
+        'access' => true, 'author' => true, 'copyright' => true, 'deprecated' => true,
+        'example' => true, 'ignore' => true, 'internal' => true, 'link' => true, 'see' => true,
+        'since' => true, 'tutorial' => true, 'version' => true, 'package' => true,
+        'subpackage' => true, 'name' => true, 'global' => true, 'param' => true,
+        'return' => true, 'staticvar' => true, 'category' => true, 'staticVar' => true,
+        'static' => true, 'var' => true, 'throws' => true, 'inheritdoc' => true,
+        'inheritDoc' => true, 'license' => true, 'todo' => true, 'deprecated' => true,
+        'deprec' => true, 'author' => true, 'property' => true, 'method' => true,
+        'abstract' => true, 'exception' => true, 'magic' => true, 'api' => true,
+        'final' => true, 'filesource' => true, 'throw' => true, 'uses' => true,
+        'usedby' => true, 'private' => true, 'Annotation' => true, 'override' => true,
         'codeCoverageIgnoreStart' => true, 'codeCoverageIgnoreEnd' => true,
         'Required' => true, 'Attribute' => true, 'Attributes' => true,
         'Target' => true, 'SuppressWarnings' => true,
@@ -134,7 +134,7 @@ final class AnnotationReader implements Reader
     public function __construct()
     {
         AnnotationRegistry::registerFile(__DIR__ . '/Annotation/IgnoreAnnotation.php');
-        
+
         $this->parser = new DocParser;
 
         $this->preParser = new DocParser;

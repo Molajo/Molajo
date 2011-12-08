@@ -64,12 +64,12 @@ class QueryException extends \Doctrine\ORM\ORMException
 
     public static function invalidParameterFormat($value)
     {
-        return new self('Invalid parameter format, '.$value.' given, but :<name> or ?<num> expected.');
+        return new self('Invalid parameter format, ' . $value . ' given, but :<name> or ?<num> expected.');
     }
 
     public static function unknownParameter($key)
     {
-        return new self("Invalid parameter: token ".$key." is not defined in the query.");
+        return new self("Invalid parameter: token " . $key . " is not defined in the query.");
     }
 
     public static function parameterTypeMissmatch()
@@ -84,7 +84,8 @@ class QueryException extends \Doctrine\ORM\ORMException
         );
     }
 
-    public static function invalidLiteral($literal) {
+    public static function invalidLiteral($literal)
+    {
         return new self("Invalid literal '$literal'");
     }
 
@@ -94,8 +95,8 @@ class QueryException extends \Doctrine\ORM\ORMException
     public static function iterateWithFetchJoinCollectionNotAllowed($assoc)
     {
         return new self(
-            "Invalid query operation: Not allowed to iterate over fetch join collections ".
-            "in class ".$assoc['sourceEntity']." assocation ".$assoc['fieldName']
+            "Invalid query operation: Not allowed to iterate over fetch join collections " .
+            "in class " . $assoc['sourceEntity'] . " assocation " . $assoc['fieldName']
         );
     }
 
@@ -111,8 +112,8 @@ class QueryException extends \Doctrine\ORM\ORMException
     public static function overwritingJoinConditionsNotYetSupported($assoc)
     {
         return new self(
-            "Unsupported query operation: It is not yet possible to overwrite the join ".
-            "conditions in class ".$assoc['sourceEntityName']." assocation ".$assoc['fieldName'].". ".
+            "Unsupported query operation: It is not yet possible to overwrite the join " .
+            "conditions in class " . $assoc['sourceEntityName'] . " assocation " . $assoc['fieldName'] . ". " .
             "Use WITH to append additional join conditions to the association."
         );
     }
@@ -120,12 +121,13 @@ class QueryException extends \Doctrine\ORM\ORMException
     public static function associationPathInverseSideNotSupported()
     {
         return new self(
-            "A single-valued association path expression to an inverse side is not supported".
+            "A single-valued association path expression to an inverse side is not supported" .
             " in DQL queries. Use an explicit join instead."
         );
     }
 
-    public static function iterateWithFetchJoinNotAllowed($assoc) {
+    public static function iterateWithFetchJoinNotAllowed($assoc)
+    {
         return new self(
             "Iterate with fetch join in class " . $assoc['sourceEntity'] .
             " using association " . $assoc['fieldName'] . " not allowed."
@@ -135,8 +137,8 @@ class QueryException extends \Doctrine\ORM\ORMException
     public static function associationPathCompositeKeyNotSupported()
     {
         return new self(
-            "A single-valued association path expression to an entity with a composite primary ".
-            "key is not supported. Explicitly name the components of the composite primary key ".
+            "A single-valued association path expression to an entity with a composite primary " .
+            "key is not supported. Explicitly name the components of the composite primary key " .
             "in the query."
         );
     }
@@ -144,6 +146,6 @@ class QueryException extends \Doctrine\ORM\ORMException
     public static function instanceOfUnrelatedClass($className, $rootClass)
     {
         return new self("Cannot check if a child of '" . $rootClass . "' is instanceof '" . $className . "', " .
-                "inheritance hierachy exists between these two classes.");
+                        "inheritance hierachy exists between these two classes.");
     }
 }

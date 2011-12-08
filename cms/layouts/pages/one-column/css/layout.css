@@ -5,7 +5,23 @@
 @copyright   Copyright (C) 2011 Individual Molajo Contributors. All rights reserved.
 @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
 */
-.header { width:1000px; }
-.nav { margin-top:10px; width:1000px; }
-.section { height:auto !important; margin-top:10px; min-height:500px; width:1000px; }
-.footer { margin-top:10px; width:1000px; }
+.header {
+    width: 1000px;
+}
+
+.nav {
+    margin-top: 10px;
+    width: 1000px;
+}
+
+.section {
+    height: auto !important;
+    margin-top: 10px;
+    min-height: 500px;
+    width: 1000px;
+}
+
+.footer {
+    margin-top: 10px;
+    width: 1000px;
+}

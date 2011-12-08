@@ -85,40 +85,40 @@ class SchemaValidator
                 /* @var $assoc AssociationMapping */
                 if ($assoc['mappedBy']) {
                     if ($targetMetadata->hasField($assoc['mappedBy'])) {
-                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the owning side ".
+                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the owning side " .
                                 "field " . $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " which is not defined as association.";
                     }
                     if (!$targetMetadata->hasAssociation($assoc['mappedBy'])) {
-                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the owning side ".
+                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the owning side " .
                                 "field " . $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " which does not exist.";
                     } else if ($targetMetadata->associationMappings[$assoc['mappedBy']]['inversedBy'] == null) {
-                        $ce[] = "The field " . $class->name . "#" . $fieldName . " is on the inverse side of a ".
-                                "bi-directional relationship, but the specified mappedBy association on the target-entity ".
-                                $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " does not contain the required ".
+                        $ce[] = "The field " . $class->name . "#" . $fieldName . " is on the inverse side of a " .
+                                "bi-directional relationship, but the specified mappedBy association on the target-entity " .
+                                $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " does not contain the required " .
                                 "'inversedBy' attribute.";
                     } else  if ($targetMetadata->associationMappings[$assoc['mappedBy']]['inversedBy'] != $fieldName) {
                         $ce[] = "The mappings " . $class->name . "#" . $fieldName . " and " .
-                                $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " are ".
+                                $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " are " .
                                 "incosistent with each other.";
                     }
                 }
 
                 if ($assoc['inversedBy']) {
                     if ($targetMetadata->hasField($assoc['inversedBy'])) {
-                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the inverse side ".
+                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the inverse side " .
                                 "field " . $assoc['targetEntity'] . "#" . $assoc['inversedBy'] . " which is not defined as association.";
                     }
                     if (!$targetMetadata->hasAssociation($assoc['inversedBy'])) {
-                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the inverse side ".
+                        $ce[] = "The association " . $class->name . "#" . $fieldName . " refers to the inverse side " .
                                 "field " . $assoc['targetEntity'] . "#" . $assoc['inversedBy'] . " which does not exist.";
                     } else if ($targetMetadata->associationMappings[$assoc['inversedBy']]['mappedBy'] == null) {
-                        $ce[] = "The field " . $class->name . "#" . $fieldName . " is on the owning side of a ".
-                                "bi-directional relationship, but the specified mappedBy association on the target-entity ".
-                                $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " does not contain the required ".
+                        $ce[] = "The field " . $class->name . "#" . $fieldName . " is on the owning side of a " .
+                                "bi-directional relationship, but the specified mappedBy association on the target-entity " .
+                                $assoc['targetEntity'] . "#" . $assoc['mappedBy'] . " does not contain the required " .
                                 "'inversedBy' attribute.";
                     } else  if ($targetMetadata->associationMappings[$assoc['inversedBy']]['mappedBy'] != $fieldName) {
                         $ce[] = "The mappings " . $class->name . "#" . $fieldName . " and " .
-                                $assoc['targetEntity'] . "#" . $assoc['inversedBy'] . " are ".
+                                $assoc['targetEntity'] . "#" . $assoc['inversedBy'] . " are " .
                                 "incosistent with each other.";
                     }
                 }
@@ -174,7 +174,7 @@ class SchemaValidator
                     $targetClass = $cmf->getMetadataFor($assoc['targetEntity']);
                     foreach ($assoc['orderBy'] AS $orderField => $orientation) {
                         if (!$targetClass->hasField($orderField)) {
-                            $ce[] = "The association " . $class->name."#".$fieldName." is ordered by a foreign field " .
+                            $ce[] = "The association " . $class->name . "#" . $fieldName . " is ordered by a foreign field " .
                                     $orderField . " that is not a field on the target entity " . $targetClass->name;
                         }
                     }
@@ -185,13 +185,13 @@ class SchemaValidator
                 if ($publicAttr->isStatic()) {
                     continue;
                 }
-                $ce[] = "Field '".$publicAttr->getName()."' in class '".$class->name."' must be private ".
+                $ce[] = "Field '" . $publicAttr->getName() . "' in class '" . $class->name . "' must be private " .
                         "or protected. Public fields may break lazy-loading.";
             }
 
             foreach ($class->subClasses AS $subClass) {
                 if (!in_array($class->name, class_parents($subClass))) {
-                    $ce[] = "According to the discriminator map class '" . $subClass . "' has to be a child ".
+                    $ce[] = "According to the discriminator map class '" . $subClass . "' has to be a child " .
                             "of '" . $class->name . "' but these entities are not related through inheritance.";
                 }
             }

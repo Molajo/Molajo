@@ -40,27 +40,27 @@ class Math
 
     public function __construct($leftExpr, $operator, $rightExpr)
     {
-        $this->_leftExpr  = $leftExpr;
-        $this->_operator  = $operator;
+        $this->_leftExpr = $leftExpr;
+        $this->_operator = $operator;
         $this->_rightExpr = $rightExpr;
     }
 
     public function __toString()
     {
         // Adjusting Left Expression
-        $leftExpr = (string) $this->_leftExpr;
-        
+        $leftExpr = (string)$this->_leftExpr;
+
         if ($this->_leftExpr instanceof Math) {
             $leftExpr = '(' . $leftExpr . ')';
         }
-        
+
         // Adjusting Right Expression
-        $rightExpr = (string) $this->_rightExpr;
-        
+        $rightExpr = (string)$this->_rightExpr;
+
         if ($this->_rightExpr instanceof Math) {
             $rightExpr = '(' . $rightExpr . ')';
         }
-    
+
         return $leftExpr . ' ' . $this->_operator . ' ' . $rightExpr;
     }
 }

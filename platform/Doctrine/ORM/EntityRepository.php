@@ -74,8 +74,8 @@ class EntityRepository implements ObjectRepository
     public function createQueryBuilder($alias)
     {
         return $this->_em->createQueryBuilder()
-            ->select($alias)
-            ->from($this->_entityName, $alias);
+                ->select($alias)
+                ->from($this->_entityName, $alias);
     }
 
     /**
@@ -112,7 +112,7 @@ class EntityRepository implements ObjectRepository
             if (!($entity instanceof $this->_class->name)) {
                 return null;
             }
-            
+
             if ($lockMode != LockMode::NONE) {
                 $this->_em->lock($entity, $lockMode, $lockVersion);
             }
@@ -120,7 +120,7 @@ class EntityRepository implements ObjectRepository
             return $entity; // Hit!
         }
 
-        if ( ! is_array($id) || count($id) <= 1) {
+        if (!is_array($id) || count($id) <= 1) {
             // @todo FIXME: Not correct. Relies on specific order.
             $value = is_array($id) ? array_values($id) : array($id);
             $id = array_combine($this->_class->identifier, $value);
@@ -141,7 +141,7 @@ class EntityRepository implements ObjectRepository
             if (!$this->_em->getConnection()->isTransactionActive()) {
                 throw TransactionRequiredException::transactionRequired();
             }
-            
+
             return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->load($id, null, null, array(), $lockMode);
         }
     }
@@ -199,14 +199,14 @@ class EntityRepository implements ObjectRepository
             $method = 'findOneBy';
         } else {
             throw new \BadMethodCallException(
-                "Undefined method '$method'. The method name must start with ".
+                "Undefined method '$method'. The method name must start with " .
                 "either findBy or findOneBy!"
             );
         }
 
-        if ( !isset($arguments[0])) {
+        if (!isset($arguments[0])) {
             // we dont even want to allow null at this point, because we cannot (yet) transform it into IS NULL.
-            throw ORMException::findByRequiresParameter($method.$by);
+            throw ORMException::findByRequiresParameter($method . $by);
         }
 
         $fieldName = lcfirst(\Doctrine\Common\Util\Inflector::classify($by));
@@ -214,7 +214,7 @@ class EntityRepository implements ObjectRepository
         if ($this->_class->hasField($fieldName) || $this->_class->hasAssociation($fieldName)) {
             return $this->$method(array($fieldName => $arguments[0]));
         } else {
-            throw ORMException::invalidFindByCall($this->_entityName, $fieldName, $method.$by);
+            throw ORMException::invalidFindByCall($this->_entityName, $fieldName, $method . $by);
         }
     }
 

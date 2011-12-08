@@ -45,7 +45,7 @@ class SizeFunction extends FunctionNode
         $platform = $sqlWalker->getConnection()->getDatabasePlatform();
         $dqlAlias = $this->collectionPathExpression->identificationVariable;
         $assocField = $this->collectionPathExpression->field;
-        
+
         $qComp = $sqlWalker->getQueryComponent($dqlAlias);
         $class = $qComp['metadata'];
         $assoc = $class->associationMappings[$assocField];
@@ -61,13 +61,13 @@ class SizeFunction extends FunctionNode
             $owningAssoc = $targetClass->associationMappings[$assoc['mappedBy']];
 
             $first = true;
-            
+
             foreach ($owningAssoc['targetToSourceKeyColumns'] as $targetColumn => $sourceColumn) {
                 if ($first) $first = false; else $sql .= ' AND ';
 
                 $sql .= $targetTableAlias . '.' . $sourceColumn
-                      . ' = '
-                      . $sourceTableAlias . '.' . $class->getQuotedColumnName($class->fieldNames[$targetColumn], $platform);
+                        . ' = '
+                        . $sourceTableAlias . '.' . $class->getQuotedColumnName($class->fieldNames[$targetColumn], $platform);
             }
         } else { // many-to-many
             $targetClass = $sqlWalker->getEntityManager()->getClassMetadata($assoc['targetEntity']);
@@ -83,8 +83,8 @@ class SizeFunction extends FunctionNode
             $sql .= $targetClass->getQuotedJoinTableName($owningAssoc, $platform) . ' ' . $joinTableAlias . ' WHERE ';
 
             $joinColumns = $assoc['isOwningSide']
-                ? $joinTable['joinColumns']
-                : $joinTable['inverseJoinColumns'];
+                    ? $joinTable['joinColumns']
+                    : $joinTable['inverseJoinColumns'];
 
             $first = true;
 
@@ -96,11 +96,11 @@ class SizeFunction extends FunctionNode
                 );
 
                 $sql .= $joinTableAlias . '.' . $joinColumn['name']
-                      . ' = '
-                      . $sourceTableAlias . '.' . $sourceColumnName;
+                        . ' = '
+                        . $sourceTableAlias . '.' . $sourceColumnName;
             }
         }
-        
+
         return '(' . $sql . ')';
     }
 
@@ -110,12 +110,12 @@ class SizeFunction extends FunctionNode
     public function parse(\Doctrine\ORM\Query\Parser $parser)
     {
         $lexer = $parser->getLexer();
-        
+
         $parser->match(Lexer::T_SIZE);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        
+
         $this->collectionPathExpression = $parser->CollectionValuedPathExpression();
-        
+
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

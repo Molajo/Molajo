@@ -42,7 +42,7 @@ class LowerFunction extends FunctionNode
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
         return $sqlWalker->getConnection()->getDatabasePlatform()->getLowerExpression(
-               $sqlWalker->walkSimpleArithmeticExpression($this->stringPrimary)
+            $sqlWalker->walkSimpleArithmeticExpression($this->stringPrimary)
         );
     }
 
@@ -53,9 +53,9 @@ class LowerFunction extends FunctionNode
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        
+
         $this->stringPrimary = $parser->StringPrimary();
-        
+
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

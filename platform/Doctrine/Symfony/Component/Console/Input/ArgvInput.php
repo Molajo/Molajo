@@ -164,14 +164,14 @@ class ArgvInput extends Input
         // if input is expecting another argument, add it
         if ($this->definition->hasArgument($c)) {
             $arg = $this->definition->getArgument($c);
-            $this->arguments[$arg->getName()] = $arg->isArray()? array($token) : $token;
+            $this->arguments[$arg->getName()] = $arg->isArray() ? array($token) : $token;
 
-        // if last argument isArray(), append token to last argument
+            // if last argument isArray(), append token to last argument
         } elseif ($this->definition->hasArgument($c - 1) && $this->definition->getArgument($c - 1)->isArray()) {
             $arg = $this->definition->getArgument($c - 1);
             $this->arguments[$arg->getName()][] = $token;
 
-        // unexpected argument
+            // unexpected argument
         } else {
             throw new \RuntimeException('Too many arguments.');
         }
@@ -264,7 +264,7 @@ class ArgvInput extends Input
      */
     public function hasParameterOption($values)
     {
-        $values = (array) $values;
+        $values = (array)$values;
 
         foreach ($this->tokens as $v) {
             if (in_array($v, $values)) {
@@ -287,7 +287,7 @@ class ArgvInput extends Input
      */
     public function getParameterOption($values, $default = false)
     {
-        $values = (array) $values;
+        $values = (array)$values;
 
         $tokens = $this->tokens;
         while ($token = array_shift($tokens)) {

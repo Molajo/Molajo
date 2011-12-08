@@ -28,14 +28,14 @@ class MappingException extends \Doctrine\ORM\ORMException
 {
     public static function pathRequired()
     {
-        return new self("Specifying the paths to your entities is required ".
-            "in the AnnotationDriver to retrieve all class names.");
+        return new self("Specifying the paths to your entities is required " .
+                        "in the AnnotationDriver to retrieve all class names.");
     }
 
     public static function identifierRequired($entityName)
     {
         return new self("No identifier/primary key specified for Entity '$entityName'."
-                . " Every Entity must have an identifier/primary key.");
+                        . " Every Entity must have an identifier/primary key.");
     }
 
     public static function invalidInheritanceType($entityName, $type)
@@ -101,7 +101,7 @@ class MappingException extends \Doctrine\ORM\ORMException
     {
         $message = "The mapping of field '{$field}' is invalid: The option '{$expectedOption}' is required.";
 
-        if ( ! empty($hint)) {
+        if (!empty($hint)) {
             $message .= ' (Hint: ' . $hint . ')';
         }
 
@@ -134,22 +134,22 @@ class MappingException extends \Doctrine\ORM\ORMException
     public static function joinColumnMustPointToMappedField($className, $joinColumn)
     {
         return new self('The column ' . $joinColumn . ' must be mapped to a field in class '
-                . $className . ' since it is referenced by a join column of another class.');
+                        . $className . ' since it is referenced by a join column of another class.');
     }
 
     public static function classIsNotAValidEntityOrMappedSuperClass($className)
     {
-        return new self('Class '.$className.' is not a valid entity or mapped super class.');
+        return new self('Class ' . $className . ' is not a valid entity or mapped super class.');
     }
 
     public static function propertyTypeIsRequired($className, $propertyName)
     {
-        return new self("The attribute 'type' is required for the column description of property ".$className."::\$".$propertyName.".");
+        return new self("The attribute 'type' is required for the column description of property " . $className . "::\$" . $propertyName . ".");
     }
 
     public static function tableIdGeneratorNotImplemented($className)
     {
-        return new self("TableIdGenerator is not yet implemented for use with class ".$className);
+        return new self("TableIdGenerator is not yet implemented for use with class " . $className);
     }
 
     /**
@@ -157,34 +157,39 @@ class MappingException extends \Doctrine\ORM\ORMException
      * @param string $entity The entity's name
      * @param string $fieldName The name of the field that was already declared
      */
-    public static function duplicateFieldMapping($entity, $fieldName) {
-        return new self('Property "'.$fieldName.'" in "'.$entity.'" was already declared, but it must be declared only once');
+    public static function duplicateFieldMapping($entity, $fieldName)
+    {
+        return new self('Property "' . $fieldName . '" in "' . $entity . '" was already declared, but it must be declared only once');
     }
 
-    public static function duplicateAssociationMapping($entity, $fieldName) {
-        return new self('Property "'.$fieldName.'" in "'.$entity.'" was already declared, but it must be declared only once');
+    public static function duplicateAssociationMapping($entity, $fieldName)
+    {
+        return new self('Property "' . $fieldName . '" in "' . $entity . '" was already declared, but it must be declared only once');
     }
 
-    public static function duplicateQueryMapping($entity, $queryName) {
-        return new self('Query named "'.$queryName.'" in "'.$entity.'" was already declared, but it must be declared only once');
+    public static function duplicateQueryMapping($entity, $queryName)
+    {
+        return new self('Query named "' . $queryName . '" in "' . $entity . '" was already declared, but it must be declared only once');
     }
 
-    public static function singleIdNotAllowedOnCompositePrimaryKey($entity) {
-        return new self('Single id is not allowed on composite primary key in entity '.$entity);
+    public static function singleIdNotAllowedOnCompositePrimaryKey($entity)
+    {
+        return new self('Single id is not allowed on composite primary key in entity ' . $entity);
     }
 
-    public static function unsupportedOptimisticLockingType($entity, $fieldName, $unsupportedType) {
-        return new self('Locking type "'.$unsupportedType.'" (specified in "'.$entity.'", field "'.$fieldName.'") '
-                        .'is not supported by Doctrine.'
+    public static function unsupportedOptimisticLockingType($entity, $fieldName, $unsupportedType)
+    {
+        return new self('Locking type "' . $unsupportedType . '" (specified in "' . $entity . '", field "' . $fieldName . '") '
+                        . 'is not supported by Doctrine.'
         );
     }
 
     public static function fileMappingDriversRequireConfiguredDirectoryPath($path = null)
     {
-        if ( ! empty($path)) {
+        if (!empty($path)) {
             $path = '[' . $path . ']';
         }
-        
+
         return new self(
             'File mapping drivers must have a valid directory path, ' .
             'however the given path ' . $path . ' seems to be incorrect!'
@@ -199,9 +204,10 @@ class MappingException extends \Doctrine\ORM\ORMException
      * @param string $owningClass The class that declares the discriminator map.
      * @return self
      */
-    public static function invalidClassInDiscriminatorMap($className, $owningClass) {
+    public static function invalidClassInDiscriminatorMap($className, $owningClass)
+    {
         return new self(
-            "Entity class '$className' used in the discriminator map of class '$owningClass' ".
+            "Entity class '$className' used in the discriminator map of class '$owningClass' " .
             "does not exist."
         );
     }
@@ -233,12 +239,12 @@ class MappingException extends \Doctrine\ORM\ORMException
      */
     public static function duplicateColumnName($className, $columnName)
     {
-        return new self("Duplicate definition of column '".$columnName."' on entity '".$className."' in a field or discriminator column mapping.");
+        return new self("Duplicate definition of column '" . $columnName . "' on entity '" . $className . "' in a field or discriminator column mapping.");
     }
 
     public static function illegalToManyAssocationOnMappedSuperclass($className, $field)
     {
-        return new self("It is illegal to put an inverse side one-to-many or many-to-many association on mapped superclass '".$className."#".$field."'.");
+        return new self("It is illegal to put an inverse side one-to-many or many-to-many association on mapped superclass '" . $className . "#" . $field . "'.");
     }
 
     /**
@@ -249,8 +255,8 @@ class MappingException extends \Doctrine\ORM\ORMException
      */
     public static function cannotMapCompositePrimaryKeyEntitiesAsForeignId($className, $targetEntity, $targetField)
     {
-        return new self("It is not possible to map entity '".$className."' with a composite primary key ".
-            "as part of the primary key of another entity '".$targetEntity."#".$targetField."'.");
+        return new self("It is not possible to map entity '" . $className . "' with a composite primary key " .
+                        "as part of the primary key of another entity '" . $targetEntity . "#" . $targetField . "'.");
     }
 
     public static function noSingleAssociationJoinColumnFound($className, $field)
@@ -260,14 +266,14 @@ class MappingException extends \Doctrine\ORM\ORMException
 
     public static function noFieldNameFoundForColumn($className, $column)
     {
-        return new self("Cannot find a field on '$className' that is mapped to column '$column'. Either the ".
-            "field does not exist or an association exists but it has multiple join columns.");
+        return new self("Cannot find a field on '$className' that is mapped to column '$column'. Either the " .
+                        "field does not exist or an association exists but it has multiple join columns.");
     }
 
     public static function illegalOrphanRemovalOnIdentifierAssociation($className, $field)
     {
-        return new self("The orphan removal option is not allowed on an association that is ".
-            "part of the identifier in '$className#$field'.");
+        return new self("The orphan removal option is not allowed on an association that is " .
+                        "part of the identifier in '$className#$field'.");
     }
 
     public static function illegalInverseIdentifierAssocation($className, $field)
@@ -279,17 +285,17 @@ class MappingException extends \Doctrine\ORM\ORMException
     {
         return new self("Many-to-many or one-to-many associations are not allowed to be identifier in '$className#$field'.");
     }
-    
+
     public static function noInheritanceOnMappedSuperClass($className)
     {
         return new self("Its not supported to define inheritance information on a mapped superclass '" . $className . "'.");
     }
-    
+
     public static function mappedClassNotPartOfDiscriminatorMap($className, $rootClassName)
     {
         return new self(
             "Entity '" . $className . "' has to be part of the descriminator map of '" . $rootClassName . "' " .
-            "to be properly mapped in the inheritance hierachy. Alternatively you can make '".$className."' an abstract class " .
+            "to be properly mapped in the inheritance hierachy. Alternatively you can make '" . $className . "' an abstract class " .
             "to avoid this exception from occuring."
         );
     }

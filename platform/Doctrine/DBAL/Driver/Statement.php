@@ -26,9 +26,9 @@ use \PDO;
 /**
  * Statement interface.
  * Drivers must implement this interface.
- * 
+ *
  * This resembles (a subset of) the PDOStatement interface.
- * 
+ *
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Roman Borschel <roman@code-factory.org>
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
@@ -54,13 +54,13 @@ interface Statement
     function bindValue($param, $value, $type = null);
 
     /**
-     * Binds a PHP variable to a corresponding named or question mark placeholder in the 
+     * Binds a PHP variable to a corresponding named or question mark placeholder in the
      * SQL statement that was use to prepare the statement. Unlike PDOStatement->bindValue(),
-     * the variable is bound as a reference and will only be evaluated at the time 
+     * the variable is bound as a reference and will only be evaluated at the time
      * that PDOStatement->execute() is called.
      *
-     * Most parameters are input parameters, that is, parameters that are 
-     * used in a read-only fashion to build up the query. Some drivers support the invocation 
+     * Most parameters are input parameters, that is, parameters that are
+     * used in a read-only fashion to build up the query. Some drivers support the invocation
      * of stored procedures that return data as output parameters, and some also as input/output
      * parameters that both send in data and are updated to receive it.
      *
@@ -84,9 +84,9 @@ interface Statement
      */
     function closeCursor();
 
-    /** 
+    /**
      * columnCount
-     * Returns the number of columns in the result set 
+     * Returns the number of columns in the result set
      *
      * @return integer              Returns the number of columns in the result set represented
      *                              by the PDOStatement object. If there is no result set,
@@ -96,7 +96,7 @@ interface Statement
 
     /**
      * errorCode
-     * Fetch the SQLSTATE associated with the last operation on the statement handle 
+     * Fetch the SQLSTATE associated with the last operation on the statement handle
      *
      * @see Doctrine_Adapter_Interface::errorCode()
      * @return string       error code string
@@ -136,10 +136,10 @@ interface Statement
      *                                      This value must be one of the Query::HYDRATE_* constants,
      *                                      defaulting to Query::HYDRATE_BOTH
      *
-     * @param integer $cursorOrientation    For a PDOStatement object representing a scrollable cursor, 
-     *                                      this value determines which row will be returned to the caller. 
+     * @param integer $cursorOrientation    For a PDOStatement object representing a scrollable cursor,
+     *                                      this value determines which row will be returned to the caller.
      *                                      This value must be one of the Query::HYDRATE_ORI_* constants, defaulting to
-     *                                      Query::HYDRATE_ORI_NEXT. To request a scrollable cursor for your 
+     *                                      Query::HYDRATE_ORI_NEXT. To request a scrollable cursor for your
      *                                      PDOStatement object,
      *                                      you must set the PDO::ATTR_CURSOR attribute to Doctrine::CURSOR_SCROLL when you
      *                                      prepare the SQL statement with Doctrine_Adapter_Interface->prepare().
@@ -147,10 +147,10 @@ interface Statement
      * @param integer $cursorOffset         For a PDOStatement object representing a scrollable cursor for which the
      *                                      $cursorOrientation parameter is set to Query::HYDRATE_ORI_ABS, this value specifies
      *                                      the absolute number of the row in the result set that shall be fetched.
-     *                                      
-     *                                      For a PDOStatement object representing a scrollable cursor for 
-     *                                      which the $cursorOrientation parameter is set to Query::HYDRATE_ORI_REL, this value 
-     *                                      specifies the row to fetch relative to the cursor position before 
+     *
+     *                                      For a PDOStatement object representing a scrollable cursor for
+     *                                      which the $cursorOrientation parameter is set to Query::HYDRATE_ORI_REL, this value
+     *                                      specifies the row to fetch relative to the cursor position before
      *                                      PDOStatement->fetch() was called.
      *
      * @return mixed
@@ -176,8 +176,8 @@ interface Statement
      * Returns a single column from the next row of a
      * result set or FALSE if there are no more rows.
      *
-     * @param integer $columnIndex          0-indexed number of the column you wish to retrieve from the row. If no 
-     *                                      value is supplied, PDOStatement->fetchColumn() 
+     * @param integer $columnIndex          0-indexed number of the column you wish to retrieve from the row. If no
+     *                                      value is supplied, PDOStatement->fetchColumn()
      *                                      fetches the first column.
      *
      * @return string                       returns a single column in the next row of a result set.
@@ -186,12 +186,12 @@ interface Statement
 
     /**
      * rowCount
-     * rowCount() returns the number of rows affected by the last DELETE, INSERT, or UPDATE statement 
+     * rowCount() returns the number of rows affected by the last DELETE, INSERT, or UPDATE statement
      * executed by the corresponding object.
      *
-     * If the last SQL statement executed by the associated Statement object was a SELECT statement, 
-     * some databases may return the number of rows returned by that statement. However, 
-     * this behaviour is not guaranteed for all databases and should not be 
+     * If the last SQL statement executed by the associated Statement object was a SELECT statement,
+     * some databases may return the number of rows returned by that statement. However,
+     * this behaviour is not guaranteed for all databases and should not be
      * relied on for portable applications.
      *
      * @return integer                      Returns the number of rows.

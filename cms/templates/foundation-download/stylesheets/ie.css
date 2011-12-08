@@ -1,4 +1,6 @@
 /* Foundation v2.1.1 http://foundation.zurb.com */
 /* This is for all IE specfific style less than IE9. We hate IE. */
 
-	div.panel { border: 1px solid #ccc; }
+div.panel {
+    border: 1px solid #ccc;
+}

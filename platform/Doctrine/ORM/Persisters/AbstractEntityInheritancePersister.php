@@ -20,13 +20,13 @@
 namespace Doctrine\ORM\Persisters;
 
 use Doctrine\ORM\Mapping\ClassMetadata,
-    Doctrine\DBAL\Types\Type;
+Doctrine\DBAL\Types\Type;
 
 /**
  * Base class for entity persisters that implement a certain inheritance mapping strategy.
  * All these persisters are assumed to use a discriminator column to discriminate entity
  * types in the hierarchy.
- * 
+ *
  * @author Roman Borschel <roman@code-factory.org>
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  * @since 2.0
@@ -39,18 +39,18 @@ abstract class AbstractEntityInheritancePersister extends BasicEntityPersister
     protected function _prepareInsertData($entity)
     {
         $data = parent::_prepareInsertData($entity);
-        
+
         // Populate the discriminator column
         $discColumn = $this->_class->discriminatorColumn;
         $this->_columnTypes[$discColumn['name']] = $discColumn['type'];
         $data[$this->_getDiscriminatorColumnTableName()][$discColumn['name']] = $this->_class->discriminatorValue;
-        
+
         return $data;
     }
 
     /**
      * Gets the name of the table that contains the discriminator column.
-     * 
+     *
      * @return string The table name.
      */
     abstract protected function _getDiscriminatorColumnTableName();
@@ -61,7 +61,8 @@ abstract class AbstractEntityInheritancePersister extends BasicEntityPersister
     protected function _getSelectColumnSQL($field, ClassMetadata $class, $alias = 'r')
     {
         $columnName = $class->columnNames[$field];
-        $sql = $this->_getSQLTableAlias($class->name, $alias == 'r' ? '' : $alias) . '.' . $class->getQuotedColumnName($field, $this->_platform);
+        $sql = $this->_getSQLTableAlias($class->name, $alias == 'r' ? ''
+                                                            : $alias) . '.' . $class->getQuotedColumnName($field, $this->_platform);
         $columnAlias = $this->_platform->getSQLResultCasing($columnName . $this->_sqlAliasCounter++);
         $this->_rsm->addFieldResult($alias, $columnAlias, $field, $class->name);
 
@@ -73,7 +74,7 @@ abstract class AbstractEntityInheritancePersister extends BasicEntityPersister
         $columnAlias = $joinColumnName . $this->_sqlAliasCounter++;
         $resultColumnName = $this->_platform->getSQLResultCasing($columnAlias);
         $this->_rsm->addMetaResult('r', $resultColumnName, $joinColumnName);
-        
+
         return $tableAlias . '.' . $joinColumnName . ' AS ' . $columnAlias;
     }
 }

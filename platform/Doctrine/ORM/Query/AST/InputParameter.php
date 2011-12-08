@@ -47,7 +47,7 @@ class InputParameter extends Node
         }
 
         $param = substr($value, 1);
-        $this->isNamed = ! is_numeric($param);
+        $this->isNamed = !is_numeric($param);
         $this->name = $param;
     }
 

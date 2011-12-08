@@ -52,7 +52,7 @@ class DateTimeTzType extends Type
     {
         return Type::DATETIMETZ;
     }
-    
+
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         return $platform->getDateTimeTzTypeDeclarationSQL($fieldDeclaration);
@@ -61,7 +61,7 @@ class DateTimeTzType extends Type
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return ($value !== null)
-            ? $value->format($platform->getDateTimeTzFormatString()) : null;
+                ? $value->format($platform->getDateTimeTzFormatString()) : null;
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform)

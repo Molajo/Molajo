@@ -61,17 +61,18 @@ class SingleTablePersister extends AbstractEntityInheritancePersister
             $subClass = $this->_em->getClassMetadata($subClassName);
             // Regular columns
             foreach ($subClass->fieldMappings as $fieldName => $mapping) {
-                if ( ! isset($mapping['inherited'])) {
+                if (!isset($mapping['inherited'])) {
                     $columnList .= ', ' . $this->_getSelectColumnSQL($fieldName, $subClass);
                 }
             }
             // Foreign key columns
             foreach ($subClass->associationMappings as $assoc) {
-                if ($assoc['isOwningSide'] && $assoc['type'] & ClassMetadata::TO_ONE && ! isset($assoc['inherited'])) {
+                if ($assoc['isOwningSide'] && $assoc['type'] & ClassMetadata::TO_ONE && !isset($assoc['inherited'])) {
                     foreach ($assoc['targetToSourceKeyColumns'] as $srcColumn) {
                         if ($columnList != '') $columnList .= ', ';
                         $columnList .= $this->getSelectJoinColumnSQL($tableAlias, $srcColumn,
-                            isset($assoc['inherited']) ? $assoc['inherited'] : $this->_class->name
+                                                                     isset($assoc['inherited']) ? $assoc['inherited']
+                                                                             : $this->_class->name
                         );
                     }
                 }
@@ -115,8 +116,8 @@ class SingleTablePersister extends AbstractEntityInheritancePersister
             $values[] = $this->_conn->quote($discrValues[$subclassName]);
         }
         $conditionSql .= $this->_getSQLTableAlias($this->_class->name) . '.'
-                . $this->_class->discriminatorColumn['name']
-                . ' IN (' . implode(', ', $values) . ')';
+                         . $this->_class->discriminatorColumn['name']
+                         . ' IN (' . implode(', ', $values) . ')';
 
         return $conditionSql;
     }

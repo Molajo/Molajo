@@ -37,7 +37,7 @@ class Comparator
      * @param Schema $toSchema
      * @return SchemaDiff
      */
-    static public function compareSchemas( Schema $fromSchema, Schema $toSchema )
+    static public function compareSchemas(Schema $fromSchema, Schema $toSchema)
     {
         $c = new self();
         return $c->compare($fromSchema, $toSchema);
@@ -61,20 +61,20 @@ class Comparator
 
         $foreignKeysToTable = array();
 
-        foreach ( $toSchema->getTables() AS $tableName => $table ) {
-            if ( !$fromSchema->hasTable($tableName) ) {
+        foreach ($toSchema->getTables() AS $tableName => $table) {
+            if (!$fromSchema->hasTable($tableName)) {
                 $diff->newTables[$tableName] = $table;
             } else {
-                $tableDifferences = $this->diffTable( $fromSchema->getTable($tableName), $table );
-                if ( $tableDifferences !== false ) {
+                $tableDifferences = $this->diffTable($fromSchema->getTable($tableName), $table);
+                if ($tableDifferences !== false) {
                     $diff->changedTables[$tableName] = $tableDifferences;
                 }
             }
         }
 
         /* Check if there are tables removed */
-        foreach ( $fromSchema->getTables() AS $tableName => $table ) {
-            if ( !$toSchema->hasTable($tableName) ) {
+        foreach ($fromSchema->getTables() AS $tableName => $table) {
+            if (!$toSchema->hasTable($tableName)) {
                 $diff->removedTables[$tableName] = $table;
             }
 
@@ -94,7 +94,7 @@ class Comparator
             }
         }
 
-        foreach ( $toSchema->getSequences() AS $sequenceName => $sequence) {
+        foreach ($toSchema->getSequences() AS $sequenceName => $sequence) {
             if (!$fromSchema->hasSequence($sequenceName)) {
                 $diff->newSequences[] = $sequence;
             } else {
@@ -120,11 +120,11 @@ class Comparator
      */
     public function diffSequence(Sequence $sequence1, Sequence $sequence2)
     {
-        if($sequence1->getAllocationSize() != $sequence2->getAllocationSize()) {
+        if ($sequence1->getAllocationSize() != $sequence2->getAllocationSize()) {
             return true;
         }
 
-        if($sequence1->getInitialValue() != $sequence2->getInitialValue()) {
+        if ($sequence1->getInitialValue() != $sequence2->getInitialValue()) {
             return true;
         }
 
@@ -150,24 +150,24 @@ class Comparator
         $table2Columns = $table2->getColumns();
 
         /* See if all the fields in table 1 exist in table 2 */
-        foreach ( $table2Columns as $columnName => $column ) {
-            if ( !$table1->hasColumn($columnName) ) {
+        foreach ($table2Columns as $columnName => $column) {
+            if (!$table1->hasColumn($columnName)) {
                 $tableDifferences->addedColumns[$columnName] = $column;
                 $changes++;
             }
         }
         /* See if there are any removed fields in table 2 */
-        foreach ( $table1Columns as $columnName => $column ) {
-            if ( !$table2->hasColumn($columnName) ) {
+        foreach ($table1Columns as $columnName => $column) {
+            if (!$table2->hasColumn($columnName)) {
                 $tableDifferences->removedColumns[$columnName] = $column;
                 $changes++;
             }
         }
-        
-        foreach ( $table1Columns as $columnName => $column ) {
-            if ( $table2->hasColumn($columnName) ) {
-                $changedProperties = $this->diffColumn( $column, $table2->getColumn($columnName) );
-                if (count($changedProperties) ) {
+
+        foreach ($table1Columns as $columnName => $column) {
+            if ($table2->hasColumn($columnName)) {
+                $changedProperties = $this->diffColumn($column, $table2->getColumn($columnName));
+                if (count($changedProperties)) {
                     $columnDiff = new ColumnDiff($column->getName(), $table2->getColumn($columnName), $changedProperties);
                     $tableDifferences->changedColumns[$column->getName()] = $columnDiff;
                     $changes++;
@@ -211,7 +211,7 @@ class Comparator
 
         foreach ($fromFkeys AS $key1 => $constraint1) {
             foreach ($toFkeys AS $key2 => $constraint2) {
-                if($this->diffForeignKey($constraint1, $constraint2) === false) {
+                if ($this->diffForeignKey($constraint1, $constraint2) === false) {
                     unset($fromFkeys[$key1]);
                     unset($toFkeys[$key2]);
                 } else {
@@ -241,7 +241,7 @@ class Comparator
     /**
      * Try to find columns that only changed their name, rename operations maybe cheaper than add/drop
      * however ambiguouties between different possibilites should not lead to renaming at all.
-     * 
+     *
      * @param TableDiff $tableDifferences
      */
     private function detectColumnRenamings(TableDiff $tableDifferences)
@@ -278,7 +278,7 @@ class Comparator
         if (array_map('strtolower', $key1->getLocalColumns()) != array_map('strtolower', $key2->getLocalColumns())) {
             return true;
         }
-        
+
         if (array_map('strtolower', $key1->getForeignColumns()) != array_map('strtolower', $key2->getForeignColumns())) {
             return true;
         }
@@ -308,7 +308,7 @@ class Comparator
     public function diffColumn(Column $column1, Column $column2)
     {
         $changedProperties = array();
-        if ( $column1->getType() != $column2->getType() ) {
+        if ($column1->getType() != $column2->getType()) {
             $changedProperties[] = 'type';
         }
 
@@ -326,8 +326,8 @@ class Comparator
 
         if ($column1->getType() instanceof \Doctrine\DBAL\Types\StringType) {
             // check if value of length is set at all, default value assumed otherwise.
-            $length1 = $column1->getLength() ?: 255;
-            $length2 = $column2->getLength() ?: 255;
+            $length1 = $column1->getLength() ? : 255;
+            $length2 = $column2->getLength() ? : 255;
             if ($length1 != $length2) {
                 $changedProperties[] = 'length';
             }
@@ -338,7 +338,7 @@ class Comparator
         }
 
         if ($column1->getType() instanceof \Doctrine\DBAL\Types\DecimalType) {
-            if (($column1->getPrecision()?:10) != ($column2->getPrecision()?:10)) {
+            if (($column1->getPrecision() ? : 10) != ($column2->getPrecision() ? : 10)) {
                 $changedProperties[] = 'precision';
             }
             if ($column1->getScale() != $column2->getScale()) {

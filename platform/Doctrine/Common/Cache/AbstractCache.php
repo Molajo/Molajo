@@ -41,7 +41,7 @@ abstract class AbstractCache implements Cache
      */
     public function setNamespace($namespace)
     {
-        $this->_namespace = (string) $namespace;
+        $this->_namespace = (string)$namespace;
     }
 
     /**
@@ -106,7 +106,7 @@ abstract class AbstractCache implements Cache
      */
     public function deleteByRegex($regex)
     {
-        $ids     = $this->getIds();
+        $ids = $this->getIds();
         $deleted = array();
 
         foreach ($ids as $id) {
@@ -127,8 +127,8 @@ abstract class AbstractCache implements Cache
      */
     public function deleteByPrefix($prefix)
     {
-        $prefix  = $this->_getNamespacedId($prefix);
-        $ids     = $this->getIds();
+        $prefix = $this->_getNamespacedId($prefix);
+        $ids = $this->getIds();
         $deleted = array();
 
         foreach ($ids as $id) {
@@ -149,7 +149,7 @@ abstract class AbstractCache implements Cache
      */
     public function deleteBySuffix($suffix)
     {
-        $ids     = $this->getIds();
+        $ids = $this->getIds();
         $deleted = array();
 
         foreach ($ids as $id) {

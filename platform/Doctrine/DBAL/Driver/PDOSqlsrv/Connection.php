@@ -31,15 +31,15 @@ class Connection extends \Doctrine\DBAL\Driver\PDOConnection implements \Doctrin
     /**
      * @override
      */
-    public function quote($value, $type=\PDO::PARAM_STR)
+    public function quote($value, $type = \PDO::PARAM_STR)
     {
         $val = parent::quote($value, $type);
-		
-		// Fix for a driver version terminating all values with null byte
-		if (strpos($val, "\0") !== false) {
-			$val = substr($val, 0, -1);
-		}
-		
-		return $val;
+
+        // Fix for a driver version terminating all values with null byte
+        if (strpos($val, "\0") !== false) {
+            $val = substr($val, 0, -1);
+        }
+
+        return $val;
     }
 }

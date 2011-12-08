@@ -46,7 +46,7 @@ class Shell
         }
 
         $this->application = $application;
-        $this->history = getenv('HOME').'/.history_'.$application->getName();
+        $this->history = getenv('HOME') . '/.history_' . $application->getName();
         $this->output = new ConsoleOutput();
     }
 
@@ -63,7 +63,7 @@ class Shell
 
         $this->output->writeln($this->getHeader());
         while (true) {
-            $command = readline($this->application->getName().' > ');
+            $command = readline($this->application->getName() . ' > ');
 
             if (false === $command) {
                 $this->output->writeln("\n");
@@ -109,7 +109,7 @@ class Shell
 
         $list = array('--help');
         foreach ($command->getDefinition()->getOptions() as $option) {
-            $list[] = '--'.$option->getName();
+            $list[] = '--' . $option->getName();
         }
 
         return $list;

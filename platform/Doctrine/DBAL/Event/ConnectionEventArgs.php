@@ -22,7 +22,7 @@
 namespace Doctrine\DBAL\Event;
 
 use Doctrine\Common\EventArgs,
-    Doctrine\DBAL\Connection;
+Doctrine\DBAL\Connection;
 
 /**
  * Event Arguments used when a Driver connection is established inside Doctrine\DBAL\Connection.

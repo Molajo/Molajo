@@ -22,8 +22,8 @@
 namespace Doctrine\ORM\Tools\Console\Command\ClearCache;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console;
 
 /**
  * Command to clear the query cache of the various cache drivers.
@@ -45,10 +45,10 @@ class QueryCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('orm:clear-cache:query')
-        ->setDescription('Clear all query cache of the various cache drivers.')
-        ->setDefinition(array())
-        ->setHelp(<<<EOT
+                ->setName('orm:clear-cache:query')
+                ->setDescription('Clear all query cache of the various cache drivers.')
+                ->setDefinition(array())
+                ->setHelp(<<<EOT
 Clear all query cache of the various cache drivers.
 EOT
         );
@@ -62,7 +62,7 @@ EOT
         $em = $this->getHelper('em')->getEntityManager();
         $cacheDriver = $em->getConfiguration()->getQueryCacheImpl();
 
-        if ( ! $cacheDriver) {
+        if (!$cacheDriver) {
             throw new \InvalidArgumentException('No Query cache driver is configured on given EntityManager.');
         }
 

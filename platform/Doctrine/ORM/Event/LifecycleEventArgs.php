@@ -38,13 +38,13 @@ class LifecycleEventArgs extends \Doctrine\Common\EventArgs
      * @var object
      */
     private $_entity;
-    
+
     public function __construct($entity, $em)
     {
         $this->_entity = $entity;
         $this->_em = $em;
     }
-    
+
     public function getEntity()
     {
         return $this->_entity;

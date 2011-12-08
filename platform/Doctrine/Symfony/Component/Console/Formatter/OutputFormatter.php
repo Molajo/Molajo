@@ -33,11 +33,11 @@ class OutputFormatter implements OutputFormatterInterface
      */
     public function __construct($decorated = null, array $styles = array())
     {
-        $this->decorated = (Boolean) $decorated;
+        $this->decorated = (Boolean)$decorated;
 
-        $this->setStyle('error',    new OutputFormatterStyle('white', 'red'));
-        $this->setStyle('info',     new OutputFormatterStyle('green'));
-        $this->setStyle('comment',  new OutputFormatterStyle('yellow'));
+        $this->setStyle('error', new OutputFormatterStyle('white', 'red'));
+        $this->setStyle('info', new OutputFormatterStyle('green'));
+        $this->setStyle('comment', new OutputFormatterStyle('yellow'));
         $this->setStyle('question', new OutputFormatterStyle('black', 'cyan'));
 
         foreach ($styles as $name => $style) {
@@ -54,7 +54,7 @@ class OutputFormatter implements OutputFormatterInterface
      */
     public function setDecorated($decorated)
     {
-        $this->decorated = (Boolean) $decorated;
+        $this->decorated = (Boolean)$decorated;
     }
 
     /**

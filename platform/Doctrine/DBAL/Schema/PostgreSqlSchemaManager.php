@@ -54,8 +54,8 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
         }
 
         return new ForeignKeyConstraint(
-                $localColumns, $foreignTable, $foreignColumns, $tableForeignKey['conname'],
-                array('onUpdate' => $onUpdate, 'onDelete' => $onDelete)
+            $localColumns, $foreignTable, $foreignColumns, $tableForeignKey['conname'],
+            array('onUpdate' => $onUpdate, 'onDelete' => $onDelete)
         );
     }
 
@@ -125,7 +125,7 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
      * @param  string $tableName
      * @return array
      */
-    protected function _getPortableTableIndexesList($tableIndexes, $tableName=null)
+    protected function _getPortableTableIndexesList($tableIndexes, $tableName = null)
     {
         $buffer = array();
         foreach ($tableIndexes AS $row) {
@@ -198,7 +198,7 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
         if ($length == '-1' && isset($tableColumn['atttypmod'])) {
             $length = $tableColumn['atttypmod'] - 4;
         }
-        if ((int) $length <= 0) {
+        if ((int)$length <= 0) {
             $length = null;
         }
         $fixed = null;
@@ -272,16 +272,16 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
         }
 
         $options = array(
-            'length'        => $length,
-            'notnull'       => (bool) $tableColumn['isnotnull'],
-            'default'       => $tableColumn['default'],
-            'primary'       => (bool) ($tableColumn['pri'] == 't'),
-            'precision'     => $precision,
-            'scale'         => $scale,
-            'fixed'         => $fixed,
-            'unsigned'      => false,
+            'length' => $length,
+            'notnull' => (bool)$tableColumn['isnotnull'],
+            'default' => $tableColumn['default'],
+            'primary' => (bool)($tableColumn['pri'] == 't'),
+            'precision' => $precision,
+            'scale' => $scale,
+            'fixed' => $fixed,
+            'unsigned' => false,
             'autoincrement' => $autoincrement,
-            'comment'       => $tableColumn['comment'],
+            'comment' => $tableColumn['comment'],
         );
 
         return new Column($tableColumn['field'], \Doctrine\DBAL\Types\Type::getType($type), $options);

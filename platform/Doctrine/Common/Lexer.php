@@ -137,7 +137,7 @@ abstract class Lexer
         $this->peek = 0;
         $this->token = $this->lookahead;
         $this->lookahead = (isset($this->tokens[$this->position]))
-            ? $this->tokens[$this->position++] : null;
+                ? $this->tokens[$this->position++] : null;
 
         return $this->lookahead !== null;
     }
@@ -201,9 +201,9 @@ abstract class Lexer
     {
         static $regex;
 
-        if ( ! isset($regex)) {
+        if (!isset($regex)) {
             $regex = '/(' . implode(')|(', $this->getCatchablePatterns()) . ')|'
-                   . implode('|', $this->getNonCatchablePatterns()) . '/i';
+                     . implode('|', $this->getNonCatchablePatterns()) . '/i';
         }
 
         $flags = PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_OFFSET_CAPTURE;
@@ -215,7 +215,7 @@ abstract class Lexer
 
             $this->tokens[] = array(
                 'value' => $match[0],
-                'type'  => $type,
+                'type' => $type,
                 'position' => $match[1],
             );
         }

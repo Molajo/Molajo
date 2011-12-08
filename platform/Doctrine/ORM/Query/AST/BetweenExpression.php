@@ -24,7 +24,7 @@ namespace Doctrine\ORM\Query\AST;
 /**
  * Description of BetweenExpression
  *
-  @license http://www.opensource.org/licenses/lgpl-license.php LGPL
+@license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
  * @version $Revision: 3938 $

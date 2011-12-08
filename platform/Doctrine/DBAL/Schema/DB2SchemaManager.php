@@ -43,10 +43,10 @@ class DB2SchemaManager extends AbstractSchemaManager
     public function listTableNames()
     {
         $sql = $this->_platform->getListTablesSQL();
-        $sql .= " AND CREATOR = UPPER('".$this->_conn->getUsername()."')";
+        $sql .= " AND CREATOR = UPPER('" . $this->_conn->getUsername() . "')";
 
         $tables = $this->_conn->fetchAll($sql);
-        
+
         return $this->_getPortableTablesList($tables);
     }
 
@@ -68,7 +68,7 @@ class DB2SchemaManager extends AbstractSchemaManager
         $precision = false;
 
         $type = $this->_platform->getDoctrineTypeMapping($tableColumn['typename']);
-        
+
         switch (strtolower($tableColumn['typename'])) {
             case 'varchar':
                 $length = $tableColumn['length'];
@@ -90,13 +90,13 @@ class DB2SchemaManager extends AbstractSchemaManager
         }
 
         $options = array(
-            'length'        => $length,
-            'unsigned'      => (bool)$unsigned,
-            'fixed'         => (bool)$fixed,
-            'default'       => ($tableColumn['default'] == "NULL") ? null : $tableColumn['default'],
-            'notnull'       => (bool) ($tableColumn['nulls'] == 'N'),
-            'scale'         => null,
-            'precision'     => null,
+            'length' => $length,
+            'unsigned' => (bool)$unsigned,
+            'fixed' => (bool)$fixed,
+            'default' => ($tableColumn['default'] == "NULL") ? null : $tableColumn['default'],
+            'notnull' => (bool)($tableColumn['nulls'] == 'N'),
+            'scale' => null,
+            'precision' => null,
             'platformOptions' => array(),
         );
 
@@ -118,11 +118,11 @@ class DB2SchemaManager extends AbstractSchemaManager
         return $tableNames;
     }
 
-    protected function _getPortableTableIndexesList($tableIndexes, $tableName=null)
+    protected function _getPortableTableIndexesList($tableIndexes, $tableName = null)
     {
         $tableIndexRows = array();
         $indexes = array();
-        foreach($tableIndexes AS $indexKey => $data) {
+        foreach ($tableIndexes AS $indexKey => $data) {
             $data = array_change_key_case($data, \CASE_LOWER);
             $unique = ($data['uniquerule'] == "D") ? false : true;
             $primary = ($data['uniquerule'] == "P");
@@ -153,8 +153,8 @@ class DB2SchemaManager extends AbstractSchemaManager
             array_map('trim', (array)$tableForeignKey['pkcolnames']),
             $tableForeignKey['relname'],
             array(
-                'onUpdate' => $tableForeignKey['updaterule'],
-                'onDelete' => $tableForeignKey['deleterule'],
+                 'onUpdate' => $tableForeignKey['updaterule'],
+                 'onDelete' => $tableForeignKey['deleterule'],
             )
         );
     }
@@ -176,7 +176,7 @@ class DB2SchemaManager extends AbstractSchemaManager
         //$view['text'] = (is_resource($view['text']) ? stream_get_contents($view['text']) : $view['text']);
         if (!is_resource($view['text'])) {
             $pos = strpos($view['text'], ' AS ');
-            $sql = substr($view['text'], $pos+4);
+            $sql = substr($view['text'], $pos + 4);
         } else {
             $sql = '';
         }

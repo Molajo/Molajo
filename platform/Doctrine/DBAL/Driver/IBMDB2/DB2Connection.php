@@ -47,7 +47,7 @@ class DB2Connection implements \Doctrine\DBAL\Driver\Connection
         }
         return new DB2Statement($stmt);
     }
-    
+
     function query()
     {
         $args = func_get_args();
@@ -57,13 +57,13 @@ class DB2Connection implements \Doctrine\DBAL\Driver\Connection
         return $stmt;
     }
 
-    function quote($input, $type=\PDO::PARAM_STR)
+    function quote($input, $type = \PDO::PARAM_STR)
     {
         $input = db2_escape_string($input);
-        if ($type == \PDO::PARAM_INT ) {
+        if ($type == \PDO::PARAM_INT) {
             return $input;
         } else {
-            return "'".$input."'";
+            return "'" . $input . "'";
         }
     }
 

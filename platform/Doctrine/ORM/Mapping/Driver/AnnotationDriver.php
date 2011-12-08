@@ -20,10 +20,10 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use Doctrine\Common\Cache\ArrayCache,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\Common\Annotations\AnnotationRegistry,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\MappingException;
+Doctrine\Common\Annotations\AnnotationReader,
+Doctrine\Common\Annotations\AnnotationRegistry,
+Doctrine\ORM\Mapping\ClassMetadataInfo,
+Doctrine\ORM\Mapping\MappingException;
 
 /**
  * The AnnotationDriver reads the mapping metadata from docblock annotations.
@@ -73,7 +73,7 @@ class AnnotationDriver implements Driver
     {
         $this->_reader = $reader;
         if ($paths) {
-            $this->addPaths((array) $paths);
+            $this->addPaths((array)$paths);
         }
     }
 
@@ -181,9 +181,9 @@ class AnnotationDriver implements Driver
 
             foreach ($namedQueriesAnnot->value as $namedQuery) {
                 $metadata->addNamedQuery(array(
-                    'name'  => $namedQuery->name,
-                    'query' => $namedQuery->query
-                ));
+                                              'name' => $namedQuery->name,
+                                              'query' => $namedQuery->query
+                                         ));
             }
         }
 
@@ -197,10 +197,10 @@ class AnnotationDriver implements Driver
                 if (isset($classAnnotations['Doctrine\ORM\Mapping\DiscriminatorColumn'])) {
                     $discrColumnAnnot = $classAnnotations['Doctrine\ORM\Mapping\DiscriminatorColumn'];
                     $metadata->setDiscriminatorColumn(array(
-                        'name' => $discrColumnAnnot->name,
-                        'type' => $discrColumnAnnot->type,
-                        'length' => $discrColumnAnnot->length
-                    ));
+                                                           'name' => $discrColumnAnnot->name,
+                                                           'type' => $discrColumnAnnot->type,
+                                                           'length' => $discrColumnAnnot->length
+                                                      ));
                 } else {
                     $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
@@ -222,11 +222,12 @@ class AnnotationDriver implements Driver
 
         // Evaluate annotations on properties/fields
         foreach ($class->getProperties() as $property) {
-            if ($metadata->isMappedSuperclass && ! $property->isPrivate()
+            if ($metadata->isMappedSuperclass && !$property->isPrivate()
                 ||
                 $metadata->isInheritedField($property->name)
                 ||
-                $metadata->isInheritedAssociation($property->name)) {
+                $metadata->isInheritedAssociation($property->name)
+            ) {
                 continue;
             }
 
@@ -302,10 +303,10 @@ class AnnotationDriver implements Driver
                 // Check for SequenceGenerator/TableGenerator definition
                 if ($seqGeneratorAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\SequenceGenerator')) {
                     $metadata->setSequenceGeneratorDefinition(array(
-                        'sequenceName' => $seqGeneratorAnnot->sequenceName,
-                        'allocationSize' => $seqGeneratorAnnot->allocationSize,
-                        'initialValue' => $seqGeneratorAnnot->initialValue
-                    ));
+                                                                   'sequenceName' => $seqGeneratorAnnot->sequenceName,
+                                                                   'allocationSize' => $seqGeneratorAnnot->allocationSize,
+                                                                   'initialValue' => $seqGeneratorAnnot->initialValue
+                                                              ));
                 } else if ($tblGeneratorAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\TableGenerator')) {
                     throw MappingException::tableIdGeneratorNotImplemented($className);
                 }
@@ -469,8 +470,8 @@ class AnnotationDriver implements Driver
             return true;
         }
 
-        return ! isset($classAnnotations['Doctrine\ORM\Mapping\Entity']) &&
-               ! isset($classAnnotations['Doctrine\ORM\Mapping\MappedSuperclass']);
+        return !isset($classAnnotations['Doctrine\ORM\Mapping\Entity']) &&
+               !isset($classAnnotations['Doctrine\ORM\Mapping\MappedSuperclass']);
     }
 
     /**
@@ -490,7 +491,7 @@ class AnnotationDriver implements Driver
         $includedFiles = array();
 
         foreach ($this->_paths as $path) {
-            if ( ! is_dir($path)) {
+            if (!is_dir($path)) {
                 throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
@@ -499,15 +500,15 @@ class AnnotationDriver implements Driver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\\' . $this->_fileExtension . '$/i', 
+                    '/^.+\\' . $this->_fileExtension . '$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
-            
+
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
-                
+
                 require_once $sourceFile;
-                
+
                 $includedFiles[] = $sourceFile;
             }
         }
@@ -517,7 +518,7 @@ class AnnotationDriver implements Driver
         foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
                 $classes[] = $className;
             }
         }

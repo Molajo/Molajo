@@ -49,7 +49,7 @@ abstract class Output implements OutputInterface
 
         $this->verbosity = null === $verbosity ? self::VERBOSITY_NORMAL : $verbosity;
         $this->formatter = $formatter;
-        $this->formatter->setDecorated((Boolean) $decorated);
+        $this->formatter->setDecorated((Boolean)$decorated);
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class Output implements OutputInterface
      */
     public function setDecorated($decorated)
     {
-        $this->formatter->setDecorated((Boolean) $decorated);
+        $this->formatter->setDecorated((Boolean)$decorated);
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class Output implements OutputInterface
      */
     public function setVerbosity($level)
     {
-        $this->verbosity = (int) $level;
+        $this->verbosity = (int)$level;
     }
 
     /**
@@ -154,7 +154,7 @@ abstract class Output implements OutputInterface
             return;
         }
 
-        $messages = (array) $messages;
+        $messages = (array)$messages;
 
         foreach ($messages as $message) {
             switch ($type) {

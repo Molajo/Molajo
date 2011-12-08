@@ -39,12 +39,12 @@ class ConditionalPrimary extends Node
 
     public function isSimpleConditionalExpression()
     {
-        return (bool) $this->simpleConditionalExpression;
+        return (bool)$this->simpleConditionalExpression;
     }
 
     public function isConditionalExpression()
     {
-        return (bool) $this->conditionalExpression;
+        return (bool)$this->conditionalExpression;
     }
 
     public function dispatch($sqlWalker)

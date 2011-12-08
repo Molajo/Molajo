@@ -56,7 +56,7 @@ abstract class AbstractExporter
      * Converts a single ClassMetadata instance to the exported format
      * and returns it
      *
-     * @param ClassMetadataInfo $metadata 
+     * @param ClassMetadataInfo $metadata
      * @return mixed $exported
      */
     abstract public function exportClassMetadata(ClassMetadataInfo $metadata);
@@ -64,7 +64,7 @@ abstract class AbstractExporter
     /**
      * Set the array of ClassMetadataInfo instances to export
      *
-     * @param array $metadata 
+     * @param array $metadata
      * @return void
      */
     public function setMetadata(array $metadata)
@@ -90,7 +90,7 @@ abstract class AbstractExporter
      *     $exporter->setOutputDir(__DIR__ . '/yaml');
      *     $exporter->export();
      *
-     * @param string $dir 
+     * @param string $dir
      * @return void
      */
     public function setOutputDir($dir)
@@ -106,7 +106,7 @@ abstract class AbstractExporter
      */
     public function export()
     {
-        if ( ! is_dir($this->_outputDir)) {
+        if (!is_dir($this->_outputDir)) {
             mkdir($this->_outputDir, 0777, true);
         }
 
@@ -114,7 +114,7 @@ abstract class AbstractExporter
             $output = $this->exportClassMetadata($metadata);
             $path = $this->_generateOutputPath($metadata);
             $dir = dirname($path);
-            if ( ! is_dir($dir)) {
+            if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
             if (file_exists($path) && !$this->_overwriteExistingFiles) {
@@ -127,7 +127,7 @@ abstract class AbstractExporter
     /**
      * Generate the path to write the class for the given ClassMetadataInfo instance
      *
-     * @param ClassMetadataInfo $metadata 
+     * @param ClassMetadataInfo $metadata
      * @return string $path
      */
     protected function _generateOutputPath(ClassMetadataInfo $metadata)
@@ -157,19 +157,19 @@ abstract class AbstractExporter
         {
             case ClassMetadataInfo::INHERITANCE_TYPE_NONE:
                 return 'NONE';
-            break;
+                break;
 
             case ClassMetadataInfo::INHERITANCE_TYPE_JOINED:
                 return 'JOINED';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::INHERITANCE_TYPE_SINGLE_TABLE:
                 return 'SINGLE_TABLE';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::INHERITANCE_TYPE_TABLE_PER_CLASS:
                 return 'PER_CLASS';
-            break;
+                break;
         }
     }
 
@@ -179,15 +179,15 @@ abstract class AbstractExporter
         {
             case ClassMetadataInfo::CHANGETRACKING_DEFERRED_IMPLICIT:
                 return 'DEFERRED_IMPLICIT';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::CHANGETRACKING_DEFERRED_EXPLICIT:
                 return 'DEFERRED_EXPLICIT';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::CHANGETRACKING_NOTIFY:
                 return 'NOTIFY';
-            break;
+                break;
         }
     }
 
@@ -197,19 +197,19 @@ abstract class AbstractExporter
         {
             case ClassMetadataInfo::GENERATOR_TYPE_AUTO:
                 return 'AUTO';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::GENERATOR_TYPE_SEQUENCE:
                 return 'SEQUENCE';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::GENERATOR_TYPE_TABLE:
                 return 'TABLE';
-            break;
-            
+                break;
+
             case ClassMetadataInfo::GENERATOR_TYPE_IDENTITY:
                 return 'IDENTITY';
-            break;
+                break;
         }
     }
 }

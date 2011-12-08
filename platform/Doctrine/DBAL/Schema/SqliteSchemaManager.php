@@ -33,7 +33,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
 {
     /**
      * {@inheritdoc}
-     * 
+     *
      * @override
      */
     public function dropDatabase($database)
@@ -45,7 +45,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @override
      */
     public function createDatabase($database)
@@ -73,15 +73,15 @@ class SqliteSchemaManager extends AbstractSchemaManager
      * @param  string $tableName
      * @return array
      */
-    protected function _getPortableTableIndexesList($tableIndexes, $tableName=null)
+    protected function _getPortableTableIndexesList($tableIndexes, $tableName = null)
     {
         $indexBuffer = array();
 
         // fetch primary
-        $stmt = $this->_conn->executeQuery( "PRAGMA TABLE_INFO ('$tableName')" );
+        $stmt = $this->_conn->executeQuery("PRAGMA TABLE_INFO ('$tableName')");
         $indexArray = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        foreach($indexArray AS $indexColumnRow) {
-            if($indexColumnRow['pk'] == "1") {
+        foreach ($indexArray AS $indexColumnRow) {
+            if ($indexColumnRow['pk'] == "1") {
                 $indexBuffer[] = array(
                     'key_name' => 'primary',
                     'primary' => true,
@@ -92,17 +92,17 @@ class SqliteSchemaManager extends AbstractSchemaManager
         }
 
         // fetch regular indexes
-        foreach($tableIndexes AS $tableIndex) {
+        foreach ($tableIndexes AS $tableIndex) {
             $keyName = $tableIndex['name'];
             $idx = array();
             $idx['key_name'] = $keyName;
             $idx['primary'] = false;
-            $idx['non_unique'] = $tableIndex['unique']?false:true;
+            $idx['non_unique'] = $tableIndex['unique'] ? false : true;
 
-            $stmt = $this->_conn->executeQuery( "PRAGMA INDEX_INFO ( '{$keyName}' )" );
+            $stmt = $this->_conn->executeQuery("PRAGMA INDEX_INFO ( '{$keyName}' )");
             $indexArray = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            foreach ( $indexArray as $indexColumnRow ) {
+            foreach ($indexArray as $indexColumnRow) {
                 $idx['column_name'] = $indexColumnRow['name'];
                 $indexBuffer[] = $idx;
             }
@@ -115,7 +115,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
     {
         return array(
             'name' => $tableIndex['name'],
-            'unique' => (bool) $tableIndex['unique']
+            'unique' => (bool)$tableIndex['unique']
         );
     }
 
@@ -130,16 +130,16 @@ class SqliteSchemaManager extends AbstractSchemaManager
 
         $dbType = strtolower($tableColumn['type']);
         $length = isset($tableColumn['length']) ? $tableColumn['length'] : null;
-        $unsigned = (boolean) isset($tableColumn['unsigned']) ? $tableColumn['unsigned'] : false;
+        $unsigned = (boolean)isset($tableColumn['unsigned']) ? $tableColumn['unsigned'] : false;
         $fixed = false;
         $type = $this->_platform->getDoctrineTypeMapping($dbType);
         $default = $tableColumn['dflt_value'];
-        if  ($default == 'NULL') {
+        if ($default == 'NULL') {
             $default = null;
         }
-        $notnull = (bool) $tableColumn['notnull'];
+        $notnull = (bool)$tableColumn['notnull'];
 
-        if ( ! isset($tableColumn['name'])) {
+        if (!isset($tableColumn['name'])) {
             $tableColumn['name'] = '';
         }
 
@@ -163,14 +163,14 @@ class SqliteSchemaManager extends AbstractSchemaManager
         }
 
         $options = array(
-            'length'   => $length,
-            'unsigned' => (bool) $unsigned,
-            'fixed'    => $fixed,
-            'notnull'  => $notnull,
-            'default'  => $default,
+            'length' => $length,
+            'unsigned' => (bool)$unsigned,
+            'fixed' => $fixed,
+            'notnull' => $notnull,
+            'default' => $default,
             'precision' => $precision,
-            'scale'     => $scale,
-            'autoincrement' => (bool) $tableColumn['pk'],
+            'scale' => $scale,
+            'autoincrement' => (bool)$tableColumn['pk'],
         );
 
         return new Column($tableColumn['name'], \Doctrine\DBAL\Types\Type::getType($type), $options);

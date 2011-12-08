@@ -20,13 +20,13 @@
 namespace Doctrine\DBAL\Tools\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console;
 
 /**
  * Task for executing arbitrary SQL that can come from a file or directly from
  * the command line.
- * 
+ *
  * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
@@ -43,13 +43,13 @@ class RunSqlCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('dbal:run-sql')
-        ->setDescription('Executes arbitrary SQL directly from the command line.')
-        ->setDefinition(array(
-            new InputArgument('sql', InputArgument::REQUIRED, 'The SQL statement to execute.'),
-            new InputOption('depth', null, InputOption::VALUE_REQUIRED, 'Dumping depth of result set.', 7)
-        ))
-        ->setHelp(<<<EOT
+                ->setName('dbal:run-sql')
+                ->setDescription('Executes arbitrary SQL directly from the command line.')
+                ->setDefinition(array(
+                                     new InputArgument('sql', InputArgument::REQUIRED, 'The SQL statement to execute.'),
+                                     new InputOption('depth', null, InputOption::VALUE_REQUIRED, 'Dumping depth of result set.', 7)
+                                ))
+                ->setHelp(<<<EOT
 Executes arbitrary SQL directly from the command line.
 EOT
         );
@@ -68,16 +68,16 @@ EOT
 
         $depth = $input->getOption('depth');
 
-        if ( ! is_numeric($depth)) {
+        if (!is_numeric($depth)) {
             throw new \LogicException("Option 'depth' must contains an integer value");
         }
-        
+
         if (preg_match('/^select/i', $sql)) {
-           $resultSet = $conn->fetchAll($sql);
+            $resultSet = $conn->fetchAll($sql);
         } else {
             $resultSet = $conn->executeUpdate($sql);
         }
 
-        \Doctrine\Common\Util\Debug::dump($resultSet, (int) $depth);
+        \Doctrine\Common\Util\Debug::dump($resultSet, (int)$depth);
     }
 }

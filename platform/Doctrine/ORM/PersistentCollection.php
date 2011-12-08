@@ -20,8 +20,8 @@
 namespace Doctrine\ORM;
 
 use Doctrine\ORM\Mapping\ClassMetadata,
-    Doctrine\Common\Collections\Collection,
-    Closure;
+Doctrine\Common\Collections\Collection,
+Closure;
 
 /**
  * A PersistentCollection represents a collection of elements that have persistent state.
@@ -131,7 +131,7 @@ final class PersistentCollection implements Collection
     {
         $this->owner = $entity;
         $this->association = $assoc;
-        $this->backRefFieldName = $assoc['inversedBy'] ?: $assoc['mappedBy'];
+        $this->backRefFieldName = $assoc['inversedBy'] ? : $assoc['mappedBy'];
     }
 
     /**
@@ -167,9 +167,9 @@ final class PersistentCollection implements Collection
             $this->typeClass->reflFields[$this->backRefFieldName]
                     ->setValue($element, $this->owner);
             $this->em->getUnitOfWork()->setOriginalEntityProperty(
-                    spl_object_hash($element),
-                    $this->backRefFieldName,
-                    $this->owner);
+                spl_object_hash($element),
+                $this->backRefFieldName,
+                $this->owner);
         }
     }
 
@@ -198,7 +198,7 @@ final class PersistentCollection implements Collection
      */
     public function initialize()
     {
-        if ( ! $this->initialized && $this->association) {
+        if (!$this->initialized && $this->association) {
             if ($this->isDirty) {
                 // Has NEW objects added through add(). Remember them.
                 $newObjects = $this->coll->toArray();
@@ -247,7 +247,10 @@ final class PersistentCollection implements Collection
     public function getDeleteDiff()
     {
         return array_udiff_assoc($this->snapshot, $this->coll->toArray(),
-                function($a, $b) {return $a === $b ? 0 : 1;});
+            function($a, $b)
+            {
+                return $a === $b ? 0 : 1;
+            });
     }
 
     /**
@@ -259,7 +262,10 @@ final class PersistentCollection implements Collection
     public function getInsertDiff()
     {
         return array_udiff_assoc($this->coll->toArray(), $this->snapshot,
-                function($a, $b) {return $a === $b ? 0 : 1;});
+            function($a, $b)
+            {
+                return $a === $b ? 0 : 1;
+            });
     }
 
     /**
@@ -277,10 +283,11 @@ final class PersistentCollection implements Collection
      */
     private function changed()
     {
-        if ( ! $this->isDirty) {
+        if (!$this->isDirty) {
             $this->isDirty = true;
             if ($this->association !== null && $this->association['isOwningSide'] && $this->association['type'] == ClassMetadata::MANY_TO_MANY &&
-                    $this->em->getClassMetadata(get_class($this->owner))->isChangeTrackingNotify()) {
+                $this->em->getClassMetadata(get_class($this->owner))->isChangeTrackingNotify()
+            ) {
                 $this->em->getUnitOfWork()->scheduleForDirtyCheck($this->owner);
             }
         }
@@ -355,7 +362,8 @@ final class PersistentCollection implements Collection
         if ($removed) {
             $this->changed();
             if ($this->association !== null && $this->association['type'] == ClassMetadata::ONE_TO_MANY &&
-                    $this->association['orphanRemoval']) {
+                $this->association['orphanRemoval']
+            ) {
                 $this->em->getUnitOfWork()->scheduleOrphanRemoval($removed);
             }
         }
@@ -383,7 +391,8 @@ final class PersistentCollection implements Collection
         if ($removed) {
             $this->changed();
             if ($this->association !== null && $this->association['type'] == ClassMetadata::ONE_TO_MANY &&
-                    $this->association['orphanRemoval']) {
+                $this->association['orphanRemoval']
+            ) {
                 $this->em->getUnitOfWork()->scheduleOrphanRemoval($element);
             }
         }
@@ -407,8 +416,8 @@ final class PersistentCollection implements Collection
         if (!$this->initialized && $this->association['fetch'] == Mapping\ClassMetadataInfo::FETCH_EXTRA_LAZY) {
             return $this->coll->contains($element) ||
                    $this->em->getUnitOfWork()
-                            ->getCollectionPersister($this->association)
-                            ->contains($this, $element);
+                           ->getCollectionPersister($this->association)
+                           ->contains($this, $element);
         }
 
         $this->initialize();
@@ -467,8 +476,8 @@ final class PersistentCollection implements Collection
     {
         if (!$this->initialized && $this->association['fetch'] == Mapping\ClassMetadataInfo::FETCH_EXTRA_LAZY) {
             return $this->em->getUnitOfWork()
-                        ->getCollectionPersister($this->association)
-                        ->count($this) + ($this->isDirty ? $this->coll->count() : 0);
+                           ->getCollectionPersister($this->association)
+                           ->count($this) + ($this->isDirty ? $this->coll->count() : 0);
         }
 
         $this->initialize();
@@ -619,7 +628,7 @@ final class PersistentCollection implements Collection
      */
     public function offsetSet($offset, $value)
     {
-        if ( ! isset($offset)) {
+        if (!isset($offset)) {
             return $this->add($value);
         }
         return $this->set($offset, $value);
@@ -675,13 +684,14 @@ final class PersistentCollection implements Collection
      */
     public function slice($offset, $length = null)
     {
-        if ( ! $this->initialized &&
-             ! $this->isDirty &&
-               $this->association['fetch'] == Mapping\ClassMetadataInfo::FETCH_EXTRA_LAZY) {
+        if (!$this->initialized &&
+            !$this->isDirty &&
+            $this->association['fetch'] == Mapping\ClassMetadataInfo::FETCH_EXTRA_LAZY
+        ) {
 
             return $this->em->getUnitOfWork()
-                            ->getCollectionPersister($this->association)
-                            ->slice($this, $offset, $length);
+                    ->getCollectionPersister($this->association)
+                    ->slice($this, $offset, $length);
         }
 
         $this->initialize();

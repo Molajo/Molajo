@@ -20,12 +20,12 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use Doctrine\Common\Cache\ArrayCache,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\DBAL\Schema\AbstractSchemaManager,
-    Doctrine\DBAL\Schema\SchemaException,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\MappingException,
-    Doctrine\Common\Util\Inflector;
+Doctrine\Common\Annotations\AnnotationReader,
+Doctrine\DBAL\Schema\AbstractSchemaManager,
+Doctrine\DBAL\Schema\SchemaException,
+Doctrine\ORM\Mapping\ClassMetadataInfo,
+Doctrine\ORM\Mapping\MappingException,
+Doctrine\Common\Util\Inflector;
 
 /**
  * The DatabaseDriver reverse engineers the mapping metadata from a database.
@@ -76,7 +76,7 @@ class DatabaseDriver implements Driver
     /**
      * Initializes a new AnnotationDriver that uses the given AnnotationReader for reading
      * docblock annotations.
-     * 
+     *
      * @param AnnotationReader $reader The AnnotationReader to use.
      */
     public function __construct(AbstractSchemaManager $schemaManager)
@@ -111,7 +111,7 @@ class DatabaseDriver implements Driver
         }
 
         $tables = array();
-                
+
         foreach ($this->_sm->listTableNames() as $tableName) {
             $tables[$tableName] = $this->_sm->listTableDetails($tableName);
         }
@@ -129,7 +129,7 @@ class DatabaseDriver implements Driver
             foreach ($foreignKeys AS $foreignKey) {
                 $allForeignKeyColumns = array_merge($allForeignKeyColumns, $foreignKey->getLocalColumns());
             }
-            
+
             $pkColumns = $table->getPrimaryKey()->getColumns();
             sort($pkColumns);
             sort($allForeignKeyColumns);
@@ -145,7 +145,7 @@ class DatabaseDriver implements Driver
             }
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -166,10 +166,10 @@ class DatabaseDriver implements Driver
         $indexes = $this->tables[$tableName]->getIndexes();
         try {
             $primaryKeyColumns = $this->tables[$tableName]->getPrimaryKey()->getColumns();
-        } catch(SchemaException $e) {
+        } catch (SchemaException $e) {
             $primaryKeyColumns = array();
         }
-        
+
         if ($this->_sm->getDatabasePlatform()->supportsForeignKeyConstraints()) {
             $foreignKeys = $this->tables[$tableName]->getForeignKeys();
         } else {
@@ -193,7 +193,7 @@ class DatabaseDriver implements Driver
 
             $fieldMapping['fieldName'] = $this->getFieldNameForColumn($tableName, $column->getName(), false);
             $fieldMapping['columnName'] = $column->getName();
-            $fieldMapping['type'] = strtolower((string) $column->getType());
+            $fieldMapping['type'] = strtolower((string)$column->getType());
 
             if ($column->getType() instanceof \Doctrine\DBAL\Types\StringType) {
                 $fieldMapping['length'] = $column->getLength();

@@ -33,7 +33,7 @@ class Dumper
         $prefix = $indent ? str_repeat(' ', $indent) : '';
 
         if ($inline <= 0 || !is_array($input) || empty($input)) {
-            $output .= $prefix.Inline::dump($input);
+            $output .= $prefix . Inline::dump($input);
         } else {
             $isAHash = array_keys($input) !== range(0, count($input) - 1);
 
@@ -41,11 +41,11 @@ class Dumper
                 $willBeInlined = $inline - 1 <= 0 || !is_array($value) || empty($value);
 
                 $output .= sprintf('%s%s%s%s',
-                    $prefix,
-                    $isAHash ? Inline::dump($key).':' : '-',
-                    $willBeInlined ? ' ' : "\n",
-                    $this->dump($value, $inline - 1, $willBeInlined ? 0 : $indent + 2)
-                ).($willBeInlined ? "\n" : '');
+                                   $prefix,
+                                   $isAHash ? Inline::dump($key) . ':' : '-',
+                                   $willBeInlined ? ' ' : "\n",
+                                   $this->dump($value, $inline - 1, $willBeInlined ? 0 : $indent + 2)
+                           ) . ($willBeInlined ? "\n" : '');
             }
         }
 

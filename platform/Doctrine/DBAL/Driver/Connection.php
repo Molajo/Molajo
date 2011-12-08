@@ -24,19 +24,28 @@ namespace Doctrine\DBAL\Driver;
  * Driver connections must implement this interface.
  *
  * This resembles (a subset of) the PDO interface.
- * 
+ *
  * @since 2.0
  */
 interface Connection
 {
     function prepare($prepareString);
+
     function query();
-    function quote($input, $type=\PDO::PARAM_STR);
+
+    function quote($input, $type = \PDO::PARAM_STR);
+
     function exec($statement);
+
     function lastInsertId($name = null);
+
     function beginTransaction();
+
     function commit();
+
     function rollBack();
+
     function errorCode();
+
     function errorInfo();
 }

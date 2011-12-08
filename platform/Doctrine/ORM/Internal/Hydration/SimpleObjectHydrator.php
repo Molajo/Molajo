@@ -82,7 +82,7 @@ class SimpleObjectHydrator extends AbstractHydrator
 
                 if (isset($cache[$column]['field'])) {
                     $value = Type::getType($this->class->fieldMappings[$cache[$column]['name']]['type'])
-                                    ->convertToPHPValue($value, $this->_platform);
+                            ->convertToPHPValue($value, $this->_platform);
                 }
                 $data[$cache[$column]['name']] = $value;
             }
@@ -111,7 +111,7 @@ class SimpleObjectHydrator extends AbstractHydrator
 
                 if (isset($cache[$column]['class'])) {
                     $value = Type::getType($cache[$column]['class']->fieldMappings[$cache[$column]['name']]['type'])
-                                    ->convertToPHPValue($value, $this->_platform);
+                            ->convertToPHPValue($value, $this->_platform);
                 }
 
                 // the second and part is to prevent overwrites in case of multiple

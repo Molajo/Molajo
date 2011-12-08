@@ -72,24 +72,24 @@ class Application
         $this->autoExit = true;
         $this->commands = array();
         $this->helperSet = new HelperSet(array(
-            new FormatterHelper(),
-            new DialogHelper(),
-        ));
+                                              new FormatterHelper(),
+                                              new DialogHelper(),
+                                         ));
 
         $this->add(new HelpCommand());
         $this->add(new ListCommand());
 
         $this->definition = new InputDefinition(array(
-            new InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
+                                                     new InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
 
-            new InputOption('--help',           '-h', InputOption::VALUE_NONE, 'Display this help message.'),
-            new InputOption('--quiet',          '-q', InputOption::VALUE_NONE, 'Do not output any message.'),
-            new InputOption('--verbose',        '-v', InputOption::VALUE_NONE, 'Increase verbosity of messages.'),
-            new InputOption('--version',        '-V', InputOption::VALUE_NONE, 'Display this program version.'),
-            new InputOption('--ansi',           '',   InputOption::VALUE_NONE, 'Force ANSI output.'),
-            new InputOption('--no-ansi',        '',   InputOption::VALUE_NONE, 'Disable ANSI output.'),
-            new InputOption('--no-interaction', '-n', InputOption::VALUE_NONE, 'Do not ask any interactive question.'),
-        ));
+                                                     new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message.'),
+                                                     new InputOption('--quiet', '-q', InputOption::VALUE_NONE, 'Do not output any message.'),
+                                                     new InputOption('--verbose', '-v', InputOption::VALUE_NONE, 'Increase verbosity of messages.'),
+                                                     new InputOption('--version', '-V', InputOption::VALUE_NONE, 'Display this program version.'),
+                                                     new InputOption('--ansi', '', InputOption::VALUE_NONE, 'Force ANSI output.'),
+                                                     new InputOption('--no-ansi', '', InputOption::VALUE_NONE, 'Disable ANSI output.'),
+                                                     new InputOption('--no-interaction', '-n', InputOption::VALUE_NONE, 'Do not ask any interactive question.'),
+                                                ));
     }
 
     /**
@@ -248,9 +248,9 @@ class Application
 
         foreach ($this->getDefinition()->getOptions() as $option) {
             $messages[] = sprintf('  %-29s %s %s',
-                '<info>--'.$option->getName().'</info>',
-                $option->getShortcut() ? '<info>-'.$option->getShortcut().'</info>' : '  ',
-                $option->getDescription()
+                                  '<info>--' . $option->getName() . '</info>',
+                                  $option->getShortcut() ? '<info>-' . $option->getShortcut() . '</info>' : '  ',
+                                  $option->getDescription()
             );
         }
 
@@ -266,7 +266,7 @@ class Application
      */
     public function setCatchExceptions($boolean)
     {
-        $this->catchExceptions = (Boolean) $boolean;
+        $this->catchExceptions = (Boolean)$boolean;
     }
 
     /**
@@ -278,7 +278,7 @@ class Application
      */
     public function setAutoExit($boolean)
     {
-        $this->autoExit = (Boolean) $boolean;
+        $this->autoExit = (Boolean)$boolean;
     }
 
     /**
@@ -481,7 +481,11 @@ class Application
 
         $found = array();
         foreach (explode(':', $namespace) as $i => $part) {
-            $abbrevs = static::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i) { return isset($p[$i]) ? $p[$i] : ''; }, $allNamespaces)))));
+            $abbrevs = static::getAbbreviations(array_unique(array_values(array_filter(array_map(function ($p) use ($i)
+                                                                                           {
+                                                                                               return isset($p[$i])
+                                                                                                       ? $p[$i] : '';
+                                                                                           }, $allNamespaces)))));
 
             if (!isset($abbrevs[$part])) {
                 throw new \InvalidArgumentException(sprintf('There are no commands defined in the "%s" namespace.', $namespace));
@@ -518,7 +522,7 @@ class Application
         $searchName = $name;
         if (false !== $pos = strrpos($name, ':')) {
             $namespace = $this->findNamespace(substr($name, 0, $pos));
-            $searchName = $namespace.substr($name, $pos);
+            $searchName = $namespace . substr($name, $pos);
         }
 
         // name
@@ -645,7 +649,7 @@ class Application
         // add commands by namespace
         foreach ($this->sortCommands($commands) as $space => $commands) {
             if (!$namespace && '_global' !== $space) {
-                $messages[] = '<comment>'.$space.'</comment>';
+                $messages[] = '<comment>' . $space . '</comment>';
             }
 
             foreach ($commands as $name => $command) {
@@ -732,17 +736,17 @@ class Application
                 $len = max($strlen($line) + 4, $len);
             }
 
-            $messages = array(str_repeat(' ', $len), $title.str_repeat(' ', $len - $strlen($title)));
+            $messages = array(str_repeat(' ', $len), $title . str_repeat(' ', $len - $strlen($title)));
 
             foreach ($lines as $line) {
-                $messages[] = $line.str_repeat(' ', $len - $strlen($line));
+                $messages[] = $line . str_repeat(' ', $len - $strlen($line));
             }
 
             $messages[] = str_repeat(' ', $len);
 
             $output->writeln("\n");
             foreach ($messages as $message) {
-                $output->writeln('<error>'.$message.'</error>');
+                $output->writeln('<error>' . $message . '</error>');
             }
             $output->writeln("\n");
 
@@ -752,11 +756,11 @@ class Application
                 // exception related properties
                 $trace = $e->getTrace();
                 array_unshift($trace, array(
-                    'function' => '',
-                    'file'     => $e->getFile() != null ? $e->getFile() : 'n/a',
-                    'line'     => $e->getLine() != null ? $e->getLine() : 'n/a',
-                    'args'     => array(),
-                ));
+                                           'function' => '',
+                                           'file' => $e->getFile() != null ? $e->getFile() : 'n/a',
+                                           'line' => $e->getLine() != null ? $e->getLine() : 'n/a',
+                                           'args' => array(),
+                                      ));
 
                 for ($i = 0, $count = count($trace); $i < $count; $i++) {
                     $class = isset($trace[$i]['class']) ? $trace[$i]['class'] : '';
@@ -826,7 +830,8 @@ class Application
      */
     private function getAbbreviationSuggestions($abbrevs)
     {
-        return sprintf('%s, %s%s', $abbrevs[0], $abbrevs[1], count($abbrevs) > 2 ? sprintf(' and %d more', count($abbrevs) - 2) : '');
+        return sprintf('%s, %s%s', $abbrevs[0], $abbrevs[1], count($abbrevs) > 2
+                                         ? sprintf(' and %d more', count($abbrevs) - 2) : '');
     }
 
     private function extractNamespace($name, $limit = null)

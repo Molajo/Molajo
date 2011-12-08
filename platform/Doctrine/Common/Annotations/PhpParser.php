@@ -44,9 +44,9 @@ final class PhpParser
         // This is a short-cut for code that follows some conventions:
         // - namespaced
         // - one class per file
-        if (preg_match_all('#\bnamespace\s+'.str_replace('\\', '\\\\', $class->getNamespaceName()).'\s*;.*?\b(?:class|interface)\s+'.$class->getShortName().'\b#s', $src, $matches)) {
+        if (preg_match_all('#\bnamespace\s+' . str_replace('\\', '\\\\', $class->getNamespaceName()) . '\s*;.*?\b(?:class|interface)\s+' . $class->getShortName() . '\b#s', $src, $matches)) {
             foreach ($matches[0] as $match) {
-                $classes = $this->parse('<?php '.$match, $name);
+                $classes = $this->parse('<?php ' . $match, $name);
 
                 if (isset($classes[$name])) {
                     return $classes[$name];
@@ -70,7 +70,7 @@ final class PhpParser
                 $uses = array();
             } elseif (T_CLASS === $token[0] || T_INTERFACE === $token[0]) {
                 if ('' !== $namespace) {
-                    $class = $namespace.'\\'.$this->nextValue();
+                    $class = $namespace . '\\' . $this->nextValue();
                 } else {
                     $class = $this->nextValue();
                 }

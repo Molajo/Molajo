@@ -428,7 +428,7 @@ abstract class MolajoTable extends JObject
         return true;
     }
 
-    private function _storeAsset ()
+    private function _storeAsset()
     {
         $asset = MolajoTable::getInstance('Asset');
 
@@ -488,6 +488,7 @@ abstract class MolajoTable extends JObject
         //			}
         //        }
     }
+
     /**
      * save
      *

@@ -34,7 +34,7 @@ class DB2Keywords extends KeywordList
     {
         return 'DB2';
     }
-    
+
     protected function getKeywords()
     {
         return array(

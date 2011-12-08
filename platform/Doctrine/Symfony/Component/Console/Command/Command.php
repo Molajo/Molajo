@@ -218,9 +218,9 @@ class Command
         }
 
         $this->definition->setArguments(array_merge(
-            $this->application->getDefinition()->getArguments(),
-            $this->definition->getArguments()
-        ));
+                                            $this->application->getDefinition()->getArguments(),
+                                            $this->definition->getArguments()
+                                        ));
 
         $this->definition->addOptions($this->application->getDefinition()->getOptions());
 
@@ -409,7 +409,7 @@ class Command
         );
         $replacements = array(
             $name,
-            $_SERVER['PHP_SELF'].' '.$name
+            $_SERVER['PHP_SELF'] . ' ' . $name
         );
 
         return str_replace($placeholders, $replacements, $this->getHelp());
@@ -486,19 +486,19 @@ class Command
     {
         $messages = array(
             '<comment>Usage:</comment>',
-            ' '.$this->getSynopsis(),
+            ' ' . $this->getSynopsis(),
             '',
         );
 
         if ($this->getAliases()) {
-            $messages[] = '<comment>Aliases:</comment> <info>'.implode(', ', $this->getAliases()).'</info>';
+            $messages[] = '<comment>Aliases:</comment> <info>' . implode(', ', $this->getAliases()) . '</info>';
         }
 
         $messages[] = $this->definition->asText();
 
         if ($help = $this->getProcessedHelp()) {
             $messages[] = '<comment>Help:</comment>';
-            $messages[] = ' '.implode("\n ", explode("\n", $help))."\n";
+            $messages[] = ' ' . implode("\n ", explode("\n", $help)) . "\n";
         }
 
         return implode("\n", $messages);

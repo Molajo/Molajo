@@ -50,11 +50,11 @@ class MySqlSchemaManager extends AbstractSchemaManager
         );
     }
 
-    protected function _getPortableTableIndexesList($tableIndexes, $tableName=null)
+    protected function _getPortableTableIndexesList($tableIndexes, $tableName = null)
     {
-        foreach($tableIndexes AS $k => $v) {
+        foreach ($tableIndexes AS $k => $v) {
             $v = array_change_key_case($v, CASE_LOWER);
-            if($v['key_name'] == 'PRIMARY') {
+            if ($v['key_name'] == 'PRIMARY') {
                 $v['primary'] = true;
             } else {
                 $v['primary'] = false;
@@ -94,12 +94,12 @@ class MySqlSchemaManager extends AbstractSchemaManager
             $decimal = '';
         } else {
             $length = strtok('(), ');
-            $decimal = strtok('(), ') ? strtok('(), '):null;
+            $decimal = strtok('(), ') ? strtok('(), ') : null;
         }
         $type = array();
         $unsigned = $fixed = null;
 
-        if ( ! isset($tableColumn['name'])) {
+        if (!isset($tableColumn['name'])) {
             $tableColumn['name'] = '';
         }
 
@@ -119,7 +119,7 @@ class MySqlSchemaManager extends AbstractSchemaManager
             case 'real':
             case 'numeric':
             case 'decimal':
-                if(preg_match('([A-Za-z]+\(([0-9]+)\,([0-9]+)\))', $tableColumn['type'], $match)) {
+                if (preg_match('([A-Za-z]+\(([0-9]+)\,([0-9]+)\))', $tableColumn['type'], $match)) {
                     $precision = $match[1];
                     $scale = $match[2];
                     $length = null;
@@ -142,24 +142,24 @@ class MySqlSchemaManager extends AbstractSchemaManager
                 break;
         }
 
-        $length = ((int) $length == 0) ? null : (int) $length;
-        $def =  array(
+        $length = ((int)$length == 0) ? null : (int)$length;
+        $def = array(
             'type' => $type,
             'length' => $length,
-            'unsigned' => (bool) $unsigned,
-            'fixed' => (bool) $fixed
+            'unsigned' => (bool)$unsigned,
+            'fixed' => (bool)$fixed
         );
 
         $options = array(
-            'length'        => $length,
-            'unsigned'      => (bool)$unsigned,
-            'fixed'         => (bool)$fixed,
-            'default'       => isset($tableColumn['default']) ? $tableColumn['default'] : null,
-            'notnull'       => (bool) ($tableColumn['null'] != 'YES'),
-            'scale'         => null,
-            'precision'     => null,
-            'autoincrement' => (bool) (strpos($tableColumn['extra'], 'auto_increment') !== false),
-            'comment'       => (isset($tableColumn['comment'])) ? $tableColumn['comment'] : null
+            'length' => $length,
+            'unsigned' => (bool)$unsigned,
+            'fixed' => (bool)$fixed,
+            'default' => isset($tableColumn['default']) ? $tableColumn['default'] : null,
+            'notnull' => (bool)($tableColumn['null'] != 'YES'),
+            'scale' => null,
+            'precision' => null,
+            'autoincrement' => (bool)(strpos($tableColumn['extra'], 'auto_increment') !== false),
+            'comment' => (isset($tableColumn['comment'])) ? $tableColumn['comment'] : null
         );
 
         if ($scale !== null && $precision !== null) {
@@ -187,8 +187,8 @@ class MySqlSchemaManager extends AbstractSchemaManager
             (array)$tableForeignKey['referenced_column_name'],
             $tableForeignKey['constraint_name'],
             array(
-                'onUpdate' => $tableForeignKey['update_rule'],
-                'onDelete' => $tableForeignKey['delete_rule'],
+                 'onUpdate' => $tableForeignKey['update_rule'],
+                 'onDelete' => $tableForeignKey['delete_rule'],
             )
         );
     }

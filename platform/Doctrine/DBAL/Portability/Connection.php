@@ -26,31 +26,31 @@ use Doctrine\DBAL\Driver;
 
 class Connection extends \Doctrine\DBAL\Connection
 {
-    const PORTABILITY_ALL               = 255;
-    const PORTABILITY_NONE              = 0;
-    const PORTABILITY_RTRIM             = 1;
-    const PORTABILITY_EMPTY_TO_NULL     = 4;
-    const PORTABILITY_FIX_CASE          = 8;
-    
-    const PORTABILITY_ORACLE            = 9;
-    const PORTABILITY_POSTGRESQL        = 13;
-    const PORTABILITY_SQLITE            = 13;
-    const PORTABILITY_OTHERVENDORS      = 12;
-    
+    const PORTABILITY_ALL = 255;
+    const PORTABILITY_NONE = 0;
+    const PORTABILITY_RTRIM = 1;
+    const PORTABILITY_EMPTY_TO_NULL = 4;
+    const PORTABILITY_FIX_CASE = 8;
+
+    const PORTABILITY_ORACLE = 9;
+    const PORTABILITY_POSTGRESQL = 13;
+    const PORTABILITY_SQLITE = 13;
+    const PORTABILITY_OTHERVENDORS = 12;
+
     /**
      * @var int
      */
     private $portability = self::PORTABILITY_NONE;
-    
+
     /**
      * @var int
      */
     private $case = \PDO::CASE_NATURAL;
-    
+
     public function connect()
     {
         $ret = parent::connect();
-        if ($ret) {       
+        if ($ret) {
             $params = $this->getParams();
             if (isset($params['portability'])) {
                 if ($this->_platform->getName() === "oracle") {
@@ -71,26 +71,26 @@ class Connection extends \Doctrine\DBAL\Connection
                 } else {
                     $this->case = ($params['fetch_case'] == \PDO::CASE_LOWER) ? CASE_LOWER : CASE_UPPER;
                 }
-            }    
+            }
         }
         return $ret;
     }
-    
+
     public function getPortability()
     {
         return $this->portability;
     }
-    
+
     public function getFetchCase()
     {
         return $this->case;
     }
-    
+
     public function executeQuery($query, array $params = array(), $types = array())
     {
         return new Statement(parent::executeQuery($query, $params, $types), $this);
     }
-    
+
     /**
      * Prepares an SQL statement.
      *
@@ -101,7 +101,7 @@ class Connection extends \Doctrine\DBAL\Connection
     {
         return new Statement(parent::prepare($statement), $this);
     }
-    
+
     public function query()
     {
         $this->connect();

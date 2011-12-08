@@ -36,7 +36,7 @@ namespace Doctrine\ORM\Tools;
 class EntityRepositoryGenerator
 {
     protected static $_template =
-'<?php
+    '<?php
 
 namespace <namespace>;
 
@@ -69,14 +69,14 @@ class <className> extends EntityRepository
         $code = $this->generateEntityRepositoryClass($fullClassName);
 
         $path = $outputDirectory . DIRECTORY_SEPARATOR
-              . str_replace('\\', \DIRECTORY_SEPARATOR, $fullClassName) . '.php';
+                . str_replace('\\', \DIRECTORY_SEPARATOR, $fullClassName) . '.php';
         $dir = dirname($path);
 
-        if ( ! is_dir($dir)) {
+        if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
 
-        if ( ! file_exists($path)) {
+        if (!file_exists($path)) {
             file_put_contents($path, $code);
         }
     }

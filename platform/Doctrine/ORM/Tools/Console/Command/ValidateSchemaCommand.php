@@ -22,8 +22,8 @@
 namespace Doctrine\ORM\Tools\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console;
 
 /**
  * Validate that the current mapping is valid
@@ -45,9 +45,9 @@ class ValidateSchemaCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('orm:validate-schema')
-        ->setDescription('Validate that the mapping files.')
-        ->setHelp(<<<EOT
+                ->setName('orm:validate-schema')
+                ->setDescription('Validate that the mapping files.')
+                ->setHelp(<<<EOT
 'Validate that the mapping files are correct and in sync with the database.'
 EOT
         );

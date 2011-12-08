@@ -20,12 +20,12 @@
 namespace Doctrine\ORM;
 
 use Doctrine\Common\Cache\Cache,
-    Doctrine\Common\Cache\ArrayCache,
-    Doctrine\Common\Annotations\AnnotationRegistry,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\Common\Annotations\SimpleAnnotationReader,
-    Doctrine\ORM\Mapping\Driver\Driver,
-    Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+Doctrine\Common\Cache\ArrayCache,
+Doctrine\Common\Annotations\AnnotationRegistry,
+Doctrine\Common\Annotations\AnnotationReader,
+Doctrine\Common\Annotations\SimpleAnnotationReader,
+Doctrine\ORM\Mapping\Driver\Driver,
+Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
 /**
  * Configuration container for all configuration options of Doctrine.
@@ -170,7 +170,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function getEntityNamespace($entityNamespaceAlias)
     {
-        if ( ! isset($this->_attributes['entityNamespaces'][$entityNamespaceAlias])) {
+        if (!isset($this->_attributes['entityNamespaces'][$entityNamespaceAlias])) {
             throw ORMException::unknownEntityNamespace($entityNamespaceAlias);
         }
 
@@ -292,7 +292,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function getNamedQuery($name)
     {
-        if ( ! isset($this->_attributes['namedQueries'][$name])) {
+        if (!isset($this->_attributes['namedQueries'][$name])) {
             throw ORMException::namedQueryNotFound($name);
         }
         return $this->_attributes['namedQueries'][$name];
@@ -319,7 +319,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function getNamedNativeQuery($name)
     {
-        if ( ! isset($this->_attributes['namedNativeQueries'][$name])) {
+        if (!isset($this->_attributes['namedNativeQueries'][$name])) {
             throw ORMException::namedNativeQueryNotFound($name);
         }
         return $this->_attributes['namedNativeQueries'][$name];
@@ -334,10 +334,10 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function ensureProductionSettings()
     {
-        if ( !$this->getQueryCacheImpl()) {
+        if (!$this->getQueryCacheImpl()) {
             throw ORMException::queryCacheNotConfigured();
         }
-        if ( !$this->getMetadataCacheImpl()) {
+        if (!$this->getMetadataCacheImpl()) {
             throw ORMException::metadataCacheNotConfigured();
         }
         if ($this->getAutoGenerateProxyClasses()) {
@@ -483,7 +483,7 @@ class Configuration extends \Doctrine\DBAL\Configuration
     public function getCustomHydrationMode($modeName)
     {
         return isset($this->_attributes['customHydrationModes'][$modeName]) ?
-            $this->_attributes['customHydrationModes'][$modeName] : null;
+                $this->_attributes['customHydrationModes'][$modeName] : null;
     }
 
     /**

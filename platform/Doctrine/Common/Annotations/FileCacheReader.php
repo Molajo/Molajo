@@ -46,7 +46,7 @@ class FileCacheReader implements Reader
             throw new \InvalidArgumentException(sprintf('The directory "%s" is not writable.', $cacheDir));
         }
 
-        $this->dir   = rtrim($cacheDir, '\\/');
+        $this->dir = rtrim($cacheDir, '\\/');
         $this->debug = $debug;
     }
 
@@ -58,7 +58,7 @@ class FileCacheReader implements Reader
             return $this->loadedAnnotations[$key];
         }
 
-        $path = $this->dir.'/'.strtr($key, '\\', '-').'.cache.php';
+        $path = $this->dir . '/' . strtr($key, '\\', '-') . '.cache.php';
         if (!file_exists($path)) {
             $annot = $this->reader->getClassAnnotations($class);
             $this->saveCacheFile($path, $annot);
@@ -67,7 +67,8 @@ class FileCacheReader implements Reader
 
         if ($this->debug
             && (false !== $filename = $class->getFilename())
-            && filemtime($path) < filemtime($filename)) {
+            && filemtime($path) < filemtime($filename)
+        ) {
             @unlink($path);
 
             $annot = $this->reader->getClassAnnotations($class);
@@ -81,13 +82,13 @@ class FileCacheReader implements Reader
     public function getPropertyAnnotations(\ReflectionProperty $property)
     {
         $class = $property->getDeclaringClass();
-        $key = $class->getName().'$'.$property->getName();
+        $key = $class->getName() . '$' . $property->getName();
 
         if (isset($this->loadedAnnotations[$key])) {
             return $this->loadedAnnotations[$key];
         }
 
-        $path = $this->dir.'/'.strtr($key, '\\', '-').'.cache.php';
+        $path = $this->dir . '/' . strtr($key, '\\', '-') . '.cache.php';
         if (!file_exists($path)) {
             $annot = $this->reader->getPropertyAnnotations($property);
             $this->saveCacheFile($path, $annot);
@@ -96,7 +97,8 @@ class FileCacheReader implements Reader
 
         if ($this->debug
             && (false !== $filename = $class->getFilename())
-            && filemtime($path) < filemtime($filename)) {
+            && filemtime($path) < filemtime($filename)
+        ) {
             unlink($path);
 
             $annot = $this->reader->getPropertyAnnotations($property);
@@ -110,13 +112,13 @@ class FileCacheReader implements Reader
     public function getMethodAnnotations(\ReflectionMethod $method)
     {
         $class = $method->getDeclaringClass();
-        $key = $class->getName().'#'.$method->getName();
+        $key = $class->getName() . '#' . $method->getName();
 
         if (isset($this->loadedAnnotations[$key])) {
             return $this->loadedAnnotations[$key];
         }
 
-        $path = $this->dir.'/'.strtr($key, '\\', '-').'.cache.php';
+        $path = $this->dir . '/' . strtr($key, '\\', '-') . '.cache.php';
         if (!file_exists($path)) {
             $annot = $this->reader->getMethodAnnotations($method);
             $this->saveCacheFile($path, $annot);
@@ -125,7 +127,8 @@ class FileCacheReader implements Reader
 
         if ($this->debug
             && (false !== $filename = $class->getFilename())
-            && filemtime($path) < filemtime($filename)) {
+            && filemtime($path) < filemtime($filename)
+        ) {
             unlink($path);
 
             $annot = $this->reader->getMethodAnnotations($method);
@@ -138,7 +141,7 @@ class FileCacheReader implements Reader
 
     private function saveCacheFile($path, $data)
     {
-        file_put_contents($path, '<?php return unserialize('.var_export(serialize($data), true).');');
+        file_put_contents($path, '<?php return unserialize(' . var_export(serialize($data), true) . ');');
     }
 
     /**

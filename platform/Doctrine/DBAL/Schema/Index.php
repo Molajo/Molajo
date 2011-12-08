@@ -44,15 +44,15 @@ class Index extends AbstractAsset implements Constraint
      * @param bool $isUnique
      * @param bool $isPrimary
      */
-    public function __construct($indexName, array $columns, $isUnique=false, $isPrimary=false)
+    public function __construct($indexName, array $columns, $isUnique = false, $isPrimary = false)
     {
-        $isUnique = ($isPrimary)?true:$isUnique;
+        $isUnique = ($isPrimary) ? true : $isUnique;
 
         $this->_setName($indexName);
         $this->_isUnique = $isUnique;
         $this->_isPrimary = $isPrimary;
 
-        foreach($columns AS $column) {
+        foreach ($columns AS $column) {
             $this->_addColumn($column);
         }
     }
@@ -62,7 +62,7 @@ class Index extends AbstractAsset implements Constraint
      */
     protected function _addColumn($column)
     {
-        if(is_string($column)) {
+        if (is_string($column)) {
             $this->_columns[] = $column;
         } else {
             throw new \InvalidArgumentException("Expecting a string as Index Column");
@@ -76,10 +76,10 @@ class Index extends AbstractAsset implements Constraint
     {
         return $this->_columns;
     }
-    
+
     /**
      * Is the index neither unique nor primary key?
-     * 
+     *
      * @return bool
      */
     public function isSimpleIndex()
@@ -108,7 +108,7 @@ class Index extends AbstractAsset implements Constraint
      * @param  int $pos
      * @return bool
      */
-    public function hasColumnAtPosition($columnName, $pos=0)
+    public function hasColumnAtPosition($columnName, $pos = 0)
     {
         $columnName = strtolower($columnName);
         $indexColumns = \array_map('strtolower', $this->getColumns());

@@ -20,7 +20,7 @@
 namespace Doctrine\DBAL\Platforms;
 
 use Doctrine\DBAL\Schema\TableDiff,
-    Doctrine\DBAL\Schema\Table;
+Doctrine\DBAL\Schema\Table;
 
 /**
  * PostgreSqlPlatform.
@@ -86,9 +86,9 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         if ($startPos !== false) {
             $str = $this->getSubstringExpression($str, $startPos);
-            return 'CASE WHEN (POSITION('.$substr.' IN '.$str.') = 0) THEN 0 ELSE (POSITION('.$substr.' IN '.$str.') + '.($startPos-1).') END';
+            return 'CASE WHEN (POSITION(' . $substr . ' IN ' . $str . ') = 0) THEN 0 ELSE (POSITION(' . $substr . ' IN ' . $str . ') + ' . ($startPos - 1) . ') END';
         } else {
-            return 'POSITION('.$substr.' IN '.$str.')';
+            return 'POSITION(' . $substr . ' IN ' . $str . ')';
         }
     }
 
@@ -116,7 +116,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return "(" . $date . "- interval '" . $months . " month')";
     }
-    
+
     /**
      * parses a literal boolean value and returns
      * proper sql equivalent
@@ -128,7 +128,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return $value;
     }*/
-    
+
     /**
      * Whether the platform supports sequences.
      * Postgres has native support for sequences.
@@ -139,17 +139,17 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return true;
     }
-    
+
     /**
      * Whether the platform supports database schemas.
-     * 
+     *
      * @return boolean
      */
     public function supportsSchemas()
     {
         return true;
     }
-    
+
     /**
      * Whether the platform supports identity columns.
      * Postgres supports these through the SERIAL keyword.
@@ -165,7 +165,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return true;
     }
-    
+
     /**
      * Whether the platform prefers sequences for ID generation.
      *
@@ -210,7 +210,7 @@ class PostgreSqlPlatform extends AbstractPlatform
                   (
                       SELECT c.oid
                       FROM pg_catalog.pg_class c, pg_catalog.pg_namespace n
-                      WHERE " .$this->getTableWhereClause($table) ." AND n.oid = c.relnamespace
+                      WHERE " . $this->getTableWhereClause($table) . " AND n.oid = c.relnamespace
                   )
                   AND r.contype = 'f'";
     }
@@ -222,7 +222,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 
     public function getDropViewSQL($name)
     {
-        return 'DROP VIEW '. $name;
+        return 'DROP VIEW ' . $name;
     }
 
     public function getListTableConstraintsSQL($table)
@@ -254,7 +254,7 @@ class PostgreSqlPlatform extends AbstractPlatform
                  WHERE oid IN (
                     SELECT indexrelid
                     FROM pg_index si, pg_class sc, pg_namespace sn
-                    WHERE " . $this->getTableWhereClause($table, 'sc', 'sn')." AND sc.oid=si.indrelid AND sc.relnamespace = sn.oid
+                    WHERE " . $this->getTableWhereClause($table, 'sc', 'sn') . " AND sc.oid=si.indrelid AND sc.relnamespace = sn.oid
                  ) AND pg_index.indexrelid = oid";
     }
 
@@ -266,7 +266,7 @@ class PostgreSqlPlatform extends AbstractPlatform
      */
     private function getTableWhereClause($table, $classAlias = 'c', $namespaceAlias = 'n')
     {
-        $whereClause = $namespaceAlias.".nspname NOT IN ('pg_catalog', 'information_schema', 'pg_toast') AND ";
+        $whereClause = $namespaceAlias . ".nspname NOT IN ('pg_catalog', 'information_schema', 'pg_toast') AND ";
         if (strpos($table, ".") !== false) {
             list($schema, $table) = explode(".", $table);
             $whereClause .= "$classAlias.relname = '" . $table . "' AND $namespaceAlias.nspname = '" . $schema . "'";
@@ -303,14 +303,14 @@ class PostgreSqlPlatform extends AbstractPlatform
                         FROM pg_description WHERE pg_description.objoid = c.oid AND a.attnum = pg_description.objsubid
                     ) AS comment
                     FROM pg_attribute a, pg_class c, pg_type t, pg_namespace n
-                    WHERE ".$this->getTableWhereClause($table, 'c', 'n') ."
+                    WHERE " . $this->getTableWhereClause($table, 'c', 'n') . "
                         AND a.attnum > 0
                         AND a.attrelid = c.oid
                         AND a.atttypid = t.oid
                         AND n.oid = c.relnamespace
                     ORDER BY a.attnum";
     }
-    
+
     /**
      * create a new database
      *
@@ -363,7 +363,7 @@ class PostgreSqlPlatform extends AbstractPlatform
         }
         return $query;
     }
-    
+
     /**
      * generates the sql for altering an existing table on postgresql
      *
@@ -397,7 +397,7 @@ class PostgreSqlPlatform extends AbstractPlatform
         foreach ($diff->changedColumns AS $columnDiff) {
             $oldColumnName = $columnDiff->oldColumnName;
             $column = $columnDiff->column;
-            
+
             if ($columnDiff->hasChanged('type')) {
                 $type = $column->getType();
 
@@ -443,7 +443,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 
         return array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff), $commentsSQL);
     }
-    
+
     /**
      * Gets the SQL to create a sequence on this platform.
      *
@@ -457,13 +457,13 @@ class PostgreSqlPlatform extends AbstractPlatform
                ' MINVALUE ' . $sequence->getInitialValue() .
                ' START ' . $sequence->getInitialValue();
     }
-    
+
     public function getAlterSequenceSQL(\Doctrine\DBAL\Schema\Sequence $sequence)
     {
-        return 'ALTER SEQUENCE ' . $sequence->getQuotedName($this) . 
+        return 'ALTER SEQUENCE ' . $sequence->getQuotedName($this) .
                ' INCREMENT BY ' . $sequence->getAllocationSize();
     }
-    
+
     /**
      * Drop existing sequence
      * @param  \Doctrine\DBAL\Schema\Sequence $sequence
@@ -486,7 +486,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return $this->getDropConstraintSQL($foreignKey, $table);
     }
-    
+
     /**
      * Gets the SQL used to create a table.
      *
@@ -499,7 +499,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         $queryFields = $this->getColumnDeclarationListSQL($columns);
 
-        if (isset($options['primary']) && ! empty($options['primary'])) {
+        if (isset($options['primary']) && !empty($options['primary'])) {
             $keyColumns = array_unique(array_values($options['primary']));
             $queryFields .= ', PRIMARY KEY(' . implode(', ', $keyColumns) . ')';
         }
@@ -508,21 +508,21 @@ class PostgreSqlPlatform extends AbstractPlatform
 
         $sql[] = $query;
 
-        if (isset($options['indexes']) && ! empty($options['indexes'])) {
+        if (isset($options['indexes']) && !empty($options['indexes'])) {
             foreach ($options['indexes'] AS $index) {
                 $sql[] = $this->getCreateIndexSQL($index, $tableName);
             }
         }
 
         if (isset($options['foreignKeys'])) {
-            foreach ((array) $options['foreignKeys'] as $definition) {
+            foreach ((array)$options['foreignKeys'] as $definition) {
                 $sql[] = $this->getCreateForeignKeySQL($definition, $tableName);
             }
         }
 
         return $sql;
     }
-    
+
     /**
      * Postgres wants boolean values converted to the strings 'true'/'false'.
      *
@@ -538,9 +538,9 @@ class PostgreSqlPlatform extends AbstractPlatform
                 }
             }
         } else {
-           if (is_bool($item) || is_numeric($item)) {
-               $item = ($item) ? 'true' : 'false';
-           }
+            if (is_bool($item) || is_numeric($item)) {
+                $item = ($item) ? 'true' : 'false';
+            }
         }
         return $item;
     }
@@ -553,9 +553,9 @@ class PostgreSqlPlatform extends AbstractPlatform
     public function getSetTransactionIsolationSQL($level)
     {
         return 'SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL '
-                . $this->_getTransactionIsolationLevelSQL($level);
+               . $this->_getTransactionIsolationLevelSQL($level);
     }
-    
+
     /**
      * @override
      */
@@ -569,10 +569,10 @@ class PostgreSqlPlatform extends AbstractPlatform
      */
     public function getIntegerTypeDeclarationSQL(array $field)
     {
-        if ( ! empty($field['autoincrement'])) {
+        if (!empty($field['autoincrement'])) {
             return 'SERIAL';
         }
-        
+
         return 'INT';
     }
 
@@ -581,7 +581,7 @@ class PostgreSqlPlatform extends AbstractPlatform
      */
     public function getBigIntTypeDeclarationSQL(array $field)
     {
-        if ( ! empty($field['autoincrement'])) {
+        if (!empty($field['autoincrement'])) {
             return 'BIGSERIAL';
         }
         return 'BIGINT';
@@ -610,7 +610,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return 'TIMESTAMP(0) WITH TIME ZONE';
     }
-    
+
     /**
      * @override
      */
@@ -646,7 +646,7 @@ class PostgreSqlPlatform extends AbstractPlatform
         return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR(255)')
                 : ($length ? 'VARCHAR(' . $length . ')' : 'VARCHAR(255)');
     }
-    
+
     /** @override */
     public function getClobTypeDeclarationSQL(array $field)
     {
@@ -662,12 +662,12 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return 'postgresql';
     }
-    
+
     /**
      * Gets the character casing of a column in an SQL result set.
-     * 
+     *
      * PostgreSQL returns all column names in SQL result sets in lowercase.
-     * 
+     *
      * @param string $column The column name for which to get the correct character casing.
      * @return string The column name in the character casing used in SQL result sets.
      */
@@ -675,7 +675,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return strtolower($column);
     }
-    
+
     public function getDateTimeTzFormatString()
     {
         return 'Y-m-d H:i:sO';
@@ -684,8 +684,8 @@ class PostgreSqlPlatform extends AbstractPlatform
     /**
      * Get the insert sql for an empty insert statement
      *
-     * @param string $tableName 
-     * @param string $identifierColumnName 
+     * @param string $tableName
+     * @param string $identifierColumnName
      * @return string $sql
      */
     public function getEmptyIdentityInsertSQL($quotedTableName, $quotedIdentifierColumnName)
@@ -698,7 +698,7 @@ class PostgreSqlPlatform extends AbstractPlatform
      */
     public function getTruncateTableSQL($tableName, $cascade = false)
     {
-        return 'TRUNCATE '.$tableName.' '.(($cascade)?'CASCADE':'');
+        return 'TRUNCATE ' . $tableName . ' ' . (($cascade) ? 'CASCADE' : '');
     }
 
     public function getReadLockSQL()
@@ -709,41 +709,41 @@ class PostgreSqlPlatform extends AbstractPlatform
     protected function initializeDoctrineTypeMappings()
     {
         $this->doctrineTypeMapping = array(
-            'smallint'      => 'smallint',
-            'int2'          => 'smallint',
-            'serial'        => 'integer',
-            'serial4'       => 'integer',
-            'int'           => 'integer',
-            'int4'          => 'integer',
-            'integer'       => 'integer',
-            'bigserial'     => 'bigint',
-            'serial8'       => 'bigint',
-            'bigint'        => 'bigint',
-            'int8'          => 'bigint',
-            'bool'          => 'boolean',
-            'boolean'       => 'boolean',
-            'text'          => 'text',
-            'varchar'       => 'string',
-            'interval'      => 'string',
-            '_varchar'      => 'string',
-            'char'          => 'string',
-            'bpchar'        => 'string',
-            'date'          => 'date',
-            'datetime'      => 'datetime',
-            'timestamp'     => 'datetime',
-            'timestamptz'   => 'datetimetz',
-            'time'          => 'time',
-            'timetz'        => 'time',
-            'float'         => 'float',
-            'float4'        => 'float',
-            'float8'        => 'float',
-            'double'        => 'float',
+            'smallint' => 'smallint',
+            'int2' => 'smallint',
+            'serial' => 'integer',
+            'serial4' => 'integer',
+            'int' => 'integer',
+            'int4' => 'integer',
+            'integer' => 'integer',
+            'bigserial' => 'bigint',
+            'serial8' => 'bigint',
+            'bigint' => 'bigint',
+            'int8' => 'bigint',
+            'bool' => 'boolean',
+            'boolean' => 'boolean',
+            'text' => 'text',
+            'varchar' => 'string',
+            'interval' => 'string',
+            '_varchar' => 'string',
+            'char' => 'string',
+            'bpchar' => 'string',
+            'date' => 'date',
+            'datetime' => 'datetime',
+            'timestamp' => 'datetime',
+            'timestamptz' => 'datetimetz',
+            'time' => 'time',
+            'timetz' => 'time',
+            'float' => 'float',
+            'float4' => 'float',
+            'float8' => 'float',
+            'double' => 'float',
             'double precision' => 'float',
-            'real'          => 'float',
-            'decimal'       => 'decimal',
-            'money'         => 'decimal',
-            'numeric'       => 'decimal',
-            'year'          => 'date',
+            'real' => 'float',
+            'decimal' => 'decimal',
+            'money' => 'decimal',
+            'numeric' => 'decimal',
+            'year' => 'date',
         );
     }
 
@@ -751,7 +751,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         return 65535;
     }
-    
+
     protected function getReservedKeywordsClass()
     {
         return 'Doctrine\DBAL\Platforms\Keywords\PostgreSQLKeywords';

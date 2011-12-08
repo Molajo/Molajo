@@ -20,7 +20,7 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\MappingException;
+Doctrine\ORM\Mapping\MappingException;
 
 /**
  * The YamlDriver reads the mapping metadata from yaml schema files.
@@ -72,7 +72,7 @@ class YamlDriver extends AbstractFileDriver
                     $queryMapping = array('query' => $queryMapping);
                 }
 
-                if ( ! isset($queryMapping['name'])) {
+                if (!isset($queryMapping['name'])) {
                     $queryMapping['name'] = $name;
                 }
 
@@ -93,10 +93,10 @@ class YamlDriver extends AbstractFileDriver
                 if (isset($element['discriminatorColumn'])) {
                     $discrColumn = $element['discriminatorColumn'];
                     $metadata->setDiscriminatorColumn(array(
-                        'name' => $discrColumn['name'],
-                        'type' => $discrColumn['type'],
-                        'length' => $discrColumn['length']
-                    ));
+                                                           'name' => $discrColumn['name'],
+                                                           'type' => $discrColumn['type'],
+                                                           'length' => $discrColumn['length']
+                                                      ));
                 } else {
                     $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
@@ -112,13 +112,13 @@ class YamlDriver extends AbstractFileDriver
         // Evaluate changeTrackingPolicy
         if (isset($element['changeTrackingPolicy'])) {
             $metadata->setChangeTrackingPolicy(constant('Doctrine\ORM\Mapping\ClassMetadata::CHANGETRACKING_'
-                    . strtoupper($element['changeTrackingPolicy'])));
+                                                        . strtoupper($element['changeTrackingPolicy'])));
         }
 
         // Evaluate indexes
         if (isset($element['indexes'])) {
             foreach ($element['indexes'] as $name => $index) {
-                if ( ! isset($index['name'])) {
+                if (!isset($index['name'])) {
                     $index['name'] = $name;
                 }
 
@@ -137,7 +137,7 @@ class YamlDriver extends AbstractFileDriver
         // Evaluate uniqueConstraints
         if (isset($element['uniqueConstraints'])) {
             foreach ($element['uniqueConstraints'] as $name => $unique) {
-                if ( ! isset($unique['name'])) {
+                if (!isset($unique['name'])) {
                     $unique['name'] = $name;
                 }
 
@@ -184,7 +184,7 @@ class YamlDriver extends AbstractFileDriver
 
                 if (isset($idElement['generator'])) {
                     $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
-                            . strtoupper($idElement['generator']['strategy'])));
+                                                           . strtoupper($idElement['generator']['strategy'])));
                 }
                 // Check for SequenceGenerator/TableGenerator definition
                 if (isset($idElement['sequenceGenerator'])) {
@@ -215,7 +215,7 @@ class YamlDriver extends AbstractFileDriver
                     $mapping['id'] = true;
                     if (isset($fieldMapping['generator']['strategy'])) {
                         $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
-                                . strtoupper($fieldMapping['generator']['strategy'])));
+                                                               . strtoupper($fieldMapping['generator']['strategy'])));
                     }
                 }
                 if (isset($fieldMapping['column'])) {
@@ -475,15 +475,15 @@ class YamlDriver extends AbstractFileDriver
         );
 
         if (isset($joinColumnElement['fieldName'])) {
-            $joinColumn['fieldName'] = (string) $joinColumnElement['fieldName'];
+            $joinColumn['fieldName'] = (string)$joinColumnElement['fieldName'];
         }
 
         if (isset($joinColumnElement['unique'])) {
-            $joinColumn['unique'] = (bool) $joinColumnElement['unique'];
+            $joinColumn['unique'] = (bool)$joinColumnElement['unique'];
         }
 
         if (isset($joinColumnElement['nullable'])) {
-            $joinColumn['nullable'] = (bool) $joinColumnElement['nullable'];
+            $joinColumn['nullable'] = (bool)$joinColumnElement['nullable'];
         }
 
         if (isset($joinColumnElement['onDelete'])) {

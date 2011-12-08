@@ -22,10 +22,10 @@
 namespace Doctrine\ORM\Tools\Console\Command\SchemaTool;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Output\OutputInterface,
-    Doctrine\ORM\Tools\SchemaTool;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console\Input\InputInterface,
+Symfony\Component\Console\Output\OutputInterface,
+Doctrine\ORM\Tools\SchemaTool;
 
 /**
  * Command to generate the SQL needed to update the database schema to match
@@ -51,25 +51,25 @@ class UpdateCommand extends AbstractCommand
     protected function configure()
     {
         $this
-        ->setName($this->name)
-        ->setDescription(
+                ->setName($this->name)
+                ->setDescription(
             'Executes (or dumps) the SQL needed to update the database schema to match the current mapping metadata.'
         )
-        ->setDefinition(array(
-            new InputOption(
-                'complete', null, InputOption::VALUE_NONE,
-                'If defined, all assets of the database which are not relevant to the current metadata will be dropped.'
-            ),
+                ->setDefinition(array(
+                                     new InputOption(
+                                         'complete', null, InputOption::VALUE_NONE,
+                                         'If defined, all assets of the database which are not relevant to the current metadata will be dropped.'
+                                     ),
 
-            new InputOption(
-                'dump-sql', null, InputOption::VALUE_NONE,
-                'Dumps the generated SQL statements to the screen (does not execute them).'
-            ),
-            new InputOption(
-                'force', null, InputOption::VALUE_NONE,
-                'Causes the generated SQL statements to be physically executed against your database.'
-            ),
-        ));
+                                     new InputOption(
+                                         'dump-sql', null, InputOption::VALUE_NONE,
+                                         'Dumps the generated SQL statements to the screen (does not execute them).'
+                                     ),
+                                     new InputOption(
+                                         'force', null, InputOption::VALUE_NONE,
+                                         'Causes the generated SQL statements to be physically executed against your database.'
+                                     ),
+                                ));
 
         $fullName = $this->getName();
         $this->setHelp(<<<EOT
@@ -127,7 +127,7 @@ EOT
 
             $output->writeln(sprintf('The Schema-Tool would execute <info>"%s"</info> queries to update the database.', count($sqls)));
             $output->writeln('Please run the operation by passing one of the following options:');
-            
+
             $output->writeln(sprintf('    <info>%s --force</info> to execute the command', $this->getName()));
             $output->writeln(sprintf('    <info>%s --dump-sql</info> to dump the SQL statements to the screen', $this->getName()));
         }

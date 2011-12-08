@@ -71,7 +71,7 @@ abstract class AbstractAsset
 
     /**
      * Trim quotes from the identifier.
-     * 
+     *
      * @param  string $identifier
      * @return string
      */
@@ -82,7 +82,7 @@ abstract class AbstractAsset
 
     /**
      * Return name of this schema asset.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -114,7 +114,7 @@ abstract class AbstractAsset
      * @param  int $maxSize
      * @return string
      */
-    protected function _generateIdentifierName($columnNames, $prefix='', $maxSize=30)
+    protected function _generateIdentifierName($columnNames, $prefix = '', $maxSize = 30)
     {
         /*$columnCount = count($columnNames);
         $postfixLen = strlen($postfix);
@@ -135,9 +135,10 @@ abstract class AbstractAsset
         return $identifier;*/
 
 
-        $hash = implode("", array_map(function($column) {
-            return dechex(crc32($column));
-        }, $columnNames));
+        $hash = implode("", array_map(function($column)
+                              {
+                                  return dechex(crc32($column));
+                              }, $columnNames));
         return substr(strtoupper($prefix . "_" . $hash), 0, $maxSize);
     }
 }

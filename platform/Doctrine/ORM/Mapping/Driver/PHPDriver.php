@@ -20,23 +20,23 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use Doctrine\Common\Cache\ArrayCache,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\DBAL\Schema\AbstractSchemaManager,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\MappingException,
-    Doctrine\Common\Util\Inflector,
-    Doctrine\ORM\Mapping\Driver\AbstractFileDriver;
+Doctrine\Common\Annotations\AnnotationReader,
+Doctrine\DBAL\Schema\AbstractSchemaManager,
+Doctrine\ORM\Mapping\ClassMetadataInfo,
+Doctrine\ORM\Mapping\MappingException,
+Doctrine\Common\Util\Inflector,
+Doctrine\ORM\Mapping\Driver\AbstractFileDriver;
 
 /**
  * The PHPDriver includes php files which just populate ClassMetadataInfo
  * instances with plain php code
  *
- * @license 	http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link    	www.doctrine-project.org
- * @since   	2.0
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link        www.doctrine-project.org
+ * @since       2.0
  * @version     $Revision$
- * @author		Benjamin Eberlei <kontakt@beberlei.de>
- * @author		Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author        Benjamin Eberlei <kontakt@beberlei.de>
+ * @author        Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @author      Roman Borschel <roman@code-factory.org>
  * @todo Rename: PHPDriver

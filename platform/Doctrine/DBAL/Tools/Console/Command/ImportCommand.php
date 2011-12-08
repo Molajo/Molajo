@@ -20,7 +20,7 @@
 namespace Doctrine\DBAL\Tools\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console;
+Symfony\Component\Console;
 
 /**
  * Task for executing arbitrary SQL that can come from a file or directly from
@@ -42,14 +42,14 @@ class ImportCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('dbal:import')
-        ->setDescription('Import SQL file(s) directly to Database.')
-        ->setDefinition(array(
-            new InputArgument(
-                'file', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'File path(s) of SQL to be executed.'
-            )
-        ))
-        ->setHelp(<<<EOT
+                ->setName('dbal:import')
+                ->setDescription('Import SQL file(s) directly to Database.')
+                ->setDefinition(array(
+                                     new InputArgument(
+                                         'file', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'File path(s) of SQL to be executed.'
+                                     )
+                                ))
+                ->setHelp(<<<EOT
 Import SQL file(s) directly to Database.
 EOT
         );
@@ -62,15 +62,15 @@ EOT
     {
         $conn = $this->getHelper('db')->getConnection();
 
-        if (($fileNames = $input->getArgument('file')) !== null)  {
-            foreach ((array) $fileNames as $fileName) {
+        if (($fileNames = $input->getArgument('file')) !== null) {
+            foreach ((array)$fileNames as $fileName) {
                 $fileName = realpath($fileName);
 
-                if ( ! file_exists($fileName)) {
+                if (!file_exists($fileName)) {
                     throw new \InvalidArgumentException(
                         sprintf("SQL file '<info>%s</info>' does not exist.", $fileName)
                     );
-                } else if ( ! is_readable($fileName)) {
+                } else if (!is_readable($fileName)) {
                     throw new \InvalidArgumentException(
                         sprintf("SQL file '<info>%s</info>' does not have read permissions.", $fileName)
                     );

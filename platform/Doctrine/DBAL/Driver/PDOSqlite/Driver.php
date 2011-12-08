@@ -31,8 +31,8 @@ class Driver implements \Doctrine\DBAL\Driver
      */
     protected $_userDefinedFunctions = array(
         'sqrt' => array('callback' => array('Doctrine\DBAL\Platforms\SqlitePlatform', 'udfSqrt'), 'numArgs' => 1),
-        'mod'  => array('callback' => array('Doctrine\DBAL\Platforms\SqlitePlatform', 'udfMod'), 'numArgs' => 2),
-        'locate'  => array('callback' => array('Doctrine\DBAL\Platforms\SqlitePlatform', 'udfLocate'), 'numArgs' => -1),
+        'mod' => array('callback' => array('Doctrine\DBAL\Platforms\SqlitePlatform', 'udfMod'), 'numArgs' => 2),
+        'locate' => array('callback' => array('Doctrine\DBAL\Platforms\SqlitePlatform', 'udfLocate'), 'numArgs' => -1),
     );
 
     /**
@@ -80,7 +80,7 @@ class Driver implements \Doctrine\DBAL\Driver
         } else if (isset($params['memory'])) {
             $dsn .= ':memory:';
         }
-        
+
         return $dsn;
     }
 

@@ -22,8 +22,8 @@
 namespace Doctrine\ORM\Tools\Console\Command\ClearCache;
 
 use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+Symfony\Component\Console\Input\InputOption,
+Symfony\Component\Console;
 
 /**
  * Command to clear the result cache of the various cache drivers.
@@ -45,27 +45,27 @@ class ResultCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('orm:clear-cache:result')
-        ->setDescription('Clear result cache of the various cache drivers.')
-        ->setDefinition(array(
-            new InputOption(
-                'id', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'ID(s) of the cache entry to delete (accepts * wildcards).', array()
-            ),
-            new InputOption(
-                'regex', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Delete cache entries that match the given regular expression(s).', array()
-            ),
-            new InputOption(
-                'prefix', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Delete cache entries that have the given prefix(es).', array()
-            ),
-            new InputOption(
-                'suffix', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Delete cache entries that have the given suffix(es).', array()
-            ),
-        ))
-        ->setHelp(<<<EOT
+                ->setName('orm:clear-cache:result')
+                ->setDescription('Clear result cache of the various cache drivers.')
+                ->setDefinition(array(
+                                     new InputOption(
+                                         'id', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                                         'ID(s) of the cache entry to delete (accepts * wildcards).', array()
+                                     ),
+                                     new InputOption(
+                                         'regex', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                                         'Delete cache entries that match the given regular expression(s).', array()
+                                     ),
+                                     new InputOption(
+                                         'prefix', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                                         'Delete cache entries that have the given prefix(es).', array()
+                                     ),
+                                     new InputOption(
+                                         'suffix', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                                         'Delete cache entries that have the given suffix(es).', array()
+                                     ),
+                                ))
+                ->setHelp(<<<EOT
 Clear result cache of the various cache drivers.
 If none of the options are defined, all cache entries will be removed.
 EOT
@@ -80,7 +80,7 @@ EOT
         $em = $this->getHelper('em')->getEntityManager();
         $cacheDriver = $em->getConfiguration()->getResultCacheImpl();
 
-        if ( ! $cacheDriver) {
+        if (!$cacheDriver) {
             throw new \InvalidArgumentException('No Result cache driver is configured on given EntityManager.');
         }
 
@@ -110,11 +110,11 @@ EOT
 
         // Removing based on --regex
         if (($regexps = $input->getOption('regex')) !== null && $regexps) {
-            foreach($regexps as $regex) {
+            foreach ($regexps as $regex) {
                 $output->write($outputed ? PHP_EOL : '');
                 $output->write(sprintf('Clearing Result cache entries that match the regular expression "<info>%s</info>"', $regex) . PHP_EOL);
 
-                $this->_printDeleted($output, $cacheDriver->deleteByRegex('/' . $regex. '/'));
+                $this->_printDeleted($output, $cacheDriver->deleteByRegex('/' . $regex . '/'));
 
                 $outputed = true;
             }
@@ -145,7 +145,7 @@ EOT
         }
 
         // Removing ALL entries
-        if ( ! $ids && ! $regexps && ! $prefixes && ! $suffixes) {
+        if (!$ids && !$regexps && !$prefixes && !$suffixes) {
             $output->write($outputed ? PHP_EOL : '');
             $output->write('Clearing ALL Result cache entries' . PHP_EOL);
 

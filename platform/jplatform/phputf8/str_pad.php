@@ -1,26 +1,27 @@
 <?php
 /**
-* @version $Id$
-* @package utf8
-* @subpackage strings
-*/
+ * @version $Id$
+ * @package utf8
+ * @subpackage strings
+ */
 
 //---------------------------------------------------------------
 /**
-* Replacement for str_pad. $padStr may contain multi-byte characters.
-*
-* @author Oliver Saunders <oliver (a) osinternetservices.com>
-* @param string $input
-* @param int $length
-* @param string $padStr
-* @param int $type ( same constants as str_pad )
-* @return string
-* @see http://www.php.net/str_pad
-* @see utf8_substr
-* @package utf8
-* @subpackage strings
-*/
-function utf8_str_pad($input, $length, $padStr = ' ', $type = STR_PAD_RIGHT) {
+ * Replacement for str_pad. $padStr may contain multi-byte characters.
+ *
+ * @author Oliver Saunders <oliver (a) osinternetservices.com>
+ * @param string $input
+ * @param int $length
+ * @param string $padStr
+ * @param int $type ( same constants as str_pad )
+ * @return string
+ * @see http://www.php.net/str_pad
+ * @see utf8_substr
+ * @package utf8
+ * @subpackage strings
+ */
+function utf8_str_pad($input, $length, $padStr = ' ', $type = STR_PAD_RIGHT)
+{
 
     $inputLen = utf8_strlen($input);
     if ($length <= $inputLen) {
@@ -42,7 +43,7 @@ function utf8_str_pad($input, $length, $padStr = ' ', $type = STR_PAD_RIGHT) {
 
     if ($type == STR_PAD_BOTH) {
 
-        $padLen/= 2;
+        $padLen /= 2;
         $padAmountLeft = floor($padLen);
         $padAmountRight = ceil($padLen);
         $repeatTimesLeft = ceil($padAmountLeft / $padStrLen);
@@ -53,5 +54,5 @@ function utf8_str_pad($input, $length, $padStr = ' ', $type = STR_PAD_RIGHT) {
         return $paddingLeft . $input . $paddingRight;
     }
 
-    trigger_error('utf8_str_pad: Unknown padding type (' . $type . ')',E_USER_ERROR);
+    trigger_error('utf8_str_pad: Unknown padding type (' . $type . ')', E_USER_ERROR);
 }

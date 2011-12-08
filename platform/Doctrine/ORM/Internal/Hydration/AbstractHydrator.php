@@ -20,9 +20,9 @@
 namespace Doctrine\ORM\Internal\Hydration;
 
 use PDO,
-    Doctrine\DBAL\Connection,
-    Doctrine\DBAL\Types\Type,
-    Doctrine\ORM\EntityManager;
+Doctrine\DBAL\Connection,
+Doctrine\DBAL\Types\Type,
+Doctrine\ORM\EntityManager;
 
 /**
  * Base class for all hydrators. A hydrator is a class that provides some form
@@ -110,7 +110,7 @@ abstract class AbstractHydrator
     public function hydrateRow()
     {
         $row = $this->_stmt->fetch(PDO::FETCH_ASSOC);
-        if ( ! $row) {
+        if (!$row) {
             $this->_cleanup();
             return false;
         }
@@ -124,7 +124,8 @@ abstract class AbstractHydrator
      * through {@link hydrateAll} or {@link iterate()}.
      */
     protected function _prepare()
-    {}
+    {
+    }
 
     /**
      * Excutes one-time cleanup tasks at the end of a hydration that was initiated
@@ -178,7 +179,7 @@ abstract class AbstractHydrator
 
         foreach ($data as $key => $value) {
             // Parse each column name only once. Cache the results.
-            if ( ! isset($cache[$key])) {
+            if (!isset($cache[$key])) {
                 if (isset($this->_rsm->scalarMappings[$key])) {
                     $cache[$key]['fieldName'] = $this->_rsm->scalarMappings[$key];
                     $cache[$key]['isScalar'] = true;
@@ -203,7 +204,7 @@ abstract class AbstractHydrator
                     $cache[$key]['isIdentifier'] = isset($this->_rsm->isIdentifierColumn[$cache[$key]['dqlAlias']][$key]);
                 }
             }
-            
+
             if (isset($cache[$key]['isScalar'])) {
                 $rowData['scalars'][$cache[$key]['fieldName']] = $value;
                 continue;
@@ -221,7 +222,7 @@ abstract class AbstractHydrator
                 }
                 continue;
             }
-            
+
             // in an inheritance hierachy the same field could be defined several times.
             // We overwrite this value so long we dont have a non-null value, that value we keep.
             // Per definition it cannot be that a field is defined several times and has several values.
@@ -231,7 +232,7 @@ abstract class AbstractHydrator
 
             $rowData[$dqlAlias][$cache[$key]['fieldName']] = $cache[$key]['type']->convertToPHPValue($value, $this->_platform);
 
-            if ( ! isset($nonemptyComponents[$dqlAlias]) && $value !== null) {
+            if (!isset($nonemptyComponents[$dqlAlias]) && $value !== null) {
                 $nonemptyComponents[$dqlAlias] = true;
             }
         }
@@ -256,7 +257,7 @@ abstract class AbstractHydrator
 
         foreach ($data as $key => $value) {
             // Parse each column name only once. Cache the results.
-            if ( ! isset($cache[$key])) {
+            if (!isset($cache[$key])) {
                 if (isset($this->_rsm->scalarMappings[$key])) {
                     $cache[$key]['fieldName'] = $this->_rsm->scalarMappings[$key];
                     $cache[$key]['isScalar'] = true;
@@ -277,7 +278,7 @@ abstract class AbstractHydrator
                     $cache[$key]['dqlAlias'] = $this->_rsm->columnOwnerMap[$key];
                 }
             }
-            
+
             $fieldName = $cache[$key]['fieldName'];
 
             if (isset($cache[$key]['isScalar'])) {
@@ -292,7 +293,7 @@ abstract class AbstractHydrator
 
         return $rowData;
     }
-    
+
     protected function registerManaged($class, $entity, $data)
     {
         if ($class->isIdentifierComposite) {

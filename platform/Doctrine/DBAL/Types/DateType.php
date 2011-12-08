@@ -40,17 +40,17 @@ class DateType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null) 
-            ? $value->format($platform->getDateFormatString()) : null;
+        return ($value !== null)
+                ? $value->format($platform->getDateFormatString()) : null;
     }
-    
+
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         if ($value === null) {
             return null;
         }
 
-        $val = \DateTime::createFromFormat('!'.$platform->getDateFormatString(), $value);
+        $val = \DateTime::createFromFormat('!' . $platform->getDateFormatString(), $value);
         if (!$val) {
             throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateFormatString());
         }

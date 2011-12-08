@@ -12,40 +12,40 @@ class DBALException extends \Exception
     public static function invalidPlatformSpecified()
     {
         return new self(
-            "Invalid 'platform' option specified, need to give an instance of ".
+            "Invalid 'platform' option specified, need to give an instance of " .
             "\Doctrine\DBAL\Platforms\AbstractPlatform.");
     }
 
     public static function invalidPdoInstance()
     {
         return new self(
-            "The 'pdo' option was used in DriverManager::getConnection() but no ".
+            "The 'pdo' option was used in DriverManager::getConnection() but no " .
             "instance of PDO was given."
         );
     }
 
     public static function driverRequired()
     {
-        return new self("The options 'driver' or 'driverClass' are mandatory if no PDO ".
-            "instance is given to DriverManager::getConnection().");
+        return new self("The options 'driver' or 'driverClass' are mandatory if no PDO " .
+                        "instance is given to DriverManager::getConnection().");
     }
 
     public static function unknownDriver($unknownDriverName, array $knownDrivers)
     {
-        return new self("The given 'driver' ".$unknownDriverName." is unknown, ".
-            "Doctrine currently supports only the following drivers: ".implode(", ", $knownDrivers));
+        return new self("The given 'driver' " . $unknownDriverName . " is unknown, " .
+                        "Doctrine currently supports only the following drivers: " . implode(", ", $knownDrivers));
     }
 
     public static function invalidWrapperClass($wrapperClass)
     {
-        return new self("The given 'wrapperClass' ".$wrapperClass." has to be a ".
-            "subtype of \Doctrine\DBAL\Connection.");
+        return new self("The given 'wrapperClass' " . $wrapperClass . " has to be a " .
+                        "subtype of \Doctrine\DBAL\Connection.");
     }
 
     public static function invalidDriverClass($driverClass)
     {
-        return new self("The given 'driverClass' ".$driverClass." has to implement the ".
-            "\Doctrine\DBAL\Driver interface.");
+        return new self("The given 'driverClass' " . $driverClass . " has to implement the " .
+                        "\Doctrine\DBAL\Driver interface.");
     }
 
     /**
@@ -54,7 +54,7 @@ class DBALException extends \Exception
      */
     public static function invalidTableName($tableName)
     {
-        return new self("Invalid table name specified: ".$tableName);
+        return new self("Invalid table name specified: " . $tableName);
     }
 
     /**
@@ -63,7 +63,7 @@ class DBALException extends \Exception
      */
     public static function noColumnsSpecifiedForTable($tableName)
     {
-        return new self("No columns specified for table ".$tableName);
+        return new self("No columns specified for table " . $tableName);
     }
 
     public static function limitOffsetInvalid()
@@ -73,16 +73,16 @@ class DBALException extends \Exception
 
     public static function typeExists($name)
     {
-        return new self('Type '.$name.' already exists.');
+        return new self('Type ' . $name . ' already exists.');
     }
 
     public static function unknownColumnType($name)
     {
-        return new self('Unknown column type '.$name.' requested.');
+        return new self('Unknown column type ' . $name . ' requested.');
     }
 
     public static function typeNotFound($name)
     {
-        return new self('Type to be overwritten '.$name.' does not exist.');
+        return new self('Type to be overwritten ' . $name . ' does not exist.');
     }
 }

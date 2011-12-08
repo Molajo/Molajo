@@ -48,8 +48,8 @@ class LocateFunction extends FunctionNode
             $sqlWalker->walkStringPrimary($this->secondStringPrimary), // its the other way around in platform
             $sqlWalker->walkStringPrimary($this->firstStringPrimary),
             (($this->simpleArithmeticExpression)
-                ? $sqlWalker->walkSimpleArithmeticExpression($this->simpleArithmeticExpression)
-                : false
+                    ? $sqlWalker->walkSimpleArithmeticExpression($this->simpleArithmeticExpression)
+                    : false
             )
         );
     }
@@ -61,20 +61,20 @@ class LocateFunction extends FunctionNode
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        
+
         $this->firstStringPrimary = $parser->StringPrimary();
-        
+
         $parser->match(Lexer::T_COMMA);
-        
+
         $this->secondStringPrimary = $parser->StringPrimary();
-        
+
         $lexer = $parser->getLexer();
         if ($lexer->isNextToken(Lexer::T_COMMA)) {
             $parser->match(Lexer::T_COMMA);
-            
+
             $this->simpleArithmeticExpression = $parser->SimpleArithmeticExpression();
         }
-        
+
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

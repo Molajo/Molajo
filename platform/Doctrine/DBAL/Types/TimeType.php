@@ -46,8 +46,8 @@ class TimeType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null) 
-            ? $value->format($platform->getTimeFormatString()) : null;
+        return ($value !== null)
+                ? $value->format($platform->getTimeFormatString()) : null;
     }
 
     /**

@@ -32,23 +32,23 @@ use Doctrine\Common\Lexer;
  */
 final class DocLexer extends Lexer
 {
-    const T_NONE                = 1;
-    const T_IDENTIFIER          = 2;
-    const T_INTEGER             = 3;
-    const T_STRING              = 4;
-    const T_FLOAT               = 5;
+    const T_NONE = 1;
+    const T_IDENTIFIER = 2;
+    const T_INTEGER = 3;
+    const T_STRING = 4;
+    const T_FLOAT = 5;
 
-    const T_AT                  = 101;
-    const T_CLOSE_CURLY_BRACES  = 102;
-    const T_CLOSE_PARENTHESIS   = 103;
-    const T_COMMA               = 104;
-    const T_EQUALS              = 105;
-    const T_FALSE               = 106;
+    const T_AT = 101;
+    const T_CLOSE_CURLY_BRACES = 102;
+    const T_CLOSE_PARENTHESIS = 103;
+    const T_COMMA = 104;
+    const T_EQUALS = 105;
+    const T_FALSE = 106;
     const T_NAMESPACE_SEPARATOR = 107;
-    const T_OPEN_CURLY_BRACES   = 108;
-    const T_OPEN_PARENTHESIS    = 109;
-    const T_TRUE                = 110;
-    const T_NULL                = 111;
+    const T_OPEN_CURLY_BRACES = 108;
+    const T_OPEN_PARENTHESIS = 109;
+    const T_TRUE = 110;
+    const T_NULL = 111;
 
     /**
      * @inheritdoc
@@ -80,7 +80,7 @@ final class DocLexer extends Lexer
         // Checking numeric value
         if (is_numeric($value)) {
             return (strpos($value, '.') !== false || stripos($value, 'e') !== false)
-                ? self::T_FLOAT : self::T_INTEGER;
+                    ? self::T_FLOAT : self::T_INTEGER;
         }
 
         if ($value[0] === '"') {

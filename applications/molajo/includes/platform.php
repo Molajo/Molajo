@@ -54,9 +54,9 @@ $files = JFolder::files(MOLAJO_MVC . '/views', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'layout.php' || $file == 'view.php') {
     } else {
-//        if (strpos($file, $includeFormat)) {
-            $filehelper->requireClassFile(MOLAJO_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
-//        }
+        //        if (strpos($file, $includeFormat)) {
+        $filehelper->requireClassFile(MOLAJO_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        //        }
     }
 }
 

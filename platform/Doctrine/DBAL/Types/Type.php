@@ -20,7 +20,7 @@
 namespace Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform,
-    Doctrine\DBAL\DBALException;
+Doctrine\DBAL\DBALException;
 
 /**
  * The base class for so-called Doctrine mapping types.
@@ -70,7 +70,9 @@ abstract class Type
     );
 
     /* Prevent instantiation and force use of the factory method. */
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     /**
      * Converts a value from its PHP representation to its database representation
@@ -135,8 +137,8 @@ abstract class Type
      */
     public static function getType($name)
     {
-        if ( ! isset(self::$_typeObjects[$name])) {
-            if ( ! isset(self::$_typesMap[$name])) {
+        if (!isset(self::$_typeObjects[$name])) {
+            if (!isset(self::$_typesMap[$name])) {
                 throw DBALException::unknownColumnType($name);
             }
             self::$_typeObjects[$name] = new self::$_typesMap[$name]();
@@ -184,7 +186,7 @@ abstract class Type
      */
     public static function overrideType($name, $className)
     {
-        if ( ! isset(self::$_typesMap[$name])) {
+        if (!isset(self::$_typesMap[$name])) {
             throw DBALException::typeNotFound($name);
         }
 
@@ -194,15 +196,15 @@ abstract class Type
     /**
      * Gets the (preferred) binding type for values of this type that
      * can be used when binding parameters to prepared statements.
-     * 
+     *
      * This method should return one of the PDO::PARAM_* constants, that is, one of:
-     * 
+     *
      * PDO::PARAM_BOOL
      * PDO::PARAM_NULL
      * PDO::PARAM_INT
      * PDO::PARAM_STR
      * PDO::PARAM_LOB
-     * 
+     *
      * @return integer
      */
     public function getBindingType()
@@ -244,7 +246,7 @@ abstract class Type
 
     /**
      * Modifies the SQL expression (identifier, parameter) to convert to a database value.
-     * 
+     *
      * @param string $sqlExpr
      * @param AbstractPlatform $platform
      * @return string

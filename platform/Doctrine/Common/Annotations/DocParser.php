@@ -149,7 +149,7 @@ final class DocParser
 
     public function setIgnoreNotImportedAnnotations($bool)
     {
-        $this->ignoreNotImportedAnnotations = (Boolean) $bool;
+        $this->ignoreNotImportedAnnotations = (Boolean)$bool;
     }
 
     public function setAnnotationNamespaceAlias($namespace, $alias)
@@ -191,7 +191,7 @@ final class DocParser
      */
     private function match($token)
     {
-        if ( ! $this->lexer->isNextToken($token) ) {
+        if (!$this->lexer->isNextToken($token)) {
             $this->syntaxError($this->lexer->getLiteral($token));
         }
 
@@ -209,7 +209,7 @@ final class DocParser
      */
     private function matchAny(array $tokens)
     {
-        if ( ! $this->lexer->isNextTokenAny($tokens)) {
+        if (!$this->lexer->isNextTokenAny($tokens)) {
             $this->syntaxError(implode(' or ', array_map(array($this->lexer, 'getLiteral'), $tokens)));
         }
 
@@ -229,7 +229,7 @@ final class DocParser
             $token = $this->lexer->lookahead;
         }
 
-        $message =  "Expected {$expected}, got ";
+        $message = "Expected {$expected}, got ";
 
         if ($this->lexer->lookahead === null) {
             $message .= 'end of string';
@@ -293,7 +293,8 @@ final class DocParser
             // an identifier token
             if ((null === $peek = $this->lexer->glimpse())
                 || (DocLexer::T_NAMESPACE_SEPARATOR !== $peek['type'] && !in_array($peek['type'], self::$classIdentifiers, true))
-                || $peek['position'] !== $this->lexer->lookahead['position'] + 1) {
+                || $peek['position'] !== $this->lexer->lookahead['position'] + 1
+            ) {
                 $this->lexer->moveNext();
                 continue;
             }
@@ -333,13 +334,13 @@ final class DocParser
         while ($this->lexer->lookahead['position'] === $this->lexer->token['position'] + strlen($this->lexer->token['value']) && $this->lexer->isNextToken(DocLexer::T_NAMESPACE_SEPARATOR)) {
             $this->match(DocLexer::T_NAMESPACE_SEPARATOR);
             $this->matchAny(self::$classIdentifiers);
-            $name .= '\\'.$this->lexer->token['value'];
+            $name .= '\\' . $this->lexer->token['value'];
         }
 
         if (strpos($name, ":") !== false) {
             list ($alias, $name) = explode(':', $name);
             // If the namespace alias doesnt exist, skip until next annotation
-            if ( ! isset($this->namespaceAliases[$alias])) {
+            if (!isset($this->namespaceAliases[$alias])) {
                 $this->lexer->skipUntil(DocLexer::T_AT);
                 return false;
             }
@@ -350,18 +351,18 @@ final class DocParser
         // fully qualified names must start with a \
         $originalName = $name;
         if ('\\' !== $name[0]) {
-            $alias = (false === $pos = strpos($name, '\\'))? $name : substr($name, 0, $pos);
+            $alias = (false === $pos = strpos($name, '\\')) ? $name : substr($name, 0, $pos);
 
             if (isset($this->imports[$loweredAlias = strtolower($alias)])) {
                 if (false !== $pos) {
-                    $name = $this->imports[$loweredAlias].substr($name, $pos);
+                    $name = $this->imports[$loweredAlias] . substr($name, $pos);
                 } else {
                     $name = $this->imports[$loweredAlias];
                 }
-            } elseif (isset($this->imports['__DEFAULT__']) && $this->classExists($this->imports['__DEFAULT__'].$name)) {
-                 $name = $this->imports['__DEFAULT__'].$name;
-            } elseif (isset($this->imports['__NAMESPACE__']) && $this->classExists($this->imports['__NAMESPACE__'].'\\'.$name)) {
-                 $name = $this->imports['__NAMESPACE__'].'\\'.$name;
+            } elseif (isset($this->imports['__DEFAULT__']) && $this->classExists($this->imports['__DEFAULT__'] . $name)) {
+                $name = $this->imports['__DEFAULT__'] . $name;
+            } elseif (isset($this->imports['__NAMESPACE__']) && $this->classExists($this->imports['__NAMESPACE__'] . '\\' . $name)) {
+                $name = $this->imports['__NAMESPACE__'] . '\\' . $name;
             } elseif (!$this->classExists($name)) {
                 if ($this->ignoreNotImportedAnnotations || isset($this->ignoredAnnotationNames[$name])) {
                     return false;
@@ -394,7 +395,7 @@ final class DocParser
         if ($this->lexer->isNextToken(DocLexer::T_OPEN_PARENTHESIS)) {
             $this->match(DocLexer::T_OPEN_PARENTHESIS);
 
-            if ( ! $this->lexer->isNextToken(DocLexer::T_CLOSE_PARENTHESIS)) {
+            if (!$this->lexer->isNextToken(DocLexer::T_CLOSE_PARENTHESIS)) {
                 $values = $this->Values();
             }
 
@@ -459,7 +460,7 @@ final class DocParser
             $token = $this->lexer->lookahead;
             $value = $this->Value();
 
-            if ( ! is_object($value) && ! is_array($value)) {
+            if (!is_object($value) && !is_array($value)) {
                 $this->syntaxError('Value', $token);
             }
 
@@ -469,10 +470,10 @@ final class DocParser
         foreach ($values as $k => $value) {
             if (is_object($value) && $value instanceof \stdClass) {
                 $values[$value->name] = $value->value;
-            } else if ( ! isset($values['value'])){
+            } else if (!isset($values['value'])) {
                 $values['value'] = $value;
             } else {
-                if ( ! is_array($values['value'])) {
+                if (!is_array($values['value'])) {
                     $values['value'] = array($values['value']);
                 }
 
@@ -560,7 +561,7 @@ final class DocParser
         $this->match(DocLexer::T_EQUALS);
 
         $item = new \stdClass();
-        $item->name  = $fieldName;
+        $item->name = $fieldName;
         $item->value = $this->PlainValue();
 
         return $item;

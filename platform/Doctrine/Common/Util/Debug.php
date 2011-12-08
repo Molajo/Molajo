@@ -39,7 +39,9 @@ final class Debug
      * Private constructor (prevents from instantiation)
      *
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * Prints a dump of the public, protected and private properties of $var.
@@ -52,36 +54,36 @@ final class Debug
     public static function dump($var, $maxDepth = 2)
     {
         ini_set('html_errors', 'On');
-        
+
         if (extension_loaded('xdebug')) {
             ini_set('xdebug.var_display_max_depth', $maxDepth);
         }
-        
+
         $var = self::export($var, $maxDepth++);
-        
+
         ob_start();
         var_dump($var);
         $dump = ob_get_contents();
         ob_end_clean();
-        
+
         echo strip_tags(html_entity_decode($dump));
-        
+
         ini_set('html_errors', 'Off');
     }
-    
+
     public static function export($var, $maxDepth)
     {
         $return = null;
         $isObj = is_object($var);
-    
+
         if ($isObj && in_array('Doctrine\Common\Collections\Collection', class_implements($var))) {
             $var = $var->toArray();
         }
-        
+
         if ($maxDepth) {
             if (is_array($var)) {
                 $return = array();
-            
+
                 foreach ($var as $k => $v) {
                     $return[$k] = self::export($v, $maxDepth - 1);
                 }
@@ -93,7 +95,7 @@ final class Debug
                     $return = new \stdclass();
                     $return->{'__CLASS__'} = get_class($var);
 
-                    if ($var instanceof \Doctrine\ORM\Proxy\Proxy && ! $var->__isInitialized__) {
+                    if ($var instanceof \Doctrine\ORM\Proxy\Proxy && !$var->__isInitialized__) {
                         $reflProperty = $reflClass->getProperty('_identifier');
                         $reflProperty->setAccessible(true);
 
@@ -108,9 +110,9 @@ final class Debug
                         }
 
                         foreach ($reflClass->getProperties() as $reflProperty) {
-                            $name  = $reflProperty->getName();
+                            $name = $reflProperty->getName();
 
-                            if ( ! in_array($name, $excludeProperties)) {
+                            if (!in_array($name, $excludeProperties)) {
                                 $reflProperty->setAccessible(true);
 
                                 $return->$name = self::export($reflProperty->getValue($var), $maxDepth - 1);
@@ -122,15 +124,15 @@ final class Debug
                 $return = $var;
             }
         } else {
-            $return = is_object($var) ? get_class($var) 
-                : (is_array($var) ? 'Array(' . count($var) . ')' : $var);
+            $return = is_object($var) ? get_class($var)
+                    : (is_array($var) ? 'Array(' . count($var) . ')' : $var);
         }
-        
+
         return $return;
     }
 
     public static function toString($obj)
     {
-        return method_exists('__toString', $obj) ? (string) $obj : get_class($obj) . '@' . spl_object_hash($obj);
+        return method_exists('__toString', $obj) ? (string)$obj : get_class($obj) . '@' . spl_object_hash($obj);
     }
 }

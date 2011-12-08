@@ -41,11 +41,12 @@ class SelectStatement extends Node
     public $havingClause;
     public $orderByClause;
 
-    public function __construct($selectClause, $fromClause) {
+    public function __construct($selectClause, $fromClause)
+    {
         $this->selectClause = $selectClause;
         $this->fromClause = $fromClause;
-    }    
-    
+    }
+
     public function dispatch($sqlWalker)
     {
         return $sqlWalker->walkSelectStatement($this);

@@ -20,11 +20,11 @@
 namespace Doctrine\ORM\Mapping;
 
 use ReflectionException,
-    Doctrine\ORM\ORMException,
-    Doctrine\ORM\EntityManager,
-    Doctrine\DBAL\Platforms,
-    Doctrine\ORM\Events,
-    Doctrine\Common\Persistence\Mapping\ClassMetadataFactory as ClassMetadataFactoryInterface;
+Doctrine\ORM\ORMException,
+Doctrine\ORM\EntityManager,
+Doctrine\DBAL\Platforms,
+Doctrine\ORM\Events,
+Doctrine\Common\Persistence\Mapping\ClassMetadataFactory as ClassMetadataFactoryInterface;
 
 /**
  * The ClassMetadataFactory is used to create ClassMetadata objects that contain all the
@@ -115,7 +115,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
      */
     public function getAllMetadata()
     {
-        if ( ! $this->initialized) {
+        if (!$this->initialized) {
             $this->initialize();
         }
 
@@ -147,7 +147,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
      */
     public function getMetadataFor($className)
     {
-        if ( ! isset($this->loadedMetadata[$className])) {
+        if (!isset($this->loadedMetadata[$className])) {
             $realClassName = $className;
 
             // Check for namespace alias
@@ -221,7 +221,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
         // Collect parent classes, ignoring transient (not-mapped) classes.
         $parentClasses = array();
         foreach (array_reverse(class_parents($name)) as $parentClass) {
-            if ( ! $this->driver->isTransient($parentClass)) {
+            if (!$this->driver->isTransient($parentClass)) {
                 $parentClasses[] = $parentClass;
             }
         }
@@ -237,7 +237,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
      */
     protected function loadMetadata($name)
     {
-        if ( ! $this->initialized) {
+        if (!$this->initialized) {
             $this->initialize();
         }
 
@@ -253,7 +253,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
         foreach ($parentClasses as $className) {
             if (isset($this->loadedMetadata[$className])) {
                 $parent = $this->loadedMetadata[$className];
-                if ( ! $parent->isMappedSuperclass) {
+                if (!$parent->isMappedSuperclass) {
                     $rootEntityFound = true;
                     array_unshift($visited, $className);
                 }
@@ -323,7 +323,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
 
             $parent = $class;
 
-            if ( ! $class->isMappedSuperclass) {
+            if (!$class->isMappedSuperclass) {
                 $rootEntityFound = true;
                 array_unshift($visited, $className);
             }
@@ -343,7 +343,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     protected function validateRuntimeMetadata($class, $parent)
     {
         // Verify & complete identifier mapping
-        if ( ! $class->identifier && ! $class->isMappedSuperclass) {
+        if (!$class->identifier && !$class->isMappedSuperclass) {
             throw MappingException::identifierRequired($class->name);
         }
 
@@ -386,10 +386,10 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     private function addInheritedFields(ClassMetadata $subClass, ClassMetadata $parentClass)
     {
         foreach ($parentClass->fieldMappings as $fieldName => $mapping) {
-            if ( ! isset($mapping['inherited']) && ! $parentClass->isMappedSuperclass) {
+            if (!isset($mapping['inherited']) && !$parentClass->isMappedSuperclass) {
                 $mapping['inherited'] = $parentClass->name;
             }
-            if ( ! isset($mapping['declared'])) {
+            if (!isset($mapping['declared'])) {
                 $mapping['declared'] = $parentClass->name;
             }
             $subClass->addInheritedFieldMapping($mapping);
@@ -416,10 +416,10 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
             }
 
             //$subclassMapping = $mapping;
-            if ( ! isset($mapping['inherited']) && ! $parentClass->isMappedSuperclass) {
+            if (!isset($mapping['inherited']) && !$parentClass->isMappedSuperclass) {
                 $mapping['inherited'] = $parentClass->name;
             }
-            if ( ! isset($mapping['declared'])) {
+            if (!isset($mapping['declared'])) {
                 $mapping['declared'] = $parentClass->name;
             }
             $subClass->addInheritedAssociationMapping($mapping);
@@ -459,7 +459,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
             case ClassMetadata::GENERATOR_TYPE_SEQUENCE:
                 // If there is no sequence definition yet, create a default definition
                 $definition = $class->sequenceGeneratorDefinition;
-                if ( ! $definition) {
+                if (!$definition) {
                     $sequenceName = $class->getTableName() . '_' . $class->getSingleIdentifierColumnName() . '_seq';
                     $definition['sequenceName'] = $this->targetPlatform->fixSchemaElementName($sequenceName);
                     $definition['allocationSize'] = 1;

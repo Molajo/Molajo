@@ -23,7 +23,7 @@
 namespace Doctrine\ORM\Tools\Export;
 
 use Doctrine\ORM\Tools\Export\ExportException,
-    Doctrine\ORM\EntityManager;
+Doctrine\ORM\EntityManager;
 
 /**
  * Class used for converting your mapping information between the
@@ -65,7 +65,7 @@ class ClassMetadataExporter
      */
     public function getExporter($type, $dest = null)
     {
-        if ( ! isset(self::$_exporterDrivers[$type])) {
+        if (!isset(self::$_exporterDrivers[$type])) {
             throw ExportException::invalidExporterDriverType($type);
         }
 

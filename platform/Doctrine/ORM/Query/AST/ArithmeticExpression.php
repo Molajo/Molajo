@@ -39,12 +39,12 @@ class ArithmeticExpression extends Node
 
     public function isSimpleArithmeticExpression()
     {
-        return (bool) $this->simpleArithmeticExpression;
+        return (bool)$this->simpleArithmeticExpression;
     }
 
     public function isSubselect()
     {
-        return (bool) $this->subselect;
+        return (bool)$this->subselect;
     }
 
     public function dispatch($walker)

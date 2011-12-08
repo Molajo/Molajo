@@ -50,11 +50,11 @@ class Sequence extends AbstractAsset
      * @param int $allocationSize
      * @param int $initialValue
      */
-    public function __construct($name, $allocationSize=1, $initialValue=1)
+    public function __construct($name, $allocationSize = 1, $initialValue = 1)
     {
         $this->_setName($name);
-        $this->_allocationSize = (is_numeric($allocationSize))?$allocationSize:1;
-        $this->_initialValue = (is_numeric($initialValue))?$initialValue:1;
+        $this->_allocationSize = (is_numeric($allocationSize)) ? $allocationSize : 1;
+        $this->_initialValue = (is_numeric($initialValue)) ? $initialValue : 1;
     }
 
     public function getAllocationSize()
@@ -66,15 +66,15 @@ class Sequence extends AbstractAsset
     {
         return $this->_initialValue;
     }
-    
+
     public function setAllocationSize($allocationSize)
     {
-        $this->_allocationSize = (is_numeric($allocationSize))?$allocationSize:1;
+        $this->_allocationSize = (is_numeric($allocationSize)) ? $allocationSize : 1;
     }
 
     public function setInitialValue($initialValue)
     {
-        $this->_initialValue = (is_numeric($initialValue))?$initialValue:1;
+        $this->_initialValue = (is_numeric($initialValue)) ? $initialValue : 1;
     }
 
     /**

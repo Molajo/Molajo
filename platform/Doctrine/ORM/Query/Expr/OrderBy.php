@@ -50,8 +50,8 @@ class OrderBy
 
     public function add($sort, $order = null)
     {
-        $order = ! $order ? 'ASC' : $order;
-        $this->_parts[] = $sort . ' '. $order;
+        $order = !$order ? 'ASC' : $order;
+        $this->_parts[] = $sort . ' ' . $order;
     }
 
     public function count()

@@ -22,18 +22,18 @@
 namespace Doctrine\ORM\Mapping\Driver;
 
 use SimpleXMLElement,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
-    Doctrine\ORM\Mapping\MappingException;
+Doctrine\ORM\Mapping\ClassMetadataInfo,
+Doctrine\ORM\Mapping\MappingException;
 
 /**
  * XmlDriver is a metadata driver that enables mapping through XML files.
  *
- * @license 	http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link    	www.doctrine-project.org
- * @since   	2.0
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link        www.doctrine-project.org
+ * @since       2.0
  * @version     $Revision$
- * @author		Benjamin Eberlei <kontakt@beberlei.de>
- * @author		Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author        Benjamin Eberlei <kontakt@beberlei.de>
+ * @author        Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @author      Roman Borschel <roman@code-factory.org>
  */
@@ -76,9 +76,9 @@ class XmlDriver extends AbstractFileDriver
         if (isset($xmlRoot['named-queries'])) {
             foreach ($xmlRoot->{'named-queries'}->{'named-query'} as $namedQueryElement) {
                 $metadata->addNamedQuery(array(
-                    'name'  => (string)$namedQueryElement['name'],
-                    'query' => (string)$namedQueryElement['query']
-                ));
+                                              'name' => (string)$namedQueryElement['name'],
+                                              'query' => (string)$namedQueryElement['query']
+                                         ));
             }
         }
 
@@ -96,10 +96,10 @@ class XmlDriver extends AbstractFileDriver
                 if (isset($xmlRoot->{'discriminator-column'})) {
                     $discrColumn = $xmlRoot->{'discriminator-column'};
                     $metadata->setDiscriminatorColumn(array(
-                        'name' => (string)$discrColumn['name'],
-                        'type' => (string)$discrColumn['type'],
-                        'length' => (string)$discrColumn['length']
-                    ));
+                                                           'name' => (string)$discrColumn['name'],
+                                                           'type' => (string)$discrColumn['type'],
+                                                           'length' => (string)$discrColumn['length']
+                                                      ));
                 } else {
                     $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
@@ -119,7 +119,7 @@ class XmlDriver extends AbstractFileDriver
         // Evaluate <change-tracking-policy...>
         if (isset($xmlRoot['change-tracking-policy'])) {
             $metadata->setChangeTrackingPolicy(constant('Doctrine\ORM\Mapping\ClassMetadata::CHANGETRACKING_'
-                    . strtoupper((string)$xmlRoot['change-tracking-policy'])));
+                                                        . strtoupper((string)$xmlRoot['change-tracking-policy'])));
         }
 
         // Evaluate <indexes...>
@@ -230,17 +230,17 @@ class XmlDriver extends AbstractFileDriver
                 $strategy = isset($idElement->generator['strategy']) ?
                         (string)$idElement->generator['strategy'] : 'AUTO';
                 $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
-                        . $strategy));
+                                                       . $strategy));
             }
 
             // Check for SequenceGenerator/TableGenerator definition
             if (isset($idElement->{'sequence-generator'})) {
                 $seqGenerator = $idElement->{'sequence-generator'};
                 $metadata->setSequenceGeneratorDefinition(array(
-                    'sequenceName' => (string)$seqGenerator['sequence-name'],
-                    'allocationSize' => (string)$seqGenerator['allocation-size'],
-                    'initialValue' => (string)$seqGenerator['initial-value']
-                ));
+                                                               'sequenceName' => (string)$seqGenerator['sequence-name'],
+                                                               'allocationSize' => (string)$seqGenerator['allocation-size'],
+                                                               'initialValue' => (string)$seqGenerator['initial-value']
+                                                          ));
             } else if (isset($idElement->{'table-generator'})) {
                 throw MappingException::tableIdGeneratorNotImplemented($className);
             }

@@ -92,7 +92,7 @@ abstract class Input implements InputInterface
      */
     public function setInteractive($interactive)
     {
-        $this->interactive = (Boolean) $interactive;
+        $this->interactive = (Boolean)$interactive;
     }
 
     /**
@@ -120,7 +120,8 @@ abstract class Input implements InputInterface
             throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
-        return isset($this->arguments[$name]) ? $this->arguments[$name] : $this->definition->getArgument($name)->getDefault();
+        return isset($this->arguments[$name]) ? $this->arguments[$name]
+                : $this->definition->getArgument($name)->getDefault();
     }
 
     /**

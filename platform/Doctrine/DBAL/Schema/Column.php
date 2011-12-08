@@ -95,7 +95,7 @@ class Column extends AbstractAsset
 
     /**
      * Create a new Column
-     * 
+     *
      * @param string $columnName
      * @param Doctrine\DBAL\Types\Type $type
      * @param int $length
@@ -107,7 +107,7 @@ class Column extends AbstractAsset
      * @param int $scale
      * @param array $platformOptions
      */
-    public function __construct($columnName, Type $type, array $options=array())
+    public function __construct($columnName, Type $type, array $options = array())
     {
         $this->_setName($columnName);
         $this->setType($type);
@@ -121,7 +121,7 @@ class Column extends AbstractAsset
     public function setOptions(array $options)
     {
         foreach ($options AS $name => $value) {
-            $method = "set".$name;
+            $method = "set" . $name;
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
@@ -145,7 +145,7 @@ class Column extends AbstractAsset
      */
     public function setLength($length)
     {
-        if($length !== null) {
+        if ($length !== null) {
             $this->_length = (int)$length;
         } else {
             $this->_length = null;
@@ -354,18 +354,18 @@ class Column extends AbstractAsset
     public function toArray()
     {
         return array_merge(array(
-            'name'          => $this->_name,
-            'type'          => $this->_type,
-            'default'       => $this->_default,
-            'notnull'       => $this->_notnull,
-            'length'        => $this->_length,
-            'precision'     => $this->_precision,
-            'scale'         => $this->_scale,
-            'fixed'         => $this->_fixed,
-            'unsigned'      => $this->_unsigned,
-            'autoincrement' => $this->_autoincrement,
-            'columnDefinition' => $this->_columnDefinition,
-            'comment' => $this->_comment,
-        ), $this->_platformOptions);
+                                'name' => $this->_name,
+                                'type' => $this->_type,
+                                'default' => $this->_default,
+                                'notnull' => $this->_notnull,
+                                'length' => $this->_length,
+                                'precision' => $this->_precision,
+                                'scale' => $this->_scale,
+                                'fixed' => $this->_fixed,
+                                'unsigned' => $this->_unsigned,
+                                'autoincrement' => $this->_autoincrement,
+                                'columnDefinition' => $this->_columnDefinition,
+                                'comment' => $this->_comment,
+                           ), $this->_platformOptions);
     }
 }

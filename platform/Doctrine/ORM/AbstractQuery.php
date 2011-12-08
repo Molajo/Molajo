@@ -20,7 +20,7 @@
 namespace Doctrine\ORM;
 
 use Doctrine\DBAL\Types\Type,
-    Doctrine\ORM\Query\QueryException;
+Doctrine\ORM\Query\QueryException;
 
 /**
  * Base contract for ORM queries. Base class for Query and NativeQuery.
@@ -162,7 +162,7 @@ abstract class AbstractQuery
     {
         return $this->_params;
     }
-    
+
     /**
      * Get all defined parameter types.
      *
@@ -219,10 +219,10 @@ abstract class AbstractQuery
         if ($type === null) {
             $type = Query\ParameterTypeInferer::inferType($value);
         }
-        
+
         $this->_paramTypes[$key] = $type;
         $this->_params[$key] = $value;
-        
+
         return $this;
     }
 
@@ -265,7 +265,7 @@ abstract class AbstractQuery
      */
     public function setResultCacheDriver($resultCacheDriver = null)
     {
-        if ($resultCacheDriver !== null && ! ($resultCacheDriver instanceof \Doctrine\Common\Cache\Cache)) {
+        if ($resultCacheDriver !== null && !($resultCacheDriver instanceof \Doctrine\Common\Cache\Cache)) {
             throw ORMException::invalidResultCacheDriver();
         }
         $this->_resultCacheDriver = $resultCacheDriver;
@@ -319,7 +319,7 @@ abstract class AbstractQuery
     public function setResultCacheLifetime($timeToLive)
     {
         if ($timeToLive !== null) {
-            $timeToLive = (int) $timeToLive;
+            $timeToLive = (int)$timeToLive;
         }
 
         $this->_resultCacheTTL = $timeToLive;
@@ -448,7 +448,7 @@ abstract class AbstractQuery
     {
         $result = $this->execute(array(), $hydrationMode);
 
-        if ($this->_hydrationMode !== self::HYDRATE_SINGLE_SCALAR && ! $result) {
+        if ($this->_hydrationMode !== self::HYDRATE_SINGLE_SCALAR && !$result) {
             return null;
         }
 
@@ -479,7 +479,7 @@ abstract class AbstractQuery
     {
         $result = $this->execute(array(), $hydrationMode);
 
-        if ($this->_hydrationMode !== self::HYDRATE_SINGLE_SCALAR && ! $result) {
+        if ($this->_hydrationMode !== self::HYDRATE_SINGLE_SCALAR && !$result) {
             throw new NoResultException;
         }
 
@@ -532,7 +532,7 @@ abstract class AbstractQuery
 
     /**
      * Return the key value map of query hints that are currently set.
-     * 
+     *
      * @return array
      */
     public function getHints()
@@ -611,8 +611,8 @@ abstract class AbstractQuery
         }
 
         return $this->_em->getHydrator($this->_hydrationMode)->hydrateAll(
-                $stmt, $this->_resultSetMapping, $this->_hints
-                );
+            $stmt, $this->_resultSetMapping, $this->_hints
+        );
     }
 
     /**
@@ -659,7 +659,7 @@ abstract class AbstractQuery
             $sql = $this->getSql();
             ksort($this->_hints);
             $key = implode(";", (array)$sql) . var_export($params, true) .
-                var_export($this->_hints, true)."&hydrationMode=".$this->_hydrationMode;
+                   var_export($this->_hints, true) . "&hydrationMode=" . $this->_hydrationMode;
             return array($key, md5($key));
         }
     }

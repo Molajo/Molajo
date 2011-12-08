@@ -40,7 +40,7 @@ class Func
     public function __construct($name, $arguments)
     {
         $this->_name = $name;
-        $this->_arguments = (array) $arguments;
+        $this->_arguments = (array)$arguments;
     }
 
     public function __toString()

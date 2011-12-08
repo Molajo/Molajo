@@ -416,12 +416,12 @@ class Expr
     {
         if (is_array($y)) {
             foreach ($y as &$literal) {
-                if ( ! ($literal instanceof Expr\Literal)) {
+                if (!($literal instanceof Expr\Literal)) {
                     $literal = $this->_quoteLiteral($literal);
                 }
             }
         }
-        return new Expr\Func($x . ' IN', (array) $y);
+        return new Expr\Func($x . ' IN', (array)$y);
     }
 
     /**
@@ -435,12 +435,12 @@ class Expr
     {
         if (is_array($y)) {
             foreach ($y as &$literal) {
-                if ( ! ($literal instanceof Expr\Literal)) {
+                if (!($literal instanceof Expr\Literal)) {
                     $literal = $this->_quoteLiteral($literal);
                 }
             }
         }
-        return new Expr\Func($x . ' NOT IN', (array) $y);
+        return new Expr\Func($x . ' NOT IN', (array)$y);
     }
 
     /**
@@ -559,7 +559,7 @@ class Expr
     private function _quoteLiteral($literal)
     {
         if (is_numeric($literal) && !is_string($literal)) {
-            return (string) $literal;
+            return (string)$literal;
         } else {
             return "'" . str_replace("'", "''", $literal) . "'";
         }

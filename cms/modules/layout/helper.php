@@ -142,6 +142,6 @@ class modContentHelper
             $title = '';
         }
         return MolajoTextHelper::plural('LATEST_TITLE' . $type . ($catid ? "_CATEGORY" : '') . ($who != '0' ? "_$who"
-                          : ''), (int)$parameters->get('count'), $title);
+                                       : ''), (int)$parameters->get('count'), $title);
     }
 }

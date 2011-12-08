@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
     <doc:include type="message"/>
 
     <div class="section">
-        <doc:include type="component" />
+        <doc:include type="component"/>
     </div>
 </div>
 <div class="footer">

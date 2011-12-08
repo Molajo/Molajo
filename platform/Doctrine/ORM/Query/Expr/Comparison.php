@@ -34,21 +34,21 @@ namespace Doctrine\ORM\Query\Expr;
  */
 class Comparison
 {
-    const EQ  = '=';
+    const EQ = '=';
     const NEQ = '<>';
-    const LT  = '<';
+    const LT = '<';
     const LTE = '<=';
-    const GT  = '>';
+    const GT = '>';
     const GTE = '>=';
-    
+
     private $_leftExpr;
     private $_operator;
     private $_rightExpr;
 
     public function __construct($leftExpr, $operator, $rightExpr)
     {
-        $this->_leftExpr  = $leftExpr;
-        $this->_operator  = $operator;
+        $this->_leftExpr = $leftExpr;
+        $this->_operator = $operator;
         $this->_rightExpr = $rightExpr;
     }
 

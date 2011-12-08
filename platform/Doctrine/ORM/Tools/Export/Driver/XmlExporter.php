@@ -41,15 +41,15 @@ class XmlExporter extends AbstractExporter
      * Converts a single ClassMetadata instance to the exported format
      * and returns it
      *
-     * @param ClassMetadataInfo $metadata 
+     * @param ClassMetadataInfo $metadata
      * @return mixed $exported
      */
     public function exportClassMetadata(ClassMetadataInfo $metadata)
     {
-        $xml = new \SimpleXmlElement("<?xml version=\"1.0\" encoding=\"utf-8\"?><doctrine-mapping ".
-            "xmlns=\"http://doctrine-project.org/schemas/orm/doctrine-mapping\" " .
-            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ".
-            "xsi:schemaLocation=\"http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd\" />");
+        $xml = new \SimpleXmlElement("<?xml version=\"1.0\" encoding=\"utf-8\"?><doctrine-mapping " .
+                                     "xmlns=\"http://doctrine-project.org/schemas/orm/doctrine-mapping\" " .
+                                     "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " .
+                                     "xsi:schemaLocation=\"http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd\" />");
 
         /*$xml->addAttribute('xmlns', 'http://doctrine-project.org/schemas/orm/doctrine-mapping');
         $xml->addAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -99,7 +99,7 @@ class XmlExporter extends AbstractExporter
 
         if (isset($metadata->table['indexes'])) {
             $indexesXml = $root->addChild('indexes');
-            
+
             foreach ($metadata->table['indexes'] as $name => $index) {
                 $indexXml = $indexesXml->addChild('index');
                 $indexXml->addAttribute('name', $name);
@@ -109,7 +109,7 @@ class XmlExporter extends AbstractExporter
 
         if (isset($metadata->table['uniqueConstraints'])) {
             $uniqueConstraintsXml = $root->addChild('unique-constraints');
-            
+
             foreach ($metadata->table['uniqueConstraints'] as $unique) {
                 $uniqueConstraintXml = $uniqueConstraintsXml->addChild('unique-constraint');
                 $uniqueConstraintXml->addAttribute('name', $unique['name']);
@@ -118,7 +118,7 @@ class XmlExporter extends AbstractExporter
         }
 
         $fields = $metadata->fieldMappings;
-        
+
         $id = array();
         foreach ($fields as $name => $field) {
             if (isset($field['id']) && $field['id']) {

@@ -71,7 +71,7 @@ class Driver implements \Doctrine\DBAL\Driver
         if (isset($params['charset'])) {
             $dsn .= 'charset=' . $params['charset'] . ';';
         }
-        
+
         return $dsn;
     }
 

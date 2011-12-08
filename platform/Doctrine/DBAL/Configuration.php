@@ -53,7 +53,7 @@ class Configuration
 
     /**
      * Gets the SQL logger that is used.
-     * 
+     *
      * @return SQLLogger
      */
     public function getSQLLogger()

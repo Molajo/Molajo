@@ -20,17 +20,23 @@ defined('MOLAJO') or die;
 class MolajoGroup
 {
 
-    public function action () {
+    public function action()
+    {
 
     }
 
-    private function create () {
+    private function create()
+    {
 
     }
-    private function update () {
+
+    private function update()
+    {
 
     }
-    private function delete () {
+
+    private function delete()
+    {
 
     }
 }

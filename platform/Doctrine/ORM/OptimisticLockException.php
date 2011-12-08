@@ -54,7 +54,7 @@ class OptimisticLockException extends ORMException
 
     public static function lockFailedVersionMissmatch($entity, $expectedLockVersion, $actualLockVersion)
     {
-        return new self("The optimistic lock failed, version " . $expectedLockVersion . " was expected, but is actually ".$actualLockVersion, $entity);
+        return new self("The optimistic lock failed, version " . $expectedLockVersion . " was expected, but is actually " . $actualLockVersion, $entity);
     }
 
     public static function notVersioned($entityName)

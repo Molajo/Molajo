@@ -23,7 +23,7 @@ namespace Doctrine\DBAL\Platforms;
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Index,
-    Doctrine\DBAL\Schema\Table;
+Doctrine\DBAL\Schema\Table;
 
 /**
  * The MsSqlPlatform provides the behavior, features and SQL dialect of the
@@ -124,7 +124,7 @@ class MsSqlPlatform extends AbstractPlatform
     /**
      * @override
      */
-    public function getDropIndexSQL($index, $table=null)
+    public function getDropIndexSQL($index, $table = null)
     {
         if ($index instanceof \Doctrine\DBAL\Schema\Index) {
             $index_ = $index;
@@ -189,7 +189,7 @@ class MsSqlPlatform extends AbstractPlatform
         }
 
         if (isset($options['foreignKeys'])) {
-            foreach ((array) $options['foreignKeys'] AS $definition) {
+            foreach ((array)$options['foreignKeys'] AS $definition) {
                 $sql[] = $this->getCreateForeignKeySQL($definition, $tableName);
             }
         }
@@ -266,12 +266,12 @@ class MsSqlPlatform extends AbstractPlatform
             /* @var $columnDiff Doctrine\DBAL\Schema\ColumnDiff */
             $column = $columnDiff->column;
             $queryParts[] = 'CHANGE ' . ($columnDiff->oldColumnName) . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+                            . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
             $queryParts[] = 'CHANGE ' . $oldColumnName . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+                            . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         $sql = array();
@@ -432,13 +432,13 @@ class MsSqlPlatform extends AbstractPlatform
             return $trimFn . '(' . $str . ')';
         } else {
             /** Original query used to get those expressions
-              declare @c varchar(100) = 'xxxBarxxx', @trim_char char(1) = 'x';
-              declare @pat varchar(10) = '%[^' + @trim_char + ']%';
-              select @c as string
-              , @trim_char as trim_char
-              , stuff(@c, 1, patindex(@pat, @c) - 1, null) as trim_leading
-              , reverse(stuff(reverse(@c), 1, patindex(@pat, reverse(@c)) - 1, null)) as trim_trailing
-              , reverse(stuff(reverse(stuff(@c, 1, patindex(@pat, @c) - 1, null)), 1, patindex(@pat, reverse(stuff(@c, 1, patindex(@pat, @c) - 1, null))) - 1, null)) as trim_both;
+            declare @c varchar(100) = 'xxxBarxxx', @trim_char char(1) = 'x';
+            declare @pat varchar(10) = '%[^' + @trim_char + ']%';
+            select @c as string
+            , @trim_char as trim_char
+            , stuff(@c, 1, patindex(@pat, @c) - 1, null) as trim_leading
+            , reverse(stuff(reverse(@c), 1, patindex(@pat, reverse(@c)) - 1, null)) as trim_trailing
+            , reverse(stuff(reverse(stuff(@c, 1, patindex(@pat, @c) - 1, null)), 1, patindex(@pat, reverse(stuff(@c, 1, patindex(@pat, @c) - 1, null))) - 1, null)) as trim_both;
              */
             $pattern = "'%[^' + $char + ']%'";
 
@@ -520,7 +520,8 @@ class MsSqlPlatform extends AbstractPlatform
     /** @override */
     protected function getVarcharTypeDeclarationSQLSnippet($length, $fixed)
     {
-        return $fixed ? ($length ? 'NCHAR(' . $length . ')' : 'CHAR(255)') : ($length ? 'NVARCHAR(' . $length . ')' : 'NVARCHAR(255)');
+        return $fixed ? ($length ? 'NCHAR(' . $length . ')' : 'CHAR(255)') : ($length ? 'NVARCHAR(' . $length . ')'
+                : 'NVARCHAR(255)');
     }
 
     /** @override */
