@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Articles Component
+ * @subpackage  Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -10,11 +10,9 @@ defined('MOLAJO') or die;
 /**
  * ArticlesRouter
  *
- * Router
- *
- * @package     Molajo
- * @subpackage  Articles
- * @since       1.6
+ * @package      Molajo
+ * @subpackage   Controller
+ * @since        1.0
  */
 class ArticlesRouter
 {

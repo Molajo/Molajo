@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Edit Controller
+ * ArticlesControllerEdit
  *
- * @package        Molajo
- * @subpackage    Controller
+ * @package      Molajo
+ * @subpackage   Controller
  * @since        1.0
  */
 class ArticlesControllerEdit extends MolajoControllerEdit

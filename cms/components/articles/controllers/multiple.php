@@ -8,10 +8,10 @@
 defined('MOLAJO') or die;
 
 /**
- * Multiple Controller
+ * ArticlesControllerMultiple
  *
- * @package        Molajo
- * @subpackage    Controller
+ * @package      Molajo
+ * @subpackage   Controller
  * @since        1.0
  */
 class ArticlesControllerMultiple extends MolajoControllerMultiple

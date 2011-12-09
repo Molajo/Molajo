@@ -1,8 +1,7 @@
 <?php
 /**
- * @version     $id: articles.php
  * @package     Molajo
- * @subpackage  Articles Component
+ * @subpackage  Helper
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -11,11 +10,9 @@ defined('MOLAJO') or die;
 /**
  * ArticlesHelper
  *
- * Category Submenu Helper
- *
- * @package    Molajo
- * @subpackage    articles
- * @since    1.6
+ * @package      Molajo
+ * @subpackage   Helpers
+ * @since        1.0
  */
 class ArticlesHelper
 {

@@ -1,19 +1,19 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Table
+ * @subpackage  Models
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- * ArticlesTableArticle
+ * ArticlesModelDummy
  *
  * @package      Molajo
- * @subpackage   Table
+ * @subpackage   Model
  * @since        1.0
  */
-class ArticlesTableArticle extends MolajoTableContent
+class ArticlesModelDummy extends MolajoModelDummy
 {
 }
