@@ -64,8 +64,6 @@ abstract class MolajoTable extends JObject
      */
     function __construct($table, $key, &$database)
     {
-        echo $table.'<br />';
- 
         $this->_table = $table;
         $this->_primary_key = $key;
         $this->_database = &$database;
@@ -124,10 +122,9 @@ abstract class MolajoTable extends JObject
     {
         $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
         $tableClass = $prefix . ucfirst($type);
-echo $tableClass;
-        echo '<br />>';
+
         if (class_exists($tableClass)) {
-echo 'yes';
+
         } else {
             if ($path = JPath::find(MolajoTable::addIncludePath(), strtolower($type) . '.php')) {
                 require_once $path;

@@ -28,8 +28,6 @@ class MolajoTableContent extends MolajoTable
     function __construct($db)
     {
      //   parent::__construct('#' . JRequest::getCmd('ComponentTable'), 'id', $db);
-        echo 'in here!';
-        die;
         parent::__construct('#__content', 'id', $db);
     }
 

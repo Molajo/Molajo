@@ -333,8 +333,6 @@ class MolajoModelDisplay extends JModel
     {
         /** extract actual column names from table **/
         $table = $this->getTable();
-var_dump($table);
-        die;
         $names = $table->getProperties();
 
         $this->tableFieldList = array();
@@ -373,7 +371,7 @@ var_dump($table);
         $jsonFields = $this->molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
 
         /** ACL **/
-        $aclClass = 'MolajoACL' . ucfirst($this->request['view']);
+        $aclClass = ucfirst($this->request['option']).'Acl';
 
         /** process rowset */
         $rowCount = 0;
@@ -590,30 +588,30 @@ var_dump($table);
         $this->query->from('#' . $this->request['component_table'] . ' AS a');
 
         /** parent category **/
-        $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
-        $this->query->join('LEFT', '#__categories AS c ON c.id = a.catid');
+//        $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
+//        $this->query->join('LEFT', '#__categories AS c ON c.id = a.catid');
 
         /** sins of the parent checking **/
 
         /** spammed or trashed or unpublished ancestor = same for descendents **/
-        $this->query->select(' minimumState.published AS minimum_state_category');
-        $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
-        $subQuery .= ' FROM #__categories AS cat ';
-        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-        $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
-        $subQuery .= '   AND cat.published > ' . MOLAJO_STATUS_VERSION;
-        $subQuery .= '   AND parent.published > ' . MOLAJO_STATUS_VERSION;
-        $subQuery .= ' GROUP BY parent.id ';
-        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS minimumState ON minimumState.id = c.id ');
+//        $this->query->select(' minimumState.published AS minimum_state_category');
+//        $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
+//        $subQuery .= ' FROM #__categories AS cat ';
+//        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
+//        $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
+//        $subQuery .= '   AND cat.published > ' . MOLAJO_STATUS_VERSION;
+//        $subQuery .= '   AND parent.published > ' . MOLAJO_STATUS_VERSION;
+//        $subQuery .= ' GROUP BY parent.id ';
+//        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS minimumState ON minimumState.id = c.id ');
 
         /** archived ancestor = archived descendents **/
-        $this->query->select(' CASE WHEN maximumState.published > ' . MOLAJO_STATUS_PUBLISHED . ' THEN 1 ELSE 0 END AS archived_category');
-        $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
-        $subQuery .= ' FROM #__categories AS cat ';
-        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-        $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
-        $subQuery .= ' GROUP BY parent.id ';
-        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
+//        $this->query->select(' CASE WHEN maximumState.published > ' . MOLAJO_STATUS_PUBLISHED . ' THEN 1 ELSE 0 END AS archived_category');
+//        $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
+//        $subQuery .= ' FROM #__categories AS cat ';
+//        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
+//       $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
+//        $subQuery .= ' GROUP BY parent.id ';
+//        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
 
         /**
         $date = MolajoFactory::getDate();
@@ -629,9 +627,9 @@ var_dump($table);
         /** set ordering and direction **/
         $orderCol = $this->state->get('list.ordering', 'a.title');
         $orderDirn = $this->state->get('list.direction', 'asc');
-        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
-            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
-        }
+//        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
+//            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
+//        }
         $this->query->order($this->_db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
@@ -753,16 +751,16 @@ var_dump($table);
     {
         $id = ':' . $this->getState('filter.search');
 
-        for ($i = 1; $i < 1000; $i++) {
-            $temp = $this->parameters->def($this->filterFieldName . $i);
-            $filterName = substr($temp, 0, stripos($temp, ';'));
-            $filterDataType = substr($temp, stripos($temp, ';') + 1, 1);
-            if ($filterName == null) {
-                break;
-            } else {
-                $id .= ':' . $this->getState('filter.' . $filterName);
-            }
-        }
+//        for ($i = 1; $i < 1000; $i++) {
+//            $temp = $this->parameters->def($this->filterFieldName . $i);
+//            $filterName = substr($temp, 0, stripos($temp, ';'));
+//            $filterDataType = substr($temp, stripos($temp, ';') + 1, 1);
+//            if ($filterName == null) {
+//                break;
+//            } else {
+//                $id .= ':' . $this->getState('filter.' . $filterName);
+//            }
+//        }
 
         $id .= ':' . $this->getState('filter.layout');
 

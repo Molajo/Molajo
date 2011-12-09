@@ -41,7 +41,6 @@ $folders = JFolder::folders($request['component_path'] . '/views', false, false)
 foreach ($folders as $folder) {
     $files = JFolder::files($request['component_path'] . '/views/' .$folder, false, false);
     foreach ($files as $file) {
-        echo ucfirst($request['option']) . 'View' . ucfirst($folder);
         $filehelper->requireClassFile($request['component_path'] . '/views/' . $folder . '/'. $file, ucfirst($request['option']) . 'View' . ucfirst($folder));
     }
 }
