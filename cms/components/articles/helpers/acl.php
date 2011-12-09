@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage    ACL
  * @since        1.0
  */
-class MolajoACLArticles extends MolajoACL
+class ArticlesAcl extends MolajoACL
 {
     /**
      *  Override any ACL Method by placing the like named method in this class and making modifications needed

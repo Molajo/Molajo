@@ -27,7 +27,7 @@ class MolajoFieldPublish_down extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('stop_publishing_datetime');
+        parent::setName('stop_publishing_datetime');
         parent::setFilter('integer');
 
         parent::setSortable(true);

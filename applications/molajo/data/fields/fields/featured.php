@@ -27,7 +27,7 @@ class MolajoFieldFeatured extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('featured');
+        parent::setName('featured');
         parent::setFilter('string');
 
         parent::setSortable(true);

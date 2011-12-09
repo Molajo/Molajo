@@ -20,10 +20,6 @@ require_once MOLAJO_APPLICATIONS . '/molajo/includes/site.php';
 require_once MOLAJO_APPLICATIONS . '/molajo/includes/platform.php';
 require_once MOLAJO_APPLICATIONS . '/molajo/includes/other.php';
 require_once MOLAJO_APPLICATIONS . '/molajo/includes/overrides.php';
-require_once MOLAJO_CMS_TEMPLATES . '/maji/index.php';
-
-return;
-die;
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 

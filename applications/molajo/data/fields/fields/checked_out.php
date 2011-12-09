@@ -27,7 +27,7 @@ class MolajoFieldChecked_out extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('checked_out');
+        parent::setName('checked_out');
         parent::setFilter('integer');
     }
 

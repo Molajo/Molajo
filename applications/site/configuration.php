@@ -27,7 +27,7 @@ class MolajoConfigApplication
     public $application_logon_requirement = '0';
     public $application_guest_option = 'articles';
     public $application_default_option = 'articles';
-    public $default_template_extension = 'sample';
+    public $default_template_extension = 'maji';
 
     /* Locale */
     public $language = 'en-GB';

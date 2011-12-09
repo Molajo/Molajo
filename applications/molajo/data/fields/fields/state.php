@@ -27,7 +27,7 @@ class MolajoFieldState extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('state');
+        parent::setName('state');
         parent::setFilter('string');
     }
 

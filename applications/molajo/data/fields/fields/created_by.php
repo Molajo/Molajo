@@ -27,7 +27,7 @@ class MolajoFieldCreated_by extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('created_by');
+        parent::setName('created_by');
         parent::setFilter('integer');
 
     }

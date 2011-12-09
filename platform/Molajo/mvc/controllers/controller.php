@@ -301,13 +301,13 @@ class MolajoController extends JController
                 $checkId = $this->id;
             }
 
-            if ($checkCatid == null) {
-                if ((int)$this->catid == 0) {
-                    $checkCatid = (int)$this->table->catid;
-                } else {
-                    $checkCatid = (int)$this->catid;
-                }
-            }
+//           if ($checkCatid == null) {
+//                if ((int)$this->catid == 0) {
+//                    $checkCatid = (int)$this->table->catid;
+//                } else {
+//                    $checkCatid = (int)$this->catid;
+//                }
+//            }
 
             if ($checkTable == null) {
                 $checkTable = $this->table;

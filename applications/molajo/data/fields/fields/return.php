@@ -27,7 +27,7 @@ class MolajoFieldReturn extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('return');
+        parent::setName('return');
         parent::setFilter('base64');
     }
 

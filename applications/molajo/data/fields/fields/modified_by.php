@@ -27,7 +27,7 @@ class MolajoFieldModified_by extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('modified_by');
+        parent::setName('modified_by');
         parent::setFilter('integer');
 
         parent::setSortable(true);

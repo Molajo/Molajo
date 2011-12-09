@@ -27,7 +27,7 @@ class MolajoFieldId extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('Id');
+        parent::setName('Id');
         parent::setFilter('integer');
     }
 

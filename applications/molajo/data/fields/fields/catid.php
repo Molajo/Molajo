@@ -27,7 +27,7 @@ class MolajoFieldCatid extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('catid');
+        parent::setName('catid');
         parent::setFilter('integer');
     }
 

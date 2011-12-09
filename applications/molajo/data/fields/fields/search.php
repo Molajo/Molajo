@@ -27,7 +27,7 @@ class MolajoFieldSearch extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('search');
+        parent::setName('search');
         parent::setFilter('string');
 
         parent::setSortable(false);

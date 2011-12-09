@@ -27,7 +27,7 @@ class MolajoFieldLanguage extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('language');
+        parent::setName('language');
         parent::setFilter('string');
 
         parent::setSortable(true);

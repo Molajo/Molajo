@@ -27,7 +27,7 @@ class MolajoFieldModified extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('modified');
+        parent::setName('modified');
         parent::setFilter('integer');
 
         parent::setSortable(true);

@@ -27,7 +27,7 @@ class MolajoFieldOrdering extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('ordering');
+        parent::setName('ordering');
         parent::setFilter('integer');
     }
 

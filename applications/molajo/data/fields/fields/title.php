@@ -27,7 +27,7 @@ class MolajoFieldTitle extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('title');
+        parent::setName('title');
         parent::setFilter('integer');
 
     }

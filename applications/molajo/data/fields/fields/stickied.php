@@ -27,7 +27,7 @@ class MolajoFieldStickied extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('stickied');
+        parent::setName('stickied');
         parent::setFilter('string');
 
         parent::setSortable(true);

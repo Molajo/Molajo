@@ -27,7 +27,7 @@ class MolajoFieldPublish_up extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('start_publishing_datetime');
+        parent::setName('start_publishing_datetime');
         parent::setFilter('integer');
 
         parent::setSortable(true);

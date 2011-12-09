@@ -32,7 +32,7 @@ class MolajoModelDisplay extends JModel
      * @var        string
      * @since    1.0
      */
-    protected $parameters = null;
+    public $parameters = null;
 
     /**
      * $query
@@ -120,7 +120,7 @@ class MolajoModelDisplay extends JModel
 
         $this->parameters = $this->request['parameters'];
 
-        $this->filterFieldName = $this->request['filterFieldName'];
+//        $this->filterFieldName = $this->request['filterFieldName'];
 
         $this->molajoConfig = new MolajoModelConfiguration($this->request['option']);
 
@@ -132,9 +132,9 @@ class MolajoModelDisplay extends JModel
         MolajoPlugin::importPlugin($this->request['plugin_type']);
 
         if ($this->request['id'] == 0) {
-            $this->model->populateStateMultiple();
+            $this->populateStateMultiple();
         } else {
-            $this->model->populateItemState();
+            $this->populateItemState();
         }
 
         $this->dispatcher->trigger('onQueryPopulateState', array(&$this->state, &$this->parameters));
@@ -167,30 +167,30 @@ class MolajoModelDisplay extends JModel
         }
 
         /** selected filters **/
-        for ($i = 1; $i < 1000; $i++) {
+//        for ($i = 1; $i < 10000; $i++) {
 
-            $filterName = $this->parameters->def($this->filterFieldName . $i);
+//            $filterName = $this->parameters->def($this->filterFieldName . $i);
 
             /** end of filter processing **/
-            if ($filterName == null) {
-                break;
-            }
+//            if ($filterName == null) {
+//                break;
+//            }
 
             /** state already processed **/
-            if ($filterName == 'state') {
+//            if ($filterName == 'state') {
 
                 /** configuration option not selected **/
-            } else if ($filterName == '0') {
+//            } else if ($filterName == '0') {
 
                 /** no filter was selected for configuration option **/
-            } else if (in_array($filterName, $loadFilterArray)) {
+//            } else if (in_array($filterName, $loadFilterArray)) {
 
                 /** process selected filter **/
-            } else {
-                $loadFilterArray[] = $filterName;
-                $this->processFilter($filterName);
-            }
-        }
+//            } else {
+//                $loadFilterArray[] = $filterName;
+//                $this->processFilter($filterName);
+//            }
+//        }
 
         /** list limit **/
         $limit = (int)MolajoFactory::getApplication()->getUserStateFromRequest('global.list.limit', 'limit',
@@ -333,6 +333,8 @@ class MolajoModelDisplay extends JModel
     {
         /** extract actual column names from table **/
         $table = $this->getTable();
+var_dump($table);
+        die;
         $names = $table->getProperties();
 
         $this->tableFieldList = array();
@@ -1080,8 +1082,8 @@ class MolajoModelDisplay extends JModel
      */
     public function getTable($type = '', $prefix = '', $config = array())
     {
-        return MolajoTable::getInstance($type = ucfirst($this->request['view']),
-                                        $prefix = ucfirst($this->request['view'] . 'Table'),
+        return MolajoTable::getInstance($type = ucfirst('Article'),
+                                        $prefix = ucfirst($this->request['option'] . 'Table'),
                                         $config);
     }
 

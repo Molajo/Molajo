@@ -6,10 +6,11 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>"
-      lang="<?php //echo MolajoFactory::getLanguage()->language; ?>"
+      lang="<?php echo MolajoFactory::getLanguage()->language; ?>"
       dir="<?php //echo MolajoFactory::getLanguage()->direction; ?>">
 <head>
     <doc:include type="head"/>
@@ -22,7 +23,14 @@ MolajoForm::addFieldPath($here);
 
 //$form = JForm::getInstance('com_installer.manage', 'manage', array('load_data' => $loadData));
 $form = MolajoForm::getInstance('com_dashboard.dashboard', 'dashboard', array('load_data' => true));
+$app = MolajoFactory::getApplication();
+$data = $app->getUserState('com_dashboard.dashboard.data', array());
+//$form->bind($data);
 echo '<pre>';var_dump($form);'</pre>';
+die;
+
+return $data;
+
 
 ?>
 </body>

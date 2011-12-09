@@ -103,6 +103,7 @@ class MolajoApplication extends JObject
         static $instances;
 
         if (isset($instances)) {
+            
         } else {
             $instances = array();
         }
@@ -623,6 +624,7 @@ class MolajoApplication extends JObject
     public function getUserState($key, $default = null)
     {
         $session = MolajoFactory::getSession();
+
         $registry = $session->get('registry');
 
         if (is_null($registry)) {

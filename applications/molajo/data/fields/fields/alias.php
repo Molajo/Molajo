@@ -27,7 +27,7 @@ class MolajoFieldAlias extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setFieldname('alias');
+        parent::setName('alias');
         parent::setFilter('string');
 
     }
