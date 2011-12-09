@@ -85,15 +85,15 @@ class MolajoInstallerExtension extends JObject
     /**
      * Constructor
      *
-     * @param   JXMLElement  $element  A JXMLElement from which to load data from
+     * @param   SimpleXMLElement  $element  A SimpleXMLElement from which to load data from
      *
      * @return  JExtension
      *
      * @since  11.1
      */
-    function __construct(JXMLElement $element = null)
+    function __construct(SimpleXMLElement $element = null)
     {
-        if ($element && is_a($element, 'JXMLElement')) {
+        if ($element && is_a($element, 'SimpleXMLElement')) {
             $this->type = (string)$element->attributes()->type;
             $this->id = (string)$element->attributes()->id;
 

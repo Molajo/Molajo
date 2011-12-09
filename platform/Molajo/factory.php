@@ -504,14 +504,13 @@ abstract class MolajoFactory
      * @param   string  $data   Full path and file name.
      * @param   boolean  $isFile true to load a file | false to load a string.
      *
-     * @return  mixed    JXMLElement on success | false on error.
+     * @return  mixed    SimpleXMLElement on success | false on error.
      * @todo This may go in a separate class - error reporting may be improved.
      */
     public static function getXML($data, $isFile = true)
     {
         // Disable libxml errors and allow to fetch error information as needed
-        //libxml_use_internal_errors(true);
-echo $data.'<br />';
+        libxml_use_internal_errors(false);
         if ($isFile) {
             $xml = simplexml_load_file($data, 'SimpleXMLElement');
         } else {
@@ -530,8 +529,7 @@ echo $data.'<br />';
                 MolajoError::raiseWarning(100, 'XML: ' . $error->message);
             }
         }
-echo 'xml '.$xml;
-echo '<br /><br /><br /><br />';
+
         return $xml;
     }
 

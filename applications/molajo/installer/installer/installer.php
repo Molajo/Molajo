@@ -747,7 +747,7 @@ class MolajoInstaller extends MolajoAdapter
      * Backward compatible method to parse through a queries element of the
      * installation manifest file and take appropriate action.
      *
-     * @param   JXMLElement  $element  The XML node to process
+     * @param   SimpleXMLElement  $element  The XML node to process
      *
      * @return  mixed  Number of queries processed or False on error
      *
@@ -877,7 +877,7 @@ class MolajoInstaller extends MolajoAdapter
     /**
      * Set the schema version for an extension by looking at its latest update
      *
-     * @param   JXMLElement  $schema  Schema Tag
+     * @param   SimpleXMLElement  $schema  Schema Tag
      * @param   integer      $eid     Extension ID
      *
      * @return  void
@@ -937,7 +937,7 @@ class MolajoInstaller extends MolajoAdapter
     /**
      * Method to process the updates for an item
      *
-     * @param   JXMLElement  $schema  The XML node to process
+     * @param   SimpleXMLElement  $schema  The XML node to process
      * @param   integer      $eid     Extension Identifier
      *
      * @return  boolean      Result of the operations
@@ -1055,9 +1055,9 @@ class MolajoInstaller extends MolajoAdapter
      * Method to parse through a files element of the installation manifest and take appropriate
      * action.
      *
-     * @param   JXMLElement  $element   The XML node to process
+     * @param   SimpleXMLElement  $element   The XML node to process
      * @param   integer      $cid       Application ID of application to install to
-     * @param   array        $oldFiles  List of old files (JXMLElement's)
+     * @param   array        $oldFiles  List of old files (SimpleXMLElement's)
      * @param   array        $oldMD5    List of old MD5 sums (indexed by filename with value as MD5)
      *
      * @return  boolean      True on success
@@ -1111,7 +1111,7 @@ class MolajoInstaller extends MolajoAdapter
         }
 
         // Work out what files have been deleted
-        if ($oldFiles && ($oldFiles instanceof JXMLElement)) {
+        if ($oldFiles && ($oldFiles instanceof SimpleXMLElement)) {
             $oldEntries = $oldFiles->children();
 
             if (count($oldEntries)) {
@@ -1170,7 +1170,7 @@ class MolajoInstaller extends MolajoAdapter
      * Method to parse through a languages element of the installation manifest and take appropriate
      * action.
      *
-     * @param   JXMLElement  $element  The XML node to process
+     * @param   SimpleXMLElement  $element  The XML node to process
      * @param   integer      $cid      Application ID of application to install to
      *
      * @return  boolean  True on success
@@ -1276,7 +1276,7 @@ class MolajoInstaller extends MolajoAdapter
      * Method to parse through a media element of the installation manifest and take appropriate
      * action.
      *
-     * @param   JXMLElement  $element  The XML node to process
+     * @param   SimpleXMLElement  $element  The XML node to process
      * @param   integer      $cid      Application ID of application to install to
      *
      * @return  boolean     True on success
@@ -1741,7 +1741,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @param   string  $file  An xmlfile path to check
      *
-     * @return  mixed  A JXMLElement, or null if the file failed to parse
+     * @return  mixed  A SimpleXMLElement, or null if the file failed to parse
      *
      * @since   11.1
      */
@@ -1810,8 +1810,8 @@ class MolajoInstaller extends MolajoAdapter
     /**
      * Compares two "files" entries to find deleted files/folders
      *
-     * @param   array  $old_files  An array of JXMLElement objects that are the old files
-     * @param   array  $new_files  An array of JXMLElement objects that are the new files
+     * @param   array  $old_files  An array of SimpleXMLElement objects that are the old files
+     * @param   array  $new_files  An array of SimpleXMLElement objects that are the new files
      *
      * @return  array  An array with the delete files and folders in findDeletedFiles[files] and findDeletedFiles[folders] resepctively
      *

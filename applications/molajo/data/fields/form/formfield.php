@@ -26,7 +26,7 @@ abstract class MolajoFormField
     protected $description;
 
     /**
-     * The JXMLElement object of the <field /> XML element that describes the form field.
+     * The SimpleXMLElement object of the <field /> XML element that describes the form field.
      *
      * @var    object
      * @since  1.0
@@ -271,7 +271,7 @@ abstract class MolajoFormField
     /**
      * Method to attach a MolajoForm object to the field.
      *
-     * @param   object  $element  The JXMLElement object representing the <field /> tag for the
+     * @param   object  $element  The SimpleXMLElement object representing the <field /> tag for the
      *                            form field object.
      * @param   mixed   $value    The form field default value for display.
      * @param   string  $group    The field name group control value. This acts as as an array
@@ -286,7 +286,7 @@ abstract class MolajoFormField
     public function setup(& $element, $value, $group = null)
     {
         // Make sure there is a valid MolajoFormField XML element.
-        if (!($element instanceof JXMLElement) || (string)$element->getName() != 'field') {
+        if (!($element instanceof SimpleXMLElement) || (string)$element->getName() != 'field') {
             return false;
         }
 

@@ -97,7 +97,7 @@ class MolajoForm
     public function bind($data)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -180,7 +180,7 @@ class MolajoForm
     public function filter($data, $group = null)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -250,7 +250,7 @@ class MolajoForm
     public function getField($name, $group = null, $value = null)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -281,7 +281,7 @@ class MolajoForm
     public function getFieldAttribute($name, $attribute, $default = null, $group = null)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             // TODO: throw exception.
 
             return $default;
@@ -291,7 +291,7 @@ class MolajoForm
         $element = $this->findField($name, $group);
 
         // If the element exists and the attribute exists for the field return the attribute value.
-        if (($element instanceof JXMLElement) && ((string)$element[$attribute])) {
+        if (($element instanceof SimpleXMLElement) && ((string)$element[$attribute])) {
             return (string)$element[$attribute];
         }
             // Otherwise return the given default value.
@@ -362,7 +362,7 @@ class MolajoForm
         $sets = array();
 
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return $namesets;
         }
 
@@ -590,7 +590,7 @@ class MolajoForm
     public function load($data, $replace = true, $xpath = false)
     {
         // If the data to load isn't already an XML element or string return false.
-        if ((!($data instanceof JXMLElement)) && (!is_string($data))) {
+        if ((!($data instanceof SimpleXMLElement)) && (!is_string($data))) {
             return false;
         }
 
@@ -618,10 +618,10 @@ class MolajoForm
 
                 // Create a root element for the form.
             else {
-                $this->xml = new JXMLElement('<form></form>');
+                $this->xml = new SimpleXMLElement('<form></form>');
             }
         }
-
+ 
         // Get the XML elements to load.
         $elements = array();
         if ($xpath) {
@@ -694,6 +694,7 @@ class MolajoForm
     {
         // Check to see if the path is an absolute path.
         if (is_file($file)) {
+
         } else {
 
             // Not an absolute path so let's attempt to find one using JPath.
@@ -704,11 +705,10 @@ class MolajoForm
                 return false;
             }
         }
+
         // Attempt to load the XML file.
         $xml = MolajoFactory::getXML($file, true);
 
-echo 'xml: '.$xml;
-        die;
         return $this->load($xml, $reset, $xpath);
     }
 
@@ -725,7 +725,7 @@ echo 'xml: '.$xml;
     public function removeField($name, $group = null)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             // TODO: throw exception.
             return false;
         }
@@ -734,7 +734,7 @@ echo 'xml: '.$xml;
         $element = $this->findField($name, $group);
 
         // If the element exists remove it from the form definition.
-        if ($element instanceof JXMLElement) {
+        if ($element instanceof SimpleXMLElement) {
             $dom = dom_import_simplexml($element);
             $dom->parentNode->removeChild($dom);
         }
@@ -754,7 +754,7 @@ echo 'xml: '.$xml;
     public function removeGroup($group)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             // TODO: throw exception.
             return false;
         }
@@ -786,7 +786,7 @@ echo 'xml: '.$xml;
 
         if ($xml) {
             unset($this->xml);
-            $this->xml = new JXMLElement('<form></form>');
+            $this->xml = new SimpleXMLElement('<form></form>');
         }
 
         return true;
@@ -808,14 +808,14 @@ echo 'xml: '.$xml;
     public function setField(& $element, $group = null, $replace = true)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             // TODO: throw exception.
 
             return false;
         }
 
         // Make sure the element to set is valid.
-        if (!($element instanceof JXMLElement)) {
+        if (!($element instanceof SimpleXMLElement)) {
             // TODO: throw exception.
 
             return false;
@@ -831,7 +831,7 @@ echo 'xml: '.$xml;
         }
 
         // If an existing field is found and replace flag is true remove the old field.
-        if ($replace && !empty($old) && ($old instanceof JXMLElement)) {
+        if ($replace && !empty($old) && ($old instanceof SimpleXMLElement)) {
             $dom = dom_import_simplexml($old);
             $dom->parentNode->removeChild($dom);
         }
@@ -844,7 +844,7 @@ echo 'xml: '.$xml;
             $names = & $this->findGroup($group);
 
             // If an appropriate fields element was found for the group, add the element.
-            if (isset($names[0]) && ($names[0] instanceof JXMLElement)) {
+            if (isset($names[0]) && ($names[0] instanceof SimpleXMLElement)) {
                 self::addNode($names[0], $element);
             }
         }
@@ -874,7 +874,7 @@ echo 'xml: '.$xml;
     public function setFieldAttribute($name, $attribute, $value, $group = null)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             // TODO: throw exception.
 
             return false;
@@ -884,7 +884,7 @@ echo 'xml: '.$xml;
         $element = & $this->findField($name, $group);
 
         // If the element doesn't exist return false.
-        if (!($element instanceof JXMLElement)) {
+        if (!($element instanceof SimpleXMLElement)) {
 
             return false;
         }
@@ -915,7 +915,7 @@ echo 'xml: '.$xml;
     public function setFields(& $elements, $group = null, $replace = true)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             // TODO: throw exception.
 
             return false;
@@ -924,7 +924,7 @@ echo 'xml: '.$xml;
         // Make sure the elements to set are valid.
         foreach ($elements as $element)
         {
-            if (!($element instanceof JXMLElement)) {
+            if (!($element instanceof SimpleXMLElement)) {
                 // TODO: throw exception.
 
                 return false;
@@ -993,7 +993,7 @@ echo 'xml: '.$xml;
     public function validate($data, $group = null)
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -1064,8 +1064,8 @@ echo 'xml: '.$xml;
      */
     protected function filterField($element, $value)
     {
-        // Make sure there is a valid JXMLElement.
-        if (!($element instanceof JXMLElement)) {
+        // Make sure there is a valid SimpleXMLElement.
+        if (!($element instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -1240,7 +1240,7 @@ echo 'xml: '.$xml;
         $names = array();
 
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -1312,7 +1312,7 @@ echo 'xml: '.$xml;
      *
      * @param   string  $name  The name of the fieldset.
      *
-     * @return  mixed  Boolean false on error or array of JXMLElement objects.
+     * @return  mixed  Boolean false on error or array of SimpleXMLElement objects.
      *
      * @since   1.0
      */
@@ -1322,7 +1322,7 @@ echo 'xml: '.$xml;
         $false = false;
 
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return $false;
         }
 
@@ -1345,7 +1345,7 @@ echo 'xml: '.$xml;
      * @param   boolean  $nested  True to also include fields in nested groups that are inside of the
      *                            group for which to find fields.
      *
-     * @return  mixed  Boolean false on error or array of JXMLElement objects.
+     * @return  mixed  Boolean false on error or array of SimpleXMLElement objects.
      *
      * @since   1.0
      */
@@ -1356,7 +1356,7 @@ echo 'xml: '.$xml;
         $names = array();
 
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return $false;
         }
 
@@ -1424,7 +1424,7 @@ echo 'xml: '.$xml;
         $tmp = array();
 
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return $false;
         }
 
@@ -1476,7 +1476,7 @@ echo 'xml: '.$xml;
             // Only include valid XML objects.
             foreach ($tmp as $element)
             {
-                if ($element instanceof JXMLElement) {
+                if ($element instanceof SimpleXMLElement) {
                     $groups[] = $element;
                 }
             }
@@ -1498,8 +1498,8 @@ echo 'xml: '.$xml;
      */
     protected function loadField($element, $group = null, $value = null)
     {
-        // Make sure there is a valid JXMLElement.
-        if (!($element instanceof JXMLElement)) {
+        // Make sure there is a valid SimpleXMLElement.
+        if (!($element instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -1588,7 +1588,7 @@ echo 'xml: '.$xml;
     protected function syncPaths()
     {
         // Make sure there is a valid MolajoForm XML document.
-        if (!($this->xml instanceof JXMLElement)) {
+        if (!($this->xml instanceof SimpleXMLElement)) {
             return false;
         }
 
@@ -1643,8 +1643,8 @@ echo 'xml: '.$xml;
      */
     protected function validateField($element, $group = null, $value = null, $calendar = null)
     {
-        // Make sure there is a valid JXMLElement.
-        if (!$element instanceof JXMLElement) {
+        // Make sure there is a valid SimpleXMLElement.
+        if (!$element instanceof SimpleXMLElement) {
             return new MolajoException(MolajoTextHelper::_('MOLAJO_FORM_ERROR_VALIDATE_FIELD'), -1, E_ERROR);
         }
 
@@ -1802,7 +1802,7 @@ echo 'xml: '.$xml;
                     return false;
                 }
             } else {
-echo $data.$replace.$xpath;
+
 				if ($forms[$name]->loadFile($data, $replace, $xpath) === false) {
 					throw new Exception(JText::_('JLIB_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
@@ -1810,8 +1810,7 @@ echo $data.$replace.$xpath;
 				}
 			}
         }
-echo '<pre>';var_dump($forms);'</pre>';
-            die;
+
         return $forms[$name];
     }
 

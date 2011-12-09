@@ -118,7 +118,7 @@ class MolajoInstallerAdapterTemplate extends MolajoAdapterInstance
             // Update function available or
             // Update tag detected
             if ($this->parent->getUpgrade() || ($this->parent->manifestClass && method_exists($this->parent->manifestClass, 'update'))
-                || is_a($updateElement, 'JXMLElement')
+                || is_a($updateElement, 'SimpleXMLElement')
             ) {
                 // Force this one
                 $this->parent->setOverwrite(true);
@@ -334,7 +334,7 @@ class MolajoInstallerAdapterTemplate extends MolajoAdapterInstance
         // We do findManifest to avoid problem when uninstalling a list of extensions: getManifest cache its manifest file
         $this->parent->findManifest();
         $manifest = $this->parent->getManifest();
-        if (!($manifest instanceof JXMLElement)) {
+        if (!($manifest instanceof SimpleXMLElement)) {
             // Kill the extension entry
             $row->delete($row->extension_id);
             unset($row);

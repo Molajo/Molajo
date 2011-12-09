@@ -231,7 +231,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
             // Update function available or
             // Update tag detected
             if ($this->parent->getUpgrade() || ($this->parent->manifestClass && method_exists($this->parent->manifestClass, 'update'))
-                || is_a($updateElement, 'JXMLElement')
+                || is_a($updateElement, 'SimpleXMLElement')
             ) {
                 // Force this one
                 $this->parent->setOverwrite(true);
@@ -729,7 +729,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         $msg = ob_get_contents();
         ob_end_clean();
 
-        if (!($this->manifest instanceof JXMLElement)) {
+        if (!($this->manifest instanceof SimpleXMLElement)) {
             // Make sure we delete the folders
             JFolder::delete($this->parent->getPath('extension_root'));
             MolajoError::raiseWarning(100, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_UNINSTALL_INVALID_NOTFOUND_MANIFEST'));
