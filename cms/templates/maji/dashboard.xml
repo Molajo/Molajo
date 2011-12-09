@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="text">
+		<fieldset name="text">
+
+			<field
+                type="text"
+				name="title"
+				label="Title of Content"
+				description="Text description"
+                class="inputbox"
+                size="30"
+			    required="true"
+			/>
+
+		</fieldset>
+	</fields>
+</form>

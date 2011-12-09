@@ -693,19 +693,22 @@ class MolajoForm
     public function loadFile($file, $reset = true, $xpath = false)
     {
         // Check to see if the path is an absolute path.
-        if (!is_file($file)) {
+        if (is_file($file)) {
+        } else {
 
             // Not an absolute path so let's attempt to find one using JPath.
             $file = JPath::find(self::addFormPath(), strtolower($file) . '.xml');
 
-            // If unable to find the file return false.
-            if (!$file) {
+            if ($file) {
+            } else {
                 return false;
             }
         }
         // Attempt to load the XML file.
         $xml = MolajoFactory::getXML($file, true);
 
+echo 'xml: '.$xml;
+        die;
         return $this->load($xml, $reset, $xpath);
     }
 
@@ -1773,34 +1776,42 @@ class MolajoForm
         $forms = &self::$forms;
 
         // Only instantiate the form if it does not already exist.
-        if (!isset($forms[$name])) {
+        if (isset($forms[$name])) {
+
+            if ($forms[$name]->loadFile($data, $replace, $xpath) == false) {
+                throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+
+                return false;
+            }
+
+        } else {
 
             $data = trim($data);
-
             if (empty($data)) {
                 throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_NO_DATA'));
             }
 
             // Instantiate the form.
             $forms[$name] = new MolajoForm($name, $options);
-
+ 
             // Load the data.
             if (substr(trim($data), 0, 1) == '<') {
-                if ($forms[$name]->load($data, $replace, $xpath) == false) {
+                if ($forms[$name]->load($data, $replace, $xpath) === false) {
                     throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
                     return false;
                 }
-            }
-            else {
-                if ($forms[$name]->loadFile($data, $replace, $xpath) == false) {
-                    throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+            } else {
+echo $data.$replace.$xpath;
+				if ($forms[$name]->loadFile($data, $replace, $xpath) === false) {
+					throw new Exception(JText::_('JLIB_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
-                    return false;
-                }
-            }
+					return false;
+				}
+			}
         }
-
+echo '<pre>';var_dump($forms);'</pre>';
+            die;
         return $forms[$name];
     }
 

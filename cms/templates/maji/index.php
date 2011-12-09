@@ -6,6 +6,8 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>"
@@ -15,6 +17,15 @@ defined('MOLAJO') or die;
     <doc:include type="head"/>
 </head>
 <body>
-<?php include MOLAJO_CMS_LAYOUTS . '/formfields/button/layouts/body.php'; ?>
+<?php
+$here = dirname(__FILE__);
+MolajoForm::addFormPath($here);
+MolajoForm::addFieldPath($here);
+
+//$form = JForm::getInstance('com_installer.manage', 'manage', array('load_data' => $loadData));
+$form = MolajoForm::getInstance('com_dashboard.dashboard', 'dashboard', array('load_data' => true));
+echo '<pre>';var_dump($form);'</pre>';
+
+?>
 </body>
 </html>

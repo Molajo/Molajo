@@ -510,18 +510,15 @@ abstract class MolajoFactory
     public static function getXML($data, $isFile = true)
     {
         // Disable libxml errors and allow to fetch error information as needed
-        libxml_use_internal_errors(true);
-
+        //libxml_use_internal_errors(true);
+echo $data.'<br />';
         if ($isFile) {
-            // Try to load the XML file
             $xml = simplexml_load_file($data, 'SimpleXMLElement');
         } else {
-            // Try to load the XML string
             $xml = simplexml_load_string($data, 'SimpleXMLElement');
         }
 
         if (empty($xml)) {
-            // There was an error
             MolajoError::raiseWarning(100, MolajoTextHelper::_('MOLAJO_UTIL_ERROR_XML_LOAD'));
 
             if ($isFile) {
@@ -533,7 +530,8 @@ abstract class MolajoFactory
                 MolajoError::raiseWarning(100, 'XML: ' . $error->message);
             }
         }
-
+echo 'xml '.$xml;
+echo '<br /><br /><br /><br />';
         return $xml;
     }
 
