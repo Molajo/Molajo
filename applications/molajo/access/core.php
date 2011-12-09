@@ -422,7 +422,7 @@ class MolajoACLCore extends MolajoACL
         $query->select('a.access');
         //        $query->select('ag.title AS access_level');
 
-        $aclClass = MolajoACL;
+        $aclClass = 'MolajoACL';
         $acl = new $aclClass();
         $groupList = $acl->getList('viewaccess');
 

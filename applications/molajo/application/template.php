@@ -61,7 +61,7 @@ abstract class MolajoTemplate
 
         /** Retrieve Template from the DB */
         $templates = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $id);
-
+echo '<pre>';var_dump($templates);'</pre>';
         foreach ($templates as $template) {
             $registry = new JRegistry;
             $registry->loadJSON($template->parameters);

@@ -255,10 +255,7 @@ class MolajoACL
         /** Component Override */
         if ($option == '') {
         } else {
-            if (substr($option, 0, 4) == '') {
-                $option = substr($option, 4, strlen($option) - 4);
-            }
-            $componentClass = 'MolajoACL' . ucfirst(strtolower($option));
+            $componentClass = ucfirst(strtolower($option)) . 'Acl';
             if (class_exists($componentClass)) {
                 if (method_exists($componentClass, $method)) {
                     return $componentClass;
