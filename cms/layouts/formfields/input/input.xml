@@ -13,8 +13,4 @@
         <folder>language</folder>
         <folder>layouts</folder>
     </files>
-    <languages>
-        <language tag="language/en-GB">en-GB.layouts_text.ini</language>
-        <language tag="language/en-GB">en-GB.layouts_text.sys.ini</language>
-    </languages>
 </extension>
