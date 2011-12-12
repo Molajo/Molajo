@@ -1,11 +1,12 @@
 <?php
 class MolajoConfigSite
 {
-
     /* Site Settings */
+    public $sitename = 'Molajo';
+
+    /* Offline Settings */
     public $offline = '0';
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-    public $sitename = 'Molajo';
 
     /* Database Settings */
     public $dbtype = 'mysqli'; // Normally mysql

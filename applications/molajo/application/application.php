@@ -9,14 +9,14 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoApplication
+ * Molajo Application Class
  *
- * Acts as a Factory class for application specific objects and supporting API functions
+ * Factory class for application specific objects and supporting API functions
  */
 class MolajoApplication extends JObject
 {
     /**
-     * The application identifier.
+     * Application ID
      *
      * @var    integer
      * @since  1.0
@@ -24,7 +24,7 @@ class MolajoApplication extends JObject
     protected $_application_id = null;
 
     /**
-     * The application message queue.
+     * Application Message Queue
      *
      * @var    array
      * @since  1.0
@@ -32,7 +32,7 @@ class MolajoApplication extends JObject
     protected $_messageQueue = array();
 
     /**
-     * Name of the application.
+     * Application Name
      *
      * @var    array
      * @since  1.0
@@ -40,7 +40,7 @@ class MolajoApplication extends JObject
     protected $_name = null;
 
     /**
-     * Scope of the application.
+     * Application Scope
      *
      * @var    string
      * @since  1.0
@@ -72,15 +72,17 @@ class MolajoApplication extends JObject
     public $input = null;
 
     /**
-     * @var object $template
+     * Application Template
      *
+     * @var object
      * @since 1.0
      */
     private $template = null;
 
     /**
-     * @var bool $_detect_browser
+     * Detect Browser
      *
+     * @var bool
      * @since 1.0
      */
     private $_detect_browser = false;
@@ -277,6 +279,8 @@ class MolajoApplication extends JObject
         }
         $config->set('editor', $editor);
 
+/** todo: amy get the user's template */
+
         /** Site authorisation for Application */
         $site = new MolajoSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
@@ -304,6 +308,7 @@ class MolajoApplication extends JObject
      */
     public function route()
     {
+/** todo: amy 404 processing */
         if ($itemid = JRequest::getInt('Itemid')) {
             $this->authorise($itemid);
         }

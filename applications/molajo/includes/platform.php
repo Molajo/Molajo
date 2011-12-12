@@ -75,6 +75,10 @@ foreach ($files as $file) {
  */
 $files = JFolder::files(MOLAJO_PLATFORM . '/utilities', '\.php$', false, false);
 foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_PLATFORM . '/utilities/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    if ($file == 'LoremIpsum.class.php') {
+        $filehelper->requireClassFile(MOLAJO_PLATFORM . '/utilities/' . $file, 'LoremIpsumGenerator');
+    } else {
+        $filehelper->requireClassFile(MOLAJO_PLATFORM . '/utilities/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 

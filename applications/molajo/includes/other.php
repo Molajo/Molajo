@@ -12,6 +12,15 @@ defined('MOLAJO') or die;
 $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(PLATFORM . '/jplatform/simplepie/simplepie.php', 'SimplePie');
 
+/**
+ *	Twig
+ */
+require_once PLATFORM . '/Twig/Autoloader.php';
+Twig_Autoloader::register();
+
+$loader = new Twig_Loader_String();
+$twig = new Twig_Environment($loader);
+
 /** Twig Autoload */
 //$filehelper->requireClassFile(MOLAJO_BASE_FOLDER.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
 //Twig_Autoloader::register();

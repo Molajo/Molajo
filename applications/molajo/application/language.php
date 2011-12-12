@@ -20,7 +20,7 @@ define('_QQ_', '"');
  * @subpackage  Language
  * @since       11.1
  */
-class MolajoLanguage extends JObject
+class MolajoLanguage
 {
     /**
      * $languages

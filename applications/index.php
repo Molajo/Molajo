@@ -40,7 +40,7 @@ JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
  */
 $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
-
+ 
 /**
  *  Initialize Application
  */
