@@ -15,7 +15,7 @@ $filehelper->requireClassFile(PLATFORM . '/jplatform/simplepie/simplepie.php', '
 /**
  *	Twig
  */
-require_once PLATFORM . '/Twig/Autoloader.php';
+require_once TWIG . '/Autoloader.php';
 Twig_Autoloader::register();
 
 $loader = new Twig_Loader_String();

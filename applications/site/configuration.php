@@ -23,7 +23,7 @@ class MolajoConfigApplication
     public $editor = 'none';
     public $access = '1';
 
-    /* Application Access */
+    /* Access */
     public $application_logon_requirement = '0';
     public $application_guest_option = 'articles';
     public $application_default_option = 'articles';

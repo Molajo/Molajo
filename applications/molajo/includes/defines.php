@@ -21,13 +21,17 @@ if (defined('MOLAJO_MVC')) {
     define('MOLAJO_MVC', MOLAJO_PLATFORM . '/mvc');
 }
 
-if (defined('DOCTRINE_PLATFORM')) {
+if (defined('DOCTRINE')) {
 } else {
-    define('DOCTRINE_PLATFORM', PLATFORM . '/Doctrine');
+    define('DOCTRINE', PLATFORM . '/Doctrine');
 }
-if (defined('DOCTRINE_EXTENSIONS_PLATFORM')) {
+if (defined('DOCTRINE_EXTENSIONS')) {
 } else {
-    define('DOCTRINE_EXTENSIONS_PLATFORM', PLATFORM . '/DoctrineExtensions');
+    define('DOCTRINE_EXTENSIONS', PLATFORM . '/DoctrineExtensions');
+}
+if (defined('TWIG')) {
+} else {
+    define('TWIG', PLATFORM . '/Twig');
 }
 
 if (defined('MOLAJO_CMS')) {

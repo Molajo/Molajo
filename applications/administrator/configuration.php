@@ -23,7 +23,7 @@ class MolajoConfigApplication
     public $editor = 'none';
     public $access = '1';
 
-    /* Application Access */
+    /* Access */
     public $application_logon_requirement = '1';
     public $application_guest_option = 'login';
     public $application_default_option = 'dashboard';
@@ -39,7 +39,7 @@ class MolajoConfigApplication
     public $feed_email = 'author';
     public $list_limit = 20;
 
-    /* Application */
+    /* Media */
     public $html5 = '1';
     public $image_xsmall = '50';
     public $image_small = '75';

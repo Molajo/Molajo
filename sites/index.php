@@ -37,9 +37,6 @@ if (defined('MOLAJO_SITE')) {
             break;
         }
     }
-}
-if (defined('MOLAJO_SITE')) {
-} else {
     define('MOLAJO_SITE', 1);
 }
 
