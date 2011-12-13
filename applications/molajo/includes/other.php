@@ -21,6 +21,9 @@ Twig_Autoloader::register();
 $loader = new Twig_Loader_String();
 $twig = new Twig_Environment($loader);
 
+require_once dirname(__FILE__).'/../lib/Github/Autoloader.php';
+Github_Autoloader::register();
+
 /** Twig Autoload */
 //$filehelper->requireClassFile(MOLAJO_BASE_FOLDER.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
 //Twig_Autoloader::register();

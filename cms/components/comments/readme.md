@@ -19,28 +19,28 @@ Assumptions for Administrator Component:
 IF YOU WANT TO:
 
 0. featured
-1. add elements, "Select Article for Article Layout"
+1. add elements, "Select Comment for Comment Layout"
 1. add tasks - "Mark as Audited" -> configuration and method
 2. add record types ... "Car Component - Makes of Cars" (responses)
 3. add views ...
 4. add or remove fields in the table (Configuration Option)
 5. change the layout (Admin - it's a configuration option/Frontend likely a Layout Override or Alternative Layout)
 6. adapt the level of acl coverage (Modify the access.xml file)
-7. add fields like articles or tags... (Do it)
+7. add fields like comments or tags... (Do it)
 8. translations (Instructions)
 9. buttons and menu items and css and media (Explain how)
 10. Package and share
 11. Change the words on the page - the labels and descriptions
 
-Articles Manager Page - Multiple View - List
+Comments Manager Page - Multiple View - List
 
 1. To display or hide the Component Title: Component Options -> Component Manager List -> Toolbar Title Display  -> Display Title No Yes
 
-2. To change the Title Text: Update the Language String for COM_ARTICLES_MANAGER_ARTICLES (How? *)
+2. To change the Title Text: Update the Language String for COM_COMMENTS_MANAGER_COMMENTS (How? *)
 
 3. To display or hide the Title Image: Component Options -> Component Manager List -> Toolbar Title Display -> Display Title Image No Yes
 
-4. To change the Title Image: Replace the media/com_articles/images/icon-48-articles.png file
+4. To change the Title Image: Replace the media/com_comments/images/icon-48-comments.png file
 
 5. To change or rearrange the order of the Toolbar Buttons: Component Options -> Component Manager List -> Toolbar Buttons
 

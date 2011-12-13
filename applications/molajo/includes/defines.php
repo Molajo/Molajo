@@ -33,6 +33,10 @@ if (defined('TWIG')) {
 } else {
     define('TWIG', PLATFORM . '/Twig');
 }
+if (defined('GITHUB')) {
+} else {
+    define('GITHUB', PLATFORM . '/Github');
+}
 
 if (defined('MOLAJO_CMS')) {
 } else {

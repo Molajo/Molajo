@@ -113,7 +113,6 @@
             <option value="1">YES</option>
         </field>
 
-
         <field
                 name="uninstall_options"
                 type="spacer"
@@ -143,7 +142,7 @@
         <field
                 name="rules"
                 type="rules"
-                component="articles"
+                component="comments"
                 filter="rules"
                 validate="rules"
                 label="PERMISSIONS_LABEL"
@@ -262,7 +261,7 @@
                 />
 
         <field
-                name="config_article_editor"
+                name="config_comment_editor"
                 type="spacer"
                 class="spacer"
                 hr="false"
@@ -270,7 +269,7 @@
                 description="ITEM_EDITOR_DESC"
                 />
 
-        <field name="article_editor_parameter1"
+        <field name="comment_editor_parameter1"
                label="ITEM_EDITOR_PARAMETER1_LABEL"
                description="ITEM_EDITOR_PARAMETER1_DESC"
                type="sql"
@@ -283,7 +282,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_editor_parameter2"
+        <field name="comment_editor_parameter2"
                label="ITEM_EDITOR_PARAMETER2_LABEL"
                description="ITEM_EDITOR_PARAMETER2_DESC"
                type="sql"
@@ -296,7 +295,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_editor_parameter3"
+        <field name="comment_editor_parameter3"
                label="ITEM_EDITOR_PARAMETER3_LABEL"
                description="ITEM_EDITOR_PARAMETER3_DESC"
                type="sql"
@@ -309,7 +308,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_editor_parameter4"
+        <field name="comment_editor_parameter4"
                label="ITEM_EDITOR_PARAMETER4_LABEL"
                description="ITEM_EDITOR_PARAMETER4_DESC"
                type="sql"
@@ -322,7 +321,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_editor_parameter5"
+        <field name="comment_editor_parameter5"
                label="ITEM_EDITOR_PARAMETER5_LABEL"
                description="ITEM_EDITOR_PARAMETER5_DESC"
                type="sql"
@@ -336,7 +335,7 @@
         </field>
 
         <field
-                name="config_article_default"
+                name="config_comment_default"
                 type="spacer"
                 class="spacer"
                 hr="false"
@@ -344,7 +343,7 @@
                 description="ITEM_DEFAULT_LAYOUT_DESC"
                 />
 
-        <field name="article_default_parameter1"
+        <field name="comment_default_parameter1"
                label="ITEM_DEFAULT_LAYOUT_PARAMETER1_LABEL"
                description="ITEM_DEFAULT_LAYOUT_PARAMETER1_DESC"
                type="sql"
@@ -357,7 +356,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_default_parameter2"
+        <field name="comment_default_parameter2"
                label="ITEM_DEFAULT_LAYOUT_PARAMETER2_LABEL"
                description="ITEM_DEFAULT_LAYOUT_PARAMETER2_DESC"
                type="sql"
@@ -370,7 +369,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_default_parameter3"
+        <field name="comment_default_parameter3"
                label="ITEM_DEFAULT_LAYOUT_PARAMETER3_LABEL"
                description="ITEM_DEFAULT_LAYOUT_PARAMETER3_DESC"
                type="sql"
@@ -383,7 +382,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_default_parameter4"
+        <field name="comment_default_parameter4"
                label="ITEM_DEFAULT_LAYOUT_PARAMETER4_LABEL"
                description="ITEM_DEFAULT_LAYOUT_PARAMETER4_DESC"
                type="sql"
@@ -396,7 +395,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="article_default_parameter5"
+        <field name="comment_default_parameter5"
                label="ITEM_DEFAULT_LAYOUT_PARAMETER5_LABEL"
                description="ITEM_DEFAULT_LAYOUT_PARAMETER5_DESC"
                type="sql"
@@ -410,7 +409,7 @@
         </field>
 
         <field
-                name="config_articles_blog"
+                name="config_comments_blog"
                 type="spacer"
                 class="spacer"
                 hr="false"
@@ -418,7 +417,7 @@
                 description="ITEM_BLOG_DESC"
                 />
 
-        <field name="articles_blog_parameter1"
+        <field name="comments_blog_parameter1"
                label="ITEM_BLOG_PARAMETER1_LABEL"
                description="ITEM_BLOG_PARAMETER1_DESC"
                type="sql"
@@ -431,7 +430,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_blog_parameter2"
+        <field name="comments_blog_parameter2"
                label="ITEM_BLOG_PARAMETER2_LABEL"
                description="ITEM_BLOG_PARAMETER2_DESC"
                type="sql"
@@ -444,7 +443,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_blog_parameter3"
+        <field name="comments_blog_parameter3"
                label="ITEM_BLOG_PARAMETER3_LABEL"
                description="ITEM_BLOG_PARAMETER3_DESC"
                type="sql"
@@ -457,7 +456,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_blog_parameter4"
+        <field name="comments_blog_parameter4"
                label="ITEM_BLOG_PARAMETER4_LABEL"
                description="ITEM_BLOG_PARAMETER4_DESC"
                type="sql"
@@ -470,7 +469,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_blog_parameter5"
+        <field name="comments_blog_parameter5"
                label="ITEM_BLOG_PARAMETER5_LABEL"
                description="ITEM_BLOG_PARAMETER5_DESC"
                type="sql"
@@ -484,7 +483,7 @@
         </field>
 
         <field
-                name="config_articles_default"
+                name="config_comments_default"
                 type="spacer"
                 class="spacer"
                 hr="false"
@@ -492,7 +491,7 @@
                 description="MULTIPLE_LIST_DESC"
                 />
 
-        <field name="articles_default_parameter1"
+        <field name="comments_default_parameter1"
                label="ITEM_LIST_PARAMETER1_LABEL"
                description="ITEM_LIST_PARAMETER1_DESC"
                type="sql"
@@ -505,7 +504,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_default_parameter2"
+        <field name="comments_default_parameter2"
                label="ITEM_LIST_PARAMETER2_LABEL"
                description="ITEM_LIST_PARAMETER2_DESC"
                type="sql"
@@ -518,7 +517,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_default_parameter3"
+        <field name="comments_default_parameter3"
                label="ITEM_LIST_PARAMETER3_LABEL"
                description="ITEM_LIST_PARAMETER3_DESC"
                type="sql"
@@ -531,7 +530,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_default_parameter4"
+        <field name="comments_default_parameter4"
                label="ITEM_LIST_PARAMETER4_LABEL"
                description="ITEM_LIST_PARAMETER4_DESC"
                type="sql"
@@ -544,7 +543,7 @@
             <option value="0">LAYOUT_NONE</option>
         </field>
 
-        <field name="articles_default_parameter5"
+        <field name="comments_default_parameter5"
                label="ITEM_LIST_PARAMETER5_LABEL"
                description="ITEM_LIST_PARAMETER5_DESC"
                type="sql"
@@ -1687,7 +1686,7 @@
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 240 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
-               default="article"
+               default="comment"
                label="MANAGER_EDITOR_BUTTON1_LABEL"
                description="MANAGER_EDITOR_BUTTON1_DESC"
                 >
