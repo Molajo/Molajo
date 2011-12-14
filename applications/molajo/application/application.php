@@ -14,22 +14,13 @@ defined('MOLAJO') or die;
  */
 class MolajoApplication
 {
-
     /**
-     * Time the request was made.
-     *
-     * @var    date
-     * @since  1.0
-     */
-    public $requestTime = null;
-
-    /**
-     * Time the request was made, expressed as a Unix timestamp.
+     * Application configuration object.
      *
      * @var    integer
      * @since  1.0
      */
-    public $startTime = null;
+    public $config = null;
 
     /**
      * Application input object.
@@ -59,7 +50,7 @@ class MolajoApplication
      *
      * @since  1.0
      */
-    public static function getInstance($application, $prefix = 'Molajo')
+    public static function getInstance($prefix = 'Molajo')
     {
         static $instances;
 
@@ -68,9 +59,9 @@ class MolajoApplication
             $instances = array();
         }
 
-        if (empty($instances[$application])) {
+        if (empty($instances[MOLAJO_APPLICATION])) {
 
-            $info = MolajoApplicationHelper::getApplicationInfo($application, true);
+            $info = MolajoApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION, true);
             if ($info === false) {
                 return false;
             }
@@ -87,16 +78,16 @@ class MolajoApplication
 
             MolajoApplicationHelper::loadApplicationClasses();
 
-            $classname = $prefix . ucfirst($application) . 'Application';
+            $classname = $prefix . ucfirst(MOLAJO_APPLICATION) . 'Application';
             if (class_exists($classname)) {
                 $instance = new $classname();
             } else {
                 return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_APPLICATION_INSTANTIATION_ERROR', $classname));
             }
-            $instances[$application] = &$instance;
+            $instances[MOLAJO_APPLICATION] = &$instance;
         }
 
-        return $instances[$application];
+        return $instances[MOLAJO_APPLICATION];
     }
 
     /**
@@ -124,8 +115,9 @@ class MolajoApplication
             $this->config = new JRegistry;
         }
 
-        $this->loadConfiguration($this->fetchConfigurationData());
-
+        $this->getConfig();
+echo '<pre>';$this->config;'</pre>';
+        die;
         // Set the execution datetime and timestamp;
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());
@@ -138,20 +130,6 @@ class MolajoApplication
 
         // Set the system URIs.
         $this->loadSystemUris();
-
-        /** Configuration File */
-        if (isset($config['config_file'])) {
-        } else {
-            $config['config_file'] = 'configuration.php';
-        }
-
-        if (MOLAJO_APPLICATION == 'installation') {
-            $this->_createApplicationConfiguration();
-            $this->_createConfiguration();
-        } else {
-            $this->_createApplicationConfiguration(MOLAJO_APPLICATION_PATH . '/' . $config['config_file']);
-            $this->_createConfiguration(MOLAJO_APPLICATIONS_CORE . '/' . $config['config_file']);
-        }
 
         /** Session */
         if (isset($config['session'])) {
@@ -192,24 +170,23 @@ class MolajoApplication
     {
         /** Language */
         MolajoLanguageHelper::getLanguage($options);
-        $config = MolajoFactory::getConfig();
-        $config->set('language', $options['language']);
+        $this->set('language', $options['language']);
 
         $language = MolajoFactory::getLanguage();
         $results = $language->load('base', MOLAJO_CMS_LANGUAGES);
 
         /** Editor */
-        $editor = MolajoFactory::getUser()->getParam('editor', $config->get('editor', 'none'));
+        $editor = MolajoFactory::getUser()->getParam('editor', $this->get('editor', 'none'));
         if (MolajoPlugin::isEnabled('editors', $editor)) {
 
         } else {
-            $editor = $config->get('editor');
+            $editor = $this->get('editor');
             if (MolajoPlugin::isEnabled('editors', $editor)) {
             } else {
                 $editor = 'none';
             }
         }
-        $config->set('editor', $editor);
+        $this->set('editor', $editor);
 
         /** todo: amy get the user's template */
 
@@ -251,7 +228,7 @@ class MolajoApplication
 
         JRequest::set($result, 'get', false);
 
-        if ($this->getConfig('force_ssl') >= 1
+        if ($this->get('force_ssl') >= 1
             && strtolower($uri->getScheme()) != 'https'
         ) {
             $uri->setScheme('https');
@@ -378,14 +355,14 @@ class MolajoApplication
             $document = MolajoFactory::getDocument();
             switch ($document->getType()) {
                 case 'html':
-                    $document->setMetaData('keywords', $this->getConfig('MetaKeys'));
+                    $document->setMetaData('keywords', $this->get('MetaKeys'));
                     break;
 
                 default:
                     break;
             }
-            $document->setTitle($this->getConfig('sitename'));
-            $document->setDescription($this->getConfig('MetaDesc'));
+            $document->setTitle($this->get('sitename'));
+            $document->setDescription($this->get('MetaDesc'));
 
             /** Render */
             $contents = MolajoComponent::renderComponent($request);
@@ -433,24 +410,6 @@ class MolajoApplication
     {
         return MOLAJO_APPLICATION;
     }
-
-    /**
-     * getConfig
-     *
-     * Gets a configuration value for the Application.
-     *
-     * @param   string   The name of the value to get.
-     * @param   string   Default value to return
-     *
-     * @return  mixed    The user state.
-     *
-     * @since  1.0
-     */
-    public function getConfig($varname, $default = null)
-    {
-        return MolajoFactory::getConfig()->get('' . $varname, $default);
-    }
-
 
     /**
      * getUserState
@@ -691,58 +650,33 @@ class MolajoApplication
      */
 
     /**
-     * _createApplicationConfiguration
+     * getConfig
      *
-     * Create the Application configuration registry.
-     *
-     * @param   string  $file  The path to the application configuration file
+     * Creates the Application configuration object.
      *
      * return   object  A config object
      *
      * @since  1.0
      */
-    protected function _createApplicationConfiguration($file = null)
+    protected function getConfig()
     {
-        if ($file == null) {
-        } else {
-            require_once $file;
-        }
-        /** Application Configuration */
-        $appConfig = new MolajoConfigApplication();
-        $registry = MolajoFactory::getApplicationConfig();
-        $registry->loadObject($appConfig);
+        $data = MolajoConfiguration::get();
 
-        return $appConfig;
+        if (is_array($data)) {
+            $this->config->loadArray($data);
+
+        } elseif (is_object($data)) {
+            $this->config->loadObject($data);
+        }
+
+        return $this;
     }
 
     /**
-     * _createConfiguration
+     * get
      *
-     * Create the combined site and application configuration registry.
-     *
-     * @param   string  $file  The path to the configuration file
-     *
-     * return   object  A config object
-     *
-     * @since  1.0
-     */
-    protected function _createConfiguration($file = null)
-    {
-        if ($file == null) {
-        } else {
-            require_once $file;
-        }
-
-        /** Combined Site and Application Configuration */
-        $config = new MolajoConfig();
-        $registry = MolajoFactory::getConfig();
-        $registry->loadObject($config);
-
-        return $config;
-    }
-
-    /**
-     * Returns a property of the object or the default value if the property is not set.
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
      *
      * @param   string  $key      The name of the property.
      * @param   mixed   $default  The default value (optional) if none is set.
@@ -757,7 +691,9 @@ class MolajoApplication
     }
 
     /**
-     * Modifies a property of the object, creating it if it does not already exist.
+     * set
+     *
+     * Modifies a property of the Application object, creating it if it does not already exist.
      *
      * @param   string  $key    The name of the property.
      * @param   mixed   $value  The value of the property to set (optional).
@@ -828,7 +764,7 @@ class MolajoApplication
      */
     static public function stringURLSafe($string)
     {
-        if (self::getConfig('unicodeslugs') == 1) {
+        if (self::get('unicodeslugs') == 1) {
             $output = JFilterOutput::stringURLUnicodeSlug($string);
 
         } else {
@@ -851,7 +787,7 @@ class MolajoApplication
      */
     public static function getHash($seed)
     {
-        return md5(MolajoFactory::getConfig()->get('secret') . $seed);
+        return md5(self::get('secret') . $seed);
     }
 
     /**
@@ -879,6 +815,6 @@ class MolajoApplication
      */
     public function __toString()
     {
-        return JResponse::toString($this->getConfig('gzip', false));
+        return JResponse::toString($this->get('gzip', false));
     }
 }

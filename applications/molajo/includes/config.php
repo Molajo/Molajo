@@ -51,4 +51,3 @@ if (MOLAJO_APPLICATION == 'installation') {
         $_PROFILER = JProfiler::getInstance('Application');
     }
 }
-

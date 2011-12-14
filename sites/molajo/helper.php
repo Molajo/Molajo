@@ -37,7 +37,7 @@ class MolajoSiteHelper
      * @return  boolean  True if the information is added. False on error
      * @since   1.0
      */
-    public static function getSiteInfo($id = null, $byName = false)
+    public static function getSiteInfo()
     {
         if (self::$_sites === null) {
 
@@ -82,26 +82,10 @@ class MolajoSiteHelper
             }
         }
 
-        /** All sites requested */
-        if (is_null($id)) {
-            return self::$_sites;
+        if (isset(self::$_sites[MOLAJO_SITE_ID])) {
+            return self::$_sites[MOLAJO_SITE_ID];
         }
 
-        /** Name lookup */
-        if ($byName) {
-            foreach (self::$_sites as $site) {
-                if ($site->name == strtolower($id)) {
-                    return $site;
-                }
-            }
-
-        } else {
-            if (isset(self::$_sites[$id])) {
-                return self::$_sites[$id];
-            }
-        }
-
-        /** Name and or ID lookup unsuccessful */
         return null;
     }
 

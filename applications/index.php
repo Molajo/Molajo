@@ -10,6 +10,10 @@ defined('MOLAJO') or die;
 /**
  *  Load Classes
  */
+if (defined('MOLAJO_APPLICATIONS_CORE')) {
+} else {
+    define('MOLAJO_APPLICATIONS_CORE', MOLAJO_APPLICATIONS . '/molajo');
+}
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/phpversion.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/defines.php';
 require_once MOLAJO_APPLICATIONS_CORE . '/includes/installcheck.php';
@@ -38,7 +42,7 @@ JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
 /**
  *  Get Application
  */
-$app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
+$app = MolajoFactory::getApplication();
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
  
 /**

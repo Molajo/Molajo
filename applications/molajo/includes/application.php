@@ -27,13 +27,19 @@ $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/group.php', 'M
  */
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/application.php', 'MolajoApplication');
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/application', '\.php$', false, false);
+
+echo 'yes';
+        die;
+
+
 foreach ($files as $file) {
     if ($file == 'application') {
     } else {
         $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/' . $file, 'MolajoApplication' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-
+echo 'yes';
+        die;
 /**
  *  Data
  */
@@ -158,4 +164,5 @@ foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/updater/adapters/' . $file, 'MolajoUpdater' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
-
+echo 'yes';
+        die;

@@ -83,15 +83,13 @@ class MolajoSite extends JObject
      *
      * Returns the global site object, creating if not existing
      *
-     * @param   mixed   $site         Site identifier or name.
-     * @param   array   $config       Associative array of configuration settings.
      * @param   strong  $prefix       Prefix for class names
      *
      * @return  site object
      *
      * @since  1.0
      */
-    public static function getInstance($site, $config = array(), $prefix = 'Molajo')
+    public static function getInstance($prefix = 'Molajo')
     {
         static $instances;
 
@@ -99,10 +97,9 @@ class MolajoSite extends JObject
         } else {
             $instances = array();
         }
+        if (empty($instances[MOLAJO_SITE])) {
 
-        if (empty($instances[$site])) {
-
-            $info = MolajoSiteHelper::getSiteInfo($site, false);
+            $info = MolajoSiteHelper::getSiteInfo();
             if ($info === false) {
                 return false;
             }
@@ -117,16 +114,16 @@ class MolajoSite extends JObject
                 return false;
             }
 
-            $classname = $prefix . ucfirst($site) . 'Site';
+            $classname = $prefix . ucfirst(MOLAJO_SITE) . 'Site';
             if (class_exists($classname)) {
-                $instance = new $classname($config);
+                $instance = new $classname();
             } else {
                 return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_INSTANTIATION_ERROR', $classname));
             }
-            $instances[$site] = &$instance;
+            $instances[MOLAJO_SITE] = &$instance;
         }
 
-        return $instances[$site];
+        return $instances[MOLAJO_SITE];
     }
 
     /**
