@@ -150,7 +150,7 @@ class MolajoApplication
             $this->_createConfiguration();
         } else {
             $this->_createApplicationConfiguration(MOLAJO_APPLICATION_PATH . '/' . $config['config_file']);
-            $this->_createConfiguration(MOLAJO_APPLICATIONS . '/molajo/' . $config['config_file']);
+            $this->_createConfiguration(MOLAJO_APPLICATIONS_CORE . '/' . $config['config_file']);
         }
 
         /** Session */

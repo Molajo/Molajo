@@ -10,16 +10,16 @@ defined('MOLAJO') or die;
 /**
  *  Load Classes
  */
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/phpversion.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/defines.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/installcheck.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/joomla.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/config.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/application.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/site.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/platform.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/other.php';
-require_once MOLAJO_APPLICATIONS . '/molajo/includes/overrides.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/phpversion.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/defines.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/installcheck.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/joomla.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/config.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/application.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/site.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/platform.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/other.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/includes/overrides.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
