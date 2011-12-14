@@ -56,6 +56,58 @@ class MolajoLanguageHelper
         return $list;
     }
 
+
+    /**
+     * Tries to detect the language.
+     *
+     * @return  string  locale or null if not found
+     * @since   1.0
+     */
+    public static function getLanguage($options)
+    {
+        /** 1. request */
+        if (empty($options['language'])) {
+            $language = JRequest::getString('language', null);
+            if ($language && MolajoLanguage::exists($language)) {
+                $options['language'] = $language;
+            }
+        }
+echo '<pre>';var_dump(MolajoFactory::getUser());'</pre>';
+        die;
+        /** 2. user option for user */
+        if (empty($options['language'])) {
+            $language = MolajoFactory::getUser()->getParameter('language');
+            if ($language && MolajoLanguage::exists($language)) {
+                $options['language'] = $language;
+            }
+        }
+
+        /** 3. browser detection */
+        if (empty($options['language'])) {
+            if ($detect_browser && empty($options['language'])) {
+                $language = MolajoLanguageHelper::detectLanguage();
+                if ($language && MolajoLanguage::exists($language)) {
+                    $options['language'] = $language;
+                }
+            }
+        }
+
+        /** 4. site default for application */
+        if (empty($options['language'])) {
+            $language = $config->get('language', 'en-GB');
+            if ($language && MolajoLanguage::exists($language)) {
+                $options['language'] = $language;
+            }
+        }
+
+        /** 5. default */
+        if (MolajoLanguage::exists($options['language'])) {
+        } else {
+            $options['language'] = 'en-GB';
+        }
+
+    }
+
     /**
      * Tries to detect the language.
      *
@@ -64,33 +116,35 @@ class MolajoLanguageHelper
      */
     public static function detectLanguage()
     {
-
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $browserLangs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $systemLangs = self::getLanguages();
-            foreach ($browserLangs as $browserLang)
-            {
-                // Slice out the part before ; on first step, the part before - on second, place into array
-                $browserLang = substr($browserLang, 0, strcspn($browserLang, ';'));
-                $primary_browserLang = substr($browserLang, 0, 2);
-                foreach ($systemLangs as $systemLang)
-                {
-                    // Take off 3 letters iso code languages as they can't match browsers' languages and default them to en
-                    $Jinstall_lang = $systemLang->lang_code;
+        } else {
+            return null;
+        }
 
-                    if (strlen($Jinstall_lang) < 6) {
-                        if (strtolower($browserLang) == strtolower(substr($systemLang->lang_code, 0, strlen($browserLang)))) {
-                            return $systemLang->lang_code;
-                        }
-                        else if ($primary_browserLang == substr($systemLang->lang_code, 0, 2)) {
-                            $primaryDetectedLang = $systemLang->lang_code;
-                        }
+        $systemLangs = self::getLanguages();
+        foreach ($browserLangs as $browserLang)
+        {
+            // Slice out the part before ; on first step, the part before - on second, place into array
+            $browserLang = substr($browserLang, 0, strcspn($browserLang, ';'));
+            $primary_browserLang = substr($browserLang, 0, 2);
+            foreach ($systemLangs as $systemLang)
+            {
+                // Take off 3 letters iso code languages as they can't match browsers' languages and default them to en
+                $Jinstall_lang = $systemLang->lang_code;
+
+                if (strlen($Jinstall_lang) < 6) {
+                    if (strtolower($browserLang) == strtolower(substr($systemLang->lang_code, 0, strlen($browserLang)))) {
+                        return $systemLang->lang_code;
+                    }
+                    else if ($primary_browserLang == substr($systemLang->lang_code, 0, 2)) {
+                        $primaryDetectedLang = $systemLang->lang_code;
                     }
                 }
+            }
 
-                if (isset($primaryDetectedLang)) {
-                    return $primaryDetectedLang;
-                }
+            if (isset($primaryDetectedLang)) {
+                return $primaryDetectedLang;
             }
         }
 

@@ -104,8 +104,8 @@ class MolajoContentSyntaxHighlighter
         if (count($jstoload) > 0) {
 
             $document =& MolajoFactory::getDocument();
-            $scriptsfolder = JURI::base() . 'media/molajo/syntaxhighlighter/scripts/';
-            $stylesfolder = JURI::base() . 'media/molajo/syntaxhighlighter/styles/';
+            $scriptsfolder = JURI::base() . 'media/syntaxhighlighter/scripts/';
+            $stylesfolder = JURI::base() . 'media/syntaxhighlighter/styles/';
 
             if ($jsLoaded == false) {
 

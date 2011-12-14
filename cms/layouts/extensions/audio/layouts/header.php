@@ -9,7 +9,7 @@ defined('MOLAJO') or die;
 
 /** swf player and parameters **/
 $js = "window.addEvent('domready', function() { " . "\n";
-$js .= ' AudioPlayer.setup("' . JURI::base() . 'media/molajo/audio/player.swf' . '", {   ' . "\n";
+$js .= ' AudioPlayer.setup("' . JURI::base() . 'media/audio/player.swf' . '", {   ' . "\n";
 
 /** options **/
 $js .= ' loop: "' . $this->systemParameters->def('audio_loop', "no") . '", ' . "\n";

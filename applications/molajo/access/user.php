@@ -9,119 +9,139 @@
 defined('MOLAJO') or die;
 
 /**
- * User class
- *
- * @package    Molajo
+ * User Class
+ * 
+ * @package     Molajo
  * @subpackage  User
- * @since      11.1
+ * @since       1.1
  */
 class MolajoUser extends JObject
 {
     /**
-     * A cached switch for if this user has root access rights.
-     *
-     * @var    boolean
-     */
-    protected $isRoot = null;
-
-    /**
      * $id
+     *
+     * @since  1.0
      * @var int
      */
     public $id = null;
 
     /**
+     * $asset_type_id
+     *
+     * @since  1.0
+     * @var int
+     */
+    public $asset_type_id = null;
+    
+    /**
      * $username
+     *
+     * @since  1.0
      * @var string
      */
     public $username = null;
 
     /**
      * $first_name
+     *
+     * @since  1.0
      * @var string
      */
     public $first_name = null;
 
     /**
      * $last_name
+     *
+     * @since  1.0
      * @var string
      */
     public $last_name = null;
 
     /**
      * $name
+     *
+     * @since  1.0
      * @var string
      */
     public $name = null;
 
     /**
      * $content_text
+     *
+     * @since  1.0
      * @var string
      */
     public $content_text = null;
 
     /**
      * $email
+     *
+     * @since  1.0
      * @var string
      */
     public $email = null;
 
     /**
      * $password
-     * MD5 encrypted password
+     *
+     * @since  1.0
      * @var string
      */
     public $password = null;
 
     /**
-     * $password_clear
-     * Clear password, only available when a new password is set for a user
-     * @var string
-     */
-    public $password_clear = '';
-
-    /**
      * $block
+     *
+     * @since  1.0
      * @var int
      */
     public $block = null;
-
+    
+    /**
+     * $activation
+     *
+     * @since  1.0
+     * @var string activation hash
+     */
+    public $activation = null;
+    
     /**
      * $send_email
-     * Send Email switch
+     *
+     * @since  1.0
      * @var int
      */
     public $send_email = null;
 
     /**
      * $register_datetime
+     *
+     * @since  1.0
      * @var datetime
      */
     public $register_datetime = null;
 
     /**
      * $last_visit_datetime
+     *
+     * @since  1.0
      * @var datetime
      */
     public $last_visit_datetime = null;
 
     /**
-     * $activated
-     * @var string activated hash
-     */
-    public $activated = null;
-
-    /**
-     * $parameters
-     * @var string
-     */
-    public $parameters = null;
-
-    /**
      * $custom_fields
+     * 
      * @var string
      */
     public $custom_fields = null;
+    
+    /**
+     * $parameters
+     * 
+     * @var string
+     */
+    public $parameters = null;
 
     /**
      * Associative array of user => applications
@@ -149,37 +169,28 @@ class MolajoUser extends JObject
 
     /**
      * $guest
+     *
+     * @since  1.0
      * @var boolean
      */
     public $guest = null;
 
     /**
-     * User parameters
-     * @var object
-     */
-    protected $_parameters = null;
-
-    /**
-     * Error message
-     * @var string
-     */
-    protected $_errorMsg = null;
-
-    /**
      * getInstance
      *
-     * Returns the global User object, only creating it if it doesn't already exist.
+     * Returns Global User object, creating it if it doesn't already exist.
      *
-     * @param   integer  $identifier    The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+     * @param   strjng $identifier  Requested User (id or username)
      *
-     * @return  object   MolajoUser    The User object.
+     * @return  object  User
      * @since   1.0
      */
     public static function getInstance($identifier = 0)
     {
         static $instances;
 
-        if (!isset ($instances)) {
+        if (isset ($instances)) {
+        } else {
             $instances = array();
         }
 
@@ -190,9 +201,8 @@ class MolajoUser extends JObject
             if ($id = MolajoUserhelper::getUserId($identifier)) {
 
             } else {
-                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('JLIB_USER_ERROR_ID_NOT_EXISTS', $identifier));
-                $retval = false;
-                return $retval;
+                MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
+                return false;
             }
         }
 
@@ -216,10 +226,8 @@ class MolajoUser extends JObject
      */
     public function __construct($identifier = 0)
     {
-        // Create the user parameters object
-        $this->_parameters = new JRegistry;
+        $this->parameters = new JRegistry;
 
-        // Load the user if it exists
         if (empty($identifier)) {
             $this->id = 0;
             $this->send_email = 0;
@@ -227,6 +235,65 @@ class MolajoUser extends JObject
         } else {
             $this->load($identifier);
         }
+    }
+
+    /**
+     * getTable
+     *
+     * Method to get the user table object
+     *
+     * This function uses a static variable to store the user table name
+     *
+     * @param   string   $type    The user table name to be used
+     * @param   string   $prefix  The user table prefix to be used
+     *
+     * @return  object   The user table object
+     * @since   1.0
+     */
+    public static function getTable($type = null, $prefix = 'MolajoTable')
+    {
+        static $tabletype;
+
+        if (isset($tabletype)) {
+
+        } else {
+            $tabletype['name'] = 'User';
+            $tabletype['prefix'] = 'MolajoTable';
+        }
+
+        if (isset($type)) {
+            $tabletype['name'] = $type;
+            $tabletype['prefix'] = $prefix;
+        }
+
+        $table = MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
+        echo '<pre>';var_dump($table);'</pre>';
+        die;
+    }
+
+    /**
+     * load
+     *
+     * Method to load a User object by user id number
+     *
+     * @param   mixed  $id  The user id of the user to load
+     *
+     * @return  boolean  True on success
+     * @since   1.0
+     */
+    public function load($id)
+    {
+        $table = $this->getTable();
+        if ($table->load($id)) {
+        } else {
+            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+            return false;
+        }
+        $this->parameters->loadJSON($table->parameters);
+
+        $this->setProperties($table->getProperties());
+
+        return true;
     }
 
     /**
@@ -242,7 +309,7 @@ class MolajoUser extends JObject
      */
     public function getParam($key, $default = null)
     {
-        return $this->_parameters->get($key, $default);
+        return $this->parameters->get($key, $default);
     }
 
     /**
@@ -258,7 +325,7 @@ class MolajoUser extends JObject
      */
     public function setParam($key, $value)
     {
-        return $this->_parameters->set($key, $value);
+        return $this->parameters->set($key, $value);
     }
 
     /**
@@ -274,7 +341,7 @@ class MolajoUser extends JObject
      */
     public function defParam($key, $value)
     {
-        return $this->_parameters->def($key, $value);
+        return $this->parameters->def($key, $value);
     }
 
     /**
@@ -331,10 +398,10 @@ class MolajoUser extends JObject
                 $file = $parampath . '/' . 'user.xml';
             }
 
-            $this->_parameters->loadSetupFile($file);
+            $this->parameters->loadSetupFile($file);
         }
 
-        return $this->_parameters;
+        return $this->parameters;
     }
 
     /**
@@ -349,44 +416,7 @@ class MolajoUser extends JObject
      */
     public function setParameters($parameters)
     {
-        $this->_parameters = $parameters;
-    }
-
-    /**
-     * getTable
-     *
-     * Method to get the user table object
-     *
-     * This function uses a static variable to store the table name of the user table to
-     * it instantiates. You can call this function statically to set the table name if
-     * needed.
-     *
-     * @param   string   $type    The user table name to be used
-     * @param   string   $prefix    The user table prefix to be used
-     *
-     * @return  object   The user table object
-     * @since   1.0
-     */
-    public static function getTable($type = null, $prefix = 'MolajoTable')
-    {
-        static $tabletype;
-
-        // Set the default tabletype;
-        if (isset($tabletype)) {
-
-        } else {
-            $tabletype['name'] = 'User';
-            $tabletype['prefix'] = 'MolajoTable';
-        }
-
-        // Set a custom table type is defined
-        if (isset($type)) {
-            $tabletype['name'] = $type;
-            $tabletype['prefix'] = $prefix;
-        }
-
-        // Create the user table object
-        return MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
+        $this->parameters = $parameters;
     }
 
     /**
@@ -414,8 +444,6 @@ class MolajoUser extends JObject
                 $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_PASSWORD_NOT_MATCH'));
                 return false;
             }
-
-            $this->password_clear = JArrayHelper::getValue($array, 'password', '', 'string');
 
             $salt = MolajoUserhelper::genRandomPassword(32);
             $crypt = MolajoUserhelper::getCryptedPassword($array['password'], $salt);
@@ -448,8 +476,6 @@ class MolajoUser extends JObject
                     return false;
                 }
 
-                $this->password_clear = JArrayHelper::getValue($array, 'password', '', 'string');
-
                 $salt = MolajoUserhelper::genRandomPassword(32);
                 $crypt = MolajoUserhelper::getCryptedPassword($array['password'], $salt);
                 $array['password'] = $crypt . ':' . $salt;
@@ -461,10 +487,10 @@ class MolajoUser extends JObject
         if (array_key_exists('parameters', $array)) {
             $parameters = '';
 
-            $this->_parameters->loadArray($array['parameters']);
+            $this->parameters->loadArray($array['parameters']);
 
             if (is_array($array['parameters'])) {
-                $parameters = (string)$this->_parameters;
+                $parameters = (string)$this->parameters;
             } else {
                 $parameters = $array['parameters'];
             }
@@ -485,7 +511,7 @@ class MolajoUser extends JObject
     }
 
     /**
-     * Method to save the MolajoUser object to the database
+     * Method to save the User object to the database
      *
      * @param   boolean  $updateOnly    Save the object only if not a new user
      *
@@ -497,7 +523,7 @@ class MolajoUser extends JObject
         // NOTE: $updateOnly is currently only used in the user reset password method.
         // Create the user table object
         $table = $this->getTable();
-        $this->parameters = (string)$this->_parameters;
+        $this->parameters = (string)$this->parameters;
         $table->bind($this->getProperties());
 
         // Allow an exception to be thrown.
@@ -580,7 +606,7 @@ class MolajoUser extends JObject
                 throw new Exception($table->getError());
             }
 
-            // Set the id for the MolajoUser object in case we created a new user.
+            // Set the id for the User object in case we created a new user.
             if (empty($this->id)) {
                 $this->id = $table->get('id');
             }
@@ -605,7 +631,7 @@ class MolajoUser extends JObject
     }
 
     /**
-     * Method to delete the MolajoUser object from the database
+     * Method to delete the User object from the database
      *
      * @return  boolean  True on success
      * @since   1.0
@@ -631,30 +657,4 @@ class MolajoUser extends JObject
 
         return $result;
     }
-
-    /**
-     * load
-     *
-     * Method to load a MolajoUser object by user id number
-     *
-     * @param   mixed  $id  The user id of the user to load
-     *
-     * @return  boolean  True on success
-     * @since   1.0
-     */
-    public function load($id)
-    {
-        $table = $this->getTable();
-        if ($table->load($id)) {
-        } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
-            return false;
-        }
-        $this->_parameters->loadJSON($table->parameters);
-
-        $this->setProperties($table->getProperties());
-
-        return true;
-    }
-
 }

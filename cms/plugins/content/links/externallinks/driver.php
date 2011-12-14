@@ -48,8 +48,8 @@ class MolajoLinksExternalLinks
                 $rel .= ', ' . $systemParameters->def('follow_external_links', 'nofollow');
 
                 $document =& MolajoFactory::getDocument();
-                $document->addScript(JURI::base() . 'media/molajo/js/mooexternal.js');
-                $document->addStyleSheet(JURI::base() . 'media/molajo/css/external.css');
+                $document->addScript(JURI::base() . 'media/js/mooexternal.js');
+                $document->addStyleSheet(JURI::base() . 'media/css/external.css');
 
             }
 

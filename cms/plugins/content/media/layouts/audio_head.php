@@ -9,12 +9,12 @@
 defined('MOLAJO') or die;
 
 $document =& MolajoFactory::getDocument();
-$document->addStyleSheet(JURI::base() . 'media/molajo/audio/audio.css');
-$document->addScript(JURI::base() . 'media/molajo/audio/audio-player.js');
+$document->addStyleSheet(JURI::base() . 'media/audio/audio.css');
+$document->addScript(JURI::base() . 'media/audio/audio-player.js');
 
 /** swf player and parameters **/
 $js = "window.addEvent('domready', function() { " . "\n";
-$js .= ' AudioPlayer.setup("' . JURI::base() . 'media/molajo/audio/player.swf' . '", {   ' . "\n";
+$js .= ' AudioPlayer.setup("' . JURI::base() . 'media/audio/player.swf' . '", {   ' . "\n";
 
 /** options **/
 $js .= ' loop: "' . $this->systemParameters->def('audio_loop', "no") . '", ' . "\n";

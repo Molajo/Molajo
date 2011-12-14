@@ -19,7 +19,7 @@ defined('MOLAJO') or die;
 class MolajoTableUser extends MolajoTable
 {
     /**
-     * Associative array of user names => group ids
+     * Associative array of user => group ids
      *
      * @since   1.0
      * @var    array
@@ -33,47 +33,47 @@ class MolajoTableUser extends MolajoTable
     {
         parent::__construct('#__users', 'id', $db);
 
-        // Initialise.
         $this->id = 0;
         $this->send_email = 0;
     }
 
     /**
+     * load
+     *
      * Method to load a user, user groups, and any other necessary data
      * from the database so that it can be bound to the user object.
      *
-     * @param   integer  $userId        An optional user id.
+     * @param   integer  $user_id   An optional user id.
      *
-     * @return  bool  True on success, false on failure.
-     *
+     * @return  bool    True on success, false on failure.
      * @since   1.0
      */
-    function load($userId = null, $reset = true)
+    function load($user_id = null, $reset = true)
     {
-        // Get the id to load.
-        if ($userId !== null) {
-            $this->id = $userId;
+        if ($user_id === null) {
+            $user_id = $this->id;
         } else {
-            $userId = $this->id;
+            $this->id = $user_id;
         }
 
-        // Check for a valid id to load.
-        if ($userId === null) {
+        if ($user_id === null) {
             return false;
         }
-
-        // Reset the table.
+echo $user_id;
+        die;
         $this->reset();
 
-        // Load the user data.
         $this->_database->setQuery(
             'SELECT *' .
             ' FROM #__users' .
-            ' WHERE id = ' . (int)$userId
+            ' WHERE id = ' . (int)$user_id
         );
+
         $data = (array)$this->_database->loadAssoc();
 
-        // Check for an error message.
+echo '<pre>';var_dump($data);'</pre>';
+        die;
+        $this->id = $user_id;
         if ($this->_database->getErrorNum()) {
             $this->setError($this->_database->getErrorMsg());
             return false;
@@ -94,7 +94,7 @@ class MolajoTableUser extends MolajoTable
                 'SELECT g.id, g.title' .
                 ' FROM #__content AS g' .
                 ' JOIN #__user_groups AS m ON m.group_id = g.id' .
-                ' WHERE m.user_id = ' . (int)$userId
+                ' WHERE m.user_id = ' . (int)$user_id
             );
             // Add the groups to the user data.
             $this->groups = $this->_database->loadAssocList('title', 'id');
@@ -302,18 +302,18 @@ class MolajoTableUser extends MolajoTable
      * Method to delete a user, user groups, and any other necessary
      * data from the database.
      *
-     * @param   integer  $userId        An optional user id.
+     * @param   integer  $user_id        An optional user id.
      *
      * @return  bool  True on success, false on failure.
      *
      * @since   1.0
      */
-    function delete($userId = null)
+    function delete($user_id = null)
     {
         // Set the primary key to delete.
         $k = $this->_tbl_key;
-        if ($userId) {
-            $this->$k = intval($userId);
+        if ($user_id) {
+            $this->$k = intval($user_id);
         }
 
         // Delete the user.
@@ -353,13 +353,13 @@ class MolajoTableUser extends MolajoTable
      *
      * @return  bool  False if an error occurs
      */
-    function setLastVisit($timeStamp = null, $userId = null)
+    function setLastVisit($timeStamp = null, $user_id = null)
     {
 
         // Check for User ID
-        if (is_null($userId)) {
+        if (is_null($user_id)) {
             if (isset($this)) {
-                $userId = $this->id;
+                $user_id = $this->id;
             } else {
                 // do not translate
                 jexit(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_SETLASTVISIT'));
@@ -374,7 +374,7 @@ class MolajoTableUser extends MolajoTable
         $this->_database->setQuery(
             'UPDATE ' . $this->_database->quoteName($this->_tbl) .
             ' SET ' . $this->_database->quoteName('last_visit_datetime') . ' = ' . $this->_database->Quote($date) .
-            ' WHERE ' . $this->_database->quoteName('id') . ' = ' . (int)$userId
+            ' WHERE ' . $this->_database->quoteName('id') . ' = ' . (int)$user_id
         );
         $this->_database->query();
 

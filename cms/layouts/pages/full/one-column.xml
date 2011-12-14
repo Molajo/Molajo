@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="layout" group="wrap" method="upgrade">
-    <name>LAYOUT_WRAP_ARTICLE_NAME</name>
+    <name>LAYOUT_PAGES_ONE_COLUMN_NAME</name>
     <author>Molajo Contributors</author>
     <creationDate>June 2011</creationDate>
     <copyright>Copyright (C) Individual Molajo Contributors. All rights reserved.</copyright>
@@ -13,8 +13,4 @@
         <folder>layouts</folder>
         <folder>language</folder>
     </files>
-    <languages>
-        <language tag="language/en-GB">en-GB.layout_wrap_article_name.ini</language>
-        <language tag="language/en-GB">en-GB.layout_wrap_article_name.sys.ini</language>
-    </languages>
 </extension>

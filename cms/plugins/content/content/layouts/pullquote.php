@@ -8,7 +8,7 @@
  */
 defined('MOLAJO') or die;
 $document =& MolajoFactory::getDocument();
-$document->addStyleSheet(JURI::base() . 'media/molajo/css/quotes.css');
+$document->addStyleSheet(JURI::base() . 'media/css/quotes.css');
 if ($evenodd == 'even') {
     $evenodd = 'odd';
 } else {

@@ -9,8 +9,8 @@
 defined('MOLAJO') or die;
 
 $document =& MolajoFactory::getDocument();
-$document->addScript(JURI::base() . 'media/molajo/js/footnotes.js');
-$document->addStyleSheet(JURI::base() . 'media/molajo/css/footnotes.css');
+$document->addScript(JURI::base() . 'media/js/footnotes.js');
+$document->addStyleSheet(JURI::base() . 'media/css/footnotes.css');
 
 $js = "window.addEvent('domready', function() { " . "\n";
 $js .= "formatFootnotes('data_" . $this->id . "','footnotes_" . $this->id . "');" . "\n";

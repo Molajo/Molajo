@@ -11,7 +11,7 @@ defined('MOLAJO') or die;
 /**
  * User
  *
- * Provides static methods to perform various tasks for user and authorization classes
+ * Static class Tasks for User and Authorization classes
  *
  * This class has influences and some method logic from the Horde Auth package
  *
@@ -21,95 +21,127 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoUserHelper
 {
+
     /**
-     * Method to add a user to a group.
+     * getUserId
      *
-     * @param   integer  $userId    The id of the user.
-     * @param   integer  $groupId   The id of the group.
+     * Returns user_id if a user exists
      *
-     * @return  mixed    Boolean true on success, MolajoException on error.
+     * @static
+     * @param   $username
+     * @return  mixed
+     */
+    public static function getUserId($username)
+    {
+        $db = MolajoFactory::getDbo();
+        $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
+        $db->setQuery($query);
+        return $db->loadResult();
+    }
+
+    /**
+     * getUserGroups
+     *
+     * Method to get a list of users groups
+     *
+     * @static
+     * @param   integer $user_id
+     * @return  mixed array
      * @since   1.0
      */
-    public static function addUserToGroup($userId, $groupId)
+    public static function getUserGroups($user_id)
     {
-        // Get the user object.
-        $user = new MolajoUser((int)$userId);
+        $user = MolajoUser::getInstance((int)$user_id);
+        return isset($user->groups) ? $user->groups : array();
+    }
 
-        // Add the user to the group if necessary.
-        if (in_array($groupId, $user->groups)) {
+    /**
+     * getProfile
+     *
+     * Gets the user profile information
+     *
+     * @param int $user_id
+     * @return JObject
+     */
+    function getProfile($user_id = 0)
+    {
+        if ($user_id == 0) {
+            $user = MolajoFactory::getUser();
+            $user_id = $user->id;
         } else {
-            // Get the title of the group.
+            $user = MolajoFactory::getUser((int)$user_id);
+        }
+
+        $dispatcher = JDispatcher::getInstance();
+        MolajoPlugin::importPlugin('user');
+
+        $data = new JObject;
+        $results = $dispatcher->trigger('onContentPrepareData', array($user_id, &$data));
+        return $data;
+    }
+
+    /**
+     * addUserToGroup
+     * 
+     * Method to add a user to a group.
+     *
+     * @param   integer  $user_id    The id of the user.
+     * @param   integer  $group_id   The id of the group.
+     *
+     * @return  mixed    Boolean true on success, exception on error.
+     * @since   1.0
+     */
+    public static function addUserToGroup($user_id, $group_id)
+    {
+        $user = new MolajoUser((int)$user_id);
+
+        if (in_array($group_id, $user->groups)) {
+        } else {
+
             $db = MolajoFactory::getDbo();
             $db->setQuery(
                 'SELECT `title`' .
                 ' FROM `#__content`' .
-                ' WHERE `id` = ' . (int)$groupId
+                ' WHERE `id` = ' . (int)$group_id
             );
             $title = $db->loadResult();
 
-            // Check for a database error.
             if ($db->getErrorNum()) {
                 return new MolajoException($db->getErrorMsg());
             }
 
-            // If the group does not exist, return an exception.
-            if (!$title) {
-                return new MolajoException(MolajoTextHelper::_('MOLAJO_USER_EXCEPTION_ACCESS_USERGROUP_INVALID'));
+            if ($title) {
+            } else {
+                return new MolajoException(MolajoTextHelper::_('MOLAJO_ERROR_GROUP_INVALID'));
             }
 
-            // Add the group data to the user object.
-            $user->groups[$title] = $groupId;
-
-            // Store the user object.
-            if (!$user->save()) {
+            $user->groups[$title] = $group_id;
+            if ($user->save()) {
+            } else {
                 return new MolajoException($user->getError());
             }
-        }
-
-        // Set the group data for any preloaded user objects.
-        $temp = MolajoFactory::getUser((int)$userId);
-        $temp->groups = $user->groups;
-
-        // Set the group data for the user object in the session.
-        $temp = MolajoFactory::getUser();
-        if ($temp->id == $userId) {
-            $temp->groups = $user->groups;
         }
 
         return true;
     }
 
     /**
-     * Method to get a list of groups a user is in.
-     *
-     * @param   integer  $userId        The id of the user.
-     * @return  mixed  Array on success, MolajoException on error.
-     * @since   1.0
-     */
-    public static function getUserGroups($userId)
-    {
-        $user = MolajoUser::getInstance((int)$userId);
-
-        return isset($user->groups) ? $user->groups : array();
-    }
-
-    /**
      * Method to remove a user from a group.
      *
-     * @param   integer  $userId        The id of the user.
-     * @param   integer  $groupId    The id of the group.
+     * @param   integer  $user_id        The id of the user.
+     * @param   integer  $group_id    The id of the group.
      * @return  mixed  Boolean true on success, MolajoException on error.
      * @since   1.0
      */
-    public static function removeUserFromGroup($userId, $groupId)
+    public static function removeUserFromGroup($user_id, $group_id)
     {
         // Get the user object.
-        $user = MolajoUser::getInstance((int)$userId);
+        $user = MolajoUser::getInstance((int)$user_id);
 
         // Remove the user from the group if necessary.
-        if (in_array($groupId, $user->groups)) {
+        if (in_array($group_id, $user->groups)) {
             // Remove the user from the group.
-            unset($user->groups[$groupId]);
+            unset($user->groups[$group_id]);
 
             // Store the user object.
             if (!$user->save()) {
@@ -118,12 +150,12 @@ abstract class MolajoUserHelper
         }
 
         // Set the group data for any preloaded user objects.
-        $temp = MolajoFactory::getUser((int)$userId);
+        $temp = MolajoFactory::getUser((int)$user_id);
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
         $temp = MolajoFactory::getUser();
-        if ($temp->id == $userId) {
+        if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
 
@@ -133,16 +165,16 @@ abstract class MolajoUserHelper
     /**
      * Method to set the groups for a user.
      *
-     * @param   integer  $userId        The id of the user.
+     * @param   integer  $user_id        The id of the user.
      * @param   array    $groups        An array of group ids to put the user in.
      *
      * @return  mixed  Boolean true on success, MolajoException on error.
      * @since   1.0
      */
-    public static function setUserGroups($userId, $groups)
+    public static function setUserGroups($user_id, $groups)
     {
         // Get the user object.
-        $user = MolajoUser::getInstance((int)$userId);
+        $user = MolajoUser::getInstance((int)$user_id);
 
         // Set the group ids.
         JArrayHelper::toInteger($groups);
@@ -173,40 +205,16 @@ abstract class MolajoUserHelper
         }
 
         // Set the group data for any preloaded user objects.
-        $temp = MolajoFactory::getUser((int)$userId);
+        $temp = MolajoFactory::getUser((int)$user_id);
         $temp->groups = $user->groups;
 
         // Set the group data for the user object in the session.
         $temp = MolajoFactory::getUser();
-        if ($temp->id == $userId) {
+        if ($temp->id == $user_id) {
             $temp->groups = $user->groups;
         }
 
         return true;
-    }
-
-    /**
-     * Gets the user profile information
-     */
-    function getProfile($userId = 0)
-    {
-        if ($userId == 0) {
-            $user = MolajoFactory::getUser();
-            $userId = $user->id;
-        }
-        else {
-            $user = MolajoFactory::getUser((int)$userId);
-        }
-
-        // Get the dispatcher and load the user's plugins.
-        $dispatcher = JDispatcher::getInstance();
-        MolajoPlugin::importPlugin('user');
-
-        $data = new JObject;
-
-        // Trigger the data preparation event.
-        $results = $dispatcher->trigger('onContentPrepareData', array($userId, &$data));
-        return $data;
     }
 
     /**
@@ -250,21 +258,6 @@ abstract class MolajoUserHelper
         }
 
         return true;
-    }
-
-    /**
-     * Returns user_id if a user exists
-     *
-     * @param   string The username to search on
-     *
-     * @return  integer  The user id or 0 if not found
-     */
-    public static function getUserId($username)
-    {
-        $db = MolajoFactory::getDbo();
-        $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
-        $db->setQuery($query, 0, 1);
-        return $db->loadResult();
     }
 
     /**
