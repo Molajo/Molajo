@@ -417,6 +417,7 @@ abstract class MolajoFactory
     protected static function _createSession($options = array())
     {
         self::getConfig();
+
         $handler = self::$config->get('session_handler', 'none');
 
         $options['expire'] = (self::$config->get('lifetime')) ? self::$config->get('lifetime') * 60 : 900;
@@ -451,7 +452,12 @@ abstract class MolajoFactory
         $driver = self::$siteConfig->get('dbtype');
         $debug = self::$siteConfig->get('debug');
 
-        $options = array('driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database, 'prefix' => $prefix);
+        $options = array('driver' => $driver,
+                            'host' => $host,
+                            'user' => $user,
+                            'password' => $password,
+                            'database' => $database,
+                            'prefix' => $prefix);
 
         $db = JDatabase::getInstance($options);
 
@@ -569,7 +575,6 @@ abstract class MolajoFactory
      */
     public static function getStream($use_prefix = true, $use_network = true, $ua = null, $uamask = false)
     {
-
         $context = array();
         $version = new MolajoVersion;
 
@@ -617,7 +622,7 @@ abstract class MolajoFactory
         $siteInstance = new $classname ();
         if (self::$siteConfig) {
         } else {
-            self::$siteConfig = $siteInstance->getConfig();
+            self::$siteConfig = $siteInstance->siteConfig();
         }
     }
 
@@ -633,6 +638,7 @@ abstract class MolajoFactory
     {
         $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
         $configInstance = new $classname();
+
         if (self::$config) {
         } else {
             self::$config = $configInstance->getConfig();

@@ -40,6 +40,11 @@ if (defined('MOLAJO_SITE')) {
     define('MOLAJO_SITE', 1);
 }
 
+if (defined('MOLAJO_SITE_ID')) {
+} else {
+    define('MOLAJO_SITE_ID', MOLAJO_SITE);
+}
+
 if (defined('MOLAJO_SITE_PATH')) {
 } else {
     define('MOLAJO_SITE_PATH', MOLAJO_BASE_FOLDER . '/sites/' . MOLAJO_SITE);

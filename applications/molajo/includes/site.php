@@ -10,18 +10,18 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$filehelper = new MolajoFileHelper();
+$fileHelper = new MolajoFileHelper();
 
 /**
  *  Site
  */
-$filehelper->requireClassFile(MOLAJO_SITES . '/molajo/site.php', 'MolajoSite');
+$fileHelper->requireClassFile(MOLAJO_SITES . '/molajo/site.php', 'MolajoSite');
 $files = JFolder::files(MOLAJO_SITES . '/molajo', '\.php$', false, false);
 foreach ($files as $file) {
     if ($file == 'site.php') {
     } else {
-        $filehelper->requireClassFile(MOLAJO_SITES . '/molajo/' . $file, 'MolajoSite' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $fileHelper->requireClassFile(MOLAJO_SITES . '/molajo/' . $file, 'MolajoSite' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
 
-
+MolajoSiteHelper::loadSiteClasses();

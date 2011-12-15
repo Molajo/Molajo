@@ -118,7 +118,8 @@ class MolajoApplicationHelper
      */
     public static function loadApplicationClasses()
     {
-        $filehelper = new MolajoFileHelper();
+        $fileHelper = new MolajoFileHelper();
+
         $files = JFolder::files(MOLAJO_APPLICATION_PATH, '\.php$', false, false);
 
         foreach ($files as $file) {
@@ -126,9 +127,9 @@ class MolajoApplicationHelper
             if ($file == 'configuration.php') {
 
             } else if ($file == 'helper.php') {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application' . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application' . ucfirst(substr($file, 0, strpos($file, '.'))));
             } else {
-                $filehelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . ucfirst(substr($file, 0, strpos($file, '.'))));
+                $fileHelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . ucfirst(substr($file, 0, strpos($file, '.'))));
             }
         }
     }

@@ -20,7 +20,7 @@ class MolajoApplication
      * @var    integer
      * @since  1.0
      */
-    public $config = null;
+    static public $config = null;
 
     /**
      * Application input object.
@@ -116,8 +116,7 @@ class MolajoApplication
         }
 
         $this->getConfig();
-echo '<pre>';$this->config;'</pre>';
-        die;
+
         // Set the execution datetime and timestamp;
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());
@@ -151,10 +150,6 @@ echo '<pre>';$this->config;'</pre>';
         } else {
             JURI::root(null, str_ireplace('/' . MOLAJO_APPLICATION, '', JURI::base(true)));
         }
-
-        /** stats */
-        $this->set('requestTime', gmdate('Y-m-d H:i'));
-        $this->set('startTime', JProfiler::getmicrotime());
     }
 
     /**
@@ -660,7 +655,8 @@ echo '<pre>';$this->config;'</pre>';
      */
     public function getConfig()
     {
-        $data = MolajoConfiguration::getConfig();
+        $configClass = new MolajoConfiguration();
+        $data = $configClass->getConfig();
 
         if (is_array($data)) {
             $this->config->loadArray($data);
@@ -669,7 +665,7 @@ echo '<pre>';$this->config;'</pre>';
             $this->config->loadObject($data);
         }
 
-        return $this;
+        return true;
     }
 
     /**

@@ -7,8 +7,8 @@
  */
 defined('MOLAJO') or die;
 
-$filehelper = new MolajoFileHelper();
-$filehelper->requireClassFile(dirname(__FILE__) . '/helper.php', 'modMenuHelper');
+$fileHelper = new MolajoFileHelper();
+$fileHelper->requireClassFile(dirname(__FILE__) . '/helper.php', 'modMenuHelper');
 
 $rowset = modMenuHelper::getList($parameters);
 

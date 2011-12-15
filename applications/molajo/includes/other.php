@@ -9,8 +9,8 @@ defined('MOLAJO') or die;
 /**
  *  File Helper
  */
-$filehelper = new MolajoFileHelper();
-$filehelper->requireClassFile(PLATFORM . '/jplatform/simplepie/simplepie.php', 'SimplePie');
+$fileHelper = new MolajoFileHelper();
+$fileHelper->requireClassFile(PLATFORM . '/jplatform/simplepie/simplepie.php', 'SimplePie');
 
 /**
  *	Twig
@@ -28,7 +28,7 @@ require_once GITHUB . '/Autoloader.php';
 Github_Autoloader::register();
 
 /** Twig Autoload */
-//$filehelper->requireClassFile(MOLAJO_BASE_FOLDER.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
+//$fileHelper->requireClassFile(MOLAJO_BASE_FOLDER.'/libraries/Twig/Autoloader.php', 'Twig_Autoloader');
 //Twig_Autoloader::register();
 
 /** @var $loader  */
