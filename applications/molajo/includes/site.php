@@ -18,7 +18,7 @@ $filehelper = new MolajoFileHelper();
 $filehelper->requireClassFile(MOLAJO_SITES . '/molajo/site.php', 'MolajoSite');
 $files = JFolder::files(MOLAJO_SITES . '/molajo', '\.php$', false, false);
 foreach ($files as $file) {
-    if ($file == 'site') {
+    if ($file == 'site.php') {
     } else {
         $filehelper->requireClassFile(MOLAJO_SITES . '/molajo/' . $file, 'MolajoSite' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }

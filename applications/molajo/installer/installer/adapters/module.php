@@ -151,7 +151,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
         // Get the target application
         if ($cname = (string)$this->manifest->attributes()->client) {
             // Attempt to map the client to a base path
-            jimport('joomla.application.helper');
+
             $client = MolajoApplicationHelper::getApplicationInfo($cname, true);
 
             if ($client === false) {

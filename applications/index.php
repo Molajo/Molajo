@@ -30,9 +30,11 @@ JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 /**
  *  Get Site
  */
-$site = MolajoFactory::getSite(MOLAJO_SITE);
-JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
+$site = MolajoFactory::getSite();
 
+JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
+echo 'MOLAJO_APPLICATIONS_CORE';
+die;
 /**
  *  Initialize Site
  */

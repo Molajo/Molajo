@@ -59,8 +59,7 @@ class MolajoTableUser extends MolajoTable
         if ($user_id === null) {
             return false;
         }
-echo $user_id;
-        die;
+
         $this->reset();
 
         $this->_database->setQuery(

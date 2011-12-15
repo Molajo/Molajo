@@ -19,36 +19,26 @@ $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/authentication
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/molajo.php', 'MolajoACL');
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/core.php', 'MolajoACLCore');
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/user.php', 'MolajoUser');
-$filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/userhelper.php', 'MolajoUserhelper');
 $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/access/group.php', 'MolajoGroup');
 
 /**
  *  Application
  */
-$filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/application.php', 'MolajoApplication');
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/application', '\.php$', false, false);
-
-echo 'yes';
-        die;
-
-
 foreach ($files as $file) {
-    if ($file == 'application') {
-    } else {
-        $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/' . $file, 'MolajoApplication' . ucfirst(substr($file, 0, strpos($file, '.'))));
-    }
+        $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-echo 'yes';
-        die;
+
 /**
  *  Data
  */
 
 /** Data: Entity */
-$files = JFolder::files(MOLAJO_APPLICATIONS_DATA . '/Entity', '\.php$', false, false);
-foreach ($files as $file) {
-    $filehelper->requireClassFile(MOLAJO_APPLICATIONS_DATA . '/Entity/' . $file, ucfirst(substr($file, 0, strpos($file, '.'))));
-}
+//$files = JFolder::files(MOLAJO_APPLICATIONS_DATA . '/Entity', '\.php$', false, false);
+//foreach ($files as $file) {
+//    echo $file.'<br />';
+//    $filehelper->requireClassFile(MOLAJO_APPLICATIONS_DATA . '/Entity/' . $file, ucfirst(substr($file, 0, strpos($file, '.'))));
+//}
 
 /** Data: Fields */
 
@@ -154,7 +144,8 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/installer/adapter
 foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-/** updater */
+ /*
+/** updater  */
 $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/updater', '\.php$', false, false);
 foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/updater/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
@@ -163,6 +154,3 @@ $files = JFolder::files(MOLAJO_APPLICATIONS_CORE . '/installer/updater/adapters'
 foreach ($files as $file) {
     $filehelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/installer/updater/adapters/' . $file, 'MolajoUpdater' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-
-echo 'yes';
-        die;

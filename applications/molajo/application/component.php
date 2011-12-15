@@ -37,13 +37,13 @@ class MolajoComponent
         }
 
         if (MolajoFactory::getUser()->get('guest') == 1
-            && MolajoFactory::getApplicationConfig()->get('application_logon_requirement', 1) == 1
+            && MolajoFactory::getConfig()->get('application_logon_requirement', 1) == 1
         ) {
 
-            $option = MolajoFactory::getApplicationConfig()->get('application_guest_option', 'login');
+            $option = MolajoFactory::getConfig()->get('application_guest_option', 'login');
 
         } elseif ($option == null) {
-            $option = MolajoFactory::getApplicationConfig()->get('application_default_option', 'dashboard');
+            $option = MolajoFactory::getConfig()->get('application_default_option', 'dashboard');
         }
 
         JRequest::setVar('option', $option);
@@ -182,9 +182,6 @@ class MolajoComponent
      */
     public static function renderComponent($request, $parameters = array())
     {
-        /** scope */
-        $scope = MolajoFactory::getApplication()->scope;
-        MolajoFactory::getApplication()->scope = $request['option'];
 
         /** path */
         $path = $request['component_path'] . '/' . $request['option'] . '.php';
@@ -211,9 +208,7 @@ class MolajoComponent
         $output = ob_get_contents();
         ob_end_clean();
 
-        /** Revert scope */
-        MolajoFactory::getApplication()->scope = $scope;
-
+        /** Return output */
         return $output;
     }
 
@@ -583,11 +578,9 @@ class MolajoComponent
         }
 
         /** Set Document Information */
-        $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
-        $appClass = new $classname();
         $document = MolajoFactory::getDocument();
 
-        $menus = $appClass->getMenu();
+        $menus = MolajoFactory::getMenu();
         if ($menus == null) {
             $menu = false;
             $id = 0;
@@ -596,7 +589,7 @@ class MolajoComponent
             $id = (int)@$menu->query['id'];
         }
 
-        $pathway = $appClass->getPathway();
+        $pathway = MolajoFactory::getPathway();
         $title = null;
         $parameters = MolajoComponent::getParameters($session->get('page.option'));
 

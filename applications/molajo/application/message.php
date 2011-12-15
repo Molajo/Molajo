@@ -17,11 +17,6 @@ defined('MOLAJO') or die;
 class MolajoMessage
 {
     /**
-     *
-     */
-    $bum int;
-
-    /**
      * Application Message Queue
      *
      * @var    array

@@ -44,6 +44,7 @@ class MolajoSiteHelper
             $obj = new stdClass();
 
             $db = MolajoFactory::getDbo();
+var_dump($db);
             $query = $db->getQuery(true);
 
             $query->select('id');
@@ -54,7 +55,8 @@ class MolajoSiteHelper
             $query->select('custom_fields');
             $query->select('base_url');
             $query->from($db->namequote('#__sites'));
-
+echo $query->__toString();
+            die;
             $db->setQuery($query->__toString());
 
             if ($results = $db->loadObjectList()) {
@@ -139,7 +141,8 @@ class MolajoSiteHelper
     public static function loadSiteClasses()
     {
         $filehelper = new MolajoFileHelper();
-        $files = JFolder::files(MOLAJO_SITE_PATH . '/classes', '\.php$', false, false);
+        $files = JFolder::files(MOLAJO_SITES . '/' . MOLAJO_SITE . '/classes', '\.php$', false, false);
+
         foreach ($files as $file) {
             if ($file == 'helper.php') {
                 $filehelper->requireClassFile(MOLAJO_SITE_PATH . '/classes/' . $file, 'Molajo' . ucfirst(MOLAJO_SITE) . 'Site' . ucfirst(substr($file, 0, strpos($file, '.'))));

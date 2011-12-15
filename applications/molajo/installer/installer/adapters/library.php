@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Installer
  * @since       11.1
  */
-class MolajoInstallerLibrary extends MolajoAdapterInstance
+class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
 {
     /**
      * Custom loadLanguage method

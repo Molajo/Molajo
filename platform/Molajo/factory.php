@@ -16,15 +16,15 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoFactory
 {
-    public static $site = null;
+    public static $acl = null;
     public static $application = null;
     public static $cache = null;
-    public static $session = null;
-    public static $language = null;
-    public static $document = null;
-    public static $acl = null;
     public static $database = null;
+    public static $document = null;
+    public static $language = null;
     public static $mailer = null;
+    public static $session = null;
+    public static $site = null;
 
     /**
      * Get a site object
@@ -39,15 +39,11 @@ abstract class MolajoFactory
      */
     public static function getSite($prefix = 'Molajo')
     {
-        echo 'yes';
-                die;
         if (self::$site) {
         } else {
             self::$site = MolajoSite::getInstance($prefix);
         }
-        var_dump(self::$site);
-        echo 'yes';
-                die;
+
         return self::$site;
     }
 
@@ -214,7 +210,7 @@ abstract class MolajoFactory
     {
         if (self::$database) {
         } else {
-            $conf = self::getConfig();
+            $conf = self::getSiteConfig();
             $debug = $conf->get('debug');
 
             self::$database = self::_createDbo();
@@ -457,7 +453,7 @@ abstract class MolajoFactory
      */
     protected static function _createDbo()
     {
-        $conf = self::getConfig();
+        $conf = self::getSiteConfig();
 
         $host = $conf->get('host');
         $user = $conf->get('user');
@@ -493,7 +489,7 @@ abstract class MolajoFactory
      */
     protected static function _createMailer()
     {
-        $conf = self::getConfig();
+        $conf = self::getSiteConfig();
 
         $sendmail = $conf->get('sendmail');
         $smtpauth = ($conf->get('smtpauth') == 0) ? null : 1;
@@ -620,7 +616,19 @@ abstract class MolajoFactory
     }
 
     /**
-     * Retrieve the configuration object
+     * Retrieve the Site configuration object
+     *
+     * @return  config object
+     * @since   1.0
+     */
+    public static function getSiteConfig()
+    {
+        $classname = 'Molajo' . ucfirst(MOLAJO_SITE) . 'Site';
+        return $classname::getConfig();
+    }
+
+    /**
+     * Retrieve the Application configuration object
      *
      * @return  config object
      * @since   1.0
@@ -629,6 +637,5 @@ abstract class MolajoFactory
     {
         $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
         return $classname::getConfig();
-
     }
 }

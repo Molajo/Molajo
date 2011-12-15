@@ -658,9 +658,9 @@ echo '<pre>';$this->config;'</pre>';
      *
      * @since  1.0
      */
-    protected function getConfig()
+    public function getConfig()
     {
-        $data = MolajoConfiguration::get();
+        $data = MolajoConfiguration::getConfig();
 
         if (is_array($data)) {
             $this->config->loadArray($data);

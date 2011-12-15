@@ -91,6 +91,7 @@ class MolajoSite extends JObject
      */
     public static function getInstance($prefix = 'Molajo')
     {
+
         static $instances;
 
         if (isset($instances)) {
@@ -98,6 +99,11 @@ class MolajoSite extends JObject
             $instances = array();
         }
         if (empty($instances[MOLAJO_SITE])) {
+
+            $results = MolajoSiteHelper::loadSiteClasses();
+            if ($results === false) {
+                return false;
+            }
 
             $info = MolajoSiteHelper::getSiteInfo();
             if ($info === false) {
@@ -107,11 +113,6 @@ class MolajoSite extends JObject
             if (defined('MOLAJO_SITE_ID')) {
             } else {
                 define('MOLAJO_SITE_ID', $info->id);
-            }
-
-            $results = MolajoSiteHelper::loadSiteClasses();
-            if ($results === false) {
-                return false;
             }
 
             $classname = $prefix . ucfirst(MOLAJO_SITE) . 'Site';
@@ -279,5 +280,29 @@ class MolajoSite extends JObject
     public function getSiteConfig($varname, $default = null)
     {
         return MolajoFactory::getSiteConfig()->get('' . $varname, $default);
+    }
+
+
+    /**
+     * getConfig
+     *
+     * Creates the Application configuration object.
+     *
+     * return   object  A config object
+     *
+     * @since  1.0
+     */
+    public function getConfig()
+    {
+        return MolajoConfiguration::site();
+
+        if (is_array($data)) {
+            $config->loadArray($data);
+
+        } elseif (is_object($data)) {
+            $config->loadObject($data);
+        }
+
+        return $config;
     }
 }

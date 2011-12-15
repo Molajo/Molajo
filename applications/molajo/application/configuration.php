@@ -23,7 +23,7 @@ class MolajoConfiguration
      * @var    object
      * @since  1.0
      */
-    protected static $application;
+    public static $application;
 
     /**
      * Site Configuration Object
@@ -53,7 +53,7 @@ class MolajoConfiguration
      * @throws RuntimeException
      * @since  1.0
      */
-    public static function get()
+    public static function getConfig()
     {
         if (self::$config) {
             return self::$config;
@@ -188,7 +188,7 @@ class MolajoConfiguration
 
         self::$site = new MolajoConfigSite();
 
-        return true;
+        return self::$site;
     }
 
     /**
@@ -233,7 +233,7 @@ class MolajoConfiguration
             return self::$config;
         }
 
-        $file = MOLAJO_APPLICATIONS . '/configuration.php';
+        $file = MOLAJO_APPLICATIONS_CORE . '/configuration.php';
         if (is_file($file)) {
             include_once $file;
         } else {
@@ -243,5 +243,43 @@ class MolajoConfiguration
         self::$config = new MolajoConfig();
 
         return true;
+    }
+
+    /**
+     * get
+     *
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   11.3
+     */
+    public function get($key, $default = null)
+    {
+        return $this->config->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Application object, creating it if it does not already exist.
+     *
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   11.3
+     */
+    public function set($key, $value = null)
+    {
+        $previous = $this->config->get($key);
+        $this->config->set($key, $value);
+
+        return $previous;
     }
 }
