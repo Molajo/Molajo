@@ -260,7 +260,7 @@ class plgSystemParameters extends MolajoPlugin
             return $path;
         }
         /** library */
-        $path = MOLAJO_BASE_FOLDER . MOLAJO_APPLICATIONS_DATA_XML . '/' . $parameterSet . '.xml';
+        $path = MOLAJO_BASE_FOLDER . MOLAJO_APPLICATION_CORE_DATA_XML . '/' . $parameterSet . '.xml';
         if (is_file($path)) {
             return $path;
         }

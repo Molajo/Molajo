@@ -490,7 +490,7 @@ INSERT INTO `molajo_sites`
 # APPLICATIONS
 # Note: after menuitems are defined, update applications for home
 #
-INSERT INTO `molajo_applications`
+INSERT INTO `MOLAJO_APPLICATION_CORE`
   (`id`, `asset_type_id`, `name`, `path`, `description`, `home_menu_id`, `parameters`, `custom_fields`)
   VALUES
     (1, 50, 'site', '', 'Primary application for site visitors', 0, '{}', '{}'),
@@ -612,7 +612,7 @@ INSERT INTO `molajo_application_extension_instances`
   (`application_id`, `extension_instance_id`)
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE b.id = 1
       AND a.asset_type_id = 1050
        AND a.title IN
@@ -628,7 +628,7 @@ INSERT INTO `molajo_application_extension_instances`
   (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE b.id = 2
       AND a.asset_type_id = 1050;
 
@@ -637,7 +637,7 @@ INSERT INTO `molajo_application_extension_instances`
   (`application_id`, `extension_instance_id`)
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1100;
 
 ##  3. layouts
@@ -645,7 +645,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1150;
 
 ##  5. menuitems
@@ -653,7 +653,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1300
       AND NOT(a.title = 'Admin')
       AND b.id = 1;
@@ -662,7 +662,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1300
       AND a.title = 'Admin'
       AND b.id = 2;
@@ -672,7 +672,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1350
       AND b.id = 1
       AND a.title IN
@@ -694,7 +694,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1350
       AND b.id = 2
       AND a.title IN
@@ -718,7 +718,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1450;
 
 ##  9. templates
@@ -726,7 +726,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1500
       AND a.title = 'construct'
       AND b.id = 1;
@@ -735,7 +735,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1500
       AND a.title = 'install'
       AND b.id IN (0);
@@ -744,7 +744,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1500
       AND a.title = 'molajito'
       AND b.id IN (2);
@@ -753,7 +753,7 @@ INSERT INTO `molajo_application_extension_instances`
  (`application_id`, `extension_instance_id`)
   SELECT DISTINCT b.id, a.id
     FROM `molajo_extension_instances` a,
-     `molajo_applications` b
+     `MOLAJO_APPLICATION_CORE` b
     WHERE a.asset_type_id = 1500
       AND (a.title = 'sample' OR a.title = 'system');
 
@@ -1286,7 +1286,7 @@ SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Home' AND `asset_typ
 UPDATE `molajo_content`
   SET `home` = 1
   WHERE `id` = @id;
-UPDATE `molajo_applications`
+UPDATE `MOLAJO_APPLICATION_CORE`
   SET `home_menu_id` = @id
   WHERE `id` = 1;
 
@@ -1295,7 +1295,7 @@ SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_
 UPDATE `molajo_content`
   SET `home` = 1
   WHERE `id` = @id;
-UPDATE `molajo_applications`
+UPDATE `MOLAJO_APPLICATION_CORE`
   SET `home_menu_id` = @id
   WHERE `id` = 2;
 
@@ -1318,7 +1318,7 @@ INSERT INTO `molajo_assets`
 INSERT INTO `molajo_assets`
  (`asset_type_id`, `source_id`, `title`, `sef_request`, `request`, `primary_category_id`, `template_id`, `language`, `translation_of_id`, `redirect_to_id`, `view_group_id`)
   SELECT `asset_type_id`, `id`, `name`, `path`, '', 0, 0, 'en-GB', 0, 0, 1
-    FROM  molajo_applications;
+    FROM  MOLAJO_APPLICATION_CORE;
 
 # Groups
 INSERT INTO `molajo_assets`

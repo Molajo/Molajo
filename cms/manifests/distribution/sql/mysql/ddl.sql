@@ -207,9 +207,9 @@ DEFAULT CHARACTER SET = utf8;
 CREATE INDEX `fk_sites_asset_types_index` ON `molajo_sites` (`asset_type_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table 08 `molajo_applications`
+-- Table 08 `MOLAJO_APPLICATION_CORE`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `molajo_applications` (
+CREATE  TABLE IF NOT EXISTS `MOLAJO_APPLICATION_CORE` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Application Primary Key' ,
   `asset_type_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `name` VARCHAR(255) NOT NULL DEFAULT ' ' COMMENT 'Title' ,
@@ -228,7 +228,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_applications_asset_types_index` ON `molajo_applications` (`asset_type_id` ASC) ;
+CREATE INDEX `fk_applications_asset_types_index` ON `MOLAJO_APPLICATION_CORE` (`asset_type_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table 09 `molajo_asset_modules`
@@ -276,7 +276,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_extension_options` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_extension_options_applications`
     FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
+    REFERENCES `MOLAJO_APPLICATION_CORE` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -396,7 +396,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_site_applications` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_site_applications_applications`
     FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
+    REFERENCES `MOLAJO_APPLICATION_CORE` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -437,7 +437,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_application_extension_instances` (
   PRIMARY KEY (`application_id`, `extension_instance_id`) ,
   CONSTRAINT `fk_application_extensions_applications`
     FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
+    REFERENCES `MOLAJO_APPLICATION_CORE` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_application_extension_instances_extension_instances`
@@ -463,7 +463,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_sessions` (
   PRIMARY KEY (`session_id`) ,
   CONSTRAINT `fk_sessions_applications`
     FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
+    REFERENCES `MOLAJO_APPLICATION_CORE` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -485,7 +485,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_user_applications` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_applications_applications`
     FOREIGN KEY (`application_id` )
-    REFERENCES `molajo_applications` (`id` )
+    REFERENCES `MOLAJO_APPLICATION_CORE` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
