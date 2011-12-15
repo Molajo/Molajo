@@ -1,31 +1,31 @@
 SELECT a.`id` as extension_id,a.`name` as extension_name,a.`element`, a.`folder`,
 b.`id` as extension_instance_id,b.`title`,b.`subtitle`,b.`alias`,b.`content_text`,
 b.`protected`,b.`featured`,b.`stickied`,b.`status`,b.`custom_fields`,
-b.`parameters`,b.`position`,b.`ordering`,b.`language` 
+b.`parameters`,b.`position`,b.`ordering`,b.`language`
 
 FROM `molajo_extensions` as a,
 `molajo_extension_instances` as b,
 `molajo_assets` as b_assets,
 `molajo_asset_types` as b_ctype,
 `molajo_application_extension_instances` as d,
-`molajo_site_extension_instances` as e 
+`molajo_site_extension_instances` as e
 
-WHERE a.`name` != "sef" AND a.`name` != "joomla" AND a.`name` != "example" AND a.`name` != "system" AND a.`name` != "webservices" AND a.`name` != "broadcast" AND a.`name` != "content" AND a.`name` != "links" AND a.`name` != "media" AND a.`name` != "protect" AND a.`name` != "responses" AND a.`name` != "broadcast" 
+WHERE a.`name` != "sef" AND a.`name` != "joomla" AND a.`name` != "example" AND a.`name` != "system" AND a.`name` != "webservices" AND a.`name` != "broadcast" AND a.`name` != "content" AND a.`name` != "links" AND a.`name` != "media" AND a.`name` != "protect" AND a.`name` != "responses" AND a.`name` != "broadcast"
 
-AND a.`asset_type_id` = 1500 
-AND a.`id` = b.`extension_id` 
-AND b.`asset_type_id` = 1500 
-AND b.`status` = 1 
-AND (b.start_publishing_datetime = '0000-00-00 00:00:00' 
-OR b.start_publishing_datetime <= '2011-12-09 09:31:01') 
+AND a.`asset_type_id` = 1500
+AND a.`id` = b.`extension_id`
+AND b.`asset_type_id` = 1500
+AND b.`status` = 1
+AND (b.start_publishing_datetime = '0000-00-00 00:00:00'
+OR b.start_publishing_datetime <= '2011-12-09 09:31:01')
 
-AND (b.stop_publishing_datetime = '0000-00-00 00:00:00' 
-OR b.stop_publishing_datetime >= '2011-12-09 09:31:01') 
-AND b_assets.asset_type_id = b_ctype.id 
-AND b_ctype.`source_table` = "__extension_instances" 
-AND b_assets.source_id = b.id 
-AND b_assets.view_group_id IN (3,5,4,1,3) 
-AND b.`id` = d.`extension_instance_id` 
-AND d.`application_id` = 1 
-AND b.`id` = e.`extension_instance_id` 
+AND (b.stop_publishing_datetime = '0000-00-00 00:00:00'
+OR b.stop_publishing_datetime >= '2011-12-09 09:31:01')
+AND b_assets.asset_type_id = b_ctype.id
+AND b_ctype.`source_table` = "__extension_instances"
+AND b_assets.source_id = b.id
+AND b_assets.view_group_id IN (3,5,4,1,3)
+AND b.`id` = d.`extension_instance_id`
+AND d.`application_id` = 1
+AND b.`id` = e.`extension_instance_id`
 AND e.`site_id` = 1
