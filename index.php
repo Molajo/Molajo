@@ -139,6 +139,7 @@ JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
 /**
  *  Get Application
  */
+
 $app = MolajoFactory::getApplication();
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
 
@@ -166,9 +167,6 @@ JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 $app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
 
-/**
-print_r(get_defined_constants(true));
- */
 /**
  *  Display
  */

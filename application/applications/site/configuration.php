@@ -25,9 +25,9 @@ class MolajoConfigApplication
 
     /* Access */
     public $application_logon_requirement = '0';
-    public $application_guest_option = 'articles';
-    public $application_default_option = 'articles';
-    public $default_template_extension = 'sample';
+    public $application_guest_option = 'article';
+    public $application_default_option = 'article';
+    public $default_template_extension = 'cleanslate';
 
     /* Locale */
     public $language = 'en-GB';
@@ -39,7 +39,7 @@ class MolajoConfigApplication
     public $feed_email = 'author';
     public $list_limit = 20;
 
-    /* Application */
+    /* Media */
     public $html5 = '1';
     public $image_xsmall = '50';
     public $image_small = '75';

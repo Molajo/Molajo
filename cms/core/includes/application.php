@@ -26,7 +26,7 @@ $fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/access/group.php', 'Mo
  */
 $files = JFolder::files(MOLAJO_APPLICATION_CORE . '/application', '\.php$', false, false);
 foreach ($files as $file) {
-        $fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/application/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/application/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**

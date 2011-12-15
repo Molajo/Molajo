@@ -37,6 +37,8 @@ class MolajoConfigSite
     /* Session settings */
     public $lifetime = '15';
     public $session_handler = 'database';
+    public $cookie_domain = '';
+    public $cookie_path = '';
 
     /* Mail Settings */
     public $mailer = 'mail';

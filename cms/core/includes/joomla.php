@@ -115,6 +115,8 @@ $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input.php', 'JInput
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/cli.php', 'JInputCli');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/cookie.php', 'JInputCookie');
 $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/files.php', 'JInputFiles');
+$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/web/webclient.php', 'JWebClient');
+$fileHelper->requireClassFile(JOOMLA_LIBRARY . '/application/input/files.php', 'JInputFiles');
 
 /**
  *  Cache

@@ -6,17 +6,17 @@ class MolajoConfig
      *  Application Configuration
      */
 
-    /* Cache Settings */
-    public $caching = '';
-    public $cachetime = '';
-    public $cache_handler = '';
+    /* Cache */
+    public $caching = '0';
+    public $cachetime = '15';
+    public $cache_handler = 'file';
 
-    /* Meta Settings */
-    public $MetaDesc = '';
-    public $MetaKeys = '';
-    public $MetaAuthor = '';
+    /* Meta */
+    public $MetaDesc = 'Molajo - the Cats Meow';
+    public $MetaKeys = 'molajo, Molajo';
+    public $MetaAuthor = '1';
 
-    /* SEO Settings */
+    /* SEO */
     public $sef = '1';
     public $sef_rewrite = '0';
     public $sef_suffix = '0';
@@ -27,27 +27,23 @@ class MolajoConfig
     public $editor = 'none';
     public $access = '1';
 
-    /* Application Access */
-    public $application_logon_requirement = '';
-    public $application_guest_option = '';
-    public $application_default_option = '';
-    public $default_template_extension = '';
+    /* Access */
+    public $application_logon_requirement = '1';
+    public $application_guest_option = 'login';
+    public $application_default_option = 'dashboard';
+    public $default_template_extension = 'Molajito';
 
-    /* Locale Settings */
+    /* Locale */
     public $language = 'en-GB';
     public $offset = 'UTC';
     public $offset_user = 'UTC';
 
-    /* Debug Settings */
-    public $debug = '0';
-    public $debug_language = '0';
+    /* Feed */
+    public $feed_limit = 10;
+    public $feed_email = 'author';
+    public $list_limit = 20;
 
-    /* Feed Settings */
-    public $feed_limit = '10';
-    public $feed_email = 'site';
-    public $list_limit = '20';
-
-    /* Other */
+    /* Media */
     public $html5 = '1';
     public $image_xsmall = '50';
     public $image_small = '75';
@@ -61,47 +57,55 @@ class MolajoConfig
      *  Site Configuration Settings
      */
     /* Site Settings */
-    public $offline;
-    public $offline_message;
-    public $sitename;
+    public $sitename = 'Molajo';
+
+    /* Offline Settings */
+    public $offline = '0';
+    public $offline_message = 'This site is not available.<br /> Please check back again soon.';
 
     /* Database Settings */
-    public $dbtype;
-    public $host;
-    public $user;
-    public $password;
-    public $db;
-    public $dbprefix;
+    public $dbtype = 'mysqli'; // Normally mysql
+    public $host = 'localhost'; // This is normally set to localhost
+    public $user = 'root'; // MySQL username
+    public $password = 'root'; // MySQL password
+    public $db = 'molajo'; // MySQL database name
+    public $dbprefix = 'molajo_'; // Prefix change to something unique
 
     /* Server Settings */
-    public $secret;
-    public $gzip;
-    public $error_reporting;
-    public $helpurl;
-    public $ftp_host;
-    public $ftp_port;
-    public $ftp_user;
-    public $ftp_pass;
-    public $ftp_root;
-    public $ftp_enable;
-    public $cache_path;
-    public $images_path;
-    public $logs_path;
-    public $media_path;
-    public $tmp_path;
-    public $live_site;
+    public $secret = 'FBVtggIk5lAzEU9H'; // Change this to something more secure
+    public $gzip = '0';
+    public $error_reporting = '-1';
+    public $helpurl = 'http://help.molajo.org/';
+    public $ftp_host = '';
+    public $ftp_port = '';
+    public $ftp_user = '';
+    public $ftp_pass = '';
+    public $ftp_root = '';
+    public $ftp_enable = '';
+    public $cache_path = '/Users/amystephen/Sites/Molajo/sites/1/cache';
+    public $images_path = '/Users/amystephen/Sites/Molajo/sites/1/images';
+    public $logs_path = '/Users/amystephen/Sites/Molajo/sites/1/logs';
+    public $media_path = '/Users/amystephen/Sites/Molajo/sites/1/media';
+    public $tmp_path = '/Users/amystephen/Sites/Molajo/sites/1/tmp';
+    public $live_site = ''; // Optional, Full url to installation.
 
     /* Session settings */
-    public $lifetime;
-    public $session_handler;
+    public $lifetime = '15';
+    public $session_handler = 'database';
+    public $cookie_domain = '';
+    public $cookie_path = '';
 
     /* Mail Settings */
-    public $mailer;
-    public $mailfrom;
-    public $fromname;
-    public $sendmail;
-    public $smtpauth;
-    public $smtpuser;
-    public $smtppass;
-    public $smtphost;
+    public $mailer = 'mail';
+    public $mailfrom = '';
+    public $fromname = '';
+    public $sendmail = '/usr/sbin/sendmail';
+    public $smtpauth = '0';
+    public $smtpuser = '';
+    public $smtppass = '';
+    public $smtphost = 'localhost';
+
+    /* Debug */
+    public $debug = '0';
+    public $debug_language = '0';
 }

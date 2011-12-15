@@ -624,6 +624,7 @@ abstract class MolajoFactory
         } else {
             self::$siteConfig = $siteInstance->siteConfig();
         }
+        return self::$siteConfig;
     }
 
     /**
@@ -638,11 +639,11 @@ abstract class MolajoFactory
     {
         $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
         $configInstance = new $classname();
-
         if (self::$config) {
         } else {
             self::$config = $configInstance->getConfig();
         }
+        return self::$config;
     }
     
     /**
