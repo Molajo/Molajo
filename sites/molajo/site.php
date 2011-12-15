@@ -15,28 +15,12 @@ defined('MOLAJO') or die;
 class MolajoSite extends JObject
 {
     /**
-     * The site identifier.
+     * Application configuration object.
      *
      * @var    integer
      * @since  1.0
      */
-    public $siteId = null;
-
-    /**
-     * The site name
-     *
-     * @var    string
-     * @since  1.0
-     */
-    public $name = null;
-
-    /**
-     * The description name
-     *
-     * @var    string
-     * @since  1.0
-     */
-    public $description = null;
+    public $config = null;
 
     /**
      * The base url
@@ -71,14 +55,6 @@ class MolajoSite extends JObject
     public $custom_fields = null;
 
     /**
-     * Configuration
-     *
-     * @var    date
-     * @since  1.0
-     */
-    public $siteConfig = null;
-
-    /**
      * getInstance
      *
      * Returns the global site object, creating if not existing
@@ -91,7 +67,6 @@ class MolajoSite extends JObject
      */
     public static function getInstance($prefix = 'Molajo')
     {
-
         static $instances;
 
         if (isset($instances)) {
@@ -136,22 +111,12 @@ class MolajoSite extends JObject
      *
      * @since  1.0
      */
-    public function __construct($config = array())
+    public function __construct($config = null)
     {
-        /** Site ID and Name */
-        $config['siteId'] = MOLAJO_SITE_ID;
-        $this->_siteId = MOLAJO_SITE_ID;
-        $this->_name = MOLAJO_SITE;
-
-        /** Configuration File */
-        if (isset($config['config_file'])) {
+        if ($config) {
+            $this->config = $config;
         } else {
-            $config['config_file'] = 'configuration.php';
-        }
-        if ($this->_name == 'installation') {
-            $this->_createSiteConfiguration();
-        } else {
-            $this->_createSiteConfiguration(MOLAJO_SITE_PATH . '/' . $config['config_file']);
+            $this->config = new JRegistry;
         }
     }
 
@@ -166,12 +131,11 @@ class MolajoSite extends JObject
      */
     public function initialise($options = array())
     {
-        $info = MolajoSiteHelper::getSiteInfo(MOLAJO_SITE, false);
+        $info = MolajoSiteHelper::getSiteInfo();
         if ($info === false) {
             return false;
         }
 
-        $this->description = $info->description;
         $this->parameters = $info->parameters;
         $this->custom_fields = $info->custom_fields;
         $this->base_url = $info->base_url;
@@ -294,15 +258,53 @@ class MolajoSite extends JObject
      */
     public function getConfig()
     {
-        return MolajoConfiguration::site();
+        $data = MolajoConfiguration::site();
 
         if (is_array($data)) {
-            $config->loadArray($data);
+            $this->config->loadArray($data);
 
         } elseif (is_object($data)) {
-            $config->loadObject($data);
+            $this->config->loadObject($data);
         }
 
-        return $config;
+        return $this->config;
+    }
+
+    /**
+     * get
+     *
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   11.3
+     */
+    public function get($key, $default = null)
+    {
+        return $this->config->get($key, $default);
+    }
+
+    /**
+     * set
+     *
+     * Modifies a property of the Application object, creating it if it does not already exist.
+     *
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   11.3
+     */
+    public function set($key, $value = null)
+    {
+        $previous = $this->config->get($key);
+        $this->config->set($key, $value);
+
+        return $previous;
     }
 }

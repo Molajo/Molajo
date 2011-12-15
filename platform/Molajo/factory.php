@@ -16,23 +16,22 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoFactory
 {
-    public static $acl = null;
     public static $application = null;
     public static $cache = null;
+    public static $config = null;
     public static $database = null;
     public static $document = null;
     public static $language = null;
     public static $mailer = null;
     public static $session = null;
     public static $site = null;
+    public static $siteConfig = null;
 
     /**
+     * getSite
+     *
      * Get a site object
      *
-     * Returns the global Site object
-     *
-     * @param   mixed   $id     Site identifier or name
-     * @param   array   $config Optional associative array of configuration settings
      * @param   string  $prefix Site prefix
      *
      * @return application    object
@@ -43,15 +42,13 @@ abstract class MolajoFactory
         } else {
             self::$site = MolajoSite::getInstance($prefix);
         }
-
         return self::$site;
     }
 
     /**
-     * Get an application object
+     * getApplication
      *
-     * Returns the global Application object, only creating it
-     * if it doesn't already exist.
+     * Get an application object
      *
      * @param   string  $prefix Application prefix
      *
@@ -68,10 +65,9 @@ abstract class MolajoFactory
     }
 
     /**
-     * Get a session object
+     * getSession
      *
-     * Returns the global session object, creating it
-     * if it doesn't already exist.
+     * Get a session object
      *
      * @param   array  $options  An array containing session options
      *
@@ -88,10 +84,9 @@ abstract class MolajoFactory
     }
 
     /**
-     * Get a language object
+     * getLanguage
      *
-     * Returns the global language object, creating it
-     * if it doesn't already exist.
+     * Get a language object
      *
      * @return language object
      */
@@ -106,6 +101,8 @@ abstract class MolajoFactory
     }
 
     /**
+     * getDocument
+     *
      * Get a document object
      *
      * Returns the global document object
@@ -118,18 +115,19 @@ abstract class MolajoFactory
         } else {
             self::$document = self::_createDocument();
         }
+
         return self::$document;
     }
 
     /**
+     * getUser
+     *
      * Get an user object
      *
      * Returns the global user object
      *
      * @param   integer  $id  The user to load - Can be an integer or string -
      *          If string, it is converted to ID automatically.
-     *
-     * @see MolajoUser
      *
      * @return user object
      */
@@ -152,9 +150,9 @@ abstract class MolajoFactory
     }
 
     /**
-     * Get a cache object
+     * getCache
      *
-     * Returns the global cache object
+     * Get a cache object
      *
      * @param   string  $group    The cache group name
      * @param   string  $handler  The handler to use
@@ -172,7 +170,7 @@ abstract class MolajoFactory
         }
         $handler = ($handler == 'function') ? 'callback' : $handler;
 
-        $conf = self::getConfig();
+//        $conf = self::getConfig();
 
         $options = array('defaultgroup' => $group);
 
@@ -188,21 +186,9 @@ abstract class MolajoFactory
     }
 
     /**
-     * Get an authorization object
+     * getDbo
      *
-     * Returns the global {@link JACL} object, only creating it
-     * if it doesn't already exist.
-     *
-     * @deprecated
-     */
-    public static function getACL()
-    {
-    }
-
-    /**
      * Get a database object
-     *
-     * Returns the global database object
      *
      * @return JDatabase object
      */
@@ -210,8 +196,8 @@ abstract class MolajoFactory
     {
         if (self::$database) {
         } else {
-            $conf = self::getSiteConfig();
-            $debug = $conf->get('debug');
+            self::getSiteConfig();
+            $debug = self::$siteConfig->get('debug');
 
             self::$database = self::_createDbo();
             self::$database->debug($debug);
@@ -221,12 +207,10 @@ abstract class MolajoFactory
     }
 
     /**
+     * getMailer
+     * 
      * Get a mailer object
-     *
-     * Returns the global mail object
-     *
-     * @see MolajoMail
-     *
+     * 
      * @return mail object
      */
     public static function getMailer()
@@ -241,6 +225,8 @@ abstract class MolajoFactory
     }
 
     /**
+     * getFeedParser
+     * 
      * Get a parsed XML Feed Source
      *
      * @param   string   $url         url for feed source
@@ -344,27 +330,29 @@ abstract class MolajoFactory
     }
 
     /**
+     * getEditor
+     * 
      * Get an editor object
      *
      * @param   string  $editor The editor to load, depends on the editor plugins that are installed
      *
      * @return editor object
+     * @since   1.0
      */
     public static function getEditor($editor = null)
     {
         if (is_null($editor)) {
-            $conf = self::getConfig();
-            $editor = $conf->get('editor');
+            self::getConfig();
+            $editor = self::$config->get('editor');
         }
+        
         return MolajoEditor::getInstance($editor);
     }
 
     /**
+     * getURI
+     * 
      * Return a reference to the URI object
-     *
-     * @param   string  $uri uri name
-     *
-     * @see JURI
      *
      * @return JURI object
      * @since   1.0
@@ -375,12 +363,12 @@ abstract class MolajoFactory
     }
 
     /**
+     * getDate
+     * 
      * Return the {@link JDate} object
      *
      * @param   mixed  $time     The initial time for the JDate object
      * @param   mixed  $tzOffset The timezone offset.
-     *
-     * @see JDate
      *
      * @return JDate object
      * @since   1.0
@@ -419,19 +407,19 @@ abstract class MolajoFactory
     }
 
     /**
+     * _createSession
+     * 
      * Create a session object
      *
-     * @param   array  $options Session option array
-     *
-     * @return MolajoSession object
+     * @return object
      * @since   1.0
      */
     protected static function _createSession($options = array())
     {
-        $conf = self::getConfig();
-        $handler = $conf->get('session_handler', 'none');
+        self::getConfig();
+        $handler = self::$config->get('session_handler', 'none');
 
-        $options['expire'] = ($conf->get('lifetime')) ? $conf->get('lifetime') * 60 : 900;
+        $options['expire'] = (self::$config->get('lifetime')) ? self::$config->get('lifetime') * 60 : 900;
 
         $session = MolajoSession::getInstance($handler, $options);
 
@@ -453,15 +441,15 @@ abstract class MolajoFactory
      */
     protected static function _createDbo()
     {
-        $conf = self::getSiteConfig();
+        self::getSiteConfig();
 
-        $host = $conf->get('host');
-        $user = $conf->get('user');
-        $password = $conf->get('password');
-        $database = $conf->get('db');
-        $prefix = $conf->get('dbprefix');
-        $driver = $conf->get('dbtype');
-        $debug = $conf->get('debug');
+        $host = self::$siteConfig->get('host');
+        $user = self::$siteConfig->get('user');
+        $password = self::$siteConfig->get('password');
+        $database = self::$siteConfig->get('db');
+        $prefix = self::$siteConfig->get('dbprefix');
+        $driver = self::$siteConfig->get('dbtype');
+        $debug = self::$siteConfig->get('debug');
 
         $options = array('driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database, 'prefix' => $prefix);
 
@@ -469,7 +457,7 @@ abstract class MolajoFactory
 
         if (MolajoError::isError($db)) {
             header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: ' . (string)$db);
+            jexit('Database Error: ' . (string) $db);
         }
 
         if ($db->getErrorNum() > 0) {
@@ -489,18 +477,18 @@ abstract class MolajoFactory
      */
     protected static function _createMailer()
     {
-        $conf = self::getSiteConfig();
+        self::getSiteConfig();
 
-        $sendmail = $conf->get('sendmail');
-        $smtpauth = ($conf->get('smtpauth') == 0) ? null : 1;
-        $smtpuser = $conf->get('smtpuser');
-        $smtppass = $conf->get('smtppass');
-        $smtphost = $conf->get('smtphost');
-        $smtpsecure = $conf->get('smtpsecure');
-        $smtpport = $conf->get('smtpport');
-        $mailfrom = $conf->get('mailfrom');
-        $fromname = $conf->get('fromname');
-        $mailer = $conf->get('mailer');
+        $sendmail = self::$siteConfig->get('sendmail');
+        $smtpauth = (self::$siteConfig->get('smtpauth') == 0) ? null : 1;
+        $smtpuser = self::$siteConfig->get('smtpuser');
+        $smtppass = self::$siteConfig->get('smtppass');
+        $smtphost = self::$siteConfig->get('smtphost');
+        $smtpsecure = self::$siteConfig->get('smtpsecure');
+        $smtpport = self::$siteConfig->get('smtpport');
+        $mailfrom = self::$siteConfig->get('mailfrom');
+        $fromname = self::$siteConfig->get('fromname');
+        $mailer = self::$siteConfig->get('mailer');
 
         $mail = MolajoMail::getInstance();
         $mail->setSender(array($mailfrom, $fromname));
@@ -533,18 +521,18 @@ abstract class MolajoFactory
      */
     protected static function _createLanguage()
     {
-        $conf = self::getConfig();
-        $locale = $conf->get('language');
-        $debug = $conf->get('debug_language');
+        self::getConfig();
+        $locale = self::$siteConfig->get('language');
+        $debug = self::$siteConfig->get('debug_language');
         $lang = MolajoLanguage::getInstance($locale, $debug);
 
         return $lang;
     }
 
     /**
-     * Create a document object
+     * _createDocument
      *
-     * @see MolajoDocument
+     * Create a document object
      *
      * @return MolajoDocument object
      * @since   1.0
@@ -581,10 +569,10 @@ abstract class MolajoFactory
      */
     public static function getStream($use_prefix = true, $use_network = true, $ua = null, $uamask = false)
     {
-        // Setup the context; Molajo UA and overwrite
+
         $context = array();
         $version = new MolajoVersion;
-        // set the UA for HTTP and overwrite for FTP
+
         $context['http']['user_agent'] = $version->getUserAgent($ua, $uamask);
         $context['ftp']['overwrite'] = true;
 
@@ -616,6 +604,8 @@ abstract class MolajoFactory
     }
 
     /**
+     * getSiteConfig
+     *
      * Retrieve the Site configuration object
      *
      * @return  config object
@@ -624,10 +614,16 @@ abstract class MolajoFactory
     public static function getSiteConfig()
     {
         $classname = 'Molajo' . ucfirst(MOLAJO_SITE) . 'Site';
-        return $classname::getConfig();
+        $siteInstance = new $classname ();
+        if (self::$siteConfig) {
+        } else {
+            self::$siteConfig = $siteInstance->getConfig();
+        }
     }
 
     /**
+     * getConfig
+     *
      * Retrieve the Application configuration object
      *
      * @return  config object
@@ -636,6 +632,32 @@ abstract class MolajoFactory
     public static function getConfig()
     {
         $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
-        return $classname::getConfig();
+        $configInstance = new $classname();
+        if (self::$config) {
+        } else {
+            self::$config = $configInstance->getConfig();
+        }
+    }
+    
+    /**
+     * get
+     *
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
+     * @since   11.3
+     */
+    public function get($key, $default = null)
+    {
+        if (isset($this->config)) {
+            return $this->config->get($key, $default);
+        } else {
+            return $this->siteConfig->get($key, $default);
+        }
     }
 }

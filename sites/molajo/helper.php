@@ -44,7 +44,7 @@ class MolajoSiteHelper
             $obj = new stdClass();
 
             $db = MolajoFactory::getDbo();
-var_dump($db);
+
             $query = $db->getQuery(true);
 
             $query->select('id');
