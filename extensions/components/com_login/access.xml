@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<access component="com_login">
-	<section name="component">
-	    <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESC" />
- 	</section>
-	<section name="login">
-	    <action name="view" title="MOLAJO_VIEW" description="MOLAJO_VIEW_DESC" />
-	</section>
-</access>

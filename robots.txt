@@ -1,5 +1,5 @@
-# If the site is installed within a folder such as at example.com/molajo
-# Disallow rules must be changed to: /molajo/administrator/
+# If the site is installed within a folder such as at example.com/folder
+# Disallow rules must be changed to include the path: /folder/administrator/
 #
 # For more information, see:
 # http://www.robotstxt.org/orig.html
@@ -7,17 +7,9 @@
 
 User-agent: *
 Disallow: /administrator/
-Disallow: /cache/
-Disallow: /components/
-Disallow: /includes/
+Disallow: /applications/
+Disallow: /cms/
 Disallow: /installation/
-Disallow: /language/
-Disallow: /layouts/
-Disallow: /libraries/
-Disallow: /logs/
-Disallow: /media/
-Disallow: /modules/
-Disallow: /plugins/
-Disallow: /templates/
-Disallow: /tmp/
+Disallow: /platform/
+Disallow: /sites/
 

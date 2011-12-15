@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metafile version="1.0">
+    <name>English (United Kingdom)</name>
+    <version>1.6.2</version>
+    <creationDate>2008-03-15</creationDate>
+    <author>Molajo Project</author>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>molajo.org</authorUrl>
+    <copyright>Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <description>en-GB administrator language</description>
+    <files>
+        <filename>en-GB.admin.ini</filename>
+        <filename>en-GB.admin.sys.ini</filename>
+    </files>
+    <metadata>
+        <name>English (United Kingdom)</name>
+        <tag>en-GB</tag>
+        <rtl>0</rtl>
+        <locale>en_GB.utf8, en_GB.UTF-8, en_GB, eng_GB, en, english, english-uk, uk, gbr, britain, england, great
+            britain, uk, united kingdom, united-kingdom
+        </locale>
+        <firstDay>0</firstDay>
+    </metadata>
+    <parameters/>
+</metafile>

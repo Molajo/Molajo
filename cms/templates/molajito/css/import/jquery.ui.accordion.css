@@ -1,0 +1,86 @@
+/*
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2012 Cristina Solana. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+
+/* jQuery UI Accordion 1.8.14
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Accordion#theming
+ */
+/* IE/Win - Fix animation bug - #4615 */
+.ui-accordion {
+    width: 100%;
+}
+
+.ui-accordion .ui-accordion-header {
+    cursor: pointer;
+    position: relative;
+    margin-top: 0;
+    padding: .75em 0;
+    zoom: 1;
+}
+
+.ui-accordion .ui-accordion-li-fix {
+    display: inline;
+}
+
+.ui-accordion .ui-accordion-header-active {
+    border-bottom: 0;
+}
+
+.ui-accordion .ui-accordion-header a {
+    display: block;
+    font-size: 1.25em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, .5);
+}
+
+.ui-accordion-icons .ui-accordion-header a {
+    padding-left: 40px;
+}
+
+.ui-accordion .ui-accordion-header .ui-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    margin-top: -8px;
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 1.25em 40px;
+    border-top: 1px solid rgba(255, 255, 255, 1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    margin-top: 0px;
+    margin-bottom: 0px;
+    position: relative;
+    top: 0;
+    overflow: auto;
+    display: none;
+    zoom: 1;
+    background: #f9f9f9;
+    color: #222;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+}
+
+.ui-accordion .ui-accordion-content a {
+    text-decoration: none;
+}
+
+.ui-accordion .ui-accordion-content a:hover {
+    color: #7ec1e0;
+}
+
+.ui-accordion .ui-accordion-content a:active {
+    color: #7ec1e0;
+    font-weight: bold;
+}
+
+.ui-accordion .ui-accordion-content-active {
+    display: block;
+}

@@ -1,0 +1,88 @@
+/*
+@package     Molajo
+@subpackage  CSS
+@copyright   Copyright (C) 2012 Cristina Solana. All rights reserved.
+@license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
+*/
+
+/*
+ * jQuery UI Tabs 1.8.15
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Tabs#theming
+ */
+.ui-tabs {
+    position: relative;
+    width: 100%;
+    padding: .2em;
+    zoom: 1;
+}
+
+/* position: relative prevents IE scroll bug */
+.ui-tabs .ui-tabs-nav {
+    margin: 0;
+    padding: .2em 0 0;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    float: left;
+    position: relative;
+    top: 1px;
+    margin: 0 .2em 1px 0;
+    padding: 0;
+    border: 1px solid #7ec1e0;
+    border-bottom: 0;
+    border-radius: 2px 2px 0 0;
+    background: #7ec1e0 url() 50% 50% repeat-x;
+    background: -moz-linear-gradient(100% 100% 90deg, #7ec1e0, #9ed7f2);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9ed7f2), to(#7ec1e0));
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .3);
+    white-space: nowrap;
+    list-style: none;
+}
+
+.ui-tabs .ui-tabs-nav li:hover {
+    background: #9ed7f2;
+    background: #58a1c2 url() 50% 50% repeat-x;
+    background: -moz-linear-gradient(100% 100% 90deg, #58a1c2, #7ec1e0);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7ec1e0), to(#58a1c2));
+}
+
+.ui-tabs .ui-tabs-nav li a {
+    float: left;
+    padding: .5em 1em;
+    text-decoration: none;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+    margin-bottom: 0;
+    padding-bottom: 1px;
+    border-color: #222;
+    background: #000 url() 50% 50% repeat-x;
+    background: -moz-linear-gradient(100% 100% 90deg, #000, #333);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#000));
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    cursor: text;
+    color: #f4f4f4;
+}
+
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    cursor: pointer;
+}
+
+/* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor */
+.ui-tabs .ui-tabs-panel {
+    display: block;
+    border-width: 0;
+    padding: 1em 1.4em;
+    background: none;
+}
+
+.ui-tabs .ui-tabs-hide {
+    display: none !important;
+}

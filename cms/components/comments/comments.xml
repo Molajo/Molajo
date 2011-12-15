@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.0" method="upgrade">
+    <name>COMMENTS</name>
+    <author>Molajo Contributors</author>
+    <creationDate>January 2012</creationDate>
+    <copyright>Copyright (C) 2012 Individual Molajo contributors. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>collaborate@molajo.org</authorEmail>
+    <authorUrl>http://molajo.org</authorUrl>
+    <version>1.0</version>
+    <description>COMMENTS_DESCRIPTION</description>
+
+    <files>
+        <filename>comments.php</filename>
+        <filename>config.xml</filename>
+        <filename>readme.md</filename>
+        <folder>language</folder>
+        <folder>sql</folder>
+    </files>
+
+    <media
+        destination="components/comments"
+        folder="media">
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+    </media>
+
+    <tables>
+        <table>#__content</table>
+    </tables>
+
+</extension>

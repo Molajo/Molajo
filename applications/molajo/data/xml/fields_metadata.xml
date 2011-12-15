@@ -1,0 +1,58 @@
+<fieldset
+        name="metadata_options"
+        label="METADATA_FIELDSET_OPTIONS">
+
+    <fields name="metadata">
+
+        <field
+                name="metadata_description"
+                type="textarea"
+                label="METADATA_DESCRIPTION_LABEL"
+                description="METADATA_DESCRIPTION_DESC"
+                rows="3"
+                cols="40"
+                />
+
+        <field
+                name="metadata_keywords"
+                type="textarea"
+                label="METADATA_KEYWORDS_LABEL"
+                description="METADATA_KEYWORDS_DESC"
+                rows="3"
+                cols="40"
+                />
+
+        <field
+                name="metadata_robots"
+                type="list"
+                label="METADATA_ROBOTS_LABEL"
+                description="METADATA_ROBOTS_DESC"
+                >
+            <option value="">USE_GLOBAL</option>
+            <option value="index, follow">INDEX_FOLLOW</option>
+            <option value="noindex, follow">NOINDEX_FOLLOW</option>
+            <option value="index, nofollow">INDEX_NOFOLLOW</option>
+            <option value="noindex, nofollow">NOINDEX_NOFOLLOW</option>
+        </field>
+
+        <field
+                name="metadata_author"
+                type="text"
+                label="METADATA_AUTHOR_LABEL"
+                description="METADATA_AUTHOR_DESC"
+                size="20"
+                />
+
+        <field
+                name="metadata_rights"
+                type="textarea"
+                label="METADATA_RIGHTS_LABEL"
+                description="METADATA_RIGHTS_DESC"
+                required="false"
+                filter="string"
+                cols="30"
+                rows="2"
+                />
+    </fields>
+
+</fieldset>
