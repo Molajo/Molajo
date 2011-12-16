@@ -2,9 +2,8 @@
 class MolajoExtensionConfiguration
 {
     /* Page */
-
-    public $url_current;
-    public $url_base;
+    public $request;
+    public $sef_request;
 
     public $site;
     public $application;
@@ -28,21 +27,21 @@ class MolajoExtensionConfiguration
 
     public $page_extension;
     public $page_extension_type;
+    public $page_extension_acl;
+    public $page_extension_table;
+    public $page_extension_path;
     public $page_extension_layout;
     public $page_extension_layout_wrap;
     public $page_extension_layout_wrap_id;
     public $page_extension_layout_wrap_class;
 
     public $page_extension_menu_item;
-    public $page_extension_primary_category;
     public $page_extension_plugin_type;
     public $page_extension_item_id;
-    public $page_extension_acl;
-    public $page_extension_table;
-    public $page_extension_path;
+    public $page_extension_primary_category;
+    public $page_extension_parameters;
     public $page_filter_name;
     public $page_select_name;
 
     public $page_component_specific;
-
 }

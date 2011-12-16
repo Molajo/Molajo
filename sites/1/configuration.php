@@ -32,7 +32,6 @@ class MolajoSiteConfiguration
     public $logs_path = '/Users/amystephen/Sites/Molajo/sites/1/logs';
     public $media_path = '/Users/amystephen/Sites/Molajo/sites/1/media';
     public $tmp_path = '/Users/amystephen/Sites/Molajo/sites/1/tmp';
-    public $live_site = ''; // Optional, Full url to installation.
 
     /* Session settings */
     public $lifetime = '15';
