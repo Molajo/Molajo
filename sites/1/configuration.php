@@ -1,5 +1,5 @@
 <?php
-class MolajoConfigSite
+class MolajoSiteConfiguration
 {
     /* Site Settings */
     public $sitename = 'Molajo';

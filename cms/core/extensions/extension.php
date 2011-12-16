@@ -76,7 +76,7 @@ class MolajoExtension
      * @var string
      * @since 1.0
      */
-    private $_menuitem = null;
+    protected $_menuitem = null;
 
     /**
      *  Component
@@ -84,7 +84,7 @@ class MolajoExtension
      * @var object
      * @since 1.0
      */
-    private $_component = null;
+    protected $_component = null;
 
     /**
      * Dispatcher
@@ -142,8 +142,8 @@ class MolajoExtension
         } else {
             $this->config = new JRegistry;
         }
-
         $this->getConfig();
+        echo '<pre>';var_dump($this->config);'</pre>';
     }
 
     /**
@@ -179,7 +179,7 @@ class MolajoExtension
 
         /** Event */
         MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onAfterInitialise');
+        MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
     }
 
     /**
@@ -191,8 +191,8 @@ class MolajoExtension
      */
     public function execute()
     {
-        $this->triggerEvent('onBeforeExecute');
-        $this->triggerEvent('onAfterExecute');
+        MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
+        MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
     }
 
     /**
@@ -204,8 +204,8 @@ class MolajoExtension
      */
     public function render()
     {
-        $this->triggerEvent('onBeforeRender');
-        $this->triggerEvent('onAfterRender');
+        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
+        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
     }
 
     /**
@@ -243,7 +243,7 @@ class MolajoExtension
 
         /** trigger onAfterRoute Event */
         MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onAfterRoute');
+        MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
     }
 
     /**
@@ -477,20 +477,6 @@ class MolajoExtension
     }
 
     /**
-     * Method to create an event dispatcher for the Web application.  The logic and options for creating
-     * this object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create event dispatchers based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   11.3
-     */
-    protected function loadDispatcher()
-    {
-        $this->dispatcher = JDispatcher::getInstance();
-    }
-
-    /**
      * Method to create a document for the Web application.  The logic and options for creating this
      * object are adequately generic for default cases but for many applications it will make sense
      * to override this method and create document objects based on more specific needs.
@@ -557,17 +543,25 @@ class MolajoExtension
      */
     public function getConfig()
     {
-        $configClass = new MolajoExtensionConfiguration();
-        $data = $configClass->getConfig();
+        $configData = array();
 
-        if (is_array($data)) {
-            $this->config->loadArray($data);
-
-        } elseif (is_object($data)) {
-            $this->config->loadObject($data);
+        $file = MOLAJO_CMS_CORE . '/configuration.php';
+        if (file_exists($file)) {
+            require_once $file;
+        } else {
+            throw new RuntimeException('Fatal error - Extension Configuration File does not exist');
         }
 
-        return $this->config;
+        $configData = new MolajoExtensionConfiguration();
+
+        if (is_array($configData)) {
+            $this->config->loadArray($configData);
+
+        } elseif (is_object($configData)) {
+            $this->config->loadObject($configData);
+        }
+
+        return;
     }
 
     /**

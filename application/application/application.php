@@ -668,7 +668,6 @@ class MolajoApplication
                 }
             }
         }
-
         return $this;
     }
 

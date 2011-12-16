@@ -35,15 +35,10 @@ if (class_exists($formatClass)) {
 /**
  *  Extensions
  */
-$fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extensions/configuration.php', 'MolajoExtensionConfiguration');
 $files = JFolder::files(MOLAJO_CMS_CORE . '/extensions', '\.php$', false, false);
 foreach ($files as $file) {
         $fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extensions/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
-
-/**
- *  Document
- */
 
 /**
  *  Helpers
