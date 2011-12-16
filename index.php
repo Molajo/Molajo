@@ -149,13 +149,7 @@ $app->initialise();
 JDEBUG ? $_PROFILER->mark('afterInitialiseApplication') : null;
 
 /**
- *  Execute
- */
-$app->beforeExecute();
-JDEBUG ? $_PROFILER->mark('beforeExecute') : null;
-
-/**
- *  Extension
+ *  Get Extension
  */
 $extension = MolajoFactory::getExtension();
 JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
@@ -165,32 +159,21 @@ JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
  */
 $extension->initialise($site, $app);
 JDEBUG ? $_PROFILER->mark('afterExtensionInitialise') : null;
-echo '<pre>';var_dump($extension);'</pre>';
-die;
+
 /**
- *  Execute
+ *  Execute Extension
  */
 $extension->execute();
 JDEBUG ? $_PROFILER->mark('afterExecuteExtension') : null;
 
 /**
- *  After Execute
+ *  Render Extensions
  */
-$app->afterExecute();
-JDEBUG ? $_PROFILER->mark('afterExecute') : null;
+$extension->execute();
+JDEBUG ? $_PROFILER->mark('afterExecuteExtension') : null;
 
 /**
- *  Render - loop all items (including component) that must be rendered
+ *  Application Response
  */
-$app->beforeRender();
-JDEBUG ? $_PROFILER->mark('beforeRender') : null;
-
-
-$app->afterRender();
-JDEBUG ? $_PROFILER->mark('afterRender') : null;
-
-
-
-
-
-echo 'thats it';
+$app->processResponse();
+JDEBUG ? $_PROFILER->mark('afterExecute') : null;

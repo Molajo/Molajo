@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Extensions
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -68,7 +68,7 @@ class MolajoComponent
         }
 
         $option = strtolower(JRequest::getCmd('option'));
-
+        $option = JFactory::getApplication()->input->get('option', '', 'filter');
         if (empty($option)) {
             $option = $default;
         }

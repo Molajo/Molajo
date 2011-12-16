@@ -15,30 +15,6 @@ defined('MOLAJO') or die;
 class MolajoExtension
 {
     /**
-     * Configuration
-     *
-     * @var    integer
-     * @since  1.0
-     */
-    private $_config = null;
-
-    /**
-     * Template
-     *
-     * @var object
-     * @since 1.0
-     */
-    private $_template = null;
-
-    /**
-     *  Page
-     *
-     * @var string
-     * @since 1.0
-     */
-    private $_page = null;
-
-    /**
      * Site
      *
      * @var object
@@ -63,6 +39,70 @@ class MolajoExtension
     protected static $instance;
 
     /**
+     * Configuration
+     *
+     * @var    integer
+     * @since  1.0
+     */
+    private $_config = null;
+
+    /**
+     *  User
+     *
+     * @var string
+     * @since 1.0
+     */
+    private $_user = null;
+
+    /**
+     * Template
+     *
+     * @var object
+     * @since 1.0
+     */
+    private $_template = null;
+
+    /**
+     *  Page
+     *
+     * @var string
+     * @since 1.0
+     */
+    private $_page = null;
+
+    /**
+     *  Menu item
+     *
+     * @var string
+     * @since 1.0
+     */
+    private $_menuitem = null;
+
+    /**
+     *  Component
+     *
+     * @var object
+     * @since 1.0
+     */
+    private $_component = null;
+
+    /**
+     * Dispatcher
+     *
+     * @var    object
+     * @since  11.3
+     */
+    protected $dispatcher;
+
+    /**
+     * Document
+     *
+     * @var    object
+     * @since  11.3
+     */
+    protected $document;
+
+    /**
      * getInstance
      *
      * Returns the global application object, creating if not existing
@@ -83,7 +123,6 @@ class MolajoExtension
                 self::$instance = new MolajoExtension;
             }
         }
-
         return self::$instance;
     }
 
@@ -120,8 +159,9 @@ class MolajoExtension
     {
         $this->_site = $site;
         $this->_app = $app;
-
-        /** todo: user */
+        $this->loadUser();
+        $this->loadDocument();
+        $this->loadDispatcher();
 
         /** todo: asset record */
 
@@ -129,7 +169,7 @@ class MolajoExtension
 
         /** todo: component */
 
-        /** todo: authorized? */
+        /** todo: authorized */
 
         /** todo: template */
 
@@ -137,16 +177,35 @@ class MolajoExtension
 
         /** todo: menu item */
 
-        /** Site authorisation */
-        $site = new MolajoSite ();
-        $authorise = $site->authorise(MOLAJO_EXTENSION_ID);
-        if ($authorise === false) {
-            return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_EXTENSION', MOLAJO_EXTENSION_ID));
-        }
-
         /** Event */
         MolajoPlugin::importPlugin('system');
         $this->triggerEvent('onAfterInitialise');
+    }
+
+    /**
+     * Execute Extension
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function execute()
+    {
+        $this->triggerEvent('onBeforeExecute');
+        $this->triggerEvent('onAfterExecute');
+    }
+
+    /**
+     * Render Extensions
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function render()
+    {
+        $this->triggerEvent('onBeforeRender');
+        $this->triggerEvent('onAfterRender');
     }
 
     /**
@@ -277,6 +336,32 @@ class MolajoExtension
     }
 
     /**
+     * Returns the application pathway object.
+     *
+     * @param   string    $name     The name of the application.
+     * @param   array     $options  An optional associative array of configuration settings.
+     *
+     * @return  object  A pathway object
+     *
+     * @since   11.1
+     */
+    public function getPathway($name = null, $options = array())
+    {
+        if (isset($name)) {
+        } else {
+            $name = MOLAJO_EXTENSION;
+        }
+
+        $pathway = MolajoPathway::getInstance($name, $options);
+
+        if (MolajoError::isError($pathway)) {
+            return null;
+        }
+
+        return $pathway;
+    }
+
+    /**
      * getTemplate
      *
      * return the folder name of the template
@@ -303,31 +388,14 @@ class MolajoExtension
     }
 
     /**
-     * Returns the application pathway object.
+     *  loadUser
      *
-     * @param   string    $name     The name of the application.
-     * @param   array     $options  An optional associative array of configuration settings.
-     *
-     * @return  object  A pathway object
-     *
-     * @since   11.1
      */
-    public function getPathway($name = null, $options = array())
+    private function loadUser()
     {
-        if (isset($name)) {
-        } else {
-            $name = MOLAJO_EXTENSION;
-        }
-
-        $pathway = MolajoPathway::getInstance($name, $options);
-
-        if (MolajoError::isError($pathway)) {
-            return null;
-        }
-
-        return $pathway;
+        $this->_user = MolajoFactory::getUser();
     }
-    
+
     /**
      * getUserState
      *
@@ -406,6 +474,72 @@ class MolajoExtension
         }
 
         return $new_state;
+    }
+
+    /**
+     * Method to create an event dispatcher for the Web application.  The logic and options for creating
+     * this object are adequately generic for default cases but for many applications it will make sense
+     * to override this method and create event dispatchers based on more specific needs.
+     *
+     * @return  void
+     *
+     * @since   11.3
+     */
+    protected function loadDispatcher()
+    {
+        $this->dispatcher = JDispatcher::getInstance();
+    }
+
+    /**
+     * Method to create a document for the Web application.  The logic and options for creating this
+     * object are adequately generic for default cases but for many applications it will make sense
+     * to override this method and create document objects based on more specific needs.
+     *
+     * @return  void
+     *
+     * @since   11.3
+     */
+    protected function loadDocument()
+    {
+        $this->document = MolajoFactory::getDocument();
+    }
+
+    /**
+     * Registers a handler to a particular event group.
+     *
+     * @param   string    $event    The event name.
+     * @param   callback  $handler  The handler, a function or an instance of a event object.
+     *
+     * @return  MolajoApplication  Instance of $this to allow chaining.
+     *
+     * @since   11.3
+     */
+    public function registerEvent($event, $handler)
+    {
+        if ($this->dispatcher instanceof JDispatcher) {
+            $this->dispatcher->register($event, $handler);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Calls all handlers associated with an event group.
+     *
+     * @param   string  $event  The event name.
+     * @param   array   $args   An array of arguments (optional).
+     *
+     * @return  array   An array of results from each function call, or null if no dispatcher is defined.
+     *
+     * @since   11.3
+     */
+    public function triggerEvent($event, array $args = null)
+    {
+        if ($this->dispatcher instanceof JDispatcher) {
+            return $this->dispatcher->trigger($event, $args);
+        }
+
+        return null;
     }
 
     /**

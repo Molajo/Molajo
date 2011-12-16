@@ -69,7 +69,7 @@ class MolajoApplication
     protected $language;
 
     /**
-     * @var    MolajoSession  The application session object.
+     * @var    Session  The application session object.
      * @since  11.3
      */
     protected $session;
@@ -185,7 +185,7 @@ class MolajoApplication
      * Initialise the application.
      *
      * @param   mixed  $session     An optional argument to provide dependency injection for the application's
-     *                              session object.  If the argument is a MolajoSession object that object will become
+     *                              session object.  If the argument is a Session object that object will become
      *                              the application's session object, if it is false then there will be no session
      *                              object, and if it is null then the default session object will be created based
      *                              on the application's loadSession() method.
@@ -251,52 +251,16 @@ class MolajoApplication
     }
 
     /**
-     * Before executing the application.
+     * Method to send the application response to the client.  All headers will be sent prior to the main
+     * application output data.
      *
      * @return  void
      *
-     * @since   1.0
+     * @since   11.3
      */
-    public function beforeExecute()
+    public function respond()
     {
-        $this->triggerEvent('onBeforeExecute');
-    }
-
-    /**
-     * After executing the application.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function afterExecute()
-    {
-        $this->triggerEvent('onAfterExecute');
-    }
-
-    /**
-     * Before rendering the application.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function beforeRender()
-    {
-        // Trigger the onBeforeExecute event.
-        $this->triggerEvent('onBeforeRender');
-    }
-
-    /**
-     * After executing the application.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function afterRender()
-    {
-        $this->triggerEvent('onAfterRender');
+        $this->triggerEvent('onBeforeRespond');
 
         // If gzip compression is enabled in configuration and the server is compliant, compress the output.
         if ($this->get('gzip')
@@ -305,13 +269,32 @@ class MolajoApplication
             $this->compress();
         }
 
-        // Trigger the onBeforeRespond event.
-        $this->triggerEvent('onBeforeRespond');
+        // Send the content-type header.
+        $this->setHeader('Content-Type', $this->mimeType . '; charset=' . $this->charSet);
 
-        // Send the application response.
-        $this->respond();
+        // If the response is set to uncachable, we need to set some appropriate headers so browsers don't cache the response.
+        if ($this->response->cachable) {
+            $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
+            // Last modified.
+            if ($this->modifiedDate instanceof JDate) {
+                $this->setHeader('Last-Modified', $this->modifiedDate->format('D, d M Y H:i:s'));
+            }
 
-        // Trigger the onAfterRespond event.
+        } else {
+            // Expires in the past.
+            $this->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
+            // Always modified.
+            $this->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
+            $this->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
+            // HTTP 1.0
+            $this->setHeader('Pragma', 'no-cache');
+
+        }
+
+        $this->sendHeaders();
+
+        echo $this->getBody();
+
         $this->triggerEvent('onAfterRespond');
     }
 
@@ -378,43 +361,6 @@ class MolajoApplication
                 break;
             }
         }
-    }
-
-    /**
-     * Method to send the application response to the client.  All headers will be sent prior to the main
-     * application output data.
-     *
-     * @return  void
-     *
-     * @since   11.3
-     */
-    protected function respond()
-    {
-        // Send the content-type header.
-        $this->setHeader('Content-Type', $this->mimeType . '; charset=' . $this->charSet);
-
-        // If the response is set to uncachable, we need to set some appropriate headers so browsers don't cache the response.
-        if ($this->response->cachable) {
-            $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
-            // Last modified.
-            if ($this->modifiedDate instanceof JDate) {
-                $this->setHeader('Last-Modified', $this->modifiedDate->format('D, d M Y H:i:s'));
-            }
-
-        } else {
-            // Expires in the past.
-            $this->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-            // Always modified.
-            $this->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
-            $this->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
-            // HTTP 1.0
-            $this->setHeader('Pragma', 'no-cache');
-
-        }
-
-        $this->sendHeaders();
-
-        echo $this->getBody();
     }
 
     /**
@@ -819,7 +765,7 @@ class MolajoApplication
     /**
      * Method to get the application session object.
      *
-     * @return  MolajoSession  The session object
+     * @return  Session  The session object
      *
      * @since   11.3
      */
@@ -941,7 +887,7 @@ class MolajoApplication
         // Get the session handler from the configuration.
         $handler = $this->get('session_handler', 'none');
 
-        // Initialize the options for MolajoSession.
+        // Initialize the options for Session.
         $options = array(
             'name' => $name,
             'expire' => $lifetime,
