@@ -2,32 +2,19 @@
 
 ## What is Molajo? ##
 
-## Installation Instructons ##
+xyz
 
-Located in the [**installation**][https://github.com/Molajo/Molajo/blob/core/installation/readme.md] folder
+## How do I install Molajo? ##
 
-1. WORKING WITH MOLAJO LAYOUTS
+Located in the [**installation**](https://github.com/Molajo/Molajo/blob/core/installation/README.md) folder
 
-    layouts/readme
+## How do I work with Molajo Extensions? ##
 
-    I. INTRODUCTION
-    II. WHAT IS A MOLAJO LAYOUT?
-    III. WHERE ARE LAYOUTS LOCATED?
-    IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING?
-    V. HOW DO I CREATE, INSTALL, AND SHARE LAYOUTS?
-    VI. HOW DO I OVERRIDE A LAYOUT?
-    VII. WORKING WITH CSS AND JS FOR THE APPLICATION, COMPONENT, ASSET, AND/OR LAYOUT
-    VIII. USING QUERY RESULTS IN LAYOUTS
-    IX. WHAT DATA IS AVAILABLE WITHIN A LAYOUT FILE?
-    X. WORKING WITH DATES
-    XI. INTEGRATING OTHER EXTENSION OUTPUT WITHIN A LAYOUT
-    XII. WORKING WITH IMAGES
-    XIII. USING OTHER TEMPLATE SYSTEMS
+1. [**Layouts**](https://github.com/Molajo/Molajo/blob/core/cms/layouts/README.md)
 
-2. WORKING WITH MOLAJO COMPONENTS
+2. [**Modules**](https://github.com/Molajo/Molajo/blob/core/cms/modules/README.md)
 
-    administrator/component/your-component-name 
+3. [**Components**](https://github.com/Molajo/Molajo/blob/core/cms/components/README.md)
 
-
-The **README.md** file on the [root of the website][https://github.com/Molajo/Molajo/blob/core/readme.md] lists all README files available.
+The **README.md** file on the [root of the website](https://github.com/Molajo/Molajo/blob/core/README.md) lists all README files available.
 
