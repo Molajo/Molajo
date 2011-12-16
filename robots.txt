@@ -7,7 +7,7 @@
 
 User-agent: *
 Disallow: /administrator/
-Disallow: /applications/
+Disallow: /application/
 Disallow: /cms/
 Disallow: /installation/
 Disallow: /platform/

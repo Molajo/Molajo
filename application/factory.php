@@ -16,16 +16,18 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoFactory
 {
+    public static $site = null;
+    public static $siteConfig = null;
     public static $application = null;
-    public static $cache = null;
     public static $config = null;
+    public static $extension = null;
+    public static $extensionConfig = null;
+
     public static $database = null;
     public static $document = null;
     public static $language = null;
     public static $mailer = null;
     public static $session = null;
-    public static $site = null;
-    public static $siteConfig = null;
 
     /**
      * getSite
@@ -62,6 +64,25 @@ abstract class MolajoFactory
         }
 
         return self::$application;
+    }
+
+    /**
+     * getExtension
+     *
+     * Get an extension object
+     *
+     * @param   string  $prefix Extension prefix
+     *
+     * @return application    object
+     */
+    public static function getExtension($prefix = 'Molajo')
+    {
+        if (self::$extension) {
+        } else {
+            self::$extension = MolajoExtension::getInstance();
+        }
+
+        return self::$extension;
     }
 
     /**

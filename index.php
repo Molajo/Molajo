@@ -116,7 +116,7 @@ require_once MOLAJO_CMS_CORE.'/includes/installcheck.php';
 require_once MOLAJO_CMS_CORE.'/includes/joomla.php';
 require_once MOLAJO_CMS_CORE.'/includes/config.php';
 require_once MOLAJO_CMS_CORE.'/includes/application.php';
-require_once MOLAJO_CMS_CORE.'/includes/implementation.php';
+require_once MOLAJO_CMS_CORE.'/includes/extension.php';
 require_once MOLAJO_CMS_CORE.'/includes/site.php';
 require_once MOLAJO_CMS_CORE.'/includes/platform.php';
 require_once MOLAJO_CMS_CORE.'/includes/other.php';
@@ -125,7 +125,7 @@ require_once MOLAJO_CMS_CORE.'/includes/overrides.php';
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
- *  Get Site
+ *  Site
  */
 $site = MolajoFactory::getSite();
 JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
@@ -137,41 +137,60 @@ $site->initialise();
 JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
 
 /**
- *  Get Application
+ *  Application
  */
-
 $app = MolajoFactory::getApplication();
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
 
 /**
- *  Initialize Application
+ *  Initialize App
  */
 $app->initialise();
-JDEBUG ? $_PROFILER->mark('afterInitialise') : null;
+JDEBUG ? $_PROFILER->mark('afterInitialiseApplication') : null;
 
 /**
- *  Route
+ *  Execute
  */
-//$app->route();
-JDEBUG ? $_PROFILER->mark('afterRoute') : null;
+$app->beforeExecute();
+JDEBUG ? $_PROFILER->mark('beforeExecute') : null;
 
 /**
- *  Dispatch
+ *  Extension
  */
-//$app->dispatch();
-JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
+$extension = MolajoFactory::getExtension();
+JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
+echo '<pre>';var_dump($execution);'</pre>';
+die;
+/**
+ *  Initialize Extension
+ */
+$extension->initialise();
+JDEBUG ? $_PROFILER->mark('afterExtensionInitialise') : null;
 
 /**
- *  Render
+ *  Execute
  */
-//$app->render();
+$extension->initialise();
+JDEBUG ? $_PROFILER->mark('afterExecuteExtension') : null;
+
+/**
+ *  After Execute
+ */
+$app->afterExecute();
+JDEBUG ? $_PROFILER->mark('afterExecute') : null;
+
+/**
+ *  Render - loop all items (including component) that must be rendered
+ */
+$app->beforeRender();
+JDEBUG ? $_PROFILER->mark('beforeRender') : null;
+
+
+$app->afterRender();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
 
-/**
- *  Display
- */
-echo $app;
 
 
 
 
+echo 'thats it';

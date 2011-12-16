@@ -214,58 +214,36 @@ class MolajoApplication
      */
     public function initialise($session = null, $document = null, $language = null, $dispatcher = null)
     {
-        // If a session object is given use it.
         if ($session instanceof MolajoSession) {
             $this->session = $session;
-        }
-        // We don't have a session, nor do we want one.
-        elseif ($session === false)
-        {
-            // Do nothing.
-        }
-        // Create the session based on the application logic.
-        else
-        {
+
+        } elseif ($session === false) {
+
+        } else {
             $this->loadSession();
         }
 
-        // If a document object is given use it.
         if ($document instanceof JDocument) {
             $this->document = $document;
-        }
-        // We don't have a document, nor do we want one.
-        elseif ($document === false)
-        {
-            // Do nothing.
-        }
-        // Create the document based on the application logic.
-        else
-        {
+
+        } elseif ($document === false) {
+
+        } else {
             $this->loadDocument();
         }
 
-        // If a language object is given use it.
         if ($language instanceof MolajoLanguage) {
             $this->language = $language;
-        }
-        // We don't have a language, nor do we want one.
-        elseif ($language === false)
-        {
-            // Do nothing.
-        }
-        // Create the language based on the application logic.
-        else
-        {
+
+        } elseif ($language === false) {
+
+        } else {
             $this->loadLanguage();
         }
 
-        // If a dispatcher object is given use it.
         if ($dispatcher instanceof JDispatcher) {
             $this->dispatcher = $dispatcher;
-        }
-        // Create the dispatcher based on the application logic.
-        else
-        {
+        } else {
             $this->loadDispatcher();
         }
 
@@ -273,37 +251,57 @@ class MolajoApplication
     }
 
     /**
-     * Execute the application.
+     * Before executing the application.
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
-    public function execute()
+    public function beforeExecute()
+    {
+        $this->triggerEvent('onBeforeExecute');
+    }
+
+    /**
+     * After executing the application.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function afterExecute()
+    {
+        $this->triggerEvent('onAfterExecute');
+    }
+
+    /**
+     * Before rendering the application.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function beforeRender()
     {
         // Trigger the onBeforeExecute event.
-        $this->triggerEvent('onBeforeExecute');
+        $this->triggerEvent('onBeforeRender');
+    }
 
-        // Perform application routines.
-        $this->doExecute();
-
-        // Trigger the onAfterExecute event.
-        $this->triggerEvent('onAfterExecute');
-
-        // If we have an application document object, render it.
-        if ($this->document instanceof JDocument) {
-            // Trigger the onBeforeRender event.
-            $this->triggerEvent('onBeforeRender');
-
-            // Render the application output.
-            $this->render();
-
-            // Trigger the onAfterRender event.
-            $this->triggerEvent('onAfterRender');
-        }
+    /**
+     * After executing the application.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function afterRender()
+    {
+        $this->triggerEvent('onAfterRender');
 
         // If gzip compression is enabled in configuration and the server is compliant, compress the output.
-        if ($this->get('gzip') && !ini_get('zlib.output_compression') && (ini_get('output_handler') != 'ob_gzhandler')) {
+        if ($this->get('gzip')
+            && !ini_get('zlib.output_compression')
+            && (ini_get('output_handler') != 'ob_gzhandler')) {
             $this->compress();
         }
 
@@ -476,9 +474,8 @@ class MolajoApplication
         // If the headers have already been sent we need to send the redirect statement via JavaScript.
         if ($this->checkHeadersSent()) {
             echo "<script>document.location.href='$url';</script>\n";
-        }
-        else
-        {
+        } else {
+
             // We have to use a JavaScript redirect here because MSIE doesn't play nice with utf-8 URLs.
             if (($this->client->engine == JWebClient::TRIDENT) && !utf8_is_ascii($url)) {
                 $html = '<html><head>';
@@ -862,53 +859,6 @@ class MolajoApplication
     }
 
     /**
-     * Method to detect the requested URI from server environment variables.
-     *
-     * @return  string  The requested URI
-     *
-     * @since   11.3
-     */
-    protected function detectRequestUri()
-    {
-        // Initialise variables.
-        $uri = '';
-
-        // First we need to detect the URI scheme.
-        if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
-            $scheme = 'https://';
-        }
-        else
-        {
-            $scheme = 'http://';
-        }
-
-        /*
-           * There are some differences in the way that Apache and IIS populate server environment variables.  To
-           * properly detect the requested URI we need to adjust our algorithm based on whether or not we are getting
-           * information from Apache or IIS.
-           */
-
-        // If PHP_SELF and REQUEST_URI are both populated then we will assume "Apache Mode".
-        if (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI'])) {
-            // The URI is built from the HTTP_HOST and REQUEST_URI environment variables in an Apache environment.
-            $uri = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        }
-        // If not in "Apache Mode" we will assume that we are in an IIS environment and proceed.
-        else
-        {
-            // IIS uses the SCRIPT_NAME variable instead of a REQUEST_URI variable... thanks, MS
-            $uri = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
-
-            // If the QUERY_STRING variable exists append it to the URI string.
-            if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-                $uri .= '?' . $_SERVER['QUERY_STRING'];
-            }
-        }
-
-        return trim($uri);
-    }
-
-    /**
      * Method to send a header to the client.  We are wrapping this to isolate the header() function
      * from our code base for testing reasons.
      *
@@ -1026,55 +976,109 @@ class MolajoApplication
      */
     protected function loadSystemUris($requestUri = null)
     {
-        // Set the request URI.
-        // @codeCoverageIgnoreStart
-        if (!empty($requestUri)) {
+        /** Request URL */
+        if (empty($requestUri)) {
+            $this->set('uri.request', $this->detectRequestUri());
+        } else {
             $this->set('uri.request', $requestUri);
         }
-        else
-        {
-            $this->set('uri.request', $this->detectRequestUri());
-        }
-        // @codeCoverageIgnoreEnd
 
-        // Check to see if an explicit site URI has been set.
+        /** siteUri */
         $siteUri = trim($this->get('site_uri'));
-        if ($siteUri != '') {
+        if ($siteUri == '') {
+            $uri = JUri::getInstance($this->get('uri.request'));
+        } else {
             $uri = JUri::getInstance($siteUri);
         }
-        // No explicit site URI was set so use the system one.
-        else
-        {
-            $uri = JUri::getInstance($this->get('uri.request'));
-        }
 
-        // Get the host and path from the URI.
+        /** Host */
         $host = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
         $path = rtrim($uri->toString(array('path')), '/\\');
 
-        // Set the base URI both as just a path and as the full URI.
+        /** Base */
         $this->set('uri.base.full', $host . $path . '/');
         $this->set('uri.base.host', $host);
         $this->set('uri.base.path', $path . '/');
 
-        // Get an explicitly set media URI is present.
+        /** Media */
         $mediaURI = trim($this->get('media_uri'));
         if ($mediaURI) {
-            if (strpos($mediaURI, '://') !== false) {
+            if (strpos($mediaURI, '://') == false) {
+                $this->set('uri.media.full', $this->get('uri.base.host') . $mediaURI);
+                $this->set('uri.media.path', $mediaURI);
+            } else {
                 $this->set('uri.media.full', $mediaURI);
                 $this->set('uri.media.path', $mediaURI);
             }
-            else
-            {
-                $this->set('uri.media.full', $this->get('uri.base.host') . $mediaURI);
-                $this->set('uri.media.path', $mediaURI);
-            }
-        }
-        // No explicit media URI was set, build it dynamically from the base uri.
-        else
-        {
+        } else {
             $this->set('uri.media.full', $this->get('uri.base.full') . 'media/');
             $this->set('uri.media.path', $this->get('uri.base.path') . 'media/');
         }
+//        echo '<pre>';
+//        var_dump($this);
+//        '</pre>';
+    }
+
+    /**
+     * Method to detect the requested URI from server environment variables.
+     *
+     * @return  string  The requested URI
+     *
+     * @since   11.3
+     */
+    protected function detectRequestUri()
+    {
+        // Initialise variables.
+        $uri = '';
+
+        // First we need to detect the URI scheme.
+        if (isset($_SERVER['HTTPS'])
+            && !empty($_SERVER['HTTPS'])
+            && (strtolower($_SERVER['HTTPS']) != 'off')) {
+            $scheme = 'https://';
+        } else {
+            $scheme = 'http://';
+        }
+
+        /*
+        * There are some differences in the way that Apache and IIS populate server environment variables.  To
+        * properly detect the requested URI we need to adjust our algorithm based on whether or not we are getting
+        * information from Apache or IIS.
+        */
+
+        // If PHP_SELF and REQUEST_URI are both populated then we will assume "Apache Mode".
+        if (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI'])) {
+            // The URI is built from the HTTP_HOST and REQUEST_URI environment variables in an Apache environment.
+            $uri = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        // If not in "Apache Mode" we will assume that we are in an IIS environment and proceed.
+        } else {
+
+            // IIS uses the SCRIPT_NAME variable instead of a REQUEST_URI variable... thanks, MS
+            $uri = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+
+            // If the QUERY_STRING variable exists append it to the URI string.
+            if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
+                $uri .= '?' . $_SERVER['QUERY_STRING'];
+            }
+        }
+
+        return trim($uri);
+    }
+
+    /**
+     * getHash
+     *
+     * Provides a secure hash based on a seed
+     *
+     * @param   string   $seed  Seed string.
+     *
+     * @return  string   A secure hash
+     *
+     * @since  1.0
+     */
+    public static function getHash($seed)
+    {
+        return md5(self::get('secret') . $seed);
     }
 }

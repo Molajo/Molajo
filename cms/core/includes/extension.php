@@ -13,6 +13,11 @@ defined('MOLAJO') or die;
 $fileHelper = new MolajoFileHelper();
 
 /**
+ *  Extension
+ */
+$fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extension.php', 'MolajoExtension');
+
+/**
  *  Extensions
  */
 $files = JFolder::files(MOLAJO_CMS_CORE . '/extensions', '\.php$', false, false);
