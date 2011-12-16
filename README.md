@@ -1,4 +1,10 @@
-Molajo has several README files located:
+# Molajo #
+
+## What is Molajo? ##
+
+## Installation Instructons ##
+
+Located in the [**installation**][https://github.com/Molajo/Molajo/blob/core/installation/readme.md] folder
 
 1. WORKING WITH MOLAJO LAYOUTS
 
@@ -23,5 +29,5 @@ Molajo has several README files located:
     administrator/component/your-component-name 
 
 
-This README file on the root of the website lists all README files available.
+The **README.md** file on the [root of the website][https://github.com/Molajo/Molajo/blob/core/readme.md] lists all README files available.
 
