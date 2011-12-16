@@ -152,19 +152,19 @@ JDEBUG ? $_PROFILER->mark('afterInitialise') : null;
 /**
  *  Route
  */
-$app->route();
+//$app->route();
 JDEBUG ? $_PROFILER->mark('afterRoute') : null;
 
 /**
  *  Dispatch
  */
-$app->dispatch();
+//$app->dispatch();
 JDEBUG ? $_PROFILER->mark('afterDispatch') : null;
 
 /**
  *  Render
  */
-$app->render();
+//$app->render();
 JDEBUG ? $_PROFILER->mark('afterRender') : null;
 
 /**

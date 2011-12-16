@@ -170,7 +170,7 @@ abstract class MolajoFactory
         }
         $handler = ($handler == 'function') ? 'callback' : $handler;
 
-//        $conf = self::getConfig();
+        //        $conf = self::getConfig();
 
         $options = array('defaultgroup' => $group);
 
@@ -197,8 +197,7 @@ abstract class MolajoFactory
         if (self::$database) {
         } else {
             self::getSiteConfig();
-            $debug = self::$siteConfig->get('debug');
-
+            $debug = self::get('debug');
             self::$database = self::_createDbo();
             self::$database->debug($debug);
         }
@@ -208,9 +207,9 @@ abstract class MolajoFactory
 
     /**
      * getMailer
-     * 
+     *
      * Get a mailer object
-     * 
+     *
      * @return mail object
      */
     public static function getMailer()
@@ -226,7 +225,7 @@ abstract class MolajoFactory
 
     /**
      * getFeedParser
-     * 
+     *
      * Get a parsed XML Feed Source
      *
      * @param   string   $url         url for feed source
@@ -331,7 +330,7 @@ abstract class MolajoFactory
 
     /**
      * getEditor
-     * 
+     *
      * Get an editor object
      *
      * @param   string  $editor The editor to load, depends on the editor plugins that are installed
@@ -345,13 +344,13 @@ abstract class MolajoFactory
             self::getConfig();
             $editor = self::$config->get('editor');
         }
-        
+
         return MolajoEditor::getInstance($editor);
     }
 
     /**
      * getURI
-     * 
+     *
      * Return a reference to the URI object
      *
      * @return JURI object
@@ -364,7 +363,7 @@ abstract class MolajoFactory
 
     /**
      * getDate
-     * 
+     *
      * Return the {@link JDate} object
      *
      * @param   mixed  $time     The initial time for the JDate object
@@ -408,7 +407,7 @@ abstract class MolajoFactory
 
     /**
      * _createSession
-     * 
+     *
      * Create a session object
      *
      * @return object
@@ -453,24 +452,34 @@ abstract class MolajoFactory
         $debug = self::$siteConfig->get('debug');
 
         $options = array('driver' => $driver,
-                            'host' => $host,
-                            'user' => $user,
-                            'password' => $password,
-                            'database' => $database,
-                            'prefix' => $prefix);
+            'host' => $host,
+            'user' => $user,
+            'password' => $password,
+            'database' => $database,
+            'prefix' => $prefix);
 
         $db = JDatabase::getInstance($options);
 
         if (MolajoError::isError($db)) {
             header('HTTP/1.1 500 Internal Server Error');
-            jexit('Database Error: ' . (string) $db);
+            jexit('Database Error: ' . (string)$db);
         }
 
         if ($db->getErrorNum() > 0) {
             MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
         }
+//        $query = $db->getQuery(true);
+//
+//        $query->select('*');
+//        $query->from($db->nameQuote('#__content'));
+//
+//     $db->setQuery($query->__toString());
+//       $options = $db->loadObjectList();
+//var_dump($options);
+//        die;
+        //		);
 
-        $db->debug($debug);
+//
 
         return $db;
     }
@@ -645,7 +654,7 @@ abstract class MolajoFactory
         }
         return self::$config;
     }
-    
+
     /**
      * get
      *
@@ -661,10 +670,10 @@ abstract class MolajoFactory
      */
     public function get($key, $default = null)
     {
-        if (isset($this->config)) {
-            return $this->config->get($key, $default);
+        if (isset(self::$config)) {
+            return self::$config->get($key, $default);
         } else {
-            return $this->siteConfig->get($key, $default);
+            return self::$siteConfig->get($key, $default);
         }
     }
 }

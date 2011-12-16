@@ -256,6 +256,7 @@ class MolajoSession extends JObject
 
 		$names = array();
 		foreach($handlers as $handler) {
+
 			$name = substr($handler, 0, strrpos($handler, '.'));
 			$class = 'MolajoSessionStorage'.ucfirst($name);
 
@@ -394,6 +395,7 @@ class MolajoSession extends JObject
 	 */
 	protected function _start()
 	{
+
 		// Start session if not started
 		if ($this->_state == 'restart') {
 			session_id($this->_createId());
