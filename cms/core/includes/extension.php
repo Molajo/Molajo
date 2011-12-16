@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Load Molajo Framework
+ * @subpackage  Extension
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
@@ -13,13 +13,9 @@ defined('MOLAJO') or die;
 $fileHelper = new MolajoFileHelper();
 
 /**
- *  Extension
- */
-$fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extension.php', 'MolajoExtension');
-
-/**
  *  Extensions
  */
+$fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extensions/configuration.php', 'MolajoExtensionConfiguration');
 $files = JFolder::files(MOLAJO_CMS_CORE . '/extensions', '\.php$', false, false);
 foreach ($files as $file) {
         $fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extensions/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));

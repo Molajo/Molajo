@@ -159,18 +159,18 @@ JDEBUG ? $_PROFILER->mark('beforeExecute') : null;
  */
 $extension = MolajoFactory::getExtension();
 JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
-echo '<pre>';var_dump($execution);'</pre>';
-die;
+
 /**
  *  Initialize Extension
  */
-$extension->initialise();
+$extension->initialise($site, $app);
 JDEBUG ? $_PROFILER->mark('afterExtensionInitialise') : null;
-
+echo '<pre>';var_dump($extension);'</pre>';
+die;
 /**
  *  Execute
  */
-$extension->initialise();
+$extension->execute();
 JDEBUG ? $_PROFILER->mark('afterExecuteExtension') : null;
 
 /**

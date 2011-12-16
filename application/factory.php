@@ -218,7 +218,7 @@ abstract class MolajoFactory
         if (self::$database) {
         } else {
             self::getSiteConfig();
-            $debug = self::get('debug');
+            $debug = self::get('debug', '', 'site');
             self::$database = self::_createDbo();
             self::$database->debug($debug);
         }
@@ -464,13 +464,13 @@ abstract class MolajoFactory
     {
         self::getSiteConfig();
 
-        $host = self::$siteConfig->get('host');
-        $user = self::$siteConfig->get('user');
-        $password = self::$siteConfig->get('password');
-        $database = self::$siteConfig->get('db');
-        $prefix = self::$siteConfig->get('dbprefix');
-        $driver = self::$siteConfig->get('dbtype');
-        $debug = self::$siteConfig->get('debug');
+        $host = self::$siteConfig->get('host', '', 'site');
+        $user = self::$siteConfig->get('user', '', 'site');
+        $password = self::$siteConfig->get('password', '', 'site');
+        $database = self::$siteConfig->get('db', '', 'site');
+        $prefix = self::$siteConfig->get('dbprefix', '', 'site');
+        $driver = self::$siteConfig->get('dbtype', '', 'site');
+        $debug = self::$siteConfig->get('debug', '', 'site');
 
         $options = array('driver' => $driver,
             'host' => $host,
@@ -489,18 +489,6 @@ abstract class MolajoFactory
         if ($db->getErrorNum() > 0) {
             MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_UTIL_ERROR_CONNECT_DATABASE', $db->getErrorNum(), $db->getErrorMsg()));
         }
-//        $query = $db->getQuery(true);
-//
-//        $query->select('*');
-//        $query->from($db->nameQuote('#__content'));
-//
-//     $db->setQuery($query->__toString());
-//       $options = $db->loadObjectList();
-//var_dump($options);
-//        die;
-        //		);
-
-//
 
         return $db;
     }
@@ -515,16 +503,16 @@ abstract class MolajoFactory
     {
         self::getSiteConfig();
 
-        $sendmail = self::$siteConfig->get('sendmail');
-        $smtpauth = (self::$siteConfig->get('smtpauth') == 0) ? null : 1;
-        $smtpuser = self::$siteConfig->get('smtpuser');
-        $smtppass = self::$siteConfig->get('smtppass');
-        $smtphost = self::$siteConfig->get('smtphost');
-        $smtpsecure = self::$siteConfig->get('smtpsecure');
-        $smtpport = self::$siteConfig->get('smtpport');
-        $mailfrom = self::$siteConfig->get('mailfrom');
-        $fromname = self::$siteConfig->get('fromname');
-        $mailer = self::$siteConfig->get('mailer');
+        $sendmail = self::$siteConfig->get('sendmail', '', 'site');
+        $smtpauth = (self::$siteConfig->get('smtpauth', '', 'site') == 0) ? null : 1;
+        $smtpuser = self::$siteConfig->get('smtpuser', '', 'site');
+        $smtppass = self::$siteConfig->get('smtppass', '', 'site');
+        $smtphost = self::$siteConfig->get('smtphost', '', 'site');
+        $smtpsecure = self::$siteConfig->get('smtpsecure', '', 'site');
+        $smtpport = self::$siteConfig->get('smtpport', '', 'site');
+        $mailfrom = self::$siteConfig->get('mailfrom', '', 'site');
+        $fromname = self::$siteConfig->get('fromname', '', 'site');
+        $mailer = self::$siteConfig->get('mailer', '', 'site');
 
         $mail = MolajoMail::getInstance();
         $mail->setSender(array($mailfrom, $fromname));
@@ -558,8 +546,8 @@ abstract class MolajoFactory
     protected static function _createLanguage()
     {
         self::getConfig();
-        $locale = self::$siteConfig->get('language');
-        $debug = self::$siteConfig->get('debug_language');
+        $locale = self::$siteConfig->get('language', '', 'site');
+        $debug = self::$siteConfig->get('debug_language', '', 'site');
         $lang = MolajoLanguage::getInstance($locale, $debug);
 
         return $lang;
@@ -677,24 +665,46 @@ abstract class MolajoFactory
     }
 
     /**
+     * getExtensionConfig
+     *
+     * Retrieve the Extension configuration object
+     *
+     * @return  config object
+     * @since   1.0
+     */
+    public static function getExtensionConfig()
+    {
+        $classname = 'MolajoExtension';
+        $extensionInstance = new $classname ();
+        if (self::$extensionConfig) {
+        } else {
+            self::$extensionConfig = $extensionInstance->getConfig();
+        }
+        return self::$extensionConfig;
+    }
+
+    /**
      * get
      *
-     * Returns a property of the Application object
+     * Returns a property of the Site, Application, and Extension objects
      * or the default value if the property is not set.
      *
      * @param   string  $key      The name of the property.
      * @param   mixed   $default  The default value (optional) if none is set.
+     * @param   mixed   $type     The type of configuration data
      *
      * @return  mixed   The value of the configuration.
      *
      * @since   11.3
      */
-    public function get($key, $default = null)
+    public function get($key, $default = null, $type = 'config')
     {
-        if (isset(self::$config)) {
-            return self::$config->get($key, $default);
-        } else {
+        if ($type == 'extension') {
+            return self::$extensionConfig->get($key, $default);
+        } elseif ($type == 'site') {
             return self::$siteConfig->get($key, $default);
+        } else {
+            return self::$config->get($key, $default);
         }
     }
 }
