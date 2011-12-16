@@ -13,6 +13,26 @@ defined('MOLAJO') or die;
 $fileHelper = new MolajoFileHelper();
 
 /**
+ *  Document
+ */
+$fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/document/document.php', 'MolajoDocument');
+$fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/document/renderer.php', 'MolajoDocumentRenderer');
+
+$format = JRequest::getCmd('format', 'html');
+if ($format == 'error' || $format == 'feed' || $format == 'raw') {
+    $includeFormat = $format;
+} else {
+    $includeFormat = 'html';
+}
+$formatClass = 'MolajoDocument' . ucfirst($includeFormat);
+if (class_exists($formatClass)) {
+} else {
+    $path = MOLAJO_CMS_CORE . '/document/' . $includeFormat . '/' . $includeFormat . '.php';
+    $formatClass = 'MolajoDocument' . ucfirst($includeFormat);
+    $fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/document/' . $includeFormat . '/' . $includeFormat . '.php', $formatClass);
+}
+
+/**
  *  Extensions
  */
 $fileHelper->requireClassFile(MOLAJO_CMS_CORE . '/extensions/configuration.php', 'MolajoExtensionConfiguration');

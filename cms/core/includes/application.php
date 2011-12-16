@@ -100,26 +100,6 @@ foreach ($files as $file) {
 }
 
 /**
- *  Document
- */
-$fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/document/document.php', 'MolajoDocument');
-$fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/document/renderer.php', 'MolajoDocumentRenderer');
-
-$format = JRequest::getCmd('format', 'html');
-if ($format == 'error' || $format == 'feed' || $format == 'raw') {
-    $includeFormat = $format;
-} else {
-    $includeFormat = 'html';
-}
-$formatClass = 'MolajoDocument' . ucfirst($includeFormat);
-if (class_exists($formatClass)) {
-} else {
-    $path = MOLAJO_APPLICATION_CORE . '/document/' . $includeFormat . '/' . $includeFormat . '.php';
-    $formatClass = 'MolajoDocument' . ucfirst($includeFormat);
-    $fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/document/' . $includeFormat . '/' . $includeFormat . '.php', $formatClass);
-}
-
-/**
  *  Helpers
  */
 $files = JFolder::files(MOLAJO_APPLICATION_CORE . '/helpers', '\.php$', false, false);

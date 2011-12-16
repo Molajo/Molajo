@@ -44,7 +44,7 @@ class MolajoExtension
      * @var    integer
      * @since  1.0
      */
-    private $_config = null;
+    protected $_config = null;
 
     /**
      *  User
@@ -52,7 +52,7 @@ class MolajoExtension
      * @var string
      * @since 1.0
      */
-    private $_user = null;
+    protected $_user = null;
 
     /**
      * Template
@@ -60,7 +60,7 @@ class MolajoExtension
      * @var object
      * @since 1.0
      */
-    private $_template = null;
+    protected $_template = null;
 
     /**
      *  Page
@@ -68,7 +68,7 @@ class MolajoExtension
      * @var string
      * @since 1.0
      */
-    private $_page = null;
+    protected $_page = null;
 
     /**
      *  Menu item

@@ -182,7 +182,6 @@ class MolajoComponent
      */
     public static function renderComponent($request, $parameters = array())
     {
-
         /** path */
         $path = $request['component_path'] . '/' . $request['option'] . '.php';
 
