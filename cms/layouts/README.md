@@ -252,6 +252,10 @@ A. The Application Object, which includes data about the input request, response
 
     <?php echo '<pre>'; var_dump($this->application); echo '</pre>';  ?>
 
+    echo '<pre>';var_dump(MolajoFactory::getApplication()->getConfig());echo '</pre>';
+
+    MolajoFactory::getApplication()->get('db');
+
 B. $this->document
 
     <?php echo '<pre>'; var_dump($this->document); echo '</pre>';  ?>
