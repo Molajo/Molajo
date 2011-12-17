@@ -168,7 +168,7 @@ class MolajoApplication
         $this->set('language', $options['language']);
 
         $language = MolajoFactory::getLanguage();
-        $results = $language->load('base', MOLAJO_CMS_LANGUAGES);
+        $results = $language->load('base', MOLAJO_DISTRO_LANGUAGES);
 
         /** Editor */
         $editor = MolajoFactory::getUser()->getParam('editor', $this->get('editor', 'none'));
@@ -505,7 +505,7 @@ class MolajoApplication
      */
     public function setTemplate($template)
     {
-        if (is_dir(MOLAJO_CMS_TEMPLATES . '/' . $template)) {
+        if (is_dir(MOLAJO_DISTRO_TEMPLATES . '/' . $template)) {
             $this->template = new stdClass();
             $this->template->parameters = new JRegistry;
             $this->template->template = $template;

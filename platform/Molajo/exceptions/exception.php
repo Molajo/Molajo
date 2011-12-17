@@ -9,30 +9,29 @@
 defined('MOLAJO') or die;
 
 /**
- * Joomla! Exception object.
+ * Exception object.
  *
- * @package     Joomla.Platform
- * @subpackage  Error
- * @since       11.1
- * @deprecated  12.1
+ * @package     Molajo
+ * @subpackage  Exception
+ * @since       1.0
  */
 class MolajoException extends Exception
 {
     /**
      * @var    string  Error level.
-     * @since  11.1
+     * @since 1.0
      */
     protected $level = null;
 
     /**
      * @var    string  Error code.
-     * @since  11.1
+     * @since 1.0
      */
     protected $code = null;
 
     /**
      * @var    string  Error message.
-     * @since  11.1
+     * @since 1.0
      */
     protected $message = null;
 
@@ -41,31 +40,31 @@ class MolajoException extends Exception
      * for example, if a database connect fails, the dsn used
      *
      * @var    string
-     * @since  11.1
+     * @since 1.0
      */
     protected $info = '';
 
     /**
-     * Name of the file the error occurred in [Available if backtrace is enabled]
+     * Name of the file the error occurred in
      *
      * @var    string
-     * @since  11.1
+     * @since 1.0
      */
     protected $file = null;
 
     /**
-     * Line number the error occurred in [Available if backtrace is enabled]
+     * Line number the error occurred in  
      *
      * @var    int
-     * @since  11.1
+     * @since 1.0
      */
     protected $line = 0;
 
     /**
-     * Name of the method the error occurred in [Available if backtrace is enabled]
+     * Name of the method the error occurred in  
      *
      * @var    string
-     * @since  11.1
+     * @since 1.0
      */
     protected $function = null;
 
@@ -73,27 +72,27 @@ class MolajoException extends Exception
      * Name of the class the error occurred in [Available if backtrace is enabled]
      *
      * @var    string
-     * @since  11.1
+     * @since 1.0
      */
     protected $class = null;
 
     /**
      * @var    string  Error type.
-     * @since  11.1
+     * @since 1.0
      */
     protected $type = null;
 
     /**
-     * Arguments recieved by the method the error occurred in [Available if backtrace is enabled]
+     * Arguments received by the method the error occurred in [Available if backtrace is enabled]
      *
      * @var    array
-     * @since  11.1
+     * @since 1.0
      */
     protected $args = array();
 
     /**
      * @var    mixed  Backtrace information.
-     * @since  11.1
+     * @since 1.0
      */
     protected $backtrace = null;
 
@@ -101,23 +100,22 @@ class MolajoException extends Exception
      * Constructor
      * - used to set up the error with all needed error details.
      *
-     * @param   string   $msg        The error message
+     * @param   string   $message    The error message
      * @param   string   $code       The error code from the application
      * @param   integer  $level      The error level (use the PHP constants E_ALL, E_NOTICE etc.).
      * @param   string   $info       Optional: The additional error information.
      * @param   boolean  $backtrace  True if backtrace information is to be collected
      *
-     * @since   11.1
-     *
-     * @deprecated  12.1
+     * @since   1.0
      */
-    public function __construct($msg, $code = 0, $level = null, $info = null, $backtrace = false)
+    public function __construct($message, $code = 0, $level = null, $info = null, $backtrace = false)
     {
         $this->level = $level;
         $this->code = $code;
-        $this->message = $msg;
+        $this->message = $message;
 
-        if ($info != null) {
+        if ($info == null) {
+        } else {
             $this->info = $info;
         }
 
@@ -151,20 +149,18 @@ class MolajoException extends Exception
             }
         }
 
-        // Store exception for debugging purposes!
+        // Store exception for debugging purposes
         MolajoError::addToStack($this);
 
-        parent::__construct($msg, (int)$code);
+        parent::__construct($message, (int)$code);
     }
 
     /**
-     * Returns to error message
+     * Returns error message
      *
      * @return  string  Error message
      *
-     * @since   11.1
-     *
-     * @deprecated  12.1
+     * @since   11.0
      */
     public function __toString()
     {
@@ -176,7 +172,7 @@ class MolajoException extends Exception
      *
      * @return  string   Error message
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated    12.1
      */
     public function toString()
@@ -192,9 +188,7 @@ class MolajoException extends Exception
      *
      * @return  mixed  The value of the property or null
      *
-     * @deprecated  12.1
-     * @see         getProperties()
-     * @since       11.1
+     * @since       1.0
      */
     public function get($property, $default = null)
     {
@@ -211,9 +205,7 @@ class MolajoException extends Exception
      *
      * @return  array  Object properties
      *
-     * @deprecated    12.1
-     * @see     get()
-     * @since   11.1
+     * @since   1.0
      */
     public function getProperties($public = true)
     {
@@ -343,26 +335,19 @@ class MolajoException extends Exception
     }
 }
 
-class JException extends MolajoException
-{
-}
 
 class ApplicationException extends Exception
 {
 }
-
-class MolajoApplicationException extends ApplicationException
-{
-}
-
 class DatabaseException extends Exception
 {
 }
-
-class MolajoDatabaseException extends DatabaseException
+class JException extends Exception
 {
 }
-
-class JDatabaseException extends MolajoDatabaseException
+class JApplicationException extends ApplicationException
+{
+}
+class JDatabaseException extends DatabaseException
 {
 }

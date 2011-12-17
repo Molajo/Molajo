@@ -263,7 +263,7 @@ class MolajoPagination extends JObject
         $itemOverride = false;
         $listOverride = false;
 
-        $chromePath = MOLAJO_CMS_TEMPLATES . '/' . $app->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
+        $chromePath = MOLAJO_DISTRO_TEMPLATES . '/' . $app->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
         if (file_exists($chromePath)) {
             require_once $chromePath;
             if (function_exists('pagination_item_active') && function_exists('pagination_item_inactive')) {
@@ -368,7 +368,7 @@ class MolajoPagination extends JObject
         $list['pagescounter'] = $this->getPagesCounter();
         $list['pageslinks'] = $this->getPagesLinks();
 
-        $chromePath = MOLAJO_CMS_TEMPLATES . '/' . $app->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
+        $chromePath = MOLAJO_DISTRO_TEMPLATES . '/' . $app->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
         if (file_exists($chromePath)) {
             require_once $chromePath;
             if (function_exists('pagination_list_footer')) {

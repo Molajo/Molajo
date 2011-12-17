@@ -104,30 +104,31 @@ if (defined('MOLAJO_APPLICATION_CORE')) {
 }
 
 /*                                              */
-/*  CMS                                         */
+/*  DISTRO                                      */
 /*                                              */
-if (defined('MOLAJO_CMS_CORE')) {
+if (defined('MOLAJO_DISTRO_CORE')) {
 } else {
-    define('MOLAJO_CMS_CORE', MOLAJO_BASE_FOLDER . '/cms/core');
+    define('MOLAJO_DISTRO_CORE', MOLAJO_BASE_FOLDER . '/distro/core');
 }
-require_once MOLAJO_CMS_CORE.'/includes/phpversion.php';
-require_once MOLAJO_CMS_CORE.'/includes/defines.php';
-require_once MOLAJO_CMS_CORE.'/includes/installcheck.php';
-require_once MOLAJO_CMS_CORE.'/includes/joomla.php';
-require_once MOLAJO_CMS_CORE.'/includes/config.php';
-require_once MOLAJO_CMS_CORE.'/includes/application.php';
-require_once MOLAJO_CMS_CORE.'/includes/extension.php';
-require_once MOLAJO_CMS_CORE.'/includes/site.php';
-require_once MOLAJO_CMS_CORE.'/includes/platform.php';
-require_once MOLAJO_CMS_CORE.'/includes/other.php';
-require_once MOLAJO_CMS_CORE.'/includes/overrides.php';
+
+require_once MOLAJO_DISTRO_CORE.'/includes/phpversion.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/defines.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/installcheck.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/joomla.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/config.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/application.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/extension.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/site.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/platform.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/other.php';
+require_once MOLAJO_DISTRO_CORE.'/includes/overrides.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
  *  Site
  */
-$site = MolajoFactory::getSite();
+$site = MolajoFactory::getSite(MOLAJO_SITE_ID);
 JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
 
 /**
@@ -139,7 +140,7 @@ JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
 /**
  *  Application
  */
-$app = MolajoFactory::getApplication();
+$app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
 
 /**

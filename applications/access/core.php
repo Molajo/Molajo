@@ -527,8 +527,8 @@ class MolajoACLCore extends MolajoACL
         $component = $parameters[0];
         $section = $parameters[1];
 
-        if (is_file(MOLAJO_CMS_COMPONENTS . '/' . $component . '/access.xml')) {
-            $xml = simplexml_load_file(MOLAJO_CMS_COMPONENTS . '/' . $component . '/access.xml');
+        if (is_file(MOLAJO_DISTRO_COMPONENTS . '/' . $component . '/access.xml')) {
+            $xml = simplexml_load_file(MOLAJO_DISTRO_COMPONENTS . '/' . $component . '/access.xml');
 
             foreach ($xml->children() as $child)
             {
@@ -816,7 +816,7 @@ class MolajoACLCore extends MolajoACL
         $db->setQuery($query);
         $accessResult = $db->loadObjectList();
         if ($db->getErrorNum()) {
-            return new MolajoException($db->getErrorMsg());
+            return new DatabaseException($db->getErrorMsg());
         }
 
         if (count($accessResult) == 0) {

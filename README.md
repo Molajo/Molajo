@@ -22,13 +22,13 @@ System requirements and instructions for how to install Molajo are located in th
 
 ## Where can I learn more about Molajo Extensions and Templating? ##
 
-There is more information about [**about extensions**](https://github.com/Molajo/Molajo/blob/core/cms/README.md),
- [**Components**](https://github.com/Molajo/Molajo/blob/core/cms/components/README.md),
- [**Languages**](https://github.com/Molajo/Molajo/blob/core/cms/languages/README.md),
- [**Layouts**](https://github.com/Molajo/Molajo/blob/core/cms/layouts/README.md),
- [**Modules**](https://github.com/Molajo/Molajo/blob/core/cms/modules/README.md),
- [**Plugins**](https://github.com/Molajo/Molajo/blob/core/cms/plugins/README.md),
- and [**Templates**](https://github.com/Molajo/Molajo/blob/core/cms/templates/README.md).
+There is more information about [**about extensions**](https://github.com/Molajo/Molajo/blob/core/distro/README.md),
+ [**Components**](https://github.com/Molajo/Molajo/blob/core/distro/components/README.md),
+ [**Languages**](https://github.com/Molajo/Molajo/blob/core/distro/languages/README.md),
+ [**Layouts**](https://github.com/Molajo/Molajo/blob/core/distro/layouts/README.md),
+ [**Modules**](https://github.com/Molajo/Molajo/blob/core/distro/modules/README.md),
+ [**Plugins**](https://github.com/Molajo/Molajo/blob/core/distro/plugins/README.md),
+ and [**Templates**](https://github.com/Molajo/Molajo/blob/core/distro/templates/README.md).
 
 ## What if I encounter problems? ##
 

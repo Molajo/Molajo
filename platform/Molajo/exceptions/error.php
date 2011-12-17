@@ -62,7 +62,7 @@ abstract class MolajoError
 
     /**
      * Method to determine if a value is an exception object.  This check supports
-     * both MolajoException and PHP5 Exception objects
+     * both Exception and PHP5 Exception objects
      *
      * @param   mixed  &$object  Object to check
      *
@@ -117,22 +117,22 @@ abstract class MolajoError
     }
 
     /**
-     * Method to add non-MolajoError thrown MolajoExceptions to the MolajoError stack for debugging purposes
+     * Method to add non-MolajoError thrown Exceptions to the MolajoError stack for debugging purposes
      *
-     * @param   MolajoException  &$e  Add an exception to the stack.
+     * @param   Exception  &$e  Add an exception to the stack.
      *
      * @return  void
      *
      * @since       11.1
      * @deprecated  12.1
      */
-    public static function addToStack(MolajoException &$e)
+    public static function addToStack(Exception &$e)
     {
         MolajoError::$stack[] = &$e;
     }
 
     /**
-     * Create a new MolajoException object given the passed arguments
+     * Create a new Exception object given the passed arguments
      *
      * @param   integer  $level      The error level - use any of PHP's own error levels for
      *                               this: E_ERROR, E_WARNING, E_NOTICE, E_USER_ERROR,
@@ -144,11 +144,11 @@ abstract class MolajoError
      *                               like a database DSN).
      * @param   boolean  $backtrace  Add a stack backtrace to the exception.
      *
-     * @return  mixed    The MolajoException object
+     * @return  mixed    The Exception object
      *
      * @since       11.1
      * @deprecated  12.1  Use PHP Exception
-     * @see         MolajoException
+     * @see         Exception
      */
     public static function raise($level, $code, $msg, $info = null, $backtrace = false)
     {
@@ -164,7 +164,7 @@ abstract class MolajoError
      * @return  reference
      *
      * @deprecated  12.1  Use PHP Exception
-     * @see     MolajoException
+     * @see     Exception
      * @since   11.1
      */
     public static function throwError(&$exception)
@@ -198,7 +198,7 @@ abstract class MolajoError
                 '<br /><strong>Error was</strong> ' . '<br />' . $exception->getMessage()
             );
         }
-        // We don't need to store the error, since MolajoException already does that for us!
+        // We don't need to store the error, since Exception already does that for us!
         // Remove loop check
         $thrown = false;
 
@@ -306,7 +306,7 @@ abstract class MolajoError
      * @param   string   $mode     The mode to use for the error handling.
      * @param   mixed    $options  Optional: Any options needed for the given mode.
      *
-     * @return  mixed  True on success or a MolajoException object if failed.
+     * @return  mixed  True on success or a Exception object if failed.
      *
      * @deprecated  12.1  Use PHP Exception
      * @since   11.1
@@ -699,7 +699,7 @@ abstract class MolajoError
 
             @ob_end_clean();
             $document->setTitle(MolajoTextHelper::_('Error') . ': ' . $error->get('code'));
-            $data = $document->render(false, array('template' => $template, 'directory' => MOLAJO_CMS_TEMPATES, 'debug' => $config->get('debug')));
+            $data = $document->render(false, array('template' => $template, 'directory' => MOLAJO_DISTRO_TEMPATES, 'debug' => $config->get('debug')));
 
             // Failsafe to get the error displayed.
             if (empty($data)) {

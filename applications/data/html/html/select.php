@@ -150,7 +150,7 @@ abstract class MolajoHtmlSelect
      *
      * @since   11.1
      *
-     * @throws  MolajoException If a group has unprocessable contents.
+     * @throws  Exception If a group has unprocessable contents.
      */
     public static function groupedlist($data, $name, $options = array())
     {

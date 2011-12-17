@@ -54,7 +54,7 @@ class MolajoFormRule
      * @return  boolean  True if the value is valid, false otherwise.
      *
      * @since   1.0
-     * @throws  MolajoException on invalid rule.
+     * @throws  Exception on invalid rule.
      */
     public function test(& $element, $value, $group = null, & $calendar = null, & $form = null)
     {

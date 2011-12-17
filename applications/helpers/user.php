@@ -130,7 +130,7 @@ abstract class MolajoUserHelper
      *
      * @param   integer  $user_id        The id of the user.
      * @param   integer  $group_id    The id of the group.
-     * @return  mixed  Boolean true on success, MolajoException on error.
+     * @return  mixed  Boolean true on success, Exception on error.
      * @since   1.0
      */
     public static function removeUserFromGroup($user_id, $group_id)
@@ -168,7 +168,7 @@ abstract class MolajoUserHelper
      * @param   integer  $user_id        The id of the user.
      * @param   array    $groups        An array of group ids to put the user in.
      *
-     * @return  mixed  Boolean true on success, MolajoException on error.
+     * @return  mixed  Boolean true on success, Exception on error.
      * @since   1.0
      */
     public static function setUserGroups($user_id, $groups)

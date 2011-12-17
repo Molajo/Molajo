@@ -227,7 +227,7 @@ class MolajoForm
     /**
      * Return all errors, if any.
      *
-     * @return  array  Array of error messages or MolajoException objects.
+     * @return  array  Array of error messages or Exception objects.
      *
      * @since   1.0
      */
@@ -1637,7 +1637,7 @@ class MolajoForm
      * @param   object  $calendar    An optional JRegistry object with the entire data set to validate
      *                            against the entire form.
      *
-     * @return  mixed  Boolean true if field value is valid, MolajoException on failure.
+     * @return  mixed  Boolean true if field value is valid, Exception on failure.
      *
      * @since   1.0
      */
@@ -1779,7 +1779,7 @@ class MolajoForm
         if (isset($forms[$name])) {
 
             if ($forms[$name]->loadFile($data, $replace, $xpath) == false) {
-                throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+                throw new MolajoException(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
                 return false;
             }
@@ -1788,7 +1788,7 @@ class MolajoForm
 
             $data = trim($data);
             if (empty($data)) {
-                throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_NO_DATA'));
+                throw new MolajoException(MolajoTextHelper::_('MOLAJO_FORM_ERROR_NO_DATA'));
             }
 
             // Instantiate the form.
@@ -1797,14 +1797,14 @@ class MolajoForm
             // Load the data.
             if (substr(trim($data), 0, 1) == '<') {
                 if ($forms[$name]->load($data, $replace, $xpath) === false) {
-                    throw new Exception(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+                    throw new MolajoException(MolajoTextHelper::_('MOLAJO_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
                     return false;
                 }
             } else {
 
 				if ($forms[$name]->loadFile($data, $replace, $xpath) === false) {
-					throw new Exception(JText::_('JLIB_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
+					throw new MolajoException(JText::_('JLIB_FORM_ERROR_XML_FILE_DID_NOT_LOAD'));
 
 					return false;
 				}

@@ -196,7 +196,7 @@ class MolajoLanguage
         $this->setLanguage($lang);
         $this->setDebug($debug);
 
-        $filename = MOLAJO_CMS_LANGUAGES . "/overrides/$lang.override.ini";
+        $filename = MOLAJO_DISTRO_LANGUAGES . "/overrides/$lang.override.ini";
 
         if (file_exists($filename)
             && $contents = $this->parse($filename)
@@ -213,7 +213,7 @@ class MolajoLanguage
         if (class_exists($class)) {
 
         } else {
-            $localise = MOLAJO_CMS_LANGUAGES . "/$lang/$lang.localise.php";
+            $localise = MOLAJO_DISTRO_LANGUAGES . "/$lang/$lang.localise.php";
             if (file_exists($localise)) {
                 require_once $localise;
             }
@@ -602,7 +602,7 @@ class MolajoLanguage
      *
      * @since   11.1
      */
-    public static function exists($lang, $basePath = MOLAJO_CMS_LANGUAGES)
+    public static function exists($lang, $basePath = MOLAJO_DISTRO_LANGUAGES)
     {
         static $paths = array();
 
@@ -634,7 +634,7 @@ class MolajoLanguage
      *
      * @since   11.1
      */
-    public function load($extension = 'molajo', $basePath = MOLAJO_CMS_LANGUAGES, $lang = null, $reload = false, $default = true)
+    public function load($extension = 'molajo', $basePath = MOLAJO_DISTRO_LANGUAGES, $lang = null, $reload = false, $default = true)
     {
         if ($lang) {
         } else {
@@ -1065,7 +1065,7 @@ class MolajoLanguage
      */
     public static function getMetadata($lang)
     {
-        $path = self::getLanguagePath(MOLAJO_CMS_LANGUAGES, $lang);
+        $path = self::getLanguagePath(MOLAJO_DISTRO_LANGUAGES, $lang);
         $file = "$lang.xml";
 
         $result = null;
@@ -1086,7 +1086,7 @@ class MolajoLanguage
      *
      * @since   11.1
      */
-    public static function getKnownLanguages($basePath = MOLAJO_CMS_LANGUAGES)
+    public static function getKnownLanguages($basePath = MOLAJO_DISTRO_LANGUAGES)
     {
         $dir = self::getLanguagePath($basePath);
         $knownLanguages = self::parseLanguageFiles($dir);
@@ -1104,9 +1104,9 @@ class MolajoLanguage
      *
      * @since   11.1
      */
-    public static function getLanguagePath($basePath = MOLAJO_CMS_LANGUAGES, $language = null)
+    public static function getLanguagePath($basePath = MOLAJO_DISTRO_LANGUAGES, $language = null)
     {
-        if ($basePath == MOLAJO_CMS_LANGUAGES) {
+        if ($basePath == MOLAJO_DISTRO_LANGUAGES) {
             $dir = $basePath;
         } else {
             $dir = $basePath . '/language';

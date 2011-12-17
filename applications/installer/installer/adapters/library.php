@@ -374,7 +374,7 @@ class MolajoInstallerAdapterLibrary extends MolajoAdapterInstance
         {
             return $this->parent->extension->store();
         }
-        catch (MolajoException $e)
+        catch (Exception $e)
         {
             MolajoError::raiseWarning(101, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_LIB_REFRESH_MANIFEST_CACHE'));
             return false;

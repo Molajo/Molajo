@@ -37,8 +37,13 @@ class MolajoSiteHelper
      * @return  boolean  True if the information is added. False on error
      * @since   1.0
      */
-    public static function getSiteInfo()
+    public static function getSiteInfo($id = null)
     {
+
+        if ($id == null) {
+            $id = MOLAJO_SITE_ID;
+        }
+
         if (self::$_sites === null) {
 
             $obj = new stdClass();
@@ -83,8 +88,8 @@ class MolajoSiteHelper
             }
         }
 
-        if (isset(self::$_sites[MOLAJO_SITE_ID])) {
-            return self::$_sites[MOLAJO_SITE_ID];
+        if (isset(self::$_sites[$id])) {
+            return self::$_sites[$id];
         }
 
         return null;
@@ -111,7 +116,7 @@ class MolajoSiteHelper
 
         $query->select('application_id');
         $query->from($db->namequote('#__site_applications'));
-        $query->where($db->namequote('site_id') . ' = ' . (int)$id);
+        $query->where($db->namequote('site_id') . ' = ' . (int) $id);
 
         $db->setQuery($query->__toString());
 

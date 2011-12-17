@@ -207,13 +207,13 @@ class MolajoMessage
 
         // Get Message path
         $Message->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $Message->title);
-        $path = MOLAJO_CMS_MessageS . '/' . $Message->extension_name . '/' . $Message->extension_name . '.php';
+        $path = MOLAJO_DISTRO_MessageS . '/' . $Message->extension_name . '/' . $Message->extension_name . '.php';
 
         // Load the Message
         if (file_exists($path)) {
 
             $lang = MolajoFactory::getLanguage();
-            $lang->load($Message->extension_name, MOLAJO_CMS_MessageS . '/' . $Message->extension_name, $lang->getDefault(), false, false);
+            $lang->load($Message->extension_name, MOLAJO_DISTRO_MessageS . '/' . $Message->extension_name, $lang->getDefault(), false, false);
 
             /** view */
             $view = new MolajoView ();

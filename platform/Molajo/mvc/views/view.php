@@ -210,7 +210,7 @@ class MolajoView extends JView
         /** initialize layout */
         $this->layout_path = false;
         $templateObject = MolajoFactory::getApplication()->getTemplate();
-        $template = MOLAJO_CMS_TEMPLATES . '/' . $templateObject[0]->title;
+        $template = MOLAJO_DISTRO_TEMPLATES . '/' . $templateObject[0]->title;
 
         /** 1. @var $templateLayoutPath [template]/layouts/[layout-type]/[layout-folder] */
         $templateLayoutPath = $template . '/layouts/' . $layout_type . '/' . $layout;
@@ -219,15 +219,15 @@ class MolajoView extends JView
         /** 2. @var $extensionPath [extension_type]/[extension-name]/layouts/[layout-type]/[layout-folder] */
         $extensionPath = '';
         if ($this->request['extension_type'] == 'plugin') {
-            $extensionPath = MOLAJO_CMS_PLUGINS . '/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
+            $extensionPath = MOLAJO_DISTRO_PLUGINS . '/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
             $extensionPathURL = JURI::root() . 'cms/plugins/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
 
         } else if ($this->request['extension_type'] == 'component') {
-            $extensionPath = MOLAJO_CMS_COMPONENTS . '/' . $this->request['option'] . '/views/' . $this->request['view'] . '/layouts/' . $layout_type . '/' . $layout;
+            $extensionPath = MOLAJO_DISTRO_COMPONENTS . '/' . $this->request['option'] . '/views/' . $this->request['view'] . '/layouts/' . $layout_type . '/' . $layout;
             $extensionPathURL = JURI::root() . 'cms/components/' . $this->request['option'] . '/views/' . $this->request['view'] . '/layouts/' . $layout_type . '/' . $layout;
 
         } else if ($this->request['extension_type'] == 'module') {
-            $extensionPath = MOLAJO_CMS_MODULES . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
+            $extensionPath = MOLAJO_DISTRO_MODULES . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
             $extensionPathURL = JURI::root() . 'cms/modules/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
 
         } else {
@@ -236,7 +236,7 @@ class MolajoView extends JView
         }
 
         /** 3. $corePath layouts/[layout_type]/[layout-folder] */
-        $corePath = MOLAJO_CMS_LAYOUTS . '/' . $layout_type . '/' . $layout;
+        $corePath = MOLAJO_DISTRO_LAYOUTS . '/' . $layout_type . '/' . $layout;
         $corePathURL = JURI::root() . 'extensions/layouts/' . $layout_type . '/' . $layout;
 
         /**

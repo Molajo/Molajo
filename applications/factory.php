@@ -16,18 +16,72 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoFactory
 {
-    public static $site = null;
-    public static $siteConfig = null;
-    public static $application = null;
-    public static $config = null;
-    public static $extension = null;
-    public static $extensionConfig = null;
 
+    /**
+   	 * @var    Site
+   	 * @since  1.0
+   	 */
+    public static $site = null;
+
+    /**
+   	 * @var    Configuration for Site
+   	 * @since  1.0
+   	 */
+    public static $siteConfig = null;
+
+    /**
+   	 * @var    Application
+   	 * @since  1.0
+   	 */
+    public static $application = null;
+
+    /**
+   	 * @var    Configuration for Application
+   	 * @since  1.0
+   	 */
+    public static $config = null;
+
+    /**
+   	 * @var    Database
+   	 * @since  1.0
+   	 */
     public static $database = null;
+
+    /**
+     * @var    Cache
+     * @since  1.0
+     */
+    public static $cache = null;
+
+    /**
+   	 * @var    Document
+   	 * @since  1.0
+   	 */
     public static $document = null;
+
+    /**
+   	 * @var    Language
+   	 * @since  1.0
+   	 */
     public static $language = null;
+
+    /**
+   	 * @var    Mailer
+   	 * @since  1.0
+   	 */
     public static $mailer = null;
+
+    /**
+   	 * @var    Session
+   	 * @since  1.0
+   	 */
     public static $session = null;
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public static $dates = array();
 
     /**
      * getSite
@@ -38,12 +92,14 @@ abstract class MolajoFactory
      *
      * @return application    object
      */
-    public static function getSite($prefix = 'Molajo')
+    public static function getSite($id = null, $config = array(), $prefix = 'Molajo')
     {
         if (self::$site) {
         } else {
-            self::$site = MolajoSite::getInstance($prefix);
+            self::$site = MolajoSite::getInstance($id, $config, $prefix);
         }
+
+        var_dump(self::$site);
         return self::$site;
     }
 

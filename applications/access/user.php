@@ -386,7 +386,7 @@ class MolajoUser extends JObject
         // Set the default parampath if not set already
         if (isset($parampath)) {
         } else {
-            $parampath = MOLAJO_CMS_COMPONENTS . '/users/models';
+            $parampath = MOLAJO_DISTRO_COMPONENTS . '/users/models';
         }
 
         if ($loadsetupfile) {
@@ -571,20 +571,20 @@ class MolajoUser extends JObject
                     // Check if the new user is being put into a Super Admin group.
                     foreach ($this->groups as $key => $groupId) {
                         if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
-                            throw new Exception(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                            throw new MolajoException(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                         }
                     }
                 } else {
                     // I am not a Super Admin, and this one is, so fail.
                     if ($acl->checkPermissions('user', $this->id, 'administer', '', '')) {
-                        throw new Exception(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                        throw new MolajoException(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                     }
 
                     if ($this->groups != null) {
                         // I am not a Super Admin and I'm trying to make one.
                         foreach ($this->groups as $groupId) {
                             if ($acl->checkPermissions('group', $groupId, 'administer', '', '')) {
-                                throw new Exception(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
+                                throw new MolajoException(MolajoTextHelper::_('MOLAJO_USER_ERROR_NOT_SUPERADMIN'));
                             }
                         }
                     }
@@ -603,7 +603,7 @@ class MolajoUser extends JObject
 
             // Store the user data in the database
             if (!($result = $table->store())) {
-                throw new Exception($table->getError());
+                throw new MolajoException($table->getError());
             }
 
             // Set the id for the User object in case we created a new user.

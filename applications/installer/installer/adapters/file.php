@@ -188,7 +188,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
         {
             $db->Query();
         }
-        catch (MolajoException $e)
+        catch (Exception $e)
         {
             // Install failed, roll back changes
             $this->parent->abort(
@@ -550,7 +550,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
         {
             $db->Query();
         }
-        catch (MolajoException $e)
+        catch (Exception $e)
         {
             // Install failed, roll back changes
             $this->parent->abort(MolajoTextHelper::sprintf('JLIB_INSTALLER_ABORT_FILE_ROLLBACK', $db->stderr(true)));
@@ -678,7 +678,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
         {
             return $this->parent->extension->store();
         }
-        catch (MolajoException $e)
+        catch (Exception $e)
         {
             MolajoError::raiseWarning(101, MolajoTextHelper::_('JLIB_INSTALLER_ERROR_PACK_REFRESH_MANIFEST_CACHE'));
             return false;

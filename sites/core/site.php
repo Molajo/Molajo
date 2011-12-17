@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
 class MolajoSite extends JObject
 {
     /**
-     * Application configuration object.
+     * Configuration for Site
      *
      * @var    integer
      * @since  1.0
@@ -65,7 +65,7 @@ class MolajoSite extends JObject
      *
      * @since  1.0
      */
-    public static function getInstance($prefix = 'Molajo')
+    public static function getInstance($id = null, $config = array(), $prefix = 'Molajo')
     {
         static $instances;
 
@@ -73,9 +73,9 @@ class MolajoSite extends JObject
         } else {
             $instances = array();
         }
-        if (empty($instances[MOLAJO_SITE])) {
+        if (empty($instances[$id])) {
 
-            $info = MolajoSiteHelper::getSiteInfo();
+            $info = MolajoSiteHelper::getSiteInfo($id);
             if ($info === false) {
                 return false;
             }
