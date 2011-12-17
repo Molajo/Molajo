@@ -382,7 +382,7 @@ class MolajoApplication
      *
      * Rendering is the process of pushing the document buffers into the template
      * placeholders, retrieving data from the document and pushing it into
-     * the JResponse buffer.
+     * the MolajoApplication buffer.
      *
      * @return  void;
      * @since  1.0
@@ -811,6 +811,6 @@ class MolajoApplication
      */
     public function __toString()
     {
-        return JResponse::toString($this->get('gzip', false));
+        return MolajoApplication::toString($this->get('gzip', false));
     }
 }

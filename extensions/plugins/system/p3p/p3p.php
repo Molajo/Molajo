@@ -27,6 +27,6 @@ class plgSystemP3p extends MolajoPlugin
             return;
         }
         // Replace any existing P3P headers in the response
-        JResponse::setHeader('P3P', 'CP="' . $header . '"', true);
+        MolajoApplication::setHeader('P3P', 'CP="' . $header . '"', true);
     }
 }

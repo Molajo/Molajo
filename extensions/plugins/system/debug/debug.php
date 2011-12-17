@@ -326,7 +326,7 @@ class plgSystemDebug extends MolajoPlugin
 
         $debug = ob_get_clean();
 
-        $body = JResponse::getBody();
+        $body = MolajoApplication::getBody();
         $body = str_replace('</body>', $debug . '</body>', $body);
         echo str_replace('</body>', $debug . '</body>', $contents);
     }

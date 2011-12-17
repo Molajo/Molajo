@@ -108,33 +108,6 @@ class MolajoApplicationHelper
     }
 
     /**
-     * loadApplicationClasses
-     *
-     * @param string $application_name
-     *
-     * @return bool
-     *
-     * @since   1.0
-     */
-    public static function loadApplicationClasses()
-    {
-        $fileHelper = new MolajoFileHelper();
-
-        $files = JFolder::files(MOLAJO_APPLICATION_PATH, '\.php$', false, false);
-
-        foreach ($files as $file) {
-
-            if ($file == 'configuration.php') {
-
-            } else if ($file == 'helper.php') {
-                $fileHelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application' . ucfirst(substr($file, 0, strpos($file, '.'))));
-            } else {
-                $fileHelper->requireClassFile(MOLAJO_APPLICATION_PATH . '/' . $file, 'Molajo' . ucfirst(MOLAJO_APPLICATION) . ucfirst(substr($file, 0, strpos($file, '.'))));
-            }
-        }
-    }
-
-    /**
      * parseXMLInstallFile
      *
      * Parse an XML install manifest file.

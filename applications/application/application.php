@@ -172,9 +172,9 @@ class MolajoApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-            MolajoApplicationHelper::loadApplicationClasses();
+//            MolajoApplicationHelper::loadApplicationClasses();
 
-            $classname = $prefix . ucfirst(MOLAJO_APPLICATION) . 'Application';
+            $classname = $prefix . 'Application';
             if (class_exists($classname)) {
                 self::$instance = new $classname ();
             } else {
@@ -383,8 +383,6 @@ class MolajoApplication
      */
     public function redirect($url, $moved = false)
     {
-        // Import library dependencies.
-        jimport('phputf8.utils.ascii');
 
         // Check for relative internal links.
         if (preg_match('#^index\.php#', $url)) {

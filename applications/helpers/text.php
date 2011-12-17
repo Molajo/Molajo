@@ -271,9 +271,9 @@ class MolajoTextHelper
      */
     function replaceBuffer($change_from, $change_to)
     {
-        $buffer = JResponse::getBody();
+        $buffer = MolajoApplication::getBody();
         $buffer = preg_replace($change_from, $change_to, $buffer);
-        JResponse::setBody($buffer);
+        MolajoApplication::setBody($buffer);
     }
 
     /**

@@ -65,9 +65,9 @@ class plgSystemCache extends MolajoPlugin
         $data = $this->_cache->get();
 
         if ($data !== false) {
-            JResponse::setBody($data);
+            MolajoApplication::setBody($data);
 
-            echo JResponse::toString($app->getConfig('gzip'));
+            echo MolajoApplication::toString($app->getConfig('gzip'));
 
             if (JDEBUG) {
                 $_PROFILER->mark('afterCache');

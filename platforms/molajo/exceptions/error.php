@@ -708,10 +708,10 @@ abstract class MolajoError
             else
             {
                 // Do not allow cache
-                JResponse::allowCache(false);
+                MolajoApplication::allowCache(false);
 
-                JResponse::setBody($data);
-                echo JResponse::toString();
+                MolajoApplication::setBody($data);
+                echo MolajoApplication::toString();
             }
         }
         else

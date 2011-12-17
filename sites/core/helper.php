@@ -63,11 +63,7 @@ class MolajoSiteHelper
 
             $db->setQuery($query->__toString());
 
-            if ($results = $db->loadObjectList()) {
-            } else {
-                MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-                return false;
-            }
+            $results = $db->loadObjectList();
 
             if ($db->getErrorNum()) {
                 return new MolajoException($db->getErrorMsg());
@@ -120,39 +116,12 @@ class MolajoSiteHelper
 
         $db->setQuery($query->__toString());
 
-        if ($results = $db->loadObjectList()) {
-        } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-            return false;
-        }
+        $results = $db->loadObjectList();
 
         if ($db->getErrorNum()) {
             return new MolajoException($db->getErrorMsg());
         }
 
         return $results;
-    }
-
-    /**
-     * loadSiteClasses
-     *
-     * @param string $site_name
-     *
-     * @return bool
-     *
-     * @since   1.0
-     */
-    public static function loadSiteClasses()
-    {
-        $fileHelper = new MolajoFileHelper();
-        $files = JFolder::files(MOLAJO_SITES . '/' . MOLAJO_SITE . '/classes', '\.php$', false, false);
-
-        foreach ($files as $file) {
-            if ($file == 'helper.php') {
-                $fileHelper->requireClassFile(MOLAJO_SITE_PATH . '/classes/' . $file, 'Molajo' . ucfirst(MOLAJO_SITE) . 'Site' . ucfirst(substr($file, 0, strpos($file, '.'))));
-            } else {
-                $fileHelper->requireClassFile(MOLAJO_SITE_PATH . '/classes/' . $file, 'Molajo' . ucfirst(MOLAJO_SITE) . ucfirst(substr($file, 0, strpos($file, '.'))));
-            }
-        }
     }
 }

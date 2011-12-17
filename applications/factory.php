@@ -98,7 +98,6 @@ abstract class MolajoFactory
             self::$site = MolajoSite::getInstance($id, $config, $prefix);
         }
 
-        var_dump(self::$site);
         return self::$site;
     }
 
@@ -475,8 +474,7 @@ abstract class MolajoFactory
         self::getConfig();
 
         $handler = self::$config->get('session_handler', 'none');
-echo $handler;
-        die;
+
         $options['expire'] = (self::$config->get('lifetime')) ? self::$config->get('lifetime') * 60 : 900;
 
         $session = MolajoSession::getInstance($handler, $options);
@@ -673,8 +671,7 @@ echo $handler;
      */
     public static function getSiteConfig()
     {
-        $classname = 'Molajo' . ucfirst(MOLAJO_SITE) . 'Site';
-        $siteInstance = new $classname ();
+        $siteInstance = new MolajoSite ();
         if (self::$siteConfig) {
         } else {
             self::$siteConfig = $siteInstance->siteConfig();
@@ -692,8 +689,7 @@ echo $handler;
      */
     public static function getConfig()
     {
-        $classname = 'Molajo' . ucfirst(MOLAJO_APPLICATION) . 'Application';
-        $configInstance = new $classname();
+        $configInstance = new MolajoApplication();
         if (self::$config) {
         } else {
             self::$config = $configInstance->getConfig();

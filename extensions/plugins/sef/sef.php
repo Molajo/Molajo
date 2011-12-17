@@ -30,7 +30,7 @@ class plgSystemSef extends MolajoPlugin
 
         //Replace src links
         $base = JURI::base(true) . '/';
-        $buffer = JResponse::getBody();
+        $buffer = MolajoApplication::getBody();
 
         $regex = '#href="index.php\?([^"]*)#m';
         $buffer = preg_replace_callback($regex, array('plgSystemSef', 'route'), $buffer);
@@ -69,7 +69,7 @@ class plgSystemSef extends MolajoPlugin
         $buffer = preg_replace($regex, '$1data="' . $base . '$2"$3', $buffer);
         $this->checkBuffer($buffer);
 
-        JResponse::setBody($buffer);
+        MolajoApplication::setBody($buffer);
         return true;
     }
 

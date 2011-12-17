@@ -833,7 +833,7 @@ abstract class MolajoHtmlBehavior
         $document->addStyleDeclaration('html { display:none }');
         $document->addScriptDeclaration($js);
 
-        JResponse::setHeader('X-Frames-Options', 'SAME-ORIGIN');
+        MolajoApplication::setHeader('X-Frames-Options', 'SAME-ORIGIN');
 
         $loaded = true;
     }

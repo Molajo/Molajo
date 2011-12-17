@@ -887,9 +887,9 @@ class MolajoDocument extends JObject
     public function render($cache = false, $parameters = array())
     {
         if ($mdate = $this->getModifiedDate()) {
-            JResponse::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);
+            MolajoApplication::setHeader('Last-Modified', $mdate /* gmdate('D, d M Y H:i:s', time() + 900).' GMT' */);
         }
 
-        JResponse::setHeader('Content-Type', $this->_mime . '; charset=' . $this->_charset);
+        MolajoApplication::setHeader('Content-Type', $this->_mime . '; charset=' . $this->_charset);
     }
 }

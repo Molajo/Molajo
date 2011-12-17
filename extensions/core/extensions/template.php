@@ -131,7 +131,7 @@ abstract class MolajoTemplate
         /** Render */
         $body = MolajoFactory::getDocument()->render(false, $parameters);
 
-        JResponse::setBody($body);
+        MolajoApplication::setBody($body);
 
         /** After Event */
         $app->triggerEvent('onAfterRender');
