@@ -1,6 +1,6 @@
 # Molajo #
 
-**Molajo is pre-alpha, not ready for use**
+# Molajo is pre-alpha, not ready for use #
 
 ## What is Molajo? ##
 
@@ -14,7 +14,7 @@ There are many ways to learn more about Molajo, you can:
 * Watch Molajo on [github](https://github.com/Molajo/Molajo/watchers);
 * Follow Molajo on [Twitter](http://twitter.com/Molajo);
 * Review Molajo [development on Ohloh](https://www.ohloh.net/p/Molajo);
-* Discuss Molajo on [the Molajo Plus page](https://plus.google.com/b/112043507882364310541/).
+* Discuss Molajo on [the Molajo Google Plus page](https://plus.google.com/b/112043507882364310541/).
 
 ## How do I install Molajo? ##
 
@@ -45,7 +45,7 @@ Molajo translations are skillfully provided by [**Open Translators**](http://ope
 ## Is Molajo capable of multi-lingual content? ##
 
 
-## How can I create new applications in an existing Molajo site to provide an area like an intranet, content staging area or customer portal? ##
+## How can I add an application, like an intranet, to a Molajo site? ##
 
 Learn about [Molajo applications](https://github.com/Molajo/Molajo/blob/core/applications/README.md)
 
@@ -53,7 +53,7 @@ Learn about [Molajo applications](https://github.com/Molajo/Molajo/blob/core/app
 
 Learn about [Molajo multi-site](https://github.com/Molajo/Molajo/blob/core/sites/README.md)
 
-## How can I share my ideas about new features I would like to see available in Molajo? ##
+## Where can I share my ideas about new features I would like to see available in Molajo? ##
 
 Share your ideas and comments about how to improve the software on [**Molajo User Voice**](http://molajo.uservoice.com/forums/85709-general).
 

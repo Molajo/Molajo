@@ -1,4 +1,4 @@
-# Working with Molajo Language Extensions #
+# Working with Molajo Templates #
 
 
 ## Need more information? ##

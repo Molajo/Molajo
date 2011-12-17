@@ -4,7 +4,7 @@ Please check the README file on the root for the location of other README files.
 
 ---
 
-## SECTION I. INTRODUCTION ##
+## SECTION I. Introduction ##
 
 ### What is a Layout? ###
 
@@ -49,7 +49,7 @@ A column is a single piece of information about an item. Display the data for a 
 
 ---
 
-## SECTION II. WHAT IS A MOLAJO LAYOUT? ##
+## SECTION II. What is a Molajo Layout? ##
 
 ### What is a Molajo Layout? ###
 
@@ -66,16 +66,16 @@ A Layout is organized in the following way:
     layout-type
         ...layout-name
         ... ... css
-        ... ... ... All files with a CSS extension are automatically loaded
-        ... ... ... Name files rtl_ to indicate those files which should be loaded only for sites configured for a Right-to-left Language.
+        ... ... ... Files with CSS extension are automatically loaded
+        ... ... ... Files that begin with rtl_ are only loaded for RTL Languages.
         ... ... images
-        ... ... ... Any images needed for the layout can be stored in the images subfolder.
+        ... ... ... Layout images go here
         ... ... js
         ... ... ... All files with a JS extension are automatically loaded
         ... ... language
         ... ... ... en-GB
-        ... ... ... ... en-GB.layouts_layouttype_layoutname.ini
-        ... ... ... ... en-GB.layouts_layouttype_layoutname.sys.ini
+        ... ... ... ... en-GB.layout-name.ini
+        ... ... ... ... en-GB.layout-name.sys.ini
         ... ... layouts
         ... ... ... top.php
         ... ... ... header.php
@@ -86,21 +86,37 @@ A Layout is organized in the following way:
 
 ---
 
-## SECTION III. WHERE ARE LAYOUTS LOCATED? ##
+## SECTION III. Where are layouts located? ##
 
-The Core Molajo Layouts are located within the layouts/layout-type/layout-name folder
+Layouts can be found in three places in a Molajo website:
 
-Valid Layout types include extensions, formfields, head, and wraps.
+1. Layouts stored in the CMS/layouts folder are available for any extension.
 
-For example, the list layout will be found in layouts/extensions/list.
+    cms/layouts/layout-type/layout-name folder
+
+Valid Layout types include document, extensions, formfields, pages, and wraps.
+
+For example, the list layout will be found in layouts/extensions/list folder.
+
+2. Layouts stored in the extensions/layouts folder can only be used by that extension.
+
+    cms/component/layouts/layout-type/layout-name
+
+If you want a custom layout and/or wrap for your component, place it within your extension folders.
+
+3. Layouts can also be placed in the extensions/template/current-template/layouts/layout-type/layout-name folder.
+
+    cms/templates/current-templates/layouts/layout-type/layout-name
+
+Layouts stored within the template are the highest priority and will always be used over the other two locations.
 
 ---
 
-## SECTION IV. HOW TO DETERMINE WHAT LAYOUT AN EXTENSION IS USING? ##
+## SECTION IV. How do I know what layout a specific extension is using? ##
 
 ---
 
-## SECTION V. HOW DO I CREATE, INSTALL, AND SHARE LAYOUTS? ##
+## SECTION V. How can I create extensions? ##
 
 ### How can I install a Molajo Layout? ###
 
@@ -116,7 +132,7 @@ Use the 'Create' Submenu Item.
 
 ---
 
-## SECTION VI. HOW DO I OVERRIDE A LAYOUT? ##
+## SECTION VI. How do I override a layout? ##
 
 ### What sequence does Molajo use to search for Layouts? ###
 
@@ -133,7 +149,7 @@ To override a core Layout, place the layout in a, b, or c, above.
 
 ---
 
-## SECTION VII. WORKING WITH CSS AND JS FOR THE APPLICATION, COMPONENT, ASSET, AND/OR LAYOUT ##
+## SECTION VII. Working with CSS, JS, and other media assets ##
 
 ### How do I add CSS for a Layout?
 
