@@ -10,7 +10,7 @@ Molajo's primary user focus is frontend developers and designers with a clear go
 
 There are many ways to learn more about Molajo, you can:
 
-* Review the Molajo [Data Model](https://github.com/Molajo/Molajo/downloads);
+* Review the Molajo [Data Model](https://github.com/downloads/Molajo/Molajo/molajo.png);
 * Watch Molajo on [github](https://github.com/Molajo/Molajo/watchers);
 * Follow Molajo on [Twitter](http://twitter.com/Molajo);
 * Review Molajo [development on Ohloh](https://www.ohloh.net/p/Molajo);
