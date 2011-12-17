@@ -6,17 +6,20 @@ Molajo is an web development environment for crafting custom solutions from simp
 
 Molajo's primary user focus is frontend developers and designers with a clear goal of making it easier to *plug in* professionally designed layouts and customize data collection processes without writing code.
 
+There are many ways to learn more about Molajo, you can:
+
+* Watch Molajo on [github](https://github.com/Molajo/Molajo/watchers);
+* Follow Molajo on [Twitter](http://twitter.com/);
+* Review Molajo [development on Ohloh](https://www.ohloh.net/p/Molajo);
+* Discuss Molajo on [the Molajo Plus page](https://plus.google.com/b/112043507882364310541/).
+
 ## How do I install Molajo? ##
 
-Located in the [**installation**](https://github.com/Molajo/Molajo/blob/core/installation/README.md) folder
+System requirements and instructions for how to install Molajo are located in the [**installation**](https://github.com/Molajo/Molajo/blob/core/installation/README.md) folder.
 
-## How do I work with Molajo Extensions? ##
+## Where can I learn more about Molajo Extensions? ##
 
-1. [**Layouts**](https://github.com/Molajo/Molajo/blob/core/cms/layouts/README.md)
-
-2. [**Modules**](https://github.com/Molajo/Molajo/blob/core/cms/modules/README.md)
-
-3. [**Components**](https://github.com/Molajo/Molajo/blob/core/cms/components/README.md)
+There is more information in the [**CMS**](https://github.com/Molajo/Molajo/blob/core/cms/) folder about extensions, extension types, how to create extensions and share your work with others.
 
 ## What if I encounter problems? ##
 
@@ -26,24 +29,15 @@ Located in the [**installation**](https://github.com/Molajo/Molajo/blob/core/ins
 
 3. The **README.md** files contain important information that will help you learn how to use Molajo successfully.
 
-## Where can I find Molajo Extensions ##
-
---
-
-## How can I get my Extension for Molajo listed? ##
-
---
 
 ## How can I share ideas about new features for Molajo? ##
 
 Share your ideas and comments about how to improve the software on [**Molajo User Voice**](http://molajo.uservoice.com/forums/85709-general).
 
-## How do I share a new feature for Molajo ##
-
-The goal is to keep the Molajo core very lean. Most of the time, it is best to create a new feature as an extension. If you feel an improvement is architecturally important and you want to contribute it, please issue a [**pull request**](https://github.com/Molajo/Molajo/pulls) for consideration.
 
 ## Contributor Workflow ##
 
 Please see the [Contributor Workflow](https://github.com/Molajo/Molajo/wiki/Contributor-Workflow) for more information on contributing code to the Molajo project.
+
 
 
