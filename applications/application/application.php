@@ -57,12 +57,6 @@ class MolajoApplication
     protected $dispatcher;
 
     /**
-     * @var    MolajoDocument  The application document object.
-     * @since  11.3
-     */
-    protected $document;
-
-    /**
      * @var    MolajoLanguage  The application language object.
      * @since  11.3
      */
@@ -172,14 +166,7 @@ class MolajoApplication
                 define('MOLAJO_APPLICATION_ID', $info->id);
             }
 
-//            MolajoApplicationHelper::loadApplicationClasses();
-
-            $classname = $prefix . 'Application';
-            if (class_exists($classname)) {
-                self::$instance = new $classname ();
-            } else {
-                return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_APPLICATION_INSTANTIATION_ERROR', $classname));
-            }
+            self::$instance = new MolajoApplication();
         }
 
         return self::$instance;
@@ -193,11 +180,6 @@ class MolajoApplication
      *                              the application's session object, if it is false then there will be no session
      *                              object, and if it is null then the default session object will be created based
      *                              on the application's loadSession() method.
-     * @param   mixed  $document    An optional argument to provide dependency injection for the application's
-     *                              document object.  If the argument is a MolajoDocument object that object will become
-     *                              the application's document object, if it is false then there will be no document
-     *                              object, and if it is null then the default document object will be created based
-     *                              on the application's loadDocument() method.
      * @param   mixed  $language    An optional argument to provide dependency injection for the application's
      *                              language object.  If the argument is a MolajoLanguage object that object will become
      *                              the application's language object, if it is false then there will be no language
@@ -216,7 +198,7 @@ class MolajoApplication
      * @see     loadDispatcher()
      * @since   11.3
      */
-    public function initialise($session = null, $document = null, $language = null, $dispatcher = null)
+    public function initialise($session = null, $language = null, $dispatcher = null)
     {
         if ($session instanceof MolajoSession) {
             $this->session = $session;
@@ -225,15 +207,6 @@ class MolajoApplication
 
         } else {
             $this->loadSession();
-        }
-
-        if ($document instanceof MolajoDocument) {
-            $this->document = $document;
-
-        } elseif ($document === false) {
-
-        } else {
-            $this->loadDocument();
         }
 
         if ($language instanceof MolajoLanguage) {
@@ -296,7 +269,7 @@ class MolajoApplication
         }
 
         $this->sendHeaders();
-
+$this->setBody('Hello World');
         echo $this->getBody();
 
         $this->triggerEvent('onAfterRespond');
@@ -740,18 +713,6 @@ class MolajoApplication
     }
 
     /**
-     * Method to get the application document object.
-     *
-     * @return  MolajoDocument  The document object
-     *
-     * @since   11.3
-     */
-    public function getDocument()
-    {
-        return $this->document;
-    }
-
-    /**
      * Method to get the application language object.
      *
      * @return  MolajoLanguage  The language object
@@ -838,20 +799,6 @@ class MolajoApplication
     protected function loadDispatcher()
     {
         $this->dispatcher = JDispatcher::getInstance();
-    }
-
-    /**
-     * Method to create a document for the Web application.  The logic and options for creating this
-     * object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create document objects based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   11.3
-     */
-    protected function loadDocument()
-    {
-        $this->document = JFactory::getDocument();
     }
 
     /**

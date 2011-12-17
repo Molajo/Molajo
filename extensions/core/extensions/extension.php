@@ -15,22 +15,6 @@ defined('MOLAJO') or die;
 class MolajoExtension
 {
     /**
-     * Site
-     *
-     * @var object
-     * @since  1.0
-     */
-    protected $_site;
-
-    /**
-     * Application
-     *
-     * @var object
-     * @since  1.0
-     */
-    protected $_app;
-
-    /**
      * Instance
      *
      * @var string
@@ -44,7 +28,13 @@ class MolajoExtension
      * @var    integer
      * @since  1.0
      */
-    protected $_config = null;
+    protected $config = null;
+
+    /**
+     * @var    Document  The application document object.
+     * @since  11.3
+     */
+    protected $document;
 
     /**
      *  User
@@ -52,7 +42,7 @@ class MolajoExtension
      * @var string
      * @since 1.0
      */
-    protected $_user = null;
+    protected $user = null;
 
     /**
      * Template
@@ -60,7 +50,7 @@ class MolajoExtension
      * @var object
      * @since 1.0
      */
-    protected $_template = null;
+    protected $template = null;
 
     /**
      *  Page
@@ -68,100 +58,43 @@ class MolajoExtension
      * @var string
      * @since 1.0
      */
-    protected $_page = null;
-
-    /**
-     *  Menu item
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $_menuitem = null;
-
-    /**
-     *  Component
-     *
-     * @var object
-     * @since 1.0
-     */
-    protected $_component = null;
-
-    /**
-     * Dispatcher
-     *
-     * @var    object
-     * @since  11.3
-     */
-    protected $dispatcher;
-
-    /**
-     * Document
-     *
-     * @var    object
-     * @since  11.3
-     */
-    protected $document;
-
-    /**
-     * getInstance
-     *
-     * Returns the global application object, creating if not existing
-     *
-     * @param   mixed   $application  A application identifier or name.
-     * @param   strong  $prefix       A prefix for class names
-     *
-     * @return  application object
-     *
-     * @since  1.0
-     */
-    public static function getInstance($name = 'MolajoExtension')
-    {
-        if (empty(self::$instance)) {
-            if (class_exists($name)) {
-                self::$instance = new $name;
-            } else {
-                self::$instance = new MolajoExtension;
-            }
-        }
-        return self::$instance;
-    }
+    protected $page = null;
 
     /**
      * __construct
      *
      * Class constructor.
      *
+     * @param   mixed  $document    An optional argument to provide dependency injection for the application's
+     *                              document object.  If the argument is a document object that object will become
+     *                              the application's document object, if it is false then there will be no document
+     *                              object, and if it is null then the default document object will be created based
+     *                              on the application's loadDocument() method.
+     *
      * @param   array  $config  A configuration array
      *
      * @since  1.0
      */
-    public function __construct($config = null)
+    public function __construct($id = null, $config = array(), $document = null)
     {
+
         if ($config) {
             $this->config = $config;
         } else {
             $this->config = new JRegistry;
         }
         $this->getConfig();
-        echo '<pre>';var_dump($this->config);'</pre>';
-    }
 
-    /**
-     * initialise
-     *
-     * Retrieves the configuration information, loads language files, editor, triggers onAfterInitialise
-     *
-     * @param    array
-     *
-     * @since 1.0
-     */
-    public function initialise($site = null, $app = null, $options = array())
-    {
-        $this->_site = $site;
-        $this->_app = $app;
-        $this->loadUser();
-        $this->loadDocument();
-        $this->loadDispatcher();
+        if ($document instanceof MolajoDocument) {
+            $this->document = $document;
+
+        } elseif ($document === false) {
+
+        } else {
+            $this->loadDocument();
+        }
+
+       // $this->loadUser();
 
         /** todo: asset record */
 
@@ -178,8 +111,8 @@ class MolajoExtension
         /** todo: menu item */
 
         /** Event */
-        MolajoPlugin::importPlugin('system');
-        MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
+     //   MolajoPlugin::importPlugin('system');
+     //   MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
     }
 
     /**
@@ -322,11 +255,6 @@ class MolajoExtension
      */
     public function getMenu($name = null, $options = array())
     {
-        if (isset($name)) {
-        } else {
-            $name = MOLAJO_EXTENSION;
-        }
-
         $menu = MolajoMenu::getInstance($name, $options);
 
         if (MolajoError::isError($menu)) {
@@ -393,7 +321,7 @@ class MolajoExtension
      */
     private function loadUser()
     {
-        $this->_user = MolajoFactory::getUser();
+        $this->user = MolajoFactory::getUser();
     }
 
     /**
@@ -477,36 +405,18 @@ class MolajoExtension
     }
 
     /**
-     * Method to create a document for the Web application.  The logic and options for creating this
-     * object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create document objects based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   11.3
-     */
-    protected function loadDocument()
-    {
-        $this->document = MolajoFactory::getDocument();
-    }
-
-    /**
      * Registers a handler to a particular event group.
      *
      * @param   string    $event    The event name.
      * @param   callback  $handler  The handler, a function or an instance of a event object.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function registerEvent($event, $handler)
     {
-        if ($this->dispatcher instanceof JDispatcher) {
-            $this->dispatcher->register($event, $handler);
-        }
-
-        return $this;
+        return MolajoFactory::getApplication()->register($event, $handler);
     }
 
     /**
@@ -521,10 +431,7 @@ class MolajoExtension
      */
     public function triggerEvent($event, array $args = null)
     {
-        if ($this->dispatcher instanceof JDispatcher) {
-            return $this->dispatcher->trigger($event, $args);
-        }
-
+        MolajoFactory::getApplication()->trigger($event, $args);
         return null;
     }
 
@@ -598,4 +505,33 @@ class MolajoExtension
     {
         $this->config->set($key, $value);
     }
+
+//** todo: shit can document */
+
+        /**
+         * Method to get the application document object.
+         *
+         * @return  MolajoDocument  The document object
+         *
+         * @since   11.3
+         */
+        public function getDocument()
+        {
+            return $this->document;
+        }
+
+        /**
+         * Method to create a document for the Web application.  The logic and options for creating this
+         * object are adequately generic for default cases but for many applications it will make sense
+         * to override this method and create document objects based on more specific needs.
+         *
+         * @return  void
+         *
+         * @since   11.3
+         */
+        protected function loadDocument()
+        {
+            $this->document = JFactory::getDocument();
+        }
+
 }

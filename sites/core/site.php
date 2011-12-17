@@ -80,12 +80,7 @@ class MolajoSite extends JObject
                 return false;
             }
 
-            $classname = $prefix . ucfirst(MOLAJO_SITE) . 'Site';
-            if (class_exists($classname)) {
-                $instance = new $classname();
-            } else {
-                return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_INSTANTIATION_ERROR', $classname));
-            }
+            $instance = new MolajoSite();
             $instances[MOLAJO_SITE] = &$instance;
         }
 

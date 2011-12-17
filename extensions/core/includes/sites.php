@@ -25,4 +25,3 @@ foreach ($files as $file) {
     }
 }
 
-MolajoSiteHelper::loadSiteClasses();

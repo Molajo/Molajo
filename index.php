@@ -153,31 +153,13 @@ $app->initialise();
 JDEBUG ? $_PROFILER->mark('afterInitialiseApplication') : null;
 
 /**
- *  Get the Extension
+ *  Execute Extension Layer
  */
-$extension = MolajoExtension::getExtension();
-JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
-
-/**
- *  Initialize Extensions
- */
-$extension->initialise();
+$extension = new MolajoExtension();
 JDEBUG ? $_PROFILER->mark('afterExtensionInitialise') : null;
-
-/**
- *  Execute Extension
- */
-$extension->execute();
-JDEBUG ? $_PROFILER->mark('afterExecuteExtension') : null;
-
-/**
- *  Render Extensions
- */
-$extension->execute();
-JDEBUG ? $_PROFILER->mark('afterExecuteExtension') : null;
 
 /**
  *  Application Response
  */
-$app->processResponse();
+$app->respond();
 JDEBUG ? $_PROFILER->mark('afterExecute') : null;
