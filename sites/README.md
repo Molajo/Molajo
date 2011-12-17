@@ -1,4 +1,4 @@
-To set up Multi-site in Molajo:
+# To set up Multi-site in Molajo: #
 
 1. Copy the sites/0 folder to sites/N (next number in series)
 
@@ -8,3 +8,5 @@ To set up Multi-site in Molajo:
 Using MAMP PRO, it is very easy using the Hosts tab.
 
 4. Create a new database for your second site
+
+5. Extension access control.

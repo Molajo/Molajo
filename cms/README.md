@@ -16,6 +16,10 @@
 
 ---
 
+## How do I install, remove, or upgrade Molajo Extensions? ##
+
+---
+
 ## What tools do I need to create my own extensions? ##
 
 ---
@@ -26,13 +30,15 @@ The following links contain information designed to help you learn how to create
 
 1. [**Components**](https://github.com/Molajo/Molajo/blob/core/cms/components/README.md)
 
-2. [**Modules**](https://github.com/Molajo/Molajo/blob/core/cms/modules/README.md)
+2. [**Languages**](https://github.com/Molajo/Molajo/blob/core/cms/languages/README.md)
 
-3. [**Plugins**](https://github.com/Molajo/Molajo/blob/core/cms/plugins/README.md)
+3. [**Layouts**](https://github.com/Molajo/Molajo/blob/core/cms/layouts/README.md)
 
-4. [**Layouts**](https://github.com/Molajo/Molajo/blob/core/cms/layouts/README.md)
+4. [**Modules**](https://github.com/Molajo/Molajo/blob/core/cms/modules/README.md)
 
-5. [**Templates**](https://github.com/Molajo/Molajo/blob/core/cms/templates/README.md)
+5. [**Plugins**](https://github.com/Molajo/Molajo/blob/core/cms/plugins/README.md)
+
+6. [**Templates**](https://github.com/Molajo/Molajo/blob/core/cms/templates/README.md)
 
 ---
 
