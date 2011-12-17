@@ -132,7 +132,7 @@ class MolajoCategories
         $classname = 'MolajoCategoriesHelper';
 
         if (!class_exists($classname)) {
-            $path = MOLAJO_PLATFORM . '/helpers/categories.php';
+            $path = PLATFORM_MOLAJO . '/helpers/categories.php';
             if (is_file($path)) {
                 require_once $path;
             }

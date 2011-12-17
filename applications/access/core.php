@@ -527,8 +527,8 @@ class MolajoACLCore extends MolajoACL
         $component = $parameters[0];
         $section = $parameters[1];
 
-        if (is_file(MOLAJO_DISTRO_COMPONENTS . '/' . $component . '/access.xml')) {
-            $xml = simplexml_load_file(MOLAJO_DISTRO_COMPONENTS . '/' . $component . '/access.xml');
+        if (is_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml')) {
+            $xml = simplexml_load_file(MOLAJO_EXTENSIONS_COMPONENTS . '/' . $component . '/access.xml');
 
             foreach ($xml->children() as $child)
             {

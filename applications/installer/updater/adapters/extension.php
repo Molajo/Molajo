@@ -50,7 +50,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
                     $name = strtolower($name);
                     $this->current_update->$name = '';
                 }
-                if ($name == 'TARGETPLATFORM') {
+                if ($name == 'TARGETPLATFORMS') {
                     $this->current_update->targetplatform = $attrs;
                 }
                 break;

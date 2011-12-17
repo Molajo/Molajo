@@ -8,8 +8,8 @@
 User-agent: *
 Disallow: /administrator/
 Disallow: /application/
-Disallow: /distro/
+Disallow: /extensions/
 Disallow: /installation/
-Disallow: /platform/
+Disallow: /platforms/
 Disallow: /sites/
 

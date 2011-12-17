@@ -183,7 +183,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
         $request['component_specific'] = '';
 
         $request['current_url'] = JURI::base() . '/installation';
-        $request['component_path'] = MOLAJO_DISTRO_COMPONENTS . '/' . $request['option'];
+        $request['component_path'] = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $request['option'];
         $request['base_url'] = MOLAJO_BASE_FOLDER . '/installation';
         $request['item_id'] = null;
 
@@ -239,7 +239,7 @@ class MolajoInstallationApplication extends MolajoApplicationHelper
                 $parameters = array(
                     'template' => $template->template,
                     'file' => $file . '.php',
-                    'directory' => MOLAJO_DISTRO_TEMPLATES,
+                    'directory' => MOLAJO_EXTENSIONS_TEMPLATES,
                     'parameters' => $template->parameters
                 );
                 break;

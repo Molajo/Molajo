@@ -17,8 +17,8 @@
     <field
             name="extension_instance_id"
             type="extension_instance"
-            label="FIELD_EXTENSION_INSTANCE_LABEL"
-            description="FIELD_EXTENSION_INSTANCE_DESC"
+            label="FIELD_EXTENSION_EXTENSIONS_LABEL"
+            description="FIELD_EXTENSION_EXTENSIONS_DESC"
             readonly="true"
             />
 

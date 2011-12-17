@@ -48,7 +48,7 @@ if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
 }
 
 /*                                              */
-/*  SITE                                        */
+/*  SITES LAYER                                 */
 /*                                              */
 if (defined('MOLAJO_SITES')) {
 } else {
@@ -96,7 +96,7 @@ if (defined('MOLAJO_SITE_CORE')) {
 }
 
 /*                                              */
-/*  APPLICATION                                 */
+/*  APPLICATIONS LAYER                          */
 /*                                              */
 if (defined('MOLAJO_APPLICATION_CORE')) {
 } else {
@@ -104,61 +104,64 @@ if (defined('MOLAJO_APPLICATION_CORE')) {
 }
 
 /*                                              */
-/*  DISTRO                                      */
+/*  EXTENSIONS LAYER                            */
 /*                                              */
-if (defined('MOLAJO_DISTRO_CORE')) {
+if (defined('MOLAJO_EXTENSIONS_CORE')) {
 } else {
-    define('MOLAJO_DISTRO_CORE', MOLAJO_BASE_FOLDER . '/distro/core');
+    define('MOLAJO_EXTENSIONS_CORE', MOLAJO_BASE_FOLDER . '/extensions/core');
 }
 
-require_once MOLAJO_DISTRO_CORE.'/includes/phpversion.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/defines.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/installcheck.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/joomla.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/config.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/application.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/extension.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/site.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/platform.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/other.php';
-require_once MOLAJO_DISTRO_CORE.'/includes/overrides.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/phpversion.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/defines.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/installcheck.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-joomla.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/config.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/applications.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/extensions.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/sites.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-molajo.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-twig.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-doctrine.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-simple-pie.php';
+
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/overrides.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;
 
 /**
- *  Site
+ *  Get the Site
  */
 $site = MolajoFactory::getSite(MOLAJO_SITE_ID);
 JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
 
 /**
- *  Initialize Site
+ *  Initialise the Site
  */
 $site->initialise();
 JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
 
 /**
- *  Application
+ *  Get the Application
  */
 $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
 
 /**
- *  Initialize App
+ *  Initialize Application
  */
 $app->initialise();
 JDEBUG ? $_PROFILER->mark('afterInitialiseApplication') : null;
 
 /**
- *  Get Extension
+ *  Get the Extension
  */
 $extension = MolajoFactory::getExtension();
 JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
 
 /**
- *  Initialize Extension
+ *  Initialize Extensions
  */
-$extension->initialise($site, $app);
+$extension->initialise();
 JDEBUG ? $_PROFILER->mark('afterExtensionInitialise') : null;
 
 /**

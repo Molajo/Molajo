@@ -386,7 +386,7 @@ class MolajoUser extends JObject
         // Set the default parampath if not set already
         if (isset($parampath)) {
         } else {
-            $parampath = MOLAJO_DISTRO_COMPONENTS . '/users/models';
+            $parampath = MOLAJO_EXTENSIONS_COMPONENTS . '/users/models';
         }
 
         if ($loadsetupfile) {
