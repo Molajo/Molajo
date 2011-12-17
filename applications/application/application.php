@@ -57,7 +57,7 @@ class MolajoApplication
     protected $dispatcher;
 
     /**
-     * @var    JDocument  The application document object.
+     * @var    MolajoDocument  The application document object.
      * @since  11.3
      */
     protected $document;
@@ -81,7 +81,7 @@ class MolajoApplication
     protected $response;
 
     /**
-     * @var    MolajoApplication  The application instance.
+     * @var    Application  The application instance.
      * @since  11.3
      */
     protected static $instance;
@@ -138,22 +138,26 @@ class MolajoApplication
     }
 
     /**
-     * Returns a reference to the global MolajoApplication object, only creating it if it doesn't already exist.
+     * Returns a reference to the global Application object, only creating it if it doesn't already exist.
      *
-     * This method must be invoked as: $web = MolajoApplication::getInstance();
+     * This method must be invoked as: $web = Application::getInstance();
      *
-     * @param   string  $name  The name (optional) of the MolajoApplication class to instantiate.
+     * @param   string  $name  The name (optional) of the Application class to instantiate.
      *
-     * @return  MolajoApplication
+     * @return  Application
      *
      * @since   11.3
      */
-    public static function getInstance($prefix = 'Molajo')
+    public static function getInstance($id = null, $config = array(), $prefix = 'Molajo')
     {
+        if ($id == null) {
+            $id = MOLAJO_APPLICATION;
+        }
+
         if (self::$instance) {
         } else {
 
-            $info = MolajoApplicationHelper::getApplicationInfo(MOLAJO_APPLICATION, true);
+            $info = MolajoApplicationHelper::getApplicationInfo($id, true);
             if ($info === false) {
                 return false;
             }
@@ -190,7 +194,7 @@ class MolajoApplication
      *                              object, and if it is null then the default session object will be created based
      *                              on the application's loadSession() method.
      * @param   mixed  $document    An optional argument to provide dependency injection for the application's
-     *                              document object.  If the argument is a JDocument object that object will become
+     *                              document object.  If the argument is a MolajoDocument object that object will become
      *                              the application's document object, if it is false then there will be no document
      *                              object, and if it is null then the default document object will be created based
      *                              on the application's loadDocument() method.
@@ -204,7 +208,7 @@ class MolajoApplication
      *                              the application's event dispatcher, if it is null then the default event dispatcher
      *                              will be created based on the application's loadDispatcher() method.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @see     loadSession()
      * @see     loadDocument()
@@ -223,7 +227,7 @@ class MolajoApplication
             $this->loadSession();
         }
 
-        if ($document instanceof JDocument) {
+        if ($document instanceof MolajoDocument) {
             $this->document = $document;
 
         } elseif ($document === false) {
@@ -530,7 +534,7 @@ class MolajoApplication
      * @param   string    $event    The event name.
      * @param   callback  $handler  The handler, a function or an instance of a event object.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -590,7 +594,7 @@ class MolajoApplication
      * @param   string   $value    The value of the header to set.
      * @param   boolean  $replace  True to replace any headers with the same name.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -635,7 +639,7 @@ class MolajoApplication
     /**
      * Method to clear any set response headers.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -649,7 +653,7 @@ class MolajoApplication
     /**
      * Send the response headers.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -676,7 +680,7 @@ class MolajoApplication
      *
      * @param   string  $content  The content to set as the response body.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -692,7 +696,7 @@ class MolajoApplication
      *
      * @param   string  $content  The content to prepend to the response body.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -708,7 +712,7 @@ class MolajoApplication
      *
      * @param   string  $content  The content to append to the response body.
      *
-     * @return  MolajoApplication  Instance of $this to allow chaining.
+     * @return  Application  Instance of $this to allow chaining.
      *
      * @since   11.3
      */
@@ -740,7 +744,7 @@ class MolajoApplication
     /**
      * Method to get the application document object.
      *
-     * @return  JDocument  The document object
+     * @return  MolajoDocument  The document object
      *
      * @since   11.3
      */

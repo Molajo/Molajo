@@ -155,7 +155,7 @@ JDEBUG ? $_PROFILER->mark('afterInitialiseApplication') : null;
 /**
  *  Get the Extension
  */
-$extension = MolajoFactory::getExtension();
+$extension = MolajoExtension::getExtension();
 JDEBUG ? $_PROFILER->mark('afterGetExtension') : null;
 
 /**

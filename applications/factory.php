@@ -16,7 +16,6 @@ defined('MOLAJO') or die;
  */
 abstract class MolajoFactory
 {
-
     /**
    	 * @var    Site
    	 * @since  1.0
@@ -112,33 +111,14 @@ abstract class MolajoFactory
      *
      * @return application    object
      */
-    public static function getApplication($prefix = 'Molajo')
+    public static function getApplication($id = null, $config = array(), $prefix = 'Molajo')
     {
         if (self::$application) {
         } else {
-            self::$application = MolajoApplication::getInstance($prefix);
+            self::$application = MolajoApplication::getInstance($id = null, $config = array(), $prefix);
         }
 
         return self::$application;
-    }
-
-    /**
-     * getExtension
-     *
-     * Get an extension object
-     *
-     * @param   string  $prefix Extension prefix
-     *
-     * @return application    object
-     */
-    public static function getExtension($prefix = 'Molajo')
-    {
-        if (self::$extension) {
-        } else {
-            self::$extension = MolajoExtension::getInstance();
-        }
-
-        return self::$extension;
     }
 
     /**
@@ -154,7 +134,7 @@ abstract class MolajoFactory
     {
         if (self::$session) {
         } else {
-            self::$session = self::_createSession($options);
+            self::$session = self::createSession($options);
         }
 
         return self::$session;
@@ -483,19 +463,20 @@ abstract class MolajoFactory
     }
 
     /**
-     * _createSession
+     * createSession
      *
      * Create a session object
      *
      * @return object
      * @since   1.0
      */
-    protected static function _createSession($options = array())
+    protected static function createSession($options = array())
     {
         self::getConfig();
 
         $handler = self::$config->get('session_handler', 'none');
-
+echo $handler;
+        die;
         $options['expire'] = (self::$config->get('lifetime')) ? self::$config->get('lifetime') * 60 : 900;
 
         $session = MolajoSession::getInstance($handler, $options);
@@ -721,25 +702,6 @@ abstract class MolajoFactory
     }
 
     /**
-     * getExtensionConfig
-     *
-     * Retrieve the Extension configuration object
-     *
-     * @return  config object
-     * @since   1.0
-     */
-    public static function getExtensionConfig()
-    {
-        $classname = 'MolajoExtension';
-        $extensionInstance = new $classname ();
-        if (self::$extensionConfig) {
-        } else {
-            self::$extensionConfig = $extensionInstance->getConfig();
-        }
-        return self::$extensionConfig;
-    }
-
-    /**
      * get
      *
      * Returns a property of the Site, Application, and Extension objects
@@ -755,9 +717,7 @@ abstract class MolajoFactory
      */
     public function get($key, $default = null, $type = 'config')
     {
-        if ($type == 'extension') {
-            return self::$extensionConfig->get($key, $default);
-        } elseif ($type == 'site') {
+        if ($type == 'site') {
             return self::$siteConfig->get($key, $default);
         } else {
             return self::$config->get($key, $default);
