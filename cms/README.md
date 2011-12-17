@@ -12,18 +12,6 @@
 
 ---
 
-## How can I share my Extension for Molajo with others? ##
-
----
-
-## How do I install, remove, or upgrade Molajo Extensions? ##
-
----
-
-## What tools do I need to create my own extensions? ##
-
----
-
 ## Where can I learn how to create Molajo Extensions? ##
 
 The following links contain information designed to help you learn how to create each type of Molajo extension.
@@ -42,9 +30,15 @@ The following links contain information designed to help you learn how to create
 
 ---
 
-## How can I share ideas about new features for Molajo? ##
+## What tools do I need to create my own extensions? ##
 
-Share your ideas and comments about how to improve the software on [**Molajo User Voice**](http://molajo.uservoice.com/forums/85709-general).
+---
+
+## How do I install, remove, or upgrade Molajo extensions? ##
+
+---
+
+## How can I share my extension for Molajo with others? ##
 
 ---
 

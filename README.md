@@ -1,13 +1,16 @@
 # Molajo #
 
+**Molajo is pre-alpha, not ready for use**
+
 ## What is Molajo? ##
 
-Molajo is an web development environment for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.
+Molajo is a web application development environment for crafting custom solutions from simple to complex custom data architecture, presentation output, and access control.
 
 Molajo's primary user focus is frontend developers and designers with a clear goal of making it easier to *plug in* professionally designed layouts and customize data collection processes without writing code.
 
 There are many ways to learn more about Molajo, you can:
 
+* Review the Molajo [Data Model](https://github.com/Molajo/Molajo/downloads);
 * Watch Molajo on [github](https://github.com/Molajo/Molajo/watchers);
 * Follow Molajo on [Twitter](http://twitter.com/Molajo);
 * Review Molajo [development on Ohloh](https://www.ohloh.net/p/Molajo);
@@ -17,17 +20,23 @@ There are many ways to learn more about Molajo, you can:
 
 System requirements and instructions for how to install Molajo are located in the [**installation**](https://github.com/Molajo/Molajo/blob/core/installation/README.md) folder.
 
-## Where can I learn more about Molajo Extensions? ##
+## Where can I learn more about Molajo Extensions and Templating? ##
 
-There is more information in the [**CMS**](https://github.com/Molajo/Molajo/blob/core/cms/) folder about extensions, extension types, how to create extensions and share your work with others.
+There is more information about [**about extensions**](https://github.com/Molajo/Molajo/blob/core/cms/README.md),
+ [**Components**](https://github.com/Molajo/Molajo/blob/core/cms/components/README.md),
+ [**Languages**](https://github.com/Molajo/Molajo/blob/core/cms/languages/README.md),
+ [**Layouts**](https://github.com/Molajo/Molajo/blob/core/cms/layouts/README.md),
+ [**Modules**](https://github.com/Molajo/Molajo/blob/core/cms/modules/README.md),
+ [**Plugins**](https://github.com/Molajo/Molajo/blob/core/cms/plugins/README.md),
+ and [**Templates**](https://github.com/Molajo/Molajo/blob/core/cms/templates/README.md).
 
 ## What if I encounter problems? ##
 
-1. It's best if you can fork Molajo, fix the problem, and then issue a [**pull request**](https://github.com/Molajo/Molajo/pulls).
+1. It's best if you fork Molajo, fix the problem, and then issue a [**pull request**](https://github.com/Molajo/Molajo/pulls).
 
 2. If you are unable to fix the problem, it is still helpful to report the problem using an [**issue report**](https://github.com/Molajo/Molajo/issues).
 
-3. The **README.md** files contain important information that will help you learn how to use Molajo successfully.
+3. Spend time with the **README.md** files as these contain information to help you learn how to use Molajo successfully.
 
 ## How can I translate Molajo into my language? ##
 
@@ -35,17 +44,16 @@ Molajo translations are skillfully provided by [**Open Translators**](http://ope
 
 ## Is Molajo capable of multi-lingual content? ##
 
-xyz
+
+## How can I create new applications in an existing Molajo site to provide an area like an intranet, content staging area or customer portal? ##
+
+Learn about [Molajo applications](https://github.com/Molajo/Molajo/blob/core/applications/README.md)
 
 ## Can I use Molajo for multi-site? ##
 
 Learn about [Molajo multi-site](https://github.com/Molajo/Molajo/blob/core/sites/README.md)
 
-## How can I create new applications, like intranets, in an existing Molajo site? ##
-
-Learn about [Molajo applications](https://github.com/Molajo/Molajo/blob/core/applications/README.md)
-
-## How can I share ideas about new features for Molajo? ##
+## How can I share my ideas about new features I would like to see available in Molajo? ##
 
 Share your ideas and comments about how to improve the software on [**Molajo User Voice**](http://molajo.uservoice.com/forums/85709-general).
 

@@ -100,7 +100,7 @@ if (defined('MOLAJO_SITE_CORE')) {
 /*                                              */
 if (defined('MOLAJO_APPLICATION_CORE')) {
 } else {
-    define('MOLAJO_APPLICATION_CORE', MOLAJO_BASE_FOLDER . '/application');
+    define('MOLAJO_APPLICATION_CORE', MOLAJO_BASE_FOLDER . '/applications');
 }
 
 /*                                              */
