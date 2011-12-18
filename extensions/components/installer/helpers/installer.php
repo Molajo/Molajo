@@ -20,7 +20,7 @@ defined('MOLAJO') or die;
 class InstallerHelper
 {
     /**
-     * getDBO
+     * getDbo
      *
      * Method to get a JDatabase object.
      *
@@ -35,7 +35,7 @@ class InstallerHelper
      * @return    mixed    JDatabase object on success, Exception on error.
      * @since    1.0
      */
-    public static function & getDBO($driver, $host, $user, $password, $database, $prefix, $select = true)
+    public static function & getDbo($driver, $host, $user, $password, $database, $prefix, $select = true)
     {
         static $db;
 

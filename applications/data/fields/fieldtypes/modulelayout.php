@@ -78,7 +78,7 @@ class MolajoFormFieldModuleLayout extends MolajoFormField
             || $lang->load($module . '.sys', $application->path . '/modules/' . $module, $lang->getDefault(), false, false);
 
             // Get the database object and a new query object.
-            $db = MolajoFactory::getDBO();
+            $db = MolajoFactory::getDbo();
             $query = $db->getQuery(true);
 
             // Build the query.

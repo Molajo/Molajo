@@ -537,7 +537,7 @@ class MolajoInstallerAdapterFile extends MolajoAdapterInstance
     protected function extensionExistsInSystem($extension = null)
     {
         // Get a database connector object
-        $db = $this->parent->getDBO();
+        $db = $this->parent->getDbo();
 
         $query = $db->getQuery(true);
         $query->select($query->qn('extension_id'))

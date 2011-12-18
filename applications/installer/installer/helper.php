@@ -29,7 +29,7 @@ abstract class MolajoInstallerHelper
      */
     public static function downloadPackage($url, $target = false)
     {
-        $config = MolajoFactory::getConfig();
+        $config = MolajoFactory::getApplication()->getConfig();
 
         // Capture PHP errors
         $php_errormsg = 'Error Unknown';
@@ -60,11 +60,11 @@ abstract class MolajoInstallerHelper
 
         // Set the target path if not given
         if (!$target) {
-            $target = $config->get('tmp_path') . '/' . self::getFilenameFromURL($url);
+            $target = $config->get('temp_path') . '/' . self::getFilenameFromURL($url);
         }
         else
         {
-            $target = $config->get('tmp_path') . '/' . basename($target);
+            $target = $config->get('temp_path') . '/' . basename($target);
         }
 
         // Initialise contents buffer
@@ -237,7 +237,7 @@ abstract class MolajoInstallerHelper
      */
     public static function cleanupInstall($package, $resultdir)
     {
-        $config = MolajoFactory::getConfig();
+        $config = MolajoFactory::getApplication()->getConfig();
 
         // Does the unpacked extension directory exist?
         if (is_dir($resultdir)) {
@@ -248,10 +248,10 @@ abstract class MolajoInstallerHelper
         if (is_file($package)) {
             JFile::delete($package);
         }
-        elseif (is_file(JPath::clean($config->get('tmp_path') . '/' . $package)))
+        elseif (is_file(JPath::clean($config->get('temp_path') . '/' . $package)))
         {
             // It might also be just a base filename
-            JFile::delete(JPath::clean($config->get('tmp_path') . '/' . $package));
+            JFile::delete(JPath::clean($config->get('temp_path') . '/' . $package));
         }
     }
 

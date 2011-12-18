@@ -229,7 +229,7 @@ class MolajoTableContent extends MolajoTable
         if (trim($this->alias) == '') {
             $this->alias = $this->title;
         }
-        $this->alias = MolajoApplication::stringURLSafe($this->alias);
+        $this->alias = MolajoFactory::getApplication()->stringURLSafe($this->alias);
 
         /** do not check alias for version saves  **/
         if ($this->state == MOLAJO_STATUS_VERSION) {

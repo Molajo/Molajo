@@ -1,14 +1,14 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Twig
+ * @subpackage  Mustache
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
 
 /**
- *	Twig
+ *	Mustache
  */
-require_once PLATFORM_TWIG . '/Autoloader.php';
-Twig_Autoloader::register();
+$fileHelper = new MolajoFileHelper();
+$fileHelper->requireClassFile(PLATFORM_MUSTACHE . '/Mustache.php', 'Mustache');

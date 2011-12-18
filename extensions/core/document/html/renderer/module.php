@@ -52,7 +52,7 @@ class MolajoDocumentRendererModule extends MolajoDocumentRenderer
             }
         }
 
-        $conf = MolajoFactory::getConfig();
+        $conf = MolajoFactory::getApplication()->getConfig();
 
         // Set the module content
         if (is_null($content)) {

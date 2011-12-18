@@ -53,7 +53,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
         $html = array();
         $link = 'index.php?option=' . $this->element['extension'] . '&amp;view=' . $this->element['view'] . '&amp;layout=modal&amp;layout=component&amp;function=jSelectItem_' . $this->id;
 
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $db->setQuery(
             'SELECT title' .
             ' FROM ' . $this->element['table'] .

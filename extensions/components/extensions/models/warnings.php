@@ -80,13 +80,13 @@ class InstallerModelWarnings extends JModelList
             }
         }
 
-        $config = MolajoFactory::getConfig();
-        $tmp_path = $config->get('tmp_path');
-        if (!$tmp_path) {
+        $config = MolajoFactory::getApplication()->getConfig();
+        $temp_path = $config->get('temp_path');
+        if (!$temp_path) {
             $messages[] = Array('message' => MolajoTextHelper::_('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSET'), 'description' => MolajoTextHelper::_('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSETDESC'));
         } else {
-            if (!is_writeable($tmp_path)) {
-                $messages[] = Array('message' => MolajoTextHelper::_('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLE'), 'description' => MolajoTextHelper::sprintf('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLEDESC', $tmp_path));
+            if (!is_writeable($temp_path)) {
+                $messages[] = Array('message' => MolajoTextHelper::_('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLE'), 'description' => MolajoTextHelper::sprintf('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTWRITEABLEDESC', $temp_path));
             }
         }
 

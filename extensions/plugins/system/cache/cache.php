@@ -33,7 +33,7 @@ class plgSystemCache extends MolajoPlugin
         parent::__construct($subject, $config);
 
         //Set the language in the class
-        $config = MolajoFactory::getConfig();
+        $config = MolajoFactory::getApplication()->getConfig();
         $options = array(
             'defaultgroup' => 'page',
             'browsercache' => $this->parameters->get('browsercache', false),
@@ -51,7 +51,7 @@ class plgSystemCache extends MolajoPlugin
     function onAfterInitialise()
     {
         global $_PROFILER;
-        $app = MolajoFactory::getApplication();
+
         $user = MolajoFactory::getUser();
 
         if (JDEBUG) {
@@ -65,22 +65,22 @@ class plgSystemCache extends MolajoPlugin
         $data = $this->_cache->get();
 
         if ($data !== false) {
-            MolajoApplication::setBody($data);
+            MolajoFactory::getApplication()->setBody($data);
 
-            echo MolajoApplication::toString($app->getConfig('gzip'));
+            echo MolajoFactory::getApplication()->toString(MolajoFactory::getApplication()->getConfig('gzip'));
 
             if (JDEBUG) {
                 $_PROFILER->mark('afterCache');
                 echo implode('', $_PROFILER->getBuffer());
             }
 
-            $app->close();
+            MolajoFactory::getApplication()->close();
         }
     }
 
     function onAfterRender()
     {
-        $app = MolajoFactory::getApplication();
+
 
         if (JDEBUG) {
             return;

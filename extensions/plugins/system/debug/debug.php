@@ -31,7 +31,7 @@ class plgSystemDebug extends MolajoPlugin
 
         // Only if debugging is enabled
         if (JDEBUG) {
-            $config = MolajoFactory::getConfig();
+            $config = MolajoFactory::getApplication()->getConfig();
             $config->set('gzip', 0);
             ob_start();
             ob_implicit_flush(false);
@@ -326,7 +326,7 @@ class plgSystemDebug extends MolajoPlugin
 
         $debug = ob_get_clean();
 
-        $body = MolajoApplication::getBody();
+        $body = MolajoFactory::getApplication()->getBody();
         $body = str_replace('</body>', $debug . '</body>', $body);
         echo str_replace('</body>', $debug . '</body>', $contents);
     }

@@ -366,8 +366,8 @@ class MolajoDocumentHTML extends MolajoDocument
         if (!isset($children)) {
         } else {
             $dbo = MolajoFactory::getDbo();
-            $app = MolajoFactory::getApplication();
-            $menu = $app->getMenu();
+
+            $menu = MolajoFactory::getApplication()->getMenu();
             $where = Array();
             $active = $menu->getActive();
             /** todo: amy acl */

@@ -33,8 +33,8 @@ class plgUserMolajo extends MolajoPlugin
     public function onUserAfterSave($user, $isnew, $success, $msg)
     {
         // Initialise variables.
-        $app = MolajoFactory::getApplication();
-        $config = MolajoFactory::getConfig();
+
+        $config = MolajoFactory::getApplication()->getConfig();
 
         if ($isnew) {
             // TODO: Suck in the frontend registration emails here as well. Job for a rainy day.
@@ -106,9 +106,9 @@ class plgUserMolajo extends MolajoPlugin
         $session = MolajoFactory::getSession();
         $session->set('user', $instance);
 
-        $db = MolajoFactory::getDBO();
-        $app = MolajoFactory::getApplication();
-        $app->checkSession();
+        $db = MolajoFactory::getDbo();
+
+        MolajoFactory::getApplication()->checkSession();
 
         // Update the user related fields for the Joomla sessions table.
         $db->setQuery(
@@ -137,7 +137,7 @@ class plgUserMolajo extends MolajoPlugin
     {
         $my = MolajoFactory::getUser();
         $session = MolajoFactory::getSession();
-        $app = MolajoFactory::getApplication();
+
 
         // Make sure we're a valid user first
         if ($user['id'] == 0 && !$my->get('tmp_user')) {
@@ -156,7 +156,7 @@ class plgUserMolajo extends MolajoPlugin
         }
 
         // Force logout all users with that user_id
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `user_id` = ' . (int)$user['id'] .

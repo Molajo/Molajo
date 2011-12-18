@@ -129,6 +129,8 @@ class MolajoApplication
 
         /** URI */
         $this->loadSystemUris();
+        echo $this->get('uri.request');
+        //echo '<pre>';var_dump($this);'</pre>';
     }
 
     /**
@@ -148,8 +150,7 @@ class MolajoApplication
             $id = MOLAJO_APPLICATION;
         }
 
-        if (self::$instance) {
-        } else {
+        if (empty(self::$instance)) {
 
             $info = MolajoApplicationHelper::getApplicationInfo($id, true);
             if ($info === false) {
@@ -318,6 +319,7 @@ $this->setBody('Hello World');
 
                 // Attempt to gzip encode the data with an optimal level 4.
                 $data = $this->getBody();
+
                 $gzdata = gzencode($data, 4, ($supported[$encoding] == 'gz') ? FORCE_GZIP : FORCE_DEFLATE);
 
                 // If there was a problem encoding the data just try the next encoding scheme.
@@ -870,12 +872,26 @@ $this->setBody('Hello World');
      */
     protected function loadSystemUris($requestUri = null)
     {
+//echo $this->detectRequestUri().'<br >';
         /** Request URL */
         if (empty($requestUri)) {
             $this->set('uri.request', $this->detectRequestUri());
         } else {
             $this->set('uri.request', $requestUri);
         }
+//$cache_path
+/**
+if (MolajoFactory::getApplication()->getConfig('force_ssl') == 2
+&& strtolower($uri->getScheme()) != 'https') {
+//forward to https
+$uri->setScheme('https');
+MolajoFactory::getApplication()->redirect((string)$uri);
+}
+*/
+//$logs_path
+//$temp_path
+//$media_path
+//$media_uri_path
 
         /** siteUri */
         $siteUri = trim($this->get('site_uri'));
@@ -896,6 +912,7 @@ $this->setBody('Hello World');
 
         /** Media */
         $mediaURI = trim($this->get('media_uri'));
+
         if ($mediaURI) {
             if (strpos($mediaURI, '://') == false) {
                 $this->set('uri.media.full', $this->get('uri.base.host') . $mediaURI);

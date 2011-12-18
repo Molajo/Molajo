@@ -328,7 +328,7 @@ class MolajoInstaller extends MolajoAdapter
 
                 case 'extension':
                     // Get database connector object
-                    $db = $this->getDBO();
+                    $db = $this->getDbo();
                     $query = $db->getQuery(true);
 
                     // Remove the entry from the #__extensions table
@@ -364,7 +364,7 @@ class MolajoInstaller extends MolajoAdapter
             $step = array_pop($this->_stepStack);
         }
 
-        $conf = MolajoFactory::getConfig();
+        $conf = MolajoFactory::getApplication()->getConfig();
         $debug = $conf->get('debug');
 
         if ($debug) {
@@ -887,7 +887,7 @@ class MolajoInstaller extends MolajoAdapter
     public function setSchemaVersion($schema, $eid)
     {
         if ($eid && $schema) {
-            $db = MolajoFactory::getDBO();
+            $db = MolajoFactory::getDbo();
             $schemapaths = $schema->children();
 
             if (!$schemapaths) {
@@ -951,7 +951,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Ensure we have an XML element and a valid extension id
         if ($eid && $schema) {
-            $db = MolajoFactory::getDBO();
+            $db = MolajoFactory::getDbo();
             $schemapaths = $schema->children();
 
             if (count($schemapaths)) {
@@ -1795,7 +1795,7 @@ class MolajoInstaller extends MolajoAdapter
      */
     public function cleanDiscoveredExtension($type, $element, $folder = '', $client = 0)
     {
-        $dbo = MolajoFactory::getDBO();
+        $dbo = MolajoFactory::getDbo();
         $query = $dbo->getQuery(true);
         $query->delete($dbo->quoteName('#__extensions'));
         $query->where('type = ' . $dbo->Quote($type));

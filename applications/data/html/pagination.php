@@ -252,7 +252,7 @@ class MolajoPagination extends JObject
      */
     public function getPagesLinks()
     {
-        $app = MolajoFactory::getApplication();
+
 
         // Build the page navigation list.
         $data = $this->_buildDataObject();
@@ -263,7 +263,7 @@ class MolajoPagination extends JObject
         $itemOverride = false;
         $listOverride = false;
 
-        $chromePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $app->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
+        $chromePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . MolajoFactory::getApplication()->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
         if (file_exists($chromePath)) {
             require_once $chromePath;
             if (function_exists('pagination_item_active') && function_exists('pagination_item_inactive')) {
@@ -357,7 +357,7 @@ class MolajoPagination extends JObject
      */
     public function getListFooter()
     {
-        $app = MolajoFactory::getApplication();
+
 
         $list = array();
         $list['prefix'] = $this->prefix;
@@ -368,7 +368,7 @@ class MolajoPagination extends JObject
         $list['pagescounter'] = $this->getPagesCounter();
         $list['pageslinks'] = $this->getPagesLinks();
 
-        $chromePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $app->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
+        $chromePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . MolajoFactory::getApplication()->getTemplate() . '/' . 'html' . '/' . 'pagination.php';
         if (file_exists($chromePath)) {
             require_once $chromePath;
             if (function_exists('pagination_list_footer')) {
@@ -386,7 +386,7 @@ class MolajoPagination extends JObject
      */
     public function getLimitBox()
     {
-        $app = MolajoFactory::getApplication();
+
 
         // Initialise variables.
         $limits = array();
@@ -485,7 +485,7 @@ class MolajoPagination extends JObject
 
     protected function _item_active(&$item)
     {
-        $app = MolajoFactory::getApplication();
+
         if ($item->base > 0) {
             return "<a title=\"" . $item->text . "\" onclick=\"document.adminForm." . $this->prefix . "limitstart.value=" . $item->base . "; Joomla.submitform();return false;\">" . $item->text . "</a>";
         }

@@ -14,8 +14,8 @@ class modLoginHelper
 {
     static function getReturnURL($parameters, $type)
     {
-        $app = MolajoFactory::getApplication();
-        $router = $app->getRouter();
+
+        $router = MolajoFactory::getApplication()->getRouter();
         $url = null;
         if ($itemid = $parameters->get($type)) {
             $db = MolajoFactory::getDbo();
@@ -44,7 +44,7 @@ class modLoginHelper
             if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
                 if (isset($vars['Itemid'])) {
                     $itemid = $vars['Itemid'];
-                    $menu = $app->getMenu();
+                    $menu = MolajoFactory::getApplication()->getMenu();
                     $item = $menu->getItem($itemid);
                     unset($vars['Itemid']);
                     if (isset($item) && $vars == $item->query) {

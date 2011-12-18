@@ -75,7 +75,7 @@ abstract class MolajoModule
      */
     public static function getModules($position)
     {
-        $app = MolajoFactory::getApplication();
+
         $position = strtolower($position);
         $result = array();
 
@@ -332,7 +332,7 @@ abstract class MolajoModule
 
         $user = MolajoFactory::getUser();
         $cache = MolajoFactory::getCache($cacheparameters->cachegroup, 'callback');
-        $conf = MolajoFactory::getConfig();
+        $conf = MolajoFactory::getApplication()->getConfig();
 
         // Turn cache off for internal callers if parameters are set to off and for all logged in users
         if ($moduleparameters->get('owncache', null) === 0 || $conf->get('caching') == 0 || $user->get('id')) {

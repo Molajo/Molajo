@@ -19,8 +19,6 @@ class plgSystemRemember extends MolajoPlugin
 {
     function onAfterInitialise()
     {
-        $app = MolajoFactory::getApplication();
-
         $user = MolajoFactory::getUser();
         if ($user->get('guest')) {
             jimport('joomla.utilities.utility');
@@ -37,8 +35,8 @@ class plgSystemRemember extends MolajoPlugin
 
                 $options = array();
                 $options['silent'] = true;
-                if (!$app->login(@unserialize($str), $options)) {
-                    $config = MolajoFactory::getConfig();
+                if (!MolajoFactory::getApplication()->login(@unserialize($str), $options)) {
+                    $config = MolajoFactory::getApplication()->getConfig();
                     $cookie_domain = $config->get('cookie_domain', '');
                     $cookie_path = $config->get('cookie_path', '/');
                     // Clear the remember me cookie

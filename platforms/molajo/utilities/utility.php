@@ -81,7 +81,7 @@ class MolajoUtility
      */
     public static function getHash($seed)
     {
-        return md5(MolajoFactory::getConfig()->get('secret') . $seed);
+        return md5(MolajoFactory::getApplication()->getConfig->get('secret') . $seed);
     }
 
     /**
@@ -133,7 +133,7 @@ class MolajoUtility
      *
      * @since       11.1
      * @deprecated  1.6
-     * @see            MolajoApplication::isWinOS()
+     * @see            MolajoFactory::getApplication()->isWinOS()
      */
     public static function isWinOS()
     {

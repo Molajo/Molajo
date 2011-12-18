@@ -59,7 +59,7 @@ class MolajoDocumentXml extends MolajoDocument
     public function render($cache = false, $parameters = array())
     {
         parent::render();
-        MolajoApplication::setHeader('Content-disposition', 'inline; filename="' . $this->getName() . '.xml"', true);
+        MolajoFactory::getApplication()->setHeader('Content-disposition', 'inline; filename="' . $this->getName() . '.xml"', true);
 
         return $this->getBuffer();
     }

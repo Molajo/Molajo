@@ -55,20 +55,20 @@ class InstallerModelManage extends InstallerModel
     protected function populateState($ordering = null, $direction = null)
     {
         // Initialise variables.
-        $app = MolajoFactory::getApplication();
+
         $filters = JRequest::getVar('filters');
         if (empty($filters)) {
-            $data = $app->getUserState($this->context . '.data');
+            $data = MolajoFactory::getApplication()->getUserState($this->context . '.data');
             $filters = $data['filters'];
         }
         else {
-            $app->setUserState($this->context . '.data', array('filters' => $filters));
+            MolajoFactory::getApplication()->setUserState($this->context . '.data', array('filters' => $filters));
         }
 
-        $this->setState('message', $app->getUserState('installer.message'));
-        $this->setState('extension_message', $app->getUserState('installer.extension_message'));
-        $app->setUserState('installer.message', '');
-        $app->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoFactory::getApplication()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoFactory::getApplication()->getUserState('installer.extension_message'));
+        MolajoFactory::getApplication()->setUserState('installer.message', '');
+        MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
 
         $this->setState('filter.search', isset($filters['search']) ? $filters['search'] : '');
         $this->setState('filter.hideprotected', isset($filters['hideprotected']) ? $filters['hideprotected'] : 0);
@@ -101,7 +101,7 @@ class InstallerModelManage extends InstallerModel
             }
 
             // Get a database connector
-            $db = MolajoFactory::getDBO();
+            $db = MolajoFactory::getDbo();
 
             // Get a table object for the extension type
             $table = JTable::getInstance('Extension');
@@ -144,7 +144,7 @@ class InstallerModelManage extends InstallerModel
         }
 
         // Get a database connector
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
 
         // Get an installer object for the extension type
         jimport('joomla.installer.installer');
@@ -184,7 +184,7 @@ class InstallerModelManage extends InstallerModel
             }
 
             // Get a database connector
-            $db = MolajoFactory::getDBO();
+            $db = MolajoFactory::getDbo();
 
             // Get an installer object for the extension type
             jimport('joomla.installer.installer');
@@ -225,12 +225,12 @@ class InstallerModelManage extends InstallerModel
                 $msg = MolajoTextHelper::sprintf('INSTALLER_UNINSTALL_SUCCESS', $rowtype);
                 $result = true;
             }
-            $app = MolajoFactory::getApplication();
-            $app->enqueueMessage($msg);
+
+            MolajoFactory::getApplication()->enqueueMessage($msg);
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
-            $app->setUserState('installer.message', $installer->message);
-            $app->setUserState('installer.extension_message', $installer->get('extension_message'));
+            MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
+            MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
             return $result;
         } else {
             $result = false;
@@ -251,7 +251,7 @@ class InstallerModelManage extends InstallerModel
         $application = $this->getState('filter.application_id');
         $group = $this->getState('filter.group');
         $hideprotected = $this->getState('filter.hideprotected');
-        $query = MolajoFactory::getDBO()->getQuery(true);
+        $query = MolajoFactory::getDbo()->getQuery(true);
         $query->select('*');
         $query->from('#__extensions');
         $query->where('state=0');
@@ -293,7 +293,7 @@ class InstallerModelManage extends InstallerModel
     {
         // Get the form.
         jimport('joomla.form.form');
-        $app = MolajoFactory::getApplication();
+
         JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
         JForm::addFieldPath(JPATH_COMPONENT . '/models/fields');
         $form = JForm::getInstance('installer.manage', 'manage', array('load_data' => $loadData));

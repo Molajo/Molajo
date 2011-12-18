@@ -35,7 +35,7 @@ class MolajoFormFieldTag extends MolajoFormFieldList
     {
         // Initialize variables.
         $options = array();
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         // Build the query.

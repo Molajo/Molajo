@@ -26,10 +26,10 @@ class InstallerViewDefault extends JView
      */
     function __construct($config = null)
     {
-        $app = MolajoFactory::getApplication();
+
         parent::__construct($config);
         $this->_addPath('template', $this->_basePath . '/views/default/layouts');
-        $this->_addPath('template', JPATH_THEMES . '/' . $app->getTemplate() . '/html/installer/default');
+        $this->_addPath('template', JPATH_THEMES . '/' . MolajoFactory::getApplication()->getTemplate() . '/html/installer/default');
     }
 
     /**

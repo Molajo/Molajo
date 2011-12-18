@@ -2,10 +2,6 @@
 class MolajoConfig
 {
 
-    /**
-     *  Application Configuration
-     */
-
     /* Cache */
     public $caching = '0';
     public $cachetime = '15';
@@ -83,10 +79,10 @@ class MolajoConfig
     public $ftp_root = '';
     public $ftp_enable = '';
     public $cache_path = '/Users/amystephen/Sites/Molajo/sites/1/cache';
-    public $images_path = '/Users/amystephen/Sites/Molajo/sites/1/images';
     public $logs_path = '/Users/amystephen/Sites/Molajo/sites/1/logs';
+    public $temp_path = '/Users/amystephen/Sites/Molajo/sites/1/temp';
     public $media_path = '/Users/amystephen/Sites/Molajo/sites/1/media';
-    public $tmp_path = '/Users/amystephen/Sites/Molajo/sites/1/tmp';
+    public $media_uri_path = 'sites/1/media';
     public $live_site = ''; // Optional, Full url to installation.
 
     /* Session settings */

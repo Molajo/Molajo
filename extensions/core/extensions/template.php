@@ -24,7 +24,7 @@ abstract class MolajoTemplate
      * @return string The template name
      * @since 1.0
      */
-    static public function getTemplate()
+    static public function getTemplate($template = null)
     {
         /** initialize */
         $menuItem = null;
@@ -56,7 +56,7 @@ abstract class MolajoTemplate
 
         /** Configuration default */
         if ((int)$id == 0) {
-            $id = strtolower(MolajoFactory::getConfig()->get('default_template_extension'));
+            $id = strtolower(MolajoFactory::getApplication()->getConfig->get('default_template_extension'));
         }
 
         /** Retrieve Template from the DB */
@@ -126,15 +126,15 @@ abstract class MolajoTemplate
         MolajoFactory::getDocument()->parse($parameters);
 
         /** Before Event */
-        $app->triggerEvent('onBeforeRender');
+        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
 
         /** Render */
         $body = MolajoFactory::getDocument()->render(false, $parameters);
 
-        MolajoApplication::setBody($body);
+        MolajoFactory::getApplication()->setBody($body);
 
         /** After Event */
-        $app->triggerEvent('onAfterRender');
+        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
 
         /** Revert scope */
         MolajoFactory::getApplication()->scope = $scope;

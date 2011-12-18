@@ -15,14 +15,6 @@ defined('MOLAJO') or die;
 class MolajoExtension
 {
     /**
-     * Instance
-     *
-     * @var string
-     * @since  1.0
-     */
-    protected static $instance;
-
-    /**
      * Configuration
      *
      * @var    integer
@@ -31,8 +23,10 @@ class MolajoExtension
     protected $config = null;
 
     /**
+     * Document
+     *
      * @var    Document  The application document object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $document;
 
@@ -61,6 +55,46 @@ class MolajoExtension
     protected $page = null;
 
     /**
+     *  Option
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $option = null;
+
+    /**
+     *  View
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $view = null;
+
+    /**
+     *  Layout
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $layout = null;
+
+    /**
+     *  Id
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $id = null;
+
+    /**
+     *  Task
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $task = null;
+
+    /**
      * __construct
      *
      * Class constructor.
@@ -77,7 +111,6 @@ class MolajoExtension
      */
     public function __construct($id = null, $config = array(), $document = null)
     {
-
         if ($config) {
             $this->config = $config;
         } else {
@@ -93,6 +126,12 @@ class MolajoExtension
         } else {
             $this->loadDocument();
         }
+
+        $request = MolajoFactory::getApplication()->get('uri.request');
+        echo 'Request'.$request;
+        die;
+        $asset = new MolajoAsset ($request);
+var_dump($asset);
 
        // $this->loadUser();
 

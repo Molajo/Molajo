@@ -121,9 +121,9 @@ require_once MOLAJO_EXTENSIONS_CORE.'/includes/extensions.php';
 require_once MOLAJO_EXTENSIONS_CORE.'/includes/sites.php';
 require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-molajo.php';
 require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-twig.php';
+require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-mustache.php';
 require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-doctrine.php';
 require_once MOLAJO_EXTENSIONS_CORE.'/includes/platforms-simple-pie.php';
-
 require_once MOLAJO_EXTENSIONS_CORE.'/includes/overrides.php';
 
 JDEBUG ? $_PROFILER->mark('afterLoad') : null;

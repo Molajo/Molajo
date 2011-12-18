@@ -381,18 +381,6 @@ class MolajoLanguage
     }
 
     /**
-     * Getter for pluralSuffixesCallback function.
-     *
-     * @return  mixed  Function name (string) or the actual function for PHP 5.3 (function).
-     *
-     * @since   11.1
-     */
-    public function getPluralSuffixesCallback()
-    {
-        return $this->pluralSuffixesCallback;
-    }
-
-    /**
      * Set the pluralSuffixes function.
      *
      * @param   mixed  $function  Function name (string) or actual function for PHP 5.3 (function)

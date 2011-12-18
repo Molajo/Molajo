@@ -120,7 +120,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
         /* Feed Settings */
         $registry->set('feed_limit', 10);
         $registry->set('log_path', MOLAJO_PATH_ROOT . '/logs');
-        $registry->set('tmp_path', MOLAJO_PATH_ROOT . '/tmp');
+        $registry->set('temp_path', MOLAJO_PATH_ROOT . '/tmp');
 
         /* Session Setting */
         $registry->set('lifetime', 15);
@@ -201,7 +201,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
     function _createRootUser($config)
     {
         // Get a database object.
-        $db = MolajoInstallationHelperDatabase::getDBO($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
+        $db = MolajoInstallationHelperDatabase::getDbo($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
 
         // Check for errors.
         if (MolajoError::isError($db)) {
@@ -314,7 +314,7 @@ class InstallerModelConfiguration extends MolajoModelDummy
      */
     function createPermissions($config)
     {
-        $db = MolajoInstallationHelperDatabase::getDBO($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
+        $db = MolajoInstallationHelperDatabase::getDbo($config->db_type, $config->db_host, $config->db_user, $config->db_pass, $config->db_name, $config->db_prefix);
 
         $query = 'INSERT INTO `#__permissions_groups` (`group_id`,`asset_id`,`action_id`)
                   SELECT DISTINCT c.group_id as group_id, b.id as asset_id, 3 as `action_id`

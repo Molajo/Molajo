@@ -54,7 +54,7 @@ abstract class MolajoPageHelper
 
         /** Configuration default */
         if ((int)$id == 0) {
-            $id = strtolower(MolajoFactory::getConfig()->get('default_template_extension'));
+            $id = strtolower(MolajoFactory::getApplication()->getConfig->get('default_template_extension'));
         }
 
         /** Retrieve Page from the DB */
@@ -124,14 +124,14 @@ abstract class MolajoPageHelper
         MolajoFactory::getDocument()->parse($parameters);
 
         /** Before Event */
-        $app->triggerEvent('onBeforeRender');
+        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
 
         /** Render */
         $body = MolajoFactory::getDocument()->render(false, $parameters);
-        MolajoApplication::setBody($body);
+        MolajoFactory::getApplication()->setBody($body);
 
         /** After Event */
-        $app->triggerEvent('onAfterRender');
+        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
 
         /** Revert scope */
         MolajoFactory::getApplication()->scope = $scope;

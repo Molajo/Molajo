@@ -80,7 +80,7 @@ class MolajoFormFieldComponentlayout extends MolajoFormField
             || $lang->load($extn . '.sys', MOLAJO_BASE_FOLDER . '/components/' . $extn, $lang->getDefault(), false, false);
 
             // Get the database object and a new query object.
-            $db = MolajoFactory::getDBO();
+            $db = MolajoFactory::getDbo();
             $query = $db->getQuery(true);
 
             // Build the query.

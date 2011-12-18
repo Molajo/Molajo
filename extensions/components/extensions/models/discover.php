@@ -34,11 +34,11 @@ class InstallerModelDiscover extends InstallerModel
      */
     protected function populateState($ordering = null, $direction = null)
     {
-        $app = MolajoFactory::getApplication();
-        $this->setState('message', $app->getUserState('installer.message'));
-        $this->setState('extension_message', $app->getUserState('installer.extension_message'));
-        $app->setUserState('installer.message', '');
-        $app->setUserState('installer.extension_message', '');
+
+        $this->setState('message', MolajoFactory::getApplication()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoFactory::getApplication()->getUserState('installer.extension_message'));
+        MolajoFactory::getApplication()->setUserState('installer.message', '');
+        MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
         parent::populateState('name', 'asc');
     }
 
@@ -50,7 +50,7 @@ class InstallerModelDiscover extends InstallerModel
      */
     protected function getListQuery()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('*');
         $query->from('#__extensions');
@@ -72,7 +72,7 @@ class InstallerModelDiscover extends InstallerModel
 
         // Get all templates, including discovered ones
         $query = 'SELECT extension_id, element, folder, application_id, type FROM #__extensions';
-        $dbo = MolajoFactory::getDBO();
+        $dbo = MolajoFactory::getDbo();
         $dbo->setQuery($query);
         $installedtmp = $dbo->loadObjectList();
         $extensions = Array();
@@ -101,7 +101,7 @@ class InstallerModelDiscover extends InstallerModel
      */
     function discover_install()
     {
-        $app = MolajoFactory::getApplication();
+
         $installer = JInstaller::getInstance();
         $eid = JRequest::getVar('cid', 0);
         if (is_array($eid) || $eid) {
@@ -109,24 +109,24 @@ class InstallerModelDiscover extends InstallerModel
                 $eid = Array($eid);
             }
             JArrayHelper::toInteger($eid);
-            $app = MolajoFactory::getApplication();
+
             $failed = false;
             foreach ($eid as $id) {
                 $result = $installer->discover_install($id);
                 if (!$result) {
                     $failed = true;
-                    $app->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLFAILED') . ': ' . $id);
+                    MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLFAILED') . ': ' . $id);
                 }
             }
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
-            $app->setUserState('installer.message', $installer->message);
-            $app->setUserState('installer.extension_message', $installer->get('extension_message'));
+            MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
+            MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
             if (!$failed) {
-                $app->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
+                MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
             }
         } else {
-            $app->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
+            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
         }
     }
 
@@ -137,7 +137,7 @@ class InstallerModelDiscover extends InstallerModel
      */
     function purge()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
         $query->delete();
         $query->from('#__extensions');

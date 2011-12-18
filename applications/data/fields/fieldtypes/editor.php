@@ -95,7 +95,7 @@ class MolajoFormFieldEditor extends MolajoFormField
                 $types = explode('|', $type);
 
                 // Get the database object.
-                $db = MolajoFactory::getDBO();
+                $db = MolajoFactory::getDbo();
 
                 // Iterate over teh types looking for an existing editor.
                 foreach ($types as $element)

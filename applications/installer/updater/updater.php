@@ -66,7 +66,7 @@ class MolajoUpdater extends MolajoAdapter
             return false;
         }
 
-        $dbo = $this->getDBO();
+        $dbo = $this->getDbo();
         $retval = false;
         // Push it into an array
         if (!is_array($eid)) {

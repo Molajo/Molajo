@@ -32,7 +32,7 @@ class MolajoTableMenu extends MolajoTable
      */
     function check()
     {
-        $this->menu_id = MolajoApplication::stringURLSafe($this->menu_id);
+        $this->menu_id = MolajoFactory::getApplication()->stringURLSafe($this->menu_id);
         if (empty($this->menu_id)) {
             $this->setError(MolajoTextHelper::_('MOLAJO_DATABASE_ERROR_MENU_EMPTY'));
             return false;

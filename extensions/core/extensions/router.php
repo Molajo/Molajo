@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Extension
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -18,27 +18,27 @@ define('MOLAJO_ROUTER_MODE_SEF', 1);
  * Class to create and parse routes
  *
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  Router
  * @since       1.0
  */
 class MolajoRouter extends JObject
 {
     /**
-     * The rewrite mode
+     * Rewrite mode
      *
      * @var integer
      */
-    protected $_mode = null;
+    protected $mode = null;
 
     /**
-     * An array of variables
+     * Variable array
      *
      * @var array
      */
-    protected $_vars = array();
+    protected $vars = array();
 
     /**
-     * An array of rules
+     * Rules array
      *
      * @var array
      */
@@ -49,13 +49,15 @@ class MolajoRouter extends JObject
 
     /**
      * Class constructor
+     * 
+     * @param array $options
      */
     public function __construct($options = array())
     {
         if (array_key_exists('mode', $options)) {
-            $this->_mode = $options['mode'];
+            $this->mode = $options['mode'];
         } else {
-            $this->_mode = MOLAJO_ROUTER_MODE_RAW;
+            $this->mode = MOLAJO_ROUTER_MODE_RAW;
         }
     }
 
@@ -108,55 +110,35 @@ class MolajoRouter extends JObject
         $vars = array();
 
         // Get the application
-        $app = MolajoFactory::getApplication();
 
-        if ($app->getConfig('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
+
+        if (MolajoFactory::getApplication()->getConfig('force_ssl') == 2 && strtolower($uri->getScheme()) != 'https') {
             //forward to https
             $uri->setScheme('https');
-            $app->redirect((string)$uri);
+            MolajoFactory::getApplication()->redirect((string)$uri);
         }
 
         // Get the path
         $path = $uri->getPath();
 
-        // Remove the base URI path.
-        $path = substr_replace($path, '', 0, strlen(JURI::base(true)));
+            $db = MolajoFactory::getDbo();
+            $query = $db->getQuery(true);
+    
+            $query->select('id');
+            $query->from($tableParam);
+            $query->where('sef_request = ' . $db->Quote($alias));
+            $query->where('state > -10');
+    
+            $db->setQuery($query);
+    
+            $asset = $db->loadResult();
 
-        // Check to see if a request to a specific entry point has been made.
-        if (preg_match("#.*\.php#u", $path, $matches)) {
-
-            // Get the current entry point path relative to the site path.
-            $scriptPath = realpath($_SERVER['SCRIPT_FILENAME'] ? $_SERVER['SCRIPT_FILENAME']
-                                           : str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']));
-            $relativeScriptPath = str_replace('\\', '/', str_replace(JPATH_SITE, '', $scriptPath));
-
-            // If a php file has been found in the request path, check to see if it is a valid file.
-            // Also verify that it represents the same file from the server variable for entry script.
-            if (file_exists(JPATH_SITE . $matches[0]) && ($matches[0] == $relativeScriptPath)) {
-
-                // Remove the entry point segments from the request path for proper routing.
-                $path = str_replace($matches[0], '', $path);
-            }
-        }
-
-        //Remove the suffix
-        if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
-            if ($app->getConfig('sef_suffix') && !(substr($path, -9) == 'index.php' || substr($path, -1) == '/')) {
-                if ($suffix = pathinfo($path, PATHINFO_EXTENSION)) {
-                    $path = str_replace('.' . $suffix, '', $path);
-                    $vars['format'] = $suffix;
-                }
-            }
-        }
-
-        //Set the route
-        $uri->setPath(trim($path, '/'));
 
         // Process the parsed variables based on custom defined rules
         $vars = $this->_processParseRules($uri);
 
         // Parse RAW URL
-        if ($this->_mode == MOLAJO_ROUTER_MODE_RAW) {
+        if ($this->mode == MOLAJO_ROUTER_MODE_RAW) {
             $vars2 = $this->_parseRawRoute($uri);
             if (is_array($vars2)) {
                 array_merge($vars, $vars2);
@@ -164,7 +146,7 @@ class MolajoRouter extends JObject
         }
 
         // Parse SEF URL
-        if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
+        if ($this->mode == MOLAJO_ROUTER_MODE_SEF) {
             $vars2 = $this->_parseSefRoute($uri);
             if (is_array($vars2)) {
                 array_merge($vars, $vars2);
@@ -191,12 +173,12 @@ class MolajoRouter extends JObject
         $this->_processBuildRules($uri);
 
         // Build RAW URL
-        if ($this->_mode == MOLAJO_ROUTER_MODE_RAW) {
+        if ($this->mode == MOLAJO_ROUTER_MODE_RAW) {
             $this->_buildRawRoute($uri);
         }
 
         // Build SEF URL : mysite/route/index.php?var=x
-        if ($this->_mode == MOLAJO_ROUTER_MODE_SEF) {
+        if ($this->mode == MOLAJO_ROUTER_MODE_SEF) {
             $this->_buildSefRoute($uri);
         }
 
@@ -211,7 +193,7 @@ class MolajoRouter extends JObject
      */
     public function getMode()
     {
-        return $this->_mode;
+        return $this->mode;
     }
 
     /**
@@ -222,7 +204,7 @@ class MolajoRouter extends JObject
      */
     public function setMode($mode)
     {
-        $this->_mode = $mode;
+        $this->mode = $mode;
     }
 
     /**
@@ -237,8 +219,8 @@ class MolajoRouter extends JObject
      */
     public function setVar($key, $value, $create = true)
     {
-        if ($create || array_key_exists($key, $this->_vars)) {
-            $this->_vars[$key] = $value;
+        if ($create || array_key_exists($key, $this->vars)) {
+            $this->vars[$key] = $value;
         }
     }
 
@@ -254,9 +236,9 @@ class MolajoRouter extends JObject
     public function setVars($vars = array(), $merge = true)
     {
         if ($merge) {
-            $this->_vars = array_merge($this->_vars, $vars);
+            $this->vars = array_merge($this->vars, $vars);
         } else {
-            $this->_vars = $vars;
+            $this->vars = $vars;
         }
     }
 
@@ -271,8 +253,8 @@ class MolajoRouter extends JObject
     public function getVar($key)
     {
         $result = null;
-        if (isset($this->_vars[$key])) {
-            $result = $this->_vars[$key];
+        if (isset($this->vars[$key])) {
+            $result = $this->vars[$key];
         }
         return $result;
     }
@@ -285,7 +267,7 @@ class MolajoRouter extends JObject
      */
     public function getVars()
     {
-        return $this->_vars;
+        return $this->vars;
     }
 
     /**

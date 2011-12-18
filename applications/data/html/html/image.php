@@ -45,7 +45,7 @@ abstract class MolajoHtmlImage
         JLog::add('JImage::site is deprecated.', JLog::WARNING, 'deprecated');
 
         static $paths;
-        $app = MolajoFactory::getApplication();
+
 
         if (!$paths) {
             $paths = array();
@@ -55,7 +55,7 @@ abstract class MolajoHtmlImage
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        $cur_template = $app->getTemplate();
+        $cur_template = MolajoFactory::getApplication()->getTemplate();
 
         // Strip HTML.
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');
@@ -124,13 +124,13 @@ abstract class MolajoHtmlImage
         // Deprecation warning.
         JLog::add('JImage::administrator is deprecated.', JLog::WARNING, 'deprecated');
 
-        $app = MolajoFactory::getApplication();
+
 
         if (is_array($attribs)) {
             $attribs = JArrayHelper::toString($attribs);
         }
 
-        $cur_template = $app->getTemplate();
+        $cur_template = MolajoFactory::getApplication()->getTemplate();
 
         // Strip HTML.
         $alt = html_entity_decode($alt, ENT_COMPAT, 'UTF-8');

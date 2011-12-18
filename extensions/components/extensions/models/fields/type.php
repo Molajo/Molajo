@@ -42,7 +42,7 @@ class JFormFieldType extends JFormField
             $options[] = MolajoHTML::_('select.option', $option->attributes('value'), MolajoTextHelper::_(trim($option->data())));
         }
 
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('type')->from('#__extensions');
         $db->setQuery($query);

@@ -65,7 +65,7 @@ class MolajoFormFieldSample extends MolajoFormFieldList
     protected function getInput()
     {
         if (!$this->value) {
-            $conf = MolajoFactory::getConfig();
+            $conf = MolajoFactory::getApplication()->getConfig();
             if ($conf->get('sampledata')) {
                 $this->value = $conf->get('sampledata');
             } else {

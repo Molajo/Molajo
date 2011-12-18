@@ -216,15 +216,15 @@ abstract class MolajoTable extends JObject
     }
 
     /**
-     * setDBO
+     * setDbo
      *
      * Method to set the JDatabase connector object.
      *
      * @param   object   A JDatabase connector object to be used by the table object.
      * @return  boolean  True on success.
-     * @link    http://docs.molajo.org/MolajoTable/setDBO
+     * @link    http://docs.molajo.org/MolajoTable/setDbo
      */
-    public function setDBO(&$database)
+    public function setDbo(&$database)
     {
         if ($database instanceof JDatabase) {
         } else {
@@ -749,7 +749,7 @@ abstract class MolajoTable extends JObject
             return false;
         }
 
-        $database = MolajoFactory::getDBO();
+        $database = MolajoFactory::getDbo();
         $database->setQuery(
             'SELECT COUNT(user_id)' .
             ' FROM ' . $database->quoteName('#__sessions') .

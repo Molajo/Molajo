@@ -36,16 +36,16 @@ class InstallerControllerUpdate extends JController
             $cache->clean();
         }
 
-        $app = MolajoFactory::getApplication();
-        $redirect_url = $app->getUserState('installer.redirect_url');
+
+        $redirect_url = MolajoFactory::getApplication()->getUserState('installer.redirect_url');
         if (empty($redirect_url)) {
             $redirect_url = MolajoRouteHelper::_('index.php?option=installer&view=update', false);
         } else
         {
             // wipe out the user state when we're going to redirect
-            $app->setUserState('installer.redirect_url', '');
-            $app->setUserState('installer.message', '');
-            $app->setUserState('installer.extension_message', '');
+            MolajoFactory::getApplication()->setUserState('installer.redirect_url', '');
+            MolajoFactory::getApplication()->setUserState('installer.message', '');
+            MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
         }
         $this->setRedirect($redirect_url);
     }

@@ -77,7 +77,7 @@ class MolajoSessionHelper extends JObject
      */
     protected function _removeExpiredSessions()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $db->setQuery(
             'DELETE FROM `#__sessions`' .
             ' WHERE `session_time` < ' . (int)(time() - $this->_session->getExpire())
@@ -99,7 +99,7 @@ class MolajoSessionHelper extends JObject
      */
     protected function _checkSession()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $session = MolajoFactory::getSession();
         $user = MolajoFactory::getUser();
 
@@ -157,6 +157,6 @@ class MolajoSessionHelper extends JObject
      */
     protected function _getConfig($varname, $default = null)
     {
-        return MolajoFactory::getConfig()->get('' . $varname, $default);
+        return MolajoFactory::getApplication()->getConfig->get('' . $varname, $default);
     }
 }

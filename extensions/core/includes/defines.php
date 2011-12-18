@@ -36,6 +36,10 @@ if (defined('PLATFORM_TWIG')) {
 } else {
     define('PLATFORM_TWIG', PLATFORMS . '/Twig');
 }
+if (defined('PLATFORM_MUSTACHE')) {
+} else {
+    define('PLATFORM_MUSTACHE', PLATFORMS . '/Mustache');
+}
 
 /**
  *  Applications

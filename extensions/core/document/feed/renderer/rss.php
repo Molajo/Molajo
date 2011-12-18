@@ -35,10 +35,10 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
      */
     public function render()
     {
-        $app = MolajoFactory::getApplication();
+
 
         // Gets and sets timezone offset from site configuration
-        $tz = new DateTimeZone($app->getConfig('offset'));
+        $tz = new DateTimeZone(MolajoFactory::getApplication()->getConfig('offset'));
         $now = MolajoFactory::getDate();
         $now->setTimeZone($tz);
 
@@ -48,11 +48,11 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
         $url = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
         $syndicationURL = MolajoRouteHelper::_('&format=feed&type=rss');
 
-        if ($app->getConfig('sitename_pagetitles', 0) == 1) {
-            $title = MolajoTextHelper::sprintf('JPAGETITLE', $app->getConfig('sitename'), $data->title);
+        if (MolajoFactory::getApplication()->getConfig('sitename_pagetitles', 0) == 1) {
+            $title = MolajoTextHelper::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getConfig('sitename'), $data->title);
         }
-        elseif ($app->getConfig('sitename_pagetitles', 0) == 2) {
-            $title = MolajoTextHelper::sprintf('JPAGETITLE', $data->title, $app->getConfig('sitename'));
+        elseif (MolajoFactory::getApplication()->getConfig('sitename_pagetitles', 0) == 2) {
+            $title = MolajoTextHelper::sprintf('JPAGETITLE', $data->title, MolajoFactory::getApplication()->getConfig('sitename'));
         }
         else {
             $title = $data->title;

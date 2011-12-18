@@ -33,7 +33,7 @@ class MolajoHelpHelper
     static function createURL($ref, $useComponent = false, $override = null, $component = null)
     {
         $local = false;
-        $app = MolajoFactory::getApplication();
+
 
         if (is_null($component)) {
             $component = MolajoComponent::getComponentName();
@@ -53,7 +53,7 @@ class MolajoHelpHelper
 
             // If user hasn't specified a help URL, then get the global one.
             if ($url == '') {
-                $url = $app->getConfig('helpurl');
+                $url = MolajoFactory::getApplication()->getConfig('helpurl');
             }
 
             // Component help URL overrides user and global.
@@ -108,7 +108,7 @@ class MolajoHelpHelper
         );
 
         $replace = array(
-            $app->getName(), // {app}
+            MolajoFactory::getApplication()->getName(), // {app}
             $component, // {component}
             $keyref, // {keyref}
             $lang->getTag(), // {language}

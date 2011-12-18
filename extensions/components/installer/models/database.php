@@ -214,8 +214,8 @@ class InstallerModelDatabase extends InstallerModelDisplay
             }
 
             // Handle default backend language setting. This feature is available for localized versions of Joomla 1.5.
-            $app = MolajoFactory::getApplication();
-            $languages = $app->getLocaliseAdmin($db);
+
+            $languages = MolajoFactory::getApplication()->getLocaliseAdmin($db);
             if (in_array($options->language, $languages)) {
                 // Build the language parameters for the language manager.
                 $parameters = array();
@@ -265,7 +265,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
         $options = JArrayHelper::toObject($options, 'JObject');
 
         // Get a database object.
-        $db = MolajoInstallationHelperDatabase::getDBO($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
+        $db = MolajoInstallationHelperDatabase::getDbo($options->db_type, $options->db_host, $options->db_user, $options->db_pass, $options->db_name, $options->db_prefix);
 
         // Check for errors.
         if (MolajoError::isError($db)) {
@@ -351,7 +351,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
      */
     public function backupTables()
     {
-        $conf = MolajoFactory::getConfig();
+        $conf = MolajoFactory::getApplication()->getConfig();
 
         $prefix = $conf->get('dbprefix');
         $database = $conf->get('db');
@@ -452,7 +452,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
         // Initialise variables.
         $return = true;
 
-        $conf = MolajoFactory::getConfig();
+        $conf = MolajoFactory::getApplication()->getConfig();
 
         $prefix = $conf->get('dbprefix');
         $database = $conf->get('db');
@@ -540,7 +540,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
      */
     public function setDatabaseCharset()
     {
-        $conf = MolajoFactory::getConfig();
+        $conf = MolajoFactory::getApplication()->getConfig();
 
         $database = $conf->get('db');
 

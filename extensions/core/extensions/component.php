@@ -37,13 +37,13 @@ class MolajoComponent
         }
 
         if (MolajoFactory::getUser()->get('guest') == 1
-            && MolajoFactory::getConfig()->get('application_logon_requirement', 1) == 1
+            && MolajoFactory::getApplication()->getConfig->get('application_logon_requirement', 1) == 1
         ) {
 
-            $option = MolajoFactory::getConfig()->get('application_guest_option', 'login');
+            $option = MolajoFactory::getApplication()->getConfig->get('application_guest_option', 'login');
 
         } elseif ($option == null) {
-            $option = MolajoFactory::getConfig()->get('application_default_option', 'dashboard');
+            $option = MolajoFactory::getApplication()->getConfig->get('application_default_option', 'dashboard');
         }
 
         JRequest::setVar('option', $option);
@@ -568,7 +568,7 @@ class MolajoComponent
                 $session->set('page.parameters', $item->parameters);
             }
         } else {
-            $session->set('page.title', MolajoFactory::getConfig()->get('sitename', 'Molajo'));
+            $session->set('page.title', MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo'));
             $session->set('page.subtitle', '');
             $session->set('page.metakey', '');
             $session->set('page.metadesc', '');
@@ -598,14 +598,14 @@ class MolajoComponent
             $title = $session->get('page.title');
         }
         if (empty($title)) {
-            $title = MolajoFactory::getConfig()->get('sitename', 'Molajo');
+            $title = MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo');
         }
 
-        if (MolajoFactory::getConfig()->get('sitename_pagetitles', 0) == 1) {
-            $title = MolajoTextHelper::sprintf('JPAGETITLE', MolajoFactory::getConfig()->get('sitename', 'Molajo'), $title);
+        if (MolajoFactory::getApplication()->getConfig->get('sitename_pagetitles', 0) == 1) {
+            $title = MolajoTextHelper::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo'), $title);
 
-        } elseif (MolajoFactory::getConfig()->get('sitename_pagetitles', 0) == 2) {
-            $title = MolajoTextHelper::sprintf('JPAGETITLE', $title, MolajoFactory::getConfig()->get('sitename', 'Molajo'));
+        } elseif (MolajoFactory::getApplication()->getConfig->get('sitename_pagetitles', 0) == 2) {
+            $title = MolajoTextHelper::sprintf('JPAGETITLE', $title, MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo'));
         }
 
         $document->setTitle($title);
@@ -634,10 +634,10 @@ class MolajoComponent
         $session->set('page.position', 'component');
 
         // Load the parameters. Merge Global and Menu Item parameters into new object
-        //		$parameters = $app->getParameters();
+        //		$parameters = MolajoFactory::getApplication()->getParameters();
         //		$menuParameters = new JRegistry;
 
-        //		if ($menu = $app->getMenu()->getActive()) {
+        //		if ($menu = MolajoFactory::getApplication()->getMenu()->getActive()) {
         //			$menuParameters->loadString($menu->parameters);
         //		}
 

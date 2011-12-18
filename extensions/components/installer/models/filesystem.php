@@ -464,7 +464,7 @@ class MolajoInstallationModelFilesystem extends JModel
      */
     public function setFTPCfg($vars)
     {
-        $app = MolajoFactory::getApplication();
+
         $arr = array();
         $arr['ftp_enable'] = $vars['ftp_enable'];
         $arr['ftp_user'] = $vars['ftp_user'];
@@ -473,7 +473,7 @@ class MolajoInstallationModelFilesystem extends JModel
         $arr['ftp_host'] = $vars['ftp_host'];
         $arr['ftp_port'] = $vars['ftp_port'];
 
-        $app->setConfig($arr, 'config');
+        MolajoFactory::getApplication()->setConfig($arr, 'config');
     }
 
     /**
@@ -485,22 +485,22 @@ class MolajoInstallationModelFilesystem extends JModel
      */
     function _chmod($path, $mode)
     {
-        $app = MolajoFactory::getApplication();
+
         $ret = false;
 
         // Initialise variables.
         $ftpFlag = true;
-        $ftpRoot = $app->getConfig('ftp_root');
+        $ftpRoot = MolajoFactory::getApplication()->getConfig('ftp_root');
 
         // Do NOT use ftp if it is not enabled
-        if ($app->getConfig(ftp_enable) != 1) {
+        if (MolajoFactory::getApplication()->getConfig(ftp_enable) != 1) {
             $ftpFlag = false;
         }
 
         if ($ftpFlag == true) {
             // Connect the FTP client
-            $ftp = JFTP::getInstance($app->getConfig('ftp_host'), $app->getConfig('ftp_port'));
-            $ftp->login($app->getConfig('ftp_user'), $app->getConfig('ftp_pass'));
+            $ftp = JFTP::getInstance(MolajoFactory::getApplication()->getConfig('ftp_host'), MolajoFactory::getApplication()->getConfig('ftp_port'));
+            $ftp->login(MolajoFactory::getApplication()->getConfig('ftp_user'), MolajoFactory::getApplication()->getConfig('ftp_pass'));
 
             //Translate the destination path for the FTP account
             $path = JPath::clean(str_replace(MOLAJO_PATH_SITE, $ftpRoot, $path), '/');

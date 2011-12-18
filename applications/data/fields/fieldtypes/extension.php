@@ -53,7 +53,7 @@ class MolajoFormFieldExtension extends MolajoFormFieldList
         }
 
         // Get the database object and a new query object.
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         // Build the query.

@@ -135,17 +135,17 @@ class MolajoControllerLogin extends MolajoController
     {
         JRequest::checkToken('default') or die;
 
-        $app = MolajoFactory::getApplication();
+
         $user_id = JRequest::getInt('uid', null);
         $options = array(
             'application_id' => ($user_id) ? 0 : 1
         );
 
-        $result = $app->logout($user_id, $options);
+        $result = MolajoFactory::getApplication()->logout($user_id, $options);
         if (!MolajoError::isError($result)) {
             $this->model = $this->getModel('login');
             $return = $this->model->getState('return');
-            $app->redirect($return);
+            MolajoFactory::getApplication()->redirect($return);
         }
 
         parent::display();

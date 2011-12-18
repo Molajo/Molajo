@@ -25,7 +25,7 @@ class MolajoTableCategory extends MolajoTableNested
     {
         parent::__construct('#__categories', 'id', $db);
 
-        $this->access = (int)MolajoFactory::getConfig()->get('access');
+        $this->access = (int)MolajoFactory::getApplication()->getConfig->get('access');
     }
 
     /**
@@ -120,7 +120,7 @@ class MolajoTableCategory extends MolajoTableNested
             $this->alias = $this->title;
         }
 
-        $this->alias = MolajoApplication::stringURLSafe($this->alias);
+        $this->alias = MolajoFactory::getApplication()->stringURLSafe($this->alias);
         if (trim(str_replace('-', '', $this->alias)) == '') {
             $this->alias = MolajoFactory::getDate()->format('Y-m-d-H-i-s');
         }

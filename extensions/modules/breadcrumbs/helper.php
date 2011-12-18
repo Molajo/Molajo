@@ -15,8 +15,8 @@ class modBreadCrumbsHelper
     public static function getList(&$parameters)
     {
         // Get the PathWay object from the application
-        $app = MolajoFactory::getApplication();
-        $pathway = $app->getPathway();
+
+        $pathway = MolajoFactory::getApplication()->getPathway();
         $items = $pathway->getPathWay();
 
         $count = count($items);
@@ -29,7 +29,7 @@ class modBreadCrumbsHelper
         if ($parameters->get('showHome', 1)) {
             $item = new stdClass();
             $item->name = $parameters->get('homeText', MolajoTextHelper::_('BREADCRUMBS_HOME'));
-            $item->link = MolajoRouteHelper::_('index.php?Itemid=' . $app->getMenu()->getDefault()->id);
+            $item->link = MolajoRouteHelper::_('index.php?Itemid=' . MolajoFactory::getApplication()->getMenu()->getDefault()->id);
             array_unshift($items, $item);
         }
 

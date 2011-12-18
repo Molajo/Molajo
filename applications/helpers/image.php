@@ -130,7 +130,7 @@ class MolajoImageHelper
      */
     public function getImage()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         $date = MolajoFactory::getDate();

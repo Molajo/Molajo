@@ -51,8 +51,8 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
      */
     public function fetchHead(&$document)
     {
-        $app = MolajoFactory::getApplication();
-        $app->triggerEvent('onBeforeCompileHead');
+
+        MolajoFactory::getApplication()->triggerEvent('onBeforeCompileHead');
 
         $lnEnd = $document->_getLineEnd();
         $tab = $document->_getTab();

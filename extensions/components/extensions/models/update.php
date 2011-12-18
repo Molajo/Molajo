@@ -57,10 +57,10 @@ class InstallerModelUpdate extends JModelList
     protected function populateState($ordering = null, $direction = null)
     {
         $app = MolajoFactory::getApplication('administrator');
-        $this->setState('message', $app->getUserState('installer.message'));
-        $this->setState('extension_message', $app->getUserState('installer.extension_message'));
-        $app->setUserState('installer.message', '');
-        $app->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoFactory::getApplication()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoFactory::getApplication()->getUserState('installer.extension_message'));
+        MolajoFactory::getApplication()->setUserState('installer.message', '');
+        MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
         parent::populateState('name', 'asc');
     }
 
@@ -103,7 +103,7 @@ class InstallerModelUpdate extends JModelList
      */
     public function purge()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         // Note: TRUNCATE is a DDL operation
         // This may or may not mean depending on your database
         $db->setQuery('TRUNCATE TABLE #__updates');
@@ -124,7 +124,7 @@ class InstallerModelUpdate extends JModelList
      */
     public function enableSites()
     {
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $db->setQuery('UPDATE #__extension_sites SET enabled = 1 WHERE enabled = 0');
         if ($db->Query()) {
             if ($rows = $db->getAffectedRows()) {
@@ -176,7 +176,7 @@ class InstallerModelUpdate extends JModelList
      */
     private function install($update)
     {
-        $app = MolajoFactory::getApplication();
+
         if (isset($update->get('downloadurl')->_data)) {
             $url = $update->downloadurl->_data;
         } else {
@@ -193,8 +193,8 @@ class InstallerModelUpdate extends JModelList
             return false;
         }
 
-        $config = MolajoFactory::getConfig();
-        $tmp_dest = $config->get('tmp_path');
+        $config = MolajoFactory::getApplication()->getConfig();
+        $tmp_dest = $config->get('temp_path');
 
         // Unpack the downloaded package file
         $package = JInstallerHelper::unpack($tmp_dest . '/' . $p_file);
@@ -218,18 +218,18 @@ class InstallerModelUpdate extends JModelList
         $this->type = $package['type'];
 
         // Set some model state values
-        $app->enqueueMessage($msg);
+        MolajoFactory::getApplication()->enqueueMessage($msg);
 
         // TODO: Reconfigure this code when you have more battery life left
         $this->setState('name', $installer->get('name'));
         $this->setState('result', $result);
-        $app->setUserState('installer.message', $installer->message);
-        $app->setUserState('installer.extension_message', $installer->get('extension_message'));
+        MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
+        MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
 
         // Cleanup the install files
         if (!is_file($package['packagefile'])) {
-            $config = MolajoFactory::getConfig();
-            $package['packagefile'] = $config->get('tmp_path') . '/' . $package['packagefile'];
+            $config = MolajoFactory::getApplication()->getConfig();
+            $package['packagefile'] = $config->get('temp_path') . '/' . $package['packagefile'];
         }
 
         JInstallerHelper::cleanupInstall($package['packagefile'], $package['extractdir']);

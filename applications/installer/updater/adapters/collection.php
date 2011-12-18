@@ -205,7 +205,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
         $this->base = new stdClass;
         $this->extension_sites = array();
         $this->updates = array();
-        $dbo = $this->parent->getDBO();
+        $dbo = $this->parent->getDbo();
 
         if (!($fp = @fopen($url, "r"))) {
             $query = $dbo->getQuery(true);
@@ -216,8 +216,8 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
             $dbo->Query();
 
             JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
-            $app = MolajoFactory::getApplication();
-            $app->enqueueMessage(MolajoTextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_OPEN_URL', $url), 'warning');
+
+            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_OPEN_URL', $url), 'warning');
             return false;
         }
 
@@ -229,8 +229,8 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
         {
             if (!xml_parse($this->xml_parser, $data, feof($fp))) {
                 JLog::add("Error parsing url: " . $url, JLog::WARNING, 'updater');
-                $app = MolajoFactory::getApplication();
-                $app->enqueueMessage(MolajoTextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_PARSE_URL', $url), 'warning');
+
+                MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::sprintf('JLIB_UPDATER_ERROR_COLLECTION_PARSE_URL', $url), 'warning');
                 return false;
             }
         }

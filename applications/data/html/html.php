@@ -299,8 +299,7 @@ abstract class MolajoHtml
             if ($relative) {
 
                 // Get the template
-                $app = MolajoFactory::getApplication();
-                $template = $app->getTemplate();
+                $template = MolajoFactory::getApplication()->getTemplate();
 
                 // Prepare array of files
                 $includes = array();
@@ -571,7 +570,7 @@ abstract class MolajoHtml
     {
         // If no debugging value is set, use the configuration setting
         if ($debug === null) {
-            $debug = MolajoFactory::getConfig()->get('debug');
+            $debug = MolajoFactory::getApplication()->getConfig->get('debug');
         }
 
         $uncompressed = $debug ? '-uncompressed' : '';
@@ -619,7 +618,7 @@ abstract class MolajoHtml
     public static function date($input = 'now', $format = null, $tz = true, $gregorian = false)
     {
         // Get some system objects.
-        $config = MolajoFactory::getConfig();
+        $config = MolajoFactory::getApplication()->getConfig();
         $user = MolajoFactory::getUser();
 
         // UTC date converted to user time zone.

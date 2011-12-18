@@ -554,7 +554,7 @@ class MolajoApplication
      *
      * @return  void  Calls exit().
      *
-     * @see     MolajoApplication::enqueueMessage()
+     * @see     MolajoFactory::getApplication()->enqueueMessage()
      * @since  1.0
      */
     public function redirect($url, $msg = '', $msgType = 'message', $moved = false)
@@ -811,6 +811,6 @@ class MolajoApplication
      */
     public function __toString()
     {
-        return MolajoApplication::toString($this->get('gzip', false));
+        return MolajoFactory::getApplication()->toString($this->get('gzip', false));
     }
 }

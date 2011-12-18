@@ -90,7 +90,7 @@ class MolajoDocumentError extends MolajoDocument
         }
 
         //Set the status header
-        MolajoApplication::setHeader('status', $this->_error->getCode() . ' ' . str_replace("\n", ' ', $this->_error->getMessage()));
+        MolajoFactory::getApplication()->setHeader('status', $this->_error->getCode() . ' ' . str_replace("\n", ' ', $this->_error->getMessage()));
         $file = 'error.php';
 
         // check template

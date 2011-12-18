@@ -28,9 +28,9 @@ class modMenuHelper
         $rowset = array();
         $db = MolajoFactory::getDbo();
         $user = MolajoFactory::getUser();
-        $app = MolajoFactory::getApplication();
 
-        $menu = $app->getMenu();
+
+        $menu = MolajoFactory::getApplication()->getMenu();
 
         $active = $menu->getActive();
         if (isset($active)) {

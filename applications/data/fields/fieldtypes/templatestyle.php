@@ -45,7 +45,7 @@ class MolajoFormFieldTemplateStyle extends MolajoFormFieldGroupedList
         $template = (string)$this->element['template'];
 
         // Get the database object and a new query object.
-        $db = MolajoFactory::getDBO();
+        $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
         // Build the query.

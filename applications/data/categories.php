@@ -193,7 +193,7 @@ class MolajoCategories
     protected function _load($id)
     {
         $db = MolajoFactory::getDbo();
-        $app = MolajoFactory::getApplication();
+
         $user = MolajoFactory::getUser();
         $extension = $this->_extension;
 

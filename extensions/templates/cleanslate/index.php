@@ -7,7 +7,7 @@
  */
 defined('MOLAJO') or die;
 
-if (MolajoFactory::getConfig()->get('html5', true) === true): ?>
+if (MolajoFactory::getApplication()->getConfig->get('html5', true) === true): ?>
 <!DOCTYPE html>
     <?php else: ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

@@ -33,8 +33,6 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
      */
     protected function getOptions()
     {
-        // Initialise variables.
-        $app = MolajoFactory::getApplication();
 
         // Detect the native language.
         $native = MolajoLanguageHelper::detectLanguage();
@@ -43,7 +41,7 @@ class MolajoFormFieldLanguage extends MolajoFormFieldList
         }
 
         // Get a forced language if it exists.
-        $forced = $app->getLocalise();
+        $forced = MolajoFactory::getApplication()->getLocalise();
         if (!empty($forced['language'])) {
             $native = $forced['language'];
         }

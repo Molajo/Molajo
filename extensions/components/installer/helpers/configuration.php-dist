@@ -54,7 +54,7 @@ class MolajoConfig {
 	public $ftp_pass = '';
 	public $ftp_root = '';
 	public $ftp_enable = '';
-	public $tmp_path = '/tmp';
+	public $temp_path = '/tmp';
 	public $log_path = '/var/logs';
 	public $live_site = ''; 					// Optional, Full url to Joomla install.
 	public $force_ssl = 0;						// Force areas of the site to be SSL ONLY.  0 = None, 1 = Administrator, 2 = Both Site and Administrator

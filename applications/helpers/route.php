@@ -30,8 +30,8 @@ class MolajoRouteHelper
     public static function _($url, $xhtml = true, $ssl = null)
     {
         // Get the router.
-        $app = MolajoFactory::getApplication();
-        $router = $app->getRouter();
+
+        $router = MolajoFactory::getApplication()->getRouter();
 
         // Make sure that we have our router
         if (!$router) {

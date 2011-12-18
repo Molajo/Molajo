@@ -686,13 +686,13 @@ abstract class MolajoError
      */
     public static function customErrorPage(&$error)
     {
-        $app = MolajoFactory::getApplication();
+
         $document = MolajoFactory::getInstance('error');
         if ($document) {
-            $config = MolajoFactory::getConfig();
+            $config = MolajoFactory::getApplication()->getConfig();
 
             // Get the current template from the application
-            $template = $app->getTemplate();
+            $template = MolajoFactory::getApplication()->getTemplate();
 
             // Push the error object into the document
             $document->setError($error);
@@ -708,10 +708,10 @@ abstract class MolajoError
             else
             {
                 // Do not allow cache
-                MolajoApplication::allowCache(false);
+                MolajoFactory::getApplication()->allowCache(false);
 
-                MolajoApplication::setBody($data);
-                echo MolajoApplication::toString();
+                MolajoFactory::getApplication()->setBody($data);
+                echo MolajoFactory::getApplication()->toString();
             }
         }
         else
@@ -720,7 +720,7 @@ abstract class MolajoError
             // This is a common use case for Command Line Interface applications.
             self::handleEcho($error, array());
         }
-        $app->close(0);
+        MolajoFactory::getApplication()->close(0);
     }
 
     /**

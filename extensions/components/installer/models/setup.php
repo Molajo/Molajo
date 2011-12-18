@@ -160,7 +160,7 @@ class MolajoInstallationModelSetup extends JModel
     public function getLanguages()
     {
         // Initialise variables.
-        $app = MolajoFactory::getApplication();
+
 
         // Detect the native language.
         $native = MolajoLanguageHelper::detectLanguage();
@@ -170,7 +170,7 @@ class MolajoInstallationModelSetup extends JModel
         }
 
         // Get a forced language if it exists.
-        $forced = $app->getLocalise();
+        $forced = MolajoFactory::getApplication()->getLocalise();
 
         if (!empty($forced['language'])) {
             $native = $forced['language'];

@@ -186,7 +186,7 @@ class MolajoSite extends JObject
         }
         if (defined('MOLAJO_SITE_PATH_TEMP')) {
         } else {
-            define('MOLAJO_SITE_PATH_TEMP', self::get('tmp_path', MOLAJO_SITE_PATH . '/tmp'));
+            define('MOLAJO_SITE_PATH_TEMP', self::get('temp_path', MOLAJO_SITE_PATH . '/tmp'));
         }
     }
 

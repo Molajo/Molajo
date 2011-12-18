@@ -1123,7 +1123,7 @@ class MolajoForm
             case 'SERVER_UTC':
                 if (intval($value) > 0) {
                     // Get the server timezone setting.
-                    $offset = MolajoFactory::getConfig()->get('offset');
+                    $offset = MolajoFactory::getApplication()->getConfig->get('offset');
 
                     // Return a MySQL formatted datetime string in UTC.
                     $return = MolajoFactory::getDate($value, $offset)->toMySQL();
@@ -1137,7 +1137,7 @@ class MolajoForm
             case 'USER_UTC':
                 if (intval($value) > 0) {
                     // Get the user timezone setting defaulting to the server timezone setting.
-                    $offset = MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getConfig()->get('offset'));
+                    $offset = MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getApplication()->getConfig->get('offset'));
 
                     // Return a MySQL formatted datetime string in UTC.
                     $return = MolajoFactory::getDate($value, $offset)->toMySQL();
