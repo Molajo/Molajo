@@ -129,8 +129,20 @@ class MolajoApplication
 
         /** URI */
         $this->loadSystemUris();
-        echo $this->get('uri.request');
         //echo '<pre>';var_dump($this);'</pre>';
+
+
+    }
+
+    public function figure_out ()
+    {
+
+                if ($this->get('force_ssl') >= 1
+                    && strtolower($uri->getScheme()) != 'https'
+                ) {
+                    $uri->setScheme('https');
+                    $this->redirect((string)$uri);
+                }
     }
 
     /**
@@ -937,7 +949,7 @@ MolajoFactory::getApplication()->redirect((string)$uri);
      *
      * @since   11.3
      */
-    protected function detectRequestUri()
+    public function detectRequestUri()
     {
         // Initialise variables.
         $uri = '';
@@ -991,5 +1003,13 @@ MolajoFactory::getApplication()->redirect((string)$uri);
     public static function getHash($seed)
     {
         return md5(self::get('secret') . $seed);
+    }
+
+    /**
+     * @param \JRegistry $config
+     */
+    public static function setConfig($config)
+    {
+        self::$config = $config;
     }
 }

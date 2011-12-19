@@ -23,14 +23,6 @@ class MolajoExtension
     protected $config = null;
 
     /**
-     * Document
-     *
-     * @var    Document  The application document object.
-     * @since  1.0
-     */
-    protected $document;
-
-    /**
      *  User
      *
      * @var string
@@ -55,129 +47,68 @@ class MolajoExtension
     protected $page = null;
 
     /**
-     *  Option
+     *  Component Output
      *
      * @var string
      * @since 1.0
      */
-    protected $option = null;
-
-    /**
-     *  View
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $view = null;
-
-    /**
-     *  Layout
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $layout = null;
-
-    /**
-     *  Id
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $id = null;
-
-    /**
-     *  Task
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $task = null;
+    protected $component_output = null;
 
     /**
      * __construct
      *
      * Class constructor.
      *
-     * @param   mixed  $document    An optional argument to provide dependency injection for the application's
-     *                              document object.  If the argument is a document object that object will become
-     *                              the application's document object, if it is false then there will be no document
-     *                              object, and if it is null then the default document object will be created based
-     *                              on the application's loadDocument() method.
-     *
      * @param   array  $config  A configuration array
      *
      * @since  1.0
      */
-    public function __construct($id = null, $config = array(), $document = null)
+    public function __construct($request = null, $asset_id = null, $config = array())
     {
+        /** configuration */
         if ($config) {
             $this->config = $config;
         } else {
             $this->config = new JRegistry;
+            $this->getConfig();
         }
-        $this->getConfig();
 
-        if ($document instanceof MolajoDocument) {
-            $this->document = $document;
+        /** Retrieve Asset for Request */
+        $this->asset = new MolajoAsset ($request = null, $asset_id = null);
 
-        } elseif ($document === false) {
-
+        /** Redirect Found */
+        if ($this->asset->found === true) {
         } else {
-            $this->loadDocument();
+            // redirect
+            return false;
         }
 
-        $request = MolajoFactory::getApplication()->get('uri.request');
-        echo 'Request'.$request;
-        die;
-        $asset = new MolajoAsset ($request);
-var_dump($asset);
+        /** 404 without redirect */
+        if ($this->asset->found === true) {
+        } else {
+            // 404 error
+            return false;
+        }
 
-       // $this->loadUser();
+        /** current user */
+       $this->loadUser();
 
-        /** todo: asset record */
+        /** authorise */
+       $this->authorise();
 
         /** todo: primary category */
 
         /** todo: component */
 
-        /** todo: authorized */
+        /** todo: menu item */
 
         /** todo: template */
 
         /** todo: page */
 
-        /** todo: menu item */
-
         /** Event */
      //   MolajoPlugin::importPlugin('system');
      //   MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
-    }
-
-    /**
-     * Execute Extension
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function execute()
-    {
-        MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
-        MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
-    }
-
-    /**
-     * Render Extensions
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function render()
-    {
-        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
-        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
     }
 
     /**
@@ -195,39 +126,30 @@ var_dump($asset);
      */
     public function route()
     {
-        /** todo: amy 404 processing */
-        if ($itemid = JRequest::getInt('Itemid')) {
-            $this->authorise($itemid);
-        }
-        $uri = JURI::getInstance();
-
-        $router = $this->getRouter();
-        $result = $router->parse($uri);
-
-        JRequest::set($result, 'get', false);
-
-        if ($this->get('force_ssl') >= 1
-            && strtolower($uri->getScheme()) != 'https'
-        ) {
-            $uri->setScheme('https');
-            $this->redirect((string)$uri);
-        }
-
         /** trigger onAfterRoute Event */
         MolajoPlugin::importPlugin('system');
         MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
     }
 
     /**
-     * authorise
-     *
-     * Check if the user can access the application
-     *
-     * @param $itemid
-     * @return booleon
+     *  loadUser
      */
-    public function authorise($itemid)
+    private function loadUser()
     {
+        $this->user = MolajoFactory::getUser();
+    }
+
+    /**
+     * Execute Extension
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function authorise()
+    {
+        $itemid = 'kill it';
+
         $menus = $this->getMenu();
 
         if ($menus == null) {
@@ -254,34 +176,7 @@ var_dump($asset);
     }
 
     /**
-     * getRouter
-     *
-     * Returns the application router object.
-     *
-     * @param   string  $name     The name of the application.
-     * @param   array   $options  An optional associative array of configuration settings.
-     *
-     * @return  router object
-     *
-     * @since  1.0
-     */
-    static public function getRouter($name = null, array $options = array())
-    {
-        if (isset($name)) {
-        } else {
-            $name = MOLAJO_EXTENSION;
-        }
-
-        $router = MolajoRouter::getInstance($name, $options);
-        if (MolajoError::isError($router)) {
-            return null;
-        }
-
-        return $router;
-    }
-
-    /**
-     * getMenu
+     * getMenu - only need to check if view access not good enough
      *
      * Returns the Menu object.
      *
@@ -303,41 +198,31 @@ var_dump($asset);
     }
 
     /**
-     * Returns the application pathway object.
+     * Get Header information for Page
      *
-     * @param   string    $name     The name of the application.
-     * @param   array     $options  An optional associative array of configuration settings.
+     * @return  void
      *
-     * @return  object  A pathway object
-     *
-     * @since   11.1
+     * @since   1.0
      */
-    public function getPathway($name = null, $options = array())
+    public function getHead()
     {
-        if (isset($name)) {
-        } else {
-            $name = MOLAJO_EXTENSION;
-        }
 
-        $pathway = MolajoPathway::getInstance($name, $options);
-
-        if (MolajoError::isError($pathway)) {
-            return null;
-        }
-
-        return $pathway;
     }
 
     /**
-     * getTemplate
+     * Execute Extension
      *
-     * return the folder name of the template
-     * @param $template
-     * @return string
+     * @return  void
+     *
+     * @since   1.0
      */
-    function getTemplate()
+    public function executeComponent()
     {
-        return MolajoTemplate::getTemplate();
+        MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
+
+
+
+        MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
     }
 
     /**
@@ -355,123 +240,64 @@ var_dump($asset);
     }
 
     /**
-     *  loadUser
+     * getTemplate
      *
+     * Get Template and parse doc statements
+     *
+     * @param $template
+     * @return string
+     * @since   1.0
      */
-    private function loadUser()
+    function getTemplate()
     {
-        $this->user = MolajoFactory::getUser();
+        return MolajoTemplate::getTemplate();
     }
 
     /**
-     * getUserState
+     * Render Extensions
      *
-     * Gets a user state.
-     *
-     * @param   string  The path of the state.
-     * @param   mixed   Optional default value, returned if the internal value is null.
-     *
-     * @return  mixed  The user state or null.
-     *
-     * @since  1.0
-     */
-    public function getUserState($key, $default = null)
-    {
-        $session = MolajoFactory::getSession();
-
-        $registry = $session->get('registry');
-
-        if (is_null($registry)) {
-        } else {
-            return $registry->get($key, $default);
-        }
-
-        return $default;
-    }
-
-    /**
-     * setUserState
-     *
-     * Sets the value of a user state variable.
-     *
-     * @param   string  The path of the state.
-     * @param   string  The value of the variable.
-     *
-     * @return  mixed   The previous state, if one existed.
-     *
-     * @since  1.0
-     */
-    public function setUserState($key, $value)
-    {
-        $session = MolajoFactory::getSession();
-        $registry = $session->get('registry');
-
-        if (is_null($registry)) {
-        } else {
-            return $registry->set($key, $value);
-        }
-
-        return null;
-    }
-
-    /**
-     * getUserStateFromRequest
-     *
-     * Gets the value of a user state variable.
-     *
-     * @param   string   $key      The key of the user state variable.
-     * @param   string   $request  The name of the variable passed in a request.
-     * @param   string   $default  The default value for the variable if not found. Optional.
-     * @param   string   $type     Filter for the variable, for valid values see {@link JFilterInput::clean()}. Optional.
-     *
-     * @return  The request user state.
-     *
-     * @since  1.0
-     */
-    public function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
-    {
-        $cur_state = $this->getUserState($key, $default);
-        $new_state = JRequest::getVar($request, null, 'default', $type);
-
-        // Save the new value only if it was set in this request.
-        if ($new_state == null) {
-            $new_state = $cur_state;
-        } else {
-            $this->setUserState($key, $new_state);
-        }
-
-        return $new_state;
-    }
-
-    /**
-     * Registers a handler to a particular event group.
-     *
-     * @param   string    $event    The event name.
-     * @param   callback  $handler  The handler, a function or an instance of a event object.
-     *
-     * @return  Instance of $this to allow chaining.
+     * @return  void
      *
      * @since   1.0
      */
-    public function registerEvent($event, $handler)
+    public function getTemplateFunctions()
     {
-        return MolajoFactory::getApplication()->register($event, $handler);
+        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
+
+
+        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
+    }
+
+    private function executeHead ()
+    {
+
+    }
+
+    private function executeMessage ()
+    {
+
     }
 
     /**
-     * Calls all handlers associated with an event group.
+     * Execute Position
      *
-     * @param   string  $event  The event name.
-     * @param   array   $args   An array of arguments (optional).
+     * @return  void
      *
-     * @return  array   An array of results from each function call, or null if no dispatcher is defined.
-     *
-     * @since   11.3
+     * @since   1.0
      */
-    public function triggerEvent($event, array $args = null)
+    public function executePosition()
     {
-        MolajoFactory::getApplication()->trigger($event, $args);
-        return null;
+        MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
+
+        MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
+    }
+
+    /**
+     *
+     */
+    public function executeModule ()
+    {
+
     }
 
     /**
@@ -544,33 +370,4 @@ var_dump($asset);
     {
         $this->config->set($key, $value);
     }
-
-//** todo: shit can document */
-
-        /**
-         * Method to get the application document object.
-         *
-         * @return  MolajoDocument  The document object
-         *
-         * @since   11.3
-         */
-        public function getDocument()
-        {
-            return $this->document;
-        }
-
-        /**
-         * Method to create a document for the Web application.  The logic and options for creating this
-         * object are adequately generic for default cases but for many applications it will make sense
-         * to override this method and create document objects based on more specific needs.
-         *
-         * @return  void
-         *
-         * @since   11.3
-         */
-        protected function loadDocument()
-        {
-            $this->document = JFactory::getDocument();
-        }
-
 }

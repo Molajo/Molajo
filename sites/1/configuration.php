@@ -9,15 +9,15 @@ class MolajoSiteConfiguration
     public $offline_message = 'This site is not available.<br /> Please check back again soon.';
 
     /* Database Settings */
-    public $dbtype = 'mysqli'; // Normally mysql
-    public $host = 'localhost'; // This is normally set to localhost
-    public $user = 'root'; // MySQL username
-    public $password = 'root'; // MySQL password
-    public $db = 'molajo'; // MySQL database name
-    public $dbprefix = 'molajo_'; // Prefix change to something unique
+    public $dbtype = 'mysqli';
+    public $host = 'localhost';
+    public $user = 'root';
+    public $password = 'root';
+    public $db = 'molajo';
+    public $dbprefix = 'molajo_';
 
     /* Server Settings */
-    public $secret = 'FBVtggIk5lAzEU9H'; // Change this to something more secure
+    public $secret = 'FBVtggIk5lAzEU9H';
     public $gzip = '0';
     public $error_reporting = '-1';
     public $helpurl = 'http://help.molajo.org/';
@@ -32,7 +32,7 @@ class MolajoSiteConfiguration
     public $temp_path = '/Users/amystephen/Sites/Molajo/sites/1/temp';
     public $media_path = '/Users/amystephen/Sites/Molajo/sites/1/media';
     public $media_uri_path = 'sites/1/media';
-    public $live_site = ''; // Optional, Full url to installation.
+    public $live_site = '';
 
     /* Session settings */
     public $lifetime = '15';
