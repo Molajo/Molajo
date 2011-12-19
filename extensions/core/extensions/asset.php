@@ -197,15 +197,12 @@ class MolajoAsset
         $this->getRequest();
 
         /** get home asset id, if needed */
-        if ($this->query_request == ''
-            && $this->found === true) {
+        if ($this->query_request == '') {
             $this->getHomeAssetId();
         }
 
         /** get asset information */
-        if ($this->found === true) {
-            $this->getAsset();
-        }
+        $this->getAsset();
 
         /** get request parameters */
         if ($this->found === true) {
@@ -233,35 +230,8 @@ class MolajoAsset
         $unicodeslugs = MolajoFactory::getApplication()->get('unicodeslugs', 0);
         $force_ssl = MolajoFactory::getApplication()->get('force_ssl' . 0);
 
-        /** Full ex. http://localhost/molajo/index.php/access/groups */
-        $uri = JUri::getInstance();
-
-        /** Host ex. http://localhost */
-        $host = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-
-        /** Base http://localhost/molajo */
-        $base = JUri::base();
-
-        /** Folder ex. molajo */
-        $folder = rtrim(substr($base, strlen($host) + 1, 999), '/\\');
-
-        /** Query ex. ?option=login */
-        $query = $uri->toString(array('query', 'fragment'));
-
         /** Path ex. index.php?option=login or access/groups */
-        $path = $uri->toString(array('path', 'query', 'fragment'));
-
-        /** remove application name from path */
-        if (substr($path, 0, strlen(MOLAJO_APPLICATION)) == MOLAJO_APPLICATION) {
-            echo $path;
-            $path = substr($path, strlen(MOLAJO_APPLICATION), 999);
-            echo $path;
-        }
-
-        if ($path === '') {
-        } else {
-            $path = rtrim(substr($path, strlen($folder) + 2, 999), '/\\');
-        }
+        $path = MOLAJO_PAGE_REQUEST;
         if (substr($path, 0, 10) == 'index.php/') {
             $path = substr($path, 10, 999);
         }
@@ -280,13 +250,7 @@ class MolajoAsset
         }
 
         /** populate value used in query  */
-        $this->query_request = '';
-
-        if ($sef == 0) {
-            $this->query_request .= 'index.php' . $query;
-        } else {
-            $this->query_request .= $path;
-        }
+        $this->query_request = $path;
 
         return;
     }
