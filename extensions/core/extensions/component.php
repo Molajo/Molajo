@@ -32,22 +32,28 @@ class MolajoComponent
      */
     public static function verifyComponent($option = null)
     {
+        $asset_id = 0;
         if ($option == null) {
             $option = strtolower(JRequest::getCmd('option', null));
         }
 
         if (MolajoFactory::getUser()->get('guest') == 1
-            && MolajoFactory::getApplication()->getConfig->get('application_logon_requirement', 1) == 1
+            && MolajoFactory::getApplication()->getConfig->get('logon_requirement', 1) == 1
         ) {
-
-            $option = MolajoFactory::getApplication()->getConfig->get('application_guest_option', 'login');
+            $redirect = true;
+            $asset_id = MolajoFactory::getApplication()->getConfig->get('not_logged_on_redirect_asset_id');
 
         } elseif ($option == null) {
-            $option = MolajoFactory::getApplication()->getConfig->get('application_default_option', 'dashboard');
+            $asset_id = MolajoFactory::getApplication()->getConfig->get('application_home_asset_id');
         }
 
-        JRequest::setVar('option', $option);
-        return $option;
+        if ($asset_id == 0) {
+            return true;
+        } else {
+            JRequest::setVar('asset_id', $asset_id);
+            JRequest::setVar('redirect', true);
+            return false;
+        }
     }
 
     /**

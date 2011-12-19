@@ -23,12 +23,14 @@ class MolajoConfig
     public $editor = 'none';
     public $access = '1';
 
-    /* Access */
-    public $application_logon_requirement = '1';
-    public $application_guest_option = 'login';
-    public $application_default_option = 'dashboard';
-    public $default_template_extension = 'molajito';
-    public $application_home_asset_id = 267;
+    /* Home and Logon Requirements */
+    public $logon_requirement = '0';
+    public $not_logged_on_redirect_asset_id = '0';
+    public $default_template_name = 'cleanslate';
+    public $application_home_asset_id = 296;
+    public $application_offline = '0';
+    public $application_offline_asset_id = 0;
+    public $application_error_asset_id = 0;
 
     /* Locale */
     public $language = 'en-GB';

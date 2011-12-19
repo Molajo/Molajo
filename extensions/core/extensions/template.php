@@ -56,7 +56,7 @@ abstract class MolajoTemplate
 
         /** Configuration default */
         if ((int)$id == 0) {
-            $id = strtolower(MolajoFactory::getApplication()->getConfig->get('default_template_extension'));
+            $id = strtolower(MolajoFactory::getApplication()->getConfig->get('default_template_name'));
         }
 
         /** Retrieve Template from the DB */

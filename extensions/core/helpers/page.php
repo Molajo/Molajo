@@ -54,7 +54,7 @@ abstract class MolajoPageHelper
 
         /** Configuration default */
         if ((int)$id == 0) {
-            $id = strtolower(MolajoFactory::getApplication()->getConfig->get('default_template_extension'));
+            $id = strtolower(MolajoFactory::getApplication()->getConfig->get('default_template_name'));
         }
 
         /** Retrieve Page from the DB */

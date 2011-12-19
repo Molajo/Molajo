@@ -24,11 +24,13 @@ class MolajoConfigApplication
     public $access = '1';
 
     /* Home and Logon Requirements */
-    public $application_logon_requirement = '1';
-    public $application_guest_option = 'login';
-    public $application_default_option = 'dashboard';
-    public $default_template_extension = 'Molajito';
-    public $application_home_asset_id = 267;
+    public $logon_requirement = '0';
+    public $not_logged_on_redirect_asset_id = '0';
+    public $default_template_name = 'molajito';
+    public $application_home_asset_id = 0;
+    public $application_offline = '0';
+    public $application_offline_asset_id = 0;
+    public $application_error_asset_id = 0;
 
     /* Locale */
     public $language = 'en-GB';
