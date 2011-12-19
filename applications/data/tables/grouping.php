@@ -24,7 +24,7 @@ class MolajoTableGrouping extends MolajoTable
      *
      * @return  MolajoTableGrouping
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct(&$db)
     {
@@ -39,7 +39,7 @@ class MolajoTableGrouping extends MolajoTable
      *
      * @return  bool  True on success, false on failure.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function bind($array, $ignore = '')
     {
@@ -51,7 +51,7 @@ class MolajoTableGrouping extends MolajoTable
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function check()
     {

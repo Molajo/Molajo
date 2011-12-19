@@ -46,7 +46,7 @@ abstract class MolajoPlugin extends JEvent
      * Recognized key values include 'name', 'group', 'parameters', 'language'
      * (this list is not meant to be comprehensive).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct(&$subject, $config = array())
     {
@@ -79,7 +79,7 @@ abstract class MolajoPlugin extends JEvent
      * @param   string   $basePath    The basepath to use
      *
      * @return  boolean  True, if the file has successfully loaded.
-     * @since   11.1
+     * @since   1.0
      */
     public function loadLanguage($extension = '', $basePath = MOLAJO_EXTENSIONS_PLUGINS)
     {

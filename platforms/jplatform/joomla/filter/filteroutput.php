@@ -31,7 +31,7 @@ class JFilterOutput
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function objectHTMLSafe(&$mixed, $quote_style = ENT_QUOTES, $exclude_keys = '')
     {
@@ -62,7 +62,7 @@ class JFilterOutput
      *
      * @return  string  Processed string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function linkXHTMLSafe($input)
     {
@@ -78,7 +78,7 @@ class JFilterOutput
      *
      * @return  string  Processed string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function stringURLSafe($string)
     {
@@ -107,7 +107,7 @@ class JFilterOutput
      *
      * @return  string  Processed string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function stringURLUnicodeSlug($string)
     {
@@ -141,7 +141,7 @@ class JFilterOutput
      *
      * @return  string  Processed string.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @todo There must be a better way???
      */
@@ -164,7 +164,7 @@ class JFilterOutput
      *
      * @return  string  Replaced string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function _ampReplaceCallback($m)
     {
@@ -180,7 +180,7 @@ class JFilterOutput
      *
      * @return  string  Cleaned text.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function cleanText(&$text)
     {
@@ -204,7 +204,7 @@ class JFilterOutput
      *
      * @return  string  Cleaned string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function stripImages($string)
     {

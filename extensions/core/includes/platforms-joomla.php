@@ -33,7 +33,7 @@ if (defined('JPATH_ROOT')) {
 }
 if (defined('JPATH_CONFIGURATION')) {
 } else {
-    define('JPATH_CONFIGURATION', MOLAJO_SITE_PATH);
+    define('JPATH_CONFIGURATION', MOLAJO_SITE_FOLDER_PATH);
 }
 if (defined('JOOMLA_LIBRARY')) {
 } else {
@@ -57,7 +57,7 @@ if (defined('JPATH_PLUGINS')) {
 }
 if (defined('JPATH_CACHE')) {
 } else {
-    define('JPATH_CACHE', MOLAJO_SITE_PATH . '/cache');
+    define('JPATH_CACHE', MOLAJO_SITE_FOLDER_PATH . '/cache');
 }
 if (defined('JPATH_MANIFESTS')) {
 } else {

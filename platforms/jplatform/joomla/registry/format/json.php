@@ -26,7 +26,7 @@ class JRegistryFormatJSON extends JRegistryFormat
      *
      * @return  string  JSON formatted string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function objectToString($object, $options = array())
     {
@@ -43,7 +43,7 @@ class JRegistryFormatJSON extends JRegistryFormat
      *
      * @return  object   Data object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function stringToObject($data, $options = array('processSections' => false))
     {

@@ -93,7 +93,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if successful.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @todo    Finish Implementation
      */
@@ -120,7 +120,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function extract($archive, $destination, $options = array())
     {
@@ -146,7 +146,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if php has native ZIP support
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function hasNativeSupport()
     {
@@ -160,7 +160,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if valid, false if invalid.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function checkZipData(&$data)
     {
@@ -182,7 +182,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _extract($archive, $destination, $options)
     {
@@ -243,7 +243,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _extractNative($archive, $destination, $options)
     {
@@ -310,7 +310,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getZipInfo(&$data)
     {
@@ -419,7 +419,7 @@ class JArchiveZip extends JObject
      *
      * @return  string  Uncompressed file data buffer.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getFileData($key)
     {
@@ -462,7 +462,7 @@ class JArchiveZip extends JObject
      *
      * @return  integer  The current date in a 4-byte DOS format.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _unix2DOSTime($unixtime = null)
     {
@@ -490,7 +490,7 @@ class JArchiveZip extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @todo    Review and finish implementation
      */
@@ -599,7 +599,7 @@ class JArchiveZip extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @todo    Review and finish implementation
      */

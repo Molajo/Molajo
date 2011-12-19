@@ -27,12 +27,10 @@ class MolajoSiteConfiguration
     public $ftp_pass = '';
     public $ftp_root = '';
     public $ftp_enable = '';
-    public $cache_path = '/Users/amystephen/Sites/Molajo/sites/1/cache';
-    public $logs_path = '/Users/amystephen/Sites/Molajo/sites/1/logs';
-    public $temp_path = '/Users/amystephen/Sites/Molajo/sites/1/temp';
-    public $media_path = '/Users/amystephen/Sites/Molajo/sites/1/media';
-    public $media_uri_path = 'sites/1/media';
-    public $live_site = '';
+    public $cache_path = 'cache';
+    public $logs_path = 'logs';
+    public $temp_path = 'temp';
+    public $media_path = 'media';
 
     /* Session settings */
     public $lifetime = '15';

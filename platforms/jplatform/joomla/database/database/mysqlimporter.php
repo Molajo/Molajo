@@ -61,7 +61,7 @@ class JDatabaseImporterMySQL
      *
      * Sets up the default options for the exporter.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct()
     {
@@ -85,7 +85,7 @@ class JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQL  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function asXml()
     {
@@ -99,7 +99,7 @@ class JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQL  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception if an error is encountered.
      */
     public function check()
@@ -124,7 +124,7 @@ class JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQL  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function from($from)
     {
@@ -141,7 +141,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getAddColumnSQL($table, SimpleXMLElement $field)
     {
@@ -158,7 +158,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getAddKeySQL($table, $keys)
     {
@@ -174,7 +174,7 @@ class JDatabaseImporterMySQL
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getAlterTableSQL(SimpleXMLElement $structure)
     {
@@ -316,7 +316,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getChangeColumnSQL($table, SimpleXMLElement $field)
     {
@@ -333,7 +333,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getColumnSQL(SimpleXMLElement $field)
     {
@@ -387,7 +387,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getDropColumnSQL($table, $name)
     {
@@ -404,7 +404,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getDropKeySQL($table, $name)
     {
@@ -420,7 +420,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getDropPrimaryKeySQL($table)
     {
@@ -436,7 +436,7 @@ class JDatabaseImporterMySQL
      *
      * @return  array  The lookup array. array({key name} => array(object, ...))
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception
      */
     protected function getKeyLookup($keys)
@@ -468,7 +468,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getKeySQL($columns)
     {
@@ -518,7 +518,7 @@ class JDatabaseImporterMySQL
      *
      * @return  string    The real name of the table.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getRealTableName($table)
     {
@@ -537,7 +537,7 @@ class JDatabaseImporterMySQL
      * @return  void
      *
      * @note    Currently only supports XML format.
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception on error.
      * @todo    If it's not XML convert to XML first.
      */
@@ -609,7 +609,7 @@ class JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQL  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setDbo(JDatabaseMySQL $db)
     {
@@ -625,7 +625,7 @@ class JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQL  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function withStructure($setting = true)
     {

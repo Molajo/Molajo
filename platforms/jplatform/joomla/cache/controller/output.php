@@ -19,17 +19,17 @@ defined('JPATH_PLATFORM') or die;
 class JCacheControllerOutput extends JCacheController
 {
     /**
-     * @since   11.1
+     * @since   1.0
      */
     protected $_id;
 
     /**
-     * @since   11.1
+     * @since   1.0
      */
     protected $_group;
 
     /**
-     * @since   11.1
+     * @since   1.0
      */
     protected $_locktest = null;
 
@@ -41,7 +41,7 @@ class JCacheControllerOutput extends JCacheController
      *
      * @return  boolean  True if the cache is hit (false else)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function start($id, $group = null)
     {
@@ -89,7 +89,7 @@ class JCacheControllerOutput extends JCacheController
      *
      * @return  boolean  True if cache stored
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function end()
     {

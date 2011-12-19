@@ -31,7 +31,7 @@ class JFilesystemHelper
      * @return  mixed
      *
      * @see     http://www.php.net/manual/en/function.filesize.php#71098
-     * @since   11.1
+     * @since   1.0
      */
     function remotefsize($url)
     {
@@ -115,7 +115,7 @@ class JFilesystemHelper
      * @return  mixed
      *
      * @see     http://www.php.net/manual/en/function.ftp-chmod.php
-     * @since   11.1
+     * @since   1.0
      */
     function ftpChmod($url, $mode)
     {
@@ -179,7 +179,7 @@ class JFilesystemHelper
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     static function getWriteModes()
     {
@@ -194,7 +194,7 @@ class JFilesystemHelper
      *
      * @return  array  Streams
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getSupported()
     {
@@ -213,7 +213,7 @@ class JFilesystemHelper
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getTransports()
     {
@@ -226,7 +226,7 @@ class JFilesystemHelper
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getFilters()
     {
@@ -240,7 +240,7 @@ class JFilesystemHelper
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getJStreams()
     {
@@ -260,7 +260,7 @@ class JFilesystemHelper
      *
      * @return  boolean  True for a Joomla Stream
      *
-     * @since   11.1
+     * @since   1.0
      */
     function isJoomlaStream($streamname)
     {

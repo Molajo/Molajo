@@ -49,7 +49,7 @@ class JArchiveGzip extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function extract($archive, $destination, $options = array())
     {
@@ -125,7 +125,7 @@ class JArchiveGzip extends JObject
      *
      * @return  integer  Data position marker for archive
      *
-     * @since   11.1
+     * @since   1.0
      */
     function _getFilePosition()
     {

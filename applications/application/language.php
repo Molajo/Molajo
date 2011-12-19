@@ -164,7 +164,7 @@ class MolajoLanguage
      *
      * @return  MolajoLanguage  The Language object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($lang, $debug = false)
     {
@@ -183,7 +183,7 @@ class MolajoLanguage
      *
      * @return  MolajoLanguage
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($lang = null, $debug = false)
     {
@@ -260,7 +260,7 @@ class MolajoLanguage
      *
      * @return  string  The translation of the string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function _($string, $jsSafe = false, $interpretBackSlashes = true)
     {
@@ -319,7 +319,7 @@ class MolajoLanguage
      *
      * @return  string  The transliteration of the string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function transliterate($string)
     {
@@ -338,7 +338,7 @@ class MolajoLanguage
      *
      * @return  string  Function name or the actual function for PHP 5.3.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getTransliterator()
     {
@@ -352,7 +352,7 @@ class MolajoLanguage
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setTransliterator($function)
     {
@@ -369,7 +369,7 @@ class MolajoLanguage
      *
      * @return  array    The array of suffixes.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPluralSuffixes($count)
     {
@@ -387,7 +387,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name or the actual function for PHP 5.3.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setPluralSuffixesCallback($function)
     {
@@ -402,7 +402,7 @@ class MolajoLanguage
      *
      * @return  array  The array of ignored search words.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getIgnoredSearchWords()
     {
@@ -419,7 +419,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name (string) or the actual function for PHP 5.3 (function).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getIgnoredSearchWordsCallback()
     {
@@ -433,7 +433,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name (string) or the actual function for PHP 5.3 (function)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setIgnoredSearchWordsCallback($function)
     {
@@ -448,7 +448,7 @@ class MolajoLanguage
      *
      * @return  integer  The lower limit integer for length of search words (3 if no value was set for a specific language).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getLowerLimitSearchWord()
     {
@@ -464,7 +464,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name (string) or the actual function for PHP 5.3 (function).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getLowerLimitSearchWordCallback()
     {
@@ -478,7 +478,7 @@ class MolajoLanguage
      *
      * @return  string|function Function name or the actual function for PHP 5.3.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setLowerLimitSearchWordCallback($function)
     {
@@ -493,7 +493,7 @@ class MolajoLanguage
      *
      * @return  integer  The upper limit integer for length of search words (20 if no value was set for a specific language).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getUpperLimitSearchWord()
     {
@@ -509,7 +509,7 @@ class MolajoLanguage
      *
      * @return  string|function  Function name or the actual function for PHP 5.3.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getUpperLimitSearchWordCallback()
     {
@@ -523,7 +523,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name (string) or the actual function for PHP 5.3 (function).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setUpperLimitSearchWordCallback($function)
     {
@@ -538,7 +538,7 @@ class MolajoLanguage
      *
      * @return  integer  The number of characters displayed (200 if no value was set for a specific language).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getSearchDisplayedCharactersNumber()
     {
@@ -554,7 +554,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name or the actual function for PHP 5.3.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getSearchDisplayedCharactersNumberCallback()
     {
@@ -568,7 +568,7 @@ class MolajoLanguage
      *
      * @return  mixed  Function name (string) or the actual function for PHP 5.3 (function).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setSearchDisplayedCharactersNumberCallback($function)
     {
@@ -588,7 +588,7 @@ class MolajoLanguage
      *
      * @return  boolean  True if the language exists.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function exists($lang, $basePath = MOLAJO_EXTENSIONS_LANGUAGES)
     {
@@ -620,7 +620,7 @@ class MolajoLanguage
      *
      * @return  boolean  True if the file has successfully loaded.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function load($extension = 'molajo', $basePath = MOLAJO_EXTENSIONS_LANGUAGES, $lang = null, $reload = false, $default = true)
     {
@@ -684,7 +684,7 @@ class MolajoLanguage
      * @return  boolean  True if new strings have been added to the language
      *
      * @see     MolajoLanguage::load()
-     * @since   11.1
+     * @since   1.0
      */
     protected function loadLanguage($filename, $extension = 'unknown', $overwrite = true)
     {
@@ -726,7 +726,7 @@ class MolajoLanguage
      *
      * @return  array  The array of parsed strings.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function parse($filename)
     {
@@ -818,7 +818,7 @@ class MolajoLanguage
      *
      * @return  mixed  The value of the property.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($property, $default = null)
     {
@@ -834,7 +834,7 @@ class MolajoLanguage
      *
      * @return  array  Caller information.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getCallerInfo()
     {
@@ -877,7 +877,7 @@ class MolajoLanguage
      *
      * @return  string  Official name element of the language.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getName()
     {
@@ -891,7 +891,7 @@ class MolajoLanguage
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPaths($extension = null)
     {
@@ -911,7 +911,7 @@ class MolajoLanguage
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getErrorFiles()
     {
@@ -923,7 +923,7 @@ class MolajoLanguage
      *
      * @return  string  The language tag.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getTag()
     {
@@ -935,7 +935,7 @@ class MolajoLanguage
      *
      * @return  boolean  True is it an RTL language.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isRTL()
     {
@@ -949,7 +949,7 @@ class MolajoLanguage
      *
      * @return  boolean  Previous value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setDebug($debug)
     {
@@ -964,7 +964,7 @@ class MolajoLanguage
      *
      * @return  boolean  True is in debug mode.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getDebug()
     {
@@ -976,7 +976,7 @@ class MolajoLanguage
      *
      * @return  string  Language code.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getDefault()
     {
@@ -990,7 +990,7 @@ class MolajoLanguage
      *
      * @return  string  Previous value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setDefault($lang)
     {
@@ -1005,7 +1005,7 @@ class MolajoLanguage
      *
      * @return  array  Orphaned text.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getOrphans()
     {
@@ -1019,7 +1019,7 @@ class MolajoLanguage
      *
      * @return  array  Used strings.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getUsed()
     {
@@ -1033,7 +1033,7 @@ class MolajoLanguage
      *
      * @return  boolean  True, if the key exists.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function hasKey($string)
     {
@@ -1049,7 +1049,7 @@ class MolajoLanguage
      *
      * @return  mixed  If $lang exists return key/value pair with the language metadata, otherwise return NULL.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getMetadata($lang)
     {
@@ -1072,7 +1072,7 @@ class MolajoLanguage
      *
      * @return  array  key/value pair with the language file and real name.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getKnownLanguages($basePath = MOLAJO_EXTENSIONS_LANGUAGES)
     {
@@ -1090,7 +1090,7 @@ class MolajoLanguage
      *
      * @return  string  language related path or null.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getLanguagePath($basePath = MOLAJO_EXTENSIONS_LANGUAGES, $language = null)
     {
@@ -1117,7 +1117,7 @@ class MolajoLanguage
      *
      * @return  string  Previous value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setLanguage($lang)
     {
@@ -1133,7 +1133,7 @@ class MolajoLanguage
      *
      * @return  array  The locale according to the language.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getLocale()
     {
@@ -1157,7 +1157,7 @@ class MolajoLanguage
      *
      * @return  integer  The first day of the week according to the language
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getFirstDay()
     {
@@ -1171,7 +1171,7 @@ class MolajoLanguage
      *
      * @return  array  Array holding the found languages as filename => real name pairs.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function parseLanguageFiles($dir = null)
     {
@@ -1195,7 +1195,7 @@ class MolajoLanguage
      *
      * @return  array  Array holding the found languages as filename => metadata array.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function parseXMLLanguageFiles($dir = null)
     {
@@ -1226,7 +1226,7 @@ class MolajoLanguage
      *
      * @return  array  Array holding the found metadata as a key => value pair.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function parseXMLLanguageFile($path)
     {

@@ -291,7 +291,7 @@ class MolajoModelDisplay extends JModel
      * @param   mixed   $value        The value of the property to set
      *
      * @return  mixed   The previous value of the property
-     * @since   11.1
+     * @since   1.0
      */
     public function setState($property, $value = null)
     {

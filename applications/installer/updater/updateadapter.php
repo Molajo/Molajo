@@ -50,7 +50,7 @@ class MolajoUpdateadapter extends MolajoAdapterInstance
      *
      * @return  object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getStackLocation()
     {
@@ -62,7 +62,7 @@ class MolajoUpdateadapter extends MolajoAdapterInstance
      *
      * @return  object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getLastTag()
     {

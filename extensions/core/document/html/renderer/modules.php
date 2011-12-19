@@ -25,7 +25,7 @@ class MolajoDocumentRendererModules extends MolajoDocumentRenderer
      *
      * @return  string  The output of the script
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function render($position, $parameters = array(), $content = null)
     {

@@ -40,7 +40,7 @@ class JRegistry
      *
      * @param   mixed  $data  The data to bind to the new JRegistry object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($data = null)
     {
@@ -62,7 +62,7 @@ class JRegistry
      *
      * @return  JRegistry
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __clone()
     {
@@ -74,7 +74,7 @@ class JRegistry
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __toString()
     {
@@ -89,7 +89,7 @@ class JRegistry
      *
      * @return  string  The value set, or the default if the value was not previously set (or null).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function def($key, $default = '')
     {
@@ -105,7 +105,7 @@ class JRegistry
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function exists($path)
     {
@@ -142,7 +142,7 @@ class JRegistry
      *
      * @return  mixed  Value of entry or null
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($path, $default = null)
     {
@@ -190,7 +190,7 @@ class JRegistry
      *
      * @return  object  The JRegistry object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($id)
     {
@@ -208,7 +208,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadArray($array)
     {
@@ -224,7 +224,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadObject($object)
     {
@@ -242,7 +242,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadFile($file, $format = 'JSON', $options = array())
     {
@@ -262,7 +262,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadString($data, $format = 'JSON', $options = array())
     {
@@ -282,7 +282,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function merge(&$source)
     {
@@ -307,7 +307,7 @@ class JRegistry
      *
      * @return  mixed  The value of the that has been set.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function set($path, $value)
     {
@@ -339,7 +339,7 @@ class JRegistry
      *
      * @return  array  An associative array holding the namespace data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function toArray()
     {
@@ -351,7 +351,7 @@ class JRegistry
      *
      * @return  object   An an object holding the namespace data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function toObject()
     {
@@ -366,7 +366,7 @@ class JRegistry
      *
      * @return  string   Namespace in string format
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function toString($format = 'JSON', $options = array())
     {
@@ -384,7 +384,7 @@ class JRegistry
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function bindData(&$parent, $data)
     {
@@ -417,7 +417,7 @@ class JRegistry
      *
      * @return  array  Array representation of the input object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function asArray($data)
     {
@@ -449,7 +449,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1   Use loadString passing XML as the format instead.
      * @note
@@ -471,7 +471,7 @@ class JRegistry
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1  Use loadString passing INI as the format instead.
      */
@@ -492,7 +492,7 @@ class JRegistry
      *
      * @deprecated    12.1  Use loadString passing JSON as the format instead.
      * @note    Use loadString instead.
-     * @since   11.1
+     * @since   1.0
      */
     public function loadJSON($data)
     {
@@ -511,7 +511,7 @@ class JRegistry
      *
      * @deprecated    12.1
      * @note    Namespaces are no longer supported.
-     * @since   11.1
+     * @since   1.0
      */
     public function makeNameSpace($namespace)
     {
@@ -529,7 +529,7 @@ class JRegistry
      *
      * @deprecated    12.1
      * @note    Namespaces are no longer supported.
-     * @since   11.1
+     * @since   1.0
      */
     public function getNameSpaces()
     {
@@ -550,7 +550,7 @@ class JRegistry
      *
      * @deprecated    12.1
      * @note    Use get instead.
-     * @since   11.1
+     * @since   1.0
      */
     public function getValue($path, $default = null)
     {
@@ -575,7 +575,7 @@ class JRegistry
      *
      * @deprecated    12.1
      * @note    Use set instead.
-     * @since   11.1
+     * @since   1.0
      */
     public function setValue($path, $value)
     {
@@ -599,7 +599,7 @@ class JRegistry
      *
      * @deprecated    12.1
      * @note    Load no longer supported.
-     * @since   11.1
+     * @since   1.0
      */
     public function loadSetupFile()
     {

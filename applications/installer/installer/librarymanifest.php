@@ -99,7 +99,7 @@ class MolajoInstallerLibrarymanifest extends JObject
      *
      * @return  MolajoInstallerLibrarymanifest
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __construct($xmlpath = '')
     {
@@ -115,7 +115,7 @@ class MolajoInstallerLibrarymanifest extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function loadManifestFromXML($xmlfile)
     {

@@ -29,7 +29,7 @@ abstract class MolajoHtmlRules
      *
      * @return  string   HTML for the permissions widget
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     JAccess
      * @see     JFormFieldRules
@@ -150,7 +150,7 @@ abstract class MolajoHtmlRules
      *
      * @return  integer  The id of the parent asset
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _getParentAssetId($assetId)
     {
@@ -171,7 +171,7 @@ abstract class MolajoHtmlRules
      *
      * @return  array  Array of user groups
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _getUserGroups()
     {
@@ -203,7 +203,7 @@ abstract class MolajoHtmlRules
      *
      * @return  array  An associative  array of permissions and images
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _getImagesArray()
     {

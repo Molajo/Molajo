@@ -43,7 +43,7 @@ class JInputCLI extends JInput
      * @param   array  $source   Source data (Optional, default is $_REQUEST)
      * @param   array  $options  Array of configuration parameters (Optional)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($source = null, $options = array())
     {
@@ -67,7 +67,7 @@ class JInputCLI extends JInput
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function parseArguments()
     {

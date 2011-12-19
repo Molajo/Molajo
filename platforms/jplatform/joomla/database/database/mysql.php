@@ -56,7 +56,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @param   array  $options  Array of database options with keys: host, user, password, database, select.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function __construct($options)
     {
@@ -114,7 +114,7 @@ class JDatabaseMySQL extends JDatabase
     /**
      * Destructor.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __destruct()
     {
@@ -131,7 +131,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  string  The escaped string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function escape($text, $extra = false)
     {
@@ -149,7 +149,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function test()
     {
@@ -161,7 +161,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  boolean  True if connected to the database engine.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function connected()
     {
@@ -180,7 +180,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  JDatabaseSQLSrv  Returns this object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function dropTable($tableName, $ifExists = true)
     {
@@ -198,7 +198,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  integer  The number of affected rows.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAffectedRows()
     {
@@ -210,7 +210,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  mixed  The collation in use by the database (string) or boolean false if not supported.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getCollation()
     {
@@ -224,7 +224,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  JDatabaseExporterMySQL  An exporter object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getExporter()
     {
@@ -244,7 +244,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  JDatabaseImporterMySQL  An importer object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getImporter()
     {
@@ -266,7 +266,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  integer   The number of returned rows.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getNumRows($cursor = null)
     {
@@ -280,7 +280,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  mixed  The current value of the internal SQL variable or a new JDatabaseQuery object.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     function getQuery($new = false)
@@ -305,7 +305,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  array  A list of the create SQL for the tables.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function getTableCreate($tables)
@@ -336,7 +336,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  array  An array of fields for the database table.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function getTableColumns($table, $typeOnly = true)
@@ -374,7 +374,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  array  An array of the column specification for the table.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function getTableKeys($table)
@@ -391,7 +391,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  array  An array of all the tables in the database.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function getTableList()
@@ -408,7 +408,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  string  The database connector version.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getVersion()
     {
@@ -420,7 +420,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  boolean  True if supported.
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1
      */
     public function hasUTF()
@@ -434,7 +434,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  integer  The value of the auto-increment field from the last inserted row.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function insertid()
     {
@@ -446,7 +446,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  mixed  A database cursor resource on success, boolean false on failure.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function query()
@@ -523,7 +523,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  boolean  True if the database was successfully selected.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function select($database)
@@ -555,7 +555,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setUTF()
     {
@@ -567,7 +567,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function transactionCommit()
@@ -581,7 +581,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function transactionRollback()
@@ -595,7 +595,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JDatabaseException
      */
     public function transactionStart()
@@ -611,7 +611,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  mixed  Either the next row from the result set or false if there are no more rows.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function fetchArray($cursor = null)
     {
@@ -625,7 +625,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  mixed  Either the next row from the result set or false if there are no more rows.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function fetchAssoc($cursor = null)
     {
@@ -640,7 +640,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  mixed   Either the next row from the result set or false if there are no more rows.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function fetchObject($cursor = null, $class = 'stdClass')
     {
@@ -654,7 +654,7 @@ class JDatabaseMySQL extends JDatabase
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function freeResult($cursor = null)
     {
@@ -727,7 +727,7 @@ class JDatabaseMySQL extends JDatabase
      * @return  mixed  A database resource if successful, false if not.
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public function queryBatch($abortOnError = true, $transactionSafe = false)
     {

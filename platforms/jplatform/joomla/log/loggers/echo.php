@@ -41,7 +41,7 @@ class JLoggerEcho extends JLogger
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function addEntry(JLogEntry $entry)
     {

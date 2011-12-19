@@ -45,7 +45,7 @@ class JCacheControllerPage extends JCacheController
      *
      * @return  boolean  True if the cache is hit (false else)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id = false, $group = 'page', $wrkarounds = true)
     {
@@ -108,7 +108,7 @@ class JCacheControllerPage extends JCacheController
      *
      * @return  boolean  True if cache stored
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($wrkarounds = true)
     {
@@ -145,7 +145,7 @@ class JCacheControllerPage extends JCacheController
      *
      * @return  string  MD5 Hash : page cache id
      *
-     * @since   11.1
+     * @since   1.0
      * @todo    Discuss whether this should be coupled to a data hash or a request
      * hash ... perhaps hashed with a serialized request
      */
@@ -161,7 +161,7 @@ class JCacheControllerPage extends JCacheController
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _noChange()
     {
@@ -179,7 +179,7 @@ class JCacheControllerPage extends JCacheController
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _setEtag($etag)
     {

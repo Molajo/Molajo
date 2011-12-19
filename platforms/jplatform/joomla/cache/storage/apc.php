@@ -28,7 +28,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  mixed    Boolean     False on failure or a cached data string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group, $checkTime = true)
     {
@@ -41,7 +41,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  array  data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAll()
     {
@@ -88,7 +88,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($id, $group, $data)
     {
@@ -104,7 +104,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function remove($id, $group)
     {
@@ -123,7 +123,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($group, $mode = null)
     {
@@ -146,7 +146,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function gc()
     {
@@ -167,7 +167,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function test()
     {
@@ -183,7 +183,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  object   Properties are lock and locklooped
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function lock($id, $group, $locktime)
     {
@@ -229,7 +229,7 @@ class JCacheStorageApc extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function unlock($id, $group = null)
     {

@@ -53,7 +53,7 @@ abstract class JEvent extends JObject
      *
      * @return  mixed  Routine return value
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function update(&$args)
     {

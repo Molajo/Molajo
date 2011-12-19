@@ -35,7 +35,7 @@ class MolajoTextHelper
      *
      * @return  string  The translated string or the key is $script is true
      *
-     * @since   11.1
+     * @since   1.0
      *
      */
     public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
@@ -79,7 +79,7 @@ class MolajoTextHelper
      *
      * @return  string  The translated string or the key if $script is true
      *
-     * @since   11.1
+     * @since   1.0
      *
      */
     public static function alt($string, $alt, $jsSafe = false, $interpretBackSlashes = true, $script = false)
@@ -110,7 +110,7 @@ class MolajoTextHelper
      *
      * @return  string  The translated strings or the key if 'script' is true in the array of options
      *
-     * @since   11.1
+     * @since   1.0
      */
 
     public static function plural($string, $n)
@@ -170,7 +170,7 @@ class MolajoTextHelper
      *
      * @return  string  The translated strings or the key if 'script' is true in the array of options
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function sprintf($string)
     {
@@ -203,7 +203,7 @@ class MolajoTextHelper
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function printf($string)
     {
@@ -229,7 +229,7 @@ class MolajoTextHelper
      *
      * @param   string   The MolajoTextHelper key.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function script($string = null, $jsSafe = false, $interpretBackSlashes = true)
     {

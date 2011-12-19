@@ -47,7 +47,7 @@ class JCacheStorageHelper
      *
      * @param   string  $group  The cache data group
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($group)
     {
@@ -61,7 +61,7 @@ class JCacheStorageHelper
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function updateSize($size)
     {

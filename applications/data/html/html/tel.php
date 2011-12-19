@@ -30,7 +30,7 @@ abstract class MolajoHtmlTel
      *
      * @return  string  The formatted telephone number.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     JFormRuleTel
      */

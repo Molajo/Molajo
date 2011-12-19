@@ -36,7 +36,7 @@ abstract class MolajoHtmlJGrid
      *
      * @return string         The Html code
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function action($i, $task, $prefix = '', $text = '', $active_title = '', $inactive_title = '', $tip = false, $active_class = '',
         $inactive_class = '', $enabled = true, $translate = true, $checkbox = 'cb')
@@ -96,7 +96,7 @@ abstract class MolajoHtmlJGrid
      *
      * @return  string       The Html code
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function state($states, $value, $i, $prefix = '', $enabled = true, $translate = true, $checkbox = 'cb')
     {
@@ -140,7 +140,7 @@ abstract class MolajoHtmlJGrid
      * @return  string  The Html code
      *
      * @see     MolajoHTMLJGrid::state
-     * @since   11.1
+     * @since   1.0
      */
     public static function published($value, $i, $prefix = '', $enabled = true, $checkbox = 'cb', $start_publishing_datetime = null, $stop_publishing_datetime = null)
     {
@@ -219,7 +219,7 @@ abstract class MolajoHtmlJGrid
      * @return  The Html code
      *
      * @see     MolajoHTMLJGrid::state
-     * @since   11.1
+     * @since   1.0
      */
     public static function isdefault($value, $i, $prefix = '', $enabled = true, $checkbox = 'cb')
     {
@@ -248,7 +248,7 @@ abstract class MolajoHtmlJGrid
      *
      * @return  string  The HTML code for the select tag
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function publishedOptions($config = array())
     {
@@ -284,7 +284,7 @@ abstract class MolajoHtmlJGrid
      *
      * @return  string  The required HTML.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function checkedout($i, $editorName, $time, $prefix = '', $enabled = false, $checkbox = 'cb')
     {
@@ -319,7 +319,7 @@ abstract class MolajoHtmlJGrid
      *
      * @return  string  The required HTML.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function orderUp($i, $task = 'orderup', $prefix = '', $text = 'JLIB_HTML_MOVE_UP', $enabled = true, $checkbox = 'cb')
     {
@@ -345,7 +345,7 @@ abstract class MolajoHtmlJGrid
      *
      * @return  string  The required HTML.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function orderDown($i, $task = 'orderdown', $prefix = '', $text = 'JLIB_HTML_MOVE_DOWN', $enabled = true, $checkbox = 'cb')
     {

@@ -137,7 +137,7 @@ class JLog
     /**
      * Constructor.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function __construct()
     {
@@ -153,7 +153,7 @@ class JLog
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function add($entry, $priority = JLog::INFO, $category = '', $date = null)
     {
@@ -180,7 +180,7 @@ class JLog
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addLogger(array $options, $priorities = JLog::ALL, $categories = array())
     {
@@ -220,7 +220,7 @@ class JLog
      *
      * @return  JLog
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1
      */
@@ -273,7 +273,7 @@ class JLog
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setInstance($instance)
     {
@@ -344,7 +344,7 @@ class JLog
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  LogException
      */
     protected function addLogEntry(JLogEntry $entry)
@@ -380,7 +380,7 @@ class JLog
      *
      * @return  array  The array of loggers to use for the given priority and category values.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function findLoggers($priority, $category)
     {

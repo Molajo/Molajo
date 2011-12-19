@@ -56,7 +56,7 @@ class JBuffer
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      * @see     streamWrapper::stream_open
      */
     function stream_open($path, $mode, $options, &$opened_path)
@@ -79,7 +79,7 @@ class JBuffer
      *                   the stream is empty.
      *
      * @see     streamWrapper::stream_read
-     * @since   11.1
+     * @since   1.0
      */
     function stream_read($count)
     {
@@ -97,7 +97,7 @@ class JBuffer
      * @return  integer
      *
      * @see     streamWrapper::stream_write
-     * @since   11.1
+     * @since   1.0
      */
     function stream_write($data)
     {
@@ -115,7 +115,7 @@ class JBuffer
      * @return  integer
      *
      * @see     streamWrapper::stream_tell
-     * @since   11.1
+     * @since   1.0
      */
     function stream_tell()
     {
@@ -128,7 +128,7 @@ class JBuffer
      * @return  boolean  True if the pointer is at the end of the stream
      *
      * @see     streamWrapper::stream_eof
-     * @since   11.1
+     * @since   1.0
      */
     function stream_eof()
     {
@@ -145,7 +145,7 @@ class JBuffer
      * @return  boolean  True if updated
      *
      * @see     streamWrapper::stream_seek
-     * @since   11.1
+     * @since   1.0
      */
     function stream_seek($offset, $whence)
     {

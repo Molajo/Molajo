@@ -35,7 +35,7 @@ class JObject
      * @param   mixed  $properties  Either and associative array or another
      *                              object to set the initial properties of the object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($properties = null)
     {
@@ -49,7 +49,7 @@ class JObject
      *
      * @return  string  The classname.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __toString()
     {
@@ -64,7 +64,7 @@ class JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function def($property, $default = null)
     {
@@ -80,7 +80,7 @@ class JObject
      *
      * @return  mixed    The value of the property.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     getProperties()
      */
@@ -99,7 +99,7 @@ class JObject
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     get()
      */
@@ -126,7 +126,7 @@ class JObject
      *
      * @return  string   Error message
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getError($i = null, $toString = true)
     {
@@ -158,7 +158,7 @@ class JObject
      *
      * @return  array  Array of error messages or JErrors.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getErrors()
     {
@@ -173,7 +173,7 @@ class JObject
      *
      * @return  mixed  Previous value of the property.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function set($property, $value = null)
     {
@@ -189,7 +189,7 @@ class JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     set()
      */
@@ -214,7 +214,7 @@ class JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setError($error)
     {
@@ -226,7 +226,7 @@ class JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.1    Use magic method __toString()
      * @see         __toString()
      */

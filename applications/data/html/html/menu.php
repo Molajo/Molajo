@@ -39,7 +39,7 @@ abstract class MolajoHtmlMenu
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function menus()
     {
@@ -169,7 +169,7 @@ abstract class MolajoHtmlMenu
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function ordering(&$row, $id)
     {
@@ -205,7 +205,7 @@ abstract class MolajoHtmlMenu
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function linkoptions($all = false, $unassigned = false)
     {
@@ -298,7 +298,7 @@ abstract class MolajoHtmlMenu
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function treerecurse($id, $indent, $list, &$children, $maxlevel = 9999, $level = 0, $type = 1)
     {

@@ -65,7 +65,7 @@ class JCacheStorage
      *
      * @param   array  $options  Optional parameters
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -99,7 +99,7 @@ class JCacheStorage
      *
      * @return  JCacheStorageHandler  A JCacheStorageHandler object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($handler = null, $options = array())
     {
@@ -148,7 +148,7 @@ class JCacheStorage
      *
      * @return  mixed  Boolean  false on failure or a cached data object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group, $checkTime = true)
     {
@@ -160,7 +160,7 @@ class JCacheStorage
      *
      * @return  mixed    Boolean false on failure or a cached data object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAll()
     {
@@ -179,7 +179,7 @@ class JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($id, $group, $data)
     {
@@ -194,7 +194,7 @@ class JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function remove($id, $group)
     {
@@ -211,7 +211,7 @@ class JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($group, $mode = null)
     {
@@ -223,7 +223,7 @@ class JCacheStorage
      *
      * @return boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function gc()
     {
@@ -235,7 +235,7 @@ class JCacheStorage
      *
      * @return   boolean  True on success, false otherwise
      *
-     * @since    11.1.
+     * @since    1.0.
      */
     public static function test()
     {
@@ -251,7 +251,7 @@ class JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function lock($id, $group, $locktime)
     {
@@ -266,7 +266,7 @@ class JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function unlock($id, $group = null)
     {
@@ -281,7 +281,7 @@ class JCacheStorage
      *
      * @return  string   The cache_id string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getCacheId($id, $group)
     {
@@ -298,7 +298,7 @@ class JCacheStorage
      *
      * @return  array  An array with directory elements
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addIncludePath($path = '')
     {

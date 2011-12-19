@@ -25,7 +25,7 @@ abstract class MolajoInstallerHelper
      *
      * @return  mixed  Path to downloaded package or boolean false on failure
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function downloadPackage($url, $target = false)
     {
@@ -103,7 +103,7 @@ abstract class MolajoInstallerHelper
      *
      * @return  array  Two elements: extractdir and packagefile
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function unpack($p_filename)
     {
@@ -172,7 +172,7 @@ abstract class MolajoInstallerHelper
      *
      * @return  mixed  Extension type string or boolean false on fail
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function detectType($p_dir)
     {
@@ -214,7 +214,7 @@ abstract class MolajoInstallerHelper
      *
      * @return  mixed   String filename or boolean false if failed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getFilenameFromURL($url)
     {
@@ -233,7 +233,7 @@ abstract class MolajoInstallerHelper
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function cleanupInstall($package, $resultdir)
     {
@@ -263,7 +263,7 @@ abstract class MolajoInstallerHelper
      *
      * @return  array  Array of queries
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function splitSql($sql)
     {

@@ -33,7 +33,7 @@ abstract class MolajoHtmlString
      *
      * @return  string   The truncated text.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function truncate($text, $length = 0, $noSplit = true, $allowHtml = true)
     {
@@ -125,7 +125,7 @@ abstract class MolajoHtmlString
      *
      * @return  string   The abridged text.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function abridge($text, $length = 50, $intro = 30)
     {

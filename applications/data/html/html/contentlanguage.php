@@ -34,7 +34,7 @@ abstract class MolajoHtmlContentLanguage
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     JFormFieldContentLanguage
      */

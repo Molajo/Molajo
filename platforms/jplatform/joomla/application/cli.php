@@ -61,7 +61,7 @@ class JCli
      *                              will be created based on the application's loadDispatcher() method.
      *
      * @see     loadDispatcher()
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct(JInputCli $input = null, JRegistry $config = null, JDispatcher $dispatcher = null)
     {
@@ -139,7 +139,7 @@ class JCli
      *
      * @return  JCli
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($name = null)
     {
@@ -162,7 +162,7 @@ class JCli
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function execute()
     {
@@ -198,7 +198,7 @@ class JCli
      * @return  void
      *
      * @codeCoverageIgnore
-     * @since   11.1
+     * @since   1.0
      */
     public function close($code = 0)
     {
@@ -212,7 +212,7 @@ class JCli
      *
      * @return  JCli  Instance of $this to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadConfiguration($data)
     {
@@ -237,7 +237,7 @@ class JCli
      * @return  JCli  Instance of $this to allow chaining.
      *
      * @codeCoverageIgnore
-     * @since   11.1
+     * @since   1.0
      */
     public function out($text = '', $nl = true)
     {
@@ -252,7 +252,7 @@ class JCli
      * @return  string  The input string from standard input.
      *
      * @codeCoverageIgnore
-     * @since   11.1
+     * @since   1.0
      */
     public function in()
     {
@@ -267,7 +267,7 @@ class JCli
      *
      * @return  JCli  Instance of $this to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function registerEvent($event, $handler)
     {
@@ -286,7 +286,7 @@ class JCli
      *
      * @return  array   An array of results from each function call, or null if no dispatcher is defined.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function triggerEvent($event, $args = null)
     {
@@ -326,7 +326,7 @@ class JCli
      *
      * @return  mixed   Either an array or object to be loaded into the configuration object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function fetchConfigurationData($file = '', $class = 'JConfig')
     {

@@ -28,7 +28,7 @@ class JClientHelper
      * @return  array    Client layer configuration options, consisting of at least
      * these fields: enabled, host, port, user, pass, root
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getCredentials($client, $force = false)
     {
@@ -86,7 +86,7 @@ class JClientHelper
      *
      * @return  boolean  True if the given login credentials have been set and are valid
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setCredentials($client, $user, $pass)
     {
@@ -138,7 +138,7 @@ class JClientHelper
      *
      * @return  boolean  True if login credentials are available
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function hasCredentials($client)
     {
@@ -192,7 +192,7 @@ class JClientHelper
      *
      * @return  mixed  True, if FTP settings should be shown or an exception
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setCredentialsFromRequest($client)
     {

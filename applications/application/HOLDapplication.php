@@ -520,7 +520,7 @@ class MolajoApplication
      *
      * @return  object  A pathway object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPathway($name = null, $options = array())
     {
@@ -633,7 +633,7 @@ class MolajoApplication
      *
      * @return   void     Exits the application.
      *
-     * @since    11.1
+     * @since    1.0
      */
     public function close($code = 0)
     {

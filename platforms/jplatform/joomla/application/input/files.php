@@ -31,7 +31,7 @@ class JInputFiles extends JInput
      *
      * @return  mixed  The filtered input value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($name, $default = null, $filter = 'cmd')
     {
@@ -59,7 +59,7 @@ class JInputFiles extends JInput
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function decodeData($data)
     {
@@ -84,7 +84,7 @@ class JInputFiles extends JInput
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function set($name, $value)
     {

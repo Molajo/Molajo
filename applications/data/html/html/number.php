@@ -31,7 +31,7 @@ abstract class MolajoHtmlNumber
      *
      * @return  string   The number of bytes in the proper units.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function bytes($bytes, $unit = 'auto', $precision = 2)
     {

@@ -31,7 +31,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @param   array  $options  Optional parameters
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -50,7 +50,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  mixed  Boolean false on failure or a cached data string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group, $checkTime = true)
     {
@@ -80,7 +80,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  array  The cached data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAll()
     {
@@ -115,7 +115,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($id, $group, $data)
     {
@@ -152,7 +152,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function remove($id, $group)
     {
@@ -173,7 +173,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($group, $mode = null)
     {
@@ -210,7 +210,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function gc()
     {
@@ -232,7 +232,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function test()
     {
@@ -249,7 +249,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function lock($id, $group, $locktime)
     {
@@ -302,7 +302,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function unlock($id, $group = null)
     {
@@ -326,7 +326,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  False if not valid
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _checkExpire($id, $group)
     {
@@ -352,7 +352,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  string   The cache file path
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getFilePath($id, $group)
     {
@@ -381,7 +381,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _deleteFolder($path)
     {
@@ -469,7 +469,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  string  The cleaned path
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _cleanPath($path, $ds = DS)
     {
@@ -501,7 +501,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  array    Files in the given folder.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _filesInFolder($path, $filter = '.', $recurse = false, $fullpath = false
         , $exclude = array('.svn', 'CVS', '.DS_Store', '__MACOSX'), $excludefilter = array('^\..*', '.*~'))
@@ -579,7 +579,7 @@ class JCacheStorageFile extends JCacheStorage
      *
      * @return  array  Folders in the given folder.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _folders($path, $filter = '.', $recurse = false, $fullpath = false
         , $exclude = array('.svn', 'CVS', '.DS_Store', '__MACOSX'), $excludefilter = array('^\..*'))

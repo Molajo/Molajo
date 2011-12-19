@@ -26,7 +26,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      * @param   string   The path to the session object.
      * @param   string   The name of the session.
      * @return  boolean  True on success, false otherwise.
-     * @since   11.1
+     * @since   1.0
      */
     public function open($save_path, $session_name)
     {
@@ -37,7 +37,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      * Close the SessionHandler backend.
      *
      * @return  boolean  True on success, false otherwise.
-     * @since   11.1
+     * @since   1.0
      */
     public function close()
     {
@@ -50,7 +50,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      *
      * @param   string   The session identifier.
      * @return  string   The session data.
-     * @since   11.1
+     * @since   1.0
      */
     public function read($id)
     {
@@ -76,7 +76,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      * @param   string   The session data.
      *
      * @return  boolean  True on success, false otherwise.
-     * @since   11.1
+     * @since   1.0
      */
     public function write($id, $data)
     {
@@ -127,7 +127,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      * @param   string   The session identifier.
      *
      * @return  boolean  True on success, false otherwise.
-     * @since   11.1
+     * @since   1.0
      */
     public function destroy($id)
     {
@@ -150,7 +150,7 @@ class MolajoSessionStorageDatabase extends MolajoSessionStorage
      *
      * @param   integer  The maximum age of a session.
      * @return  boolean  True on success, false otherwise.
-     * @since   11.1
+     * @since   1.0
      */
     function gc($lifetime = 1440)
     {

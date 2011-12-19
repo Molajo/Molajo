@@ -130,8 +130,6 @@ class MolajoApplication
         /** URI */
         $this->loadSystemUris();
         //echo '<pre>';var_dump($this);'</pre>';
-
-
     }
 
     public function figure_out ()
@@ -282,7 +280,7 @@ class MolajoApplication
         }
 
         $this->sendHeaders();
-$this->setBody('Hello World');
+
         echo $this->getBody();
 
         $this->triggerEvent('onAfterRespond');

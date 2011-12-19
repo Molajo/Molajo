@@ -49,7 +49,7 @@ class JHttp
      *
      * @param   array  $options  Array of configuration options for the client.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -62,7 +62,7 @@ class JHttp
     /**
      * Destructor.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __destruct()
     {
@@ -81,7 +81,7 @@ class JHttp
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception
      */
     public function head($url, $headers = null)
@@ -114,7 +114,7 @@ class JHttp
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception
      */
     public function get($url, $headers = null)
@@ -148,7 +148,7 @@ class JHttp
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception
      */
     public function post($url, $data, $headers = null)
@@ -184,7 +184,7 @@ class JHttp
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception
      */
     protected function sendRequest($connection, $method, JUri $uri, $data = null, $headers = null)
@@ -254,7 +254,7 @@ class JHttp
      *
      * @return  JHttpResponse
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception
      */
     protected function getResponseObject()
@@ -302,7 +302,7 @@ class JHttp
      *
      * @return  mixed  Connection resource on success or boolean false on failure.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function connect(JUri $uri)
     {

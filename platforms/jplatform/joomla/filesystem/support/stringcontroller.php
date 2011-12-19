@@ -23,7 +23,7 @@ class JStringController
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     function _getArray()
     {
@@ -39,7 +39,7 @@ class JStringController
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function createRef($reference, &$string)
     {
@@ -54,7 +54,7 @@ class JStringController
      *
      * @return  mixed  False if not set, reference if it it exists
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getRef($reference)
     {

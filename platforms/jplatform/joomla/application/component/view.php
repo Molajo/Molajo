@@ -116,7 +116,7 @@ class JView extends JObject
      *                          helper_path: the path (optional) of the helper files (defaults to base_path + /helpers/)<br/>
      *                          layout: the layout (optional) to use to display the view<br/>
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($config = array())
     {
@@ -190,7 +190,7 @@ class JView extends JObject
      * @return  mixed  A string if successful, otherwise a JError object.
      *
      * @see     fetch()
-     * @since   11.1
+     * @since   1.0
      */
     function display($tpl = null)
     {
@@ -301,7 +301,7 @@ class JView extends JObject
      *
      * @return  boolean  True on success, false on failure.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function assignRef($key, &$val)
     {
@@ -323,7 +323,7 @@ class JView extends JObject
      *
      * @return  mixed  The escaped value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function escape($var)
     {
@@ -342,7 +342,7 @@ class JView extends JObject
      *
      * @return  mixed  The return value of the method
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($property, $default = null)
     {
@@ -383,7 +383,7 @@ class JView extends JObject
      *
      * @return  mixed  JModel object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getModel($name = null)
     {
@@ -421,7 +421,7 @@ class JView extends JObject
      *
      * @return  string  The name of the model
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getName()
     {
@@ -451,7 +451,7 @@ class JView extends JObject
      *
      * @return  object   The added model.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setModel(&$model, $default = false)
     {
@@ -471,7 +471,7 @@ class JView extends JObject
      *
      * @return  string  Previous value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setLayout($layout)
     {
@@ -498,7 +498,7 @@ class JView extends JObject
      *
      * @return  string   Previous value
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setLayoutExt($value)
     {
@@ -517,7 +517,7 @@ class JView extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function setEscape($spec)
     {
@@ -531,7 +531,7 @@ class JView extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function addTemplatePath($path)
     {
@@ -545,7 +545,7 @@ class JView extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function addHelperPath($path)
     {
@@ -559,7 +559,7 @@ class JView extends JObject
      *
      * @return  string  The output of the the template script.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadTemplate($tpl = null)
     {
@@ -635,7 +635,7 @@ class JView extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadHelper($hlp = null)
     {
@@ -660,7 +660,7 @@ class JView extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _setPath($type, $path)
     {
@@ -696,7 +696,7 @@ class JView extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _addPath($type, $path)
     {
@@ -728,7 +728,7 @@ class JView extends JObject
      *
      * @return  string  The filename
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _createFileName($type, $parts = array())
     {

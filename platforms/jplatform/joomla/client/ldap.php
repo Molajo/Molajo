@@ -103,7 +103,7 @@ class JLDAP extends JObject
      *
      * @param   object  $configObj  An object of configuration variables
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __construct($configObj = null)
     {
@@ -126,7 +126,7 @@ class JLDAP extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     function connect()
     {
@@ -161,7 +161,7 @@ class JLDAP extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function close()
     {
@@ -176,7 +176,7 @@ class JLDAP extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function setDN($username, $nosub = 0)
     {
@@ -198,7 +198,7 @@ class JLDAP extends JObject
      *
      * @return  string  The current dn
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getDN()
     {
@@ -210,7 +210,7 @@ class JLDAP extends JObject
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     function anonymous_bind()
     {
@@ -227,7 +227,7 @@ class JLDAP extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function bind($username = null, $password = null, $nosub = 0)
     {
@@ -250,7 +250,7 @@ class JLDAP extends JObject
      *
      * @return  array  Search results
      *
-     * @since    11.1
+     * @since    1.0
      */
     function simple_search($search)
     {
@@ -270,7 +270,7 @@ class JLDAP extends JObject
      *
      * @return  array  Multidimensional array of results
      *
-     * @since   11.1
+     * @since   1.0
      */
     function search($filters, $dnoverride = null)
     {
@@ -328,7 +328,7 @@ class JLDAP extends JObject
      *
      * @return  mixed  result of comparison (true, false, -1 on error)
      *
-     * @since   11.1
+     * @since   1.0
      */
 
     function replace($dn, $attribute)
@@ -344,7 +344,7 @@ class JLDAP extends JObject
      *
      * @return  mixed  result of comparison (true, false, -1 on error)
      *
-     * @since   11.1
+     * @since   1.0
      */
     function modify($dn, $attribute)
     {
@@ -359,7 +359,7 @@ class JLDAP extends JObject
      *
      * @return  mixed  result of comparison (true, false, -1 on error)
      *
-     * @since   11.1
+     * @since   1.0
      */
     function remove($dn, $attribute)
     {
@@ -376,7 +376,7 @@ class JLDAP extends JObject
      *
      * @return  mixed  result of comparison (true, false, -1 on error)
      *
-     * @since   11.1
+     * @since   1.0
      */
     function compare($dn, $attribute, $value)
     {
@@ -391,7 +391,7 @@ class JLDAP extends JObject
      *
      * @return  mixed  array of attributes or -1 on error
      *
-     * @since   11.1
+     * @since   1.0
      */
     function read($dn, $attribute = array())
     {
@@ -457,7 +457,7 @@ class JLDAP extends JObject
      *
      * @return  boolean  Result of operation
      *
-     * @since   11.1
+     * @since   1.0
      */
     function rename($dn, $newdn, $newparent, $deleteolddn)
     {
@@ -469,7 +469,7 @@ class JLDAP extends JObject
      *
      * @return  string   error message
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getErrorMsg()
     {
@@ -483,7 +483,7 @@ class JLDAP extends JObject
      *
      * @return  string  Net address
      *
-     * @since   11.1
+     * @since   1.0
      */
     function ipToNetAddress($ip)
     {
@@ -523,7 +523,7 @@ class JLDAP extends JObject
      * @return  array
      *
      * @author  Jay Burrell, Systems & Networks, Mississippi State University
-     * @since   11.1
+     * @since   1.0
      */
     function LDAPNetAddr($networkaddress)
     {
@@ -583,7 +583,7 @@ class JLDAP extends JObject
      *
      * @return  string   Encrypted password
      *
-     * @since   11.1
+     * @since   1.0
      */
     function generatePassword($password, $type = 'md5')
     {

@@ -71,7 +71,7 @@ class JLoggerDatabase extends JLogger
      *
      * @param   array  &$options  Log object options.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  LogException
      */
     public function __construct(array &$options)
@@ -111,7 +111,7 @@ class JLoggerDatabase extends JLogger
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function addEntry(JLogEntry $entry)
     {
@@ -131,7 +131,7 @@ class JLoggerDatabase extends JLogger
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  LogException
      */
     protected function connect()

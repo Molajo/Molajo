@@ -27,7 +27,7 @@ class JCacheStorageCachelite extends JCacheStorage
 
     /**
      * @var
-     * @since   11.1
+     * @since   1.0
      */
     protected $_root;
 
@@ -36,7 +36,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @param   array  $options  Optional parameters.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -67,7 +67,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function initCache($cloptions)
     {
@@ -87,7 +87,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  mixed  Boolean false on failure or a cached data string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group, $checkTime = true)
     {
@@ -104,7 +104,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAll()
     {
@@ -140,7 +140,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($id, $group, $data)
     {
@@ -179,7 +179,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function remove($id, $group)
     {
@@ -206,7 +206,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($group, $mode = null)
     {
@@ -269,7 +269,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function gc()
     {
@@ -303,7 +303,7 @@ class JCacheStorageCachelite extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function test()
     {

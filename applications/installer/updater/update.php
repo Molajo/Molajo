@@ -130,7 +130,7 @@ class MolajoUpdate extends JObject
      *
      * @return  object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getStackLocation()
     {
@@ -142,7 +142,7 @@ class MolajoUpdate extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getLastTag()
     {
@@ -159,7 +159,7 @@ class MolajoUpdate extends JObject
      * @return  void
      *
      * @note    This is public because it is called externally
-     * @since   11.1
+     * @since   1.0
      */
     public function _startElement($parser, $name, $attrs = array())
     {
@@ -252,7 +252,7 @@ class MolajoUpdate extends JObject
      * @return  void
      *
      * @note    This is public because its called externally.
-     * @since   11.1
+     * @since   1.0
      */
     public function _characterData($parser, $data)
     {
@@ -271,7 +271,7 @@ class MolajoUpdate extends JObject
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadFromXML($url)
     {

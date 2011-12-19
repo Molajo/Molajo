@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
  * Version information class for the Joomla Platform.
  *
  * @package  Joomla.Platform
- * @since    11.1
+ * @since    1.0
  */
 final class JPlatform
 {
@@ -47,7 +47,7 @@ final class JPlatform
      * @return  boolean  True if the version is compatible.
      *
      * @see     http://www.php.net/version_compare
-     * @since   11.1
+     * @since   1.0
      */
     public static function isCompatible($minimum)
     {
@@ -59,7 +59,7 @@ final class JPlatform
      *
      * @return  string  Version string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getShortVersion()
     {
@@ -71,7 +71,7 @@ final class JPlatform
      *
      * @return  string  Complete version string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getLongVersion()
     {

@@ -26,7 +26,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _startElement($parser, $name, $attrs = array())
     {
@@ -65,7 +65,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _endElement($parser, $name)
     {
@@ -108,7 +108,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
      * @return  void
      *
      * @note    This is public because its called externally.
-     * @since   11.1
+     * @since   1.0
      */
     protected function _characterData($parser, $data)
     {
@@ -128,7 +128,7 @@ class MolajoUpdaterExtension extends MolajoUpdateAdapter
      *
      * @return  array  Array containing the array of update sites and array of updates
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function findUpdate($options)
     {

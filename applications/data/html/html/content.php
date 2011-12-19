@@ -27,7 +27,7 @@ abstract class MolajoHtmlContent
      *
      * @return  string   The content after transformation.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function prepare($text, $parameters = null, $context = 'text')
     {

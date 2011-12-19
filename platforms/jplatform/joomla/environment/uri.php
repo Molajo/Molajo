@@ -112,7 +112,7 @@ class JURI extends JObject
      *
      * @param   string  $uri  The optional URI string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($uri = null)
     {
@@ -126,7 +126,7 @@ class JURI extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __toString()
     {
@@ -141,7 +141,7 @@ class JURI extends JObject
      *
      * @return  JURI  The URI object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($uri = 'SERVER')
     {
@@ -201,7 +201,7 @@ class JURI extends JObject
      *
      * @return  string  The base URI string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function base($pathonly = false)
     {
@@ -251,7 +251,7 @@ class JURI extends JObject
      *
      * @return  string  The root URI string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function root($pathonly = false, $path = null)
     {
@@ -275,7 +275,7 @@ class JURI extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function current()
     {
@@ -293,7 +293,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function reset()
     {
@@ -310,7 +310,7 @@ class JURI extends JObject
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parse($uri)
     {
@@ -356,7 +356,7 @@ class JURI extends JObject
      *
      * @return  string  The rendered URI string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function toString($parts = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'))
     {
@@ -386,7 +386,7 @@ class JURI extends JObject
      *
      * @return  string  Previous value for the query variable.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setVar($name, $value)
     {
@@ -406,7 +406,7 @@ class JURI extends JObject
      *
      * @return  boolean  True if the variable exists.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function hasVar($name)
     {
@@ -421,7 +421,7 @@ class JURI extends JObject
      *
      * @return  array   Query variables.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getVar($name, $default = null)
     {
@@ -438,7 +438,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function delVar($name)
     {
@@ -458,7 +458,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setQuery($query)
     {
@@ -484,7 +484,7 @@ class JURI extends JObject
      *
      * @return  string   Query string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getQuery($toArray = false)
     {
@@ -508,7 +508,7 @@ class JURI extends JObject
      * @return  string  The resulting query string.
      *
      * @see     parse_str()
-     * @since   11.1
+     * @since   1.0
      */
     public static function buildQuery($params)
     {
@@ -525,7 +525,7 @@ class JURI extends JObject
      *
      * @return  string  The URI scheme.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getScheme()
     {
@@ -540,7 +540,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setScheme($scheme)
     {
@@ -553,7 +553,7 @@ class JURI extends JObject
      *
      * @return  string  The URI username.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getUser()
     {
@@ -567,7 +567,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setUser($user)
     {
@@ -580,7 +580,7 @@ class JURI extends JObject
      *
      * @return  string  The URI password.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPass()
     {
@@ -594,7 +594,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setPass($pass)
     {
@@ -607,7 +607,7 @@ class JURI extends JObject
      *
      * @return  string  The URI host.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getHost()
     {
@@ -621,7 +621,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setHost($host)
     {
@@ -634,7 +634,7 @@ class JURI extends JObject
      *
      * @return  integer  The URI port number.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPort()
     {
@@ -648,7 +648,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setPort($port)
     {
@@ -660,7 +660,7 @@ class JURI extends JObject
      *
      * @return  string  The URI path string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPath()
     {
@@ -674,7 +674,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setPath($path)
     {
@@ -687,7 +687,7 @@ class JURI extends JObject
      *
      * @return  string  The URI anchor string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getFragment()
     {
@@ -702,7 +702,7 @@ class JURI extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setFragment($anchor)
     {
@@ -714,7 +714,7 @@ class JURI extends JObject
      *
      * @return  boolean  True if using SSL via HTTPS.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isSSL()
     {
@@ -728,7 +728,7 @@ class JURI extends JObject
      *
      * @return  boolean  True if Internal.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function isInternal($url)
     {
@@ -753,7 +753,7 @@ class JURI extends JObject
      *
      * @return  string  Cleaned and resolved URI path.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _cleanPath($path)
     {

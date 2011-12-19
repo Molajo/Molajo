@@ -34,7 +34,7 @@ class MolajoTableExtension extends MolajoTable
      * @return  boolean  True if the object is ok
      *
      * @see     MolajoTable:bind
-     * @since   11.1
+     * @since   1.0
      */
     function check()
     {
@@ -54,7 +54,7 @@ class MolajoTableExtension extends MolajoTable
      * @return  null|string  null is operation was satisfactory, otherwise returns an error
      *
      * @see     MolajoTable:bind
-     * @since   11.1
+     * @since   1.0
      */
     function bind($array, $ignore = '')
     {

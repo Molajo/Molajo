@@ -32,7 +32,7 @@ abstract class JRegistryFormat
      *
      * @return  object  Registry format handler
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  JException
      */
     public static function getInstance($type)
@@ -68,7 +68,7 @@ abstract class JRegistryFormat
      *
      * @return  string  Formatted string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     abstract public function objectToString($object, $options = null);
 
@@ -80,7 +80,7 @@ abstract class JRegistryFormat
      *
      * @return  object  Data Object
      *
-     * @since   11.1
+     * @since   1.0
      */
     abstract public function stringToObject($data, $options = null);
 }

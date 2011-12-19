@@ -102,7 +102,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  MolajoInstaller
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct()
     {
@@ -115,7 +115,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  object  An installer object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -132,7 +132,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  Allow overwrite switch
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getOverwrite()
     {
@@ -146,7 +146,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True it state is set, false if it is not
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setOverwrite($state = false)
     {
@@ -168,7 +168,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  string  Redirect location (or null)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getRedirectURL()
     {
@@ -182,7 +182,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setRedirectURL($newurl)
     {
@@ -194,7 +194,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getUpgrade()
     {
@@ -208,7 +208,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True if upgrade, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setUpgrade($state = false)
     {
@@ -230,7 +230,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  object  Manifest object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getManifest()
     {
@@ -249,7 +249,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  string  Path
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPath($name, $default = null)
     {
@@ -264,7 +264,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setPath($name, $value)
     {
@@ -278,7 +278,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function pushStep($step)
     {
@@ -293,7 +293,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function abort($msg = null, $type = null)
     {
@@ -383,7 +383,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function install($path = null)
     {
@@ -446,7 +446,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover_install($eid = null)
     {
@@ -531,7 +531,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  array  JExtension
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover()
     {
@@ -562,7 +562,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function update($path = null)
     {
@@ -621,7 +621,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function uninstall($type, $identifier, $cid = 0)
     {
@@ -659,7 +659,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  mixed  void on success, false on error @todo missing return value ?
      *
-     * @since   11.1
+     * @since   1.0
      */
     function refreshManifestCache($eid)
     {
@@ -721,7 +721,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setupInstall()
     {
@@ -751,7 +751,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  mixed  Number of queries processed or False on error
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parseQueries($element)
     {
@@ -793,7 +793,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  mixed  Number of queries processed or False on error
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parseSQLFiles($element)
     {
@@ -882,7 +882,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setSchemaVersion($schema, $eid)
     {
@@ -942,7 +942,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean      Result of the operations
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parseSchemaUpdates($schema, $eid)
     {
@@ -1062,7 +1062,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean      True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parseFiles($element, $cid = 0, $oldFiles = null, $oldMD5 = null)
     {
@@ -1175,7 +1175,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parseLanguages($element, $cid = 0)
     {
@@ -1281,7 +1281,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean     True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function parseMedia($element, $cid = 0)
     {
@@ -1356,7 +1356,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  string   INI string of parameter values
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getParameters()
     {
@@ -1409,7 +1409,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function copyFiles($files, $overwrite = null)
     {
@@ -1508,7 +1508,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function removeFiles($element, $cid = 0)
     {
@@ -1658,7 +1658,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  boolean  True on success, False on error
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function copyManifest($cid = 1)
     {
@@ -1743,7 +1743,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  mixed  A SimpleXMLElement, or null if the file failed to parse
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isManifest($file)
     {
@@ -1774,7 +1774,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return string serialised manifest data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function generateManifestCache()
     {
@@ -1791,7 +1791,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  object    Result of query
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function cleanDiscoveredExtension($type, $element, $folder = '', $client = 0)
     {
@@ -1815,7 +1815,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  array  An array with the delete files and folders in findDeletedFiles[files] and findDeletedFiles[folders] resepctively
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function findDeletedFiles($old_files, $new_files)
     {
@@ -1904,7 +1904,7 @@ class MolajoInstaller extends MolajoAdapter
      *
      * @return  array  Associative array with filenames as the index and the MD5 as the value
      *
-     * @since   11.1
+     * @since   1.0
      */
     function loadMD5Sum($filename)
     {

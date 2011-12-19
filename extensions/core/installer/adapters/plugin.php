@@ -71,7 +71,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadLanguage($path = null)
     {
@@ -114,7 +114,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function install()
     {
@@ -463,7 +463,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return   boolean  True on success
      *
-     * @since    11.1
+     * @since    1.0
      */
     function update()
     {
@@ -483,7 +483,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function uninstall($id)
     {
@@ -657,7 +657,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return  array  JExtension) list of extensions available
      *
-     * @since   11.1
+     * @since   1.0
      */
     function discover()
     {
@@ -722,7 +722,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover_install()
     {
@@ -769,7 +769,7 @@ class MolajoInstallerAdapterPlugin extends MolajoAdapterInstance
      *
      * @return  boolean  Result of operation, true if updated, false on failure.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function refreshManifestCache()
     {

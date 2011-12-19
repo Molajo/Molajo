@@ -35,7 +35,7 @@ class MolajoDocumentError extends MolajoDocument
      * @param   string  $type        Either HTML or text
      * @param   array   $attributes  Associative array of attributes
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -57,7 +57,7 @@ class MolajoDocumentError extends MolajoDocument
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setError($error)
     {
@@ -79,7 +79,7 @@ class MolajoDocumentError extends MolajoDocument
      *
      * @return  string   The rendered data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function render($cache = false, $parameters = array())
     {
@@ -126,7 +126,7 @@ class MolajoDocumentError extends MolajoDocument
      *
      * @return  string  The contents of the template
      *
-     * @since   11.1
+     * @since   1.0
      */
     function _loadTemplate($directory, $filename)
     {
@@ -154,7 +154,7 @@ class MolajoDocumentError extends MolajoDocument
      *
      * @return  string  The contents of the backtrace
      *
-     * @since   11.1
+     * @since   1.0
      */
     function renderBacktrace()
     {

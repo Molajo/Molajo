@@ -31,7 +31,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function render()
     {
@@ -199,7 +199,7 @@ class MolajoDocumentRendererRSS extends MolajoDocumentRenderer
      *
      * @return  string   Text with converted links
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function _relToAbs($text)
     {

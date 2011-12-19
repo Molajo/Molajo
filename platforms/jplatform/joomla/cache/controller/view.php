@@ -28,7 +28,7 @@ class JCacheControllerView extends JCacheController
      *
      * @return  boolean  True if the cache is hit (false else)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get(&$view, $method, $id = false, $wrkarounds = true)
     {
@@ -119,7 +119,7 @@ class JCacheControllerView extends JCacheController
      *
      * @return  string  MD5 Hash : view cache id
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _makeId(&$view, $method)
     {

@@ -159,7 +159,7 @@ class MolajoControllerLogin extends MolajoController
      *
      * @return  array  An array of results from each function call.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function triggerEvent($event, $args = null)
     {
@@ -183,7 +183,7 @@ class MolajoControllerLogin extends MolajoController
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function logout2($user_id = null, $options = array())
     {

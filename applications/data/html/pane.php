@@ -30,7 +30,7 @@ abstract class MolajoPane extends JObject
      * @return  object
      *
      * @deprecated    12.1
-     * @since   11.1
+     * @since   1.0
      *
      */
     public static function getInstance($behavior = 'Tabs', $parameters = array())
@@ -51,7 +51,7 @@ abstract class MolajoPane extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -60,7 +60,7 @@ abstract class MolajoPane extends JObject
     /**
      * Ends the pane.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @return  string
      *
@@ -77,7 +77,7 @@ abstract class MolajoPane extends JObject
      * @return  string
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     abstract public function startPanel($text, $id);
 
@@ -86,7 +86,7 @@ abstract class MolajoPane extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated    12.1
      */
     abstract public function endPanel();
@@ -97,7 +97,7 @@ abstract class MolajoPane extends JObject
      * @return  void
      *
      * @deprecated    12.1
-     * @since   11.1
+     * @since   1.0
      */
     abstract protected function _loadBehavior();
 }
@@ -119,7 +119,7 @@ class MolajoPaneTabs extends MolajoPane
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __construct($parameters = array())
     {
@@ -143,7 +143,7 @@ class MolajoPaneTabs extends MolajoPane
      *
      * @return  string  HTML to start the pane dl
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -161,7 +161,7 @@ class MolajoPaneTabs extends MolajoPane
      *
      * @return  string  HTML to end the pane dl
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -181,7 +181,7 @@ class MolajoPaneTabs extends MolajoPane
      *
      * @return  string  HTML for the dt tag.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -198,7 +198,7 @@ class MolajoPaneTabs extends MolajoPane
      *
      * @return  string   HTML for the dd tag.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -217,7 +217,7 @@ class MolajoPaneTabs extends MolajoPane
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated    12.1
      */
     protected function _loadBehavior($parameters = array())
@@ -268,7 +268,7 @@ class MolajoPaneSliders extends MolajoPane
      *
      * @param   array  $parameters  Associative array of values.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -294,7 +294,7 @@ class MolajoPaneSliders extends MolajoPane
      *
      * @return  string  HTML to start the slider div.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -311,7 +311,7 @@ class MolajoPaneSliders extends MolajoPane
      *
      * @return  string  HTML to end the slider div.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -331,7 +331,7 @@ class MolajoPaneSliders extends MolajoPane
      *
      * @return  string  HTML to start the tab panel div.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -349,7 +349,7 @@ class MolajoPaneSliders extends MolajoPane
      *
      * @return  string  HTML to end the tab divs.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */

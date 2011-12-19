@@ -53,7 +53,7 @@ class JNode extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function addChild(&$child)
     {
@@ -71,7 +71,7 @@ class JNode extends JObject
      *
      * @return  void
      *
-     * @since    11.1
+     * @since    1.0
      */
     function setParent(&$parent)
     {
@@ -92,7 +92,7 @@ class JNode extends JObject
      *
      * @return  array    The children
      *
-     * @since   11.1
+     * @since   1.0
      */
     function &getChildren()
     {
@@ -104,7 +104,7 @@ class JNode extends JObject
      *
      * @return  mixed   JNode object with the parent or null for no parent
      *
-     * @since   11.1
+     * @since   1.0
      */
     function &getParent()
     {
@@ -116,7 +116,7 @@ class JNode extends JObject
      *
      * @return   boolean  True if there are children
      *
-     * @since    11.1
+     * @since    1.0
      */
     function hasChildren()
     {
@@ -128,7 +128,7 @@ class JNode extends JObject
      *
      * @return  boolean  True if there is a parent
      *
-     * @since   11.1
+     * @since   1.0
      */
     function hasParent()
     {

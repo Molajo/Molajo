@@ -26,7 +26,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
      *
      * @return  string  The output of the script
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @note    Unused arguments are retained to preserve backward compatibility.
      */
@@ -47,7 +47,7 @@ class MolajoDocumentRendererHead extends MolajoDocumentRenderer
      *
      * @return  string  The head hTML
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function fetchHead(&$document)
     {

@@ -89,7 +89,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadLanguage($path = null)
     {
@@ -148,7 +148,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function install()
     {
@@ -564,7 +564,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function update()
     {
@@ -998,7 +998,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  mixed  Return value for uninstall method in component uninstall file
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function uninstall($id)
     {
@@ -1253,7 +1253,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _buildAdminMenus()
     {
@@ -1448,7 +1448,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  boolean  True if successful.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _removeAdminMenus(&$row)
     {
@@ -1503,7 +1503,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _rollback_menu($step)
     {
@@ -1515,7 +1515,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  array  A list of extensions.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover()
     {
@@ -1564,7 +1564,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover_install()
     {
@@ -1824,7 +1824,7 @@ class MolajoInstallerAdapterComponent extends MolajoAdapterInstance
      *
      * @return  boolean  Result of operation, true if updated, false on failure
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function refreshManifestCache()
     {

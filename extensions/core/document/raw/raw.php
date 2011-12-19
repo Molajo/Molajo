@@ -25,7 +25,7 @@ class MolajoDocumentRaw extends MolajoDocument
      *
      * @return  MolajoDocumentRaw
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -46,7 +46,7 @@ class MolajoDocumentRaw extends MolajoDocument
      *
      * @return  The rendered data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function render($cache = false, $parameters = array())
     {

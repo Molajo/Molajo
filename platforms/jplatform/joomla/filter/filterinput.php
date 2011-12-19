@@ -88,7 +88,7 @@ class JFilterInput extends JObject
 
     /**
      * @var    array     A list of the default blacklisted tag attributes.  All event handlers implicit.
-     * @since   11.1
+     * @since   1.0
      */
     public $attrBlacklist = array(
         'action',
@@ -107,7 +107,7 @@ class JFilterInput extends JObject
      * @param   integer  $attrMethod  WhiteList method = 0, BlackList method = 1
      * @param   integer  $xssAuto     Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
     {
@@ -134,7 +134,7 @@ class JFilterInput extends JObject
      *
      * @return  object  The JFilterInput object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function &getInstance($tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
     {
@@ -156,7 +156,7 @@ class JFilterInput extends JObject
      *
      * @return  mixed  'Cleaned' version of input parameter
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($source, $type = 'string')
     {
@@ -265,7 +265,7 @@ class JFilterInput extends JObject
      *
      * @return  boolean  True if bad code is detected
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function checkAttribute($attrSubSet)
     {
@@ -284,7 +284,7 @@ class JFilterInput extends JObject
      *
      * @return  string  'Cleaned' version of input parameter
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _remove($source)
     {
@@ -307,7 +307,7 @@ class JFilterInput extends JObject
      *
      * @return  string  'Cleaned' version of input parameter
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _cleanTags($source)
     {
@@ -514,7 +514,7 @@ class JFilterInput extends JObject
      *
      * @return  array  Filtered array of attribute pairs
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _cleanAttributes($attrSet)
     {
@@ -605,7 +605,7 @@ class JFilterInput extends JObject
      *
      * @return  string  Plaintext string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _decode($source)
     {
@@ -634,7 +634,7 @@ class JFilterInput extends JObject
      *
      * @return  string  Filtered string
      *
-     * @since    11.1
+     * @since    1.0
      */
     protected function _escapeAttributeValues($source)
     {
@@ -685,7 +685,7 @@ class JFilterInput extends JObject
      *
      * @return  string  Filtered string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _stripCSSExpressions($source)
     {

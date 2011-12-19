@@ -65,7 +65,7 @@ class MolajoAdapter extends JObject
      *
      * @return  MolajoAdapter  MolajoAdapter object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($basepath, $classprefix = null, $adapterfolder = null)
     {
@@ -81,7 +81,7 @@ class MolajoAdapter extends JObject
      *
      * @return  object  Database connector object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getDbo()
     {
@@ -97,7 +97,7 @@ class MolajoAdapter extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setAdapter($name, &$adapter = null, $options = array())
     {
@@ -132,7 +132,7 @@ class MolajoAdapter extends JObject
      *
      * @return  object  Adapter of type 'name' or false
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAdapter($name, $options = array())
     {
@@ -154,7 +154,7 @@ class MolajoAdapter extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadAllAdapters($options = array())
     {

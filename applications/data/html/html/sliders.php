@@ -26,7 +26,7 @@ abstract class MolajoHtmlSliders
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function start($group = 'sliders', $parameters = array())
     {
@@ -40,7 +40,7 @@ abstract class MolajoHtmlSliders
      *
      * @return  string  hTML to close the pane
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function end()
     {
@@ -55,7 +55,7 @@ abstract class MolajoHtmlSliders
      *
      * @return  string  HTML to start a panel
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function panel($text, $id)
     {
@@ -71,7 +71,7 @@ abstract class MolajoHtmlSliders
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _loadBehavior($group, $parameters = array())
     {

@@ -91,7 +91,7 @@ class MolajoInstallerPackagemanifest extends JObject
      *
      * @return  boolean    Result of load
      *
-     * @since   11.1
+     * @since   1.0
      */
     function loadManifestFromXML($xmlfile)
     {

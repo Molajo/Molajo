@@ -202,7 +202,7 @@ class JBrowser extends JObject
      * @param   string  $userAgent  The browser string to parse.
      * @param   string  $accept     The HTTP_ACCEPT settings to use.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($userAgent = null, $accept = null)
     {
@@ -239,7 +239,7 @@ class JBrowser extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function _sortMime($a, $b)
     {
@@ -265,7 +265,7 @@ class JBrowser extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function match($userAgent = null, $accept = null)
     {
@@ -704,7 +704,7 @@ class JBrowser extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _setPlatform()
     {
@@ -726,7 +726,7 @@ class JBrowser extends JObject
      *
      * @return  string  The user's platform.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getPlatform()
     {
@@ -740,7 +740,7 @@ class JBrowser extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setBrowser($browser)
     {
@@ -752,7 +752,7 @@ class JBrowser extends JObject
      *
      * @return  string  The current browser.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getBrowser()
     {
@@ -764,7 +764,7 @@ class JBrowser extends JObject
      *
      * @return  integer  The current browser's major version
      *
-     * @since   11.1.
+     * @since   1.0.
      */
     public function getMajor()
     {
@@ -776,7 +776,7 @@ class JBrowser extends JObject
      *
      * @return  integer  The current browser's minor version.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getMinor()
     {
@@ -788,7 +788,7 @@ class JBrowser extends JObject
      *
      * @return  string  The current browser's version.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getVersion()
     {
@@ -800,7 +800,7 @@ class JBrowser extends JObject
      *
      * @return  string  The browser agent string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAgentString()
     {
@@ -812,7 +812,7 @@ class JBrowser extends JObject
      *
      * @return  string  The HTTP server protocol version.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getHTTPProtocol()
     {
@@ -832,7 +832,7 @@ class JBrowser extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1 This function will be dropped without replacement
      */
     public function setQuirk($quirk, $value = true)
@@ -848,7 +848,7 @@ class JBrowser extends JObject
      *
      * @return  boolean  Does the browser have the behavior set?
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1 This function will be dropped without replacement
      */
     public function hasQuirk($quirk)
@@ -864,7 +864,7 @@ class JBrowser extends JObject
      *
      * @return  string  The value for the requested behavior.
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1 This function will be dropped without replacement
      */
     public function getQuirk($quirk)
@@ -881,7 +881,7 @@ class JBrowser extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1 This function will be dropped without replacement
      */
     public function setFeature($feature, $value = true)
@@ -897,7 +897,7 @@ class JBrowser extends JObject
      *
      * @return  boolean  Does the browser have the capability set?
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1 This function will be dropped without replacement
      */
     public function hasFeature($feature)
@@ -913,7 +913,7 @@ class JBrowser extends JObject
      *
      * @return  string  The value of the requested capability.
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated 12.1 This function will be dropped without replacement
      */
     public function getFeature($feature)
@@ -933,7 +933,7 @@ class JBrowser extends JObject
      *
      * @return  boolean  True if the browser can display the MIME type.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isViewable($mimetype)
     {
@@ -978,7 +978,7 @@ class JBrowser extends JObject
      *
      * @return  boolean  Is the given browser the same as the current?
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isBrowser($browser)
     {
@@ -990,7 +990,7 @@ class JBrowser extends JObject
      *
      * @return  boolean  True if browser is a known robot.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isRobot()
     {
@@ -1008,7 +1008,7 @@ class JBrowser extends JObject
      *
      * @return boolean  True if browser is a known mobile version.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isMobile()
     {
@@ -1020,7 +1020,7 @@ class JBrowser extends JObject
      *
      * @return  boolean  True if using SSL, false if not.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isSSLConnection()
     {

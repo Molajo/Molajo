@@ -33,7 +33,7 @@ abstract class JObserver extends JObject
      *
      * @param   object  &$subject  The object to observe.
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.3
      */
     public function __construct(&$subject)
@@ -52,7 +52,7 @@ abstract class JObserver extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.3
      */
     public abstract function update(&$args);

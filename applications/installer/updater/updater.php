@@ -22,7 +22,7 @@ class MolajoUpdater extends MolajoAdapter
      *
      * @return  MolajoUpdater
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct()
     {
@@ -36,7 +36,7 @@ class MolajoUpdater extends MolajoAdapter
      *
      * @return  object  An installer object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function &getInstance()
     {
@@ -55,7 +55,7 @@ class MolajoUpdater extends MolajoAdapter
      *
      * @return  boolean True if there are updates
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function findUpdates($eid = 0)
     {
@@ -166,7 +166,7 @@ class MolajoUpdater extends MolajoAdapter
      * @note    Use JArrayHelper::arrayUnique() instead.
      * @note    Borrowed from PHP.net
      * @see     http://au2.php.net/manual/en/function.array-unique.php
-     * @since   11.1
+     * @since   1.0
      *
      */
     public function arrayUnique($myArray)
@@ -182,7 +182,7 @@ class MolajoUpdater extends MolajoAdapter
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function update($id)
     {

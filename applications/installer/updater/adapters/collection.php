@@ -59,7 +59,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
      *
      * @return  object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getStackLocation()
     {
@@ -72,7 +72,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
      *
      * @return  string   parent
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getParent()
     {
@@ -88,7 +88,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function _startElement($parser, $name, $attrs = array())
     {
@@ -164,7 +164,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _endElement($parser, $name)
     {
@@ -189,7 +189,7 @@ class MolajoUpdaterCollection extends MolajoUpdateAdapter
      *
      * @return  array  Update_sites and updates discovered
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function findUpdate($options)
     {

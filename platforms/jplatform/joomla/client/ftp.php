@@ -101,7 +101,7 @@ class JFTP
 
     /**
      * @var    array  Array to hold ascii format file extensions
-     * @since   11.1
+     * @since   1.0
      */
     var $_autoAscii = array(
         "asp",
@@ -145,7 +145,7 @@ class JFTP
      *
      * @param   array  $options  Associative array of options to set
      *
-     * @since   11.1
+     * @since   1.0
      */
 
     public function __construct($options = array())
@@ -182,7 +182,7 @@ class JFTP
      *
      * Closes an existing connection, if we have one
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __destruct()
     {
@@ -208,7 +208,7 @@ class JFTP
      *
      * @return  JFTP    The FTP Client object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getInstance($host = '127.0.0.1', $port = '21', $options = null, $user = null, $pass = null)
     {
@@ -241,7 +241,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setOptions($options)
     {
@@ -263,7 +263,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function connect($host = '127.0.0.1', $port = 21)
     {
@@ -313,7 +313,7 @@ class JFTP
      *
      * @return  boolean  True if connected
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isConnected()
     {
@@ -328,7 +328,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function login($user = 'anonymous', $pass = 'jftp@joomla.org')
     {
@@ -367,7 +367,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function quit()
     {
@@ -390,7 +390,7 @@ class JFTP
      *
      * @return  string   Current working directory
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function pwd()
     {
@@ -425,7 +425,7 @@ class JFTP
      *
      * @return  string   System identifier string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function syst()
     {
@@ -471,7 +471,7 @@ class JFTP
      *
      * @return  boolean True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function chdir($path)
     {
@@ -501,7 +501,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function reinit()
     {
@@ -532,7 +532,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function rename($from, $to)
     {
@@ -569,7 +569,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function chmod($path, $mode)
     {
@@ -612,7 +612,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function delete($path)
     {
@@ -645,7 +645,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function mkdir($path)
     {
@@ -674,7 +674,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function restart($point)
     {
@@ -704,7 +704,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function create($path)
     {
@@ -758,7 +758,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function read($remote, &$buffer)
     {
@@ -836,7 +836,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($local, $remote)
     {
@@ -907,7 +907,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($local, $remote = null)
     {
@@ -1001,7 +1001,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function write($remote, $buffer)
     {
@@ -1078,7 +1078,7 @@ class JFTP
      *
      * @return  string  Directory listing
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function listNames($path = null)
     {
@@ -1379,7 +1379,7 @@ class JFTP
      *
      * @return  boolean  True if command executed successfully
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _putCmd($cmd, $expectedResponse)
     {
@@ -1405,7 +1405,7 @@ class JFTP
      *
      * @return  boolean  True if response code from the server is expected
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _verifyResponse($expected)
     {
@@ -1460,7 +1460,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _passive()
     {
@@ -1534,7 +1534,7 @@ class JFTP
      *
      * @return  integer Transfer-mode for this filetype [FTP_ASCII|FTP_BINARY]
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _findMode($fileName)
     {
@@ -1569,7 +1569,7 @@ class JFTP
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _mode($mode)
     {

@@ -30,7 +30,7 @@ abstract class MolajoHtmlEmail
      *
      * @return  string  The cloaked email.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function cloak($mail, $mailto = 1, $text = '', $email = 1)
     {
@@ -107,7 +107,7 @@ abstract class MolajoHtmlEmail
      *
      * @return  string  The converted text.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _convertEncoding($text)
     {

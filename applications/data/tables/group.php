@@ -37,7 +37,7 @@ class MolajoTableGroup extends MolajoTable
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function check()
     {
@@ -74,7 +74,7 @@ class MolajoTableGroup extends MolajoTable
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function rebuild($parent_id = 0, $left = 0)
     {
@@ -127,7 +127,7 @@ class MolajoTableGroup extends MolajoTable
      *
      * @return  bool  True successful, false otherwise and an internal error message is set
      *
-     * @since   11.1
+     * @since   1.0
      */
     function store($updateNulls = false)
     {
@@ -146,7 +146,7 @@ class MolajoTableGroup extends MolajoTable
      *
      * @return  mixed  Boolean or Exception.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function delete($id = null)
     {

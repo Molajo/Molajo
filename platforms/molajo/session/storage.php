@@ -35,7 +35,7 @@ abstract class MolajoSessionStorage extends JObject
      * @param   name        $name The session store to instantiate
      *
      * @return  database    A MolajoSessionStorage object
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($name = 'none', $options = array())
     {

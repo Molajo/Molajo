@@ -58,7 +58,7 @@ class JArrayHelper
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function toInteger(&$array, $default = null)
     {
@@ -93,7 +93,7 @@ class JArrayHelper
      *
      * @return  object   The object mapped from the given array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function toObject(&$array, $class = 'stdClass')
     {
@@ -124,7 +124,7 @@ class JArrayHelper
      *
      * @return  string   The string mapped from the given array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function toString($array = null, $inner_glue = '=', $outer_glue = ' ', $keepOuterKey = false)
     {
@@ -159,7 +159,7 @@ class JArrayHelper
      *
      * @return  array    The array mapped from the given object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function fromObject($p_obj, $recurse = true, $regex = null)
     {
@@ -181,7 +181,7 @@ class JArrayHelper
      *
      * @return  array  The array mapped from the given object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _fromObject($item, $recurse, $regex)
     {
@@ -223,7 +223,7 @@ class JArrayHelper
      *
      * @return  array  Column of values from the source array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getColumn(&$array, $index)
     {
@@ -259,7 +259,7 @@ class JArrayHelper
      *
      * @return  mixed  The value from the source array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getValue(&$array, $name, $default = null, $type = '')
     {
@@ -326,7 +326,7 @@ class JArrayHelper
      *
      * @return  boolean  True if the array is an associative array.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function isAssociative($array)
     {
@@ -424,7 +424,7 @@ class JArrayHelper
      *
      * @return  array  The sorted array of objects
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function sortObjects(&$a, $k, $direction = 1, $caseSensitive = true, $locale = false)
     {
@@ -456,7 +456,7 @@ class JArrayHelper
      * @return  integer  Comparison status
      *
      * @see     JArrayHelper::sortObjects()
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _sortObjects(&$a, &$b)
     {

@@ -100,7 +100,7 @@ class MolajoConfiguration
     {
         $siteConfigData = array();
 
-        $file = MOLAJO_SITE_PATH . '/configuration.php';
+        $file = MOLAJO_SITE_FOLDER_PATH . '/configuration.php';
         if (file_exists($file)) {
             require_once $file;
         } else {

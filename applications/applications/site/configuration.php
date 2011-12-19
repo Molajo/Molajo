@@ -23,11 +23,12 @@ class MolajoConfigApplication
     public $editor = 'none';
     public $access = '1';
 
-    /* Access */
+    /* Home and Logon Requirements */
     public $application_logon_requirement = '0';
-    public $application_guest_option = 'article';
-    public $application_default_option = 'article';
+    public $application_guest_option = '';
+    public $application_default_option = 'layouts';
     public $default_template_extension = 'cleanslate';
+    public $application_home_asset_id = 296;
 
     /* Locale */
     public $language = 'en-GB';

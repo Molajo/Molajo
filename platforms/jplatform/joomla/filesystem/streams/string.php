@@ -104,7 +104,7 @@ class JStreamString
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function stream_open($path, $mode, $options, &$opened_path)
     {
@@ -128,7 +128,7 @@ class JStreamString
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     http://www.php.net/manual/en/streamwrapper.stream-stat.php
      */
@@ -145,7 +145,7 @@ class JStreamString
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     http://php.net/manual/en/streamwrapper.url-stat.php
      */
@@ -180,7 +180,7 @@ class JStreamString
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @see     http://www.php.net/manual/en/streamwrapper.stream-read.php
      */
@@ -200,7 +200,7 @@ class JStreamString
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @note    Updating the string is not supported.
      */
@@ -215,7 +215,7 @@ class JStreamString
      *
      * @return  integer  The position
      *
-     * @since   11.1
+     * @since   1.0
      */
     function stream_tell()
     {
@@ -227,7 +227,7 @@ class JStreamString
      *
      * @return  boolean  True if at end of field.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function stream_eof()
     {
@@ -246,7 +246,7 @@ class JStreamString
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function stream_seek($offset, $whence)
     {
@@ -285,7 +285,7 @@ class JStreamString
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @note    Data storage is not supported
      */

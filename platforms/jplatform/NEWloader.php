@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
  * Static class to handle loading of libraries.
  *
  * @package  Joomla.Platform
- * @since    11.1
+ * @since    1.0
  */
 abstract class JLoader
 {
@@ -42,7 +42,7 @@ abstract class JLoader
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function discover($classPrefix, $parentPath, $force = true, $recurse = false)
     {
@@ -87,7 +87,7 @@ abstract class JLoader
      *
      * @return  array  The array of class => path values for the autoloader.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getClassList()
     {
@@ -102,7 +102,7 @@ abstract class JLoader
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function import($key, $base = null)
     {
@@ -164,7 +164,7 @@ abstract class JLoader
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function load($class)
     {
@@ -194,7 +194,7 @@ abstract class JLoader
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function register($class, $path, $force = true)
     {
@@ -266,7 +266,7 @@ abstract class JLoader
  * @return  void
  *
  * @codeCoverageIgnore
- * @since   11.1
+ * @since   1.0
  */
 function jexit($message = 0)
 {
@@ -280,7 +280,7 @@ function jexit($message = 0)
  *
  * @return  boolean  True on success.
  *
- * @since   11.1
+ * @since   1.0
  */
 function jimport($path)
 {

@@ -43,7 +43,7 @@ class JCache extends JObject
      *
      * @param   array  $options  options
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options)
     {
@@ -81,7 +81,7 @@ class JCache extends JObject
      *
      * @return  JCache  A JCache object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($type = 'output', $options = array())
     {
@@ -93,7 +93,7 @@ class JCache extends JObject
      *
      * @return  array    An array of available storage handlers
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getStores()
     {
@@ -125,7 +125,7 @@ class JCache extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setCaching($enabled)
     {
@@ -137,7 +137,7 @@ class JCache extends JObject
      *
      * @return  boolean  Caching state
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getCaching()
     {
@@ -151,7 +151,7 @@ class JCache extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setLifeTime($lt)
     {
@@ -166,7 +166,7 @@ class JCache extends JObject
      *
      * @return  mixed  boolean  False on failure or a cached data string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group = null)
     {
@@ -186,7 +186,7 @@ class JCache extends JObject
      *
      * @return  mixed    Boolean false on failure or an object with a list of cache groups and data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAll()
     {
@@ -207,7 +207,7 @@ class JCache extends JObject
      *
      * @return  boolean  True if cache stored
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($data, $id, $group = null)
     {
@@ -231,7 +231,7 @@ class JCache extends JObject
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function remove($id, $group = null)
     {
@@ -257,7 +257,7 @@ class JCache extends JObject
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($group = null, $mode = 'group')
     {
@@ -277,7 +277,7 @@ class JCache extends JObject
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function gc()
     {
@@ -298,7 +298,7 @@ class JCache extends JObject
      *
      * @return  object  Properties are lock and locklooped
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function lock($id, $group = null, $locktime = null)
     {
@@ -375,7 +375,7 @@ class JCache extends JObject
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function unlock($id, $group = null)
     {
@@ -405,7 +405,7 @@ class JCache extends JObject
      *
      * @return  JCacheStorage   A JCacheStorage object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function &_getStorage()
     {
@@ -428,7 +428,7 @@ class JCache extends JObject
      *
      * @return  string  Body of cached data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getWorkarounds($data, $options = array())
     {
@@ -485,7 +485,7 @@ class JCache extends JObject
      *
      * @return  string  Data to be cached
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setWorkarounds($data, $options = array())
     {
@@ -586,7 +586,7 @@ class JCache extends JObject
      *
      * @return  string   md5 encoded cacheid
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function makeId()
     {
@@ -630,7 +630,7 @@ class JCache extends JObject
      *
      * @return  array   An array with directory elements
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addIncludePath($path = '')
     {

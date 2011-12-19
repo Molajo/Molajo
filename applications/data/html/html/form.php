@@ -26,7 +26,7 @@ abstract class MolajoHtmlForm
      * @return  void
      *
      * @see     JRequest::checkToken
-     * @since   11.1
+     * @since   1.0
      */
     public static function token()
     {

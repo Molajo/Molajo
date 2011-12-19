@@ -85,7 +85,7 @@ class MolajoAuthentication extends JObservable
      *
      * @return  MolajoAuthentication
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct()
     {
@@ -103,7 +103,7 @@ class MolajoAuthentication extends JObservable
      *
      * @return  MolajoAuthentication  The global MolajoAuthentication object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance()
     {
@@ -130,7 +130,7 @@ class MolajoAuthentication extends JObservable
      * @return  MolajoAuthenticationResponse Response object with status variable filled
      *                                 in for last plugin or first successful plugin
      * @see     MolajoAuthenticationResponse
-     * @since   11.1
+     * @since   1.0
      */
     public function authenticate($credentials, $options = Array())
     {
@@ -284,7 +284,7 @@ class MolajoAuthentication extends JObservable
  *
  * @package    Joomla.Platform
  * @subpackage    User
- * @since    11.1
+ * @since    1.0
  */
 class MolajoAuthenticationResponse extends JObject
 {
@@ -406,7 +406,7 @@ class MolajoAuthenticationResponse extends JObject
      *
      * @return  MolajoAuthenticationResponse
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __construct()
     {

@@ -26,7 +26,7 @@ class JArchive
      *
      * @return  boolean  True for success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function extract($archivename, $extractdir)
     {
@@ -157,7 +157,7 @@ class JArchive
      *
      * @return  object   JObject
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getAdapter($type)
     {

@@ -22,7 +22,7 @@ abstract class MolajoHtmlSelect
      * Default values for options. Organized by option group.
      *
      * @var     array
-     * @since   11.1
+     * @since   1.0
      */
     static protected $_optionDefaults = array(
         'option' => array('option.attr' => null, 'option.disable' => 'disable', 'option.id' => null, 'option.key' => 'value',
@@ -41,7 +41,7 @@ abstract class MolajoHtmlSelect
      *
      * @return  string  HTML for the radio list
      *
-     * @since   11.1
+     * @since   1.0
      * @see     JFormFieldRadio
      */
     public static function booleanlist($name, $attribs = null, $selected = null, $yes = 'JYES', $no = 'JNO', $id = false)
@@ -75,7 +75,7 @@ abstract class MolajoHtmlSelect
      *
      * @return  string  HTML for the select list.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function genericlist($data, $name, $attribs = null, $optKey = 'value', $optText = 'text', $selected = null, $idtag = false,
         $translate = false)
@@ -148,7 +148,7 @@ abstract class MolajoHtmlSelect
      *
      * @return  string  HTML for the select list
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @throws  Exception If a group has unprocessable contents.
      */
@@ -265,7 +265,7 @@ abstract class MolajoHtmlSelect
      *
      * @return  string   HTML for the select list
      *
-     * @since    11.1
+     * @since    1.0
      */
     public static function integerlist($start, $end, $inc, $name, $attribs = null, $selected = null, $format = '')
     {
@@ -311,7 +311,7 @@ abstract class MolajoHtmlSelect
      *
      * @deprecated  12.1  Use MolajoHTMLSelect::groupedList()
      * @see     MolajoHTMLSelect::groupedList()
-     * @since   11.1
+     * @since   1.0
      */
     public static function optgroup($text, $optKey = 'value', $optText = 'text')
     {
@@ -370,7 +370,7 @@ abstract class MolajoHtmlSelect
      *
      * @return  object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function option($value, $text = '', $optKey = 'value', $optText = 'text', $disable = false)
     {
@@ -458,7 +458,7 @@ abstract class MolajoHtmlSelect
      *
      * @return  string  HTML for the select list
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function options($arr, $optKey = 'value', $optText = 'text', $selected = null, $translate = false)
     {

@@ -491,10 +491,10 @@ INSERT INTO `molajo_sites`
 # Note: after menuitems are defined, update applications for home
 #
 INSERT INTO `MOLAJO_APPLICATION_CORE`
-  (`id`, `asset_type_id`, `name`, `path`, `description`, `home_menu_id`, `parameters`, `custom_fields`)
+  (`id`, `asset_type_id`, `name`, `path`, `description`, `parameters`, `custom_fields`)
   VALUES
     (1, 50, 'site', '', 'Primary application for site visitors', 0, '{}', '{}'),
-    (2, 50, 'administrator', 'administrator', 'Administrative site area for site construction', 0, '{}', '{}');
+    (2, 50, 'administrator', 'administrator', 'Administrative site area for site construction', '{}', '{}');
 
 #
 # CONTENT ROOT ID
@@ -1282,6 +1282,8 @@ UPDATE `molajo_content`
         `home` = 0;
 
 # Site Home
+/*
+todo: amy update configuration file
 SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Home' AND `asset_type_id` = 2000);
 UPDATE `molajo_content`
   SET `home` = 1
@@ -1289,8 +1291,9 @@ UPDATE `molajo_content`
 UPDATE `MOLAJO_APPLICATION_CORE`
   SET `home_menu_id` = @id
   WHERE `id` = 1;
-
+*/
 # Application Home
+/*
 SET @id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 2000);
 UPDATE `molajo_content`
   SET `home` = 1
@@ -1298,11 +1301,10 @@ UPDATE `molajo_content`
 UPDATE `MOLAJO_APPLICATION_CORE`
   SET `home_menu_id` = @id
   WHERE `id` = 2;
-
+*/
 # Menu Item Metadata
 UPDATE `molajo_content`
   SET `metadata` = '{"metadata_description":"","metadata_keywords":"","metadata_robots":"","metadata_author":"","metadata_rights":""}';
-
 
 #
 # ASSETS

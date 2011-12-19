@@ -42,7 +42,7 @@ class JRequest
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -60,7 +60,7 @@ class JRequest
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -100,7 +100,7 @@ class JRequest
      *
      * @return  mixed  Requested variable.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1  Use JInput::Get
      */
@@ -193,7 +193,7 @@ class JRequest
      *
      * @return  integer  Requested variable.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -242,7 +242,7 @@ class JRequest
      *
      * @return  float  Requested variable.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -291,7 +291,7 @@ class JRequest
      *
      * @return  string  Requested variable.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -343,7 +343,7 @@ class JRequest
      *
      * @return  string   Requested variable
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -366,7 +366,7 @@ class JRequest
      *
      * @return  string   Previous value
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */
@@ -569,7 +569,7 @@ class JRequest
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated   12.1
      */

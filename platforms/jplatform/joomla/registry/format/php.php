@@ -27,7 +27,7 @@ class JRegistryFormatPHP extends JRegistryFormat
      *
      * @return  string  Config class formatted string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function objectToString($object, $params = array())
     {
@@ -64,7 +64,7 @@ class JRegistryFormatPHP extends JRegistryFormat
      *
      * @return  object   Data object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function stringToObject($data, $options = array())
     {
@@ -78,7 +78,7 @@ class JRegistryFormatPHP extends JRegistryFormat
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getArrayString($a)
     {

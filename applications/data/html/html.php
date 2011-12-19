@@ -55,7 +55,7 @@ abstract class MolajoHtml
      *
      * @return  array  Contains lowercase key, prefix, file, function.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function extract($key)
     {
@@ -83,7 +83,7 @@ abstract class MolajoHtml
      *
      * @return  mixed  MolajoHTML::call($function, $args) or False on error
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function _($key)
     {
@@ -138,7 +138,7 @@ abstract class MolajoHtml
      *
      * @return  boolean  True if the function is callable
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function register($key, $function)
     {
@@ -157,7 +157,7 @@ abstract class MolajoHtml
      *
      * @return  boolean  True if a set key is unset
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function unregister($key)
     {
@@ -177,7 +177,7 @@ abstract class MolajoHtml
      *
      * @return  boolean  True if the key is registered.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function isRegistered($key)
     {
@@ -194,7 +194,7 @@ abstract class MolajoHtml
      * @return  mixed   Function result or false on error.
      *
      * @see     http://php.net/manual/en/function.call-user-func-array.php
-     * @since   11.1
+     * @since   1.0
      */
     protected static function call($function, $args)
     {
@@ -223,7 +223,7 @@ abstract class MolajoHtml
      *
      * @return  string  <a></a> string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function link($url, $text, $attribs = null)
     {
@@ -244,7 +244,7 @@ abstract class MolajoHtml
      *
      * @return  string  <iframe></iframe> element or message if not supported
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function iframe($url, $name, $attribs = null, $noFrames = '')
     {
@@ -266,7 +266,7 @@ abstract class MolajoHtml
      * @return  array    files to be included
      *
      * @see     JBrowser
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _includeRelativeFiles($file, $relative, $detect_browser, $folder)
     {
@@ -393,7 +393,7 @@ abstract class MolajoHtml
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function image($file, $alt, $attribs = null, $relative = false, $path_only = false)
     {
@@ -455,7 +455,7 @@ abstract class MolajoHtml
      * @return  mixed  nothing if $path_only is false, null, path or array of path if specific css browser files were detected
      *
      * @see     JBrowser
-     * @since   11.1
+     * @since   1.0
      */
     public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = false, $detect_browser = true)
     {
@@ -511,7 +511,7 @@ abstract class MolajoHtml
      * @return  mixed  nothing if $path_only is false, null, path or array of path if specific js browser files were detected
      *
      * @see     MolajoHTML::stylesheet
-     * @since   11.1
+     * @since   1.0
      */
     public static function script($file, $framework = false, $relative = false, $path_only = false, $detect_browser = true)
     {
@@ -564,7 +564,7 @@ abstract class MolajoHtml
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function core($debug = null)
     {
@@ -589,7 +589,7 @@ abstract class MolajoHtml
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setFormatOptions($options)
     {
@@ -613,7 +613,7 @@ abstract class MolajoHtml
      * @return  string    A date translated by the given format and time zone.
      *
      * @see     strftime
-     * @since   11.1
+     * @since   1.0
      */
     public static function date($input = 'now', $format = null, $tz = true, $gregorian = false)
     {
@@ -686,7 +686,7 @@ abstract class MolajoHtml
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function tooltip($tooltip, $title = '', $image = 'tooltip.png', $text = '', $href = '', $alt = 'Tooltip', $class = 'hasTip')
     {
@@ -749,7 +749,7 @@ abstract class MolajoHtml
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function calendar($value, $name, $id, $format = '%Y-%m-%d', $attribs = null)
     {
@@ -807,7 +807,7 @@ abstract class MolajoHtml
      *
      * @return  array  An array with directory elements
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addIncludePath($path = '')
     {

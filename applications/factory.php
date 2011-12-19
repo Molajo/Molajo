@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
  * Joomla Framework Factory class
  *
  * @package Joomla.Platform
- * @since   11.1
+ * @since   1.0
  */
 abstract class MolajoFactory
 {

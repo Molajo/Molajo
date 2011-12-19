@@ -62,7 +62,7 @@ class JInput
      * @param   array  $source   Source data (Optional, default is $_REQUEST)
      * @param   array  $options  Array of configuration parameters (Optional)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($source = null, $options = array())
     {
@@ -93,7 +93,7 @@ class JInput
      *
      * @return  JInput  The request input object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __get($name)
     {
@@ -125,7 +125,7 @@ class JInput
      *
      * @return  mixed  The filtered input value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($name, $default = null, $filter = 'cmd')
     {
@@ -144,7 +144,7 @@ class JInput
      *
      * @return  mixed  The filtered input data.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getArray($vars, $datasource = null)
     {
@@ -183,7 +183,7 @@ class JInput
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function set($name, $value)
     {
@@ -198,7 +198,7 @@ class JInput
      *
      * @return  boolean  The filtered boolean input value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __call($name, $arguments)
     {
@@ -223,7 +223,7 @@ class JInput
      *
      * @return  string   The request method.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getMethod($name, $arguments)
     {

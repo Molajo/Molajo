@@ -67,7 +67,7 @@ abstract class JModel extends JObject
      * The event to trigger when cleaning cache.
      *
      * @var      string
-     * @since    11.1
+     * @since    1.0
      */
     protected $event_clean_cache = null;
 
@@ -80,7 +80,7 @@ abstract class JModel extends JObject
      *
      * @return  array  An array with directory elements. If prefix is equal to '', all directories are returned.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addIncludePath($path = '', $prefix = '')
     {
@@ -120,7 +120,7 @@ abstract class JModel extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addTablePath($path)
     {
@@ -136,7 +136,7 @@ abstract class JModel extends JObject
      *
      * @return  string  The filename
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _createFileName($type, $parts = array())
     {
@@ -161,7 +161,7 @@ abstract class JModel extends JObject
      *
      * @return  mixed   A model object or false on failure
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($type, $prefix = '', $config = array())
     {
@@ -196,7 +196,7 @@ abstract class JModel extends JObject
      *
      * @param   array  $config  An array of configuration options (name, state, dbo, table_path, ignore_request).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($config = array())
     {
@@ -274,7 +274,7 @@ abstract class JModel extends JObject
      *
      * @return  array  An array of results.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getList($query, $limitstart = 0, $limit = 0)
     {
@@ -291,7 +291,7 @@ abstract class JModel extends JObject
      *
      * @return  integer  Number of rows for query
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _getListCount($query)
     {
@@ -310,7 +310,7 @@ abstract class JModel extends JObject
      *
      * @return  mixed  Model object or boolean false if failed
      *
-     * @since   11.1
+     * @since   1.0
      * @see     JTable::getInstance
      */
     protected function _createTable($name, $prefix = 'Table', $config = array())
@@ -345,7 +345,7 @@ abstract class JModel extends JObject
      *
      * @return  string  The name of the model
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getName()
     {
@@ -368,7 +368,7 @@ abstract class JModel extends JObject
      *
      * @return  object  The property where specified, the state object where omitted
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getState($property = null, $default = null)
     {
@@ -392,7 +392,7 @@ abstract class JModel extends JObject
      *
      * @return  JTable  A JTable object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getTable($name = '', $prefix = '', $options = array())
     {
@@ -427,7 +427,7 @@ abstract class JModel extends JObject
      * @return  void
      *
      * @note    Calling getState in this method will result in recursion.
-     * @since   11.1
+     * @since   1.0
      */
     protected function populateState()
     {
@@ -440,7 +440,7 @@ abstract class JModel extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setDbo(&$db)
     {
@@ -455,7 +455,7 @@ abstract class JModel extends JObject
      *
      * @return  mixed  The previous value of the property or null if not set.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setState($property, $value = null)
     {
@@ -470,7 +470,7 @@ abstract class JModel extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function cleanCache($group = null, $client_id = 0)
     {

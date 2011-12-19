@@ -76,7 +76,7 @@ class JLogEntry
      * @param   string  $category  Type of entry
      * @param   string  $date      Date of entry (defaults to now if not specified or blank)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($message, $priority = JLog::INFO, $category = '', $date = null)
     {

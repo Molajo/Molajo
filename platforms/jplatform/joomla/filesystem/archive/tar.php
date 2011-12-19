@@ -74,7 +74,7 @@ class JArchiveTar extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function extract($archive, $destination, $options = array())
     {
@@ -127,7 +127,7 @@ class JArchiveTar extends JObject
      * 'type'  --  File type
      * </pre>
      *
-     * @since    11.1
+     * @since    1.0
      */
     protected function _getTarInfo(& $data)
     {

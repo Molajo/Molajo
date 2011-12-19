@@ -206,7 +206,7 @@ class MolajoDocumentFeed extends MolajoDocument
            */
         $cache = 0;
         $cache_time = 3600;
-        $cache_path = MOLAJO_SITE_PATH_CACHE;
+        $cache_path = MOLAJO_SITE_FOLDER_PATH_CACHE;
 
         // set filename for rss feeds
         $file = strtolower(str_replace('.', '', $type));

@@ -12,7 +12,7 @@ defined('MOLAJO') or die;
 /**
  * @package     Joomla.Platform
  * @subpackage  Language
- * @since   11.1
+ * @since   1.0
  */
 
 /**
@@ -32,7 +32,7 @@ class MolajoTransliterateHelper
      *
      * @return  string  Transliterated string
      *
-     * @since   11.1
+     * @since   1.0
      */
     static function utf8_latin_to_ascii($string, $case = 0)
     {

@@ -97,7 +97,7 @@ abstract class MolajoButton extends JObject
      *
      * @return  string  CSS class name
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function fetchIconClass($identifier)
     {
@@ -111,7 +111,7 @@ abstract class MolajoButton extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     abstract public function fetchButton();
 }

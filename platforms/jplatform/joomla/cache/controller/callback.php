@@ -34,7 +34,7 @@ class JCacheControllerCallback extends JCacheController
      *
      * @return  mixed  Result of the callback
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function call()
     {
@@ -56,7 +56,7 @@ class JCacheControllerCallback extends JCacheController
      *
      * @return  mixed  Result of the callback
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($callback, $args = array(), $id = false, $wrkarounds = false, $woptions = array())
     {
@@ -182,7 +182,7 @@ class JCacheControllerCallback extends JCacheController
      *
      * @return  string  MD5 Hash : function cache id
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _makeId($callback, $args)
     {

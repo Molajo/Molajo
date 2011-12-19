@@ -24,7 +24,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @param   array  $options  Optional parameters.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -40,7 +40,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  mixed  Boolean false on failure or a cached data string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group, $checkTime = true)
     {
@@ -57,7 +57,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  array    data
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getAll()
     {
@@ -104,7 +104,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($id, $group, $data)
     {
@@ -120,7 +120,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     function remove($id, $group)
     {
@@ -138,7 +138,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clean($group, $mode = null)
     {
@@ -165,7 +165,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function gc()
     {
@@ -177,7 +177,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function test()
     {
@@ -193,7 +193,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function lock($id, $group, $locktime)
     {
@@ -240,7 +240,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
      *
      * @return  boolean  True on success, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function unlock($id, $group = null)
     {

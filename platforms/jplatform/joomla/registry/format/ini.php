@@ -31,7 +31,7 @@ class JRegistryFormatINI extends JRegistryFormat
      *
      * @return  string  INI formatted string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function objectToString($object, $options = array())
     {
@@ -72,7 +72,7 @@ class JRegistryFormatINI extends JRegistryFormat
      *
      * @return  object   Data object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function stringToObject($data, $options = array())
     {
@@ -201,7 +201,7 @@ class JRegistryFormatINI extends JRegistryFormat
      *
      * @return  string  The value in INI format.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getValueAsINI($value)
     {

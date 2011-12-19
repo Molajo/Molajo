@@ -246,22 +246,22 @@ class MolajoInstallationModelFilesystem extends JModel
      */
     public static function checkPermissions()
     {
-        if (!is_writable(MOLAJO_SITE_PATH . '/tmp')) {
+        if (!is_writable(MOLAJO_SITE_FOLDER_PATH . '/tmp')) {
             return false;
         }
-        if (!mkdir(MOLAJO_SITE_PATH . '/tmp/test', 0755)) {
+        if (!mkdir(MOLAJO_SITE_FOLDER_PATH . '/tmp/test', 0755)) {
             return false;
         }
-        if (!copy(MOLAJO_SITE_PATH . '/tmp/index.html', MOLAJO_SITE_PATH . 'tmp/test/index.html')) {
+        if (!copy(MOLAJO_SITE_FOLDER_PATH . '/tmp/index.html', MOLAJO_SITE_FOLDER_PATH . 'tmp/test/index.html')) {
             return false;
         }
-        if (!chmod(MOLAJO_SITE_PATH . '/tmp/test/index.html', 0777)) {
+        if (!chmod(MOLAJO_SITE_FOLDER_PATH . '/tmp/test/index.html', 0777)) {
             return false;
         }
-        if (!unlink(MOLAJO_SITE_PATH . '/tmp/test/index.html')) {
+        if (!unlink(MOLAJO_SITE_FOLDER_PATH . '/tmp/test/index.html')) {
             return false;
         }
-        if (!rmdir(MOLAJO_SITE_PATH . '/tmp/test')) {
+        if (!rmdir(MOLAJO_SITE_FOLDER_PATH . '/tmp/test')) {
             return false;
         }
 
@@ -413,7 +413,7 @@ class MolajoInstallationModelFilesystem extends JModel
         $ftpRoot = $options->ftpRoot;
 
         // Determine if the path is "chmodable".
-        if (!JPath::canChmod(JPath::clean(MOLAJO_SITE_PATH . '/' . $folder))) {
+        if (!JPath::canChmod(JPath::clean(MOLAJO_SITE_FOLDER_PATH . '/' . $folder))) {
             $ftpFlag = true;
         }
 
@@ -440,7 +440,7 @@ class MolajoInstallationModelFilesystem extends JModel
             $client->quit();
             $ret = true;
         } else {
-            $path = JPath::clean(MOLAJO_SITE_PATH . '/' . $folder);
+            $path = JPath::clean(MOLAJO_SITE_FOLDER_PATH . '/' . $folder);
 
             if (!@ chmod($path, octdec('0755'))) {
                 $ret = false;

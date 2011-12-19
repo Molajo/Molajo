@@ -28,7 +28,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function framework($extras = false, $debug = null)
     {
@@ -68,7 +68,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1
      */
@@ -87,7 +87,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function caption($selector = 'img.caption')
     {
@@ -129,7 +129,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function formvalidation()
     {
@@ -154,7 +154,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function switcher()
     {
@@ -193,7 +193,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function combobox()
     {
@@ -237,7 +237,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function tooltip($selector = '.hasTip', $parameters = array())
     {
@@ -315,7 +315,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function modal($selector = 'a.modal', $parameters = array())
     {
@@ -396,7 +396,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function multiselect($id = 'adminForm')
     {
@@ -437,7 +437,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function uploader($id = 'file-upload', $parameters = array(), $upload_queue = 'upload-queue')
     {
@@ -614,7 +614,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function tree($id, $parameters = array(), $root = array())
     {
@@ -681,7 +681,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function calendar()
     {
@@ -767,7 +767,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function keepalive()
     {
@@ -813,7 +813,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function noframes($location = 'top.location.href')
     {
@@ -845,7 +845,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  string  JavaScript object notation representation of the array
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _getJSObject($array = array())
     {
@@ -904,7 +904,7 @@ abstract class MolajoHtmlBehavior
      *
      * @return  string  JavaScript that translates the object
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _calendartranslation()
     {

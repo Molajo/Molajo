@@ -100,7 +100,7 @@ class JDaemon extends JCli
      *                              the application's event dispatcher, if it is null then the default event dispatcher
      *                              will be created based on the application's loadDispatcher() method.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct(JInputCli $input = null, JRegistry $config = null, JDispatcher $dispatcher = null)
     {
@@ -138,7 +138,7 @@ class JDaemon extends JCli
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @see     pcntl_signal()
      */
     public static function signal($signal)
@@ -201,7 +201,7 @@ class JDaemon extends JCli
      *
      * @return  boolean  True if daemon is active.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function isActive()
     {
@@ -244,7 +244,7 @@ class JDaemon extends JCli
      *
      * @return  JCli  Instance of $this to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadConfiguration($data)
     {
@@ -339,7 +339,7 @@ class JDaemon extends JCli
      * @return  void
      *
      * @codeCoverageIgnore
-     * @since   11.1
+     * @since   1.0
      */
     public function restart()
     {
@@ -352,7 +352,7 @@ class JDaemon extends JCli
      *
      * @return  boolean  True if successfully spawned
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function start()
     {
@@ -392,7 +392,7 @@ class JDaemon extends JCli
      * @return  void
      *
      * @codeCoverageIgnore
-     * @since   11.1
+     * @since   1.0
      */
     public function stop()
     {
@@ -405,7 +405,7 @@ class JDaemon extends JCli
      *
      * @return  boolean  True if identity successfully changed
      *
-     * @since   11.1
+     * @since   1.0
      * @see     posix_setuid()
      */
     protected function changeIdentity()
@@ -460,7 +460,7 @@ class JDaemon extends JCli
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  ApplicationException
      */
     protected function daemonize()
@@ -533,7 +533,7 @@ class JDaemon extends JCli
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  ApplicationException
      */
     protected function fork()
@@ -575,7 +575,7 @@ class JDaemon extends JCli
      * @return  void
      *
      * @codeCoverageIgnore
-     * @since   11.1
+     * @since   1.0
      */
     protected function gc()
     {
@@ -594,7 +594,7 @@ class JDaemon extends JCli
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      * @see     pcntl_signal()
      */
     protected function setupSignalHandlers()
@@ -624,7 +624,7 @@ class JDaemon extends JCli
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function shutdown($restart = false)
     {
@@ -670,7 +670,7 @@ class JDaemon extends JCli
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function writeProcessIdFile()
     {

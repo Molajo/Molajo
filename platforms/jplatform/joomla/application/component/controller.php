@@ -174,7 +174,7 @@ class JController extends JObject
      * @return  string  The filename.
      *
      * @note    Replaced _createFileName.
-     * @since   11.1
+     * @since   1.0
      */
     protected static function createFileName($type, $parts = array())
     {
@@ -220,7 +220,7 @@ class JController extends JObject
      *
      * @return  JController
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception if the controller cannot be loaded.
      */
     public static function getInstance($prefix, $config = array())
@@ -302,7 +302,7 @@ class JController extends JObject
      * Recognized key values include 'name', 'default_task', 'model_path', and
      * 'view_path' (this list is not meant to be comprehensive).
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($config = array())
     {
@@ -413,7 +413,7 @@ class JController extends JObject
      *
      * @return  JController  A JController object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      * @note    Replaces _addPath.
      */
     protected function addPath($type, $path)
@@ -459,7 +459,7 @@ class JController extends JObject
      *
      * @return  boolean  True if authorised
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1   Use JAuthorise
      */
@@ -478,7 +478,7 @@ class JController extends JObject
      *
      * @return  boolean  True if authorised
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function authorise($task)
     {
@@ -509,7 +509,7 @@ class JController extends JObject
      *
      * @return  boolean  True if the ID is in the edit list.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function checkEditId($context, $id)
     {
@@ -551,7 +551,7 @@ class JController extends JObject
      *
      * @return  mixed   Model object on success; otherwise null failure.
      *
-     * @since   11.1
+     * @since   1.0
      * @note    Replaces _createModel.
      */
     protected function createModel($name, $prefix = '', $config = array())
@@ -580,7 +580,7 @@ class JController extends JObject
      *
      * @return  mixed  View object on success; null or error result on failure.
      *
-     * @since   11.1
+     * @since   1.0
      * @note    Replaces _createView.
      */
     protected function createView($name, $prefix = '', $type = '', $config = array())
@@ -626,7 +626,7 @@ class JController extends JObject
      *
      * @return  JController  A JController object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function display($cachable = false, $urlparams = false)
     {
@@ -688,7 +688,7 @@ class JController extends JObject
      *
      * @return  mixed   The value returned by the called method, false in error case.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function execute($task)
     {
@@ -730,7 +730,7 @@ class JController extends JObject
      *
      * @return  object  The model.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getModel($name = '', $prefix = '', $config = array())
     {
@@ -769,7 +769,7 @@ class JController extends JObject
      *
      * @return  string  The name of the dispatcher
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getName()
     {
@@ -789,7 +789,7 @@ class JController extends JObject
      *
      * @return  string  The task that is being performed or was most recently performed.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getTask()
     {
@@ -801,7 +801,7 @@ class JController extends JObject
      *
      * @return  array  Array[i] of task names.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getTasks()
     {
@@ -818,7 +818,7 @@ class JController extends JObject
      *
      * @return  object  Reference to the view or an error.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getView($name = '', $type = '', $prefix = '', $config = array())
     {
@@ -859,7 +859,7 @@ class JController extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function holdEditId($context, $id)
     {
@@ -888,7 +888,7 @@ class JController extends JObject
      *
      * @return  boolean  False if no redirect exists.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function redirect()
     {
@@ -907,7 +907,7 @@ class JController extends JObject
      *
      * @return  JController  A JController object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function registerDefaultTask($method)
     {
@@ -924,7 +924,7 @@ class JController extends JObject
      *
      * @return  JController  A JController object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function registerTask($task, $method)
     {
@@ -942,7 +942,7 @@ class JController extends JObject
      *
      * @return  JController  This object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function unregisterTask($task)
     {
@@ -959,7 +959,7 @@ class JController extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function releaseEditId($context, $id)
     {
@@ -993,7 +993,7 @@ class JController extends JObject
      *
      * @deprecated  12.1  Use JAccess
      * @see     Jaccess
-     * @since   11.1
+     * @since   1.0
      */
     public function setAccessControl($section, $value = null)
     {
@@ -1011,7 +1011,7 @@ class JController extends JObject
      *
      * @return  string  Previous message
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setMessage($text, $type = 'message')
     {
@@ -1031,7 +1031,7 @@ class JController extends JObject
      * @return  void
      *
      * @note    Replaces _setPath.
-     * @since   11.1
+     * @since   1.0
      */
     protected function setPath($type, $path)
     {
@@ -1051,7 +1051,7 @@ class JController extends JObject
      *
      * @return  JController  This object to support chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setRedirect($url, $msg = null, $type = null)
     {

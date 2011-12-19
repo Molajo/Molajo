@@ -28,7 +28,7 @@ class JDatabaseQueryMySQL extends JDatabaseQuery
      *
      * @return  string  The concatenated values.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function concatenate($values, $separator = null)
     {

@@ -68,7 +68,7 @@ abstract class MolajoError
      *
      * @return  boolean  True if argument is an exception, false otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1
      */
@@ -85,7 +85,7 @@ abstract class MolajoError
      * @return  mixed  Last exception object in the error stack or boolean false if none exist
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public static function getError($unset = false)
     {
@@ -109,7 +109,7 @@ abstract class MolajoError
      * @return  array  Chronological array of errors that have been stored during script execution
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public static function getErrors()
     {
@@ -165,7 +165,7 @@ abstract class MolajoError
      *
      * @deprecated  12.1  Use PHP Exception
      * @see     Exception
-     * @since   11.1
+     * @since   1.0
      */
     public static function throwError(&$exception)
     {
@@ -218,7 +218,7 @@ abstract class MolajoError
      *
      * @deprecated   12.1       Use PHP Exception
      * @see        raise()
-     * @since   11.1
+     * @since   1.0
      */
     public static function raiseError($code, $msg, $info = null)
     {
@@ -261,7 +261,7 @@ abstract class MolajoError
      *
      * @deprecated       12.1   Use PHP Exception
      * @see     raise()
-     * @since   11.1
+     * @since   1.0
      */
     public static function raiseNotice($code, $msg, $info = null)
     {
@@ -277,7 +277,7 @@ abstract class MolajoError
      * @return  array    All error handling details
      *
      * @deprecated   12.1  Use PHP Exception
-     * @since   11.1
+     * @since   1.0
      */
     public static function getErrorHandling($level)
     {
@@ -309,7 +309,7 @@ abstract class MolajoError
      * @return  mixed  True on success or a Exception object if failed.
      *
      * @deprecated  12.1  Use PHP Exception
-     * @since   11.1
+     * @since   1.0
      */
     public static function setErrorHandling($level, $mode, $options = null)
     {
@@ -371,7 +371,7 @@ abstract class MolajoError
      *
      * @deprecated  12.1
      * @see     set_error_handler
-     * @since   11.1
+     * @since   1.0
      */
     public static function attachHandler()
     {
@@ -385,7 +385,7 @@ abstract class MolajoError
      *
      * @deprecated  12.1
      * @see     restore_error_handler
-     * @since   11.1
+     * @since   1.0
      */
     public static function detachHandler()
     {
@@ -407,7 +407,7 @@ abstract class MolajoError
      * @return  boolean  True on success; false if the level already has been registered
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public static function registerErrorLevel($level, $name, $handler = 'ignore')
     {
@@ -430,7 +430,7 @@ abstract class MolajoError
      * @return  mixed  Human readable error level name or boolean false if it doesn't exist
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
 
     public static function translateErrorLevel($level)
@@ -453,7 +453,7 @@ abstract class MolajoError
      *
      * @deprecated  12.1
      * @see     raise()
-     * @since   11.1
+     * @since   1.0
      */
     public static function handleIgnore(&$error, $options)
     {
@@ -682,7 +682,7 @@ abstract class MolajoError
      * @return  void
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public static function customErrorPage(&$error)
     {
@@ -734,7 +734,7 @@ abstract class MolajoError
      * @return  void
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public static function customErrorHandler($level, $msg)
     {
@@ -749,7 +749,7 @@ abstract class MolajoError
      * @return  string  Contents of the backtrace
      *
      * @deprecated  12.1
-     * @since   11.1
+     * @since   1.0
      */
     public static function renderBacktrace($error)
     {

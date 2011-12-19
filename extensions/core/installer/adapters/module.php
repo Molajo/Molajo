@@ -42,7 +42,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      * Extension name
      *
      * @var
-     * @since   11.1
+     * @since   1.0
      */
     protected $name = null;
 
@@ -65,7 +65,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function loadLanguage($path = null)
     {
@@ -120,7 +120,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function install()
     {
@@ -511,7 +511,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function update()
     {
@@ -530,7 +530,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  array  JExtension list of extensions available
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover()
     {
@@ -574,7 +574,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function discover_install()
     {
@@ -617,7 +617,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  boolean  Result of operation, true if updated, false on failure.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function refreshManifestCache()
     {
@@ -647,7 +647,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function uninstall($id)
     {
@@ -846,7 +846,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _rollback_menu($arg)
     {
@@ -875,7 +875,7 @@ class MolajoInstallerAdapterModule extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _rollback_module($arg)
     {

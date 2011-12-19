@@ -68,7 +68,7 @@ class JLoggerFormattedText extends JLogger
      *
      * @param   array  &$options  Log object options.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct(array &$options)
     {
@@ -105,7 +105,7 @@ class JLoggerFormattedText extends JLogger
     /**
      * Destructor.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __destruct()
     {
@@ -121,7 +121,7 @@ class JLoggerFormattedText extends JLogger
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  LogException
      */
     public function addEntry(JLogEntry $entry)
@@ -181,7 +181,7 @@ class JLoggerFormattedText extends JLogger
      *
      * @return  string  The log file header
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function generateFileHeader()
     {
@@ -212,7 +212,7 @@ class JLoggerFormattedText extends JLogger
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function initFile()
     {
@@ -246,7 +246,7 @@ class JLoggerFormattedText extends JLogger
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function parseFields()
     {

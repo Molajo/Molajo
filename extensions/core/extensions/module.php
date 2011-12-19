@@ -318,7 +318,7 @@ abstract class MolajoModule
      * @param   array   $parameters - parameters for given mode - calculated id or an array of safe url parameters and their
      *                     variable types, for valid values see {@link JFilterInput::clean()}.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function moduleCache($module, $moduleparameters, $cacheparameters)
     {

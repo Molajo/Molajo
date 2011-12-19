@@ -135,7 +135,7 @@ class JStream extends JObject
      * @param   string  $readprefix   The read prefix (optional).
      * @param   array   $context      The context options (optional).
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __construct($writeprefix = '', $readprefix = '', $context = array())
     {
@@ -148,7 +148,7 @@ class JStream extends JObject
     /**
      * Destructor
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __destruct()
     {
@@ -174,7 +174,7 @@ class JStream extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function open($filename, $mode = 'r', $use_include_path = false, $context = null,
         $use_prefix = false, $relative = false, $detectprocessingmode = false)
@@ -286,7 +286,7 @@ class JStream extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function close()
     {
@@ -344,7 +344,7 @@ class JStream extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function eof()
     {
@@ -389,7 +389,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function filesize()
     {
@@ -454,7 +454,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function gets($length = 0)
     {
@@ -508,7 +508,7 @@ class JStream extends JObject
      * @return  mixed
      *
      * @see     http://php.net/manual/en/function.fread.php
-     * @since   11.1
+     * @since   1.0
      */
     function read($length = 0)
     {
@@ -602,7 +602,7 @@ class JStream extends JObject
      * @return  boolean  True on success, false on failure
      *
      * @see http://php.net/manual/en/function.fseek.php
-     * @since   11.1
+     * @since   1.0
      */
     function seek($offset, $whence = SEEK_SET)
     {
@@ -652,7 +652,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function tell()
     {
@@ -711,7 +711,7 @@ class JStream extends JObject
      * @return  boolean
      *
      * @see     http://php.net/manual/en/function.fwrite.php
-     * @since   11.1
+     * @since   1.0
      */
     function write(&$string, $length = 0, $chunk = 0)
     {
@@ -780,7 +780,7 @@ class JStream extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function chmod($filename = '', $mode = 0)
     {
@@ -841,7 +841,7 @@ class JStream extends JObject
      * @return  array  header/metadata
      *
      * @see     http://php.net/manual/en/function.stream-get-meta-data.php
-     * @since   11.1
+     * @since   1.0
      */
     function get_meta_data()
     {
@@ -860,7 +860,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function _buildContext()
     {
@@ -884,7 +884,7 @@ class JStream extends JObject
      * @return  void
      *
      * @see       http://php.net/stream_context_create
-     * @since   11.1
+     * @since   1.0
      */
     function setContextOptions($context)
     {
@@ -903,7 +903,7 @@ class JStream extends JObject
      *
      * @see     http://php.net/stream_context_create Stream Context Creation
      * @see     http://php.net/manual/en/context.php Context Options for various streams
-     * @since   11.1
+     * @since   1.0
      */
     function addContextEntry($wrapper, $name, $value)
     {
@@ -920,7 +920,7 @@ class JStream extends JObject
      * @return  void
      *
      * @see     http://php.net/stream_context_create
-     * @since   11.1
+     * @since   1.0
      */
     function deleteContextEntry($wrapper, $name)
     {
@@ -950,7 +950,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function applyContextToStream()
     {
@@ -985,7 +985,7 @@ class JStream extends JObject
      * @return  mixed
      *
      * @see     http://php.net/manual/en/function.stream-filter-append.php
-     * @since   11.1
+     * @since   1.0
      */
     function appendFilter($filtername, $read_write = STREAM_FILTER_READ, $params = array())
     {
@@ -1024,7 +1024,7 @@ class JStream extends JObject
      * @return  mixed
      *
      * @see     http://php.net/manual/en/function.stream-filter-prepend.php
-     * @since   11.1
+     * @since   1.0
      */
     function prependFilter($filtername, $read_write = STREAM_FILTER_READ, $params = array())
     {
@@ -1062,7 +1062,7 @@ class JStream extends JObject
      *
      * @return  boolean   Result of operation
      *
-     * @since   11.1
+     * @since   1.0
      */
     function removeFilter(&$resource, $byindex = false)
     {
@@ -1101,7 +1101,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function copy($src, $dest, $context = null, $use_prefix = true, $relative = false)
     {
@@ -1196,7 +1196,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function move($src, $dest, $context = null, $use_prefix = true, $relative = false)
     {
@@ -1247,7 +1247,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function delete($filename, $context = null, $use_prefix = true, $relative = false)
     {
@@ -1296,7 +1296,7 @@ class JStream extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function upload($src, $dest, $context = null, $use_prefix = true, $relative = false)
     {
@@ -1320,7 +1320,7 @@ class JStream extends JObject
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      */
     function writeFile($filename, &$buffer)
     {
@@ -1345,7 +1345,7 @@ class JStream extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     function _getFilename($filename, $mode, $use_prefix, $relative)
     {
@@ -1380,7 +1380,7 @@ class JStream extends JObject
      *
      * @return  File handler
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getFileHandle()
     {

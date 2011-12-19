@@ -26,7 +26,7 @@ abstract class MolajoHtmlTabs
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function start($group = 'tabs', $parameters = array())
     {
@@ -40,7 +40,7 @@ abstract class MolajoHtmlTabs
      *
      * @return  string  HTML to close the pane
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function end()
     {
@@ -55,7 +55,7 @@ abstract class MolajoHtmlTabs
      *
      * @return  string  HTML to start a new panel
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function panel($text, $id)
     {
@@ -70,7 +70,7 @@ abstract class MolajoHtmlTabs
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected static function _loadBehavior($group, $parameters = array())
     {

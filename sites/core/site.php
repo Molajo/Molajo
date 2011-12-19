@@ -168,25 +168,25 @@ class MolajoSite extends JObject
      */
     public function setPaths()
     {
-        if (defined('MOLAJO_SITE_PATH_CACHE')) {
+        if (defined('MOLAJO_SITE_FOLDER_PATH_CACHE')) {
         } else {
-            define('MOLAJO_SITE_PATH_CACHE', self::get('cache_path', MOLAJO_SITE_PATH . '/cache'));
+            define('MOLAJO_SITE_FOLDER_PATH_CACHE', self::get('cache_path', MOLAJO_SITE_FOLDER_PATH . '/cache'));
         }
-        if (defined('MOLAJO_SITE_PATH_IMAGES')) {
+        if (defined('MOLAJO_SITE_FOLDER_PATH_IMAGES')) {
         } else {
-            define('MOLAJO_SITE_PATH_IMAGES', self::get('images_path', MOLAJO_SITE_PATH . '/images'));
+            define('MOLAJO_SITE_FOLDER_PATH_IMAGES', self::get('images_path', MOLAJO_SITE_FOLDER_PATH . '/images'));
         }
-        if (defined('MOLAJO_SITE_PATH_LOGS')) {
+        if (defined('MOLAJO_SITE_FOLDER_PATH_LOGS')) {
         } else {
-            define('MOLAJO_SITE_PATH_LOGS', self::get('logs_path', MOLAJO_SITE_PATH . '/logs'));
+            define('MOLAJO_SITE_FOLDER_PATH_LOGS', self::get('logs_path', MOLAJO_SITE_FOLDER_PATH . '/logs'));
         }
-        if (defined('MOLAJO_SITE_PATH_MEDIA')) {
+        if (defined('MOLAJO_SITE_FOLDER_PATH_MEDIA')) {
         } else {
-            define('MOLAJO_SITE_PATH_MEDIA', self::get('media_path', MOLAJO_SITE_PATH . '/media'));
+            define('MOLAJO_SITE_FOLDER_PATH_MEDIA', self::get('media_path', MOLAJO_SITE_FOLDER_PATH . '/media'));
         }
-        if (defined('MOLAJO_SITE_PATH_TEMP')) {
+        if (defined('MOLAJO_SITE_FOLDER_PATH_TEMP')) {
         } else {
-            define('MOLAJO_SITE_PATH_TEMP', self::get('temp_path', MOLAJO_SITE_PATH . '/tmp'));
+            define('MOLAJO_SITE_FOLDER_PATH_TEMP', self::get('temp_path', MOLAJO_SITE_FOLDER_PATH . '/tmp'));
         }
     }
 

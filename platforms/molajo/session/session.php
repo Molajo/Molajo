@@ -107,7 +107,7 @@ class MolajoSession extends JObject
 	/**
 	 * Session object destructor
 	 *
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function __destruct()
 	{
@@ -119,7 +119,7 @@ class MolajoSession extends JObject
 	 * if it doesn't already exist.
 	 *
 	 * @return  object  MolajoSession	The Session object.
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public static function getInstance($handler, $options)
 	{
@@ -184,7 +184,7 @@ class MolajoSession extends JObject
 	 * @param   boolean  If true, expires the session
 	 *
 	 * @return  boolean
-	 * @since   11.1
+	 * @since   1.0
 	 */
 	public function hasToken($tCheck, $forceExpire = true)
 	{

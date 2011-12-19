@@ -23,7 +23,7 @@ abstract class MolajoHtmlBatch
      *
      * @return  string  The necessary HTML for the widget.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function access()
     {
@@ -51,7 +51,7 @@ abstract class MolajoHtmlBatch
      *
      * @return  string  The necessary HTML for the widget.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function item($extension)
     {

@@ -28,7 +28,7 @@ class JRegistryFormatXML extends JRegistryFormat
      *
      * @return  string  XML formatted string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function objectToString($object, $options = array())
     {
@@ -68,7 +68,7 @@ class JRegistryFormatXML extends JRegistryFormat
      *
      * @return  object   Data object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function stringToObject($data, $options = array())
     {
@@ -93,7 +93,7 @@ class JRegistryFormatXML extends JRegistryFormat
      *
      * @return  mixed  Native value of the SimpleXMLElement object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getValueFromNode($node)
     {
@@ -142,7 +142,7 @@ class JRegistryFormatXML extends JRegistryFormat
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function getXmlChildren(&$node, $var, $nodeName)
     {

@@ -34,7 +34,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
      *
      * @return  boolean  True on success
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function install()
     {
@@ -277,7 +277,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
      *
      * @return  boolean  True on success, false on failure
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function update()
     {
@@ -419,7 +419,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
      *
      * @return  mixed  Return value for uninstall method in component uninstall file
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function uninstall($eid)
     {
@@ -566,7 +566,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
      *
      * @return  integer  The extrension id
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function discover_install()
     {
@@ -601,7 +601,7 @@ class MolajoInstallerAdapterLanguage extends MolajoAdapterInstance
      *
      * @return  boolean result of operation, true if updated, false on failure
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function refreshManifestCache()
     {

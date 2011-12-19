@@ -229,7 +229,7 @@ class MolajoException extends Exception
      *
      * @return  string  Error message
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1
      */
@@ -262,7 +262,7 @@ class MolajoException extends Exception
      *
      * @return  array  Array of error messages or MolajoErrors
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1
      */
@@ -325,7 +325,7 @@ class MolajoException extends Exception
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1
      */

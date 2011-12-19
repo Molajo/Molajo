@@ -164,7 +164,7 @@ class MolajoAsset
      * @var boolean
      * @since 1.0
      */
-    public $found = false;
+    public $found = null;
 
     /**
      * __construct
@@ -180,14 +180,14 @@ class MolajoAsset
      */
     public function __construct($request = null, $asset_id = null)
     {
-        /** specific request */
+        /** request specific URL */
         if ($request == null) {
         } else {
             $this->query_request = $request;
         }
 
-        /** specific asset */
-        if ((int) $asset_id == 0) {
+        /** request specific asset */
+        if ((int)$asset_id == 0) {
             $this->asset_id = 0;
         } else {
             $this->asset_id = $asset_id;
@@ -196,17 +196,14 @@ class MolajoAsset
         /** retrieve request */
         $this->getRequest();
 
-        /** get home menu item asset id, if necessary */
-        if ($this->query_request == '') {
-            $this->getHomeMenu();
+        /** get home asset id, if needed */
+        if ($this->query_request == ''
+            && $this->found === true) {
+            $this->getHomeAssetId();
         }
 
         /** get asset information */
-        if ($this->query_request == ''
-            && $this->asset_id = 0) {
-            $this->found = false;
-
-        } else {
+        if ($this->found === true) {
             $this->getAsset();
         }
 
@@ -227,25 +224,39 @@ class MolajoAsset
      * @param null $request
      * @return mixed
      */
-    public function getRequest ($request = null)
+    public function getRequest($request = null)
     {
+        /** Application SEF Options */
+        $sef = MolajoFactory::getApplication()->get('sef', 1);
+        $sef_rewrite = MolajoFactory::getApplication()->get('sef_rewrite', 0);
+        $sef_suffix = MolajoFactory::getApplication()->get('sef_suffix', 0);
+        $unicodeslugs = MolajoFactory::getApplication()->get('unicodeslugs', 0);
+        $force_ssl = MolajoFactory::getApplication()->get('force_ssl' . 0);
+
         /** Full ex. http://localhost/molajo/index.php/access/groups */
         $uri = JUri::getInstance();
 
         /** Host ex. http://localhost */
         $host = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 
-        /** Base */
+        /** Base http://localhost/molajo */
         $base = JUri::base();
 
         /** Folder ex. molajo */
         $folder = rtrim(substr($base, strlen($host) + 1, 999), '/\\');
 
-        /** Query ex. ?option=com_login */
+        /** Query ex. ?option=login */
         $query = $uri->toString(array('query', 'fragment'));
 
-        /** Path ex. index.php?option=com_login or access/groups */
+        /** Path ex. index.php?option=login or access/groups */
         $path = $uri->toString(array('path', 'query', 'fragment'));
+
+        /** remove application name from path */
+        if (substr($path, 0, strlen(MOLAJO_APPLICATION)) == MOLAJO_APPLICATION) {
+            echo $path;
+            $path = substr($path, strlen(MOLAJO_APPLICATION), 999);
+            echo $path;
+        }
 
         if ($path === '') {
         } else {
@@ -254,20 +265,25 @@ class MolajoAsset
         if (substr($path, 0, 10) == 'index.php/') {
             $path = substr($path, 10, 999);
         }
+        /** duplicate content: could redirect on this */
+        if ($path == 'index.php') {
+            $path = '';
+        }
 
-        /**
-         *  Create DB lookup for Request based on SEF Options
-         */
-        $sef = MolajoFactory::getApplication()->get('sef', 1);
-        $sef_rewrite = MolajoFactory::getApplication()->get('sef_rewrite', 0);
-        $sef_suffix = MolajoFactory::getApplication()->get('sef_suffix', 0);
-        $unicodeslugs = MolajoFactory::getApplication()->get('unicodeslugs', 0);
-        $force_ssl = MolajoFactory::getApplication()->get('force_ssl'. 0);
+        /** duplicate content: URL's without the .html */
+        $sef_suffix =1;
+        if ($sef_suffix == 1 && substr($path, -11) == '/index.html') {
+            $path = substr($path, 0, (strlen($path) -11));
+        }
+        if ($sef_suffix == 1 && substr($path, -5) == '.html') {
+            $path = substr($path, 0, (strlen($path) -5));
+        }
 
+        /** populate value used in query  */
         $this->query_request = '';
 
         if ($sef == 0) {
-            $this->query_request .= 'index.php'.$query;
+            $this->query_request .= 'index.php' . $query;
         } else {
             $this->query_request .= $path;
         }
@@ -276,27 +292,23 @@ class MolajoAsset
     }
 
     /**
-     * getHomeMenu
+     * getHomeAssetId
      *
-     * Retrieve the Home Menu Item and related Asset ID
+     * Retrieve the Home Asset ID for the Application
      *
      * @return  array
-     * @since   11.1
+     * @since   1.0
      */
-    public function getHomeMenu()
+    public function getHomeAssetId()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('c.'.$db->nameQuote('id'));
-        $query->from($db->nameQuote('#__applications').' as a');
-        $query->from($db->nameQuote('#__content').' as b');
-        $query->from($db->nameQuote('#__assets').' as c');
+        $home = MolajoFactory::getApplication()->get('application_home_asset_id', 1);
 
-        $query->where('a.'.$db->nameQuote('home_menu_id').' = b.'.$db->nameQuote('id'));
-        $query->where('b.'.$db->nameQuote('id').' = c.'.$db->nameQuote('source_id'));
-        $query->where('b.'.$db->nameQuote('asset_type_id').' = b.'.$db->nameQuote('asset_type_id'));
-        $query->where('a.'.$db->nameQuote('id').' = '.MOLAJO_APPLICATION_ID);
+        $query->select('a.' . $db->nameQuote('id'));
+        $query->from($db->nameQuote('#__assets') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$home);
 
         $db->setQuery($query->__toString());
 
@@ -307,48 +319,48 @@ class MolajoAsset
     }
 
     /**
-     *  Function to retrieve asset information given the request
+     * getAsset
      *
-     * @param   string   $uri
+     * Function to retrieve asset information for the Request or Asset ID
      *
-     * @return  array
-     * @since   11.1
+     * @return  boolean
+     * @since   1.0
      */
     public function getAsset()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('a.'.$db->nameQuote('id').' as asset_id');
-        $query->select('a.'.$db->nameQuote('asset_type_id'));
-        $query->select('a.'.$db->nameQuote('source_id'));
-        $query->select('a.'.$db->nameQuote('primary_category_id'));
-        $query->select('a.'.$db->nameQuote('template_id'));
-        $query->select('a.'.$db->nameQuote('template_page'));
-        $query->select('a.'.$db->nameQuote('language'));
-        $query->select('a.'.$db->nameQuote('translation_of_id'));
-        $query->select('a.'.$db->nameQuote('redirect_to_id'));
-        $query->select('a.'.$db->nameQuote('view_group_id'));
-        $query->select('a.'.$db->nameQuote('primary_category_id'));
-        $query->select('a.'.$db->nameQuote('sef_request'));
-        $query->select('a.'.$db->nameQuote('request'));
-        
-        $query->select('b.'.$db->nameQuote('component_option').' as '.$db->nameQuote('option'));
-        $query->select('b.'.$db->nameQuote('source_table'));
+        $query->select('a.' . $db->nameQuote('id') . ' as asset_id');
+        $query->select('a.' . $db->nameQuote('asset_type_id'));
+        $query->select('a.' . $db->nameQuote('source_id'));
+        $query->select('a.' . $db->nameQuote('primary_category_id'));
+        $query->select('a.' . $db->nameQuote('template_id'));
+        $query->select('a.' . $db->nameQuote('template_page'));
+        $query->select('a.' . $db->nameQuote('language'));
+        $query->select('a.' . $db->nameQuote('translation_of_id'));
+        $query->select('a.' . $db->nameQuote('redirect_to_id'));
+        $query->select('a.' . $db->nameQuote('view_group_id'));
+        $query->select('a.' . $db->nameQuote('primary_category_id'));
+        $query->select('a.' . $db->nameQuote('sef_request'));
+        $query->select('a.' . $db->nameQuote('request'));
 
-        $query->from($db->nameQuote('#__assets').' as a');
-        $query->from($db->nameQuote('#__asset_types').' as b');
+        $query->select('b.' . $db->nameQuote('component_option') . ' as ' . $db->nameQuote('option'));
+        $query->select('b.' . $db->nameQuote('source_table'));
 
-        $query->where('a.'.$db->nameQuote('asset_type_id').' = b.'.$db->nameQuote('id'));
+        $query->from($db->nameQuote('#__assets') . ' as a');
+        $query->from($db->nameQuote('#__asset_types') . ' as b');
 
-        if ((int) $this->asset_id == 0) {
+        $query->where('a.' . $db->nameQuote('asset_type_id') . ' = b.' . $db->nameQuote('id'));
+
+        if ((int)$this->asset_id == 0) {
             if (MolajoFactory::getApplication()->get('sef', 1) == 0) {
-                $query->where('a.'.$db->nameQuote('sef_request').' = ' . $db->Quote($this->query_request));
+                $query->where('a.' . $db->nameQuote('sef_request') . ' = ' . $db->Quote($this->query_request));
             } else {
-                $query->where('a.'.$db->nameQuote('request').' = ' . $db->Quote($this->query_request));
+                $query->where('a.' . $db->nameQuote('request') . ' = ' . $db->Quote($this->query_request));
             }
         } else {
-            $query->where('a.'.$db->nameQuote('id').' = ' . (int) $this->asset_id);
+            $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->asset_id);
         }
 
         $db->setQuery($query->__toString());
@@ -361,7 +373,7 @@ class MolajoAsset
             foreach ($results as $result) {
 
                 $this->option = $result->option;
-                $this->template_id  = $result->template_id;
+                $this->template_id = $result->template_id;
                 $this->template_page = $result->template_page;
                 $this->asset_id = $result->asset_id;
                 $this->asset_type_id = $result->asset_type_id;
@@ -372,7 +384,7 @@ class MolajoAsset
                 $this->redirect_to_id = $result->redirect_to_id;
                 $this->view_group_id = $result->view_group_id;
                 $this->primary_category_id = $result->primary_category_id;
-                
+
                 $this->request = $result->request;
                 $this->sef_request = $result->sef_request;
 
@@ -384,7 +396,7 @@ class MolajoAsset
     /**
      *  Get Request values from JInput
      */
-    function getRequestParameters ()
+    function getRequestParameters()
     {
         $input = JFactory::getApplication()->input;
 

@@ -424,13 +424,13 @@ class MolajoView extends JView
     protected function loadMedia()
     {
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA . '/system/' . $this->request['option'] . '/layouts';
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request['option'] . '/layouts';
         $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . $this->request['option'] . '/layouts';
         MolajoTemplate::loadMediaCSS($filePath, $urlPath);
         MolajoTemplate::loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
-        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_PATH_MEDIA.'/'.$this->request['asset_id'];
+        /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request['asset_id'];
         $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
         $this->loadMediaCSS($filePath, $urlPath);
         $this->loadMediaJS($filePath, $urlPath);

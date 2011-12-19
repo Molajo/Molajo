@@ -32,7 +32,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($key = null)
     {
@@ -53,7 +53,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function decrypt($s)
     {
@@ -70,7 +70,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function encrypt($s)
     {
@@ -93,7 +93,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  integer
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _hexToInt($s, $i)
     {
@@ -169,7 +169,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  array  An array of integers.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _hexToIntArray($s)
     {
@@ -192,7 +192,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  integer
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _charToInt($c)
     {
@@ -208,7 +208,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _xorString($ai)
     {
@@ -238,7 +238,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _intToHex($i)
     {
@@ -263,7 +263,7 @@ class MolajoSimplecrypt extends JObject
      *
      * @return  array  An array of integers
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function _xorCharString($s)
     {

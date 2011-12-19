@@ -26,7 +26,7 @@ class JInputCookie extends JInput
      * @param   array  $source   Ignored.
      * @param   array  $options  Array of configuration parameters (Optional)
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($source = null, $options = array())
     {
@@ -81,7 +81,7 @@ class JInputCookie extends JInput
      *
      * @link    http://www.ietf.org/rfc/rfc2109.txt
      * @see     setcookie()
-     * @since   11.1
+     * @since   1.0
      */
     public function set($name, $value, $expire = 0, $path = '', $domain = '', $secure = false, $httpOnly = false)
     {

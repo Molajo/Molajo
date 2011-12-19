@@ -39,7 +39,7 @@ class MolajoDocument extends JObject
      * Document full URL
      *
      * @var    string
-     * @since   11.1
+     * @since   1.0
      */
     public $link = '';
 
@@ -55,7 +55,7 @@ class MolajoDocument extends JObject
      * Contains the document language setting
      *
      * @var    string
-     * @since   11.1
+     * @since   1.0
      */
     public $language = 'en-gb';
 
@@ -190,7 +190,7 @@ class MolajoDocument extends JObject
      *
      * @return  document
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options = array())
     {
@@ -234,7 +234,7 @@ class MolajoDocument extends JObject
      * @param   array   $attribues  Array of attributes
      *
      * @return  object  The document object.
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($format = 'html', $attributes = array())
     {
@@ -291,7 +291,7 @@ class MolajoDocument extends JObject
      * @param   string  $format
      *
      * @return
-     * @since   11.1
+     * @since   1.0
      */
     public function setType($format)
     {
@@ -304,7 +304,7 @@ class MolajoDocument extends JObject
      * Returns the document type
      *
      * @return  string
-     * @since   11.1
+     * @since   1.0
      */
     public function getType()
     {
@@ -317,7 +317,7 @@ class MolajoDocument extends JObject
      * Get the contents of the document buffer
      *
      * @return  The contents of the document buffer
-     * @since   11.1
+     * @since   1.0
      */
     public function getBuffer()
     {
@@ -333,7 +333,7 @@ class MolajoDocument extends JObject
      * @param   array   $options  Array of optional elements.
      *
      * @return  void
-     * @since   11.1
+     * @since   1.0
      */
     public function setBuffer($content, $options = array())
     {
@@ -349,7 +349,7 @@ class MolajoDocument extends JObject
      * @param   bool    $http_equiv  META type "http-equiv" defaults to null
      *
      * @return  string
-     * @since   11.1
+     * @since   1.0
      */
     public function getMetaData($name, $http_equiv = false)
     {
@@ -384,7 +384,7 @@ class MolajoDocument extends JObject
      * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
      *
      * @return  void
-     * @since   11.1
+     * @since   1.0
      */
     public function setMetaData($name, $content, $http_equiv = false, $sync = true)
     {
@@ -421,7 +421,7 @@ class MolajoDocument extends JObject
      * @param   bool    $defer      Adds the defer attribute.
      * @param   bool    $async      Adds the async attribute.
      * @return
-     * @since    11.1
+     * @since    1.0
      */
     public function addScript($url, $format = "text/javascript", $defer = false, $async = false)
     {
@@ -439,7 +439,7 @@ class MolajoDocument extends JObject
      * @param   string  $format     Scripting mime (defaults to 'text/javascript')
      *
      * @return  void
-     * @since    11.1
+     * @since    1.0
      */
     public function addScriptDeclaration($content, $format = 'text/javascript')
     {
@@ -462,7 +462,7 @@ class MolajoDocument extends JObject
      * @param   array   $attribs  Array of attributes
      *
      * @return  void
-     * @since    11.1
+     * @since    1.0
      */
     public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array())
     {
@@ -835,7 +835,7 @@ class MolajoDocument extends JObject
      * @param   string  $format  The renderer type
      *
      * @return  mixed  Object or null if class does not exist
-     * @since   11.1
+     * @since   1.0
      */
     public function loadRenderer($format)
     {

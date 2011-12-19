@@ -101,7 +101,7 @@ abstract class MolajoPageHelper
         /** Media */
 
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_SITE_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
+        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
         $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
         self::loadMediaCSS($filePath, $urlPath);
         self::loadMediaJS($filePath, $urlPath);

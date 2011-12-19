@@ -35,7 +35,7 @@ class JCacheController
      *
      * @param   array  $options  Array of options
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($options)
     {
@@ -59,7 +59,7 @@ class JCacheController
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __call($name, $arguments)
     {
@@ -75,7 +75,7 @@ class JCacheController
      *
      * @return  JCache  A JCache object
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($type = 'output', $options = array())
     {
@@ -108,7 +108,7 @@ class JCacheController
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setCaching($enabled)
     {
@@ -122,7 +122,7 @@ class JCacheController
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setLifeTime($lt)
     {
@@ -137,7 +137,7 @@ class JCacheController
      *
      * @return  array   An array with directory elements
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function addIncludePath($path = '')
     {
@@ -161,7 +161,7 @@ class JCacheController
      *
      * @return  mixed   False on no result, cached object otherwise
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function get($id, $group = null)
     {
@@ -197,7 +197,7 @@ class JCacheController
      *
      * @return  boolean  True if cache was stored
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function store($data, $id, $group = null)
     {

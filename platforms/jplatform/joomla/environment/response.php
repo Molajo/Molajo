@@ -48,7 +48,7 @@ class JResponse
      *
      * @return  boolean  True if browser caching should be allowed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function allowCache($allow = null)
     {
@@ -70,7 +70,7 @@ class JResponse
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setHeader($name, $value, $replace = false)
     {
@@ -94,7 +94,7 @@ class JResponse
      *
      * @return  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getHeaders()
     {
@@ -106,7 +106,7 @@ class JResponse
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function clearHeaders()
     {
@@ -118,7 +118,7 @@ class JResponse
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function sendHeaders()
     {
@@ -146,7 +146,7 @@ class JResponse
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function setBody($content)
     {
@@ -160,7 +160,7 @@ class JResponse
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function prependBody($content)
     {
@@ -174,7 +174,7 @@ class JResponse
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function appendBody($content)
     {
@@ -188,7 +188,7 @@ class JResponse
      *
      * @return  string  array
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getBody($toArray = false)
     {
@@ -212,7 +212,7 @@ class JResponse
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function toString($compress = false)
     {
@@ -245,7 +245,7 @@ class JResponse
      * @return  string  compressed data
      *
      * @note    Replaces _compress method in 11.1
-     * @since   11.1
+     * @since   1.0
      */
     protected static function compress($data)
     {
@@ -294,7 +294,7 @@ class JResponse
      *
      * @return  boolean
      *
-     * @since   11.1
+     * @since   1.0
      * @note    Replaces _clientEncoding method from 11.1
      */
     protected static function clientEncoding()

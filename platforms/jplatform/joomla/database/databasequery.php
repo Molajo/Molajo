@@ -43,7 +43,7 @@ class JDatabaseQueryElement
      * @param   mixed   $elements  String or array.
      * @param   string  $glue      The glue for elements.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct($name, $elements, $glue = ',')
     {
@@ -59,7 +59,7 @@ class JDatabaseQueryElement
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __toString()
     {
@@ -79,7 +79,7 @@ class JDatabaseQueryElement
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function append($elements)
     {
@@ -97,7 +97,7 @@ class JDatabaseQueryElement
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getElements()
     {
@@ -218,7 +218,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  The aliased method's return value or null.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __call($method, $args)
     {
@@ -247,7 +247,7 @@ abstract class JDatabaseQuery
      *
      * @param   JDatabase  $db  The database connector resource.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct(JDatabase $db = null)
     {
@@ -259,7 +259,7 @@ abstract class JDatabaseQuery
      *
      * @return  string    The completed query.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __toString()
     {
@@ -359,7 +359,7 @@ abstract class JDatabaseQuery
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __get($name)
     {
@@ -378,7 +378,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  Returns the cast value.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function castAsChar($value)
     {
@@ -411,7 +411,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function clear($clause = null)
     {
@@ -501,7 +501,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function columns($columns)
     {
@@ -527,7 +527,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  The concatenated values.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function concatenate($values, $separator = null)
     {
@@ -548,7 +548,7 @@ abstract class JDatabaseQuery
      *
      * @return  string
      *
-     * @since   11.1
+     * @since   1.0
      */
     function currentTimestamp()
     {
@@ -563,7 +563,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  The format string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function dateFormat()
     {
@@ -601,7 +601,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function delete($table = null)
     {
@@ -628,7 +628,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  The escaped string.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  DatabaseError if the internal db property is not a valid object.
      */
     public function escape($text, $extra = false)
@@ -652,7 +652,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function from($tables)
     {
@@ -677,7 +677,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function group($columns)
     {
@@ -703,7 +703,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function having($conditions, $glue = 'AND')
     {
@@ -729,7 +729,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function innerJoin($condition)
     {
@@ -752,7 +752,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function insert($table)
     {
@@ -773,7 +773,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function join($type, $conditions)
     {
@@ -795,7 +795,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function leftJoin($condition)
     {
@@ -816,7 +816,7 @@ abstract class JDatabaseQuery
      *
      * @return  int
      *
-     * @since   11.1
+     * @since   1.0
      */
     function length($value)
     {
@@ -836,7 +836,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  Null or zero representation of a timestamp.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function nullDate($quoted = true)
     {
@@ -864,7 +864,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function order($columns)
     {
@@ -889,7 +889,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function outerJoin($condition)
     {
@@ -915,7 +915,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  The quoted input string.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  DatabaseError if the internal db property is not a valid object.
      */
     public function quote($text, $escape = true)
@@ -944,7 +944,7 @@ abstract class JDatabaseQuery
      *
      * @return  string  The quote wrapped name.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  DatabaseError if the internal db property is not a valid object.
      */
     public function quoteName($name)
@@ -966,7 +966,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function rightJoin($condition)
     {
@@ -989,7 +989,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function select($columns)
     {
@@ -1019,7 +1019,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function set($conditions, $glue = ',')
     {
@@ -1047,7 +1047,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function update($table)
     {
@@ -1068,7 +1068,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     function values($values)
     {
@@ -1096,7 +1096,7 @@ abstract class JDatabaseQuery
      *
      * @return  JDatabaseQuery  Returns this object to allow chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function where($conditions, $glue = 'AND')
     {

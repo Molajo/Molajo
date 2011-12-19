@@ -34,7 +34,7 @@ abstract class MolajoHtmlImage
      *
      * @return  string   The value for the src or if $asTag is true, the full img html.
      *
-     * @since    11.1
+     * @since    1.0
      *
      * @deprecated    12.1
      */
@@ -114,7 +114,7 @@ abstract class MolajoHtmlImage
      *
      * @return  string   The src or the full img tag if $asTag is true.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated  12.1
      */

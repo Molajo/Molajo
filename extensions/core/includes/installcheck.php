@@ -14,12 +14,12 @@ if (defined('MOLAJO_INSTALL_CHECK')) {
 
 if (MOLAJO_APPLICATION == 'installation'
     || (MOLAJO_INSTALL_CHECK === false
-        && file_exists(MOLAJO_SITE_PATH . '/configuration.php'))
+        && file_exists(MOLAJO_SITE_FOLDER_PATH . '/configuration.php'))
 ) {
 
 } else {
-    if (!file_exists(MOLAJO_SITE_PATH . '/configuration.php')
-        || filesize(MOLAJO_SITE_PATH . '/configuration.php' < 10)
+    if (!file_exists(MOLAJO_SITE_FOLDER_PATH . '/configuration.php')
+        || filesize(MOLAJO_SITE_FOLDER_PATH . '/configuration.php' < 10)
         || file_exists(MOLAJO_BASE_FOLDER . '/installation/index.php')
     ) {
 

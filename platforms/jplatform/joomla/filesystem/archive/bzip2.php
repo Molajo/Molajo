@@ -31,7 +31,7 @@ class JArchiveBzip2 extends JObject
     /**
      * Constructor tries to load the bz2 extension if not loaded
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __construct()
     {
@@ -56,7 +56,7 @@ class JArchiveBzip2 extends JObject
      *
      * @return  boolean  True if successful
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function extract($archive, $destination, $options = array())
     {

@@ -48,7 +48,7 @@ abstract class MolajoMailHelper
      *
      * @param   string  $body    email body string.
      * @return  string  Cleaned email body string.
-     * @since   11.1
+     * @since   1.0
      */
     public static function cleanBody($body)
     {
@@ -61,7 +61,7 @@ abstract class MolajoMailHelper
      *
      * @param   string  $subject    email subject string.
      * @return  string  Cleaned email subject string.
-     * @since   11.1
+     * @since   1.0
      */
     public static function cleanSubject($subject)
     {
@@ -73,7 +73,7 @@ abstract class MolajoMailHelper
      *
      * @param   string  $address    email address.
      * @return  string  false    email address string or boolean false if injected headers are present.
-     * @since   11.1
+     * @since   1.0
      */
     public static function cleanAddress($address)
     {
@@ -88,7 +88,7 @@ abstract class MolajoMailHelper
      *
      * @param   string   $email    String to be verified.
      * @return  boolean  True if string has the correct format; false otherwise.
-     * @since   11.1
+     * @since   1.0
      */
     public static function isEmailAddress($email)
     {

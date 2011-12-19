@@ -82,7 +82,7 @@ class JDate extends DateTime
      * @param   string  $date  String in a format accepted by strtotime(), defaults to "now".
      * @param   mixed   $tz    Time zone to be used for the date.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @throws  JException
      */
@@ -131,7 +131,7 @@ class JDate extends DateTime
      *
      * @return  mixed   A value if the property name is valid, null otherwise.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __get($name)
     {
@@ -204,7 +204,7 @@ class JDate extends DateTime
      *
      * @return  string  The date as a formatted string.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function __toString()
     {
@@ -235,7 +235,7 @@ class JDate extends DateTime
      *
      * @return  string  The day of the week.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function dayToString($day, $abbr = false)
     {
@@ -267,7 +267,7 @@ class JDate extends DateTime
      *
      * @return  string   The date string in the specified format format.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function calendar($format, $local = false, $translate = true)
     {
@@ -283,7 +283,7 @@ class JDate extends DateTime
      *
      * @return  string   The date string in the specified format format.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function format($format, $local = false, $translate = true)
     {
@@ -336,7 +336,7 @@ class JDate extends DateTime
      *
      * @return  float  The time offset from GMT either in hours or in seconds.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function getOffsetFromGMT($hours = false)
     {
@@ -351,7 +351,7 @@ class JDate extends DateTime
      *
      * @return  string  The month of the year.
      *
-     * @since   11.1
+     * @since   1.0
      */
     protected function monthToString($month, $abbr = false)
     {
@@ -391,7 +391,7 @@ class JDate extends DateTime
      *
      * @return  boolean  True on success.
      *
-     * @since   11.1
+     * @since   1.0
      *
      * @deprecated    12.1  Use setTimezone instead.
      */
@@ -418,7 +418,7 @@ class JDate extends DateTime
      *
      * @return  DateTimeZone  The old DateTimeZone object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setTimezone($tz)
     {
@@ -489,7 +489,7 @@ class JDate extends DateTime
      * @return  string  The date string in ISO 8601 format.
      *
      * @link    http://www.ietf.org/rfc/rfc3339.txt
-     * @since   11.1
+     * @since   1.0
      */
     public function toISO8601($local = false)
     {
@@ -505,7 +505,7 @@ class JDate extends DateTime
      * @return  string   The date string in MySQL datetime format.
      *
      * @link http://dev.mysql.com/doc/refman/5.0/en/datetime.html
-     * @since   11.1
+     * @since   1.0
      */
     public function toMySQL($local = false)
     {
@@ -522,7 +522,7 @@ class JDate extends DateTime
      * @return  string   The date string in RFC 822 format.
      *
      * @link    http://www.ietf.org/rfc/rfc2822.txt
-     * @since   11.1
+     * @since   1.0
      */
     public function toRFC822($local = false)
     {
@@ -534,7 +534,7 @@ class JDate extends DateTime
      *
      * @return  integer  The date as a UNIX timestamp.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function toUnix()
     {

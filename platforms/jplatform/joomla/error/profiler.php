@@ -84,7 +84,7 @@ class JProfiler extends JObject
      *
      * @return  JProfiler  The Profiler object.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getInstance($prefix = '')
     {
@@ -105,7 +105,7 @@ class JProfiler extends JObject
      *
      * @return  string  Mark enclosed in <div> tags
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function mark($label)
     {
@@ -139,7 +139,7 @@ class JProfiler extends JObject
      *
      * @return  float The current time
      *
-     * @since   11.1
+     * @since   1.0
      */
     public static function getmicrotime()
     {
@@ -154,7 +154,7 @@ class JProfiler extends JObject
      * @return  integer  The memory usage
      *
      * @link    PHP_MANUAL#memory_get_usage
-     * @since   11.1
+     * @since   1.0
      */
     public function getMemory()
     {

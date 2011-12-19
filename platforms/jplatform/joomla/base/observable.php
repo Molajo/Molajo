@@ -63,7 +63,7 @@ class JObservable extends JObject
      *
      * @return  mixed    The state of the object.
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.3
      */
     public function getState()
@@ -76,7 +76,7 @@ class JObservable extends JObject
      *
      * @return  array    Array of return values from the observers
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.3
      */
     public function notify()
@@ -97,7 +97,7 @@ class JObservable extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.3
      */
     public function attach($observer)
@@ -160,7 +160,7 @@ class JObservable extends JObject
      *
      * @return  boolean  True if the observer object was detached.
      *
-     * @since   11.1
+     * @since   1.0
      * @deprecated  12.3
      */
     public function detach($observer)

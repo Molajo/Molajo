@@ -39,7 +39,7 @@ class JTree extends JObject
     /**
      * Constructor
      *
-     * @since   11.1
+     * @since   1.0
      */
     function __construct()
     {
@@ -55,7 +55,7 @@ class JTree extends JObject
      *
      * @return  mixed
      *
-     * @since   11.1
+     * @since   1.0
      */
     function addChild(&$node, $setCurrent = false)
     {
@@ -70,7 +70,7 @@ class JTree extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function getParent()
     {
@@ -82,7 +82,7 @@ class JTree extends JObject
      *
      * @return  void
      *
-     * @since   11.1
+     * @since   1.0
      */
     function reset()
     {

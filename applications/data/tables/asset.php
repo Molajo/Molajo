@@ -77,7 +77,7 @@ class MolajoTableAsset extends MolajoTable
      * @return  bool  True if the instance is sane and able to be stored in the database.
      *
      * @link    http://docs.molajo.org/MolajoTable/check
-     * @since   11.1
+     * @since   1.0
      */
     public function check()
     {

@@ -25,7 +25,7 @@ class JDatabaseImporterMySQLi extends JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQLi  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      * @throws  Exception if an error is encountered.
      */
     public function check()
@@ -50,7 +50,7 @@ class JDatabaseImporterMySQLi extends JDatabaseImporterMySQL
      *
      * @return  JDatabaseImporterMySQLi  Method supports chaining.
      *
-     * @since   11.1
+     * @since   1.0
      */
     public function setDbo(JDatabaseMySQLi $db)
     {
