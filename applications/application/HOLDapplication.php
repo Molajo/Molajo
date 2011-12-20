@@ -68,7 +68,7 @@ class MolajoApplication
 
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
-                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATION_CORE . '/' . $info->path);
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_CORE . '/' . $info->path);
             }
 
             if (defined('MOLAJO_APPLICATION_ID')) {

@@ -117,7 +117,7 @@ class MolajoAttribute
         }
 
         /** component override */
-        $classFile = MOLAJO_APPLICATION_CORE_DATA . '/fields/attributes/' . $this->_name . '.php';
+        $classFile = MOLAJO_APPLICATIONS_CORE_DATA . '/fields/attributes/' . $this->_name . '.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }
@@ -127,7 +127,7 @@ class MolajoAttribute
         }
 
         /** library class */
-        $classFile = MOLAJO_APPLICATION_CORE_DATA . '/fields/attributes/' . $this->_name . '.php';
+        $classFile = MOLAJO_APPLICATIONS_CORE_DATA . '/fields/attributes/' . $this->_name . '.php';
         if (JFile::exists($classFile)) {
             require_once $classFile;
         }

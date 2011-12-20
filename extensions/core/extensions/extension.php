@@ -316,7 +316,7 @@ echo '<pre>';var_dump($this->asset);'</pre>';
     {
         $configData = array();
 
-        $file = MOLAJO_EXTENSIONS_CORE . '/configuration.php';
+        $file = MOLAJO_EXTENSIONS_CORE . '/core/configuration.php';
         if (file_exists($file)) {
             require_once $file;
         } else {

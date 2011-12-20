@@ -53,7 +53,7 @@ class MolajoFormFieldParameters extends MolajoFormField
     protected function getParameterSet($parameter_type, $path)
     {
         if ($path == '' || $path == null) {
-            $path = MOLAJO_APPLICATION_CORE_DATA_XML;
+            $path = MOLAJO_APPLICATIONS_CORE_DATA_XML;
         }
 
         JFile::makeSafe($parameter_type);

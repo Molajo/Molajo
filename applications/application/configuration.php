@@ -148,7 +148,7 @@ class MolajoConfiguration
     {
         $configData = array();
 
-        $file = MOLAJO_APPLICATION_CORE . '/configuration.php';
+        $file = MOLAJO_APPLICATIONS_CORE . '/configuration.php';
         if (is_file($file)) {
             include_once $file;
         } else {

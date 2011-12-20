@@ -127,20 +127,21 @@ class MolajoApplication
         $this->response->headers = array();
         $this->response->body = array();
 
-        /** URI */
-        $this->loadSystemUris();
+        /** ssl check for application */
+        if ($this->get('force_ssl') >= 1) {
+            if (isset($_SERVER['HTTPS'])) {
+            } else {
+                $this->redirect((string)'https'.substr(MOLAJO_BASE_URL, 4, 999).MOLAJO_APPLICATION_URL_PATH.'/'.MOLAJO_PAGE_REQUEST);
+            }
+        }
+
         //echo '<pre>';var_dump($this);'</pre>';
     }
 
     public function figure_out ()
     {
 /** ssl
-                if ($this->get('force_ssl') >= 1
-                    && strtolower($uri->getScheme()) != 'https'
-                ) {
-                    $uri->setScheme('https');
-                    $this->redirect((string)$uri);
-                }
+
  */
 
 /** application offline - only admin */
@@ -186,7 +187,7 @@ class MolajoApplication
 
             if (defined('MOLAJO_APPLICATION_PATH')) {
             } else {
-                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATION_CORE . '/applications/' . $info->path);
+                define('MOLAJO_APPLICATION_PATH', MOLAJO_APPLICATIONS_CORE . '/applications/' . $info->path);
             }
 
             if (defined('MOLAJO_APPLICATION_ID')) {
@@ -250,6 +251,13 @@ class MolajoApplication
             $this->dispatcher = $dispatcher;
         } else {
             $this->loadDispatcher();
+        }
+
+        /** Site authorisation */
+        $site = new MolajoSite ();
+        $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
+        if ($authorise === false) {
+            return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
         }
 
         return $this;
@@ -885,123 +893,6 @@ class MolajoApplication
 
         // Set the session object.
         $this->session = $session;
-    }
-
-    /**
-     * Method to load the system URI strings for the application.
-     *
-     * @param   string  $requestUri  An optional request URI to use instead of detecting one from the
-     *                               server environment variables.
-     *
-     * @return  void
-     *
-     * @since   11.3
-     */
-    protected function loadSystemUris($requestUri = null)
-    {
-//echo $this->detectRequestUri().'<br >';
-        /** Request URL */
-        if (empty($requestUri)) {
-            $this->set('uri.request', $this->detectRequestUri());
-        } else {
-            $this->set('uri.request', $requestUri);
-        }
-//$cache_path
-/**
-if (MolajoFactory::getApplication()->getConfig('force_ssl') == 2
-&& strtolower($uri->getScheme()) != 'https') {
-//forward to https
-$uri->setScheme('https');
-MolajoFactory::getApplication()->redirect((string)$uri);
-}
-*/
-//$logs_path
-//$temp_path
-//$media_path
-//$media_uri_path
-
-        /** siteUri */
-        $siteUri = trim($this->get('site_uri'));
-        if ($siteUri == '') {
-            $uri = JUri::getInstance($this->get('uri.request'));
-        } else {
-            $uri = JUri::getInstance($siteUri);
-        }
-
-        /** Host */
-        $host = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-        $path = rtrim($uri->toString(array('path')), '/\\');
-
-        /** Base */
-        $this->set('uri.base.full', $host . $path . '/');
-        $this->set('uri.base.host', $host);
-        $this->set('uri.base.path', $path . '/');
-
-        /** Media */
-        $mediaURI = trim($this->get('media_uri'));
-
-        if ($mediaURI) {
-            if (strpos($mediaURI, '://') == false) {
-                $this->set('uri.media.full', $this->get('uri.base.host') . $mediaURI);
-                $this->set('uri.media.path', $mediaURI);
-            } else {
-                $this->set('uri.media.full', $mediaURI);
-                $this->set('uri.media.path', $mediaURI);
-            }
-        } else {
-            $this->set('uri.media.full', $this->get('uri.base.full') . 'media/');
-            $this->set('uri.media.path', $this->get('uri.base.path') . 'media/');
-        }
-//        echo '<pre>';
-//        var_dump($this);
-//        '</pre>';
-    }
-
-    /**
-     * Method to detect the requested URI from server environment variables.
-     *
-     * @return  string  The requested URI
-     *
-     * @since   11.3
-     */
-    public function detectRequestUri()
-    {
-        // Initialise variables.
-        $uri = '';
-
-        // First we need to detect the URI scheme.
-        if (isset($_SERVER['HTTPS'])
-            && !empty($_SERVER['HTTPS'])
-            && (strtolower($_SERVER['HTTPS']) != 'off')) {
-            $scheme = 'https://';
-        } else {
-            $scheme = 'http://';
-        }
-
-        /*
-        * There are some differences in the way that Apache and IIS populate server environment variables.  To
-        * properly detect the requested URI we need to adjust our algorithm based on whether or not we are getting
-        * information from Apache or IIS.
-        */
-
-        // If PHP_SELF and REQUEST_URI are both populated then we will assume "Apache Mode".
-        if (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI'])) {
-            // The URI is built from the HTTP_HOST and REQUEST_URI environment variables in an Apache environment.
-            $uri = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        // If not in "Apache Mode" we will assume that we are in an IIS environment and proceed.
-        } else {
-
-            // IIS uses the SCRIPT_NAME variable instead of a REQUEST_URI variable... thanks, MS
-            $uri = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
-
-            // If the QUERY_STRING variable exists append it to the URI string.
-            if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-                $uri .= '?' . $_SERVER['QUERY_STRING'];
-            }
-        }
-
-        return trim($uri);
     }
 
     /**

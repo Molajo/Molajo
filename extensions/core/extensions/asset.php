@@ -533,16 +533,15 @@ class MolajoAsset
      */
     function getMetaData()
     {
+/** need to know if this is for edit or display - list or item - or is it a static page */
         /** Priority 1: Request Override */
         $this->getRequestParameters();
 
         /** Priority 2: Asset */
-        // already processed in getAsset
+        // already collected in getAsset
 
         /** Priority 3: Source Table ID */
-        //        if ($this->asset_type_id == MOLAJO_EXTENSIONS_COMPONENTS) {
         $this->getSourceData();
-        //        }
 
         /** Priority 4: Menu Item */
 
@@ -586,6 +585,14 @@ class MolajoAsset
         if ($input->get('page', '', 'CMD') == '') {
         } else {
             $this->template_page = $input->get('page', '', 'CMD');
+        }
+        if ($input->get('layout', '', 'CMD') == '') {
+        } else {
+            $this->template_name = $input->get('layout', '', 'CMD');
+        }
+        if ($input->get('wrap', '', 'CMD') == '') {
+        } else {
+            $this->template_page = $input->get('wrap', '', 'CMD');
         }
     }
 

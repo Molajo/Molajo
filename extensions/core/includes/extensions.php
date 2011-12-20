@@ -15,8 +15,8 @@ $fileHelper = new MolajoFileHelper();
 /**
  *  Document
  */
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/document/document.php', 'MolajoDocument');
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/document/renderer.php', 'MolajoDocumentRenderer');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document/document.php', 'MolajoDocument');
+$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document/renderer.php', 'MolajoDocumentRenderer');
 
 $format = JRequest::getCmd('format', 'html');
 if ($format == 'error' || $format == 'feed' || $format == 'raw') {
@@ -27,31 +27,31 @@ if ($format == 'error' || $format == 'feed' || $format == 'raw') {
 $formatClass = 'MolajoDocument' . ucfirst($includeFormat);
 if (class_exists($formatClass)) {
 } else {
-    $path = MOLAJO_EXTENSIONS_CORE . '/document/' . $includeFormat . '/' . $includeFormat . '.php';
+    $path = MOLAJO_EXTENSIONS_CORE . '/core/document/' . $includeFormat . '/' . $includeFormat . '.php';
     $formatClass = 'MolajoDocument' . ucfirst($includeFormat);
-    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/document/' . $includeFormat . '/' . $includeFormat . '.php', $formatClass);
+    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document/' . $includeFormat . '/' . $includeFormat . '.php', $formatClass);
 }
 
 /**
  *  Extensions
  */
-$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/extensions', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/extensions', '\.php$', false, false);
 foreach ($files as $file) {
-        $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/extensions/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/extensions/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**
  *  Helpers
  */
-$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/helpers', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/helpers', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
+    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/helpers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))) . 'Helper');
 }
 
 /**
  *  Installer
  */
-$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/installer/adapters', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/installer/adapters', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/installer/adapters/' . $file, 'MolajoInstallerAdapter' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }

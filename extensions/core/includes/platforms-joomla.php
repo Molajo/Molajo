@@ -17,7 +17,7 @@ if (defined('JPATH_PLATFORM')) {
 
 require_once JPATH_PLATFORM . '/platform.php';
 require_once JPATH_PLATFORM . '/loader.php';
-require_once MOLAJO_APPLICATION_CORE . '/helpers/file.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/helpers/file.php';
 
 if (defined('_JEXEC')) {
 } else {
@@ -77,7 +77,7 @@ if (defined('JPATH_COMPONENT')) {
  */
 require_once PLATFORM_MOLAJO . '/exceptions/error.php';
 require_once PLATFORM_MOLAJO . '/exceptions/exception.php';
-require_once MOLAJO_APPLICATION_CORE . '/helpers/text.php';
+require_once MOLAJO_APPLICATIONS_CORE . '/helpers/text.php';
 if (class_exists('JText')) {
 } else {
     class JText extends MolajoTextHelper
@@ -103,7 +103,7 @@ foreach ($files as $file) {
         $fileHelper->requireClassFile(JOOMLA_LIBRARY . '/base/' . $file, 'J' . ucfirst(substr($file, 0, strpos($file, '.'))));
     }
 }
-$fileHelper->requireClassFile(MOLAJO_APPLICATION_CORE . '/application/language.php', 'MolajoLanguage');
+$fileHelper->requireClassFile(MOLAJO_APPLICATIONS_CORE . '/application/language.php', 'MolajoLanguage');
 
 /**
  *  Application
