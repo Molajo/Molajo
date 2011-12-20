@@ -248,6 +248,54 @@ class MolajoAsset
     public $primary_category_metadata = null;
 
     /**
+     *  Document Title
+     *
+     * @var boolean
+     * @since 1.0
+     */
+    public $document_title = null;
+
+    /**
+     *  Document Meta Description
+     *
+     * @var boolean
+     * @since 1.0
+     */
+    public $document_meta_description = null;
+
+    /**
+     *  Document Meta Keywords
+     *
+     * @var boolean
+     * @since 1.0
+     */
+    public $document_meta_keywords = null;
+
+    /**
+     *  Document Meta Author
+     *
+     * @var boolean
+     * @since 1.0
+     */
+    public $document_meta_author = null;
+
+    /**
+     *  Document Meta Content Rights
+     *
+     * @var boolean
+     * @since 1.0
+     */
+    public $document_meta_content_rights = null;
+
+    /**
+     *  Document Robots
+     *
+     * @var boolean
+     * @since 1.0
+     */
+    public $document_robots = null;
+
+    /**
      *  Found
      *
      * @var boolean
@@ -370,7 +418,7 @@ class MolajoAsset
         $query->select('a.' . $db->nameQuote('asset_type_id'));
         $query->select('a.' . $db->nameQuote('source_id'));
         $query->select('a.' . $db->nameQuote('primary_category_id'));
-        $query->select('a.' . $db->nameQuote('template_name'));
+        $query->select('a.' . $db->nameQuote('template_id'));
         $query->select('a.' . $db->nameQuote('template_page'));
         $query->select('a.' . $db->nameQuote('language'));
         $query->select('a.' . $db->nameQuote('translation_of_id'));
@@ -413,7 +461,10 @@ class MolajoAsset
                     $this->home = false;
                 }
                 $this->option = $result->option;
-                $this->template_name = $result->template_name;
+                $template_id = $result->template_id;
+                if ((int)$template_id == 0) {
+                    $this->template_name = $this->getTemplate($template_id);
+                }
                 $this->template_page = $result->template_page;
                 $this->asset_id = $result->asset_id;
                 $this->asset_type_id = $result->asset_type_id;
@@ -449,37 +500,49 @@ class MolajoAsset
                         $this->id = $pair[1];
                     }
                 }
-
                 $this->found = true;
             }
         }
     }
 
     /**
+     * getTemplate
+     *
+     * Get Template Name using the Template ID
+     *
+     * @param $template_id
+     */
+    private function getTemplate($template_id)
+    {
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('a.' . $db->nameQuote('title'));
+        $query->from($db->nameQuote('#__extension_instances') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$template_id);
+
+        $db->setQuery($query->__toString());
+
+        $result = $db->loadResult();
+    }
+
+    /**
      *  getMetaData
      *
      *  Retrieves data needed to generate the page
-     *
-     *  Priority Sequence:
-     *      URL Request Parameters
-     *      Asset Table Row
-     *      Source Table Parameter and Metadata Values
-     *      Primary Category ID Parameter and Metadata Values
-     *      Menu Item Parameter Values
-     *      Component Parameter and Metadata Values
-     *      Application Configuration and Metadata Values
-     *      System defaults
      */
     function getMetaData()
     {
-        /** Priority 1: Request Override (not found) */
+        /** Priority 1: Request Override */
         $this->getRequestParameters();
 
-        /** Priority 2: Asset (not found) */
-        // already processed
+        /** Priority 2: Asset */
+        // already processed in getAsset
 
         /** Priority 3: Source Table ID */
+        //        if ($this->asset_type_id == MOLAJO_EXTENSIONS_COMPONENTS) {
         $this->getSourceData();
+        //        }
 
         /** Priority 4: Menu Item */
 
@@ -505,9 +568,6 @@ class MolajoAsset
         if ($this->template_page == null) {
             $this->template_page = 'default';
         }
-
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
     }
 
     /**
@@ -519,8 +579,14 @@ class MolajoAsset
     protected function getRequestParameters()
     {
         $input = JFactory::getApplication()->input;
-        $this->template_name = $input->get('template', '', 'CMD');
-        $this->template_page = $input->get('page', '', 'CMD');
+        if ($input->get('template', '', 'CMD') == '') {
+        } else {
+            $this->template_name = $input->get('template', '', 'CMD');
+        }
+        if ($input->get('page', '', 'CMD') == '') {
+        } else {
+            $this->template_page = $input->get('page', '', 'CMD');
+        }
     }
 
     /**
@@ -547,49 +613,54 @@ class MolajoAsset
         $results = $db->loadObjectList();
         if (count($results) > 0) {
             foreach ($results as $result) {
-                $this->source_parameters = $result->parameters;
-                $this->source_metadata = $result->metadata;
+                $this->source_parameters = new JRegistry;
+                $this->source_parameters->loadString($result->parameters);
+
+                if ($this->template_name == '') {
+                    $this->template_name = $this->source_parameters->get('template_name', '');
+                }
+                if ($this->template_page == '') {
+                    $this->template_page = $this->source_parameters->get('template_page', '');
+                }
+                if ($this->layout == '') {
+                    $this->layout = $this->source_parameters->get('layout', '');
+                }
+                if ($this->wrap == '') {
+                    $this->wrap = $this->source_parameters->get('wrap', '');
+                }
+
+                $this->source_metadata = new JRegistry;
+                $this->source_metadata->loadString($result->metadata);
+
+                if ($this->document_title == '') {
+                    $this->document_title = $this->source_metadata->get('meta_title', '');
+                }
+                if ($this->document_meta_description == '') {
+                    $this->document_meta_description = $this->source_metadata->get('meta_description', '');
+                }
+                if ($this->document_meta_keywords == '') {
+                    $this->document_meta_keywords = $this->source_metadata->get('meta_keywords', '');
+                }
+                if ($this->document_meta_author == '') {
+                    $this->document_meta_author = $this->source_metadata->get('meta_author', '');
+                }
+                if ($this->document_meta_content_rights == '') {
+                    $this->document_meta_content_rights = $this->source_metadata->get('meta_rights', '');
+                }
+                if ($this->document_robots == '') {
+                    $this->document_robots = $this->source_metadata->get('meta_robots', '');
+                }
+
                 $this->component_id = $result->extension_instance_id;
             }
         }
-
+        //                  echo '<pre>';var_dump($this->source_parameters);'</pre>';
         //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
     /**
-     * getComponent
-     *
-     * Retrieve the Parameters and Meta Data for Component
-     *
-     * @return  array
-     * @since   1.0
-     */
-    public function getComponent()
-    {
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('a.' . $db->nameQuote('parameters'));
-        $query->select('a.' . $db->nameQuote('metadata'));
-        $query->from($db->nameQuote('#__extension_instances') . ' as a');
-        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->component_id);
-
-        $db->setQuery($query->__toString());
-
-        $results = $db->loadObjectList();
-        if (count($results) > 0) {
-            foreach ($results as $result) {
-                $this->component_parameters = $result->parameters;
-                $this->component_metadata = $result->metadata;
-            }
-        }
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-        //    return false;
-    }
-
-    /**
-     * getMenuItem
+     * getPrimaryCategory
      *
      * Retrieve the Menu Item Parameters and Meta Data
      *
@@ -611,11 +682,89 @@ class MolajoAsset
         $results = $db->loadObjectList();
         if (count($results) > 0) {
             foreach ($results as $result) {
-                $this->primary_category_parameters = $result->parameters;
-                $this->primary_category_metadata = $result->metadata;
+                $this->category_parameters = new JRegistry;
+                $this->category_parameters->loadString($result->parameters);
+
+                if ($this->template_name == '') {
+                    $this->template_name = $this->category_parameters->get('template_name', '');
+                }
+                if ($this->template_page == '') {
+                    $this->template_page = $this->category_parameters->get('template_page', '');
+                }
+                if ($this->layout == '') {
+                    $this->layout = $this->category_parameters->get('layout', '');
+                }
+                if ($this->wrap == '') {
+                    $this->wrap = $this->category_parameters->get('wrap', '');
+                }
+
+                $this->category_metadata = new JRegistry;
+                $this->category_metadata->loadString($result->metadata);
+
+                if ($this->document_title == '') {
+                    $this->document_title = $this->category_metadata->get('meta_title', '');
+                }
+                if ($this->document_meta_description == '') {
+                    $this->document_meta_description = $this->category_metadata->get('meta_description', '');
+                }
+                if ($this->document_meta_keywords == '') {
+                    $this->document_meta_keywords = $this->category_metadata->get('meta_keywords', '');
+                }
+                if ($this->document_meta_author == '') {
+                    $this->document_meta_author = $this->category_metadata->get('meta_author', '');
+                }
+                if ($this->document_meta_content_rights == '') {
+                    $this->document_meta_content_rights = $this->category_metadata->get('meta_rights', '');
+                }
+                if ($this->document_robots == '') {
+                    $this->document_robots = $this->category_metadata->get('meta_robots', '');
+                }
             }
         }
 
+        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    return false;
+    }
+
+    /**
+     * getComponent
+     *
+     * Retrieve the Parameters and Meta Data for Component
+     *
+     * @return  array
+     * @since   1.0
+     */
+    public function getComponent()
+    {
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('a.' . $db->nameQuote('parameters'));
+        $query->from($db->nameQuote('#__extension_instances') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$this->component_id);
+
+        $db->setQuery($query->__toString());
+
+        $results = $db->loadObjectList();
+        if (count($results) > 0) {
+            foreach ($results as $result) {
+                $this->component_parameters = new JRegistry;
+                $this->component_parameters->loadString($result->parameters);
+
+                if ($this->template_name == '') {
+                    $this->template_name = $this->component_parameters->get('template_name', '');
+                }
+                if ($this->template_page == '') {
+                    $this->template_page = $this->component_parameters->get('template_page', '');
+                }
+                if ($this->layout == '') {
+                    $this->layout = $this->component_parameters->get('layout', '');
+                }
+                if ($this->wrap == '') {
+                    $this->wrap = $this->component_parameters->get('wrap', '');
+                }
+            }
+        }
         //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
         //    return false;
     }

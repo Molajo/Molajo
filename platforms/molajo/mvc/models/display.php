@@ -363,7 +363,7 @@ class MolajoModelDisplay extends JModel
         /** pass query results to event */
         $this->dispatcher->trigger('onQueryAfterQuery', array(&$this->state, &$items, &$this->parameters));
 
-        /** publish dates (if the user is not able to see unpublished - and the dates prevent publilshing) **/
+        /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
         $nullDate = $this->_db->Quote($this->_db->getNullDate());
         $nowDate = $this->_db->Quote(MolajoFactory::getDate()->toMySQL());
 
