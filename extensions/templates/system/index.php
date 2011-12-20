@@ -1,11 +1,25 @@
 <?php
 /**
- * @version        $Id: index.php 20196 2011-01-09 02:40:25Z ian $
- * @package        Joomla.Site
- * @copyright    Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license        GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Molajo
+ * @subpackage  System
+ * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
+ * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
-
 defined('MOLAJO') or die;
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'component.php';
+if (MolajoFactory::getApplication()->getConfig->get('html5', true) === true): ?>
+<!DOCTYPE html>
+    <?php else: ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <?php endif; ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MOLAJO_BASE_FOLDER; ?>"
+      lang="<?php echo MolajoFactory::getLanguage()->language; ?>"
+      dir="<?php echo MolajoFactory::getLanguage()->direction; ?>">
+<head>
+    <doc:include type="head"/>
+</head>
+<body>
+<?php include dirname(__FILE__) . '/pages/' . MolajoFactory::getDocument()->page; ?>
+</body>
+</html>

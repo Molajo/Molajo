@@ -75,8 +75,8 @@ class MolajoExtension
 
         /** Retrieve Asset for Request */
         $this->asset = new MolajoAsset ($request = null, $asset_id = null);
-
-        /** Redirect Found */
+echo '<pre>';var_dump($this->asset);'</pre>';
+        /** Redirect */
         if ($this->asset->found === true) {
         } else {
             // redirect
@@ -148,7 +148,6 @@ class MolajoExtension
      */
     public function authorise()
     {
-        $itemid = 'kill it';
 
         $menus = $this->getMenu();
 
@@ -156,7 +155,7 @@ class MolajoExtension
             return false;
         }
 
-        if ($menus->authorise($itemid)) {
+        if ($menus->authorise()) {
             return true;
         }
 

@@ -460,25 +460,25 @@ class MolajoComponent
         $request['current_url'] = $session->get('page.current_url');
         $request['component_path'] = $session->get('page.component_path');
         $request['base_url'] = $session->get('page.base_url');
-        $request['item_id'] = $session->get('page.item_id');
 
-        $request['controller'] = $session->get('page.controller');
         $request['extension_type'] = $session->get('page.extension_type');
         $request['option'] = $session->get('page.option');
+
+        $request['model'] = $session->get('page.model');
         $request['view'] = $session->get('page.view');
+        $request['controller'] = $session->get('page.controller');
+
         $request['layout'] = $session->get('page.layout');
+        $request['format'] = $session->get('page.format');
         $request['wrap'] = $session->get('page.wrap');
         $request['wrap_id'] = $session->get('page.wrap_id');
         $request['wrap_class'] = $session->get('page.wrap_class');
 
-        $request['model'] = $session->get('page.model');
         $request['task'] = $session->get('page.task');
-        $request['format'] = $session->get('page.format');
+
         $request['plugin_type'] = $session->get('page.plugin_type');
 
         $request['id'] = $session->get('page.id');
-        $request['cid'] = $session->get('page.cid');
-        $request['catid'] = $session->get('page.catid');
         $request['parameters'] = $session->get('page.parameters');
         $request['extension'] = $session->get('page.extension');
         $request['component_specific'] = $session->get('page.component_specific');

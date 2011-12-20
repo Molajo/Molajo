@@ -17,53 +17,6 @@ class modLoginHelper
 
         $router = MolajoFactory::getApplication()->getRouter();
         $url = null;
-        if ($itemid = $parameters->get($type)) {
-            $db = MolajoFactory::getDbo();
-            $query = $db->getQuery(true);
-
-            $query->select($db->nameQuote('link'));
-            $query->from($db->nameQuote('#__content'));
-            $query->where($db->nameQuote('published') . '=1');
-            $query->where($db->nameQuote('id') . '=' . $db->quote($itemid));
-
-            $db->setQuery($query);
-            if ($link = $db->loadResult()) {
-                if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
-                    $url = 'index.php?Itemid=' . $itemid;
-                }
-                else {
-                    $url = $link . '&Itemid=' . $itemid;
-                }
-            }
-        }
-        if (!$url) {
-            // stay on the same page
-            $uri = MolajoFactory::getURI();
-            $vars = $router->parse($uri);
-            unset($vars['language']);
-            if ($router->getMode() == MOLAJO_ROUTER_MODE_SEF) {
-                if (isset($vars['Itemid'])) {
-                    $itemid = $vars['Itemid'];
-                    $menu = MolajoFactory::getApplication()->getMenu();
-                    $item = $menu->getItem($itemid);
-                    unset($vars['Itemid']);
-                    if (isset($item) && $vars == $item->query) {
-                        $url = 'index.php?Itemid=' . $itemid;
-                    }
-                    else {
-                        $url = 'index.php?' . JURI::buildQuery($vars) . '&Itemid=' . $itemid;
-                    }
-                }
-                else
-                {
-                    $url = 'index.php?' . JURI::buildQuery($vars);
-                }
-            }
-            else
-            {
-                $url = 'index.php?' . JURI::buildQuery($vars);
-            }
-        }
 
         return base64_encode($url);
     }

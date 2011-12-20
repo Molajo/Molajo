@@ -134,13 +134,30 @@ class MolajoApplication
 
     public function figure_out ()
     {
-
+/** ssl
                 if ($this->get('force_ssl') >= 1
                     && strtolower($uri->getScheme()) != 'https'
                 ) {
                     $uri->setScheme('https');
                     $this->redirect((string)$uri);
                 }
+ */
+
+/** application offline - only admin */
+        if ($this->get('application_offline', 0) == 1) {
+            return;
+        }
+
+        /** not logged on */
+        if ($this->get('logon_requirement', 0) == 1
+            && MolajoFactory::getUser()->get('guest', true) == true) {
+            return;
+        }
+/**
+        public $not_logged_on_redirect_asset_id = '0';
+
+        public $application_error_asset_id = 0;
+ */
     }
 
     /**

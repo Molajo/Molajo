@@ -26,11 +26,21 @@ class MolajoConfigApplication
     /* Home and Logon Requirements */
     public $logon_requirement = '1';
     public $not_logged_on_redirect_asset_id = '0';
-    public $default_template_name = 'molajito';
     public $application_home_asset_id = 267;
+    public $application_error_asset_id = 0;
     public $application_offline = '0';
     public $application_offline_asset_id = 0;
-    public $application_error_asset_id = 0;
+
+    public $default_layout_static = 'dashboard';
+    public $default_wrap_static = 'div';
+    public $default_template_name = 'molajito';
+    public $default_template_page = 'full';
+    public $default_layout_items = 'items';
+    public $default_wrap_items = 'section';
+    public $default_layout_item = 'item';
+    public $default_wrap_item = 'article';
+    public $default_layout_edit = 'edit';
+    public $default_wrap_edit = 'div';
 
     /* Locale */
     public $language = 'en-GB';

@@ -439,13 +439,13 @@ INSERT INTO `molajo_extension_instances`
         '2011-11-11 11:11:11', 0, '2011-11-11 11:11:11', 0,
         '0000-00-00 00:00:00', 0,
         SUBSTRING(`name`, 5, 99), '{}',
-        CONCAT('{"menu_id":"', @menu_id, '","wrap":"none","layout":"launchpad","start_lvl":"0","end_lvl":"0","show_all_children":"0","max_depth":"0","tag_id":"","class_suffix":"","window_open":"","layout":"","moduleclass_suffix":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}'),
+        CONCAT('{"menu_id":"', @menu_id, '","wrap":"none","layout":"launchpad","start_lvl":"0","end_lvl":"0","show_all_children":"0","max_depth":"0","tag_id":"","class_suffix":"","window_open":"","layout":"","moduleclass_suffix":"_menu","cache":"1","cache_time":"900","cachemode":""}'),
         'en-GB', 0, `id`
     FROM `molajo_extensions`
     WHERE `asset_type_id` = 1350
      AND `name` = 'menu';
 /*
-{"menu_id":"209","wrap":"none","layout":"launchpad","start_lvl":"0","end_lvl":"0","show_all_children":"0","max_depth":"0","tag_id":"","class_suffix":"","window_open":"","layout":"","moduleclass_suffix":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}
+{"menu_id":"209","wrap":"none","layout":"launchpad","start_lvl":"0","end_lvl":"0","show_all_children":"0","max_depth":"0","tag_id":"","class_suffix":"","window_open":"","layout":"","moduleclass_suffix":"_menu","cache":"1","cache_time":"900","cachemode":""}
  */
 # Main Menu Module
 SET @menu_id = (SELECT `id` FROM `molajo_extension_instances` WHERE `title` = 'Main Menu' AND `asset_type_id` = 1300);
