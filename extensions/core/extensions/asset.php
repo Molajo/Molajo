@@ -79,14 +79,6 @@ class MolajoAsset
     public $layout = null;
 
     /**
-     *  Format
-     *
-     * @var string
-     * @since 1.0
-     */
-    public $format = null;
-
-    /**
      *  Id
      *
      * @var integer
@@ -101,6 +93,14 @@ class MolajoAsset
      * @since 1.0
      */
     public $wrap = null;
+
+    /**
+     *  Format
+     *
+     * @var string
+     * @since 1.0
+     */
+    public $format = null;
 
     /**
      *  Template
@@ -238,7 +238,6 @@ class MolajoAsset
      */
     public $primary_category_parameters = null;
 
-
     /**
      *  Primary Category Metadata
      *
@@ -311,7 +310,13 @@ class MolajoAsset
      * @param   null    $request    An optional argument to provide dependency injection for the asset
      * @param   null    $asset_id   An optional argument to provide dependency injection for the asset
      *
-     * Constants set in index.php => MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.'/'.MOLAJO_PAGE_REQUEST
+     * URL PHP Constants set in root index.php =>
+     * MOLAJO_BASE_URL - protocol, host and path + / (ex. http://localhost/molajo/)
+     * MOLAJO_APPLICATION_URL_PATH - slug for application (ex. administrator or '' for site)
+     * .'/'.
+     * MOLAJO_PAGE_REQUEST - remaining (ex. index.php?option=articles&view=article&layout=default or articles)
+     *
+     * When issuing a redirect, only use the page request portion (see above)
      *
      * @return boolean
      *
@@ -340,7 +345,7 @@ class MolajoAsset
             || $this->query_request == 'index.php/'
             || $this->query_request == 'index.php?'
             || $this->query_request == '/index.php/') {
-            MolajoFactory::getApplication()->redirect((string)MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.'/', true);
+            MolajoFactory::getApplication()->redirect(MolajoFactory::getApplication()->get('application_home_asset_id'), 301);
             return;
         }
 
@@ -360,40 +365,33 @@ class MolajoAsset
             $this->wrap = MolajoFactory::getApplication()->get('offline_wrap', 'div');
         }
 
-        /** Logged on requirement */
+        /** Get Asset Information */
+        $this->getAsset();
+
+        /** Logged on Requirement */
         if (MolajoFactory::getApplication()->get('logon_requirement', 0) == 1
-            && MolajoFactory::getUser()->get('guest', true) === true) {
-            $url = $this->getRedirectURL(MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id'));
-            MolajoFactory::getApplication()->redirect((string)MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.'/'.$url, true);
+            && MolajoFactory::getUser()->get('guest', true) === true
+            && $this->asset_id <> MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id')) {
+            $this->redirect(MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id'), 303);
             return;
         }
 
-/**
-        public $not_logged_on_redirect_asset_id = '0';
- *
- */
-        /** get asset information */
-        $this->getAsset();
-
-        /** act on redirect_to_id */
-        if ($this->redirect_to_id == 0) {
-        } else {
-            //redirect
-        }
-
-        /** Site offline? */
-        if (MolajoFactory::getApplication()->get('offline', 0) == 1) {
+        /** 404 Not Found */
+        if ($this->found == false) {
+            // more needed.
             MolajoFactory::getApplication()->setHeader('Status', '404 Not Found', 'true');
             $this->template_name = MolajoFactory::getApplication()->get('error_template', 'system');
-            $this->template_page = MolajoFactory::getApplication()->get('error_template_page', 'full');
-            $this->layout = MolajoFactory::getApplication()->get('error_layout', 'offline');
-            $this->wrap = MolajoFactory::getApplication()->get('error_wrap', 'div');
+            $this->template_page = MolajoFactory::getApplication()->get('error_template_page', 'print');
+            $this->layout = MolajoFactory::getApplication()->get('error_layout', 'error');
+            $this->wrap = MolajoFactory::getApplication()->get('error_wrap', 'none');
+            return;
         }
 
         /** act on redirect_to_id */
         if ($this->redirect_to_id == 0) {
         } else {
-            //redirect
+            MolajoFactory::getApplication()->redirect($this->redirect_to_id, 301);
+            return;
         }
 
         /** get redirect to if not logged on */
@@ -449,34 +447,6 @@ class MolajoAsset
     }
 
     /**
-     * getRedirectURL
-     *
-     * Function to retrieve asset information for the Request or Asset ID
-     *
-     * @return  boolean
-     * @since   1.0
-     */
-    public function getRedirectURL($asset_id)
-    {
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        if (MolajoFactory::getApplication()->get('sef', 1) == 0) {
-            $query->select('a.' . $db->nameQuote('sef_request'));
-        } else {
-            $query->select('a.' . $db->nameQuote('request'));
-        }
-        $query->from($db->nameQuote('#__assets') . ' as a');
-        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
-
-        $db->setQuery($query->__toString());
-        return $db->loadResult();
-
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
-        //    return false;
-    }
-
-    /**
      * getAsset
      *
      * Function to retrieve asset information for the Request or Asset ID
@@ -527,7 +497,10 @@ class MolajoAsset
         //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
         //    return false;
 
-        if (count($results) > 0) {
+        if (count($results) == 0) {
+            $this->found = false;
+        } else {
+            $this->found = true;
             foreach ($results as $result) {
 
                 if ($this->asset_id == MolajoFactory::getApplication()->get('application_home_asset_id')) {
@@ -575,7 +548,13 @@ class MolajoAsset
                         $this->id = $pair[1];
                     }
                 }
-                $this->found = true;
+
+                if ($this->task == '' || $this->task == null) {
+                    $this->task = 'display';
+                }
+                if ($this->format == '' || $this->format == null) {
+                    $this->format = 'html';
+                }
             }
         }
     }
@@ -736,7 +715,7 @@ class MolajoAsset
                 $this->component_id = $result->extension_instance_id;
             }
         }
-        //                  echo '<pre>';var_dump($this->source_parameters);'</pre>';
+        //    echo '<pre>';var_dump($this->source_parameters);'</pre>';
         //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
@@ -847,6 +826,38 @@ class MolajoAsset
                 }
             }
         }
+        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    return false;
+    }
+
+    /**
+     * getRedirectURL
+     *
+     * Function to retrieve asset information for the Request or Asset ID
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public static function getRedirectURL($asset_id)
+    {
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        if ((int) $asset_id == MolajoFactory::getApplication()->get('application_home_asset_id', 0)) {
+            return '';
+        }
+
+        if (MolajoFactory::getApplication()->get('sef', 1) == 0) {
+            $query->select('a.' . $db->nameQuote('sef_request'));
+        } else {
+            $query->select('a.' . $db->nameQuote('request'));
+        }
+        $query->from($db->nameQuote('#__assets') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int) $asset_id);
+
+        $db->setQuery($query->__toString());
+        return $db->loadResult();
+
         //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
         //    return false;
     }

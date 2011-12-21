@@ -47,12 +47,39 @@ class MolajoExtension
     protected $page = null;
 
     /**
-     *  Component Output
+     *  Buffered output
      *
      * @var string
      * @since 1.0
      */
-    protected $component_output = null;
+    protected $buffered_output = array();
+
+    /**
+     *  Render Type
+     *  1: HTML Webpage
+     *      a. parse template for doc statements
+     *      b. process doc statements (render and buffer output) for:
+     *          html-head
+     *          message
+     *          component
+     *          module
+     *          modules
+     *
+     *  2: JSON Webpage
+     *      a. process (render and buffer output) for:
+     *          json-head
+     *          component
+     *
+     *  3: raw
+     *      a. process (render and buffer output) for:
+     *          text-head
+     *          component
+     *
+     *  4: xml
+     *      a. process:
+     *          xml-head
+     *          component
+     */
 
     /**
      * __construct
@@ -75,19 +102,13 @@ class MolajoExtension
 
         /** Retrieve Asset for Request */
         $this->asset = new MolajoAsset ($request = null, $asset_id = null);
-//echo '<pre>';var_dump($this->asset);'</pre>';
 
+        echo $this->asset->template_name. ' '. $this->asset->template_page;
+        die;
         /** already redirected */
         if ($this->asset->redirect_to_id == 0) {
         } else {
             return;
-        }
-
-        /** 404 without redirect */
-        if ($this->asset->found === true) {
-        } else {
-            // 404 error
-            return false;
         }
 
         /** current user */
@@ -148,7 +169,6 @@ class MolajoExtension
      */
     public function authorise()
     {
-
         $menus = $this->getMenu();
 
         if ($menus == null) {

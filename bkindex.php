@@ -31,18 +31,20 @@ if (file_exists(MOLAJO_BASE_FOLDER . '/defines.php')) {
 /*                                              */
 /*  Server Super Globals                        */
 /*                                              */
-$protocol = 'http';
+$baseURL = 'http';
 $siteName = '';
 if (isset($_SERVER['HTTPS'])) {
-    $protocol .= 's';
+    $baseURL .= 's';
 }
-$protocol .= '://';
+$baseURL .= '://';
 if (isset($_SERVER['SERVER_NAME'])) {
+    $baseURL .= $_SERVER['SERVER_NAME'];
     $siteName = $_SERVER['SERVER_NAME'];
 }
 if (isset($_SERVER['SERVER_PORT'])) {
     if ($_SERVER['SERVER_PORT'] == '80') {
     } else {
+        $baseURL .= ":" . $_SERVER['SERVER_PORT'];
         $siteName .= ":" . $_SERVER['SERVER_PORT'];
     }
 }
@@ -55,7 +57,7 @@ if ($_SERVER['PHP_SELF'] == '/index.php') {
 $siteName .= $folder;
 
 /** base url for this site ex. http://localhost/molajo/ */
-define('MOLAJO_BASE_URL', strtolower($protocol.$siteName));
+define('MOLAJO_BASE_URL', $siteName);
 
 /*                                              */
 /*  SITES LAYER                                 */
@@ -73,7 +75,7 @@ if (defined('MOLAJO_SITE')) {
 } else {
     $sites = simplexml_load_file(MOLAJO_BASE_FOLDER . '/sites.xml', 'SimpleXMLElement');
     foreach ($sites->site as $single) {
-        if ($single->name == $siteName) {
+        if ($single->name == MOLAJO_BASE_URL) {
             define('MOLAJO_SITE', $single->name);
             define('MOLAJO_SITE_FOLDER_PATH', $single->folderpath);
             define('MOLAJO_SITE_APPEND_TO_BASE_URL', $single->appendtobaseurl);
@@ -93,7 +95,7 @@ if (defined('MOLAJO_SITE')) {
 /*                                              */
 
 /** $_SERVER["REQUEST_URI"] everything following host ex. /molajo/administrator/index.php?option=login */
-$requestURI = strtolower($_SERVER["REQUEST_URI"]);
+$requestURI = $_SERVER["REQUEST_URI"];
 /** remove path ex. /molajo/ */
 $requestURI = substr($requestURI, strlen($folder), strlen($requestURI) - strlen($folder));
 /** extract first node for testing as application name */
@@ -109,7 +111,7 @@ if (defined('MOLAJO_APPLICATION')) {
     foreach ($apps->application as $app) {
         if ($app->name == $applicationTest) {
             define('MOLAJO_APPLICATION', $app->name);
-            define('MOLAJO_APPLICATION_URL_PATH', MOLAJO_APPLICATION.'/');
+            define('MOLAJO_APPLICATION_URL_PATH', MOLAJO_APPLICATION);
             $pageRequest = substr($requestURI, strlen(MOLAJO_APPLICATION) + 1, strlen($requestURI) - strlen(MOLAJO_APPLICATION) + 1);
             break;
         }

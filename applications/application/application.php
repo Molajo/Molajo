@@ -121,19 +121,19 @@ class MolajoApplication
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());
 
+        /** ssl check for application */
+        if ($this->get('force_ssl') >= 1) {
+            if (isset($_SERVER['HTTPS'])) {
+            } else {
+                $this->redirect((string)'https'.substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4).MOLAJO_APPLICATION_URL_PATH.'/'.MOLAJO_PAGE_REQUEST);
+            }
+        }
+
         /** response */
         $this->response = new stdClass;
         $this->response->cachable = false;
         $this->response->headers = array();
         $this->response->body = array();
-
-        /** ssl check for application */
-        if ($this->get('force_ssl') >= 1) {
-            if (isset($_SERVER['HTTPS'])) {
-            } else {
-                $this->redirect((string)'https'.substr(MOLAJO_BASE_URL, 4, 999).MOLAJO_APPLICATION_URL_PATH.'/'.MOLAJO_PAGE_REQUEST);
-            }
-        }
 
         //echo '<pre>';var_dump($this);'</pre>';
     }
@@ -288,7 +288,6 @@ class MolajoApplication
             $this->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
             // HTTP 1.0
             $this->setHeader('Pragma', 'no-cache');
-
         }
 
         $this->sendHeaders();
@@ -365,7 +364,13 @@ class MolajoApplication
     }
 
     /**
-     * Redirect to another URL.
+     * Redirect to the URL for a specified asset ID
+     *
+     * URL PHP Constants set in root index.php =>
+     * MOLAJO_BASE_URL - protocol, host and path + / (ex. http://localhost/molajo/)
+     * MOLAJO_APPLICATION_URL_PATH - slug for application (ex. administrator or '' for site)
+     * .'/'.
+     * MOLAJO_PAGE_REQUEST - remaining (ex. index.php?option=articles&view=article&layout=default or articles)
      *
      * If the headers have not been sent the redirect will be accomplished using a "301 Moved Permanently"
      * or "303 See Other" code in the header pointing to the new location. If the headers have already been
@@ -374,47 +379,22 @@ class MolajoApplication
      * @param   string   $url    The URL to redirect to. Can only be http/https URL
      * @param   boolean  $moved  True if the page is 301 Permanently Moved, otherwise 303 See Other is assumed.
      *
+     * 301 - Permanent move
+     * 303 - Other
+     *
      * @return  void
      *
      * @since   11.3
      */
-    public function redirect($url, $moved = false)
+    public function redirect($asset_id, $code = 303)
     {
+        /** retrieve url */
+        $url = MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.MolajoAsset::getRedirectURL((int) $asset_id);
 
-        // Check for relative internal links.
-        if (preg_match('#^index\.php#', $url)) {
-            $url = $this->get('uri.base.full') . $url;
-        }
-
-        // Perform a basic sanity check to make sure we don't have any CRLF garbage.
-        $url = preg_split("/[\r\n]/", $url);
-        $url = $url[0];
-
-        /*
-         * Here we need to check and see if the URL is relative or absolute.  Essentially, do we need to
-         * prepend the URL with our base URL for a proper redirect.  The rudimentary way we are looking
-         * at this is to simply check whether or not the URL string has a valid scheme or not.
-         */
-        if (preg_match('#^[a-z]+\://#i', $url)) {
+        /** validate code */
+        if ($code == 301) {
         } else {
-            // Get a JURI instance for the requested URI.
-            $uri = JURI::getInstance($this->get('uri.request'));
-
-            // Get a base URL to prepend from the requested URI.
-            $prefix = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
-
-            // We just need the prefix since we have a path relative to the root.
-            if ($url[0] == '/') {
-                $url = $prefix . $url;
-            }
-            // It's relative to where we are now, so lets add that.
-            else
-            {
-                $parts = explode('/', $uri->toString(array('path')));
-                array_pop($parts);
-                $path = implode('/', $parts) . '/';
-                $url = $prefix . $path . $url;
-            }
+            $code = 303;
         }
 
         // If the headers have already been sent we need to send the redirect statement via JavaScript.
@@ -435,7 +415,7 @@ class MolajoApplication
              * For WebKit based browsers do not send a 303, as it causes subresource reloading.  You can view the
              * bug report at: https://bugs.webkit.org/show_bug.cgi?id=38690
              */
-            elseif (!$moved and ($this->client->engine == JWebClient::WEBKIT))
+            elseif ($code == 303 and ($this->client->engine == JWebClient::WEBKIT))
             {
                 $html = '<html><head>';
                 $html .= '<meta http-equiv="refresh" content="0; url=' . $url . '" />';
@@ -447,7 +427,7 @@ class MolajoApplication
             else
             {
                 // All other cases use the more efficient HTTP header for redirection.
-                $this->header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
+                $this->header($code ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 $this->header('Location: ' . $url);
                 $this->header('Content-Type: text/html; charset=' . $this->charSet);
             }
