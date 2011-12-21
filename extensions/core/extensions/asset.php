@@ -311,40 +311,90 @@ class MolajoAsset
      * @param   null    $request    An optional argument to provide dependency injection for the asset
      * @param   null    $asset_id   An optional argument to provide dependency injection for the asset
      *
+     * Constants set in index.php => MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.'/'.MOLAJO_PAGE_REQUEST
+     *
      * @return boolean
      *
      * @since  1.0
      */
     public function __construct($request = null, $asset_id = null)
     {
-        /** request specific URL */
+        /** Specific URL path (less host, path and application) */
         if ($request == null) {
         } else {
             $this->query_request = $request;
         }
 
-        /** request specific asset */
+        /** Specific asset */
         if ((int)$asset_id == 0) {
             $this->asset_id = 0;
         } else {
             $this->asset_id = $asset_id;
         }
 
-        /** home */
-        $this->home = MolajoFactory::getApplication()->get('application_home_asset_id', 0);
+        /** Request */
+        $this->getSEFOptions();
 
-        /** retrieve request */
-        $this->getRequest();
-
-        /** use home asset id, if needed */
-        if ($this->query_request == '' && $this->asset_id == 0) {
-            $this->asset_id = $this->home;
+        /** home: duplicate content - redirect */
+        if ($this->query_request == 'index.php'
+            || $this->query_request == 'index.php/'
+            || $this->query_request == 'index.php?'
+            || $this->query_request == '/index.php/') {
+            MolajoFactory::getApplication()->redirect((string)MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.'/', true);
+            return;
         }
 
+        /** Home */
+        if ($this->query_request == ''
+            && $this->asset_id == 0) {
+            $this->asset_id = MolajoFactory::getApplication()->get('application_home_asset_id', 0);
+            $this->home = true;
+        }
+
+        /** Site offline */
+        if (MolajoFactory::getApplication()->get('offline', 0) == 1) {
+            MolajoFactory::getApplication()->setHeader('Status', '503 Service Temporarily Unavailable', 'true');
+            $this->template_name = MolajoFactory::getApplication()->get('offline_template', 'system');
+            $this->template_page = MolajoFactory::getApplication()->get('offline_template_page', 'full');
+            $this->layout = MolajoFactory::getApplication()->get('offline_layout', 'offline');
+            $this->wrap = MolajoFactory::getApplication()->get('offline_wrap', 'div');
+        }
+
+        /** Logged on requirement */
+        if (MolajoFactory::getApplication()->get('logon_requirement', 0) == 1
+            && MolajoFactory::getUser()->get('guest', true) === true) {
+            $url = $this->getRedirectURL(MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id'));
+            MolajoFactory::getApplication()->redirect((string)MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.'/'.$url, true);
+            return;
+        }
+
+/**
+        public $not_logged_on_redirect_asset_id = '0';
+ *
+ */
         /** get asset information */
         $this->getAsset();
 
         /** act on redirect_to_id */
+        if ($this->redirect_to_id == 0) {
+        } else {
+            //redirect
+        }
+
+        /** Site offline? */
+        if (MolajoFactory::getApplication()->get('offline', 0) == 1) {
+            MolajoFactory::getApplication()->setHeader('Status', '404 Not Found', 'true');
+            $this->template_name = MolajoFactory::getApplication()->get('error_template', 'system');
+            $this->template_page = MolajoFactory::getApplication()->get('error_template_page', 'full');
+            $this->layout = MolajoFactory::getApplication()->get('error_layout', 'offline');
+            $this->wrap = MolajoFactory::getApplication()->get('error_wrap', 'div');
+        }
+
+        /** act on redirect_to_id */
+        if ($this->redirect_to_id == 0) {
+        } else {
+            //redirect
+        }
 
         /** get redirect to if not logged on */
 
@@ -360,14 +410,14 @@ class MolajoAsset
     }
 
     /**
-     * getRequest
+     * getSEFOptions
      *
-     * Get the current request and split it into Host, Folder, Query, and Path
+     * Request is already stripped of Host, Folder, and Application
      *
      * @param null $request
      * @return mixed
      */
-    public function getRequest($request = null)
+    public function getSEFOptions($request = null)
     {
         /** Application SEF Options */
         $sef = MolajoFactory::getApplication()->get('sef', 1);
@@ -377,13 +427,10 @@ class MolajoAsset
         $force_ssl = MolajoFactory::getApplication()->get('force_ssl' . 0);
 
         /** Path ex. index.php?option=login or access/groups */
-        $path = MOLAJO_PAGE_REQUEST;
-        if (substr($path, 0, 10) == 'index.php/') {
-            $path = substr($path, 10, 999);
-        }
-        /** duplicate content: could redirect on this */
-        if ($path == 'index.php') {
-            $path = '';
+        if ($request == null) {
+            $path = MOLAJO_PAGE_REQUEST;
+        } else {
+            $path = $request;
         }
 
         /** duplicate content: URL's without the .html */
@@ -399,6 +446,34 @@ class MolajoAsset
         $this->query_request = $path;
 
         return;
+    }
+
+    /**
+     * getRedirectURL
+     *
+     * Function to retrieve asset information for the Request or Asset ID
+     *
+     * @return  boolean
+     * @since   1.0
+     */
+    public function getRedirectURL($asset_id)
+    {
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        if (MolajoFactory::getApplication()->get('sef', 1) == 0) {
+            $query->select('a.' . $db->nameQuote('sef_request'));
+        } else {
+            $query->select('a.' . $db->nameQuote('request'));
+        }
+        $query->from($db->nameQuote('#__assets') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$asset_id);
+
+        $db->setQuery($query->__toString());
+        return $db->loadResult();
+
+        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    return false;
     }
 
     /**
@@ -535,7 +610,7 @@ class MolajoAsset
     {
 /** need to know if this is for edit or display - list or item - or is it a static page */
         /** Priority 1: Request Override */
-        $this->getRequestParameters();
+        $this->getSEFOptionsParameters();
 
         /** Priority 2: Asset */
         // already collected in getAsset
@@ -570,12 +645,12 @@ class MolajoAsset
     }
 
     /**
-     *  getRequestParameters
+     *  getSEFOptionsParameters
      *
      *  Retrieve Template and Template Page overrides from URL
      *  todo: amy add parameter to turn this off in the template manager
      */
-    protected function getRequestParameters()
+    protected function getSEFOptionsParameters()
     {
         $input = JFactory::getApplication()->input;
         if ($input->get('template', '', 'CMD') == '') {

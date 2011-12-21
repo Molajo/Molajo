@@ -2,7 +2,7 @@
 <sites>
     <site>
         <id>1</id>
-        <name>localhost/molajo</name>
+        <name>localhost/molajo/</name>
         <folderpath>/users/amystephen/sites/molajo/sites/1</folderpath>
         <appendtobaseurl>/sites/1</appendtobaseurl>
     </site>

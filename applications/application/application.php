@@ -140,25 +140,12 @@ class MolajoApplication
 
     public function figure_out ()
     {
-/** ssl
 
- */
 
-/** application offline - only admin */
-        if ($this->get('application_offline', 0) == 1) {
-            return;
-        }
 
-        /** not logged on */
-        if ($this->get('logon_requirement', 0) == 1
-            && MolajoFactory::getUser()->get('guest', true) == true) {
-            return;
-        }
-/**
-        public $not_logged_on_redirect_asset_id = '0';
 
-        public $application_error_asset_id = 0;
- */
+        //public $application_error_asset_id = 0;
+
     }
 
     /**
@@ -404,11 +391,12 @@ class MolajoApplication
         $url = $url[0];
 
         /*
-           * Here we need to check and see if the URL is relative or absolute.  Essentially, do we need to
-           * prepend the URL with our base URL for a proper redirect.  The rudimentary way we are looking
-           * at this is to simply check whether or not the URL string has a valid scheme or not.
-           */
-        if (!preg_match('#^[a-z]+\://#i', $url)) {
+         * Here we need to check and see if the URL is relative or absolute.  Essentially, do we need to
+         * prepend the URL with our base URL for a proper redirect.  The rudimentary way we are looking
+         * at this is to simply check whether or not the URL string has a valid scheme or not.
+         */
+        if (preg_match('#^[a-z]+\://#i', $url)) {
+        } else {
             // Get a JURI instance for the requested URI.
             $uri = JURI::getInstance($this->get('uri.request'));
 
@@ -444,9 +432,9 @@ class MolajoApplication
                 echo $html;
             }
             /*
-                * For WebKit based browsers do not send a 303, as it causes subresource reloading.  You can view the
-                * bug report at: https://bugs.webkit.org/show_bug.cgi?id=38690
-                */
+             * For WebKit based browsers do not send a 303, as it causes subresource reloading.  You can view the
+             * bug report at: https://bugs.webkit.org/show_bug.cgi?id=38690
+             */
             elseif (!$moved and ($this->client->engine == JWebClient::WEBKIT))
             {
                 $html = '<html><head>';
@@ -909,13 +897,5 @@ class MolajoApplication
     public static function getHash($seed)
     {
         return md5(self::get('secret') . $seed);
-    }
-
-    /**
-     * @param \JRegistry $config
-     */
-    public static function setConfig($config)
-    {
-        self::$config = $config;
     }
 }

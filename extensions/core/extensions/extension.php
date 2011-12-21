@@ -75,12 +75,12 @@ class MolajoExtension
 
         /** Retrieve Asset for Request */
         $this->asset = new MolajoAsset ($request = null, $asset_id = null);
-echo '<pre>';var_dump($this->asset);'</pre>';
-        /** Redirect */
-        if ($this->asset->found === true) {
+//echo '<pre>';var_dump($this->asset);'</pre>';
+
+        /** already redirected */
+        if ($this->asset->redirect_to_id == 0) {
         } else {
-            // redirect
-            return false;
+            return;
         }
 
         /** 404 without redirect */

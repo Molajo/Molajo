@@ -78,7 +78,6 @@ class MolajoSiteHelper
                 $obj->parameters = $result->parameters;
                 $obj->custom_fields = $result->custom_fields;
                 $obj->base_url = $result->base_url;
-                $obj->description = $result->description;
 
                 self::$_sites[$result->id] = clone $obj;
             }

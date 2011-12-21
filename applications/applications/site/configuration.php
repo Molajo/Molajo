@@ -28,8 +28,16 @@ class MolajoConfigApplication
     public $not_logged_on_redirect_asset_id = '0';
     public $application_home_asset_id = 296;
     public $application_error_asset_id = 0;
-    public $application_offline = '0';
-    public $application_offline_asset_id = 0;
+
+    public $offline_template = 'system';
+    public $offline_template_page = 'full';
+    public $offline_layout = 'offline';
+    public $offline_wrap = 'div';
+
+    public $error_template = 'system';
+    public $error_template_page = 'full';
+    public $error_layout = 'error';
+    public $error_wrap = 'div';
 
     public $default_template_name = 'cleanslate';
     public $default_template_page = 'full';
