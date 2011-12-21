@@ -62,7 +62,7 @@ class plgAuthenticationMolajo extends MolajoPlugin
         $crypt = $parts[0];
         $salt = @$parts[1];
 
-        $testcrypt = MolajoUserhelper::getCryptedPassword($credentials['password'], $salt);
+        $testcrypt = MolajoUserHelper::getCryptedPassword($credentials['password'], $salt);
 
         if ($crypt == $testcrypt) {
         } else {

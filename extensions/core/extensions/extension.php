@@ -56,6 +56,7 @@ class MolajoExtension
 
     /**
      *  Render Type
+     *
      *  1: HTML Webpage
      *      a. parse template for doc statements
      *      b. process doc statements (render and buffer output) for:
@@ -65,17 +66,19 @@ class MolajoExtension
      *          module
      *          modules
      *
-     *  2: JSON Webpage
+     *  2: feed
+     *
+     *  3: JSON Webpage
      *      a. process (render and buffer output) for:
      *          json-head
      *          component
      *
-     *  3: raw
+     *  4: raw
      *      a. process (render and buffer output) for:
      *          text-head
      *          component
      *
-     *  4: xml
+     *  5: xml
      *      a. process:
      *          xml-head
      *          component

@@ -198,7 +198,7 @@ class MolajoUser extends JObject
             $id = $identifier;
 
         } else {
-            if ($id = MolajoUserhelper::getUserId($identifier)) {
+            if ($id = MolajoUserHelper::getUserId($identifier)) {
 
             } else {
                 MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_ERROR_USER_DOES_NOT_EXISTS', $identifier));
@@ -329,22 +329,8 @@ class MolajoUser extends JObject
     }
 
     /**
-     * defParam
+     * setLastVisit
      *
-     * Method to set a default parameter if it does not exist
-     *
-     * @param   string   $key    Parameter key
-     * @param   mixed    $value    Parameter value
-     *
-     * @return  mixed    Set parameter value
-     * @since   1.0
-     */
-    public function defParam($key, $value)
-    {
-        return $this->parameters->def($key, $value);
-    }
-
-    /**
      * Pass through method to the table for setting the last visit date
      *
      * @param   integer  $timestamp    The timestamp, defaults to 'now'.
@@ -436,7 +422,7 @@ class MolajoUser extends JObject
 
             // Check the password and create the crypted password
             if (empty($array['password'])) {
-                $array['password'] = MolajoUserhelper::genRandomPassword();
+                $array['password'] = MolajoUserHelper::genRandomPassword();
                 $array['password2'] = $array['password'];
             }
 
@@ -445,8 +431,8 @@ class MolajoUser extends JObject
                 return false;
             }
 
-            $salt = MolajoUserhelper::genRandomPassword(32);
-            $crypt = MolajoUserhelper::getCryptedPassword($array['password'], $salt);
+            $salt = MolajoUserHelper::genRandomPassword(32);
+            $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
             $array['password'] = $crypt . ':' . $salt;
 
             // Set the registration timestamp
@@ -476,8 +462,8 @@ class MolajoUser extends JObject
                     return false;
                 }
 
-                $salt = MolajoUserhelper::genRandomPassword(32);
-                $crypt = MolajoUserhelper::getCryptedPassword($array['password'], $salt);
+                $salt = MolajoUserHelper::genRandomPassword(32);
+                $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
                 $array['password'] = $crypt . ':' . $salt;
             }
         }

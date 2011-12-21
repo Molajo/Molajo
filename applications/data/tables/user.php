@@ -18,13 +18,30 @@ defined('MOLAJO') or die;
  */
 class MolajoTableUser extends MolajoTable
 {
+
+    /**
+     * Associative array of user => applications
+     *
+     * @since  1.0
+     * @var    array
+     */
+    public $applications = array();
+
     /**
      * Associative array of user => group ids
      *
-     * @since   1.0
+     * @since  1.0
      * @var    array
      */
-    var $groups;
+    public $groups = array();
+
+    /**
+     * Associative array of user => view group ids
+     *
+     * @since  1.0
+     * @var    array
+     */
+    public $view_groups = array();
 
     /**
      * @param database A database connector object
@@ -40,8 +57,8 @@ class MolajoTableUser extends MolajoTable
     /**
      * load
      *
-     * Method to load a user, user groups, and any other necessary data
-     * from the database so that it can be bound to the user object.
+     * Method to load a user, applications, groups, view groups, and any other data
+     * from the database to be bound to the user object.
      *
      * @param   integer  $user_id   An optional user id.
      *
@@ -50,6 +67,8 @@ class MolajoTableUser extends MolajoTable
      */
     function load($user_id = null, $reset = true)
     {
+        echo $user_id;
+        die;
         if ($user_id === null) {
             $user_id = $this->id;
         } else {
@@ -62,17 +81,19 @@ class MolajoTableUser extends MolajoTable
 
         $this->reset();
 
-        $this->_database->setQuery(
-            'SELECT *' .
-            ' FROM #__users' .
-            ' WHERE id = ' . (int)$user_id
-        );
+        $db = MolajoFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('a.*');
+        $query->from($db->nameQuote('#__users') . ' as a');
+        $query->where('a.' . $db->nameQuote('id') . ' = ' . (int)$user_id);
+
+        $db->setQuery($query->__toString());
 
         $data = (array)$this->_database->loadAssoc();
 
-echo '<pre>';var_dump($data);'</pre>';
-        die;
         $this->id = $user_id;
+
         if ($this->_database->getErrorNum()) {
             $this->setError($this->_database->getErrorMsg());
             return false;
@@ -88,21 +109,28 @@ echo '<pre>';var_dump($data);'</pre>';
 
         if ($return == false) {
         } else {
-            // Load the user groups.
-            $this->_database->setQuery(
-                'SELECT g.id, g.title' .
-                ' FROM #__content AS g' .
-                ' JOIN #__user_groups AS m ON m.group_id = g.id' .
-                ' WHERE m.user_id = ' . (int)$user_id
-            );
-            // Add the groups to the user data.
+
+            $db = MolajoFactory::getDbo();
+            $query = $db->getQuery(true);
+
+            $query->select('a.' . $db->nameQuote('id'));
+            $query->select('a.' . $db->nameQuote('title'));
+            $query->from($db->nameQuote('#__content') . ' as a');
+            $query->from($db->nameQuote('#__user_groups') . ' as b');
+            $query->where('a.' . $db->nameQuote('id') . ' = b.' . $db->nameQuote('id'));
+            $query->where('b.' . $db->nameQuote('user_id') . ' = ' . (int)$user_id);
+
+            $db->setQuery($query->__toString());
+
             $this->groups = $this->_database->loadAssocList('title', 'id');
 
-            // Check for an error message.
             if ($this->_database->getErrorNum()) {
                 $this->setError($this->_database->getErrorMsg());
                 return false;
             }
+var_dump($this->groups);
+    die;
+
         }
 
         return $return;

@@ -182,7 +182,7 @@ class plgUserMolajo extends MolajoPlugin
     {
         $instance = MolajoUser::getInstance($user->username);
 
-        if ($id = intval(MolajoUserhelper::getUserId($user->username))) {
+        if ($id = intval(MolajoUserHelper::getUserId($user->username))) {
             $instance->load($id);
             return $instance;
         }
