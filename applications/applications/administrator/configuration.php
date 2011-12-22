@@ -25,7 +25,7 @@ class MolajoConfigApplication
 
     /* Home and Logon Requirements */
     public $logon_requirement = '1';
-    public $not_logged_on_redirect_asset_id = '0';
+    public $not_logged_on_redirect_asset_id = '267';
     public $application_home_asset_id = 267;
     public $application_error_asset_id = 0;
 

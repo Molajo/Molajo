@@ -35,11 +35,6 @@ class MolajoHelpHelper
         $local = false;
 
 
-        if (is_null($component)) {
-            $component = MolajoComponent::getComponentName();
-        }
-
-
         //  Determine the location of the help file.  At this stage the URL
         //  can contain substitution codes that will be replaced later.
 

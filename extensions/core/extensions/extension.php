@@ -106,9 +106,7 @@ class MolajoExtension
         /** Retrieve Asset for Request */
         $this->asset = new MolajoAsset ($request = null, $asset_id = null);
 
-        echo $this->asset->template_name. ' '. $this->asset->template_page;
-        die;
-        /** already redirected */
+        /** Redirected in Asset Class*/
         if ($this->asset->redirect_to_id == 0) {
         } else {
             return;
@@ -117,14 +115,13 @@ class MolajoExtension
         /** current user */
        $this->loadUser();
 
+MolajoFactory::getApplication()->setBody('Here it is!');
         /** authorise */
+        echo '<pre>';var_dump($this->user);'</pre>';
        $this->authorise();
 
-        /** todo: primary category */
 
-        /** todo: component */
-
-        /** todo: menu item */
+        $this->executeComponent();
 
         /** todo: template */
 
@@ -172,51 +169,14 @@ class MolajoExtension
      */
     public function authorise()
     {
-        $menus = $this->getMenu();
-
-        if ($menus == null) {
-            return false;
-        }
-
-        if ($menus->authorise()) {
-            return true;
-        }
-
-        /** Not authorized */
-        if (MolajoFactory::getUser()->get('guest')) {
-            $uri = MolajoFactory::getURI();
-            $return = (string)$uri;
-            $url = 'index.php?option=users&view=login&return=' . $return;
-            $url = MolajoRouteHelper::_($url, false);
-            $this->redirect($url, MolajoTextHelper::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
+        if (in_array($this->asset->view_group_id, $this->user->view_groups)) {
+        } else {
+//            $this->redirect($url, MolajoTextHelper::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
 
             return false;
         }
 
-        MolajoError::raiseError(403, MolajoTextHelper::_('ERROR_NOT_AUTHORIZED'));
-        return false;
-    }
-
-    /**
-     * getMenu - only need to check if view access not good enough
-     *
-     * Returns the Menu object.
-     *
-     * @param   string  $name     The name of the application
-     * @param   array   $options  An optional associative array of configuration settings.
-     *
-     * @return  menu object.
-     *
-     * @since  1.0
-     */
-    public function getMenu($name = null, $options = array())
-    {
-        $menu = MolajoMenu::getInstance($name, $options);
-
-        if (MolajoError::isError($menu)) {
-            return null;
-        }
-        return $menu;
+//        MolajoError::raiseError(403, MolajoTextHelper::_('ERROR_NOT_AUTHORIZED'));
     }
 
     /**
@@ -242,7 +202,9 @@ class MolajoExtension
     {
         MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
 
-
+        $component = new MolajoComponent($this->asset);
+        $component->getRequest();
+        $component->renderComponent();
 
         MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
     }

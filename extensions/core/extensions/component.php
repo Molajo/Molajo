@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Extensions
+ * @subpackage  Component
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -17,204 +17,45 @@ defined('MOLAJO') or die;
  */
 class MolajoComponent
 {
+
     /**
-     * @var array $_components - list of components from cache
+     * Asset
+     *
+     * @var    array
+     * @since  1.0
+     */
+    public $asset = array();
+
+    /**
+     * Option
+     *
+     * @var    array
+     * @since  1.0
+     */
+    public $option = array();
+
+    /**
+     * __construct
+     *
+     * Class constructor.
+     *
+     * @param   array  $asset  A configuration array
      *
      * @since  1.0
      */
-    protected static $_components = array();
-
-    /**
-     * Verifies login requirement for application and default options
-     *
-     * @return    string        option
-     * @since    1.0
-     */
-    public static function verifyComponent($option = null)
+    public function __construct($asset)
     {
-        $asset_id = 0;
-        if ($option == null) {
-            $option = strtolower(JRequest::getCmd('option', null));
-        }
+        /** configuration */
+        $this->asset = $asset;
 
-        if (MolajoFactory::getUser()->get('guest') == 1
-            && MolajoFactory::getApplication()->getConfig->get('logon_requirement', 1) == 1
-        ) {
-            $redirect = true;
-            $asset_id = MolajoFactory::getApplication()->getConfig->get('not_logged_on_redirect_asset_id');
+        $this->option = $this->asset->option;
 
-        } elseif ($option == null) {
-            $asset_id = MolajoFactory::getApplication()->getConfig->get('application_home_asset_id');
-        }
+        $this->parameters = new JRegistry;
+        $this->parameters = $this->asset->source_parameters;
 
-        if ($asset_id == 0) {
-            return true;
-        } else {
-            JRequest::setVar('asset_id', $asset_id);
-            JRequest::setVar('redirect', true);
-            return false;
-        }
-    }
-
-    /**
-     * getComponentName
-     *
-     * Return the name of the request component [main component]
-     * Moved in from the Application Helper
-     *
-     * @param   string  $default The default option
-     * @return  string  Option
-     * @since   1.0
-     */
-    public static function getComponentName($default = NULL)
-    {
-        static $option;
-        if ($option) {
-            return $option;
-        }
-
-        $option = strtolower(JRequest::getCmd('option'));
-        $option = JFactory::getApplication()->input->get('option', '', 'filter');
-        if (empty($option)) {
-            $option = $default;
-        }
-
-        JRequest::setVar('option', $option);
-        return $option;
-    }
-
-    /**
-     * getComponent
-     *
-     * Get component information.
-     *
-     * @param   string   $option  component option.
-     * @param   boolean  $string  If set and the component does not exist, the enabled attribute will be set to false
-     *
-     * @return  object   An object with information about the component.
-     * @since  1.0
-     */
-    public static function getComponent($option, $strict = false)
-    {
-        if (isset(self::$_components[$option])) {
-            $result = self::$_components[$option];
-
-        } else {
-            if (self::_load($option)) {
-                $result = self::$_components[$option];
-
-            } else {
-                $result = new stdClass;
-                $result->enabled = $strict ? false : true;
-                $result->parameters = new JRegistry;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * isEnabled
-     *
-     * Checks if the component is enabled
-     *
-     * @param   string   $option  The component option.
-     * @param   boolean  $string  If set and the component does not exist, false will be returned
-     *
-     * @return  boolean
-     * @since  1.0
-     */
-    public static function isEnabled($option, $strict = false)
-    {
-        $result = self::getComponent($option, $strict);
-        if ($result[0]->status == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * getParameters
-     *
-     * Gets the parameter object for the component
-     *
-     * @param   string   $option  The option for the component.
-     * @param   boolean  $strict  If set and the component does not exist, false will be returned
-     *
-     * @return  JRegistry  A JRegistry object.
-     *
-     * @see     JRegistry
-     * @since  1.0
-     */
-    public static function getParameters($option, $strict = false)
-    {
-        $component = self::getComponent($option, $strict);
-        return $component[0]->parameters;
-    }
-
-    /**
-     * _load
-     *
-     * Load installed components into the _components array.
-     *
-     * @param   string  $option  The element value for the extension
-     *
-     * @return  bool  True on success
-     * @since  1.0
-     */
-    protected static function _load($option)
-    {
-        self::$_components[$option] = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_COMPONENT, $option);
-        if (isset(self::$_components[$option]->parameters)) {
-            $temp = new JRegistry;
-            $temp->loadString(self::$_components[$option]->parameters);
-            self::$_components[$option]->parameters = $temp;
-        }
-
-        return true;
-    }
-
-    /**
-     * renderComponent
-     *
-     * Render the component.
-     *
-     * @param   string  $request An array of component information
-     * @param   array   $parameters  The component parameters
-     *
-     * @return  object
-     * @since  1.0
-     */
-    public static function renderComponent($request, $parameters = array())
-    {
-        /** path */
-        $path = $request['component_path'] . '/' . $request['option'] . '.php';
-
-        /** installation */
-        if ($request['application_id'] == 0
-            && file_exists($path)
-        ) {
-
-            /** language */
-        } elseif (self::isEnabled($request['option'])
-                  && file_exists($path)
-        ) {
-            MolajoFactory::getLanguage()->load($request['option'], $path, MolajoFactory::getLanguage()->getDefault(), false, false);
-
-        } else {
-            MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
-        }
-        //echo '<pre>';var_dump($request);'</pre>';
-
-        /** execute the component */
-        ob_start();
-        require_once $path;
-        $output = ob_get_contents();
-        ob_end_clean();
-
-        /** Return output */
-        return $output;
+        echo '<pre>';
+        var_dump($this->asset);
+        echo '</pre>';
     }
 
     /**
@@ -224,7 +65,7 @@ class MolajoComponent
      *
      * @return bool
      */
-    public function getRequest($option = null)
+    public function getRequest()
     {
         //todo: amy remove all the application-specific values
 
@@ -236,18 +77,13 @@ class MolajoComponent
         $format = '';
         $component_table = '';
 
-        $molajoConfig = new MolajoModelConfiguration ($option);
-
-        /** 1. Option */
-        if ($option == null) {
-            $option = $this->verifyComponent();
-        }
+        $molajoConfig = new MolajoModelConfiguration ($this->option);
 
         /** 2. Component Path */
-        $component_path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $option;
+        $component_path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option;
 
         /** 3. Task */
-        $task = JRequest::getCmd('task', 'display');
+        $task = $this->asset->task;
         if (strpos($task, '.')) {
             $task = substr($task, (strpos($task, '.') + 1), 99);
         }
@@ -262,7 +98,7 @@ class MolajoComponent
         if ($task == 'display') {
 
             /** 5. View **/
-            $view = JRequest::getCmd('view', null);
+            $view = $this->asset->view;
             if ($view == null) {
                 $results = false;
             } else {
@@ -284,7 +120,7 @@ class MolajoComponent
             }
 
             /** 8. Layout **/
-            $layout = JRequest::getCmd('layout', null);
+            $layout = $this->asset->layout;
             if ($layout == null) {
                 $results = false;
             } else {
@@ -296,7 +132,7 @@ class MolajoComponent
             }
 
             /** 9. Layout **/
-            $layout = JRequest::getCmd('layout', null);
+            $layout = $this->asset->layout;
             if ($layout == null) {
                 $results = false;
             } else {
@@ -320,7 +156,7 @@ class MolajoComponent
             }
 
             /** 9. Format */
-            $format = JRequest::getCmd('format', null);
+            $format = $this->asset->format;
             if ($format == null) {
                 $results = false;
             } else {
@@ -349,8 +185,9 @@ class MolajoComponent
         }
 
         /** 10. id, cid and catid */
-        $id = JRequest::getInt('id');
-        $cids = JRequest::getVar('cid', array(), '', 'array');
+        $id = $this->asset->id;
+        //amy        $cids = JRequest::getVar('cid', array(), '', 'array');
+        $cids = array();
         JArrayHelper::toInteger($cids);
 
         if ($task == 'add') {
@@ -373,7 +210,6 @@ class MolajoComponent
                 return false;
             }
         }
-        $catid = JRequest::getInt('catid');
 
         /** 11. acl implementation */
         $acl_implementation = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_ACL_IMPLEMENTATION);
@@ -384,7 +220,7 @@ class MolajoComponent
         /** 12. component table */
         $component_table = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_TABLE);
         if ($component_table === false) {
-            $component_table = '_common';
+            $component_table = '__common';
         }
 
         /** 13. plugin helper */
@@ -393,39 +229,26 @@ class MolajoComponent
             $plugin_type = 'content';
         }
 
-        /** 14. parameters */
-        $parameters = MolajoComponent::getParameters($option);
-
         /** other */
-        $extension = JRequest::getCmd('extension', '');
-        $component_specific = JRequest::getCmd('component_specific', '');
-
-        /** Request Object */
-        JRequest::setVar('option', $option);
-        JRequest::setVar('view', $view);
-        JRequest::setVar('layout', $layout);
-        JRequest::setVar('task', $task);
-        JRequest::setVar('format', $format);
-
-        JRequest::setVar('id', (int)$id);
-        JRequest::setVar('cid', (array)$cids);
+        //        $extension = JRequest::getCmd('extension', '');
+        //        $component_specific = JRequest::getCmd('component_specific', '');
 
         /** Page Session Variables */
         $session = MolajoFactory::getSession();
 
         $session->set('page.application_id', MOLAJO_APPLICATION_ID);
-        $session->set('page.current_url', MOLAJO_BASE_URL);
-        $session->set('page.base_url', JURI::base());
-        $session->set('page.item_id', JRequest::getInt('Itemid', 0));
+        $session->set('page.current_url', MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
+        $session->set('page.base_url', MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/');
+        $session->set('page.item_id', $this->asset->id);
 
         $session->set('page.controller', $controller);
         $session->set('page.extension_type', 'component');
-        $session->set('page.option', $option);
+        $session->set('page.option', $this->option);
         $session->set('page.view', $view);
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
 
-        $session->set('page.wrap', 'none');
+        $session->set('page.wrap', $this->parameters->wrap);
         $session->set('page.wrap_id', '');
         $session->set('page.wrap_class', '');
 
@@ -445,13 +268,13 @@ class MolajoComponent
         $session->set('page.select_name', 'config_manager_grid_column');
 
         /** other */
-        $session->set('page.extension', $extension);
+        $session->set('page.extension', $this->option);
         $session->set('page.component_specific', $component_specific);
 
         /** retrieve from db */
-        if ($controller == 'display') {
-            $this->getContentInfo();
-        }
+        //        if ($controller == 'display') {
+        //            $this->getContentInfo();
+        //        }
 
         /** load into $data array for creation of the request object */
         $request = array();
@@ -502,6 +325,48 @@ class MolajoComponent
         $request['wrap_more_array'] = array();
 
         return $request;
+    }
+
+    /**
+     * renderComponent
+     *
+     * Render the component.
+     *
+     * @param   string  $request An array of component information
+     * @param   array   $parameters  The component parameters
+     *
+     * @return  object
+     * @since  1.0
+     */
+    public static function renderComponent($request, $parameters = array())
+    {
+        /** path */
+        $path = $request['component_path'] . '/' . $request['option'] . '.php';
+
+        /** installation */
+        if ($request['application_id'] == 0
+            && file_exists($path)
+        ) {
+
+            /** language */
+        } elseif (self::isEnabled($request['option'])
+            && file_exists($path)
+        ) {
+            MolajoFactory::getLanguage()->load($request['option'], $path, MolajoFactory::getLanguage()->getDefault(), false, false);
+
+        } else {
+            MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+        }
+        //echo '<pre>';var_dump($request);'</pre>';
+
+        /** execute the component */
+        ob_start();
+        require_once $path;
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        /** Return output */
+        return $output;
     }
 
     /**

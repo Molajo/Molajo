@@ -20,7 +20,7 @@ class MolajoAsset
      * @var string
      * @since 1.0
      */
-    public $query_request = null;
+    protected $query_request = null;
 
     /**
      *  Request
@@ -372,7 +372,7 @@ class MolajoAsset
         if (MolajoFactory::getApplication()->get('logon_requirement', 0) == 1
             && MolajoFactory::getUser()->get('guest', true) === true
             && $this->asset_id <> MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id')) {
-            $this->redirect(MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id'), 303);
+            MolajoFactory::getApplication()->redirect(MolajoFactory::getApplication()->get('not_logged_on_redirect_asset_id'), 303);
             return;
         }
 
@@ -415,7 +415,7 @@ class MolajoAsset
      * @param null $request
      * @return mixed
      */
-    public function getSEFOptions($request = null)
+    protected function getSEFOptions($request = null)
     {
         /** Application SEF Options */
         $sef = MolajoFactory::getApplication()->get('sef', 1);
@@ -454,7 +454,7 @@ class MolajoAsset
      * @return  boolean
      * @since   1.0
      */
-    public function getAsset()
+    protected function getAsset()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -566,7 +566,7 @@ class MolajoAsset
      *
      * @param $template_id
      */
-    private function getTemplate($template_id)
+    protected function getTemplate($template_id)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -585,7 +585,7 @@ class MolajoAsset
      *
      *  Retrieves data needed to generate the page
      */
-    function getMetaData()
+    protected function getMetaData()
     {
 /** need to know if this is for edit or display - list or item - or is it a static page */
         /** Priority 1: Request Override */
@@ -658,7 +658,7 @@ class MolajoAsset
      * @return  array
      * @since   1.0
      */
-    public function getSourceData()
+    protected function getSourceData()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -728,7 +728,7 @@ class MolajoAsset
      * @return  array
      * @since   1.0
      */
-    public function getPrimaryCategory()
+    protected function getPrimaryCategory()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);
@@ -795,7 +795,7 @@ class MolajoAsset
      * @return  array
      * @since   1.0
      */
-    public function getComponent()
+    protected function getComponent()
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);

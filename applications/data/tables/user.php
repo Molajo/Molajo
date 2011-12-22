@@ -18,7 +18,6 @@ defined('MOLAJO') or die;
  */
 class MolajoTableUser extends MolajoTable
 {
-
     /**
      * Associative array of user => applications
      *
@@ -67,8 +66,6 @@ class MolajoTableUser extends MolajoTable
      */
     function load($user_id = null, $reset = true)
     {
-        echo $user_id;
-        die;
         if ($user_id === null) {
             $user_id = $this->id;
         } else {
@@ -111,13 +108,35 @@ class MolajoTableUser extends MolajoTable
         } else {
 
             $db = MolajoFactory::getDbo();
-            $query = $db->getQuery(true);
 
+            /** guest */
+            $this->guest = 0;
+
+            /** applications */
+            $query = $db->getQuery(true);
             $query->select('a.' . $db->nameQuote('id'));
-            $query->select('a.' . $db->nameQuote('title'));
+            $query->select('a.' . $db->nameQuote('name') . ' as title');
+            $query->from($db->nameQuote('#__applications') . ' as a');
+            $query->from($db->nameQuote('#__user_applications') . ' as b');
+            $query->where('a.' . $db->nameQuote('id') . ' = b.' . $db->nameQuote('application_id'));
+            $query->where('b.' . $db->nameQuote('user_id') . ' = ' . (int)$user_id);
+
+            $db->setQuery($query->__toString());
+
+            $this->applications = $this->_database->loadAssocList('title', 'id');
+
+            if ($this->_database->getErrorNum()) {
+                $this->setError($this->_database->getErrorMsg());
+                return false;
+            }
+
+            /** groups */
+            $query = $db->getQuery(true);
+            $query->select('a.' . $db->nameQuote('id'));
+            $query->select('a.' . $db->nameQuote('title') . ' as title');
             $query->from($db->nameQuote('#__content') . ' as a');
             $query->from($db->nameQuote('#__user_groups') . ' as b');
-            $query->where('a.' . $db->nameQuote('id') . ' = b.' . $db->nameQuote('id'));
+            $query->where('a.' . $db->nameQuote('id') . ' = b.' . $db->nameQuote('group_id'));
             $query->where('b.' . $db->nameQuote('user_id') . ' = ' . (int)$user_id);
 
             $db->setQuery($query->__toString());
@@ -128,8 +147,24 @@ class MolajoTableUser extends MolajoTable
                 $this->setError($this->_database->getErrorMsg());
                 return false;
             }
-var_dump($this->groups);
-    die;
+
+            /** view groups */
+            $query = $db->getQuery(true);
+            $query->select('a.' . $db->nameQuote('id'));
+            $query->select('a.' . $db->nameQuote('view_group_name_list') . ' as title');
+            $query->from($db->nameQuote('#__view_groups') . ' as a');
+            $query->from($db->nameQuote('#__user_view_groups') . ' as b');
+            $query->where('a.' . $db->nameQuote('id') . ' = b.' . $db->nameQuote('view_group_id'));
+            $query->where('b.' . $db->nameQuote('user_id') . ' = ' . (int)$user_id);
+
+            $db->setQuery($query->__toString());
+
+            $this->view_groups = $this->_database->loadAssocList('title', 'id');
+
+            if ($this->_database->getErrorNum()) {
+                $this->setError($this->_database->getErrorMsg());
+                return false;
+            }
 
         }
 
@@ -165,8 +200,8 @@ var_dump($this->groups);
             // Get the titles for the user groups.
             $this->_database->setQuery(
                 'SELECT ' . $this->_database->quoteName('id') . ', ' . $this->_database->quoteName('title') .
-                ' FROM ' . $this->_database->quoteName('#__content') .
-                ' WHERE ' . $this->_database->quoteName('id') . ' = ' . implode(' OR ' . $this->_database->quoteName('id') . ' = ', $this->groups)
+                    ' FROM ' . $this->_database->quoteName('#__content') .
+                    ' WHERE ' . $this->_database->quoteName('id') . ' = ' . implode(' OR ' . $this->_database->quoteName('id') . ' = ', $this->groups)
             );
             // Set the titles for the user groups.
             $this->groups = $this->_database->loadAssocList('title', 'id');
@@ -216,9 +251,9 @@ var_dump($this->groups);
 
         // check for existing username
         $query = 'SELECT id'
-                 . ' FROM #__users '
-                 . ' WHERE username = ' . $this->_database->Quote($this->username)
-                 . ' AND id != ' . (int)$this->id;
+            . ' FROM #__users '
+            . ' WHERE username = ' . $this->_database->Quote($this->username)
+            . ' AND id != ' . (int)$this->id;
         ;
         $this->_database->setQuery($query);
         $xid = intval($this->_database->loadResult());
@@ -229,9 +264,9 @@ var_dump($this->groups);
 
         // check for existing email
         $query = 'SELECT id'
-                 . ' FROM #__users '
-                 . ' WHERE email = ' . $this->_database->Quote($this->email)
-                 . ' AND id != ' . (int)$this->id;
+            . ' FROM #__users '
+            . ' WHERE email = ' . $this->_database->Quote($this->email)
+            . ' AND id != ' . (int)$this->id;
         $this->_database->setQuery($query);
         $xid = intval($this->_database->loadResult());
         if ($xid && $xid != intval($this->id)) {
@@ -284,7 +319,8 @@ var_dump($this->groups);
         }
 
         // Handle error if it exists.
-        if (!$return) {
+        if ($return) {
+        } else {
             $this->setError(MolajoTextHelper::sprintf('MOLAJO_DATABASE_ERROR_STORE_FAILED', strtolower(get_class($this)), $this->_database->getErrorMsg()));
             return false;
         }
@@ -298,7 +334,7 @@ var_dump($this->groups);
             // Delete the old user group maps.
             $this->_database->setQuery(
                 'DELETE FROM ' . $this->_database->quoteName('#__user_groups') .
-                ' WHERE ' . $this->_database->quoteName('user_id') . ' = ' . (int)$this->id
+                    ' WHERE ' . $this->_database->quoteName('user_id') . ' = ' . (int)$this->id
             );
             $this->_database->query();
 
@@ -311,7 +347,7 @@ var_dump($this->groups);
             // Set the new user group maps.
             $this->_database->setQuery(
                 'INSERT INTO ' . $this->_database->quoteName('#__user_groups') . ' (' . $this->_database->quoteName('user_id') . ', ' . $this->_database->quoteName('group_id') . ')' .
-                ' VALUES (' . $this->id . ', ' . implode('), (' . $this->id . ', ', $this->groups) . ')'
+                    ' VALUES (' . $this->id . ', ' . implode('), (' . $this->id . ', ', $this->groups) . ')'
             );
             $this->_database->query();
 
@@ -346,7 +382,7 @@ var_dump($this->groups);
         // Delete the user.
         $this->_database->setQuery(
             'DELETE FROM ' . $this->_database->quoteName($this->_tbl) .
-            ' WHERE ' . $this->_database->quoteName($this->_tbl_key) . ' = ' . (int)$this->$k
+                ' WHERE ' . $this->_database->quoteName($this->_tbl_key) . ' = ' . (int)$this->$k
         );
         $this->_database->query();
 
@@ -359,7 +395,7 @@ var_dump($this->groups);
         // Delete the user group maps.
         $this->_database->setQuery(
             'DELETE FROM ' . $this->_database->quoteName('#__user_groups') .
-            ' WHERE ' . $this->_database->quoteName('user_id') . ' = ' . (int)$this->$k
+                ' WHERE ' . $this->_database->quoteName('user_id') . ' = ' . (int)$this->$k
         );
         $this->_database->query();
 
@@ -400,8 +436,8 @@ var_dump($this->groups);
         // 			' SET '.$this->_database->quoteName('last_visit_datetime').' = '.$this->_database->Quote($this->_database->toSQLDate($date)) .
         $this->_database->setQuery(
             'UPDATE ' . $this->_database->quoteName($this->_tbl) .
-            ' SET ' . $this->_database->quoteName('last_visit_datetime') . ' = ' . $this->_database->Quote($date) .
-            ' WHERE ' . $this->_database->quoteName('id') . ' = ' . (int)$user_id
+                ' SET ' . $this->_database->quoteName('last_visit_datetime') . ' = ' . $this->_database->Quote($date) .
+                ' WHERE ' . $this->_database->quoteName('id') . ' = ' . (int)$user_id
         );
         $this->_database->query();
 

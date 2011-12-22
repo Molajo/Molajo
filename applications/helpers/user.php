@@ -36,6 +36,7 @@ abstract class MolajoUserHelper
         $db = MolajoFactory::getDbo();
         $query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote($username);
         $db->setQuery($query);
+
         return $db->loadResult();
     }
 
@@ -52,6 +53,7 @@ abstract class MolajoUserHelper
     public static function getUserGroups($user_id)
     {
         $user = MolajoUser::getInstance((int)$user_id);
+
         return isset($user->groups) ? $user->groups : array();
     }
 

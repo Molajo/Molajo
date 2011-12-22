@@ -10,7 +10,7 @@ defined('MOLAJO') or die;
 
 /**
  * User Class
- * 
+ *
  * @package     Molajo
  * @subpackage  User
  * @since       1.1
@@ -32,7 +32,7 @@ class MolajoUser extends JObject
      * @var int
      */
     public $asset_type_id = null;
-    
+
     /**
      * $username
      *
@@ -96,7 +96,7 @@ class MolajoUser extends JObject
      * @var int
      */
     public $block = null;
-    
+
     /**
      * $activation
      *
@@ -104,7 +104,7 @@ class MolajoUser extends JObject
      * @var string activation hash
      */
     public $activation = null;
-    
+
     /**
      * $send_email
      *
@@ -131,14 +131,14 @@ class MolajoUser extends JObject
 
     /**
      * $custom_fields
-     * 
+     *
      * @var string
      */
     public $custom_fields = null;
-    
+
     /**
      * $parameters
-     * 
+     *
      * @var string
      */
     public $parameters = null;
@@ -238,6 +238,31 @@ class MolajoUser extends JObject
     }
 
     /**
+     * load
+     *
+     * Method to load a User object by user id number
+     *
+     * @param   mixed  $id  The user id of the user to load
+     *
+     * @return  boolean  True on success
+     * @since   1.0
+     */
+    public function load($id)
+    {
+        $table = $this->getTable();
+        if ($table->load($id)) {
+        } else {
+            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+            return false;
+        }
+        $this->parameters->loadJSON($table->parameters);
+
+        $this->setProperties($table->getProperties());
+
+        return true;
+    }
+
+    /**
      * getTable
      *
      * Method to get the user table object
@@ -266,34 +291,7 @@ class MolajoUser extends JObject
             $tabletype['prefix'] = $prefix;
         }
 
-        $table = MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
-        echo '<pre>';var_dump($table);'</pre>';
-        die;
-    }
-
-    /**
-     * load
-     *
-     * Method to load a User object by user id number
-     *
-     * @param   mixed  $id  The user id of the user to load
-     *
-     * @return  boolean  True on success
-     * @since   1.0
-     */
-    public function load($id)
-    {
-        $table = $this->getTable();
-        if ($table->load($id)) {
-        } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
-            return false;
-        }
-        $this->parameters->loadJSON($table->parameters);
-
-        $this->setProperties($table->getProperties());
-
-        return true;
+        return MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
     }
 
     /**

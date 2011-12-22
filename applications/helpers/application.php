@@ -217,6 +217,6 @@ class MolajoApplicationHelper
      */
     public static function getComponentName($default = NULL)
     {
-        return MolajoComponent::getComponentName($default);
+        return;
     }
 }

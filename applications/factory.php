@@ -176,32 +176,35 @@ abstract class MolajoFactory
     }
 
     /**
-     * getUser
+     * Get an user object.
      *
-     * Get an user object
+     * Returns the global {@link User} object, only creating it if it doesn't already exist.
      *
-     * Returns the global user object
+     * @param   integer  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
      *
-     * @param   integer  $id  The user to load - Can be an integer or string -
-     *          If string, it is converted to ID automatically.
+     * @return  User object
      *
-     * @return user object
+     * @see     User
+     * @since   11.1
      */
     public static function getUser($id = null)
     {
-        $id = 'admin';
+        $id = 42;
         if (is_null($id)) {
             $instance = self::getSession()->get('user');
-
-            if (($instance instanceof MolajoUser)) {
+            if ($instance instanceof MolajoUser) {
             } else {
                 $instance = MolajoUser::getInstance();
             }
         } else {
-            $instance = MolajoUser::getInstance($id);
+            $current = self::getSession()->get('user');
+            if ($current->id = $idxxxxxx) {
+                $instance = self::getSession()->get('user');
+            } else {
+                $instance = MolajoUser::getInstance($id);
+            }
         }
-
-        //echo '<pre>';var_dump($instance);'</pre>';
+//        echo '<pre>';var_dump($instance);'</pre>';
         return $instance;
     }
 

@@ -72,8 +72,7 @@ class MolajoLanguageHelper
                 $options['language'] = $language;
             }
         }
-echo '<pre>';var_dump(MolajoFactory::getUser());'</pre>';
-        die;
+
         /** 2. user option for user */
         if (empty($options['language'])) {
             $language = MolajoFactory::getUser()->getParameter('language');
