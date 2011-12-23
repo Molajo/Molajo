@@ -553,7 +553,7 @@ class MolajoAsset
                     $this->task = 'display';
                 }
                 if ($this->format == '' || $this->format == null) {
-                    $this->format = 'html';
+                    $this->format = MolajoFactory::getApplication()->get('default_format', 'html');
                 }
             }
         }

@@ -38,6 +38,7 @@ class MolajoConfig
     public $error_layout = 'error';
     public $error_wrap = 'div';
 
+    public $default_format = 'html';
     public $default_template_name = 'molajito';
     public $default_template_page = 'full';
     public $default_layout_static = 'default';

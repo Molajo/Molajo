@@ -134,14 +134,14 @@ class MolajoUser extends JObject
      *
      * @var string
      */
-    public $custom_fields = null;
+    public $custom_fields = array();
 
     /**
      * $parameters
      *
      * @var string
      */
-    public $parameters = null;
+    public $parameters = array();
 
     /**
      * Associative array of user => applications
@@ -226,12 +226,11 @@ class MolajoUser extends JObject
      */
     public function __construct($identifier = 0)
     {
-        $this->parameters = new JRegistry;
-
         if (empty($identifier)) {
             $this->id = 0;
             $this->send_email = 0;
             $this->guest = 1;
+            // shouldn't we load guest groups, etc?
         } else {
             $this->load($identifier);
         }
@@ -247,17 +246,34 @@ class MolajoUser extends JObject
      * @return  boolean  True on success
      * @since   1.0
      */
-    public function load($id)
+    protected function load($id)
     {
         $table = $this->getTable();
-        if ($table->load($id)) {
-        } else {
-            MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
-            return false;
-        }
-        $this->parameters->loadJSON($table->parameters);
 
-        $this->setProperties($table->getProperties());
+        $results = $table->load($id);
+
+        $db = MolajoFactory::getDbo();
+
+        //  MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::sprintf('MOLAJO_USER_ERROR_UNABLE_TO_LOAD_USER', $id));
+        $columns = $db->getTableColumns('#__users', true);
+        foreach ($columns as $name=>$value) {
+            $this->$name = $table->$name;
+        }
+
+        /** extra fields */
+        $this->name = trim($this->first_name.' '.$this->last_name);
+
+        $this->loadCustomFields($table->custom_fields);
+        
+        $this->loadParameters($table->parameters);
+
+        $this->applications = $table->applications;
+
+        $this->groups = $table->groups;
+
+        $this->view_groups = $table->view_groups;
+
+        $this->guest = 0;
 
         return true;
     }
@@ -275,7 +291,7 @@ class MolajoUser extends JObject
      * @return  object   The user table object
      * @since   1.0
      */
-    public static function getTable($type = null, $prefix = 'MolajoTable')
+    protected function getTable($type = null, $prefix = 'MolajoTable')
     {
         static $tabletype;
 
@@ -292,38 +308,6 @@ class MolajoUser extends JObject
         }
 
         return MolajoTable::getInstance($tabletype['name'], $tabletype['prefix']);
-    }
-
-    /**
-     * getParam
-     *
-     * Method to get a parameter value
-     *
-     * @param   string   $key        Parameter key
-     * @param   mixed    $default    Parameter default value
-     *
-     * @return  mixed    The value or the default if it did not exist
-     * @since   1.0
-     */
-    public function getParam($key, $default = null)
-    {
-        return $this->parameters->get($key, $default);
-    }
-
-    /**
-     * setParam
-     *
-     * Method to set a parameter
-     *
-     * @param   string   $key    Parameter key
-     * @param   mixed    $value    Parameter value
-     *
-     * @return  mixed    Set parameter value
-     * @since   1.0
-     */
-    public function setParam($key, $value)
-    {
-        return $this->parameters->set($key, $value);
     }
 
     /**
@@ -344,65 +328,100 @@ class MolajoUser extends JObject
     }
 
     /**
-     * getParameters
+     * getCustomField
      *
-     * Method to get the user parameters
+     * Method to get a CustomField value
      *
-     * This function tries to load an XML file based on the users usertype. The filename of the xml
-     * file is the same as the usertype. The functionals has a static variable to store the parameters
-     * setup file base path. You can call this function statically to set the base path if needed.
+     * @param   string   $key        CustomField key
+     * @param   mixed    $default    CustomField default value
      *
-     * @param   boolean  $loadsetupfile    If true, loads the parameters setup file. Default is false.
-     * @param   path    $path            Set the parameters setup file base path to be used to load the user parameters.
-     *
-     * @return  object   The user parameters object.
+     * @return  mixed    The value or the default if it did not exist
      * @since   1.0
      */
-    public function getParameters($loadsetupfile = false, $path = null)
+    public function getCustomField($key, $default = null)
     {
-        static $parampath;
-
-        // Set a custom parampath if defined
-        if (isset($path)) {
-            $parampath = $path;
-        }
-
-        // Set the default parampath if not set already
-        if (isset($parampath)) {
-        } else {
-            $parampath = MOLAJO_EXTENSIONS_COMPONENTS . '/users/models';
-        }
-
-        if ($loadsetupfile) {
-            $type = str_replace(' ', '_', strtolower($this->usertype));
-
-            $file = $parampath . '/' . $type . '.xml';
-            if (file_exists($file)) {
-            } else {
-                $file = $parampath . '/' . 'user.xml';
-            }
-
-            $this->parameters->loadSetupFile($file);
-        }
-
-        return $this->parameters;
+        return $this->custom_fields->get($key, $default);
     }
 
     /**
-     * setParameters
+     * setCustomField
      *
-     * Method to get the user parameters
+     * Method to set a CustomField value
      *
-     * @param   object   $parameters    The user parameters object
+     * @param   string   $key    CustomField key
+     * @param   mixed    $value    CustomField value
      *
-     * @return  void
+     * @return  mixed    Set CustomField value
      * @since   1.0
      */
-    public function setParameters($parameters)
+    public function setCustomField($key, $value)
     {
-        $this->parameters = $parameters;
+        return $this->custom_fields->set($key, $value);
     }
 
+    /**
+     * loadCustomFields
+     *
+     * Loads user CustomFields JSON field into an array
+     *
+     * @since  1.0
+     */
+    public function loadCustomFields($custom_fields)
+    {
+        $this->custom_fields = new JRegistry;
+        $this->custom_fields->loadString($custom_fields, 'JSON');
+        $this->custom_fields->toArray();
+    }    
+
+    /**
+     * getParameter
+     *
+     * Method to get a parameter value
+     *
+     * @param   string   $key        Parameter key
+     * @param   mixed    $default    Parameter default value
+     *
+     * @return  mixed    The value or the default if it did not exist
+     * @since   1.0
+     */
+    public function getParameter($key, $default = null)
+    {
+        return $this->parameters->get($key, $default);
+    }
+
+    /**
+     * setParameter
+     *
+     * Method to set a parameter value
+     *
+     * @param   string   $key    Parameter key
+     * @param   mixed    $value    Parameter value
+     *
+     * @return  mixed    Set parameter value
+     * @since   1.0
+     */
+    public function setParameter($key, $value)
+    {
+        return $this->parameters->set($key, $value);
+    }
+
+    /**
+     * loadParameters
+     *
+     * Loads user parameters JSON field into an array
+     *
+     * @since  1.0
+     */
+    public function loadParameters($parameters)
+    {
+        $this->parameters = new JRegistry;
+        $this->parameters->loadString($parameters, 'JSON');
+        $this->parameters->toArray();
+    }
+}
+
+class save_user_crud
+{
     /**
      * bind
      *
@@ -433,7 +452,6 @@ class MolajoUser extends JObject
             $crypt = MolajoUserHelper::getCryptedPassword($array['password'], $salt);
             $array['password'] = $crypt . ':' . $salt;
 
-            // Set the registration timestamp
             $this->set('register_datetime', MolajoFactory::getDate()->toMySQL());
 
             $username = $this->get('username');
@@ -449,7 +467,6 @@ class MolajoUser extends JObject
             }
 
         } else {
-            // Updating an existing user
             if (empty($array['password'])) {
                 $array['password'] = $this->password;
 
@@ -466,30 +483,6 @@ class MolajoUser extends JObject
             }
         }
 
-        $db = MolajoFactory::getDbo();
-
-        if (array_key_exists('parameters', $array)) {
-            $parameters = '';
-
-            $this->parameters->loadArray($array['parameters']);
-
-            if (is_array($array['parameters'])) {
-                $parameters = (string)$this->parameters;
-            } else {
-                $parameters = $array['parameters'];
-            }
-
-            $this->parameters = $parameters;
-        }
-
-        // Bind the array
-        if ($this->setProperties($array)) {
-        } else {
-            $this->setError(MolajoTextHelper::_('MOLAJO_USER_ERROR_BIND_ARRAY'));
-            return false;
-        }
-
-        $this->id = (int)$this->id;
 
         return true;
     }
@@ -624,21 +617,18 @@ class MolajoUser extends JObject
     {
         MolajoPlugin::importPlugin('user');
 
-        // Trigger the onUserBeforeDelete event
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onUserBeforeDelete', array($this->getProperties()));
 
-        // Create the user table object
         $table = $this->getTable();
 
-        $result = false;
-        if (!$result = $table->delete($this->id)) {
-            $this->setError($table->getError());
-        }
+        $result = $table->delete($this->id);
+        // $this->setError($table->getError());
 
         // Trigger the onUserAfterDelete event
         $dispatcher->trigger('onUserAfterDelete', array($this->getProperties(), $result, $this->getError()));
 
         return $result;
     }
+
 }

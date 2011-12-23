@@ -93,43 +93,29 @@ class MolajoExtension
      *
      * @since  1.0
      */
-    public function __construct($request = null, $asset_id = null, $config = array())
+    public function __construct($request = null, $asset_id = null)
     {
-        /** configuration */
-        if ($config) {
-            $this->config = $config;
-        } else {
-            $this->config = new JRegistry;
-            $this->getConfig();
-        }
-
-        /** Retrieve Asset for Request */
+        /** Asset for Request */
         $this->asset = new MolajoAsset ($request = null, $asset_id = null);
 
-        /** Redirected in Asset Class*/
+        /** Already Redirected */
         if ($this->asset->redirect_to_id == 0) {
         } else {
             return;
         }
 
-        /** current user */
-       $this->loadUser();
+        /** User */
+        $this->loadUser();
 
-MolajoFactory::getApplication()->setBody('Here it is!');
-        /** authorise */
-        echo '<pre>';var_dump($this->user);'</pre>';
-       $this->authorise();
+        /** Authorise */
+        $this->authorise();
 
-
-        $this->executeComponent();
-
-        /** todo: template */
-
-        /** todo: page */
+        /** Document */
+        $this->renderDocumentType();
 
         /** Event */
-     //   MolajoPlugin::importPlugin('system');
-     //   MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
+        //   MolajoPlugin::importPlugin('system');
+        //   MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
     }
 
     /**
@@ -153,7 +139,9 @@ MolajoFactory::getApplication()->setBody('Here it is!');
     }
 
     /**
-     *  loadUser
+     * Load User
+     *
+     * @since   1.0
      */
     private function loadUser()
     {
@@ -163,20 +151,19 @@ MolajoFactory::getApplication()->setBody('Here it is!');
     /**
      * Execute Extension
      *
-     * @return  void
+     * @return  boolean
      *
      * @since   1.0
      */
     public function authorise()
     {
         if (in_array($this->asset->view_group_id, $this->user->view_groups)) {
+            return true;
         } else {
-//            $this->redirect($url, MolajoTextHelper::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
-
+            //            $this->redirect($url, MolajoTextHelper::_('JGLOBAL_YOU_MUST_LOGIN_FIRST'));
             return false;
         }
-
-//        MolajoError::raiseError(403, MolajoTextHelper::_('ERROR_NOT_AUTHORIZED'));
+        //        MolajoError::raiseError(403, MolajoTextHelper::_('ERROR_NOT_AUTHORIZED'));
     }
 
     /**
@@ -186,172 +173,9 @@ MolajoFactory::getApplication()->setBody('Here it is!');
      *
      * @since   1.0
      */
-    public function getHead()
+    public function renderDocumentType()
     {
-
-    }
-
-    /**
-     * Execute Extension
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function executeComponent()
-    {
-        MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
-
-        $component = new MolajoComponent($this->asset);
-        $component->getRequest();
-        $component->renderComponent();
-
-        MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
-    }
-
-    /**
-     * Overrides the default template that would be used
-     *
-     * @param string The template name
-     */
-    public function setTemplate($template)
-    {
-        if (is_dir(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template)) {
-            $this->template = new stdClass();
-            $this->template->parameters = new JRegistry;
-            $this->template->template = $template;
-        }
-    }
-
-    /**
-     * getTemplate
-     *
-     * Get Template and parse doc statements
-     *
-     * @param $template
-     * @return string
-     * @since   1.0
-     */
-    function getTemplate()
-    {
-        return MolajoTemplate::getTemplate();
-    }
-
-    /**
-     * Render Extensions
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function getTemplateFunctions()
-    {
-        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
-
-
-        MolajoFactory::getApplication()->triggerEvent('onAfterRender');
-    }
-
-    private function executeHead ()
-    {
-
-    }
-
-    private function executeMessage ()
-    {
-
-    }
-
-    /**
-     * Execute Position
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    public function executePosition()
-    {
-        MolajoFactory::getApplication()->triggerEvent('onBeforeExecute');
-
-        MolajoFactory::getApplication()->triggerEvent('onAfterExecute');
-    }
-
-    /**
-     *
-     */
-    public function executeModule ()
-    {
-
-    }
-
-    /**
-     *  CONFIGURATION
-     */
-
-    /**
-     * getConfig
-     *
-     * Creates the Extension configuration object.
-     *
-     * return   object  A config object
-     *
-     * @since  1.0
-     */
-    public function getConfig()
-    {
-        $configData = array();
-
-        $file = MOLAJO_EXTENSIONS_CORE . '/core/configuration.php';
-        if (file_exists($file)) {
-            require_once $file;
-        } else {
-            throw new RuntimeException('Fatal error - Extension Configuration File does not exist');
-        }
-
-        $configData = new MolajoExtensionConfiguration();
-
-        if (is_array($configData)) {
-            $this->config->loadArray($configData);
-
-        } elseif (is_object($configData)) {
-            $this->config->loadObject($configData);
-        }
-
-        return;
-    }
-
-    /**
-     * get
-     *
-     * Returns a property of the Extension object
-     * or the default value if the property is not set.
-     *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
-     *
-     * @return  mixed   The value of the configuration.
-     *
-     * @since   11.3
-     */
-    public function get($key, $default = null)
-    {
-        return $this->config->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * Modifies a property of the Extension object, creating it if it does not already exist.
-     *
-     * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The value of the property to set (optional).
-     *
-     * @return  mixed   Previous value of the property
-     *
-     * @since   11.3
-     */
-    public function set($key, $value = null)
-    {
-        $this->config->set($key, $value);
+        $documentTypeClass = 'Molajo'.$this->asset->format;
+        $results = new $documentTypeClass ();
     }
 }

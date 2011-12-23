@@ -171,7 +171,7 @@ class MolajoApplication
         $results = $language->load('base', MOLAJO_EXTENSIONS_LANGUAGES);
 
         /** Editor */
-        $editor = MolajoFactory::getUser()->getParam('editor', $this->get('editor', 'none'));
+        $editor = MolajoFactory::getUser()->getParameter('editor', $this->get('editor', 'none'));
         if (MolajoPlugin::isEnabled('editors', $editor)) {
 
         } else {

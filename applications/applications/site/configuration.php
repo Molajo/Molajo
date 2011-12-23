@@ -39,6 +39,7 @@ class MolajoConfigApplication
     public $error_layout = 'error';
     public $error_wrap = 'div';
 
+    public $default_format = 'html';
     public $default_template_name = 'cleanslate';
     public $default_template_page = 'full';
     public $default_layout_static = 'default';

@@ -190,20 +190,21 @@ abstract class MolajoFactory
     public static function getUser($id = null)
     {
         $id = 42;
-        if (is_null($id)) {
-            $instance = self::getSession()->get('user');
-            if ($instance instanceof MolajoUser) {
-            } else {
-                $instance = MolajoUser::getInstance();
-            }
-        } else {
-            $current = self::getSession()->get('user');
-            if ($current->id = $idxxxxxx) {
-                $instance = self::getSession()->get('user');
-            } else {
+//        if (is_null($id)) {
+//            $instance = self::getSession()->get('user');
+//            if ($instance instanceof MolajoUser) {
+//            } else {
+//                $instance = MolajoUser::getInstance();
+//            }
+//        } else {
+//            $current = self::getSession()->get('user');
+//            var_dump($current);
+//            if ($current->id = $idxxxxxx) {
+//                $instance = self::getSession()->get('user');
+//            } else {
                 $instance = MolajoUser::getInstance($id);
-            }
-        }
+//            }
+//        }
 //        echo '<pre>';var_dump($instance);'</pre>';
         return $instance;
     }
