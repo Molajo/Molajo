@@ -10,20 +10,18 @@
     <creationDate>January 2012</creationDate>
     <description>FILES_MOLAJO_XML_DESCRIPTION</description>
 
-    <scriptfile>cms/manifests/distribution/script.php</scriptfile>
+    <scriptfile>layouts/manifests/distribution/script.php</scriptfile>
 
     <update>
         <schemas>
-            <schemapath type="updates">cms/manifests/distribution/sql</schemapath>
+            <schemapath type="updates">layouts/manifests/distribution/sql</schemapath>
         </schemas>
     </update>
 
     <fileset>
         <files>
-            <folder>administrator</folder>
             <folder>applications</folder>
-            <folder>cms</folder>
-            <folder>installation</folder>
+            <folder>extensions</folder>
             <folder>platform</folder>
             <folder>sites</folder>
             <file>htaccess.txt</file>

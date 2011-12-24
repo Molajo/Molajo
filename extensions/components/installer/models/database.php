@@ -351,7 +351,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
      */
     public function backupTables()
     {
-        $conf = MolajoFactory::getApplication()->getConfig();
+        $conf = MolajoFactory::getApplication()->get();
 
         $prefix = $conf->get('dbprefix');
         $database = $conf->get('db');
@@ -452,7 +452,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
         // Initialise variables.
         $return = true;
 
-        $conf = MolajoFactory::getApplication()->getConfig();
+        $conf = MolajoFactory::getApplication()->get();
 
         $prefix = $conf->get('dbprefix');
         $database = $conf->get('db');
@@ -540,7 +540,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
      */
     public function setDatabaseCharset()
     {
-        $conf = MolajoFactory::getApplication()->getConfig();
+        $conf = MolajoFactory::getApplication()->get();
 
         $database = $conf->get('db');
 

@@ -37,7 +37,7 @@ class plgContentPagenavigation extends JPlugin
             $nullDate = $db->getNullDate();
 
             $date = MolajoFactory::getDate();
-            $config = MolajoFactory::getApplication()->getConfig();
+            $config = MolajoFactory::getApplication()->get();
             $now = $date->toMySQL();
 
             $uid = $row->id;

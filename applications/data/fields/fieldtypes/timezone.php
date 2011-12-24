@@ -49,7 +49,7 @@ class MolajoFormFieldTimezone extends MolajoFormFieldGroupedList
 
         // If the timezone is not set use the server setting.
         if (strlen($this->value) == 0) {
-            $value = MolajoFactory::getApplication()->getConfig->get('offset');
+            $value = MolajoFactory::getApplication()->get('offset');
         }
 
         // Get the list of time zones from the server.

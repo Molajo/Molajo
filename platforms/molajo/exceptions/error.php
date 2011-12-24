@@ -689,7 +689,7 @@ abstract class MolajoError
 
         $document = MolajoFactory::getInstance('error');
         if ($document) {
-            $config = MolajoFactory::getApplication()->getConfig();
+            $config = MolajoFactory::getApplication()->get();
 
             // Get the current template from the application
             $template = MolajoFactory::getApplication()->getTemplate();

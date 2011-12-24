@@ -47,10 +47,10 @@ INSERT INTO `molajo_extension_options`
   (`extension_instance_id`, `application_id`, `option_id`,  `option_value`, `option_value_literal`, `ordering`)
     VALUES
       (@id, 0, 200, 'parameter_template_id_item', 'MOLAJO_FIELD_PARAMETERS_TEMPLATE_ID_ITEM', 50),
-      (@id, 0, 200, 'parameter_template_page_item', 'MOLAJO_FIELD_PARAMETERS_TEMPLATE_PAGE_ITEM', 50),
+      (@id, 0, 200, 'parameter_page_item', 'MOLAJO_FIELD_PARAMETERS_TEMPLATE_PAGE_ITEM', 50),
       (@id, 0, 200, 'parameter_layout_item', 'MOLAJO_FIELD_PARAMETERS_LAYOUT_ITEM', 50),
       (@id, 0, 200, 'parameter_template_id_items', 'MOLAJO_FIELD_PARAMETERS_TEMPLATE_ID_ITEM', 50),
-      (@id, 0, 200, 'parameter_template_page_items', 'MOLAJO_FIELD_PARAMETERS_TEMPLATE_PAGE_ITEM', 50),
+      (@id, 0, 200, 'parameter_page_items', 'MOLAJO_FIELD_PARAMETERS_TEMPLATE_PAGE_ITEM', 50),
       (@id, 0, 200, 'parameter_layout_items', 'MOLAJO_FIELD_PARAMETERS_LAYOUT_ITEMS', 50),
       (@id, 0, 200, 'parameter_show_author', 'MOLAJO_FIELD_PARAMETERS_SHOW_AUTHOR', 50),
       (@id, 0, 200, 'parameter_author_url', 'MOLAJO_FIELD_PARAMETERS_AUTHOR_URL', 51),

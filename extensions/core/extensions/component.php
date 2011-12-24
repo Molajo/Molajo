@@ -17,22 +17,77 @@ defined('MOLAJO') or die;
  */
 class MolajoComponent
 {
+    /**
+     * Name
+     *
+     * @var    string
+     * @since  1.0
+     */
+    protected $name = null;
 
     /**
-     * Asset
+     * Attributes
      *
      * @var    array
      * @since  1.0
      */
-    public $asset = array();
+    protected $attributes = array();
+
+    /**
+     * Config
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $config = array();
 
     /**
      * Option
      *
-     * @var    array
+     * @var    string
      * @since  1.0
      */
-    public $option = array();
+    protected $option = null;
+
+    /**
+     *  Template folder name
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $template = null;
+
+    /**
+     *  Page include file
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $page = null;
+
+    /**
+     *  Layout include file
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $layout = null;
+
+    /**
+     *  Wrap for Layout
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $wrap = null;
+
+    /**
+     *  Template Parameters
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $parameters = null;
 
     /**
      * __construct
@@ -43,19 +98,22 @@ class MolajoComponent
      *
      * @since  1.0
      */
-    public function __construct($asset)
+    public function __construct($name = null, $attributes = array(), $config = array())
     {
-        /** configuration */
-        $this->asset = $asset;
+//        echo '<pre>';
+//        var_dump($config);
+//        '</pre>';
 
-        $this->option = $this->asset->option;
+        /** set class properties */
+        $this->name = $name;
+        $this->attributes = $attributes;
 
-        $this->parameters = new JRegistry;
-        $this->parameters = $this->asset->source_parameters;
-
-        echo '<pre>';
-        var_dump($this->asset);
-        echo '</pre>';
+        $this->config = $config;
+        $this->option = $config->option;
+        $this->template = $config->template;
+        $this->page = $config->page;
+        $this->layout = $config->layout;
+        $this->wrap = $config->wrap;
     }
 
     /**
@@ -259,7 +317,7 @@ class MolajoComponent
 
         $session->set('page.id', (int)$id);
         $session->set('page.cid', (array)$cids);
-        $session->set('page.catid', (int)$catid);
+//        $session->set('page.catid', (int)$catid);
 
         $session->set('page.acl_implementation', $acl_implementation);
         $session->set('page.component_table', $component_table);
@@ -269,7 +327,7 @@ class MolajoComponent
 
         /** other */
         $session->set('page.extension', $this->option);
-        $session->set('page.component_specific', $component_specific);
+//        $session->set('page.component_specific', $component_specific);
 
         /** retrieve from db */
         //        if ($controller == 'display') {
@@ -285,7 +343,7 @@ class MolajoComponent
         $request['base_url'] = $session->get('page.base_url');
 
         $request['extension_type'] = $session->get('page.extension_type');
-        $request['option'] = $session->get('page.option');
+        $this->option = $session->get('page.option');
 
         $request['model'] = $session->get('page.model');
         $request['view'] = $session->get('page.view');
@@ -332,27 +390,35 @@ class MolajoComponent
      *
      * Render the component.
      *
-     * @param   string  $request An array of component information
-     * @param   array   $parameters  The component parameters
-     *
      * @return  object
      * @since  1.0
      */
-    public static function renderComponent($request, $parameters = array())
+    public function render()
     {
+
+        /** Events */
+        MolajoPlugin::importPlugin('system');
+        $this->triggerEvent('onBeforeComponentRender');
+
+        $request = array();
+        foreach ($this->config as $name=>$value) {
+            $request[$name] = $value;
+        }
+        echo 'request coming';
+        var_dump($request);
+        die;
         /** path */
-        $path = $request['component_path'] . '/' . $request['option'] . '.php';
+        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->option . '/' . $this->option . '.php';
 
         /** installation */
-        if ($request['application_id'] == 0
+        if (MOLAJO_APPLICATION_ID == 0
             && file_exists($path)
         ) {
 
             /** language */
-        } elseif (self::isEnabled($request['option'])
-            && file_exists($path)
+        } elseif (file_exists($path)
         ) {
-            MolajoFactory::getLanguage()->load($request['option'], $path, MolajoFactory::getLanguage()->getDefault(), false, false);
+//            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
 
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
@@ -365,156 +431,11 @@ class MolajoComponent
         $output = ob_get_contents();
         ob_end_clean();
 
+        /** Events */
+        MolajoPlugin::importPlugin('system');
+        $this->triggerEvent('onAfterComponentRender');
+
         /** Return output */
         return $output;
-    }
-
-    /**
-     * getContentInfo
-     *
-     * @return    array
-     * @since    1.0
-     */
-    public function getContentInfo()
-    {
-        $session = MolajoFactory::getSession();
-        $db = MolajoFactory::getDbo();
-        $query = $db->getQuery(true);
-        $doquery = false;
-
-        if ((int)$session->get('page.item_id') > 0) {
-            $query->select('"" as ' . $db->namequote('metakey'));
-            $query->select('"" as ' . $db->namequote('metadesc'));
-            $query->select('"" as ' . $db->namequote('metadata'));
-            $query->select($db->namequote('parameters'));
-            $query->from($db->namequote($session->get('page.component_table')));
-            $query->where($db->namequote('id') . ' = ' . (int)$session->get('page.id'));
-            $doquery = true;
-
-        } else if ((int)$session->get('page.id') > 0) {
-            $query->select($db->namequote('metakey'));
-            $query->select($db->namequote('metadesc'));
-            $query->select($db->namequote('metadata'));
-            $query->select($db->namequote('parameters'));
-            $query->from($db->namequote($session->get('page.component_table')));
-            $query->where($db->namequote('id') . ' = ' . (int)$session->get('page.id'));
-            $doquery = true;
-
-        } else if ((int)$session->get('page.cid') > 0) {
-            $query->select($db->namequote('metakey'));
-            $query->select($db->namequote('metadesc'));
-            $query->select($db->namequote('metadata'));
-            $query->select($db->namequote('parameters'));
-            $query->from($db->namequote('#__categories'));
-            $query->where($db->namequote('id') . ' > ' . (int)$session->get('page.catid'));
-            $doquery = true;
-        }
-
-        if ($doquery === true) {
-            $query->select($db->namequote('id'));
-            $query->select($db->namequote('title'));
-            $query->select('"" as ' . $db->namequote('subtitle'));
-
-            $db->setQuery($query->__toString());
-
-            $results = $db->loadObjectList();
-
-        } else {
-            $session->set('page.title', '');
-            $session->set('page.subtitle', '');
-            $session->set('page.metakey', '');
-            $session->set('page.metadesc', '');
-            $session->set('page.metadata', '');
-            $session->set('page.parameters', '');
-            $results = array();
-        }
-
-        if (count($results) > 0) {
-            foreach ($results as $count => $item) {
-                $session->set('page.title', $item->title);
-                $session->set('page.subtitle', $item->subtitle);
-                $session->set('page.metakey', $item->metakey);
-                $session->set('page.metadesc', $item->metadesc);
-                $session->set('page.metadata', $item->metadata);
-                $session->set('page.parameters', $item->parameters);
-            }
-        } else {
-            $session->set('page.title', MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo'));
-            $session->set('page.subtitle', '');
-            $session->set('page.metakey', '');
-            $session->set('page.metadesc', '');
-            $session->set('page.metadata', '');
-            $session->set('page.parameters', '');
-        }
-
-        /** Set Document Information */
-        $document = MolajoFactory::getDocument();
-
-        $menus = MolajoFactory::getMenu();
-        if ($menus == null) {
-            $menu = false;
-            $id = 0;
-        } else {
-            $menu = $menus->getActive();
-            $id = (int)@$menu->query['id'];
-        }
-
-        $pathway = MolajoFactory::getPathway();
-        $title = null;
-        $parameters = MolajoComponent::getParameters($session->get('page.option'));
-
-        //        $title = $this->parameters->get('page_title', '');
-
-        if (empty($title)) {
-            $title = $session->get('page.title');
-        }
-        if (empty($title)) {
-            $title = MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo');
-        }
-
-        if (MolajoFactory::getApplication()->getConfig->get('sitename_pagetitles', 0) == 1) {
-            $title = MolajoTextHelper::sprintf('JPAGETITLE', MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo'), $title);
-
-        } elseif (MolajoFactory::getApplication()->getConfig->get('sitename_pagetitles', 0) == 2) {
-            $title = MolajoTextHelper::sprintf('JPAGETITLE', $title, MolajoFactory::getApplication()->getConfig->get('sitename', 'Molajo'));
-        }
-
-        $document->setTitle($title);
-        $document->setDescription($session->get('page.metadesc'));
-        $document->setMetadata('keywords', $session->get('page.metakey'));
-        $document->setMetadata('robots', $session->get('page.robots'));
-
-        $metadata = explode(',', $session->get('page.metadata'));
-        foreach ($metadata as $k => $v) {
-            if ($v) {
-                $document->setMetadata($k, $v);
-            }
-        }
-
-        //        if ($this->parameters->get('show_feed_link', 1)) {
-        //            $link = '&format=feed&limitstart=';
-        //            $attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-        //            $document->addHeadLink(MolajoRouteHelper::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
-        //            $attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-        //            $document->addHeadLink(MolajoRouteHelper::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
-        //        }
-
-        //        $session->set('page.parameters', $this->parameters);
-        $session->set('page.parameters', array());
-        $session->set('page.wrap', '');
-        $session->set('page.position', 'component');
-
-        // Load the parameters. Merge Global and Menu Item parameters into new object
-        //		$parameters = MolajoFactory::getApplication()->getParameters();
-        //		$menuParameters = new JRegistry;
-
-        //		if ($menu = MolajoFactory::getApplication()->getMenu()->getActive()) {
-        //			$menuParameters->loadString($menu->parameters);
-        //		}
-
-        //		$mergedParameters = clone $menuParameters;
-        //		$mergedParameters->merge($parameters);
-
-        return;
     }
 }

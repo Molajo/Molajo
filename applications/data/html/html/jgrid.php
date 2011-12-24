@@ -160,7 +160,7 @@ abstract class MolajoHtmlJGrid
             $nullDate = MolajoFactory::getDbo()->getNullDate();
             $nowDate = MolajoFactory::getDate()->toUnix();
 
-            $tz = new DateTimeZone(MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getApplication()->getConfig->get('offset')));
+            $tz = new DateTimeZone(MolajoFactory::getUser()->getParam('timezone', MolajoFactory::getApplication()->get('offset')));
 
             $start_publishing_datetime = ($start_publishing_datetime != $nullDate)
                     ? MolajoFactory::getDate($start_publishing_datetime, 'UTC')->setTimeZone($tz) : false;

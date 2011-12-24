@@ -22,7 +22,7 @@ class plgSystemSef extends MolajoPlugin
      */
     public function onAfterRender()
     {
-        if (MolajoFactory::getApplication()->getName() != 'site' || MolajoFactory::getApplication()->getConfig('sef') == '0') {
+        if (MolajoFactory::getApplication()->getName() != 'site' || MolajoFactory::getApplication()->get('sef') == '0') {
             return true;
         }
 

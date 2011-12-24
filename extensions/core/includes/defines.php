@@ -66,7 +66,7 @@ if (defined('MOLAJO_APPLICATIONS_CORE_DATA_PROXIES')) {
  */
 if (defined('MOLAJO_EXTENSIONS')) {
 } else {
-    define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER . '/cms');
+    define('MOLAJO_EXTENSIONS', MOLAJO_BASE_FOLDER . '/extensions');
 }
 if (defined('MOLAJO_EXTENSIONS_COMPONENTS')) {
 } else {

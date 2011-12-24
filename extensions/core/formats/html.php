@@ -8,14 +8,30 @@
 defined('MOLAJO') or die;
 
 /**
- * HTML Renderer
+ * Render HTML Format
  *
  * @package     Molajo
  * @subpackage  HTML
  * @since       1.0
  */
-class MolajoHTML
+class MolajoHtmlFormat
 {
+    /**
+     *  Config
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $config = null;
+
+    /**
+     *  Message
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $message = null;
+
     /**
      *  Template folder name
      *
@@ -23,14 +39,6 @@ class MolajoHTML
      * @since 1.0
      */
     protected $template = null;
-
-    /**
-     *  Template Parameters
-     *
-     * @var string
-     * @since 1.0
-     */
-    protected $parameters = null;
 
     /**
      *  Page include file
@@ -41,66 +49,124 @@ class MolajoHTML
     protected $page = null;
 
     /**
-     *  Asset object
+     *  Layout include file
      *
      * @var string
      * @since 1.0
      */
-    protected $asset = null;
+    protected $layout = null;
+
+    /**
+     *  Wrap for Layout
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $wrap = null;
+
+    /**
+     *  Template Parameters
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $parameters = null;
+
+    /**
+     *  Template Tags
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $_template_tags = array();
+
+    /**
+     * Array of buffered output
+     *
+     * @var    mixed (depends on the renderer)
+     */
+    protected $_buffer = null;
 
     /**
      * __construct
      *
      * Class constructor.
      *
-     * @param   null    $request    An optional argument to provide dependency injection for the asset
-     * @param   null    $asset_id   An optional argument to provide dependency injection for the asset
+     * @param   null    $request
+     * @param   null    $page
      *
      * @return boolean
      *
      * @since  1.0
      */
-    public function __construct($template, $page, $asset)
+    public function __construct($config = array())
     {
+//        echo '<pre>';
+//        var_dump($config);
+//        '</pre>';
+
         /** set class properties */
-        $this->template = $template;
-        $this->page = $page;
-        $this->asset = $asset;
+        $this->config = $config;
+        $this->message = $config->message;
+        $this->template = $config->template;
+        $this->page = $config->page;
+        $this->layout = $config->layout;
+        $this->wrap = $config->wrap;
 
         /** Request */
-        $this->renderTemplate();
+        $this->_renderTemplate();
     }
 
     /**
-     * renderTemplate
-     *
-     * Render the Template - extract and process doc statements
+     * Render the Template
      *
      * @return  object
      * @since  1.0
      */
     protected function _renderTemplate()
     {
-        /** Template */
-        $templates = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $id);
+        /** Query */
+        $templates = MolajoExtensionHelper::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $this->template);
 
-        foreach ($templates as $template) {
-            $registry = new JRegistry;
-            $registry->loadJSON($template->parameters);
-            $template->parameters = $registry;
+        /** Initialize */
+        $template_name = '';
+        $template_include = '';
+        $template_parameters = '';
 
-            if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template->title . '/' . 'index.php')) {
-            } else {
-                $template->title = 'molajito';
+        /* Process Query Results */
+        if (count($templates) > 0) {
+            foreach ($templates as $template) {
+
+                $registry = new JRegistry;
+                $registry->loadJSON($template_parameters);
+                $template_parameters = $registry;
+
+                if (file_exists(MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template->title . '/' . 'index.php')) {
+                    $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template->title . '/' . 'index.php';
+                    $template_name = $template->title;
+                }
             }
         }
 
+        if ($template_name == '') {
+            $template_include = MOLAJO_EXTENSIONS_TEMPLATES . '/system/index.php';
+            $template_name = 'system';
+        }
+
+        $template_path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template;
+
+        $template_page_include = $template_path . '/pages/default/index.php';
+
         $this->parameters = array(
-            'template' => $template[0]->title,
-            'file' => 'index.php',
-            'directory' => MOLAJO_EXTENSIONS_TEMPLATES,
-            'parameters' => $template[0]->parameters
+            'template' => $template_name,
+            'template_path' => $template_path,
+            'page' => $template_page_include,
+            'parameters' => $template_parameters
+
         );
+
+        /** Before Event */
+        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
 
         /** Media */
 
@@ -111,34 +177,19 @@ class MolajoHTML
         self::_loadMediaJS($filePath, $urlPath);
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
-        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template[0]->title;
-        $urlPath = JURI::root() . 'cms/templates/' . $template[0]->title;
+        $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name;
+        $urlPath = JURI::root() . 'extensions/templates/' . $template_name;
         self::_loadMediaCSS($filePath, $urlPath);
         self::_loadMediaJS($filePath, $urlPath);
 
         /** Language */
         $lang = MolajoFactory::getLanguage();
-        $lang->load($template[0]->title, MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template[0]->title, $lang->getDefault(), false, false);
-
-        /** Fetch */
-        $this->_fetchTemplate($this->parameters);
-
-        /** Load */
-        $this->_file = $directory . '/' . $filename;
+        $lang->load($template_name, MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name, $lang->getDefault(), false, false);
 
         ob_start();
-        require $directory . '/' . $filename;
-        $this->_template = ob_get_contents();
+        require $template_include;
+        $body = ob_get_contents();
         ob_end_clean();
-
-        /** Parse */
-        $this->_parseTemplate();
-
-        /** Before Event */
-        MolajoFactory::getApplication()->triggerEvent('onBeforeRender');
-
-        /** Render */
-        //$body = MolajoFactory::getDocument()->render(false, $this->parameters);
 
         MolajoFactory::getApplication()->setBody($body);
 
@@ -146,42 +197,6 @@ class MolajoHTML
         MolajoFactory::getApplication()->triggerEvent('onAfterRender');
 
         return;
-    }
-
-    /**
-     * _fetchTemplate --GET RID OF
-     *
-     * Fetch the template, and initialise the parameters
-     *
-     * @param   array  $this->parameters  parameters to determine the template
-     */
-    protected function _fetchTemplate()
-    {
-        if (isset($this->parameters['directory'])) {
-            $directory = $this->parameters['directory'];
-        } else {
-            $directory = MOLAJO_EXTENSIONS_TEMPLATES;
-        }
-
-        $filter = JFilterInput::getInstance();
-        $template = $filter->clean($this->parameters['template'], 'cmd');
-        $file = $filter->clean($this->parameters['file'], 'cmd');
-
-        if (file_exists($directory . '/' . $template . '/' . $file)) {
-        } else {
-            $template = 'system';
-        }
-
-        /** Language File */
-        $lang = MolajoFactory::getLanguage();
-        $lang->load('template_' . $template, MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template, $lang->getDefault(), false, false);
-
-        /** Variables */
-        $this->template = $template;
-        $this->baseurl = JURI::base(true);
-
-        $this->parameters = isset($this->parameters['parameters']) ? $this->parameters['parameters'] : new JRegistry;
-
     }
 
     /**
@@ -199,14 +214,14 @@ class MolajoHTML
             // Step through the docs in reverse order.
             for ($i = count($matches[0]) - 1; $i >= 0; $i--) {
                 $type = $matches[1][$i];
-                $attribs = empty($matches[2][$i]) ? array() : MolajoUtility::parseAttributes($matches[2][$i]);
-                $name = isset($attribs['name']) ? $attribs['name'] : null;
+                $attributes = empty($matches[2][$i]) ? array() : MolajoUtility::parseAttributes($matches[2][$i]);
+                $name = isset($attributes['name']) ? $attributes['name'] : null;
 
                 // Separate buffers to be executed first and last
                 if ($type == 'module' || $type == 'modules') {
-                    $template_tags_first[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attribs' => $attribs);
+                    $template_tags_first[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attributes' => $attributes);
                 } else {
-                    $template_tags_last[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attribs' => $attribs);
+                    $template_tags_last[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attributes' => $attributes);
                 }
             }
             // Reverse the last array so the docs are in forward order.
@@ -223,41 +238,45 @@ class MolajoHTML
      *
      * @return string rendered template
      */
-    protected function _renderTemplate()
+    protected function _renderTemplate2()
     {
         $replace = array();
         $with = array();
 
         foreach ($this->_template_tags AS $doc => $args) {
             $replace[] = $doc;
-            $with[] = $this->_getBuffer($args['type'], $args['name'], $args['attribs']);
+            $with[] = $this->_getBuffer($args['type'], $args['name'], $args['attributes']);
         }
         return str_replace($replace, $with, $this->_template);
     }
 
     /**
+     * _getBuffer
+     *
      * Get the contents of a document include
      *
-     * @param   string  $type    The type of renderer
-     * @param   string  $name    The name of the element to render
-     * @param   array   $attribs Associative array of remaining attributes.
+     * @param   string  $type        The type of renderer
+     * @param   string  $name        The name of the element to render
+     * @param   array   $attributes  Associative array of remaining attributes.
      *
      * @return  The output of the renderer
      */
-    protected function _getBuffer($type = null, $name = null, $attribs = array())
+    protected function _getBuffer($type = null, $name = null, $attributes = array())
     {
         if (isset($this->_buffer[$type][$name])) {
             return $this->_buffer[$type][$name];
         }
 
         // put head, message component, modules, module
-        // $renderer = $this->loadRenderer($type);
 
         // todo: amy put back module caching
-        //$results = $renderer->render($name, $attribs, false);
+        
+        $class = 'Molajo'.ucfirst($type);
+        $extension = new $class ($name, $attributes, $this->config);
+        $results = $extension->render();
 
         $this->_setBuffer($results, $type, $name);
-        return parent::$this->_buffer[$type][$name];
+        return $this->_buffer[$type][$name];
     }
 
     /**
@@ -301,11 +320,11 @@ class MolajoHTML
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-                    if (MolajoFactory::getDocument()->direction == 'rtl') {
-                        MolajoFactory::getDocument()->addStyleSheet($urlPath . '/css/' . $file);
-                    }
+//                    if (MolajoFactory::getApplication()->direction == 'rtl') {
+//                        MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
+//                    }
                 } else {
-                    MolajoFactory::getDocument()->addStyleSheet($urlPath . '/css/' . $file);
+                    MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
                 }
             }
         }
@@ -331,7 +350,7 @@ class MolajoHTML
 
         if (count($files) > 0) {
             foreach ($files as $file) {
-                MolajoFactory::getDocument()->addScript($urlPath . '/js/' . $file);
+                MolajoFactory::getApplication()->addScript($urlPath . '/js/' . $file);
             }
         }
     }
@@ -347,19 +366,14 @@ class MolajoHTML
     {
         $contents = '';
 
-        /** Favicon */
-        $path = $directory . '/';
-        $dirs = array($path, $path . 'images/', MOLAJO_BASE_FOLDER . '/');
-        foreach ($dirs as $dir) {
-            $icon = $dir . 'favicon.ico';
-            if (file_exists($icon)) {
-                $path = str_replace(MOLAJO_BASE_FOLDER . '/', '', $dir);
-                $path = str_replace('\\', '/', $path);
-                $this->addFavicon(JURI::base(true) . '/' . $path . 'favicon.ico');
-                break;
-            }
+        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template . '/images/';
+
+        if (file_exists($path . 'favicon.ico')) {
+            $urlPath = JURI::root() . 'extensions/templates/' . $this->template . '/images/favicon.ico';
+            MolajoFactory::getApplication()->addFavicon($urlPath);
+            return;
         }
 
-        return $contents;
+        return false;
     }
 }

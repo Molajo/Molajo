@@ -32,7 +32,7 @@ abstract class MolajoSubmenuHelper
     public static function getList($parameters)
     {
         $tmpobj = new JObject();
-        $tmpobj->set('site_title', MolajoFactory::getApplication()->getConfig('site_title', 'Molajo'));
+        $tmpobj->set('site_title', MolajoFactory::getApplication()->get('site_title', 'Molajo'));
         $data[] = $tmpobj;
         return $data;
     }

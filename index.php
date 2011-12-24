@@ -160,10 +160,10 @@ $site = MolajoFactory::getSite(MOLAJO_SITE_ID);
 JDEBUG ? $_PROFILER->mark('afterGetSite') : null;
 
 /**
- *  Initialise the Site
+ *  Load the Site
  */
-$site->initialise();
-JDEBUG ? $_PROFILER->mark('afterSiteInitialise') : null;
+$site->load();
+JDEBUG ? $_PROFILER->mark('afterSiteLoad') : null;
 
 /**
  *  Get the Application
@@ -172,19 +172,8 @@ $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
 
 /**
- *  Initialize Application
+ *  Load the Application
  */
-$app->initialise();
-JDEBUG ? $_PROFILER->mark('afterInitialiseApplication') : null;
+$app->load();
+JDEBUG ? $_PROFILER->mark('afterApplicationLoad') : null;
 
-/**
- *  Execute Extension Layer
- */
-$extension = new MolajoExtension();
-JDEBUG ? $_PROFILER->mark('afterExtensionInitialise') : null;
-
-/**
- *  Application Response
- */
-$app->respond();
-JDEBUG ? $_PROFILER->mark('afterExecute') : null;

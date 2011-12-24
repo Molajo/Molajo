@@ -92,7 +92,7 @@ Layouts can be found in three places in a Molajo website:
 
 1. Layouts stored in the CMS/layouts folder are available for any extension.
 
-    cms/layouts/layout-type/layout-name folder
+    layouts/layouts/layout-type/layout-name folder
 
 Valid Layout types include document, extensions, formfields, pages, and wraps.
 
@@ -100,13 +100,13 @@ For example, the list layout will be found in layouts/extensions/list folder.
 
 2. Layouts stored in the extensions/layouts folder can only be used by that extension.
 
-    cms/component/layouts/layout-type/layout-name
+    layouts/component/layouts/layout-type/layout-name
 
 If you want a custom layout and/or wrap for your component, place it within your extension folders.
 
 3. Layouts can also be placed in the extensions/template/current-template/layouts/layout-type/layout-name folder.
 
-    cms/templates/current-templates/layouts/layout-type/layout-name
+    layouts/templates/current-templates/layouts/layout-type/layout-name
 
 Layouts stored within the template are the highest priority and will always be used over the other two locations.
 
@@ -252,7 +252,7 @@ A. The Application Object, which includes data about the input request, response
 
     <?php echo '<pre>'; var_dump($this->application); echo '</pre>';  ?>
 
-    echo '<pre>';var_dump(MolajoFactory::getApplication()->getConfig());echo '</pre>';
+    echo '<pre>';var_dump(MolajoFactory::getApplication()->get());echo '</pre>';
 
     MolajoFactory::getApplication()->get('db');
 

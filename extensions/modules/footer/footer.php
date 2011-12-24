@@ -21,7 +21,7 @@ if (JString::strpos(MolajoTextHelper :: _('FOOTER_LINE1'), '%date%')) {
     $line1 = MolajoTextHelper :: _('FOOTER_LINE1');
 }
 if (JString::strpos($line1, '%sitename%')) {
-    $line1 = str_replace('%sitename%', MolajoFactory::getApplication()->getConfig('sitename', 'Molajo'), $line1);
+    $line1 = str_replace('%sitename%', MolajoFactory::getApplication()->get('sitename', 'Molajo'), $line1);
 }
 $tmpobj->set('line1', $line1);
 

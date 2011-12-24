@@ -99,29 +99,6 @@ class JTableUsergroup extends MolajoTableGroup
 {
 }
 
-class JDocument extends MolajoDocument
-{
-}
-
-//class JDocumentError extends MolajoDocumentError {}
-//class JDocumentFeed extends MolajoDocumentFeed {}
-class JDocumentRenderer extends MolajoDocumentRenderer
-{
-}
-
-class JDocumentHTML extends MolajoDocumentHTML
-{
-}
-
-//class JDocumentRendererComponent extends MolajoDocumentRendererComponent {}
-//class JDocumentRendererHead extends MolajoDocumentRendererHead {}
-//class JDocumentRendererMessage extends MolajoDocumentRendererMessage {}
-//class JDocumentRendererModule extends MolajoDocumentRendererModule {}
-//class JDocumentRendererModules extends MolajoDocumentRendererModules {}
-//class JDocumentJSON extends MolajoDocumentJSON {}
-//class JDocumentOpensearch extends MolajoDocumentOpensearch {}
-//class JDocumentRAW extends MolajoDocumentRAW {}
-//class JDocumentXML extends MolajoDocumentXML {}
 class JForm extends MolajoForm
 {
 }

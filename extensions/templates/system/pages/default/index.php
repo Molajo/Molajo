@@ -6,6 +6,7 @@
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
  */
 defined('MOLAJO') or die;
+echo 'in default/index.php page.'
 ?>
 <div class="container">
     <doc:include type="modules" name="header" wrap="header" />

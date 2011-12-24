@@ -60,7 +60,7 @@ class InstallerModelInstall extends JModel
         MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
 
         // Recall the 'Install from Directory' path.
-        $path = MolajoFactory::getApplication()->getUserStateFromRequest($this->_context . '.install_directory', 'install_directory', MolajoFactory::getApplication()->getConfig('temp_path'));
+        $path = MolajoFactory::getApplication()->getUserStateFromRequest($this->_context . '.install_directory', 'install_directory', MolajoFactory::getApplication()->get('temp_path'));
         $this->setState('install.directory', $path);
         parent::populateState();
     }
@@ -131,7 +131,7 @@ class InstallerModelInstall extends JModel
 
         // Cleanup the install files
         if (!is_file($package['packagefile'])) {
-            $config = MolajoFactory::getApplication()->getConfig();
+            $config = MolajoFactory::getApplication()->get();
             $package['packagefile'] = $config->get('temp_path') . '/' . $package['packagefile'];
         }
 
@@ -176,7 +176,7 @@ class InstallerModelInstall extends JModel
         }
 
         // Build the appropriate paths
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $tmp_dest = $config->get('temp_path') . '/' . $userfile['name'];
         $tmp_src = $userfile['tmp_name'];
 
@@ -254,7 +254,7 @@ class InstallerModelInstall extends JModel
             return false;
         }
 
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $tmp_dest = $config->get('temp_path');
 
         // Unpack the downloaded package file

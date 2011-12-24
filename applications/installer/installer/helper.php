@@ -29,7 +29,7 @@ abstract class MolajoInstallerHelper
      */
     public static function downloadPackage($url, $target = false)
     {
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
 
         // Capture PHP errors
         $php_errormsg = 'Error Unknown';
@@ -237,7 +237,7 @@ abstract class MolajoInstallerHelper
      */
     public static function cleanupInstall($package, $resultdir)
     {
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
 
         // Does the unpacked extension directory exist?
         if (is_dir($resultdir)) {

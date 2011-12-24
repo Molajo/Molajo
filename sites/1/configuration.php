@@ -4,10 +4,6 @@ class MolajoSiteConfiguration
     /* Site Settings */
     public $sitename = 'Molajo';
 
-    /* Offline Settings */
-    public $offline = '0';
-    public $offline_message = 'This site is not available.<br /> Please check back again soon.';
-
     /* Database Settings */
     public $dbtype = 'mysqli';
     public $host = 'localhost';

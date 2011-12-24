@@ -34,7 +34,7 @@ class plgUserMolajo extends MolajoPlugin
     {
         // Initialise variables.
 
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
 
         if ($isnew) {
             // TODO: Suck in the frontend registration emails here as well. Job for a rainy day.

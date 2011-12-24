@@ -32,7 +32,7 @@ class plgSystemLogout extends MolajoPlugin
         parent::__construct($subject, $config);
 
         $hash = MolajoUtility::getHash('plgSystemLogout');
-        $conf = MolajoFactory::getApplication()->getConfig();
+        $conf = MolajoFactory::getApplication()->get();
         $cookie_domain = $conf->get('config.cookie_domain', '');
         $cookie_path = $conf->get('config.cookie_path', '/');
         setcookie($hash, false, time() - 86400, $cookie_path, $cookie_domain);
@@ -54,7 +54,7 @@ class plgSystemLogout extends MolajoPlugin
     {
         // Create the cookie
         $hash = MolajoUtility::getHash('plgSystemLogout');
-        $conf = MolajoFactory::getApplication()->getConfig();
+        $conf = MolajoFactory::getApplication()->get();
         $cookie_domain = $conf->get('config.cookie_domain', '');
         $cookie_path = $conf->get('config.cookie_path', '/');
         setcookie($hash, true, time() + 86400, $cookie_path, $cookie_domain);

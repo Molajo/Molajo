@@ -63,7 +63,7 @@ class MolajoFormFieldCalendar extends MolajoFormField
         }
 
         // Get some system objects.
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $user = MolajoFactory::getUser();
 
         // If a known filter is given use it.

@@ -157,6 +157,6 @@ class MolajoSessionHelper extends JObject
      */
     protected function _getConfig($varname, $default = null)
     {
-        return MolajoFactory::getApplication()->getConfig->get('' . $varname, $default);
+        return MolajoFactory::getApplication()->get('' . $varname, $default);
     }
 }

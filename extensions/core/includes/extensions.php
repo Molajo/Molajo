@@ -13,25 +13,12 @@ defined('MOLAJO') or die;
 $fileHelper = new MolajoFileHelper();
 
 /**
- *  Document
+ *  Formats
  */
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document/document.php', 'MolajoDocument');
-$fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document/renderer.php', 'MolajoDocumentRenderer');
-
-$format = JRequest::getCmd('format', 'html');
-if ($format == 'error' || $format == 'feed' || $format == 'raw') {
-    $includeFormat = $format;
-} else {
-    $includeFormat = 'html';
+$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/formats', '\.php$', false, false);
+foreach ($files as $file) {
+        $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Format');
 }
-$formatClass = 'MolajoDocument' . ucfirst($includeFormat);
-if (class_exists($formatClass)) {
-} else {
-    $path = MOLAJO_EXTENSIONS_CORE . '/core/document/' . $includeFormat . '/' . $includeFormat . '.php';
-    $formatClass = 'MolajoDocument' . ucfirst($includeFormat);
-    $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/document/' . $includeFormat . '/' . $includeFormat . '.php', $formatClass);
-}
-
 /**
  *  Extensions
  */

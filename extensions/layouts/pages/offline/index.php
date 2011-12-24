@@ -27,11 +27,11 @@ defined('MOLAJO') or die;
     <img src="images/joomla_logo_black.jpg" alt="Molajo Logo"/>
 
     <h1>
-        <?php echo MolajoFactory::getApplication()->getConfig('sitename'); ?>
+        <?php echo MolajoFactory::getApplication()->get('sitename'); ?>
     </h1>
 
     <p>
-        <?php echo MolajoFactory::getApplication()->getConfig('offline_message'); ?>
+        <?php echo MolajoFactory::getApplication()->get('offline_message'); ?>
     </p>
 
     <form action="<?php echo MolajoRouteHelper::_('index.php', true); ?>" method="post" id="form-login">

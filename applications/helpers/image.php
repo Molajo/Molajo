@@ -155,7 +155,7 @@ class MolajoImageHelper
         }
 
         /** retrieve image folder for original images */
-        $images = MolajoFactory::getApplication()->getConfig('image_folder', '/images');
+        $images = MolajoFactory::getApplication()->get('image_folder', '/images');
 
         /** folders */
         if (JFolder::exists(MOLAJO_BASE_FOLDER . '/' . $images)) {
@@ -180,7 +180,7 @@ class MolajoImageHelper
     private function getResizedImage()
     {
         /** retrieve image folder for resized images */
-        $images = MolajoFactory::getApplication()->getConfig('thumb_folder', '/images/thumbs');
+        $images = MolajoFactory::getApplication()->get('thumb_folder', '/images/thumbs');
 
         /** folders */
         if (JFolder::exists(MOLAJO_BASE_FOLDER . '/' . $images)) {
@@ -206,15 +206,15 @@ class MolajoImageHelper
     {
         /** Options: exact, portrait, landscape, auto, crop and size */
         if ($this->size == 1) {
-            $dimensions = MolajoFactory::getApplication()->getConfig('image_xsmall', 50);
+            $dimensions = MolajoFactory::getApplication()->get('image_xsmall', 50);
         } else if ($this->size == 2) {
-            $dimensions = MolajoFactory::getApplication()->getConfig('image_small', 75);
+            $dimensions = MolajoFactory::getApplication()->get('image_small', 75);
         } else if ($this->size == 3) {
-            $dimensions = MolajoFactory::getApplication()->getConfig('image_medium', 150);
+            $dimensions = MolajoFactory::getApplication()->get('image_medium', 150);
         } else if ($this->size == 4) {
-            $dimensions = MolajoFactory::getApplication()->getConfig('image_large', 300);
+            $dimensions = MolajoFactory::getApplication()->get('image_large', 300);
         } else if ($this->size == 5) {
-            $dimensions = MolajoFactory::getApplication()->getConfig('image_xlarge', 500);
+            $dimensions = MolajoFactory::getApplication()->get('image_xlarge', 500);
         } else {
             $dimensions = 100;
         }

@@ -570,7 +570,7 @@ abstract class MolajoHtml
     {
         // If no debugging value is set, use the configuration setting
         if ($debug === null) {
-            $debug = MolajoFactory::getApplication()->getConfig->get('debug');
+            $debug = MolajoFactory::getApplication()->get('debug');
         }
 
         $uncompressed = $debug ? '-uncompressed' : '';
@@ -618,7 +618,7 @@ abstract class MolajoHtml
     public static function date($input = 'now', $format = null, $tz = true, $gregorian = false)
     {
         // Get some system objects.
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $user = MolajoFactory::getUser();
 
         // UTC date converted to user time zone.

@@ -48,7 +48,7 @@ class MolajoHelpHelper
 
             // If user hasn't specified a help URL, then get the global one.
             if ($url == '') {
-                $url = MolajoFactory::getApplication()->getConfig('helpurl');
+                $url = MolajoFactory::getApplication()->get('helpurl');
             }
 
             // Component help URL overrides user and global.

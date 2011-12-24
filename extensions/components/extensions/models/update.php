@@ -193,7 +193,7 @@ class InstallerModelUpdate extends JModelList
             return false;
         }
 
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $tmp_dest = $config->get('temp_path');
 
         // Unpack the downloaded package file
@@ -228,7 +228,7 @@ class InstallerModelUpdate extends JModelList
 
         // Cleanup the install files
         if (!is_file($package['packagefile'])) {
-            $config = MolajoFactory::getApplication()->getConfig();
+            $config = MolajoFactory::getApplication()->get();
             $package['packagefile'] = $config->get('temp_path') . '/' . $package['packagefile'];
         }
 

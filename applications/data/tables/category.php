@@ -25,7 +25,7 @@ class MolajoTableCategory extends MolajoTableNested
     {
         parent::__construct('#__categories', 'id', $db);
 
-        $this->access = (int)MolajoFactory::getApplication()->getConfig->get('access');
+        $this->access = (int)MolajoFactory::getApplication()->get('access');
     }
 
     /**

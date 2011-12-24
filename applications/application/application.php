@@ -144,16 +144,6 @@ class MolajoApplication
         //echo '<pre>';var_dump($this);'</pre>';
     }
 
-    public function figure_out ()
-    {
-
-
-
-
-        //public $application_error_asset_id = 0;
-
-    }
-
     /**
      * Returns a reference to the global Application object, only creating it if it doesn't already exist.
      *
@@ -195,57 +185,14 @@ class MolajoApplication
     }
 
     /**
-     * Initialise the application.
+     * Load the application.
      *
-     * @param   mixed  $session     An optional argument to provide dependency injection for the application's
-     *                              session object.  If the argument is a Session object that object will become
-     *                              the application's session object, if it is false then there will be no session
-     *                              object, and if it is null then the default session object will be created based
-     *                              on the application's loadSession() method.
-     * @param   mixed  $language    An optional argument to provide dependency injection for the application's
-     *                              language object.  If the argument is a MolajoLanguage object that object will become
-     *                              the application's language object, if it is false then there will be no language
-     *                              object, and if it is null then the default language object will be created based
-     *                              on the application's loadLanguage() method.
-     * @param   mixed  $dispatcher  An optional argument to provide dependency injection for the application's
-     *                              event dispatcher.  If the argument is a JDispatcher object that object will become
-     *                              the application's event dispatcher, if it is null then the default event dispatcher
-     *                              will be created based on the application's loadDispatcher() method.
+     * @return  nothing
      *
-     * @return  Application  Instance of $this to allow chaining.
-     *
-     * @see     loadSession()
-     * @see     loadDocument()
-     * @see     loadLanguage()
-     * @see     loadDispatcher()
-     * @since   11.3
+     * @since   1.0
      */
-    public function initialise($session = null, $language = null, $dispatcher = null)
+    public function load()
     {
-        if ($session instanceof MolajoSession) {
-            $this->session = $session;
-
-        } elseif ($session === false) {
-
-        } else {
-            $this->loadSession();
-        }
-
-        if ($language instanceof MolajoLanguage) {
-            $this->language = $language;
-
-        } elseif ($language === false) {
-
-        } else {
-            $this->loadLanguage();
-        }
-
-        if ($dispatcher instanceof JDispatcher) {
-            $this->dispatcher = $dispatcher;
-        } else {
-            $this->loadDispatcher();
-        }
-
         /** Site authorisation */
         $site = new MolajoSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
@@ -253,7 +200,19 @@ class MolajoApplication
             return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
         }
 
-        return $this;
+        /** initialize */
+        $this->loadSession();
+        $this->loadLanguage();
+        $this->loadDispatcher();
+
+        /** extension layer */
+        $extension = new MolajoExtension();
+        $extension->load();
+
+        /** response */
+        $this->respond();
+
+        //echo '<pre>';var_dump($this);'</pre>';
     }
 
     /**
@@ -1185,18 +1144,6 @@ class MolajoApplication
     }
 
     /**
-     * Method to get the application language object.
-     *
-     * @return  MolajoLanguage  The language object
-     *
-     * @since   11.3
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
      * Method to get the application session object.
      *
      * @return  Session  The session object
@@ -1328,6 +1275,31 @@ class MolajoApplication
 
         // Set the session object.
         $this->session = $session;
+    }
+
+    /**
+     * stringURLSafe
+     *
+     * This method transliterates a string into an URL
+     * safe string or returns a URL safe UTF-8 string
+     * based on the global configuration
+     *
+     * @param   string  $string  String to process
+     *
+     * @return  string  Processed string
+     *
+     * @since  1.0
+     */
+    static public function stringURLSafe($string)
+    {
+        if (self::get('unicodeslugs') == 1) {
+            $output = JFilterOutput::stringURLUnicodeSlug($string);
+
+        } else {
+            $output = JFilterOutput::stringURLSafe($string);
+        }
+
+        return $output;
     }
 
     /**

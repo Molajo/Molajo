@@ -214,21 +214,21 @@ class MolajoView extends JView
 
         /** 1. @var $templateLayoutPath [template]/layouts/[layout-type]/[layout-folder] */
         $templateLayoutPath = $template . '/layouts/' . $layout_type . '/' . $layout;
-        $templateLayoutPathURL = JURI::root() . 'cms/templates/' . $templateObject[0]->title . '/layouts/' . $layout_type . '/' . $layout;
+        $templateLayoutPathURL = JURI::root() . 'extensions/layouts/templates/' . $templateObject[0]->title . '/layouts/' . $layout_type . '/' . $layout;
 
         /** 2. @var $extensionPath [extension_type]/[extension-name]/layouts/[layout-type]/[layout-folder] */
         $extensionPath = '';
         if ($this->request['extension_type'] == 'plugin') {
             $extensionPath = MOLAJO_EXTENSIONS_PLUGINS . '/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
-            $extensionPathURL = JURI::root() . 'cms/plugins/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
+            $extensionPathURL = JURI::root() . 'extensions/layouts/plugins/' . $this->request['plugin_folder'] . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
 
         } else if ($this->request['extension_type'] == 'component') {
             $extensionPath = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->request['option'] . '/views/' . $this->request['view'] . '/layouts/' . $layout_type . '/' . $layout;
-            $extensionPathURL = JURI::root() . 'cms/components/' . $this->request['option'] . '/views/' . $this->request['view'] . '/layouts/' . $layout_type . '/' . $layout;
+            $extensionPathURL = JURI::root() . 'extensions/layouts/components/' . $this->request['option'] . '/views/' . $this->request['view'] . '/layouts/' . $layout_type . '/' . $layout;
 
         } else if ($this->request['extension_type'] == 'module') {
             $extensionPath = MOLAJO_EXTENSIONS_MODULES . '/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
-            $extensionPathURL = JURI::root() . 'cms/modules/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
+            $extensionPathURL = JURI::root() . 'extensions/layouts/modules/' . $this->request['option'] . '/layouts/' . $layout_type . '/' . $layout;
 
         } else {
             $extensionPath = '';

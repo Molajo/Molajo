@@ -106,7 +106,7 @@ class MolajoSite extends JObject
     }
 
     /**
-     * initialise
+     * load
      *
      * Retrieves the configuration information, loads language files, editor, triggers onAfterInitialise
      *
@@ -114,7 +114,7 @@ class MolajoSite extends JObject
      *
      * @since 1.0
      */
-    public function initialise()
+    public function load()
     {
         $info = MolajoSiteHelper::getSiteInfo();
         if ($info === false) {

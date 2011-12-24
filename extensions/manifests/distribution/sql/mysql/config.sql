@@ -124,7 +124,7 @@ INSERT INTO `molajo_extension_options`
       (1, 0, 205, 'assets_request', 'MOLAJO_FIELD_ASSETS_REQUEST', 68),
       (1, 0, 205, 'assets_primary_category_id', 'MOLAJO_FIELD_ASSETS_PRIMARY_CATEGORY_ID', 69),
       (1, 0, 205, 'assets_template_id', 'MOLAJO_FIELD_ASSETS_TEMPLATE_ID', 70),
-      (1, 0, 205, 'assets_template_page', 'MOLAJO_FIELD_ASSETS_TEMPLATE_PAGE', 71),
+      (1, 0, 205, 'assets_page', 'MOLAJO_FIELD_ASSETS_TEMPLATE_PAGE', 71),
       (1, 0, 205, 'assets_language', 'MOLAJO_FIELD_ASSETS_LANGUAGE', 72),
       (1, 0, 205, 'assets_translation_of_id', 'MOLAJO_FIELD_TRANSLATION_OF_ID', 73),
       (1, 0, 205, 'assets_redirect_to_id', 'MOLAJO_FIELD_ASSETS_REDIRECT_TO_ID', 74),

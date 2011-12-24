@@ -232,12 +232,12 @@ class MolajoUser extends JObject
             $this->guest = 1;
             // shouldn't we load guest groups, etc?
         } else {
-            $this->load($identifier);
+            $this->_load($identifier);
         }
     }
 
     /**
-     * load
+     * _load
      *
      * Method to load a User object by user id number
      *
@@ -246,9 +246,9 @@ class MolajoUser extends JObject
      * @return  boolean  True on success
      * @since   1.0
      */
-    protected function load($id)
+    protected function _load($id)
     {
-        $table = $this->getTable();
+        $table = $this->_getTable();
 
         $results = $table->load($id);
 
@@ -263,9 +263,9 @@ class MolajoUser extends JObject
         /** extra fields */
         $this->name = trim($this->first_name.' '.$this->last_name);
 
-        $this->loadCustomFields($table->custom_fields);
+        $this->_loadCustomFields($table->custom_fields);
         
-        $this->loadParameters($table->parameters);
+        $this->_loadParameters($table->parameters);
 
         $this->applications = $table->applications;
 
@@ -279,7 +279,7 @@ class MolajoUser extends JObject
     }
 
     /**
-     * getTable
+     * _getTable
      *
      * Method to get the user table object
      *
@@ -291,12 +291,11 @@ class MolajoUser extends JObject
      * @return  object   The user table object
      * @since   1.0
      */
-    protected function getTable($type = null, $prefix = 'MolajoTable')
+    protected function _getTable($type = null, $prefix = 'MolajoTable')
     {
         static $tabletype;
 
         if (isset($tabletype)) {
-
         } else {
             $tabletype['name'] = 'User';
             $tabletype['prefix'] = 'MolajoTable';
@@ -328,7 +327,7 @@ class MolajoUser extends JObject
     }
 
     /**
-     * getCustomField
+     * _getCustomField
      *
      * Method to get a CustomField value
      *
@@ -338,13 +337,13 @@ class MolajoUser extends JObject
      * @return  mixed    The value or the default if it did not exist
      * @since   1.0
      */
-    public function getCustomField($key, $default = null)
+    public function _getCustomField($key, $default = null)
     {
         return $this->custom_fields->get($key, $default);
     }
 
     /**
-     * setCustomField
+     * _setCustomField
      *
      * Method to set a CustomField value
      *
@@ -354,19 +353,19 @@ class MolajoUser extends JObject
      * @return  mixed    Set CustomField value
      * @since   1.0
      */
-    public function setCustomField($key, $value)
+    public function _setCustomField($key, $value)
     {
         return $this->custom_fields->set($key, $value);
     }
 
     /**
-     * loadCustomFields
+     * _loadCustomFields
      *
      * Loads user CustomFields JSON field into an array
      *
      * @since  1.0
      */
-    public function loadCustomFields($custom_fields)
+    public function _loadCustomFields($custom_fields)
     {
         $this->custom_fields = new JRegistry;
         $this->custom_fields->loadString($custom_fields, 'JSON');
@@ -406,17 +405,90 @@ class MolajoUser extends JObject
     }
 
     /**
-     * loadParameters
+     * _loadParameters
      *
      * Loads user parameters JSON field into an array
      *
      * @since  1.0
      */
-    public function loadParameters($parameters)
+    public function _loadParameters($parameters)
     {
         $this->parameters = new JRegistry;
         $this->parameters->loadString($parameters, 'JSON');
         $this->parameters->toArray();
+    }
+
+    /**
+     * getUserState
+     *
+     * Gets a user state.
+     *
+     * @param   string  The path of the state.
+     * @param   mixed   Optional default value, returned if the internal value is null.
+     *
+     * @return  mixed  The user state or null.
+     *
+     * @since  1.0
+     */
+    public function getUserState($key, $default = null)
+    {
+        $registry = MolajoFactory::getSession()->get('registry');
+        if (is_null($registry)) {
+        } else {
+            return $registry->get($key, $default);
+        }
+        return $default;
+    }
+
+    /**
+     * setUserState
+     *
+     * Sets the value of a user state variable.
+     *
+     * @param   string  The path of the state.
+     * @param   string  The value of the variable.
+     *
+     * @return  mixed   The previous state, if one existed.
+     *
+     * @since  1.0
+     */
+    public function setUserState($key, $value)
+    {
+        $registry = MolajoFactory::getSession()->get('registry');
+        if (is_null($registry)) {
+        } else {
+            return $registry->set($key, $value);
+        }
+        return null;
+    }
+
+    /**
+     * getUserStateFromRequest
+     *
+     * Gets the value of a user state variable.
+     *
+     * @param   string   $key      The key of the user state variable.
+     * @param   string   $request  The name of the variable passed in a request.
+     * @param   string   $default  The default value for the variable if not found. Optional.
+     * @param   string   $type     Filter for the variable, for valid values see {@link JFilterInput::clean()}. Optional.
+     *
+     * @return  The request user state.
+     *
+     * @since  1.0
+     */
+    public function getUserStateFromRequest($key, $request, $default = null, $type = 'none')
+    {
+        $cur_state = $this->getUserState($key, $default);
+        $new_state = JRequest::getVar($request, null, 'default', $type);
+
+        // Save the new value only if it was set in this request.
+        if ($new_state == null) {
+            $new_state = $cur_state;
+        } else {
+            $this->setUserState($key, $new_state);
+        }
+
+        return $new_state;
     }
 }
 

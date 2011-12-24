@@ -36,7 +36,7 @@ class plgSystemRemember extends MolajoPlugin
                 $options = array();
                 $options['silent'] = true;
                 if (!MolajoFactory::getApplication()->login(@unserialize($str), $options)) {
-                    $config = MolajoFactory::getApplication()->getConfig();
+                    $config = MolajoFactory::getApplication()->get();
                     $cookie_domain = $config->get('cookie_domain', '');
                     $cookie_path = $config->get('cookie_path', '/');
                     // Clear the remember me cookie

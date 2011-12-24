@@ -31,7 +31,7 @@ class plgSystemDebug extends MolajoPlugin
 
         // Only if debugging is enabled
         if (JDEBUG) {
-            $config = MolajoFactory::getApplication()->getConfig();
+            $config = MolajoFactory::getApplication()->get();
             $config->set('gzip', 0);
             ob_start();
             ob_implicit_flush(false);
@@ -211,7 +211,7 @@ class plgSystemDebug extends MolajoPlugin
         }
 
         // Show language debug only if enabled
-        if (MolajoFactory::getApplication()->getConfig('debug_language')) {
+        if (MolajoFactory::getApplication()->get('debug_language')) {
             $lang = MolajoFactory::getLanguage();
 
             if ($this->parameters->get('language_errorfiles', 1)) {

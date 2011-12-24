@@ -80,7 +80,7 @@ class InstallerModelWarnings extends JModelList
             }
         }
 
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $temp_path = $config->get('temp_path');
         if (!$temp_path) {
             $messages[] = Array('message' => MolajoTextHelper::_('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSET'), 'description' => MolajoTextHelper::_('INSTALLER_MSG_WARNINGS_JOOMLATMPNOTSETDESC'));

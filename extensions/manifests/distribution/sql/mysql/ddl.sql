@@ -88,7 +88,7 @@ CREATE  TABLE IF NOT EXISTS `molajo_assets` (
   `request` VARCHAR(2048) NOT NULL DEFAULT ' ' COMMENT 'The actually link the menu item refers to.' ,
   `primary_category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `template_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
-  `template_page` VARCHAR(255) NOT NULL DEFAULT '' ,
+  `page` VARCHAR(255) NOT NULL DEFAULT '' ,
   `language` CHAR(7) NOT NULL DEFAULT 'en-GB' ,
   `translation_of_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   `redirect_to_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,

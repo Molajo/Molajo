@@ -54,7 +54,7 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
 
         parent::__construct($options);
 
-        $config = MolajoFactory::getApplication()->getConfig();
+        $config = MolajoFactory::getApplication()->get();
         $params = $config->get('memcache_settings');
         if (!is_array($params)) {
             $params = unserialize(stripslashes($params));

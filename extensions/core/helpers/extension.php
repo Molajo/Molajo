@@ -48,18 +48,21 @@ abstract class MolajoExtensionHelper
         $acl = new MolajoACL ();
 
         /** fix and remove */
-        $query->where('a.' . $db->namequote('name') . ' != "sef"');
-        $query->where('a.' . $db->namequote('name') . ' != "joomla"');
-        $query->where('a.' . $db->namequote('name') . ' != "example"');
-        $query->where('a.' . $db->namequote('name') . ' != "system"');
-        $query->where('a.' . $db->namequote('name') . ' != "webservices"');
-        $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
-        $query->where('a.' . $db->namequote('name') . ' != "content"');
-        $query->where('a.' . $db->namequote('name') . ' != "links"');
-        $query->where('a.' . $db->namequote('name') . ' != "media"');
-        $query->where('a.' . $db->namequote('name') . ' != "protect"');
-        $query->where('a.' . $db->namequote('name') . ' != "responses"');
-        $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
+        if ($asset_type_id == MOLAJO_ASSET_TYPE_EXTENSION_PLUGIN) {
+
+            $query->where('a.' . $db->namequote('name') . ' != "sef"');
+            $query->where('a.' . $db->namequote('name') . ' != "joomla"');
+            $query->where('a.' . $db->namequote('name') . ' != "example"');
+            $query->where('a.' . $db->namequote('name') . ' != "system"');
+            $query->where('a.' . $db->namequote('name') . ' != "webservices"');
+            $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
+            $query->where('a.' . $db->namequote('name') . ' != "content"');
+            $query->where('a.' . $db->namequote('name') . ' != "links"');
+            $query->where('a.' . $db->namequote('name') . ' != "media"');
+            $query->where('a.' . $db->namequote('name') . ' != "protect"');
+            $query->where('a.' . $db->namequote('name') . ' != "responses"');
+            $query->where('a.' . $db->namequote('name') . ' != "broadcast"');
+        }
 
         /** Extensions */
         $query->select('a.' . $db->namequote('id') . ' as extension_id');
@@ -180,6 +183,7 @@ abstract class MolajoExtensionHelper
             MolajoError::raiseWarning(500, $error);
             return false;
         }
+//echo '<pre>';var_dump($extensions);'</pre>';
 
         return $extensions;
     }
