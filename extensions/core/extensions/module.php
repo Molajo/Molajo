@@ -15,8 +15,38 @@ defined('MOLAJO') or die;
  * @subpackage  Application
  * @since       1.0
  */
-abstract class MolajoModule
+class MolajoModule
 {
+    /**
+     *  Module Output
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $module_output = null;
+
+    /**
+     *  Parameters
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $parameters = null;
+
+    /**
+     *  Config
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $config = null;
+
+    public function __construct($parameters = array(), $config = null)
+    {
+        $this->parameters = $this->parameters;
+        $this->config = $config;
+    }
+
     /**
      * getModule
      *
@@ -75,7 +105,6 @@ abstract class MolajoModule
      */
     public static function getModules($position)
     {
-
         $position = strtolower($position);
         $result = array();
 
@@ -93,7 +122,6 @@ abstract class MolajoModule
             if (JRequest::getBool('tp')
                 && MolajoComponent::getParameters('templates')->get('template_positions_display')
             ) {
-
                 $result[0] = self::getModule('' . $position);
                 $result[0]->title = $position;
                 $result[0]->content = $position;
@@ -129,17 +157,13 @@ abstract class MolajoModule
      *
      * @return  string  The HTML content of the module output.
      */
-    public static function renderModule($moduleObject, $attribs = array())
+    public function render($module_object)
     {
         $output = '';
-        $module = $moduleObject->module;
+        $this->module_object = $module_object;
+        $module = $module_object->module;
 
         //echo '<pre>';var_dump($module);'</pre>';
-        // Record the scope.
-        $scope = MolajoFactory::getApplication()->scope;
-
-        // Set scope to module name
-        MolajoFactory::getApplication()->scope = $module->title;
 
         // Get module path
         $module->title = preg_replace('/[^A-Z0-9_\.-]/i', '', $module->title);
@@ -160,8 +184,8 @@ abstract class MolajoModule
             $rowset = array();
             $pagination = array();
             $layout = 'default';
-            if (isset($attribs->wrap)) {
-                $wrap = $attribs->wrap;
+            if (isset($this->parameters->wrap)) {
+                $wrap = $this->parameters->wrap;
             } else {
                 $wrap = 'none';
             }
@@ -170,10 +194,10 @@ abstract class MolajoModule
             $document = MolajoFactory::getDocument();
             $user = MolajoFactory::getUser();
 
-            $parameters = new JRegistry;
-            $parameters->loadString($module->parameters);
+            $this->parameters = new JRegistry;
+            $this->parameters->loadString($module->parameters);
 
-            $request = self::getRequest($module, $parameters, $wrap);
+            $request = self::getRequest($module, $this->parameters, $wrap);
 
             $request['wrap_title'] = $module->title;
             $request['wrap_subtitle'] = $module->subtitle;
@@ -203,7 +227,7 @@ abstract class MolajoModule
             $view->state = $module;
 
             /** 6. Parameters */
-            $view->parameters = $parameters;
+            $view->parameters = $this->parameters;
 
             /** 7. Query */
             $view->rowset = $rowset;
@@ -226,8 +250,6 @@ abstract class MolajoModule
             $output = ob_get_contents();
             ob_end_clean();
         }
-
-        MolajoFactory::getApplication()->scope = $scope;
 
         return $output;
     }
@@ -263,7 +285,7 @@ abstract class MolajoModule
         $request['id'] = $session->get('page.id');
         $request['cid'] = $session->get('page.cid');
         $request['catid'] = $session->get('page.catid');
-        $request['parameters'] = $parameters;
+        $request['parameters'] = $this->parameters;
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');
         $request['component_table'] = $session->get('page.component_table');
@@ -295,7 +317,7 @@ abstract class MolajoModule
             return $modules;
         }
 
-        $modules = MolajoExtension::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
+        $modules = MolajoExtensionHelper::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
 
         return $modules;
     }

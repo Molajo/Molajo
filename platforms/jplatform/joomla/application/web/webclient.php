@@ -146,6 +146,10 @@ class JWebClient
 		{
 			$this->acceptLanguage = $acceptLanguage;
 		}
+        $this->__get('mobile');
+        $this->__get('engine');
+        $this->__get('browser');
+        $this->__get('languages');
 	}
 
 	/**

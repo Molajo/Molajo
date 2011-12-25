@@ -15,83 +15,74 @@ defined('MOLAJO') or die;
 class MolajoApplication
 {
     /**
-     * @var    JInput  The application input object.
-     * @since  11.3
+     * @var    string  Character encoding 
+     * @since  1.0
      */
-    public $input;
-
-    /**
-     * @var    string  Character encoding string.
-     * @since  11.3
-     */
-    public $charSet = 'utf-8';
+    public $charset = 'utf-8';
 
     /**
      * @var    string  Response mime type.
-     * @since  11.3
+     * @since  1.0
      */
-    public $mimeType = 'text/html';
+    public $mimetype = 'text/html';
 
     /**
-     * @var    JDate  The body modified date for response headers.
-     * @since  11.3
+     * @var    Date   Response last modified value
+     * @since  1.0
      */
-    public $modifiedDate;
+    public $last_modified;
 
     /**
      * @var    JWebClient  The application client object.
-     * @since  11.3
+     * @since  1.0
      */
     public $client;
 
     /**
      * @var    JRegistry  The application configuration object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $config;
 
     /**
      * @var    JDispatcher  The application dispatcher object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $dispatcher;
 
     /**
      * @var    MolajoLanguage  The application language object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $language;
 
     /**
      * @var    MolajoLanguage  The application language object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $direction;
 
     /**
      * @var    Session  The application session object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $session;
 
     /**
      * @var    object  The application response object.
-     * @since  11.3
+     * @since  1.0
      */
     protected $response;
 
     /**
      * @var    Application  The application instance.
-     * @since  11.3
+     * @since  1.0
      */
     protected static $instance;
 
     /**
      * Class constructor.
      *
-     * @param   mixed  $input   An optional argument to provide dependency injection for the application's
-     *                          input object.  If the argument is a JInput object that object will become
-     *                          the application's input object, otherwise a default input object is created.
      * @param   mixed  $config  An optional argument to provide dependency injection for the application's
      *                          config object.  If the argument is a JRegistry object that object will become
      *                          the application's config object, otherwise a default config object is created.
@@ -99,16 +90,10 @@ class MolajoApplication
      *                          client object.  If the argument is a JWebClient object that object will become
      *                          the application's client object, otherwise a default client object is created.
      *
-     * @since   11.3
+     * @since   1.0
      */
-    public function __construct(JInput $input = null, JRegistry $config = null, JWebClient $client = null)
+    public function __construct(JRegistry $config = null, JWebClient $client = null)
     {
-        if ($input instanceof JInput) {
-            $this->input = $input;
-        } else {
-            $this->input = new JInput;
-        }
-
         if ($config instanceof JRegistry) {
             $this->config = $config;
         } else {
@@ -153,7 +138,7 @@ class MolajoApplication
      *
      * @return  Application
      *
-     * @since   11.3
+     * @since   1.0
      */
     public static function getInstance($id = null, $config = array(), $prefix = 'Molajo')
     {
@@ -682,7 +667,7 @@ class MolajoApplication
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function respond()
     {
@@ -696,14 +681,14 @@ class MolajoApplication
         }
 
         // Send the content-type header.
-        $this->setHeader('Content-Type', $this->mimeType . '; charset=' . $this->charSet);
+        $this->setHeader('Content-Type', $this->mimetype . '; charset=' . $this->charset);
 
         // If the response is set to uncachable, we need to set some appropriate headers so browsers don't cache the response.
         if ($this->response->cachable) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
             // Last modified.
-            if ($this->modifiedDate instanceof JDate) {
-                $this->setHeader('Last-Modified', $this->modifiedDate->format('D, d M Y H:i:s'));
+            if ($this->last_modified instanceof JDate) {
+                $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
             }
 
         } else {
@@ -729,7 +714,7 @@ class MolajoApplication
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
     protected function compress()
     {
@@ -810,7 +795,7 @@ class MolajoApplication
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function redirect($asset_id, $code = 303)
     {
@@ -831,7 +816,7 @@ class MolajoApplication
             // We have to use a JavaScript redirect here because MSIE doesn't play nice with utf-8 URLs.
             if (($this->client->engine == JWebClient::TRIDENT) && !utf8_is_ascii($url)) {
                 $html = '<html><head>';
-                $html .= '<meta http-equiv="content-type" content="text/html; charset=' . $this->charSet . '" />';
+                $html .= '<meta http-equiv="content-type" content="text/html; charset=' . $this->charset . '" />';
                 $html .= '<script>document.location.href=\'' . $url . '\';</script>';
                 $html .= '</head><body></body></html>';
 
@@ -845,7 +830,7 @@ class MolajoApplication
             {
                 $html = '<html><head>';
                 $html .= '<meta http-equiv="refresh" content="0; url=' . $url . '" />';
-                $html .= '<meta http-equiv="content-type" content="text/html; charset=' . $this->charSet . '" />';
+                $html .= '<meta http-equiv="content-type" content="text/html; charset=' . $this->charset . '" />';
                 $html .= '</head><body></body></html>';
 
                 echo $html;
@@ -855,7 +840,7 @@ class MolajoApplication
                 // All other cases use the more efficient HTTP header for redirection.
                 $this->header($code ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 $this->header('Location: ' . $url);
-                $this->header('Content-Type: text/html; charset=' . $this->charSet);
+                $this->header('Content-Type: text/html; charset=' . $this->charset);
             }
         }
 
@@ -871,7 +856,7 @@ class MolajoApplication
      * @return  void
      *
      * @codeCoverageIgnore
-     * @since   11.3
+     * @since   1.0
      */
     public function close($code = 0)
     {
@@ -906,7 +891,7 @@ class MolajoApplication
      *
      * @return  mixed   The value of the configuration.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function get($key, $default = null)
     {
@@ -923,7 +908,7 @@ class MolajoApplication
      *
      * @return  mixed   Previous value of the property
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function set($key, $value = null)
     {
@@ -938,7 +923,7 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function registerEvent($event, $handler)
     {
@@ -957,7 +942,7 @@ class MolajoApplication
      *
      * @return  array   An array of results from each function call, or null if no dispatcher is defined.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function triggerEvent($event, array $args = null)
     {
@@ -976,7 +961,7 @@ class MolajoApplication
      *
      * @return  boolean
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function allowCache($allow = null)
     {
@@ -998,11 +983,10 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function setHeader($name, $value, $replace = false)
     {
-        // Sanitize the input values.
         $name = (string)$name;
         $value = (string)$value;
 
@@ -1031,7 +1015,7 @@ class MolajoApplication
      *
      * @return  array
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function getHeaders()
     {
@@ -1043,7 +1027,7 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function clearHeaders()
     {
@@ -1057,7 +1041,7 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function sendHeaders()
     {
@@ -1084,7 +1068,7 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function setBody($content)
     {
@@ -1100,7 +1084,7 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function prependBody($content)
     {
@@ -1116,7 +1100,7 @@ class MolajoApplication
      *
      * @return  Application  Instance of $this to allow chaining.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function appendBody($content)
     {
@@ -1132,7 +1116,7 @@ class MolajoApplication
      *
      * @return  mixed  The response body either as an array or concatenated string.
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function getBody($asArray = false)
     {
@@ -1148,7 +1132,7 @@ class MolajoApplication
      *
      * @return  Session  The session object
      *
-     * @since   11.3
+     * @since   1.0
      */
     public function getSession()
     {
@@ -1156,14 +1140,14 @@ class MolajoApplication
     }
 
     /**
-     * Method to check the current client connnection status to ensure that it is alive.  We are
+     * Method to check the current client connection status to ensure that it is alive.  We are
      * wrapping this to isolate the connection_status() function from our code base for testing reasons.
      *
      * @return  boolean  True if the connection is valid and normal.
      *
      * @codeCoverageIgnore
      * @see     connection_status()
-     * @since   11.3
+     * @since   1.0
      */
     protected function checkConnectionAlive()
     {
@@ -1178,7 +1162,7 @@ class MolajoApplication
      *
      * @codeCoverageIgnore
      * @see     headers_sent()
-     * @since   11.3
+     * @since   1.0
      */
     protected function checkHeadersSent()
     {
@@ -1199,7 +1183,7 @@ class MolajoApplication
      *
      * @codeCoverageIgnore
      * @see     header()
-     * @since   11.3
+     * @since   1.0
      */
     protected function header($string, $replace = true, $code = null)
     {
@@ -1213,7 +1197,7 @@ class MolajoApplication
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
     protected function loadDispatcher()
     {
@@ -1227,7 +1211,7 @@ class MolajoApplication
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
     protected function loadLanguage()
     {
@@ -1235,13 +1219,15 @@ class MolajoApplication
     }
 
     /**
+     * loadSession
+     *
      * Method to create a session for the Web application.  The logic and options for creating this
      * object are adequately generic for default cases but for many applications it will make sense
      * to override this method and create session objects based on more specific needs.
      *
      * @return  void
      *
-     * @since   11.3
+     * @since   1.0
      */
     protected function loadSession()
     {

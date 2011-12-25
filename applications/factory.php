@@ -675,9 +675,9 @@ abstract class MolajoFactory
      */
     public static function getSiteConfig()
     {
-        $siteInstance = new MolajoSite ();
         if (self::$siteConfig) {
         } else {
+            $siteInstance = new MolajoSite ();
             self::$siteConfig = $siteInstance->siteConfig();
         }
         return self::$siteConfig;
@@ -693,9 +693,9 @@ abstract class MolajoFactory
      */
     public static function getConfig()
     {
-        $configInstance = new MolajoApplication();
         if (self::$config) {
         } else {
+            $configInstance = new MolajoApplication();
             self::$config = $configInstance->getConfig();
         }
         return self::$config;

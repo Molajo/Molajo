@@ -1,20 +1,20 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Text
+ * @subpackage  Feed
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('MOLAJO') or die;
 
 /**
- * Render Text Format
+ * Render Feed Format
  *
  * @package     Molajo
- * @subpackage  Text
+ * @subpackage  Feed
  * @since       1.0
  */
-class MolajoTextFormat
+class MolajoFeedFormat
 {
     /**
      *  Config

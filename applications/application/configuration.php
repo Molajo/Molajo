@@ -73,13 +73,13 @@ class MolajoConfiguration
 
         /** Site */
         $siteConfigData = $this->site();
-        foreach ($siteConfigData as $key=>$value) {
+        foreach ($siteConfigData as $key => $value) {
             $this->set($key, $value, 'site');
         }
 
         /** Application */
         $appConfigData = $this->_application();
-        foreach ($appConfigData as $key=>$value) {
+        foreach ($appConfigData as $key => $value) {
             $this->set($key, $value, 'application');
         }
 
@@ -152,7 +152,7 @@ class MolajoConfiguration
         if (is_file($file)) {
             include_once $file;
         } else {
-            throw new RuntimeException('Fatal error - Configuration File does not exist '.$file);
+            throw new RuntimeException('Fatal error - Configuration File does not exist ' . $file);
         }
 
         $configData = new MolajoConfig();

@@ -73,6 +73,14 @@ class MolajoHtmlFormat
     protected $parameters = null;
 
     /**
+     *  Template
+     *
+     * @var string
+     * @since 1.0
+     */
+    protected $_template = array();
+
+    /**
      *  Template Tags
      *
      * @var string
@@ -114,7 +122,7 @@ class MolajoHtmlFormat
         $this->wrap = $config->wrap;
 
         /** Request */
-        $this->_renderTemplate();
+        $this->_render();
     }
 
     /**
@@ -123,7 +131,7 @@ class MolajoHtmlFormat
      * @return  object
      * @since  1.0
      */
-    protected function _renderTemplate()
+    protected function _render()
     {
         /** Query */
         $templates = MolajoExtensionHelper::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $this->template);
@@ -188,8 +196,12 @@ class MolajoHtmlFormat
 
         ob_start();
         require $template_include;
-        $body = ob_get_contents();
+        $this->_template = ob_get_contents();
         ob_end_clean();
+
+        $this->_parseTemplate();
+
+        $body = $this->_renderTemplate();
 
         MolajoFactory::getApplication()->setBody($body);
 
@@ -238,7 +250,7 @@ class MolajoHtmlFormat
      *
      * @return string rendered template
      */
-    protected function _renderTemplate2()
+    protected function _renderTemplate()
     {
         $replace = array();
         $with = array();

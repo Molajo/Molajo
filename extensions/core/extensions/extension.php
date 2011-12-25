@@ -637,22 +637,21 @@ class MolajoExtension
      */
     protected function _getSEFOptionsParameters()
     {
-        $input = JFactory::getApplication()->input;
-        if ($input->get('template', '', 'CMD') == '') {
-        } else {
-            $this->template = $input->get('template', '', 'CMD');
-        }
-        if ($input->get('page', '', 'CMD') == '') {
-        } else {
-            $this->page = $input->get('page', '', 'CMD');
-        }
-        if ($input->get('layout', '', 'CMD') == '') {
-        } else {
-            $this->template = $input->get('layout', '', 'CMD');
-        }
-        if ($input->get('wrap', '', 'CMD') == '') {
-        } else {
-            $this->page = $input->get('wrap', '', 'CMD');
+        $parameterArray = array();
+        $temp = substr(MOLAJO_PAGE_REQUEST, 10, (strlen(MOLAJO_PAGE_REQUEST) - 10));
+        $parameterArray = explode('&', $temp);
+
+        foreach ($parameterArray as $parameter) {
+            $pair = explode('=', $parameter);
+            if ($pair[0] == 'layout') {
+                $this->layout = $pair[1];
+            } elseif ($pair[0] == 'wrap') {
+                $this->wrap = $pair[1];
+            } elseif ($pair[0] == 'template') {
+                $this->template = $pair[1];
+            } elseif ($pair[0] == 'page') {
+                $this->page = $pair[1];
+            }
         }
     }
 
