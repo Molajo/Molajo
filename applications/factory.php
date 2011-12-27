@@ -53,12 +53,6 @@ abstract class MolajoFactory
     public static $cache = null;
 
     /**
-   	 * @var    Document
-   	 * @since  1.0
-   	 */
-    public static $document = null;
-
-    /**
    	 * @var    Language
    	 * @since  1.0
    	 */
@@ -154,25 +148,6 @@ abstract class MolajoFactory
         }
 
         return self::$language;
-    }
-
-    /**
-     * getDocument
-     *
-     * Get a document object
-     *
-     * Returns the global document object
-     *
-     * @return document object
-     */
-    public static function getDocument()
-    {
-        if (self::$document) {
-        } else {
-            self::$document = self::_createDocument();
-        }
-
-        return self::$document;
     }
 
     /**
