@@ -23,7 +23,7 @@ abstract class MolajoFactory
     public static $site = null;
 
     /**
-   	 * @var    Configuration for Site
+   	 * @var    Site Configuration
    	 * @since  1.0
    	 */
     public static $siteConfig = null;
@@ -35,9 +35,9 @@ abstract class MolajoFactory
     public static $application = null;
 
     /**
-   	 * @var    Configuration for Application
-   	 * @since  1.0
-   	 */
+     * @var    Application Configuration
+     * @since  1.0
+     */
     public static $config = null;
 
     /**
@@ -98,7 +98,7 @@ abstract class MolajoFactory
     /**
      * getApplication
      *
-     * Get an application object
+     * Get an Application object
      *
      * @param   string  $prefix Application prefix
      *
@@ -117,7 +117,7 @@ abstract class MolajoFactory
     /**
      * getSession
      *
-     * Get a session object
+     * Get a Session object
      *
      * @param   array  $options  An array containing session options
      *
@@ -136,7 +136,7 @@ abstract class MolajoFactory
     /**
      * getLanguage
      *
-     * Get a language object
+     * Get a Language object
      *
      * @return language object
      */
@@ -231,7 +231,6 @@ abstract class MolajoFactory
     {
         if (self::$database) {
         } else {
-            self::getSiteConfig();
             $debug = self::get('debug', '', 'site');
             self::$database = self::_createDbo();
             self::$database->debug($debug);
@@ -287,8 +286,7 @@ abstract class MolajoFactory
 
         if ($contents) {
             return $simplepie;
-        }
-        else {
+        } else {
             MolajoError::raiseWarning('SOME_ERROR_CODE', MolajoTextHelper::_('MOLAJO_UTIL_ERROR_LOADING_FEED_DATA'));
         }
 
@@ -376,24 +374,10 @@ abstract class MolajoFactory
     public static function getEditor($editor = null)
     {
         if (is_null($editor)) {
-            self::getConfig();
-            $editor = self::$config->get('editor');
+            $editor = self::get('editor', 'none');
         }
 
         return MolajoEditor::getInstance($editor);
-    }
-
-    /**
-     * getURI
-     *
-     * Return a reference to the URI object
-     *
-     * @return JURI object
-     * @since   1.0
-     */
-    public static function getURI($uri = 'SERVER')
-    {
-        return JURI::getInstance($uri);
     }
 
     /**
@@ -450,11 +434,13 @@ abstract class MolajoFactory
      */
     protected static function createSession($options = array())
     {
-        self::getConfig();
-
-        $handler = self::$config->get('session_handler', 'none');
-
-        $options['expire'] = (self::$config->get('lifetime')) ? self::$config->get('lifetime') * 60 : 900;
+        $handler = self::get('session_handler', 'none', 'site');
+        $lifetime = self::get('lifetime', '15', 'site');
+        if ((int) $lifetime > 0) {
+        } else {
+            $lifetime = 15;
+        }
+        $options['expire'] = (int) $lifetime * 60;
 
         $session = MolajoSession::getInstance($handler, $options);
 
@@ -476,15 +462,13 @@ abstract class MolajoFactory
      */
     protected static function _createDbo()
     {
-        self::getSiteConfig();
-
-        $host = self::$siteConfig->get('host', '', 'site');
-        $user = self::$siteConfig->get('user', '', 'site');
-        $password = self::$siteConfig->get('password', '', 'site');
-        $database = self::$siteConfig->get('db', '', 'site');
-        $prefix = self::$siteConfig->get('dbprefix', '', 'site');
-        $driver = self::$siteConfig->get('dbtype', '', 'site');
-        $debug = self::$siteConfig->get('debug', '', 'site');
+        $host = self::get('host', '', 'site');
+        $user = self::get('user', '', 'site');
+        $password = self::get('password', '', 'site');
+        $database = self::get('db', '', 'site');
+        $prefix = self::get('dbprefix', '', 'site');
+        $driver = self::get('dbtype', '', 'site');
+        $debug = self::get('debug', '', 'site');
 
         $options = array('driver' => $driver,
             'host' => $host,
@@ -515,18 +499,16 @@ abstract class MolajoFactory
      */
     protected static function _createMailer()
     {
-        self::getSiteConfig();
-
-        $sendmail = self::$siteConfig->get('sendmail', '', 'site');
-        $smtpauth = (self::$siteConfig->get('smtpauth', '', 'site') == 0) ? null : 1;
-        $smtpuser = self::$siteConfig->get('smtpuser', '', 'site');
-        $smtppass = self::$siteConfig->get('smtppass', '', 'site');
-        $smtphost = self::$siteConfig->get('smtphost', '', 'site');
-        $smtpsecure = self::$siteConfig->get('smtpsecure', '', 'site');
-        $smtpport = self::$siteConfig->get('smtpport', '', 'site');
-        $mailfrom = self::$siteConfig->get('mailfrom', '', 'site');
-        $fromname = self::$siteConfig->get('fromname', '', 'site');
-        $mailer = self::$siteConfig->get('mailer', '', 'site');
+        $sendmail = self::get('sendmail', '', 'site');
+        $smtpauth = (self::get('smtpauth', '', 'site') == 0) ? null : 1;
+        $smtpuser = self::get('smtpuser', '', 'site');
+        $smtppass = self::get('smtppass', '', 'site');
+        $smtphost = self::get('smtphost', '', 'site');
+        $smtpsecure = self::get('smtpsecure', '', 'site');
+        $smtpport = self::get('smtpport', '', 'site');
+        $mailfrom = self::get('mailfrom', '', 'site');
+        $fromname = self::get('fromname', '', 'site');
+        $mailer = self::get('mailer', '', 'site');
 
         $mail = MolajoMail::getInstance();
         $mail->setSender(array($mailfrom, $fromname));
@@ -559,37 +541,11 @@ abstract class MolajoFactory
      */
     protected static function _createLanguage()
     {
-        self::getConfig();
-        $locale = self::$siteConfig->get('language', '', 'site');
-        $debug = self::$siteConfig->get('debug_language', '', 'site');
+        $locale = self::get('language', '', 'site');
+        $debug = self::get('debug_language', '', 'site');
         $lang = MolajoLanguage::getInstance($locale, $debug);
 
         return $lang;
-    }
-
-    /**
-     * _createDocument
-     *
-     * Create a document object
-     *
-     * @return MolajoDocument object
-     * @since   1.0
-     */
-    protected static function _createDocument()
-    {
-        $lang = self::getLanguage();
-
-        $type = JRequest::getWord('format', 'html');
-
-        $attributes = array(
-            'charset' => 'utf-8',
-            'lineend' => 'unix',
-            'tab' => '  ',
-            'language' => $lang->getTag(),
-            'direction' => $lang->isRTL() ? 'rtl' : 'ltr'
-        );
-
-        return MolajoDocument::getInstance($type, $attributes);
     }
 
     /**
@@ -652,9 +608,18 @@ abstract class MolajoFactory
     {
         if (self::$siteConfig) {
         } else {
-            $siteInstance = new MolajoSite ();
-            self::$siteConfig = $siteInstance->siteConfig();
+            self::$siteConfig = new JRegistry;
+            $config = new MolajoConfiguration ();
+            $data = $config->site();
+
+            if (is_array($data)) {
+                self::$siteConfig->loadArray($data);
+
+            } elseif (is_object($data)) {
+                self::$siteConfig->loadObject($data);
+            }
         }
+
         return self::$siteConfig;
     }
 
@@ -670,9 +635,18 @@ abstract class MolajoFactory
     {
         if (self::$config) {
         } else {
-            $configInstance = new MolajoApplication();
-            self::$config = $configInstance->getConfig();
+            self::$config = new JRegistry;
+            $configInstance = new MolajoConfiguration ();
+            $data = $configInstance->getConfig();
+
+            if (is_array($data)) {
+                self::$config->loadArray($data);
+
+            } elseif (is_object($data)) {
+                self::$config->loadObject($data);
+            }
         }
+
         return self::$config;
     }
 
@@ -693,8 +667,16 @@ abstract class MolajoFactory
     public function get($key, $default = null, $type = 'config')
     {
         if ($type == 'site') {
+            if (self::$siteConfig) {
+            } else {
+                self::getSiteConfig();
+            }
             return self::$siteConfig->get($key, $default);
         } else {
+            if (self::$config) {
+            } else {
+                self::getConfig();
+            }
             return self::$config->get($key, $default);
         }
     }

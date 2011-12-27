@@ -15,6 +15,24 @@ defined('MOLAJO') or die;
 class MolajoApplication
 {
     /**
+     * @var    object  The application static instance.
+     * @since  1.0
+     */
+    protected static $instance;
+
+    /**
+     * @var    object  The application configuration object.
+     * @since  1.0
+     */
+    protected $config;
+
+    /**
+     * @var    Client  The application client object.
+     * @since  1.0
+     */
+    public $client;
+
+    /**
      * @var    string  Character encoding 
      * @since  1.0
      */
@@ -33,37 +51,25 @@ class MolajoApplication
     public $last_modified;
 
     /**
-     * @var    JWebClient  The application client object.
-     * @since  1.0
-     */
-    public $client;
-
-    /**
-     * @var    JRegistry  The application configuration object.
-     * @since  1.0
-     */
-    protected $config;
-
-    /**
-     * @var    JDispatcher  The application dispatcher object.
+     * @var    object  The application dispatcher object.
      * @since  1.0
      */
     protected $dispatcher;
 
     /**
-     * @var    MolajoLanguage  The application language object.
+     * @var    object  The application language object.
      * @since  1.0
      */
     protected $language;
 
     /**
-     * @var    MolajoLanguage  The application language object.
+     * @var    string  Language direction
      * @since  1.0
      */
     protected $direction;
 
     /**
-     * @var    Session  The application session object.
+     * @var    object  The application session object.
      * @since  1.0
      */
     protected $session;
@@ -73,12 +79,6 @@ class MolajoApplication
      * @since  1.0
      */
     protected $response;
-
-    /**
-     * @var    Application  The application instance.
-     * @since  1.0
-     */
-    protected static $instance;
 
     /**
      * Class constructor.
@@ -178,6 +178,7 @@ class MolajoApplication
      */
     public function load()
     {
+
         /** Site authorisation */
         $site = new MolajoSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
@@ -198,39 +199,6 @@ class MolajoApplication
         $this->respond();
 
         //echo '<pre>';var_dump($this);'</pre>';
-    }
-
-    /**
-     * getMetaData
-     *
-     * Gets a meta tag.
-     *
-     * @param   string  $name        Value of name or http-equiv tag
-     * @param   bool    $http_equiv  META type "http-equiv" defaults to null
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getMetaData($name, $http_equiv = false)
-    {
-        $result = '';
-        $name = strtolower($name);
-        if ($name == 'generator') {
-            $result = $this->getGenerator();
-        }
-        else if ($name == 'description') {
-            $result = $this->getDescription();
-
-        } else {
-            if ($http_equiv == true) {
-                $result = @$this->_metaTags['http-equiv'][$name];
-            } else {
-
-                $result = @$this->_metaTags['standard'][$name];
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -269,6 +237,39 @@ class MolajoApplication
                 $this->_metaTags['standard'][$name] = $content;
             }
         }
+    }
+
+    /**
+     * getMetaData
+     *
+     * Gets a meta tag.
+     *
+     * @param   string  $name        Value of name or http-equiv tag
+     * @param   bool    $http_equiv  META type "http-equiv" defaults to null
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function getMetaData($name, $http_equiv = false)
+    {
+        $result = '';
+        $name = strtolower($name);
+        if ($name == 'generator') {
+            $result = $this->getGenerator();
+        }
+        else if ($name == 'description') {
+            $result = $this->getDescription();
+
+        } else {
+            if ($http_equiv == true) {
+                $result = @$this->_metaTags['http-equiv'][$name];
+            } else {
+
+                $result = @$this->_metaTags['standard'][$name];
+            }
+        }
+
+        return $result;
     }
 
     /**
