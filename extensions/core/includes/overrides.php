@@ -19,17 +19,17 @@ class JApplicationHelper extends MolajoApplicationHelper
 {
 }
 
-class JMenu extends MolajoMenu
-{
-}
+//class JMenu extends MolajoMenu
+//{
+//}
 
-class JPathway extends MolajoPathway
-{
-}
+//class JPathway extends MolajoPathway
+//{
+//}
 
-class JRouter extends MolajoRouter
-{
-}
+//class JRouter extends MolajoRouter
+//{
+//}
 
 class JSession extends MolajoSession
 {
