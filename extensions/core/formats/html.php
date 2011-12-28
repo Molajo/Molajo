@@ -220,11 +220,32 @@ class MolajoHtmlFormat
     {
         $matches = array();
 
-        if (preg_match_all('#<doc:include\ type="([^"]+)" (.*)\/>#iU', $this->_template, $matches)) {
+        if (preg_match_all('#<include:(.*)\/>#iU', $this->_template, $matches)) {
+            foreach ($matches[1] as $includeString) {
+                $positionArray = array();
+                $positionArray = explode(' ', $includeString);
+                $renderType = '';
+                $attributes = array();
+                foreach ($positionArray as $value) {
+                    if ($renderType == '') {
+                        $renderType = $value;
+                    } else {
+                        $test = str_replace('"', '', $value);
+                        if (trim($test) == '') {
+                        } else {
+                            $attributes[] = str_replace('"', '', $value);
+                        }
+                    }
+                }
+                echo '<pre>';echo 'Type ';echo $renderType;echo ' Attributes';var_dump($attributes); echo '</pre>';
+            }
+
+            die;
             $template_tags_first = array();
             $template_tags_last = array();
-            // Step through the docs in reverse order.
+
             for ($i = count($matches[0]) - 1; $i >= 0; $i--) {
+
                 $type = $matches[1][$i];
                 $attributes = empty($matches[2][$i]) ? array() : MolajoUtility::parseAttributes($matches[2][$i]);
                 $name = isset($attributes['name']) ? $attributes['name'] : null;
@@ -240,6 +261,8 @@ class MolajoHtmlFormat
             $template_tags_last = array_reverse($template_tags_last);
 
             $this->_template_tags = $template_tags_first + $template_tags_last;
+            echo '<pre>';var_dump($this->_template_tags);'</pre>';
+            die;
         }
     }
 
@@ -256,6 +279,7 @@ class MolajoHtmlFormat
         $with = array();
 
         foreach ($this->_template_tags AS $doc => $args) {
+            echo '<pre>';echo $doc;var_dump($args);'</pre>';
             $replace[] = $doc;
             $with[] = $this->_getBuffer($args['type'], $args['name'], $args['attributes']);
         }

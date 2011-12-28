@@ -18,7 +18,7 @@ if (MolajoFactory::getApplication()->get('html5', true) === true): ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo MolajoFactory::getLanguage()->getDefault(); ?>"
       lang="<?php echo MolajoFactory::getLanguage()->getDefault(); ?>" dir="<?php echo $this->direction; ?>">
 <head>
-    <doc:include type="head"/>
+    <include:head />
 </head>
 <?php
 echo $bodyElement;
