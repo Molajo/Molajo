@@ -620,7 +620,7 @@ abstract class MolajoError
     {
         $appl = MolajoFactory::getApplication();
         $type = ($error->get('level') == E_NOTICE) ? 'notice' : 'error';
-        $appl->enqueueMessage($error->get('message'), $type);
+        $appl->setMessage($error->get('message'), $type);
 
         return $error;
     }

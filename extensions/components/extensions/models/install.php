@@ -122,7 +122,7 @@ class InstallerModelInstall extends JModel
 
         // Set some model state values
 
-        MolajoFactory::getApplication()->enqueueMessage($msg);
+        MolajoFactory::getApplication()->setMessage($msg);
         $this->setState('name', $installer->get('name'));
         $this->setState('result', $result);
         MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);

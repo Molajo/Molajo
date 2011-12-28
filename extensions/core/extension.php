@@ -363,8 +363,7 @@ class MolajoExtension
         /** Logged on Requirement */
         if (MolajoFactory::getApplication()->get('logon_requirement', 0) > 0
             && $this->user->get('guest', true) === true
-            && $this->asset_id <> MolajoFactory::getApplication()->get('logon_requirement', 0)
-        ) {
+            && $this->asset_id <> MolajoFactory::getApplication()->get('logon_requirement', 0)) {
             MolajoFactory::getApplication()->redirect(MolajoFactory::getApplication()->get('logon_requirement', 0), 303);
             return;
         }
@@ -500,7 +499,7 @@ class MolajoExtension
         $results = $db->loadObjectList();
 //echo '<pre>';var_dump($results);echo '</pre>';
 
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
 
         if (count($results) == 0) {
@@ -689,7 +688,7 @@ class MolajoExtension
             }
         }
         //    echo '<pre>';var_dump($this->source_parameters);'</pre>';
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -720,7 +719,7 @@ class MolajoExtension
             }
         }
 
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -753,7 +752,7 @@ class MolajoExtension
                 $this->component_parameters = $parameters;
             }
         }
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 
@@ -836,7 +835,7 @@ class MolajoExtension
 
         return $db->loadResult();
 
-        //    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+        //    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
         //    return false;
     }
 

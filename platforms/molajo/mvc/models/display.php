@@ -271,7 +271,7 @@ class MolajoModelDisplay extends JModel
         if (class_exists($nameClassName)) {
             $molajoSpecificFieldClass = new $nameClassName();
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+            MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
             return false;
         }
 
@@ -975,7 +975,7 @@ class MolajoModelDisplay extends JModel
 
         } else {
             if ($onlyWhereClause === true) {
-                MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
+                MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_CLASS') . ' ' . $nameClassName, 'error');
                 return false;
             } else {
                 $this->query->select('a.' . $name);
@@ -1014,7 +1014,7 @@ class MolajoModelDisplay extends JModel
         $this->_db->setQuery($this->query->__toString());
 
         if (!$results = $this->_db->loadObjectList()) {
-            MolajoFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -1056,7 +1056,7 @@ class MolajoModelDisplay extends JModel
         $this->_db->setQuery($this->query->__toString());
 
         if (!$results = $this->_db->loadObjectList()) {
-            MolajoFactory::getApplication()->enqueueMessage($this->_db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
             return false;
         }
 

@@ -118,14 +118,14 @@ class MolajoHtmlFormat
      */
     public function __construct($config = array())
     {
-//        echo '<pre>';
-//        var_dump($config);
-//        '</pre>';
+        //        echo '<pre>';
+        //        var_dump($config);
+        //        '</pre>';
         $sequence = simplexml_load_file(MOLAJO_EXTENSIONS_CORE . '/core/formats/sequence.xml', 'SimpleXMLElement');
         foreach ($sequence->format as $format) {
             if ($format->name == 'html') {
                 foreach ($format->renderer as $renderer) {
-                    $this->rendererProcessingSequence[] = (string) $renderer[0];
+                    $this->rendererProcessingSequence[] = (string)$renderer[0];
                 }
                 break;
             }
@@ -231,7 +231,7 @@ class MolajoHtmlFormat
 
     /**
      * _parseTemplate
-     * 
+     *
      * Parse the template and extract renderers and associated attributes
      *
      * @return  The parsed contents of the template
@@ -242,14 +242,14 @@ class MolajoHtmlFormat
         $matches = array();
         $this->_renderers = array();
         $i = 0;
-        
+
         /** parse template for renderers */
         preg_match_all('#<include:(.*)\/>#iU', $this->_template, $matches);
-        
+
         if (count($matches) == 0) {
             return;
-        }  
-        
+        }
+
         /** store renderers in array */
         foreach ($matches[1] as $includeString) {
 
@@ -266,7 +266,7 @@ class MolajoHtmlFormat
                     $this->_renderers[$i]['name'] = $rendererType;
                     $this->_renderers[$i]['replace'] = $includeString;
 
-                /** Renderer Attributes */
+                    /** Renderer Attributes */
                 } else {
                     $rendererAttributes = str_replace('"', '', $rendererCommand);
 
@@ -283,7 +283,7 @@ class MolajoHtmlFormat
             $i++;
         }
 
-//        echo '<pre>';var_dump($this->_renderers);echo '</pre>';
+        //        echo '<pre>';var_dump($this->_renderers);echo '</pre>';
     }
 
     /**
@@ -299,73 +299,33 @@ class MolajoHtmlFormat
         $with = array();
 
         foreach ($this->rendererProcessingSequence as $nextRenderer) {
-            echo '<br />Next Renderer '.$nextRenderer.'<br />';
 
-            foreach ($this->_renderers as $i=>$rendererArray) {
+            /** load renderer class */
+            $class = 'Molajo' . ucfirst($nextRenderer);
+            if (class_exists($class)) {
+                $extension = new $class ($nextRenderer, $this->config);
+            } else {
+                // ERROR
+            }
+
+            foreach ($this->_renderers as $i => $rendererArray) {
 
                 if ($nextRenderer == $rendererArray['name']) {
-                    echo 'Name '.$rendererArray['name'].'<br />';
-                    echo 'Replace '.$rendererArray['replace'].'<br />';
+
+                    $renderer = $rendererArray['name'];
+
                     if (isset($rendererArray['attributes'])) {
-                        echo '<pre>';var_dump($rendererArray['attributes']);echo '</pre>';
+                        $attributes = $rendererArray['attributes'];
                     } else {
-                        echo 'No attributes<br />';
+                        $attributes = array();
                     }
+
+                    $replace[] = $rendererArray['replace'];
+                    $with[] = $extension->render($attributes);
+                    return str_replace($replace, $with, $this->_template);
                 }
-//            $replace[] = $doc;
-//            $with[] = $this->_getBuffer($args['type'], $args['name'], $args['attributes']);
             }
-//        return str_replace($replace, $with, $this->_template);
         }
-    }
-
-    /**
-     * _getBuffer
-     *
-     * Get the contents of a document include
-     *
-     * @param   string  $type        The type of renderer
-     * @param   string  $name        The name of the element to render
-     * @param   array   $attributes  Associative array of remaining attributes.
-     *
-     * @return  The output of the renderer
-     */
-    protected function _getBuffer($type = null, $name = null, $attributes = array())
-    {
-        if (isset($this->_buffer[$type][$name])) {
-            return $this->_buffer[$type][$name];
-        }
-
-        // put head, message component, modules, module
-
-        // todo: amy put back module caching
-        
-        $class = 'Molajo'.ucfirst($type);
-        $extension = new $class ($name, $attributes, $this->config);
-        $results = $extension->render();
-
-        $this->_setBuffer($results, $type, $name);
-        return $this->_buffer[$type][$name];
-    }
-
-    /**
-     * _setBuffer
-     *
-     * Set the contents a document includes
-     *
-     * @param   string  $content    The content to be set in the buffer.
-     * @param   array   $options    Array of optional elements.
-     */
-    protected function _setBuffer($content, $options = array())
-    {
-        if (func_num_args() > 1 && !is_array($options)) {
-            $args = func_get_args();
-            $options = array();
-            $options['type'] = $args[1];
-            $options['name'] = (isset($args[2])) ? $args[2] : null;
-        }
-
-        $this->_buffer[$options['type']][$options['name']] = $content;
     }
 
     /**
@@ -389,9 +349,9 @@ class MolajoHtmlFormat
         if (count($files) > 0) {
             foreach ($files as $file) {
                 if (substr($file, 0, 4) == 'rtl_') {
-//                    if (MolajoFactory::getApplication()->direction == 'rtl') {
-//                        MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
-//                    }
+                    //                    if (MolajoFactory::getApplication()->direction == 'rtl') {
+                    //                        MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
+                    //                    }
                 } else {
                     MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
                 }
@@ -425,22 +385,18 @@ class MolajoHtmlFormat
     }
 
     /**
-     * Load a template file
+     * Load a Favicon
      *
-     * @param string    $template    The name of the template
-     * @param string    $filename    The actual filename
-     * @return string The contents of the template
+     * @return bool
      */
     protected function _loadFavicon()
     {
-        $contents = '';
-
         $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template . '/images/';
 
         if (file_exists($path . 'favicon.ico')) {
             $urlPath = JURI::root() . 'extensions/templates/' . $this->template . '/images/favicon.ico';
             MolajoFactory::getApplication()->addFavicon($urlPath);
-            return;
+            return true;
         }
 
         return false;

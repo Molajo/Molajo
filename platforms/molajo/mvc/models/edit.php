@@ -541,7 +541,7 @@ class MolajoModelEdit extends JModel
         $db->setQuery($insertQuery);
         if ($db->query()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -666,7 +666,7 @@ class MolajoModelEdit extends JModel
         $db->setQuery($deleteQuery);
         if ($db->query()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 

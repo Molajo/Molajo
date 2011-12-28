@@ -133,7 +133,7 @@ class MolajoAttribute
         }
 
         if ($reportError === true) {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME') . ' ' . $class . ' ' . $classFile, 'error');
+            MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_ATTRIBUTE_FILENAME') . ' ' . $class . ' ' . $classFile, 'error');
             return false;
         }
 

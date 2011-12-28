@@ -218,7 +218,7 @@ class InstallerModelUpdate extends JModelList
         $this->type = $package['type'];
 
         // Set some model state values
-        MolajoFactory::getApplication()->enqueueMessage($msg);
+        MolajoFactory::getApplication()->setMessage($msg);
 
         // TODO: Reconfigure this code when you have more battery life left
         $this->setState('name', $installer->get('name'));

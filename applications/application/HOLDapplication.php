@@ -542,7 +542,7 @@ class MolajoApplication
      * Redirect to another URL.
      *
      * Optionally enqueues a message in the system message queue (which will be displayed
-     * the next time a page is loaded) using the enqueueMessage method. If the headers have
+     * the next time a page is loaded) using the setMessage method. If the headers have
      * not been sent the redirect will be accomplished using a "301 Moved Permanently"
      * code in the header pointing to the new location. If the headers have already been
      * sent this will be accomplished using a JavaScript statement.
@@ -554,7 +554,7 @@ class MolajoApplication
      *
      * @return  void  Calls exit().
      *
-     * @see     MolajoFactory::getApplication()->enqueueMessage()
+     * @see     MolajoFactory::getApplication()->setMessage()
      * @since  1.0
      */
     public function redirect($url, $msg = '', $msgType = 'message', $moved = false)
@@ -591,13 +591,13 @@ class MolajoApplication
 
         // If the message exists, enqueue it.
         if (trim($msg)) {
-            $this->enqueueMessage($msg, $msgType);
+            $this->setMessage($msg, $msgType);
         }
 
         // Persist messages if they exist.
         if (count($this->_messageQueue)) {
             $session = MolajoFactory::getSession();
-            $session->set('application.queue', $this->_messageQueue);
+            $session->set('application.messages', $this->_messageQueue);
         }
 
         // If the headers have been sent, then we cannot send an additional location header

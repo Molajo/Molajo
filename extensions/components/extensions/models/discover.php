@@ -115,7 +115,7 @@ class InstallerModelDiscover extends InstallerModel
                 $result = $installer->discover_install($id);
                 if (!$result) {
                     $failed = true;
-                    MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLFAILED') . ': ' . $id);
+                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLFAILED') . ': ' . $id);
                 }
             }
             $this->setState('action', 'remove');
@@ -123,10 +123,10 @@ class InstallerModelDiscover extends InstallerModel
             MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
             MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
             if (!$failed) {
-                MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
+                MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
             }
         } else {
-            MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
+            MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_NOEXTENSIONSELECTED'));
         }
     }
 

@@ -66,7 +66,7 @@ class MolajoApplicationHelper
 
                 if ($results = $db->loadObjectList()) {
                 } else {
-                    MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+                    MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
                     return false;
                 }
 

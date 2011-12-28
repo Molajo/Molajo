@@ -226,7 +226,7 @@ class InstallerModelManage extends InstallerModel
                 $result = true;
             }
 
-            MolajoFactory::getApplication()->enqueueMessage($msg);
+            MolajoFactory::getApplication()->setMessage($msg);
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
             MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);

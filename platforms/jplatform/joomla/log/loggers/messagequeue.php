@@ -41,16 +41,16 @@ class JLoggerMessageQueue extends JLogger
             case JLog::ALERT:
             case JLog::CRITICAL:
             case JLog::ERROR:
-                JFactory::getApplication()->enqueueMessage($entry->message, 'error');
+                JFactory::getApplication()->setMessage($entry->message, 'error');
                 break;
             case JLog::WARNING:
-                JFactory::getApplication()->enqueueMessage($entry->message, 'warning');
+                JFactory::getApplication()->setMessage($entry->message, 'warning');
                 break;
             case JLog::NOTICE:
-                JFactory::getApplication()->enqueueMessage($entry->message, 'notice');
+                JFactory::getApplication()->setMessage($entry->message, 'notice');
                 break;
             case JLog::INFO:
-                JFactory::getApplication()->enqueueMessage($entry->message, 'message');
+                JFactory::getApplication()->setMessage($entry->message, 'message');
                 break;
             default:
                 // Ignore other priorities.

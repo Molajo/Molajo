@@ -269,9 +269,9 @@ class MolajoControllerEdit extends MolajoController
             $errors = $this->model->getErrors();
             for ($e = 0; $e < count($errors); $e++) {
                 if (MolajoError::isError($errors[$e])) {
-                    MolajoFactory::getApplication()->enqueueMessage($errors[$e]->getMessage(), 'warning');
+                    MolajoFactory::getApplication()->setMessage($errors[$e]->getMessage(), 'warning');
                 } else {
-                    MolajoFactory::getApplication()->enqueueMessage($errors[$e], 'warning');
+                    MolajoFactory::getApplication()->setMessage($errors[$e], 'warning');
                 }
             }
             MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);

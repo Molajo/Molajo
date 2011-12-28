@@ -80,7 +80,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -126,7 +126,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -172,7 +172,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
         return $results;
@@ -227,7 +227,7 @@ class MolajoModelConfiguration
 
         if ($results = $db->loadObjectList()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -284,7 +284,7 @@ class MolajoModelConfiguration
 
         if ($this->extension_instance_id = $db->loadResult()) {
         } else {
-            MolajoFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'error');
+            MolajoFactory::getApplication()->setMessage($db->getErrorMsg(), 'error');
             return false;
         }
 

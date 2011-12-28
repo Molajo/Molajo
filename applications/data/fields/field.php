@@ -193,7 +193,7 @@ class MolajoField
 
             } else {
                 if ($reportError === true) {
-                    MolajoFactory::getApplication()->enqueueMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($name) . ' ' . $nameClassFile, 'error');
+                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_INVALID_FIELD_FILENAME') . ' ' . 'MolajoField' . ucfirst($name) . ' ' . $nameClassFile, 'error');
                     return false;
                 }
             }

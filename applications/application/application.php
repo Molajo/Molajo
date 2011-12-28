@@ -81,6 +81,12 @@ class MolajoApplication
     public $link;
 
     /**
+     * @var    string
+     * @since  1.0
+     */
+    public $links;
+
+    /**
      * @var    Date   Response last modified value
      * @since  1.0
      */
@@ -145,6 +151,12 @@ class MolajoApplication
      * @since  1.0
      */
     public $style = array();
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public $messages = array();
 
     /**
      * @var    object  The application response object.
@@ -297,7 +309,9 @@ class MolajoApplication
         /** response */
         $this->respond();
 
-        echo '<pre>';var_dump($extension);'</pre>';
+        echo '<pre>';
+        var_dump($extension);
+        '</pre>';
     }
 
     /**
@@ -468,6 +482,55 @@ class MolajoApplication
     {
         return $this->tab;
     }
+
+    /**
+     * Adds a shortcut icon (favicon)
+     *
+     * This adds a link to the icon shown in the favorites list or on
+     * the left of the url in the address bar. Some browsers display
+     * it on the tab, as well.
+     *
+     * @param   string  $href      The link that is being related.
+     * @param   string  $type      File type
+     * @param   string  $relation  Relation of link
+     *
+     * @return  JDocumentHTML instance of $this to allow chaining
+     *
+     * @since   11.1
+     */
+    public function addFavicon($href, $type = 'image/vnd.microsoft.icon', $relation = 'shortcut icon')
+    {
+        $href = str_replace('\\', '/', $href);
+        $this->addHeadLink($href, $relation, 'rel', array('type' => $type));
+
+        return $this;
+    }
+
+    /**
+     * Adds <link> tags to the head of the document
+     *
+     * $relType defaults to 'rel' as it is the most common relation type used.
+     * ('rev' refers to reverse relation, 'rel' indicates normal, forward relation.)
+     * Typical tag: <link href="index.php" rel="Start">
+     *
+     * @param   string  $href      The link that is being related.
+     * @param   string  $relation  Relation of link.
+     * @param   string  $relType   Relation type attribute.  Either rel or rev (default: 'rel').
+     * @param   array   $attribs   Associative array of remaining attributes.
+     *
+     * @return  JDocumentHTML instance of $this to allow chaining
+     *
+     * @since   11.1
+     */
+    public function addHeadLink($href, $relation, $relType = 'rel', $attribs = array())
+    {
+        $this->links[$href]['relation'] = $relation;
+        $this->links[$href]['relType'] = $relType;
+        $this->links[$href]['attribs'] = $attribs;
+
+        return $this;
+    }
+
 
     /**
      * setTitle
@@ -989,6 +1052,76 @@ class MolajoApplication
                 // Compression complete, let's break out of the loop.
                 break;
             }
+        }
+    }
+
+    /**
+     * setMessage
+     *
+     * Set the system message.
+     *
+     * @param   string  $message
+     * @param   string  $type      message, notice, warning, and error
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function setMessage($message = null, $type = 'message')
+    {
+        /** $message */
+        if ($message == null) {
+            $message = 'Unknown message';
+        }
+
+        /** $type */
+        $type = strtolower($type);
+        if ($type == 'notice'
+            || $type == 'warning'
+            || $type == 'error'
+        ) {
+        } else {
+            $type = 'message';
+        }
+
+        /** load session messages into application messages array */
+        $this->_sessionMessages();
+
+        /** store the latest message */
+        $this->messages[] = array('message' => $message, 'type' => $type);
+    }
+
+    /**
+     * getMessages
+     *
+     * Get system messages
+     *
+     * @return  array  System messages
+     * @since   1.0
+     */
+    public function getMessages()
+    {
+        $this->_sessionMessages();
+        return $this->messages;
+    }
+
+    /**
+     *  _sessionMessages
+     *
+     * Retrieve messages in session and load into Application messages array
+     *
+     * @return  void
+     * @since   1.0
+     */
+    private function _sessionMessages()
+    {
+        $session = MolajoFactory::getSession();
+        $sessionMessages = $session->get('application.messages');
+
+        if (count($sessionMessages) > 0) {
+            foreach ($sessionMessages as $sessionMessage) {
+                $this->messages[] = $sessionMessage;
+            }
+            $session->set('application.messages', null);
         }
     }
 

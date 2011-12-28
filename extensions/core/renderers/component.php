@@ -26,7 +26,7 @@ class MolajoComponent
     protected $name = null;
 
     /**
-     * Attributes
+     * Attributes - from the template <include:component statement>
      *
      * @var    array
      * @since  1.0
@@ -94,19 +94,18 @@ class MolajoComponent
      *
      * Class constructor.
      *
-     * @param   array  $asset  A configuration array
-     *
-     * @since  1.0
+     * @param null $name
+     * @param array $config
+     * @since 1.0
      */
-    public function __construct($name = null, $attributes = array(), $config = array())
+    public function __construct($name = null, $config = array())
     {
-//        echo '<pre>';
-//        var_dump($config);
-//        '</pre>';
-
+                echo '<pre>';
+                var_dump($config);
+                '</pre>';
+echo $name;
         /** set class properties */
         $this->name = $name;
-        $this->attributes = $attributes;
 
         $this->config = $config;
         $this->option = $config->option;
@@ -117,13 +116,72 @@ class MolajoComponent
     }
 
     /**
+     * render
+     *
+     * Render the component.
+     *
+     * @return  object
+     * @since  1.0
+     */
+    public function render($attributes)
+    {
+        /** renderer $attributes from template */
+        $this->attributes = $attributes;
+
+        /** set up request for MVC */
+        $this->request();
+
+        /** Events */
+        MolajoPlugin::importPlugin('system');
+        $this->triggerEvent('onBeforeComponentRender');
+
+        $request = array();
+        foreach ($this->config as $name => $value) {
+            $request[$name] = $value;
+        }
+        echo 'request coming';
+        var_dump($request);
+        die;
+        /** path */
+        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->option . '/' . $this->option . '.php';
+
+        /** installation */
+        if (MOLAJO_APPLICATION_ID == 0
+            && file_exists($path)
+        ) {
+
+            /** language */
+        } elseif (file_exists($path)
+        ) {
+            //            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
+
+        } else {
+            MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
+        }
+        //echo '<pre>';var_dump($request);'</pre>';
+
+        /** execute the component */
+        ob_start();
+        require_once $path;
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        /** Events */
+        MolajoPlugin::importPlugin('system');
+        $this->triggerEvent('onAfterComponentRender');
+
+        /** Return output */
+        return $output;
+    }
+
+    /**
      * getRequest
      *
      * Gets the Request Object and populates Page Session Variables for Component
      *
      * @return bool
      */
-    public function getRequest()
+    public function request()
     {
         //todo: amy remove all the application-specific values
 
@@ -141,7 +199,7 @@ class MolajoComponent
         $component_path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option;
 
         /** 3. Task */
-        $task = $this->asset->task;
+        $task = $this->config->task;
         if (strpos($task, '.')) {
             $task = substr($task, (strpos($task, '.') + 1), 99);
         }
@@ -156,7 +214,7 @@ class MolajoComponent
         if ($task == 'display') {
 
             /** 5. View **/
-            $view = $this->asset->view;
+            $view = $this->config->view;
             if ($view == null) {
                 $results = false;
             } else {
@@ -166,7 +224,7 @@ class MolajoComponent
             if ($results === false) {
                 $view = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT);
                 if ($view === false) {
-                    $this->enqueueMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
+                    $this->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -178,7 +236,7 @@ class MolajoComponent
             }
 
             /** 8. Layout **/
-            $layout = $this->asset->layout;
+            $layout = $this->config->layout;
             if ($layout == null) {
                 $results = false;
             } else {
@@ -190,7 +248,7 @@ class MolajoComponent
             }
 
             /** 9. Layout **/
-            $layout = $this->asset->layout;
+            $layout = $this->config->layout;
             if ($layout == null) {
                 $results = false;
             } else {
@@ -208,13 +266,13 @@ class MolajoComponent
                     $layout = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT);
                 }
                 if ($layout === false) {
-                    $this->enqueueMessage(MolajoTextHelper::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    $this->setMessage(MolajoTextHelper::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
                     return false;
                 }
             }
 
             /** 9. Format */
-            $format = $this->asset->format;
+            $format = $this->config->format;
             if ($format == null) {
                 $results = false;
             } else {
@@ -243,7 +301,7 @@ class MolajoComponent
         }
 
         /** 10. id, cid and catid */
-        $id = $this->asset->id;
+        $id = $this->config->id;
         //amy        $cids = JRequest::getVar('cid', array(), '', 'array');
         $cids = array();
         JArrayHelper::toInteger($cids);
@@ -297,7 +355,7 @@ class MolajoComponent
         $session->set('page.application_id', MOLAJO_APPLICATION_ID);
         $session->set('page.current_url', MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
         $session->set('page.base_url', MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/');
-        $session->set('page.item_id', $this->asset->id);
+        $session->set('page.item_id', $this->config->id);
 
         $session->set('page.controller', $controller);
         $session->set('page.extension_type', 'component');
@@ -317,7 +375,7 @@ class MolajoComponent
 
         $session->set('page.id', (int)$id);
         $session->set('page.cid', (array)$cids);
-//        $session->set('page.catid', (int)$catid);
+        //        $session->set('page.catid', (int)$catid);
 
         $session->set('page.acl_implementation', $acl_implementation);
         $session->set('page.component_table', $component_table);
@@ -327,7 +385,7 @@ class MolajoComponent
 
         /** other */
         $session->set('page.extension', $this->option);
-//        $session->set('page.component_specific', $component_specific);
+        //        $session->set('page.component_specific', $component_specific);
 
         /** retrieve from db */
         //        if ($controller == 'display') {
@@ -383,59 +441,5 @@ class MolajoComponent
         $request['wrap_more_array'] = array();
 
         return $request;
-    }
-
-    /**
-     * renderComponent
-     *
-     * Render the component.
-     *
-     * @return  object
-     * @since  1.0
-     */
-    public function render()
-    {
-
-        /** Events */
-        MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onBeforeComponentRender');
-
-        $request = array();
-        foreach ($this->config as $name=>$value) {
-            $request[$name] = $value;
-        }
-        echo 'request coming';
-        var_dump($request);
-        die;
-        /** path */
-        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->option . '/' . $this->option . '.php';
-
-        /** installation */
-        if (MOLAJO_APPLICATION_ID == 0
-            && file_exists($path)
-        ) {
-
-            /** language */
-        } elseif (file_exists($path)
-        ) {
-//            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
-
-        } else {
-            MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
-        }
-        //echo '<pre>';var_dump($request);'</pre>';
-
-        /** execute the component */
-        ob_start();
-        require_once $path;
-        $output = ob_get_contents();
-        ob_end_clean();
-
-        /** Events */
-        MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onAfterComponentRender');
-
-        /** Return output */
-        return $output;
     }
 }
