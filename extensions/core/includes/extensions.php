@@ -20,11 +20,11 @@ foreach ($files as $file) {
         $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/formats/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))).'Format');
 }
 /**
- *  Extensions
+ *  Renderers
  */
-$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/extensions', '\.php$', false, false);
+$files = JFolder::files(MOLAJO_EXTENSIONS_CORE . '/core/renderers', '\.php$', false, false);
 foreach ($files as $file) {
-        $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/extensions/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
+        $fileHelper->requireClassFile(MOLAJO_EXTENSIONS_CORE . '/core/renderers/' . $file, 'Molajo' . ucfirst(substr($file, 0, strpos($file, '.'))));
 }
 
 /**

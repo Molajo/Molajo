@@ -15,7 +15,7 @@ if ($configHTML == true): ?>
     <?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <doc:include type="head"/>
+    <include:head />
     <?php include dirname(__FILE__) . '/lib/media.php'; ?>
 </head>
 <body class="<?php echo $lcbrowser . ' ' . $lcbrowser . $ver . ' ' . strtolower($browser->getPlatform()); ?>">

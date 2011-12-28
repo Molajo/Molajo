@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo  $this->language; ?>"
       lang="<?php echo  $this->language; ?>" dir="<?php echo  $this->direction; ?>">
 <head>
-    <doc:include type="head"/>
+    <include:head />
     <link rel="stylesheet" href="templates/system/css/system.css" type="text/css"/>
     <link href="templates/<?php echo  $this->template ?>/css/template.css" rel="stylesheet" type="text/css"/>
 

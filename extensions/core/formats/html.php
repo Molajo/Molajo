@@ -16,6 +16,15 @@ defined('MOLAJO') or die;
  */
 class MolajoHtmlFormat
 {
+
+    /**
+     *  Sequence in which renderers should be processed
+     *
+     * @var array
+     * @since 1.0
+     */
+    protected $rendererProcessingSequence = array();
+
     /**
      *  Config
      *
@@ -81,17 +90,17 @@ class MolajoHtmlFormat
     protected $_template = array();
 
     /**
-     *  Template Tags
+     *  Holds set of renderers defined within the template and associated attributes
      *
      * @var string
      * @since 1.0
      */
-    protected $_template_tags = array();
+    protected $_renderers = array();
 
     /**
-     * Array of buffered output
+     * Array of buffered output by renderer
      *
-     * @var    mixed (depends on the renderer)
+     * @var    mixed
      */
     protected $_buffer = null;
 
@@ -112,6 +121,15 @@ class MolajoHtmlFormat
 //        echo '<pre>';
 //        var_dump($config);
 //        '</pre>';
+        $sequence = simplexml_load_file(MOLAJO_EXTENSIONS_CORE . '/core/formats/sequence.xml', 'SimpleXMLElement');
+        foreach ($sequence->format as $format) {
+            if ($format->name == 'html') {
+                foreach ($format->renderer as $renderer) {
+                    $this->rendererProcessingSequence[] = (string) $renderer[0];
+                }
+                break;
+            }
+        }
 
         /** set class properties */
         $this->config = $config;
@@ -212,58 +230,60 @@ class MolajoHtmlFormat
     }
 
     /**
-     * Parse a document template
+     * _parseTemplate
+     * 
+     * Parse the template and extract renderers and associated attributes
      *
      * @return  The parsed contents of the template
      */
     protected function _parseTemplate()
     {
+        /** initialize */
         $matches = array();
+        $this->_renderers = array();
+        $i = 0;
+        
+        /** parse template for renderers */
+        preg_match_all('#<include:(.*)\/>#iU', $this->_template, $matches);
+        
+        if (count($matches) == 0) {
+            return;
+        }  
+        
+        /** store renderers in array */
+        foreach ($matches[1] as $includeString) {
 
-        if (preg_match_all('#<include:(.*)\/>#iU', $this->_template, $matches)) {
-            foreach ($matches[1] as $includeString) {
-                $positionArray = array();
-                $positionArray = explode(' ', $includeString);
-                $renderType = '';
-                $attributes = array();
-                foreach ($positionArray as $value) {
-                    if ($renderType == '') {
-                        $renderType = $value;
+            /** initialize for each renderer */
+            $includeArray = array();
+            $includeArray = explode(' ', $includeString);
+            $rendererType = '';
+
+            foreach ($includeArray as $rendererCommand) {
+
+                /** Type of Renderer */
+                if ($rendererType == '') {
+                    $rendererType = $rendererCommand;
+                    $this->_renderers[$i]['name'] = $rendererType;
+                    $this->_renderers[$i]['replace'] = $includeString;
+
+                /** Renderer Attributes */
+                } else {
+                    $rendererAttributes = str_replace('"', '', $rendererCommand);
+
+                    if (trim($rendererAttributes) == '') {
                     } else {
-                        $test = str_replace('"', '', $value);
-                        if (trim($test) == '') {
-                        } else {
-                            $attributes[] = str_replace('"', '', $value);
-                        }
+
+                        /** Associative array of named pairs */
+                        $splitAttribute = array();
+                        $splitAttribute = explode('=', $rendererAttributes);
+                        $this->_renderers[$i]['attributes'][$splitAttribute[0]] = $splitAttribute[1];
                     }
                 }
-                echo '<pre>';echo 'Type ';echo $renderType;echo ' Attributes';var_dump($attributes); echo '</pre>';
             }
-
-            die;
-            $template_tags_first = array();
-            $template_tags_last = array();
-
-            for ($i = count($matches[0]) - 1; $i >= 0; $i--) {
-
-                $type = $matches[1][$i];
-                $attributes = empty($matches[2][$i]) ? array() : MolajoUtility::parseAttributes($matches[2][$i]);
-                $name = isset($attributes['name']) ? $attributes['name'] : null;
-
-                // Separate buffers to be executed first and last
-                if ($type == 'module' || $type == 'modules') {
-                    $template_tags_first[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attributes' => $attributes);
-                } else {
-                    $template_tags_last[$matches[0][$i]] = array('type' => $type, 'name' => $name, 'attributes' => $attributes);
-                }
-            }
-            // Reverse the last array so the docs are in forward order.
-            $template_tags_last = array_reverse($template_tags_last);
-
-            $this->_template_tags = $template_tags_first + $template_tags_last;
-            echo '<pre>';var_dump($this->_template_tags);'</pre>';
-            die;
+            $i++;
         }
+
+//        echo '<pre>';var_dump($this->_renderers);echo '</pre>';
     }
 
     /**
@@ -278,12 +298,25 @@ class MolajoHtmlFormat
         $replace = array();
         $with = array();
 
-        foreach ($this->_template_tags AS $doc => $args) {
-            echo '<pre>';echo $doc;var_dump($args);'</pre>';
-            $replace[] = $doc;
-            $with[] = $this->_getBuffer($args['type'], $args['name'], $args['attributes']);
+        foreach ($this->rendererProcessingSequence as $nextRenderer) {
+            echo '<br />Next Renderer '.$nextRenderer.'<br />';
+
+            foreach ($this->_renderers as $i=>$rendererArray) {
+
+                if ($nextRenderer == $rendererArray['name']) {
+                    echo 'Name '.$rendererArray['name'].'<br />';
+                    echo 'Replace '.$rendererArray['replace'].'<br />';
+                    if (isset($rendererArray['attributes'])) {
+                        echo '<pre>';var_dump($rendererArray['attributes']);echo '</pre>';
+                    } else {
+                        echo 'No attributes<br />';
+                    }
+                }
+//            $replace[] = $doc;
+//            $with[] = $this->_getBuffer($args['type'], $args['name'], $args['attributes']);
+            }
+//        return str_replace($replace, $with, $this->_template);
         }
-        return str_replace($replace, $with, $this->_template);
     }
 
     /**

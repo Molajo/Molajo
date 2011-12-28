@@ -9,13 +9,13 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoModules
+ * MolajoPosition
  *
  * @package     Molajo
  * @subpackage  Application
  * @since       1.0
  */
-class MolajoModules
+class MolajoPosition
 {
     /**
      *  Position

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<formats>
+    <format>
+        <name>html</name>
+        <renderer>component</renderer>
+        <renderer>module</renderer>
+        <renderer>position</renderer>
+        <renderer>view</renderer>
+        <renderer>message</renderer>
+        <renderer>head</renderer>
+    </format>
+    <format>
+        <name>json</name>
+        <renderer>installation</renderer>
+    </format>
+</formats>

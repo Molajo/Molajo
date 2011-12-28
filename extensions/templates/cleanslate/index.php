@@ -17,7 +17,7 @@ if (MolajoFactory::getApplication()->get('html5', true) === true): ?>
       lang="<?php echo MolajoFactory::getLanguage()->language; ?>"
       dir="<?php echo MolajoFactory::getLanguage()->direction; ?>">
 <head>
-    <doc:include type="head"/>
+    <include:head />
 </head>
 <body>
 <?php include dirname(__FILE__) . '/pages/' . MolajoFactory::getDocument()->page; ?>

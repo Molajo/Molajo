@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>"
       lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-    <doc:include type="head"/>
+    <include:head />
     <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/system/css/offline.css" type="text/css"/>
     <?php if ($this->direction == 'rtl') : ?>
     <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/system/css/offline_rtl.css" type="text/css"/>

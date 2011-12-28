@@ -133,7 +133,7 @@ Within the index.php file are a combination of normal html statements and doc st
 
 ### doc: include type="head" ###
 
-    <doc:include type="head" />
+    <include:head  />
 
 Included once within the <head> element to render style, script and meta elements.
 
