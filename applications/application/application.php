@@ -105,10 +105,10 @@ class MolajoApplication
     public $generator;
 
     /**
-     * @var    string
+     * @var    array
      * @since  1.0
      */
-    public $metadata;
+    public $metadata = array();
 
     /**
      * @var    string  Response mimetype type.
@@ -150,7 +150,7 @@ class MolajoApplication
      * @var    object  The application response object.
      * @since  1.0
      */
-    protected $response;
+    protected $response = array();
 
     /**
      * Class constructor.
@@ -164,7 +164,7 @@ class MolajoApplication
      *
      * @since   1.0
      */
-    public function __construct(JRegistry $config = null, JWebClient $client = null)
+    public function __construct(JRegistry $config = null, JWebClient $client = null, $options = array())
     {
         if ($config instanceof JRegistry) {
             $this->config = $config;
@@ -176,6 +176,34 @@ class MolajoApplication
             $this->client = $client;
         } else {
             $this->client = new JWebClient;
+        }
+
+        if (array_key_exists('line_end', $options)) {
+            $this->setLineEnd($options['line_end']);
+        }
+
+        if (array_key_exists('charset', $options)) {
+            $this->setCharset($options['charset']);
+        }
+
+        if (array_key_exists('language', $options)) {
+            $this->setLanguage($options['language']);
+        }
+
+        if (array_key_exists('direction', $options)) {
+            $this->setDirection($options['direction']);
+        }
+
+        if (array_key_exists('tab', $options)) {
+            $this->setTab($options['tab']);
+        }
+
+        if (array_key_exists('link', $options)) {
+            $this->setLink($options['link']);
+        }
+
+        if (array_key_exists('base', $options)) {
+            $this->setBase($options['base']);
         }
 
         $this->getConfig();
@@ -269,7 +297,7 @@ class MolajoApplication
         /** response */
         $this->respond();
 
-        //echo '<pre>';var_dump($this);'</pre>';
+        echo '<pre>';var_dump($extension);'</pre>';
     }
 
     /**
@@ -1146,14 +1174,11 @@ class MolajoApplication
     {
         if ($this->checkHeadersSent()) {
         } else {
-            foreach ($this->response->headers as $header)
-            {
+            foreach ($this->response->headers as $header) {
                 if ('status' == strtolower($header['name'])) {
                     // 'status' headers indicate an HTTP status, and need to be handled slightly differently
                     $this->header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int)$header['value']);
-                }
-                else
-                {
+                } else {
                     $this->header($header['name'] . ': ' . $header['value']);
                 }
             }
