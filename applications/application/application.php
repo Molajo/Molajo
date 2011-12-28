@@ -24,7 +24,7 @@ class MolajoApplication
      * @var    object  The application configuration object.
      * @since  1.0
      */
-    protected $config;
+    public $config;
 
     /**
      * @var    Client  The application client object.
@@ -36,49 +36,121 @@ class MolajoApplication
      * @var    object  The application dispatcher object.
      * @since  1.0
      */
-    protected $dispatcher;
-
-    /**
-     * @var    object  The application language object.
-     * @since  1.0
-     */
-    protected $language;
-
-    /**
-     * @var    string  Language direction
-     * @since  1.0
-     */
-    protected $direction;
+    public $dispatcher;
 
     /**
      * @var    object  The application session object.
      * @since  1.0
      */
-    protected $session;
+    public $session;
 
     /**
-     * @var    object  The application response object.
+     * @var    string
      * @since  1.0
      */
-    protected $response;
+    public $line_end;
 
     /**
-     * @var    string  Character encoding 
+     * @var    string
      * @since  1.0
      */
-    public $charset = 'utf-8';
+    public $tab;
 
     /**
-     * @var    string  Response mime type.
+     * @var    string
      * @since  1.0
      */
-    public $mimetype = 'text/html';
+    public $title;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $description;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $base;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $link;
 
     /**
      * @var    Date   Response last modified value
      * @since  1.0
      */
     public $last_modified;
+
+    /**
+     * @var    object  The application language object.
+     * @since  1.0
+     */
+    public $language;
+
+    /**
+     * @var    string  Language direction
+     * @since  1.0
+     */
+    public $direction;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $generator;
+
+    /**
+     * @var    string
+     * @since  1.0
+     */
+    public $metadata;
+
+    /**
+     * @var    string  Response mimetype type.
+     * @since  1.0
+     */
+    public $mimetype = 'text/html';
+
+    /**
+     * @var    string  Character encoding
+     * @since  1.0
+     */
+    public $charset = 'utf-8';
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public $scripts = array();
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public $script = array();
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public $stylesheets = array();
+
+    /**
+     * @var    array
+     * @since  1.0
+     */
+    public $style = array();
+
+    /**
+     * @var    object  The application response object.
+     * @since  1.0
+     */
+    protected $response;
 
     /**
      * Class constructor.
@@ -116,7 +188,7 @@ class MolajoApplication
         if ($this->get('force_ssl') >= 1) {
             if (isset($_SERVER['HTTPS'])) {
             } else {
-                $this->redirect((string)'https'.substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4).MOLAJO_APPLICATION_URL_PATH.'/'.MOLAJO_PAGE_REQUEST);
+                $this->redirect((string)'https' . substr(MOLAJO_BASE_URL, 4, strlen(MOLAJO_BASE_URL) - 4) . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
             }
         }
 
@@ -201,140 +273,172 @@ class MolajoApplication
     }
 
     /**
-     * addScript
+     * getConfig
      *
-     * Adds a linked script to the page
+     * Creates the Application configuration object.
      *
-     * @param $url
-     * @param string $format
-     * @param bool $defer
-     * @param bool $async
-     * @param int $priority
+     * return   object  A config object
      *
-     * @return
+     * @since  1.0
+     */
+    public function getConfig()
+    {
+        $configClass = new MolajoConfiguration();
+        $this->config = $configClass->getConfig();
+
+        return $this->config;
+    }
+
+    /**
+     * get
+     *
+     * Returns a property of the Application object
+     * or the default value if the property is not set.
+     *
+     * @param   string  $key      The name of the property.
+     * @param   mixed   $default  The default value (optional) if none is set.
+     *
+     * @return  mixed   The value of the configuration.
+     *
      * @since   1.0
      */
-    public function addScript($url, $format = "text/javascript", $defer = false, $async = false, $priority = 500)
+    public function get($key, $default = null)
     {
-        $this->_scripts[$url]['mime'] = $format;
-        $this->_scripts[$url]['defer'] = $defer;
-        $this->_scripts[$url]['async'] = $async;
-        $this->_scripts[$url]['priority'] = $priority;
+        return $this->config->get($key, $default);
     }
 
     /**
-     * addScriptDeclaration
+     * set
      *
-     * Adds a script to the page
+     * Modifies a property of the Application object, creating it if it does not already exist.
      *
-     * @param   string  $content    Script
-     * @param   string  $format     Scripting mime (defaults to 'text/javascript')
+     * @param   string  $key    The name of the property.
+     * @param   mixed   $value  The value of the property to set (optional).
+     *
+     * @return  mixed   Previous value of the property
+     *
+     * @since   1.0
+     */
+    public function set($key, $value = null)
+    {
+        $this->config->set($key, $value);
+    }
+
+    /**
+     * Method to create an event dispatcher for the Web application.  The logic and options for creating
+     * this object are adequately generic for default cases but for many applications it will make sense
+     * to override this method and create event dispatchers based on more specific needs.
      *
      * @return  void
-     * @since    1.0
+     *
+     * @since   1.0
      */
-    public function addScriptDeclaration($content, $format = 'text/javascript')
+    protected function loadDispatcher()
     {
-        if (isset($this->_script[strtolower($format)])) {
-            $this->_script[strtolower($format)] .= chr(13) . $content;
+        $this->dispatcher = JDispatcher::getInstance();
+    }
 
-        } else {
-            $this->_script[strtolower($format)] = $content;
+    /**
+     * Registers a handler to a particular event group.
+     *
+     * @param   string    $event    The event name.
+     * @param   callback  $handler  The handler, a function or an instance of a event object.
+     *
+     * @return  Application  Instance of $this to allow chaining.
+     *
+     * @since   1.0
+     */
+    public function registerEvent($event, $handler)
+    {
+        if ($this->dispatcher instanceof JDispatcher) {
+            $this->dispatcher->register($event, $handler);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Calls all handlers associated with an event group.
+     *
+     * @param   string  $event  The event name.
+     * @param   array   $args   An array of arguments (optional).
+     *
+     * @return  array   An array of results from each function call, or null if no dispatcher is defined.
+     *
+     * @since   1.0
+     */
+    public function triggerEvent($event, array $args = null)
+    {
+        if ($this->dispatcher instanceof JDispatcher) {
+            return $this->dispatcher->trigger($event, $args);
+        }
+
+        return null;
+    }
+
+    /**
+     * setLineEnd
+     *
+     * Sets the line end style to Windows, Mac, Unix or a custom string.
+     *
+     * @param   string  $style  "win", "mac", "unix" or custom string.
+     *
+     * @return  void
+     */
+    public function setLineEnd($style)
+    {
+        switch ($style)
+        {
+            case 'win':
+                $this->line_end = "\15\12";
+                break;
+            case 'unix':
+                $this->line_end = "\12";
+                break;
+            case 'mac':
+                $this->line_end = "\15";
+                break;
+            default:
+                $this->line_end = $style;
         }
     }
 
     /**
-     * addStyleSheet
+     * getLineEnd
      *
-     * Adds a linked stylesheet to the page
+     * Returns the lineEnd
      *
-     * @param string  $url
-     * @param string  $format
-     * @param null    $media
-     * @param array   $attribs
-     * @param int     $priority
-     *
-     * @return  void
-     * @since    1.0
+     * @return  string
      */
-    public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array(), $priority = 500)
+    public function getLineEnd()
     {
-        $this->_styleSheets[$url]['mime'] = $format;
-        $this->_styleSheets[$url]['media'] = $media;
-        $this->_styleSheets[$url]['attribs'] = $attribs;
-        $this->_styleSheets[$url]['priority'] = $priority;
+        return $this->line_end;
     }
 
     /**
-     * addStyleDeclaration
+     * setTab
      *
-     * Adds a stylesheet declaration to the page
+     * Sets the string used to indent HTML
      *
-     * @param   string  $content  Style declarations
-     * @param   string  $format   Type of stylesheet (defaults to 'text/css')
+     * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
      *
      * @return  void
      */
-    public function addStyleDeclaration($content, $format = 'text/css')
+    public function setTab($string)
     {
-        if (!isset($this->_style[strtolower($format)])) {
-            $this->_style[strtolower($format)] = $content;
-
-        } else {
-            $this->_style[strtolower($format)] .= chr(13) . $content;
-        }
+        $this->tab = $string;
     }
 
     /**
-     * setLanguage
+     * getTab
      *
-     * Sets the global document language declaration. Default is English (en-gb).
+     * Returns a string containing the unit for indenting HTML
      *
-     * @param   string    $lang
-     *
-     * @return  void
+     * @return  string
      */
-    public function setLanguage($lang = "en-gb")
+    public function getTab()
     {
-        $this->language = strtolower($lang);
-    }
-
-    /**
-     * getLanguage
-     *
-     * Returns the document language.
-     *
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * setDirection
-     *
-     * Sets the global document direction declaration. Default is left-to-right (ltr).
-     *
-     * @param   string  $lang
-     *
-     * @return  void
-     */
-    public function setDirection($dir = "ltr")
-    {
-        $this->direction = strtolower($dir);
-    }
-
-    /**
-     * getDirection
-     *
-     * Returns the document direction declaration.
-     *
-     * @return string
-     */
-    public function getDirection()
-    {
-        return $this->direction;
+        return $this->tab;
     }
 
     /**
@@ -361,6 +465,32 @@ class MolajoApplication
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * setDescription
+     *
+     * Sets the description of the document
+     *
+     * @param  string  $title
+     *
+     * @return void
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * getDescription
+     *
+     * Return the title of the page.
+     *
+     * @return  string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -416,7 +546,7 @@ class MolajoApplication
     }
 
     /**
-     * setModifiedDate
+     * setLastModified
      *
      * Sets the document modified date
      *
@@ -424,21 +554,103 @@ class MolajoApplication
      *
      * @return  void
      */
-    public function setModifiedDate($date)
+    public function setLastModified($date)
     {
-        $this->_mdate = $date;
+        $this->last_modified = $date;
     }
 
     /**
-     * getModifiedDate
+     * getLastModified
      *
      * Returns the document modified date
      *
      * @return string
      */
-    public function getModifiedDate()
+    public function getLastModified()
     {
-        return $this->_mdate;
+        return $this->last_modified;
+    }
+
+    /**
+     * setLanguage
+     *
+     * Sets the global document language declaration. Default is English (en-gb).
+     *
+     * @param   string    $lang
+     *
+     * @return  void
+     */
+    public function setLanguage($language = 'en-gb')
+    {
+        $this->language = strtolower($language);
+    }
+
+    /**
+     * getLanguage
+     *
+     * Returns the document language.
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * setDirection
+     *
+     * Sets the global document direction declaration. Default is left-to-right (ltr).
+     *
+     * @param   string  $lang
+     *
+     * @return  void
+     */
+    public function setDirection($direction = 'ltr')
+    {
+        if (strtolower($direction) == 'rtl') {
+        } else {
+            $direction = 'ltr';
+        }
+        $this->direction = strtolower($direction);
+    }
+
+    /**
+     * getDirection
+     *
+     * Returns the document direction declaration.
+     *
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->direction;
+    }
+
+    /**
+     * setGenerator
+     *
+     * Sets the document generator
+     *
+     * @param  string
+     *
+     * @return  void
+     */
+    public function setGenerator($generator)
+    {
+        $this->generator = $generator;
+    }
+
+    /**
+     * getGenerator
+     *
+     * Returns the document generator
+     *
+     * @return string
+     */
+    public function getGenerator()
+    {
+        return $this->generator;
     }
 
     /**
@@ -458,31 +670,22 @@ class MolajoApplication
     {
         $name = strtolower($name);
 
-        if ($name == 'generator') {
-            $this->setGenerator($content);
+        if ($http_equiv === true) {
+            $this->metadata['http-equiv'][$name] = $content;
 
-        } else if ($name == 'description') {
-            $this->setDescription($content);
+            if ($sync && strtolower($name) == 'content-type') {
+                $this->setMimeEncoding($content, false);
+            }
 
         } else {
-            if ($http_equiv == true) {
-                $this->_metaTags['http-equiv'][$name] = $content;
-
-                // Syncing with HTTP-header
-                if ($sync && strtolower($name) == 'content-type') {
-                    $this->setMimeEncoding($content, false);
-                }
-
-            } else {
-                $this->_metaTags['standard'][$name] = $content;
-            }
+            $this->metadata['standard'][$name] = $content;
         }
     }
 
     /**
      * getMetaData
      *
-     * Gets a meta tag.
+     * Gets a metadata tag.
      *
      * @param   string  $name        Value of name or http-equiv tag
      * @param   bool    $http_equiv  META type "http-equiv" defaults to null
@@ -492,76 +695,15 @@ class MolajoApplication
      */
     public function getMetaData($name, $http_equiv = false)
     {
-        $result = '';
         $name = strtolower($name);
-        if ($name == 'generator') {
-            $result = $this->getGenerator();
-        }
-        else if ($name == 'description') {
-            $result = $this->getDescription();
 
+        if ($http_equiv === true) {
+            $result = $this->metadata['http-equiv'][$name];
         } else {
-            if ($http_equiv == true) {
-                $result = @$this->_metaTags['http-equiv'][$name];
-            } else {
-
-                $result = @$this->_metaTags['standard'][$name];
-            }
+            $result = $this->metadata['standard'][$name];
         }
 
         return $result;
-    }
-
-    /**
-     * setGenerator
-     *
-     * Sets the document generator
-     *
-     * @param  string
-     *
-     * @return  void
-     */
-    public function setGenerator($generator)
-    {
-        $this->_generator = $generator;
-    }
-
-    /**
-     * getGenerator
-     *
-     * Returns the document generator
-     *
-     * @return string
-     */
-    public function getGenerator()
-    {
-        return $this->_generator;
-    }
-
-    /**
-     * setDescription
-     *
-     * Sets the description of the document
-     *
-     * @param  string  $title
-     *
-     * @return void
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * getDescription
-     *
-     * Return the title of the page.
-     *
-     * @return  string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -570,7 +712,7 @@ class MolajoApplication
      * Sets the document MIME encoding that is sent to the browser.
      *
      * This usually will be text/html because most browsers cannot yet
-     * accept the proper mime settings for XHTML: application/xhtml+xml
+     * accept the proper mimetype settings for XHTML: application/xhtml+xml
      * and to a lesser extent application/xml and text/xml. See the W3C note
      * ({@link http://www.w3.org/TR/xhtml-media-types/
      * http://www.w3.org/TR/xhtml-media-types/}) for more details.
@@ -582,7 +724,7 @@ class MolajoApplication
      */
     public function setMimeEncoding($format = 'text/html', $sync = true)
     {
-        $this->_mime = strtolower($format);
+        $this->mimetype = strtolower($format);
 
         if ($sync) {
             $this->setMetaData('content-type', $format, true, false);
@@ -598,72 +740,118 @@ class MolajoApplication
      */
     public function getMimeEncoding()
     {
-        return $this->_mime;
+        return $this->mimetype;
     }
 
     /**
-     * setLineEnd
+     * setCharset
      *
-     * Sets the line end style to Windows, Mac, Unix or a custom string.
+     * Sets the charset
      *
-     * @param   string  $style  "win", "mac", "unix" or custom string.
+     * @param  string
      *
      * @return  void
      */
-    public function setLineEnd($style)
+    public function setCharset($charset)
     {
-        switch ($style)
-        {
-            case 'win':
-                $this->_lineEnd = "\15\12";
-                break;
-            case 'unix':
-                $this->_lineEnd = "\12";
-                break;
-            case 'mac':
-                $this->_lineEnd = "\15";
-                break;
-            default:
-                $this->_lineEnd = $style;
+        $this->charset = $charset;
+    }
+
+    /**
+     * getCharset
+     *
+     * Returns the charset
+     *
+     * @return string
+     */
+    public function getCharset()
+    {
+        return $this->charset;
+    }
+
+    /**
+     * addScript
+     *
+     * Adds a linked script to the page
+     *
+     * @param string $url
+     * @param string $format
+     * @param bool   $defer
+     * @param bool   $async
+     * @param int    $priority
+     *
+     * @return
+     * @since   1.0
+     */
+    public function addScript($url, $format = "text/javascript", $defer = false, $async = false, $priority = 500)
+    {
+        $this->scripts[$url]['mimetype'] = $format;
+        $this->scripts[$url]['defer'] = $defer;
+        $this->scripts[$url]['async'] = $async;
+        $this->scripts[$url]['priority'] = $priority;
+    }
+
+    /**
+     * addScriptDeclaration
+     *
+     * Adds a script to the page
+     *
+     * @param   string  $content    Script
+     * @param   string  $format     Scripting mimetype (defaults to 'text/javascript')
+     *
+     * @return  void
+     * @since    1.0
+     */
+    public function addScriptDeclaration($content, $format = 'text/javascript')
+    {
+        if (isset($this->script[strtolower($format)])) {
+            $this->script[strtolower($format)] .= chr(13) . $content;
+
+        } else {
+            $this->script[strtolower($format)] = $content;
         }
     }
 
     /**
-     * _getLineEnd
+     * addStyleSheet
      *
-     * Returns the lineEnd
+     * Adds a linked stylesheet to the page
      *
-     * @return  string
+     * @param string  $url
+     * @param string  $format
+     * @param null    $media
+     * @param array   $attribs
+     * @param int     $priority
+     *
+     * @return  void
+     * @since    1.0
      */
-    public function _getLineEnd()
+    public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array(), $priority = 500)
     {
-        return $this->_lineEnd;
+        $this->stylesheets[$url]['mimetype'] = $format;
+        $this->stylesheets[$url]['media'] = $media;
+        $this->stylesheets[$url]['attribs'] = $attribs;
+        $this->stylesheets[$url]['priority'] = $priority;
     }
 
     /**
-     * setTab
+     * addStyleDeclaration
      *
-     * Sets the string used to indent HTML
+     * Adds a stylesheet declaration to the page
      *
-     * @param   string  $string  String used to indent ("\11", "\t", '  ', etc.).
+     * @param   string  $content  Style declarations
+     * @param   string  $format   Type of stylesheet (defaults to 'text/css')
      *
      * @return  void
      */
-    public function setTab($string)
+    public function addStyleDeclaration($content, $format = 'text/css')
     {
-        $this->_tab = $string;
-    }
+        if (isset($this->style[strtolower($format)])) {
+            $this->style[strtolower($format)] .= chr(13) . $content;
 
-    /**
-     * _getTab
-     *
-     * Returns a string containing the unit for indenting HTML
-     *
-     * @return  string
-     */
-    public function _getTab()
-    {
-        return $this->_tab;
+        } else {
+            $this->style[strtolower($format)] = $content;
+        }
     }
 
     /**
@@ -679,27 +867,24 @@ class MolajoApplication
         $this->triggerEvent('onBeforeRespond');
 
         // If gzip compression is enabled in configuration and the server is compliant, compress the output.
-        if ($this->get('gzip')
-            && !ini_get('zlib.output_compression')
-            && (ini_get('output_handler') != 'ob_gzhandler')) {
-            $this->compress();
+        if ($this->get('gzip')) {
+            if (ini_get('zlib.output_compression')) {
+            } elseif (ini_get('output_handler') == 'ob_gzhandler') {
+            } else {
+                $this->compress();
+            }
         }
 
         // Send the content-type header.
         $this->setHeader('Content-Type', $this->mimetype . '; charset=' . $this->charset);
 
-        // If the response is set to uncachable, we need to set some appropriate headers so browsers don't cache the response.
-        if ($this->response->cachable) {
+        if ($this->response->cachable === true) {
             $this->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + 900) . ' GMT');
-            // Last modified.
             if ($this->last_modified instanceof JDate) {
                 $this->setHeader('Last-Modified', $this->last_modified->format('D, d M Y H:i:s'));
             }
-
         } else {
-            // Expires in the past.
-            $this->setHeader('Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true);
-            // Always modified.
+            $this->setHeader('Expires', 'Fri, 6 Jan 1989 00:00:00 GMT', true);
             $this->setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT', true);
             $this->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0', false);
             // HTTP 1.0
@@ -768,7 +953,7 @@ class MolajoApplication
 
                 // Set the encoding headers.
                 $this->setHeader('Content-Encoding', $encoding);
-                $this->setHeader('X-Content-Encoded-By', 'Joomla');
+                $this->setHeader('X-Content-Encoded-By', 'Molajo');
 
                 // Replace the output with the encoded data.
                 $this->setBody($gzdata);
@@ -805,7 +990,7 @@ class MolajoApplication
     public function redirect($asset_id, $code = 303)
     {
         /** retrieve url */
-        $url = MOLAJO_BASE_URL.MOLAJO_APPLICATION_URL_PATH.MolajoAsset::getRedirectURL((int) $asset_id);
+        $url = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . MolajoAsset::getRedirectURL((int)$asset_id);
 
         /** validate code */
         if ($code == 301) {
@@ -839,9 +1024,8 @@ class MolajoApplication
                 $html .= '</head><body></body></html>';
 
                 echo $html;
-            }
-            else
-            {
+
+            } else {
                 // All other cases use the more efficient HTTP header for redirection.
                 $this->header($code ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
                 $this->header('Location: ' . $url);
@@ -866,96 +1050,6 @@ class MolajoApplication
     public function close($code = 0)
     {
         exit($code);
-    }
-
-    /**
-     * getConfig
-     *
-     * Creates the Application configuration object.
-     *
-     * return   object  A config object
-     *
-     * @since  1.0
-     */
-    public function getConfig()
-    {
-        $configClass = new MolajoConfiguration();
-        $this->config = $configClass->getConfig();
-
-        return $this->config;
-    }
-
-    /**
-     * get
-     *
-     * Returns a property of the Application object
-     * or the default value if the property is not set.
-     *
-     * @param   string  $key      The name of the property.
-     * @param   mixed   $default  The default value (optional) if none is set.
-     *
-     * @return  mixed   The value of the configuration.
-     *
-     * @since   1.0
-     */
-    public function get($key, $default = null)
-    {
-        return $this->config->get($key, $default);
-    }
-
-    /**
-     * set
-     *
-     * Modifies a property of the Application object, creating it if it does not already exist.
-     *
-     * @param   string  $key    The name of the property.
-     * @param   mixed   $value  The value of the property to set (optional).
-     *
-     * @return  mixed   Previous value of the property
-     *
-     * @since   1.0
-     */
-    public function set($key, $value = null)
-    {
-        $this->config->set($key, $value);
-    }
-
-    /**
-     * Registers a handler to a particular event group.
-     *
-     * @param   string    $event    The event name.
-     * @param   callback  $handler  The handler, a function or an instance of a event object.
-     *
-     * @return  Application  Instance of $this to allow chaining.
-     *
-     * @since   1.0
-     */
-    public function registerEvent($event, $handler)
-    {
-        if ($this->dispatcher instanceof JDispatcher) {
-            $this->dispatcher->register($event, $handler);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Calls all handlers associated with an event group.
-     *
-     * @param   string  $event  The event name.
-     * @param   array   $args   An array of arguments (optional).
-     *
-     * @return  array   An array of results from each function call, or null if no dispatcher is defined.
-     *
-     * @since   1.0
-     */
-    public function triggerEvent($event, array $args = null)
-    {
-        if ($this->dispatcher instanceof JDispatcher) {
-            return $this->dispatcher->trigger($event, $args);
-        }
-
-        return null;
     }
 
     /**
@@ -1197,20 +1291,6 @@ class MolajoApplication
     }
 
     /**
-     * Method to create an event dispatcher for the Web application.  The logic and options for creating
-     * this object are adequately generic for default cases but for many applications it will make sense
-     * to override this method and create event dispatchers based on more specific needs.
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    protected function loadDispatcher()
-    {
-        $this->dispatcher = JDispatcher::getInstance();
-    }
-
-    /**
      * Method to create a language for the Web application.  The logic and options for creating this
      * object are adequately generic for default cases but for many applications it will make sense
      * to override this method and create language objects based on more specific needs.
@@ -1221,7 +1301,7 @@ class MolajoApplication
      */
     protected function loadLanguage()
     {
-        $this->language = JFactory::getLanguage();
+        $this->language = MolajoFactory::getLanguage();
     }
 
     /**
