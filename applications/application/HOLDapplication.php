@@ -194,7 +194,7 @@ class MolajoApplication
 
         /** Event */
         MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onAfterInitialise');
+        MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
     }
 
     /**
@@ -232,7 +232,7 @@ class MolajoApplication
 
         /** trigger onAfterRoute Event */
         MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onAfterRoute');
+        MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
     }
 
     /**
@@ -367,7 +367,7 @@ class MolajoApplication
 
             /** Events */
             MolajoPlugin::importPlugin('system');
-            $this->triggerEvent('onAfterDispatch');
+            MolajoFactory::getApplication()->triggerEvent('onAfterDispatch');
         }
 
         catch (Exception $e)

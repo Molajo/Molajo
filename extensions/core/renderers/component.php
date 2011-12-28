@@ -129,19 +129,12 @@ echo $name;
         $this->attributes = $attributes;
 
         /** set up request for MVC */
-        $this->request();
+        $request = $this->request();
 
         /** Events */
         MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onBeforeComponentRender');
+        MolajoFactory::getApplication()->triggerEvent('onBeforeComponentRender');
 
-        $request = array();
-        foreach ($this->config as $name => $value) {
-            $request[$name] = $value;
-        }
-        echo 'request coming';
-        var_dump($request);
-        die;
         /** path */
         $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->option . '/' . $this->option . '.php';
 
@@ -150,7 +143,7 @@ echo $name;
             && file_exists($path)
         ) {
 
-            /** language */
+        /** language */
         } elseif (file_exists($path)
         ) {
             //            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
@@ -158,7 +151,7 @@ echo $name;
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
-        //echo '<pre>';var_dump($request);'</pre>';
+        echo '<pre>';var_dump($request);'</pre>';
 
         /** execute the component */
         ob_start();
@@ -168,7 +161,7 @@ echo $name;
 
         /** Events */
         MolajoPlugin::importPlugin('system');
-        $this->triggerEvent('onAfterComponentRender');
+        MolajoFactory::getApplication()->triggerEvent('onAfterComponentRender');
 
         /** Return output */
         return $output;
@@ -224,7 +217,7 @@ echo $name;
             if ($results === false) {
                 $view = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_VIEWS_DEFAULT);
                 if ($view === false) {
-                    $this->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
+                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_VIEWS_DEFAULT_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -266,7 +259,7 @@ echo $name;
                     $layout = $molajoConfig->getOptionValue(MOLAJO_EXTENSION_OPTION_ID_LAYOUTS_DISPLAY_DEFAULT);
                 }
                 if ($layout === false) {
-                    $this->setMessage(MolajoTextHelper::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
+                    MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('MOLAJO_NO_DEFAULT_LAYOUT_FOR_VIEW_DEFINED'), 'error');
                     return false;
                 }
             }
@@ -364,9 +357,21 @@ echo $name;
         $session->set('page.model', $model);
         $session->set('page.layout', $layout);
 
-        $session->set('page.wrap', $this->parameters->wrap);
-        $session->set('page.wrap_id', '');
-        $session->set('page.wrap_class', '');
+        if (isset($this->attributes->wrap)) {
+            $session->set('page.wrap', $this->attributes->wrap);
+        } else {
+            $session->set('page.wrap', 'none');
+        }
+        if (isset($this->attributes->wrap)) {
+            $session->set('page.wrap_id', $this->attributes->wrap_id);
+        } else {
+            $session->set('page.wrap_id', '');
+        }
+        if (isset($this->attributes->wrap_class)) {
+            $session->set('page.wrap_class', $this->attributes->wrap_class);
+        } else {
+            $session->set('page.wrap_cass', 'none');
+        }
 
         $session->set('page.layout_type', 'extension');
         $session->set('page.task', $task);

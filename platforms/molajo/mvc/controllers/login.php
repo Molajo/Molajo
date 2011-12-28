@@ -206,7 +206,7 @@ class MolajoControllerLogin extends MolajoController
         MolajoPlugin::importPlugin('user');
 
         // OK, the credentials are built. Lets fire the onLogout event.
-        $results = $this->triggerEvent('onUserLogout', array($parameters, $options));
+        $results = MolajoFactory::getApplication()->triggerEvent('onUserLogout', array($parameters, $options));
 
         // Check if any of the plugins failed. If none did, success.
 
@@ -221,7 +221,7 @@ class MolajoControllerLogin extends MolajoController
         }
 
         // Trigger onUserLoginFailure Event.
-        $this->triggerEvent('onUserLogoutFailure', array($parameters));
+        MolajoFactory::getApplication()->triggerEvent('onUserLogoutFailure', array($parameters));
 
         return false;
     }
