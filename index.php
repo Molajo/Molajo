@@ -170,6 +170,8 @@ JDEBUG ? $_PROFILER->mark('afterSiteLoad') : null;
  */
 $app = MolajoFactory::getApplication(MOLAJO_APPLICATION);
 JDEBUG ? $_PROFILER->mark('afterGetApplication') : null;
+//echo $app->get('execution.datetime').'<br />';
+//echo MolajoFactory::getApplication()->get('execution.datetime');
 
 /**
  *  Load the Application

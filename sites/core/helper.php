@@ -39,7 +39,6 @@ class MolajoSiteHelper
      */
     public static function getSiteInfo($id = null)
     {
-
         if ($id == null) {
             $id = MOLAJO_SITE_ID;
         }

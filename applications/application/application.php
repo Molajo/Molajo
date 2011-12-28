@@ -33,24 +33,6 @@ class MolajoApplication
     public $client;
 
     /**
-     * @var    string  Character encoding 
-     * @since  1.0
-     */
-    public $charset = 'utf-8';
-
-    /**
-     * @var    string  Response mime type.
-     * @since  1.0
-     */
-    public $mimetype = 'text/html';
-
-    /**
-     * @var    Date   Response last modified value
-     * @since  1.0
-     */
-    public $last_modified;
-
-    /**
      * @var    object  The application dispatcher object.
      * @since  1.0
      */
@@ -79,6 +61,24 @@ class MolajoApplication
      * @since  1.0
      */
     protected $response;
+
+    /**
+     * @var    string  Character encoding 
+     * @since  1.0
+     */
+    public $charset = 'utf-8';
+
+    /**
+     * @var    string  Response mime type.
+     * @since  1.0
+     */
+    public $mimetype = 'text/html';
+
+    /**
+     * @var    Date   Response last modified value
+     * @since  1.0
+     */
+    public $last_modified;
 
     /**
      * Class constructor.
@@ -178,7 +178,6 @@ class MolajoApplication
      */
     public function load()
     {
-
         /** Site authorisation */
         $site = new MolajoSite ();
         $authorise = $site->authorise(MOLAJO_APPLICATION_ID);
@@ -191,7 +190,7 @@ class MolajoApplication
         $this->loadLanguage();
         $this->loadDispatcher();
 
-        /** extension layer */
+        /** execute the extension layer */
         $extension = new MolajoExtension();
         $extension->load();
 
@@ -202,93 +201,25 @@ class MolajoApplication
     }
 
     /**
-     * setMetaData
-     *
-     * Sets or alters a meta tag.
-     *
-     * @param   string   $name        Value of name or http-equiv tag
-     * @param   string   $content     Value of the content tag
-     * @param   bool     $http_equiv  META type "http-equiv" defaults to null
-     * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
-     *
-     * @return  void
-     * @since   1.0
-     */
-    public function setMetaData($name, $content, $http_equiv = false, $sync = true)
-    {
-        $name = strtolower($name);
-
-        if ($name == 'generator') {
-            $this->setGenerator($content);
-
-        } else if ($name == 'description') {
-            $this->setDescription($content);
-
-        } else {
-            if ($http_equiv == true) {
-                $this->_metaTags['http-equiv'][$name] = $content;
-
-                // Syncing with HTTP-header
-                if ($sync && strtolower($name) == 'content-type') {
-                    $this->setMimeEncoding($content, false);
-                }
-
-            } else {
-                $this->_metaTags['standard'][$name] = $content;
-            }
-        }
-    }
-
-    /**
-     * getMetaData
-     *
-     * Gets a meta tag.
-     *
-     * @param   string  $name        Value of name or http-equiv tag
-     * @param   bool    $http_equiv  META type "http-equiv" defaults to null
-     *
-     * @return  string
-     * @since   1.0
-     */
-    public function getMetaData($name, $http_equiv = false)
-    {
-        $result = '';
-        $name = strtolower($name);
-        if ($name == 'generator') {
-            $result = $this->getGenerator();
-        }
-        else if ($name == 'description') {
-            $result = $this->getDescription();
-
-        } else {
-            if ($http_equiv == true) {
-                $result = @$this->_metaTags['http-equiv'][$name];
-            } else {
-
-                $result = @$this->_metaTags['standard'][$name];
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * addScript
      *
      * Adds a linked script to the page
      *
-     * @param   string  $url        URL to the linked script
-     * @param   string  $format     Type of script. Defaults to 'text/javascript'
-     * @param   bool    $defer      Adds the defer attribute.
-     * @param   bool    $async      Adds the async attribute.
+     * @param $url
+     * @param string $format
+     * @param bool $defer
+     * @param bool $async
+     * @param int $priority
+     *
      * @return
-     * @since    1.0
+     * @since   1.0
      */
-    public function addScript($url, $format = "text/javascript", $defer = false, $async = false)
+    public function addScript($url, $format = "text/javascript", $defer = false, $async = false, $priority = 500)
     {
         $this->_scripts[$url]['mime'] = $format;
         $this->_scripts[$url]['defer'] = $defer;
         $this->_scripts[$url]['async'] = $async;
+        $this->_scripts[$url]['priority'] = $priority;
     }
 
     /**
@@ -304,11 +235,11 @@ class MolajoApplication
      */
     public function addScriptDeclaration($content, $format = 'text/javascript')
     {
-        if (!isset($this->_script[strtolower($format)])) {
-            $this->_script[strtolower($format)] = $content;
+        if (isset($this->_script[strtolower($format)])) {
+            $this->_script[strtolower($format)] .= chr(13) . $content;
 
         } else {
-            $this->_script[strtolower($format)] .= chr(13) . $content;
+            $this->_script[strtolower($format)] = $content;
         }
     }
 
@@ -317,19 +248,21 @@ class MolajoApplication
      *
      * Adds a linked stylesheet to the page
      *
-     * @param   string  $url      URL to the linked style sheet
-     * @param   string  $format   Mime encoding type
-     * @param   string  $media    Media type that this stylesheet applies to
-     * @param   array   $attribs  Array of attributes
+     * @param string  $url
+     * @param string  $format
+     * @param null    $media
+     * @param array   $attribs
+     * @param int     $priority
      *
      * @return  void
      * @since    1.0
      */
-    public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array())
+    public function addStyleSheet($url, $format = 'text/css', $media = null, $attribs = array(), $priority = 500)
     {
         $this->_styleSheets[$url]['mime'] = $format;
         $this->_styleSheets[$url]['media'] = $media;
         $this->_styleSheets[$url]['attribs'] = $attribs;
+        $this->_styleSheets[$url]['priority'] = $priority;
     }
 
     /**
@@ -457,32 +390,6 @@ class MolajoApplication
     }
 
     /**
-     * setDescription
-     *
-     * Sets the description of the document
-     *
-     * @param  string  $title
-     *
-     * @return void
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * getDescription
-     *
-     * Return the title of the page.
-     *
-     * @return  string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * setLink
      *
      * Sets the document link
@@ -506,6 +413,103 @@ class MolajoApplication
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * setModifiedDate
+     *
+     * Sets the document modified date
+     *
+     * @param  string
+     *
+     * @return  void
+     */
+    public function setModifiedDate($date)
+    {
+        $this->_mdate = $date;
+    }
+
+    /**
+     * getModifiedDate
+     *
+     * Returns the document modified date
+     *
+     * @return string
+     */
+    public function getModifiedDate()
+    {
+        return $this->_mdate;
+    }
+
+    /**
+     * setMetaData
+     *
+     * Sets or alters a meta tag.
+     *
+     * @param   string   $name        Value of name or http-equiv tag
+     * @param   string   $content     Value of the content tag
+     * @param   bool     $http_equiv  META type "http-equiv" defaults to null
+     * @param   bool     $sync        Should http-equiv="content-type" by synced with HTTP-header?
+     *
+     * @return  void
+     * @since   1.0
+     */
+    public function setMetaData($name, $content, $http_equiv = false, $sync = true)
+    {
+        $name = strtolower($name);
+
+        if ($name == 'generator') {
+            $this->setGenerator($content);
+
+        } else if ($name == 'description') {
+            $this->setDescription($content);
+
+        } else {
+            if ($http_equiv == true) {
+                $this->_metaTags['http-equiv'][$name] = $content;
+
+                // Syncing with HTTP-header
+                if ($sync && strtolower($name) == 'content-type') {
+                    $this->setMimeEncoding($content, false);
+                }
+
+            } else {
+                $this->_metaTags['standard'][$name] = $content;
+            }
+        }
+    }
+
+    /**
+     * getMetaData
+     *
+     * Gets a meta tag.
+     *
+     * @param   string  $name        Value of name or http-equiv tag
+     * @param   bool    $http_equiv  META type "http-equiv" defaults to null
+     *
+     * @return  string
+     * @since   1.0
+     */
+    public function getMetaData($name, $http_equiv = false)
+    {
+        $result = '';
+        $name = strtolower($name);
+        if ($name == 'generator') {
+            $result = $this->getGenerator();
+        }
+        else if ($name == 'description') {
+            $result = $this->getDescription();
+
+        } else {
+            if ($http_equiv == true) {
+                $result = @$this->_metaTags['http-equiv'][$name];
+            } else {
+
+                $result = @$this->_metaTags['standard'][$name];
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -535,29 +539,29 @@ class MolajoApplication
     }
 
     /**
-     * setModifiedDate
+     * setDescription
      *
-     * Sets the document modified date
+     * Sets the description of the document
      *
-     * @param  string
+     * @param  string  $title
      *
-     * @return  void
+     * @return void
      */
-    public function setModifiedDate($date)
+    public function setDescription($description)
     {
-        $this->_mdate = $date;
+        $this->description = $description;
     }
 
     /**
-     * getModifiedDate
+     * getDescription
      *
-     * Returns the document modified date
+     * Return the title of the page.
      *
-     * @return string
+     * @return  string
      */
-    public function getModifiedDate()
+    public function getDescription()
     {
-        return $this->_mdate;
+        return $this->description;
     }
 
     /**
@@ -1046,7 +1050,8 @@ class MolajoApplication
      */
     public function sendHeaders()
     {
-        if (!$this->checkHeadersSent()) {
+        if ($this->checkHeadersSent()) {
+        } else {
             foreach ($this->response->headers as $header)
             {
                 if ('status' == strtolower($header['name'])) {
