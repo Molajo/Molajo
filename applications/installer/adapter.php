@@ -73,7 +73,7 @@ class MolajoAdapter extends JObject
         $this->_classprefix = $classprefix ? $classprefix : 'Molajo';
         $this->_adapterfolder = $adapterfolder ? $adapterfolder : 'adapters';
 
-        $this->_db = MolajoFactory::getDbo();
+        $this->db = MolajoFactory::getDbo();
     }
 
     /**
@@ -85,7 +85,7 @@ class MolajoAdapter extends JObject
      */
     public function getDbo()
     {
-        return $this->_db;
+        return $this->db;
     }
 
     /**
@@ -116,7 +116,7 @@ class MolajoAdapter extends JObject
                 return false;
             }
 
-            $adapter = new $class($this, $this->_db, $options);
+            $adapter = new $class($this, $this->db, $options);
         }
 
         $this->_adapters[$name] = &$adapter;
@@ -173,7 +173,7 @@ class MolajoAdapter extends JObject
                     continue; // skip to next one
                 }
 
-                $adapter = new $class($this, $this->_db, $options);
+                $adapter = new $class($this, $this->db, $options);
                 $this->_adapters[$name] = clone $adapter;
             }
         }

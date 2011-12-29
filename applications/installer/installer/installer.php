@@ -756,7 +756,7 @@ class MolajoInstaller extends MolajoAdapter
     public function parseQueries($element)
     {
         // Get the database connector object
-        $db = & $this->_db;
+        $db = & $this->db;
 
         if (!$element || !count($element->children())) {
             // Either the tag does not exist or has no children therefore we return zero files processed.
@@ -804,7 +804,7 @@ class MolajoInstaller extends MolajoAdapter
 
         // Initialise variables.
         $queries = array();
-        $db = & $this->_db;
+        $db = & $this->db;
         $dbDriver = strtolower($db->name);
 
         if ($dbDriver == 'mysqli') {

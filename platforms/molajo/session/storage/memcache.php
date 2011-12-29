@@ -81,11 +81,11 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
      */
     public function open($save_path, $session_name)
     {
-        $this->_db = new Memcache;
+        $this->db = new Memcache;
         for ($i = 0, $n = count($this->_servers); $i < $n; $i++)
         {
             $server = $this->_servers[$i];
-            $this->_db->addServer($server['host'], $server['port'], $this->_persistent);
+            $this->db->addServer($server['host'], $server['port'], $this->_persistent);
         }
         return true;
     }
@@ -97,7 +97,7 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
      */
     public function close()
     {
-        return $this->_db->close();
+        return $this->db->close();
     }
 
     /**
@@ -112,7 +112,7 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
     {
         $sess_id = 'sess_' . $id;
         $this->_setExpire($sess_id);
-        return $this->_db->get($sess_id);
+        return $this->db->get($sess_id);
     }
 
     /**
@@ -126,15 +126,15 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
     public function write($id, $session_data)
     {
         $sess_id = 'sess_' . $id;
-        if ($this->_db->get($sess_id . '_expire')) {
-            $this->_db->replace($sess_id . '_expire', time(), 0);
+        if ($this->db->get($sess_id . '_expire')) {
+            $this->db->replace($sess_id . '_expire', time(), 0);
         } else {
-            $this->_db->set($sess_id . '_expire', time(), 0);
+            $this->db->set($sess_id . '_expire', time(), 0);
         }
-        if ($this->_db->get($sess_id)) {
-            $this->_db->replace($sess_id, $session_data, $this->_compress);
+        if ($this->db->get($sess_id)) {
+            $this->db->replace($sess_id, $session_data, $this->_compress);
         } else {
-            $this->_db->set($sess_id, $session_data, $this->_compress);
+            $this->db->set($sess_id, $session_data, $this->_compress);
         }
         return;
     }
@@ -150,8 +150,8 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
     public function destroy($id)
     {
         $sess_id = 'sess_' . $id;
-        $this->_db->delete($sess_id . '_expire');
-        return $this->_db->delete($sess_id);
+        $this->db->delete($sess_id . '_expire');
+        return $this->db->delete($sess_id);
     }
 
     /**
@@ -186,14 +186,14 @@ class MolajoSessionStorageMemcache extends MolajoSessionStorage
     protected function _setExpire($key)
     {
         $lifetime = ini_get("session.gc_maxlifetime");
-        $expire = $this->_db->get($key . '_expire');
+        $expire = $this->db->get($key . '_expire');
 
         // set prune period
         if ($expire + $lifetime < time()) {
-            $this->_db->delete($key);
-            $this->_db->delete($key . '_expire');
+            $this->db->delete($key);
+            $this->db->delete($key . '_expire');
         } else {
-            $this->_db->replace($key . '_expire', time());
+            $this->db->replace($key . '_expire', time());
         }
     }
 }

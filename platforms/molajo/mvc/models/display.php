@@ -194,18 +194,18 @@ class MolajoModelDisplay extends MolajoModel
 //        }
 
         /** list limit **/
-        $limit = (int)MolajoFactory::getApplication()->getUserStateFromRequest('global.list.limit', 'limit',
+        $limit = (int)MolajoFactory::getUser()->getUserStateFromRequest('global.list.limit', 'limit',
                                                                                MolajoFactory::getApplication()->get('list_limit'));
         $this->setState('list.limit', (int)$limit);
 
         /** list start **/
-        $value = MolajoFactory::getApplication()->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
+        $value = MolajoFactory::getUser()->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
         $limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
         $this->setState('list.start', (int)$limitstart);
 
         /** ordering by field **/
         $ordering = 'a.title';
-        $value = MolajoFactory::getApplication()->getUserStateFromRequest($this->context . '.ordercol', 'filter_order', $ordering);
+        $value = MolajoFactory::getUser()->getUserStateFromRequest($this->context . '.ordercol', 'filter_order', $ordering);
         if (strpos($value, 'a.')) {
             $searchValue = substr($value, (strpos($value, 'a.') + 1), strlen($value) - strpos($value, 'a.'));
         } else {
@@ -216,7 +216,7 @@ class MolajoModelDisplay extends MolajoModel
         } else {
             $ordering = 'a.title';
         }
-        MolajoFactory::getApplication()->setUserState($this->context . '.ordercol', $ordering);
+        MolajoFactory::getUser()->setUserState($this->context . '.ordercol', $ordering);
 
         $this->setState('list.ordering', $value);
 
@@ -228,11 +228,11 @@ class MolajoModelDisplay extends MolajoModel
 
         /** ordering direction **/
         $direction = 'ASC';
-        $value = MolajoFactory::getApplication()->getUserStateFromRequest($this->context . '.orderdirn', 'filter_order_Dir', $direction);
+        $value = MolajoFactory::getUser()->getUserStateFromRequest($this->context . '.orderdirn', 'filter_order_Dir', $direction);
         if (in_array(strtoupper($value), array('ASC', 'DESC', ''))) {
         } else {
             $value = $direction;
-            MolajoFactory::getApplication()->setUserState($this->context . '.orderdirn', $value);
+            MolajoFactory::getUser()->setUserState($this->context . '.orderdirn', $value);
         }
         $this->setState('list.direction', $value);
 
@@ -283,20 +283,6 @@ class MolajoModelDisplay extends MolajoModel
         $this->setState('filter.' . $filterName, $filterValue);
 
         return true;
-    }
-
-    /**
-     * Method to set model state variables
-     *
-     * @param   string  $property    The name of the property
-     * @param   mixed   $value        The value of the property to set
-     *
-     * @return  mixed   The previous value of the property
-     * @since   1.0
-     */
-    public function setState($property, $value = null)
-    {
-        return $this->state->set($property, $value);
     }
 
     /**
@@ -352,12 +338,12 @@ class MolajoModelDisplay extends MolajoModel
         $query = $this->getListQueryCache();
 
         /** run query **/
-        $this->_db->setQuery($query, $this->getStart(), $this->getState('list.limit'));
-        $items = $this->_db->loadObjectList();
+        $this->db->setQuery($query, $this->getStart(), $this->getState('list.limit'));
+        $items = $this->db->loadObjectList();
 
         /** error handling */
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
+        if ($this->db->getErrorNum()) {
+            $this->setError($this->db->getErrorMsg());
             return false;
         }
 
@@ -365,8 +351,8 @@ class MolajoModelDisplay extends MolajoModel
         $this->dispatcher->trigger('onQueryAfterQuery', array(&$this->state, &$items, &$this->parameters));
 
         /** publish dates (if the user is not able to see unpublished - and the dates prevent publishing) **/
-        $nullDate = $this->_db->Quote($this->_db->getNullDate());
-        $nowDate = $this->_db->Quote(MolajoFactory::getDate()->toMySQL());
+        $nullDate = $this->db->Quote($this->db->getNullDate());
+        $nowDate = $this->db->Quote(MolajoFactory::getDate()->toMySQL());
 
         /** retrieve names of json fields for this type of content **/
         $jsonFields = $this->molajoConfig->getOptionList(MOLAJO_EXTENSION_OPTION_ID_JSON_FIELDS);
@@ -572,7 +558,7 @@ class MolajoModelDisplay extends MolajoModel
     function getListQuery()
     {
         /** retrieve JDatabaseQuery object */
-        $this->query = $this->_db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
         /** Process each field that is 1) required 2) selected for display and 3) selected as a filter **/
         $nameArray = array();
@@ -599,7 +585,7 @@ class MolajoModelDisplay extends MolajoModel
 //        $subQuery = ' SELECT parent.id, MIN(parent.published) AS published ';
 //        $subQuery .= ' FROM #__categories AS cat ';
 //        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-//        $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
+//        $subQuery .= ' WHERE parent.extension = ' . $this->db->quote($this->request['option']);
 //        $subQuery .= '   AND cat.published > ' . MOLAJO_STATUS_VERSION;
 //        $subQuery .= '   AND parent.published > ' . MOLAJO_STATUS_VERSION;
 //        $subQuery .= ' GROUP BY parent.id ';
@@ -610,7 +596,7 @@ class MolajoModelDisplay extends MolajoModel
 //        $subQuery = ' SELECT parent.id, MAX(parent.published) AS published ';
 //        $subQuery .= ' FROM #__categories AS cat ';
 //        $subQuery .= ' JOIN #__categories AS parent ON cat.lft BETWEEN parent.lft AND parent.rgt ';
-//       $subQuery .= ' WHERE parent.extension = ' . $this->_db->quote($this->request['option']);
+//       $subQuery .= ' WHERE parent.extension = ' . $this->db->quote($this->request['option']);
 //        $subQuery .= ' GROUP BY parent.id ';
 //        $this->query->join(' LEFT OUTER', '(' . $subQuery . ') AS maximumState ON maximumState.id = c.id ');
 
@@ -631,7 +617,7 @@ class MolajoModelDisplay extends MolajoModel
 //        if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
 //            $orderCol = 'category_title ' . $orderDirn . ', a.ordering';
 //        }
-        $this->query->order($this->_db->getEscaped($orderCol . ' ' . $orderDirn));
+        $this->query->order($this->db->getEscaped($orderCol . ' ' . $orderDirn));
 
         /** pass query object to event */
         $this->dispatcher->trigger('onQueryBeforeQuery', array(&$this->state, &$this->query, &$this->parameters));
@@ -688,13 +674,13 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** get total of items returned from the last query **/
-        $this->_db->setQuery($this->getListQueryCache());
-        $this->_db->query();
+        $this->db->setQuery($this->getListQueryCache());
+        $this->db->query();
 
-        $total = (int)$this->_db->getNumRows();
+        $total = (int)$this->db->getNumRows();
 
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
+        if ($this->db->getErrorNum()) {
+            $this->setError($this->db->getErrorMsg());
             return false;
         }
 
@@ -783,17 +769,17 @@ class MolajoModelDisplay extends MolajoModel
      */
     public function getAuthors()
     {
-        $this->query = $this->_db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
         $this->query->select('u.id AS value, u.name AS text');
         $this->query->from('#__users AS u');
-        $this->query->join('INNER', $this->_db->namequote('#' . $this->request['component_table']) . ' AS c ON c.created_by = u.id');
+        $this->query->join('INNER', $this->db->namequote('#' . $this->request['component_table']) . ' AS c ON c.created_by = u.id');
         $this->query->group('u.id');
         $this->query->order('u.name');
 
-        $this->_db->setQuery($this->query->__toString());
+        $this->db->setQuery($this->query->__toString());
 
-        return $this->_db->loadObjectList();
+        return $this->db->loadObjectList();
     }
 
     /**
@@ -858,26 +844,26 @@ class MolajoModelDisplay extends MolajoModel
      */
     public function getMonths($columnName, $table = null)
     {
-        $this->query = $this->_db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
-        $this->query->select('DISTINCT CONCAT(SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 1, 4),
-                                            SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 6, 2)) AS value,
-                                            SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 1, 7) AS text');
+        $this->query->select('DISTINCT CONCAT(SUBSTRING(a.' . $this->db->namequote($columnName) . ', 1, 4),
+                                            SUBSTRING(a.' . $this->db->namequote($columnName) . ', 6, 2)) AS value,
+                                            SUBSTRING(a.' . $this->db->namequote($columnName) . ', 1, 7) AS text');
 
         if ($table == null) {
             $this->queryTable = '#' . $this->request['component_table'];
         } else {
             $this->queryTable = $table;
         }
-        $this->query->from($this->_db->namequote($this->queryTable) . ' AS a');
-        $this->query->group('SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 1, 4),
-                                            SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 6, 2),
-                                            SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 1, 7)');
-        $this->query->order('SUBSTRING(a.' . $this->_db->namequote($columnName) . ', 1, 7)');
+        $this->query->from($this->db->namequote($this->queryTable) . ' AS a');
+        $this->query->group('SUBSTRING(a.' . $this->db->namequote($columnName) . ', 1, 4),
+                                            SUBSTRING(a.' . $this->db->namequote($columnName) . ', 6, 2),
+                                            SUBSTRING(a.' . $this->db->namequote($columnName) . ', 1, 7)');
+        $this->query->order('SUBSTRING(a.' . $this->db->namequote($columnName) . ', 1, 7)');
 
-        $this->_db->setQuery($this->query->__toString());
+        $this->db->setQuery($this->query->__toString());
 
-        return $this->_db->loadObjectList();
+        return $this->db->loadObjectList();
     }
 
     /**
@@ -896,19 +882,19 @@ class MolajoModelDisplay extends MolajoModel
     {
         $this->parameters = MolajoComponent::getParameters($this->request['option']);
 
-        $this->query = $this->_db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
         /** select **/
         if ($showKey == true) {
             if ($showKeyFirst == true) {
-                $nameArray2 = 'CONCAT(' . $this->_db->namequote($name1) . ', ": ",' . $this->_db->namequote($name2) . ' )';
+                $nameArray2 = 'CONCAT(' . $this->db->namequote($name1) . ', ": ",' . $this->db->namequote($name2) . ' )';
             } else {
-                $nameArray2 = 'CONCAT(' . $this->_db->namequote($name2) . ', " (",' . $this->_db->namequote($name1) . ', ")")';
+                $nameArray2 = 'CONCAT(' . $this->db->namequote($name2) . ', " (",' . $this->db->namequote($name1) . ', ")")';
             }
         } else {
             $nameArray2 = $name2;
         }
-        $this->query->select('DISTINCT ' . $this->_db->namequote($name1) . ' AS value, ' . $nameArray2 . ' as text');
+        $this->query->select('DISTINCT ' . $this->db->namequote($name1) . ' AS value, ' . $nameArray2 . ' as text');
 
         /** from **/
         if ($table == null) {
@@ -916,7 +902,7 @@ class MolajoModelDisplay extends MolajoModel
         } else {
             $this->queryTable = $table;
         }
-        $this->query->from($this->_db->namequote($this->queryTable) . ' AS a');
+        $this->query->from($this->db->namequote($this->queryTable) . ' AS a');
 
         /** where **/
         $this->filterFieldName = JRequest::getCmd('filterFieldName', 'config_manager_list_filters') . '_query_filters';
@@ -952,8 +938,11 @@ class MolajoModelDisplay extends MolajoModel
         }
 
         /** run query and return results **/
-        $this->_db->setQuery($this->query->__toString());
-        return $this->_db->loadObjectList();
+        $this->db->setQuery($this->query->__toString());
+        return $this->db->loadObjectList();
+        //$this->db->setQuery($query, $limitstart, $limit);
+        //$result = $this->db->loadObjectList();
+        //return $result;
     }
 
     /**
@@ -996,26 +985,26 @@ class MolajoModelDisplay extends MolajoModel
      */
     public function validateValue($columnName, $value, $valueType, $table = null)
     {
-        $this->query = $this->_db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
-        $this->query->select('DISTINCT ' . $this->_db->namequote($columnName) . ' as value');
+        $this->query->select('DISTINCT ' . $this->db->namequote($columnName) . ' as value');
 
         if ($table == null) {
-            $this->query->from($this->_db->namequote('#' . $this->request['component_table']));
+            $this->query->from($this->db->namequote('#' . $this->request['component_table']));
         } else {
-            $this->query->from($this->_db->namequote($table));
+            $this->query->from($this->db->namequote($table));
         }
 
         if ($valueType == 'numeric') {
-            $this->query->where($this->_db->namequote($columnName) . ' = ' . (int)$value);
+            $this->query->where($this->db->namequote($columnName) . ' = ' . (int)$value);
         } else {
-            $this->query->where($this->_db->namequote($columnName) . ' = ' . $this->_db->quote($value));
+            $this->query->where($this->db->namequote($columnName) . ' = ' . $this->db->quote($value));
         }
 
-        $this->_db->setQuery($this->query->__toString());
+        $this->db->setQuery($this->query->__toString());
 
-        if (!$results = $this->_db->loadObjectList()) {
-            MolajoFactory::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
+        if (!$results = $this->db->loadObjectList()) {
+            MolajoFactory::getApplication()->setMessage($this->db->getErrorMsg(), 'error');
             return false;
         }
 
@@ -1041,23 +1030,23 @@ class MolajoModelDisplay extends MolajoModel
      */
     public function checkCategories($categoryArray)
     {
-        $this->query = $this->_db->getQuery(true);
+        $this->query = $this->db->getQuery(true);
 
         $this->query->select('DISTINCT id');
-        $this->query->from($this->_db->namequote('#__categories'));
+        $this->query->from($this->db->namequote('#__categories'));
 
         /** category array **/
         JArrayHelper::toInteger($categoryArray);
         if (empty($categoryArray)) {
             return;
         }
-        $this->query->where($this->_db->namequote('id') . ' IN (' . $categoryArray . ')');
-        $this->query->where($this->_db->namequote('extension') . ' = ' . $this->_db->quote($this->request['option']));
+        $this->query->where($this->db->namequote('id') . ' IN (' . $categoryArray . ')');
+        $this->query->where($this->db->namequote('extension') . ' = ' . $this->db->quote($this->request['option']));
 
-        $this->_db->setQuery($this->query->__toString());
+        $this->db->setQuery($this->query->__toString());
 
-        if (!$results = $this->_db->loadObjectList()) {
-            MolajoFactory::getApplication()->setMessage($this->_db->getErrorMsg(), 'error');
+        if (!$results = $this->db->loadObjectList()) {
+            MolajoFactory::getApplication()->setMessage($this->db->getErrorMsg(), 'error');
             return false;
         }
 

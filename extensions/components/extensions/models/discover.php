@@ -35,10 +35,10 @@ class InstallerModelDiscover extends InstallerModel
     protected function populateState($ordering = null, $direction = null)
     {
 
-        $this->setState('message', MolajoFactory::getApplication()->getUserState('installer.message'));
-        $this->setState('extension_message', MolajoFactory::getApplication()->getUserState('installer.extension_message'));
-        MolajoFactory::getApplication()->setUserState('installer.message', '');
-        MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoFactory::getUser()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoFactory::getUser()->getUserState('installer.extension_message'));
+        MolajoFactory::getUser()->setUserState('installer.message', '');
+        MolajoFactory::getUser()->setUserState('installer.extension_message', '');
         parent::populateState('name', 'asc');
     }
 
@@ -120,8 +120,8 @@ class InstallerModelDiscover extends InstallerModel
             }
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
-            MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
-            MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
+            MolajoFactory::getUser()->setUserState('installer.message', $installer->message);
+            MolajoFactory::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
             if (!$failed) {
                 MolajoFactory::getApplication()->setMessage(MolajoTextHelper::_('INSTALLER_MSG_DISCOVER_INSTALLSUCCESSFUL'));
             }

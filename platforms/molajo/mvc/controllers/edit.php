@@ -241,7 +241,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** Preparation: Save form or version data **/
-        MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
+        MolajoFactory::getUser()->setUserState(JRequest::getInt('datakey'), $data);
         $context = $this->data['option'] . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . $task . '.' . JRequest::getInt('datakey');
 
         /** Edit: verify checkout **/
@@ -274,11 +274,11 @@ class MolajoControllerEdit extends MolajoController
                     MolajoFactory::getApplication()->setMessage($errors[$e], 'warning');
                 }
             }
-            MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $data);
+            MolajoFactory::getUser()->setUserState(JRequest::getInt('datakey'), $data);
             return $this->redirectClass->setSuccessIndicator(false);
         }
 
-        MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), $validData);
+        MolajoFactory::getUser()->setUserState(JRequest::getInt('datakey'), $validData);
 
         /** Trigger_Event: onContentValidateForm **/
         /** Molajo_Note: onContentValidateForm is a new event that follows the primary source validation **/
@@ -335,7 +335,7 @@ class MolajoControllerEdit extends MolajoController
         }
 
         /** clear session data **/
-        MolajoFactory::getApplication()->setUserState(JRequest::getInt('datakey'), null);
+        MolajoFactory::getUser()->setUserState(JRequest::getInt('datakey'), null);
 
         /** Molajo_Note: Testing added to ensure state change before onContentChangeState event is triggered  **/
         if ($this->existingState == $validData->state || $this->isNew) {

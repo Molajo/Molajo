@@ -155,7 +155,7 @@ class MolajoModelEdit extends MolajoModel
     {
         $datakey = JRequest::getInt('datakey');
         if ((int)$datakey > 0) {
-            $data = MolajoFactory::getApplication()->getUserState($datakey, array());
+            $data = MolajoFactory::getUser()->getUserState($datakey, array());
         }
         $formName = JRequest::getVar('option') . '.' . JRequest::getCmd('view') . '.' . JRequest::getCmd('layout') . '.' . JRequest::getCmd('task') . '.' . JRequest::getInt('id') . '.' . JRequest::getVar('datakey');
 
@@ -223,13 +223,13 @@ class MolajoModelEdit extends MolajoModel
     {
         $datakey = JRequest::getInt('datakey');
         if ((int)$datakey > 0) {
-            $data = MolajoFactory::getApplication()->getUserState($datakey, array());
+            $data = MolajoFactory::getUser()->getUserState($datakey, array());
         }
 
         if (empty($data)) {
             $data = $this->getItem();
         } else {
-            MolajoFactory::getApplication()->setUserState($datakey, null);
+            MolajoFactory::getUser()->setUserState($datakey, null);
             JRequest::setVar('datakey', null);
         }
         return $data;

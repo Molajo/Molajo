@@ -57,10 +57,10 @@ class InstallerModelUpdate extends JModelList
     protected function populateState($ordering = null, $direction = null)
     {
         $app = MolajoFactory::getApplication('administrator');
-        $this->setState('message', MolajoFactory::getApplication()->getUserState('installer.message'));
-        $this->setState('extension_message', MolajoFactory::getApplication()->getUserState('installer.extension_message'));
-        MolajoFactory::getApplication()->setUserState('installer.message', '');
-        MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoFactory::getUser()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoFactory::getUser()->getUserState('installer.extension_message'));
+        MolajoFactory::getUser()->setUserState('installer.message', '');
+        MolajoFactory::getUser()->setUserState('installer.extension_message', '');
         parent::populateState('name', 'asc');
     }
 
@@ -223,8 +223,8 @@ class InstallerModelUpdate extends JModelList
         // TODO: Reconfigure this code when you have more battery life left
         $this->setState('name', $installer->get('name'));
         $this->setState('result', $result);
-        MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
-        MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
+        MolajoFactory::getUser()->setUserState('installer.message', $installer->message);
+        MolajoFactory::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
 
         // Cleanup the install files
         if (!is_file($package['packagefile'])) {

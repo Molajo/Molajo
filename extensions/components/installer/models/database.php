@@ -23,7 +23,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
     {
         parent::__construct($properties);
 
-        $this->_db = MolajoFactory::getDDbo();
+        $this->db = MolajoFactory::getDDbo();
     }
 
     function initialise($options)
@@ -361,12 +361,12 @@ class InstallerModelDatabase extends InstallerModelDisplay
         $backup = 'bak_' . $prefix;
 
         // Get the tables in the database.
-        $this->_db->setQuery(
+        $this->db->setQuery(
             'SHOW TABLES' .
-            ' FROM ' . $this->_db->nameQuote($database)
+            ' FROM ' . $this->db->nameQuote($database)
         );
 
-        if ($tables = $this->_db->loadResultArray()) {
+        if ($tables = $this->db->loadResultArray()) {
             foreach ($tables as $table)
             {
                 // If the table uses the given prefix, back it up.
@@ -376,26 +376,26 @@ class InstallerModelDatabase extends InstallerModelDisplay
                     $backupTable = str_replace($prefix, $backup, $table);
 
                     // Drop the backup table.
-                    $this->_db->setQuery(
-                        'DROP TABLE IF EXISTS ' . $this->_db->nameQuote($backupTable)
+                    $this->db->setQuery(
+                        'DROP TABLE IF EXISTS ' . $this->db->nameQuote($backupTable)
                     );
-                    $this->_db->query();
+                    $this->db->query();
 
                     // Check for errors.
-                    if ($this->_db->getErrorNum()) {
-                        $this->setError($this->_db->getErrorMsg());
+                    if ($this->db->getErrorNum()) {
+                        $this->setError($this->db->getErrorMsg());
                         $return = false;
                     }
 
                     // Rename the current table to the backup table.
-                    $this->_db->setQuery(
-                        'RENAME TABLE ' . $this->_db->nameQuote($table) . ' TO ' . $this->_db->nameQuote($backupTable)
+                    $this->db->setQuery(
+                        'RENAME TABLE ' . $this->db->nameQuote($table) . ' TO ' . $this->db->nameQuote($backupTable)
                     );
-                    $this->_db->query();
+                    $this->db->query();
 
                     // Check for errors.
-                    if ($this->_db->getErrorNum()) {
-                        $this->setError($this->_db->getErrorMsg());
+                    if ($this->db->getErrorNum()) {
+                        $this->setError($this->db->getErrorMsg());
                         $return = false;
                     }
                 }
@@ -459,23 +459,23 @@ class InstallerModelDatabase extends InstallerModelDisplay
 
 
         // Get the tables in the database.
-        $this->_db->setQuery(
-            'SHOW TABLES FROM ' . $this->_db->nameQuote($name)
+        $this->db->setQuery(
+            'SHOW TABLES FROM ' . $this->db->nameQuote($name)
         );
-        if ($tables = $this->_db->loadResultArray()) {
+        if ($tables = $this->db->loadResultArray()) {
             foreach ($tables as $table)
             {
                 // If the table uses the given prefix, drop it.
                 if (strpos($table, $prefix) === 0) {
                     // Drop the table.
-                    $this->_db->setQuery(
-                        'DROP TABLE IF EXISTS ' . $this->_db->nameQuote($table)
+                    $this->db->setQuery(
+                        'DROP TABLE IF EXISTS ' . $this->db->nameQuote($table)
                     );
-                    $this->_db->query();
+                    $this->db->query();
 
                     // Check for errors.
-                    if ($this->_db->getErrorNum()) {
-                        $this->setError($this->_db->getErrorMsg());
+                    if ($this->db->getErrorNum()) {
+                        $this->setError($this->db->getErrorMsg());
                         $return = false;
                     }
                 }
@@ -501,7 +501,7 @@ class InstallerModelDatabase extends InstallerModelDisplay
 
         // Get the contents of the schema file.
         if (!($buffer = file_get_contents($schema))) {
-            $this->setError($this->_db->getErrorMsg());
+            $this->setError($this->db->getErrorMsg());
             return false;
         }
 
@@ -515,12 +515,12 @@ class InstallerModelDatabase extends InstallerModelDisplay
             // If the query isn't empty and is not a comment, execute it.
             if (!empty($query) && ($query{0} != '#')) {
                 // Execute the query.
-                $this->_db->setQuery($query);
-                $this->_db->query();
+                $this->db->setQuery($query);
+                $this->db->query();
 
                 // Check for errors.
-                if ($this->_db->getErrorNum()) {
-                    $this->setError($this->_db->getErrorMsg());
+                if ($this->db->getErrorNum()) {
+                    $this->setError($this->db->getErrorMsg());
                     $return = false;
                 }
             }
@@ -545,16 +545,16 @@ class InstallerModelDatabase extends InstallerModelDisplay
         $database = $conf->get('db');
 
         // Only alter the database if it supports the character set.
-        if ($this->_db->hasUTF()) {
+        if ($this->db->hasUTF()) {
             // Run the create database query.
-            $this->_db->setQuery(
-                'ALTER DATABASE ' . $this->_db->nameQuote($database) . ' CHARACTER' .
+            $this->db->setQuery(
+                'ALTER DATABASE ' . $this->db->nameQuote($database) . ' CHARACTER' .
                 ' SET `utf8`'
             );
-            $this->_db->query();
+            $this->db->query();
 
             // If an error occurred return false.
-            if ($this->_db->getErrorNum()) {
+            if ($this->db->getErrorNum()) {
                 return false;
             }
         }

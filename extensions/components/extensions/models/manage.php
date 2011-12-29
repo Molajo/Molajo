@@ -58,17 +58,17 @@ class InstallerModelManage extends InstallerModel
 
         $filters = JRequest::getVar('filters');
         if (empty($filters)) {
-            $data = MolajoFactory::getApplication()->getUserState($this->context . '.data');
+            $data = MolajoFactory::getUser()->getUserState($this->context . '.data');
             $filters = $data['filters'];
         }
         else {
-            MolajoFactory::getApplication()->setUserState($this->context . '.data', array('filters' => $filters));
+            MolajoFactory::getUser()->setUserState($this->context . '.data', array('filters' => $filters));
         }
 
-        $this->setState('message', MolajoFactory::getApplication()->getUserState('installer.message'));
-        $this->setState('extension_message', MolajoFactory::getApplication()->getUserState('installer.extension_message'));
-        MolajoFactory::getApplication()->setUserState('installer.message', '');
-        MolajoFactory::getApplication()->setUserState('installer.extension_message', '');
+        $this->setState('message', MolajoFactory::getUser()->getUserState('installer.message'));
+        $this->setState('extension_message', MolajoFactory::getUser()->getUserState('installer.extension_message'));
+        MolajoFactory::getUser()->setUserState('installer.message', '');
+        MolajoFactory::getUser()->setUserState('installer.extension_message', '');
 
         $this->setState('filter.search', isset($filters['search']) ? $filters['search'] : '');
         $this->setState('filter.hideprotected', isset($filters['hideprotected']) ? $filters['hideprotected'] : 0);
@@ -229,8 +229,8 @@ class InstallerModelManage extends InstallerModel
             MolajoFactory::getApplication()->setMessage($msg);
             $this->setState('action', 'remove');
             $this->setState('name', $installer->get('name'));
-            MolajoFactory::getApplication()->setUserState('installer.message', $installer->message);
-            MolajoFactory::getApplication()->setUserState('installer.extension_message', $installer->get('extension_message'));
+            MolajoFactory::getUser()->setUserState('installer.message', $installer->message);
+            MolajoFactory::getUser()->setUserState('installer.extension_message', $installer->get('extension_message'));
             return $result;
         } else {
             $result = false;
@@ -262,14 +262,14 @@ class InstallerModelManage extends InstallerModel
             $query->where('enabled=' . intval($enabled));
         }
         if ($type) {
-            $query->where('type=' . $this->_db->Quote($type));
+            $query->where('type=' . $this->db->Quote($type));
         }
         if ($application != '') {
             $query->where('application_id=' . intval($application));
         }
         if ($group != '' && in_array($type, array('plugin', 'library', ''))) {
 
-            $query->where('folder=' . $this->_db->Quote($group == '*' ? '' : $group));
+            $query->where('folder=' . $this->db->Quote($group == '*' ? '' : $group));
         }
 
         // Filter by search in id
@@ -323,7 +323,7 @@ class InstallerModelManage extends InstallerModel
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = MolajoFactory::getApplication()->getUserState('installer.manage.data', array());
+        $data = MolajoFactory::getUser()->getUserState('installer.manage.data', array());
 
         return $data;
     }
