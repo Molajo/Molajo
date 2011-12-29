@@ -18,9 +18,7 @@ defined('MOLAJO') or die;
 class MolajoComponent
 {
     /**
-     * Name
-     *
-     * From MolajoExtension
+     * Name - from MolajoExtension
      *
      * @var    string
      * @since  1.0
@@ -28,9 +26,7 @@ class MolajoComponent
     protected $name = null;
 
     /**
-     * Config
-     *
-     * From MolajoExtension
+     * Config - from MolajoExtension
      *
      * @var    array
      * @since  1.0
@@ -155,10 +151,11 @@ class MolajoComponent
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
+/**
         echo '<pre>';
         var_dump($request);
         '</pre>';
-
+*/
         /** execute the component */
         ob_start();
         require_once $path;
@@ -312,6 +309,7 @@ class MolajoComponent
         } else if ($task == 'edit' || $task == 'restore') {
 
             if ($id > 0 && count($cids) == 0) {
+
             } else if ($id == 0 && count($cids) == 1) {
                 $id = $cids[0];
                 $cids = array();
@@ -344,112 +342,59 @@ class MolajoComponent
             $plugin_type = 'content';
         }
 
-        /** other */
-        //        $extension = JRequest::getCmd('extension', '');
-        //        $component_specific = JRequest::getCmd('component_specific', '');
-
-        /** Page Session Variables */
-        $session = MolajoFactory::getSession();
-
-        $session->set('page.application_id', MOLAJO_APPLICATION_ID);
-        $session->set('page.current_url', MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/' . MOLAJO_PAGE_REQUEST);
-        $session->set('page.base_url', MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH . '/');
-        $session->set('page.item_id', $this->config->id);
-
-        $session->set('page.controller', $controller);
-        $session->set('page.extension_type', 'component');
-        $session->set('page.option', $this->option);
-        $session->set('page.view', $view);
-        $session->set('page.model', $model);
-        $session->set('page.layout', $layout);
-
-        if (isset($this->attributes->wrap)) {
-            $session->set('page.wrap', $this->attributes->wrap);
-        } else {
-            $session->set('page.wrap', 'none');
-        }
-        if (isset($this->attributes->wrap)) {
-            $session->set('page.wrap_id', $this->attributes->wrap_id);
-        } else {
-            $session->set('page.wrap_id', '');
-        }
-        if (isset($this->attributes->wrap_class)) {
-            $session->set('page.wrap_class', $this->attributes->wrap_class);
-        } else {
-            $session->set('page.wrap_cass', '');
-        }
-
-        $session->set('page.layout_type', 'extension');
-        $session->set('page.task', $task);
-        $session->set('page.format', $format);
-        $session->set('page.plugin_type', $plugin_type);
-
-        $session->set('page.id', (int)$id);
-        $session->set('page.cid', (array)$cids);
-        //        $session->set('page.category_id', (int)$category_id);
-
-        $session->set('page.acl_implementation', $acl_implementation);
-        $session->set('page.component_table', $component_table);
-        $session->set('page.component_path', $component_path);
-        $session->set('page.filter_name', 'config_manager_list_filters');
-        $session->set('page.select_name', 'config_manager_grid_column');
-
-        /** other */
-        $session->set('page.extension', $this->option);
-        //        $session->set('page.component_specific', $component_specific);
-
-        /** retrieve from db */
-        //        if ($controller == 'display') {
-        //            $this->getContentInfo();
-        //        }
-
-        /** load into $data array for creation of the request object */
+        /** MVC Request Variables */
         $request = array();
 
-        $request['application_id'] = $session->get('page.application_id');
-        $request['current_url'] = $session->get('page.current_url');
-        $request['component_path'] = $session->get('page.component_path');
-        $request['base_url'] = $session->get('page.base_url');
+        $request['current_url'] = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH;
+        if (MOLAJO_PAGE_REQUEST == '') {
+        } else {
+            $request['current_url'] .= '/' . MOLAJO_PAGE_REQUEST;
+        }
+        $request['base_url'] = MOLAJO_BASE_URL . MOLAJO_APPLICATION_URL_PATH;
+        $request['component_path'] = $component_path;
 
-        $request['extension_type'] = $session->get('page.extension_type');
-        $request['option'] = $session->get('page.option');
+        $request['extension_type'] = $this->name;
+        $request['option'] = $this->option;
+        $request['extension'] = $this->option;
 
-        $request['model'] = $session->get('page.model');
-        $request['view'] = $session->get('page.view');
-        $request['controller'] = $session->get('page.controller');
+        $request['model'] = $model;
+        $request['view'] = $view;
+        $request['controller'] = $controller;
+        $request['task'] = $task;
 
-        $request['layout'] = $session->get('page.layout');
-        $request['format'] = $session->get('page.format');
-        $request['wrap'] = $session->get('page.wrap');
-        $request['wrap_id'] = $session->get('page.wrap_id');
-        $request['wrap_class'] = $session->get('page.wrap_class');
+        $request['template'] = $this->template;
+        $request['page'] = $this->page;
+        $request['layout'] = $layout;
+        $request['format'] = $format;
+        if (isset($this->attributes->wrap)) {
+            $request['page.wrap'] = $this->attributes->wrap;
+        } else {
+            $request['page.wrap'] = 'none';
+        }
+        if (isset($this->attributes->wrap)) {
+            $request['page.wrap_id'] = $this->attributes->wrap_id;
+        } else {
+            $request['page.wrap_id'] = '';
+        }
+        if (isset($this->attributes->wrap)) {
+            $request['page.wrap_class'] = $this->attributes->wrap_class;
+        } else {
+            $request['page.wrap_class'] = '';
+        }
 
-        $request['task'] = $session->get('page.task');
+        $request['plugin_type'] = $plugin_type;
 
-        $request['plugin_type'] = $session->get('page.plugin_type');
+        $request['id'] = (int) $id;
+        $request['cids'] = (array) $cids;
+        $category_id = 0;
+        $request['category_id'] = (int) $category_id;
 
-        $request['id'] = $session->get('page.id');
-        $request['parameters'] = $session->get('page.parameters');
-        $request['extension'] = $session->get('page.extension');
-        $request['component_specific'] = $session->get('page.component_specific');
+        $request['parameters'] = $this->parameters;
 
-        $request['acl_implementation'] = $session->get('page.acl_implementation');
-        $request['component_table'] = $session->get('page.component_table');
-        $request['filter_name'] = $session->get('page.filter_name');
-        $request['select_name'] = $session->get('page.select_name');
-
-        $request['title'] = $session->get('page.title');
-        $request['subtitle'] = $session->get('page.subtitle');
-        $request['metakey'] = $session->get('page.metakey');
-        $request['metadesc'] = $session->get('page.metadesc');
-        $request['metadata'] = $session->get('page.metadata');
-        $request['position'] = $session->get('page.position');
-
-        $request['wrap_title'] = $request['title'];
-        $request['wrap_subtitle'] = $request['subtitle'];
-        $request['wrap_date'] = '';
-        $request['wrap_author'] = '';
-        $request['wrap_more_array'] = array();
+        $request['acl_implementation'] = $acl_implementation;
+        $request['component_table'] = $component_table;
+        $request['filter_name'] = 'config_manager_list_filters';
+        $request['select_name'] = 'config_manager_grid_column';
 
         return $request;
     }
