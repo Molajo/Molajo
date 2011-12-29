@@ -123,6 +123,7 @@ class MolajoView extends JObject
     echo $renderer->render($position, $options, null);
     }
      */
+
     /**
      * display
      *
@@ -249,13 +250,13 @@ class MolajoView extends JObject
             $this->layout_path_url = $templateLayoutPathURL;
             return;
 
-            /** 2. Extension **/
+        /** 2. Extension **/
         } else if (is_dir($extensionPath)) {
             $this->layout_path = $extensionPath;
             $this->layout_path_url = $extensionPathURL;
             return;
 
-            /** 3. Core **/
+        /** 3. Core **/
         } else if (is_dir($corePath)) {
             $this->layout_path = $corePath;
             $this->layout_path_url = $corePathURL;
@@ -403,7 +404,7 @@ class MolajoView extends JObject
      */
     protected function loadLanguage($layout, $layout_type)
     {
-        MolajoFactory::getLanguage()->load('layout_' . substr($layout_type, 0, strlen($layout_type) - 1) . '_' . $layout, $this->layout_path, MolajoFactory::getLanguage()->getDefault(), false, false);
+        MolajoFactory::getLanguage()->load($layout, $this->layout_path, MolajoFactory::getLanguage()->getDefault(), false, false);
     }
 
     /**
@@ -476,8 +477,8 @@ class MolajoView extends JObject
      * @return  object   The added model.
      *
      * @since   1.0
-     */
-    public function setModel($model, $default = false)
+
+    public function DELETEsetModel($model, $default = false)
     {
         $name = strtolower($model->getName());
         $this->_models[$name] = &$model;
@@ -487,7 +488,7 @@ class MolajoView extends JObject
         }
         return $model;
     }
-
+     */
     /**
      * Sets the layout name to use
      *
@@ -496,8 +497,8 @@ class MolajoView extends JObject
      * @return  string  Previous value.
      *
      * @since   1.0
-     */
-    public function setLayout($layout)
+
+    public function DELETEsetLayout($layout)
     {
         $previous = $this->layout;
         if (strpos($layout, ':') === false) {
@@ -514,6 +515,7 @@ class MolajoView extends JObject
 
         return $previous;
     }
+     */
 }
 
 /** 7. Optional data (put this into a model parent?) */

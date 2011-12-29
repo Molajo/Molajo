@@ -8,21 +8,21 @@
 defined('MOLAJO') or die;
 
 /**
- * MolajoPosition
+ * MolajoView
  *
  * @package     Molajo
- * @subpackage  Application
+ * @subpackage  View
  * @since       1.0
  */
-class MolajoPositionRenderer
+class MolajoViewRenderer
 {
     /**
-     *  Position
+     *  View
      *
      * @var array
      * @since 1.0
      */
-    protected $position = null;
+    protected $view = null;
 
     /**
      *  Parameters
@@ -40,9 +40,9 @@ class MolajoPositionRenderer
      */
     protected $config = null;
 
-    public function __construct($position, $parameters = array(), $config = null)
+    public function __construct($view, $parameters = array(), $config = null)
     {
-        $this->position = $position;
+        $this->view = $view;
         $this->parameters = $parameters;
         $this->config = $config;
     }
@@ -59,13 +59,6 @@ class MolajoPositionRenderer
      */
     public function render()
     {
-        $class = 'MolajoModule';
-        $renderer = new $class ($this->parameters, $this->config);
-        $buffer = '';
-
-        foreach (MolajoModule::getModules($this->position) as $module_object) {
-            $buffer .= $renderer->render($module_object);
-        }
-        return $buffer;
+        return 'Rendered output from View';
     }
 }

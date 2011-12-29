@@ -301,14 +301,16 @@ class MolajoHtmlFormat
         foreach ($this->rendererProcessingSequence as $nextRenderer) {
 
             /** load renderer class */
-            $class = 'Molajo' . ucfirst($nextRenderer);
+            $class = 'Molajo' . ucfirst($nextRenderer).'Renderer';
             if (class_exists($class)) {
                 $extension = new $class ($nextRenderer, $this->config);
+                echo $class .'<br />';
             } else {
+                echo 'failed renderer = '.$class.'<br />';
                 // ERROR
             }
 
-            foreach ($this->_renderers as $i => $rendererArray) {
+            foreach ($this->_renderers as $index => $rendererArray) {
 
                 if ($nextRenderer == $rendererArray['name']) {
 
@@ -320,12 +322,13 @@ class MolajoHtmlFormat
                         $attributes = array();
                     }
 
-                    $replace[] = $rendererArray['replace'];
+                    $replace[] = "<include:".$rendererArray['replace']."/>";
                     $with[] = $extension->render($attributes);
-                    return str_replace($replace, $with, $this->_template);
                 }
             }
         }
+
+        return str_replace($replace, $with, $this->_template);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Molajo
- * @subpackage  Document
+ * @subpackage  Renderer
  * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.
  * @license     GNU General Public License Version 2, or later http://www.gnu.org/licenses/gpl.html
@@ -9,15 +9,15 @@
 defined('MOLAJO') or die;
 
 /**
- * Head class
+ * Head Renderer Class
  *
- * Renders the HTML Document Head
+ * Renders the HTML Head
  *
  * @package     Molajo
- * @subpackage  Document
+ * @subpackage  Head
  * @since       11.1
  */
-class MolajoHead
+class MolajoHeadRenderer
 {
     /**
      * Array of Header <link> tags

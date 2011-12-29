@@ -228,8 +228,8 @@ class MolajoController extends JObject
 
             /** view format */
             $this->view = $this->getView($this->request['view']);
-            $this->view->setModel($this->model, true);
-            $this->view->setLayout($this->request['layout']);
+//DELETE            $this->view->setModel($this->model, true);
+//DELETE            $this->view->setLayout($this->request['layout']);
         }
 
         /** load table */
@@ -619,24 +619,24 @@ class MolajoController extends JObject
      * @return  string  The task that is being performed or was most recently performed.
      *
      * @since   1.0
-     */
-    public function getTask()
+
+    public function DELETEgetTask()
     {
         return $this->task;
     }
-
+     */
     /**
      * Gets the available tasks in the controller.
      *
      * @return  array  Array[i] of task names.
      *
      * @since   1.0
-     */
-    public function getTasks()
+
+    public function DELETEgetTasks()
     {
         return $this->methods;
     }
-
+     */
     /**
      * Method to get a reference to the current view and load it if necessary.
      *

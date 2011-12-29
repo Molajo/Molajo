@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-abstract class MolajoPlugin extends JEvent
+abstract class MolajoPluginRenderer extends JEvent
 {
     /**
      * Plugin Parameters
