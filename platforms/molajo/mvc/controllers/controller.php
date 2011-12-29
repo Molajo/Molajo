@@ -42,7 +42,7 @@ class MolajoController extends JObject
      *
      * @since 1.0
      */
-    protected $table = null;
+    public $table = null;
 
     /**
      * @var object $model
@@ -63,42 +63,42 @@ class MolajoController extends JObject
      *
      * @since 1.0
      */
-    protected $category_id = null;
+    public $category_id = null;
 
     /**
      * @var object $id
      *
      * @since 1.0
      */
-    protected $id = null;
+    public $id = null;
 
     /**
      * @var object $isNew
      *
      * @since 1.0
      */
-    protected $isNew = null;
+    public $isNew = null;
 
     /**
      * @var object $existingState
      *
      * @since 1.0
      */
-    protected $existingState = null;
+    public $existingState = null;
 
     /**
      * @var object $dispatcher
      *
      * @since 1.0
      */
-    protected $dispatcher = null;
+    public $dispatcher = null;
 
     /**
      * $redirectClass
      *
      * @var string
      */
-    protected $redirectClass = null;
+    public $redirectClass = null;
 
     /**
      * __construct
@@ -135,44 +135,54 @@ class MolajoController extends JObject
             }
         }
 
+        /** initialize view */
+
+        /** 1. Request */
+        $this->view->request = $this->request;
+
+        /** 2. State */
+        $this->view->state = $this->request['state'];
+
+        /** 3. Parameters */
+        $this->view->parameters = $this->parameters;
+
+        /** 4. Template */
+        $this->view->template = $this->request['template_id'];
+
+        /** 5. Page */
+        $this->view->page = $this->request['template_page'];
+
+        /** 6. Layout Type */
+        $this->view->layout_type = $this->request['layout_type'];
+
+        /** 7. Layout */
+        $this->view->layout = $this->request['layout'];
+
+        /** 8. Wrap */
+        $this->view->wrap = $this->request['wrap'];
+
+        /** 9. Wrap ID */
+        $this->view->wrap_id = $this->request['wrap_id'];
+
+        /** 10. Wrap Class */
+        $this->view->wrap_class = $this->request['wrap_class'];
+
         /** push model results into view */
 
-        /** 1. Application */
-        $this->view->app = MolajoFactory::getApplication();
+        /** 1. Query Results */
+        $this->view->rowset = $this->model->get('Items');
 
-        /** 2. User */
-        $this->view->user = MolajoFactory::getUser();
+        /** 2. Pagination */
+        $this->view->pagination = $this->model->get('Pagination');
 
-        /** 3. Request */
-        $this->view->request = $this->view->get('Request');
+        /** display view */
+        //parent::display($cachable, $urlparameters);
+
+        return $this->view->display();
+
         echo '<pre>';
         var_dump($this->view->request);
         echo '</pre>';
-        /** 4. State */
-        $this->view->state = $this->view->get('State');
-
-        /** 5. Parameters */
-        $this->view->parameters = $this->view->get('Parameters');
-
-        /** 6. Query Results */
-        $this->view->rowset = $this->view->get('Items');
-
-        /** 7. Pagination */
-        $this->view->pagination = $this->view->get('Pagination');
-
-        /** 8. Layout Type */
-        $this->view->layout_type = 'extensions';
-
-        /** 9. Layout */
-        $this->view->layout = $this->request['layout'];
-
-        /** 10. Wrap */
-        $this->view->wrap = $this->request['wrap'];
-
-        /** display view */
-//parent::display($cachable, $urlparameters);
-
-        return $this->view->display();
     }
 
     /**
@@ -190,7 +200,9 @@ class MolajoController extends JObject
     public function initialise($request)
     {
         $this->request = $request;
+
         $this->parameters = $this->request['parameters'];
+
         $this->redirectClass = new MolajoControllerRedirect();
         $this->redirectClass->request = $this->request;
 

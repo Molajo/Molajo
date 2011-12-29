@@ -171,13 +171,6 @@ class MolajoApplication
      */
     protected $response = array();
 
-    public function getMenu()
-    {
-    } // needed by JController
-    public function getTemplate()
-    {
-    } // needed by JView
-
     /**
      * Class constructor.
      *

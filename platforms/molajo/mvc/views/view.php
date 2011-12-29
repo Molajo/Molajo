@@ -17,24 +17,6 @@ defined('MOLAJO') or die;
 class MolajoView extends JObject
 {
     /**
-     * @var object $app
-     * @since 1.0
-     */
-    public $app;
-
-    /**
-     * @var object $document
-     * @since 1.0
-     */
-    public $document;
-
-    /**
-     * @var object $user
-     * @since 1.0
-     */
-    public $user;
-
-    /**
      * @var object $request
      * @since 1.0
      */
@@ -51,6 +33,48 @@ class MolajoView extends JObject
      * @since 1.0
      */
     public $parameters;
+
+    /**
+     * @var object $template
+     * @since 1.0
+     */
+    public $template;
+
+    /**
+     * @var object $page
+     * @since 1.0
+     */
+    public $page;
+
+    /**
+     * @var object $layout_type
+     * @since 1.0
+     */
+    public $layout_type;
+
+    /**
+     * @var object $layout
+     * @since 1.0
+     */
+    public $layout;
+
+    /**
+     * @var object $wrap
+     * @since 1.0
+     */
+    public $wrap;
+
+    /**
+     * @var object $wrap_id
+     * @since 1.0
+     */
+    public $wrap_id;
+
+    /**
+     * @var object $wrap_class
+     * @since 1.0
+     */
+    public $wrap_class;
 
     /**
      * @var object $rowset
@@ -83,24 +107,6 @@ class MolajoView extends JObject
     public $layout_path_url;
 
     /**
-     * @var object $layout_type
-     * @since 1.0
-     */
-    public $layout_type;
-
-    /**
-     * @var object $layout
-     * @since 1.0
-     */
-    public $layout;
-
-    /**
-     * @var object $wrap
-     * @since 1.0
-     */
-    public $wrap;
-
-    /**
      * renderModulePosition
      *
      * usage in layout:
@@ -110,13 +116,13 @@ class MolajoView extends JObject
      * @param $position
      * @param array $options
      * @return void
-     */
+
     public function renderModulePosition($position, $options = array('wrap' => 'none'))
     {
-        $renderer = $this->document->loadRenderer('modules');
-        echo $renderer->render($position, $options, null);
+    $renderer = $this->document->loadRenderer('modules');
+    echo $renderer->render($position, $options, null);
     }
-
+     */
     /**
      * display
      *
@@ -209,12 +215,11 @@ class MolajoView extends JObject
     {
         /** initialise layout */
         $this->layout_path = false;
-        $templateObject = MolajoFactory::getApplication()->getTemplate();
-        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $templateObject[0]->title;
+        $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->template;
 
         /** 1. @var $templateLayoutPath [template]/layouts/[layout-type]/[layout-folder] */
         $templateLayoutPath = $template . '/layouts/' . $layout_type . '/' . $layout;
-        $templateLayoutPathURL = JURI::root() . 'extensions/layouts/templates/' . $templateObject[0]->title . '/layouts/' . $layout_type . '/' . $layout;
+        $templateLayoutPathURL = JURI::root() . 'extensions/layouts/templates/' . $this->template . '/layouts/' . $layout_type . '/' . $layout;
 
         /** 2. @var $extensionPath [extension_type]/[extension-name]/layouts/[layout-type]/[layout-folder] */
         $extensionPath = '';
@@ -509,7 +514,7 @@ class MolajoView extends JObject
             $temp = explode(':', $layout);
             $this->layout = $temp[1];
             // Set layout template
-//            $this->layoutTemplate = $temp[0];
+            //            $this->layoutTemplate = $temp[0];
         }
 
         return $previous;
