@@ -199,14 +199,14 @@ class MolajoHtmlFormat
         /** Application-specific CSS and JS in => media/[application]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/' . MOLAJO_APPLICATION;
         $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . MOLAJO_APPLICATION;
-        self::_loadMediaCSS($filePath, $urlPath);
-        self::_loadMediaJS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Template-specific CSS and JS in => template/[template-name]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $template_name;
         $urlPath = JURI::root() . 'extensions/templates/' . $template_name;
-        self::_loadMediaCSS($filePath, $urlPath);
-        self::_loadMediaJS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Language */
         $lang = MolajoFactory::getLanguage();
@@ -324,62 +324,6 @@ class MolajoHtmlFormat
                     $with[] = $extension->render($attributes);
                     return str_replace($replace, $with, $this->_template);
                 }
-            }
-        }
-    }
-
-    /**
-     * _loadMediaCSS
-     *
-     * Loads the CS located within the folder, as specified by the filepath
-     *
-     * @param $filePath
-     * @param $urlPath
-     * @return void
-     */
-    protected function _loadMediaCSS($filePath, $urlPath)
-    {
-        if (JFolder::exists($filePath . '/css')) {
-        } else {
-            return;
-        }
-
-        $files = JFolder::files($filePath . '/css', '\.css$', false, false);
-
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                if (substr($file, 0, 4) == 'rtl_') {
-                    //                    if (MolajoFactory::getApplication()->direction == 'rtl') {
-                    //                        MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
-                    //                    }
-                } else {
-                    MolajoFactory::getApplication()->addStyleSheet($urlPath . '/css/' . $file);
-                }
-            }
-        }
-    }
-
-    /**
-     * _loadMediaJS
-     *
-     * Loads the JS located within the folder, as specified by the filepath
-     *
-     * @param $filePath
-     * @param $urlPath
-     * @return void
-     */
-    protected function _loadMediaJS($filePath, $urlPath)
-    {
-        if (JFolder::exists($filePath . '/js')) {
-        } else {
-            return;
-        }
-        //todo: differentiate between script and scripts
-        $files = JFolder::files($filePath . '/js', '\.js$', false, false);
-
-        if (count($files) > 0) {
-            foreach ($files as $file) {
-                MolajoFactory::getApplication()->addScript($urlPath . '/js/' . $file);
             }
         }
     }

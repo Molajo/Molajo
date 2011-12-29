@@ -180,13 +180,8 @@ class MolajoView extends JObject
         $this->rowset = array();
 
         $tmpobj = new JObject();
-        $tmpobj->set('title', $this->request['wrap_title']);
-        $tmpobj->set('subtitle', $this->request['wrap_subtitle']);
         $tmpobj->set('wrap_id', $this->request['wrap_id']);
         $tmpobj->set('wrap_class', $this->request['wrap_class']);
-        $tmpobj->set('published_date', $this->request['wrap_date']);
-        $tmpobj->set('author', $this->request['wrap_author']);
-        $tmpobj->set('position', $this->request['position']);
         $tmpobj->set('content', $renderedOutput);
 
         $this->rowset[] = $tmpobj;
@@ -431,20 +426,20 @@ class MolajoView extends JObject
         /** Extension specific CSS and JS in => media/[extension]/css[js]/XYZ.css[js] */
         $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA . '/system/' . $this->request['option'] . '/layouts';
         $urlPath = JURI::root() . 'sites/' . MOLAJO_SITE . '/media/' . $this->request['option'] . '/layouts';
-        MolajoTemplate::loadMediaCSS($filePath, $urlPath);
-        MolajoTemplate::loadMediaJS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
 
         /** Asset ID specific CSS and JS in => media/[application]/[asset_id]/css[js]/XYZ.css[js] */
         /** todo: amy deal with assets for all levels        $filePath = MOLAJO_SITE_FOLDER_PATH_MEDIA.'/'.$this->request['asset_id'];
         $urlPath = JURI::root().'sites/'.MOLAJO_SITE.'/media/'.$this->request['asset_id'];
-        $this->loadMediaCSS($filePath, $urlPath);
-        $this->loadMediaJS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
          */
         /** Layout specific CSS and JS in path identified in getPath */
         $filePath = $this->layout_path . '/layouts';
         $urlPath = $this->layout_path_url . '/layouts';
-        MolajoTemplate::loadMediaCSS($filePath, $urlPath);
-        MolajoTemplate::loadMediaJS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaCSS($filePath, $urlPath);
+        MolajoFactory::getApplication()->loadMediaJS($filePath, $urlPath);
     }
 
     /**
@@ -519,7 +514,6 @@ class MolajoView extends JObject
 
         return $previous;
     }
-
 }
 
 /** 7. Optional data (put this into a model parent?) */
