@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     controller.php
  * @package     Molajo
  * @subpackage  Display Controller
  * @copyright   Copyright (C) 2012 Amy Stephen. All rights reserved.

@@ -32,7 +32,7 @@ class MolajoModel extends JObject
      * @var    object
      * @since  11.1
      */
-    protected $_db;
+    protected $db;
 
     /**
      * The model (base) name

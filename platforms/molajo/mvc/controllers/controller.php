@@ -14,8 +14,15 @@ defined('MOLAJO') or die;
  * @subpackage    Controller
  * @since        1.0
  */
-class MolajoController extends JController
+class MolajoController extends JObject
 {
+    /**
+     * @var object $config
+     *
+     * @since 1.0
+     */
+    public $config = array();
+
     /**
      * @var object $request
      *
@@ -104,7 +111,7 @@ class MolajoController extends JController
      */
     public function __construct($config = array())
     {
-        parent::__construct($config);
+        $this->config = $config;
     }
 
     /**
@@ -138,7 +145,9 @@ class MolajoController extends JController
 
         /** 3. Request */
         $this->view->request = $this->view->get('Request');
-echo '<pre>';var_dump($this->view->request); echo '</pre>';
+        echo '<pre>';
+        var_dump($this->view->request);
+        echo '</pre>';
         /** 4. State */
         $this->view->state = $this->view->get('State');
 
@@ -161,9 +170,9 @@ echo '<pre>';var_dump($this->view->request); echo '</pre>';
         $this->view->wrap = $this->request['wrap'];
 
         /** display view */
-        parent::display($cachable, $urlparameters);
+//parent::display($cachable, $urlparameters);
 
-        return $this;
+        return $this->view->display();
     }
 
     /**
@@ -190,7 +199,7 @@ echo '<pre>';var_dump($this->view->request); echo '</pre>';
             $this->id = 0;
             $this->category_id = 0;
         }
-$this->request['category_id'] = 0;
+        $this->request['category_id'] = 0;
         $this->category_id = $this->request['category_id'];
         if ((int)$this->category_id == 0) {
             $this->category_id = 0;
@@ -205,7 +214,7 @@ $this->request['category_id'] = 0;
             $this->model->parameters = $this->request['parameters'];
 
             /** view format */
-            $this->view = $this->getView($this->request['view'], $this->request['format']);
+            $this->view = $this->getView($this->request['view']);
             $this->view->setModel($this->model, true);
             $this->view->setLayout($this->request['layout']);
         }
@@ -289,13 +298,13 @@ $this->request['category_id'] = 0;
                 $checkId = $this->id;
             }
 
-//           if ($checkCatid == null) {
-//                if ((int)$this->category_id == 0) {
-//                    $checkCatid = (int)$this->table->category_id;
-//                } else {
-//                    $checkCatid = (int)$this->category_id;
-//                }
-//            }
+            //           if ($checkCatid == null) {
+            //                if ((int)$this->category_id == 0) {
+            //                    $checkCatid = (int)$this->table->category_id;
+            //                } else {
+            //                    $checkCatid = (int)$this->category_id;
+            //                }
+            //            }
 
             if ($checkTable == null) {
                 $checkTable = $this->table;
@@ -312,22 +321,6 @@ $this->request['category_id'] = 0;
         }
 
         return true;
-    }
-
-    /**
-     * getModel
-     *
-     * Proxy for getModel.
-     *
-     * @param    string    $name    The name of the model.
-     * @param    string    $prefix    The prefix for the PHP class name.
-     * @param    array    $config    Configuration data
-     *
-     * @return object model
-     */
-    public function getModel($name = '', $prefix = '', $config = array())
-    {
-        return parent::getModel($name, $prefix, $config);
     }
 
     /**
@@ -532,5 +525,167 @@ $this->request['category_id'] = 0;
     {
         $cache = MolajoFactory::getCache($this->request['option']);
         $cache->clean();
+    }
+
+    // crap follows
+
+
+    /**
+     * Method to get a model object, loading it if required.
+     *
+     * @param   string  $name    The model name. Optional.
+     * @param   string  $prefix  The class prefix. Optional.
+     * @param   array   $config  Configuration array for model. Optional.
+     *
+     * @return  object  The model.
+     *
+     * @since   1.0
+     */
+    public function getModel($name = '', $prefix = '', $config = array())
+    {
+        if (empty($name)) {
+            $name = $this->getName();
+        }
+
+        if (empty($prefix)) {
+            $prefix = $this->model_prefix;
+        }
+
+        return $this->createModel($name, $prefix, $config);
+    }
+
+    /**
+     * Method to load and return a model object.
+     *
+     * @param   string  $name    The name of the model.
+     * @param   string  $prefix  Optional model prefix.
+     * @param   array   $config  Configuration array for the model. Optional.
+     *
+     * @return  mixed   Model object on success; otherwise null failure.
+     *
+     * @since   1.0
+     * @note    Replaces _createModel.
+     */
+    protected function createModel($name, $prefix = '', $config = array())
+    {
+        // Clean the model name
+        $modelName = preg_replace('/[^A-Z0-9_]/i', '', $name);
+        $classPrefix = preg_replace('/[^A-Z0-9_]/i', '', $prefix);
+
+        $result = MolajoModel::getInstance($modelName, $classPrefix, $config);
+
+        return $result;
+    }
+
+    /**
+     * Method to get the controller name
+     *
+     * The dispatcher name is set by default parsed using the classname, or it can be set
+     * by passing a $config['name'] in the class constructor
+     *
+     * @return  string  The name of the dispatcher
+     *
+     * @since   1.0
+     */
+    public function getName()
+    {
+        if (empty($this->name)) {
+            $r = null;
+            if (!preg_match('/(.*)Controller/i', get_class($this), $r)) {
+                MolajoError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_CONTROLLER_GET_NAME'));
+            }
+            $this->name = strtolower($r[1]);
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * Get the last task that is being performed or was most recently performed.
+     *
+     * @return  string  The task that is being performed or was most recently performed.
+     *
+     * @since   1.0
+     */
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    /**
+     * Gets the available tasks in the controller.
+     *
+     * @return  array  Array[i] of task names.
+     *
+     * @since   1.0
+     */
+    public function getTasks()
+    {
+        return $this->methods;
+    }
+
+    /**
+     * Method to get a reference to the current view and load it if necessary.
+     *
+     * @param   string  $name    The view name. Optional, defaults to the controller name.
+     * @param   string  $prefix  The class prefix. Optional.
+     * @param   array   $config  Configuration array for view. Optional.
+     *
+     * @return  object  Reference to the view or an error.
+     *
+     * @since   1.0
+     */
+    public function getView($name = '', $prefix = '', $config = array())
+    {
+        static $views;
+
+        if (!isset($views)) {
+            $views = array();
+        }
+
+        if (empty($name)) {
+            $name = $this->getName();
+        }
+
+        if (empty($prefix)) {
+            $prefix = $this->getName() . 'View';
+        }
+
+        if (empty($views[$name])) {
+            if ($view = $this->createView($name, $prefix, $config)) {
+                $views[$name] = & $view;
+            }
+            else
+            {
+                $result = MolajoError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_VIEW_NOT_FOUND', $name, $prefix));
+
+                return $result;
+            }
+        }
+
+        return $views[$name];
+    }
+
+    /**
+     * Method to load and return a view object. This method first looks in the
+     * current template directory for a match and, failing that, uses a default
+     * set path to load the view class file.
+     *
+     * Note the "name, prefix, type" order of parameters, which differs from the
+     * "name, type, prefix" order used in related public methods.
+     *
+     * @param   string  $name    The name of the view.
+     * @param   string  $prefix  Optional prefix for the view class name.
+     * @param   array   $config  Configuration array for the view. Optional.
+     *
+     * @return  mixed  View object on success; null or error result on failure.
+     *
+     * @since   1.0
+     * @note    Replaces _createView.
+     */
+    protected function createView($name, $prefix = '', $config = array())
+    {
+        $viewClass = $prefix . $name;
+        return new $viewClass($config);
     }
 }

@@ -843,6 +843,7 @@ class JController extends JObject
             }
             else
             {
+
                 $result = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_VIEW_NOT_FOUND', $name, $type, $prefix));
 
                 return $result;
