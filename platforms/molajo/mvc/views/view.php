@@ -475,7 +475,7 @@ class MolajoView extends JObject
      * referenced by the name without JModel, eg. JModelCategory is just
      * Category.
      *
-     * @param   object   &$model   The model to add to the view.
+     * @param   object   $model   The model to add to the view.
      * @param   boolean  $default  Is this the default model?
      *
      * @return  object   The added model.

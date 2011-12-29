@@ -365,21 +365,22 @@ class MolajoComponent
         $request['template'] = $this->template;
         $request['page'] = $this->page;
         $request['layout'] = $layout;
+        $request['layout_type'] = 'extensions';
         $request['format'] = $format;
         if (isset($this->attributes->wrap)) {
-            $request['page.wrap'] = $this->attributes->wrap;
+            $request['wrap'] = $this->attributes->wrap;
         } else {
-            $request['page.wrap'] = 'none';
+            $request['wrap'] = 'none';
         }
         if (isset($this->attributes->wrap)) {
-            $request['page.wrap_id'] = $this->attributes->wrap_id;
+            $request['wrap_id'] = $this->attributes->wrap_id;
         } else {
-            $request['page.wrap_id'] = '';
+            $request['wrap_id'] = '';
         }
         if (isset($this->attributes->wrap)) {
-            $request['page.wrap_class'] = $this->attributes->wrap_class;
+            $request['wrap_class'] = $this->attributes->wrap_class;
         } else {
-            $request['page.wrap_class'] = '';
+            $request['wrap_class'] = '';
         }
 
         $request['plugin_type'] = $plugin_type;

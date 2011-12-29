@@ -867,6 +867,32 @@ class MolajoApplication
         return $this->charset;
     }
 
+
+    /**
+     * loadMediaJS
+     *
+     * Loads the JS located within the folder specified by the filepath
+     *
+     * @param $filePath
+     * @param $urlPath
+     * @return void
+     */
+    public function loadMediaJS($filePath, $urlPath)
+    {
+        if (JFolder::exists($filePath . '/js')) {
+        } else {
+            return;
+        }
+        //todo: differentiate between script and scripts
+        $files = JFolder::files($filePath . '/js', '\.js$', false, false);
+
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                $this->addScript($urlPath . '/js/' . $file);
+            }
+        }
+    }
+
     /**
      * addScript
      *
@@ -907,6 +933,37 @@ class MolajoApplication
 
         } else {
             $this->script[strtolower($format)] = $content;
+        }
+    }
+
+    /**
+     * loadMediaCSS
+     *
+     * Loads the CS located within the folder, as specified by the filepath
+     *
+     * @param $filePath
+     * @param $urlPath
+     * @return void
+     */
+    public function loadMediaCSS($filePath, $urlPath)
+    {
+        if (JFolder::exists($filePath . '/css')) {
+        } else {
+            return;
+        }
+
+        $files = JFolder::files($filePath . '/css', '\.css$', false, false);
+
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                if (substr($file, 0, 4) == 'rtl_') {
+                    //                    if ($this->direction == 'rtl') {
+                    //                        $this->addStyleSheet($urlPath . '/css/' . $file);
+                    //                    }
+                } else {
+                    $this->addStyleSheet($urlPath . '/css/' . $file);
+                }
+            }
         }
     }
 

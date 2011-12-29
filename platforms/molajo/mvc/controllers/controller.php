@@ -141,16 +141,17 @@ class MolajoController extends JObject
         $this->view->request = $this->request;
 
         /** 2. State */
-        $this->view->state = $this->request['state'];
+        $state = '';
+        $this->view->state = $state;
 
         /** 3. Parameters */
         $this->view->parameters = $this->parameters;
 
         /** 4. Template */
-        $this->view->template = $this->request['template_id'];
+        $this->view->template = $this->request['template'];
 
         /** 5. Page */
-        $this->view->page = $this->request['template_page'];
+        $this->view->page = $this->request['page'];
 
         /** 6. Layout Type */
         $this->view->layout_type = $this->request['layout_type'];
