@@ -152,7 +152,7 @@ class MolajoHtmlFormat
     protected function _render()
     {
         /** Query */
-        $templates = MolajoExtensionHelper::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $this->template);
+        $templates = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_TEMPLATE, $this->template);
 
         /** Initialize */
         $template_name = '';

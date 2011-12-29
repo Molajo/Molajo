@@ -38,7 +38,7 @@ abstract class MolajoExtensionHelper
      * @param null $extension
      * @return bool|mixed
      */
-    static public function getExtensions($asset_type_id, $extension = null)
+    static public function get($asset_type_id, $extension = null)
     {
         $db = MolajoFactory::getDbo();
         $query = $db->getQuery(true);

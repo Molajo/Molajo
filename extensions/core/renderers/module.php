@@ -317,7 +317,7 @@ class MolajoModule
             return $modules;
         }
 
-        $modules = MolajoExtensionHelper::getExtensions(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
+        $modules = MolajoExtensionHelper::get(MOLAJO_ASSET_TYPE_EXTENSION_MODULE);
 
         return $modules;
     }

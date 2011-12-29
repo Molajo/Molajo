@@ -20,21 +20,17 @@ class MolajoComponent
     /**
      * Name
      *
+     * From MolajoExtension
+     *
      * @var    string
      * @since  1.0
      */
     protected $name = null;
 
     /**
-     * Attributes - from the template <include:component statement>
-     *
-     * @var    array
-     * @since  1.0
-     */
-    protected $attributes = array();
-
-    /**
      * Config
+     *
+     * From MolajoExtension
      *
      * @var    array
      * @since  1.0
@@ -42,7 +38,7 @@ class MolajoComponent
     protected $config = array();
 
     /**
-     * Option
+     * Option - extracted from config
      *
      * @var    string
      * @since  1.0
@@ -50,7 +46,7 @@ class MolajoComponent
     protected $option = null;
 
     /**
-     *  Template folder name
+     *  Template folder name - extracted from config
      *
      * @var string
      * @since 1.0
@@ -58,7 +54,7 @@ class MolajoComponent
     protected $template = null;
 
     /**
-     *  Page include file
+     *  Page include file - extracted from config
      *
      * @var string
      * @since 1.0
@@ -66,7 +62,7 @@ class MolajoComponent
     protected $page = null;
 
     /**
-     *  Layout include file
+     *  Layout include file - extracted from config
      *
      * @var string
      * @since 1.0
@@ -74,7 +70,7 @@ class MolajoComponent
     protected $layout = null;
 
     /**
-     *  Wrap for Layout
+     *  Wrap for Layout - extracted from config
      *
      * @var string
      * @since 1.0
@@ -82,12 +78,20 @@ class MolajoComponent
     protected $wrap = null;
 
     /**
-     *  Template Parameters
+     *  Template Parameters - extracted from config
      *
      * @var string
      * @since 1.0
      */
     protected $parameters = null;
+
+    /**
+     * Attributes - from the Molajo Format Class <include:component statement>
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $attributes = array();
 
     /**
      * __construct
@@ -100,10 +104,11 @@ class MolajoComponent
      */
     public function __construct($name = null, $config = array())
     {
+        /**
                 echo '<pre>';
                 var_dump($config);
                 '</pre>';
-echo $name;
+        **/
         /** set class properties */
         $this->name = $name;
 
@@ -136,7 +141,7 @@ echo $name;
         MolajoFactory::getApplication()->triggerEvent('onBeforeComponentRender');
 
         /** path */
-        $path = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $this->option . '/' . $this->option . '.php';
+        $path = MOLAJO_EXTENSIONS_COMPONENTS . '/' . $this->option . '/' . $this->option . '.php';
 
         /** installation */
         if (MOLAJO_APPLICATION_ID == 0
@@ -406,7 +411,7 @@ echo $name;
         $request['base_url'] = $session->get('page.base_url');
 
         $request['extension_type'] = $session->get('page.extension_type');
-        $this->option = $session->get('page.option');
+        $request['option'] = $session->get('page.option');
 
         $request['model'] = $session->get('page.model');
         $request['view'] = $session->get('page.view');
