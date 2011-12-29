@@ -105,10 +105,10 @@ class MolajoComponent
     public function __construct($name = null, $config = array())
     {
         /**
-                echo '<pre>';
-                var_dump($config);
-                '</pre>';
-        **/
+        echo '<pre>';
+        var_dump($config);
+        '</pre>';
+         **/
         /** set class properties */
         $this->name = $name;
 
@@ -148,15 +148,16 @@ class MolajoComponent
             && file_exists($path)
         ) {
 
-        /** language */
-        } elseif (file_exists($path)
-        ) {
+            /** language */
+        } elseif (file_exists($path)) {
             //            MolajoFactory::getLanguage()->load($this->option, $path, MolajoFactory::getLanguage()->getDefault(), false, false);
 
         } else {
             MolajoError::raiseError(404, MolajoTextHelper::_('MOLAJO_APPLICATION_ERROR_COMPONENT_NOT_FOUND'));
         }
-        echo '<pre>';var_dump($request);'</pre>';
+        echo '<pre>';
+        var_dump($request);
+        '</pre>';
 
         /** execute the component */
         ob_start();
@@ -298,7 +299,7 @@ class MolajoComponent
             $format = '';
         }
 
-        /** 10. id, cid and catid */
+        /** 10. id, cid and category_id */
         $id = $this->config->id;
         //amy        $cids = JRequest::getVar('cid', array(), '', 'array');
         $cids = array();
@@ -375,7 +376,7 @@ class MolajoComponent
         if (isset($this->attributes->wrap_class)) {
             $session->set('page.wrap_class', $this->attributes->wrap_class);
         } else {
-            $session->set('page.wrap_cass', 'none');
+            $session->set('page.wrap_cass', '');
         }
 
         $session->set('page.layout_type', 'extension');
@@ -385,7 +386,7 @@ class MolajoComponent
 
         $session->set('page.id', (int)$id);
         $session->set('page.cid', (array)$cids);
-        //        $session->set('page.catid', (int)$catid);
+        //        $session->set('page.category_id', (int)$category_id);
 
         $session->set('page.acl_implementation', $acl_implementation);
         $session->set('page.component_table', $component_table);

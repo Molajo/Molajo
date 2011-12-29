@@ -105,8 +105,8 @@ class plgContentPagenavigation extends JPlugin
                            . 'CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(":", a.id, a.alias) ELSE a.id END as slug, '
                            . 'CASE WHEN CHAR_LENGTH(cc.alias) THEN CONCAT_WS(":", cc.id, cc.alias) ELSE cc.id END as catslug');
             $query->from('#__content AS a');
-            $query->leftJoin('#__categories AS cc ON cc.id = a.catid');
-            $query->where('a.catid = ' . (int)$row->catid . ' AND a.state = ' . (int)$row->state
+            $query->leftJoin('#__categories AS cc ON cc.id = a.category_id');
+            $query->where('a.category_id = ' . (int)$row->category_id . ' AND a.state = ' . (int)$row->state
                           . ($canPublish ? '' : ' AND a.access = ' . (int)$row->access) . $xwhere);
             $query->order($orderby);
 

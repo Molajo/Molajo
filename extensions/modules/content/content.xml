@@ -46,8 +46,8 @@
                     </option>
                 </field>
                 <field
-                        id="catid"
-                        name="catid"
+                        id="category_id"
+                        name="category_id"
                         type="category"
                         multiple="true"
                         extension="articles"

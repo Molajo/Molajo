@@ -36,21 +36,22 @@ foreach ($files as $file) {
 }
 
 /** Models */
+$fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/model.php', 'MolajoModel');
 $files = JFolder::files(PLATFORM_MOLAJO_MVC . '/models', '\.php$', false, false);
 foreach ($files as $file) {
-    $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    if ($file == 'layout.php') {
+    } else {
+        $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/models/' . $file, 'MolajoModel' . ucfirst(substr($file, 0, strpos($file, '.'))));
+    }
 }
 
 /** Views */
 $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/views/view.php', 'MolajoView');
 $files = JFolder::files(PLATFORM_MOLAJO_MVC . '/views', '\.php$', false, false);
-//$includeFormat = JRequest::getCmd('format', 'html');
 foreach ($files as $file) {
     if ($file == 'layout.php' || $file == 'view.php') {
     } else {
-        //        if (strpos($file, $includeFormat)) {
         $fileHelper->requireClassFile(PLATFORM_MOLAJO_MVC . '/views/' . $file, 'MolajoView' . ucfirst(substr($file, 0, strpos($file, '.'))));
-        //        }
     }
 }
 

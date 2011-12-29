@@ -129,6 +129,13 @@ class MolajoApplication
     public $charset = 'utf-8';
 
     /**
+     * Callback for escaping.
+     *
+     * @var string
+     */
+    protected $escape = 'htmlspecialchars';
+
+    /**
      * @var    array
      * @since  1.0
      */
@@ -163,6 +170,13 @@ class MolajoApplication
      * @since  1.0
      */
     protected $response = array();
+
+    public function getMenu()
+    {
+    } // needed by JController
+    public function getTemplate()
+    {
+    } // needed by JView
 
     /**
      * Class constructor.
@@ -297,7 +311,7 @@ class MolajoApplication
             return MolajoError::raiseError(500, MolajoTextHelper::sprintf('MOLAJO_SITE_NOT_AUTHORISED_FOR_APPLICATION', MOLAJO_APPLICATION_ID));
         }
 
-        /** initialize */
+        /** initialise */
         $this->loadSession();
         $this->loadLanguage();
         $this->loadDispatcher();

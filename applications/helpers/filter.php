@@ -61,7 +61,7 @@ class MolajoFilterHelper
         /** retrieve defined filters by group **/
         $filters = $systemParameters->get('filters');
 
-        /** initialize with default black and white list values **/
+        /** initialise with default black and white list values **/
         $blackListTags = array();
         $blackListAttributes = array();
         $blackListTags = explode(',', $tagBlacklist);

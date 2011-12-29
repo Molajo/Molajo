@@ -102,7 +102,7 @@ class MolajoCategories
     {
         $this->_extension = $options['extension'];
         $this->_table = $options['table'];
-        $this->_field = (isset($options['field']) && $options['field']) ? $options['field'] : 'catid';
+        $this->_field = (isset($options['field']) && $options['field']) ? $options['field'] : 'category_id';
         $this->_key = (isset($options['key']) && $options['key']) ? $options['key'] : 'id';
         $this->_statefield = (isset($options['statefield'])) ? $options['statefield'] : 'state';
         $options['access'] = (isset($options['access'])) ? $options['access'] : 'true';

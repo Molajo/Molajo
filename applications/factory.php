@@ -75,7 +75,7 @@ abstract class MolajoFactory
      * @since  1.0
      */
     public static $dates = array();
-
+    public function getDocument () {} // needed by JController
     /**
      * getSite
      *

@@ -631,7 +631,8 @@ class JController extends JObject
     public function display($cachable = false, $urlparams = false)
     {
         $document = JFactory::getDocument();
-        $viewType = $document->getType();
+//        $viewType = $document->getType();
+        $viewType = 'html';
         $viewName = JRequest::getCmd('view', $this->default_view);
         $viewLayout = JRequest::getCmd('layout', 'default');
 

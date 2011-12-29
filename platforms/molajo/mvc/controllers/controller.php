@@ -31,13 +31,6 @@ class MolajoController extends JController
     public $parameters = array();
 
     /**
-     * @var object $document
-     *
-     * @since 1.0
-     */
-    protected $document = null;
-
-    /**
      * @var object $table
      *
      * @since 1.0
@@ -59,11 +52,11 @@ class MolajoController extends JController
     public $model = null;
 
     /**
-     * @var object $catid
+     * @var object $category_id
      *
      * @since 1.0
      */
-    protected $catid = null;
+    protected $category_id = null;
 
     /**
      * @var object $id
@@ -106,7 +99,6 @@ class MolajoController extends JController
      * Constructor.
      *
      * @param    array   $config    An optional associative array of configuration settings.
-     * @see        JController
      *
      * @since    1.0
      */
@@ -141,34 +133,31 @@ class MolajoController extends JController
         /** 1. Application */
         $this->view->app = MolajoFactory::getApplication();
 
-        /** 2. Document */
-        $this->view->document = MolajoFactory::getDocument();
-
-        /** 3. User */
+        /** 2. User */
         $this->view->user = MolajoFactory::getUser();
 
-        /** 4. Request */
+        /** 3. Request */
         $this->view->request = $this->view->get('Request');
-
-        /** 5. State */
+echo '<pre>';var_dump($this->view->request); echo '</pre>';
+        /** 4. State */
         $this->view->state = $this->view->get('State');
 
-        /** 6. Parameters */
+        /** 5. Parameters */
         $this->view->parameters = $this->view->get('Parameters');
 
-        /** 7. Query Results */
+        /** 6. Query Results */
         $this->view->rowset = $this->view->get('Items');
 
-        /** 8. Pagination */
+        /** 7. Pagination */
         $this->view->pagination = $this->view->get('Pagination');
 
-        /** 9. Layout Type */
+        /** 8. Layout Type */
         $this->view->layout_type = 'extensions';
 
-        /** 10. Layout */
+        /** 9. Layout */
         $this->view->layout = $this->request['layout'];
 
-        /** 11. Wrap */
+        /** 10. Wrap */
         $this->view->wrap = $this->request['wrap'];
 
         /** display view */
@@ -191,7 +180,6 @@ class MolajoController extends JController
      */
     public function initialise($request)
     {
-        $this->document = MolajoFactory::getDocument();
         $this->request = $request;
         $this->parameters = $this->request['parameters'];
         $this->redirectClass = new MolajoControllerRedirect();
@@ -200,12 +188,12 @@ class MolajoController extends JController
         $this->id = $this->request['id'];
         if ((int)$this->id == 0) {
             $this->id = 0;
-            $this->catid = 0;
+            $this->category_id = 0;
         }
-
-        $this->catid = $this->request['catid'];
-        if ((int)$this->catid == 0) {
-            $this->catid = 0;
+$this->request['category_id'] = 0;
+        $this->category_id = $this->request['category_id'];
+        if ((int)$this->category_id == 0) {
+            $this->category_id = 0;
         }
 
         /** set model and view for display controller */
@@ -217,7 +205,7 @@ class MolajoController extends JController
             $this->model->parameters = $this->request['parameters'];
 
             /** view format */
-            $this->view = $this->getView($this->request['view'], $this->document->getType());
+            $this->view = $this->getView($this->request['view'], $this->request['format']);
             $this->view->setModel($this->model, true);
             $this->view->setLayout($this->request['layout']);
         }
@@ -234,14 +222,14 @@ class MolajoController extends JController
             $this->table = $this->model->getTable();
             $this->table->reset();
             $this->table->load($this->id);
-            $this->catid = $this->table->catid;
+            $this->category_id = $this->table->category_id;
 
             if ($this->id == 0) {
                 $this->isNew = true;
                 $this->existingState = 0;
             } else {
                 $this->isNew = false;
-                $this->catid = $this->table->catid;
+                $this->category_id = $this->table->category_id;
                 $this->existingState = $this->table->state;
             }
         }
@@ -256,7 +244,7 @@ class MolajoController extends JController
         }
 
         /** check authorisation **/
-        if (MOLAJO_APPLICATION_ID == 2) {
+        if (MOLAJO_APPLICATION == 'installation') {
         } else {
             $results = MolajoController::checkTaskAuthorisation($this->request['task']);
             if ($results === false) {
@@ -265,7 +253,7 @@ class MolajoController extends JController
         }
 
         /** set redirects **/
-        $this->redirectClass->initialize();
+        $this->redirectClass->initialise();
 
         /** success **/
         return true;
@@ -302,10 +290,10 @@ class MolajoController extends JController
             }
 
 //           if ($checkCatid == null) {
-//                if ((int)$this->catid == 0) {
-//                    $checkCatid = (int)$this->table->catid;
+//                if ((int)$this->category_id == 0) {
+//                    $checkCatid = (int)$this->table->category_id;
 //                } else {
-//                    $checkCatid = (int)$this->catid;
+//                    $checkCatid = (int)$this->category_id;
 //                }
 //            }
 
@@ -443,7 +431,8 @@ class MolajoController extends JController
     /**
      * createVersion
      *
-     * Molajo_Note: All Components have version management save and restore processes as an automatic option
+     * Molajo_Note: All Components have version management save and restore processes as an
+     *  automatic option
      *
      * @return    void
      * @since    1.0
@@ -493,14 +482,15 @@ class MolajoController extends JController
     /**
      * maintainVersionCount
      *
-     * Molajo_Note: All Components have version management save and restore processes as an automatic option
+     * Molajo_Note: All Components have version management save and restore processes as
+     *  an automatic option
      *
      * @param  $context
      * @return bool
      */
     public function maintainVersionCount($context)
     {
-        /** activiated? **/
+        /** activated? **/
         if ($this->parameters->def('version_management', 1) == 1) {
         } else {
             return;
@@ -535,8 +525,6 @@ class MolajoController extends JController
 
     /**
      * cleanCache
-     *
-     * Molajo_Note: All Components have version management save and restore processes as an automatic option
      *
      * @return    void
      */

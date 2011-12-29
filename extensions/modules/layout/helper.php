@@ -35,10 +35,10 @@ class modContentHelper
 
         $query->select('a.id, a.title, a.checked_out, a.checked_out_time');
         $query->select('a.access, a.created, a.created_by, a.created_by_alias, a.featured, a.state');
-        $query->select('a.catid, b.title as category_title');
+        $query->select('a.category_id, b.title as category_title');
 
         $query->from('#' . $parameters->get('component_table', '_articles') . ' AS a');
-        $query->join('LEFT', '#__categories AS b ON b.id = a.catid');
+        $query->join('LEFT', '#__categories AS b ON b.id = a.category_id');
 
         $query->where('a.published = 1');
         $query->where('(a.start_publishing_datetime = ' . $db->Quote($nullDate) . ' OR a.start_publishing_datetime <= ' . $db->Quote($now) . ')');
@@ -55,12 +55,12 @@ class modContentHelper
         $query->where('a.language IN (' . $db->Quote($lang) . ',' . $db->Quote('*') . ')');
 
         /** category filter */
-        $categoryId = $parameters->def('catid', 0);
+        $categoryId = $parameters->def('category_id', 0);
         if ((int)$categoryId > 0) {
             $query->where('category_id', $categoryId);
         }
 
-        //        $categoryIds = $parameters->get('catid', array());
+        //        $categoryIds = $parameters->get('category_id', array());
         /** Online User */
         if ((int)$parameters->def('limit_to_online_user', 0) > 0) {
             $query->where('a.created_by = ' . (int)$user->get('id'));
@@ -103,7 +103,7 @@ class modContentHelper
                 $item->columnheading . $i = MolajoTextHelper::_('LATEST_CREATED_BY');
 
                 /** ACL */
-                if ($acl->authoriseTask('articles', 'display', 'view', $item->id, $item->catid, $item)) {
+                if ($acl->authoriseTask('articles', 'display', 'view', $item->id, $item->category_id, $item)) {
                     $item->link = MolajoRouteHelper::_('index.php?option=articles&task=edit&id=' . $item->id);
                 } else {
                     $item->link = '';
@@ -126,10 +126,10 @@ class modContentHelper
     public static function getTitle($parameters)
     {
         $who = $parameters->get('user_id');
-        $catid = (int)$parameters->get('catid');
+        $category_id = (int)$parameters->get('category_id');
         $type = $parameters->get('ordering') == 'c_dsc' ? '_CREATED' : '_MODIFIED';
-        if ($catid) {
-            $category = JCategories::getInstance('Content')->get($catid);
+        if ($category_id) {
+            $category = JCategories::getInstance('Content')->get($category_id);
             if ($category) {
                 $title = $category->title;
             }
@@ -141,7 +141,7 @@ class modContentHelper
         {
             $title = '';
         }
-        return MolajoTextHelper::plural('LATEST_TITLE' . $type . ($catid ? "_CATEGORY" : '') . ($who != '0' ? "_$who"
+        return MolajoTextHelper::plural('LATEST_TITLE' . $type . ($category_id ? "_CATEGORY" : '') . ($who != '0' ? "_$who"
                                        : ''), (int)$parameters->get('count'), $title);
     }
 }

@@ -74,7 +74,7 @@ class MolajoViewEdit extends MolajoView
             $this->isNew = true;
             $this->slider_id = 0;
             $this->item->id = 0;
-            $this->item->catid = 0;
+            $this->item->category_id = 0;
             $this->item->state = 0;
         } else {
             $this->isNew = false;

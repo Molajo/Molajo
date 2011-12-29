@@ -12,7 +12,7 @@ defined('MOLAJO') or die; ?>
     <legend><?php echo MolajoTextHelper::_('MOLAJO_BATCH_OPTIONS');?></legend>
 
     <fieldset id="batch-choose-action" class="combo">
-        <select name="batch_catid" class="inputbox" id="batch-category-id">
+        <select name="batch_category_id" class="inputbox" id="batch-category-id">
             <option value=""><?php echo MolajoTextHelper::_('MOLAJO_BATCH_CATEGORY_LABEL') ?></option>
             <?php if ($this->request['option'] == 'categories') { ?>
             <?php echo MolajoHTML::_('select.options', MolajoHTML::_('category.categories', $this->request['option'], array('published' => 1))); ?>

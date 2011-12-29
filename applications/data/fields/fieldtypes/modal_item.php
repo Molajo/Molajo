@@ -40,7 +40,7 @@ class MolajoFormFieldModal_item extends MolajoFormField
 
         // Build the script.
         $script = array();
-        $script[] = '	function jSelectItem_' . $this->id . '(id, title, catid, object) {';
+        $script[] = '	function jSelectItem_' . $this->id . '(id, title, category_id, object) {';
         $script[] = '		document.id("' . $this->id . '_id").value = id;';
         $script[] = '		document.id("' . $this->id . '_name").value = title;';
         $script[] = '		SqueezeBox.close();';

@@ -19,7 +19,7 @@ class MolajoACL
      * @param      string      $option - component ex. articles
      * @param      string      $entity - singular form of component subject ex. article, comment
      * @param      string      $task - ex. display, add, delete
-     * @param      int         $catid - category key of the item or the value 0
+     * @param      int         $category_id - category key of the item or the value 0
      * @param      int         $id - primary key of the item or the value 0
      * @param      array       $item - table row related to the id or an empty array
      *
@@ -98,7 +98,7 @@ class MolajoACL
      * @param string $option 'articles', etc.
      * @param string $entity 'article', or 'comment', etc.
      * @param string $task 'add', 'delete', 'publish'
-     * @param integer $catid - category for content
+     * @param integer $category_id - category for content
      * @param integer $id - primary key for content
      * @param object $item - item columns and values
      *

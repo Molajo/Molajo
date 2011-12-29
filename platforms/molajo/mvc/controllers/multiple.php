@@ -191,7 +191,7 @@ class MolajoControllerMultiple extends MolajoControllerEdit
         /** security token **/
         JRequest::checkToken() or die;
 
-        /** initialize */
+        /** initialise */
         $results = $this->initialise($this->data['task']);
         if ($results === false) {
             return $this->redirectClass->setSuccessIndicator(false);
@@ -220,8 +220,8 @@ class MolajoControllerMultiple extends MolajoControllerEdit
 
         /** target category **/
         if ($task == 'copy' || $task == 'delete') {
-            $this->batch_catid = JRequest::getInt('batch_catid');
-            if ((int)$this->batch_catid == 0) {
+            $this->batch_category_id = JRequest::getInt('batch_category_id');
+            if ((int)$this->batch_category_id == 0) {
                 $this->redirectClass->setRedirectMessage(MolajoTextHelper::_('MOLAJO_BATCH_SELECT_CATEGORY_FOR_MOVE_OR_COPY'));
                 $this->redirectClass->setRedirectMessageType('message');
                 return $this->redirectClass->setSuccessIndicator(false);

@@ -223,7 +223,7 @@ class MolajoACLCore extends MolajoACL
      * @param $option
      * @param $entity
      * @param $task
-     * @param $catid
+     * @param $category_id
      * @param $id
      * @param $item
      * @param $option_value_literal
@@ -249,8 +249,8 @@ class MolajoACLCore extends MolajoACL
                 }
             }
         }
-        if ($authorised === false && (int)$catid > 0) {
-            $authorised = $this->authorise($option_value_literal, $option . '.' . 'category' . '.' . $catid);
+        if ($authorised === false && (int)$category_id > 0) {
+            $authorised = $this->authorise($option_value_literal, $option . '.' . 'category' . '.' . $category_id);
         } else if ($authorised === false) {
             $authorised = $this->authorise($option_value_literal, $option);
         }

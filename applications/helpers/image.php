@@ -81,7 +81,7 @@ class MolajoImageHelper
      */
     function __construct($id, $size = 0, $type = 'crop')
     {
-        /** initialize  */
+        /** initialise  */
         $this->id = (int)$id;
         $this->size = (int)$this->size;
         if ($this->size == 1 || $this->size == 2 || $this->size == 3 || $this->size == 4 || $this->size == 5) {

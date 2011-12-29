@@ -54,16 +54,16 @@ class MolajoTableContent extends MolajoTable
      */
     protected function _getAssetParentId($table = null, $id = null)
     {
-        /** initialize **/
+        /** initialise **/
         $assetId = null;
         $db = $this->getDbo();
 
         /** retrieve parent category asset **/
-        if ($this->catid) {
+        if ($this->category_id) {
             $query = $db->getQuery(true);
             $query->select('asset_id');
             $query->from('#__categories');
-            $query->where('id = ' . (int)$this->catid);
+            $query->where('id = ' . (int)$this->category_id);
 
             $this->_database->setQuery($query);
             if ($result = $this->_database->loadResult()) {
@@ -221,7 +221,7 @@ class MolajoTableContent extends MolajoTable
      */
     protected function _getAlias()
     {
-        /** initialize **/
+        /** initialise **/
         $aliasFound = false;
         $db = $this->getDbo();
 

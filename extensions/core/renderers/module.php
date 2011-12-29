@@ -284,7 +284,7 @@ class MolajoModule
 
         $request['id'] = $session->get('page.id');
         $request['cid'] = $session->get('page.cid');
-        $request['catid'] = $session->get('page.catid');
+        $request['category_id'] = $session->get('page.category_id');
         $request['parameters'] = $this->parameters;
 
         $request['acl_implementation'] = $session->get('page.acl_implementation');

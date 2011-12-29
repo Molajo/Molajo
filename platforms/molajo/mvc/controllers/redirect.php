@@ -88,14 +88,14 @@ class MolajoControllerRedirect extends MolajoController
     public $request = null;
 
     /**
-     * initialize
+     * initialise
      *
      * Establish the Link needed for redirecting after the task is complete (or fails)
      *
      * @return    boolean
      * @since    1.0
      */
-    public function initialize()
+    public function initialise()
     {
         /** no redirect: */
 

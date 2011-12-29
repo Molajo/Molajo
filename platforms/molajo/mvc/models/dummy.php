@@ -16,7 +16,8 @@ defined('MOLAJO') or die;
  * @subpackage    Model
  * @since 1.0
  */
-class MolajoModelDummy extends JModel
+//class MolajoModelDummy extends JModel
+class MolajoModelDummy extends MolajoModel
 {
     /**
      * $request

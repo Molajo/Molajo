@@ -16,7 +16,8 @@ defined('MOLAJO') or die;
  * @subpackage    Model
  * @since 1.0
  */
-class MolajoModelDisplay extends JModel
+//class MolajoModelDisplay extends JModel
+class MolajoModelDisplay extends MolajoModel
 {
     /**
      * $request
@@ -589,7 +590,7 @@ class MolajoModelDisplay extends JModel
 
         /** parent category **/
 //        $this->query->select('c.id AS category_id, c.title AS category_title, c.path AS category_route, c.alias AS category_alias');
-//        $this->query->join('LEFT', '#__categories AS c ON c.id = a.catid');
+//        $this->query->join('LEFT', '#__categories AS c ON c.id = a.category_id');
 
         /** sins of the parent checking **/
 
@@ -1099,7 +1100,7 @@ class MolajoModelDisplay extends JModel
     {
         /** 1: required fields **/
         $nameArray = array();
-        $requireList = 'id,title,alias,state,catid,created_by,access,checked_out,checked_out_time,search';
+        $requireList = 'id,title,alias,state,category_id,created_by,access,checked_out,checked_out_time,search';
         $requiredArray = explode(',', $requireList);
 
         foreach ($requiredArray as $required) {

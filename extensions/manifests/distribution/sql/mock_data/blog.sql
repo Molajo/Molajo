@@ -27,7 +27,7 @@ INSERT INTO `molajo_assets`
 
 # ARTICLES
 SET @id = (SELECT id FROM `molajo_extension_instances` WHERE `title` = 'articles' AND `asset_type_id` = 1050);
-SET @catid = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 3000);
+SET @category_id = (SELECT id FROM `molajo_content` WHERE `title` = 'Content' AND `asset_type_id` = 3000);
 INSERT INTO `molajo_content`
     (`title`, `subtitle`, `alias`, `path`, `content_text`, `status`, `start_publishing_datetime`, `stop_publishing_datetime`, `extension_instance_id`, `asset_type_id`, `version`, `parent_id`, `lft`, `rgt`, `lvl`, `language`, `ordering`)
   VALUES

@@ -27,7 +27,7 @@ class MolajoFieldCatid extends MolajoField
     public function __construct()
     {
         parent::__construct();
-        parent::setName('catid');
+        parent::setName('category_id');
         parent::setFilter('integer');
     }
 
@@ -75,12 +75,12 @@ class MolajoFieldCatid extends MolajoField
         }
 
         if (is_numeric($value) && $value > 0) {
-            $query->where('a.catid = ' . $value);
+            $query->where('a.category_id = ' . $value);
 
         } else if (is_array($value)) {
             JArrayHelper::toInteger($value);
             $categoryId = implode(',', $value);
-            $query->where('a.catid IN (' . $categoryId . ')');
+            $query->where('a.category_id IN (' . $categoryId . ')');
         }
     }
 
@@ -104,7 +104,7 @@ class MolajoFieldCatid extends MolajoField
             $render['sortable'] = true;
             $render['checkbox'] = false;
             $render['data_type'] = 'string';
-            $render['column_name'] = 'catid';
+            $render['column_name'] = 'category_id';
             $render['print_value'] = $item->category_id;
 
             return $render;

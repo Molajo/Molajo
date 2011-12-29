@@ -15,7 +15,8 @@ defined('MOLAJO') or die;
  * @subpackage    Single Model
  * @since       1.0
  */
-class MolajoModelEdit extends JModel
+//class MolajoModelEdit extends JModel
+class MolajoModelEdit extends MolajoModel
 {
     /**
      * @var    object    parameters
@@ -50,7 +51,7 @@ class MolajoModelEdit extends JModel
     /**
      * getItem
      *
-     * Method to get a single record or to initialize an empty record
+     * Method to get a single record or to initialise an empty record
      *
      * @param    integer    The id of the primary key.
      *
@@ -69,7 +70,7 @@ class MolajoModelEdit extends JModel
                 return false;
             }
 
-            JRequest::setVar('item_category', $table->catid); // used in editor for core ACL - find something better.
+            JRequest::setVar('item_category', $table->category_id); // used in editor for core ACL - find something better.
         }
 
         /** verify checkout for edit **/
@@ -307,7 +308,7 @@ class MolajoModelEdit extends JModel
 
         /** reorder - new content is first **/
         if (empty($table->id)) {
-            $table->reorder('catid = ' . (int)$table->catid . ' AND state >= 0');
+            $table->reorder('category_id = ' . (int)$table->category_id . ' AND state >= 0');
         }
     }
 
@@ -370,7 +371,7 @@ class MolajoModelEdit extends JModel
      * @return    void
      * @since    1.0
      */
-    public function copy($id, $catid)
+    public function copy($id, $category_id)
     {
         /** load requested copy **/
         $fromTable = $this->getTable();
@@ -391,10 +392,10 @@ class MolajoModelEdit extends JModel
             if ($column_name == 'id') {
             } else {
 
-                if ($column_name == 'catid') {
-                    $toTable->$column_name = $catid;
+                if ($column_name == 'category_id') {
+                    $toTable->$column_name = $category_id;
 
-                } else if ($column_name == 'alias' && $catid == $fromTable->catid) {
+                } else if ($column_name == 'alias' && $category_id == $fromTable->category_id) {
                     $toTable->alias = '';
 
                 } else if ($column_name == 'state') {
@@ -428,7 +429,7 @@ class MolajoModelEdit extends JModel
      * @return    void
      * @since    1.0
      */
-    public function move($id, $catid)
+    public function move($id, $category_id)
     {
         $table = $this->getTable();
         if ($table->load($id)) {
@@ -437,7 +438,7 @@ class MolajoModelEdit extends JModel
             return false;
         }
 
-        $table->catid = $catid;
+        $table->category_id = $category_id;
 
         if ($table->store()) {
         } else {
@@ -947,7 +948,7 @@ class MolajoModelEdit extends JModel
     {
         $condition = array();
         $condition[] = 'asset_type_id = ' . (int)$table->asset_type_id;
-        $condition[] = 'catid = ' . (int)$table->catid;
+        $condition[] = 'category_id = ' . (int)$table->category_id;
         return $condition;
     }
 

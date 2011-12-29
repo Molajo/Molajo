@@ -967,7 +967,7 @@
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
-               default="catid"
+               default="category_id"
                label="MANAGER_FILTER1_LABEL"
                description="MANAGER_FILTER1_DESC"
                 >
@@ -1119,7 +1119,7 @@
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 230 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
-               default="catid"
+               default="category_id"
                label="MANAGER_TWO_FIELD_QUERY_FILTER2_LABEL"
                description="MANAGER_TWO_FIELD_QUERY_FILTER2_DESC"
                 >
@@ -1294,7 +1294,7 @@
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
-               default="catid"
+               default="category_id"
                label="MANAGER_GRID_COLUMN9_LABEL"
                description="MANAGER_GRID_COLUMN9_DESC"
                 >
@@ -1986,7 +1986,7 @@
                query="select option_value, option_value_literal from #__configuration where ordering > 0 and option_id = 1 order by option_value_literal ASC"
                key_field="option_value"
                value_field="option_value_literal"
-               default="catid"
+               default="category_id"
                label="MANAGER_EDITOR_LEFT_BOTTOM_COLUMN1_LABEL"
                description="MANAGER_EDITOR_LEFT_BOTTOM_COLUMN1_DESC"
                 >

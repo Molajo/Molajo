@@ -114,7 +114,7 @@ class MolajoControllerEdit extends MolajoController
 
         /** Model: Get Data for Copy ID **/
         if ($task == 'copy') {
-            $data = $this->model->copy($this->id, $this->batch_catid);
+            $data = $this->model->copy($this->id, $this->batch_category_id);
 
             /** reset ids to point to current row **/
             JRequest::setVar('from_id', $this->id);
@@ -123,7 +123,7 @@ class MolajoControllerEdit extends MolajoController
             $this->id = 0;
             $this->table->reset();
         } else {
-            $data = $this->model->move($this->id, $this->batch_catid);
+            $data = $this->model->move($this->id, $this->batch_category_id);
         }
 
         return $this->saveItem($data, 'save');

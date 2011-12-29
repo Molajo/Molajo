@@ -16,7 +16,7 @@
         <fieldset name="request"
                   addfieldpath="/libraries/overrides/form/fields">
 
-            <field name="catid"
+            <field name="category_id"
                    type="category"
                    label="MOLAJO_CHOOSE_ITEM_LABEL"
                    required="true"

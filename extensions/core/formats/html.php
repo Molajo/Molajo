@@ -238,7 +238,7 @@ class MolajoHtmlFormat
      */
     protected function _parseTemplate()
     {
-        /** initialize */
+        /** initialise */
         $matches = array();
         $this->_renderers = array();
         $i = 0;
@@ -253,7 +253,7 @@ class MolajoHtmlFormat
         /** store renderers in array */
         foreach ($matches[1] as $includeString) {
 
-            /** initialize for each renderer */
+            /** initialise for each renderer */
             $includeArray = array();
             $includeArray = explode(' ', $includeString);
             $rendererType = '';

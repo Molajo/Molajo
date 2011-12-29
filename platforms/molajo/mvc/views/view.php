@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage   View
  * @since        1.0
  */
-class MolajoView extends JView
+class MolajoView extends JObject
 {
     /**
      * @var object $app
@@ -207,7 +207,7 @@ class MolajoView extends JView
      */
     protected function findPath($layout, $layout_type)
     {
-        /** initialize layout */
+        /** initialise layout */
         $this->layout_path = false;
         $templateObject = MolajoFactory::getApplication()->getTemplate();
         $template = MOLAJO_EXTENSIONS_TEMPLATES . '/' . $templateObject[0]->title;
@@ -441,6 +441,80 @@ class MolajoView extends JView
         MolajoTemplate::loadMediaCSS($filePath, $urlPath);
         MolajoTemplate::loadMediaJS($filePath, $urlPath);
     }
+
+    /**
+     * Escapes a value for output in a view script.
+     *
+     * If escaping mechanism is either htmlspecialchars or htmlentities, uses
+     * {@link $_encoding} setting.
+     *
+     * @param   mixed  $var  The output to escape.
+     *
+     * @return  mixed  The escaped value.
+     *
+     * @since   1.0
+     */
+    function escape($var)
+    {
+        if (in_array($this->_escape, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escape, $var, ENT_COMPAT, $this->_charset);
+        }
+
+        return call_user_func($this->_escape, $var);
+    }
+
+    /**
+     * Method to add a model to the view.  We support a multiple model single
+     * view system by which models are referenced by classname.  A caveat to the
+     * classname referencing is that any classname prepended by JModel will be
+     * referenced by the name without JModel, eg. JModelCategory is just
+     * Category.
+     *
+     * @param   object   &$model   The model to add to the view.
+     * @param   boolean  $default  Is this the default model?
+     *
+     * @return  object   The added model.
+     *
+     * @since   1.0
+     */
+    public function setModel($model, $default = false)
+    {
+        $name = strtolower($model->getName());
+        $this->_models[$name] = &$model;
+
+        if ($default) {
+            $this->_defaultModel = $name;
+        }
+        return $model;
+    }
+
+    /**
+     * Sets the layout name to use
+     *
+     * @param   string  $layout  The layout name or a string in format <template>:<layout file>
+     *
+     * @return  string  Previous value.
+     *
+     * @since   1.0
+     */
+    public function setLayout($layout)
+    {
+        $previous = $this->layout;
+        if (strpos($layout, ':') === false) {
+            $this->layout = $layout;
+        }
+        else
+        {
+            // Convert parameter to array based on :
+            $temp = explode(':', $layout);
+            $this->layout = $temp[1];
+            // Set layout template
+//            $this->layoutTemplate = $temp[0];
+        }
+
+        return $previous;
+    }
+
 }
 
 /** 7. Optional data (put this into a model parent?) */

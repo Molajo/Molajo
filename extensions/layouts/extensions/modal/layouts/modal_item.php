@@ -53,7 +53,7 @@ $this->escape($this->state->get('list.direction')) = $this->escape($this->state-
                 <?php echo MolajoHTML::_('grid.sort', 'JGLOBAL_TITLE', 'a.title', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
             </th>
             <th width="20%">
-                <?php echo MolajoHTML::_('grid.sort', 'JCATEGORY', 'a.catid', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
+                <?php echo MolajoHTML::_('grid.sort', 'JCATEGORY', 'a.category_id', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
             </th>
             <th width="5%">
                 <?php echo MolajoHTML::_('grid.sort', 'JDATE', 'a.created', $this->escape($this->state->get('list.direction')), $this->escape($this->state->get('list.ordering'))); ?>
@@ -78,7 +78,7 @@ $this->escape($this->state->get('list.direction')) = $this->escape($this->state-
         <tr class="row<?php echo $i % 2; ?>">
             <td>
                 <a class="pointer"
-                   onclick="if (window.parent) window.parent.<?php echo $function;?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', '<?php echo $this->escape($item->catid); ?>');">
+                   onclick="if (window.parent) window.parent.<?php echo $function;?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', '<?php echo $this->escape($item->category_id); ?>');">
                     <?php echo $this->escape($item->title); ?></a>
             </td>
             <td class="center">
