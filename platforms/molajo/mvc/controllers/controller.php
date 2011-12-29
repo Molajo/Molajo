@@ -262,7 +262,7 @@ class MolajoController extends JObject
         ) {
         } else {
             $this->dispatcher = JDispatcher::getInstance();
-            MolajoPlugin::importPlugin($this->request['plugin_type']);
+            MolajoPluginHelper::importPlugin($this->request['plugin_type']);
         }
 
         /** check authorisation **/

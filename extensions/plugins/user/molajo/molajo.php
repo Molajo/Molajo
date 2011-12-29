@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage    User.molajo
  * @since        1.5
  */
-class plgUserMolajo extends MolajoPlugin
+class plgUserMolajo extends MolajoPluginHelper
 {
     /**
      * Utility method to act on a user after it has been saved.

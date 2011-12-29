@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package        Joomla.Plugin
  * @subpackage    System.log
  */
-class  plgSystemLog extends MolajoPlugin
+class  plgSystemLog extends MolajoPluginHelper
 {
     function onUserLoginFailure($response)
     {

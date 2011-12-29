@@ -75,7 +75,7 @@ abstract class MolajoUserHelper
         }
 
         $dispatcher = JDispatcher::getInstance();
-        MolajoPlugin::importPlugin('user');
+        MolajoPluginHelper::importPlugin('user');
 
         $data = new JObject;
         $results = $dispatcher->trigger('onContentPrepareData', array($user_id, &$data));

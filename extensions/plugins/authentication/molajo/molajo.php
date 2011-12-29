@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @subpackage    Authentication
  * @since       1.0
  */
-class plgAuthenticationMolajo extends MolajoPlugin
+class plgAuthenticationMolajo extends MolajoPluginHelper
 {
     /**
      * onUserAuthenticate

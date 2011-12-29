@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package        Joomla.Plugin
  * @subpackage    System.p3p
  */
-class plgSystemP3p extends MolajoPlugin
+class plgSystemP3p extends MolajoPluginHelper
 {
     function onAfterInitialise()
     {

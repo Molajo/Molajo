@@ -869,7 +869,7 @@ class MolajoExtension
      */
     private function _route()
     {
-        MolajoPlugin::importPlugin('system');
+        MolajoPluginHelper::importPlugin('system');
         MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
     }
 

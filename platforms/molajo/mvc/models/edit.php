@@ -164,7 +164,7 @@ class MolajoModelEdit extends MolajoModel
             return false;
         }
 
-        MolajoPlugin::importPlugin('content');
+        MolajoPluginHelper::importPlugin('content');
         $dispatcher = JDispatcher::getInstance();
 
         $dispatcher->trigger('onContentPrepareData', array($formName, $data));

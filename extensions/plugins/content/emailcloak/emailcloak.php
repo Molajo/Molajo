@@ -14,7 +14,7 @@ defined('MOLAJO') or die;
  * @package        Joomla.Plugin
  * @subpackage    Content.emailcloak
  */
-class plgContentEmailcloak extends MolajoPlugin
+class plgContentEmailcloak extends MolajoPluginHelper
 {
     /**
      * Plugin that cloaks all emails in content from spambots via Javascript.

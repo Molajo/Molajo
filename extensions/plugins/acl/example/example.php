@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage    ACL Plugin
  * @since        1.6
  */
-class plgACLMolajosample extends MolajoPlugin
+class plgACLMolajosample extends MolajoPluginHelper
 {
     /**
      * ACL Events - Events in order of occurrence

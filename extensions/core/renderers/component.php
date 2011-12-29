@@ -133,7 +133,7 @@ class MolajoComponentRenderer
         $request = $this->request();
 
         /** Events */
-        MolajoPlugin::importPlugin('system');
+        MolajoPluginHelper::importPlugin('system');
         MolajoFactory::getApplication()->triggerEvent('onBeforeComponentRender');
 
         /** path */
@@ -163,7 +163,7 @@ class MolajoComponentRenderer
         ob_end_clean();
 
         /** Events */
-        MolajoPlugin::importPlugin('system');
+        MolajoPluginHelper::importPlugin('system');
         MolajoFactory::getApplication()->triggerEvent('onAfterComponentRender');
 
         /** Return output */

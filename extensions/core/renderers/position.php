@@ -59,11 +59,11 @@ class MolajoPositionRenderer
      */
     public function render()
     {
-        $class = 'MolajoModule';
+        $class = 'MolajoModuleRenderer';
         $renderer = new $class ($this->parameters, $this->config);
         $buffer = '';
 
-        foreach (MolajoModule::getModules($this->position) as $module_object) {
+        foreach (MolajoModuleRenderer::getModules($this->position) as $module_object) {
             $buffer .= $renderer->render($module_object);
         }
         return $buffer;

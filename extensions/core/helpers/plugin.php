@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @subpackage  Plugin
  * @since       1.0
  */
-abstract class MolajoPluginRenderer extends JEvent
+abstract class MolajoPluginHelper extends JEvent
 {
     /**
      * Plugin Parameters
@@ -64,7 +64,7 @@ abstract class MolajoPluginRenderer extends JEvent
             if (file_exists($path)) {
                 require_once $path;
 
-                $classname = 'MolajoPlugin' . ucfirst($application);
+                $classname = 'MolajoPluginHelper' . ucfirst($application);
                 $instance = new $classname($options);
             }
             else

@@ -641,7 +641,7 @@ class save_user_crud
             }
 
             // Fire the onUserBeforeSave event.
-            MolajoPlugin::importPlugin('user');
+            MolajoPluginHelper::importPlugin('user');
             $dispatcher = JDispatcher::getInstance();
 
             $result = $dispatcher->trigger('onUserBeforeSave', array($oldUser->getProperties(), $isNew, $this->getProperties()));
@@ -687,7 +687,7 @@ class save_user_crud
      */
     public function delete()
     {
-        MolajoPlugin::importPlugin('user');
+        MolajoPluginHelper::importPlugin('user');
 
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onUserBeforeDelete', array($this->getProperties()));

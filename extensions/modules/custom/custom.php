@@ -11,7 +11,7 @@ $layout = $parameters->def('layout', 'custom');
 $wrap = $parameters->def('wrap', 'div');
 
 if ($parameters->def('prepare_content', 1)) {
-    MolajoPlugin::importPlugin('content');
+    MolajoPluginHelper::importPlugin('content');
     MolajoHTML::_('content.prepare', $module->content);
 }
 $rowset[0]->content = $module->content;

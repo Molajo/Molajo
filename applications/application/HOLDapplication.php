@@ -172,11 +172,11 @@ class MolajoApplication
 
         /** Editor */
         $editor = MolajoFactory::getUser()->getParameter('editor', $this->get('editor', 'none'));
-        if (MolajoPlugin::isEnabled('editors', $editor)) {
+        if (MolajoPluginHelper::isEnabled('editors', $editor)) {
 
         } else {
             $editor = $this->get('editor');
-            if (MolajoPlugin::isEnabled('editors', $editor)) {
+            if (MolajoPluginHelper::isEnabled('editors', $editor)) {
             } else {
                 $editor = 'none';
             }
@@ -193,7 +193,7 @@ class MolajoApplication
         }
 
         /** Event */
-        MolajoPlugin::importPlugin('system');
+        MolajoPluginHelper::importPlugin('system');
         MolajoFactory::getApplication()->triggerEvent('onAfterInitialise');
     }
 
@@ -231,7 +231,7 @@ class MolajoApplication
         }
 
         /** trigger onAfterRoute Event */
-        MolajoPlugin::importPlugin('system');
+        MolajoPluginHelper::importPlugin('system');
         MolajoFactory::getApplication()->triggerEvent('onAfterRoute');
     }
 
@@ -366,7 +366,7 @@ class MolajoApplication
             $document->setBuffer($contents, 'component');
 
             /** Events */
-            MolajoPlugin::importPlugin('system');
+            MolajoPluginHelper::importPlugin('system');
             MolajoFactory::getApplication()->triggerEvent('onAfterDispatch');
         }
 

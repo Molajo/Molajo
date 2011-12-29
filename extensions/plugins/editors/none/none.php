@@ -16,7 +16,7 @@ defined('MOLAJO') or die;
  * @subpackage    Editors.none
  * @since        1.5
  */
-class plgEditorNone extends MolajoPlugin
+class plgEditorNone extends MolajoPluginHelper
 {
     /**
      * Method to handle the onInitEditor event.

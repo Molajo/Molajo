@@ -129,8 +129,8 @@ class MolajoModelDisplay extends MolajoModel
 
         $this->dispatcher = JDispatcher::getInstance();
 
-        MolajoPlugin::importPlugin('query');
-        MolajoPlugin::importPlugin($this->request['plugin_type']);
+        MolajoPluginHelper::importPlugin('query');
+        MolajoPluginHelper::importPlugin($this->request['plugin_type']);
 
         if ($this->request['id'] == 0) {
             $this->populateStateMultiple();

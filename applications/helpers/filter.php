@@ -52,7 +52,7 @@ class MolajoFilterHelper
         return true;
 
         /** filter parameters **/
-        $molajoSystemPlugin =& MolajoPlugin::getPlugin('system', 'molajo');
+        $molajoSystemPlugin =& MolajoPluginHelper::getPlugin('system', 'molajo');
         $systemParameters = new JParameter($molajoSystemPlugin->parameters);
 
         $acl = new MolajoACL ();

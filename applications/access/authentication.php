@@ -89,7 +89,7 @@ class MolajoAuthentication extends JObservable
      */
     public function __construct()
     {
-        $isLoaded = MolajoPlugin::importPlugin('authentication');
+        $isLoaded = MolajoPluginHelper::importPlugin('authentication');
 
         if ($isLoaded) {
         } else {
@@ -138,7 +138,7 @@ class MolajoAuthentication extends JObservable
         $auth = false;
 
         // Get plugins
-        $plugins = MolajoPlugin::getPlugin('authentication');
+        $plugins = MolajoPluginHelper::getPlugin('authentication');
 
         // Create authencication response
         $response = new MolajoAuthenticationResponse;
@@ -199,7 +199,7 @@ class MolajoAuthentication extends JObservable
     public function onUserLogin($user, $options = array())
     {
         /** user plugins */
-        $plugins = MolajoPlugin::getPlugin('user');
+        $plugins = MolajoPluginHelper::getPlugin('user');
 
         /*
            * Loop through the plugins and check of the creditials can be used to authenticate
@@ -242,7 +242,7 @@ class MolajoAuthentication extends JObservable
      */
     public static function authorise($response, $options = Array())
     {
-        MolajoPlugin::getPlugin('authentication');
+        MolajoPluginHelper::getPlugin('authentication');
         $dispatcher = JDispatcher::getInstance();
         $authorisations = $dispatcher->trigger('onUserAuthorisation', Array($response, $options));
 

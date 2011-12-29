@@ -15,7 +15,7 @@ defined('MOLAJO') or die;
  * @package        Joomla.Plugin
  * @subpackage    System.sef
  */
-class plgSystemSef extends MolajoPlugin
+class plgSystemSef extends MolajoPluginHelper
 {
     /**
      * Converting the site URL to fit to the HTTP request
